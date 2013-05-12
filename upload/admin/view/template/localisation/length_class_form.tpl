@@ -43,7 +43,7 @@
           <div class="controls">
             <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" />
 
-            <a data-toggle="tooltip" title="<?php echo $help_value; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_value; ?>"><i class="icon-info-sign"></i></a>
             
             
             </div>

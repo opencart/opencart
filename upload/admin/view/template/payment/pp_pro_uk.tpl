@@ -20,7 +20,7 @@
           <div class="controls">
             <input type="text" name="pp_pro_uk_vendor" value="<?php echo $pp_pro_uk_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="input-vendor" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_vendor; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_vendor; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_vendor) { ?>
             <span class="error"><?php echo $error_vendor; ?></span>
@@ -32,7 +32,7 @@
           <div class="controls">
             <input type="text" name="pp_pro_uk_user" value="<?php echo $pp_pro_uk_user; ?>" placeholder="<?php echo $entry_user; ?>" id="input-user" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_user; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_user; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_user) { ?>
             <span class="error"><?php echo $error_user; ?></span>
@@ -44,7 +44,7 @@
           <div class="controls">
             <input type="text" name="pp_pro_uk_password" value="<?php echo $pp_pro_uk_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
@@ -56,7 +56,7 @@
           <div class="controls">
             <input type="text" name="pp_pro_uk_partner" value="<?php echo $pp_pro_uk_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="input-partner" />
 
-            <a data-toggle="tooltip" title="<?php echo $help_partner; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_partner; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_partner) { ?>
             <span class="error"><?php echo $error_partner; ?></span>
@@ -85,7 +85,7 @@
               <?php } ?>
             </label>
             
-            <a data-toggle="tooltip" title="<?php echo $help_test; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_test; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -110,7 +110,7 @@
           <div class="controls">
             <input type="text" name="pp_pro_uk_total" value="<?php echo $pp_pro_uk_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>

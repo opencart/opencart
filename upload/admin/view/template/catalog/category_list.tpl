@@ -21,7 +21,7 @@
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
-              <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+              <td width="1" class="center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
               <td class="left"><?php echo $column_name; ?></td>
               <td class="right"><?php echo $column_sort_order; ?></td>
               <td class="right"><?php echo $column_action; ?></td>
@@ -31,7 +31,7 @@
             <?php if ($categories) { ?>
             <?php foreach ($categories as $category) { ?>
             <tr>
-              <td style="text-align: center;"><?php if ($category['selected']) { ?>
+              <td class="center"><?php if ($category['selected']) { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $category['category_id']; ?>" checked="checked" />
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $category['category_id']; ?>" />

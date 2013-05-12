@@ -38,7 +38,7 @@
           <div class="controls">
             <textarea cols="40" rows="5" id="input-callback" readonly="readonly"><?php echo $callback; ?></textarea>
             
-            <a data-toggle="tooltip" title="<?php echo $help_callback; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_callback; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -46,7 +46,7 @@
           <div class="controls">
             <input type="text" name="payza_total" value="<?php echo $payza_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>

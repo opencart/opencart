@@ -93,7 +93,7 @@
             </div>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_geocode; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_geocode; ?>"><i class="icon-info-sign"></i></a>
             <?php if ($error_geocode) { ?>
             <span class="error"><?php echo $error_geocode; ?></span>
             <?php } ?>
@@ -114,7 +114,7 @@
             <textarea name="open" cols="40" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open"><?php echo $open; ?></textarea>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_open; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_open; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -123,7 +123,7 @@
             <textarea name="comment" cols="40" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment"><?php echo $comment; ?></textarea>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_comment; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_comment; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
       </form>

@@ -53,7 +53,7 @@
           <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
           <div class="controls">
             <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" />
-            <a data-toggle="tooltip" title="<?php echo $help_customer; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_customer; ?>"><i class="icon-info-sign"></i></a>
             <br />
             <div id="customer" class="well well-small scrollbox"></div>
           </div>
@@ -62,7 +62,7 @@
           <label class="control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
           <div class="controls">
             <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" />
-            <a data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><i class="icon-info-sign"></i></a>
             <br />
             <div id="affiliate" class="well well-small scrollbox"></div>
           </div>
@@ -71,7 +71,7 @@
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
             <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
             <br />
             <div id="product" class="well well-small scrollbox"></div>
           </div>

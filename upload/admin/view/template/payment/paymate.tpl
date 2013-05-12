@@ -29,7 +29,7 @@
           <div class="controls">
             <input type="text" name="paymate_password" value="<?php echo $paymate_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
@@ -65,7 +65,7 @@
             <input type="text" name="paymate_total" value="<?php echo $paymate_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>

@@ -21,7 +21,7 @@
             <input type="text" name="low_order_fee_total" value="<?php echo $low_order_fee_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">

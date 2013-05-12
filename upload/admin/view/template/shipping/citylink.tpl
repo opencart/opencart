@@ -21,7 +21,7 @@
             <textarea name="citylink_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate"><?php echo $citylink_rate; ?></textarea>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>

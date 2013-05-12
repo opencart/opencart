@@ -25,7 +25,7 @@
             <input type="text" name="ups_key" value="<?php echo $ups_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" />
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_key; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_key; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_key) { ?>
             <span class="error"><?php echo $error_key; ?></span>
@@ -38,7 +38,7 @@
             <input type="text" name="ups_username" value="<?php echo $ups_username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_username; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_username; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_username) { ?>
             <span class="error"><?php echo $error_username; ?></span>
@@ -51,7 +51,7 @@
             <input type="text" name="ups_password" value="<?php echo $ups_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
@@ -72,7 +72,7 @@
             </select>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_pickup; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_pickup; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -90,7 +90,7 @@
             </select>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_packaging; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_packaging; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -107,7 +107,7 @@
             </select>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_classification; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_classification; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -124,7 +124,7 @@
               <?php } ?>
             </select>
             
-            <a data-toggle="tooltip" title="<?php echo $help_origin; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_origin; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -134,7 +134,7 @@
             <input type="text" name="ups_city" value="<?php echo $ups_city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_city; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_city; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_city) { ?>
             <span class="error"><?php echo $error_city; ?></span>
@@ -147,7 +147,7 @@
             <input type="text" name="ups_state" value="<?php echo $ups_state; ?>" placeholder="<?php echo $entry_state; ?>" id="input-state" maxlength="2" id="input-state" class="input-mini" />
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_state; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_state; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_state) { ?>
             <span class="error"><?php echo $error_state; ?></span>
@@ -159,7 +159,7 @@
           <div class="controls">
             <input type="text" name="ups_country" value="<?php echo $ups_country; ?>" placeholder="<?php echo $entry_country; ?>" id="input-country" maxlength="2" class="input-mini" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_country; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_country; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_country) { ?>
             <span class="error"><?php echo $error_country; ?></span>
@@ -172,7 +172,7 @@
             <input type="text" name="ups_postcode" value="<?php echo $ups_postcode; ?>" id="input-postcode" />
  
             
-            <a data-toggle="tooltip" title="<?php echo $help_postcode; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_postcode; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -198,7 +198,7 @@
             </label>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_test; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_test; ?>"><i class="icon-info-sign"></i></a>
              </div>
         </div>
         <div class="control-group">
@@ -215,7 +215,7 @@
             </select>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_quote_type; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_quote_type; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -680,7 +680,7 @@
             
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_service; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_service; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -706,7 +706,7 @@
             </label>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -746,7 +746,7 @@
             </select>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -762,7 +762,7 @@
               <?php } ?>
             </select>
 
-            <a data-toggle="tooltip" title="<?php echo $help_length_class; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_length_class; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -774,7 +774,7 @@
             <input type="text" name="ups_height" value="<?php echo $ups_height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="input-mini" />
            
             
-            <a data-toggle="tooltip" title="<?php echo $help_dimension; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_dimension; ?>"><i class="icon-info-sign"></i></a>
             <?php if ($error_dimension) { ?>
             <span class="error"><?php echo $error_dimension; ?></span>
             <?php } ?>
@@ -844,7 +844,7 @@
             </select>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_debug; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_debug; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>

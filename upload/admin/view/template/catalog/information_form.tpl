@@ -86,7 +86,7 @@
               <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-                <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
+                <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-info-sign"></i></a> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-bottom"><?php echo $entry_bottom; ?></label>
@@ -98,7 +98,7 @@
                   <input type="checkbox" name="bottom" value="1" id="input-bottom" />
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_bottom; ?>"><i class="icon-question-sign icon-large"></i></a> </div>
+                <a data-toggle="tooltip" title="<?php echo $help_bottom; ?>"><i class="icon-info-sign"></i></a> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>

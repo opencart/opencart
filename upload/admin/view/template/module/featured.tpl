@@ -20,7 +20,7 @@
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
             <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
             <br />
             <div id="featured-product" class="well well-small scrollbox">
               <?php foreach ($products as $product) { ?>

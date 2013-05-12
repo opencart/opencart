@@ -83,7 +83,7 @@
             <input type="text" name="sagepay_total" value="<?php echo $sagepay_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
             
             
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">

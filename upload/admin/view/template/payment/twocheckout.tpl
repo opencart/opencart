@@ -32,7 +32,7 @@
             <span class="error"><?php echo $error_secret; ?></span>
             <?php } ?>
             
-            <a data-toggle="tooltip" title="<?php echo $help_secret; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_secret; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -80,7 +80,7 @@
           <div class="controls">
             <input type="text" name="twocheckout_total" value="<?php echo $twocheckout_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">

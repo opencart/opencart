@@ -20,7 +20,7 @@
             <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_upload; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_upload; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>

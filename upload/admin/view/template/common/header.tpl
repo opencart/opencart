@@ -14,7 +14,9 @@
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <link href="view/javascript/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
+<!--
 <link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" />
+//-->
 <link type="text/css" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" />    
 <?php foreach ($styles as $style) { ?>

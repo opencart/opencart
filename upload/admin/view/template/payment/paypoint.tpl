@@ -29,7 +29,7 @@
           <div class="controls">
             <input type="text" name="paypoint_password" value="<?php echo $paypoint_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -60,7 +60,7 @@
             <input type="text" name="paypoint_total" value="<?php echo $paypoint_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>

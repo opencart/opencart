@@ -29,7 +29,7 @@
           <div class="controls">
             <input type="text" name="worldpay_password" value="<?php echo $worldpay_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
 
-            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
@@ -41,7 +41,7 @@
           <div class="controls">
             <textarea cols="40" rows="5" id="input-callback" readonly="readonly"><?php echo $callback; ?></textarea>
             
-            <a data-toggle="tooltip" title="<?php echo $help_callback; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_callback; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -72,7 +72,7 @@
           <div class="controls">
             <input type="text" name="worldpay_total" value="<?php echo $worldpay_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
             
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
             
             
             </div>

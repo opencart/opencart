@@ -21,7 +21,7 @@
             <textarea name="parcelforce_48_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate"><?php echo $parcelforce_48_rate; ?></textarea>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -30,7 +30,7 @@
             <textarea name="parcelforce_48_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-insurance"><?php echo $parcelforce_48_insurance; ?></textarea>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">
@@ -56,7 +56,7 @@
             </label>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -82,7 +82,7 @@
               <?php } ?>
             </label>
 
-            <a data-toggle="tooltip" title="<?php echo $help_display_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_display_insurance; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -109,7 +109,7 @@
             </label>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>

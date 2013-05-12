@@ -36,7 +36,7 @@
                 <input type="text" name="config_url" value="<?php echo $config_url; ?>" placeholder="<?php echo $entry_url; ?>" id="input-url" class="xxlarge" />
 
                 
-                <a data-toggle="tooltip" title="<?php echo $help_url; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_url; ?>"><i class="icon-info-sign"></i></a>
                 
                 <?php if ($error_url) { ?>
                 <span class="error"><?php echo $error_url; ?></span>
@@ -48,7 +48,7 @@
               <div class="controls">
                 <input type="text" name="config_ssl" value="<?php echo $config_ssl; ?>" placeholder="<?php echo $entry_ssl; ?>" id="input-ssl" class="xxlarge" />
                
-                <a data-toggle="tooltip" title="<?php echo $help_ssl; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_ssl; ?>"><i class="icon-info-sign"></i></a>
                 
                 
                 </div>
@@ -209,7 +209,7 @@
               <div class="controls">
                 <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" id="input-catalog-limit" class="input-mini" />
                 
-                <a data-toggle="tooltip" title="<?php echo $help_catalog_limit; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_catalog_limit; ?>"><i class="icon-info-sign"></i></a>
                 
                 <?php if ($error_catalog_limit) { ?>
                 <span class="error"><?php echo $error_catalog_limit; ?></span>
@@ -221,7 +221,7 @@
               <div class="controls">
                 <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" id="input-list-description-limit" class="input-mini" />
                 
-                <a data-toggle="tooltip" title="<?php echo $help_list_description_limit; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_list_description_limit; ?>"><i class="icon-info-sign"></i></a>
                 
                 <?php if ($error_list_description_limit) { ?>
                 <span class="error"><?php echo $error_list_description_limit; ?></span>
@@ -269,7 +269,7 @@
                   <?php } ?>
                 </select>
                 
-                <a data-toggle="tooltip" title="<?php echo $help_tax_default; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_tax_default; ?>"><i class="icon-info-sign"></i></a>
                 
                 </div>
             </div>
@@ -290,7 +290,7 @@
                   <?php } ?>
                 </select>
                 
-                <a data-toggle="tooltip" title="<?php echo $help_tax_customer; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_tax_customer; ?>"><i class="icon-info-sign"></i></a>
                 </div>
             </div>
             <h2><?php echo $text_account; ?></h2>
@@ -307,7 +307,7 @@
                   <?php } ?>
                 </select>
                 
-                <a data-toggle="tooltip" title="<?php echo $help_customer_group; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_customer_group; ?>"><i class="icon-info-sign"></i></a>
                 </div>
             </div>
             <div class="control-group">
@@ -325,7 +325,7 @@
                 </label>
                 <?php } ?>
                 
-                <a data-toggle="tooltip" title="<?php echo $help_customer_group_display; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_customer_group_display; ?>"><i class="icon-info-sign"></i></a>
                 
                 <?php if ($error_customer_group_display) { ?>
                 <span class="error"><?php echo $error_customer_group_display; ?></span>
@@ -354,7 +354,7 @@
                   <?php } ?>
                 </label>
                 
-                <a data-toggle="tooltip" title="<?php echo $help_customer_price; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_customer_price; ?>"><i class="icon-info-sign"></i></a>
                 </div>
             </div>
             <div class="control-group">
@@ -371,7 +371,7 @@
                   <?php } ?>
                 </select>
                 
-                <a data-toggle="tooltip" title="<?php echo $help_account; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_account; ?>"><i class="icon-info-sign"></i></a>
                 
                 </div>
             </div>
@@ -422,7 +422,7 @@
                 </label>
 
                 
-                <a data-toggle="tooltip" title="<?php echo $help_guest_checkout; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_guest_checkout; ?>"><i class="icon-info-sign"></i></a>
                 </div>
             </div>
             <div class="control-group">
@@ -440,7 +440,7 @@
                 </select>
 
                 
-                <a data-toggle="tooltip" title="<?php echo $help_checkout; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_checkout; ?>"><i class="icon-info-sign"></i></a>
                 
                 </div>
             </div>
@@ -457,7 +457,7 @@
                   <?php } ?>
                 </select>
                 
-                <a data-toggle="tooltip" title="<?php echo $help_order_status; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_order_status; ?>"><i class="icon-info-sign"></i></a>
                 
                 </div>
             </div>
@@ -484,7 +484,7 @@
                   <?php } ?>
                 </label>
 
-                <a data-toggle="tooltip" title="<?php echo $help_stock_display; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_stock_display; ?>"><i class="icon-info-sign"></i></a>
                 
                 </div>
             </div>
@@ -511,7 +511,7 @@
                 </label>
                 <
                 
-                <a data-toggle="tooltip" title="<?php echo $help_stock_checkout; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_stock_checkout; ?>"><i class="icon-info-sign"></i></a>
                 </div>
             </div>
           </div>
@@ -534,7 +534,7 @@
                   <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a></div>
                 
                 
-                <a data-toggle="tooltip" title="<?php echo $help_icon; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_icon; ?>"><i class="icon-info-sign"></i></a>
                 </div>
             </div>
             <div class="control-group">
@@ -661,7 +661,7 @@
                 </label>
 
                 
-                <a data-toggle="tooltip" title="<?php echo $help_secure; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_secure; ?>"><i class="icon-info-sign"></i></a>
                 </div>
             </div>
           </div>

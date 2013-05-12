@@ -55,7 +55,7 @@
                     <?php } ?>
                   </label>
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -81,7 +81,7 @@
                   </label>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_display_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_display_insurance; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -157,7 +157,7 @@
                   <textarea name="royal_mail_1st_class_standard_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-1st-class-standard-rate"><?php echo $royal_mail_1st_class_standard_rate; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -166,7 +166,7 @@
                 <div class="controls">
                   <textarea name="royal_mail_1st_class_standard_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-1st-class-standard-insurance"><?php echo $royal_mail_1st_class_standard_insurance; ?></textarea>
 
-                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-info-sign"></i></a>
                   
                   
                   </div>
@@ -193,7 +193,7 @@
                   <textarea name="royal_mail_1st_class_recorded_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-1st-class-recorded-rate"><?php echo $royal_mail_1st_class_recorded_rate; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -202,7 +202,7 @@
                 <div class="controls">
                   <textarea name="royal_mail_1st_class_recorded_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-1st-class-recorded-insurance"><?php echo $royal_mail_1st_class_recorded_insurance; ?></textarea>
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -226,7 +226,7 @@
                 <div class="controls">
                   <textarea name="royal_mail_2nd_class_standard_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-2nd-class-standard-rate"><?php echo $royal_mail_2nd_class_standard_rate; ?></textarea>
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -252,7 +252,7 @@
                   <textarea name="royal_mail_2nd_class_recorded_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-2nd-class-recorded-rate"><?php echo $royal_mail_2nd_class_recorded_rate; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -261,7 +261,7 @@
                   <textarea name="royal_mail_2nd_class_recorded_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-2nd-class-recorded-insurance"><?php echo $royal_mail_2nd_class_recorded_insurance; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -287,7 +287,7 @@
                   <textarea name="royal_mail_special_delivery_500_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-special-delivery-500-rate"><?php echo $royal_mail_special_delivery_500_rate; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -296,7 +296,7 @@
                   <textarea name="royal_mail_special_delivery_500_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-special-delivery-500-insurance"><?php echo $royal_mail_special_delivery_500_insurance; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -321,7 +321,7 @@
                   <textarea name="royal_mail_special_delivery_1000_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-special-delivery-1000-rate"><?php echo $royal_mail_special_delivery_1000_rate; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
                    </div>
               </div>
               <div class="control-group">
@@ -330,7 +330,7 @@
                   <textarea name="royal_mail_special_delivery_1000_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-special-delivery-1000-insurance"><?php echo $royal_mail_special_delivery_1000_insurance; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -355,7 +355,7 @@
                   <textarea name="royal_mail_special_delivery_2500_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-special-delivery-2500-rate"><?php echo $royal_mail_special_delivery_2500_rate; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
                   
                   
                   </div>
@@ -365,7 +365,7 @@
                 <div class="controls">
                   <textarea name="royal_mail_special_delivery_2500_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-special-delivery-2500-insurance"><?php echo $royal_mail_special_delivery_2500_insurance; ?></textarea>
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -389,7 +389,7 @@
                 <div class="controls">
                   <textarea name="royal_mail_standard_parcels_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-standard-parcels-rate"><?php echo $royal_mail_standard_parcels_rate; ?></textarea>
 
-                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -398,7 +398,7 @@
                 <div class="controls">
                   <textarea name="royal_mail_standard_parcels_insurance" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-standard-parcels-insurance"><?php echo $royal_mail_standard_parcels_insurance; ?></textarea>
 
-                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_insurance; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -424,7 +424,7 @@
                   <textarea name="royal_mail_airmail_rate_1" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-airmail-rate-1"><?php echo $royal_mail_airmail_rate_1; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_airmail_rate_1; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_airmail_rate_1; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -435,7 +435,7 @@
 
                   
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_airmail_rate_2; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_airmail_rate_2; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -459,7 +459,7 @@
                 <div class="controls">
                   <textarea name="royal_mail_international_signed_rate_1" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-signed-rate-1"><?php echo $royal_mail_international_signed_rate_1; ?></textarea>
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_international_signed_rate_1; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_international_signed_rate_1; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -467,7 +467,7 @@
                 <div class="controls">
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_international_signed_insurance_1; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_international_signed_insurance_1; ?>"><i class="icon-info-sign"></i></a>
                    </div>
               </div>
               <div class="control-group">
@@ -475,7 +475,7 @@
                 <div class="controls">
                   <textarea name="royal_mail_international_signed_rate_2" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-international-signed-rate-2"><?php echo $royal_mail_international_signed_rate_2; ?></textarea>
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_international_signed_rate_2; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_international_signed_rate_2; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -485,7 +485,7 @@
                   <textarea name="royal_mail_international_signed_insurance_2" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-international-signed-insurance-2"><?php echo $royal_mail_international_signed_insurance_2; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_international_signed_insurance_2; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_international_signed_insurance_2; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -510,7 +510,7 @@
                 <div class="controls">
                   <textarea name="royal_mail_airsure_rate_1" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-airsure-rate-1"><?php echo $royal_mail_airsure_rate_1; ?></textarea>
 
-                  <a data-toggle="tooltip" title="<?php echo $help_airsure_rate_1; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_airsure_rate_1; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -520,7 +520,7 @@
                   <textarea name="royal_mail_airsure_insurance_1" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-airsure-insurance-1"><?php echo $royal_mail_airsure_insurance_1; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_airsure_insurance_1; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_airsure_insurance_1; ?>"><i class="icon-info-sign"></i></a>
                   
                   </div>
               </div>
@@ -530,7 +530,7 @@
                   <textarea name="royal_mail_airsure_rate_2" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-airsure-rate-2"><?php echo $royal_mail_airsure_rate_2; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_airsure_rate_2; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_airsure_rate_2; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">
@@ -539,7 +539,7 @@
                   <textarea name="royal_mail_airsure_insurance_2" cols="40" rows="5" placeholder="<?php echo $entry_insurance; ?>" id="input-airsure-insurance-2"><?php echo $royal_mail_airsure_insurance_2; ?></textarea>
 
                   
-                  <a data-toggle="tooltip" title="<?php echo $help_airsure_insurance_2; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_airsure_insurance_2; ?>"><i class="icon-info-sign"></i></a>
                   </div>
               </div>
               <div class="control-group">

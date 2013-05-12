@@ -287,7 +287,7 @@
               <div class="controls">
                 <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" />
                 
-                <a data-toggle="tooltip" title="<?php echo $help_points; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_points; ?>"><i class="icon-info-sign"></i></a>
                 
                 </div>
             </div>

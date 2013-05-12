@@ -21,7 +21,7 @@
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
-              <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+              <td width="1" class="center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
               <td class="left"><?php if ($sort == 'cfd.name') { ?>
                 <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
                 <?php } else { ?>
@@ -49,7 +49,7 @@
             <?php if ($custom_fields) { ?>
             <?php foreach ($custom_fields as $custom_field) { ?>
             <tr>
-              <td style="text-align: center;"><?php if ($custom_field['selected']) { ?>
+              <td class="center"><?php if ($custom_field['selected']) { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $custom_field['custom_field_id']; ?>" checked="checked" />
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $custom_field['custom_field_id']; ?>" />

@@ -7,7 +7,7 @@
   </ul>
   <div class="box">
     <div class="box-heading">
-      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <table class="table table-striped table-bordered table-hover">

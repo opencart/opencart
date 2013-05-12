@@ -25,7 +25,7 @@
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
-              <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+              <td width="1" class="center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
               <td class="right"><?php if ($sort == 'o.order_id') { ?>
                 <a href="<?php echo $sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order_id; ?></a>
                 <?php } else { ?>
@@ -87,7 +87,7 @@
             <?php if ($orders) { ?>
             <?php foreach ($orders as $order) { ?>
             <tr>
-              <td style="text-align: center;"><?php if ($order['selected']) { ?>
+              <td class="center"><?php if ($order['selected']) { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />

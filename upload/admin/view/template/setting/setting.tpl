@@ -197,7 +197,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <a data-toggle="tooltip" title="<?php echo $help_currency; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_currency; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label" ><?php echo $entry_currency_auto; ?></div>
@@ -220,7 +220,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_currency_auto; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_currency_auto; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-length-class"><?php echo $entry_length_class; ?></label>
@@ -258,7 +258,7 @@
                 <label class="control-label" for="input-catalog-limit"><span class="required">*</span> <?php echo $entry_catalog_limit; ?></label>
                 <div class="controls">
                   <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" id="input-catalog-limit" class="input-mini" />
-                  <a data-toggle="tooltip" title="<?php echo $help_catalog_limit; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_catalog_limit; ?>"><i class="icon-info-sign"></i></a>
                   <?php if ($error_catalog_limit) { ?>
                   <span class="error"><?php echo $error_catalog_limit; ?></span>
                   <?php } ?>
@@ -268,7 +268,7 @@
                 <label class="control-label" for="input-list-description-limit"><span class="required">*</span> <?php echo $entry_list_description_limit; ?></label>
                 <div class="controls">
                   <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" id="input-list-description-limit" class="input-mini" />
-                  <a data-toggle="tooltip" title="<?php echo $help_list_description_limit; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_list_description_limit; ?>"><i class="icon-info-sign"></i></a>
                   <?php if ($error_list_description_limit) { ?>
                   <span class="error"><?php echo $error_list_description_limit; ?></span>
                   <?php } ?>
@@ -278,7 +278,7 @@
                 <label class="control-label" for="input-admin-limit"><span class="required">*</span> <?php echo $entry_admin_limit; ?></label>
                 <div class="controls">
                   <input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" placeholder="<?php echo $entry_admin_limit; ?>" id="input-admin-limit" class="input-mini" />
-                  <a data-toggle="tooltip" title="<?php echo $help_admin_limit; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_admin_limit; ?>"><i class="icon-info-sign"></i></a>
                   <?php if ($error_admin_limit) { ?>
                   <span class="error"><?php echo $error_admin_limit; ?></span>
                   <?php } ?>
@@ -308,7 +308,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_product_count; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_product_count; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <div class="control-label"><?php echo $entry_review; ?></div>
@@ -331,7 +331,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_review; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_review; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <div class="control-label"><?php echo $entry_guest_review; ?></div>
@@ -354,7 +354,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_guest_review; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_guest_review; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <div class="control-label"><?php echo $entry_download; ?></div>
@@ -386,7 +386,7 @@
                 <label class="control-label" for="input-voucher-min"><span class="required">*</span> <?php echo $entry_voucher_min; ?></label>
                 <div class="controls">
                   <input type="text" name="config_voucher_min" value="<?php echo $config_voucher_min; ?>" placeholder="<?php echo $entry_voucher_min; ?>" id="input-voucher-min" />
-                  <a data-toggle="tooltip" title="<?php echo $help_voucher_min; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_voucher_min; ?>"><i class="icon-info-sign"></i></a>
                   <?php if ($error_voucher_min) { ?>
                   <span class="error"><?php echo $error_voucher_min; ?></span>
                   <?php } ?>
@@ -396,7 +396,7 @@
                 <label class="control-label" for="input-voucher-max"><span class="required">*</span> <?php echo $entry_voucher_max; ?></label>
                 <div class="controls">
                   <input type="text" name="config_voucher_max" value="<?php echo $config_voucher_max; ?>" placeholder="<?php echo $entry_voucher_max; ?>" id="input-voucher-max" />
-                  <a data-toggle="tooltip" title="<?php echo $help_voucher_max; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_voucher_max; ?>"><i class="icon-info-sign"></i></a>
                   <?php if ($error_voucher_max) { ?>
                   <span class="error"><?php echo $error_voucher_max; ?></span>
                   <?php } ?>
@@ -444,7 +444,7 @@
                     <option value="payment"><?php echo $text_payment; ?></option>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_tax_default; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_tax_default; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-tax-customer"><?php echo $entry_tax_customer; ?></label>
@@ -462,7 +462,7 @@
                     <option value="payment"><?php echo $text_payment; ?></option>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_tax_customer; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_tax_customer; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
             </fieldset>
             <fieldset>
@@ -488,7 +488,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_customer_online; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_customer_online; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
@@ -502,7 +502,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_customer_group; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_customer_group; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <div class="control-label"><?php echo $entry_customer_group_display; ?></div>
@@ -518,7 +518,7 @@
                     <?php } ?>
                   </label>
                   <?php } ?>
-                  <a data-toggle="tooltip" title="<?php echo $help_customer_group_display; ?>"><i class="icon-question-sign icon-large"></i></a>
+                  <a data-toggle="tooltip" title="<?php echo $help_customer_group_display; ?>"><i class="icon-info-sign"></i></a>
                   <?php if ($error_customer_group_display) { ?>
                   <span class="error"><?php echo $error_customer_group_display; ?></span>
                   <?php } ?>
@@ -545,7 +545,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_customer_price; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_customer_price; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-account"><?php echo $entry_account; ?></label>
@@ -560,7 +560,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_account; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_account; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
             </fieldset>
             <fieldset>
@@ -586,7 +586,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_cart_weight; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_cart_weight; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <div class="control-label"><?php echo $entry_guest_checkout; ?></div>
@@ -609,7 +609,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_guest_checkout; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_guest_checkout; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-checkout"><?php echo $entry_checkout; ?></label>
@@ -624,19 +624,19 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_checkout; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_checkout; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-order-edit"><?php echo $entry_order_edit; ?></label>
                 <div class="controls">
                   <input type="text" name="config_order_edit" value="<?php echo $config_order_edit; ?>" placeholder="<?php echo $entry_order_edit; ?>" id="input-order-edit" class="input-mini" />
-                  <a data-toggle="tooltip" title="<?php echo $help_order_edit; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_order_edit; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-invoice-prefix"><?php echo $entry_invoice_prefix; ?></label>
                 <div class="controls">
                   <input type="text" name="config_invoice_prefix" value="<?php echo $config_invoice_prefix; ?>" placeholder="<?php echo $entry_invoice_prefix; ?>" id="input-invoice-prefix" />
-                  <a data-toggle="tooltip" title="<?php echo $help_invoice_prefix; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_invoice_prefix; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
@@ -650,7 +650,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_order_status; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_order_status; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-complete-status"><?php echo $entry_complete_status; ?></label>
@@ -664,7 +664,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_complete_status; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_complete_status; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
             </fieldset>
             <fieldset>
@@ -690,7 +690,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_stock_display; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_stock_display; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <div class="control-label"><?php echo $entry_stock_warning; ?></div>
@@ -713,7 +713,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_stock_warning; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_stock_warning; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <div class="control-label"><?php echo $entry_stock_checkout; ?></div>
@@ -736,7 +736,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <a data-toggle="tooltip" title="<?php echo $help_stock_checkout; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_stock_checkout; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-stock-status"><?php echo $entry_stock_status; ?></label>
@@ -750,7 +750,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_stock_status; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_stock_status; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
             </fieldset>
             <fieldset>
@@ -768,13 +768,13 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-commission"><?php echo $entry_commission; ?></label>
                 <div class="controls">
                   <input type="text" name="config_commission" value="<?php echo $config_commission; ?>" placeholder="<?php echo $entry_commission; ?>" id="input-commission" class="input-small" />
-                  <a data-toggle="tooltip" title="<?php echo $help_commission; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_commission; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
             </fieldset>
             <fieldset>
@@ -792,7 +792,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_return; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_return; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-return-status"><?php echo $entry_return_status; ?></label>
@@ -806,7 +806,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <a data-toggle="tooltip" title="<?php echo $help_return_status; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a data-toggle="tooltip" title="<?php echo $help_return_status; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
             </fieldset>
           </div>
@@ -826,7 +826,7 @@
                 <div class="image"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" class="img-polaroid" />
                   <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
                   <br />
-                  <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a> <a data-toggle="tooltip" title="<?php echo $help_icon; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                  <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a> <a data-toggle="tooltip" title="<?php echo $help_icon; ?>"><i class="icon-info-sign"></i></a></div>
               </div>
             </div>
             <div class="control-group">
@@ -970,7 +970,7 @@
               <label class="control-label" for="input-ftp-root"><?php echo $entry_ftp_root; ?></label>
               <div class="controls">
                 <input type="text" name="config_ftp_root" value="<?php echo $config_ftp_root; ?>" placeholder="<?php echo $entry_ftp_root; ?>" id="input-ftp-root" />
-                <a data-toggle="tooltip" title="<?php echo $help_ftp_root; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_ftp_root; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_ftp_status; ?></div>
@@ -1012,13 +1012,13 @@
                   <option value="smtp"><?php echo $text_smtp; ?></option>
                   <?php } ?>
                 </select>
-                <a data-toggle="tooltip" title="<?php echo $help_mail_protocol; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_mail_protocol; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-mail-parameter"><?php echo $entry_mail_parameter; ?></label>
               <div class="controls">
                 <input type="text" name="config_mail_parameter" value="<?php echo $config_mail_parameter; ?>" placeholder="<?php echo $entry_mail_parameter; ?>" id="input-mail-parameter" />
-                <a data-toggle="tooltip" title="<?php echo $help_mail_parameter; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_mail_parameter; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-smtp-host"><?php echo $entry_smtp_host; ?></label>
@@ -1071,7 +1071,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_alert_mail; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_alert_mail; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_account_mail; ?></div>
@@ -1094,7 +1094,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_account_mail; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_account_mail; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_review_mail; ?></div>
@@ -1123,7 +1123,7 @@
               <label class="control-label" for="input-alert-email"><?php echo $entry_alert_emails; ?></label>
               <div class="controls">
                 <textarea name="config_alert_emails" cols="40" rows="5" placeholder="<?php echo $entry_alert_emails; ?>" id="input-alert-email"><?php echo $config_alert_emails; ?></textarea>
-                <a data-toggle="tooltip" title="<?php echo $help_alert_emails; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_alert_emails; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
           </div>
           <div class="tab-pane" id="tab-fraud">
@@ -1148,7 +1148,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_fraud_detection; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_fraud_detection; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-fraud-key"><?php echo $entry_fraud_key; ?></label>
@@ -1160,7 +1160,7 @@
               <label class="control-label" for="input-fraud-score"><?php echo $entry_fraud_score; ?></label>
               <div class="controls">
                 <input type="text" name="config_fraud_score" value="<?php echo $config_fraud_score; ?>" placeholder="<?php echo $entry_fraud_score; ?>" id="input-fraud-score" />
-                <a data-toggle="tooltip" title="<?php echo $help_fraud_score; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_fraud_score; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-fraud-status"><?php echo $entry_fraud_status; ?></label>
@@ -1174,7 +1174,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <a data-toggle="tooltip" title="<?php echo $help_fraud_status; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_fraud_status; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
           </div>
           <div class="tab-pane" id="tab-server">
@@ -1199,7 +1199,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_secure; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_secure; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_shared; ?></div>
@@ -1222,13 +1222,13 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_shared; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_shared; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-robots"><?php echo $entry_robots; ?></label>
               <div class="controls">
                 <textarea name="config_robots" cols="40" rows="5" placeholder="<?php echo $entry_robots; ?>" id="input-robots"><?php echo $config_robots; ?></textarea>
-                <a data-toggle="tooltip" title="<?php echo $help_robots; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_robots; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_seo_url; ?></div>
@@ -1251,25 +1251,25 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_seo_url; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-image-file-size"><?php echo $entry_image_file_size; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_file_size" value="<?php echo $config_image_file_size; ?>" placeholder="<?php echo $entry_image_file_size; ?>" id="input-image-file-size" />
-                <a data-toggle="tooltip" title="<?php echo $help_image_file_size; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_image_file_size; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-file-extension-allowed"><?php echo $entry_file_extension_allowed; ?></label>
               <div class="controls">
                 <textarea name="config_file_extension_allowed" cols="40" rows="5" placeholder="<?php echo $entry_file_extension_allowed; ?>" id="input-file-extension-allowed"><?php echo $config_file_extension_allowed; ?></textarea>
-                <a data-toggle="tooltip" title="<?php echo $help_file_extension_allowed; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_file_extension_allowed; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-file-mime-allowed"><?php echo $entry_file_mime_allowed; ?></label>
               <div class="controls">
                 <textarea name="config_file_mime_allowed" cols="60" rows="5" placeholder="<?php echo $entry_file_mime_allowed; ?>" id="input-file-mime-allowed"><?php echo $config_file_mime_allowed; ?></textarea>
-                <a data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_file_mime_allowed; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_maintenance; ?></div>
@@ -1292,7 +1292,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_maintenance; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_maintenance; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_password; ?></div>
@@ -1315,13 +1315,13 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-encryption"><?php echo $entry_encryption; ?></label>
               <div class="controls">
                 <input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" placeholder="<?php echo $entry_encryption; ?>" id="input-encryption" />
-                <a data-toggle="tooltip" title="<?php echo $help_encryption; ?>"><i class="icon-question-sign icon-large"></i></a>
+                <a data-toggle="tooltip" title="<?php echo $help_encryption; ?>"><i class="icon-info-sign"></i></a>
                 <?php if ($error_encryption) { ?>
                 <span class="error"><?php echo $error_encryption; ?></span>
                 <?php } ?>
@@ -1331,7 +1331,7 @@
               <label class="control-label" for="input-compression"><?php echo $entry_compression; ?></label>
               <div class="controls">
                 <input type="text" name="config_compression" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="input-mini" />
-                <a data-toggle="tooltip" title="<?php echo $help_compression; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_compression; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_error_display; ?></div>
@@ -1392,7 +1392,7 @@
               <label class="control-label" for="input-google-analytics"><?php echo $entry_google_analytics; ?></label>
               <div class="controls">
                 <textarea name="config_google_analytics" cols="40" rows="5" placeholder="<?php echo $entry_google_analytics; ?>" id="input-google-analytics"><?php echo $config_google_analytics; ?></textarea>
-                <a data-toggle="tooltip" title="<?php echo $help_google_analytics; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_google_analytics; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
           </div>
         </div>

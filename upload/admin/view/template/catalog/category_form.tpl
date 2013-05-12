@@ -11,7 +11,7 @@
   </div>
   <?php } ?>
   <div class="box">
-    <div class="page-header">
+    <div class="box-heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
@@ -74,7 +74,7 @@
               <label class="control-label" for="input-filter"><?php echo $entry_filter; ?></label>
               <div class="controls">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" />
-                <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-question-sign icon-large"></i></a> <br />
+                <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-info-sign"></i></a> <br />
                 <br />
                 <div id="category-filter" class="well well-small scrollbox">
                   <?php foreach ($category_filters as $category_filter) { ?>
@@ -114,7 +114,7 @@
               <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-                <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
@@ -144,13 +144,13 @@
                   <input type="checkbox" name="top" value="1" id="input-top" />
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" data-original-title="<?php echo $help_top; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" data-original-title="<?php echo $help_top; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-column"><?php echo $entry_column; ?></label>
               <div class="controls">
                 <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" id="input-column" class="input-mini" />
-                <a data-toggle="tooltip" title="<?php echo $help_column; ?>"><i class="icon-question-sign icon-large"></i></a></div>
+                <a data-toggle="tooltip" title="<?php echo $help_column; ?>"><i class="icon-info-sign"></i></a></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

@@ -213,7 +213,7 @@
             </label>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_display_time; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -240,7 +240,7 @@
             </label>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_display_weight; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>
@@ -258,7 +258,7 @@
             </select>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_weight_class; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">

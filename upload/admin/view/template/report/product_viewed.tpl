@@ -10,7 +10,7 @@
   <?php } ?>
   <div class="box">
     <div class="heading">
-      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <div class="buttons"><a href="<?php echo $reset; ?>" class="btn"><?php echo $button_reset; ?></a></div>

@@ -37,7 +37,7 @@
                     <div class="controls">
                       <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][merchant]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['merchant'] : ''; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant<?php echo $country['code']; ?>" />
                       
-                      <a data-toggle="tooltip" title="<?php echo $help_merchant; ?>"><i class="icon-question-sign icon-large"></i></a>
+                      <a data-toggle="tooltip" title="<?php echo $help_merchant; ?>"><i class="icon-info-sign"></i></a>
                       
                       </div>
                   </div>
@@ -47,7 +47,7 @@
                       <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][secret]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['secret'] : ''; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret<?php echo $country['code']; ?>" />
 
                       
-                      <a data-toggle="tooltip" title="<?php echo $help_secret; ?>"><i class="icon-question-sign icon-large"></i></a>
+                      <a data-toggle="tooltip" title="<?php echo $help_secret; ?>"><i class="icon-info-sign"></i></a>
                       </div>
                   </div>
                   <div class="control-group">
@@ -72,7 +72,7 @@
                     <div class="controls">
                       <input type="text" name="klarna_invoice[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_invoice[$country['code']]) ? $klarna_invoice[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total<?php echo $country['code']; ?>" />
                       
-                      <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-question-sign icon-large"></i></a>
+                      <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
                       
                       </div>
                   </div>

@@ -21,7 +21,7 @@
             <textarea name="google_talk_code" cols="40" rows="5" id="input-code"><?php echo $google_talk_code; ?></textarea>
 
             
-            <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-info-sign"></i></a>
             
             <?php if ($error_code) { ?>
             <span class="error"><?php echo $error_code; ?></span>

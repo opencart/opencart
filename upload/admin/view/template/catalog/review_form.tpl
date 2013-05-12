@@ -33,7 +33,7 @@
           <div class="controls">
             <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
             <?php if ($error_product) { ?>
             <span class="error"><?php echo $error_product; ?></span>
             <?php } ?>

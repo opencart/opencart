@@ -2,7 +2,7 @@
 <div id="content">
   <div class="box" style="width: 450px; min-height: 300px; margin-top: 40px; margin-left: auto; margin-right: auto;">
     <div class="box-heading">
-      <h1><?php echo $text_login; ?></h1>
+      <h1><i class="icon-lock icon-large"></i><?php echo $text_login; ?></h1>
     </div>
     <div class="box-content">
       <?php if ($success) { ?>

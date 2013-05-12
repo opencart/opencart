@@ -25,7 +25,7 @@
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
-              <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+              <td width="1" class="center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
               <td class="right"><?php if ($sort == 'r.return_id') { ?>
                 <a href="<?php echo $sort_return_id; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_return_id; ?></a>
                 <?php } else { ?>
@@ -94,7 +94,7 @@
             <?php if ($returns) { ?>
             <?php foreach ($returns as $return) { ?>
             <tr>
-              <td style="text-align: center;"><?php if ($return['selected']) { ?>
+              <td class="center"><?php if ($return['selected']) { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $return['return_id']; ?>" checked="checked" />
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $return['return_id']; ?>" />

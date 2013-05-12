@@ -40,7 +40,7 @@
           <div class="controls">
             <textarea name="address_format" cols="40" rows="5" placeholder="<?php echo $entry_address_format; ?>" id="input-address-format"><?php echo $address_format; ?></textarea>
             
-            <a data-toggle="tooltip" title="<?php echo $help_address_format; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_address_format; ?>"><i class="icon-info-sign"></i></a>
             
             </div>
         </div>

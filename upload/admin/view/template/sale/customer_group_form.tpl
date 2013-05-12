@@ -57,7 +57,7 @@
               <?php } ?>
             </label>
             
-            <a data-toggle="tooltip" title="<?php echo $help_approval; ?>"><i class="icon-question-sign icon-large"></i></a>
+            <a data-toggle="tooltip" title="<?php echo $help_approval; ?>"><i class="icon-info-sign"></i></a>
             </div>
         </div>
         <div class="control-group">

@@ -137,13 +137,7 @@ $('#button-filter').on('click', function() {
 	if (filter_email) {
 		url += '&filter_email=' + encodeURIComponent(filter_email);
 	}
-	
-	var filter_affiliate_group_id = $('select[name=\'filter_affiliate_group_id\']').val();
-	
-	if (filter_affiliate_group_id != '*') {
-		url += '&filter_affiliate_group_id=' + encodeURIComponent(filter_affiliate_group_id);
-	}	
-	
+		
 	var filter_status = $('select[name=\'filter_status\']').val();
 	
 	if (filter_status != '*') {

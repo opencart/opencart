@@ -29,5 +29,35 @@ class ControllerErrorPermission extends Controller {
 				
 		$this->response->setOutput($this->render());
   	}
+	
+	public function check() {
+		if (isset($this->request->get['route'])) {
+			$route = '';
+			
+			$part = explode('/', $this->request->get['route']);
+			
+			if (isset($part[0])) {
+				$route .= $part[0];
+			}
+			
+			if (isset($part[1])) {
+				$route .= '/' . $part[1];
+			}
+			
+			$ignore = array(
+				'common/home',
+				'common/login',
+				'common/logout',
+				'common/forgotten',
+				'common/reset',
+				'error/not_found',
+				'error/permission'		
+			);			
+						
+			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
+				return $this->forward('error/permission');
+			}
+		}
+	}	
 }
 ?>

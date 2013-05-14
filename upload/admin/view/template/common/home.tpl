@@ -15,54 +15,39 @@
       <h1><i class="icon-eye-open icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <div class="row-fluid">
-        
-        
+      <div class="row-fluid" style="overflow: hidden;">
         <div class="span3">
           <div class="well well-small">
-          
-          
-          
             <div id="chart-sale" class="chart"></div>
             <div class="detail">
               <h5><?php echo $total_sale; ?></h5>
-              <?php echo $text_total_sale; ?></div>
-          
-          
+              <span style="color: #F00;">+10%</span> <?php echo $text_total_sale; ?></div>
           </div>
         </div>
-        
-        
         <div class="span3">
           <div class="well well-small">
             <div id="chart-order" class="chart"></div>
             <div class="detail">
-              <h5><?php echo $total_order; ?></h5>
+              <h5><?php echo $total_order; ?> <i class="icon-caret-up icon-large"></i></h5>
               <?php echo $text_total_order; ?></div>
           </div>
         </div>
-        
         <div class="span3">
           <div class="well well-small">
             <div id="chart-customer" class="chart"></div>
             <div class="detail">
-              <h5><?php echo $total_customer; ?></h5>
+              <h5><?php echo $total_customer; ?> <i class="icon-caret-down icon-large" style="font-size: 15px; color: #F00;"></i></h5>
               <?php echo $text_total_customer; ?></div>
           </div>
         </div>
-        
-        
         <div class="span3">
           <div class="well well-small">
             <div id="chart-online" class="chart"></div>
             <div class="detail">
-              <h5><?php echo $total_online; ?></h5>
+              <h5><?php echo $total_online; ?> <i class="icon-caret-down icon-large"></i></h5>
               <?php echo $text_total_online; ?></div>
           </div>
         </div>
-      
-      
-      
       </div>
       <div class="row-fluid">
         <div class="span12">
@@ -87,8 +72,9 @@
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
 <script type="text/javascript"><!--
+// Total Sales
 var option = {	
-	shadowSize: 0,
+	shadowSize: 0,         
 	bars: {
 		show: true,
 		barWidth: 0.9,
@@ -97,7 +83,10 @@ var option = {
 		fill: true,
 		fillColor: '#FF0000'
 	},
-	grid: false,
+	grid: {
+		show: false,
+		hoverable: true
+	},
 	xaxis: {
 		ticks: false
 	},
@@ -106,21 +95,28 @@ var option = {
 	}
 }
 
-var data = [];
+$.plot($('#chart-sale'), [<?php echo $sales; ?>], option);
 
-for (var i = 0; i < 5; i++) {
-	data.push([i, Math.floor((Math.random() * 100) + 1)]);
-}
+$('#chart-sale').bind('plothover', function(event, pos, item) {
+	$('.tooltip').remove();
+  
+	if (item) {
+		$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
+		
+		$('#tooltip').css({
+			position: 'absolute',
+			left: item.pageX - ($('#tooltip').outerWidth() / 2),
+			top: item.pageY - $('#tooltip').outerHeight(),
+			pointer: 'cusror'
+		}).fadeIn('slow');	
+		
+		$('#chart-sale').css('cursor', 'pointer');		
+	} else {
+		$('#chart-sale').css('cursor', 'auto');
+	}
+});
 
-
-<?php $sale_data = array(); ?>
-<?php foreach ($sales as $key => $value) { ?>
-<?php $sale_data[] = '[' . $key . ', ' . $value . ']'; ?>
-<?php } ?>
-
-
-$.plot($('#chart-sale'), [[<?php echo implode(', ', $sale_data); ?>]], option);
-
+// Number of orders
 var option = {	
 	shadowSize: 0,
 	bars: {
@@ -131,7 +127,10 @@ var option = {
 		fill: true,
 		fillColor: '#0000FF'
 	},
-	grid: false,
+	grid: {
+		show: false,
+		hoverable: true
+	},
 	xaxis: {
 		ticks: false
 	},
@@ -140,14 +139,33 @@ var option = {
 	}
 }
 
-var data = [];
-
-for (var i = 0; i < 5; i++) {
-	data.push([i, Math.floor((Math.random() * 100) + 1)]);
-}
+<?php $order_data = array(); ?>
+<?php foreach ($orders as $key => $value) { ?>
+<?php $order_data[] = '[' . $key . ', ' . $value . ']'; ?>
+<?php } ?>
 		
-$.plot($('#chart-order'), [data], option);
+$.plot($('#chart-order'), [[<?php echo implode(', ', $order_data); ?>]], option);
 
+$('#chart-order').bind('plothover', function(event, pos, item) {
+	$('.tooltip').remove();
+  
+	if (item) {
+		$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
+		
+		$('#tooltip').css({
+			position: 'absolute',
+			left: item.pageX - ($('#tooltip').outerWidth() / 2),
+			top: item.pageY - $('#tooltip').outerHeight(),
+			pointer: 'cusror'
+		}).fadeIn('slow');	
+		
+		$('#chart-order').css('cursor', 'pointer');		
+	} else {
+		$('#chart-order').css('cursor', 'auto');
+	}
+});
+
+// Number of customers
 var option = {	
 	shadowSize: 0,
 	bars: {
@@ -158,7 +176,10 @@ var option = {
 		fill: true,
 		fillColor: '#00FF00'
 	},
-	grid: false,
+	grid: {
+		show: false,
+		hoverable: true
+	},
 	xaxis: {
 		ticks: false
 	},
@@ -167,14 +188,33 @@ var option = {
 	}
 }
 
-var data = [];
-
-for (var i = 0; i < 5; i++) {
-	data.push([i, Math.floor((Math.random() * 100) + 1)]);
-}
+<?php $customer_data = array(); ?>
+<?php foreach ($customers as $key => $value) { ?>
+<?php $customer_data[] = '[' . $key . ', ' . $value . ']'; ?>
+<?php } ?>
 		
-$.plot($('#chart-customer'), [data], option);
+$.plot($('#chart-customer'), [[<?php echo implode(', ', $customer_data); ?>]], option);
 
+$('#chart-customer').bind('plothover', function(event, pos, item) {
+	$('.tooltip').remove();
+  
+	if (item) {
+		$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
+		
+		$('#tooltip').css({
+			position: 'absolute',
+			left: item.pageX - ($('#tooltip').outerWidth() / 2),
+			top: item.pageY - $('#tooltip').outerHeight(),
+			pointer: 'cusror'
+		}).fadeIn('slow');	
+		
+		$('#chart-customer').css('cursor', 'pointer');		
+	} else {
+		$('#chart-customer').css('cursor', 'auto');
+	}
+});
+
+// Number of people online
 var option = {	
 	shadowSize: 0,
 	bars: {
@@ -185,7 +225,10 @@ var option = {
 		fill: true,
 		fillColor: '#FEB900'
 	},
-	grid: false,
+	grid: {
+		show: false,
+		hoverable: true
+	},
 	xaxis: {
 		ticks: false
 	},
@@ -201,6 +244,25 @@ for (var i = 0; i < 5; i++) {
 }
 		
 $.plot($('#chart-online'), [data], option);
+
+$('#chart-online').bind('plothover', function(event, pos, item) {
+	$('.tooltip').remove();
+  
+	if (item) {
+		$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
+		
+		$('#tooltip').css({
+			position: 'absolute',
+			left: item.pageX - ($('#tooltip').outerWidth() / 2),
+			top: item.pageY - $('#tooltip').outerHeight(),
+			pointer: 'cusror'
+		}).fadeIn('slow');	
+		
+		$('#chart-online').css('cursor', 'pointer');
+	} else {
+		$('#chart-online').css('cursor', 'auto');
+	}
+});
 
 $('.btn-group button').on('click', function() {
 	$.ajax({
@@ -223,25 +285,23 @@ $('.btn-group button').on('click', function() {
 				},
 				grid: {
 					backgroundColor: '#FFFFFF',
-					hoverable: true,
-					clickable: false
+					hoverable: true
 				},
 				points: {
 					show: true				
 				},
-				colors: ['#8CC7E0', '#2D83A6'],
 				xaxis: {
             		ticks: json.xaxis
 				}
 			}
 			
-			var plot = $.plot($('#report'), [json.order, json.customer], option);	
+			$.plot($('#report'), [json.order, json.customer], option);	
 					
 			$('#report').bind('plothover', function(event, pos, item) {
 				$('.tooltip').remove();
 			  
 				if (item) {
-					$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').appendTo('body');
+					$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
 					
 					$('#tooltip').css({
 						position: 'absolute',
@@ -250,9 +310,9 @@ $('.btn-group button').on('click', function() {
 						pointer: 'cusror'
 					}).fadeIn('slow');	
 					
-					$(plot.getPlaceholder()).css('cursor', 'pointer');		
+					$('#report').css('cursor', 'pointer');		
 			  	} else {
-					$(plot.getPlaceholder()).css('cursor', 'auto');
+					$('#report').css('cursor', 'auto');
 				}
 			});
 		}

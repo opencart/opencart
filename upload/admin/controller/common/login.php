@@ -109,5 +109,58 @@ class ControllerCommonLogin extends Controller {
 			return false;
 		}
 	}
+	
+	public function check() {
+		$route = '';
+		
+		if (isset($this->request->get['route'])) {
+			$part = explode('/', $this->request->get['route']);
+			
+			if (isset($part[0])) {
+				$route .= $part[0];
+			}
+			
+			if (isset($part[1])) {
+				$route .= '/' . $part[1];
+			}
+		}
+		
+		$ignore = array(
+			'common/login',
+			'common/forgotten',
+			'common/reset'
+		);	
+		
+		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
+			return $this->forward('common/login');
+		}
+		
+		if (isset($this->request->get['route'])) {
+			$ignore = array(
+				'common/login',
+				'common/logout',
+				'common/forgotten',
+				'common/reset',
+				'error/not_found',
+				'error/permission'
+			);
+						
+			$config_ignore = array();
+			
+			if ($this->config->get('config_token_ignore')) {
+				$config_ignore = unserialize($this->config->get('config_token_ignore'));
+			}
+				
+			$ignore = array_merge($ignore, $config_ignore);
+						
+			if (!in_array($route, $ignore) && (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token']))) {
+				return $this->forward('common/login');
+			}
+		} else {
+			if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
+				return $this->forward('common/login');
+			}
+		}
+	}	
 }  
 ?>

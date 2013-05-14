@@ -24,6 +24,8 @@
               <td width="1" class="center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
               <td class="left"><?php echo $column_name; ?></td>
               <td class="left"><?php echo $column_author; ?></td>
+              <td class="left"><?php echo $column_status; ?></td>
+              <td class="right"><?php echo $column_sort_order; ?></td>
               <td class="left"><?php echo $column_date_added; ?></td>
               <td class="left"><?php echo $column_date_modified; ?></td>
               <td class="right"><?php echo $column_action; ?></td>
@@ -40,6 +42,8 @@
                 <?php } ?></td>
               <td class="left"><?php echo $modification['name']; ?></td>
               <td class="left"><?php echo $modification['author']; ?></td>
+              <td class="left"><?php echo $modification['status']; ?></td>
+              <td class="right"><?php echo $modification['sort_order']; ?></td>
               <td class="left"><?php echo $modification['date_added']; ?></td>
               <td class="left"><?php echo $modification['date_modified']; ?></td>
               <td class="right"><?php foreach ($modification['action'] as $action) { ?>

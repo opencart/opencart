@@ -259,6 +259,8 @@ class ControllerExtensionModification extends Controller {
 				'modification_id' => $result['modification_id'],
 				'name'            => $result['name'],
 				'author'          => $result['author'],
+				'status'          => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
+				'sort_order'      => $result['sort_order'],
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified'   => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'selected'        => isset($this->request->post['selected']) && in_array($result['modification_id'], $this->request->post['selected']),
@@ -273,6 +275,8 @@ class ControllerExtensionModification extends Controller {
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_author'] = $this->language->get('column_author');
+		$this->data['column_status'] = $this->language->get('column_status');
+		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
 		$this->data['column_action'] = $this->language->get('column_action');
@@ -310,6 +314,8 @@ class ControllerExtensionModification extends Controller {
 		
 		$this->data['sort_name'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
 		$this->data['sort_author'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
+		$this->data['sort_status'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
+		$this->data['sort_sort_order'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=sort_order' . $url, 'SSL');
 		$this->data['sort_date_added'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
 		$this->data['sort_date_modified'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_modified' . $url, 'SSL');
 		
@@ -353,6 +359,7 @@ class ControllerExtensionModification extends Controller {
 
     	$this->data['entry_code'] = $this->language->get('entry_code');
 		$this->data['entry_status'] = $this->language->get('entry_status');
+		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -424,7 +431,15 @@ class ControllerExtensionModification extends Controller {
 		} else {
 			$this->data['status'] = '';
 		}	
-				
+		
+		if (isset($this->request->post['sort_order'])) {
+			$this->data['sort_order'] = $this->request->post['sort_order'];
+		} elseif (!empty($modification_info)) {
+			$this->data['sort_order'] = $modification_info['sort_order'];
+		} else {
+			$this->data['sort_order'] = '';
+		}	
+						
 		$this->template = 'extension/modification_form.tpl';
 		$this->children = array(
 			'common/header',

@@ -10,7 +10,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content form-horizontal">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
@@ -30,7 +30,12 @@
             <div class="progress">
               <div class="bar" style="width: 60%;"></div>
             </div>
-            <div id="output"></div>
+            <div id="output">The Beow file will be over written:
+            
+            <table>
+            <tr><td></td></tr>
+            </table>
+            </div>
           </div>
         </div>
       </form>
@@ -94,7 +99,7 @@ function unzip(file) {
         url: 'index.php?route=extension/installer/upload&token=<?php echo $token; ?>',
         type: 'post',		
 		dataType: 'html',
-		data: new FormData($(this).parent()[0]),
+		data: ,
 		beforeSend: function() {
 			$('#button-upload i').replaceWith('<i class="icon-spinner"></i>');
 			$('#button-upload').prop('disabled', true);

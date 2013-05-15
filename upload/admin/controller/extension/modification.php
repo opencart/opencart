@@ -271,7 +271,6 @@ class ControllerExtensionModification extends Controller {
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_author'] = $this->language->get('column_author');
@@ -356,7 +355,9 @@ class ControllerExtensionModification extends Controller {
 
 		$this->data['text_enabled'] = $this->language->get('text_enabled');
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
-
+		
+		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_author'] = $this->language->get('entry_author');
     	$this->data['entry_code'] = $this->language->get('entry_code');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -416,6 +417,22 @@ class ControllerExtensionModification extends Controller {
 		
 		$this->data['token'] = $this->session->data['token'];
 		
+		if (isset($this->request->post['name'])) {
+			$this->data['name'] = $this->request->post['name'];
+		} elseif (!empty($modification_info)) {
+			$this->data['name'] = $modification_info['name'];
+		} else {
+			$this->data['name'] = '';
+		}
+		
+		if (isset($this->request->post['author'])) {
+			$this->data['author'] = $this->request->post['author'];
+		} elseif (!empty($modification_info)) {
+			$this->data['author'] = $modification_info['author'];
+		} else {
+			$this->data['author'] = '';
+		}
+						
 		if (isset($this->request->post['code'])) {
 			$this->data['code'] = $this->request->post['code'];
 		} elseif (!empty($modification_info)) {

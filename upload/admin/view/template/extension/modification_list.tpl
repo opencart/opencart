@@ -22,13 +22,37 @@
           <thead>
             <tr>
               <td width="1" class="center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-              <td class="left"><?php echo $column_name; ?></td>
-              <td class="left"><?php echo $column_author; ?></td>
-              <td class="left"><?php echo $column_status; ?></td>
-              <td class="right"><?php echo $column_sort_order; ?></td>
-              <td class="left"><?php echo $column_date_added; ?></td>
-              <td class="left"><?php echo $column_date_modified; ?></td>
-              <td class="right"><?php echo $column_action; ?></td>
+              <td class="left"><?php if ($sort == 'name') { ?>
+                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                <?php } ?></td>
+              <td class="left"><?php if ($sort == 'author') { ?>
+                <a href="<?php echo $sort_author; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_author; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_author; ?>"><?php echo $column_author; ?></a>
+                <?php } ?></td>
+              <td class="left"><?php if ($sort == 'status') { ?>
+                <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                <?php } ?></td>
+              <td class="right"><?php if ($sort == 'sort_order') { ?>
+                <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
+                <?php } ?></td>
+              <td class="left"><?php if ($sort == 'date_added') { ?>
+                <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
+                <?php } ?></td>
+              <td class="left"><?php if ($sort == 'date_modified') { ?>
+                <a href="<?php echo $sort_date_modified; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_modified; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_date_modified; ?>"><?php echo $column_date_modified; ?></a></td>
+              <td class="right">
+                <?php } ?><?php echo $column_action; ?></td>
             </tr>
           </thead>
           <tbody>
@@ -53,7 +77,7 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
+              <td class="center" colspan="8"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>

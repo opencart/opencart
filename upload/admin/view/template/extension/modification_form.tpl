@@ -17,6 +17,18 @@
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
+          <div class="controls">
+            <input type="text" name="name" value="<?php echo $name; ?>" id="input-name" />
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-author"><?php echo $entry_author; ?></label>
+          <div class="controls">
+            <input type="text" name="author" value="<?php echo $author; ?>" id="input-author" />
+          </div>
+        </div>
+        <div class="control-group">
           <label class="control-label" for="input-code"><?php echo $entry_code; ?></label>
           <div class="controls">
             <textarea name="code" cols="40" rows="15" id="input-code" class="input-xxlarge"><?php echo $code; ?></textarea>

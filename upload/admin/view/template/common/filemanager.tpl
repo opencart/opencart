@@ -668,6 +668,9 @@ $(document).ready(function() {
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
+			cache: false,
+			contentType: false,
+			processData: false,				
 			beforeSend: function() {
 				$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-top: 5px; padding-left: 5px;" />');
 				$('#button-upload').prop('disabled', true);
@@ -691,10 +694,7 @@ $(document).ready(function() {
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			},
-			cache: false,
-			contentType: false,
-			processData: false
+			}
 		});
 	});
 	

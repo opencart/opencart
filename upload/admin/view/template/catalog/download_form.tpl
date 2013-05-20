@@ -88,6 +88,9 @@ $('#file').on('change', function() {
         type: 'post',		
 		dataType: 'json',
 		data: new FormData($(this).parent()[0]),
+		cache: false,
+		contentType: false,
+		processData: false,		
 		beforeSend: function() {
 			$('#button-upload i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-upload').prop('disabled', true);
@@ -110,10 +113,7 @@ $('#file').on('change', function() {
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		},
-        cache: false,
-        contentType: false,
-        processData: false
+		}
     });
 });
 //--></script> 

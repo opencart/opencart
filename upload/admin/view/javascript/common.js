@@ -54,6 +54,9 @@ $('.ajax').on('submit', function(event) {
 		type: $(this).attr('method'),
 		data: $(this).serialize(),
 		dataType: 'json',
+		cache: false,
+		contentType: false,
+		processData: false,		
 		beforeSend: function() {
 			$('#button-option').prop('disabled', true);
 		},	
@@ -82,10 +85,7 @@ $('.ajax').on('submit', function(event) {
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		},
-		cache: false,
-		contentType: false,
-		processData: false
+		}
 	});
 });
 

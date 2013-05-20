@@ -7,7 +7,7 @@
   </ul>
   <div class="box">
     <div class="box-heading">
-      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-warning-sign icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <div style="border: 1px solid #DDDDDD; background: #F7F7F7; text-align: center; padding: 15px;"><?php echo $text_not_found; ?></div>

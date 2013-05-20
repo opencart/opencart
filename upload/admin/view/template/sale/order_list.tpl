@@ -17,7 +17,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><?php echo $heading_title; ?></h1>
+      <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <form action="" method="post" enctype="multipart/form-data" id="form">

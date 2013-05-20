@@ -9,7 +9,7 @@
   <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
+    <div class="box-heading">
       <h1><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">

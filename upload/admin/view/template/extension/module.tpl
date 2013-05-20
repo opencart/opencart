@@ -13,7 +13,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><?php echo $heading_title; ?></h1>
+      <h1><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <table class="table table-striped table-bordered table-hover">

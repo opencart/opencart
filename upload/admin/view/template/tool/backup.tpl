@@ -17,7 +17,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class=""></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-exchange icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">

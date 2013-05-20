@@ -329,6 +329,9 @@ function upload(custom_field_id) {
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
+			cache: false,
+			contentType: false,
+			processData: false,				
 			beforeSend: function() {
 				$('#button-custom-field' + custom_field_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 				$('#button-custom-field' + custom_field_id).prop('disabled', true);
@@ -351,10 +354,7 @@ function upload(custom_field_id) {
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			},
-			cache: false,
-			contentType: false,
-			processData: false
+			}
 		});
 	});		
 	

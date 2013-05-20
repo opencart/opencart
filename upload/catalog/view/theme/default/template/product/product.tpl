@@ -390,6 +390,9 @@ function upload(product_option_id) {
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
+			cache: false,
+			contentType: false,
+			processData: false,				
 			beforeSend: function() {
 				$('#button-option' + product_option_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 				$('#button-option' + product_option_id).prop('disabled', true);
@@ -412,10 +415,7 @@ function upload(product_option_id) {
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			},
-			cache: false,
-			contentType: false,
-			processData: false
+			}
 		});
 	});		
 	

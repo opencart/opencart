@@ -1041,6 +1041,9 @@ function upload(product_option_id) {
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
+			cache: false,
+			contentType: false,
+			processData: false,				
 			beforeSend: function() {
 				$('#button-option' + product_option_id).after(' <i class="icon-spinner icon-spin"></i>');
 				$('#button-option' + product_option_id).prop('disabled', true);
@@ -1064,10 +1067,7 @@ function upload(product_option_id) {
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			},
-			cache: false,
-			contentType: false,
-			processData: false
+			}
 		});
 	});		
 	

@@ -209,7 +209,7 @@ class ControllerExtensionInstaller extends Controller {
 		$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->post['file'], ENT_QUOTES, 'UTF-8')));
 
 		if (is_file(DIR_DOWNLOAD . 'temp/' . $filename)) {
-			$file = DIR_DOWNLOAD . 'temp/' . $this->request->post['file'];
+			$file = DIR_DOWNLOAD . 'temp/' . $filename;
 		} else {
 			$json['error'] = $this->language->get('error_zip_mime');
 		}
@@ -268,52 +268,59 @@ class ControllerExtensionInstaller extends Controller {
 			// Connect to the site via FTP
 			$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
 	
-			if (!$connection) {
+			if ($connection) {
+				$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
+				
+				if ($login) {
+					if ($this->config->get('config_ftp_root')) {
+						$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
+					} else {
+						$root = ftp_chdir($connection, '/');
+					}
+					
+					if ($root) {
+						foreach ($files as $file) {
+							
+
+							// Upload everything in the upload directory
+							//if (substr(substr($file, strlen($directory)), 0, 7) == 'upload/') {
+								$destination = substr($file, strlen($directory));
+								
+								echo $destination . '<br>';
+								
+								if (is_dir($file)) {
+									$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
+									
+									if (!in_array($destination, $list)) {
+										if (ftp_mkdir($connection, $destination)) {
+											$json['error'] = 'Made directory ' . $destination;
+											
+											break;
+										}
+									}
+								}	
+								
+								if (is_file($file)) {
+									if (!ftp_put($connection, $destination, $file, FTP_ASCII)) {		
+										$json['error'] = '';
+										
+										break;
+									}
+								}
+							//}
+
+						}
+					} else {
+						$json['error'] = sprintf($this->language->get('error_ftp_directory'), $root);
+					}
+				} else {
+					$json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
+				}
+				
+				ftp_close($connection);	
+			} else {
 				$json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
 			}
-			
-			$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));
-			
-			if (!$login) {
-				$json['error'] = sprintf($this->language->get('error_ftp_login'), $this->config->get('config_ftp_username'));
-			}
-			
-			if ($this->config->get('config_ftp_root')) {
-				$root = ftp_chdir($connection, $this->config->get('config_ftp_root'));
-				
-				if (!$root) {
-					$json['error'] = sprintf($this->language->get('error_ftp_directory'), $this->config->get('config_ftp_root'));
-				}
-			}
-		
-			foreach ($files as $file) {
-				// Upload everything in the upload directory
-				if (substr(substr($file, strlen($directory)), 0, 7) == 'upload/') {
-					$destination = substr(substr($file, strlen($directory)), 7);
-					
-					if (is_dir($file)) {
-						$list = ftp_nlist($connection, substr($destination, 0, strrpos($destination, '/')));
-						
-						if (!in_array($destination, $list)) {
-							if (ftp_mkdir($connection, $destination)) {
-								$json['error'] = 'Made directory ' . $destination;
-								
-								break;
-							}
-						}
-					}	
-					
-					if (is_file($file)) {
-						if (!ftp_put($connection, $destination, $file, FTP_ASCII)) {		
-							$json['error'] = '';
-							
-							break;
-						}
-					}
-				}
-			}
-			
-			ftp_close($connection);
 		}
 		
 		$this->response->setOutput(json_encode($json));		

@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -91,8 +93,6 @@
               <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" class="span2" id="input-geocode" />
               <button type="button" onclick="getGeoCode()" class="btn"><i class="icon-search"></i> <?php echo $button_geocode; ?></button>
             </div>
-
-            
             <a data-toggle="tooltip" title="<?php echo $help_geocode; ?>"><i class="icon-info-sign"></i></a>
             <?php if ($error_geocode) { ?>
             <span class="error"><?php echo $error_geocode; ?></span>
@@ -102,29 +102,23 @@
         <div class="control-group">
           <label class="control-label" for="input-image"><?php echo $entry_image; ?></label>
           <div class="controls">
-            <div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-polaroid" />
-              <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-              <br />
-              <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div>
+            <div class="image"><img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
+              <input type="hidden" name="image" value="<?php echo $image; ?>" />
+              <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+            </div>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-open"><?php echo $entry_open; ?></label>
           <div class="controls">
             <textarea name="open" cols="40" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open"><?php echo $open; ?></textarea>
-
-            
-            <a data-toggle="tooltip" title="<?php echo $help_open; ?>"><i class="icon-info-sign"></i></a>
-            </div>
+            <a data-toggle="tooltip" title="<?php echo $help_open; ?>"><i class="icon-info-sign"></i></a> </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
           <div class="controls">
             <textarea name="comment" cols="40" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment"><?php echo $comment; ?></textarea>
-
-            
-            <a data-toggle="tooltip" title="<?php echo $help_comment; ?>"><i class="icon-info-sign"></i></a>
-            </div>
+            <a data-toggle="tooltip" title="<?php echo $help_comment; ?>"><i class="icon-info-sign"></i></a> </div>
         </div>
       </form>
     </div>
@@ -155,8 +149,6 @@ function getGeoCode() {
 		} else {
 			alert('<?php echo addslashes($text_geocode); ?> ' + status);
 		}
-		
-		
 	});
 }    
 //--></script> 

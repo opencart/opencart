@@ -5,8 +5,6 @@ $_['heading_title']      = 'Store Locations';
 // Text
 $_['text_success']       = 'Success: You have modified store locations!'; 
 $_['text_time']          = 'Opening Times';
-$_['text_browse']        = 'Browse';
-$_['text_clear']         = 'Clear';
 $_['text_image_manager'] = 'Image Manager';
 $_['text_geocode']       = 'Geocode was not successful for the following reason:';
 

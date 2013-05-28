@@ -130,14 +130,12 @@ function next() {
 				} else {
 					
 				}
-							
-				if (json['success']) {
+				
+				if (!step.length) {
 					$('#progress').addClass('success');
 					$('#progress .progress').addClass('progress-success');
 					$('#progress .help-block').html(json['success']);
-				}
-				
-				
+				}				
 				
 				$('body').append(json);
 			},			

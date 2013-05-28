@@ -118,7 +118,7 @@
                   <?php } ?>
                 </select>
                 <br />
-                <img src="" alt="" title="" id="template" class="img-polaroid" /> </div>
+                <img src="" alt="" id="template" class="img-polaroid" /></div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-layout"><?php echo $entry_layout; ?></label>
@@ -814,19 +814,19 @@
             <div class="control-group">
               <label class="control-label" for="input-logo"><?php echo $entry_logo; ?></label>
               <div class="controls">
-                <div class="image"><img src="<?php echo $logo; ?>" alt="" id="thumb-logo" class="img-polaroid" />
-                  <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="logo" />
-                  <br />
-                  <a onclick="image_upload('logo', 'thumb-logo');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-logo').attr('src', '<?php echo $no_image; ?>'); $('#logo').attr('value', '');"><?php echo $text_clear; ?></a></div>
+                <div class="image"><img src="<?php echo $logo; ?>" alt="" class="img-polaroid" />
+                  <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" />
+                  <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+                </div>
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-icon"><?php echo $entry_icon; ?></label>
               <div class="controls">
-                <div class="image"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" class="img-polaroid" />
-                  <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="icon" />
-                  <br />
-                  <a onclick="image_upload('icon', 'thumb-icon');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb-icon').attr('src', '<?php echo $no_image; ?>'); $('#icon').attr('value', '');"><?php echo $text_clear; ?></a> <a data-toggle="tooltip" title="<?php echo $help_icon; ?>"><i class="icon-info-sign"></i></a></div>
+                <div class="image"><img src="<?php echo $icon; ?>" alt="" class="img-polaroid" />
+                  <input type="hidden" name="config_logo" value="<?php echo $config_icon; ?>" />
+                  <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+                </div>
               </div>
             </div>
             <div class="control-group">

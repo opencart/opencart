@@ -35,7 +35,7 @@ class ControllerExtensionInstaller extends Controller {
 		$directories = glob(DIR_DOWNLOAD . 'temp*', GLOB_ONLYDIR);
 		
 		if ($directories) {
-			$this->data['error_warning'] = sprintf($this->language->get('error_warning'), $this->url->link('extension/installer/clear', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->data['error_warning'] = $this->language->get('error_warning');
 		} else {
 			$this->data['error_warning'] = '';
 		}
@@ -70,7 +70,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 			
-		if (!isset($json['error'])) {
+		if (!$json) {
 			// If no temp directory exists create it
 			if (!is_dir(DIR_DOWNLOAD . 'temp')) {
 				mkdir(DIR_DOWNLOAD . 'temp', 0777);
@@ -83,14 +83,14 @@ class ControllerExtensionInstaller extends Controller {
 		
 			if (!is_file(DIR_DOWNLOAD . 'temp/' . $filename)) {
 				$json['error'] = $this->language->get('error_upload');
-			}		
+			}
 		}
 			
-		if (!isset($json['error'])) {
+		if (!$json) {
 			// Set the steps required for installation
 			$json['step'] = array();
 				
-			// If xml file copy it to the temp directory
+			// If xml file copy it to the temporary directory
 			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
 				$json['step'][] = array(
 					'text' => $this->language->get('text_xml'),
@@ -98,10 +98,10 @@ class ControllerExtensionInstaller extends Controller {
 					'file' => $filename
 				);
 				
-				// Clear
+				// Clear temporary files
 				$json['step'][] = array(
 					'text' => $this->language->get('text_success'),
-					'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/php', 'token=' . $this->session->data['token'], 'SSL')),
+					'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/clear', 'token=' . $this->session->data['token'], 'SSL')),
 					'file' => $filename
 				);					
 			}
@@ -133,6 +133,10 @@ class ControllerExtensionInstaller extends Controller {
 							
 							// SQL
 							if (substr($zip_name, 0, 11) == 'install.sql') {
+								
+								
+								
+								
 								$json['step'][] = array(
 									'text' => $this->language->get('text_sql'),
 									'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/sql', 'token=' . $this->session->data['token'], 'SSL')),
@@ -187,10 +191,10 @@ class ControllerExtensionInstaller extends Controller {
 							}
 						}
 			
-						// Clear
+						// Clear temporary files
 						$json['step'][] = array(
 							'text' => $this->language->get('text_success'),
-							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/php', 'token=' . $this->session->data['token'], 'SSL')),
+							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/clear', 'token=' . $this->session->data['token'], 'SSL')),
 							'file' => $filename
 						);	
 										
@@ -215,20 +219,18 @@ class ControllerExtensionInstaller extends Controller {
     	}
 
 		// Sanitize the filename	
-		$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->post['file'], ENT_QUOTES, 'UTF-8')));
+		$file = DIR_DOWNLOAD . 'temp/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['file'] . '.zip');
 
-		if (is_file(DIR_DOWNLOAD . 'temp/' . $filename)) {
-			$file = DIR_DOWNLOAD . 'temp/' . $filename;
-		} else {
+		if (!file_exists($file)) {
 			$json['error'] = $this->language->get('error_file');
 		}
 
-		if (!isset($json['error'])) {
+		if (!$json) {
 			// Unzip the files
 			$zip = new ZipArchive();
 			
 			if ($zip->open($file)) {
-				$zip->extractTo(DIR_DOWNLOAD . 'temp/' . basename($filename, '.zip'));
+				$zip->extractTo(DIR_DOWNLOAD . 'temp/' . basename($file, '.zip'));
 				$zip->close();				
 			} else {
 				$json['error'] = $this->language->get('error_unzip');		
@@ -238,7 +240,7 @@ class ControllerExtensionInstaller extends Controller {
 			unlink($file);		
 		}
 		
-		//$this->response->setOutput(json_encode($json));
+		$this->response->setOutput(json_encode($json));
 	}
 		
 	public function ftp() {
@@ -258,7 +260,7 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_directory');
 		}
 		
-		if (!isset($json['error'])) {
+		if (!$json) {
 			// Get a list of files ready to upload
 			$files = array();
 			
@@ -334,8 +336,14 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/installer')) {
       		$json['error'] = $this->language->get('error_permission');
     	}
-		/*
-		if (!isset($json['error'])) {		
+
+		$file = DIR_DOWNLOAD . 'temp/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['file']) . 'install.sql';
+
+		if (!file_exists($file)) {
+			$json['error'] = $this->language->get('error_file');
+		}
+		
+		if (!$json) {		
 			// SQL
 			if (strrchr(basename($file), '.') == '.sql') {
 				$sql = file_get_contents($file);
@@ -365,7 +373,7 @@ class ControllerExtensionInstaller extends Controller {
 				}	
 			}
 		}
-		*/		
+	
 		$this->response->setOutput(json_encode($json));							
 	}
 	
@@ -378,17 +386,12 @@ class ControllerExtensionInstaller extends Controller {
       		$json['error'] = $this->language->get('error_permission');
     	}
 		
-		/*
-		
-		if (isset($this->request->post['file']) && is_file($this->request->post['file'])) {
-			
-		}
-		
-		// If xml file just put it straight into the DB
-		if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
+		$file = DIR_DOWNLOAD . 'temp/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['file']) . 'install.xml';
 
-		} 
-			
+		if (!file_exists($file)) {
+			$json['error'] = $this->language->get('error_file');
+		}
+					
 		if (!$json) {	
 			$this->load->model('setting/modification');
 			
@@ -420,8 +423,6 @@ class ControllerExtensionInstaller extends Controller {
 				unset($this->request->files['file']['tmp_name']);
 			} 
 		}
-		*/
-		
 		
 		$this->response->setOutput(json_encode($json));
 	}
@@ -435,21 +436,30 @@ class ControllerExtensionInstaller extends Controller {
       		$json['error'] = $this->language->get('error_permission');
     	}
 			
+		$file = DIR_DOWNLOAD . 'temp/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['file']) . 'install.php';
+
+		if (!file_exists($file)) {
+			$json['error'] = $this->language->get('error_file');
+		} else {
+			include($file);
+		}
+			
 		$this->response->setOutput(json_encode($json));
 	}
 		
   	public function clear() {
-		/*
 		$this->language->load('extension/installer');
 		
 		if (!$this->user->hasPermission('modify', 'extension/installer')) {
       		$json['error'] = $this->language->get('error_permission');
     	}
 		
-		if (!is_dir($json['error'])) {
-			
-		}
-		
+		$file = DIR_DOWNLOAD . 'temp/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['file']) . 'install.php';
+
+		if (!file_exists($file)) {
+			$json['error'] = $this->language->get('error_file');
+		}		
+		/*
 		if (!isset($directory)) {
 			// Get a list of files ready to upload
 			$files = array();
@@ -484,9 +494,9 @@ class ControllerExtensionInstaller extends Controller {
 				rmdir($directory);
 			}
 		}
+		*/
 		
 		$this->response->setOutput(json_encode($json));
-		*/
   	}	
 }
 ?>

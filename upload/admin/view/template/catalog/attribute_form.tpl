@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">

@@ -5,8 +5,6 @@ $_['heading_title']      = 'Voucher Themes';
 // Text
 $_['text_success']       = 'Success: You have modified voucher themes!';
 $_['text_image_manager'] = 'Image Manager';
-$_['text_browse']        = 'Browse';
-$_['text_clear']         = 'Clear';
 
 // Column
 $_['column_name']        = 'Voucher Theme Name';

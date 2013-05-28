@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-editalt"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
@@ -223,9 +223,10 @@
             <div class="control-group">
               <label class="control-label" for="input-image"><?php echo $entry_image; ?></label>
               <div class="controls">
-                <div class="image"><img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-polaroid" /><br />
-                  <input type="hidden" name="image" value="<?php echo $image; ?>" id="image" />
-                  <a onclick="image_upload('image', 'thumb');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb').attr('src', '<?php echo $no_image; ?>'); $('#image').attr('value', '');"><?php echo $text_clear; ?></a></div>
+                <div class="image"> <img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
+                  <input type="hidden" name="image" value="<?php echo $image; ?>" />
+                  <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+                </div>
               </div>
             </div>
             <div class="control-group">
@@ -501,7 +502,7 @@
                   <div class="control-group">
                     <label class="control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
                     <div class="controls">
-                      <input type="time" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" id="input-value<?php echo $option_row; ?>" class="input-mini" />
+                      <input type="time" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" id="input-value<?php echo $option_row; ?>" class="input-small" />
                     </div>
                   </div>
                   <?php } ?>
@@ -707,10 +708,10 @@
                 <?php $image_row = 0; ?>
                 <?php foreach ($product_images as $product_image) { ?>
                 <tr id="image-row<?php echo $image_row; ?>">
-                  <td class="left"><div class="image"><img src="<?php echo $product_image['thumb']; ?>" alt="" id="thumb<?php echo $image_row; ?>" class="img-polaroid" />
-                      <input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $product_image['image']; ?>" id="image<?php echo $image_row; ?>" />
-                      <br />
-                      <a onclick="image_upload('image<?php echo $image_row; ?>', 'thumb<?php echo $image_row; ?>');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$('#thumb<?php echo $image_row; ?>').attr('src', '<?php echo $no_image; ?>'); $('#image<?php echo $image_row; ?>').attr('value', '');"><?php echo $text_clear; ?></a></div></td>
+                  <td class="left"><div class="image"><img src="<?php echo $product_image['thumb']; ?>" alt="" class="img-polaroid" />
+                      <input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $product_image['image']; ?>" />
+                      <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+                    </div></td>
                   <td class="right"><input type="text" name="product_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $product_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>
                   <td class="left"><a onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
                 </tr>
@@ -1074,7 +1075,7 @@ $('input[name=\'option\']').autocomplete({
 		if (item['type'] == 'time') {
 			html += '	<div class="control-group">';
 			html += '	  <label class="control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-			html += '	  <div class="controls"><input type="time" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="input-mini" /></div>';
+			html += '	  <div class="controls"><input type="time" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="input-small" /></div>';
 			html += '	</div>';
 		}
 			
@@ -1233,7 +1234,7 @@ var image_row = <?php echo $image_row; ?>;
 
 function addImage() {
 	html  = '<tr id="image-row' + image_row + '">';
-	html += '  <td class="left"><div class="image"><img src="<?php echo $no_image; ?>" alt="" id="thumb' + image_row + '" class="img-polaroid" /><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="image' + image_row + '" /><br /><a onclick="image_upload(\'image' + image_row + '\', \'thumb' + image_row + '\');"><?php echo $text_browse; ?></a>&nbsp;&nbsp;|&nbsp;&nbsp;<a onclick="$(\'#thumb' + image_row + '\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(\'#image' + image_row + '\').attr(\'value\', \'\');"><?php echo $text_clear; ?></a></div></td>';
+	html += '  <td class="left"><div class="image"><img src="<?php echo $no_image; ?>" alt="" class="img-polaroid" /><input type="hidden" name="product_image[' + image_row + '][image]" value="" /><div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find(\'img\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(this).parent().parent().find(\'input\').attr(\'value\', \'\'); return false;"><span class="icon-trash"></span></a></div></div></td>';
 	html += '  <td class="right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>';
 	html += '  <td class="left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';

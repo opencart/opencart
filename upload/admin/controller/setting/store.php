@@ -187,8 +187,6 @@ class ControllerSettingStore extends Controller {
 		$this->data['text_checkout'] = $this->language->get('text_checkout');
 		$this->data['text_stock'] = $this->language->get('text_stock');				
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
- 		$this->data['text_browse'] = $this->language->get('text_browse');
-		$this->data['text_clear'] = $this->language->get('text_clear');			
 		$this->data['text_shipping'] = $this->language->get('text_shipping');	
 		$this->data['text_payment'] = $this->language->get('text_payment');	
 				
@@ -259,7 +257,9 @@ class ControllerSettingStore extends Controller {
 				
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
+		$this->data['button_edit'] = $this->language->get('button_edit');
+		$this->data['button_clear'] = $this->language->get('button_clear');
+		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		$this->data['tab_store'] = $this->language->get('tab_store');
 		$this->data['tab_local'] = $this->language->get('tab_local');

@@ -527,8 +527,6 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_minus'] = $this->language->get('text_minus');
 		$this->data['text_default'] = $this->language->get('text_default');
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
-		$this->data['text_browse'] = $this->language->get('text_browse');
-		$this->data['text_clear'] = $this->language->get('text_clear');
 		$this->data['text_option'] = $this->language->get('text_option');
 		$this->data['text_option_value'] = $this->language->get('text_option_value');
 		$this->data['text_select'] = $this->language->get('text_select');
@@ -614,7 +612,9 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['button_add_special'] = $this->language->get('button_add_special');
 		$this->data['button_add_image'] = $this->language->get('button_add_image');
 		$this->data['button_remove'] = $this->language->get('button_remove');
-		
+		$this->data['button_edit'] = $this->language->get('button_edit');
+		$this->data['button_clear'] = $this->language->get('button_clear');
+				
     	$this->data['tab_general'] = $this->language->get('tab_general');
     	$this->data['tab_data'] = $this->language->get('tab_data');
 		$this->data['tab_attribute'] = $this->language->get('tab_attribute');

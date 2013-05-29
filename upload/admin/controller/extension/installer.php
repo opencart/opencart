@@ -55,7 +55,7 @@ class ControllerExtensionInstaller extends Controller {
 		$json = array();
 		
 		if (!$this->user->hasPermission('modify', 'extension/installer')) {
-      		$json['error'] = $this->language->get('error_permission') . "\n";
+      		$json['error'] = $this->language->get('error_permission');
     	}
 		
 		if (!empty($this->request->files['file']['name'])) {
@@ -110,8 +110,10 @@ class ControllerExtensionInstaller extends Controller {
 			if (strrchr($filename, '.') == '.zip') {
 				$json['overwrite'] = array();
 				
-				if (is_file(DIR_DOWNLOAD . 'temp/' . $filename)) {					
-					$zip = zip_open(DIR_DOWNLOAD . 'temp/' . $filename);
+				$file = DIR_DOWNLOAD . 'temp/' . $filename;
+				
+				if (is_file($file)) {					
+					$zip = zip_open($file);
 					
 					if ($zip) {
 						// Zip
@@ -251,8 +253,6 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$this->user->hasPermission('modify', 'extension/installer')) {
       		$json['error'] = $this->language->get('error_permission');
     	}
-		
-		//$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->post['file'], ENT_QUOTES, 'UTF-8')));
 		
 		$directory = DIR_DOWNLOAD . 'temp/' . basename($this->request->post['file'], '.zip') . '/upload/';
 		

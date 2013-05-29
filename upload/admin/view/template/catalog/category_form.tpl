@@ -110,16 +110,15 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
+              <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?> </label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-                <a data-toggle="tooltip" title="<?php echo $help_keyword; ?>"><i class="icon-info-sign"></i></a></div>
+                <span class="help-block"><?php echo $help_keyword; ?></span> </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
               <div class="controls">
-                <div class="image">
-                  <img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
+                <div class="image"> <img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
                   <input type="hidden" name="image" value="<?php echo $image; ?>" />
                   <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
                 </div>
@@ -212,6 +211,7 @@
     </div>
   </div>
 </div>
+
 <div id="modal" style="width: 60%; height: 60%;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -221,6 +221,8 @@
     <iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>" style="width: 90%; height: 90%;" frameborder="no" scrolling="auto"></iframe>
   </div>
 </div>
+
+
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>

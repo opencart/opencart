@@ -3,14 +3,17 @@ html, body, label, .control-group input, textarea, select {
 	font-size: 12px;
 	line-height: 15px;
 }
+
 .alert {
 	font-size: 14px;
 	line-height: 20px;
 }
+
 .btn-group .btn, .btn {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
 }
+
 .brand {
 	margin: 0px;
 	padding-top: 0px;
@@ -125,12 +128,17 @@ html, body, label, .control-group input, textarea, select {
 	text-decoration: none;
 	margin-left: 5px;
 }
+/*
 .control-label:after {
 	content: ':';
 }
+*/
 .required .control-label:before {
 	content: '* ';
 	color: #B94A48;
+}
+.help-block {
+	color: #999;
 }
 .scrollbox {
 	width: 250px;

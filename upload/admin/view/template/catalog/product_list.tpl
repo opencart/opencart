@@ -21,7 +21,7 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
-        <div class="buttons"><a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <a onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();" class="btn"> <?php echo $button_copy; ?></a> <a onclick="$('#form').submit();" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></a></div>
+        <div class="buttons"><a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <a onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();" class="btn"><i class="icon-copy"></i> <?php echo $button_copy; ?></a> <a onclick="$('#form').submit();" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></a></div>
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>

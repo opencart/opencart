@@ -71,6 +71,8 @@ $('#file').on('change', function() {
 			$('#button-upload').prop('disabled', false);
 		},		
 		success: function(json) {
+			//$('body').append(json);
+			
 			$('#progress').removeClass('error');
 			$('#progress').removeClass('success');
 			$('#progress .progress').removeClass('progress-danger');		
@@ -119,15 +121,19 @@ function next() {
 		$.ajax({
 			url: data.url,
 			type: 'post',		
-			dataType: 'json',
-			data: 'file=' + data.file,
+			dataType: 'html',
+			data: 'path=' + data.path,
 			success: function(json) {
+				
+				
+				$('body').append(json);
+				
 				if (json['error']) {
 					$('#progress').addClass('error');
 					$('#progress .progress').addClass('progress-danger');
 					$('#progress .help-block').html(json['error']);
 				} else {
-					next();
+					
 				}
 				
 				if (!step.length) {
@@ -136,12 +142,14 @@ function next() {
 					$('#progress .help-block').html(json['success']);
 				}				
 				
-				$('body').append(json);
+				next();
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
-				$('#progress').addClass('error');
-				$('#progress .progress').addClass('progress-danger');
-				$('#progress .help-block').html(thrownError);			
+				//$('#progress').addClass('error');
+				//$('#progress .progress').addClass('progress-danger');
+				//$('#progress .help-block').html(thrownError);
+				
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	}

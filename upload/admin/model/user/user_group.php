@@ -28,6 +28,20 @@ class ModelUserUserGroup extends Model {
 		}
 	}
 	
+	public function removePermission($user_id, $type, $page) {
+		$user_query = $this->db->query("SELECT DISTINCT user_group_id FROM " . DB_PREFIX . "user WHERE user_id = '" . (int)$user_id . "'");
+		
+		if ($user_query->num_rows) {
+			$user_group_query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+		
+			if ($user_group_query->num_rows) {
+				$data = unserialize($user_group_query->row['permission']);
+                                $data[$type] = array_diff($data[$type], array($page));
+				$this->db->query("UPDATE " . DB_PREFIX . "user_group SET permission = '" . serialize($data) . "' WHERE user_group_id = '" . (int)$user_query->row['user_group_id'] . "'");
+			}
+		}
+	}
+	
 	public function getUserGroup($user_group_id) {
 		$query = $this->db->query("SELECT DISTINCT * FROM " . DB_PREFIX . "user_group WHERE user_group_id = '" . (int)$user_group_id . "'");
 		

@@ -335,35 +335,38 @@ class ControllerExtensionInstaller extends Controller {
 			$json['error'] = $this->language->get('error_file');
 		}
 		
-		if (!$json) {		
-			/*
-			// SQL
+		if (!$json) {
 			$sql = file_get_contents($file);
 			
-			$lines = explode($sql);
+			if ($sql) {
+				try {
+					$lines = explode($sql);
+					
+					$query = '';
 			
-			$query = '';
-	
-			foreach($lines as $line) {
-				if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-					$query .= $line;
-	
-					if (preg_match('/;\s*$/', $line)) {
-						$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-						$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
-						$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
-						
-						$result = mysql_query($query, $connection); 
-	
-						if (!$result) {
-							die(mysql_error());
+					foreach($lines as $line) {
+						if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
+							$query .= $line;
+			
+							if (preg_match('/;\s*$/', $line)) {
+								$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
+								$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
+								$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
+								
+								$result = mysql_query($query, $connection); 
+			
+								if (!$result) {
+									die(mysql_error());
+								}
+			
+								$query = '';
+							}
 						}
-	
-						$query = '';
 					}
+				} catch(Exception $e) {
+					$json['error'] = $e->getMessage();
 				}
-			}	
-			*/
+			}
 		}
 	
 		$this->response->setOutput(json_encode($json));							
@@ -393,11 +396,9 @@ class ControllerExtensionInstaller extends Controller {
 			if ($xml) {
 				try {
 					$dom = new DOMDocument('1.0', 'UTF-8');
-					//$dom->validateOnParse = true;
-					$dom->load($file);
-					//$dom->loadXml($xml);
+					$dom->loadXml($xml);
 					
-					if (!$dom->xml($xml, NULL, LIBXML_DTDVALID)) {
+					if (!@$dom->xml($xml, NULL, LIBXML_DTDVALID)) {
 						$data = array(
 							'name'       => $dom->getElementsByTagName('name')->item(0)->nodeValue,
 							'version'    => $dom->getElementsByTagName('version')->item(0)->nodeValue,

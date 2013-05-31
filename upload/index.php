@@ -84,40 +84,10 @@ $registry->set('url', $url);
 $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
-function error_handler($errno, $errstr, $errfile, $errline) {
-	global $log, $config;
-	
-	switch ($errno) {
-		case E_NOTICE:
-		case E_USER_NOTICE:
-			$error = 'Notice';
-			break;
-		case E_WARNING:
-		case E_USER_WARNING:
-			$error = 'Warning';
-			break;
-		case E_ERROR:
-		case E_USER_ERROR:
-			$error = 'Fatal Error';
-			break;
-		default:
-			$error = 'Unknown';
-			break;
-	}
-		
-	if ($config->get('config_error_display')) {
-		echo '<b>' . $error . '</b>: ' . $errstr . ' in <b>' . $errfile . '</b> on line <b>' . $errline . '</b>';
-	}
-	
-	if ($config->get('config_error_log')) {
-		$log->write('PHP ' . $error . ':  ' . $errstr . ' in ' . $errfile . ' on line ' . $errline);
-	}
-
-	return true;
-}
-	
 // Error Handler
-set_error_handler('error_handler');
+set_error_handler(function($errno, $errstr, $errfile, $errline) {
+	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+});
 
 // Request
 $request = new Request();
@@ -238,7 +208,18 @@ if (isset($request->get['route'])) {
 }
 
 // Dispatch
-$controller->dispatch($action, new Action('error/not_found'));
+try {
+	$controller->dispatch($action, new Action('error/not_found'));
+} catch(Exception $e) {
+	// Catch any errors and log them!
+	if ($config->get('config_error_display')) {
+		echo '<b>Error Code ' . $e->getCode() . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+	}
+	
+	if ($config->get('config_error_log')) {
+		$log->write('Error Code ' . $e->getCode() . ': ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+	}	
+}
 
 // Output
 $response->output();

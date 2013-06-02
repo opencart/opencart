@@ -8,7 +8,9 @@ class ModelToolImage extends Model {
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 		
 		$old_image = $filename;
-		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height .'.' . $extension;
+		
+		$encoded_filename=str_replace('%2F','/', rawurlencode(utf8_substr($filename, 0, utf8_strrpos($filename, '.'))));
+    		$new_image = 'cache/' . $encoded_filename . '-' . $width . 'x' . $height . '.' . $extension;		
 		
 		if (!file_exists(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
 			$path = '';
@@ -32,9 +34,7 @@ class ModelToolImage extends Model {
 			} else {
 				copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
 			}
-		}
-		
-		$new_image = str_replace(' ', '%20', $new_image);
+		}	
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			return $this->config->get('config_ssl') . 'image/' . $new_image;

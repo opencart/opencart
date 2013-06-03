@@ -64,8 +64,8 @@ $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
-set_error_handler(function($errno, $errstr, $errfile, $errline ) {
-	throw new ErrorException($errstr, $errno, 0, $errfile, $errline);
+set_error_handler(function($number, $string, $file, $line) {
+	throw new ErrorException($string, $number, 0, $file, $line);
 });
 		
 // Request
@@ -132,17 +132,17 @@ if (isset($request->get['route'])) {
 	$action = new Action('common/home');
 }
 
-// Dispatch
 try {
+	// Dispatch
 	$controller->dispatch($action, new Action('error/not_found'));
 } catch(Exception $e) {
 	// Catch any errors and log them!
 	if ($config->get('config_error_display')) {
-		echo '<b>Error Code ' . $e->getCode() . '</b>: ' . $e->getMessage() . ' in <b>' . $e->getFile() . '</b> on line <b>' . $e->getLine() . '</b>';
+		echo sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 	}
 	
 	if ($config->get('config_error_log')) {
-		$log->write('Error Code ' . $e->getCode() . ': ' . $e->getMessage() . ' in ' . $e->getFile() . ' on line ' . $e->getLine());
+		$log->write(sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
 	}
 }
 

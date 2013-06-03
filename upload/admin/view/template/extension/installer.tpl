@@ -19,8 +19,7 @@
         <label class="control-label" for="button-upload"><?php echo $entry_upload; ?></label>
         <div class="controls">
           <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-          <a data-toggle="tooltip" title="<?php echo $help_upload; ?>"><i class="icon-info-sign"></i></a>
-        </div>
+          <a data-toggle="tooltip" title="<?php echo $help_upload; ?>"><i class="icon-info-sign"></i></a></div>
       </div>
       <div id="progress" class="control-group">
         <div class="control-label"><?php echo $entry_progress; ?></div>
@@ -71,8 +70,6 @@ $('#file').on('change', function() {
 			$('#button-upload').prop('disabled', false);
 		},		
 		success: function(json) {
-			//$('body').append(json);
-			
 			$('#progress').removeClass('error');
 			$('#progress').removeClass('success');
 			$('#progress .progress').removeClass('progress-danger');		
@@ -121,19 +118,15 @@ function next() {
 		$.ajax({
 			url: data.url,
 			type: 'post',		
-			dataType: 'html',
+			dataType: 'json',
 			data: 'path=' + data.path,
 			success: function(json) {
-				
-				
-				$('body').append(json);
-				
 				if (json['error']) {
 					$('#progress').addClass('error');
 					$('#progress .progress').addClass('progress-danger');
 					$('#progress .help-block').html(json['error']);
 				} else {
-					
+					next();
 				}
 				
 				if (!step.length) {
@@ -141,14 +134,8 @@ function next() {
 					$('#progress .progress').addClass('progress-success');
 					$('#progress .help-block').html(json['success']);
 				}				
-				
-				next();
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
-				//$('#progress').addClass('error');
-				//$('#progress .progress').addClass('progress-danger');
-				//$('#progress .help-block').html(thrownError);
-				
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});

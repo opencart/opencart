@@ -35,7 +35,7 @@ class ControllerExtensionInstaller extends Controller {
 		$directories = glob(DIR_DOWNLOAD . 'temp-*', GLOB_ONLYDIR);
 		
 		if ($directories) {
-			$this->data['error_warning'] = $this->language->get('error_warning');
+			$this->data['error_warning'] = $this->language->get('error_temporary');
 		} else {
 			$this->data['error_warning'] = '';
 		}
@@ -83,28 +83,34 @@ class ControllerExtensionInstaller extends Controller {
 			$json['overwrite'] = array();
 			
 			if (strrchr($this->request->files['file']['name'], '.') == '.xml') {
+				$file = DIR_DOWNLOAD . $path . '/install.xml';
+				
 				// If xml file copy it to the temporary directory
-				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $path . '/install.xml');
+				move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 				
-				$json['step'][] = array(
-					'text' => $this->language->get('text_xml'),
-					'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->data['token'], 'SSL')),
-					'path' => $path
-				);
-				
-				// Clear temporary files
-				$json['step'][] = array(
-					'text' => $this->language->get('text_success'),
-					'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/clear', 'token=' . $this->session->data['token'], 'SSL')),
-					'path' => $path
-				);
+				if (file_exists($file)) {	
+					$json['step'][] = array(
+						'text' => $this->language->get('text_xml'),
+						'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/xml', 'token=' . $this->session->data['token'], 'SSL')),
+						'path' => $path
+					);
+					
+					// Clear temporary files
+					$json['step'][] = array(
+						'text' => $this->language->get('text_success'),
+						'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/clear', 'token=' . $this->session->data['token'], 'SSL')),
+						'path' => ''
+					);
+				} else {
+					$json['error'] = $this->language->get('error_file');
+				}
 			}
 			
+			// If zip file copy it to the temp directory
 			if (strrchr($this->request->files['file']['name'], '.') == '.zip') {
-				// If zip file copy it to the temp directory
-				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $path . '/upload.zip');
-				
 				$file = DIR_DOWNLOAD . $path . '/upload.zip';
+				
+				move_uploaded_file($this->request->files['file']['tmp_name'], $file);
 				
 				if (file_exists($file)) {					
 					$zip = zip_open($file);
@@ -195,7 +201,7 @@ class ControllerExtensionInstaller extends Controller {
 						$json['error'] = $this->language->get('error_unzip');
 					}			
 				} else {
-					$json['error'] = $this->language->get('error_upload');
+					$json['error'] = $this->language->get('error_file');
 				}			
 			}
 		}
@@ -336,37 +342,33 @@ class ControllerExtensionInstaller extends Controller {
 		}
 		
 		if (!$json) {
-			$sql = file_get_contents($file);
+		//	$sql = file_get_contents($file);
 			
-			if ($sql) {
-				try {
-					$lines = explode($sql);
+		//	if ($sql) {
+				try {	
+					$lines = file($file);	
 					
-					$query = '';
-			
+					$sql = '';
+					
 					foreach($lines as $line) {
 						if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
-							$query .= $line;
-			
+							$sql .= $line;
+		  
 							if (preg_match('/;\s*$/', $line)) {
-								$query = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $query);
-								$query = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $query);
-								$query = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $query);
+								$sql = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $sql);
+								$sql = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $sql);
+								$sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
 								
-								$result = mysql_query($query, $connection); 
+								$db->query($sql);
 			
-								if (!$result) {
-									die(mysql_error());
-								}
-			
-								$query = '';
+								$sql = '';
 							}
 						}
 					}
-				} catch(Exception $e) {
-					$json['error'] = $e->getMessage();
+				} catch(Exception $exception) {
+					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}
-			}
+		//	}
 		}
 	
 		$this->response->setOutput(json_encode($json));							
@@ -397,21 +399,19 @@ class ControllerExtensionInstaller extends Controller {
 				try {
 					$dom = new DOMDocument('1.0', 'UTF-8');
 					$dom->loadXml($xml);
-					
-					if (!@$dom->xml($xml, NULL, LIBXML_DTDVALID)) {
-						$data = array(
-							'name'       => $dom->getElementsByTagName('name')->item(0)->nodeValue,
-							'version'    => $dom->getElementsByTagName('version')->item(0)->nodeValue,
-							'author'     => $dom->getElementsByTagName('author')->item(0)->nodeValue,
-							'code'       => $file,
-							'status'     => 1,
-							'sort_order' => 0
-						);
-					
-						$this->model_setting_modification->addModification($data);
-					}
-				} catch(Exception $e) {
-					$json['error'] = $e->getMessage();
+
+					$data = array(
+						'name'       => $dom->getElementsByTagName('name')->item(0)->nodeValue,
+						'version'    => $dom->getElementsByTagName('version')->item(0)->nodeValue,
+						'author'     => $dom->getElementsByTagName('author')->item(0)->nodeValue,
+						'code'       => $file,
+						'status'     => 1,
+						'sort_order' => 0
+					);
+				
+					$this->model_setting_modification->addModification($data);
+				} catch(Exception $exception) {
+					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}
 			}
 		}
@@ -432,11 +432,13 @@ class ControllerExtensionInstaller extends Controller {
 
 		if (!file_exists($file)) {
 			$json['error'] = $this->language->get('error_file');
-		} else {
+		}
+		
+		if (!$json) {
 			try {
 				include($file);
-			} catch(Exception $e) {
-				$json['error'] = $e->getMessage();
+			} catch(Exception $exception) {
+				$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 			}
 		}
 			
@@ -453,7 +455,6 @@ class ControllerExtensionInstaller extends Controller {
     	}
 		
 		if (!$json) {
-			/* 
 			$directories = glob(DIR_DOWNLOAD . 'temp-*', GLOB_ONLYDIR);
 			
 			foreach($directories as $directory) {
@@ -490,7 +491,6 @@ class ControllerExtensionInstaller extends Controller {
 					rmdir($directory);
 				}
 			}
-			*/
 		}
 		
 		$this->response->setOutput(json_encode($json));

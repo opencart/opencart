@@ -50,7 +50,7 @@
 var step = new Array();
 var progress = 0;
 
-$('#file').on('change', function() {
+$('#file').on('click', function() {
 	$('#button-continue').prop('disabled', true);
 	
 	$.ajax({
@@ -83,7 +83,7 @@ $('#file').on('change', function() {
 			
 			if (json['step']) {
 				step = json['step'];
-				progress = step.length;
+				progress = json['step'].length;
 			}	
 						
 			if (json['overwrite'].length) {

@@ -12,7 +12,7 @@
     <div class="box-content">
       <form class="form-horizontal">
         <div class="buttons">
-          <button id="button-send" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
+          <button id="button-send" class="btn" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
           <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-store"><?php echo $entry_store; ?></label>
@@ -200,11 +200,11 @@ $('#product').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 
-$('#button-send').on('click', function() {
+function send(url) {
 	$('textarea[name=\'message\']').html(CKEDITOR.instances.message.getData());
 	
 	$.ajax({
-		url: 'index.php?route=sale/contact/send&token=<?php echo $token; ?>',
+		url: url,
 		type: 'post',
 		data: $('select, input, textarea'),		
 		dataType: 'json',
@@ -250,6 +250,6 @@ $('#button-send').on('click', function() {
 			}				
 		}
 	});
-});
+}
 //--></script> 
 <?php echo $footer; ?>

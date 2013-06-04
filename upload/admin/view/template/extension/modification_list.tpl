@@ -16,8 +16,8 @@
       <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
-        <div class="buttons"><a href="<?php echo $refresh; ?>" class="btn"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn"><?php echo $button_clear; ?></a> <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <a onclick="$('#form').submit();" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></a></div>
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data">
+        <div class="buttons"><a href="<?php echo $refresh; ?>" class="btn"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a> <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <button type="submit" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button></div>
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>

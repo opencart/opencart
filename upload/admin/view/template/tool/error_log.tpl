@@ -13,7 +13,7 @@
       <h1><i class="icon-warning-sign icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <div class="buttons"><a href="<?php echo $clear; ?>" class="btn"><i class="icon-trash"></i> <?php echo $button_clear; ?></a></div>
+      <div class="buttons"><a href="<?php echo $clear; ?>" class="btn"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a></div>
       <textarea wrap="off" style="width: 98%; height: 300px; overflow: scroll;" readonly="readonly"><?php echo $log; ?></textarea>
     </div>
   </div>

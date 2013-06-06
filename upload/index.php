@@ -213,11 +213,11 @@ try {
 } catch(Exception $exception) {
 	// Catch any errors and log them!
 	if ($config->get('config_error_display')) {
-		echo sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
+		echo sprintf($language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 	}
 	
 	if ($config->get('config_error_log')) {
-		$log->write(sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
+		$log->write(sprintf($language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine()));
 	}	
 }
 

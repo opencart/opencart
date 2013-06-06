@@ -15,10 +15,13 @@
       <h1><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content form-horizontal">
+      <div class="buttons">
+        <button type="button" id="button-clear" class="btn"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
+      </div>
       <div class="control-group">
         <label class="control-label" for="button-upload"><?php echo $entry_upload; ?></label>
         <div class="controls">
-          <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+          <button type="button" id="button-upload" class="btn btn-primary" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
           <a data-toggle="tooltip" title="<?php echo $help_upload; ?>"><i class="icon-info-sign"></i></a></div>
       </div>
       <div id="progress" class="control-group">
@@ -48,10 +51,15 @@
 </div>
 <script type="text/javascript"><!--
 var step = new Array();
-var progress = 0;
+var total = 0;
 
-$('#file').on('click', function() {
-	$('#button-continue').prop('disabled', true);
+$('#file').on('change', function() {
+	// Reset everything
+	$('.alert').remove();
+	$('#progress .bar').css('width', '0%');
+	$('#progress').removeClass('error, success');
+	$('#progress .progress').removeClass('progress-danger, progress-success');		
+	$('#progress .help-block').html('');
 	
 	$.ajax({
         url: 'index.php?route=extension/installer/upload&token=<?php echo $token; ?>',
@@ -70,20 +78,16 @@ $('#file').on('click', function() {
 			$('#button-upload').prop('disabled', false);
 		},		
 		success: function(json) {
-			$('#progress').removeClass('error');
-			$('#progress').removeClass('success');
-			$('#progress .progress').removeClass('progress-danger');		
-			$('#progress .progress').removeClass('progress-success');
-			
 			if (json['error']) {
 				$('#progress').addClass('error');
 				$('#progress .progress-danger').addClass('progress-danger');				
+				
 				$('#progress .help-block').html(json['error']);
 			}
 			
 			if (json['step']) {
 				step = json['step'];
-				progress = json['step'].length;
+				total = step.length;
 			}	
 						
 			if (json['overwrite'].length) {
@@ -108,11 +112,16 @@ $('#file').on('click', function() {
 
 $('#button-continue').on('click', function() {
 	next();
+	
+	$('#button-continue').prop('disabled', true);
 });
 
 function next() {
-	if (data = step.shift()) {
-		$('#progress .bar').css('width', (100 - (step.length / progress) * 100) + '%');
+	data = step.shift();
+	
+	if (data) {
+		$('#progress .bar').css('width', (100 - (step.length / total) * 100) + '%');
+		
 		$('#progress .help-block').html(data.text);
 		
 		$.ajax({
@@ -124,22 +133,53 @@ function next() {
 				if (json['error']) {
 					$('#progress').addClass('error');
 					$('#progress .progress').addClass('progress-danger');
+					
 					$('#progress .help-block').html(json['error']);
-				} else {
-					next();
-				}
+				} 
 				
-				if (!step.length) {
+				if (json['success']) {
 					$('#progress').addClass('success');
 					$('#progress .progress').addClass('progress-success');
+					
 					$('#progress .help-block').html(json['success']);
-				}				
-			},			
+				}	
+				
+				if (!json['error'] && !json['success']) {
+					next();
+				}							
+			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	}
 }
+
+$('#button-clear').bind('click', function(event) {
+	event.preventDefault();
+	
+	$.ajax({
+		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',	
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-clear i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-clear').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-clear i').replaceWith('<i class="icon-upload"></i>');
+			$('#button-clear').prop('disabled', false);
+		},		
+		success: function(json) {
+			$('.alert').remove();
+			
+			if (json['error']) {
+				$('.box').before('<div class="alert alert-error">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}			
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 //--></script> 
 <?php echo $footer; ?>

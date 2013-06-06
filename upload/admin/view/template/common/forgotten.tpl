@@ -22,7 +22,7 @@
           </div>
         </div>
         <div class="buttons">
-          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_reset; ?></button>
+          <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_reset; ?></button>
           <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>

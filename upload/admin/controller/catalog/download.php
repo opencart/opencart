@@ -324,7 +324,7 @@ class ControllerCatalogDownload extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'href' => $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'),
    		);
 							
 		if (!isset($this->request->get['download_id'])) {

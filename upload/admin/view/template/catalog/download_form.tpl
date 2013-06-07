@@ -32,23 +32,21 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-filename"><?php echo $entry_filename; ?></label>
+          <label class="control-label" for="input-filename"><?php echo $entry_filename; ?> <span class="help-block"><?php echo $help_filename; ?></span> </label>
           <div class="controls">
             <div class="input-append">
               <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="span2" />
               <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
             </div>
-            <a data-toggle="tooltip" title="<?php echo $help_filename; ?>"><i class="icon-info-sign"></i></a>
             <?php if ($error_filename) { ?>
             <span class="error"><?php echo $error_filename; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-mask"><?php echo $entry_mask; ?></label>
+          <label class="control-label" for="input-mask"><?php echo $entry_mask; ?> <span class="help-block"><?php echo $help_mask; ?></span></label>
           <div class="controls">
             <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" />
-            <a data-toggle="tooltip" title="<?php echo $help_mask; ?>"><i class="icon-info-sign"></i></a>
             <?php if ($error_mask) { ?>
             <span class="error"><?php echo $error_mask; ?></span>
             <?php } ?>
@@ -62,14 +60,14 @@
         </div>
         <?php if ($download_id) { ?>
         <div class="control-group">
-          <label class="control-label" for="input-update"><?php echo $entry_update; ?></label>
+          <label class="control-label" for="input-update"><?php echo $entry_update; ?> <span class="help-block"><?php echo $help_update; ?></span> </label>
           <div class="controls">
             <?php if ($update) { ?>
             <input type="checkbox" name="update" value="1" checked="checked" id="input-update" />
             <?php } else { ?>
             <input type="checkbox" name="update" value="1" id="input-update" />
             <?php } ?>
-            <a data-toggle="tooltip" title="<?php echo $help_update; ?>"><i class="icon-info-sign"></i></a> </div>
+          </div>
         </div>
         <?php } ?>
       </form>

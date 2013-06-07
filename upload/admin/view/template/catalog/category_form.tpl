@@ -71,10 +71,10 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-filter"><?php echo $entry_filter; ?></label>
+              <label class="control-label" for="input-filter"><?php echo $entry_filter; ?> <span class="help-block"><?php echo $help_filter; ?></span></label>
               <div class="controls">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" />
-                <a data-toggle="tooltip" title="<?php echo $help_filter; ?>"><i class="icon-info-sign"></i></a><br />
+                <br />
                 <div id="category-filter" class="well well-small scrollbox">
                   <?php foreach ($category_filters as $category_filter) { ?>
                   <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $category_filter['name']; ?>
@@ -109,11 +109,11 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?> </label>
+            <div class="control-group has-error">
+              <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?> <span class="help-block"><?php echo $help_keyword; ?></span></label>
               <div class="controls">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-                <span class="help-block"><?php echo $help_keyword; ?></span> </div>
+              </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
@@ -125,22 +125,22 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-top"><?php echo $entry_top; ?></label>
+              <label class="control-label" for="input-top"><?php echo $entry_top; ?> <span class="help-block"><?php echo $help_top; ?></span></label>
               <div class="controls">
-                <label class="checkbox inline">
+                <label class="checkbox">
                   <?php if ($top) { ?>
                   <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
                   <?php } else { ?>
                   <input type="checkbox" name="top" value="1" id="input-top" />
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" data-original-title="<?php echo $help_top; ?>"><i class="icon-info-sign"></i></a></div>
+              </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-column"><?php echo $entry_column; ?></label>
+              <label class="control-label" for="input-column"><?php echo $entry_column; ?> <span class="help-block"><?php echo $help_column; ?></span> </label>
               <div class="controls">
                 <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" id="input-column" class="input-mini" />
-                <a data-toggle="tooltip" title="<?php echo $help_column; ?>"><i class="icon-info-sign"></i></a></div>
+              </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -211,7 +211,6 @@
     </div>
   </div>
 </div>
-
 <div id="modal" style="width: 60%; height: 60%;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
   <div class="modal-header">
     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
@@ -221,8 +220,6 @@
     <iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>" style="width: 90%; height: 90%;" frameborder="no" scrolling="auto"></iframe>
   </div>
 </div>
-
-
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>

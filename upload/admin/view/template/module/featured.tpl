@@ -17,10 +17,9 @@
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <div class="control-group">
-          <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
+          <label class="control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
           <div class="controls">
             <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
             <br />
             <div id="featured-product" class="well well-small scrollbox">
               <?php foreach ($products as $product) { ?>

@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -93,14 +95,10 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
+          <label class="control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
           <div class="controls">
             <input type="text" name="authorizenet_aim_total" value="<?php echo $authorizenet_aim_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-
-            
-            
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
-             </div>
+          </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>

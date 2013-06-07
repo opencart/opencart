@@ -37,17 +37,16 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
+              <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?> <span class="help-block"><?php echo $help_code; ?></span></label>
               <div class="controls">
                 <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
-                <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-info-sign"></i></a>
                 <?php if ($error_code) { ?>
                 <span class="error"><?php echo $error_code; ?></span>
                 <?php } ?>
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-type"><?php echo $entry_type; ?></label>
+              <label class="control-label" for="input-type"><?php echo $entry_type; ?> <span class="help-block"><?php echo $help_type; ?></span></label>
               <div class="controls">
                 <select name="type" id="input-type">
                   <?php if ($type == 'P') { ?>
@@ -61,7 +60,7 @@
                   <option value="F"><?php echo $text_amount; ?></option>
                   <?php } ?>
                 </select>
-                <a data-toggle="tooltip" title="<?php echo $help_type; ?>"><i class="icon-info-sign"></i></a></div>
+              </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-discount"><?php echo $entry_discount; ?></label>
@@ -70,13 +69,13 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
+              <label class="control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
               <div class="controls">
                 <input type="text" name="total" value="<?php echo $total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-                <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a></div>
+              </div>
             </div>
             <div class="control-group">
-              <div class="control-label"><?php echo $entry_logged; ?></div>
+              <div class="control-label"><?php echo $entry_logged; ?> <span class="help-block"><?php echo $help_logged; ?></span></div>
               <div class="controls">
                 <label class="radio inline">
                   <?php if ($logged) { ?>
@@ -96,7 +95,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <a data-toggle="tooltip" title="<?php echo $help_logged; ?>"><i class="icon-info-sign"></i></a></div>
+              </div>
             </div>
             <div class="control-group">
               <div class="control-label"><?php echo $entry_shipping; ?></div>
@@ -122,10 +121,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
+              <label class="control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
               <div class="controls">
                 <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-                <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
                 <br />
                 <div id="coupon-product" class="well well-small scrollbox">
                   <?php foreach ($coupon_product as $coupon_product) { ?>
@@ -137,10 +135,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-category"><?php echo $entry_category; ?></label>
+              <label class="control-label" for="input-category"><?php echo $entry_category; ?> <span class="help-block"><?php echo $help_category; ?></span></label>
               <div class="controls">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" />
-                <a data-toggle="tooltip" title="<?php echo $help_category; ?>"><i class="icon-info-sign"></i></a>
                 <br />
                 <div id="coupon-category" class="well well-small scrollbox">
                   <?php foreach ($coupon_category as $coupon_category) { ?>
@@ -164,16 +161,16 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-uses-total"><?php echo $entry_uses_total; ?></label>
+              <label class="control-label" for="input-uses-total"><?php echo $entry_uses_total; ?> <span class="help-block"><?php echo $help_uses_total; ?></span></label>
               <div class="controls">
                 <input type="text" name="uses_total" value="<?php echo $uses_total; ?>" placeholder="<?php echo $entry_uses_total; ?>" id="input-uses-total" />
-                <a data-toggle="tooltip" title="<?php echo $help_uses_total; ?>"><i class="icon-info-sign"></i></a></div>
+              </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-uses-customer"><?php echo $entry_uses_customer; ?></label>
+              <label class="control-label" for="input-uses-customer"><?php echo $entry_uses_customer; ?> <span class="help-block"><?php echo $help_uses_customer; ?></span></label>
               <div class="controls">
                 <input type="text" name="uses_customer" value="<?php echo $uses_customer; ?>" placeholder="<?php echo $entry_uses_customer; ?>" id="input-uses-customer" />
-                <a data-toggle="tooltip" title="<?php echo $help_uses_customer; ?>"><i class="icon-info-sign"></i></a></div>
+              </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>

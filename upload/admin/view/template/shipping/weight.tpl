@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -14,7 +16,9 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="tabbable tabs-left">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
@@ -63,13 +67,10 @@
             <?php foreach ($geo_zones as $geo_zone) { ?>
             <div class="tab-pane" id="tab-geo-zone<?php echo $geo_zone['geo_zone_id']; ?>">
               <div class="control-group">
-                <label class="control-label" for="input-rate<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $entry_rate; ?></label>
+                <label class="control-label" for="input-rate<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $entry_rate; ?> <span class="help-block"><?php echo $help_rate; ?></span></label>
                 <div class="controls">
                   <textarea name="weight_<?php echo $geo_zone['geo_zone_id']; ?>_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo ${'weight_' . $geo_zone['geo_zone_id'] . '_rate'}; ?></textarea>
-
-                  
-                  <a data-toggle="tooltip" title="<?php echo $help_rate; ?>"><i class="icon-info-sign"></i></a>
-                  </div>
+                </div>
               </div>
               <div class="control-group">
                 <label class="control-label" for="input-status<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $entry_status; ?></label>

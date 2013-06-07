@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -14,7 +16,9 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <div class="control-label"><span class="required">*</span> <?php echo $entry_name; ?></div>
           <div class="controls">
@@ -36,7 +40,7 @@
         </div>
         <?php } ?>
         <div class="control-group">
-          <div class="control-label"><?php echo $entry_approval; ?></div>
+          <div class="control-label"><?php echo $entry_approval; ?> <span class="help-block"><?php echo $help_approval; ?></span></div>
           <div class="controls">
             <label class="radio inline">
               <?php if ($approval) { ?>
@@ -56,9 +60,7 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            
-            <a data-toggle="tooltip" title="<?php echo $help_approval; ?>"><i class="icon-info-sign"></i></a>
-            </div>
+          </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

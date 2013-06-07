@@ -87,13 +87,12 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-geocode"><span class="required">*</span> <?php echo $entry_geocode; ?></label>
+          <label class="control-label" for="input-geocode"><span class="required">*</span> <?php echo $entry_geocode; ?> <span class="help-block"><?php echo $help_geocode; ?></span></label>
           <div class="controls">
             <div class="input-append">
               <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" class="span2" id="input-geocode" />
               <button type="button" onclick="getGeoCode()" class="btn"><i class="icon-search"></i> <?php echo $button_geocode; ?></button>
             </div>
-            <a data-toggle="tooltip" title="<?php echo $help_geocode; ?>"><i class="icon-info-sign"></i></a>
             <?php if ($error_geocode) { ?>
             <span class="error"><?php echo $error_geocode; ?></span>
             <?php } ?>
@@ -109,16 +108,16 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-open"><?php echo $entry_open; ?></label>
+          <label class="control-label" for="input-open"><?php echo $entry_open; ?> <span class="help-block"><?php echo $help_open; ?></span></label>
           <div class="controls">
             <textarea name="open" cols="40" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open"><?php echo $open; ?></textarea>
-            <a data-toggle="tooltip" title="<?php echo $help_open; ?>"><i class="icon-info-sign"></i></a> </div>
+          </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+          <label class="control-label" for="input-comment"><?php echo $entry_comment; ?> <span class="help-block"><?php echo $help_comment; ?></span></label>
           <div class="controls">
             <textarea name="comment" cols="40" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment"><?php echo $comment; ?></textarea>
-            <a data-toggle="tooltip" title="<?php echo $help_comment; ?>"><i class="icon-info-sign"></i></a> </div>
+          </div>
         </div>
       </form>
     </div>

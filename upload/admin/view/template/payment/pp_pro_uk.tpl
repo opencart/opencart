@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -14,57 +16,47 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
-          <label class="control-label" for="input-vendor"><span class="required">*</span> <?php echo $entry_vendor; ?></label>
+          <label class="control-label" for="input-vendor"><span class="required">*</span> <?php echo $entry_vendor; ?> <span class="help-block"><?php echo $help_vendor; ?></span></label>
           <div class="controls">
             <input type="text" name="pp_pro_uk_vendor" value="<?php echo $pp_pro_uk_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="input-vendor" />
-            
-            <a data-toggle="tooltip" title="<?php echo $help_vendor; ?>"><i class="icon-info-sign"></i></a>
-            
             <?php if ($error_vendor) { ?>
             <span class="error"><?php echo $error_vendor; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-user"><span class="required">*</span> <?php echo $entry_user; ?></label>
+          <label class="control-label" for="input-user"><span class="required">*</span> <?php echo $entry_user; ?> <span class="help-block"><?php echo $help_user; ?></span></label>
           <div class="controls">
             <input type="text" name="pp_pro_uk_user" value="<?php echo $pp_pro_uk_user; ?>" placeholder="<?php echo $entry_user; ?>" id="input-user" />
-            
-            <a data-toggle="tooltip" title="<?php echo $help_user; ?>"><i class="icon-info-sign"></i></a>
-            
             <?php if ($error_user) { ?>
             <span class="error"><?php echo $error_user; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-password"><span class="required">*</span> <?php echo $entry_password; ?></label>
+          <label class="control-label" for="input-password"><span class="required">*</span> <?php echo $entry_password; ?> <span class="help-block"><?php echo $help_password; ?></span></label>
           <div class="controls">
             <input type="text" name="pp_pro_uk_password" value="<?php echo $pp_pro_uk_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
-            
-            <a data-toggle="tooltip" title="<?php echo $help_password; ?>"><i class="icon-info-sign"></i></a>
-            
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-partner"><span class="required">*</span> <?php echo $entry_partner; ?></label>
+          <label class="control-label" for="input-partner"><span class="required">*</span> <?php echo $entry_partner; ?> <span class="help-block"><?php echo $help_partner; ?></span></label>
           <div class="controls">
             <input type="text" name="pp_pro_uk_partner" value="<?php echo $pp_pro_uk_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="input-partner" />
-
-            <a data-toggle="tooltip" title="<?php echo $help_partner; ?>"><i class="icon-info-sign"></i></a>
-            
             <?php if ($error_partner) { ?>
             <span class="error"><?php echo $error_partner; ?></span>
             <?php } ?>
           </div>
         </div>
         <div class="control-group">
-          <div class="control-label"><?php echo $entry_test; ?></div>
+          <div class="control-label"><?php echo $entry_test; ?> <span class="help-block"><?php echo $help_test; ?></span></div>
           <div class="controls">
             <label class="radio inline">
               <?php if ($pp_pro_uk_test) { ?>
@@ -84,9 +76,7 @@
               <?php echo $text_no; ?>
               <?php } ?>
             </label>
-            
-            <a data-toggle="tooltip" title="<?php echo $help_test; ?>"><i class="icon-info-sign"></i></a>
-            </div>
+          </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
@@ -106,13 +96,10 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
+          <label class="control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
           <div class="controls">
             <input type="text" name="pp_pro_uk_total" value="<?php echo $pp_pro_uk_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-            
-            <a data-toggle="tooltip" title="<?php echo $help_total; ?>"><i class="icon-info-sign"></i></a>
-            
-            </div>
+          </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>

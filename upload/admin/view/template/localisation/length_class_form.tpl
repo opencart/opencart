@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -39,16 +41,14 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-value"><?php echo $entry_value; ?></label>
+          <label class="control-label" for="input-value"><?php echo $entry_value; ?> <span class="help-block"><?php echo $help_value; ?></span></label>
           <div class="controls">
             <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" />
-
-            <a data-toggle="tooltip" title="<?php echo $help_value; ?>"><i class="icon-info-sign"></i></a>
-            
-            
-            </div>
+          </div>
         </div>
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>

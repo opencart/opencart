@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -14,7 +16,9 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <div class="buttons">
+          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-return" data-toggle="tab"><?php echo $tab_return; ?></a></li>
           <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
@@ -82,10 +86,9 @@
           </div>
           <div class="tab-pane" id="tab-product">
             <div class="control-group">
-              <label class="control-label" for="input-product"><span class="required">*</span> <?php echo $entry_product; ?></label>
+              <label class="control-label" for="input-product"><span class="required">*</span> <?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
               <div class="controls">
                 <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-                <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
                 <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
                 <?php if ($error_product) { ?>
                 <span class="error"><?php echo $error_product; ?></span>
@@ -227,5 +230,5 @@ $('input[name=\'product\']').autocomplete({
 		$('input[name=\'model\']').val(item['model']);	
 	}
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

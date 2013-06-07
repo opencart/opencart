@@ -29,11 +29,10 @@
           </div>
         </div>
         <div class="control-group">
-          <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
+          <label class="control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
           <div class="controls">
             <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
             <?php if ($error_product) { ?>
             <span class="error"><?php echo $error_product; ?></span>
             <?php } ?>

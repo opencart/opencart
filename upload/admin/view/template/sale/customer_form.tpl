@@ -6,7 +6,9 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
@@ -283,13 +285,10 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-points"><?php echo $entry_points; ?></label>
+              <label class="control-label" for="input-points"><?php echo $entry_points; ?> <span class="help-block"><?php echo $help_points; ?></span></label>
               <div class="controls">
                 <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" />
-                
-                <a data-toggle="tooltip" title="<?php echo $help_points; ?>"><i class="icon-info-sign"></i></a>
-                
-                </div>
+              </div>
             </div>
             <button id="button-reward" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
           </div>

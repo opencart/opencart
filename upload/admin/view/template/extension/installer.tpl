@@ -19,10 +19,10 @@
         <button type="button" id="button-clear" class="btn"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
       </div>
       <div class="control-group">
-        <label class="control-label" for="button-upload"><?php echo $entry_upload; ?></label>
+        <label class="control-label" for="button-upload"><?php echo $entry_upload; ?> <span class="help-block"><?php echo $help_upload; ?></span></label>
         <div class="controls">
-          <button type="button" id="button-upload" class="btn btn-primary" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-          <a data-toggle="tooltip" title="<?php echo $help_upload; ?>"><i class="icon-info-sign"></i></a></div>
+          <button type="button" id="button-upload" class="btn btn-primary" onclick="$('input[name=\'file\']').val(''); $('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+        </div>
       </div>
       <div id="progress" class="control-group">
         <div class="control-label"><?php echo $entry_progress; ?></div>
@@ -57,7 +57,7 @@ $('#file').on('change', function() {
 	// Reset everything
 	$('.alert').remove();
 	$('#progress .bar').css('width', '0%');
-	$('#progress').removeClass('error, success');
+	$('#progress').removeClass('error success');
 	$('#progress .progress').removeClass('progress-danger, progress-success');		
 	$('#progress .help-block').html('');
 	
@@ -121,7 +121,6 @@ function next() {
 	
 	if (data) {
 		$('#progress .bar').css('width', (100 - (step.length / total) * 100) + '%');
-		
 		$('#progress .help-block').html(data.text);
 		
 		$.ajax({
@@ -174,7 +173,11 @@ $('#button-clear').bind('click', function(event) {
 			
 			if (json['error']) {
 				$('.box').before('<div class="alert alert-error">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}			
+			}
+			
+			if (json['success']) {
+				$('.box').before('<div class="alert alert-error">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}				
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

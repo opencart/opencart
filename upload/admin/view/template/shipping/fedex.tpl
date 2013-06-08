@@ -14,11 +14,11 @@
     <div class="box-heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
-        <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <button type="submit" form="form-fedex" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-fedex" class="form-horizontal">
         <div class="control-group">
           <label class="control-label" for="input-key"><span class="required">*</span> <?php echo $entry_key; ?></label>
           <div class="controls">

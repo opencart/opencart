@@ -12,7 +12,7 @@
   <?php } ?>
   <?php if ($success) { ?>
   <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
+    <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="box">
@@ -20,7 +20,7 @@
       <h1><i class="icon-exchange icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
         <div class="control-group">
           <label class="control-label" for="input-import"><?php echo $entry_restore; ?></label>
           <div class="controls">

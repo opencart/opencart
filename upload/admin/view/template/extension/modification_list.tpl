@@ -6,18 +6,24 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons"><a href="<?php echo $refresh; ?>" class="btn"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a> <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+        <button type="submit" form="form-modification" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+      </div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data">
-        <div class="buttons"><a href="<?php echo $refresh; ?>" class="btn"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a> <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <button type="submit" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button></div>
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-modification">
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
@@ -51,8 +57,8 @@
                 <a href="<?php echo $sort_date_modified; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_modified; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_date_modified; ?>"><?php echo $column_date_modified; ?></a></td>
-              <td class="right">
-                <?php } ?><?php echo $column_action; ?></td>
+              <td class="right"><?php } ?>
+                <?php echo $column_action; ?></td>
             </tr>
           </thead>
           <tbody>

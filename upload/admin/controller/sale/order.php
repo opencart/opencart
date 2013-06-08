@@ -1467,7 +1467,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['column_filename'] = $this->language->get('column_filename');
 			$this->data['column_remaining'] = $this->language->get('column_remaining');
 						
-			$this->data['entry_order_status'] = $this->language->get('entry_order_status');
+			$this->data['entry_status'] = $this->language->get('entry_status');
 			$this->data['entry_notify'] = $this->language->get('entry_notify');
 			$this->data['entry_comment'] = $this->language->get('entry_comment');
 			

@@ -8,12 +8,12 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-envelope"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button id="button-send" class="btn" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form class="form-horizontal">
-        <div class="buttons">
-          <button id="button-send" class="btn" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
-          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-store"><?php echo $entry_store; ?></label>
           <div class="controls">

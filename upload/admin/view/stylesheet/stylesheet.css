@@ -1,6 +1,6 @@
 html, body, label, .control-group input, textarea, select {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 	line-height: 15px;
 }
 
@@ -11,7 +11,7 @@ html, body, label, .control-group input, textarea, select {
 
 .btn-group .btn, .btn {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 12px;
+	font-size: 13px;
 }
 
 .brand {
@@ -36,7 +36,7 @@ html, body, label, .control-group input, textarea, select {
 	border-radius: 0;
 }
 .breadcrumb li + li:before {
-	content: "\f105";
+	content: "   /   ";
 	font-family: FontAwesome;
 }
 #content {
@@ -79,6 +79,11 @@ html, body, label, .control-group input, textarea, select {
 	text-shadow: 1px 1px 0px #FFFFFF;
 	line-height: 42px;
 	padding-top: 0px;
+	display: inline-block;
+}
+.box-heading .buttons {
+	padding-top: 6px;
+	float: right;
 }
 .box-heading h1 i {
 	font-weight: normal;
@@ -92,12 +97,7 @@ html, body, label, .control-group input, textarea, select {
 	border-bottom: 1px solid #CCCCCC;
 	overflow: auto;
 }
-.buttons {
-	text-align: right;
-	border: 1px solid #DBDBDB;
-	padding: 5px;
-	margin-bottom: 15px;
-}
+
 .table .left {
 	text-align: left;
 }

@@ -10,22 +10,17 @@
       <h1><i class="icon-bar-chart"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      
       <div class="row-fluid">
-        <div class="span3">
-        <?php echo $entry_date_start; ?>
-        <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" class="input-medium" />
+        <div class="span3"> <?php echo $entry_date_start; ?>
+          <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" class="input-medium" />
         </div>
-        
         <div class="span3"><?php echo $entry_date_end; ?>
-            <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" class="input-medium" /></div>
-        <div class="span3"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></div>
-        
+          <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" class="input-medium" />
+        </div>
+        <div class="span3">
+          <button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
+        </div>
       </div>
-      
-
-      
-
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>

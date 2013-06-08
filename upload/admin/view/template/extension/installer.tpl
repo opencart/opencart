@@ -13,11 +13,11 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
-    </div>
-    <div class="box-content form-horizontal">
       <div class="buttons">
         <button type="button" id="button-clear" class="btn"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
       </div>
+    </div>
+    <div class="box-content form-horizontal">
       <div class="control-group">
         <label class="control-label" for="button-upload"><?php echo $entry_upload; ?> <span class="help-block"><?php echo $help_upload; ?></span></label>
         <div class="controls">

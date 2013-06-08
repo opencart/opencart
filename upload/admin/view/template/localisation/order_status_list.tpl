@@ -6,18 +6,24 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons"><a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+        <button type="submit" form="form-order-status" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+      </div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data">
-        <div class="buttons"><a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <button type="submit" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button></div>
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-order-status">
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>

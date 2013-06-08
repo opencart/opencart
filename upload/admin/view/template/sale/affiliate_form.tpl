@@ -13,9 +13,12 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-affiliate" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" fid="form-affiliate" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
@@ -283,9 +286,6 @@
           </div>
           <?php } ?>
         </div>
-        <div class="buttons">
-          <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </form>
     </div>
   </div>

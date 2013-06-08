@@ -46,7 +46,7 @@ $(document).ready(function() {
 	});
 });
 
-$('.ajax').on('submit', function(event) {
+$('[data-target=]').on('submit', function(event) {
 	event.preventDefault();
 	
 	$.ajax({

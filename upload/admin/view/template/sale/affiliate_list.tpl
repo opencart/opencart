@@ -18,14 +18,14 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-affiliate" formaction="<?php echo $approve; ?>" class="btn"><i class="icon-ok"></i> <?php echo $button_approve; ?></button>
+        <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+        <button type="submit" form="form-affiliate" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+      </div>
     </div>
     <div class="box-content">
-      <form action="" method="post" enctype="multipart/form-data" id="form">
-        <div class="buttons">
-          <button type="submit" formaction="<?php echo $approve; ?>" class="btn"><i class="icon-ok"></i> <?php echo $button_approve; ?></button>
-          <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
-          <button type="submit" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
-        </div>
+      <form action="" method="post" enctype="multipart/form-data" id="form-affiliate">
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>

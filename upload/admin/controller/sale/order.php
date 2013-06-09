@@ -502,7 +502,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
 		$this->data['entry_fax'] = $this->language->get('entry_fax');
-		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_comment'] = $this->language->get('entry_comment');	
 		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');
 		$this->data['entry_address'] = $this->language->get('entry_address');
@@ -529,6 +528,7 @@ class ControllerSaleOrder extends Controller {
 		$this->data['entry_voucher'] = $this->language->get('entry_voucher');
 		$this->data['entry_coupon'] = $this->language->get('entry_coupon');
 		$this->data['entry_reward'] = $this->language->get('entry_reward');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 
 		$this->data['column_product'] = $this->language->get('column_product');
 		$this->data['column_model'] = $this->language->get('column_model');
@@ -1467,7 +1467,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['column_filename'] = $this->language->get('column_filename');
 			$this->data['column_remaining'] = $this->language->get('column_remaining');
 						
-			$this->data['entry_status'] = $this->language->get('entry_status');
+			$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 			$this->data['entry_notify'] = $this->language->get('entry_notify');
 			$this->data['entry_comment'] = $this->language->get('entry_comment');
 			

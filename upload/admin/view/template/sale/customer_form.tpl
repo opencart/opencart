@@ -255,7 +255,7 @@
             <div class="control-group">
               <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
               <div class="controls">
-                <textarea name="comment" cols="40" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="input-xxlarge"></textarea>
+                <textarea name="comment" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="input-xxlarge"></textarea>
               </div>
             </div>
             <button id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>

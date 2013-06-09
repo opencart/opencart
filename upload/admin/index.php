@@ -138,6 +138,7 @@ try {
 } catch(Exception $exception) {
 	// Catch any errors and log them!
 	if ($config->get('config_error_display')) {
+		echo $exception->getMessage();
 		echo sprintf($language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 	}
 	

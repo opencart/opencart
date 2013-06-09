@@ -108,9 +108,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-reason"><?php echo $entry_reason; ?></label>
+              <label class="control-label" for="input-return-reason"><?php echo $entry_return_reason; ?></label>
               <div class="controls">
-                <select name="return_reason_id" id="input-reason">
+                <select name="return_reason_id" id="input-return-reason">
                   <?php foreach ($return_reasons as $return_reason) { ?>
                   <?php if ($return_reason['return_reason_id'] == $return_reason_id) { ?>
                   <option value="<?php echo $return_reason['return_reason_id']; ?>" selected="selected"><?php echo $return_reason['name']; ?></option>
@@ -142,9 +142,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-action"><?php echo $entry_action; ?></label>
+              <label class="control-label" for="input-return-action"><?php echo $entry_return_action; ?></label>
               <div class="controls">
-                <select name="return_action_id" id="input-action">
+                <select name="return_action_id" id="input-return-action">
                   <option value="0"></option>
                   <?php foreach ($return_actions as $return_action) { ?>
                   <?php if ($return_action['return_action_id'] == $return_action_id) { ?>
@@ -157,9 +157,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+              <label class="control-label" for="input-return-status"><?php echo $entry_return_status; ?></label>
               <div class="controls">
-                <select name="return_status_id" id="input-status">
+                <select name="return_status_id" id="input-return-status">
                   <?php foreach ($return_statuses as $return_status) { ?>
                   <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
                   <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>

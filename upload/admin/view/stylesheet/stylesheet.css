@@ -1,6 +1,6 @@
-html, body, label, .control-group input, textarea, select {
+html, body, label, .control-group input, textarea, select, td {
 	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
+	font-size: 12px;
 	line-height: 15px;
 }
 
@@ -8,12 +8,6 @@ html, body, label, .control-group input, textarea, select {
 	font-size: 14px;
 	line-height: 20px;
 }
-
-.btn-group .btn, .btn {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 13px;
-}
-
 .brand {
 	margin: 0px;
 	padding-top: 0px;

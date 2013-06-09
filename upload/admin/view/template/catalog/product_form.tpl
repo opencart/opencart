@@ -728,7 +728,7 @@
           </div>
           <div class="tab-pane" id="tab-reward">
             <div class="control-group">
-              <label class="control-label" for="input-points"><?php echo $entry_points; ?> <span class="help-block"><?php echo $help_stock_status; ?></span></label>
+              <label class="control-label" for="input-points"><?php echo $entry_points; ?> <span class="help-block"><?php echo $help_points; ?></span></label>
               <div class="controls">
                 <input type="text" name="points" value="<?php echo $points; ?>" placeholder="<?php echo $entry_points; ?>" id="input-points" class="input-small" />
               </div>

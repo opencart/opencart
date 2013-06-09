@@ -139,8 +139,12 @@ html, body, label, .control-group input, textarea, select, td {
 	height: 200px;
 	overflow-y: scroll;
 }
+.pagination {
+	margin: 0;
+}
 .results {
-	float: right;
+	margin-top: 5px;
+	text-align: right;
 }
 .chart {
 	width: 30px;

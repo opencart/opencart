@@ -91,7 +91,7 @@
 </div>
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
-CKEDITOR.replace('message', {
+CKEDITOR.replace('input-message', {
 	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
@@ -198,7 +198,7 @@ $('#product').delegate('.icon-minus-sign', 'click', function() {
 });
 
 function send(url) {
-	$('textarea[name=\'message\']').html(CKEDITOR.instances.message.getData());
+	$('textarea[name=\'message\']').html(CKEDITOR.instances['input-message'].getData());
 	
 	$.ajax({
 		url: url,

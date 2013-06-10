@@ -147,13 +147,13 @@ class ControllerLocalisationLocation extends Controller {
 		$this->data['breadcrumbs'] =   array();
 		
 		$this->data['breadcrumbs'][] =   array(
-			'text'      =>  $this->language->get('text_home'),
+			'text' =>  $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
 		$this->data['breadcrumbs'][] =   array(
-			'text'      =>  $this->language->get('heading_title'),
-			'href'      =>  $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL')
+			'text' =>  $this->language->get('heading_title'),
+			'href' =>  $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
 		$this->data['insert'] = $this->url->link('localisation/location/insert',  'token=' . $this->session->data['token'] . $url, 'SSL');

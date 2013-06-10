@@ -1,8 +1,12 @@
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
 <?php } ?>
 <?php if ($success) { ?>
-<div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+<div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+  <button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
 <?php } ?>
 <table class="table table-striped table-bordered table-hover">
   <thead>
@@ -33,5 +37,11 @@
     <?php } ?>
   </tbody>
 </table>
-<div class="pagination"><?php echo $pagination; ?></div>
-<div class="results"><?php echo $results; ?></div>
+<div class="row-fluid">
+  <div class="span6">
+    <div class="pagination"><?php echo $pagination; ?></div>
+  </div>
+  <div class="span6">
+    <div class="results"><?php echo $results; ?></div>
+  </div>
+</div>

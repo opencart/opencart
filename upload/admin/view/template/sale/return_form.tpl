@@ -6,15 +6,19 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-return" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-return" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-return" data-toggle="tab"><?php echo $tab_return; ?></a></li>
           <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
@@ -82,10 +86,9 @@
           </div>
           <div class="tab-pane" id="tab-product">
             <div class="control-group">
-              <label class="control-label" for="input-product"><span class="required">*</span> <?php echo $entry_product; ?></label>
+              <label class="control-label" for="input-product"><span class="required">*</span> <?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
               <div class="controls">
                 <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-                <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
                 <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
                 <?php if ($error_product) { ?>
                 <span class="error"><?php echo $error_product; ?></span>
@@ -105,9 +108,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-reason"><?php echo $entry_reason; ?></label>
+              <label class="control-label" for="input-return-reason"><?php echo $entry_return_reason; ?></label>
               <div class="controls">
-                <select name="return_reason_id" id="input-reason">
+                <select name="return_reason_id" id="input-return-reason">
                   <?php foreach ($return_reasons as $return_reason) { ?>
                   <?php if ($return_reason['return_reason_id'] == $return_reason_id) { ?>
                   <option value="<?php echo $return_reason['return_reason_id']; ?>" selected="selected"><?php echo $return_reason['name']; ?></option>
@@ -139,9 +142,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-action"><?php echo $entry_action; ?></label>
+              <label class="control-label" for="input-return-action"><?php echo $entry_return_action; ?></label>
               <div class="controls">
-                <select name="return_action_id" id="input-action">
+                <select name="return_action_id" id="input-return-action">
                   <option value="0"></option>
                   <?php foreach ($return_actions as $return_action) { ?>
                   <?php if ($return_action['return_action_id'] == $return_action_id) { ?>
@@ -154,9 +157,9 @@
               </div>
             </div>
             <div class="control-group">
-              <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+              <label class="control-label" for="input-return-status"><?php echo $entry_return_status; ?></label>
               <div class="controls">
-                <select name="return_status_id" id="input-status">
+                <select name="return_status_id" id="input-return-status">
                   <?php foreach ($return_statuses as $return_status) { ?>
                   <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
                   <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>
@@ -227,5 +230,5 @@ $('input[name=\'product\']').autocomplete({
 		$('input[name=\'model\']').val(item['model']);	
 	}
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

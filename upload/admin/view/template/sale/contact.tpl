@@ -8,12 +8,12 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-envelope"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button id="button-send" class="btn" onclick="send('index.php?route=sale/contact/send&token=<?php echo $token; ?>');"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form class="form-horizontal">
-        <div class="buttons">
-          <button id="button-send" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
-          <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
         <div class="control-group">
           <label class="control-label" for="input-store"><?php echo $entry_store; ?></label>
           <div class="controls">
@@ -50,28 +50,25 @@
           </div>
         </div>
         <div class="control-group to" id="to-customer">
-          <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+          <label class="control-label" for="input-customer"><?php echo $entry_customer; ?> <span class="help-block"><?php echo $help_customer; ?></span></label>
           <div class="controls">
             <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" />
-            <a data-toggle="tooltip" title="<?php echo $help_customer; ?>"><i class="icon-info-sign"></i></a>
             <br />
             <div id="customer" class="well well-small scrollbox"></div>
           </div>
         </div>
         <div class="control-group to" id="to-affiliate">
-          <label class="control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
+          <label class="control-label" for="input-affiliate"><?php echo $entry_affiliate; ?> <span class="help-block"><?php echo $help_affiliate; ?></span></label>
           <div class="controls">
             <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" />
-            <a data-toggle="tooltip" title="<?php echo $help_affiliate; ?>"><i class="icon-info-sign"></i></a>
             <br />
             <div id="affiliate" class="well well-small scrollbox"></div>
           </div>
         </div>
         <div class="control-group to" id="to-product">
-          <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
+          <label class="control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
           <div class="controls">
             <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-            <a data-toggle="tooltip" title="<?php echo $help_product; ?>"><i class="icon-info-sign"></i></a>
             <br />
             <div id="product" class="well well-small scrollbox"></div>
           </div>
@@ -94,7 +91,7 @@
 </div>
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
-CKEDITOR.replace('message', {
+CKEDITOR.replace('input-message', {
 	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
@@ -200,11 +197,11 @@ $('#product').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 
-$('#button-send').on('click', function() {
-	$('textarea[name=\'message\']').html(CKEDITOR.instances.message.getData());
+function send(url) {
+	$('textarea[name=\'message\']').html(CKEDITOR.instances['input-message'].getData());
 	
 	$.ajax({
-		url: 'index.php?route=sale/contact/send&token=<?php echo $token; ?>',
+		url: url,
 		type: 'post',
 		data: $('select, input, textarea'),		
 		dataType: 'json',
@@ -250,6 +247,6 @@ $('#button-send').on('click', function() {
 			}				
 		}
 	});
-});
+}
 //--></script> 
 <?php echo $footer; ?>

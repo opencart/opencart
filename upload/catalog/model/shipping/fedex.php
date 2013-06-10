@@ -79,10 +79,10 @@ class ModelShippingFedex extends Model {
           	$xml .= '					</ns1:Contact>';
 			$xml .= '					<ns1:Address>';
 			
-			if ($country_info['iso_code_2'] == 'US') {
+			if (in_array($country_info['iso_code_2'], array('US', 'CA'))) {
 				$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['code'] : '') . '</ns1:StateOrProvinceCode>';
 			} else {
-				$xml .= '						<ns1:StateOrProvinceCode>' . ($zone_info ? $zone_info['name'] : '') . '</ns1:StateOrProvinceCode>';
+				$xml .= '						<ns1:StateOrProvinceCode></ns1:StateOrProvinceCode>';
 			}
 			
 			$xml .= '						<ns1:PostalCode>' . $this->config->get('fedex_postcode') . '</ns1:PostalCode>';
@@ -100,10 +100,10 @@ class ModelShippingFedex extends Model {
 			$xml .= '						<ns1:StreetLines>' . $address['address_1'] . '</ns1:StreetLines>';
 			$xml .= '						<ns1:City>' . $address['city'] . '</ns1:City>';
 			
-			if ($address['iso_code_2'] == 'US') {
+			if (in_array($address['iso_code_2'], array('US', 'CA'))) {
 				$xml .= '						<ns1:StateOrProvinceCode>' . $address['zone_code'] . '</ns1:StateOrProvinceCode>';
 			} else {
-				$xml .= '						<ns1:StateOrProvinceCode>' . $address['zone'] . '</ns1:StateOrProvinceCode>';
+				$xml .= '						<ns1:StateOrProvinceCode></ns1:StateOrProvinceCode>';
 			}
 			
 			$xml .= '						<ns1:PostalCode>' . $address['postcode'] . '</ns1:PostalCode>';

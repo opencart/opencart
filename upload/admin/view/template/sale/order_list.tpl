@@ -18,10 +18,14 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" class="btn"><i class="icon-print"></i> <?php echo $button_invoice; ?></button>
+        <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+        <button type="submit" form="form-order" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+      </div>
     </div>
     <div class="box-content">
-      <form action="" method="post" enctype="multipart/form-data" id="form">
-        <div class="buttons"><a onclick="$('#form').attr('action', '<?php echo $invoice; ?>'); $('#form').attr('target', '_blank'); $('#form').submit();" class="btn"><i class="icon-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <a onclick="$('#form').attr('action', '<?php echo $delete; ?>'); $('#form').attr('target', '_self'); $('#form').submit();" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></a></div>
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-order">
         <table class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
@@ -111,8 +115,14 @@
           </tbody>
         </table>
       </form>
-      <div class="pagination"><?php echo $pagination; ?></div>
-      <div class="results"><?php echo $results; ?></div>
+      <div class="row-fluid">
+        <div class="span6">
+          <div class="pagination"><?php echo $pagination; ?></div>
+        </div>
+        <div class="span6">
+          <div class="results"><?php echo $results; ?></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
@@ -158,7 +168,7 @@ $('#button-filter').on('click', function() {
 				
 	location = url;
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'filter_customer\']').autocomplete({
 	'source': function(request, response) {

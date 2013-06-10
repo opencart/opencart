@@ -31,7 +31,7 @@
             <?php } ?>
           </div>
         </div>
-        <button type="submit" class="btn"><i class="icon-key"></i> <?php echo $button_login; ?></button>
+        <button type="submit" class="btn btn-primary"><i class="icon-key"></i> <?php echo $button_login; ?></button>
         <?php if ($redirect) { ?>
         <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
         <?php } ?>

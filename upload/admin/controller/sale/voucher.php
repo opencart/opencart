@@ -194,8 +194,7 @@ class ControllerSaleVoucher extends Controller {
 		}
 									
 		$this->data['heading_title'] = $this->language->get('heading_title');
-		
-		$this->data['text_send'] = $this->language->get('text_send');
+
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_code'] = $this->language->get('column_code');
@@ -209,6 +208,7 @@ class ControllerSaleVoucher extends Controller {
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
+ 		$this->data['button_send'] = $this->language->get('button_send');
  
  		$this->data['token'] = $this->session->data['token'];
 		
@@ -298,6 +298,7 @@ class ControllerSaleVoucher extends Controller {
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$this->data['button_send'] = $this->language->get('button_send');
 		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		$this->data['tab_voucher_history'] = $this->language->get('tab_voucher_history');
@@ -597,16 +598,29 @@ class ControllerSaleVoucher extends Controller {
     	$this->language->load('sale/voucher');
 		
 		$json = array();
-    	
+ 		
      	if (!$this->user->hasPermission('modify', 'sale/voucher')) {
-      		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['voucher_id'])) {
-			$this->load->model('sale/voucher');
+      		$json['error'] = $this->language->get('error_permission');
+		}
 			
-			$this->model_sale_voucher->sendVoucher($this->request->get['voucher_id']);
+    	if (!$json) {
+			$this->load->model('sale/voucher');
+		
+			$vouchers = array();
+	
+			if (isset($this->request->post['selected'])) {
+				$vouchers = $this->request->post['selected'];
+			} elseif (isset($this->request->post['voucher_id'])) {
+				$vouchers[] = $this->request->post['voucher_id'];
+			}
+
+			foreach ($vouchers as $voucher_id) {
+				$this->model_sale_voucher->sendVoucher($voucher_id);
+			}
 			
 			$json['success'] = $this->language->get('text_sent');
 		}	
+		
 		
 		$this->response->setOutput(json_encode($json));			
   	}	

@@ -14,7 +14,6 @@ $_['text_date_ordered']   = 'Order Date:';
 $_['text_customer']       = 'Customer:';
 $_['text_email']          = 'E-Mail:';
 $_['text_telephone']      = 'Telephone:';
-$_['text_return_status']  = 'Return Status:';
 $_['text_date_added']     = 'Date Added:';
 $_['text_date_modified']  = 'Date Modified:';
 $_['text_product']        = 'Product:';
@@ -22,6 +21,7 @@ $_['text_model']          = 'Model:';
 $_['text_quantity']       = 'Quantity:';
 $_['text_return_reason']  = 'Return Reason:';
 $_['text_return_action']  = 'Return Action:';
+$_['text_return_status']  = 'Return Status:';
 $_['text_comment']        = 'Comment:';
 
 // Column
@@ -48,12 +48,12 @@ $_['entry_telephone']     = 'Telephone';
 $_['entry_product']       = 'Product';
 $_['entry_model']         = 'Model';
 $_['entry_quantity']      = 'Quantity';
-$_['entry_reason']        = 'Return Reason';
 $_['entry_opened']        = 'Opened';
 $_['entry_comment']       = 'Comment';
-$_['entry_status']        = 'Return Status';
+$_['entry_return_reason'] = 'Return Reason';
+$_['entry_return_action'] = 'Return Action';
+$_['entry_return_status'] = 'Return Status';
 $_['entry_notify']        = 'Notify Customer';
-$_['entry_action']        = 'Return Action';
 
 // Help
 $_['help_product']        = '(Autocomplete)';

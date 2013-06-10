@@ -52,6 +52,7 @@ $_['button_reward']         = 'Apply Points';
 $_['button_quote']          = 'Get Quotes';
 
 // Error
+$_['error_exception']       = 'Error Code(%s): %s in %s on line %s';
 $_['error_upload_1']        = 'Warning: The uploaded file exceeds the upload_max_filesize directive in php.ini!';
 $_['error_upload_2']        = 'Warning: The uploaded file exceeds the MAX_FILE_SIZE directive that was specified in the HTML form!';
 $_['error_upload_3']        = 'Warning: The uploaded file was only partially uploaded!';

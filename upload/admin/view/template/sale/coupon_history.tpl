@@ -24,5 +24,11 @@
     <?php } ?>
   </tbody>
 </table>
-<div class="pagination"><?php echo $pagination; ?></div>
-<div class="results"><?php echo $results; ?></div>
+<div class="row-fluid">
+  <div class="span6">
+    <div class="pagination"><?php echo $pagination; ?></div>
+  </div>
+  <div class="span6">
+    <div class="results"><?php echo $results; ?></div>
+  </div>
+</div>

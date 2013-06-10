@@ -14,6 +14,9 @@
     <div class="box-heading">
       <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
+        <?php if ($voucher_id) { ?>
+        <button type="button" id="button-send" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
+        <?php } ?>
         <button type="submit" form="form-voucher" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
@@ -127,6 +130,38 @@
   </div>
 </div>
 <?php if ($voucher_id) { ?>
+<script type="text/javascript"><!--
+$('#button-send').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/voucher/send&token=<?php echo $token; ?>',
+		type: 'post',
+		dataType: 'json',
+		data: 'voucher_id=<?php echo $voucher_id; ?>',
+		beforeSend: function() {
+			$('#button-send i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-send').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-send i').replaceWith('<i class="icon-envelope"></i>');
+			$('#button-send').prop('disabled', false);
+		},
+		success: function(json) {
+			$('.alert').remove();
+			
+			if (json['error']) {
+				$('.box').before('<div class="alert alert-error">' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+				$('.box').before('<div class="alert alert-success">' + json['success'] + '</div>');
+			}		
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+})
+//--></script> 
 <script type="text/javascript"><!--
 $('#history .pagination a').on('click', function() {
 	$('#history').load(this.href);

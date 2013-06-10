@@ -18,7 +18,9 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+      <div class="buttons">
+        <button type="button" id="button-send" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
+        <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
         <button type="submit" form="form-voucher" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
     </div>
@@ -82,8 +84,7 @@
               <td class="left"><?php echo $voucher['theme']; ?></td>
               <td class="left"><?php echo $voucher['status']; ?></td>
               <td class="left"><?php echo $voucher['date_added']; ?></td>
-              <td class="right">[ <a onclick="sendVoucher('<?php echo $voucher['voucher_id']; ?>');"><?php echo $text_send; ?></a> ]
-                <?php foreach ($voucher['action'] as $action) { ?>
+              <td class="right"><?php foreach ($voucher['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
                 <?php } ?></td>
             </tr>
@@ -108,19 +109,23 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function sendVoucher(voucher_id) {
+$('#button-send').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/voucher/send&token=<?php echo $token; ?>&voucher_id=' + voucher_id,
+		url: 'index.php?route=sale/voucher/send&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
+		data: $('input[name^=\'selected\']'),
 		beforeSend: function() {
-			$('.success, .warning').remove();
-			$('.box').before('<div class="attention"><img src="view/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
-		},
+			$('#button-send i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-send').prop('disabled', true);
+		},	
 		complete: function() {
-			$('.attention').remove();
+			$('#button-send i').replaceWith('<i class="icon-envelope"></i>');
+			$('#button-send').prop('disabled', false);
 		},
 		success: function(json) {
+			$('.alert').remove();
+			
 			if (json['error']) {
 				$('.box').before('<div class="alert alert-error">' + json['error'] + '</div>');
 			}
@@ -128,8 +133,11 @@ function sendVoucher(voucher_id) {
 			if (json['success']) {
 				$('.box').before('<div class="alert alert-success">' + json['success'] + '</div>');
 			}		
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
-	});
-}
+	});	
+})
 //--></script> 
 <?php echo $footer; ?>

@@ -27,7 +27,7 @@ $_['text_view']                     = 'View';
 $_['text_home']                     = '<i class="icon-home icon-large"></i>';
 
 // Button
-$_['button_insert']                 = 'Insert';
+$_['button_insert']                 = 'Add New';
 $_['button_delete']                 = 'Delete';
 $_['button_save']                   = 'Save';
 $_['button_cancel']                 = 'Cancel';

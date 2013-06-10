@@ -22,7 +22,7 @@
         <div class="control-group">
           <label class="control-label" for="input-postcode"><span class="required">*</span> <?php echo $entry_postcode; ?></label>
           <div class="controls">
-            <input type="text" name="auspost_postcode" value="<?php echo $auspost_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" maxlength="4" class="input-mini" />
+            <input type="text" name="auspost_postcode" value="<?php echo $auspost_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" maxlength="4" class="input-small" />
             <?php if ($error_postcode) { ?>
             <span class="error"><?php echo $error_postcode; ?></span>
             <?php } ?>

@@ -98,9 +98,9 @@ class ControllerExtensionInstaller extends Controller {
 					
 					// Clear temporary files
 					$json['step'][] = array(
-						'text' => $this->language->get('text_clear'),
-						'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/clear', 'token=' . $this->session->data['token'], 'SSL')),
-						'path' => ''
+						'text' => $this->language->get('text_remove'),
+						'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->data['token'], 'SSL')),
+						'path' => $path
 					);
 				} else {
 					$json['error'] = $this->language->get('error_file');
@@ -192,11 +192,11 @@ class ControllerExtensionInstaller extends Controller {
 			
 						// Clear temporary files
 						$json['step'][] = array(
-							'text' => $this->language->get('text_clear'),
-							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/clear', 'token=' . $this->session->data['token'], 'SSL')),
-							'path' => ''
+							'text' => $this->language->get('text_remove'),
+							'url'  => str_replace('&amp;', '&', $this->url->link('extension/installer/remove', 'token=' . $this->session->data['token'], 'SSL')),
+							'path' => $path
 						);	
-										
+																
 						zip_close($zip);
 					} else {
 						$json['error'] = $this->language->get('error_unzip');
@@ -442,6 +442,61 @@ class ControllerExtensionInstaller extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 		
+  	public function remove() {
+		$this->language->load('extension/installer');
+		
+		$json = array();
+		
+		if (!$this->user->hasPermission('modify', 'extension/installer')) {
+      		$json['error'] = $this->language->get('error_permission');
+    	}
+		
+		$directory = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']);
+
+		if (!is_dir($directory)) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
+		if (!$json) {
+			// Get a list of files ready to upload
+			$files = array();
+			
+			$path = array($directory . '*');
+			
+			while(count($path) != 0) {
+				$next = array_shift($path);
+		
+				foreach(glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+					
+					$files[] = $file;
+				}
+			}
+						
+			sort($files);
+			
+			rsort($files);
+						
+			foreach ($files as $file) {
+				if (is_file($file)) {
+					unlink($file);
+				} elseif (is_dir($file)) {
+					rmdir($file);	
+				}
+			}
+				
+			if (file_exists($directory)) {
+				rmdir($directory);
+			}
+			
+			$json['success'] = $this->language->get('text_success');
+		}
+		
+		$this->response->setOutput(json_encode($json));
+  	}
+		
   	public function clear() {
 		$this->language->load('extension/installer');
 		
@@ -489,10 +544,10 @@ class ControllerExtensionInstaller extends Controller {
 				}
 			}
 			
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_clear');
 		}
 		
 		$this->response->setOutput(json_encode($json));
-  	}	
+  	}		
 }
 ?>

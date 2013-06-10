@@ -9,7 +9,8 @@ $_['text_ftp']             = 'Copying Files!';
 $_['text_sql']             = 'Running SQL!';
 $_['text_xml']             = 'Applying Modifications!';
 $_['text_php']             = 'Running PHP!';
-$_['text_clear']           = 'Removing temporary flies!';
+$_['text_remove']          = 'Removing temporary files!';
+$_['text_clear']           = 'Success: You have cleared all temporary files!';
 
 // Entry
 $_['entry_upload']         = 'Upload file';
@@ -21,7 +22,7 @@ $_['help_upload']          = 'Requires a zip or xml modification file.';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify extensions!';
-$_['error_temporary']      = 'Warning: There are some temporary files that require deleting. Click clear button to remove them!';
+$_['error_temporary']      = 'Warning: There are some temporary files that require deleting. Click the clear button to remove them!';
 $_['error_upload']         = 'File could not be uploaded!';
 $_['error_filetype']       = 'Invalid file type!';
 $_['error_file']           = 'File could not be found!';

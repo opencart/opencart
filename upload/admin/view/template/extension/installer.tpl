@@ -13,15 +13,17 @@
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons">
-        <button type="button" id="button-clear" class="btn"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
-      </div>
     </div>
     <div class="box-content form-horizontal">
       <div class="control-group">
         <label class="control-label" for="button-upload"><?php echo $entry_upload; ?> <span class="help-block"><?php echo $help_upload; ?></span></label>
         <div class="controls">
           <button type="button" id="button-upload" class="btn btn-primary" onclick="$('input[name=\'file\']').val(''); $('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+          <?php if ($error_warning) { ?>
+          <button type="button" id="button-clear" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
+          <?php } else { ?>
+          <button type="button" id="button-clear" disabled="disabled" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
+          <?php } ?>
         </div>
       </div>
       <div id="progress" class="control-group">
@@ -88,21 +90,21 @@ $('#file').on('change', function() {
 			if (json['step']) {
 				step = json['step'];
 				total = step.length;
+				
+				if (json['overwrite'].length) {
+					html = '';
+					
+					for (i = 0; i < json['overwrite'].length; i++) {
+						html += json['overwrite'][i] + "\n";
+					}
+					
+					$('#overwrite').html(html);
+					
+					$('#button-continue').prop('disabled', false);
+				} else {
+					next();
+				}				
 			}	
-						
-			if (json['overwrite'].length) {
-				html = '';
-				
-				for (i = 0; i < json['overwrite'].length; i++) {
-					html += json['overwrite'][i] + "\n";
-				}
-				
-				$('#overwrite').html(html);
-				
-				$('#button-continue').prop('disabled', false);
-			} else {
-				next();
-			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -134,6 +136,8 @@ function next() {
 					$('#progress .progress').addClass('progress-danger');
 					
 					$('#progress .help-block').html(json['error']);
+					
+					$('#button-clear').prop('disabled', false);
 				} 
 				
 				if (json['success']) {
@@ -141,11 +145,11 @@ function next() {
 					$('#progress .progress').addClass('progress-success');
 					
 					$('#progress .help-block').html(json['success']);
-				}	
-				
+				}
+									
 				if (!json['error'] && !json['success']) {
 					next();
-				}							
+				}
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -154,9 +158,7 @@ function next() {
 	}
 }
 
-$('#button-clear').bind('click', function(event) {
-	event.preventDefault();
-	
+$('#button-clear').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',	
 		dataType: 'json',
@@ -165,19 +167,20 @@ $('#button-clear').bind('click', function(event) {
 			$('#button-clear').prop('disabled', true);
 		},	
 		complete: function() {
-			$('#button-clear i').replaceWith('<i class="icon-upload"></i>');
-			$('#button-clear').prop('disabled', false);
+			$('#button-clear i').replaceWith('<i class="icon-eraser"></i>');
 		},		
 		success: function(json) {
 			$('.alert').remove();
-			
+				
 			if (json['error']) {
 				$('.box').before('<div class="alert alert-error">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-			
+			} 
+		
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-error">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}				
+				$('.box').before('<div class="alert alert-success">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				$('#button-clear').prop('disabled', true);
+			}
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

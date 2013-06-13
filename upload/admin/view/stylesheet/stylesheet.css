@@ -4,34 +4,72 @@ html, body, label, .control-group input, textarea, select, td {
 	line-height: 15px;
 }
 
-.alert {
-	font-size: 14px;
-	line-height: 20px;
-}
-.brand {
+.navbar .brand {
 	margin: 0px;
-	padding-top: 0px;
-	padding-left: 5px;
+	padding: 9px 5px 10px 0px;
 }
+
 .navbar {
-	border-bottom: 1px solid #DDDDDD;
 	margin-bottom: 14px;
-	-webkit-box-shadow: 0 1px 10px rgba(0,0,0,.1);
-	-moz-box-shadow: 0 1px 10px rgba(0,0,0,.1);
-	box-shadow: 0 1px 10px rgba(0,0,0,.1);
+	border-bottom: 5px solid #00C3F4;
 }
-.navbar-inverse .nav > li > a {
-	text-shadow: 1px 1px 0px #000000;
-	cursor: pointer;
-}
-.navbar-inner {
+
+.navbar-inverse .navbar-inner {
+	background-color: #2D2D2E;
+	background-repeat: no-repeat, repeat, no-repeat;
+	background-size: auto, 5px 5px, 100% 6px;
+	background-position: center, center, bottom;
+	background-image:  linear-gradient(
+		90deg, 
+		transparent,
+		transparent 20%,
+		rgba(255, 255, 255, 0.1) 50%,
+		transparent 80%
+	), linear-gradient(
+		-135deg,
+		transparent 50%,
+		rgba(255, 255, 255, 0.05) 50%,
+		rgba(255, 255, 255, 0.05) 50%,
+		transparent 60%,
+		transparent 100%
+	), linear-gradient(
+		to bottom, 
+		transparent,
+		rgba(0, 0, 0, 0.50) 100%
+	);
+	-webkit-box-shadow: none;
+    -moz-box-shadow: none;
+    box-shadow: none;
+	border-top: none;
+	border-left: none;
+	border-right: none;
+	border-bottom: 1px solid #000;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
 }
+
+.navbar .nav > li > a {
+	
+}
+
+.navbar-inverse .nav > li > a {
+  color: #AAAAAA;
+  text-shadow: 1px 1px 1px #000000;
+  cursor: pointer;
+}
+
+
+
+
 .breadcrumb li + li:before {
 	content: "   /   ";
 	font-family: FontAwesome;
+}
+
+.alert {
+	font-size: 14px;
+	line-height: 20px;
 }
 #content {
 	padding: 10px 15px 0px 15px;
@@ -85,7 +123,7 @@ html, body, label, .control-group input, textarea, select, td {
 	margin-right: 5px;
 }
 .box-content {
-	padding: 10px;
+	padding: 20px 10px 10px 10px;
 	border-left: 1px solid #CCCCCC;
 	border-right: 1px solid #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;

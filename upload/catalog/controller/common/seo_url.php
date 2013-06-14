@@ -38,7 +38,8 @@ class ControllerCommonSeoUrl extends Controller {
 						$this->request->get['information_id'] = $url[1];
 					}	
 				} else {
-					$this->request->get['route'] = 'error/not_found';	
+					$this->request->get['route'] = 'error/not_found';
+					return $this->forward($this->request->get['route']);
 				}
 			}
 			

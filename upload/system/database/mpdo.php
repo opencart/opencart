@@ -7,22 +7,22 @@
 */
 
 final class mPDO {
-	private $pdo = null;
+    private $pdo = null;
     private $statement = null;
 
-	public function __construct($hostname, $username, $password, $database, $port = "3306") {
-		
+    public function __construct($hostname, $username, $password, $database, $port = "3306") {
+
         try{
             $this->pdo = new PDO("mysql:host=".$hostname.";port=".$port.";dbname=".$database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
         }catch(PDOException $e){
             trigger_error('Error: Could not make a database link ( '. $e->getMessage() . '). Error Code : ' . $e->getCode() . ' <br />');    
         }
         
-		$this->pdo->exec("SET NAMES 'utf8'");
-		$this->pdo->exec("SET CHARACTER SET utf8");
-		$this->pdo->exec("SET CHARACTER_SET_CONNECTION=utf8");
-		$this->pdo->exec("SET SQL_MODE = ''");
-	
+        $this->pdo->exec("SET NAMES 'utf8'");
+        $this->pdo->exec("SET CHARACTER SET utf8");
+        $this->pdo->exec("SET CHARACTER_SET_CONNECTION=utf8");
+        $this->pdo->exec("SET SQL_MODE = ''");
+
     }
 
     public function prepare($sql){
@@ -54,8 +54,8 @@ final class mPDO {
         }
     }
 
-	public function query($sql, $params = array()) {
-		$this->statement = $this->pdo->prepare($sql);
+    public function query($sql, $params = array()) {
+        $this->statement = $this->pdo->prepare($sql);
         $result = false;
         
         try{
@@ -84,29 +84,29 @@ final class mPDO {
             return $result; // should be false
         }
 
-	}
-	
+    }
+
     // From http://www.php.net/manual/de/function.mysql-real-escape-string.php#98506
-	public function escape($value) {
+    public function escape($value) {
         // Maybe we should use quote for this.
-	    $search=array("\\","\0","\n","\r","\x1a","'",'"');
+        $search=array("\\","\0","\n","\r","\x1a","'",'"');
         $replace=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
         return str_replace($search,$replace,$value);
     } 
 
-	public function countAffected() {
+    public function countAffected() {
         if ($this->statement)
-		    return $this->statement->rowCount();
+            return $this->statement->rowCount();
         else
             return 0;
-	}
+    }
 
-	public function getLastId() {
-		return $this->pdo->lastInsertId();
-	}
+    public function getLastId() {
+        return $this->pdo->lastInsertId();
+    }
 
-	public function __destruct() {
-		$this->pdo = null;
-	}
+    public function __destruct() {
+        $this->pdo = null;
+    }
 }
 ?>

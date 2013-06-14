@@ -10,7 +10,7 @@ html, body, label, .control-group input, textarea, select, td {
 }
 
 .navbar {
-	margin-bottom: 14px;
+	margin-bottom: 3px;
 	border-bottom: 5px solid #00C3F4;
 }
 
@@ -19,7 +19,7 @@ html, body, label, .control-group input, textarea, select, td {
 	background-repeat: no-repeat, repeat, no-repeat;
 	background-size: auto, 5px 5px, 100% 6px;
 	background-position: center, center, bottom;
-	background-image:  linear-gradient(
+	background-image: linear-gradient(
 		90deg, 
 		transparent,
 		transparent 20%,
@@ -35,7 +35,7 @@ html, body, label, .control-group input, textarea, select, td {
 	), linear-gradient(
 		to bottom, 
 		transparent,
-		rgba(0, 0, 0, 0.50) 100%
+		rgba(0, 0, 0, 0.40) 100%
 	);
 	-webkit-box-shadow: none;
     -moz-box-shadow: none;
@@ -49,23 +49,66 @@ html, body, label, .control-group input, textarea, select, td {
 	border-radius: 0;
 }
 
+.navbar .nav {
+	
+}
+
 .navbar .nav > li > a {
 	
 }
 
 .navbar-inverse .nav > li > a {
-  color: #AAAAAA;
-  text-shadow: 1px 1px 1px #000000;
-  cursor: pointer;
+	color: #AAAAAA;
+	text-shadow: 1px 1px 1px #000000;
+	cursor: pointer;
+}
+
+
+
+.breadcrumb {
+	border: 1px solid #E5E5E5;
+	background: #FFFFFF;
+	padding: 0px 15px;
+	margin-bottom: 15px;
+}
+.breadcrumb li {
+	position: relative;
+}
+.breadcrumb li + li {
+	padding-left: 35px;
+}
+.breadcrumb li + li a {
+	font-size: 12px;
+}
+.breadcrumb li a {
+	color: #464646;	
+	display: inline-block;
+	vertical-align: middle;
+	padding: 5px 0px;
+}
+.breadcrumb li a:hover {
+	text-decoration: none;
+}
+.breadcrumb li:first-child a {
+	font-size: 20px;
+}
+.breadcrumb li a:after {
+	position: absolute;
+	top: 4px;
+	content: '';
+	display: inline-block;
+	width: 21px; 
+	height: 21px;
+	border-top: 1px solid #E5E5E5;
+	border-right: 1px solid #E5E5E5;
+	transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	-webkit-transform: rotate(45deg);
 }
 
 
 
 
-.breadcrumb li + li:before {
-	content: "   /   ";
-	font-family: FontAwesome;
-}
 
 .alert {
 	font-size: 14px;
@@ -121,6 +164,7 @@ html, body, label, .control-group input, textarea, select, td {
 	font-weight: normal;
 	color: #00C3F4;
 	margin-right: 5px;
+	text-shadow: none;
 }
 .box-content {
 	padding: 20px 10px 10px 10px;

@@ -174,7 +174,7 @@
           <li class="dropdown" id="help"><a data-toggle="dropdown"><?php echo $text_help; ?> <i class="icon-caret-down"></i></a>
             <ul class="dropdown-menu">
               <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
-              <li><a href="http://doc.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>
+              <li><a href="http://docs.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>
               <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
             </ul>
           </li>

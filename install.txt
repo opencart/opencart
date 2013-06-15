@@ -27,7 +27,7 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 		chmod 0755 or 0777 system/download/
 		chmod 0755 or 0777 image/
 		chmod 0755 or 0777 image/cache/
-		chmod 0755 or 0777 image/data/
+		chmod 0755 or 0777 image/catalog/
 		chmod 0755 or 0777 config.php
 		chmod 0755 or 0777 admin/config.php
 
@@ -56,7 +56,7 @@ These instructions are for a manual installation using FTP, cPanel or other web 
 		system/download/
 		image/
 		image/cache/
-		image/data/
+		image/catalog/
 		config.php
 		admin/config.php
 

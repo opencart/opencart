@@ -6,7 +6,7 @@ html, body, label, .control-group input, textarea, select, td {
 
 .navbar .brand {
 	margin: 0px;
-	padding: 9px 5px 10px 0px;
+	padding: 7px 5px 10px 0px;
 }
 
 .navbar {
@@ -15,6 +15,8 @@ html, body, label, .control-group input, textarea, select, td {
 }
 
 .navbar-inverse .navbar-inner {
+	padding-top: 2px;
+	min-height: 43px;
 	background-color: #2D2D2E;
 	background-repeat: no-repeat, repeat, no-repeat;
 	background-size: auto, 5px 5px, 100% 6px;
@@ -47,14 +49,6 @@ html, body, label, .control-group input, textarea, select, td {
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
-}
-
-.navbar .nav {
-	
-}
-
-.navbar .nav > li > a {
-	
 }
 
 .navbar-inverse .nav > li > a {

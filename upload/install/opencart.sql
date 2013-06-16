@@ -1799,6 +1799,27 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_marketing`
+--
+
+DROP TABLE IF EXISTS `oc_marketing`;
+CREATE TABLE `oc_marketing` (
+  `marketing_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(32) NOT NULL,
+  `description` text NOT NULL,
+  `code` varchar(64) NOT NULL,
+  `clicked` int(5) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`marketing_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_marketing`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_modification`
 --
 
@@ -2006,6 +2027,7 @@ CREATE TABLE `oc_order` (
   `order_status_id` int(11) NOT NULL DEFAULT '0',
   `affiliate_id` int(11) NOT NULL,
   `commission` decimal(15,4) NOT NULL,
+  `tracking` varchar(64) NOT NULL,
   `language_id` int(11) NOT NULL,
   `currency_id` int(11) NOT NULL,
   `currency_code` varchar(3) NOT NULL,
@@ -2313,9 +2335,9 @@ CREATE TABLE `oc_product` (
   `minimum` int(11) NOT NULL DEFAULT '1',
   `sort_order` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
+  `viewed` int(5) NOT NULL DEFAULT '0',
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
-  `viewed` int(5) NOT NULL DEFAULT '0',
   PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

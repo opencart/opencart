@@ -14,9 +14,6 @@
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <link href="view/javascript/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
-<!--
-<link type="text/css" href="http://fonts.googleapis.com/css?family=Open+Sans:400,600,700" rel="stylesheet" />
-//-->
 <link type="text/css" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" />
 <?php foreach ($styles as $style) { ?>
@@ -82,7 +79,12 @@
                     <li><a href="<?php echo $customer_ban_ip; ?>"><?php echo $text_customer_ban_ip; ?></a></li>
                   </ul>
                 </li>
-                <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
+                <li class="dropdown-submenu"><a><?php echo $text_marketing; ?></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
+                    <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
+                  </ul>
+                </li>
                 <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
                 <li class="dropdown-submenu"><a><?php echo $text_voucher; ?></a>
                   <ul class="dropdown-menu">
@@ -189,7 +191,12 @@
                 <?php } ?>
               </ul>
             </li>
-            <li class="dropdown"><a data-toggle="dropdown"><i class="icon-user icon-large"></i></a>
+            <li class="dropdown" id="user">
+              <div>
+                <div style="float: left;"><a data-toggle="dropdown"><img src="http://localhost/opencart/upload/image/catalog/photo.jpg" alt="" title="" /></a></div>
+                <div><a data-toggle="dropdown">Daniel Kerr</a><br /><a data-toggle="dropdown"><small>Administrator</small></a></div>
+                <div><i class="icon-caret-down"></i></div>
+              </div>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
                 <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
@@ -199,9 +206,7 @@
           </ul>
         </div>
         <?php } ?>
-
       </div>
     </div>
   </div>
 </div>
-

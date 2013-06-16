@@ -275,12 +275,15 @@ class ControllerUserUser extends Controller {
     	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
     	$this->data['entry_email'] = $this->language->get('entry_email');
-    	$this->data['entry_user_group'] = $this->language->get('entry_user_group');
+    	$this->data['entry_image'] = $this->language->get('entry_image');
+		$this->data['entry_user_group'] = $this->language->get('entry_user_group');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-    
+ 		$this->data['button_edit'] = $this->language->get('button_edit');
+		$this->data['button_clear'] = $this->language->get('button_clear');
+   
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -398,7 +401,27 @@ class ControllerUserUser extends Controller {
 		} else {
       		$this->data['email'] = '';
     	}
+		
+		if (isset($this->request->post['image'])) {
+			$this->data['image'] = $this->request->post['image'];
+		} elseif (!empty($user_info)) {
+			$this->data['image'] = $user_info['image'];
+		} else {
+			$this->data['image'] = '';
+		}
+		
+		$this->load->model('tool/image');
 
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
+			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+		} elseif (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
+			$this->data['thumb'] = $this->model_tool_image->resize($user_info['image'], 100, 100);
+		} else {
+			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+		}
+		
+		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+		
     	if (isset($this->request->post['user_group_id'])) {
       		$this->data['user_group_id'] = $this->request->post['user_group_id'];
     	} elseif (!empty($user_info)) {

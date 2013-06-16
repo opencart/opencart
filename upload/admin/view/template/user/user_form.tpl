@@ -53,6 +53,15 @@
           </div>
         </div>
         <div class="control-group">
+          <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
+          <div class="controls">
+            <div class="image"> <img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
+              <input type="hidden" name="image" value="<?php echo $image; ?>" />
+              <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+            </div>
+          </div>
+        </div>
+        <div class="control-group">
           <label class="control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
           <div class="controls">
             <select name="user_group_id" id="input-user-group">
@@ -102,4 +111,31 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+function image_upload(field, thumb) {
+	$('#dialog').remove();
+	
+	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
+	
+	$('#dialog').dialog({
+		title: '<?php echo $text_image_manager; ?>',
+		close: function (event, ui) {
+			if ($('#' + field).attr('value')) {
+				$.ajax({
+					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).val()),
+					dataType: 'text',
+					success: function(data) {
+						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
+					}
+				});
+			}
+		},	
+		bgiframe: false,
+		width: 800,
+		height: 400,
+		resizable: false,
+		modal: false
+	});
+};
+//--></script> 
 <?php echo $footer; ?> 

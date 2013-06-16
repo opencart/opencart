@@ -18,6 +18,7 @@ $_['entry_confirm']    = 'Confirm';
 $_['entry_firstname']  = 'First Name';
 $_['entry_lastname']   = 'Last Name';
 $_['entry_email']      = 'E-Mail';
+$_['entry_image']      = 'Image';
 $_['entry_user_group'] = 'User Group';
 $_['entry_status']     = 'Status';
 

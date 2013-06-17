@@ -1592,16 +1592,16 @@ class ControllerSaleOrder extends Controller {
 			$this->data['affiliate_lastname'] = $order_info['affiliate_lastname'];
 			
 			if ($order_info['affiliate_id']) {
-				$this->data['affiliate'] = $this->url->link('sale/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
+				$this->data['affiliate'] = $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
 			} else {
 				$this->data['affiliate'] = '';
 			}
 			
 			$this->data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
 						
-			$this->load->model('sale/affiliate');
+			$this->load->model('marketing/affiliate');
 			
-			$this->data['commission_total'] = $this->model_sale_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']); 
+			$this->data['commission_total'] = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']); 
 
 			$this->load->model('localisation/order_status');
 
@@ -2105,12 +2105,12 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 			
 			if ($order_info && $order_info['affiliate_id']) {
-				$this->load->model('sale/affiliate');
+				$this->load->model('marketing/affiliate');
 				
-				$affiliate_total = $this->model_sale_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
+				$affiliate_total = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
 				
 				if (!$affiliate_total) {
-					$this->model_sale_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $this->request->get['order_id'], $order_info['commission'], $this->request->get['order_id']);
+					$this->model_marketing_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $this->request->get['order_id'], $order_info['commission'], $this->request->get['order_id']);
 					
 					$json['success'] = $this->language->get('text_commission_added');
 				} else {
@@ -2137,9 +2137,9 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 			
 			if ($order_info && $order_info['affiliate_id']) {
-				$this->load->model('sale/affiliate');
+				$this->load->model('marketing/affiliate');
 
-				$this->model_sale_affiliate->deleteTransaction($this->request->get['order_id']);
+				$this->model_marketing_affiliate->deleteTransaction($this->request->get['order_id']);
 				
 				$json['success'] = $this->language->get('text_commission_removed');
 			} else {

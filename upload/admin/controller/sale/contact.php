@@ -100,7 +100,7 @@ class ControllerSaleContact extends Controller {
 				
 				$this->load->model('sale/customer_group');
 				
-				$this->load->model('sale/affiliate');
+				$this->load->model('marketing/affiliate');
 	
 				$this->load->model('sale/order');
 	
@@ -176,9 +176,9 @@ class ControllerSaleContact extends Controller {
 							'limit'  => 10
 						);
 						
-						$email_total = $this->model_sale_affiliate->getTotalAffiliates($affiliate_data);		
+						$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);		
 						
-						$results = $this->model_sale_affiliate->getAffiliates($affiliate_data);
+						$results = $this->model_marketing_affiliate->getAffiliates($affiliate_data);
 				
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
@@ -187,7 +187,7 @@ class ControllerSaleContact extends Controller {
 					case 'affiliate':
 						if (!empty($this->request->post['affiliate'])) {					
 							foreach ($this->request->post['affiliate'] as $affiliate_id) {
-								$affiliate_info = $this->model_sale_affiliate->getAffiliate($affiliate_id);
+								$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 								
 								if ($affiliate_info) {
 									$emails[] = $affiliate_info['email'];

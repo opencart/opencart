@@ -8,11 +8,8 @@ final class MySQLi {
 		if ($this->mysqli->connect_error) {
 			trigger_error('Error: Could not make a database link (' . $this->mysqli->connect_errno . ') ' . $this->mysqli->connect_error);
 		}
-
-		$this->mysqli->query("SET NAMES 'utf8'");
-		$this->mysqli->query("SET CHARACTER SET utf8");
-		$this->mysqli->query("SET CHARACTER_SET_CONNECTION=utf8");
-		$this->mysqli->query("SET SQL_MODE = ''");
+		
+		$this->mysqli->set_charset("utf-8");
 	}
 
 	public function query($sql) {
@@ -24,14 +21,10 @@ final class MySQLi {
 		}
 
 		if (is_resource($result)) {
-			$i = 0;
-
 			$data = array();
 
 			while ($row = $result->fetch_object()) {
-				$data[$i] = $row;
-
-				$i++;
+				$data[] = $row;
 			}
 
 			$result->close();

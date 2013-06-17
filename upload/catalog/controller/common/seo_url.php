@@ -1,5 +1,14 @@
 <?php
 class ControllerCommonSeoUrl extends Controller {
+        private $cached = array();
+                
+        public function __construct() {
+            $query = $this->db->query("SELECT query, keyword FROM " . DB_PREFIX . "url_alias");
+            foreach($query->rows as $row) {
+                $this->cached[$row['keyword']] = $row['query'];
+            }
+        }
+        
 	public function index() {
 		// Add rewrite to url class
 		if ($this->config->get('config_seo_url')) {
@@ -10,13 +19,12 @@ class ControllerCommonSeoUrl extends Controller {
 		if (isset($this->request->get['_route_'])) {
 			$parts = explode('/', $this->request->get['_route_']);
 			
-			if (strlen(end($parts)) == 0) array_pop($parts); // remove any empty arrays from trailing /
+			if (strlen(end($parts)) == 0)
+                            array_pop($parts); // remove any empty arrays from trailing /
 			
-			foreach ($parts as $part) {
-				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($part) . "'");
-				
-				if ($query->num_rows) {
-					$url = explode('=', $query->row['query']);
+			foreach ($parts as $part) {				
+				if (isset($this->cached[$part])) {
+					$url = explode('=', $this->cached[$part]);
 					
 					if ($url[0] == 'product_id') {
 						$this->request->get['product_id'] = $url[1];
@@ -72,10 +80,10 @@ class ControllerCommonSeoUrl extends Controller {
 		foreach ($data as $key => $value) {
 			if (isset($data['route'])) {
 				if (($data['route'] == 'product/product' && $key == 'product_id') || (($data['route'] == 'product/manufacturer/info' || $data['route'] == 'product/product') && $key == 'manufacturer_id') || ($data['route'] == 'information/information' && $key == 'information_id')) {
-					$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = '" . $this->db->escape($key . '=' . (int)$value) . "'");
+					$keyword = array_search($key . '=' . (int)$value, $this->cached);
 				
-					if ($query->num_rows) {
-						$url .= '/' . $query->row['keyword'];
+					if ($keyword !== false) {
+						$url .= '/' . $keyword;
 						
 						unset($data[$key]);
 					}					
@@ -83,10 +91,10 @@ class ControllerCommonSeoUrl extends Controller {
 					$categories = explode('_', $value);
 					
 					foreach ($categories as $category) {
-						$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE `query` = 'category_id=" . (int)$category . "'");
+						$keyword = array_search("category_id=" . (int)$category , $this->cached);
 				
-						if ($query->num_rows) {
-							$url .= '/' . $query->row['keyword'];
+						if ($keyword !== false) {
+							$url .= '/' . $keyword;
 						}							
 					}
 					

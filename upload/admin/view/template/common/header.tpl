@@ -183,20 +183,22 @@
             </li>
           </ul>
           <ul class="nav pull-right">
-            <li class="dropdown"><a href="<?php echo $store; ?>" target="_blank"><i class="icon-shopping-cart icon-large"></i></a>
+            <li class="dropdown">
+              <?php if ($stores) { ?>
+              <a data-toggle="dropdown"><i class="icon-shopping-cart icon-large"></i></a>
               <ul class="dropdown-menu">
-                <a href="<?php echo $store; ?>" target="_blank" data-toggle="dropdown"><?php echo $text_front; ?></a>
-                <?php foreach ($stores as $stores) { ?>
-                <li><a href="<?php echo $stores['href']; ?>" target="_blank"><?php echo $stores['name']; ?></a></li>
+                <li><a href="<?php echo $store; ?>" target="_blank"><?php echo $text_front; ?></a></li>
+                <?php foreach ($stores as $store) { ?>
+                <li><a href="<?php echo $store['href']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
                 <?php } ?>
               </ul>
+              <?php } else { ?>
+              <a href="<?php echo $store; ?>" target="_blank"><i class="icon-shopping-cart icon-large"></i></a>
+              <?php } ?>
             </li>
-            <li class="dropdown" id="user">
-              <div>
-                <div style="float: left;"><a data-toggle="dropdown"><img src="http://localhost/opencart/upload/image/catalog/photo.jpg" alt="" title="" /></a></div>
-                <div><a data-toggle="dropdown">Daniel Kerr</a><br /><a data-toggle="dropdown"><small>Administrator</small></a></div>
-                <div><i class="icon-caret-down"></i></div>
-              </div>
+            <li class="dropdown" id="profile">
+              <div class="profile"><a data-toggle="dropdown" data-target="#profile"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /></a> <a data-toggle="dropdown" data-target="#profile"><?php echo $profile_name; ?> <i class="icon-caret-down"></i><br />
+                <small><?php echo $profile_group; ?></small></a></div>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
                 <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>

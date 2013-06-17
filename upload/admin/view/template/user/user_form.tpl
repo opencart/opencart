@@ -29,6 +29,20 @@
           </div>
         </div>
         <div class="control-group">
+          <label class="control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
+          <div class="controls">
+            <select name="user_group_id" id="input-user-group">
+              <?php foreach ($user_groups as $user_group) { ?>
+              <?php if ($user_group['user_group_id'] == $user_group_id) { ?>
+              <option value="<?php echo $user_group['user_group_id']; ?>" selected="selected"><?php echo $user_group['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $user_group['user_group_id']; ?>"><?php echo $user_group['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        <div class="control-group">
           <label class="control-label" for="input-firstname"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
           <div class="controls">
             <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
@@ -59,20 +73,6 @@
               <input type="hidden" name="image" value="<?php echo $image; ?>" />
               <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
             </div>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
-          <div class="controls">
-            <select name="user_group_id" id="input-user-group">
-              <?php foreach ($user_groups as $user_group) { ?>
-              <?php if ($user_group['user_group_id'] == $user_group_id) { ?>
-              <option value="<?php echo $user_group['user_group_id']; ?>" selected="selected"><?php echo $user_group['name']; ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $user_group['user_group_id']; ?>"><?php echo $user_group['name']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
           </div>
         </div>
         <div class="control-group">

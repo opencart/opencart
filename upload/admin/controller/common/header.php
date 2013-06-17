@@ -109,12 +109,10 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_zone'] = $this->language->get('text_zone');
 		
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token'])) {
-			$this->data['logged'] = false;
-			
 			$this->data['home'] = $this->url->link('common/home', '', 'SSL');
-		} else {
-			$this->data['logged'] = $this->user->isLogged();
 			
+			$this->data['logged'] = false;
+		} else {
 			$this->data['home'] = $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['attribute'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], 'SSL');
@@ -184,6 +182,30 @@ class ControllerCommonHeader extends Controller {
 			$this->data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
 			
+			$this->load->model('user/user');
+			
+			$this->load->model('tool/image');
+			
+			$user_info = $this->model_user_user->getUser($this->user->getId());
+			
+			if ($user_info) {
+				$this->data['profile_name'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
+				$this->data['profile_group'] = $user_info['user_group'];
+				$this->data['profile_image'] = $user_info['image'];
+				
+				if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
+					$this->data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 23, 23);
+				} else {
+					$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
+				}
+			} else {
+				$this->data['profile_name'] = '';
+				$this->data['profile_group'] = '';
+				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
+			}
+			
+			$this->data['logged'] = $this->user->isLogged();
+
 			$this->data['stores'] = array();
 			
 			$this->load->model('setting/store');

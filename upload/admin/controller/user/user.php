@@ -270,13 +270,13 @@ class ControllerUserUser extends Controller {
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
 		
     	$this->data['entry_username'] = $this->language->get('entry_username');
+		$this->data['entry_user_group'] = $this->language->get('entry_user_group');
     	$this->data['entry_password'] = $this->language->get('entry_password');
     	$this->data['entry_confirm'] = $this->language->get('entry_confirm');
     	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
     	$this->data['entry_email'] = $this->language->get('entry_email');
     	$this->data['entry_image'] = $this->language->get('entry_image');
-		$this->data['entry_user_group'] = $this->language->get('entry_user_group');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 
     	$this->data['button_save'] = $this->language->get('button_save');
@@ -365,7 +365,19 @@ class ControllerUserUser extends Controller {
 		} else {
       		$this->data['username'] = '';
     	}
-  
+		
+    	if (isset($this->request->post['user_group_id'])) {
+      		$this->data['user_group_id'] = $this->request->post['user_group_id'];
+    	} elseif (!empty($user_info)) {
+			$this->data['user_group_id'] = $user_info['user_group_id'];
+		} else {
+      		$this->data['user_group_id'] = '';
+    	}
+		
+		$this->load->model('user/user_group');
+		
+    	$this->data['user_groups'] = $this->model_user_user_group->getUserGroups();
+		  
   		if (isset($this->request->post['password'])) {
     		$this->data['password'] = $this->request->post['password'];
 		} else {
@@ -421,18 +433,6 @@ class ControllerUserUser extends Controller {
 		}
 		
 		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
-		
-    	if (isset($this->request->post['user_group_id'])) {
-      		$this->data['user_group_id'] = $this->request->post['user_group_id'];
-    	} elseif (!empty($user_info)) {
-			$this->data['user_group_id'] = $user_info['user_group_id'];
-		} else {
-      		$this->data['user_group_id'] = '';
-    	}
-		
-		$this->load->model('user/user_group');
-		
-    	$this->data['user_groups'] = $this->model_user_user_group->getUserGroups();
  
      	if (isset($this->request->post['status'])) {
       		$this->data['status'] = $this->request->post['status'];

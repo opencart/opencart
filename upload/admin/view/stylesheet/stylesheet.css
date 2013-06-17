@@ -3,45 +3,25 @@ html, body, label, .control-group input, textarea, select, td {
 	font-size: 12px;
 	line-height: 15px;
 }
-
-.navbar .brand {
+#header .navbar .brand {
 	margin: 0px;
-	padding: 7px 5px 10px 0px;
+	padding: 7px 5px 0px 0px;
 }
-
-.navbar {
+#header .navbar {
 	margin-bottom: 3px;
 	border-bottom: 5px solid #00C3F4;
 }
-
-.navbar-inverse .navbar-inner {
+#header .navbar-inverse .navbar-inner {
 	padding-top: 2px;
 	min-height: 43px;
 	background-color: #2D2D2E;
 	background-repeat: no-repeat, repeat, no-repeat;
 	background-size: auto, 5px 5px, 100% 6px;
 	background-position: center, center, bottom;
-	background-image: linear-gradient(
-		90deg, 
-		transparent,
-		transparent 20%,
-		rgba(255, 255, 255, 0.1) 50%,
-		transparent 80%
-	), linear-gradient(
-		-135deg,
-		transparent 50%,
-		rgba(255, 255, 255, 0.05) 50%,
-		rgba(255, 255, 255, 0.05) 50%,
-		transparent 60%,
-		transparent 100%
-	), linear-gradient(
-		to bottom, 
-		transparent,
-		rgba(0, 0, 0, 0.40) 100%
-	);
+	background-image: linear-gradient(  90deg,  transparent,  transparent 20%,  rgba(255, 255, 255, 0.1) 50%,  transparent 80%  ), linear-gradient(  -135deg,  transparent 50%,  rgba(255, 255, 255, 0.05) 50%,  rgba(255, 255, 255, 0.05) 50%,  transparent 60%,  transparent 100%  ), linear-gradient(  to bottom,  transparent,  rgba(0, 0, 0, 0.40) 100%  );
 	-webkit-box-shadow: none;
-    -moz-box-shadow: none;
-    box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 	border-top: none;
 	border-left: none;
 	border-right: none;
@@ -50,23 +30,44 @@ html, body, label, .control-group input, textarea, select, td {
 	-moz-border-radius: 0;
 	border-radius: 0;
 }
-
-.navbar-inverse .nav > li > a {
+#header .navbar-inverse .nav > li > a {
 	color: #AAAAAA;
 	text-shadow: 1px 1px 1px #000000;
 	cursor: pointer;
 }
-
-#user img {
+#header .navbar-inverse .nav > li > a:hover {
+	color: #FFFFFF;
+}
+#header .navbar .icon-caret-down {
+	margin-left: 5px;
+}
+.profile {
+	text-shadow: 1px 1px 1px #000000;
+	line-height: 12px;
+	padding-top: 6px;
+}
+.profile img {
 	background: #FFFFFF;
 	border: 1px solid #000;
 	padding: 1px;
+	margin-right: 8px;
 }
-#user a {
-	color: #FFF;	
+.profile a, .profile a:hover {
+	color: #FFF;
+	cursor: pointer;
+	text-decoration: none;
+	float: left;
 }
-#user small {
+.profile a + a {
 	display: block;
+	padding-right: 20px;
+	margin-top: 2px;
+	margin-bottom: 7px;
+}
+.profile .icon-caret-down {
+	position: relative;
+	top: 5px;
+	right: -22px;
 }
 .breadcrumb {
 	border: 1px solid #E5E5E5;
@@ -84,7 +85,7 @@ html, body, label, .control-group input, textarea, select, td {
 	font-size: 12px;
 }
 .breadcrumb li a {
-	color: #464646;	
+	color: #464646;
 	display: inline-block;
 	vertical-align: middle;
 	padding: 5px 0px;
@@ -100,7 +101,7 @@ html, body, label, .control-group input, textarea, select, td {
 	top: 4px;
 	content: '';
 	display: inline-block;
-	width: 21px; 
+	width: 21px;
 	height: 21px;
 	border-top: 1px solid #E5E5E5;
 	border-right: 1px solid #E5E5E5;
@@ -108,11 +109,6 @@ html, body, label, .control-group input, textarea, select, td {
 	-ms-transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 }
-
-
-
-
-
 .alert {
 	font-size: 14px;
 	line-height: 20px;
@@ -176,7 +172,6 @@ html, body, label, .control-group input, textarea, select, td {
 	border-bottom: 1px solid #CCCCCC;
 	overflow: auto;
 }
-
 .table .left {
 	text-align: left;
 }

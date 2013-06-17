@@ -448,7 +448,7 @@ class ControllerMarketingMarketing extends Controller {
     	$this->data['cancel'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
     	if (isset($this->request->get['marketing_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-      		$marketing_info = $this->model_marketing_marketing->getAffiliate($this->request->get['marketing_id']);
+      		$marketing_info = $this->model_marketing_marketing->getMarketing($this->request->get['marketing_id']);
     	}
 
 		$this->data['token'] = $this->session->data['token'];

@@ -2,7 +2,9 @@
 class ControllerCommonSeoUrl extends Controller {
         private $cached = array();
                 
-        public function __construct() {
+        public function __construct($registry) {
+            $this->registry = $registry;    // from Controller's constructor
+            
             $query = $this->db->query("SELECT query, keyword FROM " . DB_PREFIX . "url_alias");
             foreach($query->rows as $row) {
                 $this->cached[$row['keyword']] = $row['query'];

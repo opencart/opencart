@@ -11,10 +11,7 @@ final class MySQL {
 			throw new ErrorException('Error: Could not connect to database ' . $database);
 		}
 		
-		mysql_query("SET NAMES 'utf8'", $this->link);
-		mysql_query("SET CHARACTER SET utf8", $this->link);
-		mysql_query("SET CHARACTER_SET_CONNECTION=utf8", $this->link);
-		mysql_query("SET SQL_MODE = ''", $this->link);
+		mysql_set_charset("utf8", $this->link);
 	}
 
 	public function query($sql) {

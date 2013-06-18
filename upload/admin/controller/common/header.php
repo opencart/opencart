@@ -206,6 +206,8 @@ class ControllerCommonHeader extends Controller {
 			
 			$this->data['logged'] = $this->user->isLogged();
 
+			$this->data['store_name'] = $this->config->get('config_name');
+
 			$this->data['stores'] = array();
 			
 			$this->load->model('setting/store');

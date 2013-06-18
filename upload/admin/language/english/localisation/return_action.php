@@ -10,7 +10,7 @@ $_['column_name']      = 'Return Action Name';
 $_['column_action']    = 'Action';
 
 // Entry
-$_['entry_name']       = 'Return Action Name:';
+$_['entry_name']       = 'Return Action Name';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify return actions!';

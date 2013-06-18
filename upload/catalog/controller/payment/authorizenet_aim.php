@@ -86,15 +86,26 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$data['x_invoice_num'] = $this->session->data['order_id'];
 
 		/* Customer Shipping Address Fields */
-		$data['x_ship_to_first_name'] = html_entity_decode($order_info['shipping_firstname'], ENT_QUOTES, 'UTF-8');
-		$data['x_ship_to_last_name'] = html_entity_decode($order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8');
-		$data['x_ship_to_company'] = html_entity_decode($order_info['shipping_company'], ENT_QUOTES, 'UTF-8');
-		$data['x_ship_to_address'] = html_entity_decode($order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8');
-		$data['x_ship_to_city'] = html_entity_decode($order_info['shipping_city'], ENT_QUOTES, 'UTF-8');
-		$data['x_ship_to_state'] = html_entity_decode($order_info['shipping_zone'], ENT_QUOTES, 'UTF-8');
-		$data['x_ship_to_zip'] = html_entity_decode($order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8');
-		$data['x_ship_to_country'] = html_entity_decode($order_info['shipping_country'], ENT_QUOTES, 'UTF-8');
-	
+		if ($order_info['shipping_method']) {
+			$data['x_ship_to_first_name'] = html_entity_decode($order_info['shipping_firstname'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_last_name'] = html_entity_decode($order_info['shipping_lastname'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_company'] = html_entity_decode($order_info['shipping_company'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_address'] = html_entity_decode($order_info['shipping_address_1'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_city'] = html_entity_decode($order_info['shipping_city'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_state'] = html_entity_decode($order_info['shipping_zone'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_zip'] = html_entity_decode($order_info['shipping_postcode'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_country'] = html_entity_decode($order_info['shipping_country'], ENT_QUOTES, 'UTF-8');
+		} else {
+			$data['x_ship_to_first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_company'] = html_entity_decode($order_info['payment_company'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_address'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['shipping_address_2'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_state'] = html_entity_decode($order_info['payment_zone'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
+			$data['x_ship_to_country'] = html_entity_decode($order_info['payment_country'], ENT_QUOTES, 'UTF-8');
+		}
+		
 		if ($this->config->get('authorizenet_aim_mode') == 'test') {
 			$data['x_test_request'] = 'true';
 		}	
@@ -134,33 +145,33 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 			}
 		
 			if ($response_info[1] == '1') {
-				if (strtoupper($response_info[38]) == strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_info[7] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false)))) {
-					$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
+				$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
 					
-					$message = '';
+				$message = '';
 					
-					if (isset($response_info['5'])) {
-						$message .= 'Authorization Code: ' . $response_info['5'] . "\n";
-					}
-					
-					if (isset($response_info['6'])) {
-						$message .= 'AVS Response: ' . $response_info['6'] . "\n";
-					}
-			
-					if (isset($response_info['7'])) {
-						$message .= 'Transaction ID: ' . $response_info['7'] . "\n";
-					}
-	
-					if (isset($response_info['39'])) {
-						$message .= 'Card Code Response: ' . $response_info['39'] . "\n";
-					}
-					
-					if (isset($response_info['40'])) {
-						$message .= 'Cardholder Authentication Verification Response: ' . $response_info['40'] . "\n";
-					}				
-	
-					$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);				
+				if (isset($response_info['5'])) {
+					$message .= 'Authorization Code: ' . $response_info['5'] . "\n";
 				}
+				
+				if (isset($response_info['6'])) {
+					$message .= 'AVS Response: ' . $response_info['6'] . "\n";
+				}
+		
+				if (isset($response_info['7'])) {
+					$message .= 'Transaction ID: ' . $response_info['7'] . "\n";
+				}
+
+				if (isset($response_info['39'])) {
+					$message .= 'Card Code Response: ' . $response_info['39'] . "\n";
+				}
+				
+				if (isset($response_info['40'])) {
+					$message .= 'Cardholder Authentication Verification Response: ' . $response_info['40'] . "\n";
+				}			
+				
+				if (!$this->config->get('authorizenet_aim_hash') || (strtoupper($response_info[38]) == strtoupper(md5($this->config->get('authorizenet_aim_hash') . $this->config->get('authorizenet_aim_login') . $response_info[7] . $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false))))) {
+					$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);
+				}					
 				
 				$json['success'] = $this->url->link('checkout/success', '', 'SSL');
 			} else {

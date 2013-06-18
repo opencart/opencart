@@ -15,11 +15,11 @@ $('#button-paypal').on('click', function() {
 		data: $('#payment :input'),
 		dataType: 'json',		
 		beforeSend: function() {
-			$('#button-paypal').attr('disabled', true);
+			$('#button-paypal').prop('disabled', true);
 			$('#button-paypal').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},
 		complete: function() {
-			$('#button-paypal').attr('disabled', false); 
+			$('#button-paypal').prop('disabled', false); 
 			$('.loading').remove();
 		},				
 		success: function(json) {

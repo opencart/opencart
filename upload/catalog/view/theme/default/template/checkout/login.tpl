@@ -21,7 +21,7 @@
   <?php } ?>
   <br />
   <p><?php echo $text_register_account; ?></p>
-  <input type="button" value="<?php echo $button_continue; ?>" id="button-account" class="button" />
+  <input type="button" value="<?php echo $button_continue; ?>" id="button-account" class="btn" />
   <br />
   <br />
 </div>
@@ -37,7 +37,7 @@
   <br />
   <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a><br />
   <br />
-  <input type="button" value="<?php echo $button_login; ?>" id="button-login" class="button" /><br />
+  <input type="button" value="<?php echo $button_login; ?>" id="button-login" class="btn" /><br />
   <br />
 </div>
 <script type="text/javascript"><!--
@@ -55,11 +55,11 @@ $('#button-account').off().on('click', function() {
 		url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').attr('value'),
 		dataType: 'html',
 		beforeSend: function() {
-			$('#button-account').attr('disabled', true);
+			$('#button-account').prop('disabled', true);
 			$('#button-account').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},		
 		complete: function() {
-			$('#button-account').attr('disabled', false);
+			$('#button-account').prop('disabled', false);
 			$('.loading').remove();
 		},			
 		success: function(html) {
@@ -89,11 +89,11 @@ $('#button-login').off().on('click', function() {
 		data: $('#checkout #login :input'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-login').attr('disabled', true);
+			$('#button-login').prop('disabled', true);
 			$('#button-login').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
-			$('#button-login').attr('disabled', false);
+			$('#button-login').prop('disabled', false);
 			$('.loading').remove();
 		},				
 		success: function(json) {
@@ -102,7 +102,7 @@ $('#button-login').off().on('click', function() {
 			if (json['redirect']) {
 				location = json['redirect'];
 			} else if (json['error']) {
-				$('#checkout .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '</div>');
+				$('#checkout .checkout-content').prepend('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '</div>');
 				
 				$('.warning').fadeIn('slow');
 			}

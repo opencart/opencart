@@ -32,9 +32,9 @@
     </table>
   </div>
   <div class="buttons">
-    <div class="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></div>
+    <div class="left"><a href="<?php echo $back; ?>" class="btn"><?php echo $button_back; ?></a></div>
     <div class="right">
-      <input type="button" value="<?php echo $button_continue; ?>" id="button-edit" class="button" />
+      <input type="button" value="<?php echo $button_continue; ?>" id="button-edit" class="btn" />
     </div>
   </div>
   <?php echo $content_bottom; ?></div>
@@ -46,12 +46,12 @@ $('#button-edit').on('click', function() {
 		data: $('input[type=\'text\'], input[type=\'password\'], input[type=\'checkbox\']:checked, input[type=\'radio\']:checked, input[type=\'hidden\'], select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-edit').attr('disabled', true);
-			$('#button-edit').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-edit').after(' <i class="icon-spinner icon-spin"></i>');
+			$('#button-edit').prop('disabled', true);
 		},	
 		complete: function() {
-			$('#button-edit').attr('disabled', false); 
-			$('.loading').remove();
+			$('.icon-spinner').remove();
+			$('#button-edit').prop('disabled', false); 
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();
@@ -60,7 +60,7 @@ $('#button-edit').on('click', function() {
 				location = json['redirect'];				
 			} else if (json['error']) {
 				if (json['error']['warning']) {
-					$('#notification').html('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#notification').html('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.warning').fadeIn('slow');
 				}

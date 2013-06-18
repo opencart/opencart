@@ -6,8 +6,6 @@ $_['heading_title']      = 'Banners';
 $_['text_success']       = 'Success: You have modified banners!';
 $_['text_default']       = 'Default';
 $_['text_image_manager'] = 'Image Manager';
-$_['text_browse']        = 'Browse';
-$_['text_clear']         = 'Clear';
 
 // Column
 $_['column_name']        = 'Banner Name';
@@ -15,11 +13,12 @@ $_['column_status']      = 'Status';
 $_['column_action']      = 'Action';
 
 // Entry
-$_['entry_name']         = 'Banner Name:';
-$_['entry_title']        = 'Title:';
-$_['entry_link']         = 'Link:';
-$_['entry_image']        = 'Image:';
-$_['entry_status']       = 'Status:';
+$_['entry_name']         = 'Banner Name';
+$_['entry_title']        = 'Title';
+$_['entry_link']         = 'Link';
+$_['entry_image']        = 'Image';
+$_['entry_status']       = 'Status';
+$_['entry_sort_order']   = 'Sort Order';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify banners!';

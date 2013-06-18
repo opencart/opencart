@@ -1,68 +1,80 @@
-/*
-Flot plugin for selecting regions.
+/* Flot plugin for selecting regions of a plot.
 
-The plugin defines the following options:
+Copyright (c) 2007-2013 IOLA and Ole Laursen.
+Licensed under the MIT license.
 
-  selection: {
-    mode: null or "x" or "y" or "xy",
-    color: color
-  }
+The plugin supports these options:
 
-Selection support is enabled by setting the mode to one of "x", "y" or
-"xy". In "x" mode, the user will only be able to specify the x range,
-similarly for "y" mode. For "xy", the selection becomes a rectangle
-where both ranges can be specified. "color" is color of the selection
-(if you need to change the color later on, you can get to it with
-plot.getOptions().selection.color).
+selection: {
+	mode: null or "x" or "y" or "xy",
+	color: color,
+	shape: "round" or "miter" or "bevel",
+	minSize: number of pixels
+}
 
-When selection support is enabled, a "plotselected" event will be
-emitted on the DOM element you passed into the plot function. The
-event handler gets a parameter with the ranges selected on the axes,
-like this:
+Selection support is enabled by setting the mode to one of "x", "y" or "xy".
+In "x" mode, the user will only be able to specify the x range, similarly for
+"y" mode. For "xy", the selection becomes a rectangle where both ranges can be
+specified. "color" is color of the selection (if you need to change the color
+later on, you can get to it with plot.getOptions().selection.color). "shape"
+is the shape of the corners of the selection.
 
-  placeholder.bind("plotselected", function(event, ranges) {
-    alert("You selected " + ranges.xaxis.from + " to " + ranges.xaxis.to)
-    // similar for yaxis - with multiple axes, the extra ones are in
-    // x2axis, x3axis, ...
-  });
+"minSize" is the minimum size a selection can be in pixels. This value can
+be customized to determine the smallest size a selection can be and still
+have the selection rectangle be displayed. When customizing this value, the
+fact that it refers to pixels, not axis units must be taken into account.
+Thus, for example, if there is a bar graph in time mode with BarWidth set to 1
+minute, setting "minSize" to 1 will not make the minimum selection size 1
+minute, but rather 1 pixel. Note also that setting "minSize" to 0 will prevent
+"plotunselected" events from being fired when the user clicks the mouse without
+dragging.
 
-The "plotselected" event is only fired when the user has finished
-making the selection. A "plotselecting" event is fired during the
-process with the same parameters as the "plotselected" event, in case
-you want to know what's happening while it's happening,
+When selection support is enabled, a "plotselected" event will be emitted on
+the DOM element you passed into the plot function. The event handler gets a
+parameter with the ranges selected on the axes, like this:
 
-A "plotunselected" event with no arguments is emitted when the user
-clicks the mouse to remove the selection.
+	placeholder.bind( "plotselected", function( event, ranges ) {
+		alert("You selected " + ranges.xaxis.from + " to " + ranges.xaxis.to)
+		// similar for yaxis - with multiple axes, the extra ones are in
+		// x2axis, x3axis, ...
+	});
+
+The "plotselected" event is only fired when the user has finished making the
+selection. A "plotselecting" event is fired during the process with the same
+parameters as the "plotselected" event, in case you want to know what's
+happening while it's happening,
+
+A "plotunselected" event with no arguments is emitted when the user clicks the
+mouse to remove the selection. As stated above, setting "minSize" to 0 will
+destroy this behavior.
 
 The plugin allso adds the following methods to the plot object:
 
-- setSelection(ranges, preventEvent)
+- setSelection( ranges, preventEvent )
 
-  Set the selection rectangle. The passed in ranges is on the same
-  form as returned in the "plotselected" event. If the selection mode
-  is "x", you should put in either an xaxis range, if the mode is "y"
-  you need to put in an yaxis range and both xaxis and yaxis if the
-  selection mode is "xy", like this:
+  Set the selection rectangle. The passed in ranges is on the same form as
+  returned in the "plotselected" event. If the selection mode is "x", you
+  should put in either an xaxis range, if the mode is "y" you need to put in
+  an yaxis range and both xaxis and yaxis if the selection mode is "xy", like
+  this:
 
-    setSelection({ xaxis: { from: 0, to: 10 }, yaxis: { from: 40, to: 60 } });
+	setSelection({ xaxis: { from: 0, to: 10 }, yaxis: { from: 40, to: 60 } });
 
-  setSelection will trigger the "plotselected" event when called. If
-  you don't want that to happen, e.g. if you're inside a
-  "plotselected" handler, pass true as the second parameter. If you
-  are using multiple axes, you can specify the ranges on any of those,
-  e.g. as x2axis/x3axis/... instead of xaxis, the plugin picks the
-  first one it sees.
-  
-- clearSelection(preventEvent)
+  setSelection will trigger the "plotselected" event when called. If you don't
+  want that to happen, e.g. if you're inside a "plotselected" handler, pass
+  true as the second parameter. If you are using multiple axes, you can
+  specify the ranges on any of those, e.g. as x2axis/x3axis/... instead of
+  xaxis, the plugin picks the first one it sees.
+
+- clearSelection( preventEvent )
 
   Clear the selection rectangle. Pass in true to avoid getting a
   "plotunselected" event.
 
 - getSelection()
 
-  Returns the current selection in the same format as the
-  "plotselected" event. If there's currently no selection, the
-  function returns null.
+  Returns the current selection in the same format as the "plotselected"
+  event. If there's currently no selection, the function returns null.
 
 */
 
@@ -146,6 +158,8 @@ The plugin allso adds the following methods to the plot object:
         function getSelection() {
             if (!selectionIsSane())
                 return null;
+            
+            if (!selection.show) return null;
 
             var r = {}, c1 = selection.first, c2 = selection.second;
             $.each(plot.getAxes(), function (name, axis) {
@@ -274,7 +288,7 @@ The plugin allso adds the following methods to the plot object:
         }
 
         function selectionIsSane() {
-            var minSize = 5;
+            var minSize = plot.getOptions().selection.minSize;
             return Math.abs(selection.second.x - selection.first.x) >= minSize &&
                 Math.abs(selection.second.y - selection.first.y) >= minSize;
         }
@@ -305,13 +319,13 @@ The plugin allso adds the following methods to the plot object:
 
                 ctx.strokeStyle = c.scale('a', 0.8).toString();
                 ctx.lineWidth = 1;
-                ctx.lineJoin = "round";
+                ctx.lineJoin = o.selection.shape;
                 ctx.fillStyle = c.scale('a', 0.4).toString();
 
-                var x = Math.min(selection.first.x, selection.second.x),
-                    y = Math.min(selection.first.y, selection.second.y),
-                    w = Math.abs(selection.second.x - selection.first.x),
-                    h = Math.abs(selection.second.y - selection.first.y);
+                var x = Math.min(selection.first.x, selection.second.x) + 0.5,
+                    y = Math.min(selection.first.y, selection.second.y) + 0.5,
+                    w = Math.abs(selection.second.x - selection.first.x) - 1,
+                    h = Math.abs(selection.second.y - selection.first.y) - 1;
 
                 ctx.fillRect(x, y, w, h);
                 ctx.strokeRect(x, y, w, h);
@@ -335,7 +349,9 @@ The plugin allso adds the following methods to the plot object:
         options: {
             selection: {
                 mode: null, // one of null, "x", "y" or "xy"
-                color: "#e8cfac"
+                color: "#e8cfac",
+                shape: "round", // one of "round", "miter", or "bevel"
+                minSize: 5 // minimum number of pixels
             }
         },
         name: 'selection',

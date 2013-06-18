@@ -6,118 +6,138 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/review.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+    <div class="box-heading">
+      <h1><i class="icon-edit"></i></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-review" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_author; ?></td>
-            <td><input type="text" name="author" value="<?php echo $author; ?>" />
-              <?php if ($error_author) { ?>
-              <span class="error"><?php echo $error_author; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_product; ?></td>
-            <td><input type="text" name="product" value="<?php echo $product; ?>" />
-              <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
-              <?php if ($error_product) { ?>
-              <span class="error"><?php echo $error_product; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_text; ?></td>
-            <td><textarea name="text" cols="60" rows="8"><?php echo $text; ?></textarea>
-              <?php if ($error_text) { ?>
-              <span class="error"><?php echo $error_text; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_rating; ?></td>
-            <td><b class="rating"><?php echo $entry_bad; ?></b>&nbsp;
+    <div class="box-content">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-review" class="form-horizontal">
+        <div class="control-group">
+          <label class="control-label" for="input-author"><span class="required">*</span> <?php echo $entry_author; ?></label>
+          <div class="controls">
+            <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" />
+            <?php if ($error_author) { ?>
+            <span class="error"><?php echo $error_author; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
+          <div class="controls">
+            <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
+            <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
+            <?php if ($error_product) { ?>
+            <span class="error"><?php echo $error_product; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-text"><span class="required">*</span> <?php echo $entry_text; ?></label>
+          <div class="controls">
+            <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>" id="input-text" class="input-xxlarge"><?php echo $text; ?></textarea>
+            <?php if ($error_text) { ?>
+            <span class="error"><?php echo $error_text; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <div class="control-label" for="input-name"><?php echo $entry_rating; ?></div>
+          <div class="controls">
+            <label class="radio inline">
               <?php if ($rating == 1) { ?>
-              <input type="radio" name="rating" value="1" checked />
+              <input type="radio" name="rating" value="1" checked="checked" />
+              1
               <?php } else { ?>
               <input type="radio" name="rating" value="1" />
+              1
               <?php } ?>
-              &nbsp;
+            </label>
+            <label class="radio inline">
               <?php if ($rating == 2) { ?>
-              <input type="radio" name="rating" value="2" checked />
+              <input type="radio" name="rating" value="2" checked="checked" />
+              2
               <?php } else { ?>
               <input type="radio" name="rating" value="2" />
+              2
               <?php } ?>
-              &nbsp;
+            </label>
+            <label class="radio inline">
               <?php if ($rating == 3) { ?>
-              <input type="radio" name="rating" value="3" checked />
+              <input type="radio" name="rating" value="3" checked="checked" />
+              3
               <?php } else { ?>
               <input type="radio" name="rating" value="3" />
+              3
               <?php } ?>
-              &nbsp;
+            </label>
+            <label class="radio inline">
               <?php if ($rating == 4) { ?>
-              <input type="radio" name="rating" value="4" checked />
+              <input type="radio" name="rating" value="4" checked="checked" />
+              4
               <?php } else { ?>
               <input type="radio" name="rating" value="4" />
+              4
               <?php } ?>
-              &nbsp;
+            </label>
+            <label class="radio inline">
               <?php if ($rating == 5) { ?>
-              <input type="radio" name="rating" value="5" checked />
+              <input type="radio" name="rating" value="5" checked="checked" />
+              5
               <?php } else { ?>
               <input type="radio" name="rating" value="5" />
+              5
               <?php } ?>
-              &nbsp; <b class="rating"><?php echo $entry_good; ?></b>
-              <?php if ($error_rating) { ?>
-              <span class="error"><?php echo $error_rating; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_status; ?></td>
-            <td><select name="status">
-                <?php if ($status) { ?>
-                <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                <option value="0"><?php echo $text_disabled; ?></option>
-                <?php } else { ?>
-                <option value="1"><?php echo $text_enabled; ?></option>
-                <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                <?php } ?>
-              </select></td>
-          </tr>
-        </table>
+            </label>
+            <?php if ($error_rating) { ?>
+            <span class="error"><?php echo $error_rating; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+          <div class="controls">
+            <select name="status" id="input-status">
+              <?php if ($status) { ?>
+              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+              <option value="0"><?php echo $text_disabled; ?></option>
+              <?php } else { ?>
+              <option value="1"><?php echo $text_enabled; ?></option>
+              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
       </form>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
+			url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						label: item.name,
-						value: item.product_id
+						label: item['name'],
+						value: item['product_id']
 					}
 				}));
 			}
 		});
 	},
-	select: function(event, ui) {
-		$('input[name=\'product\']').val(ui.item.label);
-		$('input[name=\'product_id\']').val(ui.item.value);
-		
-		return false;
-	},
-	focus: function(event, ui) {
-      	return false;
-   	}
+	'select': function(item) {
+		$('input[name=\'product\']').val(item['label']);
+		$('input[name=\'product_id\']').val(item['value']);		
+	}	
 });
 //--></script> 
 <?php echo $footer; ?>

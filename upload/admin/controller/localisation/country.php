@@ -245,10 +245,11 @@ class ControllerLocalisationCountry extends Controller {
 		$pagination->total = $country_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($country_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($country_total - $this->config->get('config_admin_limit'))) ? $country_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $country_total, ceil($country_total / $this->config->get('config_admin_limit')));
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -276,6 +277,8 @@ class ControllerLocalisationCountry extends Controller {
 		$this->data['entry_address_format'] = $this->language->get('entry_address_format');
 		$this->data['entry_postcode_required'] = $this->language->get('entry_postcode_required');
 		$this->data['entry_status'] = $this->language->get('entry_status');
+		
+		$this->data['help_address_format'] = $this->language->get('help_address_format');
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -410,7 +413,7 @@ class ControllerLocalisationCountry extends Controller {
 		
 		$this->load->model('setting/store');
 		$this->load->model('sale/customer');
-		$this->load->model('sale/affiliate');
+		$this->load->model('marketing/affiliate');
 		$this->load->model('localisation/zone');
 		$this->load->model('localisation/geo_zone');
 		
@@ -431,7 +434,7 @@ class ControllerLocalisationCountry extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_address'), $address_total);
 			}
 
-			$affiliate_total = $this->model_sale_affiliate->getTotalAffiliatesByCountryId($country_id);
+			$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliatesByCountryId($country_id);
 	
 			if ($affiliate_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_affiliate'), $affiliate_total);

@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<modification>
+  <name>
+    <![CDATA[Modification Default]]>
+  </name>
+  <version>
+    <![CDATA[1.0]]>
+  </version>
+  <author>
+    <![CDATA[http://www.opencart.com]]>
+  </author>
+  <file name="system/startup.php">
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'engine/action.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'engine/action.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'engine/controller.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'engine/controller.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'engine/front.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'engine/front.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'engine/loader.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'engine/loader.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'engine/model.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'engine/model.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'engine/registry.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'engine/registry.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/cache.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/cache.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/url.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/url.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/config.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/config.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/db.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/db.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/document.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/document.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/encryption.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/encryption.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/image.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/image.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/language.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/language.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/log.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/log.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/mail.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/mail.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/pagination.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/pagination.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/request.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/request.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/response.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/response.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/session.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/session.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'library/template.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'library/template.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'helper/json.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'helper/json.php')]]>
+      </add>
+    </operation>
+    <operation>
+      <search>
+        <![CDATA[DIR_SYSTEM . 'helper/utf8.php']]>
+      </search>
+      <add position="replace">
+        <![CDATA[$modification->getFile(DIR_SYSTEM . 'helper/utf8.php')]]>
+      </add>
+    </operation>
+  </file>
+  <file name="system/engine/controller.php">
+    <operation>
+      <search>
+        <![CDATA[$action->getFile()]]>
+      </search>
+      <add position="replace">
+        <![CDATA[$this->modification->getFile($action->getFile())]]>
+      </add>
+    </operation>
+    <operation>
+      <search index="2">
+        <![CDATA[DIR_TEMPLATE . $this->template]]>
+      </search>
+      <add position="replace">
+        <![CDATA[$this->modification->getFile(DIR_TEMPLATE . $this->template)]]>
+      </add>
+    </operation>
+  </file>
+  <file name="system/engine/front.php">
+    <operation>
+      <search>
+        <![CDATA[$action->getFile()]]>
+      </search>
+      <add position="replace">
+        <![CDATA[$this->registry->get('modification')->getFile($action->getFile())]]>
+      </add>
+    </operation>
+  </file>
+  <file name="system/engine/loader.php">
+    <operation>
+      <search index="2">
+        <![CDATA[$file]]>
+      </search>
+      <add position="replace">
+        <![CDATA[$this->modification->getFile($file)]]>
+      </add>
+    </operation>
+    <operation>
+      <search index="4">
+        <![CDATA[$file]]>
+      </search>
+      <add position="replace">
+        <![CDATA[$this->modification->getFile($file)]]>
+      </add>
+    </operation>
+  </file>
+  <file name="system/library/config.php">
+    <operation>
+      <search index="3">
+        <![CDATA[$file]]>
+      </search>
+      <add position="replace">
+        <![CDATA[$this->modification->getFile($file)]]>
+      </add>
+    </operation>
+  </file>
+  <file name="system/library/language.php">
+    <operation>
+      <search index="3">
+        <![CDATA[$file]]>
+      </search>
+      <add position="replace">
+        <![CDATA[$this->modification->getFile($file)]]>
+      </add>
+    </operation>
+  </file>
+  <file name="system/library/template.php">
+    <operation>
+      <search index="3">
+        <![CDATA[$file]]>
+      </search>
+      <add position="replace">
+        <![CDATA[$this->modification->getFile($file)]]>
+      </add>
+    </operation>
+  </file>
+</modification>

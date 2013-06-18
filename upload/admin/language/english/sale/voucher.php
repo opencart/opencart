@@ -3,10 +3,8 @@
 $_['heading_title']     = 'Gift Voucher';
 
 // Text
-$_['text_send']         = 'Send';
 $_['text_success']      = 'Success: You have modified vouchers!';
 $_['text_sent']         = 'Success: Gift Voucher e-mail has been sent!';
-$_['text_wait']         = 'Please Wait!';
 
 // Column
 $_['column_name']       = 'Voucher Name';
@@ -22,15 +20,18 @@ $_['column_date_added'] = 'Date Added';
 $_['column_action']     = 'Action';
 
 // Entry
-$_['entry_code']        = 'Code:<br /><span class="help">The code the customer enters to activate the voucher.</span>';
-$_['entry_from_name']   = 'From Name:';
-$_['entry_from_email']  = 'From E-Mail:';
-$_['entry_to_name']     = 'To Name:';
-$_['entry_to_email']    = 'To E-Mail:';
-$_['entry_theme']       = 'Theme:';
-$_['entry_message']     = 'Message:';
-$_['entry_amount']      = 'Amount:';
-$_['entry_status']      = 'Status:';
+$_['entry_code']        = 'Code';
+$_['entry_from_name']   = 'From Name';
+$_['entry_from_email']  = 'From E-Mail';
+$_['entry_to_name']     = 'To Name';
+$_['entry_to_email']    = 'To E-Mail';
+$_['entry_theme']       = 'Theme';
+$_['entry_message']     = 'Message';
+$_['entry_amount']      = 'Amount';
+$_['entry_status']      = 'Status';
+
+// Help
+$_['help_code']         = 'The code the customer enters to activate the voucher.';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify vouchers!';

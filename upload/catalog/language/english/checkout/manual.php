@@ -13,6 +13,7 @@ $_['error_country']     = 'Please select a country!';
 $_['error_zone']        = 'Please select a region / state!';
 $_['error_stock']       = 'Products marked with *** are not available in the desired quantity or not in stock!';
 $_['error_minimum']     = 'Minimum order amount for %s is %s!';	
+$_['error_store']       = 'Product can not be bought from the store you have choosen!';	
 $_['error_required']    = '%s required!';
 $_['error_shipping']    = 'Warning: Shipping method required!';
 $_['error_no_shipping'] = 'Warning: No Shipping options are available!';

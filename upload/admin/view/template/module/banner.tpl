@@ -6,16 +6,20 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/module.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+    <div class="box-heading">
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-banner" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table id="module" class="list">
+    <div class="box-content">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-banner">
+        <table id="module" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
               <td class="left"><?php echo $entry_banner; ?></td>
@@ -27,10 +31,10 @@
               <td></td>
             </tr>
           </thead>
-          <?php $module_row = 0; ?>
-          <?php foreach ($modules as $module) { ?>
-          <tbody id="module-row<?php echo $module_row; ?>">
-            <tr>
+          <tbody>
+            <?php $module_row = 0; ?>
+            <?php foreach ($modules as $module) { ?>
+            <tr id="module-row<?php echo $module_row; ?>">
               <td class="left"><select name="banner_module[<?php echo $module_row; ?>][banner_id]">
                   <?php foreach ($banners as $banner) { ?>
                   <?php if ($banner['banner_id'] == $module['banner_id']) { ?>
@@ -40,8 +44,8 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-              <td class="left"><input type="text" name="banner_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" size="3" />
-                <input type="text" name="banner_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" size="3" />
+              <td class="left"><input type="text" name="banner_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
+                <input type="text" name="banner_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
                 <?php if (isset($error_dimension[$module_row])) { ?>
                 <span class="error"><?php echo $error_dimension[$module_row]; ?></span>
                 <?php } ?></td>
@@ -85,16 +89,16 @@
                   <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                   <?php } ?>
                 </select></td>
-              <td class="right"><input type="text" name="banner_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" /></td>
-              <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
+              <td class="right"><input type="text" name="banner_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>
+              <td class="left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
             </tr>
+            <?php $module_row++; ?>
+            <?php } ?>
           </tbody>
-          <?php $module_row++; ?>
-          <?php } ?>
           <tfoot>
             <tr>
               <td colspan="6"></td>
-              <td class="left"><a onclick="addModule();" class="button"><?php echo $button_add_module; ?></a></td>
+              <td class="left"><a onclick="addModule();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></a></td>
             </tr>
           </tfoot>
         </table>
@@ -106,35 +110,33 @@
 var module_row = <?php echo $module_row; ?>;
 
 function addModule() {	
-	html  = '<tbody id="module-row' + module_row + '">';
-	html += '  <tr>';
-	html += '    <td class="left"><select name="banner_module[' + module_row + '][banner_id]">';
+	html  = '<tr id="module-row' + module_row + '">';
+	html += '  <td class="left"><select name="banner_module[' + module_row + '][banner_id]">';
 	<?php foreach ($banners as $banner) { ?>
-	html += '      <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
+	html += '    <option value="<?php echo $banner['banner_id']; ?>"><?php echo addslashes($banner['name']); ?></option>';
 	<?php } ?>
-	html += '    </select></td>';
-	html += '    <td class="left"><input type="text" name="banner_module[' + module_row + '][width]" value="" size="3" /> <input type="text" name="banner_module[' + module_row + '][height]" value="" size="3" /></td>'; 
-	html += '    <td class="left"><select name="banner_module[' + module_row + '][layout_id]">';
+	html += '  </select></td>';
+	html += '  <td class="left"><input type="text" name="banner_module[' + module_row + '][width]" value="" placeholder="<?php echo $entry_width; ?>" class="input-mini" /> <input type="text" name="banner_module[' + module_row + '][height]" value="" placeholder="<?php echo $entry_height; ?>" class="input-mini" /></td>'; 
+	html += '  <td class="left"><select name="banner_module[' + module_row + '][layout_id]">';
 	<?php foreach ($layouts as $layout) { ?>
-	html += '      <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
+	html += '    <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 	<?php } ?>
-	html += '    </select></td>';
-	html += '    <td class="left"><select name="banner_module[' + module_row + '][position]">';
-	html += '      <option value="content_top"><?php echo $text_content_top; ?></option>';
-	html += '      <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
-	html += '      <option value="column_left"><?php echo $text_column_left; ?></option>';
-	html += '      <option value="column_right"><?php echo $text_column_right; ?></option>';
-	html += '    </select></td>';
-	html += '    <td class="left"><select name="banner_module[' + module_row + '][status]">';
-    html += '      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
-    html += '      <option value="0"><?php echo $text_disabled; ?></option>';
-    html += '    </select></td>';
-	html += '    <td class="right"><input type="text" name="banner_module[' + module_row + '][sort_order]" value="" size="3" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="button"><?php echo $button_remove; ?></a></td>';
-	html += '  </tr>';
-	html += '</tbody>';
+	html += '  </select></td>';
+	html += '  <td class="left"><select name="banner_module[' + module_row + '][position]">';
+	html += '    <option value="content_top"><?php echo $text_content_top; ?></option>';
+	html += '    <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
+	html += '    <option value="column_left"><?php echo $text_column_left; ?></option>';
+	html += '    <option value="column_right"><?php echo $text_column_right; ?></option>';
+	html += '  </select></td>';
+	html += '  <td class="left"><select name="banner_module[' + module_row + '][status]">';
+    html += '    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
+    html += '    <option value="0"><?php echo $text_disabled; ?></option>';
+    html += '  </select></td>';
+	html += '  <td class="right"><input type="text" name="banner_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>';
+	html += '  <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
+	html += '</tr>';
 	
-	$('#module tfoot').before(html);
+	$('#module tbody').append(html);
 	
 	module_row++;
 }

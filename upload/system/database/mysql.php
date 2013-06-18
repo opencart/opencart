@@ -4,11 +4,11 @@ final class MySQL {
 
 	public function __construct($hostname, $username, $password, $database) {
 		if (!$this->link = mysql_connect($hostname, $username, $password)) {
-			trigger_error('Error: Could not make a database link using ' . $username . '@' . $hostname);
+			throw new ErrorException('Error: Could not make a database link using ' . $username . '@' . $hostname);
 		}
 
 		if (!mysql_select_db($database, $this->link)) {
-			trigger_error('Error: Could not connect to database ' . $database);
+			throw new ErrorException('Error: Could not connect to database ' . $database);
 		}
 		
 		mysql_query("SET NAMES 'utf8'", $this->link);
@@ -48,11 +48,8 @@ final class MySQL {
 				}
 			} else {
 				$trace = debug_backtrace();
-				
-				$caller = array_shift($trace);
-				$caller = array_shift($trace);
 
-				trigger_error('Error: ' . mysql_error($this->link) . '<br />Error No: ' . mysql_errno($this->link) . '<br /> Error in: <b>' . $caller['file'] . '</b> line <b>' . $caller['line'] . '</b> <br/>' . $sql);
+				throw new ErrorException('Error: ' . mysql_error($this->link) . '<br />Error No: ' . mysql_errno($this->link) . '<br /> Error in: <b>' . $trace[1]['file'] . '</b> line <b>' . $trace[1]['line'] . '</b><br />' . $sql);
 				exit();
 			}
 		}

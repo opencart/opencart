@@ -116,10 +116,11 @@ class ControllerAccountOrder extends Controller {
 		$pagination->total = $order_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('account/order', 'page={page}', 'SSL');
 		
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($order_total - 10)) ? $order_total : ((($page - 1) * 10) + 10), $order_total, ceil($order_total / 10));
 
 		$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
 
@@ -172,7 +173,7 @@ class ControllerAccountOrder extends Controller {
 		
 			$this->data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', 'SSL')       	
+				'href' => $this->url->link('account/account', '', 'SSL')     	
 			);
 			
 			$url = '';

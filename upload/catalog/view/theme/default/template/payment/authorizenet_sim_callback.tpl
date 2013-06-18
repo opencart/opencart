@@ -11,7 +11,7 @@
   <table>
     <tr>
       <td align="left"></td>
-      <td align="right"><a href="<?php echo $confirm; ?>" class="button"><?php echo $button_confirm; ?></a></td>
+      <td align="right"><a href="<?php echo $confirm; ?>" class="btn"><?php echo $button_confirm; ?></a></td>
     </tr>
   </table>
 </div>
@@ -22,7 +22,7 @@
 <div class="buttons">
   <table>
     <tr>
-      <td align="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></td>
+      <td align="left"><a href="<?php echo $back; ?>" class="btn"><?php echo $button_back; ?></a></td>
       <td align="right"></td>
     </tr>
   </table>
@@ -32,7 +32,7 @@
 <div class="buttons">
   <table>
     <tr>
-      <td align="left"><a href="<?php echo $back; ?>" class="button"><?php echo $button_back; ?></a></td>
+      <td align="left"><a href="<?php echo $back; ?>" class="btn"><?php echo $button_back; ?></a></td>
       <td align="right"></td>
     </tr>
   </table>

@@ -187,8 +187,6 @@ class ControllerSettingStore extends Controller {
 		$this->data['text_checkout'] = $this->language->get('text_checkout');
 		$this->data['text_stock'] = $this->language->get('text_stock');				
 		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
- 		$this->data['text_browse'] = $this->language->get('text_browse');
-		$this->data['text_clear'] = $this->language->get('text_clear');			
 		$this->data['text_shipping'] = $this->language->get('text_shipping');	
 		$this->data['text_payment'] = $this->language->get('text_payment');	
 				
@@ -235,11 +233,33 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_image_compare'] = $this->language->get('entry_image_compare');
 		$this->data['entry_image_wishlist'] = $this->language->get('entry_image_wishlist');
 		$this->data['entry_image_cart'] = $this->language->get('entry_image_cart');
+		$this->data['entry_width'] = $this->language->get('entry_width');
+		$this->data['entry_height'] = $this->language->get('entry_height');	
 		$this->data['entry_secure'] = $this->language->get('entry_secure');
+		
+		$this->data['help_url'] = $this->language->get('help_url');
+		$this->data['help_ssl'] = $this->language->get('help_ssl');
+		$this->data['help_catalog_limit'] = $this->language->get('help_catalog_limit');
+		$this->data['help_list_description_limit'] = $this->language->get('help_list_description_limit');
+		$this->data['help_tax_default'] = $this->language->get('help_tax_default');
+		$this->data['help_tax_customer'] = $this->language->get('help_tax_customer');
+		$this->data['help_customer_group'] = $this->language->get('help_customer_group');
+		$this->data['help_customer_group_display'] = $this->language->get('help_customer_group_display');
+		$this->data['help_customer_price'] = $this->language->get('help_customer_price');
+		$this->data['help_account'] = $this->language->get('help_account');
+		$this->data['help_guest_checkout'] = $this->language->get('help_guest_checkout');
+		$this->data['help_checkout'] = $this->language->get('help_checkout');
+		$this->data['help_order_status'] = $this->language->get('help_order_status');
+		$this->data['help_stock_display'] = $this->language->get('help_stock_display');
+		$this->data['help_stock_checkout'] = $this->language->get('help_stock_checkout');
+		$this->data['help_icon'] = $this->language->get('help_icon');
+		$this->data['help_secure'] = $this->language->get('help_secure');
 				
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-
+		$this->data['button_edit'] = $this->language->get('button_edit');
+		$this->data['button_clear'] = $this->language->get('button_clear');
+		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		$this->data['tab_store'] = $this->language->get('tab_store');
 		$this->data['tab_local'] = $this->language->get('tab_local');
@@ -1006,12 +1026,10 @@ class ControllerSettingStore extends Controller {
 		}		
 		
 		if (file_exists(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
-			$image = $server . 'image/templates/' . basename($this->request->get['template']) . '.png';
+			$this->response->setOutput($server . 'image/templates/' . basename($this->request->get['template']) . '.png');
 		} else {
-			$image = $server . 'image/no_image.jpg';
+			$this->response->setOutput($server . 'image/no_image.jpg');
 		}
-		
-		$this->response->setOutput('<img src="' . $image . '" alt="" title="" style="border: 1px solid #EEEEEE;" />');
 	}		
 	
 	public function country() {

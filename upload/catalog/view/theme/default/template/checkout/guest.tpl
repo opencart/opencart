@@ -91,7 +91,7 @@
 <?php } ?>
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="button" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="btn" />
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -109,11 +109,11 @@ $('#button-guest').off().on('click', function() {
 		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-guest').attr('disabled', true);
+			$('#button-guest').prop('disabled', true);
 			$('#button-guest').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
-			$('#button-guest').attr('disabled', false); 
+			$('#button-guest').prop('disabled', false); 
 			$('.loading').remove();
 		},			
 		success: function(json) {
@@ -123,7 +123,7 @@ $('#button-guest').off().on('click', function() {
 				location = json['redirect'];
 			} else if (json['error']) {
 				if (json['error']['warning']) {
-					$('#payment-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#payment-address .checkout-content').prepend('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.warning').fadeIn('slow');
 				}

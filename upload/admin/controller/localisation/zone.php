@@ -245,10 +245,11 @@ class ControllerLocalisationZone extends Controller {
 		$pagination->total = $zone_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($zone_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($zone_total - $this->config->get('config_admin_limit'))) ? $zone_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $zone_total, ceil($zone_total / $this->config->get('config_admin_limit')));
 		
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -394,7 +395,7 @@ class ControllerLocalisationZone extends Controller {
 		
 		$this->load->model('setting/store');
 		$this->load->model('sale/customer');
-		$this->load->model('sale/affiliate');
+		$this->load->model('marketing/affiliate');
 		$this->load->model('localisation/geo_zone');
 		
 		foreach ($this->request->post['selected'] as $zone_id) {
@@ -414,7 +415,7 @@ class ControllerLocalisationZone extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_address'), $address_total);
 			}
 
-			$affiliate_total = $this->model_sale_affiliate->getTotalAffiliatesByZoneId($zone_id);
+			$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliatesByZoneId($zone_id);
 
 			if ($affiliate_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_affiliate'), $affiliate_total);

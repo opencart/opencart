@@ -6,15 +6,17 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="success"><?php echo $success; ?></div>
+  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/log.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $clear; ?>" class="button"><?php echo $button_clear; ?></a></div>
+    <div class="box-heading">
+      <h1><i class="icon-warning-sign icon-large"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons"><a href="<?php echo $clear; ?>" class="btn"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a></div>
     </div>
-    <div class="content">
-      <textarea wrap="off" style="width: 98%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log; ?></textarea>
+    <div class="box-content">
+      <textarea wrap="off" style="width: 98%; height: 300px; overflow: scroll;" readonly="readonly"><?php echo $log; ?></textarea>
     </div>
   </div>
 </div>

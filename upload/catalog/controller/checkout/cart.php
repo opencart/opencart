@@ -358,15 +358,15 @@ class ControllerCheckoutCart extends Controller {
 			
 						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
 					}
-					
-					$sort_order = array(); 
-				  
-					foreach ($total_data as $key => $value) {
-						$sort_order[$key] = $value['sort_order'];
-					}
-		
-					array_multisort($sort_order, SORT_ASC, $total_data);			
 				}
+				
+				$sort_order = array(); 
+			  
+				foreach ($total_data as $key => $value) {
+					$sort_order[$key] = $value['sort_order'];
+				}
+	
+				array_multisort($sort_order, SORT_ASC, $total_data);				
 			}
 			
 			$this->data['totals'] = $total_data;
@@ -572,15 +572,15 @@ class ControllerCheckoutCart extends Controller {
 				
 							$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
 						}
-						
-						$sort_order = array(); 
-					  
-						foreach ($total_data as $key => $value) {
-							$sort_order[$key] = $value['sort_order'];
-						}
-			
-						array_multisort($sort_order, SORT_ASC, $total_data);			
 					}
+					
+					$sort_order = array(); 
+				  
+					foreach ($total_data as $key => $value) {
+						$sort_order[$key] = $value['sort_order'];
+					}
+		
+					array_multisort($sort_order, SORT_ASC, $total_data);								
 				}
 				
 				$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));

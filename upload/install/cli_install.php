@@ -191,8 +191,8 @@ function check_requirements() {
         $error = 'Warning: Image cache directory needs to be writable for OpenCart to work!';
     }
 
-    if (!is_writable(DIR_OPENCART . 'image/data')) {
-        $error = 'Warning: Image data directory needs to be writable for OpenCart to work!';
+    if (!is_writable(DIR_OPENCART . 'image/catalog')) {
+        $error = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
     }
 
     if (!is_writable(DIR_OPENCART . 'download')) {

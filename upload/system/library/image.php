@@ -53,16 +53,6 @@ class Image {
 		}
 	}
 
-	/**
-	*	
-	*	@param width 
-	*	@param height
-	*	@param default char [default, w, h]
-	*				   default = scale with white space, 
-	*				   w = fill according to width, 
-	*				   h = fill according to height
-	*	
-	*/
 	public function resize($width = 0, $height = 0, $default = '') {
 		if (!$this->info['width'] || !$this->info['height']) {
 			return;
@@ -176,8 +166,8 @@ class Image {
 	private function merge($file, $x = 0, $y = 0, $opacity = 100) {
 		$merge = $this->create($file);
 
-		$merge_width = imagesx($image);
-		$merge_height = imagesy($image);
+		$merge_width = imagesx($merge);
+		$merge_height = imagesy($merge);
 
 		imagecopymerge($this->image, $merge, $x, $y, 0, 0, $merge_width, $merge_height, $opacity);
 	}

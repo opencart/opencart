@@ -102,13 +102,13 @@
 <div class="buttons">
   <div class="right"><?php echo $text_agree; ?>
     <input type="checkbox" name="agree" value="1" />
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="button" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
   </div>
 </div>
 <?php } else { ?>
 <div class="buttons">
   <div class="right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="button" />
+    <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
   </div>
 </div>
 <?php } ?>
@@ -121,11 +121,11 @@ $('#button-register').off().on('click', function() {
 		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-register').attr('disabled', true);
+			$('#button-register').prop('disabled', true);
 			$('#button-register').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
-			$('#button-register').attr('disabled', false); 
+			$('#button-register').prop('disabled', false); 
 			$('.loading').remove();
 		},			
 		success: function(json) {
@@ -135,7 +135,7 @@ $('#button-register').off().on('click', function() {
 				location = json['redirect'];				
 			} else if (json['error']) {
 				if (json['error']['warning']) {
-					$('#payment-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#payment-address .checkout-content').prepend('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.warning').fadeIn('slow');
 				}

@@ -212,13 +212,13 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$this->document->breadcrumbs = array(); 
 
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('common/home'),
+        	'href' => $this->url->http('common/home'),
         	'text' => $this->language->get('text_home')
       	); 
 
 		
       	$this->document->breadcrumbs[] = array(
-        	'href'      => $this->url->http('checkout/cart'),
+        	'href' => $this->url->http('checkout/cart'),
         	'text' => $this->language->get('text_basket')
       	);	
       	

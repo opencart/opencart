@@ -17,7 +17,7 @@ class ControllerSaleContact extends Controller {
 		$this->data['text_affiliate_all'] = $this->language->get('text_affiliate_all');	
 		$this->data['text_affiliate'] = $this->language->get('text_affiliate');	
 		$this->data['text_product'] = $this->language->get('text_product');	
-
+		
 		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_to'] = $this->language->get('entry_to');
 		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
@@ -26,6 +26,10 @@ class ControllerSaleContact extends Controller {
 		$this->data['entry_product'] = $this->language->get('entry_product');
 		$this->data['entry_subject'] = $this->language->get('entry_subject');
 		$this->data['entry_message'] = $this->language->get('entry_message');
+		
+		$this->data['help_customer'] = $this->language->get('help_customer');
+		$this->data['help_affiliate'] = $this->language->get('help_affiliate');
+		$this->data['help_product'] = $this->language->get('help_product');
 		
 		$this->data['button_send'] = $this->language->get('button_send');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -96,7 +100,7 @@ class ControllerSaleContact extends Controller {
 				
 				$this->load->model('sale/customer_group');
 				
-				$this->load->model('sale/affiliate');
+				$this->load->model('marketing/affiliate');
 	
 				$this->load->model('sale/order');
 	
@@ -172,9 +176,9 @@ class ControllerSaleContact extends Controller {
 							'limit'  => 10
 						);
 						
-						$email_total = $this->model_sale_affiliate->getTotalAffiliates($affiliate_data);		
+						$email_total = $this->model_marketing_affiliate->getTotalAffiliates($affiliate_data);		
 						
-						$results = $this->model_sale_affiliate->getAffiliates($affiliate_data);
+						$results = $this->model_marketing_affiliate->getAffiliates($affiliate_data);
 				
 						foreach ($results as $result) {
 							$emails[] = $result['email'];
@@ -183,7 +187,7 @@ class ControllerSaleContact extends Controller {
 					case 'affiliate':
 						if (!empty($this->request->post['affiliate'])) {					
 							foreach ($this->request->post['affiliate'] as $affiliate_id) {
-								$affiliate_info = $this->model_sale_affiliate->getAffiliate($affiliate_id);
+								$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 								
 								if ($affiliate_info) {
 									$emails[] = $affiliate_info['email'];

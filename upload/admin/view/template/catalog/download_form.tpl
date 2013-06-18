@@ -6,55 +6,70 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/download.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+    <div class="box-heading">
+      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons">
+        <button type="submit" form="form-download" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <div class="content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="form">
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_name; ?></td>
-            <td><?php foreach ($languages as $language) { ?>
-              <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" />
-              <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-              <?php if (isset($error_name[$language['language_id']])) { ?>
-              <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
-              <?php } ?>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_filename; ?></td>
-            <td><input type="text" name="filename" value="<?php echo $filename; ?>" /> <input type="button" value="<?php echo $button_upload; ?>" id="button-upload" class="button" onclick="$('input[name=\'file\']').click();" />
-              <?php if ($error_filename) { ?>
-              <span class="error"><?php echo $error_filename; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_mask; ?></td>
-            <td><input type="text" name="mask" value="<?php echo $mask; ?>" />
-              <?php if ($error_mask) { ?>
-              <span class="error"><?php echo $error_mask; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $entry_remaining; ?></td>
-            <td><input type="text" name="remaining" value="<?php echo $remaining; ?>" size="6" /></td>
-          </tr>
-          <?php if ($download_id) { ?>
-          <tr>
-            <td><?php echo $entry_update; ?></td>
-            <td><?php if ($update) { ?>
-              <input type="checkbox" name="update" value="1" checked="checked" />
-              <?php } else { ?>
-              <input type="checkbox" name="update" value="1" />
-              <?php } ?></td>
-          </tr>
-          <?php } ?>
-        </table>
+    <div class="box-content">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-download" class="form-horizontal">
+        <div class="control-group">
+          <div class="control-label"><span class="required">*</span> <?php echo $entry_name; ?></div>
+          <div class="controls">
+            <?php foreach ($languages as $language) { ?>
+            <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
+            <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+            <?php if (isset($error_name[$language['language_id']])) { ?>
+            <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+            <?php } ?>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-filename"><?php echo $entry_filename; ?> <span class="help-block"><?php echo $help_filename; ?></span> </label>
+          <div class="controls">
+            <div class="input-append">
+              <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="span2" />
+              <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+            </div>
+            <?php if ($error_filename) { ?>
+            <span class="error"><?php echo $error_filename; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-mask"><?php echo $entry_mask; ?> <span class="help-block"><?php echo $help_mask; ?></span></label>
+          <div class="controls">
+            <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" />
+            <?php if ($error_mask) { ?>
+            <span class="error"><?php echo $error_mask; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="control-group">
+          <label class="control-label" for="input-remaining"><?php echo $entry_remaining; ?></label>
+          <div class="controls">
+            <input type="text" name="remaining" value="<?php echo $remaining; ?>" id="input-remaining" class="input-small" />
+          </div>
+        </div>
+        <?php if ($download_id) { ?>
+        <div class="control-group">
+          <label class="control-label" for="input-update"><?php echo $entry_update; ?> <span class="help-block"><?php echo $help_update; ?></span> </label>
+          <div class="controls">
+            <?php if ($update) { ?>
+            <input type="checkbox" name="update" value="1" checked="checked" id="input-update" />
+            <?php } else { ?>
+            <input type="checkbox" name="update" value="1" id="input-update" />
+            <?php } ?>
+          </div>
+        </div>
+        <?php } ?>
       </form>
     </div>
   </div>
@@ -71,13 +86,16 @@ $('#file').on('change', function() {
         type: 'post',		
 		dataType: 'json',
 		data: new FormData($(this).parent()[0]),
+		cache: false,
+		contentType: false,
+		processData: false,		
 		beforeSend: function() {
-			$('#button-upload').after('<img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-			$('#button-upload').attr('disabled', true);
+			$('#button-upload i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-upload').prop('disabled', true);
 		},	
 		complete: function() {
-			$('.loading').remove();
-			$('#button-upload').attr('disabled', false);
+			$('#button-upload i').replaceWith('<i class="icon-upload"></i>');
+			$('#button-upload').prop('disabled', false);
 		},		
 		success: function(json) {
 			if (json['error']) {
@@ -93,10 +111,7 @@ $('#file').on('change', function() {
 		},			
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		},
-        cache: false,
-        contentType: false,
-        processData: false
+		}
     });
 });
 //--></script> 

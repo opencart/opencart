@@ -20,10 +20,10 @@ class ControllerStep2 extends Controller {
 		
 		$this->data['cache'] = DIR_SYSTEM . 'cache';
 		$this->data['logs'] = DIR_SYSTEM . 'logs';
+		$this->data['download'] = DIR_SYSTEM . 'download';
 		$this->data['image'] = DIR_OPENCART . 'image';
 		$this->data['image_cache'] = DIR_OPENCART . 'image/cache';
-		$this->data['image_data'] = DIR_OPENCART . 'image/data';
-		$this->data['download'] = DIR_OPENCART . 'download';
+		$this->data['image_data'] = DIR_OPENCART . 'image/catalog';
 		
 		$this->data['back'] = $this->url->link('step_1');
 		
@@ -97,11 +97,11 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: Image cache directory needs to be writable for OpenCart to work!';
 		}
 		
-		if (!is_writable(DIR_OPENCART . 'image/data')) {
-			$this->error['warning'] = 'Warning: Image data directory needs to be writable for OpenCart to work!';
+		if (!is_writable(DIR_OPENCART . 'image/catalog')) {
+			$this->error['warning'] = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
 		}
 		
-		if (!is_writable(DIR_OPENCART . 'download')) {
+		if (!is_writable(DIR_SYSTEM . 'download')) {
 			$this->error['warning'] = 'Warning: Download directory needs to be writable for OpenCart to work!';
 		}
 		

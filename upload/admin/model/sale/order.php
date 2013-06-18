@@ -128,10 +128,10 @@ class ModelSaleOrder extends Model {
 		$affiliate_id = 0;
 		$commission = 0;
 		
-		if (!empty($this->request->post['affiliate_id'])) {
-			$this->load->model('sale/affiliate');
+		if (!empty($data['affiliate_id'])) {
+			$this->load->model('marketing/affiliate');
 			
-			$affiliate_info = $this->model_sale_affiliate->getAffiliate($this->request->post['affiliate_id']);
+			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($data['affiliate_id']);
 			
 			if ($affiliate_info) {
 				$affiliate_id = $affiliate_info['affiliate_id']; 
@@ -259,10 +259,10 @@ class ModelSaleOrder extends Model {
 		$affiliate_id = 0;
 		$commission = 0;
 		
-		if (!empty($this->request->post['affiliate_id'])) {
-			$this->load->model('sale/affiliate');
+		if (!empty($data['affiliate_id'])) {
+			$this->load->model('marketing/affiliate');
 			
-			$affiliate_info = $this->model_sale_affiliate->getAffiliate($this->request->post['affiliate_id']);
+			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($data['affiliate_id']);
 			
 			if ($affiliate_info) {
 				$affiliate_id = $affiliate_info['affiliate_id']; 
@@ -357,9 +357,9 @@ class ModelSaleOrder extends Model {
 				$affiliate_id = 0;
 			}				
 				
-			$this->load->model('sale/affiliate');
+			$this->load->model('marketing/affiliate');
 				
-			$affiliate_info = $this->model_sale_affiliate->getAffiliate($affiliate_id);
+			$affiliate_info = $this->model_marketing_affiliate->getAffiliate($affiliate_id);
 				
 			if ($affiliate_info) {
 				$affiliate_firstname = $affiliate_info['firstname'];

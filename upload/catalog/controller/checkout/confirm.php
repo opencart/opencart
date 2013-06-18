@@ -249,6 +249,8 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['total'] = $total;
 			
 			if (isset($this->request->cookie['tracking'])) {
+				$data['tracking'] = $this->request->cookie['tracking'];
+				
 				$this->load->model('affiliate/affiliate');
 				
 				$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
@@ -264,6 +266,7 @@ class ControllerCheckoutConfirm extends Controller {
 			} else {
 				$data['affiliate_id'] = 0;
 				$data['commission'] = 0;
+				$data['tracking'] = '';
 			}
 			
 			$data['language_id'] = $this->config->get('config_language_id');

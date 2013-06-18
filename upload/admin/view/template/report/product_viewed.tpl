@@ -6,15 +6,17 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="success"><?php echo $success; ?></div>
+  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/report.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $reset; ?>" class="button"><?php echo $button_reset; ?></a></div>
+    <div class="box-heading">
+      <h1><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
+      <div class="buttons"><a href="<?php echo $reset; ?>" class="btn"><?php echo $button_reset; ?></a></div>
     </div>
-    <div class="content">
-      <table class="list">
+    <div class="box-content">
+      <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
             <td class="left"><?php echo $column_name; ?></td>
@@ -40,7 +42,14 @@
           <?php } ?>
         </tbody>
       </table>
-      <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="row-fluid">
+        <div class="span6">
+          <div class="pagination"><?php echo $pagination; ?></div>
+        </div>
+        <div class="span6">
+          <div class="results"><?php echo $results; ?></div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

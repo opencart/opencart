@@ -245,10 +245,11 @@ class ControllerUserUser extends Controller {
 		$pagination->total = $user_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('user/user', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($user_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($user_total - $this->config->get('config_admin_limit'))) ? $user_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $user_total, ceil($user_total / $this->config->get('config_admin_limit')));
 								
 		$this->data['sort'] = $sort;
 		$this->data['order'] = $order;
@@ -269,17 +270,20 @@ class ControllerUserUser extends Controller {
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
 		
     	$this->data['entry_username'] = $this->language->get('entry_username');
+		$this->data['entry_user_group'] = $this->language->get('entry_user_group');
     	$this->data['entry_password'] = $this->language->get('entry_password');
     	$this->data['entry_confirm'] = $this->language->get('entry_confirm');
     	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
     	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
     	$this->data['entry_email'] = $this->language->get('entry_email');
-    	$this->data['entry_user_group'] = $this->language->get('entry_user_group');
+    	$this->data['entry_image'] = $this->language->get('entry_image');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-    
+ 		$this->data['button_edit'] = $this->language->get('button_edit');
+		$this->data['button_clear'] = $this->language->get('button_clear');
+   
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -361,7 +365,19 @@ class ControllerUserUser extends Controller {
 		} else {
       		$this->data['username'] = '';
     	}
-  
+		
+    	if (isset($this->request->post['user_group_id'])) {
+      		$this->data['user_group_id'] = $this->request->post['user_group_id'];
+    	} elseif (!empty($user_info)) {
+			$this->data['user_group_id'] = $user_info['user_group_id'];
+		} else {
+      		$this->data['user_group_id'] = '';
+    	}
+		
+		$this->load->model('user/user_group');
+		
+    	$this->data['user_groups'] = $this->model_user_user_group->getUserGroups();
+		  
   		if (isset($this->request->post['password'])) {
     		$this->data['password'] = $this->request->post['password'];
 		} else {
@@ -397,18 +413,26 @@ class ControllerUserUser extends Controller {
 		} else {
       		$this->data['email'] = '';
     	}
-
-    	if (isset($this->request->post['user_group_id'])) {
-      		$this->data['user_group_id'] = $this->request->post['user_group_id'];
-    	} elseif (!empty($user_info)) {
-			$this->data['user_group_id'] = $user_info['user_group_id'];
+		
+		if (isset($this->request->post['image'])) {
+			$this->data['image'] = $this->request->post['image'];
+		} elseif (!empty($user_info)) {
+			$this->data['image'] = $user_info['image'];
 		} else {
-      		$this->data['user_group_id'] = '';
-    	}
+			$this->data['image'] = '';
+		}
 		
-		$this->load->model('user/user_group');
+		$this->load->model('tool/image');
+
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
+			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+		} elseif (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
+			$this->data['thumb'] = $this->model_tool_image->resize($user_info['image'], 100, 100);
+		} else {
+			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+		}
 		
-    	$this->data['user_groups'] = $this->model_user_user_group->getUserGroups();
+		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
  
      	if (isset($this->request->post['status'])) {
       		$this->data['status'] = $this->request->post['status'];

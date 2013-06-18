@@ -7,125 +7,127 @@
   </ul>
   <h1><?php echo $heading_title; ?></h1>
   <p><?php echo $text_account_already; ?></p>
-  <h2><?php echo $text_your_details; ?></h2>
-  <div class="content">
-    <table class="form">
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
-        <td><input type="text" name="firstname" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
-        <td><input type="text" name="lastname" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_email; ?></td>
-        <td><input type="text" name="email" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_telephone; ?></td>
-        <td><input type="text" name="telephone" value="" /></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_fax; ?></td>
-        <td><input type="text" name="fax" value="" /></td>
-      </tr>
-    </table>
-  </div>
-  <h2><?php echo $text_your_address; ?></h2>
-  <div class="content">
-    <table class="form">
-      <tr>
-        <td><?php echo $entry_company; ?></td>
-        <td><input type="text" name="company" value="" /></td>
-      </tr>
-      <tr style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;">
-        <td><?php echo $entry_customer_group; ?></td>
-        <td><select name="customer_group_id">
-            <?php foreach ($customer_groups as $customer_group) { ?>
-            <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-            <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
-        <td><input type="text" name="address_1" value="" /></td>
-      </tr>
-      <tr>
-        <td><?php echo $entry_address_2; ?></td>
-        <td><input type="text" name="address_2" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_city; ?></td>
-        <td><input type="text" name="city" value="" /></td>
-      </tr>
-      <tr>
-        <td><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
-        <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-        <td><select name="country_id">
-            <option value=""><?php echo $text_select; ?></option>
-            <?php foreach ($countries as $country) { ?>
-            <?php if ($country['country_id'] == $country_id) { ?>
-            <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
-        <td><select name="zone_id">
-          </select></td>
-      </tr>
-    </table>
-  </div>
-  <h2><?php echo $text_your_password; ?></h2>
-  <div class="content">
-    <table class="form">
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_password; ?></td>
-        <td><input type="password" name="password" value="" /></td>
-      </tr>
-      <tr>
-        <td><span class="required">*</span> <?php echo $entry_confirm; ?></td>
-        <td><input type="password" name="confirm" value="" /></td>
-      </tr>
-    </table>
-  </div>
-  <h2><?php echo $text_newsletter; ?></h2>
-  <div class="content">
-    <table class="form">
-      <tr>
-        <td><?php echo $entry_newsletter; ?></td>
-        <td><input type="radio" name="newsletter" value="1" />
-          <?php echo $text_yes; ?>
-          <input type="radio" name="newsletter" value="0" checked="checked" />
-          <?php echo $text_no; ?></td>
-      </tr>
-    </table>
-  </div>
-  <?php if ($text_agree) { ?>
-  <div class="buttons">
-    <div class="right"><?php echo $text_agree; ?>
-      <input type="checkbox" name="agree" value="1" />
-      <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="button" />
+  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+    <h2><?php echo $text_your_details; ?></h2>
+    <div class="content">
+      <table class="form">
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
+          <td><input type="text" name="firstname" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
+          <td><input type="text" name="lastname" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_email; ?></td>
+          <td><input type="text" name="email" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_telephone; ?></td>
+          <td><input type="text" name="telephone" value="" /></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_fax; ?></td>
+          <td><input type="text" name="fax" value="" /></td>
+        </tr>
+      </table>
     </div>
-  </div>
-  <?php } else { ?>
-  <div class="buttons">
-    <div class="right">
-      <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="button" />
+    <h2><?php echo $text_your_address; ?></h2>
+    <div class="content">
+      <table class="form">
+        <tr>
+          <td><?php echo $entry_company; ?></td>
+          <td><input type="text" name="company" value="" /></td>
+        </tr>
+        <tr style="display: <?php echo (count($customer_groups) > 1 ? 'table-row' : 'none'); ?>;">
+          <td><?php echo $entry_customer_group; ?></td>
+          <td><select name="customer_group_id">
+              <?php foreach ($customer_groups as $customer_group) { ?>
+              <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
+          <td><input type="text" name="address_1" value="" /></td>
+        </tr>
+        <tr>
+          <td><?php echo $entry_address_2; ?></td>
+          <td><input type="text" name="address_2" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_city; ?></td>
+          <td><input type="text" name="city" value="" /></td>
+        </tr>
+        <tr>
+          <td><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
+          <td><input type="text" name="postcode" value="<?php echo $postcode; ?>" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_country; ?></td>
+          <td><select name="country_id">
+              <option value=""><?php echo $text_select; ?></option>
+              <?php foreach ($countries as $country) { ?>
+              <?php if ($country['country_id'] == $country_id) { ?>
+              <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
+          <td><select name="zone_id">
+            </select></td>
+        </tr>
+      </table>
     </div>
-  </div>
-  <?php } ?>
+    <h2><?php echo $text_your_password; ?></h2>
+    <div class="content">
+      <table class="form">
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_password; ?></td>
+          <td><input type="password" name="password" value="" /></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> <?php echo $entry_confirm; ?></td>
+          <td><input type="password" name="confirm" value="" /></td>
+        </tr>
+      </table>
+    </div>
+    <h2><?php echo $text_newsletter; ?></h2>
+    <div class="content">
+      <table class="form">
+        <tr>
+          <td><?php echo $entry_newsletter; ?></td>
+          <td><input type="radio" name="newsletter" value="1" />
+            <?php echo $text_yes; ?>
+            <input type="radio" name="newsletter" value="0" checked="checked" />
+            <?php echo $text_no; ?></td>
+        </tr>
+      </table>
+    </div>
+    <?php if ($text_agree) { ?>
+    <div class="buttons">
+      <div class="right"><?php echo $text_agree; ?>
+        <input type="checkbox" name="agree" value="1" />
+        <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
+      </div>
+    </div>
+    <?php } else { ?>
+    <div class="buttons">
+      <div class="right">
+        <input type="button" value="<?php echo $button_continue; ?>" id="button-register" class="btn" />
+      </div>
+    </div>
+    <?php } ?>
+  </form>
   <?php echo $content_bottom; ?></div>
 <div style="display: none;">
   <form enctype="multipart/form-data">
@@ -137,15 +139,15 @@ $('#button-register').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=account/register/save',
 		type: 'post',
-		data: $('input[type=\'text\'], input[type=\'password\'], input[type=\'checkbox\']:checked, input[type=\'radio\']:checked, input[type=\'hidden\'], select'),
+		data: $('form').serialize(),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-register').attr('disabled', true);
-			$('#button-register').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-register').after(' <i class="icon-spinner icon-spin"></i>');
+			$('#button-register').prop('disabled', true);
 		},	
 		complete: function() {
-			$('#button-register').attr('disabled', false); 
-			$('.loading').remove();
+			$('#button-register').after(' <i class="icon-spinner icon-spin"></i>');
+			$('#button-register').prop('disabled', false); 
 		},			
 		success: function(json) {
 			$('.warning, .error').remove();
@@ -154,7 +156,7 @@ $('#button-register').on('click', function() {
 				location = json['redirect'];				
 			} else if (json['error']) {
 				if (json['error']['warning']) {
-					$('#notification').html('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#notification').html('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.warning').fadeIn('slow');
 				}
@@ -281,22 +283,22 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 				
 				// File
 				if (custom_field['type'] == 'file') {
-					html += '<td><input type="button" value="<?php echo $button_upload; ?>" id="button-custom-field' + custom_field['custom_field_id'] + '" class="button" onclick="upload(\'' + custom_field['custom_field_id'] + '\');" /><input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="" /></td>';
+					html += '<td><input type="button" value="<?php echo $button_upload; ?>" id="button-custom-field' + custom_field['custom_field_id'] + '" class="btn" onclick="upload(\'' + custom_field['custom_field_id'] + '\');" /><input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="" /></td>';
 				}
 				
 				// Date
 				if (custom_field['type'] == 'date') {
-					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="date" /></td>';
+					html += '<td><input type="date" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="input-medium" /></td>';
 				}			
 				
 				// Datetime
 				if (custom_field['type'] == 'datetime') {
-					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="datetime" /></td>';
+					html += '<td><input type="datetime-local" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" /></td>';
 				}		
 							
 				// Time
 				if (custom_field['type'] == 'time') {
-					html += '<td><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="time" /></td>';
+					html += '<td><input type="time" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" class="input-mini" /></td>';
 				}	
 								
 				html += '<tr>';
@@ -309,18 +311,6 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 					$('input[name=\'' + custom_field['position'] + '\']').parent().parent().after(html);
 				}
 			}
-			
-			if ($.browser.msie && $.browser.version == 6) {
-				$('.date, .datetime, .time').bgIframe();
-			}
-			
-			$('.date').datepicker({dateFormat: 'yy-mm-dd'});
-			$('.datetime').datetimepicker({
-				dateFormat: 'yy-mm-dd',
-				timeFormat: 'h:m'
-			});
-			
-			$('.time').timepicker({timeFormat: 'h:m'});		
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -339,14 +329,17 @@ function upload(custom_field_id) {
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
+			cache: false,
+			contentType: false,
+			processData: false,				
 			beforeSend: function() {
 				$('#button-custom-field' + custom_field_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-				$('#button-custom-field' + custom_field_id).attr('disabled', true);
+				$('#button-custom-field' + custom_field_id).prop('disabled', true);
 				$('#custom-field' + custom_field_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.loading').remove();
-				$('#button-custom-field' + custom_field_id).attr('disabled', false);
+				$('#button-custom-field' + custom_field_id).prop('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {
@@ -361,10 +354,7 @@ function upload(custom_field_id) {
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			},
-			cache: false,
-			contentType: false,
-			processData: false
+			}
 		});
 	});		
 	
@@ -415,7 +405,6 @@ $('select[name=\'country_id\']').on('change', function() {
 
 $('select[name=\'country_id\']').trigger('change');
 //--></script> 
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
 $(document).ready(function() {
 	$('.colorbox').colorbox({

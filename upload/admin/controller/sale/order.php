@@ -452,10 +452,11 @@ class ControllerSaleOrder extends Controller {
 		$pagination->total = $order_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($order_total - $this->config->get('config_admin_limit'))) ? $order_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $order_total, ceil($order_total / $this->config->get('config_admin_limit')));
 
 		$this->data['filter_order_id'] = $filter_order_id;
 		$this->data['filter_customer'] = $filter_customer;
@@ -489,7 +490,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['text_default'] = $this->language->get('text_default');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_wait'] = $this->language->get('text_wait');
 		$this->data['text_product'] = $this->language->get('text_product');
 		$this->data['text_voucher'] = $this->language->get('text_voucher');
 		$this->data['text_order'] = $this->language->get('text_order');
@@ -502,7 +502,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['entry_email'] = $this->language->get('entry_email');
 		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
 		$this->data['entry_fax'] = $this->language->get('entry_fax');
-		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 		$this->data['entry_comment'] = $this->language->get('entry_comment');	
 		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');
 		$this->data['entry_address'] = $this->language->get('entry_address');
@@ -529,6 +528,7 @@ class ControllerSaleOrder extends Controller {
 		$this->data['entry_voucher'] = $this->language->get('entry_voucher');
 		$this->data['entry_coupon'] = $this->language->get('entry_coupon');
 		$this->data['entry_reward'] = $this->language->get('entry_reward');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
 
 		$this->data['column_product'] = $this->language->get('column_product');
 		$this->data['column_model'] = $this->language->get('column_model');
@@ -541,7 +541,6 @@ class ControllerSaleOrder extends Controller {
 		$this->data['button_add_product'] = $this->language->get('button_add_product');
 		$this->data['button_add_voucher'] = $this->language->get('button_add_voucher');
 		$this->data['button_update_total'] = $this->language->get('button_update_total');
-		$this->data['button_remove'] = $this->language->get('button_remove');
 		$this->data['button_upload'] = $this->language->get('button_upload');
 
 		$this->data['tab_order'] = $this->language->get('tab_order');
@@ -1205,6 +1204,8 @@ class ControllerSaleOrder extends Controller {
 			
 				if ($product_info && $product_info['shipping']) {
 					$shipping = true;
+					
+					break;
 				}
 			}
 		}
@@ -1348,7 +1349,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$this->data['text_payment_method'] = $this->language->get('text_payment_method');	
 			$this->data['text_download'] = $this->language->get('text_download');
-			$this->data['text_wait'] = $this->language->get('text_wait');
 			$this->data['text_generate'] = $this->language->get('text_generate');
 			$this->data['text_reward_add'] = $this->language->get('text_reward_add');
 			$this->data['text_reward_remove'] = $this->language->get('text_reward_remove');
@@ -1406,6 +1406,57 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_queries_remaining'] = $this->language->get('text_queries_remaining');
 			$this->data['text_maxmind_id'] = $this->language->get('text_maxmind_id');
 			$this->data['text_error'] = $this->language->get('text_error');
+
+			$this->data['help_country_match'] = $this->language->get('help_country_match');
+			$this->data['help_country_code'] = $this->language->get('help_country_code');
+			$this->data['help_high_risk_country'] = $this->language->get('help_high_risk_country');
+			$this->data['help_distance'] = $this->language->get('help_distance');
+			$this->data['help_ip_region'] = $this->language->get('help_ip_region');
+			$this->data['help_ip_city'] = $this->language->get('help_ip_city');
+			$this->data['help_ip_latitude'] = $this->language->get('help_ip_latitude');
+			$this->data['help_ip_longitude'] = $this->language->get('help_ip_longitude');
+			$this->data['help_ip_isp'] = $this->language->get('help_ip_isp');
+			$this->data['help_ip_org'] = $this->language->get('help_ip_org');
+			$this->data['help_ip_asnum'] = $this->language->get('help_ip_asnum');
+			$this->data['help_ip_user_type'] = $this->language->get('help_ip_user_type');
+			$this->data['help_ip_country_confidence'] = $this->language->get('help_ip_country_confidence');
+			$this->data['help_ip_region_confidence'] = $this->language->get('help_ip_region_confidence');
+			$this->data['help_ip_city_confidence'] = $this->language->get('help_ip_city_confidence');
+			$this->data['help_ip_postal_confidence'] = $this->language->get('help_ip_postal_confidence');
+			$this->data['help_ip_postal_code'] = $this->language->get('help_ip_postal_code');
+			$this->data['help_ip_accuracy_radius'] = $this->language->get('help_ip_accuracy_radius');
+			$this->data['help_ip_net_speed_cell'] = $this->language->get('help_ip_net_speed_cell');
+			$this->data['help_ip_metro_code'] = $this->language->get('help_ip_metro_code');
+			$this->data['help_ip_area_code'] = $this->language->get('help_ip_area_code');
+			$this->data['help_ip_time_zone'] = $this->language->get('help_ip_time_zone');
+			$this->data['help_ip_region_name'] = $this->language->get('help_ip_region_name');
+			$this->data['help_ip_domain'] = $this->language->get('help_ip_domain');
+			$this->data['help_ip_country_name'] = $this->language->get('help_ip_country_name');
+			$this->data['help_ip_continent_code'] = $this->language->get('help_ip_continent_code');
+			$this->data['help_ip_corporate_proxy'] = $this->language->get('help_ip_corporate_proxy');
+			$this->data['help_anonymous_proxy'] = $this->language->get('help_anonymous_proxy');
+			$this->data['help_proxy_score'] = $this->language->get('help_proxy_score');
+			$this->data['help_is_trans_proxy'] = $this->language->get('help_is_trans_proxy');
+			$this->data['help_free_mail'] = $this->language->get('help_free_mail');
+			$this->data['help_carder_email'] = $this->language->get('help_carder_email');
+			$this->data['help_high_risk_username'] = $this->language->get('help_high_risk_username');
+			$this->data['help_high_risk_password'] = $this->language->get('help_high_risk_password');
+			$this->data['help_bin_match'] = $this->language->get('help_bin_match');
+			$this->data['help_bin_country'] = $this->language->get('help_bin_country');
+			$this->data['help_bin_name_match'] = $this->language->get('help_bin_name_match');
+			$this->data['help_bin_name'] = $this->language->get('help_bin_name');
+			$this->data['help_bin_phone_match'] = $this->language->get('help_bin_phone_match');
+			$this->data['help_bin_phone'] = $this->language->get('help_bin_phone');
+			$this->data['help_customer_phone_in_billing_location'] = $this->language->get('help_customer_phone_in_billing_location');
+			$this->data['help_ship_forward'] = $this->language->get('help_ship_forward');
+			$this->data['help_city_postal_match'] = $this->language->get('help_city_postal_match');
+			$this->data['help_ship_city_postal_match'] = $this->language->get('help_ship_city_postal_match');
+			$this->data['help_score'] = $this->language->get('help_score');
+			$this->data['help_explanation'] = $this->language->get('help_explanation');
+			$this->data['help_risk_score'] = $this->language->get('help_risk_score');
+			$this->data['help_queries_remaining'] = $this->language->get('help_queries_remaining');
+			$this->data['help_maxmind_id'] = $this->language->get('help_maxmind_id');
+			$this->data['help_error'] = $this->language->get('help_error');
 							
 			$this->data['column_product'] = $this->language->get('column_product');
 			$this->data['column_model'] = $this->language->get('column_model');
@@ -1541,16 +1592,16 @@ class ControllerSaleOrder extends Controller {
 			$this->data['affiliate_lastname'] = $order_info['affiliate_lastname'];
 			
 			if ($order_info['affiliate_id']) {
-				$this->data['affiliate'] = $this->url->link('sale/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
+				$this->data['affiliate'] = $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $order_info['affiliate_id'], 'SSL');
 			} else {
 				$this->data['affiliate'] = '';
 			}
 			
 			$this->data['commission'] = $this->currency->format($order_info['commission'], $order_info['currency_code'], $order_info['currency_value']);
 						
-			$this->load->model('sale/affiliate');
+			$this->load->model('marketing/affiliate');
 			
-			$this->data['commission_total'] = $this->model_sale_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']); 
+			$this->data['commission_total'] = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']); 
 
 			$this->load->model('localisation/order_status');
 
@@ -2054,12 +2105,12 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 			
 			if ($order_info && $order_info['affiliate_id']) {
-				$this->load->model('sale/affiliate');
+				$this->load->model('marketing/affiliate');
 				
-				$affiliate_total = $this->model_sale_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
+				$affiliate_total = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
 				
 				if (!$affiliate_total) {
-					$this->model_sale_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $this->request->get['order_id'], $order_info['commission'], $this->request->get['order_id']);
+					$this->model_marketing_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $this->request->get['order_id'], $order_info['commission'], $this->request->get['order_id']);
 					
 					$json['success'] = $this->language->get('text_commission_added');
 				} else {
@@ -2086,9 +2137,9 @@ class ControllerSaleOrder extends Controller {
 			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
 			
 			if ($order_info && $order_info['affiliate_id']) {
-				$this->load->model('sale/affiliate');
+				$this->load->model('marketing/affiliate');
 
-				$this->model_sale_affiliate->deleteTransaction($this->request->get['order_id']);
+				$this->model_marketing_affiliate->deleteTransaction($this->request->get['order_id']);
 				
 				$json['success'] = $this->language->get('text_commission_removed');
 			} else {
@@ -2151,10 +2202,11 @@ class ControllerSaleOrder extends Controller {
 		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10; 
-		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('sale/order/history', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();
+		
+		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($history_total - $this->config->get('config_admin_limit'))) ? $history_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $history_total, ceil($history_total / $this->config->get('config_admin_limit')));
 		
 		$this->template = 'sale/order_history.tpl';		
 		

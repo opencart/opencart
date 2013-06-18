@@ -48,7 +48,7 @@
 </table>
 <br />
 <div class="buttons">
-  <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="button" /></div>
+  <div class="right"><input type="button" value="<?php echo $button_continue; ?>" id="button-guest-shipping" class="btn" /></div>
 </div>
 <script type="text/javascript"><!--
 // Guest Shipping
@@ -59,11 +59,11 @@ $('#button-guest-shipping').off().on('click', function() {
 		data: $('#shipping-address input[type=\'text\'], #shipping-address select'),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-guest-shipping').attr('disabled', true);
+			$('#button-guest-shipping').prop('disabled', true);
 			$('#button-guest-shipping').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
 		},	
 		complete: function() {
-			$('#button-guest-shipping').attr('disabled', false); 
+			$('#button-guest-shipping').prop('disabled', false); 
 			$('.loading').remove();
 		},			
 		success: function(json) {
@@ -73,7 +73,7 @@ $('#button-guest-shipping').off().on('click', function() {
 				location = json['redirect'];
 			} else if (json['error']) {
 				if (json['error']['warning']) {
-					$('#shipping-address .checkout-content').prepend('<div class="warning" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+					$('#shipping-address .checkout-content').prepend('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 					$('.warning').fadeIn('slow');
 				}

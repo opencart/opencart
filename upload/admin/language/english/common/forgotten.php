@@ -9,9 +9,9 @@ $_['text_email']      = 'Enter the e-mail address associated with your account. 
 $_['text_success']    = 'An email with a confirmation link has been sent your admin email address.';
 
 // Entry
-$_['entry_email']     = 'E-Mail Address:';
-$_['entry_password']  = 'New Password:';
-$_['entry_confirm']   = 'Confirm:';
+$_['entry_email']     = 'E-Mail Address';
+$_['entry_password']  = 'New Password';
+$_['entry_confirm']   = 'Confirm';
 
 // Error
 $_['error_email']     = 'Warning: The E-Mail Address was not found in our records, please try again!';

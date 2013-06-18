@@ -163,7 +163,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="button" value="<?php echo $button_upload; ?>" id="button-option<?php echo $option['product_option_id']; ?>" class="button" onclick="upload('<?php echo $option['product_option_id']; ?>');" />
+          <input type="button" value="<?php echo $button_upload; ?>" id="button-option<?php echo $option['product_option_id']; ?>" class="btn" onclick="upload('<?php echo $option['product_option_id']; ?>');" />
           <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" />
         </div>
         <br />
@@ -174,7 +174,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="date" />
+          <input type="date" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="input-medium" />
         </div>
         <br />
         <?php } ?>
@@ -184,7 +184,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="datetime" />
+          <input type="datetime-local" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
         </div>
         <br />
         <?php } ?>
@@ -194,7 +194,7 @@
           <span class="required">*</span>
           <?php } ?>
           <b><?php echo $option['name']; ?>:</b><br />
-          <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="time" />
+          <input type="time" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="input-mini" />
         </div>
         <br />
         <?php } ?>
@@ -203,12 +203,12 @@
       <?php } ?>
       <div class="cart">
         <div><?php echo $text_qty; ?>
-          <input type="text" name="quantity" size="2" value="<?php echo $minimum; ?>" />
-          <input type="hidden" name="product_id" size="2" value="<?php echo $product_id; ?>" />
+          <input type="text" name="quantity" class="input-mini" value="<?php echo $minimum; ?>" />
+          <input type="hidden" name="product_id" class="input-mini" value="<?php echo $product_id; ?>" />
           &nbsp;
-          <input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="button" />
+          <input type="button" value="<?php echo $button_cart; ?>" id="button-cart" class="btn" />
           <span>&nbsp;&nbsp;<?php echo $text_or; ?>&nbsp;&nbsp;</span> <span class="links"><a onclick="addToWishList('<?php echo $product_id; ?>');"><?php echo $button_wishlist; ?></a><br />
-          <a onclick="addToCompare('<?php echo $product_id; ?>');"><?php echo $button_compare; ?></a></span> </div>
+          <a onclick="addToCompare('<?php echo $product_id; ?>');"><?php echo $button_compare; ?></a></span></div>
         <?php if ($minimum > 1) { ?>
         <div class="minimum"><?php echo $text_minimum; ?></div>
         <?php } ?>
@@ -289,7 +289,7 @@
     <img src="index.php?route=product/product/captcha" alt="" id="captcha" /><br />
     <br />
     <div class="buttons">
-      <div class="right"><a id="button-review" class="button"><?php echo $button_continue; ?></a></div>
+      <div class="right"><a id="button-review" class="btn"><?php echo $button_continue; ?></a></div>
     </div>
     <?php } else { echo $text_login_write; } ?>
   </div>
@@ -315,7 +315,7 @@
         <?php if ($product['rating']) { ?>
         <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
         <?php } ?>
-        <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="button"><?php echo $button_cart; ?></a></div>
+        <a onclick="addToCart('<?php echo $product['product_id']; ?>');" class="btn"><?php echo $button_cart; ?></a></div>
       <?php } ?>
     </div>
   </div>
@@ -354,7 +354,7 @@ $('#button-cart').on('click', function() {
 		data: $('.product-info input[type=\'text\'], .product-info input[type=\'hidden\'], .product-info input[type=\'radio\']:checked, .product-info input[type=\'checkbox\']:checked, .product-info select, .product-info textarea'),
 		dataType: 'json',
 		success: function(json) {
-			$('.success, .warning, .attention, information, .error').remove();
+			$('.success, .warning, .attention, .information, .error').remove();
 			
 			if (json['error']) {
 				if (json['error']['option']) {
@@ -365,7 +365,7 @@ $('#button-cart').on('click', function() {
 			} 
 			
 			if (json['success']) {
-				$('#notification').html('<div class="success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
+				$('#notification').html('<div class="alert alert-success" style="display: none;">' + json['success'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
 					
 				$('.success').fadeIn('slow');
 					
@@ -390,14 +390,17 @@ function upload(product_option_id) {
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
+			cache: false,
+			contentType: false,
+			processData: false,				
 			beforeSend: function() {
 				$('#button-option' + product_option_id).after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-				$('#button-option' + product_option_id).attr('disabled', true);
+				$('#button-option' + product_option_id).prop('disabled', true);
 				$('#option' + product_option_id + ' + .error').remove();
 			},	
 			complete: function() {
 				$('.loading').remove();
-				$('#button-option' + product_option_id).attr('disabled', false);
+				$('#button-option' + product_option_id).prop('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {
@@ -412,10 +415,7 @@ function upload(product_option_id) {
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			},
-			cache: false,
-			contentType: false,
-			processData: false
+			}
 		});
 	});		
 	
@@ -426,7 +426,7 @@ function upload(product_option_id) {
 <?php } ?>
 <?php } ?>
 <script type="text/javascript"><!--
-$('#review .pagination a').live('click', function() {
+$('#review .pagination a').on('click', function() {
 	$('#review').fadeOut('slow');
 		
 	$('#review').load(this.href);
@@ -446,20 +446,20 @@ $('#button-review').on('click', function() {
 		data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
 		beforeSend: function() {
 			$('.success, .warning').remove();
-			$('#button-review').attr('disabled', true);
+			$('#button-review').prop('disabled', true);
 			$('#review-title').after('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
-			$('#button-review').attr('disabled', false);
+			$('#button-review').prop('disabled', false);
 			$('.attention').remove();
 		},
 		success: function(data) {
 			if (data['error']) {
-				$('#review-title').after('<div class="warning">' + data['error'] + '</div>');
+				$('#review-title').after('<div class="alert alert-error">' + data['error'] + '</div>');
 			}
 			
 			if (data['success']) {
-				$('#review-title').after('<div class="success">' + data['success'] + '</div>');
+				$('#review-title').after('<div class="alert alert-success">' + data['success'] + '</div>');
 								
 				$('input[name=\'name\']').val('');
 				$('textarea[name=\'text\']').val('');
@@ -472,23 +472,5 @@ $('#button-review').on('click', function() {
 		}
 	});
 });
-//--></script> 
-<script type="text/javascript"><!--
-$('#tabs a').tabs();
-//--></script> 
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	if ($.browser.msie && $.browser.version == 6) {
-		$('.date, .datetime, .time').bgIframe();
-	}
-
-	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
-	$('.datetime').datetimepicker({
-		dateFormat: 'yy-mm-dd',
-		timeFormat: 'h:m'
-	});
-	$('.time').timepicker({timeFormat: 'h:m'});
-});
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

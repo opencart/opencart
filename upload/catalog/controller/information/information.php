@@ -24,7 +24,7 @@ class ControllerInformationInformation extends Controller {
 	  		$this->document->setTitle($information_info['title']); 
 
       		$this->data['breadcrumbs'][] = array(
-        		'text'      => $information_info['title'],
+        		'text' => $information_info['title'],
 				'href' => $this->url->link('information/information', 'information_id=' .  $information_id)
       		);		
 						

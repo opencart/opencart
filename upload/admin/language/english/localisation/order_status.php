@@ -10,7 +10,7 @@ $_['column_name']      = 'Order Status Name';
 $_['column_action']    = 'Action';
 
 // Entry
-$_['entry_name']       = 'Order Status Name:';
+$_['entry_name']       = 'Order Status Name';
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify order statues!';

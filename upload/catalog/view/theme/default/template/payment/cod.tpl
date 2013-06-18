@@ -8,7 +8,11 @@ $('#button-confirm').on('click', function() {
 	$.ajax({ 
 		type: 'get',
 		url: 'index.php?route=payment/cod/confirm',
-		success: function() {
+		beforeSend: function() {
+			$('#button-confirm').attr('disabled', true);
+			$('#button-confirm').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+		},	
+		success: function() {			
 			location = '<?php echo $continue; ?>';
 		}		
 	});

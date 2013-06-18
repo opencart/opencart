@@ -1,7 +1,6 @@
 <?php
 final class mMySQLi {
 	private $mysqli;
-	private $statement = null;
 
 	public function __construct($hostname, $username, $password, $database) {
 

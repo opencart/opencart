@@ -1,5 +1,5 @@
 <?php
-final class MySQLi {
+final class mMySQLi {
 	private $mysqli;
 	private $statement = null;
 

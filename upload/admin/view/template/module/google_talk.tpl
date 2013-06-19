@@ -32,6 +32,10 @@
           <thead>
             <tr>
               <td class="left"><?php echo $entry_layout; ?></td>
+              <td class="left"><?php echo $entry_store; ?></td>
+              <td class="left"><?php echo $entry_responsive_phone; ?></td>
+              <td class="left"><?php echo $entry_responsive_tablet; ?></td>
+              <td class="left"><?php echo $entry_responsive_desktop; ?></td>
               <td class="left"><?php echo $entry_position; ?></td>
               <td class="left"><?php echo $entry_status; ?></td>
               <td class="right"><?php echo $entry_sort_order; ?></td>
@@ -49,6 +53,42 @@
                   <?php } else { ?>
                   <option value="<?php echo $layout['layout_id']; ?>"><?php echo $layout['name']; ?></option>
                   <?php } ?>
+                  <?php } ?>
+                </select></td>
+              <td class="left"><select name="google_talk_module[<?php echo $module_row; ?>][store_id]">
+                  <?php foreach ($stores as $store) { ?>
+                  <?php if ($store['store_id'] == $module['store_id']) { ?>
+                  <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select></td>
+              <td class="left"><select name="google_talk_module[<?php echo $module_row; ?>][responsive_phone]">
+                  <?php if ($module['responsive_phone']) { ?>
+                  <option value="1" selected="selected"><?php echo $text_visible; ?></option>
+                  <option value="0"><?php echo $text_hidden; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_visible; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_hidden; ?></option>
+                  <?php } ?>
+                </select></td>
+              <td class="left"><select name="google_talk_module[<?php echo $module_row; ?>][responsive_tablet]">
+                  <?php if ($module['responsive_tablet']) { ?>
+                  <option value="1" selected="selected"><?php echo $text_visible; ?></option>
+                  <option value="0"><?php echo $text_hidden; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_visible; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_hidden; ?></option>
+                  <?php } ?>
+                </select></td>
+              <td class="left"><select name="google_talk_module[<?php echo $module_row; ?>][responsive_desktop]">
+                  <?php if ($module['responsive_desktop']) { ?>
+                  <option value="1" selected="selected"><?php echo $text_visible; ?></option>
+                  <option value="0"><?php echo $text_hidden; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_visible; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_hidden; ?></option>
                   <?php } ?>
                 </select></td>
               <td class="left"><select name="google_talk_module[<?php echo $module_row; ?>][position]">
@@ -90,7 +130,7 @@
           </tbody>
           <tfoot>
             <tr>
-              <td colspan="4"></td>
+              <td colspan="8"></td>
               <td class="left"><a onclick="addModule();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></a></td>
             </tr>
           </tfoot>
@@ -109,6 +149,23 @@ function addModule() {
 	html += '    <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
+	html += '  <td class="left"><select name="google_talk_module[' + module_row + '][store_id]">';
+	<?php foreach ($stores as $store) { ?>
+	html += '    <option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
+	<?php } ?>
+	html += '  </select></td>';
+	html += '  <td class="left"><select name="google_talk_module[' + module_row + '][responsive_phone]">';
+    html += '    <option value="1" selected="selected"><?php echo $text_visible; ?></option>';
+    html += '    <option value="0"><?php echo $text_hidden; ?></option>';
+    html += '  </select></td>';
+	html += '  <td class="left"><select name="google_talk_module[' + module_row + '][responsive_tablet]">';
+    html += '    <option value="1" selected="selected"><?php echo $text_visible; ?></option>';
+    html += '    <option value="0"><?php echo $text_hidden; ?></option>';
+    html += '  </select></td>';
+	html += '  <td class="left"><select name="google_talk_module[' + module_row + '][responsive_desktop]">';
+    html += '    <option value="1" selected="selected"><?php echo $text_visible; ?></option>';
+    html += '    <option value="0"><?php echo $text_hidden; ?></option>';
+    html += '  </select></td>';
 	html += '  <td class="left"><select name="google_talk_module[' + module_row + '][position]">';
 	html += '    <option value="content_top"><?php echo $text_content_top; ?></option>';
 	html += '    <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';

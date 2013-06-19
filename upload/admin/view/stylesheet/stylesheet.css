@@ -3,6 +3,7 @@ html, body, label, .control-group input, textarea, select, td {
 	font-size: 12px;
 	line-height: 15px;
 }
+/* Header */
 #header .navbar .brand {
 	margin: 0px;
 	padding: 5px 5px 0px 0px;
@@ -10,6 +11,9 @@ html, body, label, .control-group input, textarea, select, td {
 #header .navbar {
 	margin-bottom: 0px;
 	border-bottom: 4px solid #00C3F4;
+}
+#header .navbar-inner {
+	padding: 0px 30px;
 }
 #header .navbar-inverse .navbar-inner {
 	padding-top: 3px;
@@ -40,11 +44,12 @@ html, body, label, .control-group input, textarea, select, td {
 #header .navbar .icon-caret-down {
 	margin-left: 5px;
 }
+/* Menu */
 #menu .navbar {
 	margin-bottom: 5px;
 }
 #menu .navbar-inner {
-	padding: 0;
+	padding: 0px 10px;
 	min-height: 29px;
 	background-color: #FFFFFF;
 	background-repeat: repeat-x;
@@ -151,7 +156,7 @@ html, body, label, .control-group input, textarea, select, td {
 	line-height: 20px;
 }
 #content {
-	padding: 10px 15px 0px 15px;
+	padding: 10px 30px 0px 30px;
 	padding-bottom: 128px;
 }
 #footer {
@@ -228,11 +233,13 @@ html, body, label, .control-group input, textarea, select, td {
 	font-family: FontAwesome;
 	font-size: 14px;
 }
+/*
 .control-group {
 	border-bottom: 1px dotted #CCCCCC;
 	padding-bottom: 20px;
 	margin-bottom: 10px;
 }
+*/
 .control-group a[data-toggle='tooltip'] {
 	font-size: 15px;
 	cursor: pointer;

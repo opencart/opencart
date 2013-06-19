@@ -28,6 +28,40 @@ class ModelAffiliateAffiliate extends Model {
 		$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
 		$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 		$mail->send();
+		
+		// Send to main admin email if new affiliate email is enabled
+		if ($this->config->get('config_account_mail')) {
+			$message  = $this->language->get('text_signup') . "\n\n";
+			$message .= $this->language->get('text_store') . ' ' . $this->config->get('config_name') . "\n";
+			$message .= $this->language->get('text_firstname') . ' ' . $data['firstname'] . "\n";
+			$message .= $this->language->get('text_lastname') . ' ' . $data['lastname'] . "\n";
+			
+			if ($data['website']) {
+				$message .= $this->language->get('text_website') . ' ' . $data['website'] . "\n";
+			}
+			
+			if ($data['company']) {
+				$message .= $this->language->get('text_company') . ' '  . $data['company'] . "\n";
+			}
+			
+			$message .= $this->language->get('text_email') . ' '  .  $data['email'] . "\n";
+			$message .= $this->language->get('text_telephone') . ' ' . $data['telephone'] . "\n";
+			
+			$mail->setTo($this->config->get('config_email'));
+			$mail->setSubject(html_entity_decode($this->language->get('text_new_affiliate'), ENT_QUOTES, 'UTF-8'));
+			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
+			$mail->send();
+			
+			// Send to additional alert emails if new affiliate email is enabled
+			$emails = explode(',', $this->config->get('config_alert_emails'));
+			
+			foreach ($emails as $email) {
+				if (strlen($email) > 0 && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+					$mail->setTo($email);
+					$mail->send();
+				}
+			}
+		}
 	}
 	
 	public function editAffiliate($data) {

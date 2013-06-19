@@ -64,6 +64,62 @@
               </div>
             </div>
             <div class="control-group">
+              <label class="control-label" for="input-store<?php echo $module_row; ?>"><?php echo $entry_store; ?></label>
+              <div class="controls">
+                <select name="welcome_module[<?php echo $module_row; ?>][store_id]" id="input-store<?php echo $module_row; ?>">
+                  <?php foreach ($stores as $store) { ?>
+                  <?php if ($store['store_id'] == $module['store_id']) { ?>
+                  <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-responsive-phone<?php echo $module_row; ?>"><?php echo $entry_responsive_phone; ?></label>
+              <div class="controls">
+                <select name="welcome_module[<?php echo $module_row; ?>][responsive_phone]" id="input-responsive-phone<?php echo $module_row; ?>">
+                  <?php if ($module['responsive_phone']) { ?>
+                  <option value="1" selected="selected"><?php echo $text_visible; ?></option>
+                  <option value="0"><?php echo $text_hidden; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_visible; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_hidden; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-responsive-tablet<?php echo $module_row; ?>"><?php echo $entry_responsive_tablet; ?></label>
+              <div class="controls">
+                <select name="welcome_module[<?php echo $module_row; ?>][responsive_tablet]" id="input-responsive-tablet<?php echo $module_row; ?>">
+                  <?php if ($module['responsive_tablet']) { ?>
+                  <option value="1" selected="selected"><?php echo $text_visible; ?></option>
+                  <option value="0"><?php echo $text_hidden; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_visible; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_hidden; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-responsive-desktop<?php echo $module_row; ?>"><?php echo $entry_responsive_desktop; ?></label>
+              <div class="controls">
+                <select name="welcome_module[<?php echo $module_row; ?>][responsive_desktop]" id="input-responsive-desktop<?php echo $module_row; ?>">
+                  <?php if ($module['responsive_desktop']) { ?>
+                  <option value="1" selected="selected"><?php echo $text_visible; ?></option>
+                  <option value="0"><?php echo $text_hidden; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_visible; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_hidden; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="control-group">
               <label class="control-label" for="input-position<?php echo $module_row; ?>"><?php echo $entry_position; ?></label>
               <div class="controls">
                 <select name="welcome_module[<?php echo $module_row; ?>][position]" id="input-position<?php echo $module_row; ?>">
@@ -169,6 +225,36 @@ function addModule() {
 	html += '    </select></div>';
 	html += '  </div>';
 
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-store' + module_row + '"><?php echo $entry_store; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][store_id]" id="input-store' + module_row + '">';
+	<?php foreach ($stores as $store) { ?>
+	html += '           <option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
+	<?php } ?>
+	html += '    </select></div>';
+	html += '  </div>';
+	
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-responsive-phone' + module_row + '"><?php echo $entry_responsive_phone; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][responsive_phone]" id="input-responsive-phone' + module_row + '">';
+	html += '          <option value="1"><?php echo $text_visible; ?></option>';
+	html += '          <option value="0"><?php echo $text_hidden; ?></option>';
+	html += '        </select></div>';
+	html += '  </div>';
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-responsive-tablet' + module_row + '"><?php echo $entry_responsive_tablet; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][responsive_tablet]" id="input-responsive-tablet' + module_row + '">';
+	html += '          <option value="1"><?php echo $text_visible; ?></option>';
+	html += '          <option value="0"><?php echo $text_hidden; ?></option>';
+	html += '        </select></div>';
+	html += '  </div>';
+	html += '  <div class="control-group">';
+	html += '    <label class="control-label" for="input-responsive-desktop' + module_row + '"><?php echo $entry_responsive_desktop; ?></label>';
+	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][responsive_desktop]" id="input-responsive-desktop' + module_row + '">';
+	html += '          <option value="1"><?php echo $text_visible; ?></option>';
+	html += '          <option value="0"><?php echo $text_hidden; ?></option>';
+	html += '        </select></div>';
+	html += '  </div>';
 	html += '  <div class="control-group">';
 	html += '    <label class="control-label" for="input-position' + module_row + '"><?php echo $entry_position; ?></label>';
 	html += '    <div class="controls"><select name="welcome_module[' + module_row + '][position]" id="input-position' + module_row + '">';

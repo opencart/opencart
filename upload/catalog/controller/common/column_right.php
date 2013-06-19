@@ -67,12 +67,27 @@ class ControllerCommonColumnRight extends Controller {
 		array_multisort($sort_order, SORT_ASC, $module_data);
 		
 		$this->data['modules'] = array();
-		
+		$i = 0;
+
 		foreach ($module_data as $module) {
-			$module = $this->getChild('module/' . $module['code'], $module['setting']);
+			if ($module['setting']['store_id'] == $this->config->get('config_store_id')) {
 			
-			if ($module) {
-				$this->data['modules'][] = $module;
+				$module_content = $this->getChild('module/' . $module['code'], $module['setting']);
+				
+				if ($module_content) {
+					$i++;
+					
+					$this->data['modules'][$i] = array();
+					
+					$this->data['modules'][$i]['content'] = $module_content;
+					
+					$this->data['modules'][$i]['responsive'] = array(
+						'phone'   => $module['setting']['responsive_phone'],
+						'tablet'  => $module['setting']['responsive_tablet'],
+						'desktop' => $module['setting']['responsive_desktop']
+					);
+				}
+				
 			}
 		}
 		

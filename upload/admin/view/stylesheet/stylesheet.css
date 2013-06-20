@@ -17,7 +17,7 @@ html, body, label, .control-group input, textarea, select, td {
 	padding-right: 30px;
 }
 #header .navbar-inverse .navbar-inner {
-	min-height: 43px;
+	min-height: 44px;
 	background-color: #2D2D2E;
 	background-repeat: no-repeat, repeat, no-repeat;
 	background-size: auto, 5px 5px, 100% 6px;
@@ -51,12 +51,12 @@ html, body, label, .control-group input, textarea, select, td {
 	margin-left: 5px;
 }
 #header .navbar-inverse .nav > li > a.profile {
-	padding: 8px 0px 7px 11px;
+	padding: 7px 0px 6px 11px;
 }
 #header .navbar-inverse .nav > li > a.profile img {
 	background: #FFFFFF;
 	border: 1px solid #000;
-	padding: 1px;
+	padding: 2px;
 }
 
 .breadcrumb {

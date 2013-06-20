@@ -6,7 +6,7 @@ html, body, label, .control-group input, textarea, select, td {
 /* Header */
 #header .navbar .brand {
 	margin: 0px;
-	padding: 7px 5px 0px 0px;
+	padding: 8px 5px 0px 0px;
 }
 #header .navbar {
 	margin-bottom: 3px;

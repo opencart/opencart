@@ -33,33 +33,30 @@ class ControllerCommonHome extends Controller {
 
 		$this->data['token'] = $this->session->data['token'];
 		
+		// Total Sales
 		$this->load->model('sale/order');
 		
-
-		// Total Sales
 		$this->data['total_sale'] = $this->currency->format($this->model_sale_order->getTotalSales(), $this->config->get('config_currency'));
 			
 		//$this->currency->format($query->row['total'], $this->config->get('config_currency'), 1.00000000, false)
-		//$this->data['sales'] = json_encode($350.00);
 		
-		
+		$this->data['sales'] = array();
 		
 		// Total Orders
 		$this->data['total_order'] = $this->model_sale_order->getTotalOrders();
 		
+		$this->data['orders'] = array();
+		
 		//$this->data['orders'] = json_encode($this->model_report_dashboard->getTotalOrdersByMonth());
 		
-
-		
-
-
-				
 		// Cstomers
 		$this->load->model('sale/customer');
 		
 		$this->data['total_customer'] = $this->model_sale_customer->getTotalCustomers();
 		
 		$this->data['customers'] = array();
+
+
 
 
 		// Number of people onlne

@@ -190,7 +190,6 @@ class ControllerCommonHeader extends Controller {
 			
 			if ($user_info) {
 				$this->data['profile_name'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
-				$this->data['profile_group'] = $user_info['user_group'];
 				$this->data['profile_image'] = $user_info['image'];
 				
 				if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
@@ -200,7 +199,6 @@ class ControllerCommonHeader extends Controller {
 				}
 			} else {
 				$this->data['profile_name'] = '';
-				$this->data['profile_group'] = '';
 				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 25, 25);
 			}
 			

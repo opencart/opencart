@@ -17,36 +17,36 @@
     <div class="box-content">
       <div class="row-fluid" style="overflow: hidden;">
         <div class="span3">
-          <div class="well well-small">
+    
             <div id="chart-sale" class="chart"></div>
             <div class="detail">
               <h5><?php echo $total_sale; ?></h5>
               <span style="color: #F00;">+10%</span> <?php echo $text_total_sale; ?></div>
-          </div>
+       
         </div>
         <div class="span3">
-          <div class="well well-small">
+
             <div id="chart-order" class="chart"></div>
             <div class="detail">
               <h5><?php echo $total_order; ?> <i class="icon-caret-up icon-large"></i></h5>
               <?php echo $text_total_order; ?></div>
-          </div>
+     
         </div>
         <div class="span3">
-          <div class="well well-small">
+       
             <div id="chart-customer" class="chart"></div>
             <div class="detail">
               <h5><?php echo $total_customer; ?> <i class="icon-caret-down icon-large" style="font-size: 15px; color: #F00;"></i></h5>
               <?php echo $text_total_customer; ?></div>
-          </div>
+    
         </div>
         <div class="span3">
-          <div class="well well-small">
+        
             <div id="chart-online" class="chart"></div>
             <div class="detail">
               <h5><?php echo $total_online; ?> <i class="icon-caret-down icon-large"></i></h5>
               <?php echo $text_total_online; ?></div>
-          </div>
+   
         </div>
       </div>
       <div class="row-fluid">

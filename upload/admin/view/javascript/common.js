@@ -35,8 +35,8 @@ $(document).ready(function() {
 		if (part[1]) {
 			url += '/' + part[1];
 		}
-		//.parents('li[id]')
-		$('#header a[href*=\'' + url + '\']').addClass('active');
+		
+		$('#header a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 	
 	$('[data-toggle=\'tooltip\']').tooltip({

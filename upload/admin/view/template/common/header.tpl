@@ -31,34 +31,14 @@
 <div id="header">
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-      <div class="container"> <a href="<?php echo $home; ?>" class="brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
-        <?php if ($logged) { ?>
-        <ul class="nav pull-right">
-          <li class="dropdown" id="profile">
-            <div class="profile"><a data-toggle="dropdown" data-target="#profile"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /></a> <a data-toggle="dropdown" data-target="#profile"><?php echo $profile_name; ?> <i class="icon-caret-down"></i><br />
-              <small><?php echo $profile_group; ?></small></a></div>
-            <ul class="dropdown-menu">
-              <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
-              <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
-              <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
-            </ul>
-          </li>
-        </ul>
-        <?php } ?>
-      </div>
-    </div>
-  </div>
-</div>
-<div id="menu">
-  <div class="navbar">
-    <div class="navbar-inner">
       <div class="container">
         <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+        <a href="<?php echo $home; ?>" class="brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
         <?php if ($logged) { ?>
         <div class="nav-collapse collapse">
           <ul class="nav">
             <li id="dashboard"><a href="<?php echo $home; ?>"><?php echo $text_dashboard; ?></a></li>
-            <li class="dropdown" id="catalog"><a data-toggle="dropdown"><?php echo $text_catalog; ?></a>
+            <li class="dropdown" id="catalog"><a data-toggle="dropdown"><?php echo $text_catalog; ?> <i class="icon-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
                 <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
@@ -76,7 +56,7 @@
                 <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
               </ul>
             </li>
-            <li class="dropdown" id="extension"><a data-toggle="dropdown"><?php echo $text_extension; ?></a>
+            <li class="dropdown" id="extension"><a data-toggle="dropdown"><?php echo $text_extension; ?> <i class="icon-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
                 <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
@@ -87,7 +67,7 @@
                 <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
               </ul>
             </li>
-            <li class="dropdown" id="sale"><a data-toggle="dropdown"><?php echo $text_sale; ?></a>
+            <li class="dropdown" id="sale"><a data-toggle="dropdown"><?php echo $text_sale; ?> <i class="icon-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
                 <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
@@ -115,7 +95,7 @@
                 <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
               </ul>
             </li>
-            <li class="dropdown" id="system"><a data-toggle="dropdown"><?php echo $text_system; ?></a>
+            <li class="dropdown" id="system"><a data-toggle="dropdown"><?php echo $text_system; ?> <i class="icon-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
                 <li class="dropdown-submenu"><a><?php echo $text_design; ?></a>
@@ -162,7 +142,7 @@
                 <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
               </ul>
             </li>
-            <li class="dropdown" id="reports"><a data-toggle="dropdown"><?php echo $text_reports; ?></a>
+            <li class="dropdown" id="reports"><a data-toggle="dropdown"><?php echo $text_reports; ?> <i class="icon-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li class="dropdown-submenu"><a><?php echo $text_sale; ?></a>
                   <ul class="dropdown-menu">
@@ -194,7 +174,7 @@
                 </li>
               </ul>
             </li>
-            <li class="dropdown" id="help"><a data-toggle="dropdown"><?php echo $text_help; ?></a>
+            <li class="dropdown" id="help"><a data-toggle="dropdown"><?php echo $text_help; ?> <i class="icon-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
                 <li><a href="http://doc.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>
@@ -215,6 +195,16 @@
               <?php } else { ?>
               <a href="<?php echo $store; ?>" target="_blank"><?php echo $text_front; ?></a>
               <?php } ?>
+            </li>
+          </ul>
+          <ul class="nav pull-right">
+            <li class="dropdown" id="profile">
+              <div class="profile"><a data-toggle="dropdown" data-target="#profile"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /></a> <a data-toggle="dropdown" data-target="#profile"><i class="icon-caret-down"></i><br /></div>
+              <ul class="dropdown-menu">
+                <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
+                <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
+                <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
+              </ul>
             </li>
           </ul>
         </div>

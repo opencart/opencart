@@ -30,7 +30,7 @@
             <?php } ?>
           </div>
         </div>
-        <button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a>
       </form>
     </div>

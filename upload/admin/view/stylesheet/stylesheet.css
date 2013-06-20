@@ -6,83 +6,53 @@ html, body, label, .control-group input, textarea, select, td {
 /* Header */
 #header .navbar .brand {
 	margin: 0px;
-	padding: 5px 5px 0px 0px;
+	padding: 7px 5px 0px 0px;
 }
 #header .navbar {
-	margin-bottom: 0px;
-	border-bottom: 4px solid #00C3F4;
+	margin-bottom: 3px;
+	border-bottom: 5px solid #00C3F4;
 }
 #header .navbar-inner {
-	padding: 0px 30px;
+	padding-left: 30px;
+	padding-right: 30px;
 }
 #header .navbar-inverse .navbar-inner {
-	padding-top: 3px;
-	min-height: 41px;
+	min-height: 43px;
 	background-color: #2D2D2E;
-	background-repeat: no-repeat, repeat;
-	background-size: auto, 5px 5px;
-	background-position: center, center;
-	background-image: linear-gradient(90deg, transparent, transparent 20%, rgba(255, 255, 255, 0.1) 50%, transparent 80%), linear-gradient(-135deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 50%, transparent 60%, transparent 100%);
-	-moz-box-shadow: inset 0 0 8px 0px #000000;
-	-webkit-box-shadow: inset 0 0 8px 0px #000000;
-	box-shadow: inset 0 0 8px 0px #000000;
+	background-repeat: no-repeat, repeat, no-repeat;
+	background-size: auto, 5px 5px, 100% 6px;
+	background-position: center, center, bottom;
+	background-image: linear-gradient(90deg, transparent, transparent 20%, rgba(255, 255, 255, 0.1) 50%, transparent 80%), linear-gradient(-135deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 50%, transparent 60%, transparent 100%), linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.40) 100%);
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
 	border-top: none;
 	border-left: none;
 	border-right: none;
+	border-bottom: 1px solid #000;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
 }
+.navbar-inverse .nav .active > a, .navbar-inverse .nav .active > a:hover {
+	color: #FFFFFF;
+	background-color: transparent;
+}
 #header .navbar-inverse .nav > li > a {
+	padding: 12px 11px 12px 11px;
 	color: #AAAAAA;
 	text-shadow: 1px 1px 1px #000000;
 	cursor: pointer;
 }
+
 #header .navbar-inverse .nav > li > a:hover {
 	color: #FFFFFF;
 }
 #header .navbar .icon-caret-down {
 	margin-left: 5px;
 }
-/* Menu */
-#menu .navbar {
-	margin-bottom: 5px;
-}
-#menu .navbar-inner {
-	padding: 0px 10px;
-	min-height: 29px;
-	background-color: #FFFFFF;
-	background-repeat: repeat-x;
-	background-position: top;
-	background-image: linear-gradient(0deg, #FFFFFF 1px, #F3F3F3 1px, #FFFFFF);
-	-webkit-box-shadow: 0px 0px 4px 0px #CCCCCC;
-	-moz-box-shadow: 0px 0px 4px 0px #CCCCCC;
-	box-shadow: 0px 0px 4px 0px #CCCCCC;
-	border-top: none;
-	border-left: none;
-	border-right: none;
-	border-bottom: 1px solid #CCCCCC;
-	-webkit-border-radius: 0;
-	-moz-border-radius: 0;
-	border-radius: 0;
-}
-#menu .navbar .nav > li {
-	padding: 0px 5px 0px 5px;
-	line-height: 13px;
-}
-#menu .navbar .nav > li > a {
-	color: #444444;
-	cursor: pointer;
-	padding: 8px 15px 8px 15px;
-	text-shadow: 1px 1px 1px #FFFFFF;
-}
-#menu .navbar .nav > li + li {
-	background-repeat: no-repeat;
-	background-size: 1px 100%;
-	background-position: top;
-	background-position: left;
-	background-image: linear-gradient(0deg, #CCCCCC, #FFFFFF);
-}
+
+
 .profile {
 	text-shadow: 1px 1px 1px #000000;
 	line-height: 12px;

@@ -196,10 +196,8 @@
               <a href="<?php echo $store; ?>" target="_blank"><?php echo $text_front; ?></a>
               <?php } ?>
             </li>
-          </ul>
-          <ul class="nav pull-right">
-            <li class="dropdown" id="profile">
-              <div class="profile"><a data-toggle="dropdown" data-target="#profile"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /></a> <a data-toggle="dropdown" data-target="#profile"><i class="icon-caret-down"></i><br /></div>
+            <li class="dropdown">
+              <a class="profile" data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> <i class="icon-caret-down"></i></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
                 <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>

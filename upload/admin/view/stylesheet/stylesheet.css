@@ -44,43 +44,21 @@ html, body, label, .control-group input, textarea, select, td {
 	text-shadow: 1px 1px 1px #000000;
 	cursor: pointer;
 }
-
 #header .navbar-inverse .nav > li > a:hover {
 	color: #FFFFFF;
 }
 #header .navbar .icon-caret-down {
 	margin-left: 5px;
 }
-
-
-.profile {
-	text-shadow: 1px 1px 1px #000000;
-	line-height: 12px;
-	padding-top: 6px;
+#header .navbar-inverse .nav > li > a.profile {
+	padding: 8px 0px 7px 11px;
 }
-.profile img {
+#header .navbar-inverse .nav > li > a.profile img {
 	background: #FFFFFF;
 	border: 1px solid #000;
 	padding: 1px;
-	margin-right: 8px;
 }
-.profile a, .profile a:hover {
-	color: #FFF;
-	cursor: pointer;
-	text-decoration: none;
-	float: left;
-}
-.profile a + a {
-	display: block;
-	padding-right: 20px;
-	margin-top: 2px;
-	margin-bottom: 7px;
-}
-.profile .icon-caret-down {
-	position: relative;
-	top: 5px;
-	right: -22px;
-}
+
 .breadcrumb {
 	border: 1px solid #E5E5E5;
 	background: #FFFFFF;

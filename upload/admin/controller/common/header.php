@@ -194,14 +194,14 @@ class ControllerCommonHeader extends Controller {
 				$this->data['profile_image'] = $user_info['image'];
 				
 				if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
-					$this->data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 23, 23);
+					$this->data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 25, 25);
 				} else {
-					$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
+					$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 25, 25);
 				}
 			} else {
 				$this->data['profile_name'] = '';
 				$this->data['profile_group'] = '';
-				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
+				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 25, 25);
 			}
 			
 			$this->data['logged'] = $this->user->isLogged();

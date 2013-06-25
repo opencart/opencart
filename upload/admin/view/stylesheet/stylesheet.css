@@ -235,6 +235,7 @@ html, body, label, .control-group input, textarea, select, td {
 	-khtml-border-radius: 7px 7px 7px 7px;
 	border-radius: 7px 7px 7px 7px;
 	overflow: auto;
+	margin-bottom: 20px;
 }
 .stats div:first-child {
 	display: inline-block;
@@ -244,7 +245,7 @@ html, body, label, .control-group input, textarea, select, td {
 	text-align: center;
 }
 .stats div + div {
-	margin-left: 65px;
+	margin-left: 70px;
 	color: #999999;
 }
 .stats i {
@@ -252,13 +253,15 @@ html, body, label, .control-group input, textarea, select, td {
 	color: #999999;
 }
 
-.stats h5 {
+.stats h5, .chart h5 {
 	font-size: 15px;
 	color: #333333;
 	text-transform: uppercase;
 	margin: 0;
 }
-
+ .chart h5 { 
+ 	vertical-align: middle;
+}
 
 /* thumbnails */
 .image {

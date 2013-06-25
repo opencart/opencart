@@ -1,5 +1,11 @@
 <?php
 class ModelReportDashboard extends Model {
+	public function getTotalSales() {
+      	$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'");
+
+		return $query->row['total'];
+	}
+	
 	public function getTotalOrdersByDay() {
 		$order_data = array();
 		

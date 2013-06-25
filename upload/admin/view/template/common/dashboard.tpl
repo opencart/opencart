@@ -15,12 +15,50 @@
       <h1><i class="icon-eye-open"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <div class="row-fluid" style="margin-bottom: 20px;">
+      <div class="row-fluid">
         <div class="span3">
           <div class="stats">
             <div><i class="icon-usd"></i></div>
             <div>
-              <h5>TOTAL SALES</h5>
+              <h5><?php echo $text_sale; ?></h5>
+              <?php echo $total_sale; ?><br />
+              +10%</div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="stats">
+            <div><i class="icon-shopping-cart"></i></div>
+            <div>
+              <h5><?php echo $text_order; ?></h5>
+              <?php echo $total_order; ?><br />
+              +10% </div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="stats">
+            <div><i class="icon-user"></i></div>
+            <div>
+              <h5><?php echo $text_customer; ?></h5>
+              <?php echo $total_customer; ?><br />
+              +10%</div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="stats">
+            <div><i class="icon-globe"></i></div>
+            <div>
+              <h5><?php echo $text_marketing; ?></h5>
+              <?php echo $total_marketing; ?><br />
+              +10% </div>
+          </div>
+        </div>
+      </div>
+      <div class="row-fluid">
+        <div class="offset3 span3">
+          <div class="stats">
+            <div><i class="icon-group"></i></div>
+            <div>
+              <h5><?php echo $text_online; ?></h5>
               $100,0000<br />
               +10%</div>
           </div>
@@ -34,50 +72,38 @@
               +10% </div>
           </div>
         </div>
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-user"></i></div>
-            <div>
-              <h5><?php echo $text_customer; ?></h5>
-              5200<br />
-              +10%</div>
-          </div>
-        </div>
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-globe"></i></div>
-            <div>
-              <h5>Marketing</h5>
-              $100,0000<br />
-              +10% </div>
-          </div>
-        </div>
       </div>
       <div class="row-fluid">
-        <div class="span6"><h5>Marketing</h5>
-          <div class="btn-group pull-right" data-toggle="buttons-radio">
-            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
-          </div>
+        <div class="span3 chart">
+          <h5><?php echo $text_sale; ?></h5></div>
+          
+          <div class="span3">
+            <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
+              <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
+              <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
+              <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
+              <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+            </div>
+          
         </div>
-        <div class="span6"><h5>Marketing</h5>
-          <div class="btn-group pull-right" data-toggle="buttons-radio">
-            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
-          </div>
-        </div>        
-      </div>
-      <div class="row-fluid">
-        <div class="span6">
+        <div class="span3 chart">
+          <h5><?php echo $text_marketing; ?></h5>
+        </div>
+        <div class="span3">
+         <div id="button-marketing" class="btn-group pull-right" data-toggle="buttons-radio">
+              <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
+              <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
+              <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
+              <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+            </div></div>
         
-          <div id="statistics" style="height: 200px; margin-bottom: 20px;"></div>
+      </div>
+      <div class="row-fluid">
+        <div class="span6">
+          <div id="chart-sale" style="height: 150px;"></div>
         </div>
         <div class="span6">
-          <div id="online" style="height: 150px; margin-bottom: 20px;"></div>
+          <div id="chart-marketing" style="height: 150px;"></div>
         </div>
       </div>
     </div>
@@ -86,16 +112,16 @@
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
 <script type="text/javascript"><!--
-$('.btn-group button').on('click', function() {
+$('#button-sale button').on('click', function() {
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=common/dashboard/statistics&token=<?php echo $token; ?>&range=' + this.value,
+		url: 'index.php?route=common/dashboard/sale&token=<?php echo $token; ?>&range=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('.btn-group button').prop('disabled', true);
+			$('#button-sale button').prop('disabled', true);
 		},
 		complete: function() {
-			$('.btn-group button').prop('disabled', false);
+			$('#button-sale button').prop('disabled', false);
 		},		
 		success: function(json) {
 			var option = {	
@@ -118,9 +144,9 @@ $('.btn-group button').on('click', function() {
 				}
 			}
 			
-			$.plot('#statistics', [json.order, json.customer], option);	
+			$.plot('#chart-sale', [json.order, json.customer], option);	
 					
-			$('#statistics').bind('plothover', function(event, pos, item) {
+			$('#chart-sale').bind('plothover', function(event, pos, item) {
 				$('.tooltip').remove();
 			  
 				if (item) {
@@ -133,24 +159,28 @@ $('.btn-group button').on('click', function() {
 						pointer: 'cusror'
 					}).fadeIn('slow');	
 					
-					$('#statistics').css('cursor', 'pointer');		
+					$('#chart-sale').css('cursor', 'pointer');		
 			  	} else {
-					$('#statistics').css('cursor', 'auto');
+					$('#chart-sale').css('cursor', 'auto');
 				}
 			});
 		}
 	});	
-})
+});
 
-$('.btn-group .active').trigger('click');
+$('#button-sale .active').trigger('click');
 
-
-	
-function online() {
+$('#button-marketing button').on('click', function() {
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=common/dashboard/online&token=<?php echo $token; ?>',
+		url: 'index.php?route=common/dashboard/marketing&token=<?php echo $token; ?>',
 		dataType: 'json',
+		beforeSend: function() {
+			$('#button-marketing button').prop('disabled', true);
+		},
+		complete: function() {
+			$('#button-marketing button').prop('disabled', false);
+		},		
 		success: function(json) {
 			var option = {	
 				shadowSize: 0,
@@ -170,9 +200,9 @@ function online() {
 				}
 			}		
 			
-			$.plot('#online', [json.online], option);
+			$.plot('#chart-marketing', [json.online], option);
 					
-			$('#online').bind('plothover', function(event, pos, item) {
+			$('#chart-marketing').bind('plothover', function(event, pos, item) {
 				$('.tooltip').remove();
 			  
 				if (item) {
@@ -185,17 +215,15 @@ function online() {
 						pointer: 'cusror'
 					}).fadeIn('slow');	
 					
-					$('#online').css('cursor', 'pointer');		
+					$('#chart-marketing').css('cursor', 'pointer');		
 				} else {
-					$('#online').css('cursor', 'auto');
+					$('#chart-marketing').css('cursor', 'auto');
 				}
 			});
 			
 			setTimeout(online, 1000);
 		}
 	});
-}
-
-online();
+});
 //--></script> 
 <?php echo $footer; ?>

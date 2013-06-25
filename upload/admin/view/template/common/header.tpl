@@ -79,20 +79,20 @@
                     <li><a href="<?php echo $customer_ban_ip; ?>"><?php echo $text_customer_ban_ip; ?></a></li>
                   </ul>
                 </li>
-                <li class="dropdown-submenu"><a><?php echo $text_marketing; ?></a>
-                  <ul class="dropdown-menu">
-                    <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
-                    <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
-                  </ul>
-                </li>
-                <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
                 <li class="dropdown-submenu"><a><?php echo $text_voucher; ?></a>
                   <ul class="dropdown-menu">
                     <li><a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a></li>
                     <li><a href="<?php echo $voucher_theme; ?>"><?php echo $text_voucher_theme; ?></a></li>
                   </ul>
                 </li>
-                <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
+                <li class="dropdown-submenu"><a><?php echo $text_marketing; ?></a>
+                  <ul class="dropdown-menu">
+                    <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
+                    <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
+                    <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
+                    <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
+                  </ul>
+                </li>                
               </ul>
             </li>
             <li class="dropdown" id="system"><a data-toggle="dropdown"><?php echo $text_system; ?> <i class="icon-caret-down"></i></a>

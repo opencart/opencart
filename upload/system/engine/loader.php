@@ -9,7 +9,7 @@ final class Loader {
 	public function controller($route, $args = array()) {
 		$path = '';
 		
-		$parts = explode('/', str_replace('..', '', (string)$route));
+		$parts = explode('/', str_replace(array('../', '..\\', '..'), '', (string)$route));
 		
 		foreach ($parts as $part) {
 			$path .= $part;
@@ -43,17 +43,10 @@ final class Loader {
 			include_once($file);
 			
 			$controller = new $class($this->registry);
-			
-			echo get_class($controller) . '<br>';
-			echo $method . '<br>';
-			
+					
 			if (is_callable(array($controller, $method))) {
-				
-				
-				
 				return call_user_func_array(array($controller, $method), $args);
-			} else {
-				
+			} else {				
 				return false;
 			}
 		} else {
@@ -71,7 +64,7 @@ final class Loader {
 
 			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
 		} else {
-			trigger_error('Error: Could not load model ' . $model . '!');
+			trigger_error('Error: Could not load model ' . $file . '!');
 			exit();
 		}
 	}
@@ -80,7 +73,13 @@ final class Loader {
 		$file = DIR_TEMPLATE . $template;
 		
 		if (file_exists($file)) {
-			extract($data);
+			foreach ($data as $key => $value) {
+				if (is_object($value)) {
+					${$key} = $value->execute(); 
+				} else {
+					${$key} = $value;
+				}
+			}
 
 			ob_start();
 
@@ -128,7 +127,7 @@ final class Loader {
 
 			$this->registry->set($driver, new $class($hostname, $username, $password, $database));
 		} else {
-			trigger_error('Error: Could not load database ' . $driver . '!');
+			trigger_error('Error: Could not load database ' . $file . '!');
 			exit();
 		}
 	}

@@ -1,79 +1,211 @@
 <?php
 class ModelReportDashboard extends Model {
-	public function getTotalSalesByMonths($limit = 5) {
-		$sale_data = array();
-
-		$j = 1;
-		
-		for ($i = $limit; $i >= 0; $i--) {
-			$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND MONTH(date_added) = '" . date('m', strtotime('-' . (int)$i . ' month')) . "' AND YEAR(date_added) = '" . date('Y', strtotime('-' . (int)$i . ' month')) . "' GROUP BY YEAR(date_added), MONTH(date_added)");
-
-			if ($query->num_rows) {
-				$sale_data[] = array(
-					$j,
-					$query->row['total']
-				);
-			} else {
-				$sale_data[] = array(
-					$j,
-					0
-				);
-			}
-			
-			$j++;
-		}
-		
-		return $sale_data;
-	}	
-	
-	public function getTotalOrdersByMonths($limit = 5) {
+	public function getTotalOrdersByDay() {
 		$order_data = array();
 		
-		for ($i = $limit; $i >= 0; $i--) {
-			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND MONTH(date_added) = '" . date('m', strtotime('-' . (int)$i . ' month')) . "' AND YEAR(date_added) = '" . date('Y', strtotime('-' . (int)$i . ' month')) . "'");
-			
-			if ($query->num_rows) {
-				$order_data[] = $query->row['total'];
-			} else {
-				$order_data[] = 0;
-			}			
-		} 
+		for ($i = 0; $i < 24; $i++) {
+			$order_data[$i] = array(
+				'hour'  => $i,
+				'total' => 0
+			);
+		}		
+		 
+		$query = $this->db->query("SELECT COUNT(*) AS total, HOUR(date_added) AS hour FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND DATE(date_added) = DATE(NOW()) GROUP BY HOUR(date_added) ORDER BY date_added ASC");
+
+		foreach ($query->rows as $result) {
+			$order_data[$result['hour']] = array(
+				'hour'  => $result['hour'],
+				'total' => $result['total']
+			);
+		}
 		
+		return $order_data;			
+	}
+		
+	public function getTotalOrdersByWeek() {
+		$order_data = array();
+		
+		$date_start = strtotime('-' . date('w') . ' days'); 
+		
+		for ($i = 0; $i < 7; $i++) {
+			$date = date('Y-m-d', $date_start + ($i * 86400));
+			
+			$order_data[date('w', strtotime($date))] = array(
+				'day'   => date('D', strtotime($date)),
+				'total' => 0
+			);
+		}	
+
+		$query = $this->db->query("SELECT COUNT(*) AS total, date_added FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND DATE(date_added) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(date_added)");
+
+		foreach ($query->rows as $result) {
+			$order_data[date('w', strtotime($result['date_added']))] = array(
+				'day'   => date('D', strtotime($result['date_added'])),
+				'total' => $result['total']
+			);		
+		}
+
 		return $order_data;
 	}	
 	
-	public function getTotalCustomersByMonths($limit = 5) {
-		$customer_data = array();
+	public function getTotalOrdersByMonth() {
+		$order_data = array();
 		
-		for ($i = $limit; $i >= 0; $i--) {
-			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer` WHERE MONTH(date_added) = '" . date('m', strtotime('-' . (int)$i . ' month')) . "' AND YEAR(date_added) = '" . date('Y', strtotime('-' . (int)$i . ' month')) . "'");
+		for ($i = 1; $i <= date('t'); $i++) {
+			$date = date('Y') . '-' . date('m') . '-' . $i;
 			
-			if ($query->num_rows) {
-				$customer_data[] = $query->row['total'];
-			} else {
-				$customer_data[] = 0;
-			}
-		}
-
+			$order_data[date('j', strtotime($date))] = array(
+				'day'   => date('d', strtotime($date)),
+				'total' => 0
+			);
+		}		
 		
-		return $customer_data;
+		$query = $this->db->query("SELECT COUNT(*) AS total, date_added FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND DATE(date_added) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(date_added)");
+			
+		foreach ($query->rows as $result) {
+			$order_data[date('j', strtotime($result['date_added']))] = array(
+				'day'   => date('d', strtotime($result['date_added'])),
+				'total' => $result['total']
+			);		
+		}
+		
+		return $order_data;
 	}
 	
-	public function getTotalPeopleOnline() {
+	public function getTotalOrdersByYear() {
+		$order_data = array();
+		
+		for ($i = 1; $i <= 12; $i++) {
+			$order_data[$i] = array(
+				'month' => date('M', mktime(0, 0, 0, $i)),
+				'total' => 0
+			);
+		}		
+
+		$query = $this->db->query("SELECT COUNT(*) AS total, date_added FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND YEAR(date_added) = YEAR(NOW()) GROUP BY MONTH(date_added)");
+			
+		foreach ($query->rows as $result) {
+			$order_data[date('n', strtotime($result['date_added']))] = array(
+				'month' => date('M', strtotime($result['date_added'])),
+				'total' => $result['total']
+			);		
+		}
+
+		return $order_data;
+	}
+	
+	public function getTotalCustomersByDay() {
+		$order_data = array();
+		
+		for ($i = 0; $i < 24; $i++) {
+			$order_data[$i] = array(
+				'hour'  => $i,
+				'total' => 0
+			);
+		}		
+		 
+		$query = $this->db->query("SELECT COUNT(*) AS total, HOUR(date_added) AS hour FROM `" . DB_PREFIX . "customer` WHERE DATE(date_added) = DATE(NOW()) GROUP BY HOUR(date_added) ORDER BY date_added ASC");
+
+		foreach ($query->rows as $result) {
+			$order_data[$result['hour']] = array(
+				'hour'  => $result['hour'],
+				'total' => $result['total']
+			);
+		}
+		
+		return $order_data;			
+	}	
+	
+	public function getTotalCustomersByWeek() {
+		$order_data = array();
+		
+		$date_start = strtotime('-' . date('w') . ' days'); 
+		
+		for ($i = 0; $i < 7; $i++) {
+			$date = date('Y-m-d', $date_start + ($i * 86400));
+			
+			$order_data[date('w', strtotime($date))] = array(
+				'day'   => date('D', strtotime($date)),
+				'total' => 0
+			);
+		}	
+
+		$query = $this->db->query("SELECT COUNT(*) AS total, date_added FROM `" . DB_PREFIX . "customer` WHERE DATE(date_added) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(date_added)");
+
+		foreach ($query->rows as $result) {
+			$order_data[date('w', strtotime($result['date_added']))] = array(
+				'day'   => date('D', strtotime($result['date_added'])),
+				'total' => $result['total']
+			);		
+		}
+
+		return $order_data;
+	}	
+				
+	public function getTotalCustomersByMonth() {
+		$order_data = array();
+		
+		for ($i = 1; $i <= date('t'); $i++) {
+			$date = date('Y') . '-' . date('m') . '-' . $i;
+			
+			$order_data[date('j', strtotime($date))] = array(
+				'day'   => date('d', strtotime($date)),
+				'total' => 0
+			);
+		}		
+		
+		$query = $this->db->query("SELECT COUNT(*) AS total, date_added FROM `" . DB_PREFIX . "customer` WHERE DATE(date_added) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(date_added)");
+			
+		foreach ($query->rows as $result) {
+			$order_data[date('j', strtotime($result['date_added']))] = array(
+				'day'   => date('d', strtotime($result['date_added'])),
+				'total' => $result['total']
+			);		
+		}
+		
+		return $order_data;
+	}
+	
+	public function getTotalCustomersByYear() {
+		$order_data = array();
+		
+		for ($i = 1; $i <= 12; $i++) {
+			$order_data[$i] = array(
+				'month' => date('M', mktime(0, 0, 0, $i)),
+				'total' => 0
+			);
+		}		
+
+		$query = $this->db->query("SELECT COUNT(*) AS total, date_added FROM `" . DB_PREFIX . "customer` WHERE YEAR(date_added) = YEAR(NOW()) GROUP BY MONTH(date_added)");
+			
+		foreach ($query->rows as $result) {
+			$order_data[date('n', strtotime($result['date_added']))] = array(
+				'month' => date('M', strtotime($result['date_added'])),
+				'total' => $result['total']
+			);		
+		}
+
+		return $order_data;
+	}
+		
+	public function getTotalCustomersOnline() {
 		$online_data = array();
 		
-		for ($i = 1; $i <= 4; $i++) {
-			$start = (($i * 15) - 15);
-			$end = ($i * 15);
+		for ($i = 0; $i < 60; $i++) {
+			$online_data[$i] = array(
+				'minute' => date('i', mktime(0, 0, 0, $i)),
+				'total'  => 0
+			);
+		}
 			
-			$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_online` WHERE date_added < DATE_SUB(NOW(), INTERVAL '" . $start . "' MINUTE) AND date_added > DATE_SUB(NOW(), INTERVAL '" . $end . "' MINUTE)");
+		$query = $this->db->query("SELECT COUNT(*) AS total, date_added FROM `" . DB_PREFIX . "customer_online` GROUP BY MINUTE(date_added)");
 
-			if ($query->num_rows) {
-				$online_data[] = $query->row['total'];
-			} else {
-				$online_data[] = 0;
-			}
-		}	
+		foreach ($query->rows as $result) {
+			$online_data[date('i', strtotime($result['date_added']))] = array(
+				'minute' => date('i', strtotime($result['date_added'])),
+				'total'  => $result['total']
+			);		
+		}
 		
 		return $online_data;
 	}	

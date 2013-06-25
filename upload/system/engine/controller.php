@@ -18,6 +18,10 @@ abstract class Controller {
 		$this->registry->set($key, $value);
 	}
 	
+	public function execute() {
+		$this->{$this->method}();
+	}
+	
 	protected function forward($route, $args = array()) {
 		return new Action($route, $args);
 	}

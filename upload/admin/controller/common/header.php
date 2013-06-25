@@ -1,6 +1,6 @@
 <?php 
 class ControllerCommonHeader extends Controller {
-	protected function index() {
+	public function index() {
 		$this->data['title'] = $this->document->getTitle(); 
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
@@ -109,11 +109,11 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_zone'] = $this->language->get('text_zone');
 		
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token'])) {
-			$this->data['home'] = $this->url->link('common/home', '', 'SSL');
+			$this->data['home'] = $this->url->link('common/dashboard', '', 'SSL');
 			
 			$this->data['logged'] = false;
 		} else {
-			$this->data['home'] = $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['attribute'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['attribute_group'] = $this->url->link('catalog/attribute_group', 'token=' . $this->session->data['token'], 'SSL');
@@ -222,7 +222,7 @@ class ControllerCommonHeader extends Controller {
 		
 		$this->template = 'common/header.tpl';
 		
-		$this->render();
+		return $this->render();
 	}
 }
 ?>

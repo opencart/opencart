@@ -84,6 +84,17 @@ require_once(DIR_SYSTEM . 'engine/model.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
 
 // Library
+function __autoload($class) {
+	$file = DIR_SYSTEM . 'library/' . strtolower($class) . '.php';
+	
+	if (file_exists($file)) {
+		include($file);
+	} else {
+		trigger_error('Error: COuld not load class ' . $class . '.php!');
+		exit();
+	}
+}
+
 require_once(DIR_SYSTEM . 'library/cache.php');
 require_once(DIR_SYSTEM . 'library/url.php');
 require_once(DIR_SYSTEM . 'library/config.php');

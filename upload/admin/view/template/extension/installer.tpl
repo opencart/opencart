@@ -29,7 +29,7 @@
       <div id="progress" class="control-group">
         <div class="control-label"><?php echo $entry_progress; ?></div>
         <div class="controls">
-          <div class="progress">
+          <div class="progress progress-striped">
             <div class="bar" style="width: 0%;"></div>
           </div>
           <span class="help-block"></span></div>
@@ -59,8 +59,9 @@ $('#file').on('change', function() {
 	// Reset everything
 	$('.alert').remove();
 	$('#progress .bar').css('width', '0%');
+	$('#progress .progress').addClass('progress-striped active');
 	$('#progress').removeClass('error success');
-	$('#progress .progress').removeClass('progress-danger, progress-success');		
+	$('#progress .progress').removeClass('progress-danger progress-success');		
 	$('#progress .help-block').html('');
 	
 	$.ajax({
@@ -132,6 +133,8 @@ function next() {
 			data: 'path=' + data.path,
 			success: function(json) {
 				if (json['error']) {
+					$('#progress .progress').removeClass('progress-striped active');
+					
 					$('#progress').addClass('error');
 					$('#progress .progress').addClass('progress-danger');
 					
@@ -141,6 +144,8 @@ function next() {
 				} 
 				
 				if (json['success']) {
+					$('#progress .progress').removeClass('progress-striped active');
+					
 					$('#progress').addClass('success');
 					$('#progress .progress').addClass('progress-success');
 					

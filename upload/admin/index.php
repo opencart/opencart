@@ -130,7 +130,7 @@ $controller->addPreAction(new Action('error/permission/check'));
 if (isset($request->get['route'])) {
 	$action = new Action($request->get['route']);
 } else {
-	$action = new Action('common/home');
+	$action = new Action('common/dashboard');
 }
 
 try {
@@ -139,7 +139,6 @@ try {
 } catch(Exception $exception) {
 	// Catch any errors and log them!
 	if ($config->get('config_error_display')) {
-		echo $exception->getMessage();
 		echo sprintf($language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 	}
 	

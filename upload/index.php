@@ -171,6 +171,8 @@ $registry->set('affiliate', new Affiliate($registry));
 
 if (isset($request->get['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
+	
+	$db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicked = (clicked + 1) WHERE code = '" . $db->escape($request->get['tracking']) . "'");
 }
 		
 // Currency

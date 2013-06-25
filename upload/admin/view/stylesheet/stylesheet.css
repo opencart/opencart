@@ -7,7 +7,7 @@ html, body, label, .control-group input, textarea, select, td {
 /* Header */
 #header .navbar .brand {
 	margin: 0px;
-	padding: 8px 5px 0px 0px;
+	padding: 9px 5px 0px 0px;
 }
 #header .navbar {
 	margin-bottom: 3px;
@@ -53,7 +53,7 @@ html, body, label, .control-group input, textarea, select, td {
 	margin-left: 5px;
 }
 #header .navbar-inverse .nav > li > a.profile {
-	padding: 7px 0px 6px 11px;
+	padding: 7px 0px 6px 17px;
 }
 #header .navbar-inverse .nav > li > a.profile img {
 	background: #FFFFFF;
@@ -61,7 +61,7 @@ html, body, label, .control-group input, textarea, select, td {
 	padding: 2px;
 }
 #header .navbar-inverse .nav > li > a.notification {
-	padding: 12px 11px 9px 11px;
+	padding: 13px 7px 8px 7px;
 }
 #header .navbar-inverse .nav > li > a.notification i {
 	font-size: 20px;
@@ -69,7 +69,7 @@ html, body, label, .control-group input, textarea, select, td {
 #header .navbar-inverse .nav > li > a.notification .badge {
 	position: relative;
 	top: -4px;
-	left: 5px;
+	left: 6px;
 	font-size: 8px;
 	line-height: 8px;
 	float: left;
@@ -260,24 +260,23 @@ html, body, label, .control-group input, textarea, select, td {
 .stats div + div {
 	margin-left: 70px;
 	color: #999999;
+	font-size: 14px;
 }
 .stats i {
 	font-size: 50px;
 	color: #999999;
 }
 
-.stats h5, .chart h5 {
+.stats h5 {
 	font-size: 15px;
 	color: #333333;
 	text-transform: uppercase;
 	margin: 0;
 }
- .chart h5 { 
- 	vertical-align: middle;
+.chart {
+	height: 200px;
+	clear: both;
 }
-
-
-
 		
 /* thumbnails */
 .image {

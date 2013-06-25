@@ -38,43 +38,31 @@ class ControllerCommonDashboard extends Controller {
 		// Total Sales
 		$this->data['total_sale'] = $this->currency->format($this->model_report_dashboard->getTotalSales(), $this->config->get('config_currency'));
 		
-		//$this->data['sales'] = $this->model_report_dashboard->getTotalSalesByMonth();
-		
 		// Total Orders
 		$this->load->model('sale/order');
 		
 		$this->data['total_order'] = $this->model_sale_order->getTotalOrders();
-		
-		//$this->data['orders'] = $this->model_report_dashboard->getTotalOrdersByMonth();
-		
+				
 		// Customers
 		$this->load->model('sale/customer');
 		
 		$this->data['total_customer'] = $this->model_sale_customer->getTotalCustomers();
-		
-		//$this->data['customers'] = $this->model_report_dashboard->getTotalCustomersByMonth();
 
 		// Marketing
 		$this->load->model('marketing/marketing');
 		
 		$this->data['total_marketing'] = $this->model_marketing_marketing->getTotalMarketings();
 
-		
 		// Number of people onlne
 		$this->load->model('report/online');
 
 		$this->data['total_online'] = $this->model_report_online->getTotalCustomersOnline();
-		
-		
-		/*
-		$this->data['online'] = $this->model_report_dashboard->getTotalPeopleOnline();
 		
 		if ($this->config->get('config_currency_auto')) {
 			$this->load->model('localisation/currency');
 		
 			$this->model_localisation_currency->updateCurrencies();
 		}
-		*/
 		
 		$this->template = 'common/dashboard.tpl';
 		$this->children = array(

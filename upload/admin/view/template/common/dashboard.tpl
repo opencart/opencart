@@ -22,7 +22,7 @@
             <div>
               <h5><?php echo $text_sale; ?></h5>
               <?php echo $total_sale; ?><br />
-              +10%</div>
+              <span class="badge badge-success">+10%</span></div>
           </div>
         </div>
         <div class="span3">
@@ -31,7 +31,7 @@
             <div>
               <h5><?php echo $text_order; ?></h5>
               <?php echo $total_order; ?><br />
-              +10% </div>
+              <span class="badge badge-success">+10%</span></div>
           </div>
         </div>
         <div class="span3">
@@ -40,7 +40,7 @@
             <div>
               <h5><?php echo $text_customer; ?></h5>
               <?php echo $total_customer; ?><br />
-              +10%</div>
+              <span class="badge badge-success">+10%</span></div>
           </div>
         </div>
         <div class="span3">
@@ -49,7 +49,7 @@
             <div>
               <h5><?php echo $text_marketing; ?></h5>
               <?php echo $total_marketing; ?><br />
-              +10% </div>
+              <span class="badge badge-success">+10%</span></div>
           </div>
         </div>
       </div>
@@ -60,7 +60,7 @@
             <div>
               <h5><?php echo $text_online; ?></h5>
               <?php echo $total_online; ?><br />
-              +10%</div>
+              <span class="badge badge-success">+10%</span></div>
           </div>
         </div>
         <div class="span3">
@@ -76,27 +76,21 @@
       <div class="row-fluid">
         <div class="span6">
           <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
-            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+            <button class="btn active" value="day"><?php echo $text_day; ?></button>
+            <button class="btn" value="week"><?php echo $text_week; ?></button>
+            <button class="btn" value="month"><?php echo $text_month; ?></button>
+            <button class="btn" value="year"><?php echo $text_year; ?></button>
           </div>
+          <div id="chart-sale" class="chart"></div>
         </div>
         <div class="span6">
           <div id="button-marketing" class="btn-group pull-right" data-toggle="buttons-radio">
-            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+            <button class="btn active" value="day"><?php echo $text_day; ?></button>
+            <button class="btn" value="week"><?php echo $text_week; ?></button>
+            <button class="btn" value="month"><?php echo $text_month; ?></button>
+            <button class="btn" value="year"><?php echo $text_year; ?></button>
           </div>
-        </div>
-      </div>
-      <div class="row-fluid">
-        <div class="span6">
-          <div id="chart-sale" style="height: 200px;"></div>
-        </div>
-        <div class="span6">
-          <div id="chart-marketing" style="height: 200px;"></div>
+          <div id="chart-marketing" class="chart"></div>
         </div>
       </div>
     </div>
@@ -166,7 +160,7 @@ $('#button-sale .active').trigger('click');
 $('#button-marketing button').on('click', function() {
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=common/dashboard/marketing&token=<?php echo $token; ?>',
+		url: 'index.php?route=common/dashboard/marketing&token=<?php echo $token; ?>&range=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-marketing button').prop('disabled', true);
@@ -180,8 +174,8 @@ $('#button-marketing button').on('click', function() {
 				bars: { 
 					show: true,
 					fill: true,
-					lineWidth: 1
-					
+					lineWidth: 1,
+					barColor: '#000000'
 				},
 				grid: {
 					backgroundColor: '#FFFFFF',
@@ -189,6 +183,9 @@ $('#button-marketing button').on('click', function() {
 				},
 				points: {
 					show: false		
+				},
+				xaxis: {
+            		ticks: json.xaxis
 				}
 			}		
 			

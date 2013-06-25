@@ -188,10 +188,6 @@ class ControllerCommonHeader extends Controller {
 			$this->load->model('report/online');
 			
 			$this->data['online'] = $this->model_report_online->getTotalCustomersOnline();
-			
-			
-			
-			
 						
 			// Get total number of stores online
 			$this->load->model('setting/store');

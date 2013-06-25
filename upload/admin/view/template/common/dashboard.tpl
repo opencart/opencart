@@ -59,7 +59,7 @@
             <div><i class="icon-group"></i></div>
             <div>
               <h5><?php echo $text_online; ?></h5>
-              $100,0000<br />
+              <?php echo $total_online; ?><br />
               +10%</div>
           </div>
         </div>
@@ -69,41 +69,34 @@
             <div>
               <h5><?php echo $text_order; ?></h5>
               $100,0000<br />
-              +10% </div>
+              <span class="badge badge-success">+10%</span></div>
           </div>
         </div>
       </div>
       <div class="row-fluid">
-        <div class="span3 chart">
-          <h5><?php echo $text_sale; ?></h5></div>
-          
-          <div class="span3">
-            <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
-              <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-              <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-              <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-              <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
-            </div>
-          
+        <div class="span6">
+          <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
+            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
+            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
+            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
+            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+          </div>
         </div>
-        <div class="span3 chart">
-          <h5><?php echo $text_marketing; ?></h5>
+        <div class="span6">
+          <div id="button-marketing" class="btn-group pull-right" data-toggle="buttons-radio">
+            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
+            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
+            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
+            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+          </div>
         </div>
-        <div class="span3">
-         <div id="button-marketing" class="btn-group pull-right" data-toggle="buttons-radio">
-              <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-              <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-              <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-              <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
-            </div></div>
-        
       </div>
       <div class="row-fluid">
         <div class="span6">
-          <div id="chart-sale" style="height: 150px;"></div>
+          <div id="chart-sale" style="height: 200px;"></div>
         </div>
         <div class="span6">
-          <div id="chart-marketing" style="height: 150px;"></div>
+          <div id="chart-marketing" style="height: 200px;"></div>
         </div>
       </div>
     </div>
@@ -126,7 +119,7 @@ $('#button-sale button').on('click', function() {
 		success: function(json) {
 			var option = {	
 				shadowSize: 0,
-				lines: { 
+				bars: { 
 					show: true,
 					fill: true,
 					lineWidth: 1,
@@ -137,7 +130,7 @@ $('#button-sale button').on('click', function() {
 					hoverable: true
 				},
 				points: {
-					show: true				
+					show: false				
 				},
 				xaxis: {
             		ticks: json.xaxis
@@ -165,7 +158,7 @@ $('#button-sale button').on('click', function() {
 				}
 			});
 		}
-	});	
+	});
 });
 
 $('#button-sale .active').trigger('click');
@@ -184,8 +177,7 @@ $('#button-marketing button').on('click', function() {
 		success: function(json) {
 			var option = {	
 				shadowSize: 0,
-				colors: ['#FF0000'],
-				lines: { 
+				bars: { 
 					show: true,
 					fill: true,
 					lineWidth: 1
@@ -196,11 +188,11 @@ $('#button-marketing button').on('click', function() {
 					hoverable: true
 				},
 				points: {
-					show: true				
+					show: false		
 				}
 			}		
 			
-			$.plot('#chart-marketing', [json.online], option);
+			$.plot('#chart-marketing', [json.click, json.sale], option);
 					
 			$('#chart-marketing').bind('plothover', function(event, pos, item) {
 				$('.tooltip').remove();
@@ -220,10 +212,10 @@ $('#button-marketing button').on('click', function() {
 					$('#chart-marketing').css('cursor', 'auto');
 				}
 			});
-			
-			setTimeout(online, 1000);
 		}
 	});
 });
+
+$('#button-marketing .active').trigger('click');
 //--></script> 
 <?php echo $footer; ?>

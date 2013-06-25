@@ -92,7 +92,7 @@
                     <li><a href="<?php echo $coupon; ?>"><?php echo $text_coupon; ?></a></li>
                     <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
                   </ul>
-                </li>                
+                </li>
               </ul>
             </li>
             <li class="dropdown" id="system"><a data-toggle="dropdown"><?php echo $text_system; ?> <i class="icon-caret-down"></i></a>
@@ -182,30 +182,38 @@
               </ul>
             </li>
           </ul>
-          <ul class="nav pull-right">
-            <li class="dropdown">
-              <?php if ($stores) { ?>
-              <a data-toggle="dropdown"><?php echo $text_front; ?> <i class="icon-caret-down"></i></a>
-              <ul class="dropdown-menu">
-                <li><a href="<?php echo $store; ?>" target="_blank"><?php echo $store_name; ?></a></li>
-                <?php foreach ($stores as $store) { ?>
-                <li><a href="<?php echo $store['href']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
-                <?php } ?>
-              </ul>
-              <?php } else { ?>
-              <a href="<?php echo $store; ?>" target="_blank"><?php echo $text_front; ?></a>
-              <?php } ?>
-            </li>
-            <li class="dropdown">
-              <a class="profile" data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> <i class="icon-caret-down"></i></a>
-              <ul class="dropdown-menu">
-                <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
-                <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
-                <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
-              </ul>
-            </li>
-          </ul>
         </div>
+        <ul class="nav pull-right">
+          <li class="dropdown"><a class="notification" data-toggle="dropdown"><span class="badge badge-important"><?php echo $online; ?></span> <i class="icon-bell-alt"></i></a>
+            <ul class="dropdown-menu">
+            </ul>
+          </li>
+          <li class="dropdown"><a class="notification" data-toggle="dropdown"><span class="badge badge-success">1</span> <i class="icon-group"></i></a>
+            <ul class="dropdown-menu">
+            </ul>
+          </li>
+          <li class="dropdown"></li>
+          <li class="dropdown">
+            <?php if ($stores) { ?>
+            <a class="notification" data-toggle="dropdown"><span class="badge badge-info"><?php echo (count($stores) + 1); ?></span> <i class="icon-shopping-cart"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="<?php echo $store; ?>" target="_blank"><?php echo $store_name; ?></a></li>
+              <?php foreach ($stores as $store) { ?>
+              <li><a href="<?php echo $store['href']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
+              <?php } ?>
+            </ul>
+            <?php } else { ?>
+            <a href="<?php echo $store; ?>" target="_blank" class="notification"><span class="badge badge-info">1</span> <i class="icon-shopping-cart"></i></a>
+            <?php } ?>
+          </li>
+          <li class="dropdown"><a class="profile" data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> <i class="icon-caret-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
+              <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
+              <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
+            </ul>
+          </li>
+        </ul>
         <?php } ?>
       </div>
     </div>

@@ -99,11 +99,11 @@
                 <?php echo $product['price']; ?>
                 <?php } ?></td>
               <td class="right"><?php if ($product['quantity'] <= 0) { ?>
-                <span style="color: #FF0000;"><?php echo $product['quantity']; ?></span>
+                <span class="badge badge-important"><?php echo $product['quantity']; ?></span>
                 <?php } elseif ($product['quantity'] <= 5) { ?>
-                <span style="color: #FFA500;"><?php echo $product['quantity']; ?></span>
+                <span class="badge badge-warning"><?php echo $product['quantity']; ?></span>
                 <?php } else { ?>
-                <span style="color: #008000;"><?php echo $product['quantity']; ?></span>
+                <span class="badge badge-success"><?php echo $product['quantity']; ?></span>
                 <?php } ?></td>
               <td class="left"><?php echo $product['status']; ?></td>
               <td class="right"><?php foreach ($product['action'] as $action) { ?>

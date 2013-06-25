@@ -60,7 +60,21 @@ html, body, label, .control-group input, textarea, select, td {
 	border: 1px solid #000;
 	padding: 2px;
 }
-
+#header .navbar-inverse .nav > li > a.notification {
+	padding: 12px 11px 9px 11px;
+}
+#header .navbar-inverse .nav > li > a.notification i {
+	font-size: 20px;
+}
+#header .navbar-inverse .nav > li > a.notification .badge {
+	position: relative;
+	top: -4px;
+	left: 5px;
+	font-size: 8px;
+	line-height: 8px;
+	float: left;
+	padding: 3px 8px;
+}
 
 
 
@@ -114,7 +128,6 @@ html, body, label, .control-group input, textarea, select, td {
 	font-weight: normal;
 	color: #00C3F4;
 	margin-right: 5px;
-	text-shadow: none;
 }
 .box-content {
 	padding: 20px 10px 10px 10px;
@@ -263,6 +276,9 @@ html, body, label, .control-group input, textarea, select, td {
  	vertical-align: middle;
 }
 
+
+
+		
 /* thumbnails */
 .image {
 	float: left;

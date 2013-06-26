@@ -15,6 +15,17 @@ class ModelSettingStore extends Model {
 	}
 	
 	public function deleteStore($store_id) {
+		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_layout WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "category_to_store WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_layout WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "information_to_store WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "layout_route WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "manufacturer_to_store WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "order WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_layout WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "product_to_store WHERE store_id = '" . (int)$store_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "setting WHERE store_id = '" . (int)$store_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "store WHERE store_id = '" . (int)$store_id . "'");
 			
 		$this->cache->delete('store');

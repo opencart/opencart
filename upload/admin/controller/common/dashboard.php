@@ -108,10 +108,9 @@ class ControllerCommonDashboard extends Controller {
 					$json['customer']['data'][] = array($key, $value['total']);
 				}
 				
-				foreach ($results as $key => $value) {
-					$json['xaxis'][] = array($key, $value['hour']);
-				}				
-				
+				for ($i = 0; $i < 24; $i++) {
+					$json['xaxis'][] = array($i, $i);
+				}					
 				break;
 			case 'week':
 				$results = $this->model_report_dashboard->getTotalOrdersByWeek();
@@ -124,11 +123,15 @@ class ControllerCommonDashboard extends Controller {
 				
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = array($key, $value['total']);
-				}	
+				}
+					
+				$date_start = strtotime('-' . date('w') . ' days'); 
 				
-				foreach ($results as $key => $value) {
-					$json['xaxis'][] = array($key, $value['day']);
-				}							
+				for ($i = 0; $i < 7; $i++) {
+					$date = date('Y-m-d', $date_start + ($i * 86400));
+					
+					$json['xaxis'][] = array(date('w', strtotime($date)), date('D', strtotime($date)));
+				}				
 				break;
 			case 'month':
 				$results = $this->model_report_dashboard->getTotalOrdersByMonth();
@@ -143,8 +146,10 @@ class ControllerCommonDashboard extends Controller {
 					$json['customer']['data'][] = array($key, $value['total']);
 				}	
 				
-				foreach ($results as $key => $value) {
-					$json['xaxis'][] = array($key, $value['day']);
+				for ($i = 1; $i <= date('t'); $i++) {
+					$date = date('Y') . '-' . date('m') . '-' . $i;
+					
+					$json['xaxis'][] = array(date('j', strtotime($date)), date('d', strtotime($date)));
 				}					
 				break;
 			case 'year':
@@ -159,10 +164,10 @@ class ControllerCommonDashboard extends Controller {
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = array($key, $value['total']);
 				}	
-
-				foreach ($results as $key => $value) {
-					$json['xaxis'][] = array($key, $value['month']);
-				}						
+				
+				for ($i = 1; $i <= 12; $i++) {
+					$json['xaxis'][] = array($i, date('M', mktime(0, 0, 0, $i)));
+				}				
 				break;	
 		} 
 		
@@ -228,6 +233,31 @@ class ControllerCommonDashboard extends Controller {
 				}
 				break;	
 		} 
+						
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function online() {
+		$json = array();
+		
+		$this->load->model('report/dashboard');
+		
+		$json['online'] = array();
+		$json['xaxis'] = array();
+		
+		$json['online']['label'] = $this->language->get('text_online');
+		
+		$results = $this->model_report_dashboard->getTotalCustomersOnline();
+		
+		foreach ($results as $result) {
+			$json['online']['data'][] = array($result['time'], $result['total']);
+		}	
+		
+		for ($i = strtotime('-1 hour'); $i < time(); $i = ($i + 300)) {
+			$time = (round($i / 300) * 300);
+			
+			$json['xaxis'][] = array($time, date('H:i', $time));
+		}	
 						
 		$this->response->setOutput(json_encode($json));
 	}

@@ -64,10 +64,11 @@ $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
-function exception_error_handler($number, $string, $file, $line) {
+function error_handler($number, $string, $file, $line) {
     throw new ErrorException($string, $number, 0, $file, $line);
 }
-set_error_handler("exception_error_handler");
+
+set_error_handler('error_handler');
 		
 // Request
 $request = new Request();

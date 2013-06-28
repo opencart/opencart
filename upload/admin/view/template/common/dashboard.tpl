@@ -18,11 +18,8 @@
       <div class="row-fluid">
         <div class="span3">
           <div class="stats">
-            <div><i class="icon-usd"></i></div>
-            <div>
-              <h5><?php echo $text_sale; ?></h5>
-              <?php echo $total_sale; ?><br />
-              <span class="badge badge-success">+10%</span></div>
+            <div><i class="icon-money"></i></div>
+            <div><span>+10%</span> <?php echo $total_sale; ?> </div>
           </div>
         </div>
         <div class="span3">
@@ -31,7 +28,7 @@
             <div>
               <h5><?php echo $text_order; ?></h5>
               <?php echo $total_order; ?><br />
-              <span class="badge badge-success">+10%</span></div>
+              <span>+10%</span></div>
           </div>
         </div>
         <div class="span3">
@@ -40,7 +37,7 @@
             <div>
               <h5><?php echo $text_customer; ?></h5>
               <?php echo $total_customer; ?><br />
-              <span class="badge badge-success">+10%</span></div>
+              <span>+10%</span></div>
           </div>
         </div>
         <div class="span3">
@@ -48,19 +45,16 @@
             <div><i class="icon-globe"></i></div>
             <div>
               <h5><?php echo $text_marketing; ?></h5>
-              <?php echo $total_marketing; ?><br />
-              <span class="badge badge-success">+10%</span></div>
+              Clicks: <?php echo $total_marketing; ?> / Sales: 1<br />
+              <span>+10%</span></div>
           </div>
         </div>
       </div>
-      <div class="row-fluid">
-        <div class="offset3 span3">
+            <div class="row-fluid">
+        <div class="span3">
           <div class="stats">
-            <div><i class="icon-group"></i></div>
-            <div>
-              <h5><?php echo $text_online; ?></h5>
-              <?php echo $total_online; ?><br />
-              <span class="badge badge-success">+10%</span></div>
+            <div><i class="icon-money"></i></div>
+            <div><span>+10%</span> <?php echo $total_sale; ?> </div>
           </div>
         </div>
         <div class="span3">
@@ -68,29 +62,61 @@
             <div><i class="icon-shopping-cart"></i></div>
             <div>
               <h5><?php echo $text_order; ?></h5>
-              $100,0000<br />
-              <span class="badge badge-success">+10%</span></div>
+              <?php echo $total_order; ?><br />
+              <span>+10%</span></div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="stats">
+            <div><i class="icon-user"></i></div>
+            <div>
+              <h5><?php echo $text_customer; ?></h5>
+              <?php echo $total_customer; ?><br />
+              <span>+10%</span></div>
+          </div>
+        </div>
+        <div class="span3">
+          <div class="stats">
+            <div><i class="icon-globe"></i></div>
+            <div>
+              <h5><?php echo $text_marketing; ?></h5>
+              Clicks: <?php echo $total_marketing; ?> / Sales: 1<br />
+              <span>+10%</span></div>
           </div>
         </div>
       </div>
       <div class="row-fluid">
-        <div class="span6">
-          <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
-            <button class="btn active" value="day"><?php echo $text_day; ?></button>
-            <button class="btn" value="week"><?php echo $text_week; ?></button>
-            <button class="btn" value="month"><?php echo $text_month; ?></button>
-            <button class="btn" value="year"><?php echo $text_year; ?></button>
-          </div>
-          <div id="chart-sale" class="chart"></div>
+        <div class="span7">
+          <fieldset>
+            <legend>
+            Sales
+            <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
+              <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
+              <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
+              <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
+              <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+            </div>
+            </legend>
+            <div id="chart-sale" class="chart" style="height: 250px;"></div>
+          </fieldset>
         </div>
-        <div class="span6">
-          <div id="button-marketing" class="btn-group pull-right" data-toggle="buttons-radio">
-            <button class="btn active" value="day"><?php echo $text_day; ?></button>
-            <button class="btn" value="week"><?php echo $text_week; ?></button>
-            <button class="btn" value="month"><?php echo $text_month; ?></button>
-            <button class="btn" value="year"><?php echo $text_year; ?></button>
-          </div>
-          <div id="chart-marketing" class="chart"></div>
+        <div class="span5">
+          <fieldset>
+            <legend style="font-size: 14px; margin-bottom: 5px;">
+            Marketing
+            <div id="button-marketing" class="btn-group pull-right" data-toggle="buttons-radio">
+              <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
+              <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
+              <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
+              <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+            </div>
+            </legend>
+            <div id="chart-marketing" class="chart" style="height: 115px;"></div>
+          </fieldset>
+          <fieldset>
+            <legend style="font-size: 14px; margin-bottom: 5px;"> People Online</legend>
+            <div id="chart-online" class="chart" style="height: 115px;"></div>
+          </fieldset>
         </div>
       </div>
     </div>
@@ -127,11 +153,12 @@ $('#button-sale button').on('click', function() {
 					show: false				
 				},
 				xaxis: {
-            		ticks: json.xaxis
+					show: true,
+            		ticks: json['xaxis']
 				}
 			}
 			
-			$.plot('#chart-sale', [json.order, json.customer], option);	
+			$.plot('#chart-sale', [json['order'], json['customer']], option);	
 					
 			$('#chart-sale').bind('plothover', function(event, pos, item) {
 				$('.tooltip').remove();
@@ -185,11 +212,11 @@ $('#button-marketing button').on('click', function() {
 					show: false		
 				},
 				xaxis: {
-            		ticks: json.xaxis
+            		ticks: json['xaxis']
 				}
 			}		
 			
-			$.plot('#chart-marketing', [json.click, json.sale], option);
+			$.plot('#chart-marketing', [json['click'], json['sale']], option);
 					
 			$('#chart-marketing').bind('plothover', function(event, pos, item) {
 				$('.tooltip').remove();
@@ -214,5 +241,60 @@ $('#button-marketing button').on('click', function() {
 });
 
 $('#button-marketing .active').trigger('click');
+
+function online() {
+	$.ajax({
+		type: 'get',
+		url: 'index.php?route=common/dashboard/online&token=<?php echo $token; ?>&range=' + this.value,
+		dataType: 'json',		
+		success: function(json) {
+			var option = {	
+				shadowSize: 0,
+				colors: ['#B94A48'],
+				lines: { 
+					show: true,
+					fill: true,
+					lineWidth: 1,
+					barColor: '#000000'
+				},
+				grid: {
+					backgroundColor: '#FFFFFF',
+					hoverable: true
+				},
+				points: {
+					show: false		
+				},	
+				xaxis: {
+					ticks: json['xaxis']
+				},
+			}		
+			
+			$.plot('#chart-online', [json['online']], option);
+					
+			$('#chart-online').bind('plothover', function(event, pos, item) {
+				$('.tooltip').remove();
+			  
+				if (item) {
+					$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
+					
+					$('#tooltip').css({
+						position: 'absolute',
+						left: item.pageX - ($('#tooltip').outerWidth() / 2),
+						top: item.pageY - $('#tooltip').outerHeight(),
+						pointer: 'cusror'
+					}).fadeIn('slow');	
+					
+					$('#chart-online').css('cursor', 'pointer');		
+				} else {
+					$('#chart-online').css('cursor', 'auto');
+				}
+			});
+		}
+	});
+	
+	setTimeout(online, 2000);
+}
+
+online();
 //--></script> 
 <?php echo $footer; ?>

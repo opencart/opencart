@@ -28,12 +28,11 @@
 <?php } ?>
 </head>
 <body>
+<div id="container">
 <div id="header">
   <div class="navbar navbar-inverse">
     <div class="navbar-inner">
-      <div class="container">
-        <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-        <a href="<?php echo $home; ?>" class="brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
+      <div class="container"><a href="<?php echo $home; ?>" class="brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
         <?php if ($logged) { ?>
         <div class="nav-collapse collapse">
           <ul class="nav">
@@ -184,6 +183,9 @@
           </ul>
         </div>
         <ul class="nav pull-right">
+          <li>
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><i class="icon-reorder icon-xlarge"></i></button>
+          </li>
           <li class="dropdown"><a class="notification" data-toggle="dropdown"><span class="badge badge-important"><?php echo $online; ?></span> <i class="icon-bell-alt"></i></a>
             <ul class="dropdown-menu">
             </ul>

@@ -90,7 +90,7 @@ function __autoload($class) {
 	if (file_exists($file)) {
 		include($file);
 	} else {
-		trigger_error('Error: COuld not load class ' . $class . '.php!');
+		trigger_error('Error: Could not load class ' . $class . '.php!');
 		exit();
 	}
 }

@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-product" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
@@ -41,8 +41,8 @@
             <div class="tab-content">
               <?php foreach ($languages as $language) { ?>
               <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
-                <div class="control-group">
-                  <label class="control-label" for="input-name<?php echo $language['language_id']; ?>"><span class="required">*</span> <?php echo $entry_name; ?></label>
+                <div class="control-group required">
+                  <label class="control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
                   <div class="controls">
                     <input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="input-xxlarge" />
                     <?php if (isset($error_name[$language['language_id']])) { ?>
@@ -79,8 +79,8 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-data">
-            <div class="control-group">
-              <label class="control-label" for="input-model"><span class="required">*</span> <?php echo $entry_model; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-model"><?php echo $entry_model; ?></label>
               <div class="controls">
                 <input type="text" name="model" value="<?php echo $model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" />
                 <?php if ($error_model) { ?>

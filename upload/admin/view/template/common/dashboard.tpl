@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-eye-open"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-eye-open icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <div class="row-fluid">

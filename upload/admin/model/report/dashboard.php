@@ -13,16 +13,16 @@ class ModelReportDashboard extends Model {
 			$time = (round($i / 60) * 60);
 			
 			$online_data[$time] = array(
-				'time'  => $time,
+				'time'  => date('Y-m-d H:i:s', $time),
 				'total' => 0
 			);					
 		}
 		
-		$query = $this->db->query("SELECT COUNT(*) AS total, DATE_FORMAT(date_added, '%Y-%m-%d %H:%i') AS date_added FROM `" . DB_PREFIX . "customer_online` GROUP BY MINUTE(date_added) ORDER BY date_added");
+		$query = $this->db->query("SELECT COUNT(*) AS total, DATE_FORMAT(date_added, '%Y-%m-%d %H:%i:00') AS date_added FROM `" . DB_PREFIX . "customer_online` WHERE date_added > '" . date('Y-m-d H:i:s', strtotime('-1 hour')) . "' AND date_added < '" . date('Y-m-d H:i:s') . "' GROUP BY MINUTE(date_added) ORDER BY date_added");
 
 		foreach ($query->rows as $result) {
 			$online_data[strtotime($result['date_added'])] = array(
-				'time'  => strtotime($result['date_added']),
+				'time'  => date('Y-m-d H:i:s', strtotime($result['date_added'])),
 				'total' => $result['total']
 			);		
 		}

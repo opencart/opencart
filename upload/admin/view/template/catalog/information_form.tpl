@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-information" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
@@ -34,8 +34,8 @@
             <div class="tab-content">
               <?php foreach ($languages as $language) { ?>
               <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
-                <div class="control-group">
-                  <label class="control-label" for="input-title<?php echo $language['language_id']; ?>"><span class="required">*</span> <?php echo $entry_title; ?></label>
+                <div class="control-group required">
+                  <label class="control-label" for="input-title<?php echo $language['language_id']; ?>"><?php echo $entry_title; ?></label>
                   <div class="controls">
                     <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title<?php echo $language['language_id']; ?>" class="input-xxlarge" />
                     <?php if (isset($error_title[$language['language_id']])) { ?>
@@ -43,8 +43,8 @@
                     <?php } ?>
                   </div>
                 </div>
-                <div class="control-group">
-                  <label class="control-label" for="input-description"><span class="required">*</span> <?php echo $entry_description; ?></label>
+                <div class="control-group required">
+                  <label class="control-label" for="input-description"><?php echo $entry_description; ?></label>
                   <div class="controls">
                     <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
                     <?php if (isset($error_description[$language['language_id']])) { ?>

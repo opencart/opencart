@@ -12,15 +12,15 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-user" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-user" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-username"><span class="required">*</span> <?php echo $entry_username; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-username"><?php echo $entry_username; ?></label>
           <div class="controls">
             <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
             <?php if ($error_username) { ?>
@@ -42,8 +42,8 @@
             </select>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-firstname"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
           <div class="controls">
             <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
             <?php if ($error_firstname) { ?>
@@ -51,8 +51,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-lastname"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
           <div class="controls">
             <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
             <?php if ($error_lastname) { ?>

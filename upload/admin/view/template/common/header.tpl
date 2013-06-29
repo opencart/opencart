@@ -34,6 +34,37 @@
     <div class="navbar-inner">
       <div class="container"><a href="<?php echo $home; ?>" class="brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
         <?php if ($logged) { ?>
+        <ul class="nav pull-right">
+          <li>
+            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><i class="icon-reorder icon-xlarge"></i></button>
+          </li>
+          <li class="dropdown"><a class="notification" data-toggle="dropdown"><span class="badge badge-important">1</span> <i class="icon-bell-alt"></i></a>
+            <ul class="dropdown-menu">
+            </ul>
+          </li>
+          <li class="dropdown"><a href="<?php echo $report_customer_online; ?>" class="notification"><span class="badge badge-success"><?php echo $online; ?></span> <i class="icon-group"></i></a></li>
+          <li class="dropdown"></li>
+          <li class="dropdown">
+            <?php if ($stores) { ?>
+            <a class="notification" data-toggle="dropdown"><span class="badge badge-info"><?php echo (count($stores) + 1); ?></span> <i class="icon-shopping-cart"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="<?php echo $store; ?>" target="_blank"><?php echo $store_name; ?></a></li>
+              <?php foreach ($stores as $store) { ?>
+              <li><a href="<?php echo $store['href']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
+              <?php } ?>
+            </ul>
+            <?php } else { ?>
+            <a href="<?php echo $store; ?>" target="_blank" class="notification"><span class="badge badge-info">1</span> <i class="icon-shopping-cart"></i></a>
+            <?php } ?>
+          </li>
+          <li class="dropdown"><a class="profile" data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> <i class="icon-caret-down"></i></a>
+            <ul class="dropdown-menu">
+              <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
+              <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
+              <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
+            </ul>
+          </li>
+        </ul>
         <div class="nav-collapse collapse">
           <ul class="nav">
             <li id="dashboard"><a href="<?php echo $home; ?>"><?php echo $text_dashboard; ?></a></li>
@@ -182,37 +213,6 @@
             </li>
           </ul>
         </div>
-        <ul class="nav pull-right">
-          <li>
-            <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><i class="icon-reorder icon-xlarge"></i></button>
-          </li>
-          <li class="dropdown"><a class="notification" data-toggle="dropdown"><span class="badge badge-important">1</span> <i class="icon-bell-alt"></i></a>
-            <ul class="dropdown-menu">
-            </ul>
-          </li>
-          <li class="dropdown"><a href="<?php echo $report_customer_online; ?>" class="notification"><span class="badge badge-success"><?php echo $online; ?></span> <i class="icon-group"></i></a></li>
-          <li class="dropdown"></li>
-          <li class="dropdown">
-            <?php if ($stores) { ?>
-            <a class="notification" data-toggle="dropdown"><span class="badge badge-info"><?php echo (count($stores) + 1); ?></span> <i class="icon-shopping-cart"></i></a>
-            <ul class="dropdown-menu">
-              <li><a href="<?php echo $store; ?>" target="_blank"><?php echo $store_name; ?></a></li>
-              <?php foreach ($stores as $store) { ?>
-              <li><a href="<?php echo $store['href']; ?>" target="_blank"><?php echo $store['name']; ?></a></li>
-              <?php } ?>
-            </ul>
-            <?php } else { ?>
-            <a href="<?php echo $store; ?>" target="_blank" class="notification"><span class="badge badge-info">1</span> <i class="icon-shopping-cart"></i></a>
-            <?php } ?>
-          </li>
-          <li class="dropdown"><a class="profile" data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> <i class="icon-caret-down"></i></a>
-            <ul class="dropdown-menu">
-              <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
-              <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
-              <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
-            </ul>
-          </li>
-        </ul>
         <?php } ?>
       </div>
     </div>

@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-order" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
@@ -66,8 +66,8 @@
                 </select>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-firstname"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
               <div class="controls">
                 <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-firstname" />
                 <?php if ($error_firstname) { ?>
@@ -75,8 +75,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-lastname"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
               <div class="controls">
                 <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-lastname" />
                 <?php if ($error_lastname) { ?>
@@ -84,8 +84,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-email"><span class="required">*</span> <?php echo $entry_email; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
               <div class="controls">
                 <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" />
                 <?php if ($error_email) { ?>
@@ -93,8 +93,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-telephone"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
               <div class="controls">
                 <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-telephone" />
                 <?php if ($error_telephone) { ?>
@@ -121,8 +121,8 @@
                 </select>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-payment-firstname"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
               <div class="controls">
                 <input type="text" name="payment_firstname" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" />
                 <?php if ($error_payment_firstname) { ?>
@@ -130,8 +130,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-payment-lastname"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
               <div class="controls">
                 <input type="text" name="payment_lastname" value="<?php echo $payment_lastname; ?>" id="input-payment-lastname" />
                 <?php if ($error_payment_lastname) { ?>
@@ -145,8 +145,8 @@
                 <input type="text" name="payment_company" value="<?php echo $payment_company; ?>" id="input-payment-company" />
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-payment-address-1"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
               <div class="controls">
                 <input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" id="input-payment-address-1" />
                 <?php if ($error_payment_address_1) { ?>
@@ -160,8 +160,8 @@
                 <input type="text" name="payment_address_2" value="<?php echo $payment_address_2; ?>" id="input-payment-address-2" />
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-payment-city"><span class="required">*</span> <?php echo $entry_city; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
               <div class="controls">
                 <input type="text" name="payment_city" value="<?php echo $payment_city; ?>" id="input-payment-city" />
                 <?php if ($error_payment_city) { ?>
@@ -178,8 +178,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-payment-country"><span class="required">*</span> <?php echo $entry_country; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
               <div class="controls">
                 <select name="payment_country_id" id="input-payment-country">
                   <option value=""><?php echo $text_select; ?></option>
@@ -196,8 +196,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-payment-zone"><span class="required">*</span> <?php echo $entry_zone; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
               <div class="controls">
                 <select name="payment_zone_id" id="input-payment-zone">
                 </select>
@@ -219,8 +219,8 @@
                 </select>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-shipping-firstname"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-shipping-firstname"><?php echo $entry_firstname; ?></label>
               <div class="controls">
                 <input type="text" name="shipping_firstname" value="<?php echo $shipping_firstname; ?>" id="input-shipping-firstname" />
                 <?php if ($error_shipping_firstname) { ?>
@@ -228,8 +228,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-shipping-lastname"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-shipping-lastname"><?php echo $entry_lastname; ?></label>
               <div class="controls">
                 <input type="text" name="shipping_lastname" value="<?php echo $shipping_lastname; ?>" id="input-shipping-lastname" />
                 <?php if ($error_shipping_lastname) { ?>
@@ -243,8 +243,8 @@
                 <input type="text" name="shipping_company" value="<?php echo $shipping_company; ?>" id="input-shipping-company" />
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-shipping-address-1"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-shipping-address-1"><?php echo $entry_address_1; ?></label>
               <div class="controls">
                 <input type="text" name="shipping_address_1" value="<?php echo $shipping_address_1; ?>" id="input-shipping-address-1" />
                 <?php if ($error_shipping_address_1) { ?>
@@ -258,8 +258,8 @@
                 <input type="text" name="shipping_address_2" value="<?php echo $shipping_address_2; ?>" id="input-shipping-address-2" />
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-shipping-city"><span class="required">*</span> <?php echo $entry_city; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-shipping-city"><?php echo $entry_city; ?></label>
               <div class="controls">
                 <input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" id="input-shipping-city" />
               </div>
@@ -273,8 +273,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-shipping-country"><span class="required">*</span> <?php echo $entry_country; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-shipping-country"><?php echo $entry_country; ?></label>
               <div class="controls">
                 <select name="shipping_country_id" id="input-shipping-country">
                   <option value=""><?php echo $text_select; ?></option>
@@ -291,8 +291,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-shipping-zone"><span class="required">*</span> <?php echo $entry_zone; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-shipping-zone"><?php echo $entry_zone; ?></label>
               <div class="controls">
                 <select name="shipping_zone_id" id="input-shipping-zone">
                 </select>
@@ -429,32 +429,32 @@
             </table>
             <fieldset>
               <legend><?php echo $text_voucher; ?></legend>
-              <div class="control-group">
-                <label class="control-label" for="input-to-name"><span class="required">*</span> <?php echo $entry_to_name; ?></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
                 <div class="controls">
                   <input type="text" name="to_name" value="" id="input-to-name" />
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="input-to-name"><span class="required">*</span> <?php echo $entry_to_email; ?></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-to-name"><?php echo $entry_to_email; ?></label>
                 <div class="controls">
                   <input type="text" name="to_email" value="" id="input-to-email" />
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="input-from-name"><span class="required">*</span> <?php echo $entry_from_name; ?></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
                 <div class="controls">
                   <input type="text" name="from_name" value="" id="input-from-name" />
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="input-from-email"><span class="required">*</span> <?php echo $entry_from_email; ?></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
                 <div class="controls">
                   <input type="text" name="from_email" value="" id="input-from-email" />
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="input-theme"><span class="required">*</span> <?php echo $entry_theme; ?></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-theme"><?php echo $entry_theme; ?></label>
                 <div class="controls">
                   <select name="voucher_theme_id" id="input-theme">
                     <?php foreach ($voucher_themes as $voucher_theme) { ?>
@@ -469,8 +469,8 @@
                   <textarea name="message" cols="40" rows="5" id="input-message"></textarea>
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="input-amount"><span class="required">*</span> <?php echo $entry_amount; ?></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-amount"><?php echo $entry_amount; ?></label>
                 <div class="controls">
                   <input type="text" name="amount" value="25.00" id="input-amount" class="input-medium" />
                 </div>

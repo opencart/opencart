@@ -12,15 +12,15 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-worldpay" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-worldpay" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-merchant"><span class="required">*</span> <?php echo $entry_merchant; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-merchant"><?php echo $entry_merchant; ?></label>
           <div class="controls">
             <input type="text" name="worldpay_merchant" value="<?php echo $worldpay_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" />
             <?php if ($error_merchant) { ?>
@@ -28,8 +28,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-password"><span class="required">*</span> <?php echo $entry_password; ?> <span class="help-block"><?php echo $help_password; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-password"><?php echo $entry_password; ?> <span class="help-block"><?php echo $help_password; ?></span></label>
           <div class="controls">
             <input type="text" name="worldpay_password" value="<?php echo $worldpay_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <?php if ($error_password) { ?>

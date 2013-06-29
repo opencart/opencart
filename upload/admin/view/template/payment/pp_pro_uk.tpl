@@ -12,15 +12,15 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-pp-pro-uk" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pp-pro-uk" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-vendor"><span class="required">*</span> <?php echo $entry_vendor; ?> <span class="help-block"><?php echo $help_vendor; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-vendor"><?php echo $entry_vendor; ?> <span class="help-block"><?php echo $help_vendor; ?></span></label>
           <div class="controls">
             <input type="text" name="pp_pro_uk_vendor" value="<?php echo $pp_pro_uk_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="input-vendor" />
             <?php if ($error_vendor) { ?>
@@ -28,8 +28,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-user"><span class="required">*</span> <?php echo $entry_user; ?> <span class="help-block"><?php echo $help_user; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-user"><?php echo $entry_user; ?> <span class="help-block"><?php echo $help_user; ?></span></label>
           <div class="controls">
             <input type="text" name="pp_pro_uk_user" value="<?php echo $pp_pro_uk_user; ?>" placeholder="<?php echo $entry_user; ?>" id="input-user" />
             <?php if ($error_user) { ?>
@@ -37,8 +37,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-password"><span class="required">*</span> <?php echo $entry_password; ?> <span class="help-block"><?php echo $help_password; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-password"><?php echo $entry_password; ?> <span class="help-block"><?php echo $help_password; ?></span></label>
           <div class="controls">
             <input type="text" name="pp_pro_uk_password" value="<?php echo $pp_pro_uk_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <?php if ($error_password) { ?>
@@ -46,8 +46,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-partner"><span class="required">*</span> <?php echo $entry_partner; ?> <span class="help-block"><?php echo $help_partner; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-partner"><?php echo $entry_partner; ?> <span class="help-block"><?php echo $help_partner; ?></span></label>
           <div class="controls">
             <input type="text" name="pp_pro_uk_partner" value="<?php echo $pp_pro_uk_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="input-partner" />
             <?php if ($error_partner) { ?>

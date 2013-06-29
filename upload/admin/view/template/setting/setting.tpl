@@ -17,7 +17,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-setting" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
@@ -37,8 +37,8 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
-            <div class="control-group">
-              <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
               <div class="controls">
                 <input type="text" name="config_name" value="<?php echo $config_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="xxlarge" />
                 <?php if ($error_name) { ?>
@@ -46,8 +46,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-owner"><span class="required">*</span> <?php echo $entry_owner; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-owner"><?php echo $entry_owner; ?></label>
               <div class="controls">
                 <input type="text" name="config_owner" value="<?php echo $config_owner; ?>" placeholder="<?php echo $entry_owner; ?>" id="input-owner" class="xxlarge" />
                 <?php if ($error_owner) { ?>
@@ -55,8 +55,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-address"><span class="required">*</span> <?php echo $entry_address; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-address"><?php echo $entry_address; ?></label>
               <div class="controls">
                 <textarea name="config_address" cols="40" rows="5" placeholder="<?php echo $entry_owner; ?>" id="input-address"><?php echo $config_address; ?></textarea>
                 <?php if ($error_address) { ?>
@@ -64,8 +64,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-email"><span class="required">*</span> <?php echo $entry_email; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
               <div class="controls">
                 <input type="text" name="config_email" value="<?php echo $config_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="xxlarge" />
                 <?php if ($error_email) { ?>
@@ -73,8 +73,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-telephone"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
               <div class="controls">
                 <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
                 <?php if ($error_telephone) { ?>
@@ -90,8 +90,8 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-store">
-            <div class="control-group">
-              <label class="control-label" for="input-title"><span class="required">*</span> <?php echo $entry_title; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-title"><?php echo $entry_title; ?></label>
               <div class="controls">
                 <input type="text" name="config_title" value="<?php echo $config_title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
                 <?php if ($error_title) { ?>
@@ -254,8 +254,8 @@
           <div class="tab-pane" id="tab-option">
             <fieldset>
               <legend><?php echo $text_items; ?></legend>
-              <div class="control-group">
-                <label class="control-label" for="input-catalog-limit"><span class="required">*</span> <?php echo $entry_catalog_limit; ?> <span class="help-block"><?php echo $help_catalog_limit; ?></span></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-catalog-limit"><?php echo $entry_catalog_limit; ?> <span class="help-block"><?php echo $help_catalog_limit; ?></span></label>
                 <div class="controls">
                   <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" id="input-catalog-limit" class="input-mini" />
                   <?php if ($error_catalog_limit) { ?>
@@ -263,8 +263,8 @@
                   <?php } ?>
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="input-list-description-limit"><span class="required">*</span> <?php echo $entry_list_description_limit; ?> <span class="help-block"><?php echo $help_list_description_limit; ?></span></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-list-description-limit"><?php echo $entry_list_description_limit; ?> <span class="help-block"><?php echo $help_list_description_limit; ?></span></label>
                 <div class="controls">
                   <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" id="input-list-description-limit" class="input-mini" />
                   <?php if ($error_list_description_limit) { ?>
@@ -272,8 +272,8 @@
                   <?php } ?>
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="input-admin-limit"><span class="required">*</span> <?php echo $entry_admin_limit; ?> <span class="help-block"><?php echo $help_admin_limit; ?></span></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-admin-limit"><?php echo $entry_admin_limit; ?> <span class="help-block"><?php echo $help_admin_limit; ?></span></label>
                 <div class="controls">
                   <input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" placeholder="<?php echo $entry_admin_limit; ?>" id="input-admin-limit" class="input-mini" />
                   <?php if ($error_admin_limit) { ?>
@@ -379,8 +379,8 @@
             </fieldset>
             <fieldset>
               <legend><?php echo $text_voucher; ?></legend>
-              <div class="control-group">
-                <label class="control-label" for="input-voucher-min"><span class="required">*</span> <?php echo $entry_voucher_min; ?> <span class="help-block"><?php echo $help_voucher_min; ?></span></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-voucher-min"><?php echo $entry_voucher_min; ?> <span class="help-block"><?php echo $help_voucher_min; ?></span></label>
                 <div class="controls">
                   <input type="text" name="config_voucher_min" value="<?php echo $config_voucher_min; ?>" placeholder="<?php echo $entry_voucher_min; ?>" id="input-voucher-min" />
                   <?php if ($error_voucher_min) { ?>
@@ -388,8 +388,8 @@
                   <?php } ?>
                 </div>
               </div>
-              <div class="control-group">
-                <label class="control-label" for="input-voucher-max"><span class="required">*</span> <?php echo $entry_voucher_max; ?> <span class="help-block"><?php echo $help_voucher_max; ?></span></label>
+              <div class="control-group required">
+                <label class="control-label" for="input-voucher-max"><?php echo $entry_voucher_max; ?> <span class="help-block"><?php echo $help_voucher_max; ?></span></label>
                 <div class="controls">
                   <input type="text" name="config_voucher_max" value="<?php echo $config_voucher_max; ?>" placeholder="<?php echo $entry_voucher_max; ?>" id="input-voucher-max" />
                   <?php if ($error_voucher_max) { ?>
@@ -823,8 +823,8 @@
                 </div>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-image-category-width"><span class="required">*</span> <?php echo $entry_image_category; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-image-category-width"><?php echo $entry_image_category; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-category-width" class="input-mini" />
                 x
@@ -834,8 +834,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-image-thumb-width"><span class="required">*</span> <?php echo $entry_image_thumb; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-image-thumb-width"><?php echo $entry_image_thumb; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-thumb-width" class="input-mini" />
                 x
@@ -845,8 +845,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-image-popup-width"><span class="required">*</span> <?php echo $entry_image_popup; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-image-popup-width"><?php echo $entry_image_popup; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-popup-width" class="input-mini" />
                 x
@@ -856,8 +856,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-image-product-width"><span class="required">*</span> <?php echo $entry_image_product; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-image-product-width"><?php echo $entry_image_product; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-product-width" class="input-mini" />
                 x
@@ -867,8 +867,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-image-additional-width"><span class="required">*</span> <?php echo $entry_image_additional; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-image-additional-width"><?php echo $entry_image_additional; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-additional-width" class="input-mini" />
                 x
@@ -878,8 +878,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-image-related"><span class="required">*</span> <?php echo $entry_image_related; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-image-related"><?php echo $entry_image_related; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-related" class="input-mini" />
                 x
@@ -889,8 +889,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-image-compare"><span class="required">*</span> <?php echo $entry_image_compare; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-image-compare"><?php echo $entry_image_compare; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-compare" class="input-mini" />
                 x
@@ -900,8 +900,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-image-wishlist"><span class="required">*</span> <?php echo $entry_image_wishlist; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-image-wishlist"><?php echo $entry_image_wishlist; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-wishlist" class="input-mini" />
                 x
@@ -911,8 +911,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-image-cart"><span class="required">*</span> <?php echo $entry_image_cart; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-image-cart"><?php echo $entry_image_cart; ?></label>
               <div class="controls">
                 <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-cart" class="input-mini" />
                 x
@@ -1372,8 +1372,8 @@
                 </label>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-error-filename"><span class="required">*</span> <?php echo $entry_error_filename; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-error-filename"><?php echo $entry_error_filename; ?></label>
               <div class="controls">
                 <input type="text" name="config_error_filename" value="<?php echo $config_error_filename; ?>" placeholder="<?php echo $entry_error_filename; ?>" id="input-error-filename" />
                 <?php if ($error_error_filename) { ?>

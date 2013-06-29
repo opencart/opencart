@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-return" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
@@ -25,8 +25,8 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-return">
-            <div class="control-group">
-              <label class="control-label" for="input-order-id"><span class="required">*</span> <?php echo $entry_order_id; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-order-id"><?php echo $entry_order_id; ?></label>
               <div class="controls">
                 <input type="text" name="order_id" value="<?php echo $order_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" />
                 <?php if ($error_order_id) { ?>
@@ -47,8 +47,8 @@
                 <input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>" />
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-firstname"><span class="required">*</span> <?php echo $entry_firstname; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
               <div class="controls">
                 <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
                 <?php if ($error_firstname) { ?>
@@ -56,8 +56,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-lastname"><span class="required">*</span> <?php echo $entry_lastname; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-lastname"><span class="">*</span> <?php echo $entry_lastname; ?></label>
               <div class="controls">
                 <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
                 <?php if ($error_lastname) { ?>
@@ -65,8 +65,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-email"><span class="required">*</span> <?php echo $entry_email; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
               <div class="controls">
                 <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
                 <?php if ($error_email) { ?>
@@ -74,8 +74,8 @@
                 <?php  } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-telephone"><span class="required">*</span> <?php echo $entry_telephone; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
               <div class="controls">
                 <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
                 <?php if ($error_telephone) { ?>
@@ -85,8 +85,8 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-product">
-            <div class="control-group">
-              <label class="control-label" for="input-product"><span class="required">*</span> <?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
               <div class="controls">
                 <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
                 <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />

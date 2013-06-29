@@ -73,14 +73,14 @@
             <div id="product" class="well well-small scrollbox"></div>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-subject"><span class="required">*</span> <?php echo $entry_subject; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-subject"><?php echo $entry_subject; ?></label>
           <div class="controls">
             <input type="text" name="subject" value="" placeholder="<?php echo $entry_subject; ?>" id="input-subject" />
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-message"><span class="required">*</span> <?php echo $entry_message; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-message"><?php echo $entry_message; ?></label>
           <div class="controls">
             <textarea name="message" placeholder="<?php echo $entry_message; ?>" id="input-message"></textarea>
           </div>

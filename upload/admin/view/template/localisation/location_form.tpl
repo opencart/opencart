@@ -12,15 +12,15 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-location" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-location" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
           <div class="controls">
             <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
             <?php if ($error_name) { ?>
@@ -28,8 +28,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-address-1"><span class="required">*</span> <?php echo $entry_address_1; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
           <div class="controls">
             <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" />
             <?php if ($error_address_1) { ?>
@@ -43,8 +43,8 @@
             <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" />
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-city"><span class="required">*</span> <?php echo $entry_city; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-city"><?php echo $entry_city; ?></label>
           <div class="controls">
             <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
             <?php if ($error_city) { ?>
@@ -58,8 +58,8 @@
             <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-country"><span class="required">*</span> <?php echo $entry_country; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-country"><?php echo $entry_country; ?></label>
           <div class="controls">
             <select name="country_id" id="input-country">
               <option value=""><?php echo $text_select; ?></option>
@@ -76,8 +76,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-zone"><span class="required">*</span> <?php echo $entry_zone; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-zone"><?php echo $entry_zone; ?></label>
           <div class="controls">
             <select name="zone_id" id="input-zone">
             </select>
@@ -86,8 +86,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-geocode"><span class="required">*</span> <?php echo $entry_geocode; ?> <span class="help-block"><?php echo $help_geocode; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-geocode"><?php echo $entry_geocode; ?> <span class="help-block"><?php echo $help_geocode; ?></span></label>
           <div class="controls">
             <div class="input-append">
               <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" class="span2" id="input-geocode" />

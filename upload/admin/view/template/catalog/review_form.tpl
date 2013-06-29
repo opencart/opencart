@@ -19,8 +19,8 @@
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-review" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-author"><span class="required">*</span> <?php echo $entry_author; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-author"><?php echo $entry_author; ?></label>
           <div class="controls">
             <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" />
             <?php if ($error_author) { ?>
@@ -38,8 +38,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-text"><span class="required">*</span> <?php echo $entry_text; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-text"><?php echo $entry_text; ?></label>
           <div class="controls">
             <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>" id="input-text" class="input-xxlarge"><?php echo $text; ?></textarea>
             <?php if ($error_text) { ?>

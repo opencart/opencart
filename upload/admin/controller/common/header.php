@@ -186,7 +186,7 @@ class ControllerCommonHeader extends Controller {
 			
 			// Get total number of customers online
 			$this->load->model('report/online');
-			
+			 
 			$this->data['online'] = $this->model_report_online->getTotalCustomersOnline();
 						
 			// Get total number of stores online
@@ -232,7 +232,7 @@ class ControllerCommonHeader extends Controller {
 					
 		$this->template = 'common/header.tpl';
 		
-		return $this->render();
+		$this->render();
 	}
 }
 ?>

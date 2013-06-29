@@ -197,8 +197,8 @@
                       <?php } ?>
                     </div>
                   </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-postcode<?php echo $address_row; ?>"> <span id="postcode-required<?php echo $address_row; ?>" class="required">*</span> <?php echo $entry_postcode; ?></label>
+                  <div class="control-group required">
+                    <label class="control-label" for="input-postcode<?php echo $address_row; ?>"><?php echo $entry_postcode; ?></label>
                     <div class="controls">
                       <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode<?php echo $address_row; ?>" />
                     </div>
@@ -374,8 +374,8 @@ function addAddress() {
 	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" id="input-city' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
-	html += '  <div class="control-group">';
-	html += '    <label class="control-label" for="input-postcode' + address_row + '"><span id="postcode-required' + address_row + '" class="required">*</span> <?php echo $entry_postcode; ?></label>';
+	html += '  <div class="control-group required">';
+	html += '    <label class="control-label" for="input-postcode' + address_row + '"><?php echo $entry_postcode; ?></label>';
 	html += '    <div class="controls"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode' + address_row + '" /></div>';
 	html += '  </div>'; 
 
@@ -426,9 +426,9 @@ function country(element, index, zone_id) {
 			},			
 			success: function(json) {
 				if (json['postcode_required'] == '1') {
-					$('#postcode-required' + index).show();
+					$('#input-postcode' + index).parent().parent().addClass('required');
 				} else {
-					$('#postcode-required' + index).hide();
+					$('#input-postcode' + index).parent().parent().removeClass('required');
 				}
 				
 				html = '<option value=""><?php echo $text_select; ?></option>';

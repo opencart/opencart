@@ -169,8 +169,8 @@
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-payment-postcode"><span id="payment-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
               <div class="controls">
                 <input type="text" name="payment_postcode" value="<?php echo $payment_postcode; ?>" id="input-payment-postcode" />
                 <?php if ($error_payment_postcode) { ?>
@@ -264,8 +264,8 @@
                 <input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" id="input-shipping-city" />
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-shipping-postcode"><span id="shipping-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-shipping-postcode"><?php echo $entry_postcode; ?></label>
               <div class="controls">
                 <input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" id="input-shipping-postcode" />
                 <?php if ($error_shipping_postcode) { ?>
@@ -716,9 +716,9 @@ $('select[name=\'payment_country_id\']').on('change', function() {
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#payment-postcode-required').show();
+				$('#input-payment-postcode').parent().parent().addClass('required');
 			} else {
-				$('#payment-postcode-required').hide();
+				$('#input-payment-postcode').parent().parent().removeClass('required');
 			}
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -790,9 +790,9 @@ $('select[name=\'shipping_country_id\']').on('change', function() {
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#shipping-postcode-required').show();
+				$('#input-shipping-postcode').parent().parent().addClass('required');
 			} else {
-				$('#shipping-postcode-required').hide();
+				$('#input-shipping-postcode').parent().parent().removeClass('required');
 			}
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';

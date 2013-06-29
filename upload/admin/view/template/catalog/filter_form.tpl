@@ -40,7 +40,7 @@
         <table id="filter" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
-              <td class="left"><span class="required">*</span> <?php echo $entry_name ?></td>
+              <td class="left required"><?php echo $entry_name ?></td>
               <td class="right"><?php echo $entry_sort_order; ?></td>
               <td></td>
             </tr>

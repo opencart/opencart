@@ -100,8 +100,8 @@
                 <?php  } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-postcode"><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
+            <div class="control-group required">
+              <label class="control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
               <div class="controls">
                 <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
                 <?php if ($error_postcode) { ?>
@@ -296,16 +296,16 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=marketing/affiliate/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
 		},
 		complete: function() {
 			$('.icon-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#postcode-required').show();
+				$('#input-postcode').parent().parent().addClass('required');
 			} else {
-				$('#postcode-required').hide();
+				$('#input-postcode').parent().parent().removeClass('required');
 			}
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';

@@ -52,8 +52,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-postcode"><span id="postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
           <div class="controls">
             <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
           </div>
@@ -126,8 +126,6 @@
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
 <script type="text/javascript"><!--
 function getGeoCode() { 
-	
-
 	var address = new Array();
 	
 	address[0] = $('input[name=\'address_1\']').attr('value');
@@ -191,9 +189,9 @@ $('select[name=\'country_id\']').on('change', function() {
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#postcode-required').show();
+				$('#input-postcode').parent().parent().addClass('required');
 			} else {
-				$('#postcode-required').hide();
+				$('#input-postcode').parent().parent().removeClass('required');
 			}
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';

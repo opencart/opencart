@@ -231,7 +231,7 @@ body > #container {
 	content: ':';
 }
 */
-.required .control-label:before {
+div.required .control-label:before, td.required:before {
 	content: '* ';
 	color: #F00;
 	font-weight: bold;

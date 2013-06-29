@@ -23,7 +23,7 @@
           <thead>
             <tr>
               <td class="left"><?php echo $entry_banner; ?></td>
-              <td class="left"><span class="required">*</span> <?php echo $entry_dimension; ?></td>
+              <td class="left required"><?php echo $entry_dimension; ?></td>
               <td class="left"><?php echo $entry_layout; ?></td>
               <td class="left"><?php echo $entry_position; ?></td>
               <td class="left"><?php echo $entry_status; ?></td>

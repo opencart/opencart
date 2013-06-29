@@ -667,12 +667,6 @@ $('select[name=\'config_country_id\']').on('change', function() {
 			$('.icon-spinner').remove();
 		},			
 		success: function(json) {
-			if (json['postcode_required'] == '1') {
-				$('#postcode-required').show();
-			} else {
-				$('#postcode-required').hide();
-			}
-			
 			html = '<option value=""><?php echo $text_select; ?></option>';
 			
 			if (json['zone'] != '') {

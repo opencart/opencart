@@ -105,7 +105,7 @@
         <table id="option-value" class="table table-striped table-bordered table-hover">
           <thead>
             <tr>
-              <td class="left"><span class="required">*</span> <?php echo $entry_option_value; ?></td>
+              <td class="left required"><?php echo $entry_option_value; ?></td>
               <td class="left"><?php echo $entry_image; ?></td>
               <td class="right"><?php echo $entry_sort_order; ?></td>
               <td></td>

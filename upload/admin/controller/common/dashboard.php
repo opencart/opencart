@@ -238,6 +238,8 @@ class ControllerCommonDashboard extends Controller {
 	}
 	
 	public function online() {
+		$this->language->load('common/dashboard');
+		
 		$json = array();
 		
 		$this->load->model('report/dashboard');

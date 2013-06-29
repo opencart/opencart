@@ -8,11 +8,20 @@ class ModelReportDashboard extends Model {
 	
 	public function getTotalCustomersOnline() {
 		$online_data = array();
+				
+		for ($i = strtotime('-1 hour'); $i < time(); $i = ($i + 60)) {
+			$time = (round($i / 60) * 60);
+			
+			$online_data[$time] = array(
+				'time'  => $time,
+				'total' => 0
+			);					
+		}
 		
-		$query = $this->db->query("SELECT COUNT(*) AS total, date_added FROM `" . DB_PREFIX . "customer_online` GROUP BY MINUTE(date_added)");
+		$query = $this->db->query("SELECT COUNT(*) AS total, DATE_FORMAT(date_added, '%Y-%m-%d %H:%i') AS date_added FROM `" . DB_PREFIX . "customer_online` GROUP BY MINUTE(date_added) ORDER BY date_added");
 
 		foreach ($query->rows as $result) {
-			$online_data[] = array(
+			$online_data[strtotime($result['date_added'])] = array(
 				'time'  => strtotime($result['date_added']),
 				'total' => $result['total']
 			);		

@@ -30,7 +30,7 @@
 <body>
 <div id="container">
 <div id="header">
-  <div class="navbar navbar-inverse">
+  <div class="navbar">
     <div class="navbar-inner">
       <div class="container"><a href="<?php echo $home; ?>" class="brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
         <?php if ($logged) { ?>

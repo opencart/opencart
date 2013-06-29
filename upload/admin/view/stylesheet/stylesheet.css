@@ -31,62 +31,52 @@ html, body {
 }
 #header .navbar {
 	margin-bottom: 3px;
-	border-bottom: 5px solid #00C3F4;
 }
 #header .navbar-inner {
 	padding-left: 30px;
 	padding-right: 30px;
-}
-#header .navbar-inverse .navbar-inner {
 	min-height: 44px;
-	background-color: #2D2D2E;
-	background-repeat: no-repeat, repeat, no-repeat;
-	background-size: auto, 5px 5px, 100% 6px;
-	background-position: center, center, bottom;
-	background-image: linear-gradient(90deg, transparent, transparent 20%, rgba(255, 255, 255, 0.1) 50%, transparent 80%), linear-gradient(-135deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 50%, transparent 60%, transparent 100%), linear-gradient(to bottom, transparent, rgba(0, 0, 0, 0.40) 100%);
+	background: #007EC8;
 	-webkit-box-shadow: none;
 	-moz-box-shadow: none;
-	box-shadow: none;
+	box-shadow: 0px 2px 2px 0px #EEEEEE;
 	border-top: none;
 	border-left: none;
 	border-right: none;
-	border-bottom: 1px solid #000;
+	border-bottom: 1px solid #006CBB;
 	-webkit-border-radius: 0;
 	-moz-border-radius: 0;
 	border-radius: 0;
 }
-#header .navbar-inverse .nav > li > a {
+#header .navbar-inner .nav > li > a {
 	padding: 12px 11px 12px 11px;
-	color: #AAAAAA;
-	text-shadow: 1px 1px 1px #000000;
+	color: #8FBAE5;
+	text-shadow: none;
 	cursor: pointer;
 	background: none;
 	box-shadow: none;
 }
-#header .navbar-inverse .nav > li > a:hover {
-	color: #FFFFFF;
-}
-#header .navbar-inverse .nav > li.active > a {
+#header .navbar-inner .nav > li.active > a, #header .navbar-inner .nav > li > a:hover {
 	color: #FFFFFF;
 }
 #header .navbar .icon-caret-down {
 	margin-left: 5px;
 }
-#header .navbar-inverse .nav > li > a.profile {
-	padding: 6px 0px 5px 17px;
+#header .navbar-inner .nav > li > a.profile {
+	padding: 8px 0px 7px 17px;
 }
-#header .navbar-inverse .nav > li > a.profile img {
-	padding: 2px;
+#header .navbar-inner .nav > li > a.profile img {
+	padding: 1px;
 	background: #FFFFFF;
-	border: 1px solid #000;
+	border: 1px solid #006CBB;
 }
-#header .navbar-inverse .nav > li > a.notification {
+#header .navbar-inner .nav > li > a.notification {
 	padding: 13px 7px 8px 7px;
 }
-#header .navbar-inverse .nav > li > a.notification i {
+#header .navbar-inner .nav > li > a.notification i {
 	font-size: 20px;
 }
-#header .navbar-inverse .nav > li > a.notification .badge {
+#header .navbar-inner .nav > li > a.notification .badge {
 	position: relative;
 	top: -4px;
 	left: 6px;
@@ -95,6 +85,10 @@ html, body {
 	float: left;
 	padding: 3px 8px;
 }
+
+
+
+
 body > #container {
 	height: auto;
 	min-height: 100%;
@@ -284,15 +278,19 @@ body > #container {
 	color: #999999;
 }
 .stats span {
-	font-size: 50px;
 	color: #468847;
 }
+
+
 #button-sale, #button-marketing {
 	margin-bottom: 10px;
 }
 .chart {
 	clear: both;
 }
+
+
+
 /* thumbnails */
 .image {
 	float: left;

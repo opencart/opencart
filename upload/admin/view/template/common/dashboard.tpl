@@ -16,73 +16,52 @@
     </div>
     <div class="box-content">
       <div class="row-fluid">
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-money"></i></div>
-            <div><span>+10%</span> <?php echo $total_sale; ?> </div>
+        <div class="span7">
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="stats">
+                <div><i class="icon-money"></i></div>
+                <div><span>+10%</span> <?php echo $total_sale; ?> </div>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="stats">
+                <div><i class="icon-shopping-cart"></i></div>
+                <div>
+                  <h5><?php echo $text_order; ?></h5>
+                  <?php echo $total_order; ?><br />
+                  <span>+10%</span></div>
+              </div>
+            </div>
+          </div>
+          <div class="row-fluid">
+            <div class="span6">
+              <div class="stats">
+                <div><i class="icon-user"></i></div>
+                <div>
+                  <h5><?php echo $text_customer; ?></h5>
+                  <?php echo $total_customer; ?><br />
+                  <span>+10%</span></div>
+              </div>
+            </div>
+            <div class="span6">
+              <div class="stats">
+                <div><i class="icon-globe"></i></div>
+                <div>
+                  <h5><?php echo $text_marketing; ?></h5>
+                  Clicks: <?php echo $total_marketing; ?> / Sales: 1<br />
+                  <span>+10%</span></div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-shopping-cart"></i></div>
-            <div>
-              <h5><?php echo $text_order; ?></h5>
-              <?php echo $total_order; ?><br />
-              <span>+10%</span></div>
-          </div>
-        </div>
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-user"></i></div>
-            <div>
-              <h5><?php echo $text_customer; ?></h5>
-              <?php echo $total_customer; ?><br />
-              <span>+10%</span></div>
-          </div>
-        </div>
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-globe"></i></div>
-            <div>
-              <h5><?php echo $text_marketing; ?></h5>
-              Clicks: <?php echo $total_marketing; ?> / Sales: 1<br />
-              <span>+10%</span></div>
-          </div>
-        </div>
-      </div>
-            <div class="row-fluid">
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-money"></i></div>
-            <div><span>+10%</span> <?php echo $total_sale; ?> </div>
-          </div>
-        </div>
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-shopping-cart"></i></div>
-            <div>
-              <h5><?php echo $text_order; ?></h5>
-              <?php echo $total_order; ?><br />
-              <span>+10%</span></div>
-          </div>
-        </div>
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-user"></i></div>
-            <div>
-              <h5><?php echo $text_customer; ?></h5>
-              <?php echo $total_customer; ?><br />
-              <span>+10%</span></div>
-          </div>
-        </div>
-        <div class="span3">
-          <div class="stats">
-            <div><i class="icon-globe"></i></div>
-            <div>
-              <h5><?php echo $text_marketing; ?></h5>
-              Clicks: <?php echo $total_marketing; ?> / Sales: 1<br />
-              <span>+10%</span></div>
-          </div>
+        <div class="span5">
+          <h5>Recent Activity</h5>
+          <table>
+            <tr>
+              <td>hjgf</td>
+            </tr>
+          </table>
         </div>
       </div>
       <div class="row-fluid">

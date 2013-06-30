@@ -35,6 +35,12 @@ class ControllerToolErrorLog extends Controller {
 		
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 		
+		if (filesize($file) >= 5242880){
+			$this->data['alert_filesize'] = sprintf($this->language->get('alert_filesize'), (filesize($file)/1024)/1024);
+		}else{
+			$this->data['alert_filesize'] = null;
+		}
+		
 		if (file_exists($file)) {
 			$this->data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
 		} else {

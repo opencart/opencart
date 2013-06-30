@@ -10,6 +10,11 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
+  <?php if ($alert_filesize){ ?>
+  <div class="alert alert-danger"><i class="icon-warning-sign"></i> <?php echo $alert_filesize ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
   <div class="box">
     <div class="box-heading">
       <h1><i class="icon-warning-sign icon-large"></i> <?php echo $heading_title; ?></h1>

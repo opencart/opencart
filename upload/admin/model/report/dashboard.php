@@ -13,7 +13,7 @@ class ModelReportDashboard extends Model {
 			$time = (round($i / 60) * 60);
 			
 			$online_data[$time] = array(
-				'time'  => date('Y-m-d H:i:s', $time),
+				'time'  => $time,
 				'total' => 0
 			);					
 		}
@@ -22,7 +22,7 @@ class ModelReportDashboard extends Model {
 
 		foreach ($query->rows as $result) {
 			$online_data[strtotime($result['date_added'])] = array(
-				'time'  => date('Y-m-d H:i:s', strtotime($result['date_added'])),
+				'time'  => strtotime($result['date_added']),
 				'total' => $result['total']
 			);		
 		}

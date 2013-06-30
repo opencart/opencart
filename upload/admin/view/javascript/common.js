@@ -39,13 +39,11 @@ $(document).ready(function() {
 		$('#header a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 	
-	$('[data-toggle=\'tooltip\']').tooltip({
-		'placement': 'top',
-		'animation': false,
-		'html': true
-	});
+	$('[data-toggle=\'tooltip\']').tooltip();
 });
 
+
+/*
 $('[data-target=]').on('submit', function(event) {
 	event.preventDefault();
 	
@@ -88,7 +86,7 @@ $('[data-target=]').on('submit', function(event) {
 		}
 	});
 });
-
+*/
 // Added my own autocomplete method for jquery since bootstraps is pretty much useless	
 (function($) {
 	function Autocomplete(element, options) {

@@ -36,7 +36,10 @@ class ControllerCommonDashboard extends Controller {
 		$this->load->model('report/dashboard');
 		
 		// Total Sales
-		$this->data['total_sale'] = $this->currency->format($this->model_report_dashboard->getTotalSales(), $this->config->get('config_currency'));
+		
+		$total_sales = $this->model_report_dashboard->getTotalSales();
+		
+		$this->data['total_sale'] = $this->currency->format(, $this->config->get('config_currency'));
 		
 		// Total Orders
 		$this->load->model('sale/order');

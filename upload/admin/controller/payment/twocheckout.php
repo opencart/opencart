@@ -27,6 +27,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 		
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_secret'] = $this->language->get('entry_secret');
+		$this->data['entry_display'] = $this->language->get('entry_display');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		

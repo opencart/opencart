@@ -61,19 +61,28 @@
           </div>
         </div>
         <div class="control-group">
-          <tr>
-            <td><?php echo $entry_display; ?></td>
-            <td><?php if ($twocheckout_display) { ?>
-              <input type="radio" name="twocheckout_display" value="1" checked="checked" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="twocheckout_display" value="0" />
-              <?php echo $text_no; ?>
-              <?php } else { ?>
-              <input type="radio" name="twocheckout_display" value="1" />
-              <?php echo $text_yes; ?>
-              <input type="radio" name="twocheckout_display" value="0" checked="checked" />
-              <?php echo $text_no; ?>
-              <?php } ?></td>
+			<label class="control-label"><?php echo $entry_display ?></label>
+			<div class="controls">
+				<div class="radio inline">
+					<?php if ($twocheckout_display) { ?>
+					<input type="radio" name="twocheckout_display" value="1" checked="checked" />
+					<?php echo $text_yes; ?>
+					<?php }else{ ?>
+					<input type="radio" name="twocheckout_display" value="1" />
+					<?php echo $text_yes; ?>
+					<?php } ?>
+				</div>
+				
+				<div class="radio inline">
+					<?php if (!$twocheckout_display) { ?>
+					<input type="radio" name="twocheckout_display" value="0" checked="checked" />
+					<?php echo $text_no; ?>
+					<?php }else{ ?>
+					<input type="radio" name="twocheckout_display" value="0" />
+					<?php echo $text_no; ?>
+					<?php } ?>
+				</div>
+			</div>
           </tr>
         </div>
         <div class="control-group">

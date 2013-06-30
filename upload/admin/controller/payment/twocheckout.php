@@ -27,6 +27,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 		
 		$this->data['entry_account'] = $this->language->get('entry_account');
 		$this->data['entry_secret'] = $this->language->get('entry_secret');
+		$this->data['entry_display'] = $this->language->get('entry_display');
 		$this->data['entry_test'] = $this->language->get('entry_test');
 		$this->data['entry_total'] = $this->language->get('entry_total');	
 		$this->data['entry_order_status'] = $this->language->get('entry_order_status');		
@@ -62,7 +63,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 
    		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$this->data['breadcrumbs'][] = array(

@@ -83,7 +83,6 @@
 					<?php } ?>
 				</div>
 			</div>
-          </tr>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>

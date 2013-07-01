@@ -8,7 +8,7 @@ var plot = $.plot(placeholder, data, options)
 
 The placeholder is a jQuery object or DOM element or jQuery expression
 that the plot will be put into. This placeholder needs to have its
-width and height set as explained in the README (go read that now if
+width and height set as explained in the [README](README.md) (go read that now if
 you haven't, it's short). The plot will modify some properties of the
 placeholder so it's recommended you simply pass in a div that you
 don't use for anything else. Make sure you check any fancy styling
@@ -635,6 +635,10 @@ standard strftime specifiers are supported (plus the nonstandard %q):
 %P: AM/PM (uppercase version of %p)
 %w: weekday as number (0-6, 0 being Sunday)
 ```
+
+Flot 0.8 switched from %h to the standard %H hours specifier. The %h specifier
+is still available, for backwards-compatibility, but is deprecated and
+scheduled to be removed permanently with the release of version 1.0.
 
 You can customize the month names with the "monthNames" option. For
 instance, for Danish you might specify:

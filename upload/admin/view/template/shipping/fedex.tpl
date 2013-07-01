@@ -12,15 +12,15 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-fedex" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-fedex" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-key"><span class="required">*</span> <?php echo $entry_key; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-key"><?php echo $entry_key; ?></label>
           <div class="controls">
             <input type="text" name="fedex_key" value="<?php echo $fedex_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" />
             <?php if ($error_key) { ?>
@@ -28,8 +28,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-password"><span class="required">*</span> <?php echo $entry_password; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
           <div class="controls">
             <input type="text" name="fedex_password" value="<?php echo $fedex_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <?php if ($error_password) { ?>
@@ -37,8 +37,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-account"><span class="required">*</span> <?php echo $entry_account; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-account"><?php echo $entry_account; ?></label>
           <div class="controls">
             <input type="text" name="fedex_account" value="<?php echo $fedex_account; ?>" placeholder="<?php echo $entry_account; ?>" id="input-account" />
             <?php if ($error_account) { ?>
@@ -46,8 +46,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-meter"><span class="required">*</span> <?php echo $entry_meter; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-meter"><?php echo $entry_meter; ?></label>
           <div class="controls">
             <input type="text" name="fedex_meter" value="<?php echo $fedex_meter; ?>" placeholder="<?php echo $entry_meter; ?>" id="input-meter" />
             <?php if ($error_meter) { ?>
@@ -55,8 +55,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-postcode"><span class="required">*</span> <?php echo $entry_postcode; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
           <div class="controls">
             <input type="text" name="fedex_postcode" value="<?php echo $fedex_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
             <?php if ($error_postcode) { ?>

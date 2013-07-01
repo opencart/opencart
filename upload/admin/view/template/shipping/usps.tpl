@@ -12,15 +12,15 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-usps" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-usps" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-user-id"><span class="required">*</span> <?php echo $entry_user_id; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-user-id"><?php echo $entry_user_id; ?></label>
           <div class="controls">
             <input type="text" name="usps_user_id" value="<?php echo $usps_user_id; ?>" placeholder="<?php echo $entry_user_id; ?>" id="input-user-id" />
             <?php if ($error_user_id) { ?>
@@ -28,8 +28,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-postcode"><span class="required">*</span> <?php echo $entry_postcode; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
           <div class="controls">
             <input type="text" name="usps_postcode" value="<?php echo $usps_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
             <?php if ($error_postcode) { ?>
@@ -435,8 +435,8 @@
             </select>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-length"><span class="required">*</span> <?php echo $entry_dimension; ?> <span class="help-block"><?php echo $help_dimension; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-length"><?php echo $entry_dimension; ?> <span class="help-block"><?php echo $help_dimension; ?></span></label>
           <div class="controls">
             <input type="text" name="usps_length" value="<?php echo $usps_length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="input-mini"/>
             <input type="text" name="usps_width" value="<?php echo $usps_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="input-mini" />

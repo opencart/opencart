@@ -10,43 +10,50 @@
 <script src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link rel="stylesheet" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <style type="text/css">
+.container-fluid {
+	width: 700px;
+	border: 1px solid #000;
+	margin: auto;
+}
 #directory, ul {
-	list-style: none;	
+	border: 1px solid #CCCCCC;
+	list-style: none;
 }
 </style>
 </head>
 <body>
 <div class="container-fluid">
 <div id="menu">
-  <div class="row">
-    <div class="span3">
-      <div class="well well-small">
-        <ul id="directory">
-          <li><a href="#"><i class="icon-folder-close"></i> Image <i class="icon-edit pull-right"></i> <i class="icon-remove pull-right"></i></a></li>
-        </ul>
-      </div>
-    </div>
-    <div class="span9">
-      <div class="well well-small">
-        <ul id="files" class="thumbnails">
-        </ul>
-      </div>
+  <div class="row-fluid">
+    <div class="span12">
+      <button id="button-create" class="btn"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
+      <button id="button-upload" class="btn"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+      <button id="button-refresh" class="btn"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
     </div>
   </div>
-  
-    <button id="button-create" class="btn"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
-    <button id="button-delete" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
-    <button id="button-upload" class="btn"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-    <button id="button-refresh" class="btn"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
-    <div class="btn-group">
-    <button id="button-move" class="btn"><i class="icon-remove-sign"></i> <?php echo $button_move; ?></button>
-    <button id="button-copy" class="btn"><i class="icon-copy"></i> <?php echo $button_copy; ?></button>
-    <button id="button-rename" class="btn"><i class="icon-edit"></i> <?php echo $button_rename; ?></button>
-   </div>
-
-  
+  <ul class="breadcrumb">
+    <li>Home</li>
+  </ul>
+  <table class="table table-striped table-bordered table-hover">
+    <thead>
+      <tr>
+        <td>Name</td>
+        <td>Size</td>
+        <td>Date Modified</td>
+        <td>Action</td>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+      <td><i class="icon-folder-close"></i> Test</td>
+        <td>13kb</td>
+        <td>1/2/1999</td>
+        <td><i title="<?php echo $button_rename; ?>" class="icon-edit"></i> <i title="<?php echo $button_move; ?>" class="icon-remove-sign"></i> <i title="<?php echo $button_delete; ?>" class="icon-trash"></i></td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-<div id="upload">
+<div id="upload" style="display: none;">
   <form enctype="multipart/form-data">
     <input type="file" name="image" id="image" />
     <input type="hidden" name="directory" />

@@ -91,6 +91,12 @@ class ControllerCommonFileManager extends Controller {
 			$directory = DIR_IMAGE . 'data/';
 		}
 		
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}
+		
 		$allowed = array(
 			'.jpg',
 			'.jpeg',
@@ -98,9 +104,13 @@ class ControllerCommonFileManager extends Controller {
 			'.gif'
 		);
 		
-		$files = glob(rtrim($directory, '/') . '/*');
+		$files = glob(rtrim($directory, '/') . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
 		
 		if ($files) {
+			$total = count($files);
+			
+
+			
 			foreach ($files as $file) {
 				if (is_file($file)) {
 					$ext = strrchr($file, '.');
@@ -138,6 +148,14 @@ class ControllerCommonFileManager extends Controller {
 				}
 			}
 		}
+		
+		$pagination = new Pagination();
+		$pagination->total = $attribute_total;
+		$pagination->page = $page;
+		$pagination->limit = $this->config->get('config_admin_limit');
+		$pagination->url = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
+			
+		$json['pagination'] = $pagination->render();
 		
 		$this->response->setOutput(json_encode($json));	
 	}	

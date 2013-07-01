@@ -12,15 +12,15 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-language" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-language" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-name"><span class="required">*</span> <?php echo $entry_name; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
           <div class="controls">
             <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
             <?php if ($error_name) { ?>
@@ -28,8 +28,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-code"><?php echo $entry_code; ?></label>
           <div class="controls">
             <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
             <?php if ($error_code) { ?>
@@ -37,8 +37,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-locale"><span class="required">*</span> <?php echo $entry_locale; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-locale"><?php echo $entry_locale; ?></label>
           <div class="controls">
             <input type="text" name="locale" value="<?php echo $locale; ?>" placeholder="<?php echo $entry_locale; ?>" id="input-locale" />
             <?php if ($error_locale) { ?>
@@ -46,8 +46,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-image"><span class="required">*</span> <?php echo $entry_image; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-image"><?php echo $entry_image; ?></label>
           <div class="controls">
             <input type="text" name="image" value="<?php echo $image; ?>" placeholder="<?php echo $entry_image; ?>" id="input-image" />
             <?php if ($error_image) { ?>
@@ -55,8 +55,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-directory"><span class="required">*</span> <?php echo $entry_directory; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-directory"><?php echo $entry_directory; ?></label>
           <div class="controls">
             <input type="text" name="directory" value="<?php echo $directory; ?>" placeholder="<?php echo $entry_directory; ?>" id="input-directory" />
             <?php if ($error_directory) { ?>
@@ -64,8 +64,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-filename"><span class="required">*</span> <?php echo $entry_filename; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-filename"><?php echo $entry_filename; ?></label>
           <div class="controls">
             <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" />
             <?php if ($error_filename) { ?>

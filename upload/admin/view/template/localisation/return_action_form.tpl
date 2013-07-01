@@ -12,15 +12,15 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-return-action" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-return-action" class="form-horizontal">
-        <div class="control-group">
-          <div class="control-label"><span class="required">*</span> <?php echo $entry_name; ?></div>
+        <div class="control-group required">
+          <div class="control-label"><?php echo $entry_name; ?></div>
           <div class="controls">
             <?php foreach ($languages as $language) { ?>
             <input type="text" name="return_action[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($return_action[$language['language_id']]) ? $return_action[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />

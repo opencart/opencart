@@ -5,64 +5,61 @@ class ControllerCommonDashboard extends Controller {
 	 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-    	$data['heading_title'] = $this->language->get('heading_title');
+    	$this->data['heading_title'] = $this->language->get('heading_title');
 		
-		$data['text_sale'] = $this->language->get('text_sale');
-		$data['text_order'] = $this->language->get('text_order');
-		$data['text_customer'] = $this->language->get('text_customer');
-		$data['text_online'] = $this->language->get('text_online');
-		$data['text_day'] = $this->language->get('text_day');
-		$data['text_week'] = $this->language->get('text_week');
-		$data['text_month'] = $this->language->get('text_month');
-		$data['text_year'] = $this->language->get('text_year');
+		$this->data['text_sale'] = $this->language->get('text_sale');
+		$this->data['text_order'] = $this->language->get('text_order');
+		$this->data['text_customer'] = $this->language->get('text_customer');
+		$this->data['text_marketing'] = $this->language->get('text_marketing');
+		$this->data['text_online'] = $this->language->get('text_online');
+		$this->data['text_day'] = $this->language->get('text_day');
+		$this->data['text_week'] = $this->language->get('text_week');
+		$this->data['text_month'] = $this->language->get('text_month');
+		$this->data['text_year'] = $this->language->get('text_year');
 		
 		// Check install directory exists
  		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
-			$data['error_install'] = $this->language->get('error_install');
+			$this->data['error_install'] = $this->language->get('error_install');
 		} else {
-			$data['error_install'] = '';
+			$this->data['error_install'] = '';
 		}
 										
-		$data['breadcrumbs'] = array();
+		$this->data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
+   		$this->data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-		$data['token'] = $this->session->data['token'];
-		
-		$this->load->model('sale/order');
+		$this->data['token'] = $this->session->data['token'];
 		
 		$this->load->model('report/dashboard');
 		
-		$this->load->model('sale/customer');
-						
-		/*		
 		// Total Sales
-		$data['total_sale'] = $this->currency->format($this->model_sale_order->getTotalSales(), $this->config->get('config_currency'));
-			
-		$data['sales'] = $this->model_report_dashboard->getTotalSalesByMonth(5);
+		
+		$total_sales = $this->model_report_dashboard->getTotalSales();
+		
+		$this->data['total_sale'] = $this->currency->format(, $this->config->get('config_currency'));
 		
 		// Total Orders
-		$data['total_order'] = $this->model_sale_order->getTotalOrders();
+		$this->load->model('sale/order');
 		
-		$data['orders'] = $this->model_report_dashboard->getTotalOrdersByMonth();
+		$this->data['total_order'] = $this->model_sale_order->getTotalOrders();
+				
+		// Customers
+		$this->load->model('sale/customer');
 		
-		// Cstomers
-		$data['total_customer'] = $this->model_sale_customer->getTotalCustomers();
+		$this->data['total_customer'] = $this->model_sale_customer->getTotalCustomers();
+
+		// Marketing
+		$this->load->model('marketing/marketing');
 		
-		$data['customers'] = $this->model_report_dashboard->getTotalCustomersByMonth();
-
-
-
+		$this->data['total_marketing'] = $this->model_marketing_marketing->getTotalMarketings();
 
 		// Number of people onlne
 		$this->load->model('report/online');
 
-		$data['total_online'] = $this->model_report_online->getTotalCustomersOnline();
-		
-		$data['online'] = $this->model_report_dashboard->getTotalPeopleOnline();
+		$this->data['total_online'] = $this->model_report_online->getTotalCustomersOnline();
 		
 		if ($this->config->get('config_currency_auto')) {
 			$this->load->model('localisation/currency');
@@ -70,15 +67,16 @@ class ControllerCommonDashboard extends Controller {
 			$this->model_localisation_currency->updateCurrencies();
 		}
 		
-		*/
-		
-		$data['header'] = $this->load->controller('common/header');
-		$data['footer'] = $this->load->controller('common/footer');
-		
-		$this->response->setOutput($this->load->view('common/dashboard.tpl', $data));
+		$this->template = 'common/dashboard.tpl';
+		$this->children = array(
+			'common/header',
+			'common/footer'
+		);
+				
+		$this->response->setOutput($this->render());
   	}
 	
-	public function statistics() {
+	public function sale() {
 		$this->language->load('common/dashboard');
 		
 		$json = array();
@@ -95,10 +93,11 @@ class ControllerCommonDashboard extends Controller {
 		if (isset($this->request->get['range'])) {
 			$range = $this->request->get['range'];
 		} else {
-			$range = 'month';
+			$range = 'day';
 		}
 		
 		switch ($range) {
+			default:
 			case 'day':
 				$results = $this->model_report_dashboard->getTotalOrdersByDay();
 				
@@ -112,10 +111,9 @@ class ControllerCommonDashboard extends Controller {
 					$json['customer']['data'][] = array($key, $value['total']);
 				}
 				
-				foreach ($results as $key => $value) {
-					$json['xaxis'][] = array($key, $value['hour']);
-				}				
-				
+				for ($i = 0; $i < 24; $i++) {
+					$json['xaxis'][] = array($i, $i);
+				}					
 				break;
 			case 'week':
 				$results = $this->model_report_dashboard->getTotalOrdersByWeek();
@@ -128,13 +126,16 @@ class ControllerCommonDashboard extends Controller {
 				
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = array($key, $value['total']);
-				}	
+				}
+					
+				$date_start = strtotime('-' . date('w') . ' days'); 
 				
-				foreach ($results as $key => $value) {
-					$json['xaxis'][] = array($key, $value['day']);
-				}							
+				for ($i = 0; $i < 7; $i++) {
+					$date = date('Y-m-d', $date_start + ($i * 86400));
+					
+					$json['xaxis'][] = array(date('w', strtotime($date)), date('D', strtotime($date)));
+				}				
 				break;
-			default:
 			case 'month':
 				$results = $this->model_report_dashboard->getTotalOrdersByMonth();
 				
@@ -148,8 +149,10 @@ class ControllerCommonDashboard extends Controller {
 					$json['customer']['data'][] = array($key, $value['total']);
 				}	
 				
-				foreach ($results as $key => $value) {
-					$json['xaxis'][] = array($key, $value['day']);
+				for ($i = 1; $i <= date('t'); $i++) {
+					$date = date('Y') . '-' . date('m') . '-' . $i;
+					
+					$json['xaxis'][] = array(date('j', strtotime($date)), date('d', strtotime($date)));
 				}					
 				break;
 			case 'year':
@@ -164,28 +167,102 @@ class ControllerCommonDashboard extends Controller {
 				foreach ($results as $key => $value) {
 					$json['customer']['data'][] = array($key, $value['total']);
 				}	
-
-				foreach ($results as $key => $value) {
-					$json['xaxis'][] = array($key, $value['month']);
-				}						
+				
+				for ($i = 1; $i <= 12; $i++) {
+					$json['xaxis'][] = array($i, date('M', mktime(0, 0, 0, $i)));
+				}				
 				break;	
 		} 
 		
 		$this->response->setOutput(json_encode($json));
 	}
 	
-	public function online() {
+	public function marketing() {
+		$this->language->load('common/dashboard');
+		
 		$json = array();
 		
 		$this->load->model('report/dashboard');
+		
+		$json['click'] = array();
+		$json['sale'] = array();
+		$json['xaxis'] = array();
+		
+		$json['click']['label'] = $this->language->get('text_click');
+		$json['sale']['label'] = $this->language->get('text_sale');
+		
+		if (isset($this->request->get['range'])) {
+			$range = $this->request->get['range'];
+		} else {
+			$range = 'day';
+		}
+		
+		switch ($range) {
+			default:
+			case 'day':
+				$results = $this->model_report_dashboard->getTotalMarketingsByDay();
 				
+				foreach ($results as $key => $value) {
+					$json['click']['data'][] = array($key, $value['click']);
+					$json['sale']['data'][] = array($key, $value['sale']);
+					$json['xaxis'][] = array($key, $value['hour']);
+				}
+				break;
+			case 'week':
+				$results = $this->model_report_dashboard->getTotalMarketingsByWeek();
+				
+				foreach ($results as $key => $value) {
+					$json['click']['data'][] = array($key, $value['click']);
+					$json['sale']['data'][] = array($key, $value['sale']);				
+					$json['xaxis'][] = array($key, $value['day']);
+				}
+				break;
+			case 'month':
+				$results = $this->model_report_dashboard->getTotalMarketingsByMonth();
+				
+				foreach ($results as $key => $value) {
+					$json['click']['data'][] = array($key, $value['click']);
+					$json['sale']['data'][] = array($key, $value['sale']);						
+					$json['xaxis'][] = array($key, $value['day']);
+				}
+				break;
+			case 'year':
+				$results = $this->model_report_dashboard->getTotalMarketingsByYear();
+				
+				foreach ($results as $key => $value) {
+					$json['click']['data'][] = array($key, $value['click']);
+					$json['sale']['data'][] = array($key, $value['sale']);						
+					$json['xaxis'][] = array($key, $value['month']);
+				}
+				break;	
+		} 
+						
+		$this->response->setOutput(json_encode($json));
+	}
+	
+	public function online() {
+		$this->language->load('common/dashboard');
+		
+		$json = array();
+		
+		$this->load->model('report/dashboard');
+		
 		$json['online'] = array();
+		$json['xaxis'] = array();
+		
+		$json['online']['label'] = $this->language->get('text_online');
 		
 		$results = $this->model_report_dashboard->getTotalCustomersOnline();
-				
-		foreach ($results as $key => $value) {
-			$json['online']['data'][] = array($key, $value['total']);
-		}		
+		
+		foreach ($results as $result) {
+			$json['online']['data'][] = array($result['time'], $result['total']);
+		}	
+		
+		for ($i = strtotime('-1 hour'); $i < time(); $i = ($i + 300)) {
+			$time = (round($i / 300) * 300);
+			
+			$json['xaxis'][] = array($time, date('H:i', $time));
+		}	
 						
 		$this->response->setOutput(json_encode($json));
 	}

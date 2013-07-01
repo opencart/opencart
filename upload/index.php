@@ -85,9 +85,11 @@ $log = new Log($config->get('config_error_filename'));
 $registry->set('log', $log);
 
 // Error Handler
-set_error_handler(function($number, $string, $file, $line) {
-	throw new ErrorException($string, $number, 0, $file, $line);
-});
+function error_handler($number, $string, $file, $line) {
+    throw new ErrorException($string, $number, 0, $file, $line);
+}
+
+set_error_handler('error_handler');
 
 // Request
 $request = new Request();
@@ -171,6 +173,8 @@ $registry->set('affiliate', new Affiliate($registry));
 
 if (isset($request->get['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
+	
+	$db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicked = (clicked + 1) WHERE code = '" . $db->escape($request->get['tracking']) . "'");
 }
 		
 // Currency

@@ -12,15 +12,15 @@
   <?php } ?>
   <div class="box">
     <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-ups" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ups" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-key"><span class="required">*</span> <?php echo $entry_key; ?> <span class="help-block"><?php echo $help_key; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-key"><?php echo $entry_key; ?> <span class="help-block"><?php echo $help_key; ?></span></label>
           <div class="controls">
             <input type="text" name="ups_key" value="<?php echo $ups_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" />
             <?php if ($error_key) { ?>
@@ -28,8 +28,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-username"><span class="required">*</span> <?php echo $entry_username; ?> <span class="help-block"><?php echo $help_username; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-username"><?php echo $entry_username; ?> <span class="help-block"><?php echo $help_username; ?></span></label>
           <div class="controls">
             <input type="text" name="ups_username" value="<?php echo $ups_username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
             <?php if ($error_username) { ?>
@@ -37,8 +37,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-password"><span class="required">*</span> <?php echo $entry_password; ?> <span class="help-block"><?php echo $help_password; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-password"><?php echo $entry_password; ?> <span class="help-block"><?php echo $help_password; ?></span></label>
           <div class="controls">
             <input type="text" name="ups_password" value="<?php echo $ups_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <?php if ($error_password) { ?>
@@ -102,8 +102,8 @@
             </select>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-city"><span class="required">*</span> <?php echo $entry_city; ?> <?php echo $help_city; ?></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-city"><?php echo $entry_city; ?> <?php echo $help_city; ?></label>
           <div class="controls">
             <input type="text" name="ups_city" value="<?php echo $ups_city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
             <?php if ($error_city) { ?>
@@ -111,8 +111,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-state"><span class="required">*</span> <?php echo $entry_state; ?> <span class="help-block"><?php echo $help_state; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-state"><?php echo $entry_state; ?> <span class="help-block"><?php echo $help_state; ?></span></label>
           <div class="controls">
             <input type="text" name="ups_state" value="<?php echo $ups_state; ?>" placeholder="<?php echo $entry_state; ?>" id="input-state" maxlength="2" id="input-state" class="input-mini" />
             <?php if ($error_state) { ?>
@@ -120,8 +120,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-country"><span class="required">*</span> <?php echo $entry_country; ?> <span class="help-block"><?php echo $help_country; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-country"><?php echo $entry_country; ?> <span class="help-block"><?php echo $help_country; ?></span></label>
           <div class="controls">
             <input type="text" name="ups_country" value="<?php echo $ups_country; ?>" placeholder="<?php echo $entry_country; ?>" id="input-country" maxlength="2" class="input-mini" />
             <?php if ($error_country) { ?>
@@ -706,8 +706,8 @@
             </select>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-length"><span class="required">*</span> <?php echo $entry_dimension; ?> <span class="help-block"><?php echo $help_dimension; ?></span></label>
+        <div class="control-group required">
+          <label class="control-label" for="input-length"><?php echo $entry_dimension; ?> <span class="help-block"><?php echo $help_dimension; ?></span></label>
           <div class="controls">
             <input type="text" name="ups_length" value="<?php echo $ups_length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="input-mini" />
             <input type="text" name="ups_width" value="<?php echo $ups_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="input-mini" />

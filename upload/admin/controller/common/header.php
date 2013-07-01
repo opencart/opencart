@@ -109,10 +109,12 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_zone'] = $this->language->get('text_zone');
 		
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token'])) {
-			$this->data['home'] = $this->url->link('common/dashboard', '', 'SSL');
-			
 			$this->data['logged'] = false;
+			
+			$this->data['home'] = $this->url->link('common/dashboard', '', 'SSL');
 		} else {
+			$this->data['logged'] = $this->user->isLogged();
+			
 			$this->data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['attribute'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], 'SSL');
@@ -121,7 +123,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['banner'] = $this->url->link('design/banner', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['category'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['country'] = $this->url->link('localisation/country', 'token=' . $this->session->data['token'], 'SSL');
-			$this->data['contact'] = $this->url->link('sale/contact', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['contact'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['coupon'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['currency'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['customer'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'], 'SSL');
@@ -182,27 +184,15 @@ class ControllerCommonHeader extends Controller {
 			$this->data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
 			
-			$this->load->model('user/user');
+			// Get total number of customers online
+			$this->load->model('report/online');
+			 
+			$this->data['online'] = $this->model_report_online->getTotalCustomersOnline();
+						
+			// Get total number of stores online
+			$this->load->model('setting/store');
 			
-			$this->load->model('tool/image');
-			
-			$user_info = $this->model_user_user->getUser($this->user->getId());
-			
-			if ($user_info) {
-				$this->data['profile_name'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
-				$this->data['profile_image'] = $user_info['image'];
-				
-				if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
-					$this->data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 25, 25);
-				} else {
-					$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 25, 25);
-				}
-			} else {
-				$this->data['profile_name'] = '';
-				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 25, 25);
-			}
-			
-			$this->data['logged'] = $this->user->isLogged();
+			$results = $this->model_setting_store->getStores();
 
 			$this->data['store_name'] = $this->config->get('config_name');
 
@@ -220,9 +210,29 @@ class ControllerCommonHeader extends Controller {
 			}
 		}
 		
+		$this->load->model('user/user');
+		
+		$this->load->model('tool/image');
+		
+		$user_info = $this->model_user_user->getUser($this->user->getId());
+		
+		if ($user_info) {
+			$this->data['profile_name'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
+			$this->data['profile_image'] = $user_info['image'];
+			
+			if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
+				$this->data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 25, 25);
+			} else {
+				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 25, 25);
+			}
+		} else {
+			$this->data['profile_name'] = '';
+			$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 25, 25);
+		}
+					
 		$this->template = 'common/header.tpl';
 		
-		return $this->render();
+		$this->render();
 	}
 }
 ?>

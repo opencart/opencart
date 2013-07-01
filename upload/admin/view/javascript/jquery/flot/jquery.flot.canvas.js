@@ -79,12 +79,9 @@ browser, but needs to redraw with canvas text when exporting as an image.
 							for (var key in styleCache) {
 								if (hasOwnProperty.call(styleCache, key)) {
 
-									var info = styleCache[key];
-
-									if (!info.active) {
-										delete styleCache[key];
-										continue;
-									}
+									var info = styleCache[key],
+										positions = info.positions,
+										lines = info.lines;
 
 									// Since every element at this level of the cache have the
 									// same font and fill styles, we can just change them once
@@ -96,10 +93,18 @@ browser, but needs to redraw with canvas text when exporting as an image.
 										updateStyles = false;
 									}
 
-									var lines = info.lines;
-									for (var i = 0; i < lines.length; ++i) {
-										var line = lines[i];
-										context.fillText(line.text, line.x, line.y);
+									for (var i = 0, position; position = positions[i]; i++) {
+										if (position.active) {
+											for (var j = 0, line; line = position.lines[j]; j++) {
+												context.fillText(lines[j].text, line[0], line[1]);
+											}
+										} else {
+											positions.splice(i--, 1);
+										}
+									}
+
+									if (positions.length == 0) {
+										delete styleCache[key];
 									}
 								}
 							}
@@ -116,11 +121,9 @@ browser, but needs to redraw with canvas text when exporting as an image.
 		// When the canvas option is set, the object looks like this:
 		//
 		// {
-		//     x: X coordinate at which the text is located.
-		//     x: Y coordinate at which the text is located.
 		//     width: Width of the text's bounding box.
 		//     height: Height of the text's bounding box.
-		//     active: Flag indicating whether the text should be visible.
+		//     positions: Array of positions at which this text is drawn.
 		//     lines: [{
 		//         height: Height of this line.
 		//         widths: Width of this line.
@@ -131,11 +134,20 @@ browser, but needs to redraw with canvas text when exporting as an image.
 		//         color: Color of the text.
 		//     },
 		// }
+		//
+		// The positions array contains objects that look like this:
+		//
+		// {
+		//     active: Flag indicating whether the text should be visible.
+		//     lines: Array of [x, y] coordinates at which to draw the line.
+		//     x: X coordinate at which to draw the text.
+		//     y: Y coordinate at which to draw the text.
+		// }
 
-		Canvas.prototype.getTextInfo = function(layer, text, font, angle) {
+		Canvas.prototype.getTextInfo = function(layer, text, font, angle, width) {
 
 			if (!plot.getOptions().canvas) {
-				return getTextInfo.call(this, layer, text, font, angle);
+				return getTextInfo.call(this, layer, text, font, angle, width);
 			}
 
 			var textStyle, layerCache, styleCache, info;
@@ -210,7 +222,7 @@ browser, but needs to redraw with canvas text when exporting as an image.
 				info = styleCache[text] = {
 					width: 0,
 					height: 0,
-					active: false,
+					positions: [],
 					lines: [],
 					font: {
 						definition: textStyle,
@@ -251,18 +263,15 @@ browser, but needs to redraw with canvas text when exporting as an image.
 
 		// Adds a text string to the canvas text overlay.
 
-		Canvas.prototype.addText = function(layer, x, y, text, font, angle, halign, valign) {
+		Canvas.prototype.addText = function(layer, x, y, text, font, angle, width, halign, valign) {
 
 			if (!plot.getOptions().canvas) {
-				return addText.call(this, layer, x, y, text, font, angle, halign, valign);
+				return addText.call(this, layer, x, y, text, font, angle, width, halign, valign);
 			}
 
-			var info = this.getTextInfo(layer, text, font, angle),
+			var info = this.getTextInfo(layer, text, font, angle, width),
+				positions = info.positions,
 				lines = info.lines;
-
-			// Mark the text for inclusion in the next render pass
-
-			info.active = true;
 
 			// Text is drawn with baseline 'middle', which we need to account
 			// for by adding half a line's height to the y position.
@@ -289,20 +298,39 @@ browser, but needs to redraw with canvas text when exporting as an image.
 				y -= 2;
 			}
 
+			// Determine whether this text already exists at this position.
+			// If so, mark it for inclusion in the next render pass.
+
+			for (var i = 0, position; position = positions[i]; i++) {
+				if (position.x == x && position.y == y) {
+					position.active = true;
+					return;
+				}
+			}
+
+			// If the text doesn't exist at this position, create a new entry
+
+			position = {
+				active: true,
+				lines: [],
+				x: x,
+				y: y
+			};
+
+			positions.push(position);
+
 			// Fill in the x & y positions of each line, adjusting them
 			// individually for horizontal alignment.
 
-			for (var i = 0; i < lines.length; ++i) {
-				var line = lines[i];
-				line.y = y;
-				y += line.height;
+			for (var i = 0, line; line = lines[i]; i++) {
 				if (halign == "center") {
-					line.x = Math.round(x - line.width / 2);
+					position.lines.push([Math.round(x - line.width / 2), y]);
 				} else if (halign == "right") {
-					line.x = Math.round(x - line.width);
+					position.lines.push([Math.round(x - line.width), y]);
 				} else {
-					line.x = Math.round(x);
+					position.lines.push([Math.round(x), y]);
 				}
+				y += line.height;
 			}
 		};
 	}

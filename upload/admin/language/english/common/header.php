@@ -39,7 +39,6 @@ $_['text_contact']                     = 'Mail';
 $_['text_marketing']                   = 'Marketing';
 $_['text_modification']                = 'Modifications';
 $_['text_manufacturer']                = 'Manufacturers';
-$_['text_marketing']                   = 'Marketing';
 $_['text_module']                      = 'Modules';
 $_['text_option']                      = 'Options';
 $_['text_order']                       = 'Orders';

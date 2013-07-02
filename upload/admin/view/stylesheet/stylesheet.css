@@ -63,7 +63,7 @@ html, body {
 	margin-left: 5px;
 }
 #header .navbar-inner .nav > li > a.profile {
-	padding: 8px 0px 7px 17px;
+	padding: 8px 0px 7px 12px;
 }
 #header .navbar-inner .nav > li > a.profile img {
 	padding: 1px;
@@ -71,15 +71,15 @@ html, body {
 	border: 1px solid #006CBB;
 }
 #header .navbar-inner .nav > li > a.notification {
-	padding: 13px 7px 8px 7px;
+	padding: 13px 12px 8px 12px;
 }
 #header .navbar-inner .nav > li > a.notification i {
 	font-size: 20px;
 }
 #header .navbar-inner .nav > li > a.notification .badge {
-	position: relative;
-	top: -4px;
-	left: 6px;
+	position: absolute;
+	top: 10px;
+	left: 0px;
 	font-size: 8px;
 	line-height: 8px;
 	float: left;

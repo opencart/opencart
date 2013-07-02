@@ -5,9 +5,9 @@ $_['heading_title']        = 'Dashboard';
 // Text
 $_['text_sale']            = 'Sales';
 $_['text_order']           = 'Orders';
+$_['text_click']           = 'Clicks';
 $_['text_customer']        = 'Customers';
 $_['text_marketing']       = 'Marketing';
-$_['text_click']           = 'Clicks';
 $_['text_online']          = 'People Online';
 $_['text_day']             = 'Today';
 $_['text_week']            = 'Week';

@@ -42,11 +42,11 @@
             <ul class="dropdown-menu">
             </ul>
           </li>
-          <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="Store Front"><a href="<?php echo $report_customer_online; ?>" class="notification"><span class="badge badge-success"><?php echo $online; ?></span> <i class="icon-group"></i></a></li>
+          <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="<?php echo $text_report_customer_online; ?>"><a href="<?php echo $report_customer_online; ?>" class="notification"><span class="badge badge-success"><?php echo $online; ?></span> <i class="icon-group"></i></a></li>
           <li class="dropdown"></li>
-          <li class="dropdown">
+          <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="<?php echo $text_store; ?>">
             <?php if ($stores) { ?>
-            <a class="notification" data-toggle="dropdown"><span class="badge badge-info"><?php echo (count($stores) + 1); ?></span> <i class="icon-shopping-cart" data-toggle="tooltip" data-placement="bottom" title="Store Front"></i></a>
+            <a class="notification" data-toggle="dropdown"><span class="badge badge-info"><?php echo (count($stores) + 1); ?></span> <i class="icon-shopping-cart"></i></a>
             <ul class="dropdown-menu">
               <li><a href="<?php echo $store; ?>" target="_blank"><?php echo $store_name; ?></a></li>
               <?php foreach ($stores as $store) { ?>
@@ -54,10 +54,10 @@
               <?php } ?>
             </ul>
             <?php } else { ?>
-            <a href="<?php echo $store; ?>" target="_blank" class="notification"><span class="badge badge-info">1</span> <i class="icon-shopping-cart" data-toggle="tooltip" data-placement="bottom" title="Store Front"></i></a>
+            <a href="<?php echo $store; ?>" target="_blank" class="notification"><span class="badge badge-info">1</span> <i class="icon-shopping-cart"></i></a>
             <?php } ?>
           </li>
-          <li class="dropdown"><a class="profile" data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> <i class="icon-caret-down"></i></a>
+          <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="<?php echo $text_profile; ?>"><a class="profile" data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> <i class="icon-caret-down"></i></a>
             <ul class="dropdown-menu">
               <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
               <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
@@ -197,9 +197,10 @@
                     <li><a href="<?php echo $report_customer_credit; ?>"><?php echo $text_report_customer_credit; ?></a></li>
                   </ul>
                 </li>
-                <li class="dropdown-submenu"><a><?php echo $text_affiliate; ?></a>
+                <li class="dropdown-submenu"><a><?php echo $text_marketing; ?></a>
                   <ul class="dropdown-menu">
-                    <li><a href="<?php echo $report_affiliate_commission; ?>"><?php echo $text_report_affiliate_commission; ?></a></li>
+                    <li><a href="<?php echo $report_marketing; ?>"><?php echo $text_marketing; ?></a></li>
+                    <li><a href="<?php echo $report_affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
                   </ul>
                 </li>
               </ul>

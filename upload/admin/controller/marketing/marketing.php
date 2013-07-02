@@ -377,8 +377,10 @@ class ControllerMarketingMarketing extends Controller {
     	$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_description'] = $this->language->get('entry_description');
 		$this->data['entry_code'] = $this->language->get('entry_code');
-  		
+  		$this->data['entry_example'] = $this->language->get('entry_example');
+		
 		$this->data['help_code'] = $this->language->get('help_code');
+		$this->data['help_example'] = $this->language->get('help_example');
 
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
@@ -476,7 +478,9 @@ class ControllerMarketingMarketing extends Controller {
 		} else {
       		$this->data['code'] = uniqid();
     	}
-
+		
+		$this->data['catalog'] = HTTP_CATALOG;
+		
 		$this->template = 'marketing/marketing_form.tpl';
 		$this->children = array(
 			'common/header',

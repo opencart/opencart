@@ -21,7 +21,7 @@
             <div class="span6">
               <div class="stats">
                 <div><i class="icon-money"></i></div>
-                <div><span>+10%</span> <?php echo $total_sale; ?> </div>
+                <div><span>+<?php echo $sale_growth; ?>%</span> <?php echo $sale_total; ?></div>
               </div>
             </div>
             <div class="span6">
@@ -29,8 +29,8 @@
                 <div><i class="icon-shopping-cart"></i></div>
                 <div>
                   <h5><?php echo $text_order; ?></h5>
-                  <?php echo $total_order; ?><br />
-                  <span>+10%</span></div>
+                  <?php echo $order_total; ?><br />
+                  <span><?php echo $order_growth; ?></span></div>
               </div>
             </div>
           </div>
@@ -40,8 +40,8 @@
                 <div><i class="icon-user"></i></div>
                 <div>
                   <h5><?php echo $text_customer; ?></h5>
-                  <?php echo $total_customer; ?><br />
-                  <span>+10%</span></div>
+                  <?php echo $customer_total; ?><br />
+                  <span><?php echo $customer_growth; ?></span></div>
               </div>
             </div>
             <div class="span6">
@@ -49,7 +49,7 @@
                 <div><i class="icon-globe"></i></div>
                 <div>
                   <h5><?php echo $text_marketing; ?></h5>
-                  Clicks: <?php echo $total_marketing; ?> / Sales: 1<br />
+                  Clicks: <?php echo $marketing_total; ?> / Orders: 1<br />
                   <span>+10%</span></div>
               </div>
             </div>
@@ -57,11 +57,7 @@
         </div>
         <div class="span5">
           <h5>Recent Activity</h5>
-          <table>
-            <tr>
-              <td>hjgf</td>
-            </tr>
-          </table>
+
         </div>
       </div>
       <div class="row-fluid">
@@ -195,7 +191,7 @@ $('#button-marketing button').on('click', function() {
 				}
 			}		
 			
-			$.plot('#chart-marketing', [json['click'], json['sale']], option);
+			$.plot('#chart-marketing', [json['click'], json['order']], option);
 					
 			$('#chart-marketing').bind('plothover', function(event, pos, item) {
 				$('.tooltip').remove();

@@ -17,9 +17,11 @@ $_['column_action']     = 'Action';
 $_['entry_name']        = 'Campaign Name';
 $_['entry_description'] = 'Campaign Description';
 $_['entry_code']        = 'Tracking Code';
+$_['entry_example']     = 'Example';
 
 // Help
 $_['help_code']         = 'The tracking code that will be used to marketing track campaigns.';
+$_['help_example']      = 'So the system can track refferals you neeed to add the tracking code to the end of the URL linkiing to your site.';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify marketing tracking!';

@@ -36,25 +36,73 @@ class ControllerCommonDashboard extends Controller {
 		$this->load->model('report/dashboard');
 		
 		// Total Sales
+		$sale_total = $this->model_report_dashboard->getTotalSales();
 		
-		$total_sales = $this->model_report_dashboard->getTotalSales();
+		$this->data['sale_total'] = $this->currency->format($sale_total, $this->config->get('config_currency'));
+
+		$monthly_total = 0;
+
+		$results = $this->model_report_dashboard->getTotalSalesByMonth();
 		
-		$this->data['total_sale'] = $this->currency->format(, $this->config->get('config_currency'));
+		foreach ($results as $result) {
+			$monthly_total += $result['total'];
+		}
+		
+		$this->data['sale_growth'] = round(($monthly_total / $sale_total) * 100, 2);
 		
 		// Total Orders
 		$this->load->model('sale/order');
 		
-		$this->data['total_order'] = $this->model_sale_order->getTotalOrders();
+		$order_total = $this->model_sale_order->getTotalOrders();
+		
+		$this->data['order_total'] = $order_total;
+				
+		$monthly_total = 0;
+
+		$results = $this->model_report_dashboard->getTotalOrdersByMonth();
+		
+		foreach ($results as $result) {
+			$monthly_total += $result['total'];
+		}	
+					
+		$this->data['order_growth'] = round(($monthly_total / $order_total) * 100, 2);		
 				
 		// Customers
 		$this->load->model('sale/customer');
 		
-		$this->data['total_customer'] = $this->model_sale_customer->getTotalCustomers();
+		$customer_total = $this->model_sale_customer->getTotalCustomers();
+		
+		$this->data['customer_total'] = $customer_total;
+		
+		$monthly_total = 0;
 
+		$results = $this->model_report_dashboard->getTotalOrdersByMonth();
+		
+		foreach ($results as $result) {
+			$monthly_total += $result['total'];
+		}
+			
+		$this->data['customer_growth'] = round(($monthly_total / $customer_total) * 100, 2);		
+		
 		// Marketing
 		$this->load->model('marketing/marketing');
 		
-		$this->data['total_marketing'] = $this->model_marketing_marketing->getTotalMarketings();
+		$marketing_total = $this->model_marketing_marketing->getTotalMarketings();
+
+		$this->data['marketing_total'] = $marketing_total;
+
+		$monthly_total = 0;
+
+		$results = $this->model_report_dashboard->getTotalOrdersByMonth();
+		
+		foreach ($results as $result) {
+			$monthly_total += $result['total'];
+		}
+			
+		$this->data['marketing_growth'] = round(($monthly_total / $marketing_total) * 100, 2);
+
+
+
 
 		// Number of people onlne
 		$this->load->model('report/online');
@@ -185,11 +233,11 @@ class ControllerCommonDashboard extends Controller {
 		$this->load->model('report/dashboard');
 		
 		$json['click'] = array();
-		$json['sale'] = array();
+		$json['order'] = array();
 		$json['xaxis'] = array();
 		
 		$json['click']['label'] = $this->language->get('text_click');
-		$json['sale']['label'] = $this->language->get('text_sale');
+		$json['order']['label'] = $this->language->get('text_order');
 		
 		if (isset($this->request->get['range'])) {
 			$range = $this->request->get['range'];
@@ -204,7 +252,7 @@ class ControllerCommonDashboard extends Controller {
 				
 				foreach ($results as $key => $value) {
 					$json['click']['data'][] = array($key, $value['click']);
-					$json['sale']['data'][] = array($key, $value['sale']);
+					$json['order']['data'][] = array($key, $value['order']);
 					$json['xaxis'][] = array($key, $value['hour']);
 				}
 				break;
@@ -213,7 +261,7 @@ class ControllerCommonDashboard extends Controller {
 				
 				foreach ($results as $key => $value) {
 					$json['click']['data'][] = array($key, $value['click']);
-					$json['sale']['data'][] = array($key, $value['sale']);				
+					$json['order']['data'][] = array($key, $value['order']);				
 					$json['xaxis'][] = array($key, $value['day']);
 				}
 				break;
@@ -222,7 +270,7 @@ class ControllerCommonDashboard extends Controller {
 				
 				foreach ($results as $key => $value) {
 					$json['click']['data'][] = array($key, $value['click']);
-					$json['sale']['data'][] = array($key, $value['sale']);						
+					$json['order']['data'][] = array($key, $value['order']);						
 					$json['xaxis'][] = array($key, $value['day']);
 				}
 				break;
@@ -231,7 +279,7 @@ class ControllerCommonDashboard extends Controller {
 				
 				foreach ($results as $key => $value) {
 					$json['click']['data'][] = array($key, $value['click']);
-					$json['sale']['data'][] = array($key, $value['sale']);						
+					$json['order']['data'][] = array($key, $value['order']);						
 					$json['xaxis'][] = array($key, $value['month']);
 				}
 				break;	

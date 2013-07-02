@@ -43,8 +43,21 @@
             <?php } ?>
           </div>
         </div>
+        <div class="control-group required">
+          <label class="control-label" for="input-example"><?php echo $entry_example; ?> <span class="help-block"><?php echo $help_example; ?></span></label>
+          <div class="controls">
+            <textarea cols="40" rows="5" id="input-example">http://www.opencart.com?tracking=1234567</textarea>
+          </div>
+        </div>        
       </form>
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#input-code').on('keydown', function() {
+	$('#input-example').val();
+});
+
+$('#input-code').trigger('keydown');
+//--></script>
 <?php echo $footer; ?>

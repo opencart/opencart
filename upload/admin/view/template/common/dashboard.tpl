@@ -16,11 +16,11 @@
     </div>
     <div class="box-content">
       <div class="row-fluid">
-        <div class="span7">
+        <div class="span6">
           <div class="row-fluid">
             <div class="span6">
               <div class="stats">
-                <div><i class="icon-money"></i></div>
+                <div><span class="badge badge-success"><i class="icon-usd"></i></span></div>
                 <div><span><?php echo $sale_growth; ?> </span> <?php echo $sale_total; ?></div>
               </div>
             </div>
@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <div class="span5">
+        <div class="span6">
           <h5>Recent Activity</h5>
 
         </div>

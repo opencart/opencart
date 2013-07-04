@@ -48,7 +48,13 @@ class ControllerCommonDashboard extends Controller {
 			$monthly_total += $result['total'];
 		}
 		
-		$this->data['sale_growth'] = round(($monthly_total / $sale_total) * 100, 2) . '%';
+		if ($monthly_total) {
+			$growth = round(($monthly_total / $sale_total) * 100, 2);
+		} else {
+			$growth = 0;
+		}
+				
+		$this->data['sale_growth'] = $growth . '%';
 		
 		// Total Orders
 		$this->load->model('sale/order');
@@ -63,9 +69,15 @@ class ControllerCommonDashboard extends Controller {
 		
 		foreach ($results as $result) {
 			$monthly_total += $result['total'];
-		}	
-					
-		$this->data['order_growth'] = round(($monthly_total / $order_total) * 100, 2) . '%';		
+		}
+			
+		if ($monthly_total) {
+			$growth = round(($monthly_total / $order_total) * 100, 2);
+		} else {
+			$growth = 0;
+		}
+							
+		$this->data['order_growth'] = $growth . '%';		
 				
 		// Customers
 		$this->load->model('sale/customer');
@@ -81,8 +93,14 @@ class ControllerCommonDashboard extends Controller {
 		foreach ($results as $result) {
 			$monthly_total += $result['total'];
 		}
+		
+		if ($monthly_total) {
+			$growth = round(($monthly_total / $customer_total) * 100, 2);
+		} else {
+			$growth = 0;
+		}
 			
-		$this->data['customer_growth'] = round(($monthly_total / $customer_total) * 100, 2) . '%';		
+		$this->data['customer_growth'] = $growth . '%';		
 		
 		// Marketing
 		$this->load->model('marketing/marketing');
@@ -98,22 +116,14 @@ class ControllerCommonDashboard extends Controller {
 		foreach ($results as $result) {
 			$monthly_total += $result['total'];
 		}
-			
-		$this->data['marketing_growth'] = round(($monthly_total / $marketing_total) * 100, 2) . '%';
-
-
-
-
-		// Number of people onlne
-		$this->load->model('report/online');
-
-		$this->data['total_online'] = $this->model_report_online->getTotalCustomersOnline();
 		
-		if ($this->config->get('config_currency_auto')) {
-			$this->load->model('localisation/currency');
+		if ($monthly_total) {
+			$growth = round(($monthly_total / $marketing_total) * 100, 2);
+		} else {
+			$growth = 0;
+		}			
 		
-			$this->model_localisation_currency->updateCurrencies();
-		}
+		$this->data['marketing_growth'] = $growth . '%';
 		
 		$this->template = 'common/dashboard.tpl';
 		$this->children = array(

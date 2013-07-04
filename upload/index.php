@@ -168,14 +168,15 @@ $registry->set('document', new Document());
 // Customer
 $registry->set('customer', new Customer($registry));
 
-// Affiliate
-$registry->set('affiliate', new Affiliate($registry));
-
+// Tracking Code
 if (isset($request->get['tracking'])) {
 	setcookie('tracking', $request->get['tracking'], time() + 3600 * 24 * 1000, '/');
 	
-	$db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicked = (clicked + 1) WHERE code = '" . $db->escape($request->get['tracking']) . "'");
+	$db->query("UPDATE `" . DB_PREFIX . "marketing` SET clicks = (clicks + 1) WHERE code = '" . $db->escape($request->get['tracking']) . "'");
 }
+
+// Affiliate
+$registry->set('affiliate', new Affiliate($registry));
 		
 // Currency
 $registry->set('currency', new Currency($registry));

@@ -19,7 +19,7 @@ class ModelMarketingMarketing extends Model {
 	}
 	
 	public function getMarketings($data = array()) {
-		$sql = "SELECT *, (SELECT COUNT(*) FROM `" . DB_PREFIX . "order` o WHERE o.tracking = m.code) AS sale FROM " . DB_PREFIX . "marketing m";
+		$sql = "SELECT *, (SELECT COUNT(*) FROM `" . DB_PREFIX . "order` o WHERE o.marketing_id = m.marketing_id) AS orders FROM " . DB_PREFIX . "marketing m";
 
 		$implode = array();
 		

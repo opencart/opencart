@@ -19,16 +19,15 @@
                 <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" class="input-medium" id="input-date-start" />
               </div>
             </div>
-            
-            
             <div class="span3">
-            <div class="control-group">
-              <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-              <div class="controls">
-                <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="input-medium" />
+              <div class="control-group">
+                <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+                <div class="controls">
+                  <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="input-medium" />
+                </div>
               </div>
             </div>
-          </div></div>
+          </div>
           <div class="span3">
             <div class="control-group">
               <label class="control-label" for="input-group"><?php echo $entry_group; ?></label>

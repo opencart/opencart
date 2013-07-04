@@ -38,8 +38,8 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
                 <?php } ?></td>
-              <td class="right"><?php echo $column_clicked; ?></td>
-              <td class="right"><?php echo $column_sale; ?></td>
+              <td class="right"><?php echo $column_clicks; ?></td>
+              <td class="right"><?php echo $column_orders; ?></td>
               <td class="left"><?php if ($sort == 'm.date_added') { ?>
                 <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
                 <?php } else { ?>
@@ -68,8 +68,8 @@
                 <?php } ?></td>
               <td class="left"><?php echo $marketing['name']; ?></td>
               <td class="left"><?php echo $marketing['code']; ?></td>
-              <td class="right"><?php echo $marketing['clicked']; ?></td>
-              <td class="right"><?php echo $marketing['sale']; ?></td>
+              <td class="right"><?php echo $marketing['clicks']; ?></td>
+              <td class="right"><?php echo $marketing['orders']; ?></td>
               <td class="left"><?php echo $marketing['date_added']; ?></td>
               <td class="right"><?php foreach ($marketing['action'] as $action) { ?>
                 [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]

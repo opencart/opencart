@@ -3,21 +3,17 @@
 $_['heading_title']    = 'Marketing Report';
 
 // Text
-$_['text_year']        = 'Years';
-$_['text_month']       = 'Months';
-$_['text_week']        = 'Weeks';
-$_['text_day']         = 'Days';
+$_['text_all_status']   = 'All Statuses';
 
 // Column
-$_['column_name']      = 'Campaign Name';
+$_['column_campaign']  = 'Campaign Name';
 $_['column_code']      = 'Code';
-$_['column_click']     = 'Clicks';
-$_['column_order']     = 'No. Orders';
+$_['column_clicks']    = 'Clicks';
+$_['column_orders']    = 'No. Orders';
 $_['column_total']     = 'Total';
 
 // Entry
 $_['entry_date_start'] = 'Date Start';
 $_['entry_date_end']   = 'Date End';
-$_['entry_group']      = 'Group By';
 $_['entry_status']     = 'Order Status';
 ?>

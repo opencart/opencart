@@ -251,10 +251,12 @@ class ControllerCheckoutConfirm extends Controller {
 			if (isset($this->request->cookie['tracking'])) {
 				$data['tracking'] = $this->request->cookie['tracking'];
 				
+				$subtotal = $this->cart->getSubTotal();
+				
+				// Affiliate
 				$this->load->model('affiliate/affiliate');
 				
 				$affiliate_info = $this->model_affiliate_affiliate->getAffiliateByCode($this->request->cookie['tracking']);
-				$subtotal = $this->cart->getSubTotal();
 				
 				if ($affiliate_info) {
 					$data['affiliate_id'] = $affiliate_info['affiliate_id']; 
@@ -263,9 +265,21 @@ class ControllerCheckoutConfirm extends Controller {
 					$data['affiliate_id'] = 0;
 					$data['commission'] = 0;
 				}
+				
+				// Marketing
+				$this->load->model('checkout/marketing');
+				
+				$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);				
+				
+				if ($marketing_info) {
+					$data['marketing_id'] = $amarketing_info['marketinge_id']; 
+				} else {
+					$data['marketing_id'] = 0;
+				}				
 			} else {
 				$data['affiliate_id'] = 0;
 				$data['commission'] = 0;
+				$data['marketing_id'] = 0;
 				$data['tracking'] = '';
 			}
 			

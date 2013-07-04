@@ -127,16 +127,15 @@ body > #container {
 	margin: 0px;
 	padding: 0px;
 	color: #666666;
-	font-size: 19px;
+	font-size: 18px;
 	font-weight: normal;
-	text-shadow: 1px 1px 0px #FFFFFF;
 	line-height: 42px;
 	padding-top: 0px;
 	display: inline-block;
 }
 .box-heading h1 i {
-	color: #909090;
-	margin-right: 3px;
+	color: #007EC8;
+	margin-right: 5px;
 }
 .box-heading .buttons {
 	padding-top: 6px;

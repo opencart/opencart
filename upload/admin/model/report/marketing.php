@@ -1,45 +1,39 @@
 <?php
 class ModelReportMarketing extends Model {
 	public function getMarketing($data = array()) {
-		$sql = "SELECT marketing_id, MIN(o.date_added) AS date_start, MAX(o.date_added) AS date_end, COUNT(*) AS `orders`, (SELECT SUM(op.quantity) FROM `" . DB_PREFIX . "order_product` op WHERE op.order_id = o.order_id GROUP BY op.order_id) AS products, (SELECT SUM(ot.value) FROM `" . DB_PREFIX . "order_total` ot WHERE ot.order_id = o.order_id AND ot.code = 'tax' GROUP BY ot.order_id) AS tax, SUM(o.total) AS `total` FROM `" . DB_PREFIX . "order` o"; 
-
+		$sql = "SELECT m.marketing_id, m.name AS campaign, m.code, SUM(m.clicks) AS clicks, (SELECT COUNT(DISTINCT order_id) FROM `" . DB_PREFIX . "order` o1 WHERE o1.marketing_id = m.marketing_id";
+		
 		if (!empty($data['filter_order_status_id'])) {
-			$sql .= " WHERE o.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
+			$sql .= " AND o1.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
-			$sql .= " WHERE o.order_status_id > '0'";
+			$sql .= " AND o1.order_status_id > '0'";
 		}
 		
 		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(o.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$sql .= " AND DATE(o1.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(o.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
-		}
+			$sql .= " AND DATE(o1.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}	
 		
-		if (!empty($data['filter_group'])) {
-			$group = $data['filter_group'];
+		$sql .= ") AS `orders`, (SELECT SUM(total) FROM `" . DB_PREFIX . "order` o2 WHERE o2.marketing_id = m.marketing_id";
+	
+		if (!empty($data['filter_order_status_id'])) {
+			$sql .= " AND o2.order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
 		} else {
-			$group = 'week';
+			$sql .= " AND o2.order_status_id > '0'";
 		}
 		
-		switch($group) {
-			case 'day';
-				$sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added), DAY(o.date_added)";
-				break;
-			default:
-			case 'week':
-				$sql .= " GROUP BY YEAR(o.date_added), WEEK(o.date_added)";
-				break;	
-			case 'month':
-				$sql .= " GROUP BY YEAR(o.date_added), MONTH(o.date_added)";
-				break;
-			case 'year':
-				$sql .= " GROUP BY YEAR(o.date_added)";
-				break;									
+		if (!empty($data['filter_date_start'])) {
+			$sql .= " AND DATE(o2.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
+
+		if (!empty($data['filter_date_end'])) {
+			$sql .= " AND DATE(o2.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}	
 		
-		$sql .= " ORDER BY o.date_added DESC";
+		$sql .= " GROUP BY o2.marketing_id) AS `total` FROM `" . DB_PREFIX . "marketing` m ORDER BY m.date_added ASC";
 		
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
@@ -58,44 +52,8 @@ class ModelReportMarketing extends Model {
 		return $query->rows;
 	}	
 	
-	public function getTotalMarketing($data = array()) {
-		if (!empty($data['filter_group'])) {
-			$group = $data['filter_group'];
-		} else {
-			$group = 'week';
-		}
-		
-		switch($group) {
-			case 'day';
-				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), MONTH(date_added), DAY(date_added)) AS total FROM `" . DB_PREFIX . "order`";
-				break;
-			default:
-			case 'week':
-				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), WEEK(date_added)) AS total FROM `" . DB_PREFIX . "order`";
-				break;	
-			case 'month':
-				$sql = "SELECT COUNT(DISTINCT YEAR(date_added), MONTH(date_added)) AS total FROM `" . DB_PREFIX . "order`";
-				break;
-			case 'year':
-				$sql = "SELECT COUNT(DISTINCT YEAR(date_added)) AS total FROM `" . DB_PREFIX . "order`";
-				break;									
-		}
-		
-		if (!empty($data['filter_order_status_id'])) {
-			$sql .= " WHERE order_status_id = '" . (int)$data['filter_order_status_id'] . "'";
-		} else {
-			$sql .= " WHERE order_status_id > '0'";
-		}
-				
-		if (!empty($data['filter_date_start'])) {
-			$sql .= " AND DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
-		}
-
-		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
-		}
-
-		$query = $this->db->query($sql);
+	public function getTotalMarketing($data = array()) {		
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "marketing`");
 
 		return $query->row['total'];	
 	}

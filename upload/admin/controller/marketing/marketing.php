@@ -109,7 +109,7 @@ class ControllerMarketingMarketing extends Controller {
 			
     	if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $marketing_id) {
-				$this->model_marketing_marketing->deleteAffiliate($marketing_id);
+				$this->model_marketing_marketing->deleteMarketing($marketing_id);
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_success');

@@ -272,7 +272,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$marketing_info = $this->model_checkout_marketing->getMarketingByCode($this->request->cookie['tracking']);				
 				
 				if ($marketing_info) {
-					$data['marketing_id'] = $amarketing_info['marketinge_id']; 
+					$data['marketing_id'] = $marketing_info['marketing_id']; 
 				} else {
 					$data['marketing_id'] = 0;
 				}				

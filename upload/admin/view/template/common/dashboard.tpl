@@ -41,7 +41,7 @@
                 <div>
                   <h5><?php echo $text_customers; ?></h5>
                   <?php echo $customer_total; ?><br />
-                  <span><?php echo $customer_growth; ?></span></div>
+                  <span><?php echo $customer_growth; ?>%</span></div>
               </div>
             </div>
             <div class="span6">
@@ -57,24 +57,21 @@
         </div>
         <div class="span6">
           <h5><?php echo $text_activity; ?></h5>
-
-      <table class="table table-striped table-bordered table-hover">
-        <tbody>
-          <?php if ($activities) { ?>
-          <?php foreach ($activities as $activity) { ?>
-          <tr>
-            <td class="left"><?php echo $activity['action']; ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td class="center"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
-
-
+          <table class="table table-striped table-bordered table-hover">
+            <tbody>
+              <?php if ($activities) { ?>
+              <?php foreach ($activities as $activity) { ?>
+              <tr>
+                <td class="left"><?php echo $activity['action']; ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="center"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
         </div>
       </div>
       <div class="row-fluid">

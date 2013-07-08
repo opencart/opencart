@@ -45,7 +45,7 @@
               <td class="left"><?php echo $category['name']; ?></td>
               <td class="right"><?php echo $category['sort_order']; ?></td>
               <td class="right"><?php foreach ($category['action'] as $action) { ?>
-                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>"><i class="icon-pencil icon-large"></i></a>
                 <?php } ?></td>
             </tr>
             <?php } ?>

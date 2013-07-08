@@ -56,7 +56,7 @@ class ControllerCommonDashboard extends Controller {
 			$growth = 0;
 		}
 				
-		$this->data['sale_growth'] = $growth . '%';
+		$this->data['sale_growth'] = $growth;
 		
 		// Total Orders
 		$this->load->model('sale/order');
@@ -79,7 +79,7 @@ class ControllerCommonDashboard extends Controller {
 			$growth = 0;
 		}
 							
-		$this->data['order_growth'] = $growth . '%';		
+		$this->data['order_growth'] = $growth;		
 				
 		// Customers
 		$this->load->model('sale/customer');
@@ -102,7 +102,7 @@ class ControllerCommonDashboard extends Controller {
 			$growth = 0;
 		}
 			
-		$this->data['customer_growth'] = $growth . '%';		
+		$this->data['customer_growth'] = $growth;		
 		
 		// Marketing
 		$this->load->model('marketing/marketing');
@@ -113,10 +113,10 @@ class ControllerCommonDashboard extends Controller {
 
 		$monthly_total = 0;
 
-		$results = $this->model_report_dashboard->getTotalOrdersByMonth();
+		$results = $this->model_report_dashboard->getTotalMarketingsByMonth();
 		
 		foreach ($results as $result) {
-			$monthly_total += $result['total'];
+			$monthly_total += $result['clicks'];
 		}
 		
 		if ($monthly_total) {
@@ -125,7 +125,7 @@ class ControllerCommonDashboard extends Controller {
 			$growth = 0;
 		}			
 		
-		$this->data['marketing_growth'] = $growth . '%';
+		$this->data['marketing_growth'] = $growth;
 		
 		$this->load->model('report/customer');
 		

@@ -49,7 +49,7 @@ class ControllerReportCustomerOnline extends Controller {
        		'text' => $this->language->get('heading_title')
    		);
 		
-		$this->load->model('report/online');
+		$this->load->model('report/customer');
     	$this->load->model('sale/customer');
 		
 		$this->data['customers'] = array();
@@ -61,9 +61,9 @@ class ControllerReportCustomerOnline extends Controller {
 			'limit'           => 20
 		);
 		
-		$customer_total = $this->model_report_online->getTotalCustomersOnline($data);
+		$customer_total = $this->model_report_customer->getTotalCustomersOnline($data);
 		
-		$results = $this->model_report_online->getCustomersOnline($data);
+		$results = $this->model_report_customer->getCustomersOnline($data);
     	
 		foreach ($results as $result) {
 			$action = array();

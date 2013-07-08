@@ -1016,7 +1016,7 @@ CREATE TABLE `oc_customer` (
   `newsletter` tinyint(1) NOT NULL DEFAULT '0',
   `address_id` int(11) NOT NULL DEFAULT '0',
   `customer_group_id` int(11) NOT NULL,
-  `ip` varchar(40) NOT NULL DEFAULT '0',
+  `ip` varchar(40) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   `token` varchar(255) NOT NULL,
@@ -1026,6 +1026,26 @@ CREATE TABLE `oc_customer` (
 
 --
 -- Dumping data for table `oc_customer`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_customer_activity`
+--
+
+DROP TABLE IF EXISTS `oc_customer_activity`;
+CREATE TABLE `oc_customer_activity` (
+  `activity_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_id` int(11) NOT NULL,
+  `action` text NOT NULL,
+  `ip` varchar(40) NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`activity_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_customer_activity`
 --
 
 -- --------------------------------------------------------

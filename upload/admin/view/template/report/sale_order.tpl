@@ -12,23 +12,21 @@
     <div class="box-content">
       <div class="well wee-small form-inline">
         <div class="row-fluid">
-          <div class="span3">
+          <div class="span4">
             <div class="control-group">
               <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
               <div class="controls">
                 <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" class="input-medium" id="input-date-start" />
               </div>
             </div>
-            <div class="span3">
-              <div class="control-group">
-                <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-                <div class="controls">
-                  <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="input-medium" />
-                </div>
+            <div class="control-group">
+              <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+              <div class="controls">
+                <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="input-medium" />
               </div>
             </div>
           </div>
-          <div class="span3">
+          <div class="span4">
             <div class="control-group">
               <label class="control-label" for="input-group"><?php echo $entry_group; ?></label>
               <div class="controls">
@@ -43,8 +41,6 @@
                 </select>
               </div>
             </div>
-          </div>
-          <div class="span3">
             <div class="control-group">
               <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
               <div class="controls">
@@ -61,7 +57,7 @@
               </div>
             </div>
           </div>
-          <div class="span1">
+          <div class="span4">
             <button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
           </div>
         </div>

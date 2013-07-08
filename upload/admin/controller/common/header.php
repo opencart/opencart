@@ -77,6 +77,7 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_report_sale_coupon'] = $this->language->get('text_report_sale_coupon');
 		$this->data['text_report_product_viewed'] = $this->language->get('text_report_product_viewed');
 		$this->data['text_report_product_purchased'] = $this->language->get('text_report_product_purchased');
+		$this->data['text_report_customer_activity'] = $this->language->get('text_report_customer_activity');
 		$this->data['text_report_customer_online'] = $this->language->get('text_report_customer_online');
 		$this->data['text_report_customer_order'] = $this->language->get('text_report_customer_order');
 		$this->data['text_report_customer_reward'] = $this->language->get('text_report_customer_reward');
@@ -160,6 +161,7 @@ class ControllerCommonHeader extends Controller {
 			$this->data['report_sale_coupon'] = $this->url->link('report/sale_coupon', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['report_product_viewed'] = $this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['report_product_purchased'] = $this->url->link('report/product_purchased', 'token=' . $this->session->data['token'], 'SSL');
+			$this->data['report_customer_activity'] = $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['report_customer_online'] = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['report_customer_order'] = $this->url->link('report/customer_order', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['report_customer_reward'] = $this->url->link('report/customer_reward', 'token=' . $this->session->data['token'], 'SSL');
@@ -173,7 +175,6 @@ class ControllerCommonHeader extends Controller {
 			$this->data['return_status'] = $this->url->link('localisation/return_status', 'token=' . $this->session->data['token'], 'SSL');			
 			$this->data['shipping'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['setting'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');
-			$this->data['store'] = HTTP_CATALOG;
 			$this->data['stock_status'] = $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['tax_class'] = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['tax_rate'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'], 'SSL');
@@ -187,16 +188,14 @@ class ControllerCommonHeader extends Controller {
 			$this->data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
 			
 			// Get total number of customers online
-			$this->load->model('report/online');
+			$this->load->model('report/customer');
 			 
-			$this->data['online'] = $this->model_report_online->getTotalCustomersOnline();
+			$this->data['online'] = $this->model_report_customer->getTotalCustomersOnline();
 						
 			// Get total number of stores online
-			$this->load->model('setting/store');
-			
-			$results = $this->model_setting_store->getStores();
-
 			$this->data['store_name'] = $this->config->get('config_name');
+
+			$this->data['store'] = HTTP_CATALOG;
 
 			$this->data['stores'] = array();
 			

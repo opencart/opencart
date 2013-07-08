@@ -161,5 +161,137 @@ class ModelReportCustomer extends Model {
 		
 		return $query->row['total'];
 	}
+	
+	public function getCustomersOnline($data = array()) { 
+		$sql = "SELECT co.ip, co.customer_id, co.url, co.referer, co.date_added FROM " . DB_PREFIX . "customer_online co LEFT JOIN " . DB_PREFIX . "customer c ON (co.customer_id = c.customer_id)";
+
+		$implode = array();
+				
+		if (!empty($data['filter_ip'])) {
+			$implode[] = "co.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+		}
+		
+		if (!empty($data['filter_customer'])) {
+			$implode[] = "co.customer_id > 0 AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
+		}
+				
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+				
+		$sql .= " ORDER BY co.date_added DESC";
+				
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}			
+			
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}	
+			
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+			
+		$query = $this->db->query($sql);
+	
+		return $query->rows;
+	}
+
+	public function getTotalCustomersOnline($data = array()) {
+		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_online` co LEFT JOIN " . DB_PREFIX . "customer c ON (co.customer_id = c.customer_id)";
+		
+		$implode = array();
+		
+		if (!empty($data['filter_ip'])) {
+			$implode[] = "co.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+		}
+		
+		if (!empty($data['filter_customer'])) {
+			$implode[] = "co.customer_id > 0 AND CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
+		}
+		
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+				
+		$query = $this->db->query($sql);
+
+		return $query->row['total'];
+	}	
+	
+	public function getCustomersActivity($data = array()) { 
+		$sql = "SELECT ca.activity_id, ca.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, ca.action, ca.date_added FROM " . DB_PREFIX . "customer_activity ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
+
+		$implode = array();
+		
+		if (!empty($data['filter_customer'])) {
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
+		}	
+			
+		if (!empty($data['filter_ip'])) {
+			$implode[] = "ca.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+		}
+				
+		if (!empty($data['filter_date_start'])) {
+			$implode[] = "DATE(ca.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$implode[] = "DATE(ca.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}
+		
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+				
+		$sql .= " ORDER BY ca.date_added DESC";
+				
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}			
+			
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}	
+			
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+			
+		$query = $this->db->query($sql);
+	
+		return $query->rows;
+	}
+
+	public function getTotalCustomersActivity($data = array()) {
+		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_activity` ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
+		
+		$implode = array();
+		
+		if (!empty($data['filter_customer'])) {
+			$implode[] = "CONCAT(c.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_customer']) . "'";
+		}	
+		
+		if (!empty($data['filter_ip'])) {
+			$implode[] = "ca.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+		}
+				
+		if (!empty($data['filter_date_start'])) {
+			$implode[] = "DATE(ca.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$implode[] = "DATE(ca.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}
+		
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+				
+		$query = $this->db->query($sql);
+
+		return $query->row['total'];
+	}	
 }
 ?>

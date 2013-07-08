@@ -60,15 +60,7 @@ html, body {
 	color: #FFFFFF;
 }
 #header .navbar .icon-caret-down {
-	margin-left: 5px;
-}
-#header .navbar-inner .nav > li > a.profile {
-	padding: 8px 0px 7px 12px;
-}
-#header .navbar-inner .nav > li > a.profile img {
-	padding: 1px;
-	background: #FFFFFF;
-	border: 1px solid #006CBB;
+	margin-left: 4px;
 }
 #header .navbar-inner .nav > li > a.notification {
 	padding: 13px 12px 8px 12px;
@@ -85,7 +77,14 @@ html, body {
 	float: left;
 	padding: 3px 8px;
 }
-
+#header .navbar-inner .nav > li > a.profile {
+	padding: 8px 0px 7px 12px;
+}
+#header .navbar-inner .nav > li > a.profile img {
+	padding: 1px;
+	background: #FFFFFF;
+	border: 1px solid #006CBB;
+}
 
 
 

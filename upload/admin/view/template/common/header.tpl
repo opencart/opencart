@@ -38,10 +38,6 @@
           <li>
             <button type="button" class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><i class="icon-reorder icon-xlarge"></i></button>
           </li>
-          <li class="dropdown"><a class="notification" data-toggle="dropdown"><span class="badge badge-important">1</span> <i class="icon-bell-alt"></i></a>
-            <ul class="dropdown-menu">
-            </ul>
-          </li>
           <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="<?php echo $text_report_customer_online; ?>"><a href="<?php echo $report_customer_online; ?>" class="notification"><span class="badge badge-success"><?php echo $online; ?></span> <i class="icon-group"></i></a></li>
           <li class="dropdown"></li>
           <li class="dropdown" data-toggle="tooltip" data-placement="bottom" title="<?php echo $text_store; ?>">

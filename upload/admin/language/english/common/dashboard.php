@@ -7,6 +7,7 @@ $_['text_sales']     = 'Sales';
 $_['text_orders']    = 'Orders';
 $_['text_clicks']    = 'Clicks';
 $_['text_customers'] = 'Customers';
+$_['text_activity']  = 'Recent Activity';
 $_['text_marketing'] = 'Marketing';
 $_['text_online']    = 'People Online';
 $_['text_day']       = 'Today';

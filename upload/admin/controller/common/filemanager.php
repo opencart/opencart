@@ -59,14 +59,14 @@ class ControllerCommonFileManager extends Controller {
 		$json = array();
 		
 		if (isset($this->request->post['directory'])) {
-			$directories = glob(rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
+			$directories = glob(DIR_IMAGE . rtrim('catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
 			
 			if ($directories) {
 				$i = 0;
 			
 				foreach ($directories as $directory) {
 					$json[$i]['name'] = basename($directory);
-					$json[$i]['directory'] = utf8_substr($directory, strlen(DIR_IMAGE . 'data/'));
+					$json[$i]['directory'] = utf8_substr($directory, strlen(DIR_IMAGE . 'catalog/'));
 					
 					$children = glob(rtrim($directory, '/') . '/*', GLOB_ONLYDIR);
 					

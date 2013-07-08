@@ -56,7 +56,7 @@
           </div>
         </div>
         <div class="span6">
-          <h5>Recent Activity</h5>
+          <h5><?php echo $text_activity; ?></h5>
 
         </div>
       </div>

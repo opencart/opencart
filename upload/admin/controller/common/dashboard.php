@@ -7,6 +7,7 @@ class ControllerCommonDashboard extends Controller {
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 		
+		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		$this->data['text_sales'] = $this->language->get('text_sales');
 		$this->data['text_orders'] = $this->language->get('text_orders');
 		$this->data['text_customers'] = $this->language->get('text_customers');
@@ -125,6 +126,23 @@ class ControllerCommonDashboard extends Controller {
 		}			
 		
 		$this->data['marketing_growth'] = $growth . '%';
+		
+		$this->load->model('report/customer');
+		
+		$this->data['activities'] = array();
+	
+		$data = array(			
+			'start' => 0,
+			'limit' => 10
+		);
+				
+		$results = $this->model_report_customer->getCustomersActivity($data);
+    	
+		foreach ($results as $result) {
+      		$this->data['activities'][] = array(
+				'action' => $result['action']
+			);
+		}			
 		
 		$this->template = 'common/dashboard.tpl';
 		$this->children = array(

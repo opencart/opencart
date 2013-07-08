@@ -10,15 +10,29 @@
       <h1><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <table class="form">
-        <tr>
-          <td><?php echo $entry_date_start; ?>
-            <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" class="input-medium" /></td>
-          <td><?php echo $entry_date_end; ?>
-            <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" class="input-medium" /></td>
-          <td style="text-align: right;"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
-        </tr>
-      </table>
+      <div class="well">
+        <div class="row-fluid">
+          <div class="span4">
+            <div class="control-group">
+              <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+              <div class="controls">
+                <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="input-medium" />
+              </div>
+            </div>
+          </div>
+          <div class="span4">
+            <div class="control-group">
+              <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+              <div class="controls">
+                <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="input-medium" />
+              </div>
+            </div>
+          </div>
+          <div class="span4">
+            <button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
+          </div>
+        </div>
+      </div>
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>

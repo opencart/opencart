@@ -10,13 +10,13 @@
       <h1><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <div class="well wee-small form-inline">
+      <div class="well">
         <div class="row-fluid">
           <div class="span4">
             <div class="control-group">
               <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
               <div class="controls">
-                <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" class="input-medium" id="input-date-start" />
+                <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="input-medium" />
               </div>
             </div>
             <div class="control-group">
@@ -31,11 +31,11 @@
               <label class="control-label" for="input-group"><?php echo $entry_group; ?></label>
               <div class="controls">
                 <select name="filter_group" id="input-group">
-                  <?php foreach ($groups as $groups) { ?>
-                  <?php if ($groups['value'] == $filter_group) { ?>
-                  <option value="<?php echo $groups['value']; ?>" selected="selected"><?php echo $groups['text']; ?></option>
+                  <?php foreach ($groups as $group) { ?>
+                  <?php if ($group['value'] == $filter_group) { ?>
+                  <option value="<?php echo $group['value']; ?>" selected="selected"><?php echo $group['text']; ?></option>
                   <?php } else { ?>
-                  <option value="<?php echo $groups['value']; ?>"><?php echo $groups['text']; ?></option>
+                  <option value="<?php echo $group['value']; ?>"><?php echo $group['text']; ?></option>
                   <?php } ?>
                   <?php } ?>
                 </select>

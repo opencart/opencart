@@ -94,11 +94,11 @@ class ModelReportCustomer extends Model {
 		$implode = array();
 		
 		if (!empty($data['filter_date_start'])) {
-			$implode[] = "DATE(cr.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+			$implode[] = "DATE(date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
 		}
 
 		if (!empty($data['filter_date_end'])) {
-			$implode[] = "DATE(cr.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+			$implode[] = "DATE(date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
 		}
 		
 		if ($implode) {
@@ -221,7 +221,7 @@ class ModelReportCustomer extends Model {
 	}	
 	
 	public function getCustomersActivity($data = array()) { 
-		$sql = "SELECT ca.activity_id, ca.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, ca.action, ca.date_added FROM " . DB_PREFIX . "customer_activity ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
+		$sql = "SELECT ca.activity_id, ca.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, ca.action, ca.ip, ca.date_added FROM " . DB_PREFIX . "customer_activity ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 
 		$implode = array();
 		

@@ -10,22 +10,8 @@
       <h1><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
-      <div class="well wee-small form-inline">
+      <div class="well">
         <div class="row-fluid">
-          <div class="span4">
-            <div class="control-group">
-              <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
-              <div class="controls">
-                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" id="input-customer" />
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-ip"><?php echo $entry_ip; ?></label>
-              <div class="controls">
-                <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" id="input-ip" />
-              </div>
-            </div>
-          </div>
           <div class="span4">
             <div class="control-group">
               <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
@@ -37,6 +23,20 @@
               <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
               <div class="controls">
                 <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="input-medium" />
+              </div>
+            </div>
+          </div>
+          <div class="span4">
+            <div class="control-group">
+              <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+              <div class="controls">
+                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" id="input-customer" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+              <div class="controls">
+                <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" id="input-ip" />
               </div>
             </div>
           </div>
@@ -86,15 +86,15 @@
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=report/customer_activity&token=<?php echo $token; ?>';
 	
-	var filter_customer = $('select[name=\'filter_customer\']').val();
+	var filter_customer = $('input[name=\'filter_customer\']').val();
 	
 	if (filter_customer) {
 		url += '&filter_customer=' + encodeURIComponent(filter_customer);
 	}
-	var filter_ip = $('select[name=\'filter_ip\']').val();
+	var filter_ip = $('input[name=\'filter_ip\']').val();
 	
 	if (filter_ip) {
-		url += '&filter_customer=' + encodeURIComponent(filter_ip);
+		url += '&filter_ip=' + encodeURIComponent(filter_ip);
 	}
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').val();

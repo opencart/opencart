@@ -1,13 +1,13 @@
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
-  <ul class="breadcrumb">
+  <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
     <?php } ?>
-  </ul>
+  </div>
   <h1><?php echo $heading_title; ?></h1>
   <p><?php echo $text_total; ?><b> <?php echo $total; ?></b>.</p>
-  <table class="table table-striped table-bordered table-hover">
+  <table class="list">
     <thead>
       <tr>
         <td class="left"><?php echo $column_date_added; ?></td>
@@ -36,9 +36,8 @@
     </tbody>
   </table>
   <div class="pagination"><?php echo $pagination; ?></div>
-  <div class="results"><?php echo $results; ?></div>
-  <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="btn"><?php echo $button_continue; ?></a></div>
+  <div class="buttons clearfix">
+    <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
   </div>
   <?php echo $content_bottom; ?></div>
 <?php echo $footer; ?>

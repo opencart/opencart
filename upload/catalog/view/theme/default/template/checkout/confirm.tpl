@@ -1,6 +1,6 @@
 <?php if (!isset($redirect)) { ?>
 <div class="checkout-product">
-  <table>
+  <table class="table table-bordered table-hover">
     <thead>
       <tr>
         <td class="name"><?php echo $column_name; ?></td>
@@ -34,17 +34,19 @@
       </tr>
       <?php } ?>
     </tbody>
-    <tfoot>
-      <?php foreach ($totals as $total) { ?>
-      <tr>
-        <td colspan="4" class="price"><b><?php echo $total['title']; ?>:</b></td>
-        <td class="total"><?php echo $total['text']; ?></td>
-      </tr>
-      <?php } ?>
-    </tfoot>
   </table>
+
+  <div class="pull-right" style="text-align: right;margin-bottom: 1em;">
+    <?php foreach ($totals as $total) { ?>
+      <div>
+        <strong class="price"><?php echo $total['title']; ?>:</strong>
+        <span class="total"><?php echo $total['text']; ?></span>
+      </div>
+    <?php } ?>
+  </div>
+
 </div>
-<div class="payment"><?php echo $payment; ?></div>
+<div class="payment" style="clear:both;"><?php echo $payment; ?></div>
 <?php } else { ?>
 <script type="text/javascript"><!--
 location = '<?php echo $redirect; ?>';

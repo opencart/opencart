@@ -48,11 +48,11 @@
     </tr>
     <tr>
       <td><?php echo $entry_cc_cvv2; ?></td>
-      <td><input type="text" name="cc_cvv2" value="" class="input-small" /></td>
+      <td><input type="text" name="cc_cvv2" value="" size="3" /></td>
     </tr>
     <tr>
       <td><?php echo $entry_cc_issue; ?></td>
-      <td><input type="text" name="cc_issue" value="" class="input-mini" />
+      <td><input type="text" name="cc_issue" value="" size="1" />
         <?php echo $text_issue; ?></td>
     </tr>
   </table>
@@ -63,18 +63,18 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').on('click', function() {
+$('#button-confirm').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/pp_pro_uk/send',
 		type: 'post',
 		data: $('#payment :input'),
 		dataType: 'json',		
 		beforeSend: function() {
-			$('#button-confirm').prop('disabled', true);
+			$('#button-confirm').attr('disabled', true);
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {
-			$('#button-confirm').prop('disabled', false);
+			$('#button-confirm').attr('disabled', false);
 			$('.attention').remove();
 		},				
 		success: function(json) {

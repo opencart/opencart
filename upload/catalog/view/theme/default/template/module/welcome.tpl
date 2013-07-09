@@ -1,2 +1,4 @@
-<div class="welcome"><?php echo $heading_title; ?></div>
-<?php echo $message; ?>
+<div class="welcome">
+	<?php echo $heading_title; ?>
+	<?php echo $message; ?>
+</div>

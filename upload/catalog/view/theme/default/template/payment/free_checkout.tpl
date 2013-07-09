@@ -4,7 +4,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('#button-confirm').on('click', function() {
+$('#button-confirm').bind('click', function() {
 	$.ajax({ 
 		type: 'get',
 		url: 'index.php?route=payment/free_checkout/confirm',

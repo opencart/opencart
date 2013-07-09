@@ -8,19 +8,19 @@
   </div>
 </form>
 <script type="text/javascript"><!--
-$('#button-paypal').on('click', function() {
+$('#button-paypal').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=payment/google_checkout/send',
 		type: 'post',
 		data: $('#payment :input'),
 		dataType: 'json',		
 		beforeSend: function() {
-			$('#button-paypal').prop('disabled', true);
-			$('#button-paypal').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#button-paypal').attr('disabled', true);
+			$('#button-paypal').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
 		},
 		complete: function() {
-			$('#button-paypal').prop('disabled', false); 
-			$('.loading').remove();
+			$('#button-paypal').attr('disabled', false); 
+			$('.wait').remove();
 		},				
 		success: function(json) {
 			if (json['error']) {

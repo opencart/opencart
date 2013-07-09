@@ -1,14 +1,14 @@
 <?php echo $header; ?>
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+<div class="warning"><?php echo $error_warning; ?></div>
 <?php } ?>
 <?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
-  <ul class="breadcrumb">
+  <div class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
     <?php } ?>
-  </ul>
+  </div>
   <h1><?php echo $heading_title; ?></h1>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <p><?php echo $text_email; ?></p>
@@ -22,9 +22,11 @@
       </table>
     </div>
     <div class="buttons">
-      <div class="left"><a href="<?php echo $back; ?>" class="btn"><?php echo $button_back; ?></a></div>
-      <div class="right">
-        <input type="submit" value="<?php echo $button_continue; ?>" class="btn" />
+      <div class="pull-left">
+        <a href="<?php echo $back; ?>" class="btn"><?php echo $button_back; ?></a>
+      </div>
+      <div class="pull-right">
+        <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
       </div>
     </div>
   </form>

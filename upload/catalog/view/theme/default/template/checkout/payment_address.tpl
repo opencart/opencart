@@ -1,6 +1,11 @@
 <?php if ($addresses) { ?>
-<input type="radio" name="payment_address" value="existing" id="payment-address-existing" checked="checked" />
-<label for="payment-address-existing"><?php echo $text_address_existing; ?></label>
+<div>
+    <label for="payment-address-existing" class="radio">
+        <input type="radio" name="payment_address" value="existing" id="payment-address-existing" checked="checked" />
+        <?php echo $text_address_existing; ?>
+    </label>
+</div>
+
 <div id="payment-existing">
   <select name="address_id" style="width: 100%; margin-bottom: 15px;" size="5">
     <?php foreach ($addresses as $address) { ?>
@@ -12,69 +17,146 @@
     <?php } ?>
   </select>
 </div>
-<p>
-  <input type="radio" name="payment_address" value="new" id="payment-address-new" />
-  <label for="payment-address-new"><?php echo $text_address_new; ?></label>
-</p>
+    <label class="radio" for="payment-address-new">
+        <input type="radio" name="payment_address" value="new" id="payment-address-new" />
+        <?php echo $text_address_new; ?>
+    </label>
 <?php } ?>
 <div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
-  <table class="form">
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_firstname; ?></td>
-      <td><input type="text" name="firstname" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_lastname; ?></td>
-      <td><input type="text" name="lastname" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><?php echo $entry_company; ?></td>
-      <td><input type="text" name="company" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_address_1; ?></td>
-      <td><input type="text" name="address_1" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><?php echo $entry_address_2; ?></td>
-      <td><input type="text" name="address_2" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_city; ?></td>
-      <td><input type="text" name="city" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span id="payment-postcode-required" class="required">*</span> <?php echo $entry_postcode; ?></td>
-      <td><input type="text" name="postcode" value="" class="large-field" /></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_country; ?></td>
-      <td><select name="country_id" class="large-field">
-          <option value=""><?php echo $text_select; ?></option>
-          <?php foreach ($countries as $country) { ?>
-          <?php if ($country['country_id'] == $country_id) { ?>
-          <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-          <?php } else { ?>
-          <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-          <?php } ?>
-          <?php } ?>
-        </select></td>
-    </tr>
-    <tr>
-      <td><span class="required">*</span> <?php echo $entry_zone; ?></td>
-      <td><select name="zone_id" class="large-field">
-        </select></td>
-    </tr>
-  </table>
+  
+    <div class="form form-horizontal">
+
+        <div class="control-group">
+            <label class="control-label" for="firstname">
+                <span class="text-error">*</span> <?php echo $entry_firstname; ?>
+            </label>
+            <div class="controls">
+                <input type="text" name="firstname" value="" class="large-field" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="lastname">
+                <span class="text-error">*</span> <?php echo $entry_lastname; ?>
+            </label>
+            <div class="controls">
+                <input type="text" name="lastname" value="" class="large-field" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="company">
+                <?php echo $entry_company; ?>
+            </label>
+            <div class="controls">
+                <input type="text" name="company" value="" class="large-field" />
+            </div>
+        </div>
+
+        <?php if ($company_id_display) { ?>
+        <div class="control-group">
+            <label class="control-label" for="company">
+                <?php if ($company_id_required) { ?>
+                    <span class="text-error">*</span>
+                <?php } ?>
+                <?php echo $entry_company_id; ?>
+            </label>
+            <div class="controls">
+                <input type="text" name="company_id" value="" class="large-field" />
+            </div>
+        </div>
+        <?php } ?>
+
+        <?php if ($tax_id_display) { ?>
+        <div class="control-group">
+            <label class="control-label" for="tax_id">
+                <?php if ($tax_id_required) { ?>
+                <span class="text-error">*</span>
+                <?php } ?>
+                <?php echo $entry_tax_id; ?>
+            </label>
+            <div class="controls">
+                <input type="text" name="tax_id" value="" class="large-field" />
+            </div>
+        </div>
+        <?php } ?>
+        
+        <div class="control-group">
+            <label class="control-label" for="address_1">
+                <span class="text-error">*</span> <?php echo $entry_address_1; ?>
+            </label>
+            <div class="controls">
+                <input type="text" name="address_1" value="" class="large-field" />
+            </div>
+        </div>
+        
+        <div class="control-group">
+            <label class="control-label" for="address_2">
+                <?php echo $entry_address_2; ?>
+            </label>
+            <div class="controls">
+                <input type="text" name="address_2" value="" class="large-field" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="city">
+                <span class="text-error">*</span> <?php echo $entry_city; ?>
+            </label>
+            <div class="controls">
+                <input type="text" name="city" value="" class="large-field" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="postcode">
+                <span id="payment-postcode-required" class="text-error">*</span> <?php echo $entry_postcode; ?>
+            </label>
+            <div class="controls">
+                <input type="text" name="postcode" value="" class="large-field" />
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="country_id">
+                <span class="text-error">*</span> <?php echo $entry_country; ?>
+            </label>
+            <div class="controls">
+                <select name="country_id" class="large-field">
+                    <option value=""><?php echo $text_select; ?></option>
+                    <?php foreach ($countries as $country) { ?>
+                    <?php if ($country['country_id'] == $country_id) { ?>
+                    <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                </select>
+            </div>
+        </div>
+
+        <div class="control-group">
+            <label class="control-label" for="zone_id">
+                <span class="text-error">*</span> <?php echo $entry_zone; ?>
+            </label>
+            <div class="controls">
+                <select name="zone_id" class="large-field">
+                </select>
+            </div>
+        </div>
+
+    </div> <!-- form -->
+
 </div>
 <br />
 <div class="buttons">
   <div class="right">
     <input type="button" value="<?php echo $button_continue; ?>" id="button-payment-address" class="btn" />
   </div>
+  <div class="clearfix"></div>
 </div>
 <script type="text/javascript"><!--
-$('#payment-address input[name=\'payment_address\']').off().on('change', function() {
+$('#payment-address input[name=\'payment_address\']').on('change', function() {
 	if (this.value == 'new') {
 		$('#payment-existing').hide();
 		$('#payment-new').show();
@@ -85,137 +167,16 @@ $('#payment-address input[name=\'payment_address\']').off().on('change', functio
 });
 //--></script> 
 <script type="text/javascript"><!--
-// Payment Address	
-$('#button-payment-address').off().on('click', function() {
-	$.ajax({
-		url: 'index.php?route=checkout/payment_address/save',
-		type: 'post',
-		data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-payment-address').prop('disabled', true);
-			$('#button-payment-address').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
-		},	
-		complete: function() {
-			$('#button-payment-address').prop('disabled', false);
-			$('.loading').remove();
-		},			
-		success: function(json) {
-			$('.warning, .error').remove();
-			
-			if (json['redirect']) {
-				location = json['redirect'];
-			} else if (json['error']) {
-				if (json['error']['warning']) {
-					$('#payment-address .checkout-content').prepend('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '<img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>');
-					
-					$('.warning').fadeIn('slow');
-				}
-								
-				if (json['error']['firstname']) {
-					$('#payment-address input[name=\'firstname\']').after('<span class="error">' + json['error']['firstname'] + '</span>');
-				}
-				
-				if (json['error']['lastname']) {
-					$('#payment-address input[name=\'lastname\']').after('<span class="error">' + json['error']['lastname'] + '</span>');
-				}	
-				
-				if (json['error']['telephone']) {
-					$('#payment-address input[name=\'telephone\']').after('<span class="error">' + json['error']['telephone'] + '</span>');
-				}		
-														
-				if (json['error']['address_1']) {
-					$('#payment-address input[name=\'address_1\']').after('<span class="error">' + json['error']['address_1'] + '</span>');
-				}	
-				
-				if (json['error']['city']) {
-					$('#payment-address input[name=\'city\']').after('<span class="error">' + json['error']['city'] + '</span>');
-				}	
-				
-				if (json['error']['postcode']) {
-					$('#payment-address input[name=\'postcode\']').after('<span class="error">' + json['error']['postcode'] + '</span>');
-				}	
-				
-				if (json['error']['country']) {
-					$('#payment-address select[name=\'country_id\']').after('<span class="error">' + json['error']['country'] + '</span>');
-				}	
-				
-				if (json['error']['zone']) {
-					$('#payment-address select[name=\'zone_id\']').after('<span class="error">' + json['error']['zone'] + '</span>');
-				}
-			} else {
-				<?php if ($shipping_required) { ?>
-				$.ajax({
-					url: 'index.php?route=checkout/shipping_address',
-					dataType: 'html',
-					success: function(html) {
-						$('#shipping-address .checkout-content').html(html);
-					
-						$('#payment-address .checkout-content').slideUp('slow');
-						
-						$('#shipping-address .checkout-content').slideDown('slow');
-						
-						$('#payment-address .checkout-heading a').remove();
-						$('#shipping-address .checkout-heading a').remove();
-						$('#shipping-method .checkout-heading a').remove();
-						$('#payment-method .checkout-heading a').remove();
-						
-						$('#payment-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});
-				<?php } else { ?>
-				$.ajax({
-					url: 'index.php?route=checkout/payment_method',
-					dataType: 'html',
-					success: function(html) {
-						$('#payment-method .checkout-content').html(html);
-					
-						$('#payment-address .checkout-content').slideUp('slow');
-						
-						$('#payment-method .checkout-content').slideDown('slow');
-						
-						$('#payment-address .checkout-heading a').remove();
-						$('#payment-method .checkout-heading a').remove();
-													
-						$('#payment-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});	
-				<?php } ?>
-				
-				$.ajax({
-					url: 'index.php?route=checkout/payment_address',
-					dataType: 'html',
-					success: function(html) {
-						$('#payment-address .checkout-content').html(html);
-					},
-					error: function(xhr, ajaxOptions, thrownError) {
-						alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-					}
-				});				
-			}	  
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});	
-});
-
-$('#payment-address select[name=\'country_id\']').off().on('change', function() {
+$('#payment-address select[name=\'country_id\']').on('change', function() {
 	if (this.value == '') return;
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#payment-address select[name=\'country_id\']').after('<img src="catalog/view/theme/default/image/loading.gif" class="loading" style="padding-left: 5px;" />');
+			$('#payment-address select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
 		},
 		complete: function() {
-			$('.loading').remove();
+			$('.wait').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

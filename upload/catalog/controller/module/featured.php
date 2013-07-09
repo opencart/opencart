@@ -6,6 +6,8 @@ class ControllerModuleFeatured extends Controller {
       	$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['button_cart'] = $this->language->get('button_cart');
+		$this->data['button_wishlist'] = $this->language->get('button_wishlist');
+		$this->data['button_compare'] = $this->language->get('button_compare');
 		
 		$this->load->model('catalog/product'); 
 		
@@ -50,14 +52,15 @@ class ControllerModuleFeatured extends Controller {
 				}
 					
 				$this->data['products'][] = array(
-					'product_id' => $product_info['product_id'],
-					'thumb'   	 => $image,
-					'name'    	 => $product_info['name'],
-					'price'   	 => $price,
-					'special' 	 => $special,
-					'rating'     => $rating,
-					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']),
-					'href'    	 => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
+					'product_id'  => $product_info['product_id'],
+					'thumb'   	  => $image,
+					'name'    	  => $product_info['name'],
+					'description' => utf8_substr(strip_tags(html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
+					'price'   	  => $price,
+					'special' 	  => $special,
+					'rating'      => $rating,
+					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']),
+					'href'    	  => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
 				);
 			}
 		}

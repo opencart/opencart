@@ -46,18 +46,22 @@
         <div class="control-group required">
           <label class="control-label" for="input-example"><?php echo $entry_example; ?> <span class="help-block"><?php echo $help_example; ?></span></label>
           <div class="controls">
-            <textarea cols="40" rows="5" id="input-example">http://www.opencart.com?tracking=1234567</textarea>
+            <input type="text" id="input-example1" class="input-xxlarge" />
+            <br />
+            OR<br />
+            <input type="text" id="input-example2" class="input-xxlarge" />
           </div>
-        </div>        
+        </div>
       </form>
     </div>
   </div>
 </div>
 <script type="text/javascript"><!--
 $('#input-code').on('keydown', function() {
-	$('#input-example').val();
+	$('#input-example1').val('<?php echo $store; ?>?tracking=' + $('#input-code').val());
+	$('#input-example2').val('<?php echo $store; ?>index.php?route=common/home&tracking=' + $('#input-code').val());
 });
 
 $('#input-code').trigger('keydown');
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

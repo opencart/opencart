@@ -48,7 +48,6 @@
           <div class="controls">
             <input type="text" id="input-example1" class="input-xxlarge" />
             <br />
-            OR<br />
             <input type="text" id="input-example2" class="input-xxlarge" />
           </div>
         </div>

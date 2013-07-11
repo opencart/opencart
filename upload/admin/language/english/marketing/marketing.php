@@ -17,7 +17,7 @@ $_['column_action']     = 'Action';
 $_['entry_name']        = 'Campaign Name';
 $_['entry_description'] = 'Campaign Description';
 $_['entry_code']        = 'Tracking Code';
-$_['entry_example']     = 'Example';
+$_['entry_example']     = 'Examples';
 
 // Help
 $_['help_code']         = 'The tracking code that will be used to marketing track campaigns.';

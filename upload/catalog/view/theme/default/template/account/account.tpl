@@ -1,14 +1,14 @@
 <?php echo $header; ?>
 <ul class="breadcrumb">
   <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-  <li> <a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?> </a> </li>
+  <li><a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?> </a></li>
   <?php } ?>
 </ul>
 <?php if ($success) { ?>
-<div class="alert alert-success"> <?php echo $success; ?> </div>
+<div class="alert alert-success"><?php echo $success; ?></div>
 <?php } ?>
 <div class="row"><?php echo $column_left; ?>
-  <div id="content" class="span9">
+  <div id="content" class="span9"><?php echo $content_top; ?>
     <div class="content">
       <h2><?php echo $text_my_account; ?></h2>
       <ul class="unstyled">
@@ -36,6 +36,6 @@
         <li><a href="<?php echo $newsletter; ?>"><?php echo $text_newsletter; ?></a></li>
       </ul>
     </div>
-  </div>
+    <?php echo $content_bottom; ?></div>
   <?php echo $column_right; ?></div>
-<?php echo $content_bottom; ?><?php echo $footer; ?> 
+<?php echo $footer; ?> 

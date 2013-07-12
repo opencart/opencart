@@ -97,7 +97,6 @@ opacity: 1;
 	animation-name: fadeIn;
 }
 /*Table*/
-
 .table tbody + tbody {
 	border-top: none;
 }
@@ -106,7 +105,6 @@ thead {
 	background-color: #eee;
 }
 /*Well*/
-
 .well {
 	background-color: #eee;
 	border: 1px solid #ddd;
@@ -1686,4 +1684,10 @@ img.mfp-img {
 	top: 0;
 	right: 0;
 	padding-top: 0;
+}
+
+div.required .control-label:before {
+	content: '* ';
+	color: #F00;
+	font-weight: bold;
 }

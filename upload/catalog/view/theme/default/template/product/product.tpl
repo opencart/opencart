@@ -457,7 +457,7 @@ $('#button-cart').click(function() {
             if (json['error']) {
                 if (json['error']['option']) {
                     for (i in json['error']['option']) {
-                        $('#option-' + i).after('<div class="alert alert-error alert-form">' + json['error']['option'][i] + '</div>');
+                        $('#option-' + i).after('<div class="error">' + json['error']['option'][i] + '</div>');
                     }
                 }
             } 
@@ -500,7 +500,7 @@ new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
         }
         
         if (json['error']) {
-            $('#option-<?php echo $option['product_option_id']; ?>').after('<div class="alert alert-error alert-form">' + json['error'] + '</div>');
+            $('#option-<?php echo $option['product_option_id']; ?>').after('<div class="error">' + json['error'] + '</div>');
         }
         
         $('.loading').remove(); 

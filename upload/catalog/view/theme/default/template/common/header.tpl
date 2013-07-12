@@ -4,7 +4,8 @@
 <!--[if IE 9 ]><html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>" class="ie9"><![endif]-->
 <!--[if (gt IE 9)|!(IE)]><!-->
 <html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
-<!--<![endif]--><head>
+<!--<![endif]-->
+<head>
 <meta charset="UTF-8" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
@@ -60,70 +61,69 @@
   </div>
 </div>
 <div class="container">
-<!-- finished in the footer -->
 <header>
-  <div class="row">
-    <div class="span4">
-      <div class="logo">
-        <?php if ($logo) { ?>
-        <a href="<?php echo $home; ?>" class="logo"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a>
-        <?php } else { ?>
-        <h1><a href="<?php echo $home; ?>" class="logo"><?php echo $name; ?></a></h1>
-        <?php } ?>
+  
+    <div class="row">
+      <div class="span4">
+        <div class="logo">
+          <?php if ($logo) { ?>
+          <a href="<?php echo $home; ?>" class="logo"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a>
+          <?php } else { ?>
+          <h1><a href="<?php echo $home; ?>" class="logo"><?php echo $name; ?></a></h1>
+          <?php } ?>
+        </div>
+      </div>
+      <div class="span8">
+        <div class="row">
+          <div class="span5">
+            <div id="search" class="input-append">
+              <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
+              <div class="btn button-search"><i class="icon-search"></i></div>
+            </div>
+          </div>
+          <div class="span3"><?php echo $cart; ?></div>
+        </div>
       </div>
     </div>
-    <div class="span8">
-      <div class="row">
-        <div class="span5">
-          <div id="search" class="input-append">
-            <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
-            <div class="btn button-search"><i class="icon-search"></i></div>
+    <?php if ($categories) { ?>
+    <div class="main-navbar navbar navbar-inverse">
+      <div class="navbar-inner">
+        <div class="container"><span class="categories hidden-desktop"><?php echo $text_category; ?></span> 
+          
+          <!-- .btn-navbar is used as the toggle for collapsed navbar content --> 
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a> 
+          
+          <!-- Everything you want hidden at 940px or less, place within here -->
+          <div class="nav-collapse collapse">
+            <ul class="nav">
+              <?php foreach ($categories as $category) { ?>
+              <?php if ($category['children']) { ?>
+              <li class="dropdown"> <a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
+                <div class="dropdown-menu animated fadeIn">
+                  <div class="dropdown-inner">
+                    <?php for ($i = 0; $i < count($category['children']);) { ?>
+                    <ul class="unstyled">
+                      <?php $j = $i + ceil(count($category['children']) / $category['column']); ?>
+                      <?php for (; $i < $j; $i++) { ?>
+                      <?php if (isset($category['children'][$i])) { ?>
+                      <li> <a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a> </li>
+                      <?php } ?>
+                      <?php } ?>
+                    </ul>
+                    <?php } ?>
+                  </div>
+                  <a href="<?php echo $category['href']; ?>" class="see-all"> See all <?php echo $category['name']; ?> </a> </div>
+              </li>
+              <?php } else { ?>
+              <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
+              <?php } ?>
+              <?php } ?>
+            </ul>
+            
+            <!-- .nav, .navbar-search, .navbar-form, etc --> 
           </div>
         </div>
-        <div class="span3"><?php echo $cart; ?></div>
       </div>
     </div>
-  </div>
-  <?php if ($categories) { ?>
-  <div class="main-navbar navbar navbar-inverse">
-    <div class="navbar-inner">
-      <div class="container"><span class="categories hidden-desktop"><?php echo $text_category; ?></span> 
-        
-        <!-- .btn-navbar is used as the toggle for collapsed navbar content --> 
-        <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a> 
-        
-        <!-- Everything you want hidden at 940px or less, place within here -->
-        <div class="nav-collapse collapse">
-          <ul class="nav">
-            <?php foreach ($categories as $category) { ?>
-            <?php if ($category['children']) { ?>
-            <li class="dropdown"> <a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
-              <div class="dropdown-menu animated fadeIn">
-                <div class="dropdown-inner">
-                  <?php for ($i = 0; $i < count($category['children']);) { ?>
-                  <ul class="unstyled">
-                    <?php $j = $i + ceil(count($category['children']) / $category['column']); ?>
-                    <?php for (; $i < $j; $i++) { ?>
-                    <?php if (isset($category['children'][$i])) { ?>
-                    <li> <a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a> </li>
-                    <?php } ?>
-                    <?php } ?>
-                  </ul>
-                  <?php } ?>
-                </div>
-                <a href="<?php echo $category['href']; ?>" class="see-all"> See all <?php echo $category['name']; ?> </a> </div>
-            </li>
-            <?php } else { ?>
-            <li> <a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a> </li>
-            <?php } ?>
-            <?php } ?>
-          </ul>
-          
-          <!-- .nav, .navbar-search, .navbar-form, etc --> 
-        </div>
-      </div>
-    </div>
-  </div>
-  <?php } ?>
+    <?php } ?>
 </header>
-<div id="notification"></div>

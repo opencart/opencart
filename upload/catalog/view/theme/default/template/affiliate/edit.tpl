@@ -39,7 +39,7 @@
                     <input type="text" name="firstname" value="<?php echo $firstname; ?>" />
 
                     <?php if ($error_firstname) { ?>
-                        <div class="alert alert-error alert-form"><?php echo $error_firstname; ?></div>
+                        <div class="error"><?php echo $error_firstname; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -50,7 +50,7 @@
                     <input type="text" name="lastname" value="<?php echo $lastname; ?>" />
 
                     <?php if ($error_lastname) { ?>
-                        <div class="alert alert-error alert-form"><?php echo $error_lastname; ?></div>
+                        <div class="error"><?php echo $error_lastname; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -61,7 +61,7 @@
                     <input type="text" name="email" value="<?php echo $email; ?>" />
 
                     <?php if ($error_email) { ?>
-                        <div class="alert alert-error alert-form"><?php echo $error_email; ?></div>
+                        <div class="error"><?php echo $error_email; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -72,7 +72,7 @@
                     <input type="text" name="telephone" value="<?php echo $telephone; ?>" />
 
                     <?php if ($error_telephone) { ?>
-                    <div class="alert alert-error alert-form"><?php echo $error_telephone; ?></div>
+                    <div class="error"><?php echo $error_telephone; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -108,7 +108,7 @@
                     <input type="text" name="address_1" value="<?php echo $address_1; ?>" />
 
                     <?php if ($error_address_1) { ?>
-                        <div class="alert alert-error alert-form"><?php echo $error_address_1; ?></div>
+                        <div class="error"><?php echo $error_address_1; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -126,7 +126,7 @@
                     <input type="text" name="city" value="<?php echo $city; ?>" />
 
                     <?php if ($error_city) { ?>
-                        <div class="alert alert-error alert-form"><?php echo $error_city; ?></div>
+                        <div class="error"><?php echo $error_city; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -137,7 +137,7 @@
                     <input type="text" name="postcode" value="<?php echo $postcode; ?>" />
 
                     <?php if ($error_postcode) { ?>
-                        <div class="alert alert-error alert-form"><?php echo $error_postcode; ?></div>
+                        <div class="error"><?php echo $error_postcode; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -157,7 +157,7 @@
                     </select>
 
                     <?php if ($error_country) { ?>
-                        <div class="alert alert-error alert-form"><?php echo $error_country; ?></div>
+                        <div class="error"><?php echo $error_country; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -168,7 +168,7 @@
                     <select name="zone_id"></select>
 
                     <?php if ($error_zone) { ?>
-                        <div class="alert alert-error alert-form"><?php echo $error_zone; ?></div>
+                        <div class="error"><?php echo $error_zone; ?></div>
                     <?php } ?>
                 </div>
             </div>

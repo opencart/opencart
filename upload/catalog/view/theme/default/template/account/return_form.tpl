@@ -13,7 +13,7 @@
 </ul>
 
 <?php if ($error_warning) { ?>
-<div class="alert alert-error alert-form"><?php echo $error_warning; ?></div>
+<div class="error"><?php echo $error_warning; ?></div>
 <?php } ?>
 
 <div class="row">
@@ -40,7 +40,7 @@
                 <div class="controls">
                     <input type="text" name="firstname" value="<?php echo $firstname; ?>" class="large-field" />
                     <?php if ($error_firstname) { ?>
-                    <div class="alert alert-error alert-form"><?php echo $error_firstname; ?></div>
+                    <div class="error"><?php echo $error_firstname; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -52,7 +52,7 @@
                 <div class="controls">
                     <input type="text" name="lastname" value="<?php echo $lastname; ?>" class="large-field" />
                     <?php if ($error_lastname) { ?>
-                    <div class="alert alert-error alert-form"><?php echo $error_lastname; ?></div>
+                    <div class="error"><?php echo $error_lastname; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                 <div class="controls">
                     <input type="text" name="email" value="<?php echo $email; ?>" class="large-field" />
                     <?php if ($error_email) { ?>
-                    <div class="alert alert-error alert-form"><?php echo $error_email; ?></div>
+                    <div class="error"><?php echo $error_email; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -76,7 +76,7 @@
                 <div class="controls">
                     <input type="text" name="telephone" value="<?php echo $telephone; ?>" class="large-field" />
                     <?php if ($error_telephone) { ?>
-                    <div class="alert alert-error alert-form"><?php echo $error_telephone; ?></div>
+                    <div class="error"><?php echo $error_telephone; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -88,7 +88,7 @@
                 <div class="controls">
                     <input type="text" name="order_id" value="<?php echo $order_id; ?>" class="large-field" />
                     <?php if ($error_order_id) { ?>
-                    <div class="alert alert-error alert-form"><?php echo $error_order_id; ?></div>
+                    <div class="error"><?php echo $error_order_id; ?></div>
                     <?php } ?>
                 </div>
             </div>
@@ -119,7 +119,7 @@
                         <div class="controls">
                             <input type="text" name="product" value="<?php echo $product; ?>" />
                             <?php if ($error_product) { ?>
-                            <div class="alert alert-error alert-form"><?php echo $error_product; ?></div>
+                            <div class="error"><?php echo $error_product; ?></div>
                             <?php } ?>
                         </div>
                     </div>
@@ -131,7 +131,7 @@
                         <div class="controls">
                             <input type="text" name="model" value="<?php echo $model; ?>" />
                             <?php if ($error_model) { ?>
-                            <div class="alert alert-error alert-form"><?php echo $error_model; ?></div>
+                            <div class="error"><?php echo $error_model; ?></div>
                             <?php } ?>
                         </div>
                     </div>
@@ -176,7 +176,7 @@
                                 <?php  } ?>
 
                                 <?php if ($error_reason) { ?>
-                                <div class="alert alert-error alert-form"><?php echo $error_reason; ?></div>
+                                <div class="error"><?php echo $error_reason; ?></div>
                                 <?php } ?>
                             </div>
                         </div>
@@ -230,7 +230,7 @@
                             <br />
                             <img src="index.php?route=account/return/captcha" alt="" />
                             <?php if ($error_captcha) { ?>
-                            <div class="alert alert-error alert-form"><?php echo $error_captcha; ?></div>
+                            <div class="error"><?php echo $error_captcha; ?></div>
                             <?php } ?>
                         </div>
                     </div>

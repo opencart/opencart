@@ -6,16 +6,16 @@
 </ul>
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
-    <h2><?php echo $heading_title; ?></h2>
+    <h1><?php echo $heading_title; ?></h1>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <fieldset>
         <legend><?php echo $text_password; ?></legend>
         <div class="control-group required">
-          <label class="control-label" for="input-password"><?php echo $entry_password; ?> </label>
+          <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
           <div class="controls">
             <input type="password" name="password" value="<?php echo $password; ?>" id="input-password" />
             <?php if ($error_password) { ?>
-            <div class="error"><?php echo $error_password; ?></div>
+            <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
           </div>
         </div>
@@ -24,7 +24,7 @@
           <div class="controls">
             <input type="password" name="confirm" value="<?php echo $confirm; ?>" id="input-confirm" />
             <?php if ($error_confirm) { ?>
-            <div class="error"><?php echo $error_confirm; ?></div>
+            <span class="error"><?php echo $error_confirm; ?></span>
             <?php } ?>
           </div>
         </div>

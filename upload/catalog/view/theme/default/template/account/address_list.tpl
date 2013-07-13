@@ -15,6 +15,9 @@
     <h2><?php echo $text_address_book; ?></h2>
     <?php foreach ($addresses as $result) { ?>
     <fieldset>
+    
+    
+    
       <table style="width: 100%;">
         <tr>
           <td><?php echo $result['address']; ?></td>

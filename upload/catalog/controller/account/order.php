@@ -72,13 +72,14 @@ class ControllerAccountOrder extends Controller {
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_order_id'] = $this->language->get('text_order_id');
-		$this->data['text_status'] = $this->language->get('text_status');
-		$this->data['text_date_added'] = $this->language->get('text_date_added');
-		$this->data['text_customer'] = $this->language->get('text_customer');
-		$this->data['text_products'] = $this->language->get('text_products');
-		$this->data['text_total'] = $this->language->get('text_total');
 		$this->data['text_empty'] = $this->language->get('text_empty');
+		
+		$this->data['column_order_id'] = $this->language->get('column_order_id');
+		$this->data['column_status'] = $this->language->get('column_status');
+		$this->data['column_date_added'] = $this->language->get('column_date_added');
+		$this->data['column_customer'] = $this->language->get('column_customer');
+		$this->data['column_product'] = $this->language->get('column_product');
+		$this->data['column_total'] = $this->language->get('column_total');
 
 		$this->data['button_view'] = $this->language->get('button_view');
 		$this->data['button_reorder'] = $this->language->get('button_reorder');

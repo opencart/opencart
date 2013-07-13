@@ -192,14 +192,13 @@
       <?php if ($text_agree) { ?>
       <div class="buttons clearfix">
         <div class="pull-right">
-          <?php if ($agree) { ?>
           <?php echo $text_agree; ?>
+          <?php if ($agree) { ?>
           <input type="checkbox" name="agree" value="1" checked="checked" />
           <?php } else { ?>
-          <?php echo $text_agree; ?>
           <input type="checkbox" name="agree" value="1" />
           <?php } ?>
-          <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
+          &nbsp; <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
         </div>
       </div>
       <?php } else { ?>
@@ -216,39 +215,7 @@
 $('input[name=\'customer_group_id\']:checked').change(function() {
 	var customer_group = [];
 	
-<?php foreach ($customer_groups as $customer_group) { ?>
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>] = [];
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_display'] = '<?php echo $customer_group['company_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['company_id_required'] = '<?php echo $customer_group['company_id_required']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_display'] = '<?php echo $customer_group['tax_id_display']; ?>';
-	customer_group[<?php echo $customer_group['customer_group_id']; ?>]['tax_id_required'] = '<?php echo $customer_group['tax_id_required']; ?>';
-<?php } ?>	
 
-	if (customer_group[this.value]) {
-		if (customer_group[this.value]['company_id_display'] == '1') {
-			$('#company-id-display').show();
-		} else {
-			$('#company-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['company_id_required'] == '1') {
-			$('#company-id-required').show();
-		} else {
-			$('#company-id-required').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_display'] == '1') {
-			$('#tax-id-display').show();
-		} else {
-			$('#tax-id-display').hide();
-		}
-		
-		if (customer_group[this.value]['tax_id_required'] == '1') {
-			$('#tax-id-required').show();
-		} else {
-			$('#tax-id-required').hide();
-		}	
-	}
 });
 
 $('input[name=\'customer_group_id\']:checked').trigger('change');

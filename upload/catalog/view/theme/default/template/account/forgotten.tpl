@@ -10,8 +10,8 @@
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
     <h1><?php echo $heading_title; ?></h1>
+    <p><?php echo $text_email; ?></p>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-      <p><?php echo $text_email; ?></p>
       <fieldset>
         <legend><?php echo $text_your_email; ?></legend>
         <div class="control-group required">

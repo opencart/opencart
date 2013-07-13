@@ -5,11 +5,11 @@
   <?php } ?>
 </ul>
 <?php if ($error_warning) { ?>
-<div class="alert alert-warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-error"><?php echo $error_warning; ?></div>
 <?php } ?>
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
-    <h2><?php echo $heading_title; ?></h2>
+    <h1><?php echo $heading_title; ?></h1>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <fieldset>
         <legend><?php echo $text_your_details; ?></legend>

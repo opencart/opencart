@@ -1686,6 +1686,17 @@ img.mfp-img {
 	padding-top: 0;
 }
 
+
+
+.table .left {
+	text-align: left;
+}
+.table .right {
+	text-align: right;
+}
+.table .center {
+	text-align: center;
+}
 div.required .control-label:before {
 	content: '* ';
 	color: #F00;

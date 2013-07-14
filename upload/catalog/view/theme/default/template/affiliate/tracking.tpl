@@ -11,19 +11,19 @@
     <div class="control-group">
       <label class="control-label" for="input-code"><?php echo $text_code; ?></label>
       <div class="controls">
-        <textarea cols="40" rows="5"><?php echo $code; ?></textarea>
+        <textarea cols="40" rows="5" id="input-code"><?php echo $code; ?></textarea>
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="input-generator"><?php echo $text_generator; ?></label>
       <div class="controls">
-        <input type="text" name="product" value="" />
+        <input type="text" name="product" value="" id="input-generator" />
       </div>
     </div>
     <div class="control-group">
       <label class="control-label" for="input-link"><?php echo $text_link; ?></label>
       <div class="controls">
-        <textarea name="link" cols="40" rows="5"></textarea>
+        <textarea name="link" cols="40" rows="5" id="input-link"></textarea>
       </div>
     </div>
     <div class="buttons clearfix">
@@ -33,30 +33,24 @@
   <?php echo $column_right; ?></div>
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({
-	delay: 500,
-	source: function(request, response) {
+	'source': function(request, response) {
 		$.ajax({
-			url: 'index.php?route=affiliate/tracking/autocomplete&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
+			url: 'index.php?route=affiliate/tracking/autocomplete&filter_name=' +  encodeURIComponent(request),
+			dataType: 'json',			
+			success: function(json) {
 				response($.map(json, function(item) {
 					return {
-						label: item.name,
-						value: item.link
+						label: item['name'],
+						value: item['link']
 					}
 				}));
 			}
 		});
 	},
-	select: function(event, ui) {
-		$('input[name=\'product\']').attr('value', ui.item.label);
-		$('textarea[name=\'link\']').attr('value', ui.item.value);
-						
-		return false;
-	},
-	focus: function(event, ui) {
-      return false;
-   }
+	'select': function(item) {
+		$('input[name=\'product\']').val(item['label']);
+		$('textarea[name=\'link\']').attr('value', item['value']);	
+	}	
 });
 //--></script> 
 <?php echo $footer; ?>

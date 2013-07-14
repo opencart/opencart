@@ -18,26 +18,31 @@
       <div class="span4">
         <div class="well">
           <h2><?php echo $text_new_affiliate; ?></h2>
-          <?php echo $text_register_account; ?><a class="btn btn-primary" href="<?php echo $register; ?>"><?php echo $button_continue; ?></a></div>
+          <p><?php echo $text_register_account; ?></p>
+          <a class="btn btn-primary" href="<?php echo $register; ?>"><?php echo $button_continue; ?></a></div>
       </div>
       <div class="span5">
         <div class="well">
+          <h2><?php echo $text_returning_affiliate; ?></h2>
+          <p><strong><?php echo $text_i_am_returning_affiliate; ?></strong></p>
           <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-            <fieldset>
-              <h2><?php echo $text_returning_affiliate; ?></h2>
-              <p><?php echo $text_i_am_returning_affiliate; ?></p>
-              <label><?php echo $entry_email; ?></label>
-              <input type="text" name="email" value="<?php echo $email; ?>" />
-              <label><?php echo $entry_password; ?></label>
-              <input type="password" name="password" value="<?php echo $password; ?>" />
-              <br />
-              <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a><br />
-              <br />
-              <input type="submit" value="<?php echo $button_login; ?>" class="btn btn-primary" />
-              <?php if ($redirect) { ?>
-              <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
-              <?php } ?>
-            </fieldset>
+            <div class="control-group">
+              <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
+              <div class="controls">
+                <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" />
+              </div>
+            </div>
+            <div class="control-group">
+              <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
+              <div class="controls">
+                <input type="password" name="password" value="<?php echo $password; ?>" id="input-password" />
+                <br />
+                <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a> </div>
+            </div>
+            <input type="submit" value="<?php echo $button_login; ?>" class="btn btn-primary" />
+            <?php if ($redirect) { ?>
+            <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
+            <?php } ?>
           </form>
         </div>
       </div>

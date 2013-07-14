@@ -274,7 +274,7 @@
                 <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" />
               </div>
             </div>
-            <button id="button-transaction" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
+            <button type="button" id="button-transaction" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
           </div>
           <div class="tab-pane" id="tab-reward">
             <div id="reward"></div>
@@ -290,7 +290,7 @@
                 <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" />
               </div>
             </div>
-            <button id="button-reward" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
+            <button type="button" id="button-reward" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
           </div>
           <?php } ?>
           <div class="tab-pane" id="tab-ip">
@@ -311,9 +311,9 @@
                   <td class="right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                   <td class="left"><?php echo $ip['date_added']; ?></td>
                   <td class="right"><?php if ($ip['ban_ip']) { ?>
-                    <button value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-add"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
+                    <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
                     <?php } else { ?>
-                    <button value="<?php echo $ip['ip']; ?>" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
+                    <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
                     <?php } ?></td>
                 </tr>
                 <?php } ?>
@@ -335,7 +335,7 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 
 });
 
-$('select[name=\'customer_group_id\']').trigger('change');
+//$('select[name=\'customer_group_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 var address_row = <?php echo $address_row; ?>;
@@ -474,8 +474,6 @@ $('#button-history').on('click', function() {
 		dataType: 'html',
 		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('.alert').remove();
-			
 			$('#button-history i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-history').prop('disabled', true);
 		},
@@ -484,6 +482,8 @@ $('#button-history').on('click', function() {
 			$('#button-history').prop('disabled', false);
 		},
 		success: function(html) {
+			$('.alert').remove();
+			
 			$('#history').html(html);
 			
 			$('#tab-history input[name=\'comment\']').val('');
@@ -507,8 +507,6 @@ $('#button-transaction').on('click', function() {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
-			$('.alert').remove();
-			
 			$('#button-transaction i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-transaction').prop('disabled', true);
 		},
@@ -517,6 +515,8 @@ $('#button-transaction').on('click', function() {
 			$('#button-transaction').prop('disabled', false);
 		},
 		success: function(html) {
+			$('.alert').remove();
+			
 			$('#transaction').html(html);
 			
 			$('#tab-transaction input[name=\'amount\']').val('');
@@ -541,17 +541,16 @@ $('#button-reward').on('click', function() {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
 		beforeSend: function() {
-			$('.alert').remove();
-			
 			$('#button-reward i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 			$('#button-reward').prop('disabled', true);
-
 		},
 		complete: function() {
 			$('#button-reward i').replaceWith('<i class="icon-plus-sign"></i>');
 			$('#button-reward').prop('disabled', false);
 		},
 		success: function(html) {
+			$('.alert').remove();
+			
 			$('#reward').html(html);
 								
 			$('#tab-reward input[name=\'points\']').val('');
@@ -560,62 +559,61 @@ $('#button-reward').on('click', function() {
 	});
 });
 
-$('.ban-ip').on('click', function() {
-	
-function addBanIP(ip) {
-	var id = ip.replace(/\./g, '-');
+$('body').delegate('.button-ban-add', 'click', function() {
+	var element = this;
 	
 	$.ajax({
 		url: 'index.php?route=sale/customer/addbanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'ip=' + encodeURIComponent(ip),
+		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$('.success, .warning').remove();
-			
-			$('#button-ban-id i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$(element).find('i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 		},
 		complete: function() {
-			
+			$(element).find('i').replaceWith('<i class="icon-plus-sign"></i>');
 		},			
 		success: function(json) {
-			$('.attention').remove();
+			$('.alert').remove();
 			
 			if (json['error']) {
 				 $('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
 				
-				$('.warning').fadeIn('slow');
+				$('.alert').fadeIn('slow');
 			}
 						
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
+				$('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
 				
 				$('.success').fadeIn('slow');
-				
-				$('#' + id).replaceWith('<a id="' + id + '" onclick="removeBanIP(\'' + ip + '\');"><?php echo $text_remove_ban_ip; ?></a>');
+                
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
 			}
 		}
 	});	
 });
 
-function removeBanIP(ip) {
-	var id = ip.replace(/\./g, '-');
+$('body').delegate('.button-ban-remove', 'click', function() {
+	var element = this;
 	
 	$.ajax({
 		url: 'index.php?route=sale/customer/removebanip&token=<?php echo $token; ?>',
 		type: 'post',
 		dataType: 'json',
-		data: 'ip=' + encodeURIComponent(ip),
+		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$('.alert').remove();
+			$(element).find('i').replaceWith('<i class="icon-spinner icon-spin"></i>');
 		},	
+		complete: function() {
+			$(element).find('i').replaceWith('<i class="icon-plus-sign"></i>');
+		},			
 		success: function(json) {
-			$('.attention').remove();
+			$('.alert').remove();
 			
 			if (json['error']) {
 				 $('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
 				
-				$('.warning').fadeIn('slow');
+				$('.alert').fadeIn('slow');
 			}
 			
 			if (json['success']) {
@@ -623,10 +621,10 @@ function removeBanIP(ip) {
 				
 				$('.success').fadeIn('slow');
 				
-				$('#' + id).replaceWith('<a id="' + id + '" onclick="addBanIP(\'' + ip + '\');"><?php echo $text_add_ban_ip; ?></a>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
 			}
 		}
 	});	
-};
+});
 //--></script> 
 <?php echo $footer; ?>

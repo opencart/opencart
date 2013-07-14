@@ -7,7 +7,7 @@
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
     <h1><?php echo $heading_title; ?></h1>
-    <p><?php echo $text_total; ?><b> <?php echo $total; ?></b>.</p>
+    <p><?php echo $text_total; ?> <b><?php echo $total; ?></b>.</p>
     <table class="table table-bordered table-hover">
       <thead>
         <tr>

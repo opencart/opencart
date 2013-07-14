@@ -43,7 +43,7 @@ class ControllerAffiliateLogin extends Controller {
 		
 		$this->data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'), $this->config->get('config_name'), $this->config->get('config_commission') . '%');
 		$this->data['text_new_affiliate'] = $this->language->get('text_new_affiliate');
-    	$this->data['text_register_account'] = $this->language->get('text_register_account'); 	
+		$this->data['text_register_account'] = $this->language->get('text_register_account'); 	
 		$this->data['text_returning_affiliate'] = $this->language->get('text_returning_affiliate');
 		$this->data['text_i_am_returning_affiliate'] = $this->language->get('text_i_am_returning_affiliate');
     	$this->data['text_forgotten'] = $this->language->get('text_forgotten');

@@ -10,7 +10,7 @@
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
     <h1><?php echo $heading_title; ?></h1>
-    <form class="form-horizontal" action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <fieldset>
         <legend><?php echo $text_your_details; ?></legend>
         <div class="control-group required">

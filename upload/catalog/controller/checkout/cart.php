@@ -40,44 +40,6 @@ class ControllerCheckoutCart extends Controller {
 								
 			$this->redirect($this->url->link('checkout/cart'));
 		}
-			
-		// Coupon    
-		if (isset($this->request->post['coupon']) && $this->validateCoupon()) { 
-			$this->session->data['coupon'] = $this->request->post['coupon'];
-				
-			$this->session->data['success'] = $this->language->get('text_coupon');
-			
-			$this->redirect($this->url->link('checkout/cart'));
-		}
-		
-		// Voucher
-		if (isset($this->request->post['voucher']) && $this->validateVoucher()) { 
-			$this->session->data['voucher'] = $this->request->post['voucher'];
-				
-			$this->session->data['success'] = $this->language->get('text_voucher');
-				
-			$this->redirect($this->url->link('checkout/cart'));
-		}
-
-		// Reward
-		if (isset($this->request->post['reward']) && $this->validateReward()) { 
-			$this->session->data['reward'] = abs($this->request->post['reward']);
-				
-			$this->session->data['success'] = $this->language->get('text_reward');
-				
-			$this->redirect($this->url->link('checkout/cart'));
-		}
-		
-		// Shipping
-		if (isset($this->request->post['shipping_method']) && $this->validateShipping()) {
-			$shipping = explode('.', $this->request->post['shipping_method']);
-			
-			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-			
-			$this->session->data['success'] = $this->language->get('text_shipping');
-			
-			$this->redirect($this->url->link('checkout/cart'));
-		}
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
@@ -258,12 +220,6 @@ class ControllerCheckoutCart extends Controller {
 					);
 				}
 			}
-
-			if (isset($this->request->post['next'])) {
-				$this->data['next'] = $this->request->post['next'];
-			} else {
-				$this->data['next'] = '';
-			}
 						 
 			$this->data['coupon_status'] = $this->config->get('coupon_status');
 			
@@ -420,86 +376,6 @@ class ControllerCheckoutCart extends Controller {
 			$this->response->setOutput($this->render());			
     	}
   	}
-	
-	protected function validateCoupon() {
-		$this->load->model('checkout/coupon');
-				
-		$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);			
-		
-		if (!$coupon_info) {			
-			$this->error['warning'] = $this->language->get('error_coupon');
-		}
-		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}		
-	}
-	
-	protected function validateVoucher() {
-		$this->load->model('checkout/voucher');
-				
-		$voucher_info = $this->model_checkout_voucher->getVoucher($this->request->post['voucher']);			
-		
-		if (!$voucher_info) {			
-			$this->error['warning'] = $this->language->get('error_voucher');
-		}
-		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}		
-	}
-	
-	protected function validateReward() {
-		$points = $this->customer->getRewardPoints();
-		
-		$points_total = 0;
-		
-		foreach ($this->cart->getProducts() as $product) {
-			if ($product['points']) {
-				$points_total += $product['points'];
-			}
-		}	
-				
-		if (empty($this->request->post['reward'])) {
-			$this->error['warning'] = $this->language->get('error_reward');
-		}
-	
-		if ($this->request->post['reward'] > $points) {
-			$this->error['warning'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
-		}
-		
-		if ($this->request->post['reward'] > $points_total) {
-			$this->error['warning'] = sprintf($this->language->get('error_maximum'), $points_total);
-		}
-		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}		
-	}
-	
-	protected function validateShipping() {
-		if (!empty($this->request->post['shipping_method'])) {
-			$shipping = explode('.', $this->request->post['shipping_method']);
-					
-			if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {			
-				$this->error['warning'] = $this->language->get('error_shipping');
-			}
-		} else {
-			$this->error['warning'] = $this->language->get('error_shipping');
-		}
-		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}		
-	}
 								
 	public function add() {
 		$this->language->load('checkout/cart');
@@ -592,6 +468,88 @@ class ControllerCheckoutCart extends Controller {
 		$this->response->setOutput(json_encode($json));		
 	}
 	
+	protected function coupon() {
+		$this->language->load('checkout/cart');
+		
+		$json = array();
+				
+		$this->load->model('checkout/coupon');
+				
+		$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);			
+		
+		if (!$coupon_info) {			
+			$json['warning'] = $this->language->get('error_coupon');
+		} else {
+			$this->session->data['coupon'] = $this->request->post['coupon'];
+				
+			$this->session->data['success'] = $this->language->get('text_coupon');
+			
+			$json['redirect'] = $this->url->link('checkout/cart');			
+		}
+					
+		$this->response->setOutput(json_encode($json));	
+	}
+	
+	protected function voucher() {
+		$this->language->load('checkout/cart');
+		
+		$json = array();
+				
+		$this->load->model('checkout/voucher');
+				
+		$voucher_info = $this->model_checkout_voucher->getVoucher($this->request->post['voucher']);			
+		
+		if (!$voucher_info) {			
+			$this->error['warning'] = $this->language->get('error_voucher');
+		} else {
+			$this->session->data['voucher'] = $this->request->post['voucher'];
+				
+			$this->session->data['success'] = $this->language->get('text_voucher');
+				
+			$json['redirect'] = $this->url->link('checkout/cart');	
+		}
+		
+		$this->response->setOutput(json_encode($json));		
+	}
+	
+	protected function reward() {
+		$this->language->load('checkout/cart');
+		
+		$json = array();
+		
+		$points = $this->customer->getRewardPoints();
+		
+		$points_total = 0;
+		
+		foreach ($this->cart->getProducts() as $product) {
+			if ($product['points']) {
+				$points_total += $product['points'];
+			}
+		}	
+				
+		if (empty($this->request->post['reward'])) {
+			$json['warning'] = $this->language->get('error_reward');
+		}
+	
+		if ($this->request->post['reward'] > $points) {
+			$json['warning'] = sprintf($this->language->get('error_points'), $this->request->post['reward']);
+		}
+		
+		if ($this->request->post['reward'] > $points_total) {
+			$json['warning'] = sprintf($this->language->get('error_maximum'), $points_total);
+		}
+		
+		if (!$json) {
+			$this->session->data['reward'] = abs($this->request->post['reward']);
+				
+			$this->session->data['success'] = $this->language->get('text_reward');
+				
+			$json['redirect'] = $this->url->link('checkout/cart');		
+		}
+		
+		$this->response->setOutput(json_encode($json));		
+	}
+		
 	public function quote() {
 		$this->language->load('checkout/cart');
 		
@@ -709,6 +667,34 @@ class ControllerCheckoutCart extends Controller {
 		$this->response->setOutput(json_encode($json));						
 	}
 	
+	protected function shipping() {
+		$this->language->load('checkout/cart');
+		
+		$json = array();	
+		
+		if (!empty($this->request->post['shipping_method'])) {
+			$shipping = explode('.', $this->request->post['shipping_method']);
+					
+			if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {			
+				$json['warning'] = $this->language->get('error_shipping');
+			}
+		} else {
+			$json['warning'] = $this->language->get('error_shipping');
+		}
+		
+		if (!$json) {
+			$shipping = explode('.', $this->request->post['shipping_method']);
+			
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+			
+			$this->session->data['success'] = $this->language->get('text_shipping');
+			
+			$json['redirect'] = $this->url->link('checkout/cart');
+		}
+		
+		$this->response->setOutput(json_encode($json));			
+	}
+		
 	public function country() {
 		$json = array();
 		

@@ -2,7 +2,7 @@
 
 <?php if ($success) { ?>
 <div class="success"><?php echo $success; ?>
-    <img src="catalog/view/theme/default/image/close.png" alt="" class="close" />
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
 <?php } ?>
 

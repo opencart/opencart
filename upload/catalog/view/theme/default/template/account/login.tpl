@@ -24,6 +24,8 @@
         <div class="well">
           <h2><?php echo $text_returning_customer; ?></h2>
           <p><strong><?php echo $text_i_am_returning_customer; ?></strong></p>
+          
+          
           <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
             <div class="control-group">
               <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>

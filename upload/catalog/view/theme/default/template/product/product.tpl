@@ -1,7 +1,4 @@
 <?php echo $header; ?>
-
-<!-- Breadcrumb -->
-
 <ul class="breadcrumb">
   <?php foreach ($breadcrumbs as $breadcrumb) { ?>
   <li> <a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?> </a> </li>
@@ -555,18 +552,19 @@ $('#button-review').bind('click', function() {
     });
 });
 //--></script> 
-<script src="catalog/view/javascript/jquery/ui/jquery-ui-1.10.3.custom.min.js"></script> 
-<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
+
+
 <script type="text/javascript"><!--
 $(document).ready(function() {
-
+/*<script src="catalog/view/javascript/jquery/ui/jquery-ui-1.10.3.custom.min.js"></script> 
+<script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
     $('.date').datepicker({dateFormat: 'yy-mm-dd'});
     $('.datetime').datetimepicker({
         dateFormat: 'yy-mm-dd',
         timeFormat: 'h:m'
     });
     $('.time').timepicker({timeFormat: 'h:m'});
-
+*/
     $('.thumbnails').magnificPopup({
         delegate: 'li a', // child items selector, by clicking on it popup will open
         type: 'image',

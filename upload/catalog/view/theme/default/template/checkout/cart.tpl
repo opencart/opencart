@@ -91,7 +91,7 @@
               <div class="accordion-inner form-inline">
                 <label class="control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
                 <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" />
-                <input type="submit" value="<?php echo $button_coupon; ?>" class="btn" />
+                <input type="button" value="<?php echo $button_coupon; ?>" id="button-coupon" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
               </div>
             </div>
           </div>
@@ -103,7 +103,7 @@
               <div class="accordion-inner form-inline">
                 <label class="control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
                 <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" />
-                <input type="submit" value="<?php echo $button_voucher; ?>" class="btn" />
+                <input type="submit" value="<?php echo $button_voucher; ?>" id="button-voucher" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
               </div>
             </div>
           </div>
@@ -115,7 +115,7 @@
               <div class="accordion-inner form-inline">
                 <label class="control-label" for="input-reward"><?php echo $entry_reward; ?></label>
                 <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" />
-                <input type="submit" value="<?php echo $button_reward; ?>" class="btn" />
+                <input type="submit" value="<?php echo $button_reward; ?>" id="button-reward" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
               </div>
             </div>
           </div>
@@ -155,7 +155,7 @@
                       <input type="text" name="postcode" value="<?php echo $postcode; ?>" id="input-postcode" />
                     </div>
                   </div>
-                  <input type="button" value="<?php echo $button_quote; ?>" data-loading-text="Loading..." id="button-quote" class="btn" />
+                  <input type="button" value="<?php echo $button_quote; ?>" id="button-quote" data-loading-text="<?php echo $text_loading; ?>" class="btn" />
                 </div>
               </div>
             </div>
@@ -192,18 +192,16 @@ $('#button-coupon').on('click', function() {
 		data: 'coupon=' + encodeURIComponent($('input[name=\'coupon\']').val()),
 		dataType: 'json',    
 		beforeSend: function() {
-			//$('#button-quote').attr('disabled', true);
-			//$('#button-quote').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-coupon').button('loading');
 		},
 		complete: function() {
-			//$('#button-quote').attr('disabled', false);
-			//$('.wait').remove();
+			$('#button-coupon').button('reset');
 		},
 		success: function(json) {
 			$('.alert').remove();   
 
 			if (json['error']) {
-				$('#content').prepend('<div class="alert alert-error">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-error">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}  
@@ -215,7 +213,61 @@ $('#button-coupon').on('click', function() {
 	});
 });
 
+$('#button-voucher').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/cart/voucher',
+		type: 'post',
+		data: 'voucher=' + encodeURIComponent($('input[name=\'voucher\']').val()),
+		dataType: 'json',    
+		beforeSend: function() {
+			$('#button-voucher').button('loading');
+		},
+		complete: function() {
+			$('#button-voucher').button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();   
 
+			if (json['error']) {
+				$('#content').prepend('<div class="alert alert-error">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		
+				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+			}  
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+		}
+	});
+});
+
+$('#button-reward').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/cart/reward',
+		type: 'post',
+		data: 'reward=' + encodeURIComponent($('input[name=\'reward\']').val()),
+		dataType: 'json',    
+		beforeSend: function() {
+			$('#button-reward').button('loading');
+		},
+		complete: function() {
+			$('#button-reward').button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();   
+
+			if (json['error']) {
+				$('#content').prepend('<div class="alert alert-error">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+		
+				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+			}  
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+		}
+	});
+});
 
 $('#button-quote').on('click', function() {
 	$.ajax({
@@ -224,21 +276,17 @@ $('#button-quote').on('click', function() {
 		data: 'country_id=' + $('select[name=\'country_id\']').val() + '&zone_id=' + $('select[name=\'zone_id\']').val() + '&postcode=' + encodeURIComponent($('input[name=\'postcode\']').val()),
 		dataType: 'json',    
 		beforeSend: function() {
-			//$('#button-quote').attr('disabled', true);
-			//$('#button-quote').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-quote').button('loading');
 		},
 		complete: function() {
-			//$('#button-quote').attr('disabled', false);
-			//$('.wait').remove();
+			$('#button-quote').button('reset');
 		},
 		success: function(json) {
 			$('.alert').remove();      
 		
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#notification').html('<div class="warning" style="display: none;">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			
-					$('.warning').fadeIn('slow');
+					$('#content').prepend('<div class="alert alert-error">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			
 					$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 				}  
@@ -258,8 +306,7 @@ $('#button-quote').on('click', function() {
 
 			if (json['shipping_method']) {
 				html  = '<h2><?php echo $text_shipping_method; ?></h2>';
-				html += '<form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">';
-				html += '  <table class="radio">';
+				html += '  <table class="table table-bordered">';
 			
 				for (i in json['shipping_method']) {
 					html += '<tr>';
@@ -288,16 +335,12 @@ $('#button-quote').on('click', function() {
 				}
 					
 				html += '  </table>';
-				html += '  <br />';
-				html += '  <input type="hidden" name="next" value="shipping" />';
 
 				<?php if ($shipping_method) { ?>
 				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="btn" />';  
 				<?php } else { ?>
 				html += '  <input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="btn" disabled="disabled" />';   
 				<?php } ?>
-				
-				html += '</form>';
 				
 				$.colorbox({
 					overlayClose: true,

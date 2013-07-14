@@ -266,11 +266,14 @@ $('select[name=\'country_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 $(document).ready(function() {
-    $('.colorbox').colorbox({
-        maxWidth: 640,
-        width: "85%",
-        height: 480
-    });
+	$('.agree').magnificPopup({
+		delegate: 'li a', // child items selector, by clicking on it popup will open
+		type: 'image',
+		gallery: {
+			enabled: true
+		}
+		// other options
+	});
 });
 //--></script> 
 <?php echo $footer; ?>

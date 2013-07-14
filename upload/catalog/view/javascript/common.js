@@ -99,11 +99,7 @@ $(document).ready(function() {
     // tooltips on hover
 
 
-    $('.tooltip-item').hover( function(){
-
-        $(this).tooltip('show');
-    });
-
+   $('[data-toggle=\'tooltip\']').tooltip();
 });
 
 function getURLVar(key) {

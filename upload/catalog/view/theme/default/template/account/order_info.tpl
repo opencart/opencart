@@ -15,12 +15,12 @@
       </thead>
       <tbody>
         <tr>
-          <td class="left" style="width: 50%;"><?php if ($invoice_no) { ?>
+          <td class="left"><?php if ($invoice_no) { ?>
             <b><?php echo $text_invoice_no; ?></b> <?php echo $invoice_no; ?><br />
             <?php } ?>
             <b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
             <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
-          <td class="left" style="width: 50%;"><?php if ($payment_method) { ?>
+          <td class="left"><?php if ($payment_method) { ?>
             <b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?><br />
             <?php } ?>
             <?php if ($shipping_method) { ?>
@@ -72,7 +72,7 @@
           <td class="right"><?php echo $product['quantity']; ?></td>
           <td class="right"><?php echo $product['price']; ?></td>
           <td class="right"><?php echo $product['total']; ?></td>
-          <td class="right"><a data-toggle="tooltip" class="tooltip-item" alt="<?php echo $button_return; ?>" title="<?php echo $button_return; ?>" href="<?php echo $product['return']; ?>"> <i class="icon-reply"></i> </a></td>
+          <td class="right"><a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>"><i class="icon-reply"></i></a></td>
         </tr>
         <?php } ?>
         <?php foreach ($vouchers as $voucher) { ?>
@@ -116,8 +116,8 @@
     </table>
     <?php } ?>
     <?php if ($histories) { ?>
+    <h3><?php echo $text_history; ?></h3>
     <table class="table table-bordered table-hover">
-      <h3><?php echo $text_history; ?></h3>
       <thead>
         <tr>
           <td class="left"><?php echo $column_date_added; ?></td>

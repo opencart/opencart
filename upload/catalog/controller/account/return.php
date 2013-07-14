@@ -38,13 +38,14 @@ class ControllerAccountReturn extends Controller {
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_return_id'] = $this->language->get('text_return_id');
-		$this->data['text_order_id'] = $this->language->get('text_order_id');
-		$this->data['text_status'] = $this->language->get('text_status');
-		$this->data['text_date_added'] = $this->language->get('text_date_added');
-		$this->data['text_customer'] = $this->language->get('text_customer');
 		$this->data['text_empty'] = $this->language->get('text_empty');
-
+		
+		$this->data['column_return_id'] = $this->language->get('column_return_id');
+		$this->data['column_order_id'] = $this->language->get('column_order_id');
+		$this->data['column_status'] = $this->language->get('column_status');
+		$this->data['column_date_added'] = $this->language->get('column_date_added');
+		$this->data['column_customer'] = $this->language->get('column_customer');
+		
 		$this->data['button_view'] = $this->language->get('button_view');
 		$this->data['button_continue'] = $this->language->get('button_continue');
 		

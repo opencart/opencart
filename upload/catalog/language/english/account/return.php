@@ -15,13 +15,17 @@ $_['text_order_id']      = 'Order ID:';
 $_['text_date_ordered']  = 'Order Date:';
 $_['text_status']        = 'Status:';
 $_['text_date_added']    = 'Date Added:';
-$_['text_customer']      = 'Customer:';
 $_['text_comment']       = 'Return Comments';
 $_['text_history']       = 'Return History';
 $_['text_empty']         = 'You have not made any previous returns!';
 $_['text_agree']         = 'I have read and agree to the <a class="colorbox" href="%s" alt="%s"><b>%s</b></a>';
 
 // Column
+$_['column_return_id']   = 'Return ID';
+$_['column_order_id']    = 'Order ID';
+$_['column_status']      = 'Status';
+$_['column_date_added']  = 'Date Added';
+$_['column_customer']    = 'Customer';
 $_['column_product']     = 'Product Name';
 $_['column_model']       = 'Model';
 $_['column_quantity']    = 'Quantity';

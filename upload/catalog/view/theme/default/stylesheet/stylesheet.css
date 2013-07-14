@@ -1687,7 +1687,10 @@ img.mfp-img {
 }
 
 
-
+.empty {
+	border: 1px solid #CCC;
+	padding: 5px;
+}
 .table .left {
 	text-align: left;
 }

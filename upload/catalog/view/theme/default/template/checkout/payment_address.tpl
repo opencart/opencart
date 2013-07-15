@@ -1,11 +1,9 @@
 <?php if ($addresses) { ?>
 <div>
-    <label for="payment-address-existing" class="radio">
-        <input type="radio" name="payment_address" value="existing" id="payment-address-existing" checked="checked" />
-        <?php echo $text_address_existing; ?>
-    </label>
+  <label for="payment-address-existing" class="radio">
+    <input type="radio" name="payment_address" value="existing" id="payment-address-existing" checked="checked" />
+    <?php echo $text_address_existing; ?> </label>
 </div>
-
 <div id="payment-existing">
   <select name="address_id" style="width: 100%; margin-bottom: 15px;" size="5">
     <?php foreach ($addresses as $address) { ?>
@@ -17,136 +15,101 @@
     <?php } ?>
   </select>
 </div>
-    <label class="radio" for="payment-address-new">
-        <input type="radio" name="payment_address" value="new" id="payment-address-new" />
-        <?php echo $text_address_new; ?>
-    </label>
+<label class="radio" for="payment-address-new">
+  <input type="radio" name="payment_address" value="new" id="payment-address-new" />
+  <?php echo $text_address_new; ?> </label>
 <?php } ?>
 <div id="payment-new" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
-  
-    <div class="form form-horizontal">
-
-        <div class="control-group">
-            <label class="control-label" for="firstname">
-                <span class="text-error">*</span> <?php echo $entry_firstname; ?>
-            </label>
-            <div class="controls">
-                <input type="text" name="firstname" value="" class="large-field" />
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="lastname">
-                <span class="text-error">*</span> <?php echo $entry_lastname; ?>
-            </label>
-            <div class="controls">
-                <input type="text" name="lastname" value="" class="large-field" />
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="company">
-                <?php echo $entry_company; ?>
-            </label>
-            <div class="controls">
-                <input type="text" name="company" value="" class="large-field" />
-            </div>
-        </div>
-
-        <?php if ($company_id_display) { ?>
-        <div class="control-group">
-            <label class="control-label" for="company">
-                <?php if ($company_id_required) { ?>
-                    <span class="text-error">*</span>
-                <?php } ?>
-                <?php echo $entry_company_id; ?>
-            </label>
-            <div class="controls">
-                <input type="text" name="company_id" value="" class="large-field" />
-            </div>
-        </div>
+  <div class="form form-horizontal">
+    <div class="control-group">
+      <label class="control-label" for="firstname"> <span class="text-error">*</span> <?php echo $entry_firstname; ?> </label>
+      <div class="controls">
+        <input type="text" name="firstname" value="" class="large-field" />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="lastname"> <span class="text-error">*</span> <?php echo $entry_lastname; ?> </label>
+      <div class="controls">
+        <input type="text" name="lastname" value="" class="large-field" />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="company"> <?php echo $entry_company; ?> </label>
+      <div class="controls">
+        <input type="text" name="company" value="" class="large-field" />
+      </div>
+    </div>
+    <?php if ($company_id_display) { ?>
+    <div class="control-group">
+      <label class="control-label" for="company">
+        <?php if ($company_id_required) { ?>
+        <span class="text-error">*</span>
         <?php } ?>
-
-        <?php if ($tax_id_display) { ?>
-        <div class="control-group">
-            <label class="control-label" for="tax_id">
-                <?php if ($tax_id_required) { ?>
-                <span class="text-error">*</span>
-                <?php } ?>
-                <?php echo $entry_tax_id; ?>
-            </label>
-            <div class="controls">
-                <input type="text" name="tax_id" value="" class="large-field" />
-            </div>
-        </div>
+        <?php echo $entry_company_id; ?> </label>
+      <div class="controls">
+        <input type="text" name="company_id" value="" class="large-field" />
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($tax_id_display) { ?>
+    <div class="control-group">
+      <label class="control-label" for="tax_id">
+        <?php if ($tax_id_required) { ?>
+        <span class="text-error">*</span>
         <?php } ?>
-        
-        <div class="control-group">
-            <label class="control-label" for="address_1">
-                <span class="text-error">*</span> <?php echo $entry_address_1; ?>
-            </label>
-            <div class="controls">
-                <input type="text" name="address_1" value="" class="large-field" />
-            </div>
-        </div>
-        
-        <div class="control-group">
-            <label class="control-label" for="address_2">
-                <?php echo $entry_address_2; ?>
-            </label>
-            <div class="controls">
-                <input type="text" name="address_2" value="" class="large-field" />
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="city">
-                <span class="text-error">*</span> <?php echo $entry_city; ?>
-            </label>
-            <div class="controls">
-                <input type="text" name="city" value="" class="large-field" />
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="postcode">
-                <span id="payment-postcode-required" class="text-error">*</span> <?php echo $entry_postcode; ?>
-            </label>
-            <div class="controls">
-                <input type="text" name="postcode" value="" class="large-field" />
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="country_id">
-                <span class="text-error">*</span> <?php echo $entry_country; ?>
-            </label>
-            <div class="controls">
-                <select name="country_id" class="large-field">
-                    <option value=""><?php echo $text_select; ?></option>
-                    <?php foreach ($countries as $country) { ?>
-                    <?php if ($country['country_id'] == $country_id) { ?>
-                    <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                </select>
-            </div>
-        </div>
-
-        <div class="control-group">
-            <label class="control-label" for="zone_id">
-                <span class="text-error">*</span> <?php echo $entry_zone; ?>
-            </label>
-            <div class="controls">
-                <select name="zone_id" class="large-field">
-                </select>
-            </div>
-        </div>
-
-    </div> <!-- form -->
-
+        <?php echo $entry_tax_id; ?> </label>
+      <div class="controls">
+        <input type="text" name="tax_id" value="" class="large-field" />
+      </div>
+    </div>
+    <?php } ?>
+    <div class="control-group">
+      <label class="control-label" for="address_1"> <span class="text-error">*</span> <?php echo $entry_address_1; ?> </label>
+      <div class="controls">
+        <input type="text" name="address_1" value="" class="large-field" />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="address_2"> <?php echo $entry_address_2; ?> </label>
+      <div class="controls">
+        <input type="text" name="address_2" value="" class="large-field" />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="city"> <span class="text-error">*</span> <?php echo $entry_city; ?> </label>
+      <div class="controls">
+        <input type="text" name="city" value="" class="large-field" />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="postcode"> <span id="payment-postcode-required" class="text-error">*</span> <?php echo $entry_postcode; ?> </label>
+      <div class="controls">
+        <input type="text" name="postcode" value="" class="large-field" />
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="country_id"> <span class="text-error">*</span> <?php echo $entry_country; ?> </label>
+      <div class="controls">
+        <select name="country_id" class="large-field">
+          <option value=""><?php echo $text_select; ?></option>
+          <?php foreach ($countries as $country) { ?>
+          <?php if ($country['country_id'] == $country_id) { ?>
+          <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+          <?php } else { ?>
+          <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+          <?php } ?>
+          <?php } ?>
+        </select>
+      </div>
+    </div>
+    <div class="control-group">
+      <label class="control-label" for="zone_id"> <span class="text-error">*</span> <?php echo $entry_zone; ?> </label>
+      <div class="controls">
+        <select name="zone_id" class="large-field">
+        </select>
+      </div>
+    </div>
+  </div>
 </div>
 <br />
 <div class="buttons">

@@ -4,9 +4,9 @@
   <li> <a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?> </a> </li>
   <?php } ?>
 </ul>
-<div class="row"> <?php echo $column_left; ?>
+<div class="row"><?php echo $column_left; ?>
   <div class="span12">
-    <div id="content"> <?php echo $content_top; ?>
+    <div id="content"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <div class="row">
         <div class="span4">
@@ -44,9 +44,7 @@
               <div class="alert alert-error"><?php echo $error_email; ?></div>
               <?php } ?>
               <label><?php echo $entry_enquiry; ?></label>
-              <textarea name="enquiry" cols="40" rows="10" style="width: 99%;">
-                                <?php echo $enquiry; ?>
-                            </textarea>
+              <textarea name="enquiry" cols="40" rows="10" style="width: 99%;"><?php echo $enquiry; ?></textarea>
               <?php if ($error_enquiry) { ?>
               <div class="alert alert-error"><?php echo $error_enquiry; ?></div>
               <?php } ?>

@@ -552,13 +552,11 @@ $('#button-review').bind('click', function() {
     });
 });
 //--></script> 
-
-
 <script type="text/javascript"><!--
 $(document).ready(function() {
 /*<script src="catalog/view/javascript/jquery/ui/jquery-ui-1.10.3.custom.min.js"></script> 
 <script type="text/javascript" src="catalog/view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
-    $('.date').datepicker({dateFormat: 'yy-mm-dd'});
+$('.date').datepicker({dateFormat: 'yy-mm-dd'});
     $('.datetime').datetimepicker({
         dateFormat: 'yy-mm-dd',
         timeFormat: 'h:m'

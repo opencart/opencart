@@ -10,12 +10,12 @@
     
         <div class="accordion" id="accordion">
           <div class="accordion-group">
-            <div class="accordion-heading"><a href="#collapse-coupon" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_use_coupon; ?> <i class="icon-caret-down"></i></a></div>
+            <div class="accordion-heading"><a href="#collapse-coupon" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_option; ?> <i class="icon-caret-down"></i></a></div>
             <div id="collapse-coupon" class="accordion-body collapse">
-              <div class="accordion-inner form-inline">
-                <label class="control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
-                <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" />
-                <input type="button" value="<?php echo $button_coupon; ?>" id="button-coupon" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
+              <div class="accordion-inner">
+              
+              
+              
               </div>
             </div>
           </div>

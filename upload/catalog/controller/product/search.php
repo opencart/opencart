@@ -214,9 +214,9 @@ class ControllerProductSearch extends Controller {
 				'limit'               => $limit
 			);
 
+			$product_total = $this->model_catalog_product->getTotalProducts($data);
+
 			$results = $this->model_catalog_product->getProducts($data);
-			
-			$product_total = $this->model_catalog_product->getFoundProducts();
 
 			foreach ($results as $result) {
 				if ($result['image']) {

@@ -118,6 +118,8 @@ class ControllerProductCategory extends Controller {
 			$this->data['button_wishlist'] = $this->language->get('button_wishlist');
 			$this->data['button_compare'] = $this->language->get('button_compare');
 			$this->data['button_continue'] = $this->language->get('button_continue');
+			$this->data['button_list'] = $this->language->get('button_list');
+			$this->data['button_grid'] = $this->language->get('button_grid');
 
 			// Set the last category breadcrumb
 			$url = '';
@@ -197,10 +199,10 @@ class ControllerProductCategory extends Controller {
 				'limit'              => $limit
 			);
 
+			$product_total = $this->model_catalog_product->getTotalProducts($data);
+
 			$results = $this->model_catalog_product->getProducts($data);
 			
-			$product_total = $this->model_catalog_product->getFoundProducts();
-
 			foreach ($results as $result) {
 				if ($result['image']) {
 					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_product_width'), $this->config->get('config_image_product_height'));

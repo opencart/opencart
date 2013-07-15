@@ -1,69 +1,67 @@
 <?php echo $header; ?>
-
-<!-- Breadcrumb -->
 <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    
-    <li>
-        <a href="<?php echo $breadcrumb['href']; ?>">
-            <?php echo $breadcrumb['text']; ?>
-        </a>
-    </li>
-    <?php } ?>
+  <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+  <?php } ?>
 </ul>
-
-<div class="row">
-
-    <div class="span12" id="content">
-        <?php echo $column_left; ?>
-        <?php echo $content_top; ?>
-
-            <h1><?php echo $heading_title; ?></h1>
-            <div class="checkout">
-                <div id="checkout">
-                    <div class="checkout-heading"><?php echo $text_checkout_option; ?></div>
-                    <div class="checkout-content"></div>
-                </div>
-                <?php if (!$logged) { ?>
-                <div id="payment-address">
-                    <div class="checkout-heading"><span><?php echo $text_checkout_account; ?></span></div>
-                    <div class="checkout-content"></div>
-                </div>
-                <?php } else { ?>
-                <div id="payment-address">
-                    <div class="checkout-heading"><span><?php echo $text_checkout_payment_address; ?></span></div>
-                    <div class="checkout-content"></div>
-                </div>
-                <?php } ?>
-                <?php if ($shipping_required) { ?>
-                <div id="shipping-address">
-                    <div class="checkout-heading"><?php echo $text_checkout_shipping_address; ?></div>
-                    <div class="checkout-content"></div>
-                </div>
-                <div id="shipping-method">
-                    <div class="checkout-heading"><?php echo $text_checkout_shipping_method; ?></div>
-                    <div class="checkout-content"></div>
-                </div>
-                <?php } ?>
-                <div id="payment-method">
-                    <div class="checkout-heading"><?php echo $text_checkout_payment_method; ?></div>
-                    <div class="checkout-content"></div>
-                </div>
-                <div id="confirm">
-                    <div class="checkout-heading"><?php echo $text_checkout_confirm; ?></div>
-                    <div class="checkout-content"></div>
-                </div>
-            </div> <!-- checkout -->
-
-        <?php echo $content_bottom; ?>
-        <?php echo $column_right; ?>
-
-    </div> <!-- content span9 -->
-
-</div> <!-- row -->
-
-
-
+<div class="row"><?php echo $column_left; ?>
+  <div id="content" class="span12"><?php echo $content_top; ?>
+    <h1><?php echo $heading_title; ?></h1>
+    
+        <div class="accordion" id="accordion">
+          <div class="accordion-group">
+            <div class="accordion-heading"><a href="#collapse-coupon" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_use_coupon; ?> <i class="icon-caret-down"></i></a></div>
+            <div id="collapse-coupon" class="accordion-body collapse">
+              <div class="accordion-inner form-inline">
+                <label class="control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
+                <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" />
+                <input type="button" value="<?php echo $button_coupon; ?>" id="button-coupon" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
+              </div>
+            </div>
+          </div>
+        </div>
+    
+    
+    
+    <div class="checkout">
+      <div id="checkout">
+        <div class="checkout-heading"><?php echo $text_checkout_option; ?></div>
+        <div class="checkout-content"></div>
+      </div>
+      <?php if (!$logged) { ?>
+      <div id="payment-address">
+        <div class="checkout-heading"><span><?php echo $text_checkout_account; ?></span></div>
+        <div class="checkout-content"></div>
+      </div>
+      <?php } else { ?>
+      <div id="payment-address">
+        <div class="checkout-heading"><span><?php echo $text_checkout_payment_address; ?></span></div>
+        <div class="checkout-content"></div>
+      </div>
+      <?php } ?>
+      <?php if ($shipping_required) { ?>
+      <div id="shipping-address">
+        <div class="checkout-heading"><?php echo $text_checkout_shipping_address; ?></div>
+        <div class="checkout-content"></div>
+      </div>
+      <div id="shipping-method">
+        <div class="checkout-heading"><?php echo $text_checkout_shipping_method; ?></div>
+        <div class="checkout-content"></div>
+      </div>
+      <?php } ?>
+      <div id="payment-method">
+        <div class="checkout-heading"><?php echo $text_checkout_payment_method; ?></div>
+        <div class="checkout-content"></div>
+      </div>
+      <div id="confirm">
+        <div class="checkout-heading"><?php echo $text_checkout_confirm; ?></div>
+        <div class="checkout-content"></div>
+      </div>
+    </div>
+  </div>
+  <?php echo $content_bottom; ?></div>
+<?php echo $column_right; ?>
+</div>
 <script type="text/javascript"><!--
 $('#checkout .checkout-content input[name=\'account\']').change(function() {
     if ($(this).prop('value') == 'register') {
@@ -75,8 +73,10 @@ $('#checkout .checkout-content input[name=\'account\']').change(function() {
 
 $(document).on('click', '.checkout-heading a', function() {
     $('.checkout-content').slideUp('slow');
-    console.log($(this));
-    $(this).parent().parent().find('.checkout-content').slideDown('slow');
+    
+	console.log($(this));
+    
+	$(this).parent().parent().find('.checkout-content').slideDown('slow');
 });
 
 <?php if (!$logged) { ?> 
@@ -145,7 +145,6 @@ $(document).on('click', '#button-account', function() {
 
 // Login
 $(document).on('click', '#button-login', function() {
-
     $.ajax({
         url: 'index.php?route=checkout/login/validate',
         type: 'post',
@@ -949,5 +948,5 @@ $(document).on('click', '#button-payment-method', function() {
         }
     }); 
 });
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

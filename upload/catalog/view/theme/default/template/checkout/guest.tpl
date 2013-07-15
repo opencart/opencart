@@ -1,7 +1,7 @@
 <div class="left">
   <h2><?php echo $text_your_details; ?></h2>
   <span class="text-error">*</span> <?php echo $entry_firstname; ?><br />
-  <input type="text" name="firstname" value="<?php echo $firstname; ?>" class="large-field" />
+  <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="input-firstname" class="large-field" />
   <br />
   <br />
   <span class="text-error">*</span> <?php echo $entry_lastname; ?><br />

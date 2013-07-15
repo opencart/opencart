@@ -13,7 +13,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
           <div class="controls">
-            <input type="password" name="password" value="<?php echo $password; ?>" id="input-password" />
+            <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
             <?php } ?>
@@ -22,7 +22,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
           <div class="controls">
-            <input type="password" name="confirm" value="<?php echo $confirm; ?>" id="input-confirm" />
+            <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" />
             <?php if ($error_confirm) { ?>
             <span class="error"><?php echo $error_confirm; ?></span>
             <?php } ?>

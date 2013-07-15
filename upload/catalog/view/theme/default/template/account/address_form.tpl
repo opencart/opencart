@@ -11,9 +11,9 @@
       <div class="content">
         <fieldset>
           <div class="control-group required">
-            <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?> </label>
+            <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
             <div class="controls">
-              <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-firstname" />
+              <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
               <?php if ($error_firstname) { ?>
               <div class="error"><?php echo $error_firstname; ?></div>
               <?php } ?>
@@ -22,7 +22,7 @@
           <div class="control-group required">
             <label class="control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
             <div class="controls">
-              <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-lastname" />
+              <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
               <?php if ($error_lastname) { ?>
               <div class="error"><?php echo $error_lastname; ?></div>
               <?php } ?>
@@ -31,13 +31,13 @@
           <div class="control-group">
             <label class="control-label" for="input-company"><?php echo $entry_company; ?></label>
             <div class="controls">
-              <input type="text" name="company" value="<?php echo $company; ?>" id="input-company" />
+              <input type="text" name="company" value="<?php echo $company; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company" />
             </div>
           </div>
           <div class="control-group">
             <label class="control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
             <div class="controls">
-              <input type="text" name="address_1" value="<?php echo $address_1; ?>" id="input-address-1" />
+              <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" />
               <?php if ($error_address_1) { ?>
               <div class="error"><?php echo $error_address_1; ?></div>
               <?php } ?>
@@ -46,13 +46,13 @@
           <div class="control-group">
             <label class="control-label" for="input-address-2"><?php echo $entry_address_2; ?></label>
             <div class="controls">
-              <input type="text" name="address_2" value="<?php echo $address_2; ?>" id="input-address-2" />
+              <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" />
             </div>
           </div>
           <div class="control-group required">
             <label class="control-label" for="input-city"><?php echo $entry_city; ?> </label>
             <div class="controls">
-              <input type="text" name="city" value="<?php echo $city; ?>" id="input-city" />
+              <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
               <?php if ($error_city) { ?>
               <div class="error"><?php echo $error_city; ?></div>
               <?php } ?>
@@ -61,7 +61,7 @@
           <div class="control-group required">
             <label class="control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
             <div class="controls">
-              <input type="text" name="postcode" value="<?php echo $postcode; ?>" id="input-postcode" />
+              <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
               <?php if ($error_postcode) { ?>
               <div class="error"><?php echo $error_postcode; ?></div>
               <?php } ?>
@@ -95,31 +95,26 @@
               <?php } ?>
             </div>
           </div>
-          <?php if ($default) { ?>
           <div class="control-group">
             <div class="control-label"><?php echo $entry_default; ?></div>
             <div class="controls">
+              <?php if ($default) { ?>
               <label class="radio">
                 <input type="radio" name="default" value="1" checked="checked" />
                 <?php echo $text_yes; ?></label>
               <label class="radio">
                 <input type="radio" name="default" value="0" />
                 <?php echo $text_no; ?></label>
-            </div>
-          </div>
-          <?php } else { ?>
-          <div class="control-group">
-            <div class="control-label"><?php echo $entry_default; ?></div>
-            <div class="controls">
+              <?php } else { ?>
               <label class="radio">
                 <input type="radio" name="default" value="1" />
                 <?php echo $text_yes; ?></label>
               <label class="radio">
                 <input type="radio" name="default" value="0" checked="checked" />
                 <?php echo $text_no; ?></label>
+              <?php } ?>
             </div>
           </div>
-          <?php } ?>
         </fieldset>
       </div>
       <div class="buttons clearfix">

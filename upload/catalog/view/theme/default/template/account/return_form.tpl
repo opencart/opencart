@@ -17,7 +17,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
           <div class="controls">
-            <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-firstname" class="large-field" />
+            <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
             <?php if ($error_firstname) { ?>
             <div class="error"><?php echo $error_firstname; ?></div>
             <?php } ?>
@@ -26,7 +26,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
           <div class="controls">
-            <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-lastname" class="large-field" />
+            <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
             <?php if ($error_lastname) { ?>
             <div class="error"><?php echo $error_lastname; ?></div>
             <?php } ?>
@@ -35,7 +35,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
           <div class="controls">
-            <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="large-field" />
+            <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
             <?php if ($error_email) { ?>
             <div class="error"><?php echo $error_email; ?></div>
             <?php } ?>
@@ -44,7 +44,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
           <div class="controls">
-            <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-telephone" class="large-field" />
+            <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
             <?php if ($error_telephone) { ?>
             <div class="error"><?php echo $error_telephone; ?></div>
             <?php } ?>
@@ -53,7 +53,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-order-id"><?php echo $entry_order_id; ?></label>
           <div class="controls">
-            <input type="text" name="order_id" value="<?php echo $order_id; ?>" id="input-order-id" class="large-field" />
+            <input type="text" name="order_id" value="<?php echo $order_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" />
             <?php if ($error_order_id) { ?>
             <div class="error"><?php echo $error_order_id; ?></div>
             <?php } ?>
@@ -62,7 +62,7 @@
         <div class="control-group">
           <label class="control-label" for="input-date-ordered"><?php echo $entry_date_ordered; ?></label>
           <div class="controls">
-            <input type="text" name="date_ordered" value="<?php echo $date_ordered; ?>" id="input-date-ordered" class="large-field date" />
+            <input type="text" name="date_ordered" value="<?php echo $date_ordered; ?>" placeholder="<?php echo $entry_date_ordered; ?>" id="input-date-ordered" class="date" />
           </div>
         </div>
       </fieldset>
@@ -71,7 +71,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="controls">
-            <input type="text" name="product" value="<?php echo $product; ?>" id="input-product" />
+            <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
             <?php if ($error_product) { ?>
             <div class="error"><?php echo $error_product; ?></div>
             <?php } ?>
@@ -80,7 +80,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-model"><?php echo $entry_model; ?></label>
           <div class="controls">
-            <input type="text" name="model" value="<?php echo $model; ?>" id="input-model" />
+            <input type="text" name="model" value="<?php echo $model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" />
             <?php if ($error_model) { ?>
             <div class="error"><?php echo $error_model; ?></div>
             <?php } ?>
@@ -89,7 +89,7 @@
         <div class="control-group">
           <label class="control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
           <div class="controls">
-            <input type="text" name="quantity" value="<?php echo $quantity; ?>" id="input-quantity" />
+            <input type="text" name="quantity" value="<?php echo $quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" />
           </div>
         </div>
         <div class="control-group required">
@@ -133,13 +133,13 @@
         <div class="control-group">
           <label class="control-label" for="input-comment"><?php echo $entry_fault_detail; ?></label>
           <div class="controls">
-            <textarea name="comment" rows="10" id="input-comment" class="input-xxlarge"><?php echo $comment; ?></textarea>
+            <textarea name="comment" rows="10" placeholder="<?php echo $entry_fault_detail; ?>" id="input-comment" class="input-xxlarge"><?php echo $comment; ?></textarea>
           </div>
         </div>
         <div class="control-group">
           <label class="control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
           <div class="controls">
-            <input type="text" name="captcha" value="<?php echo $captcha; ?>" id="input-captcha" />
+            <input type="text" name="captcha" value="<?php echo $captcha; ?>" placeholder="<?php echo $entry_captcha; ?>" id="input-captcha" />
             <br />
             <img src="index.php?route=account/return/captcha" alt="" />
             <?php if ($error_captcha) { ?>

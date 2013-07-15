@@ -17,7 +17,7 @@
         <div class="control-group required">
           <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
           <div class="controls">
-            <input type="email" name="email" value="" id="input-email" />
+            <input type="email" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-email" />
           </div>
         </div>
       </fieldset>

@@ -31,9 +31,12 @@ class ControllerAffiliateTracking extends Controller {
     	$this->data['heading_title'] = $this->language->get('heading_title');
 		
 		$this->data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'));
-		$this->data['text_code'] = $this->language->get('text_code');
-		$this->data['text_generator'] = $this->language->get('text_generator');
-		$this->data['text_link'] = $this->language->get('text_link');
+		
+		$this->data['entry_code'] = $this->language->get('entry_code');
+		$this->data['entry_generator'] = $this->language->get('entry_generator');
+		$this->data['entry_link'] = $this->language->get('entry_link');
+		
+		$this->data['help_generator'] = $this->language->get('help_generator');
 		
 		$this->data['button_continue'] = $this->language->get('button_continue');
 

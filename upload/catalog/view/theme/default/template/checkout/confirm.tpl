@@ -35,20 +35,15 @@
       <?php } ?>
     </tbody>
   </table>
-
-  <div class="pull-right" style="text-align: right;margin-bottom: 1em;">
+  <div class="pull-right" style="text-align: right; margin-bottom: 1em;">
     <?php foreach ($totals as $total) { ?>
-      <div>
-        <strong class="price"><?php echo $total['title']; ?>:</strong>
-        <span class="total"><?php echo $total['text']; ?></span>
-      </div>
+    <div><strong class="price"><?php echo $total['title']; ?>:</strong> <span class="total"><?php echo $total['text']; ?></span> </div>
     <?php } ?>
   </div>
-
 </div>
 <div class="payment" style="clear:both;"><?php echo $payment; ?></div>
 <?php } else { ?>
 <script type="text/javascript"><!--
 location = '<?php echo $redirect; ?>';
-//--></script> 
+//--></script>
 <?php } ?>

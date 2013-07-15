@@ -29,13 +29,13 @@
             <div class="control-group">
               <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
               <div class="controls">
-                <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" />
+                <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
               </div>
             </div>
             <div class="control-group">
               <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
               <div class="controls">
-                <input type="password" name="password" value="<?php echo $password; ?>" id="input-password" />
+                <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
                 <br />
                 <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a> </div>
             </div>

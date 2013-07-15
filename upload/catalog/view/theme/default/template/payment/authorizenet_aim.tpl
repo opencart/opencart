@@ -40,7 +40,7 @@ $('#button-confirm').bind('click', function() {
 		data: $('#payment :input'),
 		dataType: 'json',		
 		beforeSend: function() {
-			$('#button-confirm').attr('disabled', true);
+			$('#button-confirm').prop('disabled', true);
 			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
 		},
 		complete: function() {

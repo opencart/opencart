@@ -5,10 +5,6 @@ class ControllerCheckoutCart extends Controller {
 	public function index() {
 		$this->language->load('checkout/cart');
 
-		if (!isset($this->session->data['vouchers'])) {
-			$this->session->data['vouchers'] = array();
-		}
-		
 		// Update
 		if (!empty($this->request->post['quantity'])) {
 			foreach ($this->request->post['quantity'] as $key => $value) {
@@ -42,7 +38,7 @@ class ControllerCheckoutCart extends Controller {
 		}
 		
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/magnific.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 			
       	$this->data['breadcrumbs'] = array();
@@ -210,16 +206,20 @@ class ControllerCheckoutCart extends Controller {
 			
 			// Gift Voucher
 			$this->data['vouchers'] = array();
-			
-			if (!empty($this->session->data['vouchers'])) {
-				foreach ($this->session->data['vouchers'] as $key => $voucher) {
-					$this->data['vouchers'][] = array(
-						'key'         => $key,
-						'description' => $voucher['description'],
-						'amount'      => $this->currency->format($voucher['amount']),
-						'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)   
-					);
-				}
+		
+			if (!isset($this->session->data['vouchers'])) {
+				$vouchers = $this->session->data['vouchers'] = array();
+			} else {
+				$vouchers = array();
+			}
+
+			foreach ($vouchers as $key => $voucher) {
+				$this->data['vouchers'][] = array(
+					'key'         => $key,
+					'description' => $voucher['description'],
+					'amount'      => $this->currency->format($voucher['amount']),
+					'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)   
+				);
 			}
 						 
 			$this->data['coupon_status'] = $this->config->get('coupon_status');
@@ -461,8 +461,14 @@ class ControllerCheckoutCart extends Controller {
 		$json = array();
 				
 		$this->load->model('checkout/coupon');
-				
-		$coupon_info = $this->model_checkout_coupon->getCoupon($this->request->post['coupon']);			
+		
+		if (isset($this->request->post['coupon'])) {
+			$coupon = $this->request->post['coupon'];
+		} else {
+			$coupon = '';
+		}
+						
+		$coupon_info = $this->model_checkout_coupon->getCoupon($coupon);			
 		
 		if ($coupon_info) {			
 			$this->session->data['coupon'] = $this->request->post['coupon'];

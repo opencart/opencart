@@ -36,7 +36,7 @@ class ModelReportAffiliate extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalCommission() {
+	public function getTotalCommission($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT affiliate_id) AS total FROM `" . DB_PREFIX . "affiliate_transaction`";
 		
 		$implode = array();
@@ -94,7 +94,7 @@ class ModelReportAffiliate extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalProducts() {
+	public function getTotalProducts($data = array()) {
 		$sql = "SELECT COUNT(DISTINCT product_id) AS total FROM `" . DB_PREFIX . "affiliate_transaction`";
 		
 		$implode = array();

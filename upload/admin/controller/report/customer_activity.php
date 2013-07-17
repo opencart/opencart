@@ -134,7 +134,7 @@ class ControllerReportCustomerActivity extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $activity_total;
 		$pagination->page = $page;
-		$pagination->limit = 20;
+		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$this->data['pagination'] = $pagination->render();

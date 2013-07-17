@@ -1,5 +1,25 @@
 <div class="left">
-  <h2><?php echo $text_your_details; ?></h2>
+<div class="row">
+  <div class="span6">
+  <fieldset>
+  <legend><?php echo $text_your_details; ?></legend>
+        <div class="control-group required">
+          <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
+          <div class="controls">
+            <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
+            <?php if ($error_firstname) { ?>
+            <div class="error"><?php echo $error_firstname; ?></div>
+            <?php } ?>
+          </div>
+        </div>
+  
+  
+  </fieldset>
+ </div>
+  </div>
+  
+  
+  
   <span class="text-error">*</span> <?php echo $entry_firstname; ?><br />
   <input type="text" name="firstname" value="" class="large-field" />
   <br />
@@ -131,6 +151,7 @@
 
 
 <script type="text/javascript"><!--
+/*
 $('#payment-address input[name=\'customer_group_id\']:checked').on('change', function() {
     var customer_group = [];
     
@@ -170,6 +191,7 @@ $('#payment-address input[name=\'customer_group_id\']:checked').on('change', fun
 });
 
 $('#payment-address input[name=\'customer_group_id\']:checked').trigger('change');
+*/
 //--></script> 
 <script type="text/javascript"><!--
 $('#payment-address select[name=\'country_id\']').on('change', function() {
@@ -178,18 +200,18 @@ $('#payment-address select[name=\'country_id\']').on('change', function() {
         url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
-            $('#payment-address select[name=\'country_id\']').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#payment-address select[name=\'country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
         },
         complete: function() {
-            $('.wait').remove();
+			$('.icon-spinner').remove();
         },          
         success: function(json) {
-            if (json['postcode_required'] == '1') {
-                $('#payment-postcode-required').show();
-            } else {
-                $('#payment-postcode-required').hide();
-            }
-            
+			if (json['postcode_required'] == '1') {
+				$('#input-payment-postcode').parent().parent().addClass('required');
+			} else {
+				$('#input-payment-postcode').parent().parent().removeClass('required');
+			}
+			            
             html = '<option value=""><?php echo $text_select; ?></option>';
             
             if (json['zone'] != '') {

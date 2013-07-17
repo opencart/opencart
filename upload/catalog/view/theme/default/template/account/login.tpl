@@ -12,15 +12,15 @@
 <?php } ?>
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
-    <div class="row">
-      <div class="span4">
+    <div class="row-fluid">
+      <div class="span6">
         <div class="well">
           <h2><?php echo $text_new_customer; ?></h2>
           <p><strong><?php echo $text_register; ?></strong></p>
           <p><?php echo $text_register_account; ?></p>
           <a href="<?php echo $register; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a> </div>
       </div>
-      <div class="span5">
+      <div class="span6">
         <div class="well">
           <h2><?php echo $text_returning_customer; ?></h2>
           <p><strong><?php echo $text_i_am_returning_customer; ?></strong></p>

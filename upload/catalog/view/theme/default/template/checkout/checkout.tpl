@@ -75,7 +75,6 @@ $(document).ready(function() {
         url: 'index.php?route=checkout/login',
         dataType: 'html',
         success: function(html) {
-			alert(html);
             $('#collapse-checkout-option .accordion-inner').html(html);
                 
             $('#collapse-checkout-option').slideDown('slow');
@@ -91,6 +90,7 @@ $(document).ready(function() {
         url: 'index.php?route=checkout/payment_address',
         dataType: 'html',
         success: function(html) {
+			alert(html);
             $('#collapse-checkout-option .accordion-inner').html(html);
                 
             $('#payment-address .checkout-content').slideDown('slow');
@@ -105,18 +105,16 @@ $(document).ready(function() {
 // Checkout
 $(document).on('click', '#button-account', function() {
     $.ajax({
-        url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').prop('value'),
+        url: 'index.php?route=checkout/' + $('input[name=\'account\']:checked').val(),
         dataType: 'html',
         beforeSend: function() {
-            $('#button-account').prop('disabled', true);
-            $('#button-account').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-        },      
+        	$('#button-account').button('loading');
+		},      
         complete: function() {
-            $('#button-account').prop('disabled', false);
-            $('.wait').remove();
+			$('#button-account').button('reset');
         },          
         success: function(html) {
-            $('.alert-warning, .alert-error').remove();
+            $('.alert').remove();
             
             $('#payment-address .checkout-content').html(html);
                 
@@ -126,7 +124,7 @@ $(document).on('click', '#button-account', function() {
                 
             $('.checkout-heading a').remove();
                 
-            $('#checkout .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');
+            $('#checkout .checkout-heading').append('');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -142,15 +140,13 @@ $(document).on('click', '#button-login', function() {
         data: $('#checkout #login :input'),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-login').prop('disabled', true);
-            $('#button-login').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-        },  
+        	$('#button-login').button('loading');
+		},  
         complete: function() {
-            $('#button-login').prop('disabled', false);
-            $('.wait').remove();
+            $('#button-login').button('reset');
         },              
         success: function(json) {
-            $('.alert-warning, .alert-error').remove();
+            $('.alert').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -174,15 +170,13 @@ $(document).on('click', '#button-register', function() {
         data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-register').prop('disabled', true);
-            $('#button-register').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-        },  
+			$('#button-register').button('loading');
+		},  
         complete: function() {
-            $('#button-register').prop('disabled', false); 
-            $('.wait').remove();
+            $('#button-register').button('reset');
         },          
         success: function(json) {
-            $('.alert-warning, .alert-error').remove();
+            $('.alert').remove();
                         
             if (json['redirect']) {
                 location = json['redirect'];                
@@ -265,8 +259,8 @@ $(document).on('click', '#button-register', function() {
                             $('#shipping-method .checkout-heading a').remove();
                             $('#payment-method .checkout-heading a').remove();                                          
                             
-                            $('#shipping-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');                                  
-                            $('#payment-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');   
+                            $('#shipping-address .checkout-heading').append('');                                  
+                            $('#payment-address .checkout-heading').append('');   
 
                             $.ajax({
                                 url: 'index.php?route=checkout/shipping_address',
@@ -300,7 +294,7 @@ $(document).on('click', '#button-register', function() {
                             $('#shipping-method .checkout-heading a').remove();
                             $('#payment-method .checkout-heading a').remove();                          
 
-                            $('#payment-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');   
+                            $('#payment-address .checkout-heading').append('');   
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
                             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -322,7 +316,7 @@ $(document).on('click', '#button-register', function() {
                         $('#payment-address .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();                              
                         
-                        $('#payment-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');   
+                        $('#payment-address .checkout-heading').append('');   
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -358,15 +352,13 @@ $(document).on('click', '#button-payment-address', function() {
         data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-payment-address').prop('disabled', true);
-            $('#button-payment-address').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-        },  
+        	$('#button-payment-address').button('loading');
+		},  
         complete: function() {
-            $('#button-payment-address').prop('disabled', false);
-            $('.wait').remove();
+			$('#button-payment-address').button('reset');
         },          
         success: function(json) {
-            $('.alert-warning, .alert-error').remove();
+            $('.alert').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -433,7 +425,7 @@ $(document).on('click', '#button-payment-address', function() {
                         $('#shipping-method .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
                         
-                        $('#payment-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');   
+                        $('#payment-address .checkout-heading').append('');   
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -453,7 +445,7 @@ $(document).on('click', '#button-payment-address', function() {
                         $('#payment-address .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
                                                     
-                        $('#payment-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');   
+                        $('#payment-address .checkout-heading').append('');   
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -487,12 +479,10 @@ $(document).on('click', '#button-shipping-address', function() {
         data: $('#shipping-address input[type=\'text\'], #shipping-address input[type=\'password\'], #shipping-address input[type=\'checkbox\']:checked, #shipping-address input[type=\'radio\']:checked, #shipping-address select'),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-shipping-address').prop('disabled', true);
-            $('#button-shipping-address').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-        },  
+			$('#button-shipping-address').button('loading');
+	    },  
         complete: function() {
-            $('#button-shipping-address').prop('disabled', false);
-            $('.wait').remove();
+			$('#button-shipping-address').button('reset');
         },          
         success: function(json) {
             $('.alert-warning, .alert-error').remove();
@@ -556,7 +546,7 @@ $(document).on('click', '#button-shipping-address', function() {
                         $('#shipping-method .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
                         
-                        $('#shipping-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');                          
+                        $('#shipping-address .checkout-heading').append('');                          
                         
                         $.ajax({
                             url: 'index.php?route=checkout/shipping_address',
@@ -600,15 +590,13 @@ $(document).on('click', '#button-guest', function() {
         data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-guest').prop('disabled', true);
-            $('#button-guest').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-        },  
+       		$('#button-guest').button('loading');
+	    },  
         complete: function() {
-            $('#button-guest').prop('disabled', false); 
-            $('.wait').remove();
+			$('#button-guest').button('reset');
         },          
         success: function(json) {
-            $('.alert-warning, .alert-error').remove();
+            $('.alert').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -682,8 +670,8 @@ $(document).on('click', '#button-guest', function() {
                             $('#shipping-method .checkout-heading a').remove();
                             $('#payment-method .checkout-heading a').remove();      
                                                             
-                            $('#payment-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');   
-                            $('#shipping-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');                                  
+                            $('#payment-address .checkout-heading').append('');   
+                            $('#shipping-address .checkout-heading').append('');                                  
                             
                             $.ajax({
                                 url: 'index.php?route=checkout/guest_shipping',
@@ -716,7 +704,7 @@ $(document).on('click', '#button-guest', function() {
                             $('#shipping-method .checkout-heading a').remove();
                             $('#payment-method .checkout-heading a').remove();
                             
-                            $('#payment-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');   
+                            $('#payment-address .checkout-heading').append('');   
                         },
                         error: function(xhr, ajaxOptions, thrownError) {
                             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -737,7 +725,7 @@ $(document).on('click', '#button-guest', function() {
                         $('#payment-address .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
                                                         
-                        $('#payment-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');
+                        $('#payment-address .checkout-heading').append('');
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -760,15 +748,13 @@ $(document).on('click', '#button-guest-shipping', function() {
         data: $('#shipping-address input[type=\'text\'], #shipping-address select'),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-guest-shipping').prop('disabled', true);
-            $('#button-guest-shipping').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-        },  
+        	$('#button-guest-shipping').button('loading');
+		},  
         complete: function() {
-            $('#button-guest-shipping').prop('disabled', false); 
-            $('.wait').remove();
+			$('#button-guest-shipping').button('reset');
         },          
         success: function(json) {
-            $('.alert-warning, .alert-error').remove();
+            $('.alert').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -821,7 +807,7 @@ $(document).on('click', '#button-guest-shipping', function() {
                         $('#shipping-method .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
                             
-                        $('#shipping-address .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');
+                        $('#shipping-address .checkout-heading').append('');
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -842,15 +828,13 @@ $(document).on('click', '#button-shipping-method', function() {
         data: $('#shipping-method input[type=\'radio\']:checked, #shipping-method textarea'),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-shipping-method').prop('disabled', true);
-            $('#button-shipping-method').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-        },  
+        	$('#button-shipping-method').button('loading');
+		},  
         complete: function() {
-            $('#button-shipping-method').prop('disabled', false);
-            $('.wait').remove();
+			$('#button-shipping-method').button('reset');
         },          
         success: function(json) {
-            $('.alert-warning, .alert-error').remove();
+            $('.alert').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -874,7 +858,7 @@ $(document).on('click', '#button-shipping-method', function() {
                         $('#shipping-method .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
                         
-                        $('#shipping-method .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');   
+                        $('#shipping-method .checkout-heading').append('');   
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -895,15 +879,13 @@ $(document).on('click', '#button-payment-method', function() {
         data: $('#payment-method input[type=\'radio\']:checked, #payment-method input[type=\'checkbox\']:checked, #payment-method textarea'),
         dataType: 'json',
         beforeSend: function() {
-            $('#button-payment-method').prop('disabled', true);
-            $('#button-payment-method').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
-        },  
+         	$('#button-payment-method').button('loading');
+		},  
         complete: function() {
-            $('#button-payment-method').prop('disabled', false);
-            $('.wait').remove();
+            $('#button-payment-method').button('reset');
         },          
         success: function(json) {
-            $('.alert-warning, .alert-error').remove();
+            $('.alert').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -926,7 +908,7 @@ $(document).on('click', '#button-payment-method', function() {
                         
                         $('#payment-method .checkout-heading a').remove();
                         
-                        $('#payment-method .checkout-heading').append('<a class="modify-link"><?php echo $text_modify; ?></a>');    
+                        $('#payment-method .checkout-heading').append('');    
                     },
                     error: function(xhr, ajaxOptions, thrownError) {
                         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

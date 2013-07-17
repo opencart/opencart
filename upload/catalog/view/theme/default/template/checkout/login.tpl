@@ -1,4 +1,4 @@
-<div class="row">
+<div class="row-fluid">
   <div class="span6">
     <h2><?php echo $text_new_customer; ?></h2>
     <p><?php echo $text_checkout; ?></p>

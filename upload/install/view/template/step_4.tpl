@@ -14,6 +14,7 @@
   <div class="alert alert-success">
     <div><a href="../"><img src="view/image/screenshot_1.png" alt="" /></a><br />
       <a href="../">Go to your Online Shop</a></div>
+    <br><br>
     <div><a href="../admin/"><img src="view/image/screenshot_2.png" alt="" /></a><br />
       <a href="../admin/">Login to your Administration</a></div>
   </div>

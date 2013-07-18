@@ -20,6 +20,8 @@
           <td>Database Driver:</td>
           <td><select name="db_driver">
               <option value="mysql">MySQL</option>
+              <option value="mmysqli">MySQLi</option>
+              <option value="mpdo">PDO</option>
             </select></td>
         </tr>
         <tr>

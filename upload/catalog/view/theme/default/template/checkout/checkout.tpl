@@ -39,7 +39,7 @@
       <div class="accordion-group">
         <div class="accordion-heading"><a href="#collapse-shipping-method" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_shipping_method; ?> <i class="icon-caret-down"></i></a></div>
         <div id="collapse-shipping-method" class="accordion-body collapse">
-          <div class="accordion-inner"> </div>
+          <div class="accordion-inner"></div>
         </div>
       </div>
       <?php } ?>
@@ -61,11 +61,11 @@
 <?php echo $column_right; ?>
 </div>
 <script type="text/javascript"><!--
-$('#collapse-checkout-option input[name=\'account\']').on('change', function() {
+$(document).on('change', '#collapse-checkout-option input[name=\'account\']', function() {
     if (this.value == 'register') {
-        $('#collapse-checkout-option').parent().find('.accordion-heading a').html('<?php echo $text_checkout_account; ?>');
+        $('#collapse-payment-address').parent().find('.accordion-heading a').html('<?php echo $text_checkout_account; ?> <i class="icon-caret-down"></i>');
     } else {
-        $('#collapse-checkout-option').parent().find('.accordion-heading a').html('<?php echo $text_checkout_payment_address; ?>');
+        $('#collapse-payment-address').parent().find('.accordion-heading a').html('<?php echo $text_checkout_payment_address; ?> <i class="icon-caret-down"></i>');
     }
 });
 
@@ -77,7 +77,7 @@ $(document).ready(function() {
         success: function(html) {
             $('#collapse-checkout-option .accordion-inner').html(html);
                 
-            $('#collapse-checkout-option').slideDown('slow');
+            $('#collapse-checkout-option').collapse('show');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -90,10 +90,9 @@ $(document).ready(function() {
         url: 'index.php?route=checkout/payment_address',
         dataType: 'html',
         success: function(html) {
-			alert(html);
             $('#collapse-checkout-option .accordion-inner').html(html);
                 
-            $('#payment-address .checkout-content').slideDown('slow');
+            $('#collapse-payment-address').collapse('show');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -116,15 +115,15 @@ $(document).on('click', '#button-account', function() {
         success: function(html) {
             $('.alert').remove();
             
-            $('#payment-address .checkout-content').html(html);
+            $('#collapse-payment-address .accordion-inner').html(html);
+            
+			$('#collapse-checkout-option').collapse('hide');
+			
+			$('#collapse-payment-address').collapse('show');
                 
-            $('#checkout .checkout-content').slideUp('slow');
+           // $('.checkout-heading a').remove();
                 
-            $('#payment-address .checkout-content').slideDown('slow');
-                
-            $('.checkout-heading a').remove();
-                
-            $('#checkout .checkout-heading').append('');
+           // $('#checkout .checkout-heading').append('');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

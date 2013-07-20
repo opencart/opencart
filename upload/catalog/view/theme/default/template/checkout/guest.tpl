@@ -99,7 +99,7 @@
         </div>
       </div>
       <div class="control-group required">
-        <label class="control-label" for="input-payment-zone;"><?php echo $entry_zone;; ?></label>
+        <label class="control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
         <div class="controls">
           <select name="zone_id" id="input-payment-zone">
           </select>
@@ -121,7 +121,7 @@
   </div>
 </div>
 <?php } ?>
-<div class="buttons clearfix">
+<div class="buttons">
   <div class="pull-right">
     <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="btn btn-primary" />
   </div>
@@ -140,17 +140,17 @@ $('#input-payment-country').on('change', function() {
         url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
-            $('#input-payment-country').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#input-payment-country').after(' <i class="icon-spinner icon-spin"></i>');
         },
         complete: function() {
-            $('.wait').remove();
+            $('.icon-spinner').remove();
         },          
         success: function(json) {
-            if (json['postcode_required'] == '1') {
-                $('#payment-postcode-required').show();
-            } else {
-                $('#payment-postcode-required').hide();
-            }
+			if (json['postcode_required'] == '1') {
+				$('#input-payment-postcode').parent().parent().addClass('required');
+			} else {
+				$('#input-payment-postcode').parent().parent().removeClass('required');
+			}
             
             html = '<option value=""><?php echo $text_select; ?></option>';
             

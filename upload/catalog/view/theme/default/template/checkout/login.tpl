@@ -24,10 +24,10 @@
   <div id="login" class="span6">
     <h2><?php echo $text_returning_customer; ?></h2>
     <p><?php echo $text_i_am_returning_customer; ?></p>
-    <label for="email"><?php echo $entry_email; ?></label>
-    <input type="text" name="email" value="" />
-    <label for="password"><?php echo $entry_password; ?></label>
-    <input type="password" name="password" value="" />
+    <label for="input-email"><?php echo $entry_email; ?></label>
+    <input type="text" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-email" />
+    <label for="input-password"><?php echo $entry_password; ?></label>
+    <input type="password" name="password" value="" placeholder="<?php echo $entry_password; ?>" id="input-password" />
     <br />
     <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a><br />
     <br />

@@ -114,7 +114,7 @@
         </div>
       </div>
       <div class="control-group required">
-        <label class="control-label" for="input-payment-zone;"><?php echo $entry_zone;; ?></label>
+        <label class="control-label" for="input-payment-zone"><?php echo $entry_zone;; ?></label>
         <div class="controls">
           <select name="zone_id" id="input-payment-zone">
           </select>
@@ -181,7 +181,13 @@ $('#input-payment-country').on('change', function() {
             
             if (json['zone'] != '') {
                 for (i = 0; i < json['zone'].length; i++) {
-                    html += '<option value="' + json['zone'][i]['zone_id'] + '">' + json['zone'][i]['name'] + '</option>';
+                    html += '<option value="' + json['zone'][i]['zone_id'] + '"';
+                    
+                    if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
+                        html += ' selected="selected"';
+                    }
+    
+                    html += '>' + json['zone'][i]['name'] + '</option>';
                 }
             } else {
                 html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';

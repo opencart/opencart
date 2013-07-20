@@ -61,7 +61,7 @@
 <?php echo $column_right; ?>
 </div>
 <script type="text/javascript"><!--
-$(document).on('change', '#collapse-checkout-option input[name=\'account\']', function() {
+$(document).on('change', 'input[name=\'account\']', function() {
     if (this.value == 'register') {
         $('#collapse-payment-address').parent().find('.accordion-heading a').html('<?php echo $text_checkout_account; ?> <i class="icon-caret-down"></i>');
     } else {
@@ -90,7 +90,7 @@ $(document).ready(function() {
         url: 'index.php?route=checkout/payment_address',
         dataType: 'html',
         success: function(html) {
-            $('#collapse-checkout-option .accordion-inner').html(html);
+            $('#collapse-payment-address .accordion-inner').html(html);
                 
             $('#collapse-payment-address').collapse('show');
         },
@@ -134,9 +134,9 @@ $(document).on('click', '#button-account', function() {
 // Login
 $(document).on('click', '#button-login', function() {
     $.ajax({
-        url: 'index.php?route=checkout/login/validate',
+        url: 'index.php?route=checkout/login/save',
         type: 'post',
-        data: $('#checkout #login :input'),
+        data: $('#collapse-checkout-option #login :input'),
         dataType: 'json',
         beforeSend: function() {
         	$('#button-login').button('loading');
@@ -150,10 +150,8 @@ $(document).on('click', '#button-login', function() {
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#checkout .checkout-content').prepend('<div class="alert alert-warning" style="display: none;">' + json['error']['warning'] + '</div>');
-                
-                $('.alert-warning').fadeIn('slow');
-            }
+                $('#collapse-checkout-option .accordion-inner').prepend('<div class="alert alert-error">' + json['error']['warning'] + '</div>');
+           }
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -164,7 +162,7 @@ $(document).on('click', '#button-login', function() {
 // Register
 $(document).on('click', '#button-register', function() {
     $.ajax({
-        url: 'index.php?route=checkout/register/validate',
+        url: 'index.php?route=checkout/register/save',
         type: 'post',
         data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
         dataType: 'json',
@@ -346,7 +344,7 @@ $(document).on('click', '#button-register', function() {
 // Payment Address  
 $(document).on('click', '#button-payment-address', function() {
     $.ajax({
-        url: 'index.php?route=checkout/payment_address/validate',
+        url: 'index.php?route=checkout/payment_address/save',
         type: 'post',
         data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
         dataType: 'json',

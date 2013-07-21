@@ -44,7 +44,7 @@
       <div class="control-group required">
         <label class="control-label" for="input-payment-confirm"><?php echo $entry_confirm; ?></label>
         <div class="controls">
-          <input type="password" name="password" value="" placeholder="<?php echo $entry_confirm; ?>" id="input-payment-confirm" />
+          <input type="password" name="confirm" value="" placeholder="<?php echo $entry_confirm; ?>" id="input-payment-confirm" />
         </div>
       </div>
     </fieldset>

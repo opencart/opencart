@@ -743,7 +743,7 @@ $('body').delegate('#button-credit-add', 'click', function() {
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
+                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('.alert-success').fadeIn('slow');
 				

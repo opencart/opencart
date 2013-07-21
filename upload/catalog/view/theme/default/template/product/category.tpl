@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <ul class="breadcrumb">
   <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-  <li> <a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?> </a> </li>
+  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
   <?php } ?>
 </ul>
 <div class="row">
@@ -96,8 +96,7 @@
     <div class="product-items layout-row-4 product-grid">
       <?php } ?>
       <?php foreach ($products as $product) { ?>
-      <div class="span3"> 
-        <!-- Product thumb -->
+      <div class="span3">
         <div class="product-thumb transition">
           <?php if ($product['thumb']) { ?>
           <div class="image"> <a href="<?php echo $product['href']; ?>"> <img src="<?php echo $product['thumb']; ?>" title="<?php echo $product['name']; ?>" alt="<?php echo $product['name']; ?>" /> </a> </div>
@@ -123,11 +122,10 @@
             <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
             <?php } ?>
           </div>
-          <div class="button-group"> <a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" class="tooltip-item" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" class="tooltip-item" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a>
+          <div class="button-group"><a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" class="tooltip-item" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" class="tooltip-item" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a>
             <div class="clearfix"></div>
           </div>
         </div>
-        <!-- / Product thumb --> 
       </div>
       <?php } ?>
     </div>
@@ -136,12 +134,9 @@
     <?php if (!$categories && !$products) { ?>
     <div class="content"><?php echo $text_empty; ?></div>
     <div class="buttons">
-      <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
+      <div class="right"><a href="<?php echo $continue; ?>" class="btn"><?php echo $button_continue; ?></a></div>
     </div>
     <?php } ?>
-    <?php echo $content_bottom; ?> </div>
-  <!-- span9 or 12 --> 
-  
-  <?php echo $column_right; ?> </div>
-<!-- row --> 
+    <?php echo $content_bottom; ?></div>
+  <?php echo $column_right; ?></div>
 <?php echo $footer; ?>

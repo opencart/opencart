@@ -218,9 +218,7 @@ function send(url) {
 			
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error']['warning'] + '</div>');
-			
-					$('.alert-error').fadeIn('slow');
+					$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + '</div>');
 				}
 				
 				if (json['error']['subject']) {
@@ -234,15 +232,13 @@ function send(url) {
 			
 			if (json['next']) {
 				if (json['success']) {
-					$('.box').before('<div class="alert alert-success">' + json['success'] + '</div>');
+					$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i>  ' + json['success'] + '</div>');
 					
 					send(json['next']);
 				}		
 			} else {
 				if (json['success']) {
-					$('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-			
-					$('.alert-success').fadeIn('slow');
+					$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				}					
 			}				
 		}

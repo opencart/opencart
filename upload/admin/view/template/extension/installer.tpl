@@ -178,11 +178,11 @@ $('#button-clear').bind('click', function() {
 			$('.alert').remove();
 				
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error">' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} 
 		
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i>  ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('#button-clear').prop('disabled', true);
 			}

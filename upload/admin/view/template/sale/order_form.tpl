@@ -1133,7 +1133,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.box').before('<div class="alert alert-error">' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 							
 				// Order Details
@@ -1198,16 +1198,16 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					}
 					
 					if (json['error']['product']['stock']) {
-						$('.box').before('<div class="alert alert-error">' + json['error']['product']['stock'] + '</div>');
+						$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['stock'] + '</div>');
 					}	
 					
 					if (json['error']['product']['store']) {
-						$('.box').before('<div class="alert alert-error">' + json['error']['product']['store'] + '</div>');
+						$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['store'] + '</div>');
 					}	
 																
 					if (json['error']['product']['minimum']) {	
 						for (i in json['error']['product']['minimum']) {
-							$('.box').before('<div class="alert alert-error">' + json['error']['product']['minimum'][i] + '</div>');
+							$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['minimum'][i] + '</div>');
 						}						
 					}
 				} else {
@@ -1249,27 +1249,27 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				
 				// Shipping Method	
 				if (json['error']['shipping_method']) {
-					$('.box').before('<div class="alert alert-error">' + json['error']['shipping_method'] + '</div>');
+					$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['shipping_method'] + '</div>');
 				}	
 				
 				// Payment Method
 				if (json['error']['payment_method']) {
-					$('.box').before('<div class="alert alert-error">' + json['error']['payment_method'] + '</div>');
+					$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['payment_method'] + '</div>');
 				}	
 															
 				// Coupon
 				if (json['error']['coupon']) {
-					$('.box').before('<div class="alert alert-error">' + json['error']['coupon'] + '</div>');
+					$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['coupon'] + '</div>');
 				}
 				
 				// Voucher
 				if (json['error']['voucher']) {
-					$('.box').before('<div class="alert alert-error">' + json['error']['voucher'] + '</div>');
+					$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['voucher'] + '</div>');
 				}
 				
 				// Reward Points		
 				if (json['error']['reward']) {
-					$('.box').before('<div class="alert alert-error">' + json['error']['reward'] + '</div>');
+					$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['reward'] + '</div>');
 				}	
 			} else {
 				$('input[name=\'product\']').val('');
@@ -1286,9 +1286,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.success').fadeIn('slow');				
+				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 			}
 			
 			if (json['order_product'] != '') {

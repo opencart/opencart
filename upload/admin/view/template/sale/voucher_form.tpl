@@ -149,11 +149,11 @@ $('#button-send').on('click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error">' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success">' + json['success'] + '</div>');
+				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i>  ' + json['success'] + '</div>');
 			}		
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

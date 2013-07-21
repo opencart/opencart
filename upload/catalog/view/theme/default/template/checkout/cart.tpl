@@ -201,7 +201,7 @@ $('#button-coupon').on('click', function() {
 			$('.alert').remove();   
 
 			if (json['error']) {
-				$('#content').prepend('<div class="alert alert-error">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}  
@@ -229,7 +229,7 @@ $('#button-voucher').on('click', function() {
 			$('.alert').remove();   
 
 			if (json['error']) {
-				$('#content').prepend('<div class="alert alert-error">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}  
@@ -257,7 +257,7 @@ $('#button-reward').on('click', function() {
 			$('.alert').remove();   
 
 			if (json['error']) {
-				$('#content').prepend('<div class="alert alert-error">' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}  
@@ -286,7 +286,7 @@ $('#button-quote').on('click', function() {
 		
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content').prepend('<div class="alert alert-error">' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			
 					$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 				}  

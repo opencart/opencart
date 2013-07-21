@@ -15,12 +15,10 @@ $('#button-paypal').bind('click', function() {
 		data: $('#payment :input'),
 		dataType: 'json',		
 		beforeSend: function() {
-			$('#button-paypal').attr('disabled', true);
-			$('#button-paypal').after('<span class="wait">&nbsp;<img src="catalog/view/theme/default/image/loading.gif" alt="" /></span>');
+			$('#button-confirm').button('loading');
 		},
 		complete: function() {
-			$('#button-paypal').attr('disabled', false); 
-			$('.wait').remove();
+			$('#button-confirm').button('reset');
 		},				
 		success: function(json) {
 			if (json['error']) {

@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <ul class="breadcrumb">
   <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-  <li> <a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?> </a> </li>
+  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
   <?php } ?>
 </ul>
 <div class="row"><?php echo $column_left; ?>
@@ -39,8 +39,6 @@
           <?php } ?>
         </select>
       </div>
-      <!-- form-inline-->
-      
       <div class="form-inline search-inline">
         <label class="checkbox" for="sub_category">
           <?php if ($sub_category) { ?>
@@ -57,10 +55,8 @@
           <?php } ?>
           <?php echo $entry_description; ?> </label>
       </div>
-      <!-- form-inline-->
-      
       <div class="buttons">
-        <div class="right">
+        <div class="pull-right">
           <input type="button" value="<?php echo $button_search; ?>" id="button-search" class="btn" />
         </div>
       </div>
@@ -69,7 +65,7 @@
     <div class="product-compare"><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></div>
     <div class="product-filter">
       <div class="display pull-left">
-        <div class="btn-group"> <a id="list-view" class="btn square tooltip-item" data-toggle="tooltip" title="<?php echo $button_list_view; ?>"><i class="icon-th-list"></i></a> <a id="grid-view" class="btn square tooltip-item" data-toggle="tooltip" title="<?php echo $button_grid_view; ?>"><i class="icon-th"></i></a> </div>
+        <div class="btn-group"><a id="list-view" class="btn square tooltip-item" data-toggle="tooltip" title="<?php echo $button_list_view; ?>"><i class="icon-th-list"></i></a> <a id="grid-view" class="btn square tooltip-item" data-toggle="tooltip" title="<?php echo $button_grid_view; ?>"><i class="icon-th"></i></a></div>
       </div>
       <div class="limit"><?php echo $text_limit; ?>
         <select class="input-small" onchange="location = this.value;">

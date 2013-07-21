@@ -40,12 +40,10 @@ $('#button-confirm').bind('click', function() {
 		data: $('#payment :input'),
 		dataType: 'json',		
 		beforeSend: function() {
-			$('#button-confirm').prop('disabled', true);
-			$('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+			$('#button-confirm').button('loading');
 		},
 		complete: function() {
-			$('#button-confirm').attr('disabled', false);
-			$('.attention').remove();
+			$('#button-confirm').button('reset');
 		},				
 		success: function(json) {
 			if (json['error']) {

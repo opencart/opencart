@@ -116,11 +116,10 @@ $(document).on('click', '#button-account', function() {
             $('.alert').remove();
             
             $('#collapse-payment-address .accordion-inner').html(html);
-            
-			$('#collapse-checkout-option').collapse('hide');
 			
 			$('#collapse-payment-address').collapse('show');
-                
+
+			$('#collapse-checkout-option').collapse('hide');
            // $('.checkout-heading a').remove();
                 
            // $('#checkout .checkout-heading').append('');
@@ -150,7 +149,7 @@ $(document).on('click', '#button-login', function() {
             if (json['redirect']) {
                 location = json['redirect'];
             } else if (json['error']) {
-                $('#collapse-checkout-option .accordion-inner').prepend('<div class="alert alert-error">' + json['error']['warning'] + '</div>');
+                $('#collapse-checkout-option .accordion-inner').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
            }
         },
         error: function(xhr, ajaxOptions, thrownError) {
@@ -164,7 +163,7 @@ $(document).on('click', '#button-register', function() {
     $.ajax({
         url: 'index.php?route=checkout/register/save',
         type: 'post',
-        data: $('#payment-address input[type=\'text\'], #payment-address input[type=\'password\'], #payment-address input[type=\'checkbox\']:checked, #payment-address input[type=\'radio\']:checked, #payment-address input[type=\'hidden\'], #payment-address select'),
+        data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'password\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address select'),
         dataType: 'json',
         beforeSend: function() {
 			$('#button-register').button('loading');
@@ -179,62 +178,12 @@ $(document).on('click', '#button-register', function() {
                 location = json['redirect'];                
             } else if (json['error']) {
                 if (json['error']['warning']) {
-                    $('#payment-address .checkout-content').prepend('<div class="alert alert-warning" style="display: none;"><button type="button" class="close" data-dismiss="alert">&times;</button>' + json['error']['warning'] + '</div>');
-                    
-                    $('.alert-warning').fadeIn('slow');
+                    $('#collapse-payment-address .accordion-inner').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 }
                 
-                if (json['error']['firstname']) {
-                    $('#payment-address input[name=\'firstname\'] + br').after('<span class="alert alert-error">' + json['error']['firstname'] + '</span>');
-                }
-                
-                if (json['error']['lastname']) {
-                    $('#payment-address input[name=\'lastname\'] + br').after('<span class="alert alert-error">' + json['error']['lastname'] + '</span>');
-                }   
-                
-                if (json['error']['email']) {
-                    $('#payment-address input[name=\'email\'] + br').after('<span class="alert alert-error">' + json['error']['email'] + '</span>');
-                }
-                
-                if (json['error']['telephone']) {
-                    $('#payment-address input[name=\'telephone\'] + br').after('<span class="alert alert-error">' + json['error']['telephone'] + '</span>');
-                }   
-                    
-                if (json['error']['company_id']) {
-                    $('#payment-address input[name=\'company_id\'] + br').after('<span class="alert alert-error">' + json['error']['company_id'] + '</span>');
-                }   
-                
-                if (json['error']['tax_id']) {
-                    $('#payment-address input[name=\'tax_id\'] + br').after('<span class="alert alert-error">' + json['error']['tax_id'] + '</span>');
-                }   
-                                                                        
-                if (json['error']['address_1']) {
-                    $('#payment-address input[name=\'address_1\'] + br').after('<span class="alert alert-error">' + json['error']['address_1'] + '</span>');
-                }   
-                
-                if (json['error']['city']) {
-                    $('#payment-address input[name=\'city\'] + br').after('<span class="alert alert-error">' + json['error']['city'] + '</span>');
-                }   
-                
-                if (json['error']['postcode']) {
-                    $('#payment-address input[name=\'postcode\'] + br').after('<span class="alert alert-error">' + json['error']['postcode'] + '</span>');
-                }   
-                
-                if (json['error']['country']) {
-                    $('#payment-address select[name=\'country_id\'] + br').after('<span class="alert alert-error">' + json['error']['country'] + '</span>');
-                }   
-                
-                if (json['error']['zone']) {
-                    $('#payment-address select[name=\'zone_id\'] + br').after('<span class="alert alert-error">' + json['error']['zone'] + '</span>');
-                }
-                
-                if (json['error']['password']) {
-                    $('#payment-address input[name=\'password\'] + br').after('<span class="alert alert-error">' + json['error']['password'] + '</span>');
-                }   
-                
-                if (json['error']['confirm']) {
-                    $('#payment-address input[name=\'confirm\'] + br').after('<span class="alert alert-error">' + json['error']['confirm'] + '</span>');
-                }                                                                                                                                   
+				for (i in json['error']) {
+                    $('#input-payment-' + i.replace('_', '-')).after('<span class="alert alert-error">' + json['error'][i] + '</span>');
+				}
             } else {
                 <?php if ($shipping_required) { ?>              
                 var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');

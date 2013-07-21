@@ -577,15 +577,13 @@ $('body').delegate('.button-ban-add', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				 $('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
+				 $('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 				
 				$('.alert').fadeIn('slow');
 			}
 						
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.success').fadeIn('slow');
+				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
                 
 				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
 			}
@@ -611,15 +609,11 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				 $('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.alert').fadeIn('slow');
+				 $('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-				 $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.success').fadeIn('slow');
+				 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
 			}

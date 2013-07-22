@@ -5,7 +5,7 @@
   <?php } ?>
 </ul>
 <?php if ($success) { ?>
-<div class="alert alert-success"><?php echo $success; ?></div>
+<div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?></div>
 <?php } ?>
 <?php if ($error_warning) { ?>
 <div class="alert alert-error"><?php echo $error_warning; ?></div>

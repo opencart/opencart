@@ -692,7 +692,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$('body').delegate('#button-invoice', 'click', function() {
+$(document).delegate('#button-invoice', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/createinvoiceno&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
@@ -708,9 +708,7 @@ $('body').delegate('#button-invoice', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('#tab-order').prepend('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.alert-error').fadeIn('slow');
+				$('#tab-order').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['invoice_no']) {
@@ -720,7 +718,7 @@ $('body').delegate('#button-invoice', 'click', function() {
 	});
 });
 
-$('body').delegate('#button-credit-add', 'click', function() {
+$(document).delegate('#button-credit-add', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/addcredit&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
@@ -737,9 +735,7 @@ $('body').delegate('#button-credit-add', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.alert-error').fadeIn('slow');
+				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
@@ -753,7 +749,7 @@ $('body').delegate('#button-credit-add', 'click', function() {
 	});
 });
 
-$('body').delegate('#button-credit-remove', 'click', function() {
+$(document).delegate('#button-credit-remove', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/removecredit&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
@@ -770,15 +766,13 @@ $('body').delegate('#button-credit-remove', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-error">' + json['error'] + '</div>');
 				
 				$('.alert-error').fadeIn('slow');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.alert-success').fadeIn('slow');
+                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('#button-credit-remove').replaceWith('<button id="button-credit-add" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>');
 			}
@@ -786,7 +780,7 @@ $('body').delegate('#button-credit-remove', 'click', function() {
 	});
 });
 
-$('body').delegate('#button-reward-add', 'click', function() {
+$(document).delegate('#button-reward-add', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/addreward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
@@ -803,23 +797,19 @@ $('body').delegate('#button-reward-add', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.alert-error').fadeIn('slow');
+				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
+                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('.alert-success').fadeIn('slow');
-			
 				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>');
 			}
 		}
 	});
 });
 
-$('body').delegate('#button-reward-remove', 'click', function() {
+$(document).delegate('#button-reward-remove', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/removereward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
@@ -836,15 +826,11 @@ $('body').delegate('#button-reward-remove', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.alert-error').fadeIn('slow');
+				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.alert-success').fadeIn('slow');
+                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>');
 			}
@@ -852,7 +838,7 @@ $('body').delegate('#button-reward-remove', 'click', function() {
 	});
 });
 
-$('body').delegate('#button-commission-add', 'click', function() {
+$(document).delegate('#button-commission-add', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/addcommission&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
@@ -869,15 +855,13 @@ $('body').delegate('#button-commission-add', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 				
 				$('.alert-error').fadeIn('slow');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.alert-success').fadeIn('slow');
+                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
                 
 				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>');
 			}
@@ -885,7 +869,7 @@ $('body').delegate('#button-commission-add', 'click', function() {
 	});
 });
 
-$('body').delegate('#button-commission-remove', 'click', function() {
+$(document).delegate('#button-commission-remove', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=sale/order/removecommission&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		type: 'post',
@@ -902,15 +886,11 @@ $('body').delegate('#button-commission-remove', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.alert-error').fadeIn('slow');
+				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.alert-success').fadeIn('slow');
+                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_commission_add; ?></button>');
 			}

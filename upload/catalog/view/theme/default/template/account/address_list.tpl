@@ -5,10 +5,10 @@
   <?php } ?>
 </ul>
 <?php if ($success) { ?>
-<div class="alert alert-success"><?php echo $success; ?></div>
+<div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?></div>
 <?php } ?>
 <?php if ($error_warning) { ?>
-<div class="alert alert-warning"><?php echo $error_warning; ?></div>
+<div class="alert alert-warning"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?></div>
 <?php } ?>
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>

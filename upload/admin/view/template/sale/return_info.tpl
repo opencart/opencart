@@ -175,15 +175,11 @@ $('select[name=\'return_action_id\']').on('change', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error" style="display: none;">' + json['error'] + '</div>');
-				
-				$('.alert-error').fadeIn('slow');
+				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success" style="display: none;">' + json['success'] + '</div>');
-				
-				$('.alert-success').fadeIn('slow');
+				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('#return-action').html($('select[name=\'return_action_id\'] option:selected').text());
 			}

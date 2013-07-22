@@ -3,6 +3,12 @@ final class Tax {
 	private $shipping_address;
 	private $payment_address;
 	private $store_address;
+	
+	/**
+	 * cached tax rate definitions for tax_class_id / (shipping|payment|store) /
+	 * customer_group_id / country_id / zone_id combinations
+	*/
+	private $defined_tax_rates;
 
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
@@ -98,44 +104,23 @@ final class Tax {
 		}
 
 		if ($this->shipping_address) {
-			$tax_query = $this->db->query("SELECT tr2.tax_rate_id, tr2.name, tr2.rate, tr2.type, tr1.priority FROM " . DB_PREFIX . "tax_rule tr1 LEFT JOIN " . DB_PREFIX . "tax_rate tr2 ON (tr1.tax_rate_id = tr2.tax_rate_id) INNER JOIN " . DB_PREFIX . "tax_rate_to_customer_group tr2cg ON (tr2.tax_rate_id = tr2cg.tax_rate_id) LEFT JOIN " . DB_PREFIX . "zone_to_geo_zone z2gz ON (tr2.geo_zone_id = z2gz.geo_zone_id) LEFT JOIN " . DB_PREFIX . "geo_zone gz ON (tr2.geo_zone_id = gz.geo_zone_id) WHERE tr1.tax_class_id = '" . (int)$tax_class_id . "' AND tr1.based = 'shipping' AND tr2cg.customer_group_id = '" . (int)$customer_group_id . "' AND z2gz.country_id = '" . (int)$this->shipping_address['country_id'] . "' AND (z2gz.zone_id = '0' OR z2gz.zone_id = '" . (int)$this->shipping_address['zone_id'] . "') ORDER BY tr1.priority ASC");
-
-			foreach ($tax_query->rows as $result) {
-				$tax_rates[$result['tax_rate_id']] = array(
-					'tax_rate_id' => $result['tax_rate_id'],
-					'name'        => $result['name'],
-					'rate'        => $result['rate'],
-					'type'        => $result['type'],
-					'priority'    => $result['priority']
-				);
+			$defined_tax_rates = $this->getDefinedTaxRates($tax_class_id, 'shipping', $customer_group_id, $this->shipping_address);
+			foreach ($defined_tax_rates as $tax_rate_id => $tax_rate) {
+				$tax_rates[$tax_rate_id] = $tax_rate;
 			}
 		}
 
 		if ($this->payment_address) {
-			$tax_query = $this->db->query("SELECT tr2.tax_rate_id, tr2.name, tr2.rate, tr2.type, tr1.priority FROM " . DB_PREFIX . "tax_rule tr1 LEFT JOIN " . DB_PREFIX . "tax_rate tr2 ON (tr1.tax_rate_id = tr2.tax_rate_id) INNER JOIN " . DB_PREFIX . "tax_rate_to_customer_group tr2cg ON (tr2.tax_rate_id = tr2cg.tax_rate_id) LEFT JOIN " . DB_PREFIX . "zone_to_geo_zone z2gz ON (tr2.geo_zone_id = z2gz.geo_zone_id) LEFT JOIN " . DB_PREFIX . "geo_zone gz ON (tr2.geo_zone_id = gz.geo_zone_id) WHERE tr1.tax_class_id = '" . (int)$tax_class_id . "' AND tr1.based = 'payment' AND tr2cg.customer_group_id = '" . (int)$customer_group_id . "' AND z2gz.country_id = '" . (int)$this->payment_address['country_id'] . "' AND (z2gz.zone_id = '0' OR z2gz.zone_id = '" . (int)$this->payment_address['zone_id'] . "') ORDER BY tr1.priority ASC");
-
-			foreach ($tax_query->rows as $result) {
-				$tax_rates[$result['tax_rate_id']] = array(
-					'tax_rate_id' => $result['tax_rate_id'],
-					'name'        => $result['name'],
-					'rate'        => $result['rate'],
-					'type'        => $result['type'],
-					'priority'    => $result['priority']
-				);
+			$defined_tax_rates = $this->getDefinedTaxRates($tax_class_id, 'payment', $customer_group_id, $this->payment_address);
+			foreach ($defined_tax_rates as $tax_rate_id => $tax_rate) {
+				$tax_rates[$tax_rate_id] = $tax_rate;
 			}
 		}
 
 		if ($this->store_address) {
-			$tax_query = $this->db->query("SELECT tr2.tax_rate_id, tr2.name, tr2.rate, tr2.type, tr1.priority FROM " . DB_PREFIX . "tax_rule tr1 LEFT JOIN " . DB_PREFIX . "tax_rate tr2 ON (tr1.tax_rate_id = tr2.tax_rate_id) INNER JOIN " . DB_PREFIX . "tax_rate_to_customer_group tr2cg ON (tr2.tax_rate_id = tr2cg.tax_rate_id) LEFT JOIN " . DB_PREFIX . "zone_to_geo_zone z2gz ON (tr2.geo_zone_id = z2gz.geo_zone_id) LEFT JOIN " . DB_PREFIX . "geo_zone gz ON (tr2.geo_zone_id = gz.geo_zone_id) WHERE tr1.tax_class_id = '" . (int)$tax_class_id . "' AND tr1.based = 'store' AND tr2cg.customer_group_id = '" . (int)$customer_group_id . "' AND z2gz.country_id = '" . (int)$this->store_address['country_id'] . "' AND (z2gz.zone_id = '0' OR z2gz.zone_id = '" . (int)$this->store_address['zone_id'] . "') ORDER BY tr1.priority ASC");
-
-			foreach ($tax_query->rows as $result) {
-				$tax_rates[$result['tax_rate_id']] = array(
-					'tax_rate_id' => $result['tax_rate_id'],
-					'name'        => $result['name'],
-					'rate'        => $result['rate'],
-					'type'        => $result['type'],
-					'priority'    => $result['priority']
-				);
+			$defined_tax_rates = $this->getDefinedTaxRates($tax_class_id, 'store', $customer_group_id, $this->store_address);
+			foreach ($defined_tax_rates as $tax_rate_id => $tax_rate) {
+				$tax_rates[$tax_rate_id] = $tax_rate;
 			}
 		}
 
@@ -164,6 +149,48 @@ final class Tax {
 		}
 
 		return $tax_rate_data;
+	}
+	
+	public function getDefinedTaxRates($tax_class_id, $based, $customer_group_id, $address) {
+		$based = strtolower(trim($based));
+		
+		$country_id = isset($address['country_id']) ? (int)$address['country_id'] : 0;
+		$zone_id    = isset($address['zone_id']) ? (int)$address['zone_id'] : 0;
+		
+		$cache_key = "{$tax_class_id}.{$based}.{$customer_group_id}.{$country_id}.{$zone_id}";
+		
+		if (!isset($this->defined_tax_rates[$cache_key])) {
+			$query = $this->db->query("
+				SELECT 
+				tr2.tax_rate_id, tr2.name, tr2.rate, tr2.type, tr1.priority 
+				FROM " . DB_PREFIX . "tax_rule tr1 
+				LEFT JOIN " . DB_PREFIX . "tax_rate tr2 ON (tr1.tax_rate_id = tr2.tax_rate_id) 
+				INNER JOIN " . DB_PREFIX . "tax_rate_to_customer_group tr2cg ON (tr2.tax_rate_id = tr2cg.tax_rate_id) 
+				LEFT JOIN " . DB_PREFIX . "zone_to_geo_zone z2gz ON (tr2.geo_zone_id = z2gz.geo_zone_id) 
+				LEFT JOIN " . DB_PREFIX . "geo_zone gz ON (tr2.geo_zone_id = gz.geo_zone_id) 
+				WHERE tr1.tax_class_id = '" . (int)$tax_class_id . "' 
+				AND tr1.based = '$based' 
+				AND tr2cg.customer_group_id = '" . (int)$customer_group_id . "' 
+				AND z2gz.country_id = '" . $country_id . "' 
+				AND (z2gz.zone_id = '0' OR z2gz.zone_id = '" . $zone_id . "') 
+				ORDER BY tr1.priority ASC
+			");
+			
+			$rates = array();
+			foreach ($query->rows as $result) {
+				$rates[$result['tax_rate_id']] = array(
+					'tax_rate_id' => $result['tax_rate_id'],
+					'name'        => $result['name'],
+					'rate'        => $result['rate'],
+					'type'        => $result['type'],
+					'priority'    => $result['priority']
+				);
+			}
+			
+			$this->defined_tax_rates[$cache_key] = $rates;
+		}
+		
+		return $this->defined_tax_rates[$cache_key];
 	}
 
 	public function has($tax_class_id) {

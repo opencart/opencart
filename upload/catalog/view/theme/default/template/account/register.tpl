@@ -190,7 +190,7 @@
         </div>
       </fieldset>
       <?php if ($text_agree) { ?>
-      <div class="buttons clearfix">
+      <div class="buttons">
         <div class="pull-right">
           <?php echo $text_agree; ?>
           <?php if ($agree) { ?>
@@ -202,7 +202,7 @@
         </div>
       </div>
       <?php } else { ?>
-      <div class="buttons clearfix">
+      <div class="buttons">
         <div class="pull-right">
           <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
         </div>

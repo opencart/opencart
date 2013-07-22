@@ -177,7 +177,7 @@
         </table>
       </div>
     </div>
-    <div class="buttons clearfix">
+    <div class="buttons">
       <div class="pull-left"><a class="pull-left btn" href="<?php echo $continue; ?>"><?php echo $button_shopping; ?></a></div>
       <div class="pull-right"><a class="btn btn-primary" href="<?php echo $checkout; ?>"><?php echo $button_checkout; ?></a></div>
     </div>

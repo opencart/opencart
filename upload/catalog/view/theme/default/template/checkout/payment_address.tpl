@@ -6,11 +6,6 @@
         <input type="radio" name="payment_address" value="existing" checked="checked" />
         <?php echo $text_address_existing; ?></label>
     </p>
-    <p>
-      <label class="radio">
-        <input type="radio" name="payment_address" value="new" />
-        <?php echo $text_address_new; ?></label>
-    </p>
     <div id="payment-existing">
       <select name="address_id" class="input-xxlarge">
         <?php foreach ($addresses as $address) { ?>
@@ -22,6 +17,11 @@
         <?php } ?>
       </select>
     </div>
+    <p>
+      <label class="radio">
+        <input type="radio" name="payment_address" value="new" />
+        <?php echo $text_address_new; ?></label>
+    </p>
     <?php } ?>
     <div id="payment-new" class="form-horizontal" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
       <div class="control-group required">

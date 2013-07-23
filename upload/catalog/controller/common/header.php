@@ -8,6 +8,14 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$server = $this->config->get('config_url');
 		}
+        
+        if (isset($this->session->data['error']) && !empty($this->session->data['error'])) {
+            $this->data['error'] = $this->session->data['error'];
+            
+            unset($this->session->data['error']);
+        } else {
+            $this->data['error'] = '';
+        }
 
 		$this->data['base'] = $server;
 		$this->data['description'] = $this->document->getDescription();

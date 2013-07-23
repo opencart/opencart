@@ -58,33 +58,42 @@ $('.checkout-heading a').live('click', function() {
 });
 <?php if (!$logged) { ?> 
 $(document).ready(function() {
-	$.ajax({
-		url: 'index.php?route=checkout/login',
-		dataType: 'html',
-		success: function(html) {
-			$('#checkout .checkout-content').html(html);
-				
-			$('#checkout .checkout-content').slideDown('slow');
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});	
+	<?php if(isset($quickconfirm)) { ?>
+		quickConfirm();
+	<?php }else{ ?>
+		$.ajax({
+			url: 'index.php?route=checkout/login',
+			dataType: 'html',
+			success: function(html) {
+				$('#checkout .checkout-content').html(html);
+					
+				$('#checkout .checkout-content').slideDown('slow');
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});	
+	<?php } ?>
 });		
 <?php } else { ?>
 $(document).ready(function() {
-	$.ajax({
-		url: 'index.php?route=checkout/payment_address',
-		dataType: 'html',
-		success: function(html) {
-			$('#payment-address .checkout-content').html(html);
-				
-			$('#payment-address .checkout-content').slideDown('slow');
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});	
+
+	<?php if(isset($quickconfirm)) { ?>
+		quickConfirm();
+	<?php }else{ ?>
+		$.ajax({
+			url: 'index.php?route=checkout/payment_address',
+			dataType: 'html',
+			success: function(html) {
+				$('#payment-address .checkout-content').html(html);
+					
+				$('#payment-address .checkout-content').slideDown('slow');
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}
+		});	
+	<?php } ?>
 });
 <?php } ?>
 
@@ -925,5 +934,38 @@ $('#button-payment-method').live('click', function() {
 		}
 	});	
 });
+
+function quickConfirm(module){
+	$.ajax({
+		url: 'index.php?route=checkout/confirm',
+		dataType: 'html',
+		success: function(html) {
+			$('#confirm .checkout-content').html(html);
+			$('#confirm .checkout-content').slideDown('slow');
+			
+				
+			$('.checkout-heading a').remove();
+				
+			$('#checkout .checkout-heading a').remove();
+			$('#checkout .checkout-heading').append('<a><?php echo $text_modify; ?></a>');
+			
+			$('#shipping-address .checkout-heading a').remove();
+			$('#shipping-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+			
+			$('#shipping-method .checkout-heading a').remove();
+			$('#shipping-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+			
+			$('#payment-address .checkout-heading a').remove();			
+			$('#payment-address .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+							
+			$('#payment-method .checkout-heading a').remove();
+			$('#payment-method .checkout-heading').append('<a><?php echo $text_modify; ?></a>');	
+
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+}
 //--></script> 
 <?php echo $footer; ?>

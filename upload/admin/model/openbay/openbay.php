@@ -256,7 +256,7 @@ class ModelOpenbayOpenbay extends Model
     }
     
     public function getNotifications(){
-        $data = $this->call('notification/getPublicNotifications/');
+        $data = $this->call('update/getNotifications/');
         return $data;
     }
 

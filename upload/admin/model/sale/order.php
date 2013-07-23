@@ -382,8 +382,25 @@ class ModelSaleOrder extends Model {
 				$language_filename = '';
 				$language_directory = '';
 			}
+            
+            if ($this->config->get('amazon_status') == 1) {
+                $amazonOrderId = $this->db->query("
+                    SELECT `amazon_order_id`
+                    FROM `" . DB_PREFIX . "amazon_order`
+                    WHERE `order_id` = " . (int) $order_query->row['order_id'] . "
+                    LIMIT 1")->row;
+
+                if (isset($amazonOrderId['amazon_order_id']) && !empty($amazonOrderId['amazon_order_id'])) {
+                    $amazonOrderId = $amazonOrderId['amazon_order_id'];
+                } else {
+                    $amazonOrderId = '';
+                }
+            } else {
+                $amazonOrderId = '';
+            }
 			
 			return array(
+                'amazon_order_id'         => $amazonOrderId,
 				'order_id'                => $order_query->row['order_id'],
 				'invoice_no'              => $order_query->row['invoice_no'],
 				'invoice_prefix'          => $order_query->row['invoice_prefix'],

@@ -26,6 +26,14 @@
             <td><?php echo $text_order_id; ?></td>
             <td>#<?php echo $order_id; ?></td>
           </tr>
+          <?php if (!empty($amazon_order_id)) { ?>
+          
+          <tr>
+            <td><?php echo $text_amazon_order_id; ?></td>
+            <td><?php echo $amazon_order_id; ?></td>
+          </tr>
+          
+          <?php } ?>
           <tr>
             <td><?php echo $text_invoice_no; ?></td>
             <td><?php if ($invoice_no) { ?>
@@ -227,14 +235,25 @@
       <?php if ($shipping_method) { ?>
       <div id="tab-shipping" class="vtabs-content">
         <table class="form">
-          <tr>
-            <td><?php echo $text_firstname; ?></td>
-            <td><?php echo $shipping_firstname; ?></td>
-          </tr>
-          <tr>
-            <td><?php echo $text_lastname; ?></td>
-            <td><?php echo $shipping_lastname; ?></td>
-          </tr>
+          <?php if (!empty($amazon_order_id) && empty($shipping_lastname)) { ?> 
+            
+            <tr>
+              <td><?php echo $text_name; ?></td>
+              <td><?php echo $shipping_firstname; ?></td>
+            </tr>
+            
+           <?php } else { ?>
+            
+            <tr>
+              <td><?php echo $text_firstname; ?></td>
+              <td><?php echo $shipping_firstname; ?></td>
+            </tr>
+            <tr>
+              <td><?php echo $text_lastname; ?></td>
+              <td><?php echo $shipping_lastname; ?></td>
+            </tr>
+            
+           <?php } ?>
           <?php if ($shipping_company) { ?>
           <tr>
             <td><?php echo $text_company; ?></td>

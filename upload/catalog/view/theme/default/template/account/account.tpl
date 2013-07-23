@@ -29,6 +29,7 @@
       <?php } ?>
       <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
       <li><a href="<?php echo $transaction; ?>"><?php echo $text_transaction; ?></a></li>
+      <li><a href="<?php echo $recurring; ?>"><?php echo $text_recurring; ?></a></li>
     </ul>
   </div>
   <h2><?php echo $text_my_newsletter; ?></h2>

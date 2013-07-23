@@ -11,23 +11,16 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/payment.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a onclick="$('#form').submit();" class="button"><?php echo $button_save; ?></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><?php echo $button_cancel; ?></a></div>
     </div>
     <div class="content">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="form">
           <tr>
-            <td><span class="required">*</span> <?php echo $entry_vendor; ?></td>
-            <td><input type="text" name="pp_pro_uk_vendor" value="<?php echo $pp_pro_uk_vendor; ?>" />
-              <?php if ($error_vendor) { ?>
-              <span class="error"><?php echo $error_vendor; ?></span>
-              <?php } ?></td>
-          </tr>
-          <tr>
-            <td><span class="required">*</span> <?php echo $entry_user; ?></td>
-            <td><input type="text" name="pp_pro_uk_user" value="<?php echo $pp_pro_uk_user; ?>" />
-              <?php if ($error_user) { ?>
-              <span class="error"><?php echo $error_user; ?></span>
+            <td><span class="required">*</span> <?php echo $entry_username; ?></td>
+            <td><input type="text" name="pp_pro_uk_username" value="<?php echo $pp_pro_uk_username; ?>" />
+              <?php if ($error_username) { ?>
+              <span class="error"><?php echo $error_username; ?></span>
               <?php } ?></td>
           </tr>
           <tr>
@@ -38,10 +31,10 @@
               <?php } ?></td>
           </tr>
           <tr>
-            <td><span class="required">*</span> <?php echo $entry_partner; ?></td>
-            <td><input type="text" name="pp_pro_uk_partner" value="<?php echo $pp_pro_uk_partner; ?>" />
-              <?php if ($error_partner) { ?>
-              <span class="error"><?php echo $error_partner; ?></span>
+            <td><span class="required">*</span> <?php echo $entry_signature; ?></td>
+            <td><input type="text" name="pp_pro_uk_signature" value="<?php echo $pp_pro_uk_signature; ?>" />
+              <?php if ($error_signature) { ?>
+              <span class="error"><?php echo $error_signature; ?></span>
               <?php } ?></td>
           </tr>
           <tr>

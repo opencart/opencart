@@ -1916,6 +1916,12 @@ class ControllerSaleOrder extends Controller {
 				$this->data['maxmind_id'] = '';
 			}
 			
+			if($this->hasAction('payment/' . $order_info['payment_code'] . '/orderAction') == true){
+				$this->data['payment_action'] = $this->getChild('payment/' . $order_info['payment_code'] . '/orderAction');
+			}else{
+				$this->data['payment_action'] = '';
+			}
+			
 			$this->template = 'sale/order_info.tpl';
 			$this->children = array(
 				'common/header',

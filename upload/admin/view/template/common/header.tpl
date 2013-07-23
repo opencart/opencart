@@ -39,7 +39,6 @@ $(document).ready(function(){
             }
         }
     });
-    	
     // Confirm Uninstall
     $('a').click(function(){
         if ($(this).attr('href') != null && $(this).attr('href').indexOf('uninstall', 1) != -1) {
@@ -48,12 +47,12 @@ $(document).ready(function(){
             }
         }
     });
-});
-</script>
+        });
+    </script>
 </head>
 <body>
 <div id="container">
-<div id="header">
+    <div id="header">
   <div class="div1">
     <div class="div2"><img src="view/image/logo.png" title="<?php echo $heading_title; ?>" onclick="location = '<?php echo $home; ?>'" /></div>
     <?php if ($logged) { ?>
@@ -69,6 +68,7 @@ $(document).ready(function(){
           <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
           <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
           <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
+          <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
           <li><a class="parent"><?php echo $text_attribute; ?></a>
             <ul>
               <li><a href="<?php echo $attribute; ?>"><?php echo $text_attribute; ?></a></li>
@@ -101,7 +101,7 @@ $(document).ready(function(){
                             <li><a href="<?php echo $openbay_link_ebay_settings; ?>"><?php echo $text_openbay_settings; ?></a></li>
                             <li><a href="<?php echo $openbay_link_ebay_links; ?>"><?php echo $text_openbay_links; ?></a></li>
                             <li><a href="<?php echo $openbay_link_ebay_orderimport; ?>"><?php echo $text_openbay_order_import; ?></a></li>
-                        </ul>
+                       </ul>
                     </li>
                     <?php } ?>
 
@@ -138,6 +138,7 @@ $(document).ready(function(){
       <li id="sale"><a class="top"><?php echo $text_sale; ?></a>
         <ul>
           <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
+          <li><a href="<?php echo $recurring_profile; ?>"><?php echo $text_recurring_profile; ?></a></li>
           <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
           <li><a class="parent"><?php echo $text_customer; ?></a>
             <ul>
@@ -154,6 +155,15 @@ $(document).ready(function(){
               <li><a href="<?php echo $voucher_theme; ?>"><?php echo $text_voucher_theme; ?></a></li>
             </ul>
           </li>
+          <!-- PAYPAL MANAGE NAVIGATION LINK -->
+          <?php if ($pp_express_status) { ?>
+           <li><a class="parent" href="<?php echo $paypal_express; ?>"><?php echo $text_paypal_express; ?></a>
+             <ul>
+               <li><a href="<?php echo $paypal_express_search; ?>"><?php echo $text_paypal_express_search; ?></a></li>
+             </ul>
+           </li>
+          <?php } ?>
+          <!-- PAYPAL MANAGE NAVIGATION LINK END -->
           <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
         </ul>
       </li>

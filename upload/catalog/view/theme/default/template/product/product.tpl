@@ -55,6 +55,23 @@
         <?php } ?>
       </div>
       <?php } ?>
+      <?php if ($profiles): ?>
+      <div class="option">
+          <h2><span class="required">*</span><?php echo $text_payment_profile ?></h2>
+          <br />
+          <select name="profile_id">
+              <option value=""><?php echo $text_select; ?></option>
+              <?php foreach ($profiles as $profile): ?>
+              <option value="<?php echo $profile['profile_id'] ?>"><?php echo $profile['name'] ?></option>
+              <?php endforeach; ?>
+          </select>
+          <br />
+          <br />
+          <span id="profile-description"></span>
+          <br />
+          <br />
+      </div>
+      <?php endif; ?>
       <?php if ($options) { ?>
       <div class="options">
         <h2><?php echo $text_option; ?></h2>
@@ -342,6 +359,26 @@ $(document).ready(function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
+
+$('select[name="profile_id"], input[name="quantity"]').change(function(){
+    $.ajax({
+		url: 'index.php?route=product/product/getRecurringDescription',
+		type: 'post',
+		data: $('input[name="product_id"], input[name="quantity"], select[name="profile_id"]'),
+		dataType: 'json',
+        beforeSend: function() {
+            $('#profile-description').html('');
+        },
+		success: function(json) {
+			$('.success, .warning, .attention, information, .error').remove();
+            
+			if (json['success']) {
+                $('#profile-description').html(json['success']);
+			}	
+		}
+	});
+});
+    
 $('#button-cart').bind('click', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/cart/add',
@@ -357,6 +394,10 @@ $('#button-cart').bind('click', function() {
 						$('#option-' + i).after('<span class="error">' + json['error']['option'][i] + '</span>');
 					}
 				}
+                
+                if (json['error']['profile']) {
+                    $('select[name="profile_id"]').after('<span class="error">' + json['error']['profile'] + '</span>');
+                }
 			} 
 			
 			if (json['success']) {

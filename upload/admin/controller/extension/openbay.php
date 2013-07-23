@@ -312,7 +312,6 @@ class ControllerExtensionOpenbay extends Controller {
     }
 
     public function getNotifications() {
-        sleep(1); // give the data some "feel" that its not in our system
         $this->load->model('openbay/openbay');
         $this->response->setOutput(json_encode($this->model_openbay_openbay->getNotifications()));
     }

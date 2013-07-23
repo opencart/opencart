@@ -1,7 +1,7 @@
 <?php
 class ModelOpenbayOpenbay extends Model
 {
-    private $url    = 'https://account.openbaypro.com/';
+    private $url    = 'http://account.openbaypro.com/';
 
     public function setUrl($url){
         $this->url = $url;
@@ -261,7 +261,7 @@ class ModelOpenbayOpenbay extends Model
     }
 
     public function getVersion(){
-        $data = $this->call('notification/getStableVersion/');
+        $data = $this->call('update/getStableVersion/');
         return $data;
     }
 

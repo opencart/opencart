@@ -1,5 +1,5 @@
 <?php
-class Amazon {
+class Amazon { 
 
     private $token;
     private $encPass;

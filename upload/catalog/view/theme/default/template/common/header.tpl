@@ -94,4 +94,9 @@ $('body').prepend('<iframe src="<?php echo $store; ?>" style="display: none;"></
   </ul>
 </div>
 <?php } ?>
+<?php if ($error) { ?>
+    
+    <div class="warning"><?php echo $error ?><img src="catalog/view/theme/default/image/close.png" alt="" class="close" /></div>
+    
+<?php } ?>
 <div id="notification"></div>

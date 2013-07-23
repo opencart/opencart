@@ -223,6 +223,7 @@
             <td><?php echo $payment_method; ?></td>
           </tr>
         </table>
+		<?php echo $payment_action; ?>
       </div>
       <?php if ($shipping_method) { ?>
       <div id="tab-shipping" class="vtabs-content">

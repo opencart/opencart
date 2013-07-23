@@ -35,6 +35,14 @@
         </thead>
         <tbody>
           <?php foreach ($products as $product) { ?>
+            <?php if($product['recurring']): ?>
+              <tr>
+                  <td colspan="6" style="border:none;"><image src="catalog/view/theme/default/image/reorder.png" alt="" title="" style="float:left;" /><span style="float:left;line-height:18px; margin-left:10px;"> 
+                      <strong><?php echo $text_recurring_item ?></strong>
+                      <?php echo $product['profile_description'] ?>
+                  </td>
+                </tr>
+            <?php endif; ?>
           <tr>
             <td class="image"><?php if ($product['thumb']) { ?>
               <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
@@ -47,6 +55,9 @@
                 <?php foreach ($product['option'] as $option) { ?>
                 - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
                 <?php } ?>
+                <?php if($product['recurring']): ?>
+                - <small><?php echo $text_payment_profile ?>: <?php echo $product['profile_name'] ?></small>
+                <?php endif; ?>
               </div>
               <?php if ($product['reward']) { ?>
               <small><?php echo $product['reward']; ?></small>

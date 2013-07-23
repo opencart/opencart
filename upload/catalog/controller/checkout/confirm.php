@@ -332,41 +332,74 @@ class ControllerCheckoutConfirm extends Controller {
 			$this->data['column_quantity'] = $this->language->get('column_quantity');
 			$this->data['column_price'] = $this->language->get('column_price');
 			$this->data['column_total'] = $this->language->get('column_total');
-	
-			$this->data['products'] = array();
-	
-			foreach ($this->cart->getProducts() as $product) {
-				$option_data = array();
-	
-				foreach ($product['option'] as $option) {
-					if ($option['type'] != 'file') {
-						$value = $option['option_value'];	
-					} else {
-						$filename = $this->encryption->decrypt($option['option_value']);
-						
-						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
-					}
-										
-					$option_data[] = array(
-						'name'  => $option['name'],
-						'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
-					);
-				}  
-	 
-				$this->data['products'][] = array(
-					'product_id' => $product['product_id'],
-					'name'       => $product['name'],
-					'model'      => $product['model'],
-					'option'     => $option_data,
-					'quantity'   => $product['quantity'],
-					'subtract'   => $product['subtract'],
-					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
-					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id'])
-				); 
-			} 
-			
-			// Gift Voucher
+            
+            $this->data['text_recurring_item'] = $this->language->get('text_recurring_item');
+            $this->data['text_payment_profile'] = $this->language->get('text_payment_profile');
+
+            $this->data['products'] = array();
+
+            foreach ($this->cart->getProducts() as $product) {
+                $option_data = array();
+
+                foreach ($product['option'] as $option) {
+                    if ($option['type'] != 'file') {
+                        $value = $option['option_value'];
+                    } else {
+                        $filename = $this->encryption->decrypt($option['option_value']);
+
+                        $value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+                    }
+
+                    $option_data[] = array(
+                        'name'  => $option['name'],
+                        'value' => (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value)
+                    );
+                }
+                
+                
+                $profile_description = '';
+                
+                if ($product['recurring']) {
+                    $frequencies = array(
+                        'day' => $this->language->get('text_day'),
+                        'week' => $this->language->get('text_week'),
+                        'semi_month' => $this->language->get('text_semi_month'),
+                        'month' => $this->language->get('text_month'),
+                        'year' => $this->language->get('text_year'),
+                    );
+
+                    if ($product['recurring_trial']) {
+                        $recurring_price = $this->currency->format($this->tax->calculate($product['recurring_trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
+                        $profile_description = sprintf($this->language->get('text_trial_description'), $recurring_price, $product['recurring_trial_cycle'], $frequencies[$product['recurring_trial_frequency']], $product['recurring_trial_duration']) . ' ';
+                    }
+
+                    $recurring_price = $this->currency->format($this->tax->calculate($product['recurring_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
+
+                    if ($product['recurring_duration']) {
+                        $profile_description .= sprintf($this->language->get('text_payment_description'), $recurring_price, $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
+                    } else {
+                        $profile_description .= sprintf($this->language->get('text_payment_until_canceled_description'), $recurring_price, $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
+                    }
+                }
+
+                $this->data['products'][] = array(
+                    'key'                 => $product['key'],
+                    'product_id'          => $product['product_id'],
+                    'name'                => $product['name'],
+                    'model'               => $product['model'],
+                    'option'              => $option_data,
+                    'quantity'            => $product['quantity'],
+                    'subtract'            => $product['subtract'],
+                    'price'               => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
+                    'total'               => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
+                    'href'                => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+                    'recurring'           => $product['recurring'],
+                    'profile_name'        => $product['profile_name'],
+                    'profile_description' => $profile_description,
+                );
+            }
+            
+            // Gift Voucher
 			$this->data['vouchers'] = array();
 			
 			if (!empty($this->session->data['vouchers'])) {

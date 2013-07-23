@@ -53,6 +53,7 @@ class ControllerModuleCart extends Controller {
 		$this->data['text_empty'] = $this->language->get('text_empty');
 		$this->data['text_cart'] = $this->language->get('text_cart');
 		$this->data['text_checkout'] = $this->language->get('text_checkout');
+		$this->data['text_payment_profile'] = $this->language->get('text_payment_profile');
 		
 		$this->data['button_remove'] = $this->language->get('button_remove');
 		
@@ -100,15 +101,17 @@ class ControllerModuleCart extends Controller {
 			}
 													
 			$this->data['products'][] = array(
-				'key'      => $product['key'],
-				'thumb'    => $image,
-				'name'     => $product['name'],
-				'model'    => $product['model'], 
-				'option'   => $option_data,
-				'quantity' => $product['quantity'],
-				'price'    => $price,	
-				'total'    => $total,	
-				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id'])		
+				'key'       => $product['key'],
+				'thumb'     => $image,
+				'name'      => $product['name'],
+				'model'     => $product['model'], 
+				'option'    => $option_data,
+				'quantity'  => $product['quantity'],
+				'price'     => $price,	
+				'total'     => $total,	
+				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+                'recurring' => $product['recurring'],
+                'profile'   => $product['profile_name'],
 			);
 		}
 		

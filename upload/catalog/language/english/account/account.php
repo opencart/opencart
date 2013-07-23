@@ -17,4 +17,6 @@ $_['text_reward']        = 'Your Reward Points';
 $_['text_return']        = 'View your return requests'; 
 $_['text_transaction']   = 'Your Transactions'; 
 $_['text_newsletter']    = 'Subscribe / unsubscribe to newsletter';
+$_['text_recurring']     = 'Recurring payments';
+$_['text_transactions']  = 'Transactions';
 ?>

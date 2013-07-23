@@ -77,6 +77,10 @@ class ControllerCheckoutCheckout extends Controller {
 			'common/footer',
 			'common/header'	
 		);
+        
+        if (isset($this->request->get['quickconfirm'])) {
+            $this->data['quickconfirm'] = $this->request->get['quickconfirm'];
+        }
 				
 		$this->response->setOutput($this->render());
   	}

@@ -44,6 +44,7 @@ $_['text_order_status']                = 'Order Statuses';
 $_['text_opencart']                    = 'Homepage';
 $_['text_payment']                     = 'Payments';
 $_['text_product']                     = 'Products';
+$_['text_profile']                     = 'Profiles';
 $_['text_reports']                     = 'Reports';
 $_['text_report_sale_order']           = 'Orders';
 $_['text_report_sale_tax']             = 'Tax';
@@ -81,4 +82,8 @@ $_['text_voucher_theme']               = 'Voucher Themes';
 $_['text_weight_class']                = 'Weight Classes';
 $_['text_length_class']                = 'Length Classes';
 $_['text_zone']                        = 'Zones';
-?>
+
+$_['text_paypal_manage']               = 'PayPal';
+$_['text_paypal_search']               = 'Search';
+$_['text_recurring_profile']           = 'Recurring Profiles';
+

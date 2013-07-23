@@ -209,6 +209,9 @@ class ModelCheckoutOrder extends Model {
 					$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
 				}
 			}
+
+            if(!isset($passArray) || empty($passArray)){ $passArray = null; }
+            $this->openbay->orderNew((int)$order_id);
 			
 			$this->cache->delete('product');
 			

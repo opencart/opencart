@@ -81,4 +81,16 @@ $_['text_voucher_theme']               = 'Voucher Themes';
 $_['text_weight_class']                = 'Weight Classes';
 $_['text_length_class']                = 'Length Classes';
 $_['text_zone']                        = 'Zones';
+$_['text_openbay_extension']           = 'OpenBay Pro';
+$_['text_openbay_dashboard']           = 'Dashboard';
+$_['text_openbay_orders']              = 'Bulk order update';
+$_['text_openbay_items']               = 'Manage items';
+$_['text_openbay_ebay']                = 'eBay';
+$_['text_openbay_amazon']              = 'Amazon (EU)';
+$_['text_openbay_amazonus']            = 'Amazon (US)';
+$_['text_openbay_play']                = 'Play.com (EU)';
+$_['text_openbay_settings']            = 'Settings';
+$_['text_openbay_links']               = 'Item links';
+$_['text_openbay_report_price']        = 'Pricing report';
+$_['text_openbay_order_import']        = 'Order import';
 ?>

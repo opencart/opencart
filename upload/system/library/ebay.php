@@ -1,5 +1,5 @@
 <?php
-final class Ebay 
+final class Ebay
 {
     private $registry;
     private $url    = 'https://uk.openbaypro.com/';

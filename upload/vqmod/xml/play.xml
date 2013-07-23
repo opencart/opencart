@@ -1,0 +1,18 @@
+<modification>
+    <id>OpenBay Pro for Play</id>
+    <version>1.0.0</version>
+    <vqmver>2.3.0</vqmver>
+    <author>James Allsup</author>
+    <!-- Adding Play class to the registry object -->
+    <file name="system/engine/controller.php">
+        <operation>
+			<ignoreif><![CDATA[$this->load->library('play');]]></ignoreif>
+            <search position="after"><![CDATA[$this->registry = $registry;]]></search>
+            <add><![CDATA[
+                $this->load->library('play');
+                $play = new Play($registry);
+                $registry->set('play', $play);
+            ]]></add>
+        </operation>
+    </file>
+</modification>

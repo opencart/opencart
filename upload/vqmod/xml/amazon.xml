@@ -1,0 +1,133 @@
+<modification>
+    <id>OpenBay Pro for Amazon</id>
+    <version>1</version>
+    <vqmver>1.0.8</vqmver>
+    <author>Martynas Puronas</author>
+
+    <!-- Adding Amazon class to the registry object -->
+    <file name="system/engine/controller.php">
+        <operation>
+            <search position="after"><![CDATA[$this->registry = $registry;]]></search>
+            <add><![CDATA[
+                $this->load->library('amazon');
+                $amazon = new Amazon($registry);
+                $registry->set('amazon', $amazon);
+            ]]></add>
+        </operation>
+    </file>
+
+    <!-- Order modifications -->
+    <file name="admin/controller/sale/order.php">
+        <operation>
+            <search position="after"><![CDATA[$this->data['text_order_id'] = $this->language->get('text_order_id');]]></search>
+            <add><![CDATA[
+                $this->data['amazon_order_id_text'] = $this->language->get('amazon_order_id_text');
+                $this->data['name_text'] = $this->language->get('name_text');
+            ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[$this->data['store_name'] = $order_info['store_name'];]]></search>
+            <add><![CDATA[
+                $this->data['amazon_order_id'] = $order_info['amazon_order_id'];
+                $this->data['sku_text'] = $this->language->get('sku_text');
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/model/sale/order.php">
+        <operation>
+            <search position="before"><![CDATA[return array(]]></search>
+            <add><![CDATA[
+                if($this->config->get('amazon_status') == 1){
+                    $amazonOrderId = $this->db->query("
+                        SELECT `amazon_order_id`
+                        FROM `" . DB_PREFIX . "amazon_order`
+                        WHERE `order_id` = " . (int) $order_query->row['order_id'] . "
+                        LIMIT 1")->row;
+
+                    if (isset($amazonOrderId['amazon_order_id']) && !empty($amazonOrderId['amazon_order_id'])) {
+                        $amazonOrderId = $amazonOrderId['amazon_order_id'];
+                    }else{
+                        $amazonOrderId = '';
+                    }
+                }else{
+                    $amazonOrderId = '';
+                }
+            ]]></add>
+        </operation>
+
+        <operation>
+            <search position="after"><![CDATA[return array(]]></search>
+            <add><![CDATA[
+              'amazon_order_id' => $amazonOrderId,
+            ]]></add>
+        </operation>
+    </file>
+
+    <file name="admin/language/*/sale/order.php">
+        <operation>
+            <search position="after"><![CDATA[<?php]]></search>
+            <add><![CDATA[
+            $_['amazon_order_id_text'] = 'Amazon Order ID:';
+            $_['name_text'] = 'Name:';
+            $_['sku_text'] = 'SKU';
+            ]]></add>
+        </operation>
+    </file>
+
+  <file name="admin/view/template/sale/order_info.tpl">
+
+    <operation>
+      <search position="after" offset="5"><![CDATA[<div id="tab-order" class="vtabs-content">]]></search>
+      <add><![CDATA[
+          <?php if (!empty($amazon_order_id)): ?>
+          <tr>
+            <td><?php echo $amazon_order_id_text; ?></td>
+            <td><?php echo $amazon_order_id; ?></td>
+          </tr>
+          <?php endif; ?>
+      ]]></add>
+    </operation>
+
+    <operation error="skip">
+      <search position="before" offset="2"><![CDATA[<td><?php echo $shipping_firstname; ?></td>]]></search>
+      <add><![CDATA[
+          <?php if (!empty($amazon_order_id)): ?>
+            <!--
+          <?php endif; ?>
+      ]]></add>
+    </operation>
+
+    <operation error="skip">
+      <search position="after" offset="1"><![CDATA[<td><?php echo $shipping_firstname; ?></td>]]></search>
+      <add><![CDATA[
+          <?php if (!empty($amazon_order_id)): ?>
+            -->
+            <tr>
+                <td><?php echo $name_text ?></td>
+                <td><?php echo $shipping_firstname; ?></td>
+            </tr>
+          <?php endif; ?>
+      ]]></add>
+    </operation>
+
+    <operation error="skip">
+      <search position="before" offset="2"><![CDATA[<td><?php echo $shipping_lastname; ?></td>]]></search>
+      <add><![CDATA[
+          <?php if (!empty($amazon_order_id) && empty($shipping_lastname)): ?>
+            <!--
+          <?php endif; ?>
+      ]]></add>
+    </operation>
+
+    <operation error="skip">
+      <search position="after" offset="1"><![CDATA[<td><?php echo $shipping_lastname; ?></td>]]></search>
+      <add><![CDATA[
+          <?php if (!empty($amazon_order_id) && empty($shipping_lastname)): ?>
+            -->
+          <?php endif; ?>
+      ]]></add>
+    </operation>
+  </file>
+  <!-- END of order modifications-->
+</modification>

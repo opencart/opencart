@@ -1,0 +1,27 @@
+<modification>
+    <id>OpenBay Pro for eBay</id>
+    <version>1.0.0</version>
+    <vqmver>1.0.8</vqmver>
+    <author>James Allsup</author>
+
+    <!-- THIS IS LEGACY BUT MUST REMAIN FOR OLDER STORES! -->
+    <file name="system/startup.php">
+        <operation>
+            <search position="after"><![CDATA[require_once(DIR_SYSTEM . 'library/template.php');]]></search>
+            <add><![CDATA[require_once(DIR_SYSTEM . 'library/ebay.php');]]></add>
+        </operation>
+    </file>
+    <!-- END LEGACY CODE -->
+
+    <file name="system/engine/controller.php">
+        <operation>
+			<ignoreif><![CDATA[$this->load->library('ebay');]]></ignoreif>
+            <search position="after"><![CDATA[$this->registry = $registry;]]></search>
+            <add><![CDATA[
+                $this->load->library('ebay');
+                $ebay = new Ebay($registry);
+                $registry->set('ebay', $ebay);
+            ]]></add>
+        </operation>
+    </file>
+</modification>

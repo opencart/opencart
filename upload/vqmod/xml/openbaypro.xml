@@ -1,0 +1,288 @@
+<modification>
+	<id>OpenBay Pro Modules</id>
+	<version>1.0</version>
+	<vqmver>1.0.8</vqmver>
+	<author>James Allsup</author>
+
+	<file name="admin/controller/common/header.php">
+		<operation error="skip">
+			<search position="after"><![CDATA[$this->data['text_feed']]]></search>
+			<add><![CDATA[
+			    $this->data['text_openbay_extension'] = $this->language->get('text_openbay_extension');
+			    $this->data['text_openbay_dashboard'] = $this->language->get('text_openbay_dashboard');
+			    $this->data['text_openbay_orders'] = $this->language->get('text_openbay_orders');
+			    $this->data['text_openbay_items'] = $this->language->get('text_openbay_items');
+			    $this->data['text_openbay_ebay'] = $this->language->get('text_openbay_ebay');
+			    $this->data['text_openbay_amazon'] = $this->language->get('text_openbay_amazon');
+                $this->data['text_openbay_amazonus'] = $this->language->get('text_openbay_amazonus');
+			    $this->data['text_openbay_play'] = $this->language->get('text_openbay_play');
+			    $this->data['text_openbay_settings'] = $this->language->get('text_openbay_settings');
+			    $this->data['text_openbay_links'] = $this->language->get('text_openbay_links');
+			    $this->data['text_openbay_report_price'] = $this->language->get('text_openbay_report_price');
+			    $this->data['text_openbay_order_import'] = $this->language->get('text_openbay_order_import');
+			]]></add>
+		</operation>
+		<operation error="skip">
+			<search position="after"><![CDATA[$this->data['feed']]]></search>
+			<add><![CDATA[
+			    $this->data['openbay_link_extension']           = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL');
+			    $this->data['openbay_link_orders']              = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL');
+			    $this->data['openbay_link_items']               = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
+
+			    $this->data['openbay_link_ebay']                = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
+			    $this->data['openbay_link_ebay_settings']       = $this->url->link('openbay/openbay/settings', 'token=' . $this->session->data['token'], 'SSL');
+			    $this->data['openbay_link_ebay_links']          = $this->url->link('openbay/openbay/viewItemLinks', 'token=' . $this->session->data['token'], 'SSL');
+			    $this->data['openbay_link_ebay_orderimport']    = $this->url->link('openbay/openbay/viewOrderImport', 'token=' . $this->session->data['token'], 'SSL');
+
+			    $this->data['openbay_link_amazon']              = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
+			    $this->data['openbay_link_amazon_settings']     = $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], 'SSL');
+                $this->data['openbay_link_amazon_links']        = $this->url->link('openbay/amazon/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
+
+                $this->data['openbay_link_amazonus']            = $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL');
+			    $this->data['openbay_link_amazonus_settings']   = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL');
+                $this->data['openbay_link_amazonus_links']      = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
+
+			    $this->data['openbay_link_play']                = $this->url->link('openbay/play', 'token=' . $this->session->data['token'], 'SSL');
+			    $this->data['openbay_link_play_settings']       = $this->url->link('openbay/play/settings', 'token=' . $this->session->data['token'], 'SSL');
+                $this->data['openbay_link_play_report_price']   = $this->url->link('play/product/pricingReport', 'token=' . $this->session->data['token'], 'SSL');
+
+                $this->data['openbay_markets'] = array(
+                    'ebay' => $this->config->get('openbay_status'),
+                    'amazon' => $this->config->get('amazon_status'),
+                    'amazonus' => $this->config->get('amazonus_status'),
+                    'play' => $this->config->get('play_status')
+                );
+
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/language/*/common/header.php">
+		<operation error="skip">
+			<search position="after"><![CDATA[<?php]]></search>
+			<add><![CDATA[
+			    $_['text_openbay_extension']    = 'OpenBay Pro';
+			    $_['text_openbay_dashboard']    = 'Dashboard';
+			    $_['text_openbay_orders']       = 'Bulk order update';
+			    $_['text_openbay_items']        = 'Manage items';
+			    $_['text_openbay_ebay']         = 'eBay';
+			    $_['text_openbay_amazon']       = 'Amazon (EU)';
+                $_['text_openbay_amazonus']     = 'Amazon (US)';
+			    $_['text_openbay_play']         = 'Play.com (EU)';
+			    $_['text_openbay_settings']     = 'Settings';
+			    $_['text_openbay_links']        = 'Item links';
+			    $_['text_openbay_report_price'] = 'Pricing report';
+			    $_['text_openbay_order_import'] = 'Order import';
+			]]></add>
+		</operation>
+	</file>
+	<file name="admin/view/template/common/header.tpl">
+		<operation error="skip">
+			<search position="after"><![CDATA[<?php echo $text_feed; ?>]]></search>
+			<add><![CDATA[
+			<li><a class="parent"><?php echo $text_openbay_extension; ?></a>
+                <ul>
+                    <li><a href="<?php echo $openbay_link_extension; ?>"><?php echo $text_openbay_dashboard; ?></a></li>
+                    <li><a href="<?php echo $openbay_link_orders; ?>"><?php echo $text_openbay_orders; ?></a></li>
+                    <li><a href="<?php echo $openbay_link_items; ?>"><?php echo $text_openbay_items; ?></a></li>
+
+                    <?php if($openbay_markets['ebay'] == 1){ ?>
+                    <li><a class="parent" href="<?php echo $openbay_link_ebay; ?>"><?php echo $text_openbay_ebay; ?></a>
+                        <ul>
+                            <li><a href="<?php echo $openbay_link_ebay_settings; ?>"><?php echo $text_openbay_settings; ?></a></li>
+                            <li><a href="<?php echo $openbay_link_ebay_links; ?>"><?php echo $text_openbay_links; ?></a></li>
+                            <li><a href="<?php echo $openbay_link_ebay_orderimport; ?>"><?php echo $text_openbay_order_import; ?></a></li>
+                        </ul>
+                    </li>
+                    <?php } ?>
+
+                    <?php if($openbay_markets['amazon'] == 1){ ?>
+                    <li><a class="parent" href="<?php echo $openbay_link_amazon; ?>"><?php echo $text_openbay_amazon; ?></a>
+                        <ul>
+                            <li><a href="<?php echo $openbay_link_amazon_settings; ?>"><?php echo $text_openbay_settings; ?></a></li>
+                            <li><a href="<?php echo $openbay_link_amazon_links; ?>"><?php echo $text_openbay_links; ?></a></li>
+                        </ul>
+                    </li>
+                    <?php } ?>
+
+                    <?php if($openbay_markets['amazonus'] == 1){ ?>
+                    <li><a class="parent" href="<?php echo $openbay_link_amazonus; ?>"><?php echo $text_openbay_amazonus; ?></a>
+                        <ul>
+                            <li><a href="<?php echo $openbay_link_amazonus_settings; ?>"><?php echo $text_openbay_settings; ?></a></li>
+                            <li><a href="<?php echo $openbay_link_amazonus_links; ?>"><?php echo $text_openbay_links; ?></a></li>
+                        </ul>
+                    </li>
+                    <?php } ?>
+
+                    <?php if($openbay_markets['play'] == 1){ ?>
+                    <li><a class="parent" href="<?php echo $openbay_link_play; ?>"><?php echo $text_openbay_play; ?></a>
+                        <ul>
+                            <li><a href="<?php echo $openbay_link_play_settings; ?>"><?php echo $text_openbay_settings; ?></a></li>
+                            <li><a href="<?php echo $openbay_link_play_report_price; ?>"><?php echo $text_openbay_report_price; ?></a></li>
+                        </ul>
+                    </li>
+                    <?php } ?>
+                </ul>
+            </li>
+            ]]></add>
+		</operation>
+	</file>
+    <file name="system/engine/controller.php">
+        <operation>
+                <search position="after"><![CDATA[$this->registry = $registry;]]></search>
+                <add><![CDATA[ $this->load->library('openbay'); $registry->set('openbay', new Openbay($registry));
+                if (!defined('HTTPS_CATALOG') && defined('HTTP_CATALOG')) {
+                    define('HTTPS_CATALOG', HTTP_CATALOG);
+                } ]]>
+                </add>
+        </operation>
+    </file>
+    <!-- add product update listener -->
+	<file name="admin/controller/catalog/product.php">
+        <operation>
+            <search position="after"><![CDATA[$this->model_catalog_product->editProduct(]]></search>
+            <add><![CDATA[ $this->openbay->productUpdateListen($this->request->get['product_id'], $this->request->post); ]]></add>
+        </operation>
+    </file>
+    <!-- add the new order listener to catalog side -->
+	<file name="catalog/model/checkout/order.php">
+        <operation>
+            <search position="before" index="1"><![CDATA[$this->cache->delete('product');]]></search>
+            <add><![CDATA[
+            if(!isset($passArray) || empty($passArray)){ $passArray = null; }
+            $this->openbay->orderNew((int)$order_id);
+            ]]></add>
+        </operation>
+    </file>
+
+    <!-- add order status info / update -->
+    <file name="admin/view/template/sale/order_info.tpl">
+        <operation>
+            <search position="after"><![CDATA[$('#button-history').live('click', function() {]]></search>
+            <add><![CDATA[
+                    if(typeof verifyStatusChange == 'function'){
+                        if(verifyStatusChange() == false){
+                            return false;
+                        }else{
+                            addOrderInfo();
+                        }
+                    }else{
+                        addOrderInfo();
+                    }
+                  ]]></add>
+        </operation>
+        <operation>
+            <search position="after"><![CDATA[<td><?php echo $entry_order_status; ?></td>]]></search>
+            <add><![CDATA[ <input type="hidden" name="old_order_status_id" value="<?php echo $order_status_id; ?>" id="old_order_status_id" /> ]]></add>
+        </operation>
+        <operation>
+            <search position="before"><![CDATA[<?php echo $footer; ?>]]></search>
+            <add><![CDATA[
+                <script type="text/javascript">
+                    function orderStatusChange(){
+                        var status_id = $('select[name="order_status_id"]').val();
+
+                        $('#openbayInfo').remove();
+
+                        $.ajax({
+                            url: 'index.php?route=extension/openbay/ajaxOrderInfo&token=<?php echo $this->request->get['token']; ?>&order_id=<?php echo $this->request->get['order_id']; ?>&status_id='+status_id,
+                            type: 'post',
+                            dataType: 'html',
+                            beforeSend: function(){},
+                            success: function(html) {
+                                $('#history').after(html);
+                            },
+                            failure: function(){},
+                            error: function(){}
+                        });
+                    }
+
+                    function addOrderInfo(){
+                        var status_id = $('select[name="order_status_id"]').val();
+                        var old_status_id = $('#old_order_status_id').val();
+
+                        $('#old_order_status_id').val(status_id);
+
+                        $.ajax({
+                            url: 'index.php?route=extension/openbay/ajaxAddOrderInfo&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>&status_id='+status_id+'&old_status_id='+old_status_id,
+                            type: 'post',
+                            dataType: 'html',
+                            data: $(".openbayData").serialize(),
+                            beforeSend: function(){},
+                            success: function() {},
+                            failure: function(){},
+                            error: function(){}
+                        });
+                     }
+
+                    $(document).ready(function() {
+                        orderStatusChange();
+                    });
+
+                    $('select[name="order_status_id"]').change(function(){orderStatusChange();});
+                </script>
+            ]]></add>
+        </operation>
+    </file>
+    <file name="admin/controller/catalog/product.php">
+        <operation>
+            <search position="after"><![CDATA[$this->model_catalog_product->deleteProduct($product_id);]]></search>
+            <add><![CDATA[ $this->openbay->deleteProduct($product_id); ]]></add>
+        </operation>
+    </file>
+    <file name="admin/controller/sale/order.php">
+        <operation>
+            <search position="before"><![CDATA[$this->model_sale_order->deleteOrder($order_id);]]></search>
+            <add><![CDATA[ $this->openbay->deleteOrder($order_id); ]]></add>
+        </operation>
+    </file>
+    <!-- product page market link status -->
+    <file name="admin/view/template/catalog/product_form.tpl">
+        <operation>
+            <search position="before"><![CDATA[<?php echo $footer; ?>]]></search>
+            <add><![CDATA[
+<script type="text/javascript"><!--
+    function openbayLinkStatus(){
+        var product_id = '<?php echo $this->request->get['product_id']; ?>';
+        $.ajax({
+            type: 'GET',
+            url: 'index.php?route=extension/openbay/linkStatus&token=<?php echo $token; ?>&product_id='+product_id,
+            dataType: 'html',
+            success: function(data) {
+                //add the button to nav
+                $('<a href="#tab-openbay">Marketplace links</a>').hide().appendTo("#tabs").fadeIn(1000);
+                $('#tab-general').before(data);
+                $('#tabs a').tabs();
+            },
+            failure: function(){
+
+            },
+            error: function() {
+
+            }
+        });
+    }
+
+    $(document).ready(function(){
+        openbayLinkStatus();
+    });
+//--></script>
+            ]]></add>
+        </operation>
+    </file>
+
+    <!-- GENERIC GOOD-PRACTICE OPENCART FIXES -->
+    <file name="catalog/model/checkout/order.php">
+        <operation error="skip">
+            <search position="replace"><![CDATA[$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '1', comment = '" . $this->db->escape(($comment && $notify) ? $comment : '') . "', date_added = NOW()");]]></search>
+            <add><![CDATA[ $this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '".$notify."', comment = '" . $this->db->escape($comment) . "', date_added = NOW()"); ]]></add>
+        </operation>
+    </file>
+    <file name="admin/model/setting/setting.php">
+        <operation error="skip">
+            <search position="replace"><![CDATA[$data[$result['key']] = unserialize($setting['value']);]]></search>
+            <add><![CDATA[ $data[$result['key']] = unserialize($result['value']); ]]></add>
+        </operation>
+    </file>
+    <!-- END FIXES -->
+
+</modification>

@@ -1,7 +1,7 @@
 <?php
 class ModelOpenbayOpenbay extends Model
 {
-    private $url    = 'https://uk.openbaypro.com/';
+    private $url    = 'https://account.openbaypro.com/';
 
     public function setUrl($url){
         $this->url = $url;

@@ -6,43 +6,44 @@
 <html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
 <!--<![endif]-->
 <head>
-<meta charset="UTF-8" />
-<title><?php echo $title; ?></title>
-<base href="<?php echo $base; ?>" />
-<?php if ($description) { ?>
-<meta name="description" content="<?php echo $description; ?>" />
-<?php } ?>
-<?php if ($keywords) { ?>
-<meta name="keywords" content= "<?php echo $keywords; ?>" />
-<?php } ?>
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<?php if ($icon) { ?>
-<link href="<?php echo $icon; ?>" rel="icon" />
-<?php } ?>
-<?php foreach ($links as $link) { ?>
-<link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
-<?php } ?>
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" type="text/css" rel="stylesheet">
-<script src="catalog/view/javascript/jquery/jquery-2.0.0.min.js" type="text/javascript"></script>
-<link href="catalog/view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
-<link href="catalog/view/javascript/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
-<script src="catalog/view/javascript/bootstrap/js/bootstrap.js" type="text/javascript"></script>
-<link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
-<link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
-<?php foreach ($styles as $style) { ?>
-<link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
-<?php } ?>
-<script src="catalog/view/javascript/common.js" type="text/javascript"></script>
-<?php foreach ($scripts as $script) { ?>
-<script src="<?php echo $script; ?>" type="text/javascript"></script>
-<?php } ?>
-<!--[if IE]>
-<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-<![endif]-->
-<?php echo $google_analytics; ?>
+  <meta charset="UTF-8" />
+  <title><?php echo $title; ?></title>
+  <base href="<?php echo $base; ?>" />
+  <?php if ($description) { ?>
+  <meta name="description" content="<?php echo $description; ?>" />
+  <?php } ?>
+  <?php if ($keywords) { ?>
+  <meta name="keywords" content= "<?php echo $keywords; ?>" />
+  <?php } ?>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <?php if ($icon) { ?>
+  <link href="<?php echo $icon; ?>" rel="icon" />
+  <?php } ?>
+  <?php foreach ($links as $link) { ?>
+  <link href="<?php echo $link['href']; ?>" rel="<?php echo $link['rel']; ?>" />
+  <?php } ?>
+  <link href="http://fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" type="text/css" rel="stylesheet">
+  <script src="catalog/view/javascript/jquery/jquery-2.0.0.min.js" type="text/javascript"></script>
+  <link href="catalog/view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
+  <link href="catalog/view/javascript/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
+  <script src="catalog/view/javascript/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+  <link href="catalog/view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css" />
+  <link href="catalog/view/theme/default/stylesheet/stylesheet.css" rel="stylesheet">
+  <?php foreach ($styles as $style) { ?>
+  <link href="<?php echo $style['href']; ?>" type="text/css" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
+  <?php } ?>
+  <script src="catalog/view/javascript/common.js" type="text/javascript"></script>
+  <?php foreach ($scripts as $script) { ?>
+  <script src="<?php echo $script; ?>" type="text/javascript"></script>
+  <?php } ?>
+  <!--[if IE]>
+  <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+  <![endif]-->
+  <?php echo $google_analytics; ?>
 </head>
 <body>
+<!-- top bar -->
 <div class="topbar navbar navbar-static-top">
   <div class="navbar-inner">
     <div class="container">
@@ -60,7 +61,11 @@
     </div>
   </div>
 </div>
+<!-- /top bar -->
+
+<!-- main container that's closed at footer -->
 <div class="container">
+<!-- header -->
 <header>
   <div class="row">
     <div class="span4">
@@ -85,10 +90,12 @@
     </div>
   </div>
   <?php if ($categories) { ?>
+  <!-- menu container -->
   <div class="main-navbar navbar navbar-inverse">
     <div class="navbar-inner">
       <div class="container"><span class="categories hidden-desktop"><?php echo $text_category; ?></span> <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></a>
         <div class="nav-collapse collapse">
+          <!-- menu -->
           <ul class="nav">
             <?php foreach ($categories as $category) { ?>
             <?php if ($category['children']) { ?>
@@ -113,9 +120,12 @@
             <?php } ?>
             <?php } ?>
           </ul>
+          <!-- menu -->
         </div>
       </div>
     </div>
   </div>
+  <!-- /menu container -->
   <?php } ?>
 </header>
+<!-- /header -->

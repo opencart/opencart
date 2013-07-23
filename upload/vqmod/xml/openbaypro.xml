@@ -126,16 +126,7 @@
             ]]></add>
 		</operation>
 	</file>
-    <file name="system/engine/controller.php">
-        <operation>
-                <search position="after"><![CDATA[$this->registry = $registry;]]></search>
-                <add><![CDATA[ $this->load->library('openbay'); $registry->set('openbay', new Openbay($registry));
-                if (!defined('HTTPS_CATALOG') && defined('HTTP_CATALOG')) {
-                    define('HTTPS_CATALOG', HTTP_CATALOG);
-                } ]]>
-                </add>
-        </operation>
-    </file>
+
     <!-- add product update listener -->
 	<file name="admin/controller/catalog/product.php">
         <operation>

@@ -5,16 +5,7 @@
     <author>Martynas Puronas</author>
 
     <!-- Adding Amazon class to the registry object -->
-    <file name="system/engine/controller.php">
-        <operation>
-            <search position="after"><![CDATA[$this->registry = $registry;]]></search>
-            <add><![CDATA[
-                $this->load->library('amazon');
-                $amazon = new Amazon($registry);
-                $registry->set('amazon', $amazon);
-            ]]></add>
-        </operation>
-    </file>
+
 
     <!-- Order modifications -->
     <file name="admin/controller/sale/order.php">

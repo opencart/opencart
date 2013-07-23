@@ -5,16 +5,7 @@
     <author>Martynas Puronas</author>
 
     <!-- Adding Amazonus class to the registry object -->
-    <file name="system/engine/controller.php">
-        <operation>
-            <search position="after"><![CDATA[$this->registry = $registry;]]></search>
-            <add><![CDATA[
-                $this->load->library('amazonus');
-                $amazonus = new Amazonus($registry);
-                $registry->set('amazonus', $amazonus);
-            ]]></add>
-        </operation>
-    </file>
+
 
     <!-- Order modifications -->
     <file name="admin/controller/sale/order.php">

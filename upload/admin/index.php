@@ -138,6 +138,13 @@ $registry->set('length', new Length($registry));
 
 // User
 $registry->set('user', new User($registry));
+
+//OpenBay Pro
+$registry->set('openbay', new Openbay($registry));
+$registry->set('play', new Play($registry));
+$registry->set('ebay', new Ebay($registry));
+$registry->set('amazon', new Amazon($registry));
+$registry->set('amazonus', new Amazonus($registry));
 						
 // Front Controller
 $controller = new Front($registry);

@@ -2,10 +2,6 @@
 <div class="content" id="payment">
   <table class="form">
     <tr>
-      <td><?php echo $entry_cc_owner; ?></td>
-      <td><input type="text" name="cc_owner" value="" /></td>
-    </tr>
-    <tr>
       <td><?php echo $entry_cc_type; ?></td>
       <td><select name="cc_type">
           <?php foreach ($cards as $card) { ?>

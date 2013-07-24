@@ -18,6 +18,9 @@ final class Ebay
         $this->server       = 1;
         $this->lasterror    = '';
         $this->lastmsg      = '';
+
+        $this->load->library('log');
+        $this->logger = new Log('ebaylog.log');
     }
     
     public function __get($name) {
@@ -41,7 +44,7 @@ final class Ebay
             }
             
             if($write == true){
-                $this->ebaylog->write($data);
+                $this->logger->write($data);
             }
         }
     }

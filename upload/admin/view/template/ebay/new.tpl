@@ -2,17 +2,15 @@
 
 <div id="content">
 
-  <?php if ($error_warning) { ?>
-    <div class="warning mBottom5"><?php echo $error_warning; ?></div>
-  <?php } ?>
+    <?php if ($error_warning) { ?>
+        <div class="warning mBottom5"><?php echo $error_warning; ?></div>
+    <?php } ?>
 
-  <div class="box">
+    <div class="box">
       
     <div class="heading">
-      <h1><img src="view/image/information.png" alt="" /> <?php echo $lang_page_title; ?></h1>
-      <div class="buttons">
-          <a onclick="confirmAction('<?php echo $cancel; ?>');" class="button" id="cancel_button"><span><?php echo $lang_cancel; ?></span></a>
-      </div>
+        <h1><img src="view/image/information.png" alt="" /> <?php echo $lang_page_title; ?></h1>
+        <div class="buttons"><a onclick="confirmAction('<?php echo $cancel; ?>');" class="button" id="cancel_button"><span><?php echo $lang_cancel; ?></span></a></div>
     </div>
       
     <div class="content" id="mainForm">
@@ -29,278 +27,283 @@
             <a href="#tab-listing-returns"><?php echo $lang_tab_returns; ?></a>
         </div>
         
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
 
-        <!-- set any hidden data or settings here -->
-        <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>" />
-        <input type="hidden" name="auction_type" value="FixedPriceItem" />
-        <input type="hidden" name="attributes" value="<?php echo $product['attributes']; ?>" />
+            <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>" />
+            <input type="hidden" name="auction_type" value="FixedPriceItem" />
+            <input type="hidden" name="attributes" value="<?php echo $product['attributes']; ?>" />
 
-        <div id="tab-listing-general">
-        
-        <table class="form">
-          <?php if($product['store_cats'] != false) { ?> 
-          <tr>
-              <td><?php echo $lang_shop_category; ?></td>
-              <td>
-                  <?php
-                    echo'<select name="eBayStoreCatId" id="eBayStoreCatId">';
-                        foreach($product['store_cats'] as $key => $cat){
-                            echo'<option value="'.$key.'">'.$cat.'</option>';
-                        }
-                    echo'</select>';
-                  ?>
-              </td>
-          </tr>
-          <?php } ?>
-          <tr>
-              <td><?php echo $lang_category_suggested; ?><span class="help"><?php echo $lang_category_suggested_help; ?></span></td>
-              <td>
-                <p id="suggestedLoading" class="displayNone"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoadingSuggestedLoading"/> <?php echo $lang_category_suggested_check; ?></p>
-                <div id="suggested_cats"></div>
-              </td>
-          </tr>
-          <tr>
-              <td><?php echo $lang_category_popular; ?><span class="help"><?php echo $lang_category_popular_help; ?></span></td>
-              <td>
-                  <?php
-                    echo'<p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong>'.$lang_none.'</strong></p>';
-                    foreach($product['popular_cats'] as $cat){
-                        echo'<p><input type="radio" name="popular" value="'.$cat['CategoryID'].'" class="popular_category" /> '.$cat['breadcrumb'].'</p>';
-                    }
-                  ?>
-              </td>
-          </tr>
-          <tr id="cSelectionsRow">
-            <td><?php echo $lang_category; ?></td>
-            <td>
-                <div id="cSelections">
-                    <select id="catsSelect1" onchange="loadCategories(2);"></select>
-                    <select id="catsSelect2" class="displayNone m10" onchange="loadCategories(3);"></select>
-                    <select id="catsSelect3" class="displayNone m10" onchange="loadCategories(4);"></select>
-                    <select id="catsSelect4" class="displayNone m10" onchange="loadCategories(5);"></select>
-                    <select id="catsSelect5" class="displayNone m10" onchange="loadCategories(6);"></select>
-                    <select id="catsSelect6" class="displayNone m10" onchange="loadCategories(7);"></select>
-                    <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoading" class="displayNone" />
-                </div>
-                <input type="hidden" name="finalCat" id="finalCat" />
-            </td>
+            <div id="tab-listing-general">
+                <table class="form">
 
-            </tr>
-            <tr id="conditionContainer" class="displayNone">
-                <td><?php echo $lang_listing_condition; ?></td>
-                <td>
-                    <select name="condition" id="conditionRow" class="displayNone width200"></select>
-                    <img id="conditionLoading" src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" />
-                </td>
-            </tr>
-
-            <tr id="durationContainer" class="displayNone">
-                <td><?php echo $lang_listing_duration; ?></td>
-                <td>
-                    <select name="auction_duration" id="durationRow" class="displayNone width200"></select>
-                    <img id="durationLoading" src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" />
-                </td>
-            </tr>
-        </table>
-        </div>
-
-        <div id="tab-listing-feature">
-          <p id="showFeatureDivPreload"><?php echo $lang_feature_pretext; ?></p>
-          <table class="form" id="showFeatureDiv">
-              <tr>
-                  <td style="vertical-align:top; padding-top:15px;"><?php echo $lang_category_features; ?></td>
-                  <td>
-                      <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="featLoading" class="displayNone" />
-                      <table class="form" id="featureRow"></table>
-                  </td>
-              </tr>
-          </table>
-      </div>
-
-        <div id="tab-listing-catalog">
-            <table class="form">
-                <tr>
-                    <td><?php echo $lang_search_catalog; ?></td>
-                    <td>
-                        <div class="buttons">
-                            <input type="text" name="catalog_search" id="catalog_search" value="" />
-                            <a onclick="searchEbayCatalog();" class="button" id="catalog_search_btn"><span>Search</span></a>
-                            <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="catalog_search_img" class="displayNone" />
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo $lang_image_catalog; ?></td>
-                    <td>
-                        <input type="hidden" value="0" name="catalog_image">
-                        <input id="catalog_image" type="checkbox" value="1" name="catalog_image">
-                    </td>
-                </tr>
-            </table>
-
-            <div id="showCatalogDiv" style="width:100%;"></div>
-      </div>
-
-        <div id="tab-listing-description">
-            <table class="form">
-                <tr>
-                    <td><?php echo $lang_title; ?></td>
-                    <td><div id="name_highlight"><input type="text" name="name" value="<?php echo $product['name']; ?>" size="85" id="name" /> <span id="name_highlight_msg" class="displayNone"> <?php echo $lang_title_error; ?></span></div></td>
-                </tr>
-                <tr>
-                    <td><?php echo $lang_subtitle; ?></td>
-                    <td><div id="sub_name_highlight"><input type="text" id="sub_name" name="sub_name" value="" size="85" /> <span id="sub_name_highlight_msg" class="displayNone"> <?php echo $lang_subtitle_help; ?></span></div></td>
-                </tr>
-                <tr>
-                    <td><?php echo $lang_description; ?></td>
-                    <td><textarea name="description" id="descriptionField"><?php echo $product['description']; ?></textarea></td>
-                </tr>
-            </table>
-        </div>
-        
-        <div id="tab-listing-images">
-            <table class="form">
-                <tr>
-                    <td><?php echo $lang_profile_load; ?></td>
-                    <td>
-                        <select name="profile_theme" id="profile_theme" class="theme_input">
-                            <option value="def"><?php echo $lang_select; ?></option>
-                            <?php if(is_array($product['profiles_theme'])) { foreach($product['profiles_theme'] as $profile) { ?>
-                                <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                            <?php } }?>
-                        </select>
-                        <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="profileThemeLoading" class="displayNone" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo $lang_template; ?><span class="help"><a href="http://shop.openbaypro.com/opencart_design_services/opencart_theme_design/ebay_html_template_openbay_pro" target="_BLANK"><?php echo $lang_template_link; ?></a></span></td>
-                    <td>
-                        <select name="template" id="template_id">
-                            <option value="None">None</option>
-
-                            <?php foreach($product['templates'] as $template){ ?>
-                            <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
-                            <?php } ?>
-                        </select>
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo $lang_image_gallery; ?></td>
-                    <td>
-                        <input type="text" name="gallery_height" value="<?php echo $product['defaults']['gallery_height']; ?>" id="gallery_height" />h&nbsp;
-                        <input type="text" name="gallery_width" value="<?php echo $product['defaults']['gallery_width']; ?>" id="gallery_width" />w
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo $lang_image_thumb; ?></td>
-                    <td>
-                        <input type="text" name="thumb_height" value="<?php echo $product['defaults']['thumb_height']; ?>" id="thumb_height" />h&nbsp;
-                        <input type="text" name="thumb_width" value="<?php echo $product['defaults']['thumb_width']; ?>" id="thumb_width" />w
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo $lang_images_supersize; ?></td>
-                    <td>
-                        <input type="hidden" name="gallery_super" value="0" />
-                        <input type="checkbox" name="gallery_super" value="1" id="gallery_super" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo $lang_images_gallery_plus; ?></td>
-                    <td>
-                        <input type="hidden" name="gallery_plus" value="0" />
-                        <input type="checkbox" name="gallery_plus" value="1" id="gallery_plus" />
-                    </td>
-                </tr>
-                <tr>
-                    <td><?php echo $lang_gallery_select_all; ?></td>
-                    <td>
-                        <p><input type="checkbox" name="allTemplateImages" value="1" id="allTemplateImages" style="margin-top:2px;" /> <?php echo $lang_template_images; ?></p>
-                        <p><input type="checkbox" name="allEbayImages" value="1" id="allEbayImages" style="margin-top:2px;" /> <?php echo $lang_ebay_images; ?></p>
-                    </td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        
-                        <p>* <?php echo $lang_images_text_1; ?></p>
-                        <p>* <?php echo $lang_images_text_2; ?></p>
-                        
-                        <?php if(!empty($product['product_images'])){
-                            $i = 0;
-                            foreach($product['product_images'] as $img){
-                                echo'<div class="border p10 mBottom10 width120 left floatLeft mRight10">
-                                <img src="'.$img['preview'].'" />
-                                <p><input type="checkbox" id="imgUrl'.$i.'" name="img_tpl['.$i.']" value="'.$img['image'].'" class="checkboxTemplateImage" /> '.$lang_template_image.'</p>
-                                <p>
-                                    <input type="hidden" name="img['.$i.']" value="null" />
-                                    <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad('.$i.')" id="imgChk'.$i.'" name="img['.$i.']" value="'.$img['image'].'" '.( ($i == 0) ? 'checked="checked" ' : '').'/> '.$lang_image_ebay.'
-                                </p>
-                                <p id="imgRad'.$i.'"'.( ($i == 0) ? '' : 'class="displayNone"').'><input type="radio" name="main_image" '; if($i == 0){ echo 'checked="checked"';} echo ' value="'.$i.'"/> '.$lang_main_image_ebay.'</p>
-                                </div>';
-                                $i++;
-                            }
-                        }else{
-                            echo'<p>'.$lang_images_none.'</p>';
-                        }
-                        ?>
-                    </td>
-                </tr>
-            </table>
-<?php
-            if(!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])){
-?>
-            <h2><?php echo $lang_option_images; ?></h2>
-            <p><?php echo $lang_option_description; ?></p>
-
-            <table class="form">
-                <tr>
-                    <td><?php echo $lang_option_images_grp; ?></td>
-                    <td>
-                        <select name="option_image_group" id="option_image_group">
-                            <option value="def">-- <?php echo $lang_select; ?> --</option>
-                            <?php foreach($product['option_grp'] as $option_group){ echo'<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
-                        </select>
-                        <input type="hidden" id="option_image_group_name" name="option_image_group_name" value="" />
-                    </td>
-                </tr>
-                <tr class="option_group_img_tr displayNone">
-                    <td><?php echo $lang_option_images_choice; ?></td>
-                    <td>
-                        <?php foreach($product['option_grp'] as $option_group){ ?>
-                            <div id="option_group_img_<?php echo $option_group['option_id']; ?>" class="option_group_img">
-                                <table class="form">
-                                    <?php foreach($option_group['product_option_value'] as $option_group_choice){ ?>
-                                        <tr>
-                                            <td>
-                                                <h4><?php echo $option_group_choice['name']; ?></h4>
-                                                <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>" />
-                                                <div class="buttons">
-                                                    <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="button cursor"><span><?php echo $lang_add; ?></span></a>
-                                                </div>
-                                            </td>
-                                            <td class="center" id="option_images_<?php echo $option_group_choice['product_option_value_id']; ?>">
-                                                <?php $x = 0; if(!empty($option_group_choice['image_thumb']) && ($option_group_choice['image'] != 'no_image.jpg')){ $x++; ?>
-                                                    <div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>">
-                                                        <img src="<?php echo $option_group_choice['image_thumb']; ?>" />
-                                                        <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>" />
-                                                        <p class="textCenter"><a class="cursor" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);"><?php echo $lang_remove; ?></a></p>
-                                                    </div>
-                                                <?php } ?>
-                                                <div style="clear:both"></div>
-                                                <input type="hidden" name="option_image_count_<?php echo $option_group['option_id']; ?>" id="option_image_count_<?php echo $option_group['option_id']; ?>" value="<?php echo $x; ?>" />
-                                            </td>
-                                        </tr>
+                    <?php if($product['store_cats'] != false) { ?>
+                        <tr>
+                            <td><?php echo $lang_shop_category; ?></td>
+                            <td>
+                                <select name="eBayStoreCatId" id="eBayStoreCatId">
+                                    <?php foreach($product['store_cats'] as $key => $cat){ ?>
+                                        <option value="<?php echo $key; ?>"><?php echo $cat; ?></option>
                                     <?php } ?>
-                                </table>
+                                </select>
+                            </td>
+                        </tr>
+                    <?php } ?>
+
+                    <tr>
+                        <td><?php echo $lang_category_suggested; ?><span class="help"><?php echo $lang_category_suggested_help; ?></span></td>
+                        <td>
+                            <p id="suggestedLoading" class="displayNone"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoadingSuggestedLoading"/> <?php echo $lang_category_suggested_check; ?></p>
+                            <div id="suggested_cats"></div>
+                        </td>
+                    </tr>
+
+                    <?php if(!empty($product['popular_cats'])){ ?>
+                        <tr>
+                            <td><?php echo $lang_category_popular; ?><span class="help"><?php echo $lang_category_popular_help; ?></span></td>
+                            <td>
+                                <p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong><?php echo $lang_none; ?></strong></p>
+
+                                <?php foreach($product['popular_cats'] as $cat){ ?>
+                                    <p><input type="radio" name="popular" value="<?php echo $cat['CategoryID']; ?>" class="popular_category" /> <?php echo $cat['breadcrumb']; ?></p>
+                                <?php } ?>
+                            </td>
+                        </tr>
+                    <?php }else{ ?>
+                        <input type="radio" name="popular" value="" />
+                    <?php } ?>
+
+                    <tr id="cSelectionsRow">
+                        <td><?php echo $lang_category; ?></td>
+                        <td>
+                            <div id="cSelections">
+                                <select id="catsSelect1" onchange="loadCategories(2);"></select>
+                                <select id="catsSelect2" class="displayNone m10" onchange="loadCategories(3);"></select>
+                                <select id="catsSelect3" class="displayNone m10" onchange="loadCategories(4);"></select>
+                                <select id="catsSelect4" class="displayNone m10" onchange="loadCategories(5);"></select>
+                                <select id="catsSelect5" class="displayNone m10" onchange="loadCategories(6);"></select>
+                                <select id="catsSelect6" class="displayNone m10" onchange="loadCategories(7);"></select>
+                                <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoading" class="displayNone" />
                             </div>
-                        <?php } ?>
-                    </td>
-                </tr>
-            </table>
+                            <input type="hidden" name="finalCat" id="finalCat" />
+                        </td>
+                    </tr>
+
+                    <tr id="conditionContainer" class="displayNone">
+                        <td><?php echo $lang_listing_condition; ?></td>
+                        <td>
+                            <select name="condition" id="conditionRow" class="displayNone width200"></select>
+                            <img id="conditionLoading" src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" />
+                        </td>
+                    </tr>
+
+                    <tr id="durationContainer" class="displayNone">
+                        <td><?php echo $lang_listing_duration; ?></td>
+                        <td>
+                            <select name="auction_duration" id="durationRow" class="displayNone width200"></select>
+                            <img id="durationLoading" src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" />
+                        </td>
+                    </tr>
+
+                </table>
+            </div>
+
+            <div id="tab-listing-feature">
+                <p id="showFeatureDivPreload"><?php echo $lang_feature_pretext; ?></p>
+                <table class="form" id="showFeatureDiv">
+                    <tr>
+                        <td style="vertical-align:top; padding-top:15px;"><?php echo $lang_category_features; ?></td>
+                        <td>
+                            <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="featLoading" class="displayNone" />
+                            <table class="form" id="featureRow"></table>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+            <div id="tab-listing-catalog">
+                <table class="form">
+                    <tr>
+                        <td><?php echo $lang_search_catalog; ?></td>
+                        <td>
+                            <div class="buttons">
+                                <input type="text" name="catalog_search" id="catalog_search" value="" />
+                                <a onclick="searchEbayCatalog();" class="button" id="catalog_search_btn"><span>Search</span></a>
+                                <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="catalog_search_img" class="displayNone" />
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang_image_catalog; ?></td>
+                        <td>
+                            <input type="hidden" value="0" name="catalog_image">
+                            <input id="catalog_image" type="checkbox" value="1" name="catalog_image">
+                        </td>
+                    </tr>
+                </table>
+
+                <div id="showCatalogDiv" style="width:100%;"></div>
+            </div>
+
+            <div id="tab-listing-description">
+                <table class="form">
+                    <tr>
+                        <td><?php echo $lang_title; ?></td>
+                        <td><div id="name_highlight"><input type="text" name="name" value="<?php echo $product['name']; ?>" size="85" id="name" /> <span id="name_highlight_msg" class="displayNone"> <?php echo $lang_title_error; ?></span></div></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang_subtitle; ?></td>
+                        <td><div id="sub_name_highlight"><input type="text" id="sub_name" name="sub_name" value="" size="85" /> <span id="sub_name_highlight_msg" class="displayNone"> <?php echo $lang_subtitle_help; ?></span></div></td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang_description; ?></td>
+                        <td><textarea name="description" id="descriptionField"><?php echo $product['description']; ?></textarea></td>
+                    </tr>
+                </table>
+            </div>
+        
+            <div id="tab-listing-images">
+                <table class="form">
+                    <tr>
+                        <td><?php echo $lang_profile_load; ?></td>
+                        <td>
+                            <select name="profile_theme" id="profile_theme" class="theme_input">
+                                <option value="def"><?php echo $lang_select; ?></option>
+                                <?php if(is_array($product['profiles_theme'])) { foreach($product['profiles_theme'] as $profile) { ?>
+                                    <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                                <?php } }?>
+                            </select>
+                            <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="profileThemeLoading" class="displayNone" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang_template; ?><span class="help"><a href="http://shop.openbaypro.com/opencart_design_services/opencart_theme_design/ebay_html_template_openbay_pro" target="_BLANK"><?php echo $lang_template_link; ?></a></span></td>
+                        <td>
+                            <select name="template" id="template_id">
+                                <option value="None">None</option>
+
+                                <?php foreach($product['templates'] as $template){ ?>
+                                <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
+                                <?php } ?>
+                            </select>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang_image_gallery; ?></td>
+                        <td>
+                            <input type="text" name="gallery_height" value="<?php echo $product['defaults']['gallery_height']; ?>" id="gallery_height" />h&nbsp;
+                            <input type="text" name="gallery_width" value="<?php echo $product['defaults']['gallery_width']; ?>" id="gallery_width" />w
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang_image_thumb; ?></td>
+                        <td>
+                            <input type="text" name="thumb_height" value="<?php echo $product['defaults']['thumb_height']; ?>" id="thumb_height" />h&nbsp;
+                            <input type="text" name="thumb_width" value="<?php echo $product['defaults']['thumb_width']; ?>" id="thumb_width" />w
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang_images_supersize; ?></td>
+                        <td>
+                            <input type="hidden" name="gallery_super" value="0" />
+                            <input type="checkbox" name="gallery_super" value="1" id="gallery_super" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang_images_gallery_plus; ?></td>
+                        <td>
+                            <input type="hidden" name="gallery_plus" value="0" />
+                            <input type="checkbox" name="gallery_plus" value="1" id="gallery_plus" />
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><?php echo $lang_gallery_select_all; ?></td>
+                        <td>
+                            <p><input type="checkbox" name="allTemplateImages" value="1" id="allTemplateImages" style="margin-top:2px;" /> <?php echo $lang_template_images; ?></p>
+                            <p><input type="checkbox" name="allEbayImages" value="1" id="allEbayImages" style="margin-top:2px;" /> <?php echo $lang_ebay_images; ?></p>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="2">
+
+                            <p>* <?php echo $lang_images_text_1; ?></p>
+                            <p>* <?php echo $lang_images_text_2; ?></p>
+
 <?php
-            }
+                            if(!empty($product['product_images'])){
+                                $i = 0;
+                                foreach($product['product_images'] as $img){
 ?>
+                                    <div class="border p10 mBottom10 width120 left floatLeft mRight10">
+                                    <img src="<?php echo $img['preview']; ?>" />
+                                    <p><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="checkboxTemplateImage" /> <?php echo $lang_template_image; ?></p>
+                                    <p>
+                                        <input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
+                                        <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad(<?php echo $i; ?>)" id="imgChk<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> /> <?php echo $lang_image_ebay; ?>
+                                    </p>
+                                    <p id="imgRad<?php echo $i; ?>"<?php echo ( ($i == 0) ? '' : ' class="displayNone"'); ?>><input type="radio" name="main_image"<?php echo ( ($i == 0) ? '' : ' checked="checked"'); ?> value="<?php echo $i; ?>" /> <?php echo $lang_main_image_ebay; ?></p>
+                                    </div>
+<?php
+                                    $i++;
+                                }
+                            }else{
+                                echo'<p>'.$lang_images_none.'</p>';
+                            }
+?>
+                        </td>
+                    </tr>
+                </table>
+
+                <?php if(!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])){ ?>
+
+                <h2><?php echo $lang_option_images; ?></h2>
+                <p><?php echo $lang_option_description; ?></p>
+
+                <table class="form">
+                    <tr>
+                        <td><?php echo $lang_option_images_grp; ?></td>
+                        <td>
+                            <select name="option_image_group" id="option_image_group">
+                                <option value="def">-- <?php echo $lang_select; ?> --</option>
+                                <?php foreach($product['option_grp'] as $option_group){ echo'<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
+                            </select>
+                            <input type="hidden" id="option_image_group_name" name="option_image_group_name" value="" />
+                        </td>
+                    </tr>
+                    <tr class="option_group_img_tr displayNone">
+                        <td><?php echo $lang_option_images_choice; ?></td>
+                        <td>
+                            <?php foreach($product['option_grp'] as $option_group){ ?>
+                                <div id="option_group_img_<?php echo $option_group['option_id']; ?>" class="option_group_img">
+                                    <table class="form">
+                                        <?php foreach($option_group['product_option_value'] as $option_group_choice){ ?>
+                                            <tr>
+                                                <td>
+                                                    <h4><?php echo $option_group_choice['name']; ?></h4>
+                                                    <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>" />
+                                                    <div class="buttons">
+                                                        <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="button cursor"><span><?php echo $lang_add; ?></span></a>
+                                                    </div>
+                                                </td>
+                                                <td class="center" id="option_images_<?php echo $option_group_choice['product_option_value_id']; ?>">
+                                                    <?php $x = 0; if(!empty($option_group_choice['image_thumb']) && ($option_group_choice['image'] != 'no_image.jpg')){ $x++; ?>
+                                                        <div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>">
+                                                            <img src="<?php echo $option_group_choice['image_thumb']; ?>" />
+                                                            <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>" />
+                                                            <p class="textCenter"><a class="cursor" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);"><?php echo $lang_remove; ?></a></p>
+                                                        </div>
+                                                    <?php } ?>
+                                                    <div style="clear:both"></div>
+                                                    <input type="hidden" name="option_image_count_<?php echo $option_group['option_id']; ?>" id="option_image_count_<?php echo $option_group['option_id']; ?>" value="<?php echo $x; ?>" />
+                                                </td>
+                                            </tr>
+                                        <?php } ?>
+                                    </table>
+                                </div>
+                            <?php } ?>
+                        </td>
+                    </tr>
+                </table>
+            <?php } ?>
         </div>
         
         <div id="tab-listing-price">
@@ -317,9 +320,8 @@
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="profileGenericLoading" class="displayNone" />
                     </td>
                 </tr>
-<?php 
-                if(!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])){
-?>
+
+                <?php if(!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])){ ?>
                     <tr>
                         <td><?php echo $lang_stock_matrix; ?></td>
                         <td>
@@ -416,16 +418,18 @@
                         <td><?php echo $lang_tax_inc; ?></td>
                         <td><input type="text" name="tax" id="taxRate" onkeyup="updatePriceFromEx();" value="<?php echo $product['defaults']['tax']; ?>" class="textRight width50" /> %</td>
                     </tr>
-                <?php }
-                if(empty($product['options'])) { ?>
-                <tr>
-                    <td><?php echo $lang_offers; ?></td>
-                    <td>
-                        <input type="hidden" name="bestoffer" value="0" checked/>
-                        <input type="checkbox" name="bestoffer" id="bestoffer" value="1" />
-                    </td>
-                </tr>
                 <?php } ?>
+
+                <?php if(empty($product['options'])) { ?>
+                    <tr>
+                        <td><?php echo $lang_offers; ?></td>
+                        <td>
+                            <input type="hidden" name="bestoffer" value="0" checked/>
+                            <input type="checkbox" name="bestoffer" id="bestoffer" value="1" />
+                        </td>
+                    </tr>
+                <?php } ?>
+
                 <tr>
                     <td><?php echo $lang_private; ?></td>
                     <td>
@@ -433,6 +437,7 @@
                        <input type="checkbox" name="private_listing" id="private_listing" value="1" />
                     </td>
                 </tr>
+
             </table>
         </div>
         
@@ -450,12 +455,9 @@
                     <td>
 <?php
                     foreach($product['payments'] as $payment){
-                        echo'<p><input type="checkbox" name="payments['.$payment['ebay_name'].']" value="1"';
-
-                        if($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1) { echo ' checked="checked"'; }
-
-                        echo' /> '.$payment['local_name'].'</p>';
-                        
+?>
+                        <p><input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1" <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? echo 'checked="checked" ' : ''); ?>/><?php echo $payment['local_name']; ?></p>
+<?php
                         if($payment['ebay_name'] == 'PayPal'){
                             echo'<p><strong>'.$lang_payment_pp_email.'</strong>&nbsp;<input type="text" name="paypal_email" size="46" value="'.$product['defaults']['paypal_address'].'" /></p>';
                         }
@@ -602,7 +604,9 @@
             </tr>
         </table>
         
-      </form>
+    </form>
+
+
     </div>
     <div class="content displayNone" id="reviewForm">
         <table class="form" id="reviewFormTable">
@@ -723,6 +727,9 @@
 
                         if(data.data){
                             htmlInj += '<p><input type="radio" name="suggested" value="" id="suggested_default" checked="checked"/> <strong><?php echo $lang_none; ?></strong></p>';
+
+                            data.data = $.makeArray(data.data);
+
                             $.each(data.data, function(key,val){
                                 if(val.percent != 0) {
                                     htmlInj += '<p><input type="radio" class="suggested_category" name="suggested" value="'+val.id+'" /> ('+val.percent+'% match) '+val.name+'</p>';
@@ -815,6 +822,9 @@
                 if(data.items != null){
                     $('#catsSelect'+level).empty();
                     $('#catsSelect'+level).append('<option value="">-- <?php echo $lang_select; ?> --</option>');
+
+                    data.cats = $.makeArray(data.cats);
+
                     $.each(data.cats, function(key, val) {
                         if(val.CategoryID != parent){
                             $('#catsSelect'+level).append('<option value="'+val.CategoryID+'">'+val.CategoryName+'</option>');
@@ -867,6 +877,9 @@
                     }
 
                     if(data.data.conditions){
+
+                        data.data.conditions = $.makeArray(data.data.conditions);
+
                         $.each(data.data.conditions, function(key, val){
                             htmlInj += '<option value='+val.id+'>'+val.name+'</option>';
                         });
@@ -891,12 +904,12 @@
         var cat = $('#finalCat').val();
 
         if(cat <= 0){
-            alert('Choose your category first');
+            alert('<?php echo $lang_error_choose_category; ?>');
             return;
         }
 
         if(qry == ''){
-            alert('Enter some search text');
+            alert('<?php echo $lang_error_enter_text; ?>');
             return;
         }
 
@@ -906,11 +919,7 @@
             url: 'index.php?route=openbay/openbay/searchEbayCatalog&token=<?php echo $token; ?>',
             type: 'POST',
             dataType: 'json',
-            data: {
-                categoryId: cat,
-                page: 1,
-                search: qry
-            },
+            data: { categoryId: cat, page: 1,  search: qry },
             beforeSend: function(){
                 $('#showCatalogDiv').empty().show();
                 $('#showCatalogDivPreload').hide();
@@ -920,19 +929,15 @@
             success: function(data) {
                 if(data.error == false){
                     if(data.data.productSearchResult.paginationOutput.totalEntries == 0 || data.data.ack == 'Failure'){
-                        $('#showCatalogDiv').html('<p><?php echo $lang_no_catalog_data; ?></p>');
+                        $('#showCatalogDiv').html('<p><?php echo $lang_error_no_catalog_data; ?></p>');
                     }else{
-                        if(data.data.productSearchResult.products instanceof Array){
-                            $.each(data.data.productSearchResult.products, function(key, val){
-                                processCatalogItem(val);
-                            });
-                        }else{
-                            processCatalogItem(data.data.productSearchResult.products);
-                        }
+                        data.data.productSearchResult.products = $.makeArray(data.data.productSearchResult.products);
+
+                        $.each(data.data.productSearchResult.products, function(key, val){
+                            processCatalogItem(val);
+                        });
                         
-                        $('#showCatalogDiv').prepend('<div style="clear:both;"></div>');
-                        
-                        $('#showCatalogDiv').append('<div style="clear:both;"></div>');
+                        $('#showCatalogDiv').prepend('<div style="clear:both;"></div>').append('<div style="clear:both;"></div>');
                     }
                 }else{
                     if(data.msg == null){
@@ -978,6 +983,9 @@
         lang["GTC"]         = '<?php echo $lang_listing_gtc; ?>';
 
         htmlInj        = '';
+
+        data = $.makeArray(data);
+
         $.each(data, function(key, val){
             htmlInj += '<option value="'+val+'"';
                 if(val == listingDefault){ htmlInj += ' selected="selected"';}
@@ -1018,23 +1026,27 @@
 
                             if(("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)){
                                 htmlInj2 += '<option value="">-- <?php echo $lang_select; ?> --</option>';
-                                if($.isArray(val.ValueRecommendation)){
-                                    $.each(val.ValueRecommendation, function(key2, option){
-                                        htmlInj2 += '<option value="'+option.Value+'">'+option.Value+'</option>';
-                                    });
-                                }else{
-                                    htmlInj2 += '<option value="'+val.ValueRecommendation.Value+'">'+val.ValueRecommendation.Value+'</option>';
-                                }
+
+                                val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
+
+                                $.each(val.ValueRecommendation, function(key2, option){
+                                    htmlInj2 += '<option value="'+option.Value+'">'+option.Value+'</option>';
+                                });
 
                                 if(val.ValidationRules.SelectionMode == 'FreeText'){
                                     htmlInj2 += '<option value="Other"><?php echo $lang_other; ?></option>';
                                 }
+
                                 htmlInj += '<tr><td class="ebaySpecificTitle">'+val.Name+'</td><td><select name="feat['+val.Name+']" class="ebaySpecificSelect" id="spec_sel_'+specificCount+'" onchange="toggleSpecOther('+specificCount+');">'+htmlInj2+'</select><span id="spec_'+specificCount+'_other" class="ebaySpecificSpan"><?php echo $lang_other; ?>:&nbsp;<input type="text" name="featother['+val.Name+']" class="ebaySpecificOther" /></span></td></tr>';
                             }else if(("ValueRecommendation" in val) && (val.ValidationRules.MaxValues > 1)){
                                 htmlInj += '<tr><td class="ebaySpecificTitle">'+val.Name+'</td><td>';
-                                    $.each(val.ValueRecommendation, function(key2, option){
-                                        htmlInj += '<p><input type="checkbox" name="feat['+val.Name+'][]" value="'+option.Value+'" />'+option.Value+'</p>';
-                                    });
+
+                                val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
+
+                                $.each(val.ValueRecommendation, function(key2, option){
+                                    htmlInj += '<p><input type="checkbox" name="feat['+val.Name+'][]" value="'+option.Value+'" />'+option.Value+'</p>';
+                                });
+
                                 htmlInj += '</td></tr>';
                             }else{
                                 htmlInj += '<tr><td class="ebaySpecificTitle">'+val.Name+'</td><td><input type="text" name="feat['+val.Name+']" class="ebaySpecificInput" /></td></tr>';
@@ -1088,6 +1100,8 @@
                 success: function(data) {
                     html = '';
                     html += '<p class="shipping_' + id + '_' + count + '" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong><?php echo $lang_shipping_service; ?></strong> <label><select name="service_' + id + '[' + count + ']">';
+
+                    data.svc = $.makeArray(data.svc);
 
                     $.each(data.svc, function(key, val) {
                         html += '<option value="' + val.ShippingService + '">' + val.description + '</option>';
@@ -1251,6 +1265,9 @@
                         $('#mainForm').hide();
 
                         if(data.data.Errors){
+
+                            data.Errors = $.makeArray(data.Errors);
+
                             $.each(data.data.Errors, function(key, val){
                                 $('#reviewForm').prepend('<div class="warning" style="margin-bottom:5px;">'+val+'</div>');
                             });
@@ -1259,6 +1276,8 @@
                         if(data.data.Ack != 'Failure'){
                             var feeTot = parseFloat(0.00);
                             var Cur = '';
+
+                            data.data.Fees = $.makeArray(data.data.Fees);
 
                             $.each(data.data.Fees, function(key, val){
 
@@ -1312,6 +1331,9 @@
                     alert(data.msg);
                 }else{
                     if(data.data.Errors){
+
+                        data.data.Errors = $.makeArray(data.data.Errors);
+
                         $.each(data.data.Errors, function(key, val){
                             $('#failedForm').prepend('<div class="warning" style="margin-bottom:5px;">'+val+'</div>');
                             $('#doneForm').prepend('<div class="warning" style="margin-bottom:5px;">'+val+'</div>');

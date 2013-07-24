@@ -23,7 +23,6 @@ $_['lang_edit']                     = 'Edit';
 
 $_['lang_catalog_pretext']          = 'This tab will display any results for items found in the eBay catalog - select your category first.';
 $_['lang_feature_pretext']          = 'This tab will display any item features available - select your category first.';
-$_['lang_no_catalog_data']          = 'No eBay catalog data was found for your product in eBay';
 
 /**
  * Ajax messages
@@ -213,6 +212,10 @@ $_['lang_option_description']       = 'Variation images can be used to display a
 $_['lang_search_catalog']           = 'Search eBay catalog:';
 $_['lang_image_catalog']            = 'Use default image:<span class="help">This will change your main image and will be set to use the eBay catalog image</span>';
 
-
-
-$_['lang_nolist_zero_qty']            = 'You cannot list an item with zero stock';
+/**
+ * Errors
+ */
+$_['lang_error_choose_category']    = 'You must choose a category';
+$_['lang_error_enter_text']         = 'Enter search text';
+$_['lang_error_no_stock']           = 'You cannot list an item with zero stock';
+$_['lang_error_no_catalog_data']    = 'No eBay catalog data was found for your product in eBay';

@@ -1278,7 +1278,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 }
 
                 if($product_info['quantity'] < 1 && (!isset($product_info['has_option']) || $product_info['has_option'] == 0)){
-                    $this->data['error_warning'] = $this->language->get('lang_nolist_zero_qty');
+                    $this->data['error_warning'] = $this->language->get('lang_error_no_stock');
                 }
 
                 $this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);

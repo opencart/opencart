@@ -1,13 +1,7 @@
 <?php
 class ModelEbayPatch extends Model{
     public function runPatch($manual = true){
-        $this->load->model('ebay/openbay');
         $this->load->model('setting/setting');
-
-        /**
-         * Update the extensions table from ebay to OpenBay
-         */
-        $this->db->query("UPDATE `".DB_PREFIX."extension` SET `type` = 'openbay' WHERE `type` = 'ebay'");
 
         $settings = $this->model_setting_setting->getSetting('openbay');
 

@@ -9,7 +9,7 @@ class ModelOpenbayOpenbay extends Model
 
     public function ftpTestConnection(){
         $this->load->language('extension/openbay');
-        
+
         $data               = $this->request->post;
         $data['user']       = $data['openbay_ftp_username'];
         $data['pw']         = html_entity_decode($data['openbay_ftp_pw']);
@@ -20,32 +20,32 @@ class ModelOpenbayOpenbay extends Model
         if(empty($data['pw']))      { return array('connection' => false, 'msg' => $this->language->get('update_error_password')); }
         if(empty($data['server']))  { return array('connection' => false, 'msg' => $this->language->get('update_error_server')); }
 
-        $connection = @ftp_connect($data['server']); 
-        
+        $connection = @ftp_connect($data['server']);
+
         if($connection != false){
             if (@ftp_login($connection, $data['user'], $data['pw'])) {
                 if(!empty($data['rootpath'])){
                     @ftp_chdir($connection, $data['rootpath']);
                 }
-                
+
                 $directory_list = ftp_nlist($connection, ".");
-                
+
                 $folders = array();
                 foreach($directory_list as $key=>$list){
                     if($this->ftpDir($list, $connection)){
                         $folders[] = $list;
                     }
                 }
-                
+
                 $folder_error                                   = false;
                 $folder_error_admin                             = false;
                 if(!in_array('catalog', $folders))              { $folder_error = true;}
                 if(!in_array('system', $folders))               { $folder_error = true;}
                 if(!in_array('image', $folders))                { $folder_error = true;}
                 if(!in_array($data['openbay_admin_directory'], $folders))      { $folder_error_admin = true;}
-                
+
                 ftp_close($connection);
-                
+
                 if($folder_error_admin == true){
                     return array('connection' => false, 'msg' => $this->language->get('update_okcon_noadmin'));
                 }else{
@@ -62,7 +62,7 @@ class ModelOpenbayOpenbay extends Model
             return array('connection' => false, 'msg' => $this->language->get('update_failed_connect'));
         }
     }
-    
+
     public function ftpUpdateModule(){
         /**
          * Disable error reporting due to noticed thrown when directories are checked
@@ -74,7 +74,7 @@ class ModelOpenbayOpenbay extends Model
 
         $this->load->model('setting/setting');
         $this->load->language('extension/openbay');
-        
+
         $data               = $this->request->post;
         $data['user']       = $data['openbay_ftp_username'];
         $data['pw']         = html_entity_decode($data['openbay_ftp_pw']);
@@ -87,35 +87,35 @@ class ModelOpenbayOpenbay extends Model
         if(empty($data['pw']))      { return array('connection' => false, 'msg' => $this->language->get('update_error_password')); }
         if(empty($data['server']))  { return array('connection' => false, 'msg' => $this->language->get('update_error_server')); }
         if(empty($data['adminDir'])){ return array('connection' => false, 'msg' => $this->language->get('update_error_admindir')); }
-        
+
         $connection = @ftp_connect($data['server']);
         $updatelog = "Connecting to server\n";
-        
+
         if($connection != false){
             $updatelog .= "Connected\n";
             $updatelog .= "Checking login details\n";
-            
+
             if(isset($data['openbay_ftp_pasv']) && $data['openbay_ftp_pasv'] == 1){
                 ftp_pasv($connection, true);
                 $updatelog .= "Using pasv connection\n";
             }
-            
+
             if (@ftp_login($connection, $data['user'], $data['pw'])){
                 $updatelog .= "Logged in\n";
-                
+
                 if(!empty($data['rootpath'])){
                     $updatelog .= "Setting root path\n";
                     @ftp_chdir($connection, $data['rootpath']);
                     $directory_list = ftp_nlist($connection, $data['rootpath']);
                 }
-                
+
                 $current_version = $this->config->get('openbay_version');
-                
+
                 $send = array('version' => $current_version, 'ocversion' => VERSION, 'beta' => $data['beta']);
-                
+
                 $files = $this->call('update/getList/', $send);
                 $updatelog .= "Requesting file list\n";
-                
+
                 if($this->lasterror == true){
                     $updatelog .= $this->lastmsg;
                     return array('connection' => true, 'msg' => $this->lastmsg);
@@ -129,7 +129,7 @@ class ModelOpenbayOpenbay extends Model
                                 $dir            .= $location.'/';
 
                                 $updatelog .= "Current location: ".$dir."\n";
-                                
+
                                 // Added to allow OC security where the admin directory is renamed
                                 if($location == 'admin') { $location = $data['adminDir']; }
 
@@ -146,8 +146,10 @@ class ModelOpenbayOpenbay extends Model
                                 $dirLevel++;
                             }
                         }
-                        
-                        $filedata = base64_decode($this->call('update/getFileContent/', array('file' => $dir.$file['name'], 'beta' => $data['beta']))); 
+
+                        $filedata = base64_decode($this->call('update/getFileContent/', array('file' => $dir.$file['name'], 'beta' => $data['beta'])));
+
+                        $updatelog .= "Content of: ".$dir.$file['name'].": ".$filedata."\n\n\n";
 
                         $tmpFile = DIR_CACHE.'openbay.tmp';
 
@@ -155,37 +157,39 @@ class ModelOpenbayOpenbay extends Model
                         fwrite($fp, $filedata);
 
                         fclose($fp);
-                        
+
                         if(ftp_put($connection, $file['name'], $tmpFile, FTP_BINARY)){
-                            $updatelog .= "Updated file: ".$file['name']."\n";
+                            $updatelog .= "Updated file: ".$dir.$file['name']."\n";
                         }else{
-                            $updatelog .= "FAILED TO UPDATE FILE: ".$file['name']."\n";
+                            $updatelog .= "FAILED TO UPDATE FILE: ".$dir.$file['name']."\n";
                         }
 
 
-                        unlink($tmpFile); 
+                        unlink($tmpFile);
 
                         while($dirLevel != 0){
                             ftp_cdup($connection);
                             $dirLevel--;
                         }
                     }
-                    
+
                     $openbay_settings = $this->model_setting_setting->getSetting('openbaymanager');
                     $openbay_settings['openbay_version'] = $files['version'];
                     $this->model_setting_setting->editSetting('openbaymanager',$openbay_settings);
 
                     @ftp_close($connection);
-                    
+
                     /**
                      * Run the patch files
                      */
-                    $this->load->model('ebay/patch'); 
+                    $this->load->model('ebay/patch');
                     $this->model_ebay_patch->runPatch(false);
-                    $this->load->model('amazon/patch'); 
+                    $this->load->model('amazon/patch');
                     $this->model_amazon_patch->runPatch(false);
-                    $this->load->model('amazonus/patch'); 
+                    $this->load->model('amazonus/patch');
                     $this->model_amazonus_patch->runPatch(false);
+                    $this->load->model('play/patch');
+                    $this->model_play_patch->runPatch(false);
 
                     /**
                      * File remove operation (clean up old files)
@@ -198,45 +202,46 @@ class ModelOpenbayOpenbay extends Model
                     $filesUpdate = $files;
                     $files = $this->call('update/getRemoveList/', $send);
 
-                    foreach($files['asset']['file'] as $file){
-                        $dir        = '';
-                        $dirLevel   = 0;
-                        if(!empty($file['locations'])){
-                            foreach($file['locations']['location'] as $location){
-                                $dir       .= $location.'/';
-                                $updatelog .= "Current location: ".$dir."\n";
+                    if(!empty($files) && is_array($files)){
+                        foreach($files['asset']['file'] as $file){
+                            $dir        = '';
+                            $dirLevel   = 0;
+                            if(!empty($file['locations'])){
+                                foreach($file['locations']['location'] as $location){
+                                    $dir       .= $location.'/';
+                                    $updatelog .= "Current location: ".$dir."\n";
 
-                                // Added to allow OC security where the admin directory is renamed
-                                if($location == 'admin') { $location = $data['adminDir']; }
+                                    // Added to allow OC security where the admin directory is renamed
+                                    if($location == 'admin') { $location = $data['adminDir']; }
 
-                                if(ftp_chdir($connection, $location)) {
-                                    //$updatelog .= $location. "/ found\n";
-                                }else{
-                                    ftp_mkdir($connection, $location.'/');
-                                    $updatelog .= $location. "/ created\n";
+                                    if(ftp_chdir($connection, $location)) {
+                                        //$updatelog .= $location. "/ found\n";
+                                    }else{
+                                        ftp_mkdir($connection, $location.'/');
+                                        $updatelog .= $location. "/ created\n";
+                                    }
+
+                                    $dirLevel++;
                                 }
+                            }
 
-                                $dirLevel++;
+                            //remove the file
+                            $updatelog .= "File: ".$file['name']."\n";
+                            $updatelog .= "Size:".ftp_size($connection, $file['name'])."\n";
+
+                            if(@ftp_size($connection, $file['name']) != -1){
+                                @ftp_delete($connection, $file['name']);
+                                $updatelog .= "Removed\n";
+                            }else{
+                                $updatelog .= "File not found\n";
+                            }
+
+                            while($dirLevel != 0){
+                                ftp_cdup($connection);
+                                $dirLevel--;
                             }
                         }
-
-                        //remove the file
-                        $updatelog .= "File: ".$file['name']."\n";
-                        $updatelog .= "Size:".ftp_size($connection, $file['name'])."\n";
-
-                        if(@ftp_size($connection, $file['name']) != -1){
-                            @ftp_delete($connection, $file['name']);
-                            $updatelog .= "Removed\n";
-                        }else{
-                            $updatelog .= "File not found\n";
-                        }
-
-                        while($dirLevel != 0){
-                            ftp_cdup($connection);
-                            $dirLevel--;
-                        }
                     }
-                    
                 }
 
                 $updatelog .= "Update complete\n\n\n";
@@ -251,9 +256,9 @@ class ModelOpenbayOpenbay extends Model
             }
         }else{
             return array('connection' => false, 'msg' => $this->language->get('update_failed_connect'));
-        }        
+        }
     }
-    
+
     public function getNotifications(){
         $data = $this->call('update/getNotifications/');
         return $data;
@@ -300,7 +305,7 @@ class ModelOpenbayOpenbay extends Model
             $this->db->query("CREATE TABLE IF NOT EXISTS `".DB_PREFIX."openbay_faq` (`id` int(11) NOT NULL AUTO_INCREMENT,`route` text NOT NULL, PRIMARY KEY (`id`)) ENGINE=MyISAM DEFAULT CHARSET=utf8;");
         }
     }
-    
+
     private function ftpDir($file, $connection){
         if(ftp_size($connection, $file) == '-1'){
             return true;
@@ -308,7 +313,7 @@ class ModelOpenbayOpenbay extends Model
             return false;
         }
     }
-    
+
     public function checkMcrypt(){
         if(function_exists('mcrypt_encrypt')){
             return true;
@@ -316,7 +321,7 @@ class ModelOpenbayOpenbay extends Model
             return false;
         }
     }
-    
+
     public function checkMbstings(){
         if(function_exists('mb_detect_encoding')){
             return true;
@@ -324,7 +329,7 @@ class ModelOpenbayOpenbay extends Model
             return false;
         }
     }
-    
+
     public function checkFtpenabled(){
         if(function_exists('ftp_connect')){
             return true;
@@ -332,7 +337,7 @@ class ModelOpenbayOpenbay extends Model
             return false;
         }
     }
-    
+
     private function call($call, array $post = NULL, array $options = array(), $content_type = 'json'){
         if(defined("HTTP_CATALOG")){
             $domain = HTTP_CATALOG;
@@ -341,13 +346,13 @@ class ModelOpenbayOpenbay extends Model
         }
 
         $data = array(
-            'token'             => '', 
-            'language'          => $this->config->get('openbay_language'), 
-            'secret'            => '', 
-            'server'            => 1, 
-            'domain'            => $domain, 
+            'token'             => '',
+            'language'          => $this->config->get('openbay_language'),
+            'secret'            => '',
+            'server'            => 1,
+            'domain'            => $domain,
             'openbay_version'   => (int)$this->config->get('openbay_version'),
-            'data'              => $post, 
+            'data'              => $post,
             'content_type'      => $content_type,
             'ocversion'         => VERSION
         );
@@ -358,7 +363,7 @@ class ModelOpenbayOpenbay extends Model
             CURLOPT_POST            => 1,
             CURLOPT_HEADER          => 0,
             CURLOPT_URL             => $this->url.$call,
-            CURLOPT_USERAGENT       => $useragent, 
+            CURLOPT_USERAGENT       => $useragent,
             CURLOPT_FRESH_CONNECT   => 1,
             CURLOPT_RETURNTRANSFER  => 1,
             CURLOPT_FORBID_REUSE    => 1,
@@ -378,8 +383,8 @@ class ModelOpenbayOpenbay extends Model
 
             /* some json data may have BOM due to php not handling types correctly */
             if($encoding == 'UTF-8') {
-              $result = preg_replace('/[^(\x20-\x7F)]*/','', $result);    
-            } 
+              $result = preg_replace('/[^(\x20-\x7F)]*/','', $result);
+            }
 
             $result             = json_decode($result, 1);
             $this->lasterror    = $result['error'];
@@ -402,7 +407,7 @@ class ModelOpenbayOpenbay extends Model
             }
         }
     }
-    
+
     public function writeUpdateLog($data){
         $file = DIR_LOGS . 'openbay_update_'.date('Y_m_d_G_i_s').'.log';
 
@@ -427,14 +432,14 @@ class ModelOpenbayOpenbay extends Model
                 $sql .= " LEFT JOIN (SELECT product_id, IF( SUM( `status` ) = 0, 0, 1 ) AS 'listing_status' FROM " . DB_PREFIX . "ebay_listing GROUP BY product_id ) ebay2 ON (p.product_id = ebay2.product_id)";
             }
         }
-        
+
         if ($data['filter_market_name'] == 'amazon') {
             if($data['filter_market_id'] <= 4) {
                 $sql .= " LEFT JOIN " . DB_PREFIX . "amazon_product ap ON p.product_id = ap.product_id";
             } else {
                 $sql .= " LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id";
             }
-            
+
             $amazon_status = array(
                 1 => 'saved',
                 2 => 'uploaded',
@@ -466,13 +471,13 @@ class ModelOpenbayOpenbay extends Model
                 $sql .= " AND ebay.ebay_listing_id IS NOT NULL AND ebay.status = 1";
             }
         }
-        
+
         if ($data['filter_market_name'] == 'amazon') {
             if ($data['filter_market_id'] == 0) {
                 $sql .= " AND ap.product_id IS NULL ";
-            } elseif($data['filter_market_id'] == 5) { 
+            } elseif($data['filter_market_id'] == 5) {
                 $sql .= " AND apl.id IS NOT NULL";
-            } elseif($data['filter_market_id'] == 6) { 
+            } elseif($data['filter_market_id'] == 6) {
                 $sql .= " AND apl.id IS NULL";
             } else {
                 $sql .= " AND FIND_IN_SET('" . $this->db->escape($amazon_status[$data['filter_market_id']]) . "', ap.`status`) != 0";
@@ -553,7 +558,7 @@ class ModelOpenbayOpenbay extends Model
             } elseif($data['filter_market_id'] <= 6) {
                 $sql .= " LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id";
             }
-            
+
             $amazon_status = array(
                 1 => 'saved',
                 2 => 'uploaded',
@@ -561,14 +566,14 @@ class ModelOpenbayOpenbay extends Model
                 4 => 'error',
             );
         }
-        
+
         if ($data['filter_market_name'] == 'amazonus') {
             if($data['filter_market_id'] <= 4) {
                 $sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_product ap ON p.product_id = ap.product_id";
             } elseif($data['filter_market_id'] <= 6) {
                 $sql .= " LEFT JOIN " . DB_PREFIX . "amazonus_product_link apl ON p.product_id = apl.product_id";
             }
-            
+
             $amazonus_status = array(
                 1 => 'saved',
                 2 => 'uploaded',
@@ -576,7 +581,7 @@ class ModelOpenbayOpenbay extends Model
                 4 => 'error',
             );
         }
-        
+
         if ($data['filter_market_name'] == 'play') {
             $sql .= " LEFT JOIN `" . DB_PREFIX . "play_product_insert` `play` ON (`p`.`product_id` = `play`.`product_id`)";
         }
@@ -598,25 +603,25 @@ class ModelOpenbayOpenbay extends Model
                 $sql .= " AND ebay.ebay_listing_id IS NOT NULL AND ebay.status = 1";
             }
         }
-        
+
         if ($data['filter_market_name'] == 'amazon') {
             if ($data['filter_market_id'] == 0) {
                 $sql .= " AND ap.product_id IS NULL ";
-            } elseif($data['filter_market_id'] == 5) { 
-                $sql .= " AND apl.id IS NOT NULL"; 
-            } elseif($data['filter_market_id'] == 6) { 
+            } elseif($data['filter_market_id'] == 5) {
+                $sql .= " AND apl.id IS NOT NULL";
+            } elseif($data['filter_market_id'] == 6) {
                 $sql .= " AND apl.id IS NULL";
             } else {
                 $sql .= " AND FIND_IN_SET('" . $this->db->escape($amazon_status[$data['filter_market_id']]) . "', ap.`status`) != 0";
             }
         }
-        
+
         if ($data['filter_market_name'] == 'amazonus') {
             if ($data['filter_market_id'] == 0) {
                 $sql .= " AND ap.product_id IS NULL ";
-            } elseif($data['filter_market_id'] == 5) { 
-                $sql .= " AND apl.id IS NOT NULL"; 
-            } elseif($data['filter_market_id'] == 6) { 
+            } elseif($data['filter_market_id'] == 5) {
+                $sql .= " AND apl.id IS NOT NULL";
+            } elseif($data['filter_market_id'] == 6) {
                 $sql .= " AND apl.id IS NULL";
             } else {
                 $sql .= " AND FIND_IN_SET('" . $this->db->escape($amazonus_status[$data['filter_market_id']]) . "', ap.`status`) != 0";

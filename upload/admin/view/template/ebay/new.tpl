@@ -231,8 +231,7 @@
                             foreach($product['product_images'] as $img){
                                 echo'<div class="border p10 mBottom10 width120 left floatLeft mRight10">
                                 <img src="'.$img['preview'].'" />
-                                <p><input type="checkbox" id="imgUrl'.$i.'" name="img_tpl['.$i.']" value="'.$img['image'].'" class="checkboxTemplateImage" onchange="toggleTplImage('.$i.')" /> '.$lang_template_image.'</p>
-                                <p class="imgTag displayNone" id="imgTag'.$i.'">Tag: {imageurl_'.$i.'}</p>
+                                <p><input type="checkbox" id="imgUrl'.$i.'" name="img_tpl['.$i.']" value="'.$img['image'].'" class="checkboxTemplateImage" /> '.$lang_template_image.'</p>
                                 <p>
                                     <input type="hidden" name="img['.$i.']" value="null" />
                                     <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad('.$i.')" id="imgChk'.$i.'" name="img['.$i.']" value="'.$img['image'].'" '.( ($i == 0) ? 'checked="checked" ' : '').'/> '.$lang_image_ebay.'
@@ -1011,6 +1010,9 @@
                     var specificCount = 0;
 
                     if(data.data.Recommendations.NameRecommendation){
+
+                        data.data.Recommendations.NameRecommendation = $.makeArray(data.data.Recommendations.NameRecommendation);
+
                         $.each(data.data.Recommendations.NameRecommendation, function(key, val){
                             htmlInj2 = '';
 
@@ -1366,10 +1368,6 @@
         if ($("#imgChk"+id).is(':checked')) { $("#imgRad"+id).show(); } else { $("#imgRad"+id).hide(); }
     }
 
-    function toggleTplImage(id){
-        if ($("#imgUrl"+id).is(':checked')) { $("#imgTag"+id).show(); } else { $("#imgTag"+id).hide(); }
-    }
-
     function updatePrice(){
         var taxEx = $('#taxEx').val();
         var rate = $('#taxRate').val();
@@ -1438,10 +1436,8 @@
     $('#allTemplateImages').bind('change', function(){
         if($('#allTemplateImages').is(':checked')){
             $('.checkboxTemplateImage').prop('checked', 'checked');
-            $('.imgTag').show();
         }else{
             $('.checkboxTemplateImage').removeAttr('checked');
-            $('.imgTag').hide();
         }
     });
 
@@ -1571,7 +1567,6 @@
                     if(data.data.ebay_img_template == 1){
                         $('.checkboxTemplateImage').prop('checked', true);
                         $('#allTemplateImages').prop('checked', true);
-                        $('.imgTag').show();
                     }
 
                     if($.inArray('ebay_template_id', data.data)){

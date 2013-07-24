@@ -42,7 +42,6 @@ class ModelOpenbayOpenbay extends Model
                 if(!in_array('catalog', $folders))              { $folder_error = true;}
                 if(!in_array('system', $folders))               { $folder_error = true;}
                 if(!in_array('image', $folders))                { $folder_error = true;}
-                if(!in_array('vqmod', $folders))                { $folder_error = true;}
                 if(!in_array($data['openbay_admin_directory'], $folders))      { $folder_error_admin = true;}
                 
                 ftp_close($connection);

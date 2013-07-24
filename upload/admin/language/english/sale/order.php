@@ -3,6 +3,9 @@
 $_['heading_title']                           = 'Orders';
 
 // Text
+
+$_['text_amazon_order_id']                    = 'Amazon Order ID:';
+$_['text_name']                               = 'Name:';
 $_['text_success']                            = 'Success: You have modified orders!';
 $_['text_order_id']                           = 'Order ID:';
 $_['text_invoice_no']                         = 'Invoice No.:';

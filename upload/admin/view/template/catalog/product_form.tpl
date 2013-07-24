@@ -1312,7 +1312,6 @@ $('.time').timepicker({timeFormat: 'h:m'});
 $('#tabs a').tabs(); 
 $('#languages a').tabs(); 
 $('#vtab-option a').tabs();
-//--></script>
 <script type="text/javascript"><!--
 
 var profileCount = <?php echo $profileCount ?>;
@@ -1344,5 +1343,29 @@ function addProfile() {
     $('#tab-profile table tbody').append(html);
 }
 
-//--></script>
-<?php echo $footer; ?>
+function openbayLinkStatus(){
+    var product_id = '<?php echo $this->request->get['product_id']; ?>';
+    $.ajax({
+        type: 'GET',
+        url: 'index.php?route=extension/openbay/linkStatus&token=<?php echo $token; ?>&product_id='+product_id,
+        dataType: 'html',
+        success: function(data) {
+            //add the button to nav
+            $('<a href="#tab-openbay">Marketplace links</a>').hide().appendTo("#tabs").fadeIn(1000);
+            $('#tab-general').before(data);
+            $('#tabs a').tabs();
+        },
+        failure: function(){
+
+        },
+        error: function() {
+
+        }
+    });
+}
+
+$(document).ready(function(){
+    openbayLinkStatus();
+});
+
+//--></script><?php echo $footer; ?>

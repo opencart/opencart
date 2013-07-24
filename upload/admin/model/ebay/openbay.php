@@ -32,6 +32,8 @@ class ModelEbayOpenbay extends Model{
         $value["openbaypro_stock_report_summary"]= '1';
         $value["openbaypro_create_date"]        = '0';
         $value["openbaypro_ebay_itm_link"]      = 'http://www.ebay.com/itm/';
+        $value["openbaypro_relistitems"]        = 0;
+        $value["openbaypro_time_offset"]        = 0;
         $value["openbay_default_addressformat"] = '{firstname} {lastname}
 {company}
 {address_1}
@@ -153,8 +155,8 @@ class ModelEbayOpenbay extends Model{
                       `parent_ebay_order_id` int(11) NOT NULL,
                       `order_id` int(11) NOT NULL,
                       `smp_id` int(11) NOT NULL,
-                        `tracking_no` varchar(100) NOT NULL,
-                        `carrier_id` varchar(100) NOT NULL,
+                      `tracking_no` varchar(100) NOT NULL,
+                      `carrier_id` varchar(100) NOT NULL,
                       PRIMARY KEY (`ebay_order_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 

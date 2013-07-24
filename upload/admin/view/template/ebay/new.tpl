@@ -69,7 +69,7 @@
                             </td>
                         </tr>
                     <?php }else{ ?>
-                        <input type="radio" name="popular" value="" />
+                        <input type="hidden" name="popular" value="" />
                     <?php } ?>
 
                     <tr id="cSelectionsRow">
@@ -456,7 +456,7 @@
 <?php
                     foreach($product['payments'] as $payment){
 ?>
-                        <p><input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1" <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? echo 'checked="checked" ' : ''); ?>/><?php echo $payment['local_name']; ?></p>
+                        <p><input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1" <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/><?php echo $payment['local_name']; ?></p>
 <?php
                         if($payment['ebay_name'] == 'PayPal'){
                             echo'<p><strong>'.$lang_payment_pp_email.'</strong>&nbsp;<input type="text" name="paypal_email" size="46" value="'.$product['defaults']['paypal_address'].'" /></p>';

@@ -71,9 +71,9 @@
                   ?>
               </td>
           </tr>
-          <tr>
+          <tr id="cSelectionsRow">
             <td><?php echo $lang_category; ?></td>
-            <td id="catSelectBox">
+            <td>
                 <div id="cSelections">
                     <select id="catsSelect1" onchange="loadCategories(2);"></select>
                     <select id="catsSelect2" class="displayNone m10" onchange="loadCategories(3);"></select>
@@ -739,13 +739,13 @@
                     });
 
                     $('.suggested_category').bind('click', function(){
-                        $('#cSelections').hide();
+                        $('#cSelectionsRow').hide();
                         $('input[name=popular]').removeAttr('checked');
                         $('#popular_default').prop('checked', true);
                     });
 
                     $('#suggested_default').bind('click', function(){
-                        $('#cSelections').show();
+                        $('#cSelectionsRow').show();
                         $('#showFeatureDiv').hide();
                         $('#showCatalogDiv').hide();
                         $('#featureRow').empty();
@@ -1418,7 +1418,7 @@
     }
 
     $('#popular_default').click(function(){
-        $('#cSelections').show();
+        $('#cSelectionsRow').show();
         $('#showFeatureDiv').hide();
         $('#showCatalogDiv').hide();
         $('#featureRow').empty();

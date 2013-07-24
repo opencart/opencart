@@ -149,8 +149,6 @@ class ModelOpenbayOpenbay extends Model
 
                         $filedata = base64_decode($this->call('update/getFileContent/', array('file' => $dir.$file['name'], 'beta' => $data['beta'])));
 
-                        $updatelog .= "Content of: ".$dir.$file['name'].": ".$filedata."\n\n\n";
-
                         $tmpFile = DIR_CACHE.'openbay.tmp';
 
                         $fp = fopen($tmpFile, 'w');

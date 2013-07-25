@@ -3,7 +3,7 @@ final class Ebay
 {
     private $registry;
     private $url    = 'https://uk.openbaypro.com/';
-    private $noLog  = array('notification/getPublicNotifications/','setup/getEbayCategories/','item/getItemAllList/');
+    private $noLog  = array('notification/getPublicNotifications/','setup/getEbayCategories/','item/getItemAllList/', 'account/validate/');
 
     public function __construct($registry) {
         $this->registry     = $registry;

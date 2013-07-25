@@ -1367,4 +1367,6 @@ $(document).ready(function(){
     openbayLinkStatus();
 });
 
-//--></script><?php echo $footer; ?>
+//--></script>
+
+<?php echo $footer; ?>

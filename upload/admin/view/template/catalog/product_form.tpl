@@ -1312,8 +1312,6 @@ $('.time').timepicker({timeFormat: 'h:m'});
 $('#tabs a').tabs(); 
 $('#languages a').tabs(); 
 $('#vtab-option a').tabs();
-//--></script>
-<script type="text/javascript"><!--
 
 var profileCount = <?php echo $profileCount ?>;
 

@@ -134,6 +134,7 @@ class ControllerSaleOrder extends Controller {
     	if (isset($this->request->post['selected']) && ($this->validateDelete())) {
 			foreach ($this->request->post['selected'] as $order_id) {
 				$this->model_sale_order->deleteOrder($order_id);
+                $this->openbay->deleteOrder($order_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -1352,6 +1353,8 @@ class ControllerSaleOrder extends Controller {
 
 			$this->data['heading_title'] = $this->language->get('heading_title');
 			
+            $this->data['text_amazon_order_id'] = $this->language->get('text_amazon_order_id');
+            $this->data['text_name'] = $this->language->get('text_name');
 			$this->data['text_order_id'] = $this->language->get('text_order_id');
 			$this->data['text_invoice_no'] = $this->language->get('text_invoice_no');
 			$this->data['text_invoice_date'] = $this->language->get('text_invoice_date');
@@ -1537,6 +1540,7 @@ class ControllerSaleOrder extends Controller {
 				$this->data['invoice_no'] = '';
 			}
 			
+            $this->data['amazon_order_id'] = $order_info['amazon_order_id'];
 			$this->data['store_name'] = $order_info['store_name'];
 			$this->data['store_url'] = $order_info['store_url'];
 			$this->data['firstname'] = $order_info['firstname'];

@@ -35,23 +35,19 @@
         </tr>
         <?php } ?>
       </tbody>
+      <tfoot>
+        <?php foreach ($totals as $total) { ?>
+        <tr>
+          <td colspan="4" class="right"><strong><?php echo $total['title']; ?>:</strong></td>
+          <td class="right"><?php echo $total['text']; ?></td>
+        </tr>
+        <?php } ?>
+      </tfoot>
     </table>
   </div>
 </div>
 <div class="row-fluid">
-  <div class="span4 offset8">
-    <table class="table table-bordered">
-      <?php foreach ($totals as $total) { ?>
-      <tr>
-        <td class="right"><strong><?php echo $total['title']; ?>:</strong></td>
-        <td class="right"><?php echo $total['text']; ?></td>
-      </tr>
-      <?php } ?>
-    </table>
-  </div>
-</div>
-<div class="row-fluid">
-  <div class="span12"> <?php echo $payment; ?></div>
+  <div class="span12"><?php echo $payment; ?></div>
 </div>
 <?php } else { ?>
 <script type="text/javascript"><!--

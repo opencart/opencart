@@ -12,8 +12,8 @@
   <input type="hidden" name="email" value="<?php echo $email; ?>" />
   <input type="hidden" name="testMode" value="<?php echo $test; ?>" />
   <div class="buttons">
-    <div class="right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn" />
+    <div class="pull-right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
     </div>
   </div>
 </form>

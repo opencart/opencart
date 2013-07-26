@@ -44,8 +44,8 @@
   <input type="hidden" name="paymentaction" value="<?php echo $paymentaction; ?>" />
   <input type="hidden" name="custom" value="<?php echo $custom; ?>" />
   <div class="buttons">
-    <div class="right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn" />
+    <div class="pull-right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
     </div>
   </div>
 </form>

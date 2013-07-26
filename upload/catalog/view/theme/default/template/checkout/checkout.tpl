@@ -460,7 +460,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 // Guest
 $(document).delegate('#button-guest', 'click', function() {
     $.ajax({
-        url: 'index.php?route=checkout/guest/validate',
+        url: 'index.php?route=checkout/guest/save',
         type: 'post',
         data: $('#collapse-payment-address input[type=\'text\'], #collapse-payment-address input[type=\'checkbox\']:checked, #collapse-payment-address input[type=\'radio\']:checked, #collapse-payment-address input[type=\'hidden\'], #collapse-payment-address select'),
         dataType: 'json',
@@ -485,7 +485,7 @@ $(document).delegate('#button-guest', 'click', function() {
 				}
             } else {
                 <?php if ($shipping_required) { ?>  
-                var shipping_address = $('#payment-address input[name=\'shipping_address\']:checked').prop('value');
+                var shipping_address = $('#collapse-payment-address input[name=\'shipping_address\']:checked').prop('value');
                 
                 if (shipping_address) {
                     $.ajax({
@@ -576,7 +576,7 @@ $(document).delegate('#button-guest', 'click', function() {
 // Guest Shipping
 $(document).delegate('#button-guest-shipping', 'click', function() {
     $.ajax({
-        url: 'index.php?route=checkout/guest_shipping/validate',
+        url: 'index.php?route=checkout/guest_shipping/save',
         type: 'post',
         data: $('#collapse-shipping-address input[type=\'text\'], #collapse-shipping-address select'),
         dataType: 'json',

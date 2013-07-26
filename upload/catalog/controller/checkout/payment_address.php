@@ -7,7 +7,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		$this->data['text_address_new'] = $this->language->get('text_address_new');
 		$this->data['text_select'] = $this->language->get('text_select');
 		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_modify'] = $this->language->get('text_modify');
+		$this->data['text_loading'] = $this->language->get('text_loading');
 
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');

@@ -8,7 +8,7 @@ class ControllerCheckoutGuest extends Controller {
 		$this->data['text_your_details'] = $this->language->get('text_your_details');
 		$this->data['text_your_account'] = $this->language->get('text_your_account');
 		$this->data['text_your_address'] = $this->language->get('text_your_address');
-		$this->data['text_modify'] = $this->language->get('text_modify');
+		$this->data['text_loading'] = $this->language->get('text_loading');
 		
 		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
 		$this->data['entry_lastname'] = $this->language->get('entry_lastname');

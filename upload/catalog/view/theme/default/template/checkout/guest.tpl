@@ -11,7 +11,7 @@
       <div class="control-group required">
         <label class="control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
         <div class="controls">
-          <input type="text" name="firstname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" />
+          <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" />
         </div>
       </div>
       <div class="control-group required">
@@ -108,9 +108,9 @@
     </fieldset>
   </div>
 </div>
-<?php if ($shipping_required) { ?>
 <div class="row-fluid">
   <div class="span12">
+    <?php if ($shipping_required) { ?>
     <label class="checkbox">
       <?php if ($shipping_address) { ?>
       <input type="checkbox" name="shipping_address" value="1" checked="checked" />
@@ -118,12 +118,12 @@
       <input type="checkbox" name="shipping_address" value="1" />
       <?php } ?>
       <?php echo $entry_shipping; ?></label>
-  </div>
-</div>
-<?php } ?>
-<div class="buttons">
-  <div class="pull-right">
-    <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" class="btn btn-primary" />
+    <?php } ?>
+    <div class="buttons">
+      <div class="pull-right">
+        <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
+      </div>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--

@@ -378,8 +378,10 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				$xml .= '  </params>';
 				$xml .= '</methodCall>';        
 		        
-				$header  = 'Content-Type: text/xml' . "\n";
-				$header .= 'Content-Length: ' . strlen($xml) . "\n";
+				$header = array();
+				
+				$header[] = 'Content-Type: text/xml';
+				$header[] = 'Content-Length: ' . strlen($xml);
 		 
 				$curl = curl_init();
 		 
@@ -388,7 +390,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, 1);
 				curl_setopt($curl, CURLOPT_CUSTOMREQUEST, 'POST');
 				curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-				curl_setopt($curl, CURLOPT_HEADER, $header);
+				curl_setopt($curl, CURLOPT_HTTPHEADER, $header);
 				curl_setopt($curl, CURLOPT_POSTFIELDS, $xml);
                 
 				$response = curl_exec($curl);				

@@ -4,8 +4,8 @@
   <input type="hidden" name="Vendor" value="<?php echo $vendor; ?>" />
   <input type="hidden" name="Crypt" value="<?php echo $crypt; ?>" />
   <div class="buttons">
-    <div class="right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn" />
+    <div class="pull-right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
     </div>
   </div>
 </form>

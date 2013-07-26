@@ -52,4 +52,9 @@ class ModelPaymentAmazonCheckout extends Model {
         return array();
     }
     
+    public function updateCronJobRunTime() {
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'amazon_checkout' AND `key` = 'amazon_checkout_last_cron_job_run'");
+        $this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `group`, `key`, `value`, `serialized`) VALUES (0, 'amazon_checkout', 'amazon_checkout_last_cron_job_run', NOW(), 0)");
+    }
+    
 }

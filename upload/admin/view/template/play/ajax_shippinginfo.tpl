@@ -23,7 +23,8 @@
     </table>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript"><!--
+
     function verifyStatusChange(){
         var message = '';
 
@@ -40,4 +41,5 @@
             }
         }
     }
-</script>
+	
+//--></script>

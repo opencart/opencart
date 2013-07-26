@@ -156,7 +156,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript"><!--
 
     function validateForm() {
         //check that the prices have been entered based on the ship to location
@@ -249,5 +249,7 @@
         displayPriceBoxes();
         loadProductId();
     });
-    //--></script>
+	
+//--></script>
+	
 <?php echo $footer; ?>

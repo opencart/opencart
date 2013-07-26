@@ -14,8 +14,7 @@
 
         <div class="heading">
             <h1><?php echo $lang_heading_title; ?></h1>
-            <div class="buttons"><a onclick="validateForm();
-                    return false;" class="button"><span><?php echo $lang_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_cancel; ?></span></a></div>
+            <div class="buttons"><a onclick="validateForm(); return false;" class="button"><span><?php echo $lang_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_cancel; ?></span></a></div>
         </div>
         <div class="content">
             <div id="tabs" class="htabs">
@@ -32,7 +31,9 @@
                     <table class="form">
                         <tr>
                             <td><p><?php echo $lang_status; ?></p></td>
-                            <td><p><select name="openbay_status" style="width:200px;">
+                            <td>
+                                <p>
+                                    <select name="openbay_status" style="width:200px;">
                                         <?php if ($openbay_status) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_enabled; ?></option>
                                         <option value="0"><?php echo $lang_disabled; ?></option>
@@ -40,7 +41,9 @@
                                         <option value="1"><?php echo $lang_enabled; ?></option>
                                         <option value="0" selected="selected"><?php echo $lang_disabled; ?></option>
                                         <?php } ?>
-                                    </select></p></td>
+                                    </select>
+                                </p>
+                            </td>
                         </tr>
 
                         <tr>
@@ -87,11 +90,11 @@
                             <td>
                                 <select name="openbaypro_enditems" style="width:200px;">
                                     <?php if ($openbaypro_enditems) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                    <option value="0"><?php echo $lang_no; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -101,11 +104,11 @@
                             <td>
                                 <select name="openbaypro_relistitems" style="width:200px;">
                                     <?php if ($openbaypro_relistitems) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                    <option value="0"><?php echo $lang_no; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -115,11 +118,11 @@
                             <td>
                                 <select name="openbaypro_logging" style="width:200px;">
                                     <?php if ($openbaypro_logging) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                    <option value="0"><?php echo $lang_no; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -133,9 +136,9 @@
                                 <select name="openbay_def_currency" style="width:200px;">
                                     <?php
                                     foreach($currency_list as $currency){
-                                    echo '<option value="'.$currency['code'].'"';
-                                    if($openbay_def_currency == $currency['code']){ echo ' selected="selected"';}
-                                    echo'>'.$currency['title'].'</option>';
+                                        echo '<option value="'.$currency['code'].'"';
+                                            if($openbay_def_currency == $currency['code']){ echo ' selected="selected"';}
+                                        echo'>'.$currency['title'].'</option>';
                                     }
                                     ?>
                                 </select>
@@ -147,9 +150,9 @@
                                 <select name="openbay_def_customer_grp" style="width:200px;">
                                     <?php
                                     foreach($customer_grp_list as $customer_grp){
-                                    echo '<option value="'.$customer_grp['customer_group_id'].'"';
-                                    if($openbay_def_customer_grp == $customer_grp['customer_group_id']){ echo ' selected="selected"';}
-                                    echo'>'.$customer_grp['name'].'</option>';
+                                        echo '<option value="'.$customer_grp['customer_group_id'].'"';
+                                            if($openbay_def_customer_grp == $customer_grp['customer_group_id']){ echo ' selected="selected"';}
+                                        echo'>'.$customer_grp['name'].'</option>';
                                     }
                                     ?>
                                 </select>
@@ -160,11 +163,11 @@
                             <td>
                                 <select name="openbaypro_stock_allocate" style="width:200px;">
                                     <?php if ($openbaypro_stock_allocate) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_app_stock_2; ?></option>
-                                    <option value="0"><?php echo $lang_app_stock_1; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_app_stock_2; ?></option>
+                                        <option value="0"><?php echo $lang_app_stock_1; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_app_stock_2; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_app_stock_1; ?></option>
+                                        <option value="1"><?php echo $lang_app_stock_2; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_app_stock_1; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -180,11 +183,11 @@
                             <td>
                                 <select name="openbaypro_create_date" style="width:200px;">
                                     <?php if ($openbaypro_create_date) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_create_date_1; ?></option>
-                                    <option value="0"><?php echo $lang_create_date_0; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_create_date_1; ?></option>
+                                        <option value="0"><?php echo $lang_create_date_0; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_create_date_1; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_create_date_0; ?></option>
+                                        <option value="1"><?php echo $lang_create_date_1; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_create_date_0; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -237,11 +240,11 @@
                             <td>
                                 <select name="openbaypro_update_notify" style="width:200px;">
                                     <?php if ($openbaypro_update_notify) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                    <option value="0"><?php echo $lang_no; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -251,11 +254,11 @@
                             <td>
                                 <select name="openbaypro_confirm_notify" style="width:200px;">
                                     <?php if ($openbaypro_confirm_notify) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                    <option value="0"><?php echo $lang_no; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -265,11 +268,11 @@
                             <td>
                                 <select name="openbaypro_confirmadmin_notify" style="width:200px;">
                                     <?php if ($openbaypro_confirmadmin_notify) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                    <option value="0"><?php echo $lang_no; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -279,11 +282,11 @@
                             <td>
                                 <select name="openbaypro_email_brand_disable" style="width:200px;">
                                     <?php if ($openbaypro_email_brand_disable) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                    <option value="0"><?php echo $lang_no; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -299,11 +302,11 @@
                             <td>
                                 <select name="openbaypro_stock_report" style="width:200px;">
                                     <?php if ($openbaypro_stock_report) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                    <option value="0"><?php echo $lang_no; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -313,11 +316,11 @@
                             <td>
                                 <select name="openbaypro_stock_report_summary" style="width:200px;">
                                     <?php if ($openbaypro_stock_report_summary) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                    <option value="0"><?php echo $lang_no; ?></option>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
                                     <?php } ?>
                                 </select>
                             </td>
@@ -358,7 +361,7 @@
 
                                     foreach($order_statuses as $status){
                                         echo'<option value="'.$status['order_status_id'].'"';
-                                        if($EBAY_DEF_PAID_ID == $status['order_status_id']){echo ' selected=selected';}
+                                            if($EBAY_DEF_PAID_ID == $status['order_status_id']){echo ' selected=selected';}
                                         echo'>'.$status['name'].'</option>';
                                     }
                                     ?>
@@ -633,6 +636,7 @@
         checkCredentials();
         changeTaxHandler();
     });
+
 //--></script>
 
 <?php echo $footer; ?>

@@ -300,17 +300,14 @@
     </div>
 </div>
 
-<script type="text/javascript">
-
+<script type="text/javascript"><!--
 
     function validateForm() {
         $('#form').submit();
     }
 
     $('#tabs a').tabs();
-
-    $(document).ready(function() {
-
-    });
-    //--></script>
+	
+//--></script>
+	
 <?php echo $footer; ?>

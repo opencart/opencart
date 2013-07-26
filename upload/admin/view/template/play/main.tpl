@@ -18,20 +18,26 @@
             <div class="openbayLinks">
                 <div class="openbayPod" onclick="location='<?php echo $links_settings; ?>'">
                     <img src="<?php echo $image['icon1']; ?>" title="" alt="" border="0" />
-                    <h3>Settings</h3>
+                    <h3><?php echo $lang_text_success; ?></h3>
                 </div>
-                <div class="openbayPod" onclick="location='<?php echo $links_pricing; ?>'">
-                    <img src="<?php echo $image['icon13']; ?>" title="" alt="" border="0" />
-                    <h3>Pricing report</h3>
-                </div>
+
+                <?php if($validation == true){ ?>
+                    <div class="openbayPod" onclick="location='<?php echo $links_pricing; ?>'">
+                        <img src="<?php echo $image['icon13']; ?>" title="" alt="" border="0" />
+                        <h3><?php echo $lang_text_price_report; ?></h3>
+                    </div>
+                <?php } ?>
             </div>
         </div>
     </div>
 </div>
 
 <script type="text/javascript"><!--
-$(document).ready(function() {
 
-});
+	$(document).ready(function() {
+
+	});
+
 //--></script>
+
 <?php echo $footer; ?>

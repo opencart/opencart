@@ -23,7 +23,8 @@
     <input type="hidden" name="orderChannel" value="play" id="orderChannel" />
 </div>
 
-<script type="text/javascript">
+<script type="text/javascript"><!--
+
     function verifyStatusChange(){
         var message = '';
 
@@ -44,4 +45,5 @@
             }
         }
     }
-</script>
+	
+//--></script>

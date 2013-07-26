@@ -21,3 +21,4 @@ $_['lang_error_min_price']                  = 'GBP price must be &pound;0.98 or 
 $_['lang_error_max_price']                  = 'GBP price must be &pound;0.98 or more, and upto &pound;3000';
 $_['lang_error_min_price_eu']               = 'EURO price must be &euro;1.59 or more, and upto &euro;5000';
 $_['lang_error_max_price_eu']               = 'GBP price must be &euro;1.59 or more, and upto &euro;5000';
+?>

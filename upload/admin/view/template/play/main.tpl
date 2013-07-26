@@ -26,6 +26,11 @@
                         <img src="<?php echo $image['icon13']; ?>" title="" alt="" border="0" />
                         <h3><?php echo $lang_text_price_report; ?></h3>
                     </div>
+				<?php }else{ ?>
+                    <a class="openbayPod" href="https://playuk.openbaypro.com/account/register" target="_BLANK">
+                        <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon2.png" title="" alt="" border="0" />
+                        <h3><?php echo $lang_text_register; ?></h3>
+                    </a>
                 <?php } ?>
             </div>
         </div>

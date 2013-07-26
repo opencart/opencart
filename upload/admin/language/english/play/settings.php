@@ -49,3 +49,4 @@ $_['lang_order_new_notify']         = 'Notify customer of new order';
 $_['lang_order_new_notify_admin']   = 'Notify admin of new order';
 $_['lang_order_update_notify']      = 'Notify customer of order update';
 $_['lang_obp_tax']                  = 'Default tax rate<span class="help">Used when an order is not linked to a product to get the tax rate</span>';
+?>

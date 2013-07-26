@@ -57,7 +57,7 @@ class ControllerOpenbayPlay extends Controller {
             $this->data['success'] = '';
         }
 
-        $this->data['validation'] = $this->ebay->validate();
+        $this->data['validation'] = $this->play->validate();
         $this->data['links_settings'] = HTTPS_SERVER . 'index.php?route=openbay/play/settings&token=' . $this->session->data['token'];
         $this->data['links_pricing'] = HTTPS_SERVER . 'index.php?route=play/product/pricingReport&token=' . $this->session->data['token'];
         $this->data['image']['icon1'] = HTTPS_SERVER . 'view/image/openbay/openbay_icon1.png';

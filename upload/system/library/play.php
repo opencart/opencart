@@ -524,5 +524,17 @@ final class Play {
         $logger = new Log('play.log');
         $logger->write($data);
     }
+	
+	public function validate(){
+        if($this->config->get('play_status') != 0 &&
+            $this->config->get('obp_play_token') != '' &&
+            $this->config->get('obp_play_secret') != '' &&
+            $this->config->get('obp_play_key') != '' &&
+            $this->config->get('obp_play_key2') != ''){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
 ?>

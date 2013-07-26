@@ -12,3 +12,4 @@ $_['lang_column_product_id']                = 'ID';
 $_['lang_column_product_type']              = 'ID Type';
 $_['lang_no_data_found']                    = 'No pricing data found';
 $_['lang_created']                          = 'Report created: ';
+?>

@@ -9,9 +9,9 @@
         <div class="heading">
             <h1><?php echo $lang_page_title; ?></h1>
             <div class="buttons">
-                <a onclick="validateForm(); return false;" class="button"><span><?php echo $lang_save; ?></span></a>
-                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_cancel; ?></span></a>
-                <a onclick="location = '<?php echo $delete; ?>';" class="button"><span><?php echo $lang_delete; ?></span></a>
+                <a onclick="validateForm(); return false;" class="button"><span><?php echo $lang_btn_save; ?></span></a>
+                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_btn_cancel; ?></span></a>
+                <a onclick="location = '<?php echo $delete; ?>';" class="button"><span><?php echo $lang_btn_delete; ?></span></a>
             </div>
         </div>
         <div class="content">
@@ -149,7 +149,7 @@
                     </tr>
                 </table>
                 <div class="buttons" style="text-align:right;">
-                    <a onclick="validateForm(); return false;" class="button"><span><?php echo $lang_save; ?></span></a>
+                    <a onclick="validateForm(); return false;" class="button"><span><?php echo $lang_btn_save; ?></span></a>
                 </div>
             </form>
         </div>

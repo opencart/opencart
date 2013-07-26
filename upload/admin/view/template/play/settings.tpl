@@ -13,10 +13,7 @@
     <div class="box" style="margin-bottom:130px;">
         <div class="heading">
             <h1><?php echo $lang_heading_title; ?></h1>
-            <div class="buttons">
-                <a onclick="validateForm(); return false;" class="button"><span><?php echo $lang_save; ?></span></a>
-                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_cancel; ?></span></a>
-            </div>
+            <div class="buttons"><a onclick="validateForm(); return false;" class="button"><span><?php echo $lang_btn_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_btn_cancel; ?></span></a></div>
         </div>
         <div class="content">
             <div id="tabs" class="htabs">

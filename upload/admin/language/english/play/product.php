@@ -1,10 +1,15 @@
 <?php
-$_['lang_product_name']                     = 'Product name';
-$_['lang_save']                             = 'Save';
-$_['lang_cancel']                           = 'Cancel';
-$_['lang_delete']                           = 'Delete';
+//Heading
 $_['lang_page_title']                       = 'New play.com product';
 $_['lang_page_title_edit']                  = 'Edit play.com product';
+
+//Buttons
+$_['lang_btn_save']                         = 'Save';
+$_['lang_btn_cancel']                       = 'Cancel';
+$_['lang_btn_delete']                       = 'Delete';
+
+//Text
+$_['lang_product_name']                     = 'Product name';
 $_['lang_product_id']                       = 'Product ID<span class="help">No hyphens or spaces</span>';
 $_['lang_product_dispatch_to']              = 'Dispatch to';
 $_['lang_product_id_type']                  = 'Product ID type<span class="help">ISBN can be 10 or 13 code</span>';
@@ -14,6 +19,8 @@ $_['lang_quantity']                         = 'Quantity';
 $_['lang_condition']                        = 'Condition';
 $_['lang_comment']                          = 'Comment';
 $_['lang_product_dispatch_fr']              = 'Dispatch From';
+
+//Messages
 $_['lang_text_success']                     = 'Your product has been added';
 $_['lang_text_success_updated']             = 'Your product will be updated on the Play.com market on the next update';
 $_['lang_text_success_deleted']             = 'Your product will be deleted from Play.com market place on the next update';

@@ -359,7 +359,7 @@ class ModelEbayOpenbay extends Model{
         $this->load->language('openbay/openbay');
         
         $response['data']   = $this->ebay->openbay_call('listing/getSuggestedCategories/', array('qry' => $qry));
-	$response['error']  = $this->ebay->lasterror;
+	    $response['error']  = $this->ebay->lasterror;
         $response['msg']    = $this->ebay->lastmsg;
         
         if(empty($response['data'])){

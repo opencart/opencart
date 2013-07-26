@@ -9,7 +9,7 @@
         <div class="heading">
             <h1><?php echo $lang_page_title; ?></h1>
             <div class="buttons">
-                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_cancel; ?></span></a>
+                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_btn_cancel; ?></span></a>
             </div>
         </div>
         <div class="content">

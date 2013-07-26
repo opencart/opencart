@@ -1,4 +1,12 @@
 <?php
+//Heading
 $_['heading_title']         = 'Play.com (EU)';
-$_['lang_heading_title']    = 'OpenBay Pro for Play.com';
-/* Settings tab */
+
+//Install actions
+$_['text_install']          = 'Install';
+$_['text_edit']             = 'Edit';
+$_['text_uninstall']        = 'Uninstall';
+
+//Status
+$_['text_enabled']          = 'Enabled';
+$_['text_disabled']         = 'Disabled';

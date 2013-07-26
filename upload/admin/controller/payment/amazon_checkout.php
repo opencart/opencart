@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentAmazonCheckout extends Controller {
-
     private $errors = array();
     
     public function index() {
@@ -475,5 +473,5 @@ class ControllerPaymentAmazonCheckout extends Controller {
         
         return empty($this->errors);
     }
-    
 }
+?>

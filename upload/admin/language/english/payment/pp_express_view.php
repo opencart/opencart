@@ -1,5 +1,8 @@
 <?php
+//Headings
 $_['heading_title']             = 'View Transaction';
+
+//Text
 $_['text_pp_express']           = 'PayPal Express Checkout';
 $_['text_product_lines']        = 'Product lines';
 $_['text_ebay_txn_id']          = 'eBay transaction ID';
@@ -16,7 +19,6 @@ $_['text_options_name']         = 'Options name';
 $_['text_tax_amt']              = 'Tax amount';
 $_['text_currency_code']        = 'Currency code';
 $_['text_amount']               = 'Amount';
-
 $_['text_gift_msg']             = 'Gift message';
 $_['text_gift_receipt']         = 'Gift receipt';
 $_['text_gift_wrap_name']       = 'Gift wrap name';

@@ -1,8 +1,6 @@
 <?php
-
 class ModelPaymentPPPayflowIFrame extends Model {
-
-   public function install() {
+    public function install() {
         $this->db->query("
             CREATE TABLE `" . DB_PREFIX . "paypal_payflow_iframe_order` (
                 `order_id` int(11) DEFAULT NULL,
@@ -135,5 +133,5 @@ class ModelPaymentPPPayflowIFrame extends Model {
         
         return $response_params;
     }
-
 }
+?>

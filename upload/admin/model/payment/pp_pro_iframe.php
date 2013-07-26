@@ -1,8 +1,6 @@
 <?php
-
 class ModelPaymentPPProIframe extends Model {
-
-   public function install() {
+    public function install() {
         $this->db->query("
             CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_iframe_order` (
               `paypal_iframe_order_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -261,3 +259,4 @@ class ModelPaymentPPProIframe extends Model {
         return $arr;
     }
 }
+?>

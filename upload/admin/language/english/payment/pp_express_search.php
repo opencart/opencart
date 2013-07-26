@@ -1,7 +1,9 @@
 <?php
+//Headings
 $_['heading_title']                     = 'Search Transactions';
 $_['text_pp_express']                   = 'PayPal Express Checkout';
 
+//Table column
 $_['tbl_column_date']                   = 'Date';
 $_['tbl_column_type']                   = 'Type';
 $_['tbl_column_email']                  = 'Email';
@@ -14,6 +16,11 @@ $_['tbl_column_fee']                    = 'Fee';
 $_['tbl_column_netamt']                 = 'Net Amount';
 $_['tbl_column_action']                 = 'Action';
 
+//Button
+$_['btn_search']                        = 'Search';
+$_['btn_edit_search']                   = 'Edit search';
+
+//Form entry status
 $_['entry_status_all']                  = 'All';
 $_['entry_status_pending']              = 'Pending';
 $_['entry_status_processing']           = 'Processing';
@@ -21,6 +28,7 @@ $_['entry_status_success']              = 'Success';
 $_['entry_status_denied']               = 'Denied';
 $_['entry_status_reversed']             = 'Reversed';
 
+//Form entry
 $_['entry_trans_all']                   = 'All';
 $_['entry_trans_sent']                  = 'Sent';
 $_['entry_trans_received']              = 'Received';
@@ -40,10 +48,6 @@ $_['entry_trans_reversal']              = 'Reversal';
 $_['entry_trans_shipping']              = 'Shipping';
 $_['entry_trans_bal_affect']            = 'Balance Affecting';
 $_['entry_trans_echeque']               = 'E Check';
-
-$_['btn_search']                        = 'Search';
-$_['btn_edit_search']                   = 'Edit search';
-
 $_['entry_date']                        = 'Date';
 $_['entry_date_start']                  = 'Start';
 $_['entry_date_end']                    = 'End';
@@ -66,7 +70,9 @@ $_['entry_middlename']                  = 'Middle';
 $_['entry_lastname']                    = 'Last';
 $_['entry_suffix']                      = 'Suffix';
 
+//Text
 $_['text_searching']                    = 'Searching';
 $_['text_name']                         = 'Name';
 $_['text_buyer_info']                   = 'Buyer information';
 $_['text_view']                         = 'View';
+?>

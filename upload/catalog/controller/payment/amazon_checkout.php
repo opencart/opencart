@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentAmazonCheckout extends Controller {
-    
     public function address() {
         if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
             $amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
@@ -882,5 +880,5 @@ class ControllerPaymentAmazonCheckout extends Controller {
             $this->model_payment_amazon_checkout->updateCronJobRunTime();
         }
     }
-    
 }
+?>

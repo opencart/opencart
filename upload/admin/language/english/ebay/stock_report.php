@@ -6,5 +6,6 @@ $_['lang_heading']                      = 'Stock report';
 $_['lang_btn_return']                   = 'Return';
 $_['lang_report_label']                 = 'Email report';
 $_['lang_report_btn']                   = 'Request';
-$_['lang_ajax_load_error']               = 'Sorry, could not connect';
+$_['lang_ajax_load_error']              = 'Sorry, could not connect';
 $_['lang_ajax_load_sent']               = 'Request has been sent';
+?>

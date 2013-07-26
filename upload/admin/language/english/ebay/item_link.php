@@ -37,3 +37,4 @@ $_['lang_tbl_headertext6']          = 'Has options';
 $_['lang_tbl_headertext7']          = 'Status';
 $_['lang_tbl_headertext8']          = 'Action';
 $_['lang_alert_stock_local']        = 'Your eBay listing will be updated with your local stock levels!';
+?>

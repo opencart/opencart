@@ -15,3 +15,4 @@ $_['lang_ajax_cat_import']      = 'Your eBay shop categories have been imported.
 $_['lang_ajax_setting_import']  = 'Your settings have been imported.';
 $_['lang_ajax_setting_import_e']= 'There was an error loading the settings.';
 $_['lang_ajax_load_error']      = 'Error connecting to the server';
+?>

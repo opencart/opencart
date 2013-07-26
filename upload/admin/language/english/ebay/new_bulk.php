@@ -41,3 +41,4 @@ $_['lang_search_text']              = 'Enter some search text';
 $_['lang_catalog_no_products']      = 'No catalog items found';
 $_['lang_search_failed']            = 'Search failed';
 $_['lang_esc_key']                  = 'The splash page has been hidden but may not have finished loading';
+?>

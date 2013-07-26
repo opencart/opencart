@@ -10,3 +10,4 @@ $_['text_uninstall']        = 'Uninstall';
 //Status
 $_['text_enabled']          = 'Enabled';
 $_['text_disabled']         = 'Disabled';
+?>

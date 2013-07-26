@@ -1,12 +1,16 @@
 <?php
 
-$_['text_amazon_checkout'] 	= '<a onclick="window.open(\'http://go.amazonservices.com/UKCBASPOpenCart.html\');"><img src="view/image/payment/amazon.png" alt="Amazon Payments" title="Amazon Payments" style="border: 1px solid #EEEEEE;" /></a>';
-$_['text_amazon_join'] 		= '<a href="http://go.amazonservices.com/UKCBASPOpenCart.html" title="Click here to join Amazon Payments">Click here to create your Amazon Payments account</a>';
+$_['text_amazon_checkout'] = '<a onclick="window.open(\'http://go.amazonservices.com/UKCBASPOpenCart.html\');"><img src="view/image/payment/amazon.png" alt="Amazon Payments" title="Amazon Payments" style="border: 1px solid #EEEEEE;" /></a>';
+$_['text_amazon_join'] = '<a href="http://go.amazonservices.com/UKCBASPOpenCart.html" title="Click here to join Amazon Payments">Click here to create your Amazon Payments account</a>';
 
 $_['text_home'] = 'Home';
 $_['text_payment'] = 'Payment';
 $_['heading_title'] = 'Amazon Payments';
 
+$_['text_cron_job_url'] = "Cron Job's URL:";
+$_['help_cron_job_url'] = "Set a cron job to call this URL";
+$_['text_cron_job_token'] = "Secret Token";
+$_['help_cron_job_token'] = "Make this long and hard to guess";
 $_['text_access_key'] = 'Access Key:';
 $_['text_access_secret'] = 'Secret Key:';
 $_['text_merchant_id'] = 'Merchant ID:';

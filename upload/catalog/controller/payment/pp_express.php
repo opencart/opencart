@@ -1555,17 +1555,6 @@ class ControllerPaymentPPExpress extends Controller {
     }
 
     public function ipn(){
-        ob_start();
-        echo'<pre>';
-        print_r($this->request->post);
-        echo'</pre>';
-        $mail_errors = ob_get_contents();
-        ob_end_clean();
-
-        $headers  = "MIME-Version: 1.0\r\n";
-        $headers  .= 'Content-type: text/html; charset=iso-8859-1' . "\r\n";
-        mail('jamesa@welfordmedia.co.uk,martynas@welfordmedia.co.uk', 'test IPN data', $mail_errors, $headers);
-
         $this->load->model('payment/pp_express');
         $this->load->model('account/recurring');
 

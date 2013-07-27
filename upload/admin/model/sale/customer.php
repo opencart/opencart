@@ -12,7 +12,7 @@ class ModelSaleCustomer extends Model {
 				if (isset($address['default'])) {
 					$address_id = $this->db->getLastId();
 					
-					$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . $address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
+					$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
 				}
 			}
 		}

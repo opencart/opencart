@@ -1,7 +1,5 @@
-<?php 
-echo $header; 
-$i = 0; 
-?>
+<?php echo $header; ?>
+
 <div id="content">
     <?php if(!isset($error_fail)){ ?>
 
@@ -14,8 +12,8 @@ $i = 0;
             <h1><?php echo $lang_page_title; ?></h1>
             <div class="buttons">
                 <a class="button" onclick="previewAll()" id="previewBtn"><span><?php echo $lang_preview_all; ?></span></a>
-                <a class="button" style="display:none" onclick="editAll();" id="previewEditBtn"><span>Edit</span></a>
-                <a class="button" style="display:none" onclick="submitAll();" id="submitBtn"><span>Submit</span></a>
+                <a class="button" style="display:none" onclick="editAll();" id="previewEditBtn"><span><?php echo $lang_edit; ?></span></a>
+                <a class="button" style="display:none" onclick="submitAll();" id="submitBtn"><span><?php echo $lang_submit; ?></span></a>
             </div>
         </div>
         <form id="form">
@@ -24,6 +22,7 @@ $i = 0;
                     <tr>
                         <td>
                             <?php if ($products) { ?>
+                            <?php echo $i = 0; ?>
                             <?php foreach ($products as $product) { ?>
 
                             <div class="box mTop15 listingBox" id="p_row_<?php echo $i; ?>">
@@ -45,14 +44,15 @@ $i = 0;
                                     <tr class="p_row_content_<?php echo $i; ?>">
                                         <td class="center width100"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></td>
                                         <td class="left width390" valign="top">
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold">Title:</label><input type="text" name="title" class="openbayData_<?php echo $i; ?> width250" value="<?php echo $product['name']; ?>" id="title_<?php echo $i; ?>" /></p>
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold">Price:</label><input type="text" name="price" class="openbayData_<?php echo $i; ?> width50" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2); ?>"/></p>
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold">Stock:</label><?php echo $product['quantity']; ?></p>
+                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_title; ?>:</label><input type="text" name="title" class="openbayData_<?php echo $i; ?> width250" value="<?php echo $product['name']; ?>" id="title_<?php echo $i; ?>" /></p>
+                                            <input type="hidden" name="price_original" id="price_original_<?php echo $i; ?>" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2); ?>" />
+                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_price; ?>:</label><input id="price_<?php echo $i; ?>" type="text" name="price" class="openbayData_<?php echo $i; ?> width50" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2); ?>" /></p>
+                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_stock; ?>:</label><?php echo $product['quantity']; ?></p>
                                             <input type="hidden" name="qty" value="<?php echo $product['quantity']; ?>" class="openbayData_<?php echo $i; ?>" />
                                             
                                             <div class="buttons right">
-                                                <a class="button" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>" style="display:none;"><span>Edit features</span></a>
-                                                <a class="button" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" style="display:none;"><span>Select catalog</span></a>
+                                                <a class="button" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>" style="display:none;"><span><?php echo $lang_features; ?></span></a>
+                                                <a class="button" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" style="display:none;"><span><?php echo $lang_catalog; ?></span></a>
                                             </div>
                                             
                                             <div id="featurePage_<?php echo $i; ?>" class="greyScreenBox featurePage">
@@ -70,11 +70,11 @@ $i = 0;
                                                     <!-- catalog search area -->
                                                     <table class="form">
                                                         <tr>
-                                                            <td>Search catalog:</td>
+                                                            <td><?php echo $lang_catalog_search; ?>:</td>
                                                             <td>
                                                                 <div class="buttons">
                                                                     <input type="text" name="catalog_search" id="catalog_search_<?php echo $i; ?>" value="" />
-                                                                    <a onclick="searchEbayCatalog('<?php echo $i; ?>');" class="button" id="catalog_search_btn_<?php echo $i; ?>"><span>Search</span></a>
+                                                                    <a onclick="searchEbayCatalog('<?php echo $i; ?>');" class="button" id="catalog_search_btn_<?php echo $i; ?>"><span><?php echo $lang_search; ?></span></a>
                                                                     <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="catalog_search_img_<?php echo $i; ?>" class="displayNone" />
                                                                 </div>
                                                             </td>
@@ -104,7 +104,7 @@ $i = 0;
                                             </p>
                                             <p>
                                                 <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $lang_profile_generic; ?></label>
-                                                <select name="generic_profile" class="width250 openbayData_<?php echo $i; ?>">
+                                                <select name="generic_profile" id="generic_profile_<?php echo $i; ?>" class="width250 openbayData_<?php echo $i; ?>" onchange="genericProfileChange(<?php echo $i; ?>);">
                                                     <?php foreach($default['profiles_generic'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_generic_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
                                                 </select>
                                             </p>
@@ -163,10 +163,10 @@ $i = 0;
     </div>
     <div id="greyScreen"></div>
     <div id="loadingPage" class="greyScreenBox">
-        <p class="bold"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" /> Loading details</p>
-        <p>Preparing <span id="ajaxCountDoneDisplay">0</span> of <span id="ajaxCountTotalDisplay">0</span> elements for <?php echo count($products); ?> items </p>
+        <p class="bold"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" /> <?php echo $lang_loading; ?></p>
+        <p><?php echo $lang_preparing0; ?> <span id="ajaxCountDoneDisplay">0</span> <?php echo $lang_preparing1; ?> <span id="ajaxCountTotalDisplay">0</span> <?php echo $lang_preparing2; ?> </p>
         <div class="buttons">
-            <a class="button" href="index.php?route=extension/openbay/itemList&token=<?php echo $this->request->get['token']; ?>"><span>Cancel</span></a>
+            <a class="button" href="index.php?route=extension/openbay/itemList&token=<?php echo $this->request->get['token']; ?>"><span><?php echo $lang_cancel; ?></span></a>
         </div>
     </div>
     <div id="loadingVerify" class="greyScreenBox">
@@ -197,6 +197,7 @@ $i = 0;
 
         <?php $j = 0; while($j < $i){ ?>
             getSuggestedCategories('<?php echo (int)$j; ?>');
+            modifyPrices('<?php echo (int)$j; ?>');
         <?php $j++; } ?>
 
         $('#activeItems').text($('#totalItems').val());
@@ -208,6 +209,36 @@ $i = 0;
             hideGreyScreen();
         }
     });
+
+    function modifyPrices(id){
+
+        var price_original = $('#price_original_'+id).val();
+        var price_modified = '';
+
+        $.ajax({
+            url: 'index.php?route=ebay/profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#generic_profile_'+id).val(),
+            type: 'GET',
+            async: true,
+            dataType: 'json',
+            beforeSend: function(){ addCount(); },
+            success: function(data) {
+
+                if(data.data.price_modify !== false){
+                    price_modified = price_original * ((100 + data.data.price_modify) / 100);
+
+                    $('#price_'+id).val(price_modified);
+                }
+
+                removeCount();
+            },
+            failure: function(){
+                removeCount();
+            },
+            error: function(){
+                removeCount();
+            }
+        });
+    }
 
     function addCount(){
         var count = parseInt($('#ajaxCount').val()) + 1;
@@ -693,11 +724,11 @@ $i = 0;
                 },
                 failure: function(){
                     removeCount();
-                    alert('There was an error, you should edit and re-verify the items');
+                    alert('<?php echo $lang_error_reverify; ?>');
                 },
                 error: function(){
                     removeCount();
-                    alert('There was an error, you should edit and re-verify the items');
+                    alert('<?php echo $lang_error_reverify; ?>');
                 }
             });
         });
@@ -792,6 +823,10 @@ $i = 0;
     
     function showCatalog(id){
         showGreyScreen('catalogPage_'+id);
+    }
+
+    function genericProfileChange(id){
+        modifyPrices(id);
     }
 </script>
 <?php echo $footer; ?>

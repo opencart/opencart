@@ -19,7 +19,7 @@
         <div class="content">
             <div id="tabs" class="htabs">
                 <a href="#tab-general"><?php echo $lang_tab_general; ?></a>
-                <a href="#tab-returns"><?php echo $lang_tab_settings; ?></a>
+                <a href="#tab-profile"><?php echo $lang_tab_settings; ?></a>
             </div>
             <form action="<?php echo $btn_save; ?>" method="post" enctype="multipart/form-data" id="form">
                 <input type="hidden" name="type" value="<?php echo $type; ?>" />
@@ -49,12 +49,12 @@
 
                 </div>
 
-                <div id="tab-returns">
+                <div id="tab-profile">
 
                     <table class="form">
 
                         <tr>
-                            <td><label for="private_auction"><?php echo $lang_private_auction; ?></td>
+                            <td><label for="private_auction"><?php echo $lang_general_private; ?></td>
                             <td>
                                 <?php if(!isset($data['private_listing'])){ $data['private_listing'] = '0'; } ?>
                                 
@@ -65,6 +65,11 @@
                             </td>
                         </tr>
 
+                        <tr>
+                            <td><label><?php echo $lang_general_price; ?></label></td>
+                            <td><input type="text" name="data[price_modify]" id="price_modify" class="width100" maxlength="" value="<?php echo (isset($data['price_modify']) ? $data['price_modify'] : '0');  ?>" /></td>
+                        </tr>
+
                     </table>
                 </div>
             </form>
@@ -73,6 +78,11 @@
 </div>
 
 <script type="text/javascript"><!--
-$('#tabs a').tabs();
+    $('#tabs a').tabs();
+
+    $('#price_modify').on('change', function(){
+        $(this).text().replace('%', '');
+    });
+
 //--></script> 
 <?php echo $footer; ?>

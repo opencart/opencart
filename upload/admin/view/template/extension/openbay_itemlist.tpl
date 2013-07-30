@@ -140,7 +140,8 @@
         </table>
 
 
-        <table class="list">
+        <form method="post" id="form">
+            <table class="list">
           <thead>
             <tr>
               <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
@@ -224,6 +225,7 @@
             <?php } ?>
           </tbody>
         </table>
+        </form>
       <div class="pagination"><?php echo $pagination; ?></div>
     </div>
   </div>

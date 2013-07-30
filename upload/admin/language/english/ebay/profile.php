@@ -77,7 +77,7 @@ $_['lang_confirm_delete']       = 'Are you sure you want to delete the profile?'
 
 //General profile
 $_['lang_general_private']      = 'List items as private auction';
-$_['lang_general_price']        = 'Price % modification <span class="help">0 is default, -10 will reduce by 10%, 10 will increase by 10%</span>';
+$_['lang_general_price']        = 'Price % modification <span class="help">0 is default, -10 will reduce by 10%, 10 will increase by 10% (only used on bulk listing)</span>';
 
 //Success messages
 $_['lang_added']                = 'New profile has been added';

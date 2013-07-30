@@ -22,7 +22,7 @@
                     <tr>
                         <td>
                             <?php if ($products) { ?>
-                            <?php echo $i = 0; ?>
+                            <?php $i = 0; ?>
                             <?php foreach ($products as $product) { ?>
 
                             <div class="box mTop15 listingBox" id="p_row_<?php echo $i; ?>">
@@ -212,8 +212,9 @@
 
     function modifyPrices(id){
 
-        var price_original = $('#price_original_'+id).val();
+        var price_original  = parseFloat($('#price_original_'+id).val());
         var price_modified = '';
+        var modify_percent = '';
 
         $.ajax({
             url: 'index.php?route=ebay/profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#generic_profile_'+id).val(),
@@ -224,9 +225,11 @@
             success: function(data) {
 
                 if(data.data.price_modify !== false){
-                    price_modified = price_original * ((100 + data.data.price_modify) / 100);
+                    modify_percent = 100 + parseFloat(data.data.price_modify);
+                    modify_percent = parseFloat(modify_percent / 100);
+                    price_modified = price_original * modify_percent;
 
-                    $('#price_'+id).val(price_modified);
+                    $('#price_'+id).val(parseFloat(price_modified).toFixed(2));
                 }
 
                 removeCount();

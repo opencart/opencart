@@ -9,7 +9,7 @@ $_['lang_desc1']                    = 'Linking your items will allow for stock c
 $_['lang_desc2']                    = 'You can link items manualy by entering Amazon SKU and product name or load all unlinked products and then enter amazon SKUs. (Uploading products from OpenCart to Amazon will automaticaly add links)';
 $_['lang_load_btn']                 = 'Load';
 $_['lang_new_link']                 = 'New link';
-$_['lang_autocomplete_product']     = 'Product<span class="help">(Autocomplete from name)</span>';
+$_['lang_autocomplete_product']     = 'Product<span class="help">(Auto complete from name)</span>';
 $_['lang_amazon_sku']               = 'Amazon item SKU';
 $_['lang_action']                   = 'Action';
 $_['lang_add']                      = 'Add';
@@ -25,3 +25,4 @@ $_['lang_amazon_sku']               = 'Amazon item SKU';
 $_['lang_sku_empty_warning']        = 'Amazon SKU can not be empty!';
 $_['lang_name_empty_warning']       = 'Product name can not be empty!';
 $_['lang_product_warning']          = 'Product does not exist. Please use autocomplete values.';
+?>

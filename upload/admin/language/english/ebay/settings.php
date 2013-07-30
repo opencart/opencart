@@ -122,3 +122,4 @@ $_['lang_obp_detail_update']        = 'Click here to update your store URL & con
 $_['lang_developer_repairlinks']    = 'Repair item links';
 
 $_['lang_timezone_offset']          = 'Timezone offset<span class="help">Based on hours. 0 is GMT timezone. Only works if eBay time is used for order creation.</span>';
+?>

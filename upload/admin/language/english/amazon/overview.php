@@ -9,3 +9,4 @@ $_['lang_heading_links']            = 'Item links';
 $_['lang_heading_register']         = 'Register';
 $_['lang_heading_stock_updates']    = 'Stock updates';
 $_['lang_heading_saved_listings']   = 'Saved listings';
+?>

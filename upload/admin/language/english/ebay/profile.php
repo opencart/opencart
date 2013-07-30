@@ -75,3 +75,4 @@ $_['lang_confirm_delete']       = 'Are you sure you want to delete the profile?'
 
 $_['lang_private_auction']      = 'List items as private auction';
 $_['invalid_permission']        = 'You do not have permission to edit profiles';
+?>

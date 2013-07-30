@@ -94,9 +94,7 @@ $_['text_openbay_settings']            = 'Settings';
 $_['text_openbay_links']               = 'Item links';
 $_['text_openbay_report_price']        = 'Pricing report';
 $_['text_openbay_order_import']        = 'Order import';
-
 $_['text_paypal_manage']               = 'PayPal';
 $_['text_paypal_search']               = 'Search';
 $_['text_recurring_profile']           = 'Recurring Profiles';
-
 ?>

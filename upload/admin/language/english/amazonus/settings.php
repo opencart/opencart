@@ -46,3 +46,4 @@ $_['lang_default_condition']        = 'Default product condition type';
 $_['lang_default_mp']               = 'Default marketplace';
 $_['lang_default_mp_help']          = 'Default marketplace for product listings and lookups';
 $_['lang_admin_notify']             = 'Notify admin of new order';
+?>

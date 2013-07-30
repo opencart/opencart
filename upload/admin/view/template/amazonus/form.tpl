@@ -230,7 +230,7 @@
     <div id="page-saved">
         <table class="form" align="left">
             <tr>
-                <td colspan="2"><h2><?php echo $saved_heder_text; ?></h2>
+                <td colspan="2"><h2><?php echo $saved_header_text; ?></h2>
                 <p><?php echo $saved_listings_description; ?></p>
                 <div class="buttons">
                     <a id="upload_button" onclick="upload()" class="button"><span><?php echo $upload_button_text; ?></span></a>

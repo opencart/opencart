@@ -30,3 +30,4 @@ $_['lang_stock_col_comb']           = 'Combination';
 $_['lang_stock_col_price']          = 'Price';
 $_['lang_stock_col_enabled']        = 'Enabled';
 $_['lang_qty']                      = 'Quantity to list<span class="help">Enter a lower amount if you want to maintain a lower stock level on eBay</span>';
+?>

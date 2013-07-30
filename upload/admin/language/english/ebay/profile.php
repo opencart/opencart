@@ -1,6 +1,6 @@
 <?php
 $_['lang_heading']                  = 'Profiles';
-$_['lang_ebay']                         = 'eBay';
+$_['lang_ebay']                     = 'eBay';
 $_['lang_openbay']                  = 'OpenBay Pro';
 $_['lang_page_title']               = 'OpenBay Pro for eBay';
 $_['lang_btn_add']                  = 'Add profile';
@@ -45,6 +45,8 @@ $_['lang_shipping_add']         = 'Additional items: ';
 $_['lang_shipping_service']     = 'Service: ';
 $_['lang_shipping_in_desc']     = 'Freight info in description<span class="help">US,UK,AU & CA only</span>';
 $_['lang_shipping_getitfast']   = 'Get It Fast!';
+$_['lang_shipping_zones']       = 'Ship to zones';
+$_['lang_shipping_worldwide']   = 'Worldwide';
 
 
 $_['lang_returns_accept']       = 'Returns accepted';

@@ -287,6 +287,7 @@ class ControllerEbayProfile extends Controller {
     public function profileGet(){
         $this->load->model('ebay/profile');
         $this->load->model('ebay/openbay');
+        $this->load->language('ebay/profile');
 
         $profile_info = $this->model_ebay_profile->get($this->request->get['ebay_profile_id']);
         $zones = $this->model_ebay_openbay->getShippingLocations();
@@ -331,35 +332,31 @@ class ControllerEbayProfile extends Controller {
 
         if(is_array($shipping_national)){
             foreach($shipping_national as $key => $service){
-                $tmp .= '<p class="shipping_national_'.$key.'"><label><strong>Service: </strong><label> ';
-                $tmp .= '<input type="hidden" name="service_national['.$key.']" value="'.$service['id'].'" />';
-                $tmp .= $service['name'];
-                $tmp .= '</p><p class="shipping_national_'.$key.'"><label>First item: </label>';
+                $tmp .= '<p class="shipping_national_'.$key.'"><label><strong>'.$this->language->get('lang_shipping_service').': </strong><label> ';
+                $tmp .= '<input type="hidden" name="service_national['.$key.']" value="'.$service['id'].'" />'.$service['name'].'</p><p class="shipping_national_'.$key.'"><label>'.$this->language->get('lang_shipping_first').': </label>';
                 $tmp .= '<input type="text" name="price_national['.$key.']" style="width:50px;" value="'.$service['price'].'" />';
-                $tmp .= '&nbsp;&nbsp;<label>Additional: </label>';
-                $tmp .= '<input type="text" name="priceadditional_national['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'national\',\''.$key.'\');" class="button"><span>Remove</span></a></p>';
+                $tmp .= '&nbsp;&nbsp;<label>'.$this->language->get('lang_shipping_add').': </label>';
+                $tmp .= '<input type="text" name="priceadditional_national['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'national\',\''.$key.'\');" class="button"><span>'.$this->language->get('lang_btn_remove').'</span></a></p>';
             }
         }
         $return['national_count']   = (int)$shipping_national_count;
         $return['national']         = $tmp;
         $tmp                        = '';
 
-        if(is_array($shipping_international)){
+        if(is_array($shipping_international)) {
             foreach($shipping_international as $key => $service){
 
-                $tmp .= '<p class="shipping_international_'.$key.'" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong>Service: </strong><label> ';
-                $tmp .= '<input type="hidden" name="service_international['.$key.']" value="'.$service['id'].'" />';
-                $tmp .= $service['name'];
-                $tmp .= '</p>';
+                $tmp .= '<p class="shipping_international_'.$key.'" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong>'.$this->language->get('lang_shipping_service').': </strong><label> ';
+                $tmp .= '<input type="hidden" name="service_international['.$key.']" value="'.$service['id'].'" />'.$service['name'].'</p>';
 
-                $tmp .= '<h5 style="margin:5px 0;" class="shipping_international_'.$key.'">Ship to zones</h5>';
+                $tmp .= '<h5 style="margin:5px 0;" class="shipping_international_'.$key.'">'.$this->language->get('lang_shipping_zones').'</h5>';
                 $tmp .= '<div style="border:1px solid #000; background-color:#F5F5F5; width:100%; min-height:40px; margin-bottom:10px; display:inline-block;" class="shipping_international_'.$key.'">';
                 $tmp .= '<div style="display:inline; float:left; padding:10px 6px;line-height:20px; height:20px;">';
                 $tmp .= '<input type="checkbox" name="shipto_international['.$key.'][]" value="Worldwide" ';
                 if(in_array('Worldwide', $service['shipto'])){ $tmp .= ' checked="checked"'; }
-                $tmp .= '/> Worldwide</div>';
+                $tmp .= '/> '.$this->language->get('lang_shipping_worldwide').'</div>';
 
-                foreach($zones as $zone){
+                foreach($zones as $zone) {
                     $tmp .= '<div style="display:inline; float:left; padding:10px 6px;line-height:20px; height:20px;">';
                     $tmp .= '<input type="checkbox" name="shipto_international['.$key.'][]" value="'. $zone['shipping_location'] . '"';
                     if(in_array($zone['shipping_location'], $service['shipto'])){ $tmp .= ' checked="checked"'; }
@@ -368,10 +365,10 @@ class ControllerEbayProfile extends Controller {
 
                 $tmp .= '</div>';
                 $tmp .= '<div style="clear:both;" class="shipping_international_'.$key.'"></div>';
-                $tmp .= '<p class="shipping_international_'.$key.'"><label>First item: </label>';
+                $tmp .= '<p class="shipping_international_'.$key.'"><label>'.$this->language->get('lang_shipping_first').': </label>';
                 $tmp .= '<input type="text" name="price_international['.$key.']" style="width:50px;" value="'.$service['price'].'" />';
-                $tmp .= '&nbsp;&nbsp;<label>Additional: </label>';
-                $tmp .= '<input type="text" name="priceadditional_international['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'international\',\''.$key.'\');" class="button"><span>Remove</span></a></p>';
+                $tmp .= '&nbsp;&nbsp;<label>'.$this->language->get('lang_shipping_add').': </label>';
+                $tmp .= '<input type="text" name="priceadditional_international['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'international\',\''.$key.'\');" class="button"><span>'.$this->language->get('lang_btn_remove').'</span></a></p>';
             }
         }
         $return['international_count']  = (int)$shipping_international_count;

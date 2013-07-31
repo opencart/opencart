@@ -563,4 +563,81 @@ class Amazonus {
         );
     }
     
+    public function parseCategoryTemplate($xml) {
+        $simplexml = null;
+        
+        if(($simplexml = simplexml_load_string($xml)) == false) {
+            return false;
 }
+        
+        $category = (string)$simplexml->filename;
+        
+        $tabs = array();
+        foreach($simplexml->tabs->tab as $tab) {
+            $attributes = $tab->attributes();
+            $tabs[] = array(
+                'id' => (string)$attributes['id'],
+                'name' => (string) $tab->name,
+            );
+        }
+        
+        $fields = array();
+        $fieldTypes = array('required', 'desired', 'optional');
+        foreach ($fieldTypes as $type) {
+            foreach ($simplexml->fields->$type->field as $field) {
+                $attributes = $field->attributes();
+                $fields[] = array(
+                    'name' => (string)$attributes['name'],
+                    'title' => (string)$field->title,
+                    'definition' => (string)$field->definition,
+                    'accepted' => (array)$field->accepted,
+                    'type' => (string)$type,
+                    'child' => false,
+                    'order' => isset($attributes['order']) ? (string)$attributes['order'] : '',
+                    'tab' => (string)$attributes['tab'],
+                );
+            }
+            foreach ($simplexml->fields->$type->childfield as $field) {
+                $attributes = $field->attributes();
+                $fields[] = array(
+                    'name' => (string)$attributes['name'],
+                    'title' => (string)$field->title,
+                    'definition' => (string)$field->definition,
+                    'accepted' => (array)$field->accepted,
+                    'type' => (string)$type,
+                    'child' => true,
+                    'parent' => (array)$field->parent,
+                    'order' => isset($attributes['order']) ? (string)$attributes['order'] : '',
+                    'tab' => (string)$attributes['tab'],
+                );
+            }
+        }
+        
+        foreach($fields as $index => $field) {
+            $fields[$index]['unordered_index'] = $index;
+        }
+        
+        usort($fields, array('Amazonus','compareFields'));
+        
+        return array(
+            'category' => $category,
+            'fields' => $fields,
+            'tabs' => $tabs,
+        );
+    }
+    
+    //Used to sort fields array
+    private static function compareFields($field1, $field2) {
+        if($field1['order'] == $field2['order']) {
+            return ($field1['unordered_index'] < $field2['unordered_index']) ? -1 : 1;
+        } else if(!empty($field1['order']) && empty($field2['order'])) {
+            return -1;
+        } else if(!empty($field2['order']) && empty($field1['order'])) {
+            return 1;
+        } else {
+            return ($field1['order'] < $field2['order']) ? -1 : 1;
+        }
+    }
+    
+}
+?>

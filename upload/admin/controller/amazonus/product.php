@@ -333,63 +333,51 @@ class ControllerAmazonusProduct extends Controller{
     }
     
     public function parseTemplateAjax() {
-        ob_start();
         $this->load->model('tool/image');
+        $this->load->library('amazonus');
         $this->load->library('log');
-        $logger = new Log('amazonus_product.log');
+        $log = new Log('amazonus_product.log');
         
         $result = array();
         
         if(isset($this->request->get['xml'])) {
-            $templateName = $this->request->get['xml'];
-            
-            $this->load->library('amazonus_category_template');
-            $this->load->library('amazonus');
-            
-            
-            $templateParser = new Amazonus_category_template();
-            $data = array('template' => $templateName, 'version' => 2);
-            $response = $this->amazonus->callWithResponse("productv2/GetTemplateXml", $data);
-            
-            if(!$templateParser->load($response)) {
-                $logger->write("admin/amazonus/product/parseTemplateAjax failed to load template parses. name=" . $templateName);
-                return;
-            }
-            $category = $templateParser->getCategoryName();
-            $fields = $templateParser->getAllFields();
-            $tabs = $templateParser->getTabs();
-            
-            
-            $requestedVar = isset($this->request->get['var']) ? $this->request->get['var'] : '';
-            
-            if(isset($this->request->get['edit_id'])) {
-                $fields = $this->fillSavedValues($this->request->get['edit_id'], $fields, $requestedVar);
-            }
-            elseif(isset($this->request->get['product_id'])) {
-                $fields = $this->fillDefaultValues($this->request->get['product_id'], $fields, $requestedVar);         
-            }
-            
-            /* Generating thumbs for image fields */
-            $fieldsWithThumbs = array();
-            foreach($fields as $field) {
-                if($field['accepted']['type'] == 'image') {
-                    $field['thumb'] = $this->model_tool_image->resize(str_replace(HTTPS_CATALOG . 'image/', '', $field['value']), 100, 100);
-                    if(empty($field['thumb'])) {
-                        $field['thumb'] = '';
+            $request = array('template' => $this->request->get['xml'], 'version' => 2);
+            $response = $this->amazonus->callWithResponse("productv2/GetTemplateXml", $request);
+            if ($response) {
+                $template = $this->amazonus->parseCategoryTemplate($response);
+                if ($template) {
+                    $variation = isset($this->request->get['var']) ? $this->request->get['var'] : '';
+                    
+                    if (isset($this->request->get['product_id'])) {
+                        $template['fields'] = $this->fillDefaultValues($this->request->get['product_id'], $template['fields'], $variation);
+                    } elseif (isset($this->request->get['edit_id'])) {
+                        $template['fields'] = $this->fillSavedValues($this->request->get['edit_id'], $template['fields'], $variation);
                     }
+                    
+                    foreach($template['fields'] as $key => $field) {
+                        if($field['accepted']['type'] == 'image') {
+                            $template['fields'][$key]['thumb'] = $this->model_tool_image->resize(str_replace(HTTPS_CATALOG . 'image/', '', $field['value']), 100, 100);
+                            if(empty($field['thumb'])) {
+                                $template['fields'][$key]['thumb'] = '';
+                            }
+                        }
+                    }
+                    
+                    $result = array(
+                        "category" => $template['category'],
+                        "fields" => $template['fields'],
+                        "tabs" => $template['tabs']
+                    );
+                } else {
+                    $log->write("admin/amazonus/product/parseTemplateAjax failed to parse template response: " . $response);
                 }
-                $fieldsWithThumbs[] = $field;
+            } else {
+                $log->write("admin/amazonus/product/parseTemplateAjax failed calling productv2/GetTemplateXml with params: " . print_r($request, true));
             }
-            
-            $result = array(
-                "category" => $category,
-                "fields" => $fieldsWithThumbs,
-                "tabs" => $tabs);
         }
-        $result = json_encode($result);
-        
-        ob_clean();
-        $this->response->setOutput($result);
+            
+        $this->response->setOutput(json_encode($result));
+
     }
     
     private function fillDefaultValues($product_id, $fields_array, $var = '') {

@@ -139,12 +139,22 @@ label {
 	overflow: hidden;
 	min-height: 350px;
 }
-.warning {
+.alert {
 	padding: 10px 10px 10px 33px;
 	margin-bottom: 15px;
+	color: #555555;
+	-webkit-border-radius: 5px 5px 5px 5px;
+	-moz-border-radius: 5px 5px 5px 5px;
+	-khtml-border-radius: 5px 5px 5px 5px;
+	border-radius: 5px 5px 5px 5px;
+}
+.alert-error {
 	background: #FFD1D1 url('../image/warning.png') 10px center no-repeat;
 	border: 1px solid #F8ACAC;
-	color: #555555;
+}
+.alert-success {
+	background: #EAF7D9 url('../image/good.png') 10px center no-repeat;
+	border: 1px solid #BBDF8D;
 }
 .required {
 	color: #F00;

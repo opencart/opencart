@@ -212,7 +212,14 @@ function show_form(xml, formType) {
             $('.wait').remove();
         },
         success: function(data) {
-
+            if(data['status'] === 'error') {
+                if('info' in data) {
+                    alert(data['info']);
+                } else {
+                    alert('Unexpected error.');
+                }
+                return;
+            }
             for(tab in data['tabs']) {
                 $('#dynamic_tabs').append('<a href="#page-' + data['tabs'][tab]['id'] + '">' + data['tabs'][tab]['name'] + '</a>');
 

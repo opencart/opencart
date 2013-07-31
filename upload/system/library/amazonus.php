@@ -566,9 +566,10 @@ class Amazonus {
     public function parseCategoryTemplate($xml) {
         $simplexml = null;
         
+        libxml_use_internal_errors(true);
         if(($simplexml = simplexml_load_string($xml)) == false) {
             return false;
-}
+        }
         
         $category = (string)$simplexml->filename;
         

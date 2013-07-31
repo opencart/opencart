@@ -369,7 +369,13 @@ class ControllerAmazonusProduct extends Controller{
                         "tabs" => $template['tabs']
                     );
                 } else {
-                    $log->write("admin/amazonus/product/parseTemplateAjax failed to parse template response: " . $response);
+                    $json_decoded = json_decode($response);
+                    if ($json_decoded) {
+                        $result = $json_decoded;
+                    } else {
+                        $result = array('status' => 'error');
+                        $log->write("admin/amazon/product/parseTemplateAjax failed to parse template response: " . $response);
+                    }
                 }
             } else {
                 $log->write("admin/amazonus/product/parseTemplateAjax failed calling productv2/GetTemplateXml with params: " . print_r($request, true));

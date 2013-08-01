@@ -20,7 +20,7 @@
 
 # Templates Files
 /upload/image/templates/*
-/upload/image/templates/default.jpg
+!/upload/image/templates/default.png
 
 # Download Files
 /upload/system/download/*

@@ -1363,10 +1363,10 @@ function addProfile() {
             }
         });
     }
-<?php } ?>
 
-$(document).ready(function(){
-    openbayLinkStatus();
-});
+    $(document).ready(function(){
+        openbayLinkStatus();
+    });
+<?php } ?>
 
 //--></script><?php echo $footer; ?>

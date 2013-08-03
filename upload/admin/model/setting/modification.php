@@ -5,7 +5,7 @@ class ModelSettingModification extends Model {
 	}
 	
 	public function editModification($modification_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', code = '" . $this->db->escape($data['code']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE modification_id = '" . $modification_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', code = '" . $this->db->escape($data['code']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE modification_id = '" . (int)$modification_id . "'");
 	}
 	
 	public function deleteModification($modification_id) {

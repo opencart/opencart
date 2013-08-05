@@ -160,7 +160,7 @@
                     </tr>
                 </table>
             </div>
-        
+
             <div id="tab-listing-images">
                 <table class="form">
                     <tr>
@@ -228,11 +228,11 @@
                             <p>* <?php echo $lang_images_text_1; ?></p>
                             <p>* <?php echo $lang_images_text_2; ?></p>
 
-<?php
+    <?php
                             if(!empty($product['product_images'])){
                                 $i = 0;
                                 foreach($product['product_images'] as $img){
-?>
+    ?>
                                     <div class="border p10 mBottom10 width120 left floatLeft mRight10">
                                     <img src="<?php echo $img['preview']; ?>" />
                                     <p><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="checkboxTemplateImage" /> <?php echo $lang_template_image; ?></p>
@@ -242,13 +242,13 @@
                                     </p>
                                     <p id="imgRad<?php echo $i; ?>"<?php echo ( ($i == 0) ? '' : ' class="displayNone"'); ?>><input type="radio" name="main_image"<?php echo ( ($i == 0) ? '' : ' checked="checked"'); ?> value="<?php echo $i; ?>" /> <?php echo $lang_main_image_ebay; ?></p>
                                     </div>
-<?php
+    <?php
                                     $i++;
                                 }
                             }else{
                                 echo'<p>'.$lang_images_none.'</p>';
                             }
-?>
+    ?>
                         </td>
                     </tr>
                 </table>
@@ -495,6 +495,16 @@
                     <td><input type="text" name="location" id="location" /></td>
                 </tr>
                 <tr>
+                    <td><?php echo $lang_despatch_country; ?></td>
+                    <td>
+                        <select name="country" id="country">
+                            <?php foreach($product['countries'] as $country){ ?>
+                            <option value="<?php echo $country['code'];?>"><?php echo $country['name'];?></option>
+                            <?php } ?>
+                        </select>
+                    </td>
+                </tr>
+                <tr>
                     <td><?php echo $lang_despatch_time; ?></td>
                     <td>
                         <select name="dispatch_time" id="dispatch_time">
@@ -605,9 +615,8 @@
         </table>
         
     </form>
-
-
     </div>
+
     <div class="content displayNone" id="reviewForm">
         <table class="form" id="reviewFormTable">
           <tr class="listingFees">
@@ -630,7 +639,7 @@
           </tr>
         </table>
     </div>
-      <div class="content displayNone" id="doneForm">
+    <div class="content displayNone" id="doneForm">
           <h2><?php echo $lang_created_title; ?></h2>
           <p><?php echo $lang_created_msg; ?>: <span id="itemNumber"></span></p>
           <div class="buttons mTop10">
@@ -639,7 +648,7 @@
               <a href="<?php echo $cancel; ?>" class="button"><span><?php echo $lang_return; ?></span></a>
           </div>
       </div>
-      <div class="content displayNone" id="failedForm">
+    <div class="content displayNone" id="failedForm">
           <h2><?php echo $lang_failed_title; ?></h2>
           <p><?php echo $lang_failed_msg1; ?></p>
           <ul>
@@ -649,6 +658,7 @@
           </ul>
           <p><?php echo $lang_failed_contact; ?></p>
       </div>
+
   </div>
 </div>
 <?php echo $footer; ?>
@@ -1520,6 +1530,11 @@
                             $('#get_it_fast').prop('checked', true);
                         }else{
                             $('#get_it_fast').prop('checked', false);
+                        }
+                        if(typeof data.data.country !== undefined && data.data.country){
+                            $('#country').val(data.data.country);
+                        }else{
+                            $('#country').val(data.data.country);
                         }
                         $('#nationalBtn').html(data.html.national);
                         $('#internationalBtn').html(data.html.international);

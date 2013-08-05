@@ -1255,6 +1255,9 @@ class ControllerOpenbayOpenbay extends Controller {
                 $product_info['dispatchTimes']                      = $this->ebay->getSetting('dispatch_time_max');
                 if(is_array($product_info['dispatchTimes'])){ ksort($product_info['dispatchTimes']); }
 
+                $product_info['countries']                          = $this->ebay->getSetting('countries');
+                if(is_array($product_info['countries'])){ ksort($product_info['countries']); }
+
                 $product_info['defaults']['ebay_payment_types']     = $this->config->get('ebay_payment_types');
                 $product_info['defaults']['paypal_address']         = $this->config->get('field_payment_paypal_address');
                 $product_info['defaults']['payment_instruction']    = $this->config->get('field_payment_instruction');

@@ -113,6 +113,7 @@ $_['lang_payment_instruction']      = 'Payment instructions';
 $_['lang_item_postcode']            = 'Postcode/Zip of location<span class="help">A postcode will help eBay choose a correct location for your listing</span>';
 $_['lang_item_location']            = 'Town or State of location<span class="help">Entering a town is less reliable than a postcode</span>';
 $_['lang_despatch_time']            = 'Dispatch time<span class="help">Max days to send</span>';
+$_['lang_despatch_country']         = 'Dispatch country';
 $_['lang_shipping_national']        = 'Domestic services (national)';
 $_['lang_shipping_international']   = 'International services';
 $_['lang_service']                  = '<strong>Service</strong>';

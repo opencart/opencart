@@ -1450,28 +1450,29 @@ final class Ebay
                 $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'dispatch_time_max' LIMIT 1");
 
                 if ($qry->num_rows > 0) {
-                    $this->db->query("
-                        UPDATE `" . DB_PREFIX . "ebay_setting_option`
-                        SET
-                            `data`          = '" . $this->db->escape(serialize($response['dispatch_time_max'])) . "',
-                            `last_updated`  = now()
-                        WHERE `key` = 'dispatch_time_max' LIMIT 1");
-
+                    $this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['dispatch_time_max'])) . "', `last_updated`  = now() WHERE `key` = 'dispatch_time_max' LIMIT 1");
                     $this->log('Updated dispatch_time_max into ebay_setting_option table');
                 } else {
-                    //insert
-                    $this->db->query("
-                        INSERT INTO `" . DB_PREFIX . "ebay_setting_option`
-                        SET
-                            `key`           = 'dispatch_time_max',
-                            `data`          = '" . $this->db->escape(serialize($response['dispatch_time_max'])) . "',
-                            `last_updated`  = now()
-                    ");
-
+                    $this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'dispatch_time_max', `data` = '" . $this->db->escape(serialize($response['dispatch_time_max'])) . "', `last_updated`  = now()");
                     $this->log('Inserted dispatch_time_max into ebay_setting_option table');
                 }
             } else {
                 $this->log('No dispatch_time_max set!');
+            }
+
+            //countries
+            if (isset($response['countries'])) {
+                $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'countries' LIMIT 1");
+
+                if ($qry->num_rows > 0) {
+                    $this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['countries'])) . "', `last_updated`  = now() WHERE `key` = 'countries' LIMIT 1");
+                    $this->log('Updated countries into ebay_setting_option table');
+                } else {
+                    $this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'dispatch_time_max', `data` = '" . $this->db->escape(serialize($response['countries'])) . "', `last_updated`  = now()");
+                    $this->log('Inserted countries into ebay_setting_option table');
+                }
+            } else {
+                $this->log('No countries set!');
             }
         }
 

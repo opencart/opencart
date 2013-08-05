@@ -58,6 +58,18 @@
                             <td><input type="text" name="data[location]" id="location" class="width100" maxlength="" value="<?php if(isset($data['location'])){ echo $data['location']; } ?>" /></td>
                         </tr>
                         <tr>
+                            <td><label><?php echo $lang_shipping_dispatch_country; ?></label></td>
+                            <td>
+                                <select name="data[country]" id="country" class="width100">
+                                    <?php foreach($countries as $country){ ?>
+                                    <option value="<?php echo $country['code'];?>"
+                                    <?php if(isset($data['country']) && $data['country'] == $country['code']){ echo' selected'; } ?>
+                                    ><?php echo $country['name'];?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
                             <td><label><?php echo $lang_shipping_despatch; ?></label></td>
                             <td>
                                 <select name="data[dispatch_time]" id="dispatch_time" class="width100">

@@ -36,18 +36,19 @@ $_['lang_tab_gallery']          = 'Gallery';
 $_['lang_tab_settings']         = 'Settings';
 
 //Shipping Profile
-$_['lang_shipping_postcode']    = 'Postal/Zip code location';
-$_['lang_shipping_location']    = 'Town or State location';
-$_['lang_shipping_despatch']    = 'Despatch time<span class="help">(Max days to send)</span>';
-$_['lang_shipping_nat']         = 'National shipping services';
-$_['lang_shipping_intnat']      = 'International shipping services';
-$_['lang_shipping_first']       = 'First item: ';
-$_['lang_shipping_add']         = 'Additional items: ';
-$_['lang_shipping_service']     = 'Service: ';
-$_['lang_shipping_in_desc']     = 'Freight info in description<span class="help">US,UK,AU & CA only</span>';
-$_['lang_shipping_getitfast']   = 'Get It Fast!';
-$_['lang_shipping_zones']       = 'Ship to zones';
-$_['lang_shipping_worldwide']   = 'Worldwide';
+$_['lang_shipping_dispatch_country']    = 'Shipping from country';
+$_['lang_shipping_postcode']            = 'Postal/Zip code location';
+$_['lang_shipping_location']            = 'Town or State location';
+$_['lang_shipping_despatch']            = 'Despatch time<span class="help">(Max days to send)</span>';
+$_['lang_shipping_nat']                 = 'National shipping services';
+$_['lang_shipping_intnat']              = 'International shipping services';
+$_['lang_shipping_first']               = 'First item: ';
+$_['lang_shipping_add']                 = 'Additional items: ';
+$_['lang_shipping_service']             = 'Service: ';
+$_['lang_shipping_in_desc']             = 'Freight info in description<span class="help">US,UK,AU & CA only</span>';
+$_['lang_shipping_getitfast']           = 'Get It Fast!';
+$_['lang_shipping_zones']               = 'Ship to zones';
+$_['lang_shipping_worldwide']           = 'Worldwide';
 
 //Returns profile
 $_['lang_returns_accept']       = 'Returns accepted';

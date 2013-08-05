@@ -129,9 +129,13 @@ class ControllerEbayProfile extends Controller {
         $this->data['templates']                        = $this->model_ebay_template->getAll();
         $this->data['types']                            = $this->model_ebay_profile->getTypes();
         $this->data['dispatchTimes']                    = $this->ebay->getSetting('dispatch_time_max');
+        $this->data['countries']                        = $this->ebay->getSetting('countries');
 
         if(is_array($this->data['dispatchTimes'])){
             ksort($this->data['dispatchTimes']);
+        }
+        if(is_array($this->data['countries'])){
+            ksort($this->data['countries']);
         }
 
         if (isset($this->error['warning'])) {

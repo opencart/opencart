@@ -1537,7 +1537,12 @@ class ControllerOpenbayOpenbay extends Controller {
 
                 $data['location']           = $profile_shipping['data']['postcode'];
                 $data['dispatch_time']      = $profile_shipping['data']['dispatch_time'];
-                $data['dispatch_time']      = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);
+
+                if(isset($profile_shipping['data']['country'])) {
+                    $data['country'] = $profile_shipping['data']['country'];
+                }
+
+                $data['get_it_fast']        = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);
 
                 if(isset($profile_template['data']['ebay_template_id'])){
                     $template = $this->model_ebay_template->get($profile_template['data']['ebay_template_id']);
@@ -1715,7 +1720,12 @@ class ControllerOpenbayOpenbay extends Controller {
                 $data['location']           = $profile_shipping['data']['location'];
                 $data['postcode']           = $profile_shipping['data']['postcode'];
                 $data['dispatch_time']      = $profile_shipping['data']['dispatch_time'];
-                $data['dispatch_time']      = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);
+
+                if(isset($profile_shipping['data']['country'])) {
+                    $data['country'] = $profile_shipping['data']['country'];
+                }
+
+                $data['get_it_fast']        = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);
 
                 if(isset($profile_template['data']['ebay_template_id'])){
                     $template = $this->model_ebay_template->get($profile_template['data']['ebay_template_id']);

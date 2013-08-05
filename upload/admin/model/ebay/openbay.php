@@ -45,10 +45,6 @@ class ModelEbayOpenbay extends Model{
 
         $this->model_setting_setting->editSetting('openbay',$value);
 
-        /**
-         * Setup the database tables
-         */
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_category`;");
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_category` (
                       `ebay_category_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -60,8 +56,7 @@ class ModelEbayOpenbay extends Model{
                       `AutoPayEnabled` tinyint(1) NOT NULL,
                       PRIMARY KEY (`ebay_category_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
-        
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_category_history`;");
+
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_category_history` (
                       `ebay_category_history_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -71,7 +66,6 @@ class ModelEbayOpenbay extends Model{
                       PRIMARY KEY (`ebay_category_history_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_listing`;");
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_listing` (
                       `ebay_listing_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -81,8 +75,7 @@ class ModelEbayOpenbay extends Model{
                       `status` SMALLINT(3) NOT NULL DEFAULT '1',
                       PRIMARY KEY (`ebay_listing_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
-
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_listing_pending`;");
+;
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_listing_pending` (
                       `ebay_listing_pending_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -93,7 +86,6 @@ class ModelEbayOpenbay extends Model{
                       PRIMARY KEY (`ebay_listing_pending_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_shipping`;");
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_shipping` (
                       `ebay_shipping_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -110,7 +102,6 @@ class ModelEbayOpenbay extends Model{
                       PRIMARY KEY (`ebay_shipping_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_shipping_location`;");
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_shipping_location` (
                       `ebay_shipping_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -121,7 +112,6 @@ class ModelEbayOpenbay extends Model{
                       PRIMARY KEY (`ebay_shipping_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_payment_method`;");
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_payment_method` (
                       `ebay_payment_method_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -130,7 +120,6 @@ class ModelEbayOpenbay extends Model{
                       PRIMARY KEY (`ebay_payment_method_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5;");
 
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_transaction`;");
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_transaction` (
                         `ebay_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -148,7 +137,6 @@ class ModelEbayOpenbay extends Model{
                     PRIMARY KEY (`ebay_transaction_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_order`;");
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_order` (
                       `ebay_order_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -160,7 +148,6 @@ class ModelEbayOpenbay extends Model{
                       PRIMARY KEY (`ebay_order_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
         $this->db->query("
                     CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_profile` (
                         `ebay_profile_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -172,7 +159,6 @@ class ModelEbayOpenbay extends Model{
                         PRIMARY KEY (`ebay_profile_id`)
                     ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_setting_option`;");
         $this->db->query("
                 CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_setting_option` (
                     `ebay_setting_option_id` INT(11) NOT NULL AUTO_INCREMENT,
@@ -182,7 +168,6 @@ class ModelEbayOpenbay extends Model{
                     PRIMARY KEY (`ebay_setting_option_id`)
                 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
-		$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_image_import`;");
 		$this->db->query("
                 CREATE TABLE IF NOT EXISTS `".DB_PREFIX."ebay_image_import` (
                   `id` int(11) NOT NULL AUTO_INCREMENT,
@@ -194,7 +179,6 @@ class ModelEbayOpenbay extends Model{
                   PRIMARY KEY (`id`)
                 ) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
 
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_shipping_location_exclude`;");
         $this->db->query("
                 CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_shipping_location_exclude` (
                     `ebay_shipping_exclude_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -202,16 +186,6 @@ class ModelEbayOpenbay extends Model{
                     `location` varchar(100) NOT NULL,
                     `region` varchar(100) NOT NULL,
                     PRIMARY KEY (`ebay_shipping_exclude_id`)
-                ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
-
-        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_order`;");
-        $this->db->query("
-                CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_order` (
-                  `ebay_order_id` int(11) NOT NULL AUTO_INCREMENT,
-                  `parent_ebay_order_id` int(11) NOT NULL,
-                  `order_id` int(11) NOT NULL,
-                  `smp_id` int(11) NOT NULL,
-                  PRIMARY KEY (`ebay_order_id`)
                 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
         $this->db->query("

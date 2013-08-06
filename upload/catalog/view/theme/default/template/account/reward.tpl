@@ -11,27 +11,27 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="left"><?php echo $column_date_added; ?></td>
-          <td class="left"><?php echo $column_description; ?></td>
-          <td class="right"><?php echo $column_points; ?></td>
+          <td class="text-left"><?php echo $column_date_added; ?></td>
+          <td class="text-left"><?php echo $column_description; ?></td>
+          <td class="text-right"><?php echo $column_points; ?></td>
         </tr>
       </thead>
       <tbody>
         <?php if ($rewards) { ?>
         <?php foreach ($rewards  as $reward) { ?>
         <tr>
-          <td class="left"><?php echo $reward['date_added']; ?></td>
-          <td class="left"><?php if ($reward['order_id']) { ?>
+          <td class="text-left"><?php echo $reward['date_added']; ?></td>
+          <td class="text-left"><?php if ($reward['order_id']) { ?>
             <a href="<?php echo $reward['href']; ?>"><?php echo $reward['description']; ?></a>
             <?php } else { ?>
             <?php echo $reward['description']; ?>
             <?php } ?></td>
-          <td class="right"><?php echo $reward['points']; ?></td>
+          <td class="text-right"><?php echo $reward['points']; ?></td>
         </tr>
         <?php } ?>
         <?php } else { ?>
         <tr>
-          <td class="center" colspan="3"><?php echo $text_empty; ?></td>
+          <td class="text-center" colspan="3"><?php echo $text_empty; ?></td>
         </tr>
         <?php } ?>
       </tbody>

@@ -17,317 +17,315 @@
         <button type="submit" form="form-customer" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer" class="form-horizontal">
-        <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-          <?php if ($customer_id) { ?>
-          <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
-          <li><a href="#tab-transaction" data-toggle="tab"><?php echo $tab_transaction; ?></a></li>
-          <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
-          <?php } ?>
-          <li><a href="#tab-ip" data-toggle="tab"><?php echo $tab_ip; ?></a></li>
-        </ul>
-        <div class="tab-content">
-          <div class="tab-pane active" id="tab-general">
-            <div class="tabbable tabs-left">
-              <ul class="nav nav-tabs" id="address">
-                <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-                <?php $address_row = 1; ?>
-                <?php foreach ($addresses as $address) { ?>
-                <li><a href="#tab-address<?php echo $address_row; ?>" data-toggle="tab"><i class="icon-minus-sign" onclick="$('#address a[href=\'#tab-address<?php echo $address_row; ?>\']').parent().remove(); $('#tab-address<?php echo $address_row; ?>').remove();"></i> <?php echo $tab_address . ' ' . $address_row; ?></a></li>
-                <?php $address_row++; ?>
-                <?php } ?>
-                <li id="address-add"><a onclick="addAddress();"><i class="icon-plus-sign"></i> <?php echo $button_add_address; ?></a></li>
-              </ul>
-              <div class="tab-content">
-                <div class="tab-pane active" id="tab-customer">
-                  <div class="control-group required">
-                    <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
-                    <div class="controls">
-                      <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
-                      <?php if ($error_firstname) { ?>
-                      <span class="error"><?php echo $error_firstname; ?></span>
-                      <?php } ?>
-                    </div>
-                  </div>
-                  <div class="control-group required">
-                    <label class="control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
-                    <div class="controls">
-                      <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
-                      <?php if ($error_lastname) { ?>
-                      <span class="error"><?php echo $error_lastname; ?></span>
-                      <?php } ?>
-                    </div>
-                  </div>
-                  <div class="control-group required">
-                    <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
-                    <div class="controls">
-                      <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
-                      <?php if ($error_email) { ?>
-                      <span class="error"><?php echo $error_email; ?></span>
-                      <?php  } ?>
-                    </div>
-                  </div>
-                  <div class="control-group required">
-                    <label class="control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
-                    <div class="controls">
-                      <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
-                      <?php if ($error_telephone) { ?>
-                      <span class="error"><?php echo $error_telephone; ?></span>
-                      <?php  } ?>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-fax"><?php echo $entry_fax; ?></label>
-                    <div class="controls">
-                      <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" />
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
-                    <div class="controls">
-                      <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" autocomplete="off" id="input-password" />
-                      <?php if ($error_password) { ?>
-                      <span class="error"><?php echo $error_password; ?></span>
-                      <?php  } ?>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
-                    <div class="controls">
-                      <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" autocomplete="off" id="input-confirm" />
-                      <?php if ($error_confirm) { ?>
-                      <span class="error"><?php echo $error_confirm; ?></span>
-                      <?php  } ?>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-newsletter"><?php echo $entry_newsletter; ?></label>
-                    <div class="controls">
-                      <select name="newsletter" id="input-newsletter">
-                        <?php if ($newsletter) { ?>
-                        <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                        <option value="0"><?php echo $text_disabled; ?></option>
-                        <?php } else { ?>
-                        <option value="1"><?php echo $text_enabled; ?></option>
-                        <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
-                    <div class="controls">
-                      <select name="customer_group_id" id="input-customer-group">
-                        <?php foreach ($customer_groups as $customer_group) { ?>
-                        <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-                        <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-                        <?php } else { ?>
-                        <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
-                        <?php } ?>
-                        <?php } ?>
-                      </select>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-                    <div class="controls">
-                      <select name="status" id="input-status">
-                        <?php if ($status) { ?>
-                        <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-                        <option value="0"><?php echo $text_disabled; ?></option>
-                        <?php } else { ?>
-                        <option value="1"><?php echo $text_enabled; ?></option>
-                        <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-                        <?php } ?>
-                      </select>
-                    </div>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer" class="form-horizontal">
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+        <?php if ($customer_id) { ?>
+        <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
+        <li><a href="#tab-transaction" data-toggle="tab"><?php echo $tab_transaction; ?></a></li>
+        <li><a href="#tab-reward" data-toggle="tab"><?php echo $tab_reward; ?></a></li>
+        <?php } ?>
+        <li><a href="#tab-ip" data-toggle="tab"><?php echo $tab_ip; ?></a></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab-general">
+          <div class="tabbable tabs-left">
+            <ul class="nav nav-tabs" id="address">
+              <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+              <?php $address_row = 1; ?>
+              <?php foreach ($addresses as $address) { ?>
+              <li><a href="#tab-address<?php echo $address_row; ?>" data-toggle="tab"><i class="icon-minus-sign" onclick="$('#address a[href=\'#tab-address<?php echo $address_row; ?>\']').parent().remove(); $('#tab-address<?php echo $address_row; ?>').remove();"></i> <?php echo $tab_address . ' ' . $address_row; ?></a></li>
+              <?php $address_row++; ?>
+              <?php } ?>
+              <li id="address-add"><a onclick="addAddress();"><i class="icon-plus-sign"></i> <?php echo $button_add_address; ?></a></li>
+            </ul>
+            <div class="tab-content">
+              <div class="tab-pane active" id="tab-customer">
+                <div class="control-group required">
+                  <label class="control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
+                  <div class="controls">
+                    <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
+                    <?php if ($error_firstname) { ?>
+                    <span class="error"><?php echo $error_firstname; ?></span>
+                    <?php } ?>
                   </div>
                 </div>
-                <?php $address_row = 1; ?>
-                <?php foreach ($addresses as $address) { ?>
-                <div class="tab-pane" id="tab-address<?php echo $address_row; ?>">
-                  <input type="hidden" name="address[<?php echo $address_row; ?>][address_id]" value="<?php echo $address['address_id']; ?>" />
-                  <div class="control-group required">
-                    <label class="control-label" for="input-firstname<?php echo $address_row; ?>"><?php echo $entry_firstname; ?></label>
-                    <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname<?php echo $address_row; ?>" />
-                      <?php if (isset($error_address_firstname[$address_row])) { ?>
-                      <span class="error"><?php echo $error_address_firstname[$address_row]; ?></span>
-                      <?php } ?>
-                    </div>
-                  </div>
-                  <div class="control-group required">
-                    <label class="control-label" for="input-lastname<?php echo $address_row; ?>"><?php echo $entry_lastname; ?></label>
-                    <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname<?php echo $address_row; ?>" />
-                      <?php if (isset($error_address_lastname[$address_row])) { ?>
-                      <span class="error"><?php echo $error_address_lastname[$address_row]; ?></span>
-                      <?php } ?>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-company<?php echo $address_row; ?>"><?php echo $entry_company; ?></label>
-                    <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company<?php echo $address_row; ?>" />
-                    </div>
-                  </div>
-                  <div class="control-group required">
-                    <label class="control-label" for="input-address-1<?php echo $address_row; ?>"><?php echo $entry_address_1; ?></label>
-                    <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1<?php echo $address_row; ?>" />
-                      <?php if (isset($error_address_address_1[$address_row])) { ?>
-                      <span class="error"><?php echo $error_address_address_1[$address_row]; ?></span>
-                      <?php } ?>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <label class="control-label" for="input-address-2<?php echo $address_row; ?>"><?php echo $entry_address_2; ?></label>
-                    <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2<?php echo $address_row; ?>" />
-                    </div>
-                  </div>
-                  <div class="control-group required">
-                    <label class="control-label" for="input-city<?php echo $address_row; ?>"><?php echo $entry_city; ?></label>
-                    <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city<?php echo $address_row; ?>" />
-                      <?php if (isset($error_address_city[$address_row])) { ?>
-                      <span class="error"><?php echo $error_address_city[$address_row]; ?></span>
-                      <?php } ?>
-                    </div>
-                  </div>
-                  <div class="control-group required">
-                    <label class="control-label" for="input-postcode<?php echo $address_row; ?>"><?php echo $entry_postcode; ?></label>
-                    <div class="controls">
-                      <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode<?php echo $address_row; ?>" />
-                    </div>
-                  </div>
-                  <div class="control-group required">
-                    <label class="control-label" for="input-country<?php echo $address_row; ?>"><?php echo $entry_country; ?></label>
-                    <div class="controls">
-                      <select name="address[<?php echo $address_row; ?>][country_id]" id="input-country<?php echo $address_row; ?>" onchange="country(this, '<?php echo $address_row; ?>', '<?php echo $address['zone_id']; ?>');">
-                        <option value=""><?php echo $text_select; ?></option>
-                        <?php foreach ($countries as $country) { ?>
-                        <?php if ($country['country_id'] == $address['country_id']) { ?>
-                        <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                        <?php } else { ?>
-                        <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                        <?php } ?>
-                        <?php } ?>
-                      </select>
-                      <?php if (isset($error_address_country[$address_row])) { ?>
-                      <span class="error"><?php echo $error_address_country[$address_row]; ?></span>
-                      <?php } ?>
-                    </div>
-                  </div>
-                  <div class="control-group required">
-                    <label class="control-label" for="input-zone<?php echo $address_row; ?>"><?php echo $entry_zone; ?></label>
-                    <div class="controls">
-                      <select name="address[<?php echo $address_row; ?>][zone_id]" id="input-zone<?php echo $address_row; ?>">
-                      </select>
-                      <?php if (isset($error_address_zone[$address_row])) { ?>
-                      <span class="error"><?php echo $error_address_zone[$address_row]; ?></span>
-                      <?php } ?>
-                    </div>
-                  </div>
-                  <div class="control-group">
-                    <div class="control-label"><?php echo $entry_default; ?></div>
-                    <div class="controls">
-                      <label class="radio">
-                        <?php if (($address['address_id'] == $address_id) || !$addresses) { ?>
-                        <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" />
-                        <?php } else { ?>
-                        <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" />
-                        <?php } ?>
-                      </label>
-                    </div>
+                <div class="control-group required">
+                  <label class="control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
+                  <div class="controls">
+                    <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
+                    <?php if ($error_lastname) { ?>
+                    <span class="error"><?php echo $error_lastname; ?></span>
+                    <?php } ?>
                   </div>
                 </div>
-                <?php $address_row++; ?>
-                <?php } ?>
+                <div class="control-group required">
+                  <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
+                  <div class="controls">
+                    <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
+                    <?php if ($error_email) { ?>
+                    <span class="error"><?php echo $error_email; ?></span>
+                    <?php  } ?>
+                  </div>
+                </div>
+                <div class="control-group required">
+                  <label class="control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
+                  <div class="controls">
+                    <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
+                    <?php if ($error_telephone) { ?>
+                    <span class="error"><?php echo $error_telephone; ?></span>
+                    <?php  } ?>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="input-fax"><?php echo $entry_fax; ?></label>
+                  <div class="controls">
+                    <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" />
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
+                  <div class="controls">
+                    <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" autocomplete="off" id="input-password" />
+                    <?php if ($error_password) { ?>
+                    <span class="error"><?php echo $error_password; ?></span>
+                    <?php  } ?>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
+                  <div class="controls">
+                    <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" autocomplete="off" id="input-confirm" />
+                    <?php if ($error_confirm) { ?>
+                    <span class="error"><?php echo $error_confirm; ?></span>
+                    <?php  } ?>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="input-newsletter"><?php echo $entry_newsletter; ?></label>
+                  <div class="controls">
+                    <select name="newsletter" id="input-newsletter">
+                      <?php if ($newsletter) { ?>
+                      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                      <option value="0"><?php echo $text_disabled; ?></option>
+                      <?php } else { ?>
+                      <option value="1"><?php echo $text_enabled; ?></option>
+                      <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
+                  <div class="controls">
+                    <select name="customer_group_id" id="input-customer-group">
+                      <?php foreach ($customer_groups as $customer_group) { ?>
+                      <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+                      <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+                  <div class="controls">
+                    <select name="status" id="input-status">
+                      <?php if ($status) { ?>
+                      <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                      <option value="0"><?php echo $text_disabled; ?></option>
+                      <?php } else { ?>
+                      <option value="1"><?php echo $text_enabled; ?></option>
+                      <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-          <?php if ($customer_id) { ?>
-          <div class="tab-pane" id="tab-history">
-            <div id="history"></div>
-            <div class="control-group">
-              <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-              <div class="controls">
-                <textarea name="comment" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="input-xxlarge"></textarea>
+              <?php $address_row = 1; ?>
+              <?php foreach ($addresses as $address) { ?>
+              <div class="tab-pane" id="tab-address<?php echo $address_row; ?>">
+                <input type="hidden" name="address[<?php echo $address_row; ?>][address_id]" value="<?php echo $address['address_id']; ?>" />
+                <div class="control-group required">
+                  <label class="control-label" for="input-firstname<?php echo $address_row; ?>"><?php echo $entry_firstname; ?></label>
+                  <div class="controls">
+                    <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname<?php echo $address_row; ?>" />
+                    <?php if (isset($error_address_firstname[$address_row])) { ?>
+                    <span class="error"><?php echo $error_address_firstname[$address_row]; ?></span>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="control-group required">
+                  <label class="control-label" for="input-lastname<?php echo $address_row; ?>"><?php echo $entry_lastname; ?></label>
+                  <div class="controls">
+                    <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname<?php echo $address_row; ?>" />
+                    <?php if (isset($error_address_lastname[$address_row])) { ?>
+                    <span class="error"><?php echo $error_address_lastname[$address_row]; ?></span>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="input-company<?php echo $address_row; ?>"><?php echo $entry_company; ?></label>
+                  <div class="controls">
+                    <input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company<?php echo $address_row; ?>" />
+                  </div>
+                </div>
+                <div class="control-group required">
+                  <label class="control-label" for="input-address-1<?php echo $address_row; ?>"><?php echo $entry_address_1; ?></label>
+                  <div class="controls">
+                    <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1<?php echo $address_row; ?>" />
+                    <?php if (isset($error_address_address_1[$address_row])) { ?>
+                    <span class="error"><?php echo $error_address_address_1[$address_row]; ?></span>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <label class="control-label" for="input-address-2<?php echo $address_row; ?>"><?php echo $entry_address_2; ?></label>
+                  <div class="controls">
+                    <input type="text" name="address[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2<?php echo $address_row; ?>" />
+                  </div>
+                </div>
+                <div class="control-group required">
+                  <label class="control-label" for="input-city<?php echo $address_row; ?>"><?php echo $entry_city; ?></label>
+                  <div class="controls">
+                    <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city<?php echo $address_row; ?>" />
+                    <?php if (isset($error_address_city[$address_row])) { ?>
+                    <span class="error"><?php echo $error_address_city[$address_row]; ?></span>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="control-group required">
+                  <label class="control-label" for="input-postcode<?php echo $address_row; ?>"><?php echo $entry_postcode; ?></label>
+                  <div class="controls">
+                    <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode<?php echo $address_row; ?>" />
+                  </div>
+                </div>
+                <div class="control-group required">
+                  <label class="control-label" for="input-country<?php echo $address_row; ?>"><?php echo $entry_country; ?></label>
+                  <div class="controls">
+                    <select name="address[<?php echo $address_row; ?>][country_id]" id="input-country<?php echo $address_row; ?>" onchange="country(this, '<?php echo $address_row; ?>', '<?php echo $address['zone_id']; ?>');">
+                      <option value=""><?php echo $text_select; ?></option>
+                      <?php foreach ($countries as $country) { ?>
+                      <?php if ($country['country_id'] == $address['country_id']) { ?>
+                      <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                      <?php } else { ?>
+                      <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                      <?php } ?>
+                      <?php } ?>
+                    </select>
+                    <?php if (isset($error_address_country[$address_row])) { ?>
+                    <span class="error"><?php echo $error_address_country[$address_row]; ?></span>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="control-group required">
+                  <label class="control-label" for="input-zone<?php echo $address_row; ?>"><?php echo $entry_zone; ?></label>
+                  <div class="controls">
+                    <select name="address[<?php echo $address_row; ?>][zone_id]" id="input-zone<?php echo $address_row; ?>">
+                    </select>
+                    <?php if (isset($error_address_zone[$address_row])) { ?>
+                    <span class="error"><?php echo $error_address_zone[$address_row]; ?></span>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="control-group">
+                  <div class="control-label"><?php echo $entry_default; ?></div>
+                  <div class="controls">
+                    <label class="radio">
+                      <?php if (($address['address_id'] == $address_id) || !$addresses) { ?>
+                      <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" />
+                      <?php } else { ?>
+                      <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" />
+                      <?php } ?>
+                    </label>
+                  </div>
+                </div>
               </div>
+              <?php $address_row++; ?>
+              <?php } ?>
             </div>
-            <button id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
-          </div>
-          <div class="tab-pane" id="tab-transaction">
-            <div id="transaction"></div>
-            <div class="control-group">
-              <label class="control-label" for="input-transaction-description"><?php echo $entry_description; ?></label>
-              <div class="controls">
-                <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" id="input-transaction-description" />
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-amount"><?php echo $entry_amount; ?></label>
-              <div class="controls">
-                <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" />
-              </div>
-            </div>
-            <button type="button" id="button-transaction" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
-          </div>
-          <div class="tab-pane" id="tab-reward">
-            <div id="reward"></div>
-            <div class="control-group">
-              <label class="control-label" for="input-reward-description"><?php echo $entry_description; ?></label>
-              <div class="controls">
-                <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" id="input-reward-description" />
-              </div>
-            </div>
-            <div class="control-group">
-              <label class="control-label" for="input-points"><?php echo $entry_points; ?> <span class="help-block"><?php echo $help_points; ?></span></label>
-              <div class="controls">
-                <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" />
-              </div>
-            </div>
-            <button type="button" id="button-reward" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
-          </div>
-          <?php } ?>
-          <div class="tab-pane" id="tab-ip">
-            <table class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td class="left"><?php echo $column_ip; ?></td>
-                  <td class="right"><?php echo $column_total; ?></td>
-                  <td class="left"><?php echo $column_date_added; ?></td>
-                  <td class="right"><?php echo $column_action; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php if ($ips) { ?>
-                <?php foreach ($ips as $ip) { ?>
-                <tr>
-                  <td class="left"><a href="http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>" target="_blank"><?php echo $ip['ip']; ?></a></td>
-                  <td class="right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
-                  <td class="left"><?php echo $ip['date_added']; ?></td>
-                  <td class="right"><?php if ($ip['ban_ip']) { ?>
-                    <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
-                    <?php } else { ?>
-                    <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
-                    <?php } ?></td>
-                </tr>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="center" colspan="4"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
           </div>
         </div>
-      </form>
-    </div>
+        <?php if ($customer_id) { ?>
+        <div class="tab-pane" id="tab-history">
+          <div id="history"></div>
+          <div class="control-group">
+            <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+            <div class="controls">
+              <textarea name="comment" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="input-xxlarge"></textarea>
+            </div>
+          </div>
+          <button id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+        </div>
+        <div class="tab-pane" id="tab-transaction">
+          <div id="transaction"></div>
+          <div class="control-group">
+            <label class="control-label" for="input-transaction-description"><?php echo $entry_description; ?></label>
+            <div class="controls">
+              <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" id="input-transaction-description" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input-amount"><?php echo $entry_amount; ?></label>
+            <div class="controls">
+              <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" />
+            </div>
+          </div>
+          <button type="button" id="button-transaction" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
+        </div>
+        <div class="tab-pane" id="tab-reward">
+          <div id="reward"></div>
+          <div class="control-group">
+            <label class="control-label" for="input-reward-description"><?php echo $entry_description; ?></label>
+            <div class="controls">
+              <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" id="input-reward-description" />
+            </div>
+          </div>
+          <div class="control-group">
+            <label class="control-label" for="input-points"><?php echo $entry_points; ?> <span class="help-block"><?php echo $help_points; ?></span></label>
+            <div class="controls">
+              <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" />
+            </div>
+          </div>
+          <button type="button" id="button-reward" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
+        </div>
+        <?php } ?>
+        <div class="tab-pane" id="tab-ip">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <td class="text-left"><?php echo $column_ip; ?></td>
+                <td class="text-right"><?php echo $column_total; ?></td>
+                <td class="text-left"><?php echo $column_date_added; ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if ($ips) { ?>
+              <?php foreach ($ips as $ip) { ?>
+              <tr>
+                <td class="text-left"><a href="http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>" target="_blank"><?php echo $ip['ip']; ?></a></td>
+                <td class="text-right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
+                <td class="text-left"><?php echo $ip['date_added']; ?></td>
+                <td class="text-right"><?php if ($ip['ban_ip']) { ?>
+                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
+                  <?php } else { ?>
+                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
+                  <?php } ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </form>
   </div>
 </div>
 <script type="text/javascript"><!--

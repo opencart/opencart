@@ -14,99 +14,97 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-eye-open icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="box-content">
-      <div class="row-fluid">
-        <div class="span6">
-          <div class="row-fluid">
-            <div class="span6">
-              <div class="stats">
-                <div><span class="badge badge-success"><i class="icon-usd"></i></span></div>
-                <div><span><?php echo $sale_growth; ?> </span> <?php echo $sale_total; ?></div>
-              </div>
-            </div>
-            <div class="span6">
-              <div class="stats">
-                <div><i class="icon-shopping-cart"></i></div>
-                <div>
-                  <h5><?php echo $text_orders; ?></h5>
-                  <?php echo $order_total; ?><br />
-                  <span><?php echo $order_growth; ?>%</span></div>
-              </div>
+    <div class="row-fluid">
+      <div class="span6">
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="stats">
+              <div><span class="badge badge-success"><i class="icon-usd"></i></span></div>
+              <div><span><?php echo $sale_growth; ?> </span> <?php echo $sale_total; ?></div>
             </div>
           </div>
-          <div class="row-fluid">
-            <div class="span6">
-              <div class="stats">
-                <div><i class="icon-user"></i></div>
-                <div>
-                  <h5><?php echo $text_customers; ?></h5>
-                  <?php echo $customer_total; ?><br />
-                  <span><?php echo $customer_growth; ?>%</span></div>
-              </div>
-            </div>
-            <div class="span6">
-              <div class="stats">
-                <div><i class="icon-globe"></i></div>
-                <div>
-                  <h5><?php echo $text_marketing; ?></h5>
-                  Clicks: <?php echo $marketing_total; ?> / Orders: 1<br />
-                  <span>+10%</span></div>
-              </div>
+          <div class="span6">
+            <div class="stats">
+              <div><i class="icon-shopping-cart"></i></div>
+              <div>
+                <h5><?php echo $text_orders; ?></h5>
+                <?php echo $order_total; ?><br />
+                <span><?php echo $order_growth; ?>%</span></div>
             </div>
           </div>
         </div>
-        <div class="span6">
-          <h5><?php echo $text_activity; ?></h5>
-          <table class="table table-striped table-bordered table-hover">
-            <tbody>
-              <?php if ($activities) { ?>
-              <?php foreach ($activities as $activity) { ?>
-              <tr>
-                <td class="left"><?php echo $activity['action']; ?></td>
-              </tr>
-              <?php } ?>
-              <?php } else { ?>
-              <tr>
-                <td class="center"><?php echo $text_no_results; ?></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
+        <div class="row-fluid">
+          <div class="span6">
+            <div class="stats">
+              <div><i class="icon-user"></i></div>
+              <div>
+                <h5><?php echo $text_customers; ?></h5>
+                <?php echo $customer_total; ?><br />
+                <span><?php echo $customer_growth; ?>%</span></div>
+            </div>
+          </div>
+          <div class="span6">
+            <div class="stats">
+              <div><i class="icon-globe"></i></div>
+              <div>
+                <h5><?php echo $text_marketing; ?></h5>
+                Clicks: <?php echo $marketing_total; ?> / Orders: 1<br />
+                <span>+10%</span></div>
+            </div>
+          </div>
         </div>
       </div>
-      <div class="row-fluid">
-        <div class="span7">
-          <fieldset>
-            <legend>
-            <?php echo $text_sales; ?>
-            <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
-              <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-              <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-              <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-              <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
-            </div>
-            </legend>
-            <div id="chart-sale" class="chart" style="height: 250px;"></div>
-          </fieldset>
-        </div>
-        <div class="span5">
-          <fieldset>
-            <legend style="font-size: 14px; margin-bottom: 5px;">
-            <?php echo $text_marketing; ?>
-            <div id="button-marketing" class="btn-group pull-right" data-toggle="buttons-radio">
-              <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-              <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-              <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-              <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
-            </div>
-            </legend>
-            <div id="chart-marketing" class="chart" style="height: 115px;"></div>
-          </fieldset>
-          <fieldset>
-            <legend style="font-size: 14px; margin-bottom: 5px;"> People Online</legend>
-            <div id="chart-online" class="chart" style="height: 115px;"></div>
-          </fieldset>
-        </div>
+      <div class="span6">
+        <h5><?php echo $text_activity; ?></h5>
+        <table class="table table-striped table-bordered table-hover">
+          <tbody>
+            <?php if ($activities) { ?>
+            <?php foreach ($activities as $activity) { ?>
+            <tr>
+              <td class="text-left"><?php echo $activity['action']; ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="row-fluid">
+      <div class="span7">
+        <fieldset>
+          <legend>
+          <?php echo $text_sales; ?>
+          <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
+            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
+            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
+            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
+            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+          </div>
+          </legend>
+          <div id="chart-sale" class="chart" style="height: 250px;"></div>
+        </fieldset>
+      </div>
+      <div class="span5">
+        <fieldset>
+          <legend style="font-size: 14px; margin-bottom: 5px;">
+          <?php echo $text_marketing; ?>
+          <div id="button-marketing" class="btn-group pull-right" data-toggle="buttons-radio">
+            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
+            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
+            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
+            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+          </div>
+          </legend>
+          <div id="chart-marketing" class="chart" style="height: 115px;"></div>
+        </fieldset>
+        <fieldset>
+          <legend style="font-size: 14px; margin-bottom: 5px;"> People Online</legend>
+          <div id="chart-online" class="chart" style="height: 115px;"></div>
+        </fieldset>
       </div>
     </div>
   </div>

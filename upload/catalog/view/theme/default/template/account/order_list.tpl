@@ -11,24 +11,24 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="right"><?php echo $column_order_id; ?></td>
-          <td class="left"><?php echo $column_status; ?></td>
-          <td class="left"><?php echo $column_date_added; ?></td>
-          <td class="right"><?php echo $column_product; ?></td>
-          <td class="left"><?php echo $column_customer; ?></td>
-          <td class="right"><?php echo $column_total; ?></td>
+          <td class="text-right"><?php echo $column_order_id; ?></td>
+          <td class="text-left"><?php echo $column_status; ?></td>
+          <td class="text-left"><?php echo $column_date_added; ?></td>
+          <td class="text-right"><?php echo $column_product; ?></td>
+          <td class="text-left"><?php echo $column_customer; ?></td>
+          <td class="text-right"><?php echo $column_total; ?></td>
           <td></td>
         </tr>
       </thead>
       <tbody>
         <?php foreach ($orders as $order) { ?>
         <tr>
-          <td class="right">#<?php echo $order['order_id']; ?></td>
-          <td class="left"><?php echo $order['status']; ?></td>
-          <td class="left"><?php echo $order['date_added']; ?></td>
-          <td class="right"><?php echo $order['products']; ?></td>
-          <td class="left"><?php echo $order['name']; ?></td>
-          <td class="right"><?php echo $order['total']; ?></td>
+          <td class="text-right">#<?php echo $order['order_id']; ?></td>
+          <td class="text-left"><?php echo $order['status']; ?></td>
+          <td class="text-left"><?php echo $order['date_added']; ?></td>
+          <td class="text-right"><?php echo $order['products']; ?></td>
+          <td class="text-left"><?php echo $order['name']; ?></td>
+          <td class="text-right"><?php echo $order['total']; ?></td>
           <td><a href="<?php echo $order['href']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>"><i class="icon-eye-open"></i></a> <a href="<?php echo $order['reorder']; ?>" data-toggle="tooltip" title="<?php echo $button_reorder; ?>"><i class="icon-refresh"></i></a></td>
         </tr>
         <?php } ?>

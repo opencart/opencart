@@ -17,65 +17,63 @@
         <button type="submit" form="form-manufacturer" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-manufacturer" class="form-horizontal">
-        <div class="control-group required">
-          <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-          <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="input-xxlarge" />
-            <?php if ($error_name) { ?>
-            <span class="error"><?php echo $error_name; ?></span>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-manufacturer" class="form-horizontal">
+      <div class="control-group required">
+        <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
+        <div class="controls">
+          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="input-xxlarge" />
+          <?php if ($error_name) { ?>
+          <span class="error"><?php echo $error_name; ?></span>
+          <?php } ?>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="control-label"><?php echo $entry_store; ?></div>
+        <div class="controls">
+          <label class="checkbox">
+            <?php if (in_array(0, $manufacturer_store)) { ?>
+            <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
+            <?php echo $text_default; ?>
+            <?php } else { ?>
+            <input type="checkbox" name="manufacturer_store[]" value="0" />
+            <?php echo $text_default; ?>
             <?php } ?>
-          </div>
-        </div>
-        <div class="control-group">
-          <div class="control-label"><?php echo $entry_store; ?></div>
-          <div class="controls">
-            <label class="checkbox">
-              <?php if (in_array(0, $manufacturer_store)) { ?>
-              <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
-              <?php echo $text_default; ?>
-              <?php } else { ?>
-              <input type="checkbox" name="manufacturer_store[]" value="0" />
-              <?php echo $text_default; ?>
-              <?php } ?>
-            </label>
-            <?php foreach ($stores as $store) { ?>
-            <label class="checkbox">
-              <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
-              <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-              <?php echo $store['name']; ?>
-              <?php } else { ?>
-              <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" />
-              <?php echo $store['name']; ?>
-              <?php } ?>
-            </label>
+          </label>
+          <?php foreach ($stores as $store) { ?>
+          <label class="checkbox">
+            <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
+            <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+            <?php echo $store['name']; ?>
+            <?php } else { ?>
+            <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" />
+            <?php echo $store['name']; ?>
             <?php } ?>
+          </label>
+          <?php } ?>
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?> <span class="help-block"><?php echo $help_keyword; ?></span></label>
+        <div class="controls">
+          <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
+        </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
+        <div class="controls">
+          <div class="image"><img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
+            <input type="hidden" name="image" value="<?php echo $image; ?>" />
+            <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?> <span class="help-block"><?php echo $help_keyword; ?></span></label>
-          <div class="controls">
-            <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-          </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="controls">
+          <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" class="input-mini" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" />
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
-          <div class="controls">
-            <div class="image"><img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
-              <input type="hidden" name="image" value="<?php echo $image; ?>" />
-              <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
-            </div>
-          </div>
-        </div>
-        <div class="control-group">
-          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-          <div class="controls">
-            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" class="input-mini" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" />
-          </div>
-        </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>
 <script type="text/javascript"><!--

@@ -169,14 +169,14 @@
           <table class="table table-striped table-bordered table-hover">
             <thead>
               <tr>
-                <td class="left"><?php echo $entry_store; ?></td>
-                <td class="left"><?php echo $entry_layout; ?></td>
+                <td class="text-left"><?php echo $entry_store; ?></td>
+                <td class="text-left"><?php echo $entry_layout; ?></td>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td class="left"><?php echo $text_default; ?></td>
-                <td class="left"><select name="category_layout[0][layout_id]">
+                <td class="text-left"><?php echo $text_default; ?></td>
+                <td class="text-left"><select name="category_layout[0][layout_id]">
                     <option value=""></option>
                     <?php foreach ($layouts as $layout) { ?>
                     <?php if (isset($category_layout[0]) && $category_layout[0] == $layout['layout_id']) { ?>
@@ -189,8 +189,8 @@
               </tr>
               <?php foreach ($stores as $store) { ?>
               <tr>
-                <td class="left"><?php echo $store['name']; ?></td>
-                <td class="left"><select name="category_layout[<?php echo $store['store_id']; ?>][layout_id]">
+                <td class="text-left"><?php echo $store['name']; ?></td>
+                <td class="text-left"><select name="category_layout[<?php echo $store['store_id']; ?>][layout_id]">
                     <option value=""></option>
                     <?php foreach ($layouts as $layout) { ?>
                     <?php if (isset($category_layout[$store['store_id']]) && $category_layout[$store['store_id']] == $layout['layout_id']) { ?>

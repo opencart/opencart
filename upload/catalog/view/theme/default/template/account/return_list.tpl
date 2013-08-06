@@ -11,22 +11,22 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="right"><?php echo $column_return_id; ?></td>
-          <td class="left"><?php echo $column_status; ?></td>
-          <td class="left"><?php echo $column_date_added; ?></td>
-          <td class="right"><?php echo $column_order_id; ?></td>
-          <td class="left"><?php echo $column_customer; ?></td>
+          <td class="text-right"><?php echo $column_return_id; ?></td>
+          <td class="text-left"><?php echo $column_status; ?></td>
+          <td class="text-left"><?php echo $column_date_added; ?></td>
+          <td class="text-right"><?php echo $column_order_id; ?></td>
+          <td class="text-left"><?php echo $column_customer; ?></td>
           <td></td>
         </tr>
       </thead>
       <tbody>
         <?php foreach ($returns as $return) { ?>
         <tr>
-          <td class="right">#<?php echo $return['return_id']; ?></td>
-          <td class="left"><?php echo $return['status']; ?></td>
-          <td class="left"><?php echo $return['date_added']; ?></td>
-          <td class="right"><?php echo $return['order_id']; ?></td>
-          <td class="left"><?php echo $return['name']; ?></td>
+          <td class="text-right">#<?php echo $return['return_id']; ?></td>
+          <td class="text-left"><?php echo $return['status']; ?></td>
+          <td class="text-left"><?php echo $return['date_added']; ?></td>
+          <td class="text-right"><?php echo $return['order_id']; ?></td>
+          <td class="text-left"><?php echo $return['name']; ?></td>
           <td><a href="<?php echo $return['href']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>"><i class="icon-eye-open"></i></a></td>
         </tr>
         <?php } ?>

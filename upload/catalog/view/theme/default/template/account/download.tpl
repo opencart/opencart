@@ -11,22 +11,22 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="right"><?php echo $column_order_id; ?></td>
-          <td class="left"><?php echo $column_name; ?></td>
-          <td class="left"><?php echo $column_size; ?></td>
-          <td class="right"><?php echo $column_remaining; ?></td>
-          <td class="left"><?php echo $column_date_added; ?></td>
+          <td class="text-right"><?php echo $column_order_id; ?></td>
+          <td class="text-left"><?php echo $column_name; ?></td>
+          <td class="text-left"><?php echo $column_size; ?></td>
+          <td class="text-right"><?php echo $column_remaining; ?></td>
+          <td class="text-left"><?php echo $column_date_added; ?></td>
           <td></td>
         </tr>
       </thead>
       <tbody>
         <?php foreach ($downloads as $download) { ?>
         <tr>
-          <td class="right"><?php echo $download['order_id']; ?></td>
-          <td class="left"><?php echo $download['name']; ?></td>
-          <td class="left"><?php echo $download['size']; ?></td>
-          <td class="right"><?php echo $download['remaining']; ?></td>
-          <td class="left"><?php echo $download['date_added']; ?></td>
+          <td class="text-right"><?php echo $download['order_id']; ?></td>
+          <td class="text-left"><?php echo $download['name']; ?></td>
+          <td class="text-left"><?php echo $download['size']; ?></td>
+          <td class="text-right"><?php echo $download['remaining']; ?></td>
+          <td class="text-left"><?php echo $download['date_added']; ?></td>
           <td><?php if ($download['remaining'] > 0) { ?>
             <a href="<?php echo $download['href']; ?>" data-toggle="tooltip" title="<?php echo $button_download; ?>"><i class="icon-cloud-download"></i></a>
             <?php } ?></td>

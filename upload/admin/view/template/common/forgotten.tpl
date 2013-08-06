@@ -14,19 +14,17 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-repeat"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-        <p><?php echo $text_email; ?></p>
-        <div class="control-group">
-          <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
-          <div class="controls">
-            <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" />
-          </div>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+      <p><?php echo $text_email; ?></p>
+      <div class="control-group">
+        <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
+        <div class="controls">
+          <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" />
         </div>
-        <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_reset; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a>
-      </form>
-    </div>
+      </div>
+      <button type="submit" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_reset; ?></button>
+      <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a>
+    </form>
   </div>
 </div>
 <?php echo $footer; ?>

@@ -17,22 +17,20 @@
         <button type="submit" form="form-return-reason" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-return-reason" class="form-horizontal">
-        <div class="control-group required">
-          <div class="control-label"><?php echo $entry_name; ?></div>
-          <div class="controls">
-            <?php foreach ($languages as $language) { ?>
-            <input type="text" name="return_reason[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($return_reason[$language['language_id']]) ? $return_reason[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
-            <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-            <?php if (isset($error_name[$language['language_id']])) { ?>
-            <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
-            <?php } ?>
-            <?php } ?>
-          </div>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-return-reason" class="form-horizontal">
+      <div class="control-group required">
+        <div class="control-label"><?php echo $entry_name; ?></div>
+        <div class="controls">
+          <?php foreach ($languages as $language) { ?>
+          <input type="text" name="return_reason[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($return_reason[$language['language_id']]) ? $return_reason[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
+          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+          <?php if (isset($error_name[$language['language_id']])) { ?>
+          <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+          <?php } ?>
+          <?php } ?>
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>
 <?php echo $footer; ?>

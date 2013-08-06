@@ -22,67 +22,63 @@
         <button type="submit" form="form-currency" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
     </div>
-    <div class="box-content">
-      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-currency">
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <td width="1" class="center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-              <td class="left"><?php if ($sort == 'title') { ?>
-                <a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_title; ?>"><?php echo $column_title; ?></a>
-                <?php } ?></td>
-              <td class="left"><?php if ($sort == 'code') { ?>
-                <a href="<?php echo $sort_code; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_code; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
-                <?php } ?></td>
-              <td class="right"><?php if ($sort == 'value') { ?>
-                <a href="<?php echo $sort_value; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_value; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_value; ?>"><?php echo $column_value; ?></a>
-                <?php } ?></td>
-              <td class="left"><?php if ($sort == 'date_modified') { ?>
-                <a href="<?php echo $sort_date_modified; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_modified; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_date_modified; ?>"><?php echo $column_date_modified; ?></a>
-                <?php } ?></td>
-              <td class="right"><?php echo $column_action; ?></td>
-            </tr>
-          </thead>
-          <tbody>
-            <?php if ($currencies) { ?>
-            <?php foreach ($currencies as $currency) { ?>
-            <tr>
-              <td class="center"><?php if ($currency['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $currency['currency_id']; ?>" checked="checked" />
-                <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $currency['currency_id']; ?>" />
-                <?php } ?></td>
-              <td class="left"><?php echo $currency['title']; ?></td>
-              <td class="left"><?php echo $currency['code']; ?></td>
-              <td class="right"><?php echo $currency['value']; ?></td>
-              <td class="left"><?php echo $currency['date_modified']; ?></td>
-              <td class="right"><?php foreach ($currency['action'] as $action) { ?>
-                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-                <?php } ?></td>
-            </tr>
-            <?php } ?>
-            <?php } else { ?>
-            <tr>
-              <td class="center" colspan="6"><?php echo $text_no_results; ?></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
-      </form>
-      <div class="row-fluid">
-        <div class="span6"><?php echo $pagination; ?></div>
-        <div class="span6">
-          <div class="results"><?php echo $results; ?></div>
-        </div>
-      </div>
+    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-currency">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+            <td class="text-left"><?php if ($sort == 'title') { ?>
+              <a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_title; ?>"><?php echo $column_title; ?></a>
+              <?php } ?></td>
+            <td class="text-left"><?php if ($sort == 'code') { ?>
+              <a href="<?php echo $sort_code; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_code; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
+              <?php } ?></td>
+            <td class="text-right"><?php if ($sort == 'value') { ?>
+              <a href="<?php echo $sort_value; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_value; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_value; ?>"><?php echo $column_value; ?></a>
+              <?php } ?></td>
+            <td class="text-left"><?php if ($sort == 'date_modified') { ?>
+              <a href="<?php echo $sort_date_modified; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_modified; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_date_modified; ?>"><?php echo $column_date_modified; ?></a>
+              <?php } ?></td>
+            <td class="text-right"><?php echo $column_action; ?></td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if ($currencies) { ?>
+          <?php foreach ($currencies as $currency) { ?>
+          <tr>
+            <td class="text-center"><?php if ($currency['selected']) { ?>
+              <input type="checkbox" name="selected[]" value="<?php echo $currency['currency_id']; ?>" checked="checked" />
+              <?php } else { ?>
+              <input type="checkbox" name="selected[]" value="<?php echo $currency['currency_id']; ?>" />
+              <?php } ?></td>
+            <td class="text-left"><?php echo $currency['title']; ?></td>
+            <td class="text-left"><?php echo $currency['code']; ?></td>
+            <td class="text-right"><?php echo $currency['value']; ?></td>
+            <td class="text-left"><?php echo $currency['date_modified']; ?></td>
+            <td class="text-right"><?php foreach ($currency['action'] as $action) { ?>
+              [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+              <?php } ?></td>
+          </tr>
+          <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </form>
+    <div class="row">
+      <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
+      <div class="col-lg-6 text-right"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

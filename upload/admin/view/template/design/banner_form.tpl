@@ -17,72 +17,70 @@
         <button type="submit" form="form-banner" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-banner" class="form-horizontal">
-        <div class="control-group required">
-          <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-          <div class="controls">
-            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="input-xxlarge" />
-            <?php if ($error_name) { ?>
-            <span class="error"><?php echo $error_name; ?></span>
-            <?php } ?>
-          </div>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-banner" class="form-horizontal">
+      <div class="control-group required">
+        <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
+        <div class="controls">
+          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="input-xxlarge" />
+          <?php if ($error_name) { ?>
+          <span class="error"><?php echo $error_name; ?></span>
+          <?php } ?>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-          <div class="controls">
-            <select name="status" id="input-status">
-              <?php if ($status) { ?>
-              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-              <option value="0"><?php echo $text_disabled; ?></option>
-              <?php } else { ?>
-              <option value="1"><?php echo $text_enabled; ?></option>
-              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="controls">
+          <select name="status" id="input-status">
+            <?php if ($status) { ?>
+            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+            <option value="0"><?php echo $text_disabled; ?></option>
+            <?php } else { ?>
+            <option value="1"><?php echo $text_enabled; ?></option>
+            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+            <?php } ?>
+          </select>
+        </div>
+      </div>
+      <table id="images" class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-left"><?php echo $entry_title; ?></td>
+            <td class="text-left"><?php echo $entry_link; ?></td>
+            <td class="text-left"><?php echo $entry_image; ?></td>
+            <td class="text-right"><?php echo $entry_sort_order; ?></td>
+            <td></td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php $image_row = 0; ?>
+          <?php foreach ($banner_images as $banner_image) { ?>
+          <tr id="image-row<?php echo $image_row; ?>">
+            <td class="text-left"><?php foreach ($languages as $language) { ?>
+              <input type="text" name="banner_image[<?php echo $image_row; ?>][banner_image_description][<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($banner_image['banner_image_description'][$language['language_id']]) ? $banner_image['banner_image_description'][$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" />
+              <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+              <?php if (isset($error_banner_image[$image_row][$language['language_id']])) { ?>
+              <span class="error"><?php echo $error_banner_image[$image_row][$language['language_id']]; ?></span>
               <?php } ?>
-            </select>
-          </div>
-        </div>
-        <table id="images" class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <td class="left"><?php echo $entry_title; ?></td>
-              <td class="left"><?php echo $entry_link; ?></td>
-              <td class="left"><?php echo $entry_image; ?></td>
-              <td class="right"><?php echo $entry_sort_order; ?></td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody>
-            <?php $image_row = 0; ?>
-            <?php foreach ($banner_images as $banner_image) { ?>
-            <tr id="image-row<?php echo $image_row; ?>">
-              <td class="left"><?php foreach ($languages as $language) { ?>
-                <input type="text" name="banner_image[<?php echo $image_row; ?>][banner_image_description][<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($banner_image['banner_image_description'][$language['language_id']]) ? $banner_image['banner_image_description'][$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" />
-                <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
-                <?php if (isset($error_banner_image[$image_row][$language['language_id']])) { ?>
-                <span class="error"><?php echo $error_banner_image[$image_row][$language['language_id']]; ?></span>
-                <?php } ?>
-                <?php } ?></td>
-              <td class="left"><input type="text" name="banner_image[<?php echo $image_row; ?>][link]" value="<?php echo $banner_image['link']; ?>" placeholder="<?php echo $entry_link; ?>" /></td>
-              <td class="left"><div class="image"><img src="<?php echo $banner_image['thumb']; ?>" alt="" class="img-polaroid" />
-                  <input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $banner_image['image']; ?>" />
-                  <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
-                </div></td>
-              <td class="right"><input type="text" name="banner_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $banner_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>
-              <td class="left"><a onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
-            </tr>
-            <?php $image_row++; ?>
-            <?php } ?>
-          </tbody>
-          <tfoot>
-            <tr>
-              <td colspan="4"></td>
-              <td class="left"><a onclick="addImage();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_banner; ?></a></td>
-            </tr>
-          </tfoot>
-        </table>
-      </form>
-    </div>
+              <?php } ?></td>
+            <td class="text-left"><input type="text" name="banner_image[<?php echo $image_row; ?>][link]" value="<?php echo $banner_image['link']; ?>" placeholder="<?php echo $entry_link; ?>" /></td>
+            <td class="text-left"><div class="image"><img src="<?php echo $banner_image['thumb']; ?>" alt="" class="img-polaroid" />
+                <input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $banner_image['image']; ?>" />
+                <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+              </div></td>
+            <td class="text-right"><input type="text" name="banner_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $banner_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>
+            <td class="text-left"><a onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
+          </tr>
+          <?php $image_row++; ?>
+          <?php } ?>
+        </tbody>
+        <tfoot>
+          <tr>
+            <td colspan="4"></td>
+            <td class="text-left"><a onclick="addImage();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_banner; ?></a></td>
+          </tr>
+        </tfoot>
+      </table>
+    </form>
   </div>
 </div>
 <script type="text/javascript"><!--
@@ -90,15 +88,15 @@ var image_row = <?php echo $image_row; ?>;
 
 function addImage() {
 	html  = '<tr id="image-row' + image_row + '">';
-    html += '  <td class="left">';
+    html += '  <td class="text-left">';
 	<?php foreach ($languages as $language) { ?>
 	html += '<input type="text" name="banner_image[' + image_row + '][banner_image_description][<?php echo $language['language_id']; ?>][title]" value="" placeholder="<?php echo $entry_title; ?>" /> <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />';
     <?php } ?>
 	html += '  </td>';	
-	html += '  <td class="left"><input type="text" name="banner_image[' + image_row + '][link]" value="" placeholder="<?php echo $entry_link; ?>" /></td>';	
-	html += '  <td class="left"><div class="image"><img src="<?php echo $no_image; ?>" alt="" class="img-polaroid" /><input type="hidden" name="banner_image[' + image_row + '][image]" value="" /><div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find(\'img\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(this).parent().parent().find(\'input\').attr(\'value\', \'\'); return false;"><span class="icon-trash"></span></a></div></div></td>';
-	html += '  <td class="right"><input type="text" name="banner_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>';
-	html += '  <td class="left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
+	html += '  <td class="text-left"><input type="text" name="banner_image[' + image_row + '][link]" value="" placeholder="<?php echo $entry_link; ?>" /></td>';	
+	html += '  <td class="text-left"><div class="image"><img src="<?php echo $no_image; ?>" alt="" class="img-polaroid" /><input type="hidden" name="banner_image[' + image_row + '][image]" value="" /><div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find(\'img\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(this).parent().parent().find(\'input\').attr(\'value\', \'\'); return false;"><span class="icon-trash"></span></a></div></div></td>';
+	html += '  <td class="text-right"><input type="text" name="banner_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>';
+	html += '  <td class="text-left"><a onclick="$(\'#image-row' + image_row  + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
 	html += '</tr>';
 	
 	$('#images tbody').append(html);

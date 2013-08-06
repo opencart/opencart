@@ -30,21 +30,21 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <td class="center"><?php echo $column_image; ?></td>
-            <td class="left"><?php echo $column_name; ?></td>
-            <td class="left"><?php echo $column_model; ?></td>
-            <td class="left"><?php echo $column_quantity; ?></td>
-            <td class="right"><?php echo $column_price; ?></td>
-            <td class="right"><?php echo $column_total; ?></td>
+            <td class="text-center"><?php echo $column_image; ?></td>
+            <td class="text-left"><?php echo $column_name; ?></td>
+            <td class="text-left"><?php echo $column_model; ?></td>
+            <td class="text-left"><?php echo $column_quantity; ?></td>
+            <td class="text-right"><?php echo $column_price; ?></td>
+            <td class="text-right"><?php echo $column_total; ?></td>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($products as $product) { ?>
           <tr>
-            <td class="center"><?php if ($product['thumb']) { ?>
+            <td class="text-center"><?php if ($product['thumb']) { ?>
               <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
               <?php } ?></td>
-            <td class="left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+            <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
               <?php if (!$product['stock']) { ?>
               <span class="stock">***</span>
               <?php } ?>
@@ -56,23 +56,23 @@
               <?php if ($product['reward']) { ?>
               <small><?php echo $product['reward']; ?></small>
               <?php } ?></td>
-            <td class="left"><?php echo $product['model']; ?></td>
-            <td class="left"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="input-mini" />
+            <td class="text-left"><?php echo $product['model']; ?></td>
+            <td class="text-left"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="input-mini" />
               <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn-link"><i class="icon-refresh"></i></button>
               <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-remove"></i></a></td>
-            <td class="right"><?php echo $product['price']; ?></td>
-            <td class="right"><?php echo $product['total']; ?></td>
+            <td class="text-right"><?php echo $product['price']; ?></td>
+            <td class="text-right"><?php echo $product['total']; ?></td>
           </tr>
           <?php } ?>
           <?php foreach ($vouchers as $vouchers) { ?>
           <tr>
             <td></td>
-            <td class="left"><?php echo $vouchers['description']; ?></td>
-            <td class="left"></td>
-            <td class="left"><input type="text" name="" value="1" size="1" disabled="disabled" class="input-mini" />
+            <td class="text-left"><?php echo $vouchers['description']; ?></td>
+            <td class="text-left"></td>
+            <td class="text-left"><input type="text" name="" value="1" size="1" disabled="disabled" class="input-mini" />
               <a href="<?php echo $vouchers['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-remove"></i></a></td>
-            <td class="right"><?php echo $vouchers['amount']; ?></td>
-            <td class="right"><?php echo $vouchers['amount']; ?></td>
+            <td class="text-right"><?php echo $vouchers['amount']; ?></td>
+            <td class="text-right"><?php echo $vouchers['amount']; ?></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -170,15 +170,15 @@
         <table class="table table-bordered">
           <?php foreach ($totals as $total) { ?>
           <tr>
-            <td class="right"><strong><?php echo $total['title']; ?>:</strong></td>
-            <td class="right"><?php echo $total['text']; ?></td>
+            <td class="text-right"><strong><?php echo $total['title']; ?>:</strong></td>
+            <td class="text-right"><?php echo $total['text']; ?></td>
           </tr>
           <?php } ?>
         </table>
       </div>
     </div>
     <div class="buttons">
-      <div class="pull-left"><a class="pull-left btn" href="<?php echo $continue; ?>"><?php echo $button_shopping; ?></a></div>
+      <div class="pull-left"><a class="btn" href="<?php echo $continue; ?>"><?php echo $button_shopping; ?></a></div>
       <div class="pull-right"><a class="btn btn-primary" href="<?php echo $checkout; ?>"><?php echo $button_checkout; ?></a></div>
     </div>
     <?php echo $content_bottom; ?></div>

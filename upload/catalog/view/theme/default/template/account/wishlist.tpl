@@ -16,26 +16,26 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="center"><?php echo $column_image; ?></td>
-          <td class="left"><?php echo $column_name; ?></td>
-          <td class="left"><?php echo $column_model; ?></td>
-          <td class="right"><?php echo $column_stock; ?></td>
-          <td class="right"><?php echo $column_price; ?></td>
-          <td class="right"><?php echo $column_action; ?></td>
+          <td class="text-center"><?php echo $column_image; ?></td>
+          <td class="text-left"><?php echo $column_name; ?></td>
+          <td class="text-left"><?php echo $column_model; ?></td>
+          <td class="text-right"><?php echo $column_stock; ?></td>
+          <td class="text-right"><?php echo $column_price; ?></td>
+          <td class="text-right"><?php echo $column_action; ?></td>
         </tr>
       </thead>
       <?php foreach ($products as $product) { ?>
       <tbody id="wishlist-row<?php echo $product['product_id']; ?>">
         <tr>
-          <td class="center"><?php if ($product['thumb']) { ?>
+          <td class="text-center"><?php if ($product['thumb']) { ?>
             <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
             <?php } else { ?>
             <a href="<?php echo $product['href']; ?>"><img src="catalog/view/theme/default/image/placeholder.png" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
             <?php } ?></td>
-          <td class="left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?> </a></td>
-          <td class="left"><?php echo $product['model']; ?></td>
-          <td class="right"><?php echo $product['stock']; ?></td>
-          <td class="right"><?php if ($product['price']) { ?>
+          <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?> </a></td>
+          <td class="text-left"><?php echo $product['model']; ?></td>
+          <td class="text-right"><?php echo $product['stock']; ?></td>
+          <td class="text-right"><?php if ($product['price']) { ?>
             <div class="price">
               <?php if (!$product['special']) { ?>
               <?php echo $product['price']; ?>
@@ -44,7 +44,7 @@
               <?php } ?>
             </div>
             <?php } ?></td>
-          <td class="right"><a onclick="addToCart('<?php echo $product['product_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_cart; ?>"><i class="icon-shopping-cart"></i></a> <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-remove"></i></a></td>
+          <td class="text-right"><a onclick="addToCart('<?php echo $product['product_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_cart; ?>"><i class="icon-shopping-cart"></i></a> <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-remove"></i></a></td>
         </tr>
       </tbody>
       <?php } ?>

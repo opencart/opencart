@@ -17,65 +17,63 @@
         <button type="submit" form="form-cod" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-cod" class="form-horizontal">
-        <div class="control-group">
-          <label class="control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
-          <div class="controls">
-            <input type="text" name="cod_total" value="<?php echo $cod_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-          </div>
+    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-cod" class="form-horizontal">
+      <div class="control-group">
+        <label class="control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
+        <div class="controls">
+          <input type="text" name="cod_total" value="<?php echo $cod_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-          <div class="controls">
-            <select name="cod_order_status_id" id="input-order-status">
-              <?php foreach ($order_statuses as $order_status) { ?>
-              <?php if ($order_status['order_status_id'] == $cod_order_status_id) { ?>
-              <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
-          </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+        <div class="controls">
+          <select name="cod_order_status_id" id="input-order-status">
+            <?php foreach ($order_statuses as $order_status) { ?>
+            <?php if ($order_status['order_status_id'] == $cod_order_status_id) { ?>
+            <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-          <div class="controls">
-            <select name="cod_geo_zone_id" id="input-geo-zone">
-              <option value="0"><?php echo $text_all_zones; ?></option>
-              <?php foreach ($geo_zones as $geo_zone) { ?>
-              <?php if ($geo_zone['geo_zone_id'] == $cod_geo_zone_id) { ?>
-              <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
-          </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+        <div class="controls">
+          <select name="cod_geo_zone_id" id="input-geo-zone">
+            <option value="0"><?php echo $text_all_zones; ?></option>
+            <?php foreach ($geo_zones as $geo_zone) { ?>
+            <?php if ($geo_zone['geo_zone_id'] == $cod_geo_zone_id) { ?>
+            <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
+            <?php } else { ?>
+            <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+            <?php } ?>
+            <?php } ?>
+          </select>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-          <div class="controls">
-            <select name="cod_status" id="input-status">
-              <?php if ($cod_status) { ?>
-              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-              <option value="0"><?php echo $text_disabled; ?></option>
-              <?php } else { ?>
-              <option value="1"><?php echo $text_enabled; ?></option>
-              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-              <?php } ?>
-            </select>
-          </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="controls">
+          <select name="cod_status" id="input-status">
+            <?php if ($cod_status) { ?>
+            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+            <option value="0"><?php echo $text_disabled; ?></option>
+            <?php } else { ?>
+            <option value="1"><?php echo $text_enabled; ?></option>
+            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+            <?php } ?>
+          </select>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-          <div class="controls">
-            <input type="text" name="cod_sort_order" value="<?php echo $cod_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
-          </div>
+      </div>
+      <div class="control-group">
+        <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="controls">
+          <input type="text" name="cod_sort_order" value="<?php echo $cod_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
-      </form>
-    </div>
+      </div>
+    </form>
   </div>
 </div>
 <?php echo $footer; ?> 

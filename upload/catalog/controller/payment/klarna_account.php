@@ -310,7 +310,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				if ($klarna_account[$order_info['payment_iso_code_3']]['server'] == 'live') {
 					$url = 'https://payment.klarna.com/';
 				} else {
-					$url = 'https://payment-beta.klarna.com/';
+					$url = 'https://payment.testdrive.klarna.com/';
 				}
 				
 				$country_to_currency = array(

@@ -15,9 +15,9 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="box">
-    <div class="box-heading">
-      <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
+  <div class="panel">
+    <div class="panel-heading">
+      <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
         <button type="submit" form="form-return-status" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
@@ -60,9 +60,7 @@
         </table>
       </form>
       <div class="row-fluid">
-        <div class="span6">
-          <div class="pagination"><?php echo $pagination; ?></div>
-        </div>
+        <div class="span6"><?php echo $pagination; ?></div>
         <div class="span6">
           <div class="results"><?php echo $results; ?></div>
         </div>

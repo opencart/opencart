@@ -10,8 +10,8 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="box">
-    <div class="box-heading">
+  <div class="panel">
+    <div class="panel-heading">
       <h1><?php echo $heading_title; ?></h1>
       <div class="buttons">
         <button type="submit" form="form-affiliate" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>

@@ -5,9 +5,9 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="box">
-    <div class="box-heading">
-      <h1><i class="icon-info-sign"></i> <?php echo $heading_title; ?></h1>
+  <div class="panel">
+    <div class="panel-heading">
+      <h1 class="panel-title"><i class="icon-info-sign"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="box-content">

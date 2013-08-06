@@ -15,9 +15,9 @@
     <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="box">
-    <div class="box-heading">
-      <h1><i class="icon-exchange icon-large"></i> <?php echo $heading_title; ?></h1>
+  <div class="panel">
+    <div class="panel-heading">
+      <h1 class="panel-title"><i class="icon-exchange icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content">
       <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">

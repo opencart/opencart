@@ -10,9 +10,9 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="box">
-    <div class="box-heading">
-      <h1><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
+  <div class="panel">
+    <div class="panel-heading">
+      <h1 class="panel-title"><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a href="<?php echo $reset; ?>" class="btn"><?php echo $button_reset; ?></a></div>
     </div>
     <div class="box-content">
@@ -43,9 +43,7 @@
         </tbody>
       </table>
       <div class="row-fluid">
-        <div class="span6">
-          <div class="pagination"><?php echo $pagination; ?></div>
-        </div>
+        <div class="span6"><?php echo $pagination; ?></div>
         <div class="span6">
           <div class="results"><?php echo $results; ?></div>
         </div>

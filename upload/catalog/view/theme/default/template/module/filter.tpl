@@ -1,5 +1,5 @@
-<div class="box">
-  <div class="box-heading"><?php echo $heading_title; ?></div>
+<div class="panel">
+  <div class="panel-heading"><?php echo $heading_title; ?></div>
   <div class="box-content">
     <ul class="box-filter">
       <?php foreach ($filter_groups as $filter_group) { ?>

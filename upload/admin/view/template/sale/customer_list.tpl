@@ -112,7 +112,7 @@
             <td><input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" class="input-medium" /></td>
             <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" id="date" /></td>
             <td></td>
-            <td align="right"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+            <td align="right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
           </tr>
           <?php if ($customers) { ?>
           <?php foreach ($customers as $customer) { ?>

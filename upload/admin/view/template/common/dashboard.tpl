@@ -1,10 +1,5 @@
 <?php echo $header; ?>
 <div class="container">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <?php if ($error_install) { ?>
   <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_install; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -15,7 +10,7 @@
       <h1 class="panel-title"><i class="icon-eye-open icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="row">
-      <div class="col-6">
+      <div class="col-lg-6">
         <div class="row">
           <div class="col-6">
             <div class="stats">
@@ -54,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="col-6">
+      <div class="col-lg-6">
         <h5><?php echo $text_activity; ?></h5>
         <table class="table table-striped table-bordered table-hover">
           <tbody>
@@ -74,21 +69,21 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-7">
+      <div class="col-lg-7">
         <fieldset>
           <legend>
           <?php echo $text_sales; ?>
           <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
-            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+            <button class="btn btn-default active" value="day"><?php echo $text_day; ?></button>
+            <button class="btn btn-default" value="week"><?php echo $text_week; ?></button>
+            <button class="btn btn-default" value="month"><?php echo $text_month; ?></button>
+            <button class="btn btn-default" value="year"><?php echo $text_year; ?></button>
           </div>
           </legend>
           <div id="chart-sale" class="chart" style="height: 250px;"></div>
         </fieldset>
       </div>
-      <div class="col-5">
+      <div class="col-lg-5">
         <fieldset>
           <legend style="font-size: 14px; margin-bottom: 5px;">
           <?php echo $text_marketing; ?>

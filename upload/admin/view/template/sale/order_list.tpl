@@ -85,7 +85,7 @@
             <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" class="input-small" style="text-align: right;" /></td>
             <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" /></td>
             <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="input-medium" /></td>
-            <td align="right"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+            <td align="right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
           </tr>
           <?php if ($orders) { ?>
           <?php foreach ($orders as $order) { ?>

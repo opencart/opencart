@@ -58,14 +58,14 @@
           </tr>
         </thead>
         <tbody>
-          <tr class="filter">
+          <tr>
             <td></td>
             <td></td>
-            <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="input-medium" /></td>
-            <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" class="input-medium" /></td>
-            <td align="left"><input type="text" name="filter_price" value="<?php echo $filter_price; ?>" class="input-small" /></td>
-            <td align="right"><input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" class="input-mini" style="text-align: right;" /></td>
-            <td><select name="filter_status" class="input-medium">
+            <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="form-control" /></td>
+            <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" class="form-control" /></td>
+            <td align="left"><input type="text" name="filter_price" value="<?php echo $filter_price; ?>" class="form-control" /></td>
+            <td align="right"><input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" class="form-control" /></td>
+            <td><select name="filter_status" class="form-control">
                 <option value="*"></option>
                 <?php if ($filter_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -78,7 +78,7 @@
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select></td>
-            <td align="right"><button type="button" id="button-filter" class="btn"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+            <td><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
           </tr>
           <?php if ($products) { ?>
           <?php foreach ($products as $product) { ?>

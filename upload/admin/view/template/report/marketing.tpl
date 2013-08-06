@@ -45,7 +45,7 @@
           </div>
         </div>
         <div class="span3">
-          <button type="button" id="button-filter" class="btn pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
+          <button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
         </div>
       </div>
     </div>

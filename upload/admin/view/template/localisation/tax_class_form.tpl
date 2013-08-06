@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal" id="form-tax-class">
       <div class="control-group required">
-        <label class="control-label" for="input-title"><?php echo $entry_title; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-title"><?php echo $entry_title; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
           <?php if ($error_title) { ?>
           <span class="error"><?php echo $error_title; ?></span>
@@ -28,8 +28,8 @@
         </div>
       </div>
       <div class="control-group required">
-        <label class="control-label" for="input-description"><?php echo $entry_description; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" id="input-description" />
           <?php if ($error_description) { ?>
           <br />

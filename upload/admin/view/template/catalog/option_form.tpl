@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-option" class="form-horizontal">
       <div class="control-group required">
-        <div class="control-label"><?php echo $entry_name; ?></div>
-        <div class="controls">
+        <div class="col-lg-2 control-label"><?php echo $entry_name; ?></div>
+        <div class="col-lg-10">
           <?php foreach ($languages as $language) { ?>
           <input type="text" name="option_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($option_description[$language['language_id']]) ? $option_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
@@ -30,9 +30,9 @@
           <?php } ?>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-type"><?php echo $entry_type; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
+        <div class="col-lg-10">
           <select name="type" id="input-type">
             <optgroup label="<?php echo $text_choose; ?>">
             <?php if ($type == 'select') { ?>
@@ -95,16 +95,16 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
       </div>
       <table id="option-value" class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
-            <td class="left required"><?php echo $entry_option_value; ?></td>
+            <td class="text-left required"><?php echo $entry_option_value; ?></td>
             <td class="text-left"><?php echo $entry_image; ?></td>
             <td class="text-right"><?php echo $entry_sort_order; ?></td>
             <td></td>

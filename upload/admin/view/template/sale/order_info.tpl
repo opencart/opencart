@@ -352,9 +352,9 @@
       </div>
       <div class="tab-pane form-horizontal" id="tab-history">
         <div id="history"></div>
-        <div class="control-group">
-          <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-          <div class="controls">
+        <div class="form-group">
+          <label class="col-lg-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+          <div class="col-lg-10">
             <select name="order_status_id" id="input-order-status">
               <?php foreach ($order_statuses as $order_statuses) { ?>
               <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
@@ -366,15 +366,15 @@
             </select>
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-notify"><?php echo $entry_notify; ?></label>
-          <div class="controls">
+        <div class="form-group">
+          <label class="col-lg-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+          <div class="col-lg-10">
             <input type="checkbox" name="notify" value="1" id="input-notify" />
           </div>
         </div>
-        <div class="control-group">
-          <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-          <div class="controls">
+        <div class="form-group">
+          <label class="col-lg-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+          <div class="col-lg-10">
             <textarea name="comment" rows="8" id="input-comment" class="input-xxlarge"></textarea>
           </div>
         </div>

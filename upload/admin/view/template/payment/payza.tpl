@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-payza" class="form-horizontal">
       <div class="control-group required">
-        <label class="control-label" for="input-merchant"><?php echo $entry_merchant; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-merchant"><?php echo $entry_merchant; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="payza_merchant" value="<?php echo $payza_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" />
           <?php if ($error_merchant) { ?>
           <span class="error"><?php echo $error_merchant; ?></span>
@@ -28,29 +28,29 @@
         </div>
       </div>
       <div class="control-group required">
-        <label class="control-label" for="input-security"><?php echo $entry_security; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-security"><?php echo $entry_security; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="payza_security" value="<?php echo $payza_security; ?>" placeholder="<?php echo $entry_security; ?>" id="input-security" />
           <?php if ($error_security) { ?>
           <span class="error"><?php echo $error_security; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-callback"><?php echo $entry_callback; ?> <span class="help-block"><?php echo $help_callback; ?></span></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-callback"><?php echo $entry_callback; ?> <span class="help-block"><?php echo $help_callback; ?></span></label>
+        <div class="col-lg-10">
           <textarea cols="40" rows="5" id="input-callback" readonly="readonly"><?php echo $callback; ?></textarea>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
+        <div class="col-lg-10">
           <input type="text" name="payza_total" value="<?php echo $payza_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+        <div class="col-lg-10">
           <select name="payza_order_status_id" id="input-order-status">
             <?php foreach ($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $payza_order_status_id) { ?>
@@ -62,9 +62,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+        <div class="col-lg-10">
           <select name="payza_geo_zone_id" id="input-geo-zone">
             <option value="0"><?php echo $text_all_zones; ?></option>
             <?php foreach ($geo_zones as $geo_zone) { ?>
@@ -77,9 +77,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-10">
           <select name="payza_status" id="input-status">
             <?php if ($payza_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -91,9 +91,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="payza_sort_order" value="<?php echo $payza_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
       </div>

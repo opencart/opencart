@@ -18,9 +18,9 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-store" class="form-horizontal">
-      <div class="control-group">
-        <div class="control-label" for="input-admin"><?php echo $entry_admin; ?></div>
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-lg-2 control-label" for="input-admin"><?php echo $entry_admin; ?></div>
+        <div class="col-lg-10">
           <label class="radio inline">
             <?php if ($store_admin) { ?>
             <input type="radio" name="store_admin" value="1" checked="checked" />

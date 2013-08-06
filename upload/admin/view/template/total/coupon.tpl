@@ -18,9 +18,9 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-coupon" class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-10">
           <select name="coupon_status" id="input-status">
             <?php if ($coupon_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -32,9 +32,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="coupon_sort_order" value="<?php echo $coupon_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
       </div>

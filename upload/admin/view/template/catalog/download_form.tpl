@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-download" class="form-horizontal">
       <div class="control-group required">
-        <div class="control-label"><?php echo $entry_name; ?></div>
-        <div class="controls">
+        <div class="col-lg-2 control-label"><?php echo $entry_name; ?></div>
+        <div class="col-lg-10">
           <?php foreach ($languages as $language) { ?>
           <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
@@ -30,9 +30,9 @@
           <?php } ?>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-filename"><?php echo $entry_filename; ?> <span class="help-block"><?php echo $help_filename; ?></span> </label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-filename"><?php echo $entry_filename; ?> <span class="help-block"><?php echo $help_filename; ?></span> </label>
+        <div class="col-lg-10">
           <div class="input-append">
             <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="span2" />
             <button type="button" id="button-upload" class="btn" onclick="$('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
@@ -42,25 +42,25 @@
           <?php } ?>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-mask"><?php echo $entry_mask; ?> <span class="help-block"><?php echo $help_mask; ?></span></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-mask"><?php echo $entry_mask; ?> <span class="help-block"><?php echo $help_mask; ?></span></label>
+        <div class="col-lg-10">
           <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" />
           <?php if ($error_mask) { ?>
           <span class="error"><?php echo $error_mask; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-remaining"><?php echo $entry_remaining; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-remaining"><?php echo $entry_remaining; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="remaining" value="<?php echo $remaining; ?>" id="input-remaining" class="input-small" />
         </div>
       </div>
       <?php if ($download_id) { ?>
-      <div class="control-group">
-        <label class="control-label" for="input-update"><?php echo $entry_update; ?> <span class="help-block"><?php echo $help_update; ?></span> </label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-update"><?php echo $entry_update; ?> <span class="help-block"><?php echo $help_update; ?></span> </label>
+        <div class="col-lg-10">
           <?php if ($update) { ?>
           <input type="checkbox" name="update" value="1" checked="checked" id="input-update" />
           <?php } else { ?>

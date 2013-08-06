@@ -19,35 +19,35 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-country" class="form-horizontal">
       <div class="control-group required">
-        <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
           <?php if ($error_name) { ?>
           <span class="error"><?php echo $error_name; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-iso-code-2"><?php echo $entry_iso_code_2; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-iso-code-2"><?php echo $entry_iso_code_2; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="iso_code_2" value="<?php echo $iso_code_2; ?>" placeholder="<?php echo $entry_iso_code_2; ?>" id="input-iso-code-2" />
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-iso-code-3"><?php echo $entry_iso_code_3; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-iso-code-3"><?php echo $entry_iso_code_3; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="iso_code_3" value="<?php echo $iso_code_3; ?>" placeholder="<?php echo $entry_iso_code_3; ?>" id="input-iso-code-3" />
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-address-format"><?php echo $entry_address_format; ?> <span class="help-block"><?php echo $help_address_format; ?></span></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-address-format"><?php echo $entry_address_format; ?> <span class="help-block"><?php echo $help_address_format; ?></span></label>
+        <div class="col-lg-10">
           <textarea name="address_format" cols="40" rows="5" placeholder="<?php echo $entry_address_format; ?>" id="input-address-format"><?php echo $address_format; ?></textarea>
         </div>
       </div>
-      <div class="control-group">
-        <div class="control-label"><?php echo $entry_postcode_required; ?></div>
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-lg-2 control-label"><?php echo $entry_postcode_required; ?></div>
+        <div class="col-lg-10">
           <label class="radio inline">
             <?php if ($postcode_required) { ?>
             <input type="radio" name="postcode_required" value="1" checked="checked" />
@@ -68,9 +68,9 @@
           </label>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-10">
           <select name="status" id="input-status">
             <?php if ($status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>

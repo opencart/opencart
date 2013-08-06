@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-return-reason" class="form-horizontal">
       <div class="control-group required">
-        <div class="control-label"><?php echo $entry_name; ?></div>
-        <div class="controls">
+        <div class="col-lg-2 control-label"><?php echo $entry_name; ?></div>
+        <div class="col-lg-10">
           <?php foreach ($languages as $language) { ?>
           <input type="text" name="return_reason[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($return_reason[$language['language_id']]) ? $return_reason[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />

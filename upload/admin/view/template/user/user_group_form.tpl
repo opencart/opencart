@@ -19,17 +19,17 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-user-group" class="form-horizontal">
       <div class="control-group required">
-        <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
           <?php if ($error_name) { ?>
           <span class="error"><?php echo $error_name; ?></span>
           <?php  } ?>
         </div>
       </div>
-      <div class="control-group">
-        <div class="control-label"><?php echo $entry_access; ?></div>
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-lg-2 control-label"><?php echo $entry_access; ?></div>
+        <div class="col-lg-10">
           <div class="well well-small scrollbox">
             <?php foreach ($permissions as $permission) { ?>
             <label class="checkbox">
@@ -45,9 +45,9 @@
           </div>
           <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
       </div>
-      <div class="control-group">
-        <div class="control-label"><?php echo $entry_modify; ?></div>
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-lg-2 control-label"><?php echo $entry_modify; ?></div>
+        <div class="col-lg-10">
           <div class="well well-small scrollbox">
             <?php foreach ($permissions as $permission) { ?>
             <label class="checkbox">

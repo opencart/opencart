@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer-group" class="form-horizontal">
       <div class="control-group required">
-        <div class="control-label"><?php echo $entry_name; ?></div>
-        <div class="controls">
+        <div class="col-lg-2 control-label"><?php echo $entry_name; ?></div>
+        <div class="col-lg-10">
           <?php foreach ($languages as $language) { ?>
           <input type="text" name="customer_group_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
@@ -31,16 +31,16 @@
         </div>
       </div>
       <?php foreach ($languages as $language) { ?>
-      <div class="control-group">
-        <label class="control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
+        <div class="col-lg-10">
           <textarea name="customer_group_description[<?php echo $language['language_id']; ?>][description]" cols="40" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['description'] : ''; ?></textarea>
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></div>
       </div>
       <?php } ?>
-      <div class="control-group">
-        <div class="control-label"><?php echo $entry_approval; ?> <span class="help-block"><?php echo $help_approval; ?></span></div>
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-lg-2 control-label"><?php echo $entry_approval; ?> <span class="help-block"><?php echo $help_approval; ?></span></div>
+        <div class="col-lg-10">
           <label class="radio inline">
             <?php if ($approval) { ?>
             <input type="radio" name="approval" value="1" checked="checked" />
@@ -61,9 +61,9 @@
           </label>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
       </div>

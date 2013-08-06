@@ -20,18 +20,18 @@
       <h1 class="panel-title"><i class="icon-exchange icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label" for="input-import"><?php echo $entry_restore; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-import"><?php echo $entry_restore; ?></label>
+        <div class="col-lg-10">
           <input type="file" name="import" id="input-import" />
         </div>
       </div>
       <button type="submit" class="btn"><i class="icon-upload"></i> <?php echo $button_restore; ?></button>
     </form>
     <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="backup">
-      <div class="control-group">
-        <div class="control-label"><?php echo $entry_backup; ?></div>
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-lg-2 control-label"><?php echo $entry_backup; ?></div>
+        <div class="col-lg-10">
           <div class="well well-small scrollbox">
             <?php foreach ($tables as $table) { ?>
             <label class="checkbox">

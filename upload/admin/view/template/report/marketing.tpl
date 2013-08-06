@@ -12,25 +12,25 @@
     <div class="well wee-small form-inline">
       <div class="row-fluid">
         <div class="span3">
-          <div class="control-group">
-            <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-            <div class="controls">
+          <div class="form-group">
+            <label class="col-lg-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+            <div class="col-lg-10">
               <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" class="input-medium" id="input-date-start" />
             </div>
           </div>
         </div>
         <div class="span3">
-          <div class="control-group">
-            <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-            <div class="controls">
+          <div class="form-group">
+            <label class="col-lg-2 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+            <div class="col-lg-10">
               <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="input-medium" />
             </div>
           </div>
         </div>
         <div class="span3">
-          <div class="control-group">
-            <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-            <div class="controls">
+          <div class="form-group">
+            <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+            <div class="col-lg-10">
               <select name="filter_order_status_id" id="input-status">
                 <option value="0"><?php echo $text_all_status; ?></option>
                 <?php foreach ($order_statuses as $order_status) { ?>

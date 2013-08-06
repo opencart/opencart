@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -14,16 +14,16 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-eye-open icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="row-fluid">
-      <div class="span6">
-        <div class="row-fluid">
-          <div class="span6">
+    <div class="row">
+      <div class="col-6">
+        <div class="row">
+          <div class="col-6">
             <div class="stats">
               <div><span class="badge badge-success"><i class="icon-usd"></i></span></div>
               <div><span><?php echo $sale_growth; ?> </span> <?php echo $sale_total; ?></div>
             </div>
           </div>
-          <div class="span6">
+          <div class="col-6">
             <div class="stats">
               <div><i class="icon-shopping-cart"></i></div>
               <div>
@@ -33,8 +33,8 @@
             </div>
           </div>
         </div>
-        <div class="row-fluid">
-          <div class="span6">
+        <div class="row">
+          <div class="col-6">
             <div class="stats">
               <div><i class="icon-user"></i></div>
               <div>
@@ -43,7 +43,7 @@
                 <span><?php echo $customer_growth; ?>%</span></div>
             </div>
           </div>
-          <div class="span6">
+          <div class="col-6">
             <div class="stats">
               <div><i class="icon-globe"></i></div>
               <div>
@@ -54,7 +54,7 @@
           </div>
         </div>
       </div>
-      <div class="span6">
+      <div class="col-6">
         <h5><?php echo $text_activity; ?></h5>
         <table class="table table-striped table-bordered table-hover">
           <tbody>
@@ -73,8 +73,8 @@
         </table>
       </div>
     </div>
-    <div class="row-fluid">
-      <div class="span7">
+    <div class="row">
+      <div class="col-7">
         <fieldset>
           <legend>
           <?php echo $text_sales; ?>
@@ -88,7 +88,7 @@
           <div id="chart-sale" class="chart" style="height: 250px;"></div>
         </fieldset>
       </div>
-      <div class="span5">
+      <div class="col-5">
         <fieldset>
           <legend style="font-size: 14px; margin-bottom: 5px;">
           <?php echo $text_marketing; ?>

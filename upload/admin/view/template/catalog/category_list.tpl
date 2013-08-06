@@ -18,8 +18,8 @@
   <div class="panel">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $repair; ?>" class="btn"><i class="icon-wrench"></i> <?php echo $button_repair; ?></a> <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
-        <button type="submit" form="form-category" class="btn btn-ttc"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+      <div class="btn-group pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a><a href="<?php echo $repair; ?>" class="btn btn-default"><i class="icon-wrench"></i> <?php echo $button_repair; ?></a>
+        <button type="submit" form="form-category" class="btn btn-default"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
     </div>
     <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-category">

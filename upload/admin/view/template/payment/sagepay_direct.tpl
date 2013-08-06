@@ -19,17 +19,17 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-sagepay-direct" class="form-horizontal">
       <div class="control-group required">
-        <label class="control-label" for="input-vendor"><?php echo $entry_vendor; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-vendor"><?php echo $entry_vendor; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="sagepay_direct_vendor" value="<?php echo $sagepay_direct_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="input-vendor" />
           <?php if ($error_vendor) { ?>
           <span class="error"><?php echo $error_vendor; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-test"><?php echo $entry_test; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-test"><?php echo $entry_test; ?></label>
+        <div class="col-lg-10">
           <select name="sagepay_direct_test" id="input-test">
             <?php if ($sagepay_direct_test == 'sim') { ?>
             <option value="sim" selected="selected"><?php echo $text_sim; ?></option>
@@ -49,9 +49,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-transaction"><?php echo $entry_transaction; ?></label>
+        <div class="col-lg-10">
           <select name="sagepay_direct_transaction" id="input-transaction">
             <?php if ($sagepay_direct_transaction == 'PAYMENT') { ?>
             <option value="PAYMENT" selected="selected"><?php echo $text_payment; ?></option>
@@ -71,15 +71,15 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
+        <div class="col-lg-10">
           <input type="text" name="sagepay_direct_total" value="<?php echo $sagepay_direct_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+        <div class="col-lg-10">
           <select name="sagepay_direct_order_status_id" id="input-order-status">
             <?php foreach ($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $sagepay_direct_order_status_id) { ?>
@@ -91,9 +91,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+        <div class="col-lg-10">
           <select name="sagepay_direct_geo_zone_id" id="input-geo-zone">
             <option value="0"><?php echo $text_all_zones; ?></option>
             <?php foreach ($geo_zones as $geo_zone) { ?>
@@ -106,9 +106,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-10">
           <select name="sagepay_direct_status" id="input-status">
             <?php if ($sagepay_direct_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -120,9 +120,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="sagepay_direct_sort_order" value="<?php echo $sagepay_direct_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
       </div>

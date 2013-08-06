@@ -18,15 +18,15 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-item" class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label" for="input-cost"><?php echo $entry_cost; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-cost"><?php echo $entry_cost; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="item_cost" value="<?php echo $item_cost; ?>" placeholder="<?php echo $entry_cost; ?>" id="input-cost" />
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
+        <div class="col-lg-10">
           <select name="item_tax_class_id" id="input-tax-class">
             <option value="0"><?php echo $text_none; ?></option>
             <?php foreach ($tax_classes as $tax_class) { ?>
@@ -39,9 +39,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+        <div class="col-lg-10">
           <select name="item_geo_zone_id" id="input-geo-zone">
             <option value="0"><?php echo $text_all_zones; ?></option>
             <?php foreach ($geo_zones as $geo_zone) { ?>
@@ -54,9 +54,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-10">
           <select name="item_status" id="input-status">
             <?php if ($item_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -68,9 +68,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="item_sort_order" value="<?php echo $item_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
       </div>

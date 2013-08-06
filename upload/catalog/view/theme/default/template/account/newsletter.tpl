@@ -9,9 +9,9 @@
     <h1><?php echo $heading_title; ?></h1>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <fieldset>
-        <div class="control-group">
-          <div class="control-label"><?php echo $entry_newsletter; ?></div>
-          <div class="controls">
+        <div class="form-group">
+          <div class="col-lg-2 control-label"><?php echo $entry_newsletter; ?></div>
+          <div class="col-lg-10">
             <?php if ($newsletter) { ?>
             <label class="radio inline">
               <input type="radio" name="newsletter" value="1" checked="checked" />

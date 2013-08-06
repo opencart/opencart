@@ -16,9 +16,9 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
       <p><?php echo $text_email; ?></p>
-      <div class="control-group">
-        <label class="control-label" for="input-email"><?php echo $entry_email; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" />
         </div>
       </div>

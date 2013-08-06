@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-layout" class="form-horizontal">
       <div class="control-group required">
-        <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
           <?php if ($error_name) { ?>
           <span class="error"><?php echo $error_name; ?></span>

@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer-ban-ip" class="form-horizontal">
       <div class="control-group required">
-        <label class="control-label" for="input-ip"><?php echo $entry_ip; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" />
           <?php if ($error_ip) { ?>
           <span class="error"><?php echo $error_ip; ?></span>

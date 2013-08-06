@@ -109,9 +109,9 @@
         </div>
         <div class="tab-pane form-horizontal" id="tab-history">
           <div id="history"></div>
-          <div class="control-group">
-            <label class="control-label" for="input-return-action"><?php echo $entry_return_action; ?></label>
-            <div class="controls">
+          <div class="form-group">
+            <label class="col-lg-2 control-label" for="input-return-action"><?php echo $entry_return_action; ?></label>
+            <div class="col-lg-10">
               <select name="return_action_id" id="input-return-action">
                 <option value="0"></option>
                 <?php foreach ($return_actions as $return_action) { ?>
@@ -124,9 +124,9 @@
               </select>
             </div>
           </div>
-          <div class="control-group">
-            <label class="control-label" for="input-return-status"><?php echo $entry_return_status; ?></label>
-            <div class="controls">
+          <div class="form-group">
+            <label class="col-lg-2 control-label" for="input-return-status"><?php echo $entry_return_status; ?></label>
+            <div class="col-lg-10">
               <select name="return_status_id" id="input-return-status">
                 <?php foreach ($return_statuses as $return_status) { ?>
                 <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
@@ -138,15 +138,15 @@
               </select>
             </div>
           </div>
-          <div class="control-group">
-            <label class="control-label" for="input-notify"><?php echo $entry_notify; ?></label>
-            <div class="controls">
+          <div class="form-group">
+            <label class="col-lg-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+            <div class="col-lg-10">
               <input type="checkbox" name="notify" value="1" id="input-notify" />
             </div>
           </div>
-          <div class="control-group">
-            <label class="control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-            <div class="controls">
+          <div class="form-group">
+            <label class="col-lg-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+            <div class="col-lg-10">
               <textarea name="comment" rows="8" class="input-xxlarge"></textarea>
             </div>
           </div>

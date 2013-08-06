@@ -15,9 +15,9 @@
       <h1 class="panel-title"><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="box-content form-horizontal">
-      <div class="control-group">
-        <label class="control-label" for="button-upload"><?php echo $entry_upload; ?> <span class="help-block"><?php echo $help_upload; ?></span></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="button-upload"><?php echo $entry_upload; ?> <span class="help-block"><?php echo $help_upload; ?></span></label>
+        <div class="col-lg-10">
           <button type="button" id="button-upload" class="btn btn-primary" onclick="$('input[name=\'file\']').val(''); $('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
           <?php if ($error_warning) { ?>
           <button type="button" id="button-clear" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
@@ -27,16 +27,16 @@
         </div>
       </div>
       <div id="progress" class="control-group">
-        <div class="control-label"><?php echo $entry_progress; ?></div>
-        <div class="controls">
+        <div class="col-lg-2 control-label"><?php echo $entry_progress; ?></div>
+        <div class="col-lg-10">
           <div class="progress progress-striped">
             <div class="bar" style="width: 0%;"></div>
           </div>
           <span class="help-block"></span></div>
       </div>
-      <div class="control-group">
-        <div class="control-label"><?php echo $entry_overwrite; ?></div>
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-lg-2 control-label"><?php echo $entry_overwrite; ?></div>
+        <div class="col-lg-10">
           <textarea rows="10" readonly="readonly" id="overwrite" class="input-xxlarge"></textarea>
           <br />
           <br />

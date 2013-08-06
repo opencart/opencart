@@ -18,9 +18,9 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-google-sitemap" class="form-horizontal">
-      <div class="control-group">
-        <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-10">
           <select name="google_sitemap_status" id="input-status">
             <?php if ($google_sitemap_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -32,9 +32,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
+        <div class="col-lg-10">
           <textarea cols="40" rows="5" readonly="readonly" id="input-data-feed" class="input-xxlarge"><?php echo $data_feed; ?></textarea>
         </div>
       </div>

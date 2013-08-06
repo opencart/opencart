@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-google-talk" class="form-horizontal">
       <div class="control-group required">
-        <label class="control-label" for="input-code"><?php echo $entry_code; ?> <span class="help-block"><?php echo $help_code; ?></span></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-code"><?php echo $entry_code; ?> <span class="help-block"><?php echo $help_code; ?></span></label>
+        <div class="col-lg-10">
           <textarea name="google_talk_code" cols="40" rows="5" id="input-code"><?php echo $google_talk_code; ?></textarea>
           <?php if ($error_code) { ?>
           <span class="error"><?php echo $error_code; ?></span>

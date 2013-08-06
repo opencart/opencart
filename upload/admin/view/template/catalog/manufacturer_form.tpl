@@ -19,17 +19,17 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-manufacturer" class="form-horizontal">
       <div class="control-group required">
-        <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
-        <div class="controls">
+        <label class="col-lg-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="input-xxlarge" />
           <?php if ($error_name) { ?>
           <span class="error"><?php echo $error_name; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group">
-        <div class="control-label"><?php echo $entry_store; ?></div>
-        <div class="controls">
+      <div class="form-group">
+        <div class="col-lg-2 control-label"><?php echo $entry_store; ?></div>
+        <div class="col-lg-10">
           <label class="checkbox">
             <?php if (in_array(0, $manufacturer_store)) { ?>
             <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
@@ -52,24 +52,24 @@
           <?php } ?>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-keyword"><?php echo $entry_keyword; ?> <span class="help-block"><?php echo $help_keyword; ?></span></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-keyword"><?php echo $entry_keyword; ?> <span class="help-block"><?php echo $help_keyword; ?></span></label>
+        <div class="col-lg-10">
           <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-name"><?php echo $entry_image; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-name"><?php echo $entry_image; ?></label>
+        <div class="col-lg-10">
           <div class="image"><img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
             <input type="hidden" name="image" value="<?php echo $image; ?>" />
             <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
           </div>
         </div>
       </div>
-      <div class="control-group">
-        <label class="control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="controls">
+      <div class="form-group">
+        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-10">
           <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" class="input-mini" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" />
         </div>
       </div>

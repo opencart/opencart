@@ -28,7 +28,7 @@ class Pagination {
 		$num_links = $this->num_links;
 		$num_pages = ceil($total / $limit);
 
-		$output = '<ul>';
+		$output = '<ul class="pagination">';
 
 		if ($page > 1) {			
 			$output .= '<li><a href="' . str_replace('{page}', 1, $this->url) . '">' . $this->text_first . '</a></li>';

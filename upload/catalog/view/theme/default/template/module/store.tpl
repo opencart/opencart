@@ -1,5 +1,5 @@
-<div class="box">
-  <div class="box-heading"><?php echo $heading_title; ?></div>
+<div class="panel">
+  <div class="panel-heading"><?php echo $heading_title; ?></div>
   <div class="box-content">
     <p style="text-align: center;"><?php echo $text_store; ?></p>
     <?php foreach ($stores as $store) { ?>

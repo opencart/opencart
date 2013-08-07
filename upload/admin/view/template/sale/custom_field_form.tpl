@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -18,9 +18,9 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-custom-field" class="form-horizontal">
-      <div class="control-group required">
-        <div class="col-lg-2 control-label"><?php echo $entry_name; ?></div>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <div class="col-lg-3 control-label"><?php echo $entry_name; ?></div>
+        <div class="col-lg-9">
           <?php foreach ($languages as $language) { ?>
           <input type="text" name="custom_field_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($custom_field_description[$language['language_id']]) ? $custom_field_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
@@ -31,8 +31,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-type"><?php echo $entry_type; ?></label>
+        <div class="col-lg-9">
           <select name="type" id="input-type">
             <optgroup label="<?php echo $text_choose; ?>">
             <?php if ($type == 'select') { ?>
@@ -90,15 +90,15 @@
           </select>
         </div>
       </div>
-      <div class="control-group" id="display-value">
-        <label class="col-lg-2 control-label" for="input-value"><?php echo $entry_value; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group" id="display-value">
+        <label class="col-lg-3 control-label" for="input-value"><?php echo $entry_value; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" />
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_customer_group; ?></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label"><?php echo $entry_customer_group; ?></div>
+        <div class="col-lg-9">
           <?php $customer_group_row = 0; ?>
           <?php foreach ($customer_groups as $customer_group) { ?>
           <label class="checkbox">
@@ -115,8 +115,8 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_required; ?></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label"><?php echo $entry_required; ?></div>
+        <div class="col-lg-9">
           <?php $customer_group_row = 0; ?>
           <?php foreach ($customer_groups as $customer_group) { ?>
           <label class="checkbox">
@@ -133,8 +133,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-location"><?php echo $entry_location; ?></label>
+        <div class="col-lg-9">
           <select name="location" id="input-location">
             <?php if ($location == 'customer') { ?>
             <option value="customer" selected="selected"><?php echo $text_customer; ?></option>
@@ -160,8 +160,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-position"><?php echo $entry_position; ?> <span class="help-block"><?php echo $help_position; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-position"><?php echo $entry_position; ?> <span class="help-block"><?php echo $help_position; ?></span></label>
+        <div class="col-lg-9">
           <select name="position" id="input-position">
             <?php if ($position == 'begining') { ?>
             <option value="begining" selected="selected"><?php echo $text_begining; ?></option>
@@ -237,8 +237,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-9">
           <select name="status" id="input-status">
             <?php if ($status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -251,8 +251,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
       </div>

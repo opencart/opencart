@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -34,29 +34,29 @@
             <?php foreach ($languages as $language) { ?>
             <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
               <div class="form-group required">
-                <label class="col-lg-2 control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
-                <div class="col-lg-10">
+                <label class="col-lg-3 control-label" for="input-name<?php echo $language['language_id']; ?>"><?php echo $entry_name; ?></label>
+                <div class="col-lg-9">
                   <input type="text" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control" />
                   <?php if (isset($error_name[$language['language_id']])) { ?>
-                  <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
+                  <span class="text-danger"><?php echo $error_name[$language['language_id']]; ?></span>
                   <?php } ?>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-2 control-label" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
-                <div class="col-lg-10">
+                <label class="col-lg-3 control-label" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
+                <div class="col-lg-9">
                   <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_description]" cols="40" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-2 control-label" for="input-meta-keyword<?php echo $language['language_id']; ?>"><?php echo $entry_meta_keyword; ?></label>
-                <div class="col-lg-10">
+                <label class="col-lg-3 control-label" for="input-meta-keyword<?php echo $language['language_id']; ?>"><?php echo $entry_meta_keyword; ?></label>
+                <div class="col-lg-9">
                   <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_keyword]" cols="40" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
-                <div class="col-lg-10">
+                <label class="col-lg-3 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
+                <div class="col-lg-9">
                   <textarea name="category_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description'] : ''; ?></textarea>
                 </div>
               </div>
@@ -66,18 +66,18 @@
         </div>
         <div class="tab-pane" id="tab-data">
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-parent"><?php echo $entry_parent; ?></label>
-            <div class="col-lg-10">
-              <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" />
+            <label class="col-lg-3 control-label" for="input-parent"><?php echo $entry_parent; ?></label>
+            <div class="col-lg-9">
+              <input type="text" name="path" value="<?php echo $path; ?>" placeholder="<?php echo $entry_parent; ?>" id="input-parent" class="form-control" />
               <input type="hidden" name="parent_id" value="<?php echo $parent_id; ?>" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-filter"><?php echo $entry_filter; ?> <span class="help-block"><?php echo $help_filter; ?></span></label>
-            <div class="col-lg-10">
-              <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" />
-              <br />
-              <div id="category-filter" class="well well-small scrollbox">
+            <label class="col-lg-3 control-label" for="input-filter"><?php echo $entry_filter; ?> </label>
+            <div class="col-lg-9">
+              <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
+              <span class="help-block"><?php echo $help_filter; ?></span>
+              <div id="category-filter" class="well well-small">
                 <?php foreach ($category_filters as $category_filter) { ?>
                 <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $category_filter['name']; ?>
                   <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
@@ -87,8 +87,8 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-lg-2 control-label"><?php echo $entry_store; ?></div>
-            <div class="col-lg-10">
+            <div class="col-lg-3 control-label"><?php echo $entry_store; ?></div>
+            <div class="col-lg-9">
               <label class="checkbox">
                 <?php if (in_array(0, $category_store)) { ?>
                 <input type="checkbox" name="category_store[]" value="0" checked="checked" />
@@ -111,24 +111,24 @@
               <?php } ?>
             </div>
           </div>
-          <div class="control-group has-error">
-            <label class="col-lg-2 control-label" for="input-keyword"><?php echo $entry_keyword; ?> <span class="help-block"><?php echo $help_keyword; ?></span></label>
-            <div class="col-lg-10">
-              <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-            </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
+            <div class="col-lg-9">
+              <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
+              <span class="help-block"><?php echo $help_keyword; ?></span> </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-name"><?php echo $entry_image; ?></label>
-            <div class="col-lg-10">
-              <div class="image"> <img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
+            <div class="col-lg-3 control-label"><?php echo $entry_image; ?></div>
+            <div class="col-lg-9">
+              <div class="image"><img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
                 <input type="hidden" name="image" value="<?php echo $image; ?>" />
                 <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
               </div>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-top"><?php echo $entry_top; ?> <span class="help-block"><?php echo $help_top; ?></span></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-top"><?php echo $entry_top; ?></label>
+            <div class="col-lg-9">
               <label class="checkbox">
                 <?php if ($top) { ?>
                 <input type="checkbox" name="top" value="1" checked="checked" id="input-top" />
@@ -136,24 +136,24 @@
                 <input type="checkbox" name="top" value="1" id="input-top" />
                 <?php } ?>
               </label>
+              <span class="help-block"><?php echo $help_top; ?></span> </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label" for="input-column"><?php echo $entry_column; ?></label>
+            <div class="col-lg-9">
+              <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" id="input-column" class="form-control" />
+              <span class="help-block"><?php echo $help_column; ?></span> </div>
+          </div>
+          <div class="form-group">
+            <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+            <div class="col-lg-9">
+              <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-column"><?php echo $entry_column; ?> <span class="help-block"><?php echo $help_column; ?></span> </label>
-            <div class="col-lg-10">
-              <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" id="input-column" class="input-mini" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-            <div class="col-lg-10">
-              <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-            <div class="col-lg-10">
-              <select name="status" id="input-status">
+            <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
+            <div class="col-lg-9">
+              <select name="status" id="input-status" class="form-control">
                 <?php if ($status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
@@ -176,7 +176,7 @@
             <tbody>
               <tr>
                 <td class="text-left"><?php echo $text_default; ?></td>
-                <td class="text-left"><select name="category_layout[0][layout_id]">
+                <td class="text-left"><select name="category_layout[0][layout_id]" class="form-control">
                     <option value=""></option>
                     <?php foreach ($layouts as $layout) { ?>
                     <?php if (isset($category_layout[0]) && $category_layout[0] == $layout['layout_id']) { ?>
@@ -190,7 +190,7 @@
               <?php foreach ($stores as $store) { ?>
               <tr>
                 <td class="text-left"><?php echo $store['name']; ?></td>
-                <td class="text-left"><select name="category_layout[<?php echo $store['store_id']; ?>][layout_id]">
+                <td class="text-left"><select name="category_layout[<?php echo $store['store_id']; ?>][layout_id]" class="form-control">
                     <option value=""></option>
                     <?php foreach ($layouts as $layout) { ?>
                     <?php if (isset($category_layout[$store['store_id']]) && $category_layout[$store['store_id']] == $layout['layout_id']) { ?>
@@ -207,15 +207,6 @@
         </div>
       </div>
     </form>
-  </div>
-</div>
-<div id="modal" style="width: 60%; height: 60%;" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="modal-label" aria-hidden="true">
-  <div class="modal-header">
-    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
-    <h3 id="modal-label"><?php echo $text_image_manager; ?></h3>
-  </div>
-  <div class="modal-body">
-    <iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>" style="width: 90%; height: 90%;" frameborder="no" scrolling="auto"></iframe>
   </div>
 </div>
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 

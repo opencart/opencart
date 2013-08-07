@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-store" class="form-horizontal">
       <div class="form-group">
-        <div class="col-lg-2 control-label" for="input-admin"><?php echo $entry_admin; ?></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label" for="input-admin"><?php echo $entry_admin; ?></div>
+        <div class="col-lg-9">
           <label class="radio inline">
             <?php if ($store_admin) { ?>
             <input type="radio" name="store_admin" value="1" checked="checked" />

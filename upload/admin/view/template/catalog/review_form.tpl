@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -18,9 +18,9 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-review" class="form-horizontal">
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-author"><?php echo $entry_author; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-author"><?php echo $entry_author; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" />
           <?php if ($error_author) { ?>
           <span class="error"><?php echo $error_author; ?></span>
@@ -28,8 +28,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" />
           <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
           <?php if ($error_product) { ?>
@@ -37,9 +37,9 @@
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-text"><?php echo $entry_text; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-text"><?php echo $entry_text; ?></label>
+        <div class="col-lg-9">
           <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>" id="input-text" class="input-xxlarge"><?php echo $text; ?></textarea>
           <?php if ($error_text) { ?>
           <span class="error"><?php echo $error_text; ?></span>
@@ -47,8 +47,8 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-2 control-label" for="input-name"><?php echo $entry_rating; ?></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label" for="input-name"><?php echo $entry_rating; ?></div>
+        <div class="col-lg-9">
           <label class="radio inline">
             <?php if ($rating == 1) { ?>
             <input type="radio" name="rating" value="1" checked="checked" />
@@ -100,8 +100,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-9">
           <select name="status" id="input-status">
             <?php if ($status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>

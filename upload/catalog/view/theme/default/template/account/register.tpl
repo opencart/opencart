@@ -5,7 +5,7 @@
   <?php } ?>
 </ul>
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><?php echo $error_warning; ?></div>
+<div class="alert alert-danger"><?php echo $error_warning; ?></div>
 <?php } ?>
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
@@ -14,36 +14,36 @@
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <fieldset>
         <legend><?php echo $text_your_details; ?></legend>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
+          <div class="col-lg-9">
             <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
             <?php if ($error_firstname) { ?>
             <div class="error"><?php echo $error_firstname; ?></div>
             <?php } ?>
           </div>
         </div>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
+          <div class="col-lg-9">
             <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
             <?php if ($error_lastname) { ?>
             <div class="error"><?php echo $error_lastname; ?></div>
             <?php } ?>
           </div>
         </div>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
+          <div class="col-lg-9">
             <input type="email" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
             <?php if ($error_email) { ?>
             <div class="error"><?php echo $error_email; ?></div>
             <?php } ?>
           </div>
         </div>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
+          <div class="col-lg-9">
             <input type="tel" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
             <?php if ($error_telephone) { ?>
             <div class="error"><?php echo $error_telephone; ?></div>
@@ -51,8 +51,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
-          <div class="col-lg-10">
+          <label class="col-lg-3 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
+          <div class="col-lg-9">
             <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" />
           </div>
         </div>
@@ -60,14 +60,14 @@
       <fieldset>
         <legend><?php echo $text_your_address; ?></legend>
         <div class="form-group">
-          <label class="col-lg-2 control-label" for="input-company"><?php echo $entry_company; ?></label>
-          <div class="col-lg-10">
+          <label class="col-lg-3 control-label" for="input-company"><?php echo $entry_company; ?></label>
+          <div class="col-lg-9">
             <input type="text" name="company" value="<?php echo $company; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company" />
           </div>
         </div>
-        <div class="control-group" style="display: <?php echo (count($customer_groups) > 1 ? 'display' : 'none'); ?>;">
-          <div class="col-lg-2 control-label"><?php echo $entry_customer_group; ?></div>
-          <div class="col-lg-10">
+        <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'display' : 'none'); ?>;">
+          <div class="col-lg-3 control-label"><?php echo $entry_customer_group; ?></div>
+          <div class="col-lg-9">
             <?php foreach ($customer_groups as $customer_group) { ?>
             <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
             <label class="radio">
@@ -81,9 +81,9 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
+          <div class="col-lg-9">
             <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" />
             <?php if ($error_address_1) { ?>
             <div class="error"><?php echo $error_address_1; ?></div>
@@ -91,34 +91,34 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-2 control-label" for="input-address-2" for="input-address-2">
+          <label class="col-lg-3 control-label" for="input-address-2" for="input-address-2">
           <?php echo $entry_address_2; ?>
           </label>
-          <div class="col-lg-10">
+          <div class="col-lg-9">
             <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" />
           </div>
         </div>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-city"><?php echo $entry_city; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-city"><?php echo $entry_city; ?></label>
+          <div class="col-lg-9">
             <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
             <?php if ($error_city) { ?>
             <div class="error"><?php echo $error_city; ?></div>
             <?php } ?>
           </div>
         </div>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
+          <div class="col-lg-9">
             <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
             <?php if ($error_postcode) { ?>
             <div class="error"><?php echo $error_postcode; ?></div>
             <?php } ?>
           </div>
         </div>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-country"><?php echo $entry_country; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-country"><?php echo $entry_country; ?></label>
+          <div class="col-lg-9">
             <select name="country_id" id="input-country">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($countries as $country) { ?>
@@ -134,9 +134,9 @@
             <?php } ?>
           </div>
         </div>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
+          <div class="col-lg-9">
             <select name="zone_id" id="input-zone">
             </select>
             <?php if ($error_zone) { ?>
@@ -147,18 +147,18 @@
       </fieldset>
       <fieldset>
         <legend><?php echo $text_your_password; ?></legend>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?></label>
+          <div class="col-lg-9">
             <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
             <?php if ($error_password) { ?>
             <div class="error"><?php echo $error_password; ?></div>
             <?php } ?>
           </div>
         </div>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
+          <div class="col-lg-9">
             <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" />
             <?php if ($error_confirm) { ?>
             <div class="error"><?php echo $error_confirm; ?></div>
@@ -169,8 +169,8 @@
       <fieldset>
         <legend><?php echo $text_newsletter; ?></legend>
         <div class="form-group">
-          <div class="col-lg-2 control-label"><?php echo $entry_newsletter; ?></div>
-          <div class="col-lg-10">
+          <div class="col-lg-3 control-label"><?php echo $entry_newsletter; ?></div>
+          <div class="col-lg-9">
             <?php if ($newsletter) { ?>
             <label class="radio">
               <input type="radio" name="newsletter" value="1" checked="checked" />

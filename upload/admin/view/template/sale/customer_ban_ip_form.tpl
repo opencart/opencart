@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -18,9 +18,9 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer-ban-ip" class="form-horizontal">
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" />
           <?php if ($error_ip) { ?>
           <span class="error"><?php echo $error_ip; ?></span>

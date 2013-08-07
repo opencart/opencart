@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -18,18 +18,18 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal" id="form-tax-class">
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-title"><?php echo $entry_title; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-title"><?php echo $entry_title; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
           <?php if ($error_title) { ?>
           <span class="error"><?php echo $error_title; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-description"><?php echo $entry_description; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" id="input-description" />
           <?php if ($error_description) { ?>
           <br />

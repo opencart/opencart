@@ -13,28 +13,28 @@
       <div class="row-fluid">
         <div class="span4">
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+            <div class="col-lg-9">
               <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="input-medium" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+            <div class="col-lg-9">
               <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="input-medium" />
             </div>
           </div>
         </div>
         <div class="span4">
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-customer"><?php echo $entry_customer; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+            <div class="col-lg-9">
               <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" id="input-customer" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+            <div class="col-lg-9">
               <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" id="input-ip" />
             </div>
           </div>

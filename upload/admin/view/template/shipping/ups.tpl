@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -18,27 +18,27 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ups" class="form-horizontal">
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-key"><?php echo $entry_key; ?> <span class="help-block"><?php echo $help_key; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-key"><?php echo $entry_key; ?> <span class="help-block"><?php echo $help_key; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="ups_key" value="<?php echo $ups_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" />
           <?php if ($error_key) { ?>
           <span class="error"><?php echo $error_key; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-username"><?php echo $entry_username; ?> <span class="help-block"><?php echo $help_username; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-username"><?php echo $entry_username; ?> <span class="help-block"><?php echo $help_username; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="ups_username" value="<?php echo $ups_username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
           <?php if ($error_username) { ?>
           <span class="error"><?php echo $error_username; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-password"><?php echo $entry_password; ?> <span class="help-block"><?php echo $help_password; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?> <span class="help-block"><?php echo $help_password; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="ups_password" value="<?php echo $ups_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
           <?php if ($error_password) { ?>
           <span class="error"><?php echo $error_password; ?></span>
@@ -46,8 +46,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-pickup"><?php echo $entry_pickup; ?> <span class="help-block"><?php echo $help_pickup; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-pickup"><?php echo $entry_pickup; ?> <span class="help-block"><?php echo $help_pickup; ?></span></label>
+        <div class="col-lg-9">
           <select name="ups_pickup" id="input-pickup">
             <?php foreach ($pickups as $pickup) { ?>
             <?php if ($pickup['value'] == $ups_pickup) { ?>
@@ -60,8 +60,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-packaging"><?php echo $entry_packaging; ?> <span class="help-block"><?php echo $help_packaging; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-packaging"><?php echo $entry_packaging; ?> <span class="help-block"><?php echo $help_packaging; ?></span></label>
+        <div class="col-lg-9">
           <select name="ups_packaging" id="input-packaging">
             <?php foreach ($packages as $package) { ?>
             <?php if ($package['value'] == $ups_packaging) { ?>
@@ -74,8 +74,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-classification"><?php echo $entry_classification; ?> <span class="help-block"><?php echo $help_classification; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-classification"><?php echo $entry_classification; ?> <span class="help-block"><?php echo $help_classification; ?></span></label>
+        <div class="col-lg-9">
           <select name="ups_classification" id="input-classification">
             <?php foreach ($classifications as $classification) { ?>
             <?php if ($classification['value'] == $ups_classification) { ?>
@@ -88,8 +88,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-origin"><?php echo $entry_origin; ?> <span class="help-block"><?php echo $help_origin; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-origin"><?php echo $entry_origin; ?> <span class="help-block"><?php echo $help_origin; ?></span></label>
+        <div class="col-lg-9">
           <select name="ups_origin" id="input-origin">
             <?php foreach ($origins as $origin) { ?>
             <?php if ($origin['value'] == $ups_origin) { ?>
@@ -101,27 +101,27 @@
           </select>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-city"><?php echo $entry_city; ?> <?php echo $help_city; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-city"><?php echo $entry_city; ?> <?php echo $help_city; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="ups_city" value="<?php echo $ups_city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
           <?php if ($error_city) { ?>
           <span class="error"><?php echo $error_city; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-state"><?php echo $entry_state; ?> <span class="help-block"><?php echo $help_state; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-state"><?php echo $entry_state; ?> <span class="help-block"><?php echo $help_state; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="ups_state" value="<?php echo $ups_state; ?>" placeholder="<?php echo $entry_state; ?>" id="input-state" maxlength="2" id="input-state" class="input-mini" />
           <?php if ($error_state) { ?>
           <span class="error"><?php echo $error_state; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-country"><?php echo $entry_country; ?> <span class="help-block"><?php echo $help_country; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-country"><?php echo $entry_country; ?> <span class="help-block"><?php echo $help_country; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="ups_country" value="<?php echo $ups_country; ?>" placeholder="<?php echo $entry_country; ?>" id="input-country" maxlength="2" class="input-mini" />
           <?php if ($error_country) { ?>
           <span class="error"><?php echo $error_country; ?></span>
@@ -129,14 +129,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?> <span class="help-block"><?php echo $help_postcode; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-postcode"><?php echo $entry_postcode; ?> <span class="help-block"><?php echo $help_postcode; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="ups_postcode" value="<?php echo $ups_postcode; ?>" id="input-postcode" />
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_test; ?> <span class="help-block"><?php echo $help_test; ?></span></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label"><?php echo $entry_test; ?> <span class="help-block"><?php echo $help_test; ?></span></div>
+        <div class="col-lg-9">
           <label class="radio inline">
             <?php if ($ups_test) { ?>
             <input type="radio" name="ups_test" value="1" checked="checked" />
@@ -158,8 +158,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-quote-type"><?php echo $entry_quote_type; ?> <span class="help-block"><?php echo $help_quote_type; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-quote-type"><?php echo $entry_quote_type; ?> <span class="help-block"><?php echo $help_quote_type; ?></span></label>
+        <div class="col-lg-9">
           <select name="ups_quote_type" id="input-quote-type">
             <?php foreach ($quote_types as $quote_type) { ?>
             <?php if ($quote_type['value'] == $ups_quote_type) { ?>
@@ -172,8 +172,8 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_service; ?> <span class="help-block"><?php echo $help_service; ?></span></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label"><?php echo $entry_service; ?> <span class="help-block"><?php echo $help_service; ?></span></div>
+        <div class="col-lg-9">
           <div id="service" class="well well-small scrollbox">
             <div id="US">
               <label class="checkbox">
@@ -632,8 +632,8 @@
           <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a> </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_insurance; ?> <span class="help-block"><?php echo $help_insurance; ?></span></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label"><?php echo $entry_insurance; ?> <span class="help-block"><?php echo $help_insurance; ?></span></div>
+        <div class="col-lg-9">
           <label class="radio inline">
             <?php if ($ups_insurance) { ?>
             <input type="radio" name="ups_insurance" value="1" checked="checked" />
@@ -655,8 +655,8 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_display_weight; ?></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label"><?php echo $entry_display_weight; ?></div>
+        <div class="col-lg-9">
           <label class="radio inline">
             <?php if ($ups_display_weight) { ?>
             <input type="radio" name="ups_display_weight" value="1" checked="checked" />
@@ -678,8 +678,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-weight-class"><?php echo $entry_weight_class; ?> <span class="help-block"><?php echo $help_weight_class; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-weight-class"><?php echo $entry_weight_class; ?> <span class="help-block"><?php echo $help_weight_class; ?></span></label>
+        <div class="col-lg-9">
           <select name="ups_weight_class_id" id="input-weight-class">
             <?php foreach ($weight_classes as $weight_class) { ?>
             <?php if ($weight_class['weight_class_id'] == $ups_weight_class_id) { ?>
@@ -692,8 +692,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-length-class"><?php echo $entry_length_class; ?> <span class="help-block"><?php echo $help_length_class; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-length-class"><?php echo $entry_length_class; ?> <span class="help-block"><?php echo $help_length_class; ?></span></label>
+        <div class="col-lg-9">
           <select name="ups_length_class_id" id="input-length-class">
             <?php foreach ($length_classes as $length_class) { ?>
             <?php if ($length_class['length_class_id'] == $ups_length_class_id) { ?>
@@ -705,9 +705,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-length"><?php echo $entry_dimension; ?> <span class="help-block"><?php echo $help_dimension; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-length"><?php echo $entry_dimension; ?> <span class="help-block"><?php echo $help_dimension; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="ups_length" value="<?php echo $ups_length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="input-mini" />
           <input type="text" name="ups_width" value="<?php echo $ups_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="input-mini" />
           <input type="text" name="ups_height" value="<?php echo $ups_height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="input-mini" />
@@ -717,8 +717,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
+        <div class="col-lg-9">
           <select name="ups_tax_class_id" id="input-tax-class">
             <option value="0"><?php echo $text_none; ?></option>
             <?php foreach ($tax_classes as $tax_class) { ?>
@@ -732,8 +732,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+        <div class="col-lg-9">
           <select name="ups_geo_zone_id" id="input-geo-zone">
             <option value="0"><?php echo $text_all_zones; ?></option>
             <?php foreach ($geo_zones as $geo_zone) { ?>
@@ -747,8 +747,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-9">
           <select name="ups_status" id="input-status">
             <?php if ($ups_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -761,14 +761,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="ups_sort_order" value="<?php echo $ups_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-debug"><?php echo $entry_debug; ?> <span class="help-block"><?php echo $help_debug; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-debug"><?php echo $entry_debug; ?> <span class="help-block"><?php echo $help_debug; ?></span></label>
+        <div class="col-lg-9">
           <select name="ups_debug" id="input-debug">
             <?php if ($ups_debug) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>

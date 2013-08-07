@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -19,8 +19,8 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-coupon" class="form-horizontal">
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-9">
           <select name="coupon_status" id="input-status">
             <?php if ($coupon_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -33,8 +33,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="coupon_sort_order" value="<?php echo $coupon_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
         </div>
       </div>

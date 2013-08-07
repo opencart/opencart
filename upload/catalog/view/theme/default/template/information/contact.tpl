@@ -36,23 +36,23 @@
               <label><?php echo $entry_name; ?></label>
               <input type="text" name="name" value="<?php echo $name; ?>" />
               <?php if ($error_name) { ?>
-              <div class="alert alert-error"><?php echo $error_name; ?></div>
+              <div class="alert alert-danger"><?php echo $error_name; ?></div>
               <?php } ?>
               <label><?php echo $entry_email; ?></label>
               <input type="text" name="email" value="<?php echo $email; ?>" />
               <?php if ($error_email) { ?>
-              <div class="alert alert-error"><?php echo $error_email; ?></div>
+              <div class="alert alert-danger"><?php echo $error_email; ?></div>
               <?php } ?>
               <label><?php echo $entry_enquiry; ?></label>
               <textarea name="enquiry" cols="40" rows="10" style="width: 99%;"><?php echo $enquiry; ?></textarea>
               <?php if ($error_enquiry) { ?>
-              <div class="alert alert-error"><?php echo $error_enquiry; ?></div>
+              <div class="alert alert-danger"><?php echo $error_enquiry; ?></div>
               <?php } ?>
               <img class="captcha" src="index.php?route=information/contact/captcha" alt="" />
               <label><?php echo $entry_captcha; ?></label>
               <input type="text" name="captcha" value="<?php echo $captcha; ?>" />
               <?php if ($error_captcha) { ?>
-              <div class="alert alert-error"><?php echo $error_captcha; ?></div>
+              <div class="alert alert-danger"><?php echo $error_captcha; ?></div>
               <?php } ?>
               <hr>
               <input class="btn btn-primary" type="submit" value="<?php echo $button_continue; ?>" />

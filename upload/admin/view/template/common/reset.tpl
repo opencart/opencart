@@ -12,8 +12,8 @@
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <p><?php echo $text_password; ?></p>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?></label>
+        <div class="col-lg-9">
           <input type="password" name="password" value="<?php echo $password; ?>" id="input-password" />
           <?php if ($error_password) { ?>
           <span class="error"><?php echo $error_password; ?></span>
@@ -21,8 +21,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
+        <div class="col-lg-9">
           <input type="password" name="confirm" value="<?php echo $confirm; ?>" id="input-confirm" />
           <?php if ($error_confirm) { ?>
           <span class="error"><?php echo $error_confirm; ?></span>

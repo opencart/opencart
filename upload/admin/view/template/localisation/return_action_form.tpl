@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -18,9 +18,9 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-return-action" class="form-horizontal">
-      <div class="control-group required">
-        <div class="col-lg-2 control-label"><?php echo $entry_name; ?></div>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <div class="col-lg-3 control-label"><?php echo $entry_name; ?></div>
+        <div class="col-lg-9">
           <?php foreach ($languages as $language) { ?>
           <input type="text" name="return_action[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($return_action[$language['language_id']]) ? $return_action[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />

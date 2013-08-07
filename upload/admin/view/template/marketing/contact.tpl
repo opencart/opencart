@@ -14,8 +14,8 @@
     </div>
     <form class="form-horizontal">
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-store"><?php echo $entry_store; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-store"><?php echo $entry_store; ?></label>
+        <div class="col-lg-9">
           <select name="store_id" id="input-store">
             <option value="0"><?php echo $text_default; ?></option>
             <?php foreach ($stores as $store) { ?>
@@ -25,8 +25,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-to"><?php echo $entry_to; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-to"><?php echo $entry_to; ?></label>
+        <div class="col-lg-9">
           <select name="to" id="input-to">
             <option value="newsletter"><?php echo $text_newsletter; ?></option>
             <option value="customer_all"><?php echo $text_customer_all; ?></option>
@@ -38,9 +38,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group to" id="to-customer-group">
-        <label class="col-lg-2 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group to" id="to-customer-group">
+        <label class="col-lg-3 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
+        <div class="col-lg-9">
           <select name="customer_group_id" id="input-customer-group">
             <?php foreach ($customer_groups as $customer_group) { ?>
             <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
@@ -48,39 +48,39 @@
           </select>
         </div>
       </div>
-      <div class="control-group to" id="to-customer">
-        <label class="col-lg-2 control-label" for="input-customer"><?php echo $entry_customer; ?> <span class="help-block"><?php echo $help_customer; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group to" id="to-customer">
+        <label class="col-lg-3 control-label" for="input-customer"><?php echo $entry_customer; ?> <span class="help-block"><?php echo $help_customer; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" />
           <br />
           <div id="customer" class="well well-small scrollbox"></div>
         </div>
       </div>
-      <div class="control-group to" id="to-affiliate">
-        <label class="col-lg-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?> <span class="help-block"><?php echo $help_affiliate; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group to" id="to-affiliate">
+        <label class="col-lg-3 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?> <span class="help-block"><?php echo $help_affiliate; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" />
           <br />
           <div id="affiliate" class="well well-small scrollbox"></div>
         </div>
       </div>
-      <div class="control-group to" id="to-product">
-        <label class="col-lg-2 control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group to" id="to-product">
+        <label class="col-lg-3 control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
           <br />
           <div id="product" class="well well-small scrollbox"></div>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-subject"><?php echo $entry_subject; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-subject"><?php echo $entry_subject; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="subject" value="" placeholder="<?php echo $entry_subject; ?>" id="input-subject" />
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-message"><?php echo $entry_message; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-message"><?php echo $entry_message; ?></label>
+        <div class="col-lg-9">
           <textarea name="message" placeholder="<?php echo $entry_message; ?>" id="input-message"></textarea>
         </div>
       </div>
@@ -216,7 +216,7 @@ function send(url) {
 			
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + '</div>');
+					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + '</div>');
 				}
 				
 				if (json['error']['subject']) {

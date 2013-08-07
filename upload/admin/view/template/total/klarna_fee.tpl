@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -28,20 +28,20 @@
           <?php foreach ($countries as $country) { ?>
           <div class="tab-pane" id="tab-<?php echo $country['code']; ?>">
             <div class="form-group">
-              <label class="col-lg-2 control-label" for="input-total<?php echo $country['code']; ?>"><?php echo $entry_total ?></label>
-              <div class="col-lg-10">
+              <label class="col-lg-3 control-label" for="input-total<?php echo $country['code']; ?>"><?php echo $entry_total ?></label>
+              <div class="col-lg-9">
                 <input type="text" name="klarna_fee[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_fee[$country['code']]) ? $klarna_fee[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total<?php echo $country['code']; ?>" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-2 control-label" for="input-fee<?php echo $country['code']; ?>"><?php echo $entry_fee ?></label>
-              <div class="col-lg-10">
+              <label class="col-lg-3 control-label" for="input-fee<?php echo $country['code']; ?>"><?php echo $entry_fee ?></label>
+              <div class="col-lg-9">
                 <input type="text" name="klarna_fee[<?php echo $country['code']; ?>][fee]" value="<?php echo isset($klarna_fee[$country['code']]) ? $klarna_fee[$country['code']]['fee'] : ''; ?>" placeholder="<?php echo $entry_fee; ?>" id="input-fee<?php echo $country['code']; ?>" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-2 control-label" for="input-tax-class<?php echo $country['code']; ?>"><?php echo $entry_tax_class; ?></label>
-              <div class="col-lg-10">
+              <label class="col-lg-3 control-label" for="input-tax-class<?php echo $country['code']; ?>"><?php echo $entry_tax_class; ?></label>
+              <div class="col-lg-9">
                 <select name="klarna_fee[<?php echo $country['code']; ?>][tax_class_id]" id="input-tax-class<?php echo $country['code']; ?>">
                   <option value="0"><?php echo $text_none; ?></option>
                   <?php foreach ($tax_classes as $tax_class) { ?>
@@ -55,8 +55,8 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-2 control-label" for="input-status<?php echo $country['code']; ?>"><?php echo $entry_status; ?></label>
-              <div class="col-lg-10">
+              <label class="col-lg-3 control-label" for="input-status<?php echo $country['code']; ?>"><?php echo $entry_status; ?></label>
+              <div class="col-lg-9">
                 <select name="klarna_fee[<?php echo $country['code']; ?>][status]" id="input-status<?php echo $country['code']; ?>">
                   <?php if (isset($klarna_fee[$country['code']]) && $klarna_fee[$country['code']]['status']) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -69,8 +69,8 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-2 control-label" for="input-sort-order<?php echo $country['code']; ?>"><?php echo $entry_sort_order; ?></label>
-              <div class="col-lg-10">
+              <label class="col-lg-3 control-label" for="input-sort-order<?php echo $country['code']; ?>"><?php echo $entry_sort_order; ?></label>
+              <div class="col-lg-9">
                 <input type="text" name="klarna_fee[<?php echo $country['code']; ?>][sort_order]" value="<?php echo isset($klarna_fee[$country['code']]) ? $klarna_fee[$country['code']]['sort_order'] : ''; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order<?php echo $country['code']; ?>" class="input-mini" />
               </div>
             </div>

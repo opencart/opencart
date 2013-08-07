@@ -9,7 +9,7 @@
   </ul>
 </div>
 <div id="content">
-  <div class="alert alert-error">Don't forget to delete your installation directory!</div>
+  <div class="alert alert-danger">Don't forget to delete your installation directory!</div>
   <p>Congratulations! You have successfully installed OpenCart.</p>
   <div class="alert alert-success">
     <div><a href="../"><img src="view/image/screenshot_1.png" alt="" /></a><br />

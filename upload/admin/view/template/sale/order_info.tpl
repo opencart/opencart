@@ -353,8 +353,8 @@
       <div class="tab-pane form-horizontal" id="tab-history">
         <div id="history"></div>
         <div class="form-group">
-          <label class="col-lg-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-          <div class="col-lg-10">
+          <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+          <div class="col-lg-9">
             <select name="order_status_id" id="input-order-status">
               <?php foreach ($order_statuses as $order_statuses) { ?>
               <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
@@ -367,14 +367,14 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
-          <div class="col-lg-10">
+          <label class="col-lg-3 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+          <div class="col-lg-9">
             <input type="checkbox" name="notify" value="1" id="input-notify" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-          <div class="col-lg-10">
+          <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+          <div class="col-lg-9">
             <textarea name="comment" rows="8" id="input-comment" class="input-xxlarge"></textarea>
           </div>
         </div>
@@ -706,7 +706,7 @@ $(document).delegate('#button-invoice', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('#tab-order').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('#tab-order').prepend('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['invoice_no']) {
@@ -733,7 +733,7 @@ $(document).delegate('#button-credit-add', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
@@ -764,7 +764,7 @@ $(document).delegate('#button-credit-remove', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error">' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-danger">' + json['error'] + '</div>');
 				
 				$('.alert-error').fadeIn('slow');
 			}
@@ -795,7 +795,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
@@ -824,7 +824,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
@@ -853,7 +853,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 				
 				$('.alert-error').fadeIn('slow');
 			}
@@ -884,7 +884,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {

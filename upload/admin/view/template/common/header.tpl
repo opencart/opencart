@@ -15,6 +15,7 @@
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link type="text/css" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
+<link href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
 <?php foreach ($styles as $style) { ?>
 <link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
@@ -27,7 +28,7 @@
 <?php } ?>
 </head>
 <body>
-<div class="navbar navbar-static-top">
+<div class="navbar navbar-inverse navbar-static-top">
   <div class="container">
     <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
     <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="" /></a>

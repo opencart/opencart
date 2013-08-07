@@ -110,8 +110,8 @@
         <div class="tab-pane form-horizontal" id="tab-history">
           <div id="history"></div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-return-action"><?php echo $entry_return_action; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-return-action"><?php echo $entry_return_action; ?></label>
+            <div class="col-lg-9">
               <select name="return_action_id" id="input-return-action">
                 <option value="0"></option>
                 <?php foreach ($return_actions as $return_action) { ?>
@@ -125,8 +125,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-return-status"><?php echo $entry_return_status; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-return-status"><?php echo $entry_return_status; ?></label>
+            <div class="col-lg-9">
               <select name="return_status_id" id="input-return-status">
                 <?php foreach ($return_statuses as $return_status) { ?>
                 <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
@@ -139,14 +139,14 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+            <div class="col-lg-9">
               <input type="checkbox" name="notify" value="1" id="input-notify" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+            <div class="col-lg-9">
               <textarea name="comment" rows="8" class="input-xxlarge"></textarea>
             </div>
           </div>
@@ -173,7 +173,7 @@ $('select[name=\'return_action_id\']').on('change', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {

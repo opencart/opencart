@@ -5,52 +5,52 @@
   <?php } ?>
 </ul>
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><?php echo $error_warning; ?></div>
+<div class="alert alert-danger"><?php echo $error_warning; ?></div>
 <?php } ?>
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
     <h1><?php echo $heading_title; ?></h1>
     <p><?php echo $text_description; ?></p>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="to_name" value="<?php echo $to_name; ?>" id="input-to-name" />
           <?php if ($error_to_name) { ?>
           <span class="error"><?php echo $error_to_name; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="to_email" value="<?php echo $to_email; ?>" id="input-to-email" />
           <?php if ($error_to_email) { ?>
           <span class="error"><?php echo $error_to_email; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="from_name" value="<?php echo $from_name; ?>" id="input-from-name" />
           <?php if ($error_from_name) { ?>
           <span class="error"><?php echo $error_from_name; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="from_email" value="<?php echo $from_email; ?>" id="input-from-email" />
           <?php if ($error_from_email) { ?>
           <span class="error"><?php echo $error_from_email; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <div class="col-lg-2 control-label"><?php echo $entry_theme; ?></div>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <div class="col-lg-3 control-label"><?php echo $entry_theme; ?></div>
+        <div class="col-lg-9">
           <?php foreach ($voucher_themes as $voucher_theme) { ?>
           <?php if ($voucher_theme['voucher_theme_id'] == $voucher_theme_id) { ?>
           <label class="radio">
@@ -68,14 +68,14 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-message"><?php echo $entry_message; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-message"><?php echo $entry_message; ?></label>
+        <div class="col-lg-9">
           <textarea name="message" cols="40" rows="5" id="input-message"><?php echo $message; ?></textarea>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="amount" value="<?php echo $amount; ?>" id="input-amount" size="5" />
           <?php if ($error_amount) { ?>
           <span class="error"><?php echo $error_amount; ?></span>

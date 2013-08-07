@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -18,18 +18,18 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-tax-rate" class="form-horizontal">
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
           <?php if ($error_name) { ?>
           <span class="error"><?php echo $error_name; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-rate"><?php echo $entry_rate; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-rate"><?php echo $entry_rate; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="rate" value="<?php echo $rate; ?>" placeholder="<?php echo $entry_rate; ?>" id="input-rate" />
           <?php if ($error_rate) { ?>
           <span class="error"><?php echo $error_rate; ?></span>
@@ -37,8 +37,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-type"><?php echo $entry_type; ?></label>
+        <div class="col-lg-9">
           <select name="type" id="input-type">
             <?php if ($type == 'P') { ?>
             <option value="P" selected="selected"><?php echo $text_percent; ?></option>
@@ -54,8 +54,8 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_customer_group; ?></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label"><?php echo $entry_customer_group; ?></div>
+        <div class="col-lg-9">
           <?php foreach ($customer_groups as $customer_group) { ?>
           <label class="checkbox">
             <?php if (in_array($customer_group['customer_group_id'], $tax_rate_customer_group)) { ?>
@@ -70,8 +70,8 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+        <div class="col-lg-9">
           <select name="geo_zone_id" id="input-geo-zone">
             <?php foreach ($geo_zones as $geo_zone) { ?>
             <?php  if ($geo_zone['geo_zone_id'] == $geo_zone_id) { ?>

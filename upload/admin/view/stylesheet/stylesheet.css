@@ -1,3 +1,4 @@
+/*
 html, body, label, .control-group input, textarea, select, td {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
@@ -14,7 +15,7 @@ html, body {
 		padding-left: 0;
 	}
 }
-/* Header */
+
 #header .navbar .brand {
 	margin: 0px;
 	padding: 9px 5px 0px 0px;
@@ -217,7 +218,7 @@ body > #container {
 	padding-bottom: 20px;
 	margin-bottom: 10px;
 }
-*/
+
 .control-group a[data-toggle='tooltip'] {
 	font-size: 15px;
 	cursor: pointer;
@@ -228,7 +229,7 @@ body > #container {
 .control-label:after {
 	content: ':';
 }
-*/
+
 div.required .control-label:before, td.required:before {
 	content: '* ';
 	color: #F00;
@@ -249,7 +250,7 @@ div.required .control-label:before, td.required:before {
 	margin-top: 5px;
 	text-align: right;
 }
-/* Dashboard */
+
 .stats {
 	border: 1px solid #EEEEEE;
 	padding: 10px;
@@ -290,7 +291,7 @@ div.required .control-label:before, td.required:before {
 
 
 
-/* thumbnails */
+
 .image {
 	float: left;
 	position: relative;
@@ -317,4 +318,9 @@ div.required .control-label:before, td.required:before {
 .image-option a:hover {
 	background-color: #FFF;
 	color: #000000;
+}
+*/
+
+.nav-tabs {
+  margin-bottom: 15px;
 }

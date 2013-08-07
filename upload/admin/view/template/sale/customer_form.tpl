@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -41,36 +41,36 @@
             </ul>
             <div class="tab-content">
               <div class="tab-pane active" id="tab-customer">
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
                     <?php if ($error_firstname) { ?>
                     <span class="error"><?php echo $error_firstname; ?></span>
                     <?php } ?>
                   </div>
                 </div>
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
                     <?php if ($error_lastname) { ?>
                     <span class="error"><?php echo $error_lastname; ?></span>
                     <?php } ?>
                   </div>
                 </div>
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
                     <?php if ($error_email) { ?>
                     <span class="error"><?php echo $error_email; ?></span>
                     <?php  } ?>
                   </div>
                 </div>
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
                     <?php if ($error_telephone) { ?>
                     <span class="error"><?php echo $error_telephone; ?></span>
@@ -78,14 +78,14 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-3 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" />
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?></label>
+                  <div class="col-lg-9">
                     <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" autocomplete="off" id="input-password" />
                     <?php if ($error_password) { ?>
                     <span class="error"><?php echo $error_password; ?></span>
@@ -93,8 +93,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-2 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-3 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
+                  <div class="col-lg-9">
                     <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" autocomplete="off" id="input-confirm" />
                     <?php if ($error_confirm) { ?>
                     <span class="error"><?php echo $error_confirm; ?></span>
@@ -102,8 +102,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-2 control-label" for="input-newsletter"><?php echo $entry_newsletter; ?></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-3 control-label" for="input-newsletter"><?php echo $entry_newsletter; ?></label>
+                  <div class="col-lg-9">
                     <select name="newsletter" id="input-newsletter">
                       <?php if ($newsletter) { ?>
                       <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -116,8 +116,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-2 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-3 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
+                  <div class="col-lg-9">
                     <select name="customer_group_id" id="input-customer-group">
                       <?php foreach ($customer_groups as $customer_group) { ?>
                       <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
@@ -130,8 +130,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
+                  <div class="col-lg-9">
                     <select name="status" id="input-status">
                       <?php if ($status) { ?>
                       <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -148,18 +148,18 @@
               <?php foreach ($addresses as $address) { ?>
               <div class="tab-pane" id="tab-address<?php echo $address_row; ?>">
                 <input type="hidden" name="address[<?php echo $address_row; ?>][address_id]" value="<?php echo $address['address_id']; ?>" />
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-firstname<?php echo $address_row; ?>"><?php echo $entry_firstname; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-firstname<?php echo $address_row; ?>"><?php echo $entry_firstname; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname<?php echo $address_row; ?>" />
                     <?php if (isset($error_address_firstname[$address_row])) { ?>
                     <span class="error"><?php echo $error_address_firstname[$address_row]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-lastname<?php echo $address_row; ?>"><?php echo $entry_lastname; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-lastname<?php echo $address_row; ?>"><?php echo $entry_lastname; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname<?php echo $address_row; ?>" />
                     <?php if (isset($error_address_lastname[$address_row])) { ?>
                     <span class="error"><?php echo $error_address_lastname[$address_row]; ?></span>
@@ -167,14 +167,14 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-2 control-label" for="input-company<?php echo $address_row; ?>"><?php echo $entry_company; ?></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-3 control-label" for="input-company<?php echo $address_row; ?>"><?php echo $entry_company; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][company]" value="<?php echo $address['company']; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company<?php echo $address_row; ?>" />
                   </div>
                 </div>
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-address-1<?php echo $address_row; ?>"><?php echo $entry_address_1; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-address-1<?php echo $address_row; ?>"><?php echo $entry_address_1; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1<?php echo $address_row; ?>" />
                     <?php if (isset($error_address_address_1[$address_row])) { ?>
                     <span class="error"><?php echo $error_address_address_1[$address_row]; ?></span>
@@ -182,29 +182,29 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-2 control-label" for="input-address-2<?php echo $address_row; ?>"><?php echo $entry_address_2; ?></label>
-                  <div class="col-lg-10">
+                  <label class="col-lg-3 control-label" for="input-address-2<?php echo $address_row; ?>"><?php echo $entry_address_2; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][address_2]" value="<?php echo $address['address_2']; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2<?php echo $address_row; ?>" />
                   </div>
                 </div>
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-city<?php echo $address_row; ?>"><?php echo $entry_city; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-city<?php echo $address_row; ?>"><?php echo $entry_city; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city<?php echo $address_row; ?>" />
                     <?php if (isset($error_address_city[$address_row])) { ?>
                     <span class="error"><?php echo $error_address_city[$address_row]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-postcode<?php echo $address_row; ?>"><?php echo $entry_postcode; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-postcode<?php echo $address_row; ?>"><?php echo $entry_postcode; ?></label>
+                  <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][postcode]" value="<?php echo $address['postcode']; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode<?php echo $address_row; ?>" />
                   </div>
                 </div>
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-country<?php echo $address_row; ?>"><?php echo $entry_country; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-country<?php echo $address_row; ?>"><?php echo $entry_country; ?></label>
+                  <div class="col-lg-9">
                     <select name="address[<?php echo $address_row; ?>][country_id]" id="input-country<?php echo $address_row; ?>" onchange="country(this, '<?php echo $address_row; ?>', '<?php echo $address['zone_id']; ?>');">
                       <option value=""><?php echo $text_select; ?></option>
                       <?php foreach ($countries as $country) { ?>
@@ -220,9 +220,9 @@
                     <?php } ?>
                   </div>
                 </div>
-                <div class="control-group required">
-                  <label class="col-lg-2 control-label" for="input-zone<?php echo $address_row; ?>"><?php echo $entry_zone; ?></label>
-                  <div class="col-lg-10">
+                <div class="form-group required">
+                  <label class="col-lg-3 control-label" for="input-zone<?php echo $address_row; ?>"><?php echo $entry_zone; ?></label>
+                  <div class="col-lg-9">
                     <select name="address[<?php echo $address_row; ?>][zone_id]" id="input-zone<?php echo $address_row; ?>">
                     </select>
                     <?php if (isset($error_address_zone[$address_row])) { ?>
@@ -231,8 +231,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <div class="col-lg-2 control-label"><?php echo $entry_default; ?></div>
-                  <div class="col-lg-10">
+                  <div class="col-lg-3 control-label"><?php echo $entry_default; ?></div>
+                  <div class="col-lg-9">
                     <label class="radio">
                       <?php if (($address['address_id'] == $address_id) || !$addresses) { ?>
                       <input type="radio" name="address[<?php echo $address_row; ?>][default]" value="<?php echo $address_row; ?>" checked="checked" />
@@ -252,8 +252,8 @@
         <div class="tab-pane" id="tab-history">
           <div id="history"></div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+            <div class="col-lg-9">
               <textarea name="comment" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="input-xxlarge"></textarea>
             </div>
           </div>
@@ -262,14 +262,14 @@
         <div class="tab-pane" id="tab-transaction">
           <div id="transaction"></div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-transaction-description"><?php echo $entry_description; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-transaction-description"><?php echo $entry_description; ?></label>
+            <div class="col-lg-9">
               <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" id="input-transaction-description" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
+            <div class="col-lg-9">
               <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" />
             </div>
           </div>
@@ -278,14 +278,14 @@
         <div class="tab-pane" id="tab-reward">
           <div id="reward"></div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-reward-description"><?php echo $entry_description; ?></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-reward-description"><?php echo $entry_description; ?></label>
+            <div class="col-lg-9">
               <input type="text" name="description" value="" placeholder="<?php echo $entry_description; ?>" id="input-reward-description" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-2 control-label" for="input-points"><?php echo $entry_points; ?> <span class="help-block"><?php echo $help_points; ?></span></label>
-            <div class="col-lg-10">
+            <label class="col-lg-3 control-label" for="input-points"><?php echo $entry_points; ?> <span class="help-block"><?php echo $help_points; ?></span></label>
+            <div class="col-lg-9">
               <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" />
             </div>
           </div>
@@ -342,44 +342,44 @@ function addAddress() {
 	html  = '<div class="tab-pane" id="tab-address' + address_row + '">';
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 
-	html += '  <div class="control-group required">';
-	html += '    <label class="col-lg-2 control-label" for="input-firstname' + address_row + '"><?php echo $entry_firstname; ?></label>';
-	html += '    <div class="col-lg-10"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname' + address_row + '" /></div>';
+	html += '  <div class="form-group required">';
+	html += '    <label class="col-lg-3 control-label" for="input-firstname' + address_row + '"><?php echo $entry_firstname; ?></label>';
+	html += '    <div class="col-lg-9"><input type="text" name="address[' + address_row + '][firstname]" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
-	html += '  <div class="control-group required">';
-	html += '    <label class="col-lg-2 control-label" for="input-lastname' + address_row + '"><?php echo $entry_lastname; ?></label>';
-	html += '    <div class="col-lg-10"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname' + address_row + '" /></div>';
+	html += '  <div class="form-group required">';
+	html += '    <label class="col-lg-3 control-label" for="input-lastname' + address_row + '"><?php echo $entry_lastname; ?></label>';
+	html += '    <div class="col-lg-9"><input type="text" name="address[' + address_row + '][lastname]" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
 	html += '  <div class="form-group">';
-	html += '    <label class="col-lg-2 control-label" for="input-company' + address_row + '"><?php echo $entry_company; ?></label>';
-	html += '    <div class="col-lg-10"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo $entry_company; ?>" id="input-company' + address_row + '" /></div>';
+	html += '    <label class="col-lg-3 control-label" for="input-company' + address_row + '"><?php echo $entry_company; ?></label>';
+	html += '    <div class="col-lg-9"><input type="text" name="address[' + address_row + '][company]" value="" placeholder="<?php echo $entry_company; ?>" id="input-company' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
-	html += '  <div class="control-group required">';
-	html += '    <label class="col-lg-2 control-label" for="input-address-1' + address_row + '"><?php echo $entry_address_1; ?></label>';
-	html += '    <div class="col-lg-10"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1' + address_row + '" /></div>';
+	html += '  <div class="form-group required">';
+	html += '    <label class="col-lg-3 control-label" for="input-address-1' + address_row + '"><?php echo $entry_address_1; ?></label>';
+	html += '    <div class="col-lg-9"><input type="text" name="address[' + address_row + '][address_1]" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1' + address_row + '" /></div>';
 	html += '  </div>'; 		
 	
 	html += '  <div class="form-group">';
-	html += '    <label class="col-lg-2 control-label" for="input-address-2' + address_row + '"><?php echo $entry_address_2; ?></label>';
-	html += '    <div class="col-lg-10"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2' + address_row + '" /></div>';
+	html += '    <label class="col-lg-3 control-label" for="input-address-2' + address_row + '"><?php echo $entry_address_2; ?></label>';
+	html += '    <div class="col-lg-9"><input type="text" name="address[' + address_row + '][address_2]" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
-	html += '  <div class="control-group required">';
-	html += '    <label class="col-lg-2 control-label" for="input-city' + address_row + '"><?php echo $entry_city; ?></label>';
-	html += '    <div class="col-lg-10"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" id="input-city' + address_row + '" /></div>';
+	html += '  <div class="form-group required">';
+	html += '    <label class="col-lg-3 control-label" for="input-city' + address_row + '"><?php echo $entry_city; ?></label>';
+	html += '    <div class="col-lg-9"><input type="text" name="address[' + address_row + '][city]" value="" placeholder="<?php echo $entry_city; ?>" id="input-city' + address_row + '" /></div>';
 	html += '  </div>'; 
 	
-	html += '  <div class="control-group required">';
-	html += '    <label class="col-lg-2 control-label" for="input-postcode' + address_row + '"><?php echo $entry_postcode; ?></label>';
-	html += '    <div class="col-lg-10"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode' + address_row + '" /></div>';
+	html += '  <div class="form-group required">';
+	html += '    <label class="col-lg-3 control-label" for="input-postcode' + address_row + '"><?php echo $entry_postcode; ?></label>';
+	html += '    <div class="col-lg-9"><input type="text" name="address[' + address_row + '][postcode]" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode' + address_row + '" /></div>';
 	html += '  </div>'; 
 
-	html += '  <div class="control-group required">';
-	html += '    <label class="col-lg-2 control-label" for="input-country' + address_row + '"><?php echo $entry_country; ?></label>';
-	html += '    <div class="col-lg-10"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');">';
+	html += '  <div class="form-group required">';
+	html += '    <label class="col-lg-3 control-label" for="input-country' + address_row + '"><?php echo $entry_country; ?></label>';
+	html += '    <div class="col-lg-9"><select name="address[' + address_row + '][country_id]" id="input-country' + address_row + '" onchange="country(this, \'' + address_row + '\', \'0\');">';
     html += '         <option value=""><?php echo $text_select; ?></option>';
     <?php foreach ($countries as $country) { ?>
     html += '         <option value="<?php echo $country['country_id']; ?>"><?php echo addslashes($country['name']); ?></option>';
@@ -387,14 +387,14 @@ function addAddress() {
     html += '      </select></div>';
 	html += '  </div>'; 
 
-	html += '  <div class="control-group required">';
-	html += '    <label class="col-lg-2 control-label" for="input-zone' + address_row + '"><?php echo $entry_zone; ?></label>';
-	html += '    <div class="col-lg-10"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '"><option value="false"><?php echo $this->language->get('text_none'); ?></option></select></div>';
+	html += '  <div class="form-group required">';
+	html += '    <label class="col-lg-3 control-label" for="input-zone' + address_row + '"><?php echo $entry_zone; ?></label>';
+	html += '    <div class="col-lg-9"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '"><option value="false"><?php echo $this->language->get('text_none'); ?></option></select></div>';
 	html += '  </div>'; 
 
 	html += '  <div class="form-group">';
-	html += '    <div class="col-lg-2 control-label"><?php echo $entry_default; ?></div>';
-	html += '    <div class="col-lg-10"><label class="radio"><input type="radio" name="address[' + address_row + '][default]" value="1" /></label></div>';
+	html += '    <div class="col-lg-3 control-label"><?php echo $entry_default; ?></div>';
+	html += '    <div class="col-lg-9"><label class="radio"><input type="radio" name="address[' + address_row + '][default]" value="1" /></label></div>';
 	html += '  </div>'; 
 								
     html += '</div>';
@@ -575,7 +575,7 @@ $('body').delegate('.button-ban-add', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				 $('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				 $('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 				
 				$('.alert').fadeIn('slow');
 			}
@@ -607,7 +607,7 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				 $('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				 $('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {

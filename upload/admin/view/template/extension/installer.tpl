@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -16,8 +16,8 @@
     </div>
     <div class="box-content form-horizontal">
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="button-upload"><?php echo $entry_upload; ?> <span class="help-block"><?php echo $help_upload; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="button-upload"><?php echo $entry_upload; ?> <span class="help-block"><?php echo $help_upload; ?></span></label>
+        <div class="col-lg-9">
           <button type="button" id="button-upload" class="btn btn-primary" onclick="$('input[name=\'file\']').val(''); $('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
           <?php if ($error_warning) { ?>
           <button type="button" id="button-clear" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
@@ -26,17 +26,17 @@
           <?php } ?>
         </div>
       </div>
-      <div id="progress" class="control-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_progress; ?></div>
-        <div class="col-lg-10">
+      <div id="progress" class="form-group">
+        <div class="col-lg-3 control-label"><?php echo $entry_progress; ?></div>
+        <div class="col-lg-9">
           <div class="progress progress-striped">
             <div class="bar" style="width: 0%;"></div>
           </div>
           <span class="help-block"></span></div>
       </div>
       <div class="form-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_overwrite; ?></div>
-        <div class="col-lg-10">
+        <div class="col-lg-3 control-label"><?php echo $entry_overwrite; ?></div>
+        <div class="col-lg-9">
           <textarea rows="10" readonly="readonly" id="overwrite" class="input-xxlarge"></textarea>
           <br />
           <br />
@@ -178,7 +178,7 @@ $('#button-clear').bind('click', function() {
 			$('.alert').remove();
 				
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} 
 		
 			if (json['success']) {

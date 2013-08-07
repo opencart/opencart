@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -18,18 +18,18 @@
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-currency" class="form-horizontal">
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-title"><?php echo $entry_title; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-title"><?php echo $entry_title; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
           <?php if ($error_title) { ?>
           <span class="error"><?php echo $error_title; ?></span>
           <?php } ?>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-code"><?php echo $entry_code; ?> <span class="help-block"><?php echo $help_code; ?></span></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?> <span class="help-block"><?php echo $help_code; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
           <?php if ($error_code) { ?>
           <span class="error"><?php echo $error_code; ?></span>
@@ -37,32 +37,32 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-symbol-left"><?php echo $entry_symbol_left; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-symbol-left"><?php echo $entry_symbol_left; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="symbol_left" value="<?php echo $symbol_left; ?>" placeholder="<?php echo $entry_symbol_left; ?>" id="input-symbol-left" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-symbol-right"><?php echo $entry_symbol_right; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-symbol-right"><?php echo $entry_symbol_right; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="symbol_right" value="<?php echo $symbol_right; ?>" placeholder="<?php echo $entry_symbol_right; ?>" id="input-symbol-right" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-decimal-place"><?php echo $entry_decimal_place; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-decimal-place"><?php echo $entry_decimal_place; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="decimal_place" value="<?php echo $decimal_place; ?>" placeholder="<?php echo $entry_decimal_place; ?>" id="input-decimal-place" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-value"><?php echo $entry_value; ?> <span class="help-block"><?php echo $help_value; ?></span></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-value"><?php echo $entry_value; ?> <span class="help-block"><?php echo $help_value; ?></span></label>
+        <div class="col-lg-9">
           <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
+        <div class="col-lg-9">
           <select name="status" id="input-status">
             <?php if ($status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>

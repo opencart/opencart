@@ -6,13 +6,7 @@
 </ul>
 <div class="row">
 <?php echo $column_left; ?>
-<?php if ($column_left) { ?>
-<div class="span9">
-<?php } elseif ($column_right) { ?>
-<div class="span9">
-<?php } else { ?>
-<div class="span12">
-<?php } ?>
+<div id="content" class="col-lg-9">
 <?php echo $content_top; ?>
 <h2><?php echo $heading_title; ?></h2>
 <?php if ($thumb || $description) { ?>

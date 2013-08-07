@@ -30,21 +30,21 @@
       <table class="table table-bordered">
         <thead>
           <tr>
-            <td class="center"><?php echo $column_image; ?></td>
-            <td class="left"><?php echo $column_name; ?></td>
-            <td class="left"><?php echo $column_model; ?></td>
-            <td class="left"><?php echo $column_quantity; ?></td>
-            <td class="right"><?php echo $column_price; ?></td>
-            <td class="right"><?php echo $column_total; ?></td>
+            <td class="text-center"><?php echo $column_image; ?></td>
+            <td class="text-left"><?php echo $column_name; ?></td>
+            <td class="text-left"><?php echo $column_model; ?></td>
+            <td class="text-left"><?php echo $column_quantity; ?></td>
+            <td class="text-right"><?php echo $column_price; ?></td>
+            <td class="text-right"><?php echo $column_total; ?></td>
           </tr>
         </thead>
         <tbody>
           <?php foreach ($products as $product) { ?>
           <tr>
-            <td class="center"><?php if ($product['thumb']) { ?>
+            <td class="text-center"><?php if ($product['thumb']) { ?>
               <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
               <?php } ?></td>
-            <td class="left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+            <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
               <?php if (!$product['stock']) { ?>
               <span class="stock">***</span>
               <?php } ?>
@@ -56,23 +56,23 @@
               <?php if ($product['reward']) { ?>
               <small><?php echo $product['reward']; ?></small>
               <?php } ?></td>
-            <td class="left"><?php echo $product['model']; ?></td>
-            <td class="left"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="input-mini" />
+            <td class="text-left"><?php echo $product['model']; ?></td>
+            <td class="text-left"><input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="input-mini" />
               <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn-link"><i class="icon-refresh"></i></button>
               <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-remove"></i></a></td>
-            <td class="right"><?php echo $product['price']; ?></td>
-            <td class="right"><?php echo $product['total']; ?></td>
+            <td class="text-right"><?php echo $product['price']; ?></td>
+            <td class="text-right"><?php echo $product['total']; ?></td>
           </tr>
           <?php } ?>
           <?php foreach ($vouchers as $vouchers) { ?>
           <tr>
             <td></td>
-            <td class="left"><?php echo $vouchers['description']; ?></td>
-            <td class="left"></td>
-            <td class="left"><input type="text" name="" value="1" size="1" disabled="disabled" class="input-mini" />
+            <td class="text-left"><?php echo $vouchers['description']; ?></td>
+            <td class="text-left"></td>
+            <td class="text-left"><input type="text" name="" value="1" size="1" disabled="disabled" class="input-mini" />
               <a href="<?php echo $vouchers['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-remove"></i></a></td>
-            <td class="right"><?php echo $vouchers['amount']; ?></td>
-            <td class="right"><?php echo $vouchers['amount']; ?></td>
+            <td class="text-right"><?php echo $vouchers['amount']; ?></td>
+            <td class="text-right"><?php echo $vouchers['amount']; ?></td>
           </tr>
           <?php } ?>
         </tbody>
@@ -89,7 +89,7 @@
             <div class="accordion-heading"><a href="#collapse-coupon" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_use_coupon; ?> <i class="icon-caret-down"></i></a></div>
             <div id="collapse-coupon" class="accordion-body collapse">
               <div class="accordion-inner form-inline">
-                <label class="control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
+                <label class="col-lg-2 control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
                 <input type="text" name="coupon" value="<?php echo $coupon; ?>" placeholder="<?php echo $entry_coupon; ?>" id="input-coupon" />
                 <input type="button" value="<?php echo $button_coupon; ?>" id="button-coupon" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
               </div>
@@ -101,7 +101,7 @@
             <div class="accordion-heading"><a href="#collapse-voucher" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_use_voucher; ?> <i class="icon-caret-down"></i></a></div>
             <div id="collapse-voucher" class="accordion-body collapse">
               <div class="accordion-inner form-inline">
-                <label class="control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
+                <label class="col-lg-2 control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
                 <input type="text" name="voucher" value="<?php echo $voucher; ?>" placeholder="<?php echo $entry_voucher; ?>" id="input-voucher" />
                 <input type="submit" value="<?php echo $button_voucher; ?>" id="button-voucher" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
               </div>
@@ -113,7 +113,7 @@
             <div class="accordion-heading"><a href="#collapse-reward" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_use_reward; ?> <i class="icon-caret-down"></i></a></div>
             <div id="collapse-reward" class="accordion-body collapse">
               <div class="accordion-inner form-inline">
-                <label class="control-label" for="input-reward"><?php echo $entry_reward; ?></label>
+                <label class="col-lg-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
                 <input type="text" name="reward" value="<?php echo $reward; ?>" placeholder="<?php echo $entry_reward; ?>" id="input-reward" />
                 <input type="submit" value="<?php echo $button_reward; ?>" id="button-reward" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
               </div>
@@ -128,8 +128,8 @@
                 <p><?php echo $text_shipping_detail; ?></p>
                 <div class="form-horizontal">
                   <div class="control-group required">
-                    <label class="control-label" for="input-country"><?php echo $entry_country; ?></label>
-                    <div class="controls">
+                    <label class="col-lg-2 control-label" for="input-country"><?php echo $entry_country; ?></label>
+                    <div class="col-lg-10">
                       <select name="country_id" id="input-country">
                         <option value=""><?php echo $text_select; ?></option>
                         <?php foreach ($countries as $country) { ?>
@@ -143,15 +143,15 @@
                     </div>
                   </div>
                   <div class="control-group required">
-                    <label class="control-label" for="input-zone"><?php echo $entry_zone; ?></label>
-                    <div class="controls">
+                    <label class="col-lg-2 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
+                    <div class="col-lg-10">
                       <select name="zone_id" id="input-zone">
                       </select>
                     </div>
                   </div>
                   <div class="control-group required">
-                    <label class="control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
-                    <div class="controls">
+                    <label class="col-lg-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
+                    <div class="col-lg-10">
                       <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
                     </div>
                   </div>
@@ -170,15 +170,15 @@
         <table class="table table-bordered">
           <?php foreach ($totals as $total) { ?>
           <tr>
-            <td class="right"><strong><?php echo $total['title']; ?>:</strong></td>
-            <td class="right"><?php echo $total['text']; ?></td>
+            <td class="text-right"><strong><?php echo $total['title']; ?>:</strong></td>
+            <td class="text-right"><?php echo $total['text']; ?></td>
           </tr>
           <?php } ?>
         </table>
       </div>
     </div>
     <div class="buttons">
-      <div class="pull-left"><a class="pull-left btn" href="<?php echo $continue; ?>"><?php echo $button_shopping; ?></a></div>
+      <div class="pull-left"><a class="btn" href="<?php echo $continue; ?>"><?php echo $button_shopping; ?></a></div>
       <div class="pull-right"><a class="btn btn-primary" href="<?php echo $checkout; ?>"><?php echo $button_checkout; ?></a></div>
     </div>
     <?php echo $content_bottom; ?></div>

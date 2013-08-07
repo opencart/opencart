@@ -26,55 +26,53 @@
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
-            <td width="1" class="center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-            <td class="left"><?php if ($sort == 'ad.name') { ?>
+            <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+            <td class="text-left"><?php if ($sort == 'ad.name') { ?>
               <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
               <?php } else { ?>
               <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
               <?php } ?></td>
-            <td class="left"><?php if ($sort == 'attribute_group') { ?>
+            <td class="text-left"><?php if ($sort == 'attribute_group') { ?>
               <a href="<?php echo $sort_attribute_group; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_attribute_group; ?></a>
               <?php } else { ?>
               <a href="<?php echo $sort_attribute_group; ?>"><?php echo $column_attribute_group; ?></a>
               <?php } ?></td>
-            <td class="right"><?php if ($sort == 'a.sort_order') { ?>
+            <td class="text-right"><?php if ($sort == 'a.sort_order') { ?>
               <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
               <?php } else { ?>
               <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
               <?php } ?></td>
-            <td class="right"><?php echo $column_action; ?></td>
+            <td class="text-right"><?php echo $column_action; ?></td>
           </tr>
         </thead>
         <tbody>
           <?php if ($attributes) { ?>
           <?php foreach ($attributes as $attribute) { ?>
           <tr>
-            <td class="center"><?php if ($attribute['selected']) { ?>
+            <td class="text-center"><?php if ($attribute['selected']) { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" checked="checked" />
               <?php } else { ?>
               <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" />
               <?php } ?></td>
-            <td class="left"><?php echo $attribute['name']; ?></td>
-            <td class="left"><?php echo $attribute['attribute_group']; ?></td>
-            <td class="right"><?php echo $attribute['sort_order']; ?></td>
-            <td class="right"><?php foreach ($attribute['action'] as $action) { ?>
+            <td class="text-left"><?php echo $attribute['name']; ?></td>
+            <td class="text-left"><?php echo $attribute['attribute_group']; ?></td>
+            <td class="text-right"><?php echo $attribute['sort_order']; ?></td>
+            <td class="text-right"><?php foreach ($attribute['action'] as $action) { ?>
               [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
               <?php } ?></td>
           </tr>
           <?php } ?>
           <?php } else { ?>
           <tr>
-            <td class="center" colspan="5"><?php echo $text_no_results; ?></td>
+            <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
           </tr>
           <?php } ?>
         </tbody>
       </table>
     </form>
-    <div class="row-fluid">
-      <div class="span6"><?php echo $pagination; ?></div>
-      <div class="span6">
-        <div class="results"><?php echo $results; ?></div>
-      </div>
+    <div class="row">
+      <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
+      <div class="col-lg-6 text-right"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

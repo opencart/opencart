@@ -10,17 +10,17 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="left" colspan="2"><?php echo $text_order_detail; ?></td>
+          <td class="text-left" colspan="2"><?php echo $text_order_detail; ?></td>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="left"><?php if ($invoice_no) { ?>
+          <td class="text-left"><?php if ($invoice_no) { ?>
             <b><?php echo $text_invoice_no; ?></b> <?php echo $invoice_no; ?><br />
             <?php } ?>
             <b><?php echo $text_order_id; ?></b> #<?php echo $order_id; ?><br />
             <b><?php echo $text_date_added; ?></b> <?php echo $date_added; ?></td>
-          <td class="left"><?php if ($payment_method) { ?>
+          <td class="text-left"><?php if ($payment_method) { ?>
             <b><?php echo $text_payment_method; ?></b> <?php echo $payment_method; ?><br />
             <?php } ?>
             <?php if ($shipping_method) { ?>
@@ -32,17 +32,17 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="left"><?php echo $text_payment_address; ?></td>
+          <td class="text-left"><?php echo $text_payment_address; ?></td>
           <?php if ($shipping_address) { ?>
-          <td class="left"><?php echo $text_shipping_address; ?></td>
+          <td class="text-left"><?php echo $text_shipping_address; ?></td>
           <?php } ?>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="left"><?php echo $payment_address; ?></td>
+          <td class="text-left"><?php echo $payment_address; ?></td>
           <?php if ($shipping_address) { ?>
-          <td class="left"><?php echo $shipping_address; ?></td>
+          <td class="text-left"><?php echo $shipping_address; ?></td>
           <?php } ?>
         </tr>
       </tbody>
@@ -50,11 +50,11 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="left"><?php echo $column_name; ?></td>
-          <td class="left"><?php echo $column_model; ?></td>
-          <td class="right"><?php echo $column_quantity; ?></td>
-          <td class="right"><?php echo $column_price; ?></td>
-          <td class="right"><?php echo $column_total; ?></td>
+          <td class="text-left"><?php echo $column_name; ?></td>
+          <td class="text-left"><?php echo $column_model; ?></td>
+          <td class="text-right"><?php echo $column_quantity; ?></td>
+          <td class="text-right"><?php echo $column_price; ?></td>
+          <td class="text-right"><?php echo $column_total; ?></td>
           <?php if ($products) { ?>
           <td style="width: 20px;"></td>
           <?php } ?>
@@ -63,25 +63,25 @@
       <tbody>
         <?php foreach ($products as $product) { ?>
         <tr>
-          <td class="left"><?php echo $product['name']; ?>
+          <td class="text-left"><?php echo $product['name']; ?>
             <?php foreach ($product['option'] as $option) { ?>
             <br />
             &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
             <?php } ?></td>
-          <td class="left"><?php echo $product['model']; ?></td>
-          <td class="right"><?php echo $product['quantity']; ?></td>
-          <td class="right"><?php echo $product['price']; ?></td>
-          <td class="right"><?php echo $product['total']; ?></td>
-          <td class="right"><a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>"><i class="icon-reply"></i></a></td>
+          <td class="text-left"><?php echo $product['model']; ?></td>
+          <td class="text-right"><?php echo $product['quantity']; ?></td>
+          <td class="text-right"><?php echo $product['price']; ?></td>
+          <td class="text-right"><?php echo $product['total']; ?></td>
+          <td class="text-right"><a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>"><i class="icon-reply"></i></a></td>
         </tr>
         <?php } ?>
         <?php foreach ($vouchers as $voucher) { ?>
         <tr>
-          <td class="left"><?php echo $voucher['description']; ?></td>
-          <td class="left"></td>
-          <td class="right">1</td>
-          <td class="right"><?php echo $voucher['amount']; ?></td>
-          <td class="right"><?php echo $voucher['amount']; ?></td>
+          <td class="text-left"><?php echo $voucher['description']; ?></td>
+          <td class="text-left"></td>
+          <td class="text-right">1</td>
+          <td class="text-right"><?php echo $voucher['amount']; ?></td>
+          <td class="text-right"><?php echo $voucher['amount']; ?></td>
           <?php if ($products) { ?>
           <td></td>
           <?php } ?>
@@ -92,8 +92,8 @@
         <?php foreach ($totals as $total) { ?>
         <tr>
           <td colspan="3"></td>
-          <td class="right"><b><?php echo $total['title']; ?>:</b></td>
-          <td class="right"><?php echo $total['text']; ?></td>
+          <td class="text-right"><b><?php echo $total['title']; ?>:</b></td>
+          <td class="text-right"><?php echo $total['text']; ?></td>
           <?php if ($products) { ?>
           <td></td>
           <?php } ?>
@@ -105,12 +105,12 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="left"><?php echo $text_comment; ?></td>
+          <td class="text-left"><?php echo $text_comment; ?></td>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td class="left"><?php echo $comment; ?></td>
+          <td class="text-left"><?php echo $comment; ?></td>
         </tr>
       </tbody>
     </table>
@@ -120,17 +120,17 @@
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
-          <td class="left"><?php echo $column_date_added; ?></td>
-          <td class="left"><?php echo $column_status; ?></td>
-          <td class="left"><?php echo $column_comment; ?></td>
+          <td class="text-left"><?php echo $column_date_added; ?></td>
+          <td class="text-left"><?php echo $column_status; ?></td>
+          <td class="text-left"><?php echo $column_comment; ?></td>
         </tr>
       </thead>
       <tbody>
         <?php foreach ($histories as $history) { ?>
         <tr>
-          <td class="left"><?php echo $history['date_added']; ?></td>
-          <td class="left"><?php echo $history['status']; ?></td>
-          <td class="left"><?php echo $history['comment']; ?></td>
+          <td class="text-left"><?php echo $history['date_added']; ?></td>
+          <td class="text-left"><?php echo $history['status']; ?></td>
+          <td class="text-left"><?php echo $history['comment']; ?></td>
         </tr>
         <?php } ?>
       </tbody>

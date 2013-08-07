@@ -16,8 +16,8 @@
     <table class="table table-bordered table-hover">
       <?php foreach ($addresses as $result) { ?>
       <tr>
-        <td class="left"><?php echo $result['address']; ?></td>
-        <td class="right"><a href="<?php echo $result['update']; ?>" class="btn btn-info"><?php echo $button_edit; ?></a> &nbsp; <a href="<?php echo $result['delete']; ?>" class="btn btn-danger"><?php echo $button_delete; ?></a></td>
+        <td class="text-left"><?php echo $result['address']; ?></td>
+        <td class="text-right"><a href="<?php echo $result['update']; ?>" class="btn btn-info"><?php echo $button_edit; ?></a> &nbsp; <a href="<?php echo $result['delete']; ?>" class="btn btn-danger"><?php echo $button_delete; ?></a></td>
       </tr>
       <?php } ?>
     </table>

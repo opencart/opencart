@@ -86,22 +86,22 @@
         <div class="tab-pane form-horizontal" id="tab-reviews">
           <div id="review"></div>
           <h2 id="review-title"><?php echo $text_write; ?></h2>
-          <div class="control-group">
-            <div class="control-label"> <?php echo $entry_name; ?> </div>
-            <div class="controls">
+          <div class="form-group">
+            <div class="col-lg-2 control-label"> <?php echo $entry_name; ?> </div>
+            <div class="col-lg-10">
               <input type="text" name="name" value="" />
             </div>
           </div>
-          <div class="control-group">
-            <div class="control-label"> <?php echo $entry_review; ?> </div>
-            <div class="controls">
+          <div class="form-group">
+            <div class="col-lg-2 control-label"> <?php echo $entry_review; ?> </div>
+            <div class="col-lg-10">
               <textarea name="text" style="resize: vertical; min-height: 160px;" class="input-block-level"></textarea>
               <div class="alert alert-form"><?php echo $text_note; ?></div>
             </div>
           </div>
-          <div class="control-group">
-            <div class="control-label"> <?php echo $entry_rating; ?> </div>
-            <div class="controls"> <span><?php echo $entry_bad; ?></span>&nbsp;
+          <div class="form-group">
+            <div class="col-lg-2 control-label"> <?php echo $entry_rating; ?> </div>
+            <div class="col-lg-10"> <span><?php echo $entry_bad; ?></span>&nbsp;
               <input type="radio" name="rating" value="1" />
               &nbsp;
               <input type="radio" name="rating" value="2" />
@@ -113,9 +113,9 @@
               <input type="radio" name="rating" value="5" />
               &nbsp;<span><?php echo $entry_good; ?></span> </div>
           </div>
-          <div class="control-group">
-            <div class="control-label"> <?php echo $entry_captcha; ?> </div>
-            <div class="controls">
+          <div class="form-group">
+            <div class="col-lg-2 control-label"> <?php echo $entry_captcha; ?> </div>
+            <div class="col-lg-10">
               <input type="text" name="captcha" value="" />
               <br />
               <br />
@@ -193,7 +193,7 @@
         <h3><?php echo $text_option; ?></h3>
         <?php foreach ($options as $option) { ?>
         <?php if ($option['type'] == 'select') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
@@ -216,7 +216,7 @@
         </div>
         <?php } ?>
         <?php if ($option['type'] == 'radio') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
@@ -237,7 +237,7 @@
         </div>
         <?php } ?>
         <?php if ($option['type'] == 'checkbox') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
@@ -258,7 +258,7 @@
         </div>
         <?php } ?>
         <?php if ($option['type'] == 'image') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option option-image" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
@@ -279,7 +279,7 @@
         </div>
         <?php } ?>
         <?php if ($option['type'] == 'text') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
@@ -291,7 +291,7 @@
         </div>
         <?php } ?>
         <?php if ($option['type'] == 'textarea') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
@@ -303,7 +303,7 @@
         </div>
         <?php } ?>
         <?php if ($option['type'] == 'file') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
@@ -316,7 +316,7 @@
         </div>
         <?php } ?>
         <?php if ($option['type'] == 'date') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
@@ -328,7 +328,7 @@
         </div>
         <?php } ?>
         <?php if ($option['type'] == 'datetime') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
@@ -340,7 +340,7 @@
         </div>
         <?php } ?>
         <?php if ($option['type'] == 'time') { ?>
-        <div class="control-group">
+        <div class="form-group">
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>

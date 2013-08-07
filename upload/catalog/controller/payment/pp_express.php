@@ -221,7 +221,13 @@ class ControllerPaymentPPExpress extends Controller {
                     $this->session->data['shipping_country_id'] = '';
                 }
 
-                $zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `name` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOSTATE']) . "' AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "'")->row;
+                if (isset($result['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE'])) {
+                    $returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE'];
+                } else {
+                    $returned_shipping_zone = '';
+                }
+                
+                $zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `name` = '" . $this->db->escape($returned_shipping_zone) . "' AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "'")->row;
 
                 if ($zone_info) {
                     $this->session->data['guest']['shipping']['zone'] = $zone_info['name'];
@@ -309,7 +315,6 @@ class ControllerPaymentPPExpress extends Controller {
                     $country_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE']) . "' AND `status` = '1' LIMIT 1")->row;
                     $zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `name` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOSTATE']) . "' AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "'")->row;
 
-
                     $address_data= array(
                         'firstname' => $shipping_first_name,
                         'lastname' => $shipping_last_name,
@@ -317,7 +322,7 @@ class ControllerPaymentPPExpress extends Controller {
                         'company_id' => '',
                         'tax_id' => '',
                         'address_1' => $result['PAYMENTREQUEST_0_SHIPTOSTREET'],
-                        'address_2' => $result['PAYMENTREQUEST_0_SHIPTOSTREET2'],
+                        'address_2' => (isset($result['PAYMENTREQUEST_0_SHIPTOSTREET2']) ? $result['PAYMENTREQUEST_0_SHIPTOSTREET2'] : ''),
                         'postcode' => $result['PAYMENTREQUEST_0_SHIPTOZIP'],
                         'city' => $result['PAYMENTREQUEST_0_SHIPTOCITY'],
                         'zone_id' => (isset($zone_info['zone_id']) ? $zone_info['zone_id'] : 0),

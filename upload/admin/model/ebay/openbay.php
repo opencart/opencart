@@ -599,7 +599,11 @@ class ModelEbayOpenbay extends Model{
             $this->load->model('catalog/product');
             $this->load->model('openstock/openstock');
 
-            $varData['option_list'] = $data['optArray'];
+            //get the options list for this product
+            $opts = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+            reset($opts);
+            $varData['option_list'] = base64_encode(serialize($opts[key($opts)]['opts']));
+
             $varData['groups']      = $data['optGroupArray'];
             $varData['related']     = $data['optGroupRelArray'];
             $varData['id']          = $data['itemId'];

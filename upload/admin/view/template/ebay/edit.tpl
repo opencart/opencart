@@ -155,10 +155,6 @@ function load(){
 
                         html = '';
 
-                        if(i == 0){
-                            $('#stdMatrixTbl').append('<input type="hidden" name="optArray" value="'+v.local.base64+'" />');
-                        }
-
                         $('#stdMatrixTbl').append('<input type="hidden" name="opt['+i+'][sku]" value="'+v.ebay.SKU+'" />');
 
                         html +='<tr>';

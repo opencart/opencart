@@ -15,7 +15,7 @@
 </div>
 <?php } ?>
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><?php echo $error_warning; ?>
+<div class="alert alert-danger"><?php echo $error_warning; ?>
   <button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
 <?php } ?>
@@ -89,7 +89,7 @@
             <div class="accordion-heading"><a href="#collapse-coupon" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_use_coupon; ?> <i class="icon-caret-down"></i></a></div>
             <div id="collapse-coupon" class="accordion-body collapse">
               <div class="accordion-inner form-inline">
-                <label class="col-lg-2 control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
+                <label class="col-lg-3 control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
                 <input type="text" name="coupon" value="<?php echo $coupon; ?>" placeholder="<?php echo $entry_coupon; ?>" id="input-coupon" />
                 <input type="button" value="<?php echo $button_coupon; ?>" id="button-coupon" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
               </div>
@@ -101,7 +101,7 @@
             <div class="accordion-heading"><a href="#collapse-voucher" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_use_voucher; ?> <i class="icon-caret-down"></i></a></div>
             <div id="collapse-voucher" class="accordion-body collapse">
               <div class="accordion-inner form-inline">
-                <label class="col-lg-2 control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
+                <label class="col-lg-3 control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
                 <input type="text" name="voucher" value="<?php echo $voucher; ?>" placeholder="<?php echo $entry_voucher; ?>" id="input-voucher" />
                 <input type="submit" value="<?php echo $button_voucher; ?>" id="button-voucher" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
               </div>
@@ -113,7 +113,7 @@
             <div class="accordion-heading"><a href="#collapse-reward" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_use_reward; ?> <i class="icon-caret-down"></i></a></div>
             <div id="collapse-reward" class="accordion-body collapse">
               <div class="accordion-inner form-inline">
-                <label class="col-lg-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
+                <label class="col-lg-3 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
                 <input type="text" name="reward" value="<?php echo $reward; ?>" placeholder="<?php echo $entry_reward; ?>" id="input-reward" />
                 <input type="submit" value="<?php echo $button_reward; ?>" id="button-reward" data-loading-text="<?php echo $text_loading; ?>"  class="btn" />
               </div>
@@ -127,9 +127,9 @@
               <div class="accordion-inner">
                 <p><?php echo $text_shipping_detail; ?></p>
                 <div class="form-horizontal">
-                  <div class="control-group required">
-                    <label class="col-lg-2 control-label" for="input-country"><?php echo $entry_country; ?></label>
-                    <div class="col-lg-10">
+                  <div class="form-group required">
+                    <label class="col-lg-3 control-label" for="input-country"><?php echo $entry_country; ?></label>
+                    <div class="col-lg-9">
                       <select name="country_id" id="input-country">
                         <option value=""><?php echo $text_select; ?></option>
                         <?php foreach ($countries as $country) { ?>
@@ -142,16 +142,16 @@
                       </select>
                     </div>
                   </div>
-                  <div class="control-group required">
-                    <label class="col-lg-2 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
-                    <div class="col-lg-10">
+                  <div class="form-group required">
+                    <label class="col-lg-3 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
+                    <div class="col-lg-9">
                       <select name="zone_id" id="input-zone">
                       </select>
                     </div>
                   </div>
-                  <div class="control-group required">
-                    <label class="col-lg-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
-                    <div class="col-lg-10">
+                  <div class="form-group required">
+                    <label class="col-lg-3 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
+                    <div class="col-lg-9">
                       <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
                     </div>
                   </div>
@@ -201,7 +201,7 @@ $('#button-coupon').on('click', function() {
 			$('.alert').remove();   
 
 			if (json['error']) {
-				$('#content').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}  
@@ -229,7 +229,7 @@ $('#button-voucher').on('click', function() {
 			$('.alert').remove();   
 
 			if (json['error']) {
-				$('#content').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}  
@@ -257,7 +257,7 @@ $('#button-reward').on('click', function() {
 			$('.alert').remove();   
 
 			if (json['error']) {
-				$('#content').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('#content').prepend('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}  
@@ -286,7 +286,7 @@ $('#button-quote').on('click', function() {
 		
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('#content').prepend('<div class="alert alert-error"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('#content').prepend('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			
 					$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 				}  

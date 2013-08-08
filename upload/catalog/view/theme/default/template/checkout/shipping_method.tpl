@@ -22,7 +22,7 @@
     </p>
     <?php } ?>
     <?php } else { ?>
-    <div class="alert alert-error"><?php echo $shipping_method['error']; ?></div>
+    <div class="alert alert-danger"><?php echo $shipping_method['error']; ?></div>
     <?php } ?>
     <?php } ?>
     <?php } ?>

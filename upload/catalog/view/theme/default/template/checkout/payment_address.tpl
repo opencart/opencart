@@ -24,51 +24,51 @@
     </p>
     <?php } ?>
     <div id="payment-new" class="form-horizontal" style="display: <?php echo ($addresses ? 'none' : 'block'); ?>;">
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="firstname" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" />
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="lastname" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="company" value="" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" />
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="address_1" value="" placeholder="<?php echo $entry_address_1; ?>" />
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="address_2" value="" placeholder="<?php echo $entry_address_2; ?>" id="payment-address-2" />
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="city" value="" placeholder="<?php echo $entry_city; ?>" id="input-payment-city" />
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
+        <div class="col-lg-9">
           <input type="text" name="postcode" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" />
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
+        <div class="col-lg-9">
           <select name="country_id" id="input-payment-country">
             <option value=""><?php echo $text_select; ?></option>
             <?php foreach ($countries as $country) { ?>
@@ -81,9 +81,9 @@
           </select>
         </div>
       </div>
-      <div class="control-group required">
-        <label class="col-lg-2 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
-        <div class="col-lg-10">
+      <div class="form-group required">
+        <label class="col-lg-3 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
+        <div class="col-lg-9">
           <select name="zone_id" id="input-payment-zone">
           </select>
         </div>

@@ -42,7 +42,7 @@ body {
       </div>
     </div>
   </div>
-  <div id="directory" class="well well-small">
+  <div id="directory" class="well">
     <ul class="nav nav-list">
       <li><a href=""><i class="icon-caret-right"></i> Image</a></li>
     </ul>

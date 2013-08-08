@@ -5,7 +5,7 @@
   <?php } ?>
 </ul>
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><?php echo $error_warning; ?></div>
+<div class="alert alert-danger"><?php echo $error_warning; ?></div>
 <?php } ?>
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
@@ -14,9 +14,9 @@
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <fieldset>
         <legend><?php echo $text_your_email; ?></legend>
-        <div class="control-group required">
-          <label class="col-lg-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
-          <div class="col-lg-10">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
+          <div class="col-lg-9">
             <input type="email" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-email" />
           </div>
         </div>

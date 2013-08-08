@@ -87,21 +87,21 @@
           <div id="review"></div>
           <h2 id="review-title"><?php echo $text_write; ?></h2>
           <div class="form-group">
-            <div class="col-lg-2 control-label"> <?php echo $entry_name; ?> </div>
-            <div class="col-lg-10">
+            <div class="col-lg-3 control-label"> <?php echo $entry_name; ?> </div>
+            <div class="col-lg-9">
               <input type="text" name="name" value="" />
             </div>
           </div>
           <div class="form-group">
-            <div class="col-lg-2 control-label"> <?php echo $entry_review; ?> </div>
-            <div class="col-lg-10">
+            <div class="col-lg-3 control-label"> <?php echo $entry_review; ?> </div>
+            <div class="col-lg-9">
               <textarea name="text" style="resize: vertical; min-height: 160px;" class="input-block-level"></textarea>
               <div class="alert alert-form"><?php echo $text_note; ?></div>
             </div>
           </div>
           <div class="form-group">
-            <div class="col-lg-2 control-label"> <?php echo $entry_rating; ?> </div>
-            <div class="col-lg-10"> <span><?php echo $entry_bad; ?></span>&nbsp;
+            <div class="col-lg-3 control-label"> <?php echo $entry_rating; ?> </div>
+            <div class="col-lg-9"> <span><?php echo $entry_bad; ?></span>&nbsp;
               <input type="radio" name="rating" value="1" />
               &nbsp;
               <input type="radio" name="rating" value="2" />
@@ -114,8 +114,8 @@
               &nbsp;<span><?php echo $entry_good; ?></span> </div>
           </div>
           <div class="form-group">
-            <div class="col-lg-2 control-label"> <?php echo $entry_captcha; ?> </div>
-            <div class="col-lg-10">
+            <div class="col-lg-3 control-label"> <?php echo $entry_captcha; ?> </div>
+            <div class="col-lg-9">
               <input type="text" name="captcha" value="" />
               <br />
               <br />

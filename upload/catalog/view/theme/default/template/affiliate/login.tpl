@@ -8,7 +8,7 @@
 <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?></div>
 <?php } ?>
 <?php if ($error_warning) { ?>
-<div class="alert alert-error"><?php echo $error_warning; ?></div>
+<div class="alert alert-danger"><?php echo $error_warning; ?></div>
 <?php } ?>
 <div class="row"><?php echo $column_left; ?>
   <div id="content" class="span9"><?php echo $content_top; ?>
@@ -27,14 +27,14 @@
           <p><strong><?php echo $text_i_am_returning_affiliate; ?></strong></p>
           <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
             <div class="form-group">
-              <label class="col-lg-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
-              <div class="col-lg-10">
+              <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
+              <div class="col-lg-9">
                 <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
-              <div class="col-lg-10">
+              <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?></label>
+              <div class="col-lg-9">
                 <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
                 <br />
                 <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a> </div>

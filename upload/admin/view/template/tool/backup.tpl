@@ -1,12 +1,12 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -21,8 +21,8 @@
     </div>
     <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
       <div class="form-group">
-        <label class="col-lg-2 control-label" for="input-import"><?php echo $entry_restore; ?></label>
-        <div class="col-lg-10">
+        <label class="col-lg-3 control-label" for="input-import"><?php echo $entry_restore; ?></label>
+        <div class="col-lg-9">
           <input type="file" name="import" id="input-import" />
         </div>
       </div>
@@ -30,9 +30,9 @@
     </form>
     <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="backup">
       <div class="form-group">
-        <div class="col-lg-2 control-label"><?php echo $entry_backup; ?></div>
-        <div class="col-lg-10">
-          <div class="well well-small scrollbox">
+        <div class="col-lg-3 control-label"><?php echo $entry_backup; ?></div>
+        <div class="col-lg-9">
+          <div class="well">
             <?php foreach ($tables as $table) { ?>
             <label class="checkbox">
               <input type="checkbox" name="backup[]" value="<?php echo $table; ?>" checked="checked" />

@@ -310,9 +310,9 @@
                 <td class="text-right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                 <td class="text-left"><?php echo $ip['date_added']; ?></td>
                 <td class="text-right"><?php if ($ip['ban_ip']) { ?>
-                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
+                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-xs button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
                   <?php } else { ?>
-                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
+                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-xs button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
                   <?php } ?></td>
               </tr>
               <?php } ?>
@@ -583,7 +583,7 @@ $('body').delegate('.button-ban-add', 'click', function() {
 			if (json['success']) {
 				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
                 
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-xs button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
 			}
 		}
 	});	
@@ -613,7 +613,7 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 			if (json['success']) {
 				 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-xs button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
 			}
 		}
 	});	

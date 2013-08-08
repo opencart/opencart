@@ -21,56 +21,63 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="input-xxlarge" />
+          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
           <?php if ($error_name) { ?>
           <span class="error"><?php echo $error_name; ?></span>
           <?php } ?>
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-3 control-label"><?php echo $entry_store; ?></div>
+        <label class="col-lg-3 control-label"><?php echo $entry_store; ?></label>
         <div class="col-lg-9">
-          <label class="checkbox">
-            <?php if (in_array(0, $manufacturer_store)) { ?>
-            <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
-            <?php echo $text_default; ?>
-            <?php } else { ?>
-            <input type="checkbox" name="manufacturer_store[]" value="0" />
-            <?php echo $text_default; ?>
-            <?php } ?>
-          </label>
+          <div class="checkbox">
+            <label>
+              <?php if (in_array(0, $manufacturer_store)) { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="0" checked="checked" />
+              <?php echo $text_default; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="0" />
+              <?php echo $text_default; ?>
+              <?php } ?>
+            </label>
+          </div>
           <?php foreach ($stores as $store) { ?>
-          <label class="checkbox">
-            <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
-            <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-            <?php echo $store['name']; ?>
-            <?php } else { ?>
-            <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" />
-            <?php echo $store['name']; ?>
-            <?php } ?>
-          </label>
+          <div class="checkbox">
+            <label>
+              <?php if (in_array($store['store_id'], $manufacturer_store)) { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+              <?php echo $store['name']; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="manufacturer_store[]" value="<?php echo $store['store_id']; ?>" />
+              <?php echo $store['name']; ?>
+              <?php } ?>
+            </label>
+          </div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-keyword"><?php echo $entry_keyword; ?> <span class="help-block"><?php echo $help_keyword; ?></span></label>
+        <label class="col-lg-3 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-        </div>
+          <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
+          <span class="help-block"><?php echo $help_keyword; ?></span> </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_image; ?></label>
-        <div class="col-lg-9">
-          <div class="image"><img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
-            <input type="hidden" name="image" value="<?php echo $image; ?>" />
-            <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+        <label class="col-lg-3 control-label"><?php echo $entry_image; ?></label>
+        <div class="col-lg-9"> <img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
+          <input type="hidden" name="image" value="<?php echo $image; ?>" />
+          <br />
+          <br />
+          <div class="btn-group">
+            <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
+            <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
           </div>
         </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" class="input-mini" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" />
+          <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
         </div>
       </div>
     </form>

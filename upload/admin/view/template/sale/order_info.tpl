@@ -8,7 +8,7 @@
   <div class="panel">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-info-sign"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $invoice; ?>" target="_blank" class="btn"><i class="icon-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <div class="buttons"><a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="icon-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <ul class="nav nav-tabs">
       <li class="active"><a href="#tab-order" data-toggle="tab"><?php echo $tab_order; ?></a></li>
@@ -34,7 +34,7 @@
             <td><?php if ($invoice_no) { ?>
               <?php echo $invoice_no; ?>
               <?php } else { ?>
-              <button id="button-invoice" class="btn btn-mini"><i class="icon-cog"></i> <?php echo $text_generate; ?></button>
+              <button id="button-invoice" class="btn btn-xs"><i class="icon-cog"></i> <?php echo $text_generate; ?></button>
               <?php } ?></td>
           </tr>
           <tr>
@@ -88,9 +88,9 @@
               <?php if ($customer && $credit) { ?>
               <?php if (!$credit_total) { ?>
               <span id="credit"><b>[</b> <a id="credit-add"><?php echo $text_credit_add; ?></a> <b>]</b></span>
-              <button id="button-credit-add" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>
+              <button id="button-credit-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>
               <?php } else { ?>
-              <button id="button-credit-remove" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_credit_remove; ?></button>
+              <button id="button-credit-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_credit_remove; ?></button>
               <?php } ?>
               <?php } ?></td>
           </tr>
@@ -99,9 +99,9 @@
             <td><?php echo $text_reward; ?></td>
             <td><?php echo $reward; ?>
               <?php if (!$reward_total) { ?>
-              <button id="button-reward-add" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>
+              <button id="button-reward-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>
               <?php } else { ?>
-              <button id="button-reward-remove" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>
+              <button id="button-reward-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>
               <?php } ?></td>
           </tr>
           <?php } ?>
@@ -126,9 +126,9 @@
             <td><?php echo $text_commission; ?></td>
             <td><?php echo $commission; ?>
               <?php if (!$commission_total) { ?>
-              <button id="button-commission-add" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_commission_add; ?></button>
+              <button id="button-commission-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_commission_add; ?></button>
               <?php } else { ?>
-              <button id="button-commission-remove" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>
+              <button id="button-commission-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>
               <?php } ?></td>
           </tr>
           <?php } ?>
@@ -350,32 +350,34 @@
         </table>
         <?php } ?>
       </div>
-      <div class="tab-pane form-horizontal" id="tab-history">
+      <div class="tab-pane " id="tab-history">
         <div id="history"></div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-          <div class="col-lg-9">
-            <select name="order_status_id" id="input-order-status">
-              <?php foreach ($order_statuses as $order_statuses) { ?>
-              <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
-              <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $order_statuses['order_status_id']; ?>"><?php echo $order_statuses['name']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
+        <div class="form-horizontal">
+          <div class="form-group">
+            <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+            <div class="col-lg-9">
+              <select name="order_status_id" id="input-order-status" class="form-control">
+                <?php foreach ($order_statuses as $order_statuses) { ?>
+                <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
+                <option value="<?php echo $order_statuses['order_status_id']; ?>" selected="selected"><?php echo $order_statuses['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $order_statuses['order_status_id']; ?>"><?php echo $order_statuses['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
-          <div class="col-lg-9">
-            <input type="checkbox" name="notify" value="1" id="input-notify" />
+          <div class="form-group">
+            <label class="col-lg-3 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+            <div class="col-lg-9">
+              <input type="checkbox" name="notify" value="1" id="input-notify" />
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-          <div class="col-lg-9">
-            <textarea name="comment" rows="8" id="input-comment" class="input-xxlarge"></textarea>
+          <div class="form-group">
+            <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+            <div class="col-lg-9">
+              <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
+            </div>
           </div>
         </div>
         <button id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
@@ -741,7 +743,7 @@ $(document).delegate('#button-credit-add', 'click', function() {
 				
 				$('.alert-success').fadeIn('slow');
 				
-				$('#button-credit-add').replaceWith('<button id="button-credit-remove" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_credit_remove; ?></button>');
+				$('#button-credit-add').replaceWith('<button id="button-credit-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_credit_remove; ?></button>');
 			}
 		}
 	});
@@ -772,7 +774,7 @@ $(document).delegate('#button-credit-remove', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-credit-remove').replaceWith('<button id="button-credit-add" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>');
+				$('#button-credit-remove').replaceWith('<button id="button-credit-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>');
 			}
 		}
 	});
@@ -801,7 +803,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>');
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>');
 			}
 		}
 	});
@@ -830,7 +832,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-mini"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>');
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>');
 			}
 		}
 	});
@@ -861,7 +863,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
                 
-				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>');
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>');
 			}
 		}
 	});
@@ -890,7 +892,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-mini"><i class="icon-minus-sign"></i> <?php echo $text_commission_add; ?></button>');
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_add; ?></button>');
 			}
 		}
 	});

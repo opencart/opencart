@@ -36,7 +36,7 @@
               <div class="form-group required">
                 <label class="col-lg-3 control-label" for="input-title<?php echo $language['language_id']; ?>"><?php echo $entry_title; ?></label>
                 <div class="col-lg-9">
-                  <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title<?php echo $language['language_id']; ?>" class="input-xxlarge" />
+                  <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title<?php echo $language['language_id']; ?>" class="form-control" />
                   <?php if (isset($error_title[$language['language_id']])) { ?>
                   <span class="error"><?php echo $error_title[$language['language_id']]; ?></span>
                   <?php } ?>
@@ -45,7 +45,7 @@
               <div class="form-group required">
                 <label class="col-lg-3 control-label" for="input-description"><?php echo $entry_description; ?></label>
                 <div class="col-lg-9">
-                  <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
+                  <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
                   <?php if (isset($error_description[$language['language_id']])) { ?>
                   <span class="error"><?php echo $error_description[$language['language_id']]; ?></span>
                   <?php } ?>
@@ -57,38 +57,42 @@
         </div>
         <div class="tab-pane" id="tab-data">
           <div class="form-group">
-            <div class="col-lg-3 control-label"><?php echo $entry_store; ?></div>
+            <label class="col-lg-3 control-label"><?php echo $entry_store; ?></label>
             <div class="col-lg-9">
-              <label class="checkbox">
-                <?php if (in_array(0, $information_store)) { ?>
-                <input type="checkbox" name="information_store[]" value="0" checked="checked" />
-                <?php echo $text_default; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="information_store[]" value="0" />
-                <?php echo $text_default; ?>
-                <?php } ?>
-              </label>
+              <div class="checkbox">
+                <label>
+                  <?php if (in_array(0, $information_store)) { ?>
+                  <input type="checkbox" name="information_store[]" value="0" checked="checked" />
+                  <?php echo $text_default; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="information_store[]" value="0" />
+                  <?php echo $text_default; ?>
+                  <?php } ?>
+                </label>
+              </div>
               <?php foreach ($stores as $store) { ?>
-              <label class="checkbox">
-                <?php if (in_array($store['store_id'], $information_store)) { ?>
-                <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                <?php echo $store['name']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" />
-                <?php echo $store['name']; ?>
-                <?php } ?>
-              </label>
+              <div class="checkbox">
+                <label>
+                  <?php if (in_array($store['store_id'], $information_store)) { ?>
+                  <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                  <?php echo $store['name']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="information_store[]" value="<?php echo $store['store_id']; ?>" />
+                  <?php echo $store['name']; ?>
+                  <?php } ?>
+                </label>
+              </div>
               <?php } ?>
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-keyword"><?php echo $entry_keyword; ?> <span class="help-block"><?php echo $help_keyword; ?></span></label>
+            <label class="col-lg-3 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" />
-            </div>
+              <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
+              <span class="help-block"><?php echo $help_keyword; ?></span> </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-bottom"><?php echo $entry_bottom; ?> <span class="help-block"><?php echo $help_bottom; ?></span> </label>
+            <label class="col-lg-3 control-label" for="input-bottom"><?php echo $entry_bottom; ?></label>
             <div class="col-lg-9">
               <label class="checkbox inline">
                 <?php if ($bottom) { ?>
@@ -97,12 +101,12 @@
                 <input type="checkbox" name="bottom" value="1" id="input-bottom" />
                 <?php } ?>
               </label>
-            </div>
+              <span class="help-block"><?php echo $help_bottom; ?></span></div>
           </div>
           <div class="form-group">
             <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
             <div class="col-lg-9">
-              <select name="status" id="input-status">
+              <select name="status" id="input-status" class="form-control">
                 <?php if ($status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
@@ -116,7 +120,7 @@
           <div class="form-group">
             <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
+              <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
             </div>
           </div>
         </div>
@@ -131,7 +135,7 @@
             <tbody>
               <tr>
                 <td class="text-left"><?php echo $text_default; ?></td>
-                <td class="text-left"><select name="information_layout[0][layout_id]">
+                <td class="text-left"><select name="information_layout[0][layout_id]" class="form-control">
                     <option value=""></option>
                     <?php foreach ($layouts as $layout) { ?>
                     <?php if (isset($information_layout[0]) && $information_layout[0] == $layout['layout_id']) { ?>
@@ -145,7 +149,7 @@
               <?php foreach ($stores as $store) { ?>
               <tr>
                 <td class="text-left"><?php echo $store['name']; ?></td>
-                <td class="text-left"><select name="information_layout[<?php echo $store['store_id']; ?>][layout_id]">
+                <td class="text-left"><select name="information_layout[<?php echo $store['store_id']; ?>][layout_id]" class="form-control">
                     <option value=""></option>
                     <?php foreach ($layouts as $layout) { ?>
                     <?php if (isset($information_layout[$store['store_id']]) && $information_layout[$store['store_id']] == $layout['layout_id']) { ?>

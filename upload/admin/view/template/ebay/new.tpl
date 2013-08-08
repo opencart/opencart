@@ -1533,8 +1533,6 @@
                         }
                         if(typeof data.data.country !== undefined && data.data.country){
                             $('#country').val(data.data.country);
-                        }else{
-                            $('#country').val(data.data.country);
                         }
                         $('#nationalBtn').html(data.html.national);
                         $('#internationalBtn').html(data.html.international);

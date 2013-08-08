@@ -200,7 +200,7 @@ class ModelOpenbayOpenbay extends Model
                     $filesUpdate = $files;
                     $files = $this->call('update/getRemoveList/', $send);
 
-                    if(!empty($files) && is_array($files)){
+                    if(!empty($files['asset']['file']) && is_array($files['asset']['file'])){
                         foreach($files['asset']['file'] as $file){
                             $dir        = '';
                             $dirLevel   = 0;

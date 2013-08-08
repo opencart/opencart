@@ -1596,13 +1596,17 @@ class ControllerPaymentPPExpress extends Controller {
 
             if(isset($this->request->post['txn_id'])) {
                 $transaction = $this->model_payment_pp_express->getTransactionRow($this->request->post['txn_id']);
+            } else {
+                $transaction = false;
             }
 
             if(isset($this->request->post['parent_txn_id'])) {
                 $parent_transaction = $this->model_payment_pp_express->getTransactionRow($this->request->post['parent_txn_id']);
+            } else {
+                $parent_transaction = false;
             }
 
-            if($transaction != false) {
+            if($transaction) {
                 //transaction exists, check for cleared payment or updates etc
                 $this->log->write('Transaction exists');
                 
@@ -1617,7 +1621,7 @@ class ControllerPaymentPPExpress extends Controller {
                 }
             } else {
                 $this->log->write('Transaction does not exist');
-                if($parent_transaction != false) {
+                if($parent_transaction) {
                     $this->log->write('Parent transaction exists');
                     //parent transaction exists
 
@@ -1697,112 +1701,113 @@ class ControllerPaymentPPExpress extends Controller {
              *
              * also the reference will match a recurring payment ID
              */
+            if (isset($this->request->post['txn_type'])) {
+                //payment
+                if ($this->request->post['txn_type'] == 'recurring_payment') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
 
-            //payment
-            if($this->request->post['txn_type'] == 'recurring_payment') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+                    if ($profile != false) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `amount` = '" . (float) $this->request->post['amount'] . "', `type` = '1'");
 
-                if($profile != false) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `amount` = '" . (float)$this->request->post['amount'] . "', `type` = '1'");
-
-                    //as there was a payment the profile is active, ensure it is set to active (may be been suspended before)
-                    if($profile['status'] != 1) {
-                        $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 2 WHERE `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "'");
+                        //as there was a payment the profile is active, ensure it is set to active (may be been suspended before)
+                        if ($profile['status'] != 1) {
+                            $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 2 WHERE `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "'");
+                        }
                     }
                 }
-            }
 
-            //suspend
-            if($this->request->post['txn_type'] == 'recurring_payment_suspended') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+                //suspend
+                if ($this->request->post['txn_type'] == 'recurring_payment_suspended') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
 
-                if($profile != false) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '6'");
-                    $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 3 WHERE `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "' LIMIT 1");
-                }
-            }
-
-            //suspend due to max failed
-            if($this->request->post['txn_type'] == 'recurring_payment_suspended_due_to_max_failed_payment') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
-
-                if($profile != false) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '7'");
-                    $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 3 WHERE `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "' LIMIT 1");
-                }
-            }
-
-            //payment failed
-            if($this->request->post['txn_type'] == 'recurring_payment_failed') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
-
-                if($profile != false) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '4'");
-                }
-            }
-
-            //outstanding payment failed
-            if($this->request->post['txn_type'] == 'recurring_payment_outstanding_payment_failed') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
-
-                if($profile != false) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '8'");
-                }
-            }
-
-            //outstanding payment
-            if($this->request->post['txn_type'] == 'recurring_payment_outstanding_payment') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
-
-                if($profile != false) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `amount` = '" . (float)$this->request->post['amount'] . "', `type` = '2'");
-
-                    //as there was a payment the profile is active, ensure it is set to active (may be been suspended before)
-                    if($profile['status'] != 1) {
-                        $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 2 WHERE `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "'");
+                    if ($profile != false) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `type` = '6'");
+                        $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 3 WHERE `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "' LIMIT 1");
                     }
                 }
-            }
 
-            //created
-            if($this->request->post['txn_type'] == 'recurring_payment_profile_created') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+                //suspend due to max failed
+                if ($this->request->post['txn_type'] == 'recurring_payment_suspended_due_to_max_failed_payment') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
 
-                if($profile != false) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '0'");
-
-                    if($profile['status'] != 1) {
-                        $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 2 WHERE `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "'");
+                    if ($profile != false) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `type` = '7'");
+                        $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 3 WHERE `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "' LIMIT 1");
                     }
                 }
-            }
 
-            //cancelled
-            if($this->request->post['txn_type'] == 'recurring_payment_profile_cancel') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+                //payment failed
+                if ($this->request->post['txn_type'] == 'recurring_payment_failed') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
 
-                if($profile != false && $profile['status'] != 3) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '5'");
-                    $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "' LIMIT 1");
+                    if ($profile != false) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `type` = '4'");
+                    }
                 }
-            }
 
-            //skipped
-            if($this->request->post['txn_type'] == 'recurring_payment_skipped') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+                //outstanding payment failed
+                if ($this->request->post['txn_type'] == 'recurring_payment_outstanding_payment_failed') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
 
-                if($profile != false) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '3'");
+                    if ($profile != false) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `type` = '8'");
+                    }
                 }
-            }
 
-            //expired
-            if($this->request->post['txn_type'] == 'recurring_payment_expired') {
-                $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+                //outstanding payment
+                if ($this->request->post['txn_type'] == 'recurring_payment_outstanding_payment') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
 
-                if($profile != false) {
-                    $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '9'");
-                    $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 5 WHERE `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "' LIMIT 1");
+                    if ($profile != false) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `amount` = '" . (float) $this->request->post['amount'] . "', `type` = '2'");
+
+                        //as there was a payment the profile is active, ensure it is set to active (may be been suspended before)
+                        if ($profile['status'] != 1) {
+                            $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 2 WHERE `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "'");
+                        }
+                    }
+                }
+
+                //created
+                if ($this->request->post['txn_type'] == 'recurring_payment_profile_created') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+
+                    if ($profile != false) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `type` = '0'");
+
+                        if ($profile['status'] != 1) {
+                            $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 2 WHERE `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "'");
+                        }
+                    }
+                }
+
+                //cancelled
+                if ($this->request->post['txn_type'] == 'recurring_payment_profile_cancel') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+
+                    if ($profile != false && $profile['status'] != 3) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `type` = '5'");
+                        $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "' LIMIT 1");
+                    }
+                }
+
+                //skipped
+                if ($this->request->post['txn_type'] == 'recurring_payment_skipped') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+
+                    if ($profile != false) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `type` = '3'");
+                    }
+                }
+
+                //expired
+                if ($this->request->post['txn_type'] == 'recurring_payment_expired') {
+                    $profile = $this->model_account_recurring->getProfileByRef($this->request->post['recurring_payment_id']);
+
+                    if ($profile != false) {
+                        $this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "', `created` = NOW(), `type` = '9'");
+                        $this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 5 WHERE `order_recurring_id` = '" . (int) $profile['order_recurring_id'] . "' LIMIT 1");
+                    }
                 }
             }
         }elseif( (string)$response == "INVALID" ) {

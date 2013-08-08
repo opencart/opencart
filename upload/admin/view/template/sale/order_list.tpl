@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -65,9 +65,9 @@
         <tbody>
           <tr class="filter">
             <td></td>
-            <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="input-mini" style="text-align: right;" /></td>
-            <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" /></td>
-            <td><select name="filter_order_status_id" class="input-medium">
+            <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="form-control" /></td>
+            <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
+            <td><select name="filter_order_status_id" class="form-control">
                 <option value="*"></option>
                 <?php if ($filter_order_status_id == '0') { ?>
                 <option value="0" selected="selected"><?php echo $text_missing; ?></option>
@@ -82,9 +82,9 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-            <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" class="input-small" style="text-align: right;" /></td>
-            <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" /></td>
-            <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="input-medium" /></td>
+            <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" class="form-control" /></td>
+            <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
+            <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="form-control" /></td>
             <td align="right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
           </tr>
           <?php if ($orders) { ?>

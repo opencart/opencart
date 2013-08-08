@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -53,7 +53,7 @@
         <div class="col-lg-9">
           <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" />
           <br />
-          <div id="customer" class="well well-small scrollbox"></div>
+          <div id="customer" class="well"></div>
         </div>
       </div>
       <div class="form-group to" id="to-affiliate">
@@ -61,7 +61,7 @@
         <div class="col-lg-9">
           <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" />
           <br />
-          <div id="affiliate" class="well well-small scrollbox"></div>
+          <div id="affiliate" class="well"></div>
         </div>
       </div>
       <div class="form-group to" id="to-product">
@@ -69,7 +69,7 @@
         <div class="col-lg-9">
           <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
           <br />
-          <div id="product" class="well well-small scrollbox"></div>
+          <div id="product" class="well"></div>
         </div>
       </div>
       <div class="form-group required">

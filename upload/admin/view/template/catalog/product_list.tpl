@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -98,11 +98,11 @@
               <?php echo $product['price']; ?>
               <?php } ?></td>
             <td class="text-right"><?php if ($product['quantity'] <= 0) { ?>
-              <span class="badge badge-important"><?php echo $product['quantity']; ?></span>
+              <span class="label label-warning"><?php echo $product['quantity']; ?></span>
               <?php } elseif ($product['quantity'] <= 5) { ?>
-              <span class="badge badge-warning"><?php echo $product['quantity']; ?></span>
+              <span class="label label-danger"><?php echo $product['quantity']; ?></span>
               <?php } else { ?>
-              <span class="badge badge-success"><?php echo $product['quantity']; ?></span>
+              <span class="label label-success"><?php echo $product['quantity']; ?></span>
               <?php } ?></td>
             <td class="text-left"><?php echo $product['status']; ?></td>
             <td class="text-right"><?php foreach ($product['action'] as $action) { ?>

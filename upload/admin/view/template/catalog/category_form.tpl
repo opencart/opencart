@@ -12,10 +12,7 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
-      <div class="btn-group pull-right">
-        <button type="submit" form="form-category" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-category" class="form-horizontal">
       <ul class="nav nav-tabs">
@@ -73,11 +70,15 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-filter"><?php echo $entry_filter; ?> </label>
+            <label class="col-lg-3 control-label" for="input-filter"><?php echo $entry_filter; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
+              <div class="input-group">
+                <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
+                <span class="input-group-btn">
+                <button class="btn btn-info" type="button"><i class="icon-question-sign icon-large"></i></button>
+                </span> </div>
               <span class="help-block"><?php echo $help_filter; ?></span>
-              <div id="category-filter" class="well well-small">
+              <div id="category-filter" class="well">
                 <?php foreach ($category_filters as $category_filter) { ?>
                 <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $category_filter['name']; ?>
                   <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
@@ -87,27 +88,31 @@
             </div>
           </div>
           <div class="form-group">
-            <div class="col-lg-3 control-label"><?php echo $entry_store; ?></div>
+            <label class="col-lg-3 control-label"><?php echo $entry_store; ?></label>
             <div class="col-lg-9">
-              <label class="checkbox">
-                <?php if (in_array(0, $category_store)) { ?>
-                <input type="checkbox" name="category_store[]" value="0" checked="checked" />
-                <?php echo $text_default; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="category_store[]" value="0" />
-                <?php echo $text_default; ?>
-                <?php } ?>
-              </label>
+              <div class="checkbox">
+                <label>
+                  <?php if (in_array(0, $category_store)) { ?>
+                  <input type="checkbox" name="category_store[]" value="0" checked="checked" />
+                  <?php echo $text_default; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="category_store[]" value="0" />
+                  <?php echo $text_default; ?>
+                  <?php } ?>
+                </label>
+              </div>
               <?php foreach ($stores as $store) { ?>
-              <label class="checkbox">
-                <?php if (in_array($store['store_id'], $category_store)) { ?>
-                <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
-                <?php echo $store['name']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" />
-                <?php echo $store['name']; ?>
-                <?php } ?>
-              </label>
+              <div class="checkbox">
+                <label>
+                  <?php if (in_array($store['store_id'], $category_store)) { ?>
+                  <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
+                  <?php echo $store['name']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="category_store[]" value="<?php echo $store['store_id']; ?>" />
+                  <?php echo $store['name']; ?>
+                  <?php } ?>
+                </label>
+              </div>
               <?php } ?>
             </div>
           </div>
@@ -118,11 +123,14 @@
               <span class="help-block"><?php echo $help_keyword; ?></span> </div>
           </div>
           <div class="form-group">
-            <div class="col-lg-3 control-label"><?php echo $entry_image; ?></div>
-            <div class="col-lg-9">
-              <div class="image"><img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
-                <input type="hidden" name="image" value="<?php echo $image; ?>" />
-                <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+            <label class="col-lg-3 control-label"><?php echo $entry_image; ?></label>
+            <div class="col-lg-3"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
+              <input type="hidden" name="image" value="<?php echo $image; ?>" />
+              <br />
+              <br />
+              <div class="btn-group">
+                <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
+                <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
               </div>
             </div>
           </div>
@@ -205,6 +213,11 @@
             </tbody>
           </table>
         </div>
+      </div>
+      <div class="panel-footer">
+        <div class="btn-group">
+          <button type="submit" form="form-category" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       </div>
     </form>
   </div>

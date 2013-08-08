@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -174,7 +174,7 @@
       <div class="form-group">
         <div class="col-lg-3 control-label"><?php echo $entry_service; ?> <span class="help-block"><?php echo $help_service; ?></span></div>
         <div class="col-lg-9">
-          <div id="service" class="well well-small scrollbox">
+          <div id="service" class="well">
             <div id="US">
               <label class="checkbox">
                 <?php if ($ups_us_01) { ?>

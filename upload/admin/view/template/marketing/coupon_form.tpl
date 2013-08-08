@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -124,7 +124,7 @@
             <div class="col-lg-9">
               <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
               <br />
-              <div id="coupon-product" class="well well-small scrollbox">
+              <div id="coupon-product" class="well">
                 <?php foreach ($coupon_product as $coupon_product) { ?>
                 <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_product['name']; ?>
                   <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
@@ -138,7 +138,7 @@
             <div class="col-lg-9">
               <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" />
               <br />
-              <div id="coupon-category" class="well well-small scrollbox">
+              <div id="coupon-category" class="well">
                 <?php foreach ($coupon_category as $coupon_category) { ?>
                 <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_category['name']; ?>
                   <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />

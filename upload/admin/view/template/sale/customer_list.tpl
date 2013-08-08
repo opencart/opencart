@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -71,9 +71,9 @@
         <tbody>
           <tr class="filter">
             <td></td>
-            <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="input-medium" /></td>
-            <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" class="input-medium" /></td>
-            <td><select name="filter_customer_group_id">
+            <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="form-control" /></td>
+            <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" class="form-control" /></td>
+            <td><select name="filter_customer_group_id" class="form-control">
                 <option value="*"></option>
                 <?php foreach ($customer_groups as $customer_group) { ?>
                 <?php if ($customer_group['customer_group_id'] == $filter_customer_group_id) { ?>
@@ -83,7 +83,7 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-            <td><select name="filter_status" class="input-small">
+            <td><select name="filter_status" class="form-control">
                 <option value="*"></option>
                 <?php if ($filter_status) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -96,7 +96,7 @@
                 <option value="0"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select></td>
-            <td><select name="filter_approved" class="input-mini">
+            <td><select name="filter_approved" class="form-control">
                 <option value="*"></option>
                 <?php if ($filter_approved) { ?>
                 <option value="1" selected="selected"><?php echo $text_yes; ?></option>
@@ -109,10 +109,10 @@
                 <option value="0"><?php echo $text_no; ?></option>
                 <?php } ?>
               </select></td>
-            <td><input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" class="input-medium" /></td>
-            <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" id="date" /></td>
+            <td><input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" class="form-control" /></td>
+            <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" id="date" class="form-control" /></td>
             <td></td>
-            <td align="right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+            <td align="right"><button type="button" id="button-filter" class="btn btn-default"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
           </tr>
           <?php if ($customers) { ?>
           <?php foreach ($customers as $customer) { ?>
@@ -129,7 +129,7 @@
             <td class="text-left"><?php echo $customer['approved']; ?></td>
             <td class="text-left"><?php echo $customer['ip']; ?></td>
             <td class="text-left"><?php echo $customer['date_added']; ?></td>
-            <td class="text-left"><select onchange="((this.value !== '') ? window.open('index.php?route=sale/customer/login&token=<?php echo $token; ?>&customer_id=<?php echo $customer['customer_id']; ?>&store_id=' + this.value) : null); this.value = '';">
+            <td class="text-left"><select class="form-control" onchange="((this.value !== '') ? window.open('index.php?route=sale/customer/login&token=<?php echo $token; ?>&customer_id=<?php echo $customer['customer_id']; ?>&store_id=' + this.value) : null); this.value = '';">
                 <option value=""><?php echo $text_select; ?></option>
                 <option value="0"><?php echo $text_default; ?></option>
                 <?php foreach ($stores as $store) { ?>

@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -39,7 +39,7 @@
       <div class="form-group">
         <div class="col-lg-3 control-label"><?php echo $entry_domestic; ?></div>
         <div class="col-lg-9">
-          <div class="well well-small scrollbox">
+          <div class="well">
             <label class="checkbox">
               <?php if ($usps_domestic_00) { ?>
               <input type="checkbox" name="usps_domestic_00" value="1" checked="checked" />
@@ -244,7 +244,7 @@
       <div class="form-group">
         <div class="col-lg-3 control-label"><?php echo $entry_international; ?></div>
         <div class="col-lg-9">
-          <div class="well well-small scrollbox">
+          <div class="well">
             <label class="checkbox">
               <?php if ($usps_international_1) { ?>
               <input type="checkbox" name="usps_international_1" value="1" checked="checked" />

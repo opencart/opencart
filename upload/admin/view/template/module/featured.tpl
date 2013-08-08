@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
           <br />
-          <div id="featured-product" class="well well-small scrollbox">
+          <div id="featured-product" class="well">
             <?php foreach ($products as $product) { ?>
             <div id="featured-product<?php echo $product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product['name']; ?>
               <input type="hidden" value="<?php echo $product['product_id']; ?>" />

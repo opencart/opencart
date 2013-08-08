@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content">
+<div class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
@@ -30,7 +30,7 @@
       <div class="form-group">
         <div class="col-lg-3 control-label"><?php echo $entry_access; ?></div>
         <div class="col-lg-9">
-          <div class="well well-small scrollbox">
+          <div class="well">
             <?php foreach ($permissions as $permission) { ?>
             <label class="checkbox">
               <?php if (in_array($permission, $access)) { ?>
@@ -48,7 +48,7 @@
       <div class="form-group">
         <div class="col-lg-3 control-label"><?php echo $entry_modify; ?></div>
         <div class="col-lg-9">
-          <div class="well well-small scrollbox">
+          <div class="well">
             <?php foreach ($permissions as $permission) { ?>
             <label class="checkbox">
               <?php if (in_array($permission, $modify)) { ?>

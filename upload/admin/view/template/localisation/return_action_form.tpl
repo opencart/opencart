@@ -25,7 +25,7 @@
           <input type="text" name="return_action[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($return_action[$language['language_id']]) ? $return_action[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
           <?php if (isset($error_name[$language['language_id']])) { ?>
-          <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+          <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?>
         </div>

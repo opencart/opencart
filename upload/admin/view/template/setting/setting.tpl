@@ -41,7 +41,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_name" value="<?php echo $config_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="xxlarge" />
               <?php if ($error_name) { ?>
-              <span class="error"><?php echo $error_name; ?></span>
+              <span class="text-error"><?php echo $error_name; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -50,7 +50,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_owner" value="<?php echo $config_owner; ?>" placeholder="<?php echo $entry_owner; ?>" id="input-owner" class="xxlarge" />
               <?php if ($error_owner) { ?>
-              <span class="error"><?php echo $error_owner; ?></span>
+              <span class="text-error"><?php echo $error_owner; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -59,7 +59,7 @@
             <div class="col-lg-9">
               <textarea name="config_address" cols="40" rows="5" placeholder="<?php echo $entry_owner; ?>" id="input-address"><?php echo $config_address; ?></textarea>
               <?php if ($error_address) { ?>
-              <span class="error"><?php echo $error_address; ?></span>
+              <span class="text-error"><?php echo $error_address; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -68,7 +68,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_email" value="<?php echo $config_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="xxlarge" />
               <?php if ($error_email) { ?>
-              <span class="error"><?php echo $error_email; ?></span>
+              <span class="text-error"><?php echo $error_email; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -77,7 +77,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
               <?php if ($error_telephone) { ?>
-              <span class="error"><?php echo $error_telephone; ?></span>
+              <span class="text-error"><?php echo $error_telephone; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -94,7 +94,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_title" value="<?php echo $config_title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
               <?php if ($error_title) { ?>
-              <span class="error"><?php echo $error_title; ?></span>
+              <span class="text-error"><?php echo $error_title; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -258,7 +258,7 @@
               <div class="col-lg-9">
                 <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" id="input-catalog-limit" class="input-mini" />
                 <?php if ($error_catalog_limit) { ?>
-                <span class="error"><?php echo $error_catalog_limit; ?></span>
+                <span class="text-error"><?php echo $error_catalog_limit; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -267,7 +267,7 @@
               <div class="col-lg-9">
                 <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" id="input-list-description-limit" class="input-mini" />
                 <?php if ($error_list_description_limit) { ?>
-                <span class="error"><?php echo $error_list_description_limit; ?></span>
+                <span class="text-error"><?php echo $error_list_description_limit; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -276,7 +276,7 @@
               <div class="col-lg-9">
                 <input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" placeholder="<?php echo $entry_admin_limit; ?>" id="input-admin-limit" class="input-mini" />
                 <?php if ($error_admin_limit) { ?>
-                <span class="error"><?php echo $error_admin_limit; ?></span>
+                <span class="text-error"><?php echo $error_admin_limit; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -383,7 +383,7 @@
               <div class="col-lg-9">
                 <input type="text" name="config_voucher_min" value="<?php echo $config_voucher_min; ?>" placeholder="<?php echo $entry_voucher_min; ?>" id="input-voucher-min" />
                 <?php if ($error_voucher_min) { ?>
-                <span class="error"><?php echo $error_voucher_min; ?></span>
+                <span class="text-error"><?php echo $error_voucher_min; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -392,7 +392,7 @@
               <div class="col-lg-9">
                 <input type="text" name="config_voucher_max" value="<?php echo $config_voucher_max; ?>" placeholder="<?php echo $entry_voucher_max; ?>" id="input-voucher-max" />
                 <?php if ($error_voucher_max) { ?>
-                <span class="error"><?php echo $error_voucher_max; ?></span>
+                <span class="text-error"><?php echo $error_voucher_max; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -513,7 +513,7 @@
                 </label>
                 <?php } ?>
                 <?php if ($error_customer_group_display) { ?>
-                <span class="error"><?php echo $error_customer_group_display; ?></span>
+                <span class="text-error"><?php echo $error_customer_group_display; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -829,7 +829,7 @@
               x
               <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_category) { ?>
-              <span class="error"><?php echo $error_image_category; ?></span>
+              <span class="text-error"><?php echo $error_image_category; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -840,7 +840,7 @@
               x
               <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_thumb) { ?>
-              <span class="error"><?php echo $error_image_thumb; ?></span>
+              <span class="text-error"><?php echo $error_image_thumb; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -851,7 +851,7 @@
               x
               <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_popup) { ?>
-              <span class="error"><?php echo $error_image_popup; ?></span>
+              <span class="text-error"><?php echo $error_image_popup; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -862,7 +862,7 @@
               x
               <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_product) { ?>
-              <span class="error"><?php echo $error_image_product; ?></span>
+              <span class="text-error"><?php echo $error_image_product; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -873,7 +873,7 @@
               x
               <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_additional) { ?>
-              <span class="error"><?php echo $error_image_additional; ?></span>
+              <span class="text-error"><?php echo $error_image_additional; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -884,7 +884,7 @@
               x
               <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_related) { ?>
-              <span class="error"><?php echo $error_image_related; ?></span>
+              <span class="text-error"><?php echo $error_image_related; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -895,7 +895,7 @@
               x
               <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_compare) { ?>
-              <span class="error"><?php echo $error_image_compare; ?></span>
+              <span class="text-error"><?php echo $error_image_compare; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -906,7 +906,7 @@
               x
               <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_wishlist) { ?>
-              <span class="error"><?php echo $error_image_wishlist; ?></span>
+              <span class="text-error"><?php echo $error_image_wishlist; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -917,7 +917,7 @@
               x
               <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_cart) { ?>
-              <span class="error"><?php echo $error_image_cart; ?></span>
+              <span class="text-error"><?php echo $error_image_cart; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -928,7 +928,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_ftp_host" value="<?php echo $config_ftp_host; ?>" placeholder="<?php echo $entry_ftp_host; ?>" id="input-ftp-host" />
               <?php if ($error_ftp_host) { ?>
-              <span class="error"><?php echo $error_ftp_host; ?></span>
+              <span class="text-error"><?php echo $error_ftp_host; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -937,7 +937,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_ftp_port" value="<?php echo $config_ftp_port; ?>" placeholder="<?php echo $entry_ftp_port; ?>" id="input-ftp-port" />
               <?php if ($error_ftp_port) { ?>
-              <span class="error"><?php echo $error_ftp_port; ?></span>
+              <span class="text-error"><?php echo $error_ftp_port; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -946,7 +946,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_ftp_username" value="<?php echo $config_ftp_username; ?>" placeholder="<?php echo $entry_ftp_username; ?>" id="input-ftp-username" />
               <?php if ($error_ftp_username) { ?>
-              <span class="error"><?php echo $error_ftp_username; ?></span>
+              <span class="text-error"><?php echo $error_ftp_username; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -955,7 +955,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_ftp_password" value="<?php echo $config_ftp_password; ?>" placeholder="<?php echo $entry_ftp_password; ?>" id="input-ftp-password" />
               <?php if ($error_ftp_password) { ?>
-              <span class="error"><?php echo $error_ftp_password; ?></span>
+              <span class="text-error"><?php echo $error_ftp_password; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -1315,7 +1315,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" placeholder="<?php echo $entry_encryption; ?>" id="input-encryption" />
               <?php if ($error_encryption) { ?>
-              <span class="error"><?php echo $error_encryption; ?></span>
+              <span class="text-error"><?php echo $error_encryption; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -1376,7 +1376,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_error_filename" value="<?php echo $config_error_filename; ?>" placeholder="<?php echo $entry_error_filename; ?>" id="input-error-filename" />
               <?php if ($error_error_filename) { ?>
-              <span class="error"><?php echo $error_error_filename; ?></span>
+              <span class="text-error"><?php echo $error_error_filename; ?></span>
               <?php } ?>
             </div>
           </div>

@@ -70,7 +70,7 @@
             <div class="col-lg-9">
               <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-firstname" />
               <?php if ($error_firstname) { ?>
-              <span class="error"><?php echo $error_firstname; ?></span>
+              <span class="text-error"><?php echo $error_firstname; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -79,7 +79,7 @@
             <div class="col-lg-9">
               <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-lastname" />
               <?php if ($error_lastname) { ?>
-              <span class="error"><?php echo $error_lastname; ?></span>
+              <span class="text-error"><?php echo $error_lastname; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -88,7 +88,7 @@
             <div class="col-lg-9">
               <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" />
               <?php if ($error_email) { ?>
-              <span class="error"><?php echo $error_email; ?></span>
+              <span class="text-error"><?php echo $error_email; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -97,7 +97,7 @@
             <div class="col-lg-9">
               <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-telephone" />
               <?php if ($error_telephone) { ?>
-              <span class="error"><?php echo $error_telephone; ?></span>
+              <span class="text-error"><?php echo $error_telephone; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -125,7 +125,7 @@
             <div class="col-lg-9">
               <input type="text" name="payment_firstname" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" />
               <?php if ($error_payment_firstname) { ?>
-              <span class="error"><?php echo $error_payment_firstname; ?></span>
+              <span class="text-error"><?php echo $error_payment_firstname; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -134,7 +134,7 @@
             <div class="col-lg-9">
               <input type="text" name="payment_lastname" value="<?php echo $payment_lastname; ?>" id="input-payment-lastname" />
               <?php if ($error_payment_lastname) { ?>
-              <span class="error"><?php echo $error_payment_lastname; ?></span>
+              <span class="text-error"><?php echo $error_payment_lastname; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -149,7 +149,7 @@
             <div class="col-lg-9">
               <input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" id="input-payment-address-1" />
               <?php if ($error_payment_address_1) { ?>
-              <span class="error"><?php echo $error_payment_address_1; ?></span>
+              <span class="text-error"><?php echo $error_payment_address_1; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -164,7 +164,7 @@
             <div class="col-lg-9">
               <input type="text" name="payment_city" value="<?php echo $payment_city; ?>" id="input-payment-city" />
               <?php if ($error_payment_city) { ?>
-              <span class="error"><?php echo $error_payment_city; ?></span>
+              <span class="text-error"><?php echo $error_payment_city; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -173,7 +173,7 @@
             <div class="col-lg-9">
               <input type="text" name="payment_postcode" value="<?php echo $payment_postcode; ?>" id="input-payment-postcode" />
               <?php if ($error_payment_postcode) { ?>
-              <span class="error"><?php echo $error_payment_postcode; ?></span>
+              <span class="text-error"><?php echo $error_payment_postcode; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -191,7 +191,7 @@
                 <?php } ?>
               </select>
               <?php if ($error_payment_country) { ?>
-              <span class="error"><?php echo $error_payment_country; ?></span>
+              <span class="text-error"><?php echo $error_payment_country; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -201,7 +201,7 @@
               <select name="payment_zone_id" id="input-payment-zone">
               </select>
               <?php if ($error_payment_zone) { ?>
-              <span class="error"><?php echo $error_payment_zone; ?></span>
+              <span class="text-error"><?php echo $error_payment_zone; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -223,7 +223,7 @@
             <div class="col-lg-9">
               <input type="text" name="shipping_firstname" value="<?php echo $shipping_firstname; ?>" id="input-shipping-firstname" />
               <?php if ($error_shipping_firstname) { ?>
-              <span class="error"><?php echo $error_shipping_firstname; ?></span>
+              <span class="text-error"><?php echo $error_shipping_firstname; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -232,7 +232,7 @@
             <div class="col-lg-9">
               <input type="text" name="shipping_lastname" value="<?php echo $shipping_lastname; ?>" id="input-shipping-lastname" />
               <?php if ($error_shipping_lastname) { ?>
-              <span class="error"><?php echo $error_shipping_lastname; ?></span>
+              <span class="text-error"><?php echo $error_shipping_lastname; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -247,7 +247,7 @@
             <div class="col-lg-9">
               <input type="text" name="shipping_address_1" value="<?php echo $shipping_address_1; ?>" id="input-shipping-address-1" />
               <?php if ($error_shipping_address_1) { ?>
-              <span class="error"><?php echo $error_shipping_address_1; ?></span>
+              <span class="text-error"><?php echo $error_shipping_address_1; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -268,7 +268,7 @@
             <div class="col-lg-9">
               <input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" id="input-shipping-postcode" />
               <?php if ($error_shipping_postcode) { ?>
-              <span class="error"><?php echo $error_shipping_postcode; ?></span>
+              <span class="text-error"><?php echo $error_shipping_postcode; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -286,7 +286,7 @@
                 <?php } ?>
               </select>
               <?php if ($error_shipping_country) { ?>
-              <span class="error"><?php echo $error_shipping_country; ?></span>
+              <span class="text-error"><?php echo $error_shipping_country; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -296,7 +296,7 @@
               <select name="shipping_zone_id" id="input-shipping-zone">
               </select>
               <?php if ($error_shipping_zone) { ?>
-              <span class="error"><?php echo $error_shipping_zone; ?></span>
+              <span class="text-error"><?php echo $error_shipping_zone; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -546,7 +546,7 @@
                 <input type="hidden" name="shipping_method" value="<?php echo $shipping_method; ?>" />
                 <input type="hidden" name="shipping_code" value="<?php echo $shipping_code; ?>" />
                 <?php if ($error_shipping_method) { ?>
-                <span class="error"><?php echo $error_shipping_method; ?></span>
+                <span class="text-error"><?php echo $error_shipping_method; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -562,7 +562,7 @@
                 <input type="hidden" name="payment_method" value="<?php echo $payment_method; ?>" />
                 <input type="hidden" name="payment_code" value="<?php echo $payment_code; ?>" />
                 <?php if ($error_payment_method) { ?>
-                <span class="error"><?php echo $error_payment_method; ?></span>
+                <span class="text-error"><?php echo $error_payment_method; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -1052,7 +1052,7 @@ function upload(product_option_id) {
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$('#option' + product_option_id).after('<span class="error">' + json['error'] + '</span>');
+					$('#option' + product_option_id).after('<span class="text-error">' + json['error'] + '</span>');
 				}
 							
 				if (json['success']) {
@@ -1136,52 +1136,52 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 							
 				// Order Details
 				if (json['error']['customer']) {
-					$('.box').before('<span class="error">' + json['error']['customer'] + '</span>');
+					$('.box').before('<span class="text-error">' + json['error']['customer'] + '</span>');
 				}	
 								
 				if (json['error']['firstname']) {
-					$('input[name=\'firstname\']').after('<span class="error">' + json['error']['firstname'] + '</span>');
+					$('input[name=\'firstname\']').after('<span class="text-error">' + json['error']['firstname'] + '</span>');
 				}
 				
 				if (json['error']['lastname']) {
-					$('input[name=\'lastname\']').after('<span class="error">' + json['error']['lastname'] + '</span>');
+					$('input[name=\'lastname\']').after('<span class="text-error">' + json['error']['lastname'] + '</span>');
 				}	
 				
 				if (json['error']['email']) {
-					$('input[name=\'email\']').after('<span class="error">' + json['error']['email'] + '</span>');
+					$('input[name=\'email\']').after('<span class="text-error">' + json['error']['email'] + '</span>');
 				}
 				
 				if (json['error']['telephone']) {
-					$('input[name=\'telephone\']').after('<span class="error">' + json['error']['telephone'] + '</span>');
+					$('input[name=\'telephone\']').after('<span class="text-error">' + json['error']['telephone'] + '</span>');
 				}	
 			
 				// Payment Address
 				if (json['error']['payment']) {	
 					if (json['error']['payment']['country']) {
-						$('select[name=\'payment_country_id\']').after('<span class="error">' + json['error']['payment']['country'] + '</span>');
+						$('select[name=\'payment_country_id\']').after('<span class="text-error">' + json['error']['payment']['country'] + '</span>');
 					}	
 					
 					if (json['error']['payment']['zone']) {
-						$('select[name=\'payment_zone_id\']').after('<span class="error">' + json['error']['payment']['zone'] + '</span>');
+						$('select[name=\'payment_zone_id\']').after('<span class="text-error">' + json['error']['payment']['zone'] + '</span>');
 					}
 					
 					if (json['error']['payment']['postcode']) {
-						$('input[name=\'payment_postcode\']').after('<span class="error">' + json['error']['payment']['postcode'] + '</span>');
+						$('input[name=\'payment_postcode\']').after('<span class="text-error">' + json['error']['payment']['postcode'] + '</span>');
 					}						
 				}
 			
 				// Shipping	Address
 				if (json['error']['shipping']) {		
 					if (json['error']['shipping']['country']) {
-						$('select[name=\'shipping_country_id\']').after('<span class="error">' + json['error']['shipping']['country'] + '</span>');
+						$('select[name=\'shipping_country_id\']').after('<span class="text-error">' + json['error']['shipping']['country'] + '</span>');
 					}	
 					
 					if (json['error']['shipping_zone']) {
-						$('select[name=\'shipping_zone_id\']').after('<span class="error">' + json['error']['shipping']['zone'] + '</span>');
+						$('select[name=\'shipping_zone_id\']').after('<span class="text-error">' + json['error']['shipping']['zone'] + '</span>');
 					}
 					
 					if (json['error']['shipping']['postcode']) {
-						$('input[name=\'shipping_postcode\']').after('<span class="error">' + json['error']['shipping']['postcode'] + '</span>');
+						$('input[name=\'shipping_postcode\']').after('<span class="text-error">' + json['error']['shipping']['postcode'] + '</span>');
 					}	
 				}
 				
@@ -1218,23 +1218,23 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				// Voucher
 				if (json['error']['vouchers']) {
 					if (json['error']['vouchers']['from_name']) {
-						$('input[name=\'from_name\']').after('<span class="error">' + json['error']['vouchers']['from_name'] + '</span>');
+						$('input[name=\'from_name\']').after('<span class="text-error">' + json['error']['vouchers']['from_name'] + '</span>');
 					}	
 					
 					if (json['error']['vouchers']['from_email']) {
-						$('input[name=\'from_email\']').after('<span class="error">' + json['error']['vouchers']['from_email'] + '</span>');
+						$('input[name=\'from_email\']').after('<span class="text-error">' + json['error']['vouchers']['from_email'] + '</span>');
 					}	
 								
 					if (json['error']['vouchers']['to_name']) {
-						$('input[name=\'to_name\']').after('<span class="error">' + json['error']['vouchers']['to_name'] + '</span>');
+						$('input[name=\'to_name\']').after('<span class="text-error">' + json['error']['vouchers']['to_name'] + '</span>');
 					}	
 					
 					if (json['error']['vouchers']['to_email']) {
-						$('input[name=\'to_email\']').after('<span class="error">' + json['error']['vouchers']['to_email'] + '</span>');
+						$('input[name=\'to_email\']').after('<span class="text-error">' + json['error']['vouchers']['to_email'] + '</span>');
 					}	
 					
 					if (json['error']['vouchers']['amount']) {
-						$('input[name=\'amount\']').after('<span class="error">' + json['error']['vouchers']['amount'] + '</span>');
+						$('input[name=\'amount\']').after('<span class="text-error">' + json['error']['vouchers']['amount'] + '</span>');
 					}	
 				} else {
 					$('input[name=\'from_name\']').attr('value', '');	

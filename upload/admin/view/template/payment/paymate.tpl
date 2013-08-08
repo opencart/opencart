@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="paymate_username" value="<?php echo $paymate_username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" />
           <?php if ($error_username) { ?>
-          <span class="error"><?php echo $error_username; ?></span>
+          <span class="text-error"><?php echo $error_username; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="col-lg-9">
           <input type="text" name="paymate_password" value="<?php echo $paymate_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
           <?php if ($error_password) { ?>
-          <span class="error"><?php echo $error_password; ?></span>
+          <span class="text-error"><?php echo $error_password; ?></span>
           <?php } ?>
         </div>
       </div>

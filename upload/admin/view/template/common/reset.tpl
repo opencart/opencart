@@ -16,7 +16,7 @@
         <div class="col-lg-9">
           <input type="password" name="password" value="<?php echo $password; ?>" id="input-password" class="form-control" />
           <?php if ($error_password) { ?>
-          <span class="error"><?php echo $error_password; ?></span>
+          <span class="text-error"><?php echo $error_password; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -25,7 +25,7 @@
         <div class="col-lg-9">
           <input type="password" name="confirm" value="<?php echo $confirm; ?>" id="input-confirm" class="form-control" />
           <?php if ($error_confirm) { ?>
-          <span class="error"><?php echo $error_confirm; ?></span>
+          <span class="text-error"><?php echo $error_confirm; ?></span>
           <?php } ?>
         </div>
       </div>

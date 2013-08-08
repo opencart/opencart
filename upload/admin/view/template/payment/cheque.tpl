@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="cheque_payable" value="<?php echo $cheque_payable; ?>" placeholder="<?php echo $entry_payable; ?>" id="input-payable" />
           <?php if ($error_payable) { ?>
-          <span class="error"><?php echo $error_payable; ?></span>
+          <span class="text-error"><?php echo $error_payable; ?></span>
           <?php } ?>
         </div>
       </div>

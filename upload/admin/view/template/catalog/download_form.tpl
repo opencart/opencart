@@ -22,12 +22,12 @@
         <label class="col-lg-3 control-label"><?php echo $entry_name; ?></label>
         <div class="col-lg-9">
           <?php foreach ($languages as $language) { ?>
-          <div class="input-group">
-            <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+          <div class="input-group"> 
             <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+            <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
           </div>
           <?php if (isset($error_name[$language['language_id']])) { ?>
-          <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+          <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?>
         </div>
@@ -35,18 +35,14 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-filename"><?php echo $entry_filename; ?></label>
         <div class="col-lg-9">
-          
           <div class="input-group">
             <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
-            <span class="input-group-btn"><button type="button" onclick="$('input[name=\'file\']').click();" id="button-upload" class="btn btn-primary"><i class="icon-upload"></i> <?php echo $button_upload; ?></button></span>
-          </div>
-            
-            
+            <span class="input-group-btn">
+            <button type="button" onclick="$('input[name=\'file\']').click();" id="button-upload" class="btn btn-primary"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+            </span> </div>
           <span class="help-block"><?php echo $help_filename; ?></span>
-          
-          
           <?php if ($error_filename) { ?>
-          <span class="error"><?php echo $error_filename; ?></span>
+          <span class="text-error"><?php echo $error_filename; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -56,7 +52,7 @@
           <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" class="form-control" />
           <span class="help-block"><?php echo $help_mask; ?></span>
           <?php if ($error_mask) { ?>
-          <span class="error"><?php echo $error_mask; ?></span>
+          <span class="text-error"><?php echo $error_mask; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -74,8 +70,8 @@
           <input type="checkbox" name="update" value="1" checked="checked" id="input-update" />
           <?php } else { ?>
           <input type="checkbox" name="update" value="1" id="input-update" />
-          <?php } ?><span class="help-block"><?php echo $help_update; ?></span>
-        </div>
+          <?php } ?>
+          <span class="help-block"><?php echo $help_update; ?></span> </div>
       </div>
       <?php } ?>
     </form>

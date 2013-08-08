@@ -23,11 +23,11 @@
         <div class="col-lg-9">
           <?php foreach ($languages as $language) { ?>
           <div class="input-group">
-            <input type="text" name="attribute_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($attribute_description[$language['language_id']]) ? $attribute_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
             <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+            <input type="text" name="attribute_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($attribute_description[$language['language_id']]) ? $attribute_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
           </div>
           <?php if (isset($error_name[$language['language_id']])) { ?>
-          <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+          <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?>
         </div>

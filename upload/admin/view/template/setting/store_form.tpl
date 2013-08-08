@@ -38,7 +38,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_url" value="<?php echo $config_url; ?>" placeholder="<?php echo $entry_url; ?>" id="input-url" class="xxlarge" />
               <?php if ($error_url) { ?>
-              <span class="error"><?php echo $error_url; ?></span>
+              <span class="text-error"><?php echo $error_url; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -53,7 +53,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_name" value="<?php echo $config_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="xxlarge" />
               <?php if ($error_name) { ?>
-              <span class="error"><?php echo $error_name; ?></span>
+              <span class="text-error"><?php echo $error_name; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -62,7 +62,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_owner" value="<?php echo $config_owner; ?>" placeholder="<?php echo $entry_owner; ?>" id="input-owner" class="xxlarge" />
               <?php if ($error_owner) { ?>
-              <span class="error"><?php echo $error_owner; ?></span>
+              <span class="text-error"><?php echo $error_owner; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -71,7 +71,7 @@
             <div class="col-lg-9">
               <textarea name="config_address" cols="40" rows="5" placeholder="<?php echo $entry_address; ?>" id="input-address"><?php echo $config_address; ?></textarea>
               <?php if ($error_address) { ?>
-              <span class="error"><?php echo $error_address; ?></span>
+              <span class="text-error"><?php echo $error_address; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -80,7 +80,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_email" value="<?php echo $config_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="xxlarge" />
               <?php if ($error_email) { ?>
-              <span class="error"><?php echo $error_email; ?></span>
+              <span class="text-error"><?php echo $error_email; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -89,7 +89,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
               <?php if ($error_telephone) { ?>
-              <span class="error"><?php echo $error_telephone; ?></span>
+              <span class="text-error"><?php echo $error_telephone; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -106,7 +106,7 @@
             <div class="col-lg-9">
               <input type="text" name="config_title" value="<?php echo $config_title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
               <?php if ($error_title) { ?>
-              <span class="error"><?php echo $error_title; ?></span>
+              <span class="text-error"><?php echo $error_title; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -205,7 +205,7 @@
               <div class="col-lg-9">
                 <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" id="input-catalog-limit" class="input-mini" />
                 <?php if ($error_catalog_limit) { ?>
-                <span class="error"><?php echo $error_catalog_limit; ?></span>
+                <span class="text-error"><?php echo $error_catalog_limit; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -214,7 +214,7 @@
               <div class="col-lg-9">
                 <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" id="input-list-description-limit" class="input-mini" />
                 <?php if ($error_list_description_limit) { ?>
-                <span class="error"><?php echo $error_list_description_limit; ?></span>
+                <span class="text-error"><?php echo $error_list_description_limit; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -312,7 +312,7 @@
                 </label>
                 <?php } ?>
                 <?php if ($error_customer_group_display) { ?>
-                <span class="error"><?php echo $error_customer_group_display; ?></span>
+                <span class="text-error"><?php echo $error_customer_group_display; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -509,7 +509,7 @@
               x
               <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_category) { ?>
-              <span class="error"><?php echo $error_image_category; ?></span>
+              <span class="text-error"><?php echo $error_image_category; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -520,7 +520,7 @@
               x
               <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_thumb) { ?>
-              <span class="error"><?php echo $error_image_thumb; ?></span>
+              <span class="text-error"><?php echo $error_image_thumb; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -531,7 +531,7 @@
               x
               <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_popup) { ?>
-              <span class="error"><?php echo $error_image_popup; ?></span>
+              <span class="text-error"><?php echo $error_image_popup; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -542,7 +542,7 @@
               x
               <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if ($error_image_product) { ?>
-              <span class="error"><?php echo $error_image_product; ?></span>
+              <span class="text-error"><?php echo $error_image_product; ?></span>
               <?php } ?>
             </div>
           </div>

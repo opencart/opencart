@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <textarea name="google_talk_code" cols="40" rows="5" id="input-code"><?php echo $google_talk_code; ?></textarea>
           <?php if ($error_code) { ?>
-          <span class="error"><?php echo $error_code; ?></span>
+          <span class="text-error"><?php echo $error_code; ?></span>
           <?php } ?>
         </div>
       </div>

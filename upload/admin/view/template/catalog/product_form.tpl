@@ -45,7 +45,7 @@
                 <div class="col-lg-9">
                   <input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control" />
                   <?php if (isset($error_name[$language['language_id']])) { ?>
-                  <span class="error"><?php echo $error_name[$language['language_id']]; ?></span>
+                  <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span>
                   <?php } ?>
                 </div>
               </div>
@@ -83,7 +83,7 @@
             <div class="col-lg-9">
               <input type="text" name="model" value="<?php echo $model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
               <?php if ($error_model) { ?>
-              <span class="error"><?php echo $error_model; ?></span>
+              <span class="text-error"><?php echo $error_model; ?></span>
               <?php } ?>
             </div>
           </div>

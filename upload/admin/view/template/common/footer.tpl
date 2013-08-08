@@ -1,4 +1,4 @@
-<div class="container">
+<footer>
   <p class="text-center"><?php echo $text_footer; ?></p>
-</div>
+</footer>
 </body></html>

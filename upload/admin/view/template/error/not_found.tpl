@@ -9,7 +9,7 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-warning-sign icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div style="border: 1px solid #DDDDDD; background: #F7F7F7; text-align: center; padding: 15px;"><?php echo $text_not_found; ?></div>
+    <p class="text-center"><?php echo $text_not_found; ?></p>
   </div>
 </div>
 <?php echo $footer; ?>

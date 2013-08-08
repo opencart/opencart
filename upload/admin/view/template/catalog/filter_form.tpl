@@ -27,7 +27,7 @@
             <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
           </div>
           <?php if (isset($error_name[$language['language_id']])) { ?>
-          <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+          <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?>
         </div>
@@ -57,7 +57,7 @@
                 <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
               </div>
               <?php if (isset($error_filter[$filter_row][$language['language_id']])) { ?>
-              <span class="error"><?php echo $error_filter[$filter_row][$language['language_id']]; ?></span>
+              <span class="text-error"><?php echo $error_filter[$filter_row][$language['language_id']]; ?></span>
               <?php } ?>
               <?php } ?></td>
             <td class="text-right"><input type="text" name="filter[<?php echo $filter_row; ?>][sort_order]" value="<?php echo $filter['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" /></td>

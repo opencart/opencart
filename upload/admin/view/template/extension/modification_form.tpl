@@ -21,25 +21,25 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="name" value="<?php echo $name; ?>" id="input-name" />
+          <input type="text" name="name" value="<?php echo $name; ?>" id="input-name" class="form-control" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-author"><?php echo $entry_author; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="author" value="<?php echo $author; ?>" id="input-author" />
+          <input type="text" name="author" value="<?php echo $author; ?>" id="input-author" class="form-control" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?></label>
         <div class="col-lg-9">
-          <textarea name="code" cols="40" rows="15" id="input-code" class="input-xxlarge"><?php echo $code; ?></textarea>
+          <textarea name="code" cols="40" rows="15" id="input-code" class="form-control"><?php echo $code; ?></textarea>
         </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
         <div class="col-lg-9">
-          <select name="status" id="input-status">
+          <select name="status" id="input-status" class="form-control">
             <?php if ($status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
             <option value="0"><?php echo $text_disabled; ?></option>
@@ -53,7 +53,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" id="input-sort-order" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
+          <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
         </div>
       </div>
     </form>

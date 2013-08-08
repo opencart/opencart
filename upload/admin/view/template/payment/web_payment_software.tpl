@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="web_payment_software_merchant_name" value="<?php echo $web_payment_software_merchant_name; ?>" placeholder="<?php echo $entry_login; ?>" id="input-login" />
           <?php if ($error_login) { ?>
-          <span class="error"><?php echo $error_login; ?></span>
+          <span class="text-error"><?php echo $error_login; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="col-lg-9">
           <input type="text" name="web_payment_software_merchant_key" value="<?php echo $web_payment_software_merchant_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" />
           <?php if ($error_key) { ?>
-          <span class="error"><?php echo $error_key; ?></span>
+          <span class="text-error"><?php echo $error_key; ?></span>
           <?php } ?>
         </div>
       </div>

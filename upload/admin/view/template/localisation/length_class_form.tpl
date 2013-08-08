@@ -19,34 +19,38 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-length-class" class="form-horizontal">
       <div class="form-group required">
-        <div class="col-lg-3 control-label"><?php echo $entry_title; ?></div>
+        <label class="col-lg-3 control-label"><?php echo $entry_title; ?></label>
         <div class="col-lg-9">
           <?php foreach ($languages as $language) { ?>
-          <input type="text" name="length_class_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" />
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+          <div class="input-group">
+            <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+            <input type="text" name="length_class_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" class="form-control" />
+          </div>
           <?php if (isset($error_title[$language['language_id']])) { ?>
-          <span class="error"><?php echo $error_title[$language['language_id']]; ?></span><br />
+          <span class="text-error"><?php echo $error_title[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?>
         </div>
       </div>
       <div class="form-group required">
-        <div class="col-lg-3 control-label"><?php echo $entry_unit; ?></div>
+        <label class="col-lg-3 control-label"><?php echo $entry_unit; ?></label>
         <div class="col-lg-9">
           <?php foreach ($languages as $language) { ?>
-          <input type="text" name="length_class_description[<?php echo $language['language_id']; ?>][unit]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['unit'] : ''; ?>" placeholder="<?php echo $entry_unit; ?>" />
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+          <div class="input-group">
+            <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+            <input type="text" name="length_class_description[<?php echo $language['language_id']; ?>][unit]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['unit'] : ''; ?>" placeholder="<?php echo $entry_unit; ?>" class="form-control" />
+          </div>
           <?php if (isset($error_unit[$language['language_id']])) { ?>
-          <span class="error"><?php echo $error_unit[$language['language_id']]; ?></span><br />
+          <span class="text-error"><?php echo $error_unit[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-value"><?php echo $entry_value; ?> <span class="help-block"><?php echo $help_value; ?></span></label>
+        <label class="col-lg-3 control-label" for="input-value"><?php echo $entry_value; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" />
-        </div>
+          <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
+          <span class="help-block"><?php echo $help_value; ?></span> </div>
       </div>
     </form>
   </div>

@@ -220,11 +220,11 @@ function send(url) {
 				}
 				
 				if (json['error']['subject']) {
-					$('input[name=\'subject\']').after('<span class="error">' + json['error']['subject'] + '</span>');
+					$('input[name=\'subject\']').after('<span class="text-error">' + json['error']['subject'] + '</span>');
 				}	
 				
 				if (json['error']['message']) {
-					$('textarea[name=\'message\']').parent().append('<span class="error">' + json['error']['message'] + '</span>');
+					$('textarea[name=\'message\']').parent().append('<span class="text-error">' + json['error']['message'] + '</span>');
 				}									
 			}			
 			

@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" />
           <?php if ($error_ip) { ?>
-          <span class="error"><?php echo $error_ip; ?></span>
+          <span class="text-error"><?php echo $error_ip; ?></span>
           <?php } ?>
         </div>
       </div>

@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="twocheckout_account" value="<?php echo $twocheckout_account; ?>" placeholder="<?php echo $entry_account; ?>" id="input-account" />
           <?php if ($error_account) { ?>
-          <span class="error"><?php echo $error_account; ?></span>
+          <span class="text-error"><?php echo $error_account; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="col-lg-9">
           <input type="text" name="twocheckout_secret" value="<?php echo $twocheckout_secret; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret" />
           <?php if ($error_secret) { ?>
-          <span class="error"><?php echo $error_secret; ?></span>
+          <span class="text-error"><?php echo $error_secret; ?></span>
           <?php } ?>
         </div>
       </div>

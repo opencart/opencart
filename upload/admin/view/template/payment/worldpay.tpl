@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="worldpay_merchant" value="<?php echo $worldpay_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" />
           <?php if ($error_merchant) { ?>
-          <span class="error"><?php echo $error_merchant; ?></span>
+          <span class="text-error"><?php echo $error_merchant; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="col-lg-9">
           <input type="text" name="worldpay_password" value="<?php echo $worldpay_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
           <?php if ($error_password) { ?>
-          <span class="error"><?php echo $error_password; ?></span>
+          <span class="text-error"><?php echo $error_password; ?></span>
           <?php } ?>
         </div>
       </div>

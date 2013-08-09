@@ -63,7 +63,7 @@ class ControllerOpenbayPlay extends Controller {
         $this->data['image']['icon1'] = HTTPS_SERVER . 'view/image/openbay/openbay_icon1.png';
         $this->data['image']['icon13'] = HTTPS_SERVER . 'view/image/openbay/openbay_icon13.png';
 
-        $this->template = 'play/main.tpl';
+        $this->template = 'openbay/play_main.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -280,7 +280,7 @@ class ControllerOpenbayPlay extends Controller {
         $this->document->setTitle($this->data['lang_page_title']);
         $this->document->addScript('view/javascript/openbay/faq.js');
         $this->document->addStyle('view/stylesheet/openbay.css');
-        $this->template         = 'play/reportprice.tpl';
+        $this->template         = 'openbay/play_report_price.tpl';
         $this->children         = array('common/header','common/footer');
         $this->data['cancel']   = HTTPS_SERVER . 'index.php?route=extension/openbay/itemList&token=' . $this->session->data['token'];
         $this->data['token']    = $this->session->data['token'];
@@ -347,7 +347,7 @@ class ControllerOpenbayPlay extends Controller {
                 $this->document->setTitle($this->data['lang_page_title']);
                 $this->document->addScript('view/javascript/openbay/faq.js');
                 $this->document->addStyle('view/stylesheet/openbay.css');
-                $this->template         = 'play/listing.tpl';
+                $this->template         = 'openbay/play_listing.tpl';
                 $this->children         = array('common/header','common/footer');
                 $this->data['action']   = HTTPS_SERVER . 'index.php?route=openbay/play/newProduct&token=' . $this->session->data['token'];
                 $this->data['cancel']   = HTTPS_SERVER . 'index.php?route=extension/openbay/itemList&token=' . $this->session->data['token'];
@@ -424,7 +424,7 @@ class ControllerOpenbayPlay extends Controller {
                 $this->document->setTitle($this->data['lang_page_title_edit']);
                 $this->document->addScript('view/javascript/openbay/faq.js');
                 $this->document->addStyle('view/stylesheet/openbay.css');
-                $this->template         = 'play/listing.tpl';
+                $this->template         = 'openbay/play_listing.tpl';
                 $this->children         = array('common/header','common/footer');
                 $this->data['action']   = HTTPS_SERVER . 'index.php?route=openbay/play/editProduct&token=' . $this->session->data['token'];
                 $this->data['delete']   = HTTPS_SERVER . 'index.php?route=openbay/play/deleteProduct&token=' . $this->session->data['token'] .'&product_id='.$this->request->get['product_id'];

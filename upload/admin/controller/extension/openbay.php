@@ -377,7 +377,7 @@ class ControllerExtensionOpenbay extends Controller {
                 if($this->config->get('obp_play_shipped_id') == $this->request->get['status_id']){
                     $this->data['carriers']     = $this->play->getCarriers();
                     if(!empty($this->data['order_info'])){
-                        $this->template = 'play/ajax_shippinginfo.tpl';
+                        $this->template = 'openbay/play_ajax_shippinginfo.tpl';
                         $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
                     }
                 }
@@ -385,7 +385,7 @@ class ControllerExtensionOpenbay extends Controller {
                 if($this->config->get('obp_play_refunded_id') == $this->request->get['status_id']){
                     $this->data['refund_reason'] = $this->play->getRefundReason();
                     if(!empty($this->data['order_info'])){
-                        $this->template = 'play/ajax_refundinfo.tpl';
+                        $this->template = 'openbay/play_ajax_refundinfo.tpl';
                         $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
                     }
                 }

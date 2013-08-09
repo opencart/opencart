@@ -21,7 +21,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-title"><?php echo $entry_title; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
+          <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" class="form-control" />
           <?php if ($error_title) { ?>
           <span class="text-error"><?php echo $error_title; ?></span>
           <?php } ?>
@@ -30,7 +30,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-description"><?php echo $entry_description; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" id="input-description" />
+          <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control" />
           <?php if ($error_description) { ?>
           <br />
           <span class="text-error"><?php echo $error_description; ?></span>
@@ -50,7 +50,7 @@
           <?php $tax_rule_row = 0; ?>
           <?php foreach ($tax_rules as $tax_rule) { ?>
           <tr id="tax-rule-row<?php echo $tax_rule_row; ?>">
-            <td class="text-left"><select name="tax_rule[<?php echo $tax_rule_row; ?>][tax_rate_id]">
+            <td class="text-left"><select name="tax_rule[<?php echo $tax_rule_row; ?>][tax_rate_id]" class="form-control">
                 <?php foreach ($tax_rates as $tax_rate) { ?>
                 <?php  if ($tax_rate['tax_rate_id'] == $tax_rule['tax_rate_id']) { ?>
                 <option value="<?php echo $tax_rate['tax_rate_id']; ?>" selected="selected"><?php echo $tax_rate['name']; ?></option>
@@ -59,7 +59,7 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-            <td class="text-left"><select name="tax_rule[<?php echo $tax_rule_row; ?>][based]">
+            <td class="text-left"><select name="tax_rule[<?php echo $tax_rule_row; ?>][based]" class="form-control">
                 <?php  if ($tax_rule['based'] == 'shipping') { ?>
                 <option value="shipping" selected="selected"><?php echo $text_shipping; ?></option>
                 <?php } else { ?>
@@ -76,8 +76,8 @@
                 <option value="store"><?php echo $text_store; ?></option>
                 <?php } ?>
               </select></td>
-            <td class="text-left"><input type="text" name="tax_rule[<?php echo $tax_rule_row; ?>][priority]" value="<?php echo $tax_rule['priority']; ?>" placeholder="<?php echo $entry_priority; ?>" class="input-mini" /></td>
-            <td class="text-left"><a onclick="$('#tax-rule-row<?php echo $tax_rule_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
+            <td class="text-left"><input type="text" name="tax_rule[<?php echo $tax_rule_row; ?>][priority]" value="<?php echo $tax_rule['priority']; ?>" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>
+            <td class="text-left"><button type="button" onclick="$('#tax-rule-row<?php echo $tax_rule_row; ?>').remove();" class="btn btn-danger"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></button></td>
           </tr>
           <?php $tax_rule_row++; ?>
           <?php } ?>
@@ -85,7 +85,7 @@
         <tfoot>
           <tr>
             <td colspan="3"></td>
-            <td class="text-left"><a onclick="addRule();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_rule; ?></a></td>
+            <td class="text-left"><button type="button" onclick="addRule();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_rule; ?></button></td>
           </tr>
         </tfoot>
       </table>
@@ -97,18 +97,18 @@ var tax_rule_row = <?php echo $tax_rule_row; ?>;
 
 function addRule() {
 	html  = '<tr id="tax-rule-row' + tax_rule_row + '">';
-	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][tax_rate_id]">';
+	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][tax_rate_id]" class="form-control">';
     <?php foreach ($tax_rates as $tax_rate) { ?>
     html += '    <option value="<?php echo $tax_rate['tax_rate_id']; ?>"><?php echo addslashes($tax_rate['name']); ?></option>';
     <?php } ?>
     html += '  </select></td>';
-	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][based]">';
+	html += '  <td class="text-left"><select name="tax_rule[' + tax_rule_row + '][based]" class="form-control">';
     html += '    <option value="shipping"><?php echo $text_shipping; ?></option>';
     html += '    <option value="payment"><?php echo $text_payment; ?></option>';
     html += '    <option value="store"><?php echo $text_store; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="input-mini" /></td>';
-	html += '  <td class="text-left"><a onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
+	html += '  <td class="text-left"><input type="text" name="tax_rule[' + tax_rule_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#tax-rule-row' + tax_rule_row + '\').remove();" class="btn btn-danger"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';
 	
 	$('#tax-rule tbody').append(html);

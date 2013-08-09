@@ -21,7 +21,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
+          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
           <?php if ($error_name) { ?>
           <span class="text-error"><?php echo $error_name; ?></span>
           <?php } ?>
@@ -30,25 +30,26 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-description"><?php echo $entry_description; ?></label>
         <div class="col-lg-9">
-          <textarea name="description" cols="40" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description"><?php echo $description; ?></textarea>
+          <textarea name="description" cols="40" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $description; ?></textarea>
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?> <span class="help-block"><?php echo $help_code; ?></span></label>
+        <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
+          <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
+          <span class="help-block"><?php echo $help_code; ?></span>
           <?php if ($error_code) { ?>
           <span class="text-error"><?php echo $error_code; ?></span>
           <?php } ?>
         </div>
       </div>
       <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-example"><?php echo $entry_example; ?> <span class="help-block"><?php echo $help_example; ?></span></label>
+        <label class="col-lg-3 control-label" for="input-example"><?php echo $entry_example; ?></label>
         <div class="col-lg-9">
-          <input type="text" id="input-example1" class="input-xxlarge" />
+          <input type="text" id="input-example1" class="form-control" />
           <br />
-          <input type="text" id="input-example2" class="input-xxlarge" />
-        </div>
+          <input type="text" id="input-example2" class="form-control" />
+          <span class="help-block"><?php echo $help_example; ?></span> </div>
       </div>
     </form>
   </div>

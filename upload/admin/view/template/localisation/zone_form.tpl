@@ -21,7 +21,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
+          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
           <?php if ($error_name) { ?>
           <span class="text-error"><?php echo $error_name; ?></span>
           <?php } ?>
@@ -30,13 +30,13 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
+          <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-country"><?php echo $entry_country; ?></label>
         <div class="col-lg-9">
-          <select name="country_id" id="input-country">
+          <select name="country_id" id="input-country" class="form-control">
             <?php foreach ($countries as $country) { ?>
             <?php if ($country['country_id'] == $country_id) { ?>
             <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
@@ -50,7 +50,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
         <div class="col-lg-9">
-          <select name="status" id="input-status">
+          <select name="status" id="input-status" class="form-control">
             <?php if ($status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
             <option value="0"><?php echo $text_disabled; ?></option>

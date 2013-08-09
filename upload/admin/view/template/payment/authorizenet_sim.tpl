@@ -21,7 +21,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-merchant"><?php echo $entry_merchant; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="authorizenet_merchant" value="<?php echo $authorizenet_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" />
+          <input type="text" name="authorizenet_merchant" value="<?php echo $authorizenet_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
           <?php if ($error_merchant) { ?>
           <span class="text-error"><?php echo $error_merchant; ?></span>
           <?php } ?>
@@ -30,7 +30,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-key"><?php echo $entry_key; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="authorizenet_key" value="<?php echo $authorizenet_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" />
+          <input type="text" name="authorizenet_key" value="<?php echo $authorizenet_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
           <?php if ($error_key) { ?>
           <span class="text-error"><?php echo $error_key; ?></span>
           <?php } ?>
@@ -39,13 +39,13 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-callback"><?php echo $entry_callback; ?></label>
         <div class="col-lg-9">
-          <textarea cols="40" rows="5" id="input-callback" readonly="readonly"><?php echo $callback; ?></textarea>
+          <textarea cols="40" rows="5" id="input-callback" class="form-control" readonly="readonly"><?php echo $callback; ?></textarea>
         </div>
       </div>
       <div class="form-group">
         <div class="col-lg-3 control-label"><?php echo $entry_test; ?></div>
         <div class="col-lg-9">
-          <label class="radio inline">
+          <label class="radio-inline">
             <?php if ($authorizenet_test) { ?>
             <input type="radio" name="authorizenet_test" value="1" checked="checked" />
             <?php echo $text_yes; ?>
@@ -54,7 +54,7 @@
             <?php echo $text_yes; ?>
             <?php } ?>
           </label>
-          <label class="radio inline">
+          <label class="radio-inline">
             <?php if (!$authorizenet_test) { ?>
             <input type="radio" name="authorizenet_test" value="0" checked="checked" />
             <?php echo $text_no; ?>
@@ -68,13 +68,13 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
         <div class="col-lg-9">
-          <input type="text" name="authorizenet_total" value="<?php echo $authorizenet_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
+          <input type="text" name="authorizenet_total" value="<?php echo $authorizenet_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
         <div class="col-lg-9">
-          <select name="authorizenet_order_status_id" id="input-order-status">
+          <select name="authorizenet_order_status_id" id="input-order-status" class="form-control">
             <?php foreach ($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $authorizenet_order_status_id) { ?>
             <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -88,7 +88,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
         <div class="col-lg-9">
-          <select name="authorizenet_geo_zone_id" id="input-geo-zone">
+          <select name="authorizenet_geo_zone_id" id="input-geo-zone" class="form-control">
             <option value="0"><?php echo $text_all_zones; ?></option>
             <?php foreach ($geo_zones as $geo_zone) { ?>
             <?php if ($geo_zone['geo_zone_id'] == $authorizenet_geo_zone_id) { ?>
@@ -103,7 +103,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
         <div class="col-lg-9">
-          <select name="authorizenet_status" id="input-status">
+          <select name="authorizenet_status" id="input-status" class="form-control">
             <?php if ($authorizenet_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
             <option value="0"><?php echo $text_disabled; ?></option>
@@ -117,7 +117,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="authorizenet_sort_order" value="<?php echo $authorizenet_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
+          <input type="text" name="authorizenet_sort_order" value="<?php echo $authorizenet_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
         </div>
       </div>
     </form>

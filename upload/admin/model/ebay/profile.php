@@ -105,19 +105,19 @@ class ModelEbayProfile extends Model{
         $types = array(
             0 => array(
                 'name'          => 'Shipping',
-                'template'      => 'ebay/profile_form_shipping.tpl'
+                'template'      => 'openbay/ebay_profile_form_shipping.tpl'
             ),
             1 => array(
                 'name'          => 'Returns',
-                'template'      => 'ebay/profile_form_returns.tpl'
+                'template'      => 'openbay/ebay_profile_form_returns.tpl'
             ),
             2 => array(
                 'name'          => 'Template &amp; gallery',
-                'template'      => 'ebay/profile_form_template.tpl'
+                'template'      => 'openbay/ebay_profile_form_template.tpl'
             ),
             3 => array(
                 'name'          => 'General settings',
-                'template'      => 'ebay/profile_form_generic.tpl'
+                'template'      => 'openbay/ebay_profile_form_generic.tpl'
             )
         );
         

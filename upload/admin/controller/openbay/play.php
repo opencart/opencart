@@ -255,7 +255,7 @@ class ControllerOpenbayPlay extends Controller {
         $this->data['dispatch_from']    = $this->play->getDispatchFrom();
         $this->data['item_conditions']  = $this->play->getItemCondition();
 
-        $this->template = 'play/settings.tpl';
+        $this->template = 'openbay/play_settings.tpl';
         $this->children = array(
             'common/header',
             'common/footer'

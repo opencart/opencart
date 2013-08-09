@@ -48,7 +48,7 @@ class ControllerOpenbayAmazon extends Controller {
             'separator' => ' :: '
         );
         
-        $this->template = 'amazon/stock_updates.tpl';
+        $this->template = 'openbay/amazon_stock_updates.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -142,7 +142,7 @@ class ControllerOpenbayAmazon extends Controller {
             'separator' => ' :: '
         );
         
-        $this->template = 'amazon/overview.tpl';
+        $this->template = 'openbay/amazon_overview.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -238,7 +238,7 @@ class ControllerOpenbayAmazon extends Controller {
         $this->data['server'] = $this->amazon->getServer();
         $this->data['token'] = $this->config->get('openbay_amazon_token');
         
-        $this->template = 'amazon/subscription.tpl';
+        $this->template = 'openbay/amazon_subscription.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -369,7 +369,7 @@ class ControllerOpenbayAmazon extends Controller {
         $this->data['openbay_amazon_notify_admin'] = isset($settings['openbay_amazon_notify_admin']) ? $settings['openbay_amazon_notify_admin'] : '';
        
         
-        $this->template = 'amazon/settings.tpl';
+        $this->template = 'openbay/amazon_settings.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -461,7 +461,7 @@ class ControllerOpenbayAmazon extends Controller {
         $this->data['getUnlinkedItemsAjax'] = $this->url->link('openbay/amazon/getUnlinkedItemsAjax', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['getOpenstockOptionsAjax'] = $this->url->link('openbay/amazon/getOpenstockOptionsAjax', 'token=' . $this->session->data['token'], 'SSL');
        
-        $this->template = 'amazon/item_links.tpl';
+        $this->template = 'openbay/amazon_item_links.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -502,7 +502,7 @@ class ControllerOpenbayAmazon extends Controller {
             'separator' => ' :: '
         );
         
-        $this->template = 'amazon/saved_listings.tpl';
+        $this->template = 'openbay/amazon_saved_listings.tpl';
         $this->children = array(
             'common/header',
             'common/footer'

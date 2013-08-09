@@ -96,7 +96,7 @@ class ControllerAmazonusListing extends Controller{
         $this->document->addStyle('view/stylesheet/openbay.css');
         $this->document->addScript('view/javascript/openbay/faq.js');
 
-        $this->template = 'amazonus/listing.tpl';
+        $this->template = 'openbay/amazonus_listing.tpl';
 
         $this->children = array(
             'common/header',
@@ -366,7 +366,7 @@ class ControllerAmazonusListing extends Controller{
         $this->data['button_create_new_listing'] = $this->language->get('button_create_new_listing');
         
         
-        $this->template = 'amazonus/listing_edit.tpl';
+        $this->template = 'openbay/amazonus_listing_edit.tpl';
         $this->children = array(
             'common/header',
             'common/footer'

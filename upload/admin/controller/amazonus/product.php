@@ -194,7 +194,7 @@ class ControllerAmazonusProduct extends Controller{
             $this->data['options'] = array();
         }
         
-        $this->template = 'amazonus/listing_advanced.tpl';
+        $this->template = 'openbay/amazonus_listing_advanced.tpl';
         $this->children = array(
             'common/header',
             'common/footer'

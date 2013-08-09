@@ -218,7 +218,7 @@ class ControllerAmazonProduct extends Controller{
             
         $this->data['saved_marketplaces'] = isset($savedListingData['marketplaces']) ? (array)unserialize($savedListingData['marketplaces']) : false;
 
-        $this->template = 'amazon/listing_advanced.tpl';
+        $this->template = 'openbay/amazon_listing_advanced.tpl';
         $this->children = array(
             'common/header',
             'common/footer'

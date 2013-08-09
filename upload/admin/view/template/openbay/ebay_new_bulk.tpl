@@ -224,7 +224,7 @@
             beforeSend: function(){ addCount(); },
             success: function(data) {
 
-                if(data.data.price_modify !== false){
+                if(data.data.price_modify !== false && typeof data.data.price_modify !== 'undefined'){
                     modify_percent = 100 + parseFloat(data.data.price_modify);
                     modify_percent = parseFloat(modify_percent / 100);
                     price_modified = price_original * modify_percent;

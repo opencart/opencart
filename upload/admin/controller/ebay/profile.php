@@ -12,7 +12,7 @@ class ControllerEbayProfile extends Controller {
         $this->document->addStyle('view/stylesheet/openbay.css');
         $this->document->addScript('view/javascript/openbay/faq.js');
 
-        $this->template = 'ebay/profile_list.tpl';
+        $this->template = 'openbay/ebay_profile_list.tpl';
 
         $this->children = array(
             'common/header',

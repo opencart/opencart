@@ -69,7 +69,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['links_profile']            = $this->url->link('ebay/profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_template']           = $this->url->link('ebay/template/listAll', 'token=' . $this->session->data['token'], 'SSL');
 
-        $this->template = 'ebay/overview.tpl';
+        $this->template = 'openbay/ebay_overview.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -359,7 +359,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['api_server']       = $this->ebay->getApiServer();
         $this->data['order_statuses']   = $this->model_localisation_order_status->getOrderStatuses();
 
-        $this->template = 'ebay/settings.tpl';
+        $this->template = 'openbay/ebay_settings.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -456,7 +456,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['validation'] = $this->ebay->validate();
         $this->data['token'] = $this->session->data['token'];
 
-        $this->template = 'ebay/summary.tpl';
+        $this->template = 'openbay/ebay_summary.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -618,7 +618,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['token']        = $this->session->data['token'];
         $this->data['obp_token']    = $this->config->get('openbaypro_token');
 
-        $this->template = 'ebay/subscription.tpl';
+        $this->template = 'openbay/ebay_subscription.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -663,7 +663,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['addons'] = $this->ebay->addonList();
         $this->data['validation'] = $this->ebay->validate();
 
-        $this->template = 'ebay/addons.tpl';
+        $this->template = 'openbay/ebay_addons.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -714,7 +714,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['imgImportLink']    = $this->url->link('openbay/openbay/getImportImages', 'token=' . $this->session->data['token'], 'SSL');
 
 
-        $this->template = 'ebay/item_import.tpl';
+        $this->template = 'openbay/ebay_item_import.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -760,7 +760,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['validation']   = $this->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
 
-        $this->template = 'ebay/stock_report.tpl';
+        $this->template = 'openbay/ebay_stock_report.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -806,7 +806,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['validation']   = $this->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
 
-        $this->template = 'ebay/order_import.tpl';
+        $this->template = 'openbay/ebay_order_import.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -852,7 +852,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['validation']   = $this->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
 
-        $this->template = 'ebay/syncronise.tpl';
+        $this->template = 'openbay/ebay_syncronise.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -899,7 +899,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['token']        = $this->session->data['token'];
         $this->data['items']        = $this->ebay->getLiveProducts();
 
-        $this->template = 'ebay/item_link.tpl';
+        $this->template = 'openbay/ebay_item_link.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -977,7 +977,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->document->addStyle('view/stylesheet/openbay.css');
                 $this->document->addScript('view/javascript/openbay/faq.js');
 
-                $this->template = 'ebay/edit.tpl';
+                $this->template = 'openbay/ebay_edit.tpl';
 
                 $this->children = array(
                     'common/header',
@@ -1170,7 +1170,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->document->addStyle('view/stylesheet/openbay.css');
                 $this->document->addScript('view/javascript/openbay/faq.js');
 
-                $this->template         = 'ebay/new.tpl';
+                $this->template         = 'openbay/ebay_new.tpl';
                 $this->children         = array('common/header','common/footer');
                 $this->data['action']   = $this->url->link('openbay/openbay/create', 'token=' . $this->session->data['token'], 'SSL');
                 $this->data['cancel']   = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
@@ -1426,7 +1426,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->document->addStyle('view/stylesheet/openbay.css');
                 $this->document->addScript('view/javascript/openbay/faq.js');
                 $this->document->addScript('view/javascript/openbay/openbay.js');
-                $this->template = 'ebay/new_bulk.tpl';
+                $this->template = 'openbay/ebay_new_bulk.tpl';
 
                 $this->children = array(
                     'common/header',

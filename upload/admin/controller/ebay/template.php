@@ -12,7 +12,7 @@ class ControllerEbayTemplate extends Controller {
         $this->document->addStyle('view/stylesheet/openbay.css');
         $this->document->addScript('view/javascript/openbay/faq.js');
 
-        $this->template = 'ebay/template_list.tpl';
+        $this->template = 'openbay/ebay_template_list.tpl';
 
         $this->children = array(
             'common/header',
@@ -137,7 +137,7 @@ class ControllerEbayTemplate extends Controller {
         $this->document->addScript('view/javascript/openbay/codemirror.js');
         $this->document->addScript('view/javascript/openbay/faq.js');
 
-        $this->template = 'ebay/template_form.tpl';
+        $this->template = 'openbay/ebay_template_form.tpl';
 
         $this->children = array(
             'common/header',

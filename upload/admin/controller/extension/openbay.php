@@ -286,7 +286,7 @@ class ControllerExtensionOpenbay extends Controller {
         );
 
 
-        $this->template = 'extension/openbay_manage.tpl';
+        $this->template = 'openbay/openbay_manage.tpl';
         $this->children = array(
             'common/header',
             'common/footer',
@@ -363,7 +363,7 @@ class ControllerExtensionOpenbay extends Controller {
                 if($this->config->get('EBAY_DEF_SHIPPED_ID') == $this->request->get['status_id']){
                     $this->data['carriers']     = $this->ebay->getCarriers();
                     $this->data['order_info']   = $this->ebay->getOrder($this->request->get['order_id']);
-                    $this->template             = 'ebay/ajax_shippinginfo.tpl';
+                    $this->template             = 'openbay/ebay_ajax_shippinginfo.tpl';
                     $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
                 }
             }
@@ -401,7 +401,7 @@ class ControllerExtensionOpenbay extends Controller {
                 //if status is shipped
                 if($this->request->get['status_id'] == $this->config->get('openbay_amazon_order_status_shipped')){
                     $this->data['couriers'] = $this->amazon->getCarriers();
-                    $this->template = 'amazon/ajax_shippinginfo.tpl';
+                    $this->template = 'openbay/amazon_ajax_shippinginfo.tpl';
                     $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
                 }
             }
@@ -416,7 +416,7 @@ class ControllerExtensionOpenbay extends Controller {
                 //if status is shipped
                 if($this->request->get['status_id'] == $this->config->get('openbay_amazonus_order_status_shipped')){
                     $this->data['couriers'] = $this->amazonus->getCarriers();
-                    $this->template = 'amazonus/ajax_shippinginfo.tpl';
+                    $this->template = 'openbay/amazonus_ajax_shippinginfo.tpl';
                     $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
                 }
             }
@@ -745,7 +745,7 @@ class ControllerExtensionOpenbay extends Controller {
         $this->data['sort'] = $sort;
         $this->data['order'] = $order;
 
-        $this->template = 'extension/openbay_orderlist.tpl';
+        $this->template = 'openbay/openbay_orderlist.tpl';
         $this->children = array(
             'common/header',
             'common/footer'
@@ -840,7 +840,7 @@ class ControllerExtensionOpenbay extends Controller {
                 'separator' => ' :: '
             );
 
-            $this->template = 'extension/openbay_orderlist_confirm.tpl';
+            $this->template = 'openbay/openbay_orderlist_confirm.tpl';
             $this->children = array(
                 'common/header',
                 'common/footer'
@@ -1125,7 +1125,7 @@ class ControllerExtensionOpenbay extends Controller {
 
         $this->data['markets'] = $markets;
 
-        $this->template = 'extension/openbay_links.tpl';
+        $this->template = 'openbay/openbay_links.tpl';
         $this->children = array();
         $this->response->setOutput($this->render());
     }
@@ -1808,7 +1808,7 @@ class ControllerExtensionOpenbay extends Controller {
         $this->data['sort'] = $sort;
         $this->data['order'] = $order;
 
-        $this->template = 'extension/openbay_itemlist.tpl';
+        $this->template = 'openbay/openbay_itemlist.tpl';
         $this->children = array(
             'common/header',
             'common/footer'

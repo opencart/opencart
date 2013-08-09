@@ -31,7 +31,7 @@
             <div class="col-lg-9">
               <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
               <?php if ($error_name) { ?>
-              <span class="error"><?php echo $error_name; ?></span>
+              <span class="text-error"><?php echo $error_name; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -40,7 +40,7 @@
             <div class="col-lg-9">
               <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
               <?php if ($error_code) { ?>
-              <span class="error"><?php echo $error_code; ?></span>
+              <span class="text-error"><?php echo $error_code; ?></span>
               <?php } ?>
             </div>
           </div>

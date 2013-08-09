@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" />
           <?php if ($error_title) { ?>
-          <span class="error"><?php echo $error_title; ?></span>
+          <span class="text-error"><?php echo $error_title; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -33,7 +33,7 @@
           <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" id="input-description" />
           <?php if ($error_description) { ?>
           <br />
-          <span class="error"><?php echo $error_description; ?></span>
+          <span class="text-error"><?php echo $error_description; ?></span>
           <?php } ?>
         </div>
       </div>

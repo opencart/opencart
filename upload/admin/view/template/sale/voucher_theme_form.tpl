@@ -25,7 +25,7 @@
           <input type="text" name="voucher_theme_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($voucher_theme_description[$language['language_id']]) ? $voucher_theme_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
           <?php if (isset($error_name[$language['language_id']])) { ?>
-          <span class="error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+          <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?>
         </div>
@@ -38,7 +38,7 @@
             <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
           </div>
           <?php if ($error_image) { ?>
-          <span class="error"><?php echo $error_image; ?></span>
+          <span class="text-error"><?php echo $error_image; ?></span>
           <?php } ?>
         </div>
       </div>

@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="sagepay_us_merchant_id" value="<?php echo $sagepay_us_merchant_id; ?>" placeholder="<?php echo $entry_merchant_id; ?>" id="input-merchant-id" />
           <?php if ($error_merchant_id) { ?>
-          <span class="error"><?php echo $error_merchant_id; ?></span>
+          <span class="text-error"><?php echo $error_merchant_id; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="col-lg-9">
           <input type="text" name="sagepay_us_merchant_key" value="<?php echo $sagepay_us_merchant_key; ?>" placeholder="<?php echo $entry_merchant_key; ?>" id="input-merchant-key" />
           <?php if ($error_merchant_key) { ?>
-          <span class="error"><?php echo $error_merchant_key; ?></span>
+          <span class="text-error"><?php echo $error_merchant_key; ?></span>
           <?php } ?>
         </div>
       </div>

@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="perpetual_payments_auth_id" value="<?php echo $perpetual_payments_auth_id; ?>" placeholder="<?php echo $entry_auth_id; ?>" id="input-auth-id" />
           <?php if ($error_auth_id) { ?>
-          <span class="error"><?php echo $error_auth_id; ?></span>
+          <span class="text-error"><?php echo $error_auth_id; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="col-lg-9">
           <input type="text" name="perpetual_payments_auth_pass" value="<?php echo $perpetual_payments_auth_pass; ?>" placeholder="<?php echo $entry_auth_pass; ?>" id="input-auth-pass" />
           <?php if ($error_auth_pass) { ?>
-          <span class="error"><?php echo $error_auth_pass; ?></span>
+          <span class="text-error"><?php echo $error_auth_pass; ?></span>
           <?php } ?>
         </div>
       </div>

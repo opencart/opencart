@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="nochex_email" value="<?php echo $nochex_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
           <?php if ($error_email) { ?>
-          <span class="error"><?php echo $error_email; ?></span>
+          <span class="text-error"><?php echo $error_email; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -49,7 +49,7 @@
         <div class="col-lg-9">
           <input type="text" name="nochex_merchant" value="<?php echo $nochex_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" />
           <?php if ($error_merchant) { ?>
-          <span class="error"><?php echo $error_merchant; ?></span>
+          <span class="text-error"><?php echo $error_merchant; ?></span>
           <?php } ?>
         </div>
       </div>

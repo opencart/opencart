@@ -34,7 +34,7 @@
             <div class="col-lg-9">
               <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
               <?php if ($error_code) { ?>
-              <span class="error"><?php echo $error_code; ?></span>
+              <span class="text-error"><?php echo $error_code; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -43,7 +43,7 @@
             <div class="col-lg-9">
               <input type="text" name="from_name" value="<?php echo $from_name; ?>" placeholder="<?php echo $entry_from_name; ?>" id="input-from-name" />
               <?php if ($error_from_name) { ?>
-              <span class="error"><?php echo $error_from_name; ?></span>
+              <span class="text-error"><?php echo $error_from_name; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -52,7 +52,7 @@
             <div class="col-lg-9">
               <input type="text" name="from_email" value="<?php echo $from_email; ?>" placeholder="<?php echo $entry_from_email; ?>" id="input-from-email" />
               <?php if ($error_from_email) { ?>
-              <span class="error"><?php echo $error_from_email; ?></span>
+              <span class="text-error"><?php echo $error_from_email; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -61,7 +61,7 @@
             <div class="col-lg-9">
               <input type="text" name="to_name" value="<?php echo $to_name; ?>" placeholder="<?php echo $entry_to_name; ?>" id="input-to-name" />
               <?php if ($error_to_name) { ?>
-              <span class="error"><?php echo $error_to_name; ?></span>
+              <span class="text-error"><?php echo $error_to_name; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -70,7 +70,7 @@
             <div class="col-lg-9">
               <input type="text" name="to_email" value="<?php echo $to_email; ?>" placeholder="<?php echo $entry_to_email; ?>" id="input-to-email" />
               <?php if ($error_to_email) { ?>
-              <span class="error"><?php echo $error_to_email; ?></span>
+              <span class="text-error"><?php echo $error_to_email; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -99,7 +99,7 @@
             <div class="col-lg-9">
               <input type="text" name="amount" value="<?php echo $amount; ?>" placeholder="<?php echo $entry_amount; ?>" id="input-amount" />
               <?php if ($error_amount) { ?>
-              <span class="error"><?php echo $error_amount; ?></span>
+              <span class="text-error"><?php echo $error_amount; ?></span>
               <?php } ?>
             </div>
           </div>

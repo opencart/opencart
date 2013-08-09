@@ -38,7 +38,7 @@
             <td class="text-left"><input type="text" name="special_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
               <input type="text" name="special_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
               <?php if (isset($error_image[$module_row])) { ?>
-              <span class="error"><?php echo $error_image[$module_row]; ?></span>
+              <span class="text-error"><?php echo $error_image[$module_row]; ?></span>
               <?php } ?></td>
             <td class="text-left"><select name="special_module[<?php echo $module_row; ?>][layout_id]">
                 <?php foreach ($layouts as $layout) { ?>

@@ -32,7 +32,7 @@
             <div class="col-lg-9">
               <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
               <?php if ($error_firstname) { ?>
-              <span class="error"><?php echo $error_firstname; ?></span>
+              <span class="text-error"><?php echo $error_firstname; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -41,7 +41,7 @@
             <div class="col-lg-9">
               <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
               <?php if ($error_lastname) { ?>
-              <span class="error"><?php echo $error_lastname; ?></span>
+              <span class="text-error"><?php echo $error_lastname; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -50,7 +50,7 @@
             <div class="col-lg-9">
               <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
               <?php if ($error_email) { ?>
-              <span class="error"><?php echo $error_email; ?></span>
+              <span class="text-error"><?php echo $error_email; ?></span>
               <?php  } ?>
             </div>
           </div>
@@ -59,7 +59,7 @@
             <div class="col-lg-9">
               <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
               <?php if ($error_telephone) { ?>
-              <span class="error"><?php echo $error_telephone; ?></span>
+              <span class="text-error"><?php echo $error_telephone; ?></span>
               <?php  } ?>
             </div>
           </div>
@@ -80,7 +80,7 @@
             <div class="col-lg-9">
               <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" />
               <?php if ($error_address_1) { ?>
-              <span class="error"><?php echo $error_address_1; ?></span>
+              <span class="text-error"><?php echo $error_address_1; ?></span>
               <?php  } ?>
             </div>
           </div>
@@ -95,7 +95,7 @@
             <div class="col-lg-9">
               <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
               <?php if ($error_city) { ?>
-              <span class="error"><?php echo $error_city ?></span>
+              <span class="text-error"><?php echo $error_city ?></span>
               <?php  } ?>
             </div>
           </div>
@@ -104,7 +104,7 @@
             <div class="col-lg-9">
               <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
               <?php if ($error_postcode) { ?>
-              <span class="error"><?php echo $error_postcode ?></span>
+              <span class="text-error"><?php echo $error_postcode ?></span>
               <?php  } ?>
             </div>
           </div>
@@ -122,7 +122,7 @@
                 <?php } ?>
               </select>
               <?php if ($error_country) { ?>
-              <span class="error"><?php echo $error_country; ?></span>
+              <span class="text-error"><?php echo $error_country; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -132,7 +132,7 @@
               <select name="zone_id" id="input-zone">
               </select>
               <?php if ($error_zone) { ?>
-              <span class="error"><?php echo $error_zone; ?></span>
+              <span class="text-error"><?php echo $error_zone; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -141,7 +141,7 @@
             <div class="col-lg-9">
               <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
               <?php if ($error_code) { ?>
-              <span class="error"><?php echo $error_code; ?></span>
+              <span class="text-error"><?php echo $error_code; ?></span>
               <?php } ?>
             </div>
           </div>
@@ -150,7 +150,7 @@
             <div class="col-lg-9">
               <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" autocomplete="off" id="input-password"  />
               <?php if ($error_password) { ?>
-              <span class="error"><?php echo $error_password; ?></span>
+              <span class="text-error"><?php echo $error_password; ?></span>
               <?php  } ?>
             </div>
           </div>
@@ -159,7 +159,7 @@
             <div class="col-lg-9">
               <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" autocomplete="off" id="input-confirm" />
               <?php if ($error_confirm) { ?>
-              <span class="error"><?php echo $error_confirm; ?></span>
+              <span class="text-error"><?php echo $error_confirm; ?></span>
               <?php  } ?>
             </div>
           </div>

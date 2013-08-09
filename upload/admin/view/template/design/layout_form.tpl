@@ -21,9 +21,9 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
+          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
           <?php if ($error_name) { ?>
-          <span class="error"><?php echo $error_name; ?></span>
+          <span class="text-error"><?php echo $error_name; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -39,7 +39,7 @@
           <?php $route_row = 0; ?>
           <?php foreach ($layout_routes as $layout_route) { ?>
           <tr id="route-row<?php echo $route_row; ?>">
-            <td class="text-left"><select name="layout_route[<?php echo $route_row; ?>][store_id]">
+            <td class="text-left"><select name="layout_route[<?php echo $route_row; ?>][store_id]" class="form-control">
                 <option value="0"><?php echo $text_default; ?></option>
                 <?php foreach ($stores as $store) { ?>
                 <?php if ($store['store_id'] == $layout_route['store_id']) { ?>
@@ -49,8 +49,8 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-            <td class="text-left"><input type="text" name="layout_route[<?php echo $route_row; ?>][route]" value="<?php echo $layout_route['route']; ?>" placeholder="<?php echo $entry_route; ?>" /></td>
-            <td class="text-left"><a onclick="$('#route-row<?php echo $route_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
+            <td class="text-left"><input type="text" name="layout_route[<?php echo $route_row; ?>][route]" value="<?php echo $layout_route['route']; ?>" placeholder="<?php echo $entry_route; ?>" class="form-control" /></td>
+            <td class="text-left"><button type="button" onclick="$('#route-row<?php echo $route_row; ?>').remove();" class="btn btn-danger"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></button></td>
           </tr>
           <?php $route_row++; ?>
           <?php } ?>
@@ -58,7 +58,7 @@
         <tfoot>
           <tr>
             <td colspan="2"></td>
-            <td class="text-left"><a onclick="addRoute();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_route; ?></a></td>
+            <td class="text-left"><button type="button" onclick="addRoute();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_route; ?></button></td>
           </tr>
         </tfoot>
       </table>
@@ -70,14 +70,14 @@ var route_row = <?php echo $route_row; ?>;
 
 function addRoute() {
 	html  = '<tr id="route-row' + route_row + '">';
-	html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]">';
+	html += '  <td class="text-left"><select name="layout_route[' + route_row + '][store_id]" class="form-control">';
 	html += '  <option value="0"><?php echo $text_default; ?></option>';
 	<?php foreach ($stores as $store) { ?>
 	html += '<option value="<?php echo $store['store_id']; ?>"><?php echo addslashes($store['name']); ?></option>';
 	<?php } ?>   
 	html += '  </select></td>';
-	html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" /></td>';
-	html += '  <td class="text-left"><a onclick="$(\'#route-row' + route_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
+	html += '  <td class="text-left"><input type="text" name="layout_route[' + route_row + '][route]" value="" placeholder="<?php echo $entry_route; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#route-row' + route_row + '\').remove();" class="btn btn-danger"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';
 	
 	$('#route tbody').append(html);

@@ -25,7 +25,7 @@
           <input type="text" name="weight_class_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($weight_class_description[$language['language_id']]) ? $weight_class_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
           <?php if (isset($error_title[$language['language_id']])) { ?>
-          <span class="error"><?php echo $error_title[$language['language_id']]; ?></span><br />
+          <span class="text-error"><?php echo $error_title[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?>
         </div>
@@ -37,7 +37,7 @@
           <input type="text" name="weight_class_description[<?php echo $language['language_id']; ?>][unit]" value="<?php echo isset($weight_class_description[$language['language_id']]) ? $weight_class_description[$language['language_id']]['unit'] : ''; ?>" placeholder="<?php echo $entry_unit; ?>" />
           <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
           <?php if (isset($error_unit[$language['language_id']])) { ?>
-          <span class="error"><?php echo $error_unit[$language['language_id']]; ?></span><br />
+          <span class="text-error"><?php echo $error_unit[$language['language_id']]; ?></span><br />
           <?php } ?>
           <?php } ?>
         </div>

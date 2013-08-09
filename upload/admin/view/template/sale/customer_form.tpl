@@ -46,7 +46,7 @@
                   <div class="col-lg-9">
                     <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
                     <?php if ($error_firstname) { ?>
-                    <span class="error"><?php echo $error_firstname; ?></span>
+                    <span class="text-error"><?php echo $error_firstname; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -55,7 +55,7 @@
                   <div class="col-lg-9">
                     <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
                     <?php if ($error_lastname) { ?>
-                    <span class="error"><?php echo $error_lastname; ?></span>
+                    <span class="text-error"><?php echo $error_lastname; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -64,7 +64,7 @@
                   <div class="col-lg-9">
                     <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
                     <?php if ($error_email) { ?>
-                    <span class="error"><?php echo $error_email; ?></span>
+                    <span class="text-error"><?php echo $error_email; ?></span>
                     <?php  } ?>
                   </div>
                 </div>
@@ -73,7 +73,7 @@
                   <div class="col-lg-9">
                     <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
                     <?php if ($error_telephone) { ?>
-                    <span class="error"><?php echo $error_telephone; ?></span>
+                    <span class="text-error"><?php echo $error_telephone; ?></span>
                     <?php  } ?>
                   </div>
                 </div>
@@ -88,7 +88,7 @@
                   <div class="col-lg-9">
                     <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" autocomplete="off" id="input-password" />
                     <?php if ($error_password) { ?>
-                    <span class="error"><?php echo $error_password; ?></span>
+                    <span class="text-error"><?php echo $error_password; ?></span>
                     <?php  } ?>
                   </div>
                 </div>
@@ -97,7 +97,7 @@
                   <div class="col-lg-9">
                     <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" autocomplete="off" id="input-confirm" />
                     <?php if ($error_confirm) { ?>
-                    <span class="error"><?php echo $error_confirm; ?></span>
+                    <span class="text-error"><?php echo $error_confirm; ?></span>
                     <?php  } ?>
                   </div>
                 </div>
@@ -153,7 +153,7 @@
                   <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname<?php echo $address_row; ?>" />
                     <?php if (isset($error_address_firstname[$address_row])) { ?>
-                    <span class="error"><?php echo $error_address_firstname[$address_row]; ?></span>
+                    <span class="text-error"><?php echo $error_address_firstname[$address_row]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -162,7 +162,7 @@
                   <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname<?php echo $address_row; ?>" />
                     <?php if (isset($error_address_lastname[$address_row])) { ?>
-                    <span class="error"><?php echo $error_address_lastname[$address_row]; ?></span>
+                    <span class="text-error"><?php echo $error_address_lastname[$address_row]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -177,7 +177,7 @@
                   <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1<?php echo $address_row; ?>" />
                     <?php if (isset($error_address_address_1[$address_row])) { ?>
-                    <span class="error"><?php echo $error_address_address_1[$address_row]; ?></span>
+                    <span class="text-error"><?php echo $error_address_address_1[$address_row]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -192,7 +192,7 @@
                   <div class="col-lg-9">
                     <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city<?php echo $address_row; ?>" />
                     <?php if (isset($error_address_city[$address_row])) { ?>
-                    <span class="error"><?php echo $error_address_city[$address_row]; ?></span>
+                    <span class="text-error"><?php echo $error_address_city[$address_row]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -216,7 +216,7 @@
                       <?php } ?>
                     </select>
                     <?php if (isset($error_address_country[$address_row])) { ?>
-                    <span class="error"><?php echo $error_address_country[$address_row]; ?></span>
+                    <span class="text-error"><?php echo $error_address_country[$address_row]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -226,7 +226,7 @@
                     <select name="address[<?php echo $address_row; ?>][zone_id]" id="input-zone<?php echo $address_row; ?>">
                     </select>
                     <?php if (isset($error_address_zone[$address_row])) { ?>
-                    <span class="error"><?php echo $error_address_zone[$address_row]; ?></span>
+                    <span class="text-error"><?php echo $error_address_zone[$address_row]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -310,9 +310,9 @@
                 <td class="text-right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                 <td class="text-left"><?php echo $ip['date_added']; ?></td>
                 <td class="text-right"><?php if ($ip['ban_ip']) { ?>
-                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
+                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-xs button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
                   <?php } else { ?>
-                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
+                  <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-xs button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
                   <?php } ?></td>
               </tr>
               <?php } ?>
@@ -583,7 +583,7 @@ $('body').delegate('.button-ban-add', 'click', function() {
 			if (json['success']) {
 				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
                 
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-xs button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
 			}
 		}
 	});	
@@ -613,7 +613,7 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 			if (json['success']) {
 				 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-mini button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-xs button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
 			}
 		}
 	});	

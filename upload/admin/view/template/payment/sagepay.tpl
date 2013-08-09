@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="sagepay_vendor" value="<?php echo $sagepay_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="input-vendor" />
           <?php if ($error_vendor) { ?>
-          <span class="error"><?php echo $error_vendor; ?></span>
+          <span class="text-error"><?php echo $error_vendor; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="col-lg-9">
           <input type="text" name="sagepay_password" value="<?php echo $sagepay_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
           <?php if ($error_password) { ?>
-          <span class="error"><?php echo $error_password; ?></span>
+          <span class="text-error"><?php echo $error_password; ?></span>
           <?php } ?>
         </div>
       </div>

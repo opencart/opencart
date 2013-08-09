@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="pp_pro_uk_vendor" value="<?php echo $pp_pro_uk_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="input-vendor" />
           <?php if ($error_vendor) { ?>
-          <span class="error"><?php echo $error_vendor; ?></span>
+          <span class="text-error"><?php echo $error_vendor; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -32,7 +32,7 @@
         <div class="col-lg-9">
           <input type="text" name="pp_pro_uk_user" value="<?php echo $pp_pro_uk_user; ?>" placeholder="<?php echo $entry_user; ?>" id="input-user" />
           <?php if ($error_user) { ?>
-          <span class="error"><?php echo $error_user; ?></span>
+          <span class="text-error"><?php echo $error_user; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -41,7 +41,7 @@
         <div class="col-lg-9">
           <input type="text" name="pp_pro_uk_password" value="<?php echo $pp_pro_uk_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
           <?php if ($error_password) { ?>
-          <span class="error"><?php echo $error_password; ?></span>
+          <span class="text-error"><?php echo $error_password; ?></span>
           <?php } ?>
         </div>
       </div>
@@ -50,7 +50,7 @@
         <div class="col-lg-9">
           <input type="text" name="pp_pro_uk_partner" value="<?php echo $pp_pro_uk_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="input-partner" />
           <?php if ($error_partner) { ?>
-          <span class="error"><?php echo $error_partner; ?></span>
+          <span class="text-error"><?php echo $error_partner; ?></span>
           <?php } ?>
         </div>
       </div>

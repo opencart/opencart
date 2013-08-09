@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="paypoint_merchant" value="<?php echo $paypoint_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" />
           <?php if ($error_merchant) { ?>
-          <span class="error"><?php echo $error_merchant; ?></span>
+          <span class="text-error"><?php echo $error_merchant; ?></span>
           <?php } ?>
         </div>
       </div>

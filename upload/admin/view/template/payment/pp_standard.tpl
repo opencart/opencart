@@ -23,7 +23,7 @@
         <div class="col-lg-9">
           <input type="text" name="pp_standard_email" value="<?php echo $pp_standard_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
           <?php if ($error_email) { ?>
-          <span class="error"><?php echo $error_email; ?></span>
+          <span class="text-error"><?php echo $error_email; ?></span>
           <?php } ?>
         </div>
       </div>

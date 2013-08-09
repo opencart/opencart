@@ -280,12 +280,12 @@ body > #container {
 .chart {
 	clear: both;
 }
-*/
+
 
 .control-label:after {
 	content: ':';
 }
-
+*/
 div.required .control-label:before, td.required:before {
 	content: '* ';
 	color: #F00;

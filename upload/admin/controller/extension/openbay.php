@@ -1069,7 +1069,7 @@ class ControllerExtensionOpenbay extends Controller {
                     'name'      => 'Play.com',
                     'status'    => '1',
                     'text'      => $this->language->get('lang_openbay_edit'),
-                    'href'      => $this->url->link('play/product/editProduct', 'token=' . $this->session->data['token'].'&product_id='.$product_id, 'SSL'),
+                    'href'      => $this->url->link('openbay/play/editProduct', 'token=' . $this->session->data['token'].'&product_id='.$product_id, 'SSL'),
                     'target'    => ''
                 );
             } else if($playStatus == 4) {
@@ -1077,7 +1077,7 @@ class ControllerExtensionOpenbay extends Controller {
                     'name'      => 'Play.com',
                     'status'    => '0',
                     'text'      => $this->language->get('lang_play_fix_error'),
-                    'href'      => $this->url->link('play/product/editProduct', 'token=' . $this->session->data['token'].'&product_id='.$product_id, 'SSL'),
+                    'href'      => $this->url->link('openbay/play/editProduct', 'token=' . $this->session->data['token'].'&product_id='.$product_id, 'SSL'),
                     'target'    => ''
                 );
             } else if($playStatus == 5) {
@@ -1093,7 +1093,7 @@ class ControllerExtensionOpenbay extends Controller {
                     'name'      => 'Play.com',
                     'status'    => '1',
                     'text'      => $this->language->get('lang_play_warning'),
-                    'href'      => $this->url->link('play/product/editProduct', 'token=' . $this->session->data['token'].'&product_id='.$product_id, 'SSL'),
+                    'href'      => $this->url->link('openbay/play/editProduct', 'token=' . $this->session->data['token'].'&product_id='.$product_id, 'SSL'),
                     'target'    => ''
                 );
             }else if($playStatus == 7) {
@@ -1109,7 +1109,7 @@ class ControllerExtensionOpenbay extends Controller {
                     'name'      => 'Play.com',
                     'status'    => '1',
                     'text'      => $this->language->get('lang_play_stock_updating'),
-                    'href'      => $this->url->link('play/product/editProduct', 'token=' . $this->session->data['token'].'&product_id='.$product_id, 'SSL'),
+                    'href'      => $this->url->link('openbay/play/editProduct', 'token=' . $this->session->data['token'].'&product_id='.$product_id, 'SSL'),
                     'target'    => ''
                 );
             } else {
@@ -1117,7 +1117,7 @@ class ControllerExtensionOpenbay extends Controller {
                     'name'      => 'Play.com',
                     'status'    => '0',
                     'text'      => $this->language->get('lang_openbay_new'),
-                    'href'      => $this->url->link('play/product/newProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
+                    'href'      => $this->url->link('openbay/play/newProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
                     'target'    => ''
                 );
             }
@@ -1572,14 +1572,14 @@ class ControllerExtensionOpenbay extends Controller {
                         'name'      => 'Play.com',
                         'img'       => HTTPS_SERVER.'view/image/openbay/play_ok.png',
                         'text'      => $this->language->get('lang_openbay_edit'),
-                        'href'      => $this->url->link('play/product/editProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+                        'href'      => $this->url->link('openbay/play/editProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
                     );
                 } else if($playStatus == 4) {
                     $markets[] = array(
                         'name'      => 'Play.com',
                         'img'       => HTTPS_SERVER.'view/image/openbay/play_error.png',
                         'text'      => $this->language->get('lang_openbay_fix'),
-                        'href'      => $this->url->link('play/product/editProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+                        'href'      => $this->url->link('openbay/play/editProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
                     );
                 } else if($playStatus == 5) {
                     $markets[] = array(
@@ -1593,7 +1593,7 @@ class ControllerExtensionOpenbay extends Controller {
                         'name'      => 'Play.com',
                         'img'       => HTTPS_SERVER.'view/image/openbay/play_error.png',
                         'text'      => $this->language->get('lang_play_warning'),
-                        'href'      => $this->url->link('play/product/editProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+                        'href'      => $this->url->link('openbay/play/editProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
                     );
                 }else if($playStatus == 7) {
                     $markets[] = array(
@@ -1608,14 +1608,14 @@ class ControllerExtensionOpenbay extends Controller {
                         'status'    => '1',
                         'img'       => HTTPS_SERVER.'view/image/openbay/play_pending.png',
                         'text'      => $this->language->get('lang_play_stock_updating'),
-                        'href'      => $this->url->link('play/product/editProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+                        'href'      => $this->url->link('openbay/play/editProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
                     );
                 } else {
                     $markets[] = array(
                         'name'      => 'Play.com',
                         'img'       => HTTPS_SERVER.'view/image/openbay/play_nolink.png',
                         'text'      => $this->language->get('lang_openbay_new'),
-                        'href'      => $this->url->link('play/product/newProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+                        'href'      => $this->url->link('openbay/play/newProduct', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
                     );
                 }
             }

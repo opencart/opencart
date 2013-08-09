@@ -209,7 +209,7 @@ class ControllerCommonHeader extends Controller {
             $this->data['openbay_link_amazonus_links'] = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['openbay_link_play'] = $this->url->link('openbay/play', 'token=' . $this->session->data['token'], 'SSL');
             $this->data['openbay_link_play_settings'] = $this->url->link('openbay/play/settings', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_play_report_price'] = $this->url->link('play/product/pricingReport', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_play_report_price'] = $this->url->link('openbay/play/pricingReport', 'token=' . $this->session->data['token'], 'SSL');
 
             $this->data['openbay_markets'] = array(
                 'ebay' => $this->config->get('openbay_status'),

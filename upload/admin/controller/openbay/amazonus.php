@@ -167,7 +167,7 @@ class ControllerOpenbayAmazonus extends Controller {
         $this->response->setOutput($this->render());
     }
     
-    public function subscription(){   
+    public function subscription() {   
         $this->data = array_merge($this->data, $this->load->language('amazonus/subscription'));
         
         $this->document->setTitle($this->language->get('lang_title'));
@@ -532,7 +532,7 @@ class ControllerOpenbayAmazonus extends Controller {
         $this->response->setOutput($this->render());
     }
     
-    public function install(){
+    public function install() {
         $this->load->model('amazonus/amazonus');
         $this->load->model('setting/setting');
         $this->load->model('setting/extension');
@@ -541,7 +541,7 @@ class ControllerOpenbayAmazonus extends Controller {
         $this->model_setting_extension->install('openbay', $this->request->get['extension']);
     }
     
-    public function uninstall(){
+    public function uninstall() {
         $this->load->model('amazonus/amazonus');
         $this->load->model('setting/setting');
         $this->load->model('setting/extension');
@@ -663,3 +663,4 @@ class ControllerOpenbayAmazonus extends Controller {
         $this->model_amazonus_amazonus->deleteSaved($this->request->get['product_id'], $this->request->get['var']);
     }
 }
+?>

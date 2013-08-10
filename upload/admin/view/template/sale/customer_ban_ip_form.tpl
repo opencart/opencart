@@ -21,7 +21,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" />
+          <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" class="form-control" />
           <?php if ($error_ip) { ?>
           <span class="text-error"><?php echo $error_ip; ?></span>
           <?php } ?>

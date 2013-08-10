@@ -438,7 +438,7 @@
         </div>
         <div class="tab-pane" id="tab-option">
           <div class="row">
-            <div class="col-lg-2">
+            <div class="col-lg-3">
               <ul class="nav nav-pills nav-stacked" id="option">
                 <?php $option_row = 0; ?>
                 <?php foreach ($product_options as $product_option) { ?>
@@ -450,7 +450,7 @@
                 </li>
               </ul>
             </div>
-            <div class="col-lg-10">
+            <div class="col-lg-9">
               <div class="tab-content">
                 <?php $option_row = 0; ?>
                 <?php $option_value_row = 0; ?>

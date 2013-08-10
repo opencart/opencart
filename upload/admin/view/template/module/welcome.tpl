@@ -19,7 +19,7 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-welcome" class="form-horizontal">
       <div class="row">
-        <div class="col-lg-2">
+        <div class="col-lg-3">
           <ul class="nav nav-pills nav-stacked" id="module">
             <?php $module_row = 1; ?>
             <?php foreach ($modules as $module) { ?>
@@ -29,7 +29,7 @@
             <li id="module-add"><a onclick="addModule();"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></a></li>
           </ul>
         </div>
-        <div class="col-lg-10">
+        <div class="col-lg-9">
           <div class="tab-content">
             <?php $module_row = 1; ?>
             <?php foreach ($modules as $module) { ?>

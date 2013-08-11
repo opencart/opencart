@@ -10,25 +10,21 @@
       <h1 class="panel-title"><i class="icon-bar-chart"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="well">
-      <div class="row-fluid">
-        <div class="span4">
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-            <div class="col-lg-9">
-              <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="input-medium" />
-            </div>
-          </div>
+      <div class="row">
+        <div class="col-lg-2">
+          <label for="input-date-start"><?php echo $entry_date_start; ?></label>
         </div>
-        <div class="span4">
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-            <div class="col-lg-9">
-              <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="input-medium" />
-            </div>
-          </div>
+        <div class="col-lg-3">
+          <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
         </div>
-        <div class="span4">
-          <button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
+        <div class="col-lg-2">
+          <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+        </div>
+        <div class="col-lg-3">
+          <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
+        </div>
+        <div class="col-lg-2">
+          <button type="button" id="button-filter" class="btn btn-default"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
         </div>
       </div>
     </div>
@@ -65,7 +61,8 @@
         </tr>
         <?php } ?>
       </tbody>
-    </table>    <div class="row">
+    </table>
+    <div class="row">
       <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
       <div class="col-lg-6 text-right"><?php echo $results; ?></div>
     </div>

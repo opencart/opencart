@@ -21,7 +21,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
+          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
           <?php if ($error_name) { ?>
           <span class="text-error"><?php echo $error_name; ?></span>
           <?php } ?>
@@ -30,7 +30,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-rate"><?php echo $entry_rate; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="rate" value="<?php echo $rate; ?>" placeholder="<?php echo $entry_rate; ?>" id="input-rate" />
+          <input type="text" name="rate" value="<?php echo $rate; ?>" placeholder="<?php echo $entry_rate; ?>" id="input-rate" class="form-control" />
           <?php if ($error_rate) { ?>
           <span class="text-error"><?php echo $error_rate; ?></span>
           <?php } ?>
@@ -39,7 +39,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-type"><?php echo $entry_type; ?></label>
         <div class="col-lg-9">
-          <select name="type" id="input-type">
+          <select name="type" id="input-type" class="form-control">
             <?php if ($type == 'P') { ?>
             <option value="P" selected="selected"><?php echo $text_percent; ?></option>
             <?php } else { ?>
@@ -54,25 +54,27 @@
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-3 control-label"><?php echo $entry_customer_group; ?></div>
+        <label class="col-lg-3 control-label"><?php echo $entry_customer_group; ?></label>
         <div class="col-lg-9">
           <?php foreach ($customer_groups as $customer_group) { ?>
-          <label class="checkbox">
-            <?php if (in_array($customer_group['customer_group_id'], $tax_rate_customer_group)) { ?>
-            <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-            <?php echo $customer_group['name']; ?>
-            <?php } else { ?>
-            <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-            <?php echo $customer_group['name']; ?>
-            <?php } ?>
-          </label>
+          <div class="checkbox">
+            <label>
+              <?php if (in_array($customer_group['customer_group_id'], $tax_rate_customer_group)) { ?>
+              <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+              <?php echo $customer_group['name']; ?>
+              <?php } else { ?>
+              <input type="checkbox" name="tax_rate_customer_group[]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+              <?php echo $customer_group['name']; ?>
+              <?php } ?>
+            </label>
+          </div>
           <?php } ?>
         </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
         <div class="col-lg-9">
-          <select name="geo_zone_id" id="input-geo-zone">
+          <select name="geo_zone_id" id="input-geo-zone" class="form-control">
             <?php foreach ($geo_zones as $geo_zone) { ?>
             <?php  if ($geo_zone['geo_zone_id'] == $geo_zone_id) { ?>
             <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>

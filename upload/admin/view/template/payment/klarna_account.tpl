@@ -39,21 +39,21 @@
               <?php foreach ($countries as $country) { ?>
               <div class="tab-pane" id="tab-<?php echo $country['code']; ?>">
                 <div class="form-group">
-                  <label class="col-lg-3 control-label" for="input-merchant<?php echo $country['code']; ?>"><?php echo $entry_merchant; ?> <span class="help-block"><?php echo $help_merchant; ?></span></label>
+                  <label class="col-lg-3 control-label" for="input-merchant<?php echo $country['code']; ?>"><?php echo $entry_merchant; ?></label>
                   <div class="col-lg-9">
-                    <input type="text" name="klarna_account[<?php echo $country['code']; ?>][merchant]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['merchant'] : ''; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant<?php echo $country['code']; ?>" />
-                  </div>
+                    <input type="text" name="klarna_account[<?php echo $country['code']; ?>][merchant]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['merchant'] : ''; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant<?php echo $country['code']; ?>" class="form-control" />
+                    <span class="help-block"><?php echo $help_merchant; ?></span> </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-3 control-label" for="input-secret<?php echo $country['code']; ?>"><?php echo $entry_secret; ?> <span class="help-block"><?php echo $help_secret; ?></span></label>
+                  <label class="col-lg-3 control-label" for="input-secret<?php echo $country['code']; ?>"><?php echo $entry_secret; ?></label>
                   <div class="col-lg-9">
-                    <input type="text" name="klarna_account[<?php echo $country['code']; ?>][secret]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['secret'] : ''; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret<?php echo $country['code']; ?>" />
-                  </div>
+                    <input type="text" name="klarna_account[<?php echo $country['code']; ?>][secret]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['secret'] : ''; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret<?php echo $country['code']; ?>" class="form-control" />
+                    <span class="help-block"><?php echo $help_secret; ?></span> </div>
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label" for="input-server<?php echo $country['code']; ?>"><?php echo $entry_server; ?></label>
                   <div class="col-lg-9">
-                    <select name="klarna_account[<?php echo $country['code']; ?>][server]" id="input-server<?php echo $country['code']; ?>">
+                    <select name="klarna_account[<?php echo $country['code']; ?>][server]" id="input-server<?php echo $country['code']; ?>" class="form-control">
                       <?php if (isset($klarna_account[$country['code']]) && $klarna_account[$country['code']]['server'] == 'live') { ?>
                       <option value="live" selected="selected"><?php echo $text_live; ?></option>
                       <?php } else { ?>
@@ -68,15 +68,15 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-3 control-label" for="input-total<?php echo $country['code']; ?>"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
+                  <label class="col-lg-3 control-label" for="input-total<?php echo $country['code']; ?>"><?php echo $entry_total; ?></label>
                   <div class="col-lg-9">
-                    <input type="text" name="klarna_account[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total<?php echo $country['code']; ?>" />
-                  </div>
+                    <input type="text" name="klarna_account[<?php echo $country['code']; ?>][total]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['total'] : ''; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total<?php echo $country['code']; ?>" class="form-control" />
+                    <span class="help-block"><?php echo $help_total; ?></span> </div>
                 </div>
                 <div class="form-group">
                   <label class="col-lg-3 control-label" for="input-pending-status<?php echo $country['code']; ?>"><?php echo $entry_pending_status; ?></label>
                   <div class="col-lg-9">
-                    <select name="klarna_account[<?php echo $country['code']; ?>][pending_status_id]" id="input-pending-status<?php echo $country['code']; ?>">
+                    <select name="klarna_account[<?php echo $country['code']; ?>][pending_status_id]" id="input-pending-status<?php echo $country['code']; ?>" class="form-control">
                       <?php foreach ($order_statuses as $order_status) { ?>
                       <?php if (isset($klarna_account[$country['code']]) && $order_status['order_status_id'] == $klarna_account[$country['code']]['pending_status_id']) { ?>
                       <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -90,7 +90,7 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label" for="input-accepted-status<?php echo $country['code']; ?>"><?php echo $entry_accepted_status; ?></label>
                   <div class="col-lg-9">
-                    <select name="klarna_account[<?php echo $country['code']; ?>][accepted_status_id]" id="input-accepted-status<?php echo $country['code']; ?>">
+                    <select name="klarna_account[<?php echo $country['code']; ?>][accepted_status_id]" id="input-accepted-status<?php echo $country['code']; ?>" class="form-control">
                       <?php foreach ($order_statuses as $order_status) { ?>
                       <?php if (isset($klarna_account[$country['code']]) && $order_status['order_status_id'] == $klarna_account[$country['code']]['accepted_status_id']) { ?>
                       <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -104,7 +104,7 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label" for="input-geo-zone<?php echo $country['code']; ?>"><?php echo $entry_geo_zone; ?></label>
                   <div class="col-lg-9">
-                    <select name="klarna_account[<?php echo $country['code']; ?>][geo_zone_id]" id="input-geo-zone<?php echo $country['code']; ?>">
+                    <select name="klarna_account[<?php echo $country['code']; ?>][geo_zone_id]" id="input-geo-zone<?php echo $country['code']; ?>" class="form-control">
                       <option value="0"><?php echo $text_all_zones; ?></option>
                       <?php foreach ($geo_zones as $geo_zone) { ?>
                       <?php if (isset($klarna_account[$country['code']]) && $geo_zone['geo_zone_id'] == $klarna_account[$country['code']]['geo_zone_id']) {  ?>
@@ -119,7 +119,7 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label" for="input-status<?php echo $country['code']; ?>"><?php echo $entry_status; ?></label>
                   <div class="col-lg-9">
-                    <select name="klarna_account[<?php echo $country['code']; ?>][status]" id="input-status<?php echo $country['code']; ?>">
+                    <select name="klarna_account[<?php echo $country['code']; ?>][status]" id="input-status<?php echo $country['code']; ?>" class="form-control">
                       <?php if (isset($klarna_account[$country['code']]) && $klarna_account[$country['code']]['status']) { ?>
                       <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                       <option value="0"><?php echo $text_disabled; ?></option>
@@ -133,7 +133,7 @@
                 <div class="form-group">
                   <label class="col-lg-3 control-label" for="input-sort-order<?php echo $country['code']; ?>"><?php echo $entry_sort_order ?></label>
                   <div class="col-lg-9">
-                    <input type="text" name="klarna_account[<?php echo $country['code']; ?>][sort_order]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['sort_order'] : ''; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order<?php echo $country['code']; ?>" class="input-small" />
+                    <input type="text" name="klarna_account[<?php echo $country['code']; ?>][sort_order]" value="<?php echo isset($klarna_account[$country['code']]) ? $klarna_account[$country['code']]['sort_order'] : ''; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order<?php echo $country['code']; ?>" class="form-control" />
                   </div>
                 </div>
               </div>
@@ -142,8 +142,8 @@
           </div>
         </div>
         <div class="tab-pane" id="tab-log">
-          <textarea wrap="off" style="width: 98%; height: 300px; padding: 5px; border: 1px solid #CCCCCC; background: #FFFFFF; overflow: scroll;"><?php echo $log ?></textarea>
-          <a href="<?php echo $clear; ?>" class="btn"><?php echo $button_clear ?></a></div>
+          <textarea wrap="off" rows="15" class="form-control"><?php echo $log ?></textarea>
+          <a href="<?php echo $clear; ?>" class="btn btn-danger"><?php echo $button_clear ?></a></div>
       </div>
     </form>
   </div>

@@ -21,7 +21,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-login"><?php echo $entry_login; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="authorizenet_aim_login" value="<?php echo $authorizenet_aim_login; ?>" placeholder="<?php echo $entry_login; ?>" id="input-login" />
+          <input type="text" name="authorizenet_aim_login" value="<?php echo $authorizenet_aim_login; ?>" placeholder="<?php echo $entry_login; ?>" id="input-login" class="form-control" />
           <?php if ($error_login) { ?>
           <span class="text-error"><?php echo $error_login; ?></span>
           <?php } ?>
@@ -30,7 +30,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-key"><?php echo $entry_key; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="authorizenet_aim_key" value="<?php echo $authorizenet_aim_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" />
+          <input type="text" name="authorizenet_aim_key" value="<?php echo $authorizenet_aim_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
           <?php if ($error_key) { ?>
           <span class="text-error"><?php echo $error_key; ?></span>
           <?php } ?>
@@ -39,13 +39,13 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-hash"><?php echo $entry_hash; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="authorizenet_aim_hash" value="<?php echo $authorizenet_aim_hash; ?>" placeholder="<?php echo $entry_hash; ?>" id="input-hash" />
+          <input type="text" name="authorizenet_aim_hash" value="<?php echo $authorizenet_aim_hash; ?>" placeholder="<?php echo $entry_hash; ?>" id="input-hash" class="form-control" />
         </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-server"><?php echo $entry_server; ?></label>
         <div class="col-lg-9">
-          <select name="authorizenet_aim_server" id="input-server">
+          <select name="authorizenet_aim_server" id="input-server" class="form-control">
             <?php if ($authorizenet_aim_server == 'live') { ?>
             <option value="live" selected="selected"><?php echo $text_live; ?></option>
             <?php } else { ?>
@@ -62,7 +62,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-mode"><?php echo $entry_mode; ?></label>
         <div class="col-lg-9">
-          <select name="authorizenet_aim_mode" id="input-mode">
+          <select name="authorizenet_aim_mode" id="input-mode" class="form-control">
             <?php if ($authorizenet_aim_mode == 'live') { ?>
             <option value="live" selected="selected"><?php echo $text_live; ?></option>
             <?php } else { ?>
@@ -79,7 +79,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-method"><?php echo $entry_method; ?></label>
         <div class="col-lg-9">
-          <select name="authorizenet_aim_method" id="input-method">
+          <select name="authorizenet_aim_method" id="input-method" class="form-control">
             <?php if ($authorizenet_aim_method == 'authorization') { ?>
             <option value="authorization" selected="selected"><?php echo $text_authorization; ?></option>
             <?php } else { ?>
@@ -94,15 +94,15 @@
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
+        <label class="col-lg-3 control-label" for="input-total"><?php echo $entry_total; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="authorizenet_aim_total" value="<?php echo $authorizenet_aim_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-        </div>
+          <input type="text" name="authorizenet_aim_total" value="<?php echo $authorizenet_aim_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
+          <span class="help-block"><?php echo $help_total; ?></span> </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
         <div class="col-lg-9">
-          <select name="authorizenet_aim_order_status_id" id="input-order-status">
+          <select name="authorizenet_aim_order_status_id" id="input-order-status" class="form-control">
             <?php foreach ($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $authorizenet_aim_order_status_id) { ?>
             <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -116,7 +116,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
         <div class="col-lg-9">
-          <select name="authorizenet_aim_geo_zone_id" id="input-geo-zone">
+          <select name="authorizenet_aim_geo_zone_id" id="input-geo-zone" class="form-control">
             <option value="0"><?php echo $text_all_zones; ?></option>
             <?php foreach ($geo_zones as $geo_zone) { ?>
             <?php if ($geo_zone['geo_zone_id'] == $authorizenet_aim_geo_zone_id) { ?>
@@ -131,7 +131,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
         <div class="col-lg-9">
-          <select name="authorizenet_aim_status" id="input-status">
+          <select name="authorizenet_aim_status" id="input-status" class="form-control">
             <?php if ($authorizenet_aim_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
             <option value="0"><?php echo $text_disabled; ?></option>
@@ -145,7 +145,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="authorizenet_aim_sort_order" value="<?php echo $authorizenet_aim_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
+          <input type="text" name="authorizenet_aim_sort_order" value="<?php echo $authorizenet_aim_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
         </div>
       </div>
     </form>

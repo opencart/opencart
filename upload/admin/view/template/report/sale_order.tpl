@@ -10,8 +10,8 @@
       <h1 class="panel-title"><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="well">
-      <div class="row-fluid">
-        <div class="span4">
+      <div class="row">
+        <div class="col-lg-4">
           <div class="form-group">
             <label class="col-lg-3 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
             <div class="col-lg-9">

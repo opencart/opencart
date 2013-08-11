@@ -19,10 +19,9 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-product"><?php echo $entry_product; ?> <span class="help-block"><?php echo $help_product; ?></span></label>
+        <label class="col-lg-3 control-label" for="input-product"><?php echo $entry_product; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" />
-          <br />
+          <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" /> <span class="help-block"><?php echo $help_product; ?></span>
           <div id="featured-product" class="well">
             <?php foreach ($products as $product) { ?>
             <div id="featured-product<?php echo $product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product['name']; ?>
@@ -30,7 +29,7 @@
             </div>
             <?php } ?>
           </div>
-          <input type="hidden" name="featured_product" value="<?php echo $featured_product; ?>" />
+          <input type="hidden" name="featured_product" value="<?php echo $featured_product; ?>" class="form-control" />
         </div>
       </div>
       <table id="module" class="table table-striped table-bordered table-hover">
@@ -49,13 +48,13 @@
           <?php $module_row = 0; ?>
           <?php foreach ($modules as $module) { ?>
           <tr id="module-row<?php echo $module_row; ?>">
-            <td class="text-left"><input type="text" name="featured_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="input-mini" /></td>
-            <td class="text-left"><input type="text" name="featured_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" placeholder="<?php echo $entry_width; ?>" class="input-mini" />
-              <input type="text" name="featured_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" placeholder="<?php echo $entry_height; ?>" class="input-mini" />
+            <td class="text-left"><input type="text" name="featured_module[<?php echo $module_row; ?>][limit]" value="<?php echo $module['limit']; ?>" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>
+            <td class="text-left"><input type="text" name="featured_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
+              <input type="text" name="featured_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
               <?php if (isset($error_image[$module_row])) { ?>
               <span class="text-error"><?php echo $error_image[$module_row]; ?></span>
               <?php } ?></td>
-            <td class="text-left"><select name="featured_module[<?php echo $module_row; ?>][layout_id]">
+            <td class="text-left"><select name="featured_module[<?php echo $module_row; ?>][layout_id]" class="form-control">
                 <?php foreach ($layouts as $layout) { ?>
                 <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
                 <option value="<?php echo $layout['layout_id']; ?>" selected="selected"><?php echo $layout['name']; ?></option>
@@ -64,7 +63,7 @@
                 <?php } ?>
                 <?php } ?>
               </select></td>
-            <td class="text-left"><select name="featured_module[<?php echo $module_row; ?>][position]">
+            <td class="text-left"><select name="featured_module[<?php echo $module_row; ?>][position]" class="form-control">
                 <?php if ($module['position'] == 'content_top') { ?>
                 <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
                 <?php } else { ?>
@@ -86,7 +85,7 @@
                 <option value="column_right"><?php echo $text_column_right; ?></option>
                 <?php } ?>
               </select></td>
-            <td class="text-left"><select name="featured_module[<?php echo $module_row; ?>][status]">
+            <td class="text-left"><select name="featured_module[<?php echo $module_row; ?>][status]" class="form-control">
                 <?php if ($module['status']) { ?>
                 <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                 <option value="0"><?php echo $text_disabled; ?></option>
@@ -95,8 +94,8 @@
                 <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                 <?php } ?>
               </select></td>
-            <td class="text-right"><input type="text" name="featured_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>
-            <td class="text-left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>
+            <td class="text-right"><input type="text" name="featured_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
+            <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn btn-danger"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></button></td>
           </tr>
           <?php $module_row++; ?>
           <?php } ?>
@@ -104,7 +103,7 @@
         <tfoot>
           <tr>
             <td colspan="6"></td>
-            <td class="text-left"><a onclick="addModule();" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></a></td>
+            <td class="text-left"><button type="button" onclick="addModule();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></button></td>
           </tr>
         </tfoot>
       </table>
@@ -155,25 +154,25 @@ var module_row = <?php echo $module_row; ?>;
 
 function addModule() {	
 	html  = '<tr id="module-row' + module_row + '">';
-	html += '  <td class="text-left"><input type="text" name="featured_module[' + module_row + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="input-mini" /></td>';
-	html += '  <td class="text-left"><input type="text" name="featured_module[' + module_row + '][image_width]" value="80" placeholder="<?php echo $entry_width; ?>" class="input-mini" /> <input type="text" name="featured_module[' + module_row + '][image_height]" value="80" placeholder="<?php echo $entry_height; ?>" class="input-mini" /></td>';	
-	html += '  <td class="text-left"><select name="featured_module[' + module_row + '][layout_id]">';
+	html += '  <td class="text-left"><input type="text" name="featured_module[' + module_row + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><input type="text" name="featured_module[' + module_row + '][image_width]" value="80" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="featured_module[' + module_row + '][image_height]" value="80" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';	
+	html += '  <td class="text-left"><select name="featured_module[' + module_row + '][layout_id]" class="form-control">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '    <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 	<?php } ?>
 	html += '  </select></td>';
-	html += '  <td class="text-left"><select name="featured_module[' + module_row + '][position]">';
+	html += '  <td class="text-left"><select name="featured_module[' + module_row + '][position]" class="form-control">';
 	html += '    <option value="content_top"><?php echo $text_content_top; ?></option>';
 	html += '    <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
 	html += '    <option value="column_left"><?php echo $text_column_left; ?></option>';
 	html += '    <option value="column_right"><?php echo $text_column_right; ?></option>';
 	html += '  </select></td>';
-	html += '  <td class="text-left"><select name="featured_module[' + module_row + '][status]">';
+	html += '  <td class="text-left"><select name="featured_module[' + module_row + '][status]" class="form-control">';
     html += '    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>';
     html += '    <option value="0"><?php echo $text_disabled; ?></option>';
     html += '  </select></td>';
-	html += '  <td class="text-right"><input type="text" name="featured_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="input-mini" /></td>';
-	html += '  <td class="text-left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></a></td>';
+	html += '  <td class="text-right"><input type="text" name="featured_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" class="btn btn-danger"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';
 	
 	$('#module tbody').append(html);

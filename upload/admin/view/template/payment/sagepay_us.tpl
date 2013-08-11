@@ -21,7 +21,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-merchant-id"><?php echo $entry_merchant_id; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="sagepay_us_merchant_id" value="<?php echo $sagepay_us_merchant_id; ?>" placeholder="<?php echo $entry_merchant_id; ?>" id="input-merchant-id" />
+          <input type="text" name="sagepay_us_merchant_id" value="<?php echo $sagepay_us_merchant_id; ?>" placeholder="<?php echo $entry_merchant_id; ?>" id="input-merchant-id" class="form-control" />
           <?php if ($error_merchant_id) { ?>
           <span class="text-error"><?php echo $error_merchant_id; ?></span>
           <?php } ?>
@@ -30,22 +30,22 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-merchant-key"><?php echo $entry_merchant_key; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="sagepay_us_merchant_key" value="<?php echo $sagepay_us_merchant_key; ?>" placeholder="<?php echo $entry_merchant_key; ?>" id="input-merchant-key" />
+          <input type="text" name="sagepay_us_merchant_key" value="<?php echo $sagepay_us_merchant_key; ?>" placeholder="<?php echo $entry_merchant_key; ?>" id="input-merchant-key" class="form-control" />
           <?php if ($error_merchant_key) { ?>
           <span class="text-error"><?php echo $error_merchant_key; ?></span>
           <?php } ?>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-total"><?php echo $entry_total; ?> <span class="help-block"><?php echo $help_total; ?></span></label>
+        <label class="col-lg-3 control-label" for="input-total"><?php echo $entry_total; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="sagepay_us_total" value="<?php echo $sagepay_us_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" />
-        </div>
+          <input type="text" name="sagepay_us_total" value="<?php echo $sagepay_us_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
+          <span class="help-block"><?php echo $help_total; ?></span> </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
         <div class="col-lg-9">
-          <select name="sagepay_us_order_status_id" id="input-order-status">
+          <select name="sagepay_us_order_status_id" id="input-order-status" class="form-control">
             <?php foreach ($order_statuses as $order_status) { ?>
             <?php if ($order_status['order_status_id'] == $sagepay_us_order_status_id) { ?>
             <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
@@ -59,7 +59,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
         <div class="col-lg-9">
-          <select name="sagepay_us_geo_zone_id" id="input-geo-zone">
+          <select name="sagepay_us_geo_zone_id" id="input-geo-zone" class="form-control">
             <option value="0"><?php echo $text_all_zones; ?></option>
             <?php foreach ($geo_zones as $geo_zone) { ?>
             <?php if ($geo_zone['geo_zone_id'] == $sagepay_us_geo_zone_id) { ?>
@@ -74,7 +74,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
         <div class="col-lg-9">
-          <select name="sagepay_us_status" id="input-status">
+          <select name="sagepay_us_status" id="input-status" class="form-control">
             <?php if ($sagepay_us_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
             <option value="0"><?php echo $text_disabled; ?></option>
@@ -88,7 +88,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="sagepay_us_sort_order" value="<?php echo $sagepay_us_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
+          <input type="text" name="sagepay_us_sort_order" value="<?php echo $sagepay_us_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
         </div>
       </div>
     </form>

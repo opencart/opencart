@@ -1,5 +1,5 @@
 <div id="tab-openbay" style="display:none;">
-    <table class="list" id="images">
+    <table class="list">
         <thead>
         <tr>
             <td class="left"><?php echo $lang_marketplace; ?></td>

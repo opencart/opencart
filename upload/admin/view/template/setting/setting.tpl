@@ -57,7 +57,7 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-address"><?php echo $entry_address; ?></label>
             <div class="col-lg-9">
-              <textarea name="config_address" cols="40" rows="5" placeholder="<?php echo $entry_owner; ?>" id="input-address" class="form-control"><?php echo $config_address; ?></textarea>
+              <textarea name="config_address" rows="5" placeholder="<?php echo $entry_owner; ?>" id="input-address" class="form-control"><?php echo $config_address; ?></textarea>
               <?php if ($error_address) { ?>
               <span class="text-error"><?php echo $error_address; ?></span>
               <?php } ?>
@@ -101,7 +101,7 @@
           <div class="form-group">
             <label class="col-lg-3 control-label" for="input-meta-description"><?php echo $entry_meta_description; ?></label>
             <div class="col-lg-9">
-              <textarea name="config_meta_description" cols="40" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
+              <textarea name="config_meta_description" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_description; ?></textarea>
             </div>
           </div>
           <div class="form-group">
@@ -856,9 +856,10 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-image-category-width"><?php echo $entry_image_category; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-category-width" class="form-control" />
-              x
-              <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+              <div class="row">
+                <div class="col-lg-6"><input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-category-width" class="form-control" /></div>
+                <div class="col-lg-6"><input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" /></div>
+              </div>
               <?php if ($error_image_category) { ?>
               <span class="text-error"><?php echo $error_image_category; ?></span>
               <?php } ?>
@@ -867,9 +868,12 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-image-thumb-width"><?php echo $entry_image_thumb; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-thumb-width" class="form-control" />
-              x
-              <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+            
+              <div class="row">
+                <div class="col-lg-6"><input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-thumb-width" class="form-control" /></div>
+                <div class="col-lg-6"><input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" /></div>
+              </div>
+
               <?php if ($error_image_thumb) { ?>
               <span class="text-error"><?php echo $error_image_thumb; ?></span>
               <?php } ?>
@@ -878,9 +882,11 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-image-popup-width"><?php echo $entry_image_popup; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-popup-width" class="form-control" />
-              x
-              <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+              <div class="row">
+                <div class="col-lg-6"><input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-popup-width" class="form-control" /></div>
+                <div class="col-lg-6"><input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" /></div>
+              </div>
+
               <?php if ($error_image_popup) { ?>
               <span class="text-error"><?php echo $error_image_popup; ?></span>
               <?php } ?>
@@ -889,9 +895,10 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-image-product-width"><?php echo $entry_image_product; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-product-width" class="form-control" />
-              x
-              <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+              <div class="row">
+                <div class="col-lg-6"><input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-product-width" class="form-control" /></div>
+                <div class="col-lg-6"><input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" /></div>
+              </div>
               <?php if ($error_image_product) { ?>
               <span class="text-error"><?php echo $error_image_product; ?></span>
               <?php } ?>
@@ -900,9 +907,12 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-image-additional-width"><?php echo $entry_image_additional; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-additional-width" class="form-control" />
-              x
-              <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+              <div class="row">
+                <div class="col-lg-6"><input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-additional-width" class="form-control" /></div>
+                <div class="col-lg-6"><input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" /></div>
+              </div>
+
+              
               <?php if ($error_image_additional) { ?>
               <span class="text-error"><?php echo $error_image_additional; ?></span>
               <?php } ?>
@@ -911,9 +921,10 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-image-related"><?php echo $entry_image_related; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-related" class="form-control" />
-              x
-              <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+              <div class="row">
+                <div class="col-lg-6"><input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-related" class="form-control" /></div>
+                <div class="col-lg-6"><input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" /></div>
+              </div>
               <?php if ($error_image_related) { ?>
               <span class="text-error"><?php echo $error_image_related; ?></span>
               <?php } ?>
@@ -922,9 +933,10 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-image-compare"><?php echo $entry_image_compare; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-compare" class="form-control" />
-              x
-              <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+              <div class="row">
+                <div class="col-lg-6"><input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-compare" class="form-control" /></div>
+                <div class="col-lg-6"><input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" /></div>
+              </div>
               <?php if ($error_image_compare) { ?>
               <span class="text-error"><?php echo $error_image_compare; ?></span>
               <?php } ?>
@@ -933,9 +945,10 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-image-wishlist"><?php echo $entry_image_wishlist; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-wishlist" class="form-control" />
-              x
-              <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+              <div class="row">
+                <div class="col-lg-6"><input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-wishlist" class="form-control" /></div>
+                <div class="col-lg-6"><input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" /></div>
+              </div>              
               <?php if ($error_image_wishlist) { ?>
               <span class="text-error"><?php echo $error_image_wishlist; ?></span>
               <?php } ?>
@@ -944,9 +957,10 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-image-cart"><?php echo $entry_image_cart; ?></label>
             <div class="col-lg-9">
-              <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-cart" class="form-control" />
-              x
-              <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+              <div class="row">
+                <div class="col-lg-6"><input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-cart" class="form-control" /></div>
+                <div class="col-lg-6"><input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" /></div>
+              </div>
               <?php if ($error_image_cart) { ?>
               <span class="text-error"><?php echo $error_image_cart; ?></span>
               <?php } ?>
@@ -1151,7 +1165,7 @@
           <div class="form-group">
             <label class="col-lg-3 control-label" for="input-alert-email"><?php echo $entry_alert_emails; ?></label>
             <div class="col-lg-9">
-              <textarea name="config_alert_emails" cols="40" rows="5" placeholder="<?php echo $entry_alert_emails; ?>" id="input-alert-email" class="form-control"><?php echo $config_alert_emails; ?></textarea>
+              <textarea name="config_alert_emails" rows="5" placeholder="<?php echo $entry_alert_emails; ?>" id="input-alert-email" class="form-control"><?php echo $config_alert_emails; ?></textarea>
               <span class="help-block"><?php echo $help_alert_emails; ?></span>
             </div>
           </div>
@@ -1262,7 +1276,7 @@
           <div class="form-group">
             <label class="col-lg-3 control-label" for="input-robots"><?php echo $entry_robots; ?></label>
             <div class="col-lg-9">
-              <textarea name="config_robots" cols="40" rows="5" placeholder="<?php echo $entry_robots; ?>" id="input-robots" class="form-control"><?php echo $config_robots; ?></textarea>
+              <textarea name="config_robots" rows="5" placeholder="<?php echo $entry_robots; ?>" id="input-robots" class="form-control"><?php echo $config_robots; ?></textarea>
               <span class="help-block"><?php echo $help_robots; ?></span>
             </div>
           </div>
@@ -1300,7 +1314,7 @@
           <div class="form-group">
             <label class="col-lg-3 control-label" for="input-file-extension-allowed"><?php echo $entry_file_extension_allowed; ?></label>
             <div class="col-lg-9">
-              <textarea name="config_file_extension_allowed" cols="40" rows="5" placeholder="<?php echo $entry_file_extension_allowed; ?>" id="input-file-extension-allowed" class="form-control"><?php echo $config_file_extension_allowed; ?></textarea>
+              <textarea name="config_file_extension_allowed" rows="5" placeholder="<?php echo $entry_file_extension_allowed; ?>" id="input-file-extension-allowed" class="form-control"><?php echo $config_file_extension_allowed; ?></textarea>
               <span class="help-block"><?php echo $help_file_extension_allowed; ?></span>
             </div>
           </div>
@@ -1434,7 +1448,7 @@
           <div class="form-group">
             <label class="col-lg-3 control-label" for="input-google-analytics"><?php echo $entry_google_analytics; ?></label>
             <div class="col-lg-9">
-              <textarea name="config_google_analytics" cols="40" rows="5" placeholder="<?php echo $entry_google_analytics; ?>" id="input-google-analytics" class="form-control"><?php echo $config_google_analytics; ?></textarea>
+              <textarea name="config_google_analytics" rows="5" placeholder="<?php echo $entry_google_analytics; ?>" id="input-google-analytics" class="form-control"><?php echo $config_google_analytics; ?></textarea>
               <span class="help-block"><?php echo $help_google_analytics; ?></span>
             </div>
           </div>

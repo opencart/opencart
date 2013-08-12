@@ -94,6 +94,7 @@ $_['tab_store']                     = 'Store';
 $_['tab_special']                   = 'Special';
 $_['tab_local']                     = 'Local';
 $_['tab_mail']                      = 'Mail';
+$_['tab_marketplace_links']         = 'Marketplace Links';
 $_['tab_module']                    = 'Module';
 $_['tab_order']                     = 'Order Details';
 $_['tab_payment']                   = 'Payment Details';

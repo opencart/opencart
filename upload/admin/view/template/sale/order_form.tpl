@@ -1191,8 +1191,6 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				if (json['error']['product']) {
 					if (json['error']['product']['option']) {	
 						for (i in json['error']['product']['option']) {
-							$('[for="input-option' + i + ']').parent().parent().addClass('error');
-							
 							$('#input-option' + i).after('<span class="text-danger">' + json['error']['product']['option'][i] + '</span>');
 						}
 					}

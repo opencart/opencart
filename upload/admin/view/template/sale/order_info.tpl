@@ -34,7 +34,7 @@
             <td><?php if ($invoice_no) { ?>
               <?php echo $invoice_no; ?>
               <?php } else { ?>
-              <button id="button-invoice" class="btn btn-xs"><i class="icon-cog"></i> <?php echo $text_generate; ?></button>
+              <button id="button-invoice" class="btn btn-success btn-xs"><i class="icon-cog"></i> <?php echo $text_generate; ?></button>
               <?php } ?></td>
           </tr>
           <tr>
@@ -88,9 +88,9 @@
               <?php if ($customer && $credit) { ?>
               <?php if (!$credit_total) { ?>
               <span id="credit"><b>[</b> <a id="credit-add"><?php echo $text_credit_add; ?></a> <b>]</b></span>
-              <button id="button-credit-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>
+              <button id="button-credit-add" class="btn btn-success btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>
               <?php } else { ?>
-              <button id="button-credit-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_credit_remove; ?></button>
+              <button id="button-credit-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_credit_remove; ?></button>
               <?php } ?>
               <?php } ?></td>
           </tr>
@@ -99,9 +99,9 @@
             <td><?php echo $text_reward; ?></td>
             <td><?php echo $reward; ?>
               <?php if (!$reward_total) { ?>
-              <button id="button-reward-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>
+              <button id="button-reward-add" class="btn btn-success btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>
               <?php } else { ?>
-              <button id="button-reward-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>
+              <button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>
               <?php } ?></td>
           </tr>
           <?php } ?>
@@ -126,9 +126,9 @@
             <td><?php echo $text_commission; ?></td>
             <td><?php echo $commission; ?>
               <?php if (!$commission_total) { ?>
-              <button id="button-commission-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_commission_add; ?></button>
+              <button id="button-commission-add" class="btn btn-success btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_commission_add; ?></button>
               <?php } else { ?>
-              <button id="button-commission-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>
+              <button id="button-commission-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>
               <?php } ?></td>
           </tr>
           <?php } ?>
@@ -380,7 +380,7 @@
             </div>
           </div>
         </div>
-        <button id="button-history" class="btn"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+        <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
       </div>
       <?php if ($maxmind_id) { ?>
       <div class="tab-pane" id="tab-fraud">
@@ -743,7 +743,7 @@ $(document).delegate('#button-credit-add', 'click', function() {
 				
 				$('.alert-success').fadeIn('slow');
 				
-				$('#button-credit-add').replaceWith('<button id="button-credit-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_credit_remove; ?></button>');
+				$('#button-credit-add').replaceWith('<button id="button-credit-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_credit_remove; ?></button>');
 			}
 		}
 	});
@@ -774,7 +774,7 @@ $(document).delegate('#button-credit-remove', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-credit-remove').replaceWith('<button id="button-credit-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>');
+				$('#button-credit-remove').replaceWith('<button id="button-credit-add" class="btn btn-success btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>');
 			}
 		}
 	});
@@ -803,7 +803,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>');
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>');
 			}
 		}
 	});
@@ -832,7 +832,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>');
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-success btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>');
 			}
 		}
 	});
@@ -863,7 +863,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
                 
-				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>');
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>');
 			}
 		}
 	});
@@ -892,7 +892,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 			if (json['success']) {
                 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_add; ?></button>');
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-success btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_add; ?></button>');
 			}
 		}
 	});

@@ -19,9 +19,9 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons">
-        <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" class="btn"><i class="icon-print"></i> <?php echo $button_invoice; ?></button>
-        <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
-        <button type="submit" form="form-order" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+        <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" class="btn btn-info"><i class="icon-print"></i> <?php echo $button_invoice; ?></button>
+        <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+        <button type="submit" form="form-order" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
     </div>
     <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-order">

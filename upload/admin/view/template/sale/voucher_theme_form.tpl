@@ -19,11 +19,12 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-theme-voucher" class="form-horizontal">
       <div class="form-group required">
-        <div class="col-lg-3 control-label"><?php echo $entry_name; ?></div>
+        <label class="col-lg-3 control-label"><?php echo $entry_name; ?></label>
         <div class="col-lg-9">
           <?php foreach ($languages as $language) { ?>
-          <input type="text" name="voucher_theme_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($voucher_theme_description[$language['language_id']]) ? $voucher_theme_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" />
-          <img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /><br />
+          <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+            <input type="text" name="voucher_theme_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($voucher_theme_description[$language['language_id']]) ? $voucher_theme_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+          </div>
           <?php if (isset($error_name[$language['language_id']])) { ?>
           <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
           <?php } ?>
@@ -32,10 +33,13 @@
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-image"><?php echo $entry_image; ?></label>
-        <div class="col-lg-9">
-          <div class="image"><img src="<?php echo $thumb; ?>" alt="" class="img-polaroid" />
-            <input type="hidden" name="image" value="<?php echo $image; ?>" />
-            <div class="image-option"><a href="#" title="<?php echo $button_edit; ?>" data-toggle="modal" data-target="#modal"><span class="icon-pencil"></span></a> <a href="#" title="<?php echo $button_clear; ?>" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', ''); return false;"><span class="icon-trash"></span></a></div>
+        <div class="col-lg-9"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
+          <input type="hidden" name="image" value="<?php echo $image; ?>" />
+          <br />
+          <br />
+          <div class="btn-group">
+            <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
+            <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
           </div>
           <?php if ($error_image) { ?>
           <span class="text-error"><?php echo $error_image; ?></span>

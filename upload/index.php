@@ -226,11 +226,11 @@ $registry->set('encryption', new Encryption($config->get('config_encryption')));
 // Front Controller 
 $controller = new Front($registry);
 
-// SEO URL's
-$controller->addPreAction(new Action('common/seo_url'));	
-
 // Maintenance Mode
 $controller->addPreAction(new Action('common/maintenance'));
+
+// SEO URL's
+$controller->addPreAction(new Action('common/seo_url'));	
 	
 // Router
 if (isset($request->get['route'])) {

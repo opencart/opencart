@@ -1351,7 +1351,7 @@ function addProfile() {
             dataType: 'html',
             success: function(data) {
                 //add the button to nav
-                $('<a href="#tab-openbay">Marketplace links</a>').hide().appendTo("#tabs").fadeIn(1000);
+                $('<a href="#tab-openbay"><?php echo $tab_marketplace_links ?></a>').hide().appendTo("#tabs").fadeIn(1000);
                 $('#tab-general').before(data);
                 $('#tabs a').tabs();
             },

@@ -21,7 +21,7 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?></label>
         <div class="col-lg-9">
-          <textarea name="google_talk_code" cols="40" rows="5" id="input-code" class="form-control"><?php echo $google_talk_code; ?></textarea>
+          <textarea name="google_talk_code" rows="5" id="input-code" class="form-control"><?php echo $google_talk_code; ?></textarea>
           <span class="help-block"><?php echo $help_code; ?></span>
           <?php if ($error_code) { ?>
           <span class="text-error"><?php echo $error_code; ?></span>

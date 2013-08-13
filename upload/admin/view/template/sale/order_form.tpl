@@ -465,7 +465,7 @@
             <div class="form-group">
               <label class="col-lg-3 control-label" for="input-message"><?php echo $entry_message; ?></label>
               <div class="col-lg-9">
-                <textarea name="message" cols="40" rows="5" id="input-message" class="form-control"></textarea>
+                <textarea name="message" rows="5" id="input-message" class="form-control"></textarea>
               </div>
             </div>
             <div class="form-group required">
@@ -601,7 +601,7 @@
             <div class="form-group">
               <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
               <div class="col-lg-9">
-                <textarea name="comment" cols="40" rows="5" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
+                <textarea name="comment" rows="5" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
               </div>
             </div>
             <div class="form-group">

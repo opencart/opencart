@@ -22,12 +22,12 @@
       </thead>
       <tbody>
         <tr class="filter">
-          <td align="left"><input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" /></td>
-          <td align="left"><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" /></td>
+          <td class="text-left"><input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" class="form-control" /></td>
+          <td class="text-left"><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
           <td>&nbsp;</td>
-          <td align="right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+          <td class="text-right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
         </tr>
         <?php if ($customers) { ?>
         <?php foreach ($customers as $customer) { ?>

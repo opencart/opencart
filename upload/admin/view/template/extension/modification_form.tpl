@@ -33,7 +33,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?></label>
         <div class="col-lg-9">
-          <textarea name="code" cols="40" rows="15" id="input-code" class="form-control"><?php echo $code; ?></textarea>
+          <textarea name="code" rows="15" id="input-code" class="form-control"><?php echo $code; ?></textarea>
         </div>
       </div>
       <div class="form-group">

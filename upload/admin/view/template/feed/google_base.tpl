@@ -35,7 +35,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-data-feed"><?php echo $entry_data_feed; ?></label>
         <div class="col-lg-9">
-          <textarea cols="40" rows="5" readonly="readonly" id="input-data-feed" class="form-control"><?php echo $data_feed; ?></textarea>
+          <textarea rows="5" readonly="readonly" id="input-data-feed" class="form-control"><?php echo $data_feed; ?></textarea>
         </div>
       </div>
     </form>

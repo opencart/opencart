@@ -39,7 +39,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-callback"><?php echo $entry_callback; ?></label>
         <div class="col-lg-9">
-          <textarea cols="40" rows="5" readonly="readonly" id="input-callback" class="form-control"><?php echo $callback; ?></textarea>
+          <textarea rows="5" readonly="readonly" id="input-callback" class="form-control"><?php echo $callback; ?></textarea>
           <span class="help-block"><?php echo $help_callback; ?></span> </div>
       </div>
       <div class="form-group">

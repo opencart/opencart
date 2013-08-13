@@ -42,7 +42,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-address-format"><?php echo $entry_address_format; ?> </label>
         <div class="col-lg-9">
-          <textarea name="address_format" cols="40" rows="5" placeholder="<?php echo $entry_address_format; ?>" id="input-address-format" class="form-control"><?php echo $address_format; ?></textarea>
+          <textarea name="address_format" rows="5" placeholder="<?php echo $entry_address_format; ?>" id="input-address-format" class="form-control"><?php echo $address_format; ?></textarea>
           <span class="help-block"><?php echo $help_address_format; ?></span> </div>
       </div>
       <div class="form-group">

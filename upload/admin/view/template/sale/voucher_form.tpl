@@ -92,7 +92,7 @@
           <div class="form-group required">
             <label class="col-lg-3 control-label" for="input-message"><?php echo $entry_message; ?></label>
             <div class="col-lg-9">
-              <textarea name="message" cols="40" rows="5" placeholder="<?php echo $entry_message; ?>" id="input-message" class="form-control"><?php echo $message; ?></textarea>
+              <textarea name="message" rows="5" placeholder="<?php echo $entry_message; ?>" id="input-message" class="form-control"><?php echo $message; ?></textarea>
             </div>
           </div>
           <div class="form-group">

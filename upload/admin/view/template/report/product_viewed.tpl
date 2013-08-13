@@ -13,7 +13,7 @@
   <div class="panel">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $reset; ?>" class="btn"><?php echo $button_reset; ?></a></div>
+      <div class="buttons"><a href="<?php echo $reset; ?>" class="btn btn-danger"><i class="icon-refresh"></i> <?php echo $button_reset; ?></a></div>
     </div>
     <table class="table table-striped table-bordered table-hover">
       <thead>

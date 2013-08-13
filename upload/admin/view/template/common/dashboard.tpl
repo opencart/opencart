@@ -13,39 +13,31 @@
       <div class="col-lg-6">
         <div class="row">
           <div class="col-6">
-            <div class="stats">
-              <div><span class="badge badge-success"><i class="icon-usd"></i></span></div>
-              <div><span><?php echo $sale_growth; ?> </span> <?php echo $sale_total; ?></div>
-            </div>
+            <div><span class="badge badge-success"><i class="icon-usd"></i></span></div>
+            <div><span><?php echo $sale_growth; ?> </span> <?php echo $sale_total; ?></div>
           </div>
           <div class="col-6">
-            <div class="stats">
-              <div><i class="icon-shopping-cart"></i></div>
-              <div>
-                <h5><?php echo $text_orders; ?></h5>
-                <?php echo $order_total; ?><br />
-                <span><?php echo $order_growth; ?>%</span></div>
-            </div>
+            <div><i class="icon-shopping-cart"></i></div>
+            <div>
+              <h5><?php echo $text_orders; ?></h5>
+              <?php echo $order_total; ?><br />
+              <span><?php echo $order_growth; ?>%</span></div>
           </div>
         </div>
         <div class="row">
           <div class="col-6">
-            <div class="stats">
-              <div><i class="icon-user"></i></div>
-              <div>
-                <h5><?php echo $text_customers; ?></h5>
-                <?php echo $customer_total; ?><br />
-                <span><?php echo $customer_growth; ?>%</span></div>
-            </div>
+            <div><i class="icon-user"></i></div>
+            <div>
+              <h5><?php echo $text_customers; ?></h5>
+              <?php echo $customer_total; ?><br />
+              <span><?php echo $customer_growth; ?>%</span></div>
           </div>
           <div class="col-6">
-            <div class="stats">
-              <div><i class="icon-globe"></i></div>
-              <div>
-                <h5><?php echo $text_marketing; ?></h5>
-                Clicks: <?php echo $marketing_total; ?> / Orders: 1<br />
-                <span>+10%</span></div>
-            </div>
+            <div><i class="icon-globe"></i></div>
+            <div>
+              <h5><?php echo $text_marketing; ?></h5>
+              Clicks: <?php echo $marketing_total; ?> / Orders: 1<br />
+              <span>+10%</span></div>
           </div>
         </div>
       </div>

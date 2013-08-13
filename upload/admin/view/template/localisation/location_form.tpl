@@ -114,13 +114,13 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-open"><?php echo $entry_open; ?></label>
         <div class="col-lg-9">
-          <textarea name="open" cols="40" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $open; ?></textarea>
+          <textarea name="open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $open; ?></textarea>
           <span class="help-block"><?php echo $help_open; ?></span> </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
         <div class="col-lg-9">
-          <textarea name="comment" cols="40" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
+          <textarea name="comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
           <span class="help-block"><?php echo $help_comment; ?></span> </div>
       </div>
     </form>

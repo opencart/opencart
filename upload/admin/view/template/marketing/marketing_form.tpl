@@ -30,7 +30,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-description"><?php echo $entry_description; ?></label>
         <div class="col-lg-9">
-          <textarea name="description" cols="40" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $description; ?></textarea>
+          <textarea name="description" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $description; ?></textarea>
         </div>
       </div>
       <div class="form-group required">

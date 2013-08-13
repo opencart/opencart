@@ -7,7 +7,7 @@
   </ul>
   <div class="panel">
     <div class="panel-heading">
-      <h1><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <table class="table table-striped table-bordered table-hover">
       <thead>

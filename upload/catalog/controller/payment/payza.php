@@ -7,7 +7,7 @@ class ControllerPaymentPayza extends Controller {
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
-		$this->data['action'] = 'https://www.payza.com/PayProcess.aspx';
+		$this->data['action'] = 'https://secure.payza.com/checkout';
 
 		$this->data['ap_merchant'] = $this->config->get('payza_merchant');
 		$this->data['ap_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);

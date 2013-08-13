@@ -21,7 +21,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
         <div class="col-lg-9">
-          <select name="pickup_geo_zone_id" id="input-geo-zone">
+          <select name="pickup_geo_zone_id" id="input-geo-zone" class="form-control">
             <option value="0"><?php echo $text_all_zones; ?></option>
             <?php foreach ($geo_zones as $geo_zone) { ?>
             <?php if ($geo_zone['geo_zone_id'] == $pickup_geo_zone_id) { ?>
@@ -36,7 +36,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
         <div class="col-lg-9">
-          <select name="pickup_status" id="input-status">
+          <select name="pickup_status" id="input-status" class="form-control">
             <?php if ($pickup_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
             <option value="0"><?php echo $text_disabled; ?></option>
@@ -50,7 +50,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="pickup_sort_order" value="<?php echo $pickup_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
+          <input type="text" name="pickup_sort_order" value="<?php echo $pickup_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
         </div>
       </div>
     </form>

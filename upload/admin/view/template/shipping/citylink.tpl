@@ -19,15 +19,16 @@
     </div>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-citylink" class="form-horizontal">
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-rate"><?php echo $entry_rate; ?> <span class="help-block"><?php echo $help_rate; ?></span></label>
+        <label class="col-lg-3 control-label" for="input-rate"><?php echo $entry_rate; ?></label>
         <div class="col-lg-9">
-          <textarea name="citylink_rate" cols="40" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate"><?php echo $citylink_rate; ?></textarea>
+          <textarea name="citylink_rate" rows="5" placeholder="<?php echo $entry_rate; ?>" id="input-rate" class="form-control"><?php echo $citylink_rate; ?></textarea>
+          <span class="help-block"><?php echo $help_rate; ?></span>
         </div>
       </div>
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
         <div class="col-lg-9">
-          <select name="citylink_tax_class_id" id="input-tax-class">
+          <select name="citylink_tax_class_id" id="input-tax-class" class="form-control">
             <option value="0"><?php echo $text_none; ?></option>
             <?php foreach ($tax_classes as $tax_class) { ?>
             <?php if ($tax_class['tax_class_id'] == $citylink_tax_class_id) { ?>
@@ -42,7 +43,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
         <div class="col-lg-9">
-          <select name="citylink_geo_zone_id" id="input-geo-zone">
+          <select name="citylink_geo_zone_id" id="input-geo-zone" class="form-control">
             <option value="0"><?php echo $text_all_zones; ?></option>
             <?php foreach ($geo_zones as $geo_zone) { ?>
             <?php if ($geo_zone['geo_zone_id'] == $citylink_geo_zone_id) { ?>
@@ -57,7 +58,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
         <div class="col-lg-9">
-          <select name="citylink_status" id="input-status">
+          <select name="citylink_status" id="input-status" class="form-control">
             <?php if ($citylink_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
             <option value="0"><?php echo $text_disabled; ?></option>
@@ -71,7 +72,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="citylink_sort_order" value="<?php echo $citylink_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
+          <input type="text" name="citylink_sort_order" value="<?php echo $citylink_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
         </div>
       </div>
     </form>

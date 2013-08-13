@@ -29,7 +29,7 @@ final class mMySQLi {
 				$result = new stdClass();
 				$data = array();
 
-				while ($row = $query->fetch_array()) {
+				while ($row = $query->fetch_assoc()) {
 					$data[] = $row;
 				}
 

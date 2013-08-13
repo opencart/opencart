@@ -21,7 +21,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
         <div class="col-lg-9">
-          <select name="reward_status" id="input-status">
+          <select name="reward_status" id="input-status" class="form-control">
             <?php if ($reward_status) { ?>
             <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
             <option value="0"><?php echo $text_disabled; ?></option>
@@ -35,7 +35,7 @@
       <div class="form-group">
         <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="reward_sort_order" value="<?php echo $reward_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="input-mini" />
+          <input type="text" name="reward_sort_order" value="<?php echo $reward_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
         </div>
       </div>
     </form>

@@ -21,14 +21,14 @@
       <div class="form-group required">
         <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
         <div class="col-lg-9">
-          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" />
+          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
           <?php if ($error_name) { ?>
           <span class="error"><?php echo $error_name; ?></span>
           <?php  } ?>
         </div>
       </div>
       <div class="form-group">
-        <div class="col-lg-3 control-label"><?php echo $entry_access; ?></div>
+        <label class="col-lg-3 control-label"><?php echo $entry_access; ?></label>
         <div class="col-lg-9">
           <div class="well">
             <?php foreach ($permissions as $permission) { ?>
@@ -46,7 +46,7 @@
           <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
       </div>
       <div class="form-group">
-        <div class="col-lg-3 control-label"><?php echo $entry_modify; ?></div>
+        <label class="col-lg-3 control-label"><?php echo $entry_modify; ?></label>
         <div class="col-lg-9">
           <div class="well">
             <?php foreach ($permissions as $permission) { ?>

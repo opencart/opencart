@@ -32,14 +32,16 @@
         </div>
       </div>
     </form>
-    <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="backup">
+    <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="backup" class="form-horizontal">
       <div class="form-group">
-        <label class="col-lg-3 control-label" style="border: 2px solid #000;"><?php echo $entry_backup; ?></label>
+        <label class="col-lg-3 control-label"><?php echo $entry_backup; ?></label>
         <div class="col-lg-9">
           <div class="well">
             <?php foreach ($tables as $table) { ?>
             <div class="checkbox">
-              <label><input type="checkbox" name="backup[]" value="<?php echo $table; ?>" checked="checked" /> <?php echo $table; ?></label>
+              <label>
+                <input type="checkbox" name="backup[]" value="<?php echo $table; ?>" checked="checked" />
+                <?php echo $table; ?></label>
             </div>
             <?php } ?>
           </div>

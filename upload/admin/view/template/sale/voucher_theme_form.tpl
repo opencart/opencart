@@ -17,36 +17,38 @@
         <button type="submit" form="form-theme-voucher" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-theme-voucher" class="form-horizontal">
-      <div class="form-group required">
-        <label class="col-lg-3 control-label"><?php echo $entry_name; ?></label>
-        <div class="col-lg-9">
-          <?php foreach ($languages as $language) { ?>
-          <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-            <input type="text" name="voucher_theme_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($voucher_theme_description[$language['language_id']]) ? $voucher_theme_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+    <div class="panel-body">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-theme-voucher" class="form-horizontal">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label"><?php echo $entry_name; ?></label>
+          <div class="col-lg-9">
+            <?php foreach ($languages as $language) { ?>
+            <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+              <input type="text" name="voucher_theme_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($voucher_theme_description[$language['language_id']]) ? $voucher_theme_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
+            </div>
+            <?php if (isset($error_name[$language['language_id']])) { ?>
+            <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+            <?php } ?>
+            <?php } ?>
           </div>
-          <?php if (isset($error_name[$language['language_id']])) { ?>
-          <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
-          <?php } ?>
-          <?php } ?>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-image"><?php echo $entry_image; ?></label>
-        <div class="col-lg-9"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
-          <input type="hidden" name="image" value="<?php echo $image; ?>" />
-          <br />
-          <br />
-          <div class="btn-group">
-            <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
-            <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-image"><?php echo $entry_image; ?></label>
+          <div class="col-lg-9"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
+            <input type="hidden" name="image" value="<?php echo $image; ?>" />
+            <br />
+            <br />
+            <div class="btn-group">
+              <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
+              <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
+            </div>
+            <?php if ($error_image) { ?>
+            <span class="text-error"><?php echo $error_image; ?></span>
+            <?php } ?>
           </div>
-          <?php if ($error_image) { ?>
-          <span class="text-error"><?php echo $error_image; ?></span>
-          <?php } ?>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--

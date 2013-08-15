@@ -9,89 +9,99 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-eye-open icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="row">
-      <div class="col-lg-6">
-        <div class="row">
-          <div class="col-6">
-            <div><span class="badge badge-success"><i class="icon-usd"></i></span></div>
-            <div><span><?php echo $sale_growth; ?> </span> <?php echo $sale_total; ?></div>
-          </div>
-          <div class="col-6">
-            <div><i class="icon-shopping-cart"></i></div>
-            <div>
-              <h5><?php echo $text_orders; ?></h5>
-              <?php echo $order_total; ?><br />
-              <span><?php echo $order_growth; ?>%</span></div>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-6">
-            <div><i class="icon-user"></i></div>
-            <div>
-              <h5><?php echo $text_customers; ?></h5>
-              <?php echo $customer_total; ?><br />
-              <span><?php echo $customer_growth; ?>%</span></div>
-          </div>
-          <div class="col-6">
-            <div><i class="icon-globe"></i></div>
-            <div>
-              <h5><?php echo $text_marketing; ?></h5>
-              Clicks: <?php echo $marketing_total; ?> / Orders: 1<br />
-              <span>+10%</span></div>
-          </div>
-        </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-lg-3">
+          <h2><i class="icon-money"></i> <?php echo $text_sale; ?></h2>
+          <?php echo $sale_growth; ?> <?php echo $sale_total; ?> </div>
+        <div class="col-lg-3">
+          <h2><i class="icon-shopping-cart"></i> <?php echo $text_order; ?></h2>
+          <?php echo $order_total; ?><br />
+          <?php echo $order_growth; ?>%</span> </div>
+        <div class="col-lg-3">
+          <h2><i class="icon-user"></i> <?php echo $text_customer; ?></h2>
+          <?php echo $customer_total; ?><br />
+          <?php echo $customer_growth; ?>% </div>
+        <div class="col-lg-3">
+          <h2><i class="icon-globe"></i> <?php echo $text_marketing; ?></h2>
+          Clicks: <?php echo $marketing_total; ?> / Orders: 1<br />
+          +10% </div>
       </div>
-      <div class="col-lg-6">
-        <h5><?php echo $text_activity; ?></h5>
-        <table class="table table-striped table-bordered table-hover">
-          <tbody>
-            <?php if ($activities) { ?>
-            <?php foreach ($activities as $activity) { ?>
-            <tr>
-              <td class="text-left"><?php echo $activity['action']; ?></td>
-            </tr>
-            <?php } ?>
-            <?php } else { ?>
-            <tr>
-              <td class="text-center"><?php echo $text_no_results; ?></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
-      </div>
-    </div>
-    <div class="row">
-      <div class="col-lg-7">
-        <fieldset>
-          <legend>
-          <?php echo $text_sales; ?>
-          <div id="button-sale" class="btn-group pull-right" data-toggle="buttons-radio">
-            <button class="btn btn-default active" value="day"><?php echo $text_day; ?></button>
-            <button class="btn btn-default" value="week"><?php echo $text_week; ?></button>
-            <button class="btn btn-default" value="month"><?php echo $text_month; ?></button>
-            <button class="btn btn-default" value="year"><?php echo $text_year; ?></button>
+      <br />
+      <br />
+      <ul class="nav nav-tabs">
+        <li class="active"><a href="#tab-sale" data-toggle="tab"><?php echo $tab_sale; ?></a></li>
+        <li><a href="#tab-marketing" data-toggle="tab"><?php echo $tab_marketing; ?></a></li>
+        <li><a href="#tab-online" data-toggle="tab"><?php echo $tab_online; ?></a></li>
+        <li><a href="#tab-activity" data-toggle="tab"><?php echo $tab_activity; ?></a></li>
+        <li></li>
+      </ul>
+      <div class="tab-content">
+        <div class="tab-pane active" id="tab-sale">
+          <div class="text-right">
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-default active">
+                <input type="radio" name="sale" value="day" />
+                <?php echo $text_day; ?></label>
+              <label class="btn btn-default">
+                <input type="radio" name="sale" value="week" />
+                <?php echo $text_week; ?></label>
+              <label class="btn btn-default">
+                <input type="radio" name="sale" value="month" />
+                <?php echo $text_month; ?></label>
+              <label class="btn btn-default">
+                <input type="radio" name="sale" value="year" />
+                <?php echo $text_year; ?></label>
+            </div>
           </div>
-          </legend>
           <div id="chart-sale" class="chart" style="height: 250px;"></div>
-        </fieldset>
-      </div>
-      <div class="col-lg-5">
-        <fieldset>
-          <legend style="font-size: 14px; margin-bottom: 5px;">
-          <?php echo $text_marketing; ?>
-          <div id="button-marketing" class="btn-group pull-right" data-toggle="buttons-radio">
-            <button class="btn btn-small active" value="day"><?php echo $text_day; ?></button>
-            <button class="btn btn-small" value="week"><?php echo $text_week; ?></button>
-            <button class="btn btn-small" value="month"><?php echo $text_month; ?></button>
-            <button class="btn btn-small" value="year"><?php echo $text_year; ?></button>
+        </div>
+        <div class="tab-pane" id="tab-marketing">
+          <div class="text-right">
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-default active">
+                <input type="radio" name="marketing" value="day" />
+                <?php echo $text_day; ?></label>
+              <label class="btn btn-default">
+                <input type="radio" name="marketing" value="week" />
+                <?php echo $text_week; ?></label>
+              <label class="btn btn-default">
+                <input type="radio" name="marketing" value="month" />
+                <?php echo $text_month; ?></label>
+              <label class="btn btn-default">
+                <input type="radio" name="marketing" value="year" />
+                <?php echo $text_year; ?></label>
+            </div>
           </div>
-          </legend>
-          <div id="chart-marketing" class="chart" style="height: 115px;"></div>
-        </fieldset>
-        <fieldset>
-          <legend style="font-size: 14px; margin-bottom: 5px;"> People Online</legend>
-          <div id="chart-online" class="chart" style="height: 115px;"></div>
-        </fieldset>
+          <div id="chart-marketing" style="height: 250px;"></div>
+        </div>
+        <div class="tab-pane" id="tab-online">
+          <div id="chart-online" class="chart" style="height: 250px;"></div>
+        </div>
+        <div class="tab-pane" id="tab-activity">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <td class="text-left"><?php echo $column_action; ?></td>
+                <td class="text-left"><?php echo $column_date_added; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if ($activities) { ?>
+              <?php foreach ($activities as $activity) { ?>
+              <tr>
+                <td class="text-left"><?php echo $activity['action']; ?></td>
+                <td class="text-left"><?php echo $activity['action']; ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td colspan="2" class="text-center"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
   </div>
@@ -99,17 +109,11 @@
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
 <script type="text/javascript"><!--
-$('#button-sale button').on('click', function() {
+$('input[name=\'sale\']').on('change', function() {
 	$.ajax({
 		type: 'get',
 		url: 'index.php?route=common/dashboard/sale&token=<?php echo $token; ?>&range=' + this.value,
 		dataType: 'json',
-		beforeSend: function() {
-			$('#button-sale button').prop('disabled', true);
-		},
-		complete: function() {
-			$('#button-sale button').prop('disabled', false);
-		},		
 		success: function(json) {
 			var option = {	
 				shadowSize: 0,
@@ -132,7 +136,7 @@ $('#button-sale button').on('click', function() {
 				}
 			}
 			
-			$.plot('#chart-sale', [json['orders'], json['customers']], option);	
+			$.plot('#chart-sale', [json['order'], json['customer']], option);	
 					
 			$('#chart-sale').bind('plothover', function(event, pos, item) {
 				$('.tooltip').remove();
@@ -156,19 +160,13 @@ $('#button-sale button').on('click', function() {
 	});
 });
 
-$('#button-sale .active').trigger('click');
+$('.active input[name=\'sale\']').trigger('change');
 
-$('#button-marketing button').on('click', function() {
+$('input[name=\'marketing\']').on('change', function() {
 	$.ajax({
 		type: 'get',
 		url: 'index.php?route=common/dashboard/marketing&token=<?php echo $token; ?>&range=' + this.value,
 		dataType: 'json',
-		beforeSend: function() {
-			$('#button-marketing button').prop('disabled', true);
-		},
-		complete: function() {
-			$('#button-marketing button').prop('disabled', false);
-		},		
 		success: function(json) {
 			var option = {	
 				shadowSize: 0,
@@ -190,7 +188,7 @@ $('#button-marketing button').on('click', function() {
 				}
 			}		
 			
-			$.plot('#chart-marketing', [json['clicks'], json['orders']], option);
+			$.plot('#chart-marketing', [json['click'], json['order']], option);
 					
 			$('#chart-marketing').bind('plothover', function(event, pos, item) {
 				$('.tooltip').remove();
@@ -214,7 +212,7 @@ $('#button-marketing button').on('click', function() {
 	});
 });
 
-$('#button-marketing .active').trigger('click');
+$('.active input[name=\'marketing\']').trigger('change');
 
 function online() {
 	$.ajax({

@@ -9,62 +9,64 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <form class="form-horizontal">
-      <div class="well">
-        <div class="row">
-          <div class="col-lg-10">
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-              <div class="col-lg-9">
-                <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <div class="well">
+          <div class="row">
+            <div class="col-lg-10">
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+                <div class="col-lg-9">
+                  <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+                <div class="col-lg-9">
+                  <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
+                </div>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-              <div class="col-lg-9">
-                <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
-              </div>
+            <div class="col-lg-2">
+              <button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
             </div>
-          </div>
-          <div class="col-lg-2">
-            <button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
           </div>
         </div>
+      </form>
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-left"><?php echo $column_name; ?></td>
+            <td class="text-left"><?php echo $column_code; ?></td>
+            <td class="text-right"><?php echo $column_orders; ?></td>
+            <td class="text-right"><?php echo $column_total; ?></td>
+            <td class="text-right"><?php echo $column_action; ?></td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if ($coupons) { ?>
+          <?php foreach ($coupons as $coupon) { ?>
+          <tr>
+            <td class="text-left"><?php echo $coupon['name']; ?></td>
+            <td class="text-left"><?php echo $coupon['code']; ?></td>
+            <td class="text-right"><?php echo $coupon['orders']; ?></td>
+            <td class="text-right"><?php echo $coupon['total']; ?></td>
+            <td class="text-right"><?php foreach ($coupon['action'] as $action) { ?>
+              [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+              <?php } ?></td>
+          </tr>
+          <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-lg-6 text-right"><?php echo $results; ?></div>
       </div>
-    </form>
-    <table class="table table-striped table-bordered table-hover">
-      <thead>
-        <tr>
-          <td class="text-left"><?php echo $column_name; ?></td>
-          <td class="text-left"><?php echo $column_code; ?></td>
-          <td class="text-right"><?php echo $column_orders; ?></td>
-          <td class="text-right"><?php echo $column_total; ?></td>
-          <td class="text-right"><?php echo $column_action; ?></td>
-        </tr>
-      </thead>
-      <tbody>
-        <?php if ($coupons) { ?>
-        <?php foreach ($coupons as $coupon) { ?>
-        <tr>
-          <td class="text-left"><?php echo $coupon['name']; ?></td>
-          <td class="text-left"><?php echo $coupon['code']; ?></td>
-          <td class="text-right"><?php echo $coupon['orders']; ?></td>
-          <td class="text-right"><?php echo $coupon['total']; ?></td>
-          <td class="text-right"><?php foreach ($coupon['action'] as $action) { ?>
-            [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-            <?php } ?></td>
-        </tr>
-        <?php } ?>
-        <?php } else { ?>
-        <tr>
-          <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-        </tr>
-        <?php } ?>
-      </tbody>
-    </table>
-    <div class="row">
-      <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-lg-6 text-right"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

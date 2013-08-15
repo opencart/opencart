@@ -17,605 +17,607 @@
         <button type="submit" form="form-order" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-order" class="form-horizontal">
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_customer; ?></a></li>
-        <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
-        <li><a href="#tab-shipping" data-toggle="tab"><?php echo $tab_shipping; ?></a></li>
-        <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
-        <li><a href="#tab-voucher" data-toggle="tab"><?php echo $tab_voucher; ?></a></li>
-        <li><a href="#tab-total" data-toggle="tab"><?php echo $tab_total; ?></a></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" id="tab-customer">
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-store"><?php echo $entry_store; ?></label>
-            <div class="col-lg-9">
-              <select name="store_id" id="input-store" class="form-control">
-                <option value="0"><?php echo $text_default; ?></option>
-                <?php foreach ($stores as $store) { ?>
-                <?php if ($store['store_id'] == $store_id) { ?>
-                <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-customer"><?php echo $entry_customer; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="customer" value="<?php echo $customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
-              <input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>" />
-              <input type="hidden" name="customer_group_id" value="<?php echo $customer_group_id; ?>" />
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
-            <div class="col-lg-9">
-              <select name="customer_group_id" id="input-customer-group" <?php echo ($customer_id ? 'disabled="disabled"' : ''); ?> class="form-control">
-                <?php foreach ($customer_groups as $customer_group) { ?>
-                <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-                <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-firstname" class="form-control" />
-              <?php if ($error_firstname) { ?>
-              <span class="text-danger"><?php echo $error_firstname; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-lastname" class="form-control" />
-              <?php if ($error_lastname) { ?>
-              <span class="text-danger"><?php echo $error_lastname; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />
-              <?php if ($error_email) { ?>
-              <span class="text-danger"><?php echo $error_email; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-telephone" class="form-control" />
-              <?php if ($error_telephone) { ?>
-              <span class="text-danger"><?php echo $error_telephone; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="fax" value="<?php echo $fax; ?>" id="input-fax" class="form-control" />
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane" id="tab-payment">
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-payment-address"><?php echo $entry_address; ?></label>
-            <div class="col-lg-9">
-              <select name="payment_address" id="input-payment-address" class="form-control">
-                <option value="0" selected="selected"><?php echo $text_none; ?></option>
-                <?php foreach ($addresses as $address) { ?>
-                <option value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname'] . ' ' . $address['lastname'] . ', ' . $address['address_1'] . ', ' . $address['city'] . ', ' . $address['country']; ?></option>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="payment_firstname" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" class="form-control" />
-              <?php if ($error_payment_firstname) { ?>
-              <span class="text-danger"><?php echo $error_payment_firstname; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="payment_lastname" value="<?php echo $payment_lastname; ?>" id="input-payment-lastname" class="form-control" />
-              <?php if ($error_payment_lastname) { ?>
-              <span class="text-danger"><?php echo $error_payment_lastname; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="payment_company" value="<?php echo $payment_company; ?>" id="input-payment-company" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" id="input-payment-address-1" class="form-control" />
-              <?php if ($error_payment_address_1) { ?>
-              <span class="text-danger"><?php echo $error_payment_address_1; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="payment_address_2" value="<?php echo $payment_address_2; ?>" id="input-payment-address-2" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="payment_city" value="<?php echo $payment_city; ?>" id="input-payment-city" class="form-control" />
-              <?php if ($error_payment_city) { ?>
-              <span class="text-danger"><?php echo $error_payment_city; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="payment_postcode" value="<?php echo $payment_postcode; ?>" id="input-payment-postcode" class="form-control" />
-              <?php if ($error_payment_postcode) { ?>
-              <span class="text-danger"><?php echo $error_payment_postcode; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
-            <div class="col-lg-9">
-              <select name="payment_country_id" id="input-payment-country" class="form-control">
-                <option value=""><?php echo $text_select; ?></option>
-                <?php foreach ($countries as $country) { ?>
-                <?php if ($country['country_id'] == $payment_country_id) { ?>
-                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-              <?php if ($error_payment_country) { ?>
-              <span class="text-danger"><?php echo $error_payment_country; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
-            <div class="col-lg-9">
-              <select name="payment_zone_id" id="input-payment-zone" class="form-control">
-              </select>
-              <?php if ($error_payment_zone) { ?>
-              <span class="text-danger"><?php echo $error_payment_zone; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane" id="tab-shipping">
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-shipping-address"><?php echo $entry_address; ?></label>
-            <div class="col-lg-9">
-              <select name="shipping_address" id="input-shipping-address" class="form-control">
-                <option value="0" selected="selected"><?php echo $text_none; ?></option>
-                <?php foreach ($addresses as $address) { ?>
-                <option value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname'] . ' ' . $address['lastname'] . ', ' . $address['address_1'] . ', ' . $address['city'] . ', ' . $address['country']; ?></option>
-                <?php } ?>
-              </select>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-shipping-firstname"><?php echo $entry_firstname; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="shipping_firstname" value="<?php echo $shipping_firstname; ?>" id="input-shipping-firstname" class="form-control" />
-              <?php if ($error_shipping_firstname) { ?>
-              <span class="text-danger"><?php echo $error_shipping_firstname; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-shipping-lastname"><?php echo $entry_lastname; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="shipping_lastname" value="<?php echo $shipping_lastname; ?>" id="input-shipping-lastname" class="form-control" />
-              <?php if ($error_shipping_lastname) { ?>
-              <span class="text-danger"><?php echo $error_shipping_lastname; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-shipping-company"><?php echo $entry_company; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="shipping_company" value="<?php echo $shipping_company; ?>" id="input-shipping-company" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-shipping-address-1"><?php echo $entry_address_1; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="shipping_address_1" value="<?php echo $shipping_address_1; ?>" id="input-shipping-address-1" class="form-control" />
-              <?php if ($error_shipping_address_1) { ?>
-              <span class="text-danger"><?php echo $error_shipping_address_1; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-shipping-address-2"><?php echo $entry_address_2; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="shipping_address_2" value="<?php echo $shipping_address_2; ?>" id="input-shipping-address-2" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-shipping-city"><?php echo $entry_city; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" id="input-shipping-city" class="form-control" />
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-shipping-postcode"><?php echo $entry_postcode; ?></label>
-            <div class="col-lg-9">
-              <input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" id="input-shipping-postcode" class="form-control" />
-              <?php if ($error_shipping_postcode) { ?>
-              <span class="text-danger"><?php echo $error_shipping_postcode; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-shipping-country"><?php echo $entry_country; ?></label>
-            <div class="col-lg-9">
-              <select name="shipping_country_id" id="input-shipping-country" class="form-control">
-                <option value=""><?php echo $text_select; ?></option>
-                <?php foreach ($countries as $country) { ?>
-                <?php if ($country['country_id'] == $shipping_country_id) { ?>
-                <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
-              <?php if ($error_shipping_country) { ?>
-              <span class="text-danger"><?php echo $error_shipping_country; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-          <div class="form-group required">
-            <label class="col-lg-3 control-label" for="input-shipping-zone"><?php echo $entry_zone; ?></label>
-            <div class="col-lg-9">
-              <select name="shipping_zone_id" id="input-shipping-zone" class="form-control">
-              </select>
-              <?php if ($error_shipping_zone) { ?>
-              <span class="text-danger"><?php echo $error_shipping_zone; ?></span>
-              <?php } ?>
-            </div>
-          </div>
-        </div>
-        <div class="tab-pane" id="tab-product">
-          <table class="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <td></td>
-                <td class="text-left"><?php echo $column_product; ?></td>
-                <td class="text-left"><?php echo $column_model; ?></td>
-                <td class="text-right"><?php echo $column_quantity; ?></td>
-                <td class="text-right"><?php echo $column_price; ?></td>
-                <td class="text-right"><?php echo $column_total; ?></td>
-              </tr>
-            </thead>
-            <?php $product_row = 0; ?>
-            <?php $option_row = 0; ?>
-            <?php $download_row = 0; ?>
-            <tbody id="product">
-              <?php if ($order_products) { ?>
-              <?php foreach ($order_products as $order_product) { ?>
-              <tr id="product-row<?php echo $product_row; ?>">
-                <td class="text-center" style="width: 3px;"><i class="icon-minus-sign" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');"></i></td>
-                <td class="text-left"><?php echo $order_product['name']; ?><br />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][name]" value="<?php echo $order_product['name']; ?>" />
-                  <?php foreach ($order_product['option'] as $option) { ?>
-                  - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][order_option_id]" value="<?php echo $option['order_option_id']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_id]" value="<?php echo $option['product_option_id']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_value_id]" value="<?php echo $option['product_option_value_id']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][name]" value="<?php echo $option['name']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][value]" value="<?php echo $option['value']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][type]" value="<?php echo $option['type']; ?>" />
-                  <?php $option_row++; ?>
-                  <?php } ?>
-                  <?php foreach ($order_product['download'] as $download) { ?>
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][order_download_id]" value="<?php echo $download['order_download_id']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][name]" value="<?php echo $download['name']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][filename]" value="<?php echo $download['filename']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][mask]" value="<?php echo $download['mask']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][remaining]" value="<?php echo $download['remaining']; ?>" />
-                  <?php $download_row++; ?>
-                  <?php } ?></td>
-                <td class="text-left"><?php echo $order_product['model']; ?>
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
-                <td class="text-right"><?php echo $order_product['quantity']; ?>
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
-                <td class="text-right"><?php echo $order_product['price']; ?>
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" /></td>
-                <td class="text-right"><?php echo $order_product['total']; ?>
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['total']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['tax']; ?>" />
-                  <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>
-              </tr>
-              <?php $product_row++; ?>
-              <?php } ?>
-              <?php } else { ?>
-              <tr>
-                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
-          <fieldset>
-            <legend><?php echo $text_product; ?></legend>
+    <div class="panel-body">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-order" class="form-horizontal">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_customer; ?></a></li>
+          <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
+          <li><a href="#tab-shipping" data-toggle="tab"><?php echo $tab_shipping; ?></a></li>
+          <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
+          <li><a href="#tab-voucher" data-toggle="tab"><?php echo $tab_voucher; ?></a></li>
+          <li><a href="#tab-total" data-toggle="tab"><?php echo $tab_total; ?></a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-customer">
             <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-product"><?php echo $entry_product; ?></label>
+              <label class="col-lg-3 control-label" for="input-store"><?php echo $entry_store; ?></label>
               <div class="col-lg-9">
-                <input type="text" name="product" value="" id="input-product" class="form-control" />
-                <input type="hidden" name="product_id" value="" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
-              <div class="col-lg-9">
-                <input type="text" name="quantity" value="1" id="input-quantity" class="form-control" />
-              </div>
-            </div>
-            <div id="option"></div>
-          </fieldset>
-          <button type="button" id="button-product" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_product; ?></button>
-        </div>
-        <div class="tab-pane" id="tab-voucher">
-          <table class="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <td></td>
-                <td class="text-left"><?php echo $column_product; ?></td>
-                <td class="text-left"><?php echo $column_model; ?></td>
-                <td class="text-right"><?php echo $column_quantity; ?></td>
-                <td class="text-right"><?php echo $column_price; ?></td>
-                <td class="text-right"><?php echo $column_total; ?></td>
-              </tr>
-            </thead>
-            <tbody id="voucher">
-              <?php $voucher_row = 0; ?>
-              <?php if ($order_vouchers) { ?>
-              <?php foreach ($order_vouchers as $order_voucher) { ?>
-              <tr id="voucher-row<?php echo $voucher_row; ?>">
-                <td class="text-center" style="width: 3px;"><i class="icon-minus-sign" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');"></i></td>
-                <td class="text-left"><?php echo $order_voucher['description']; ?>
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][order_voucher_id]" value="<?php echo $order_voucher['order_voucher_id']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][description]" value="<?php echo $order_voucher['description']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][code]" value="<?php echo $order_voucher['code']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $order_voucher['from_name']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $order_voucher['from_email']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $order_voucher['to_name']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $order_voucher['to_email']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $order_voucher['voucher_theme_id']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $order_voucher['message']; ?>" />
-                  <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $order_voucher['amount']; ?>" /></td>
-                <td class="text-left"></td>
-                <td class="text-right">1</td>
-                <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-              </tr>
-              <?php $voucher_row++; ?>
-              <?php } ?>
-              <?php } else { ?>
-              <tr>
-                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
-          <fieldset>
-            <legend><?php echo $text_voucher; ?></legend>
-            <div class="form-group required">
-              <label class="col-lg-3 control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
-              <div class="col-lg-9">
-                <input type="text" name="to_name" value="" id="input-to-name" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-lg-3 control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
-              <div class="col-lg-9">
-                <input type="text" name="to_email" value="" id="input-to-email" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-lg-3 control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
-              <div class="col-lg-9">
-                <input type="text" name="from_name" value="" id="input-from-name" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-lg-3 control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
-              <div class="col-lg-9">
-                <input type="text" name="from_email" value="" id="input-from-email" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-lg-3 control-label" for="input-theme"><?php echo $entry_theme; ?></label>
-              <div class="col-lg-9">
-                <select name="voucher_theme_id" id="input-theme" class="form-control">
-                  <?php foreach ($voucher_themes as $voucher_theme) { ?>
-                  <option value="<?php echo $voucher_theme['voucher_theme_id']; ?>"><?php echo $voucher_theme['name']; ?></option>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-message"><?php echo $entry_message; ?></label>
-              <div class="col-lg-9">
-                <textarea name="message" rows="5" id="input-message" class="form-control"></textarea>
-              </div>
-            </div>
-            <div class="form-group required">
-              <label class="col-lg-3 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
-              <div class="col-lg-9">
-                <input type="text" name="amount" value="25.00" id="input-amount" class="form-control" />
-              </div>
-            </div>
-          </fieldset>
-          <button type="button" id="button-voucher" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_voucher; ?></button>
-        </div>
-        <div class="tab-pane" id="tab-total">
-          <table class="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <td class="text-left"><?php echo $column_product; ?></td>
-                <td class="text-left"><?php echo $column_model; ?></td>
-                <td class="text-right"><?php echo $column_quantity; ?></td>
-                <td class="text-right"><?php echo $column_price; ?></td>
-                <td class="text-right"><?php echo $column_total; ?></td>
-              </tr>
-            </thead>
-            <tbody id="total">
-              <?php $total_row = 0; ?>
-              <?php if ($order_products || $order_vouchers || $order_totals) { ?>
-              <?php foreach ($order_products as $order_product) { ?>
-              <tr>
-                <td class="text-left"><?php echo $order_product['name']; ?><br />
-                  <?php foreach ($order_product['option'] as $option) { ?>
-                  - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
-                  <?php } ?></td>
-                <td class="text-left"><?php echo $order_product['model']; ?></td>
-                <td class="text-right"><?php echo $order_product['quantity']; ?></td>
-                <td class="text-right"><?php echo $order_product['price']; ?></td>
-                <td class="text-right"><?php echo $order_product['total']; ?></td>
-              </tr>
-              <?php } ?>
-              <?php foreach ($order_vouchers as $order_voucher) { ?>
-              <tr>
-                <td class="text-left"><?php echo $order_voucher['description']; ?></td>
-                <td class="text-left"></td>
-                <td class="text-right">1</td>
-                <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-              </tr>
-              <?php } ?>
-              <?php foreach ($order_totals as $order_total) { ?>
-              <tr id="total-row<?php echo $total_row; ?>">
-                <td class="text-right" colspan="4"><?php echo $order_total['title']; ?>:
-                  <input type="hidden" name="order_total[<?php echo $total_row; ?>][order_total_id]" value="<?php echo $order_total['order_total_id']; ?>" />
-                  <input type="hidden" name="order_total[<?php echo $total_row; ?>][code]" value="<?php echo $order_total['code']; ?>" />
-                  <input type="hidden" name="order_total[<?php echo $total_row; ?>][title]" value="<?php echo $order_total['title']; ?>" />
-                  <input type="hidden" name="order_total[<?php echo $total_row; ?>][text]" value="<?php echo $order_total['text']; ?>" />
-                  <input type="hidden" name="order_total[<?php echo $total_row; ?>][value]" value="<?php echo $order_total['value']; ?>" />
-                  <input type="hidden" name="order_total[<?php echo $total_row; ?>][sort_order]" value="<?php echo $order_total['sort_order']; ?>" /></td>
-                <td class="text-right"><?php echo $order_total['value']; ?></td>
-              </tr>
-              <?php $total_row++; ?>
-              <?php } ?>
-              <?php } else { ?>
-              <tr>
-                <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
-          <fieldset>
-            <legend><?php echo $text_order; ?></legend>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-shipping"><?php echo $entry_shipping; ?></label>
-              <div class="col-lg-9">
-                <select name="shipping" id="input-shipping" class="form-control">
-                  <option value=""><?php echo $text_select; ?></option>
-                  <?php if ($shipping_code) { ?>
-                  <option value="<?php echo $shipping_code; ?>" selected="selected"><?php echo $shipping_method; ?></option>
-                  <?php } ?>
-                </select>
-                <input type="hidden" name="shipping_method" value="<?php echo $shipping_method; ?>" />
-                <input type="hidden" name="shipping_code" value="<?php echo $shipping_code; ?>" />
-                <?php if ($error_shipping_method) { ?>
-                <span class="text-danger"><?php echo $error_shipping_method; ?></span>
-                <?php } ?>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-payment"><?php echo $entry_payment; ?></label>
-              <div class="col-lg-9">
-                <select name="payment" id="input-payment" class="form-control">
-                  <option value=""><?php echo $text_select; ?></option>
-                  <?php if ($payment_code) { ?>
-                  <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
-                  <?php } ?>
-                </select>
-                <input type="hidden" name="payment_method" value="<?php echo $payment_method; ?>" />
-                <input type="hidden" name="payment_code" value="<?php echo $payment_code; ?>" />
-                <?php if ($error_payment_method) { ?>
-                <span class="text-danger"><?php echo $error_payment_method; ?></span>
-                <?php } ?>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
-              <div class="col-lg-9">
-                <input type="text" name="coupon" value="" id="input-coupon" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
-              <div class="col-lg-9">
-                <input type="text" name="voucher" value="" id="input-voucher" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
-              <div class="col-lg-9">
-                <input type="text" name="reward" value="" id="input-reward" class="form-control" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-              <div class="col-lg-9">
-                <select name="order_status_id" id="input-order-status" class="form-control">
-                  <?php foreach ($order_statuses as $order_status) { ?>
-                  <?php if ($order_status['order_status_id'] == $order_status_id) { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                <select name="store_id" id="input-store" class="form-control">
+                  <option value="0"><?php echo $text_default; ?></option>
+                  <?php foreach ($stores as $store) { ?>
+                  <?php if ($store['store_id'] == $store_id) { ?>
+                  <option value="<?php echo $store['store_id']; ?>" selected="selected"><?php echo $store['name']; ?></option>
                   <?php } else { ?>
-                  <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
                   <?php } ?>
                   <?php } ?>
                 </select>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+              <label class="col-lg-3 control-label" for="input-customer"><?php echo $entry_customer; ?></label>
               <div class="col-lg-9">
-                <textarea name="comment" rows="5" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
+                <input type="text" name="customer" value="<?php echo $customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
+                <input type="hidden" name="customer_id" value="<?php echo $customer_id; ?>" />
+                <input type="hidden" name="customer_group_id" value="<?php echo $customer_group_id; ?>" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
+              <label class="col-lg-3 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
               <div class="col-lg-9">
-                <input type="text" name="affiliate" value="<?php echo $affiliate; ?>" id="input-affiliate" class="form-control" />
-                <input type="hidden" name="affiliate_id" value="<?php echo $affiliate_id; ?>" />
+                <select name="customer_group_id" id="input-customer-group" <?php echo ($customer_id ? 'disabled="disabled"' : ''); ?> class="form-control">
+                  <?php foreach ($customer_groups as $customer_group) { ?>
+                  <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+                  <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
               </div>
             </div>
-          </fieldset>
-          <button type="button" id="button-update" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_update_total; ?></button>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-firstname" class="form-control" />
+                <?php if ($error_firstname) { ?>
+                <span class="text-danger"><?php echo $error_firstname; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-lastname" class="form-control" />
+                <?php if ($error_lastname) { ?>
+                <span class="text-danger"><?php echo $error_lastname; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />
+                <?php if ($error_email) { ?>
+                <span class="text-danger"><?php echo $error_email; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-telephone" class="form-control" />
+                <?php if ($error_telephone) { ?>
+                <span class="text-danger"><?php echo $error_telephone; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="fax" value="<?php echo $fax; ?>" id="input-fax" class="form-control" />
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-payment">
+            <div class="form-group">
+              <label class="col-lg-3 control-label" for="input-payment-address"><?php echo $entry_address; ?></label>
+              <div class="col-lg-9">
+                <select name="payment_address" id="input-payment-address" class="form-control">
+                  <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                  <?php foreach ($addresses as $address) { ?>
+                  <option value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname'] . ' ' . $address['lastname'] . ', ' . $address['address_1'] . ', ' . $address['city'] . ', ' . $address['country']; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="payment_firstname" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" class="form-control" />
+                <?php if ($error_payment_firstname) { ?>
+                <span class="text-danger"><?php echo $error_payment_firstname; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="payment_lastname" value="<?php echo $payment_lastname; ?>" id="input-payment-lastname" class="form-control" />
+                <?php if ($error_payment_lastname) { ?>
+                <span class="text-danger"><?php echo $error_payment_lastname; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="payment_company" value="<?php echo $payment_company; ?>" id="input-payment-company" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" id="input-payment-address-1" class="form-control" />
+                <?php if ($error_payment_address_1) { ?>
+                <span class="text-danger"><?php echo $error_payment_address_1; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="payment_address_2" value="<?php echo $payment_address_2; ?>" id="input-payment-address-2" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="payment_city" value="<?php echo $payment_city; ?>" id="input-payment-city" class="form-control" />
+                <?php if ($error_payment_city) { ?>
+                <span class="text-danger"><?php echo $error_payment_city; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="payment_postcode" value="<?php echo $payment_postcode; ?>" id="input-payment-postcode" class="form-control" />
+                <?php if ($error_payment_postcode) { ?>
+                <span class="text-danger"><?php echo $error_payment_postcode; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
+              <div class="col-lg-9">
+                <select name="payment_country_id" id="input-payment-country" class="form-control">
+                  <option value=""><?php echo $text_select; ?></option>
+                  <?php foreach ($countries as $country) { ?>
+                  <?php if ($country['country_id'] == $payment_country_id) { ?>
+                  <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+                <?php if ($error_payment_country) { ?>
+                <span class="text-danger"><?php echo $error_payment_country; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
+              <div class="col-lg-9">
+                <select name="payment_zone_id" id="input-payment-zone" class="form-control">
+                </select>
+                <?php if ($error_payment_zone) { ?>
+                <span class="text-danger"><?php echo $error_payment_zone; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-shipping">
+            <div class="form-group">
+              <label class="col-lg-3 control-label" for="input-shipping-address"><?php echo $entry_address; ?></label>
+              <div class="col-lg-9">
+                <select name="shipping_address" id="input-shipping-address" class="form-control">
+                  <option value="0" selected="selected"><?php echo $text_none; ?></option>
+                  <?php foreach ($addresses as $address) { ?>
+                  <option value="<?php echo $address['address_id']; ?>"><?php echo $address['firstname'] . ' ' . $address['lastname'] . ', ' . $address['address_1'] . ', ' . $address['city'] . ', ' . $address['country']; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-shipping-firstname"><?php echo $entry_firstname; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="shipping_firstname" value="<?php echo $shipping_firstname; ?>" id="input-shipping-firstname" class="form-control" />
+                <?php if ($error_shipping_firstname) { ?>
+                <span class="text-danger"><?php echo $error_shipping_firstname; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-shipping-lastname"><?php echo $entry_lastname; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="shipping_lastname" value="<?php echo $shipping_lastname; ?>" id="input-shipping-lastname" class="form-control" />
+                <?php if ($error_shipping_lastname) { ?>
+                <span class="text-danger"><?php echo $error_shipping_lastname; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label" for="input-shipping-company"><?php echo $entry_company; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="shipping_company" value="<?php echo $shipping_company; ?>" id="input-shipping-company" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-shipping-address-1"><?php echo $entry_address_1; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="shipping_address_1" value="<?php echo $shipping_address_1; ?>" id="input-shipping-address-1" class="form-control" />
+                <?php if ($error_shipping_address_1) { ?>
+                <span class="text-danger"><?php echo $error_shipping_address_1; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-lg-3 control-label" for="input-shipping-address-2"><?php echo $entry_address_2; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="shipping_address_2" value="<?php echo $shipping_address_2; ?>" id="input-shipping-address-2" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-shipping-city"><?php echo $entry_city; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" id="input-shipping-city" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-shipping-postcode"><?php echo $entry_postcode; ?></label>
+              <div class="col-lg-9">
+                <input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" id="input-shipping-postcode" class="form-control" />
+                <?php if ($error_shipping_postcode) { ?>
+                <span class="text-danger"><?php echo $error_shipping_postcode; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-shipping-country"><?php echo $entry_country; ?></label>
+              <div class="col-lg-9">
+                <select name="shipping_country_id" id="input-shipping-country" class="form-control">
+                  <option value=""><?php echo $text_select; ?></option>
+                  <?php foreach ($countries as $country) { ?>
+                  <?php if ($country['country_id'] == $shipping_country_id) { ?>
+                  <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+                <?php if ($error_shipping_country) { ?>
+                <span class="text-danger"><?php echo $error_shipping_country; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-shipping-zone"><?php echo $entry_zone; ?></label>
+              <div class="col-lg-9">
+                <select name="shipping_zone_id" id="input-shipping-zone" class="form-control">
+                </select>
+                <?php if ($error_shipping_zone) { ?>
+                <span class="text-danger"><?php echo $error_shipping_zone; ?></span>
+                <?php } ?>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-product">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td></td>
+                  <td class="text-left"><?php echo $column_product; ?></td>
+                  <td class="text-left"><?php echo $column_model; ?></td>
+                  <td class="text-right"><?php echo $column_quantity; ?></td>
+                  <td class="text-right"><?php echo $column_price; ?></td>
+                  <td class="text-right"><?php echo $column_total; ?></td>
+                </tr>
+              </thead>
+              <?php $product_row = 0; ?>
+              <?php $option_row = 0; ?>
+              <?php $download_row = 0; ?>
+              <tbody id="product">
+                <?php if ($order_products) { ?>
+                <?php foreach ($order_products as $order_product) { ?>
+                <tr id="product-row<?php echo $product_row; ?>">
+                  <td class="text-center" style="width: 3px;"><i class="icon-minus-sign" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');"></i></td>
+                  <td class="text-left"><?php echo $order_product['name']; ?><br />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][name]" value="<?php echo $order_product['name']; ?>" />
+                    <?php foreach ($order_product['option'] as $option) { ?>
+                    - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][order_option_id]" value="<?php echo $option['order_option_id']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_id]" value="<?php echo $option['product_option_id']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_value_id]" value="<?php echo $option['product_option_value_id']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][name]" value="<?php echo $option['name']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][value]" value="<?php echo $option['value']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][type]" value="<?php echo $option['type']; ?>" />
+                    <?php $option_row++; ?>
+                    <?php } ?>
+                    <?php foreach ($order_product['download'] as $download) { ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][order_download_id]" value="<?php echo $download['order_download_id']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][name]" value="<?php echo $download['name']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][filename]" value="<?php echo $download['filename']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][mask]" value="<?php echo $download['mask']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][remaining]" value="<?php echo $download['remaining']; ?>" />
+                    <?php $download_row++; ?>
+                    <?php } ?></td>
+                  <td class="text-left"><?php echo $order_product['model']; ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
+                  <td class="text-right"><?php echo $order_product['quantity']; ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
+                  <td class="text-right"><?php echo $order_product['price']; ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" /></td>
+                  <td class="text-right"><?php echo $order_product['total']; ?>
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['total']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['tax']; ?>" />
+                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>
+                </tr>
+                <?php $product_row++; ?>
+                <?php } ?>
+                <?php } else { ?>
+                <tr>
+                  <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+            <fieldset>
+              <legend><?php echo $text_product; ?></legend>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-product"><?php echo $entry_product; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="product" value="" id="input-product" class="form-control" />
+                  <input type="hidden" name="product_id" value="" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="quantity" value="1" id="input-quantity" class="form-control" />
+                </div>
+              </div>
+              <div id="option"></div>
+            </fieldset>
+            <button type="button" id="button-product" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_product; ?></button>
+          </div>
+          <div class="tab-pane" id="tab-voucher">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td></td>
+                  <td class="text-left"><?php echo $column_product; ?></td>
+                  <td class="text-left"><?php echo $column_model; ?></td>
+                  <td class="text-right"><?php echo $column_quantity; ?></td>
+                  <td class="text-right"><?php echo $column_price; ?></td>
+                  <td class="text-right"><?php echo $column_total; ?></td>
+                </tr>
+              </thead>
+              <tbody id="voucher">
+                <?php $voucher_row = 0; ?>
+                <?php if ($order_vouchers) { ?>
+                <?php foreach ($order_vouchers as $order_voucher) { ?>
+                <tr id="voucher-row<?php echo $voucher_row; ?>">
+                  <td class="text-center" style="width: 3px;"><i class="icon-minus-sign" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');"></i></td>
+                  <td class="text-left"><?php echo $order_voucher['description']; ?>
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][order_voucher_id]" value="<?php echo $order_voucher['order_voucher_id']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][description]" value="<?php echo $order_voucher['description']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][code]" value="<?php echo $order_voucher['code']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $order_voucher['from_name']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $order_voucher['from_email']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $order_voucher['to_name']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $order_voucher['to_email']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $order_voucher['voucher_theme_id']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $order_voucher['message']; ?>" />
+                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $order_voucher['amount']; ?>" /></td>
+                  <td class="text-left"></td>
+                  <td class="text-right">1</td>
+                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                </tr>
+                <?php $voucher_row++; ?>
+                <?php } ?>
+                <?php } else { ?>
+                <tr>
+                  <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+            <fieldset>
+              <legend><?php echo $text_voucher; ?></legend>
+              <div class="form-group required">
+                <label class="col-lg-3 control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="to_name" value="" id="input-to-name" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-lg-3 control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="to_email" value="" id="input-to-email" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-lg-3 control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="from_name" value="" id="input-from-name" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-lg-3 control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="from_email" value="" id="input-from-email" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-lg-3 control-label" for="input-theme"><?php echo $entry_theme; ?></label>
+                <div class="col-lg-9">
+                  <select name="voucher_theme_id" id="input-theme" class="form-control">
+                    <?php foreach ($voucher_themes as $voucher_theme) { ?>
+                    <option value="<?php echo $voucher_theme['voucher_theme_id']; ?>"><?php echo $voucher_theme['name']; ?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-message"><?php echo $entry_message; ?></label>
+                <div class="col-lg-9">
+                  <textarea name="message" rows="5" id="input-message" class="form-control"></textarea>
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-lg-3 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="amount" value="25.00" id="input-amount" class="form-control" />
+                </div>
+              </div>
+            </fieldset>
+            <button type="button" id="button-voucher" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_voucher; ?></button>
+          </div>
+          <div class="tab-pane" id="tab-total">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td class="text-left"><?php echo $column_product; ?></td>
+                  <td class="text-left"><?php echo $column_model; ?></td>
+                  <td class="text-right"><?php echo $column_quantity; ?></td>
+                  <td class="text-right"><?php echo $column_price; ?></td>
+                  <td class="text-right"><?php echo $column_total; ?></td>
+                </tr>
+              </thead>
+              <tbody id="total">
+                <?php $total_row = 0; ?>
+                <?php if ($order_products || $order_vouchers || $order_totals) { ?>
+                <?php foreach ($order_products as $order_product) { ?>
+                <tr>
+                  <td class="text-left"><?php echo $order_product['name']; ?><br />
+                    <?php foreach ($order_product['option'] as $option) { ?>
+                    - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                    <?php } ?></td>
+                  <td class="text-left"><?php echo $order_product['model']; ?></td>
+                  <td class="text-right"><?php echo $order_product['quantity']; ?></td>
+                  <td class="text-right"><?php echo $order_product['price']; ?></td>
+                  <td class="text-right"><?php echo $order_product['total']; ?></td>
+                </tr>
+                <?php } ?>
+                <?php foreach ($order_vouchers as $order_voucher) { ?>
+                <tr>
+                  <td class="text-left"><?php echo $order_voucher['description']; ?></td>
+                  <td class="text-left"></td>
+                  <td class="text-right">1</td>
+                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                </tr>
+                <?php } ?>
+                <?php foreach ($order_totals as $order_total) { ?>
+                <tr id="total-row<?php echo $total_row; ?>">
+                  <td class="text-right" colspan="4"><?php echo $order_total['title']; ?>:
+                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][order_total_id]" value="<?php echo $order_total['order_total_id']; ?>" />
+                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][code]" value="<?php echo $order_total['code']; ?>" />
+                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][title]" value="<?php echo $order_total['title']; ?>" />
+                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][text]" value="<?php echo $order_total['text']; ?>" />
+                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][value]" value="<?php echo $order_total['value']; ?>" />
+                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][sort_order]" value="<?php echo $order_total['sort_order']; ?>" /></td>
+                  <td class="text-right"><?php echo $order_total['value']; ?></td>
+                </tr>
+                <?php $total_row++; ?>
+                <?php } ?>
+                <?php } else { ?>
+                <tr>
+                  <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+            <fieldset>
+              <legend><?php echo $text_order; ?></legend>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-shipping"><?php echo $entry_shipping; ?></label>
+                <div class="col-lg-9">
+                  <select name="shipping" id="input-shipping" class="form-control">
+                    <option value=""><?php echo $text_select; ?></option>
+                    <?php if ($shipping_code) { ?>
+                    <option value="<?php echo $shipping_code; ?>" selected="selected"><?php echo $shipping_method; ?></option>
+                    <?php } ?>
+                  </select>
+                  <input type="hidden" name="shipping_method" value="<?php echo $shipping_method; ?>" />
+                  <input type="hidden" name="shipping_code" value="<?php echo $shipping_code; ?>" />
+                  <?php if ($error_shipping_method) { ?>
+                  <span class="text-danger"><?php echo $error_shipping_method; ?></span>
+                  <?php } ?>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-payment"><?php echo $entry_payment; ?></label>
+                <div class="col-lg-9">
+                  <select name="payment" id="input-payment" class="form-control">
+                    <option value=""><?php echo $text_select; ?></option>
+                    <?php if ($payment_code) { ?>
+                    <option value="<?php echo $payment_code; ?>" selected="selected"><?php echo $payment_method; ?></option>
+                    <?php } ?>
+                  </select>
+                  <input type="hidden" name="payment_method" value="<?php echo $payment_method; ?>" />
+                  <input type="hidden" name="payment_code" value="<?php echo $payment_code; ?>" />
+                  <?php if ($error_payment_method) { ?>
+                  <span class="text-danger"><?php echo $error_payment_method; ?></span>
+                  <?php } ?>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="coupon" value="" id="input-coupon" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="voucher" value="" id="input-voucher" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="reward" value="" id="input-reward" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+                <div class="col-lg-9">
+                  <select name="order_status_id" id="input-order-status" class="form-control">
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $order_status_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+                <div class="col-lg-9">
+                  <textarea name="comment" rows="5" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
+                <div class="col-lg-9">
+                  <input type="text" name="affiliate" value="<?php echo $affiliate; ?>" id="input-affiliate" class="form-control" />
+                  <input type="hidden" name="affiliate_id" value="<?php echo $affiliate_id; ?>" />
+                </div>
+              </div>
+            </fieldset>
+            <button type="button" id="button-update" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_update_total; ?></button>
+          </div>
         </div>
-      </div>
-    </form>
+      </form>
+    </div>
   </div>
 </div>
 <div style="display: none;">

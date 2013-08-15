@@ -17,87 +17,89 @@
         <button type="submit" form="form-payza" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-payza" class="form-horizontal">
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-merchant"><?php echo $entry_merchant; ?></label>
-        <div class="col-lg-9">
-          <input type="text" name="payza_merchant" value="<?php echo $payza_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
-          <?php if ($error_merchant) { ?>
-          <span class="text-error"><?php echo $error_merchant; ?></span>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-security"><?php echo $entry_security; ?></label>
-        <div class="col-lg-9">
-          <input type="text" name="payza_security" value="<?php echo $payza_security; ?>" placeholder="<?php echo $entry_security; ?>" id="input-security" class="form-control" />
-          <?php if ($error_security) { ?>
-          <span class="text-error"><?php echo $error_security; ?></span>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-callback"><?php echo $entry_callback; ?></label>
-        <div class="col-lg-9">
-          <textarea rows="5" readonly="readonly" id="input-callback" class="form-control"><?php echo $callback; ?></textarea>
-          <span class="help-block"><?php echo $help_callback; ?></span> </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-total"><?php echo $entry_total; ?></span></label>
-        <div class="col-lg-9">
-          <input type="text" name="payza_total" value="<?php echo $payza_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-          <span class="help-block"><?php echo $help_total; ?> </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-        <div class="col-lg-9">
-          <select name="payza_order_status_id" id="input-order-status" class="form-control">
-            <?php foreach ($order_statuses as $order_status) { ?>
-            <?php if ($order_status['order_status_id'] == $payza_order_status_id) { ?>
-            <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+    <div class="panel-body">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-payza" class="form-horizontal">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-merchant"><?php echo $entry_merchant; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="payza_merchant" value="<?php echo $payza_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
+            <?php if ($error_merchant) { ?>
+            <span class="text-error"><?php echo $error_merchant; ?></span>
             <?php } ?>
-            <?php } ?>
-          </select>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-        <div class="col-lg-9">
-          <select name="payza_geo_zone_id" id="input-geo-zone" class="form-control">
-            <option value="0"><?php echo $text_all_zones; ?></option>
-            <?php foreach ($geo_zones as $geo_zone) { ?>
-            <?php if ($geo_zone['geo_zone_id'] == $payza_geo_zone_id) { ?>
-            <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-security"><?php echo $entry_security; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="payza_security" value="<?php echo $payza_security; ?>" placeholder="<?php echo $entry_security; ?>" id="input-security" class="form-control" />
+            <?php if ($error_security) { ?>
+            <span class="text-error"><?php echo $error_security; ?></span>
             <?php } ?>
-            <?php } ?>
-          </select>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
-        <div class="col-lg-9">
-          <select name="payza_status" id="input-status" class="form-control">
-            <?php if ($payza_status) { ?>
-            <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-            <option value="0"><?php echo $text_disabled; ?></option>
-            <?php } else { ?>
-            <option value="1"><?php echo $text_enabled; ?></option>
-            <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-            <?php } ?>
-          </select>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-callback"><?php echo $entry_callback; ?></label>
+          <div class="col-lg-9">
+            <textarea rows="5" readonly="readonly" id="input-callback" class="form-control"><?php echo $callback; ?></textarea>
+            <span class="help-block"><?php echo $help_callback; ?></span></div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-        <div class="col-lg-9">
-          <input type="text" name="payza_sort_order" value="<?php echo $payza_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-total"><?php echo $entry_total; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="payza_total" value="<?php echo $payza_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
+            <span class="help-block"><?php echo $help_total; ?></span></div>
         </div>
-      </div>
-    </form>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+          <div class="col-lg-9">
+            <select name="payza_order_status_id" id="input-order-status" class="form-control">
+              <?php foreach ($order_statuses as $order_status) { ?>
+              <?php if ($order_status['order_status_id'] == $payza_order_status_id) { ?>
+              <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+          <div class="col-lg-9">
+            <select name="payza_geo_zone_id" id="input-geo-zone" class="form-control">
+              <option value="0"><?php echo $text_all_zones; ?></option>
+              <?php foreach ($geo_zones as $geo_zone) { ?>
+              <?php if ($geo_zone['geo_zone_id'] == $payza_geo_zone_id) { ?>
+              <option value="<?php echo $geo_zone['geo_zone_id']; ?>" selected="selected"><?php echo $geo_zone['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $geo_zone['geo_zone_id']; ?>"><?php echo $geo_zone['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
+          <div class="col-lg-9">
+            <select name="payza_status" id="input-status" class="form-control">
+              <?php if ($payza_status) { ?>
+              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+              <option value="0"><?php echo $text_disabled; ?></option>
+              <?php } else { ?>
+              <option value="1"><?php echo $text_enabled; ?></option>
+              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="payza_sort_order" value="<?php echo $payza_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 <?php echo $footer; ?> 

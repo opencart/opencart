@@ -9,7 +9,9 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-warning-sign icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <p class="text-center"><?php echo $text_permission; ?></p>
+    <div class="panel-body">
+      <p class="text-center"><?php echo $text_permission; ?></p>
+    </div>
   </div>
 </div>
 <?php echo $footer; ?>

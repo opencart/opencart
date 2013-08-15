@@ -22,45 +22,47 @@
         <button type="submit" form="form-tax-class" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
     </div>
-    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-tax-class">
-      <table class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-            <td class="text-left"><?php if ($sort == 'title') { ?>
-              <a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
-              <?php } else { ?>
-              <a href="<?php echo $sort_title; ?>"><?php echo $column_title; ?></a>
-              <?php } ?></td>
-            <td class="text-right"><?php echo $column_action; ?></td>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($tax_classes) { ?>
-          <?php foreach ($tax_classes as $tax_class) { ?>
-          <tr>
-            <td class="text-center"><?php if ($tax_class['selected']) { ?>
-              <input type="checkbox" name="selected[]" value="<?php echo $tax_class['tax_class_id']; ?>" checked="checked" />
-              <?php } else { ?>
-              <input type="checkbox" name="selected[]" value="<?php echo $tax_class['tax_class_id']; ?>" />
-              <?php } ?></td>
-            <td class="text-left"><?php echo $tax_class['title']; ?></td>
-            <td class="text-right"><?php foreach ($tax_class['action'] as $action) { ?>
-              [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
-    </form>
-    <div class="row">
-      <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-lg-6 text-right"><?php echo $results; ?></div>
+    <div class="panel-body">
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-tax-class">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+              <td class="text-left"><?php if ($sort == 'title') { ?>
+                <a href="<?php echo $sort_title; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_title; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_title; ?>"><?php echo $column_title; ?></a>
+                <?php } ?></td>
+              <td class="text-right"><?php echo $column_action; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($tax_classes) { ?>
+            <?php foreach ($tax_classes as $tax_class) { ?>
+            <tr>
+              <td class="text-center"><?php if ($tax_class['selected']) { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $tax_class['tax_class_id']; ?>" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $tax_class['tax_class_id']; ?>" />
+                <?php } ?></td>
+              <td class="text-left"><?php echo $tax_class['title']; ?></td>
+              <td class="text-right"><?php foreach ($tax_class['action'] as $action) { ?>
+                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <?php } ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </form>
+      <div class="row">
+        <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-lg-6 text-right"><?php echo $results; ?></div>
+      </div>
     </div>
   </div>
 </div>

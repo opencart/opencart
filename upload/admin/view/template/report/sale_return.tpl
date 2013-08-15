@@ -9,87 +9,89 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <form class="form-horizontal">
-      <div class="well">
-        <div class="row">
-          <div class="col-lg-5">
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-              <div class="col-lg-9">
-                <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <div class="well">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+                <div class="col-lg-9">
+                  <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+                <div class="col-lg-9">
+                  <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
+                </div>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-              <div class="col-lg-9">
-                <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
+            <div class="col-lg-5">
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-group"><?php echo $entry_group; ?></label>
+                <div class="col-lg-9">
+                  <select name="filter_group" id="input-group" class="form-control">
+                    <?php foreach ($groups as $group) { ?>
+                    <?php if ($group['value'] == $filter_group) { ?>
+                    <option value="<?php echo $group['value']; ?>" selected="selected"><?php echo $group['text']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $group['value']; ?>"><?php echo $group['text']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
+                <div class="col-lg-9">
+                  <select name="filter_return_status_id" id="input-status" class="form-control">
+                    <option value="0"><?php echo $text_all_status; ?></option>
+                    <?php foreach ($return_statuses as $return_status) { ?>
+                    <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
+                    <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $return_status['return_status_id']; ?>"><?php echo $return_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                </div>
               </div>
             </div>
-          </div>
-          <div class="col-lg-5">
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-group"><?php echo $entry_group; ?></label>
-              <div class="col-lg-9">
-                <select name="filter_group" id="input-group" class="form-control">
-                  <?php foreach ($groups as $group) { ?>
-                  <?php if ($group['value'] == $filter_group) { ?>
-                  <option value="<?php echo $group['value']; ?>" selected="selected"><?php echo $group['text']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $group['value']; ?>"><?php echo $group['text']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-              </div>
+            <div class="col-lg-2">
+              <button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
             </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
-              <div class="col-lg-9">
-                <select name="filter_return_status_id" id="input-status" class="form-control">
-                  <option value="0"><?php echo $text_all_status; ?></option>
-                  <?php foreach ($return_statuses as $return_status) { ?>
-                  <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
-                  <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $return_status['return_status_id']; ?>"><?php echo $return_status['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
-          </div>
-          <div class="col-lg-2">
-            <button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
           </div>
         </div>
+      </form>
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-left"><?php echo $column_date_start; ?></td>
+            <td class="text-left"><?php echo $column_date_end; ?></td>
+            <td class="text-right"><?php echo $column_returns; ?></td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if ($returns) { ?>
+          <?php foreach ($returns as $return) { ?>
+          <tr>
+            <td class="text-left"><?php echo $return['date_start']; ?></td>
+            <td class="text-left"><?php echo $return['date_end']; ?></td>
+            <td class="text-right"><?php echo $return['returns']; ?></td>
+          </tr>
+          <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-lg-6 text-right"><?php echo $results; ?></div>
       </div>
-    </form>
-    <table class="table table-striped table-bordered table-hover">
-      <thead>
-        <tr>
-          <td class="text-left"><?php echo $column_date_start; ?></td>
-          <td class="text-left"><?php echo $column_date_end; ?></td>
-          <td class="text-right"><?php echo $column_returns; ?></td>
-        </tr>
-      </thead>
-      <tbody>
-        <?php if ($returns) { ?>
-        <?php foreach ($returns as $return) { ?>
-        <tr>
-          <td class="text-left"><?php echo $return['date_start']; ?></td>
-          <td class="text-left"><?php echo $return['date_end']; ?></td>
-          <td class="text-right"><?php echo $return['returns']; ?></td>
-        </tr>
-        <?php } ?>
-        <?php } else { ?>
-        <tr>
-          <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
-        </tr>
-        <?php } ?>
-      </tbody>
-    </table>
-    <div class="row">
-      <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-lg-6 text-right"><?php echo $results; ?></div>
     </div>
   </div>
 </div>

@@ -19,36 +19,38 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-exchange icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-import"><?php echo $entry_restore; ?></label>
-        <div class="col-lg-9">
-          <input type="file" name="import" id="input-import" />
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-12">
-          <button type="submit" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_restore; ?></button>
-        </div>
-      </div>
-    </form>
-    <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="backup" class="form-horizontal">
-      <div class="form-group">
-        <label class="col-lg-3 control-label"><?php echo $entry_backup; ?></label>
-        <div class="col-lg-9">
-          <div class="well">
-            <?php foreach ($tables as $table) { ?>
-            <div class="checkbox">
-              <label>
-                <input type="checkbox" name="backup[]" value="<?php echo $table; ?>" checked="checked" />
-                <?php echo $table; ?></label>
-            </div>
-            <?php } ?>
+    <div class="panel-body">
+      <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-import"><?php echo $entry_restore; ?></label>
+          <div class="col-lg-9">
+            <input type="file" name="import" id="input-import" />
           </div>
-          <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
-      </div>
-      <button type="submit" class="btn btn-default"><i class="icon-download"></i> <?php echo $button_backup; ?></button>
-    </form>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <button type="submit" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_restore; ?></button>
+          </div>
+        </div>
+      </form>
+      <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="backup" class="form-horizontal">
+        <div class="form-group">
+          <label class="col-lg-3 control-label"><?php echo $entry_backup; ?></label>
+          <div class="col-lg-9">
+            <div class="well">
+              <?php foreach ($tables as $table) { ?>
+              <div class="checkbox">
+                <label>
+                  <input type="checkbox" name="backup[]" value="<?php echo $table; ?>" checked="checked" />
+                  <?php echo $table; ?></label>
+              </div>
+              <?php } ?>
+            </div>
+            <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
+        </div>
+        <button type="submit" class="btn btn-default"><i class="icon-download"></i> <?php echo $button_backup; ?></button>
+      </form>
+    </div>
   </div>
 </div>
 <?php echo $footer; ?>

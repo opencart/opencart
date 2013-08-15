@@ -17,113 +17,115 @@
         <button type="submit" form="form-location" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-location" class="form-horizontal">
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
-        <div class="col-lg-9">
-          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
-          <?php if ($error_name) { ?>
-          <span class="text-error"><?php echo $error_name; ?></span>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
-        <div class="col-lg-9">
-          <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" class="form-control" />
-          <?php if ($error_address_1) { ?>
-          <span class="text-error"><?php echo $error_address_1; ?></span>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-address-2"><?php echo $entry_address_2; ?></label>
-        <div class="col-lg-9">
-          <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" class="form-control" />
-        </div>
-      </div>
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-city"><?php echo $entry_city; ?></label>
-        <div class="col-lg-9">
-          <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" class="form-control" />
-          <?php if ($error_city) { ?>
-          <span class="text-error"><?php echo $error_city; ?></span>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
-        <div class="col-lg-9">
-          <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
-        </div>
-      </div>
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-country"><?php echo $entry_country; ?></label>
-        <div class="col-lg-9">
-          <select name="country_id" id="input-country" class="form-control">
-            <option value=""><?php echo $text_select; ?></option>
-            <?php foreach ($countries as $country) { ?>
-            <?php if ($country['country_id'] == $country_id) { ?>
-            <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+    <div class="panel-body">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-location" class="form-horizontal">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+            <?php if ($error_name) { ?>
+            <span class="text-error"><?php echo $error_name; ?></span>
             <?php } ?>
-            <?php } ?>
-          </select>
-          <?php if ($error_country) { ?>
-          <span class="text-error"><?php echo $error_country; ?></span>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
-        <div class="col-lg-9">
-          <select name="zone_id" id="input-zone" class="form-control">
-          </select>
-          <?php if ($error_zone) { ?>
-          <span class="text-error"><?php echo $error_zone; ?></span>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-geocode"><?php echo $entry_geocode; ?></label>
-        <div class="col-lg-9">
-          <div class="input-group">
-            <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
-            <span class="input-group-btn">
-            <button type="button" onclick="getGeoCode()" class="btn btn-primary"><i class="icon-search"></i> <?php echo $button_geocode; ?></button>
-            </span> </div>
-          <span class="help-block"><?php echo $help_geocode; ?></span>
-          <?php if ($error_geocode) { ?>
-          <span class="text-error"><?php echo $error_geocode; ?></span>
-          <?php } ?>
-        </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-image"><?php echo $entry_image; ?></label>
-        <div class="col-lg-9"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
-          <input type="hidden" name="image" value="<?php echo $image; ?>" />
-          <br />
-          <br />
-          <div class="btn-group">
-            <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
-            <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
           </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-open"><?php echo $entry_open; ?></label>
-        <div class="col-lg-9">
-          <textarea name="open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $open; ?></textarea>
-          <span class="help-block"><?php echo $help_open; ?></span> </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-        <div class="col-lg-9">
-          <textarea name="comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
-          <span class="help-block"><?php echo $help_comment; ?></span> </div>
-      </div>
-    </form>
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" class="form-control" />
+            <?php if ($error_address_1) { ?>
+            <span class="text-error"><?php echo $error_address_1; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-address-2"><?php echo $entry_address_2; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-city"><?php echo $entry_city; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" class="form-control" />
+            <?php if ($error_city) { ?>
+            <span class="text-error"><?php echo $error_city; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-country"><?php echo $entry_country; ?></label>
+          <div class="col-lg-9">
+            <select name="country_id" id="input-country" class="form-control">
+              <option value=""><?php echo $text_select; ?></option>
+              <?php foreach ($countries as $country) { ?>
+              <?php if ($country['country_id'] == $country_id) { ?>
+              <option value="<?php echo $country['country_id']; ?>" selected="selected"><?php echo $country['name']; ?></option>
+              <?php } else { ?>
+              <option value="<?php echo $country['country_id']; ?>"><?php echo $country['name']; ?></option>
+              <?php } ?>
+              <?php } ?>
+            </select>
+            <?php if ($error_country) { ?>
+            <span class="text-error"><?php echo $error_country; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
+          <div class="col-lg-9">
+            <select name="zone_id" id="input-zone" class="form-control">
+            </select>
+            <?php if ($error_zone) { ?>
+            <span class="text-error"><?php echo $error_zone; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-geocode"><?php echo $entry_geocode; ?></label>
+          <div class="col-lg-9">
+            <div class="input-group">
+              <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
+              <span class="input-group-btn">
+              <button type="button" onclick="getGeoCode()" class="btn btn-primary"><i class="icon-search"></i> <?php echo $button_geocode; ?></button>
+              </span> </div>
+            <span class="help-block"><?php echo $help_geocode; ?></span>
+            <?php if ($error_geocode) { ?>
+            <span class="text-error"><?php echo $error_geocode; ?></span>
+            <?php } ?>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-image"><?php echo $entry_image; ?></label>
+          <div class="col-lg-9"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
+            <input type="hidden" name="image" value="<?php echo $image; ?>" />
+            <br />
+            <br />
+            <div class="btn-group">
+              <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
+              <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
+            </div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-open"><?php echo $entry_open; ?></label>
+          <div class="col-lg-9">
+            <textarea name="open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $open; ?></textarea>
+            <span class="help-block"><?php echo $help_open; ?></span> </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+          <div class="col-lg-9">
+            <textarea name="comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
+            <span class="help-block"><?php echo $help_comment; ?></span> </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 

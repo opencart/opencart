@@ -17,53 +17,55 @@
         <button type="submit" form="form-user-group" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
-    <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-user-group" class="form-horizontal">
-      <div class="form-group required">
-        <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
-        <div class="col-lg-9">
-          <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
-          <?php if ($error_name) { ?>
-          <span class="error"><?php echo $error_name; ?></span>
-          <?php  } ?>
+    <div class="panel-body">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-user-group" class="form-horizontal">
+        <div class="form-group required">
+          <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
+          <div class="col-lg-9">
+            <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+            <?php if ($error_name) { ?>
+            <span class="error"><?php echo $error_name; ?></span>
+            <?php  } ?>
+          </div>
         </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label"><?php echo $entry_access; ?></label>
-        <div class="col-lg-9">
-          <div class="well">
-            <?php foreach ($permissions as $permission) { ?>
-            <label class="checkbox">
-              <?php if (in_array($permission, $access)) { ?>
-              <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" checked="checked" />
-              <?php echo $permission; ?>
-              <?php } else { ?>
-              <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" />
-              <?php echo $permission; ?>
+        <div class="form-group">
+          <label class="col-lg-3 control-label"><?php echo $entry_access; ?></label>
+          <div class="col-lg-9">
+            <div class="well">
+              <?php foreach ($permissions as $permission) { ?>
+              <label class="checkbox">
+                <?php if (in_array($permission, $access)) { ?>
+                <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" checked="checked" />
+                <?php echo $permission; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="permission[access][]" value="<?php echo $permission; ?>" />
+                <?php echo $permission; ?>
+                <?php } ?>
+              </label>
               <?php } ?>
-            </label>
-            <?php } ?>
-          </div>
-          <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label"><?php echo $entry_modify; ?></label>
-        <div class="col-lg-9">
-          <div class="well">
-            <?php foreach ($permissions as $permission) { ?>
-            <label class="checkbox">
-              <?php if (in_array($permission, $modify)) { ?>
-              <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" checked="checked" />
-              <?php echo $permission; ?>
-              <?php } else { ?>
-              <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" />
-              <?php echo $permission; ?>
+            </div>
+            <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label"><?php echo $entry_modify; ?></label>
+          <div class="col-lg-9">
+            <div class="well">
+              <?php foreach ($permissions as $permission) { ?>
+              <label class="checkbox">
+                <?php if (in_array($permission, $modify)) { ?>
+                <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" checked="checked" />
+                <?php echo $permission; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="permission[modify][]" value="<?php echo $permission; ?>" />
+                <?php echo $permission; ?>
+                <?php } ?>
+              </label>
               <?php } ?>
-            </label>
-            <?php } ?>
-          </div>
-          <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
-      </div>
-    </form>
+            </div>
+            <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>
 <?php echo $footer; ?> 

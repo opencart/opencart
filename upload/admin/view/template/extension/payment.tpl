@@ -19,36 +19,38 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <table class="table table-striped table-bordered table-hover">
-      <thead>
-        <tr>
-          <td class="text-left"><?php echo $column_name; ?></td>
-          <td></td>
-          <td class="text-left"><?php echo $column_status; ?></td>
-          <td class="text-right"><?php echo $column_sort_order; ?></td>
-          <td class="text-right"><?php echo $column_action; ?></td>
-        </tr>
-      </thead>
-      <tbody>
-        <?php if ($extensions) { ?>
-        <?php foreach ($extensions as $extension) { ?>
-        <tr>
-          <td class="text-left"><?php echo $extension['name']; ?></td>
-          <td class="text-center"><?php echo $extension['link'] ?></td>
-          <td class="text-left"><?php echo $extension['status'] ?></td>
-          <td class="text-right"><?php echo $extension['sort_order']; ?></td>
-          <td class="text-right"><?php foreach ($extension['action'] as $action) { ?>
-            [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-            <?php } ?></td>
-        </tr>
-        <?php } ?>
-        <?php } else { ?>
-        <tr>
-          <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-        </tr>
-        <?php } ?>
-      </tbody>
-    </table>
+    <div class="panel-body">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-left"><?php echo $column_name; ?></td>
+            <td></td>
+            <td class="text-left"><?php echo $column_status; ?></td>
+            <td class="text-right"><?php echo $column_sort_order; ?></td>
+            <td class="text-right"><?php echo $column_action; ?></td>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if ($extensions) { ?>
+          <?php foreach ($extensions as $extension) { ?>
+          <tr>
+            <td class="text-left"><?php echo $extension['name']; ?></td>
+            <td class="text-center"><?php echo $extension['link'] ?></td>
+            <td class="text-left"><?php echo $extension['status'] ?></td>
+            <td class="text-right"><?php echo $extension['sort_order']; ?></td>
+            <td class="text-right"><?php foreach ($extension['action'] as $action) { ?>
+              [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+              <?php } ?></td>
+          </tr>
+          <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
   </div>
 </div>
 <?php echo $footer; ?>

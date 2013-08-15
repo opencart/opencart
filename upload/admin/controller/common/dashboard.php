@@ -20,6 +20,8 @@ class ControllerCommonDashboard extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		
+		$this->data['button_refresh'] = $this->language->get('button_refresh');
+		
 		$this->data['tab_sale'] = $this->language->get('tab_sale');
 		$this->data['tab_marketing'] = $this->language->get('tab_marketing');
 		$this->data['tab_online'] = $this->language->get('tab_online');

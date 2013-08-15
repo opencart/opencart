@@ -76,6 +76,9 @@
           <div id="chart-marketing" style="width: 100%; height: 250px;"></div>
         </div>
         <div class="tab-pane" id="tab-online">
+          <div class="text-right">
+            <button type="button" id="button-refresh" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
+          </div>
           <div id="chart-online" class="chart" style="width: 100%; height: 250px;"></div>
         </div>
         <div class="tab-pane" id="tab-activity">
@@ -212,12 +215,10 @@ $('input[name=\'marketing\']').on('change', function() {
 	});
 });
 
-$('.active input[name=\'marketing\']').trigger('change');
-
-function timer() {
+$('#button-refresh').on('click', function() {
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=common/dashboard/online&token=<?php echo $token; ?>&range=' + this.value,
+		url: 'index.php?route=common/dashboard/online&token=<?php echo $token; ?>',
 		dataType: 'json',		
 		success: function(json) {
 			var option = {	
@@ -263,10 +264,20 @@ function timer() {
 			});
 		}
 	});
-	
-	setTimeout(timer, 2000);
-}
+});
 
-timer();
+$('a[data-toggle=\'tab\']').on('shown.bs.tab', function(e) {
+	if ($(this).attr('href') == '#tab-sale') {
+		$('.active input[name=\'sale\']').trigger('change');
+	}
+		
+	if ($(this).attr('href') == '#tab-marketing') {
+		$('.active input[name=\'marketing\']').trigger('change');
+	}
+	
+	if ($(this).attr('href') == '#tab-online') {
+		$('#button-refresh').trigger('click');
+	}	
+});
 //--></script> 
 <?php echo $footer; ?>

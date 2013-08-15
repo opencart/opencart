@@ -171,8 +171,8 @@ class ControllerCommonDashboard extends Controller {
 		$json['customers'] = array();
 		$json['xaxis'] = array();
 		
-		$json['orders']['label'] = $this->language->get('text_order');
-		$json['customers']['label'] = $this->language->get('text_customer');
+		$json['order']['label'] = $this->language->get('text_order');
+		$json['customer']['label'] = $this->language->get('text_customer');
 		
 		if (isset($this->request->get['range'])) {
 			$range = $this->request->get['range'];

@@ -54,7 +54,7 @@
                 <?php echo $text_year; ?></label>
             </div>
           </div>
-          <div id="chart-sale" class="chart" style="height: 250px;"></div>
+          <div id="chart-sale" class="chart" style="width: 100%; height: 250px;"></div>
         </div>
         <div class="tab-pane" id="tab-marketing">
           <div class="text-right">
@@ -73,10 +73,10 @@
                 <?php echo $text_year; ?></label>
             </div>
           </div>
-          <div id="chart-marketing" style="height: 250px;"></div>
+          <div id="chart-marketing" style="width: 100%; height: 250px;"></div>
         </div>
         <div class="tab-pane" id="tab-online">
-          <div id="chart-online" class="chart" style="height: 250px;"></div>
+          <div id="chart-online" class="chart" style="width: 100%; height: 250px;"></div>
         </div>
         <div class="tab-pane" id="tab-activity">
           <table class="table table-striped table-bordered table-hover">
@@ -214,7 +214,7 @@ $('input[name=\'marketing\']').on('change', function() {
 
 $('.active input[name=\'marketing\']').trigger('change');
 
-function online() {
+function timer() {
 	$.ajax({
 		type: 'get',
 		url: 'index.php?route=common/dashboard/online&token=<?php echo $token; ?>&range=' + this.value,
@@ -264,9 +264,9 @@ function online() {
 		}
 	});
 	
-	setTimeout(online, 2000);
+	setTimeout(timer, 2000);
 }
 
-online();
+timer();
 //--></script> 
 <?php echo $footer; ?>

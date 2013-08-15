@@ -65,8 +65,7 @@ abstract class Controller {
 				return false;
 			}
 		} else {
-			trigger_error('Error: Could not load controller ' . $child . '!');
-			exit();					
+			return false;				
 		}		
 	}
 	

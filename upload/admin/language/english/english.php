@@ -105,7 +105,10 @@ $_['tab_shipping']                  = 'Shipping Details';
 $_['tab_total']                     = 'Totals';
 $_['tab_transaction']               = 'Transactions';
 $_['tab_voucher']                   = 'Vouchers';
-$_['tab_voucher_history']           = 'Voucher History';
+$_['tab_sale']                      = 'Sales';
+$_['tab_marketing']                 = 'Marketing';
+$_['tab_online']                    = 'People Online';
+$_['tab_activity']                  = 'Recent Activity';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

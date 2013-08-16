@@ -14,36 +14,38 @@
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="box-content form-horizontal">
-      <div class="form-group">
-        <label class="col-lg-3 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>
-        <div class="col-lg-9">
-          <button type="button" id="button-upload" class="btn btn-primary" onclick="$('input[name=\'file\']').val(''); $('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-          <?php if ($error_warning) { ?>
-          <button type="button" id="button-clear" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
-          <?php } else { ?>
-          <button type="button" id="button-clear" disabled="disabled" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
-          <?php } ?>
-          <span class="help-block"><?php echo $help_upload; ?></span></div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label"><?php echo $entry_progress; ?></label>
-        <div class="col-lg-9">
-          <div class="progress">
-            <div class="progress-bar" style="width: 0%;"></div>
-          </div>
-          <div class="progress-text"></div>
-       </div>
-      </div>
-      <div class="form-group">
-        <label class="col-lg-3 control-label"><?php echo $entry_overwrite; ?></label>
-        <div class="col-lg-9">
-          <textarea rows="10" readonly="readonly" id="overwrite" class="form-control"></textarea>
-          <br />
-          <br />
-          <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="icon-ok"></i> <?php echo $button_continue; ?></button>
+    <div class="panel-body">
+      <form class="form-horizontal">
+        <div class="form-group">
+          <label class="col-lg-3 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>
+          <div class="col-lg-9">
+            <button type="button" id="button-upload" class="btn btn-primary" onclick="$('input[name=\'file\']').val(''); $('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+            <?php if ($error_warning) { ?>
+            <button type="button" id="button-clear" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
+            <?php } else { ?>
+            <button type="button" id="button-clear" disabled="disabled" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
+            <?php } ?>
+            <span class="help-block"><?php echo $help_upload; ?></span></div>
         </div>
-      </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label"><?php echo $entry_progress; ?></label>
+          <div class="col-lg-9">
+            <div class="progress">
+              <div class="progress-bar" style="width: 0%;"></div>
+            </div>
+            <div class="progress-text"></div>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-lg-3 control-label"><?php echo $entry_overwrite; ?></label>
+          <div class="col-lg-9">
+            <textarea rows="10" readonly="readonly" id="overwrite" class="form-control"></textarea>
+            <br />
+            <br />
+            <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="icon-ok"></i> <?php echo $button_continue; ?></button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
 </div>

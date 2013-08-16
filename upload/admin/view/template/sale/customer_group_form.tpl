@@ -36,7 +36,7 @@
         <label class="col-lg-3 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
         <div class="col-lg-9">
           <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
-            <textarea name="customer_group_description[<?php echo $language['language_id']; ?>][description]" cols="40" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['description'] : ''; ?></textarea>
+            <textarea name="customer_group_description[<?php echo $language['language_id']; ?>][description]" rows="5" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($customer_group_description[$language['language_id']]) ? $customer_group_description[$language['language_id']]['description'] : ''; ?></textarea>
           </div>
         </div>
       </div>

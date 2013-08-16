@@ -22,57 +22,59 @@
         <button type="submit" form="form-country" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
     </div>
-    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-country">
-      <table class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-            <td class="text-left"><?php if ($sort == 'name') { ?>
-              <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
-              <?php } else { ?>
-              <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
-              <?php } ?></td>
-            <td class="text-left"><?php if ($sort == 'iso_code_2') { ?>
-              <a href="<?php echo $sort_iso_code_2; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_iso_code_2; ?></a>
-              <?php } else { ?>
-              <a href="<?php echo $sort_iso_code_2; ?>"><?php echo $column_iso_code_2; ?></a>
-              <?php } ?></td>
-            <td class="text-left"><?php if ($sort == 'iso_code_3') { ?>
-              <a href="<?php echo $sort_iso_code_3; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_iso_code_3; ?></a>
-              <?php } else { ?>
-              <a href="<?php echo $sort_iso_code_3; ?>"><?php echo $column_iso_code_3; ?></a>
-              <?php } ?></td>
-            <td class="text-right"><?php echo $column_action; ?></td>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($countries) { ?>
-          <?php foreach ($countries as $country) { ?>
-          <tr>
-            <td class="text-center"><?php if ($country['selected']) { ?>
-              <input type="checkbox" name="selected[]" value="<?php echo $country['country_id']; ?>" checked="checked" />
-              <?php } else { ?>
-              <input type="checkbox" name="selected[]" value="<?php echo $country['country_id']; ?>" />
-              <?php } ?></td>
-            <td class="text-left"><?php echo $country['name']; ?></td>
-            <td class="text-left"><?php echo $country['iso_code_2']; ?></td>
-            <td class="text-left"><?php echo $country['iso_code_3']; ?></td>
-            <td class="text-right"><?php foreach ($country['action'] as $action) { ?>
-              [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
-    </form>
-    <div class="row">
-      <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-lg-6 text-right"><?php echo $results; ?></div>
+    <div class="panel-body">
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-country">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+              <td class="text-left"><?php if ($sort == 'name') { ?>
+                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                <?php } ?></td>
+              <td class="text-left"><?php if ($sort == 'iso_code_2') { ?>
+                <a href="<?php echo $sort_iso_code_2; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_iso_code_2; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_iso_code_2; ?>"><?php echo $column_iso_code_2; ?></a>
+                <?php } ?></td>
+              <td class="text-left"><?php if ($sort == 'iso_code_3') { ?>
+                <a href="<?php echo $sort_iso_code_3; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_iso_code_3; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_iso_code_3; ?>"><?php echo $column_iso_code_3; ?></a>
+                <?php } ?></td>
+              <td class="text-right"><?php echo $column_action; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($countries) { ?>
+            <?php foreach ($countries as $country) { ?>
+            <tr>
+              <td class="text-center"><?php if ($country['selected']) { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $country['country_id']; ?>" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $country['country_id']; ?>" />
+                <?php } ?></td>
+              <td class="text-left"><?php echo $country['name']; ?></td>
+              <td class="text-left"><?php echo $country['iso_code_2']; ?></td>
+              <td class="text-left"><?php echo $country['iso_code_3']; ?></td>
+              <td class="text-right"><?php foreach ($country['action'] as $action) { ?>
+                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <?php } ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </form>
+      <div class="row">
+        <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-lg-6 text-right"><?php echo $results; ?></div>
+      </div>
     </div>
   </div>
 </div>

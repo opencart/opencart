@@ -20,7 +20,9 @@
       <h1 class="panel-title"><i class="icon-warning-sign icon-large"></i> <?php echo $heading_title; ?></h1>
       <div class="buttons"><a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a></div>
     </div>
-    <textarea wrap="off" rows="15" readonly="readonly" class="form-control"><?php echo $log; ?></textarea>
+    <div class="panel-body">
+      <textarea wrap="off" rows="15" readonly="readonly" class="form-control"><?php echo $log; ?></textarea>
+    </div>
   </div>
 </div>
 <?php echo $footer; ?>

@@ -17,10 +17,10 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons">
+      <div class="pull-right">
         <button type="submit" form="form-setting" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-setting" class="form-horizontal">
@@ -843,10 +843,10 @@
               <label class="col-lg-3 control-label" for="input-image-category-width"><?php echo $entry_image_category; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-category-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -859,10 +859,10 @@
               <label class="col-lg-3 control-label" for="input-image-thumb-width"><?php echo $entry_image_thumb; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-thumb-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -875,10 +875,10 @@
               <label class="col-lg-3 control-label" for="input-image-popup-width"><?php echo $entry_image_popup; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-popup-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -891,10 +891,10 @@
               <label class="col-lg-3 control-label" for="input-image-product-width"><?php echo $entry_image_product; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-product-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -907,10 +907,10 @@
               <label class="col-lg-3 control-label" for="input-image-additional-width"><?php echo $entry_image_additional; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-additional-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -923,10 +923,10 @@
               <label class="col-lg-3 control-label" for="input-image-related"><?php echo $entry_image_related; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-related" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -939,10 +939,10 @@
               <label class="col-lg-3 control-label" for="input-image-compare"><?php echo $entry_image_compare; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-compare" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -955,10 +955,10 @@
               <label class="col-lg-3 control-label" for="input-image-wishlist"><?php echo $entry_image_wishlist; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-wishlist" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -971,10 +971,10 @@
               <label class="col-lg-3 control-label" for="input-image-cart"><?php echo $entry_image_cart; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-cart" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>

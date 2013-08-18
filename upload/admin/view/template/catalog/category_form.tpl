@@ -12,6 +12,9 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
+      <div class="pull-right">
+        <button type="submit" form="form-category" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
@@ -36,7 +39,7 @@
                   <div class="col-lg-9">
                     <input type="text" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_name[$language['language_id']])) { ?>
-                    <span class="text-danger"><?php echo $error_name[$language['language_id']]; ?></span>
+                    <p class="text-danger"><?php echo $error_name[$language['language_id']]; ?></p>
                     <?php } ?>
                   </div>
                 </div>
@@ -77,7 +80,7 @@
                   <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
                   <span class="input-group-btn">
                   <button class="btn btn-info" type="button"><i class="icon-question-sign icon-large"></i></button>
-                  </span> </div>
+                  </span></div>
                 <span class="help-block"><?php echo $help_filter; ?></span>
                 <div id="category-filter" class="well">
                   <?php foreach ($category_filters as $category_filter) { ?>
@@ -121,7 +124,7 @@
               <label class="col-lg-3 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
               <div class="col-lg-9">
                 <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
-                <span class="help-block"><?php echo $help_keyword; ?></span> </div>
+                <span class="help-block"><?php echo $help_keyword; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-lg-3 control-label"><?php echo $entry_image; ?></label>
@@ -215,9 +218,6 @@
             </table>
           </div>
         </div>
-        <div class="navbar navbar-fixed-bottom">
-          <button type="submit" form="form-category" class="btn btn-primary navbar-btn pull-right"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-          <a href="<?php echo $cancel; ?>" class="btn btn-danger navbar-btn pull-right"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a> </div>
       </form>
     </div>
   </div>

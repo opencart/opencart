@@ -1,9 +1,8 @@
-/*
-html, body, label, .control-group input, textarea, select, td {
+html, body, label, input, textarea, select, td {
 	font-family: Arial, Helvetica, sans-serif;
 	font-size: 12px;
-	line-height: 15px;
 }
+/*
 html, body {
 	margin: 0;
 	padding: 0;
@@ -291,6 +290,7 @@ div.required .control-label:before, td.required:before {
 	color: #F00;
 	font-weight: bold;
 }
+
 .dropdown-submenu{position:relative;}
 .dropdown-submenu>.dropdown-menu{top:0;left:100%;margin-top:-6px;margin-left:-1px;-webkit-border-radius:0 6px 6px 6px;-moz-border-radius:0 6px 6px 6px;border-radius:0 6px 6px 6px;}
 .dropdown-submenu:hover>.dropdown-menu{display:block;}

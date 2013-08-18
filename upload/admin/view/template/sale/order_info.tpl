@@ -7,8 +7,8 @@
   </ul>
   <div class="panel">
     <div class="panel-heading">
+      <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="icon-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       <h1 class="panel-title"><i class="icon-info-sign"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="icon-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
     </div>
     <div class="panel-body">
       <ul class="nav nav-tabs">

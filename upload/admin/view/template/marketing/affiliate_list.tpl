@@ -17,12 +17,12 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons">
+      <div class="pull-right">
         <button type="submit" form="form-affiliate" formaction="<?php echo $approve; ?>" class="btn"><i class="icon-ok"></i> <?php echo $button_approve; ?></button>
         <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
-        <button type="submit" form="form-affiliate" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+        <button type="submit" form="form-affiliate" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
+      <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="" method="post" enctype="multipart/form-data" id="form-affiliate">

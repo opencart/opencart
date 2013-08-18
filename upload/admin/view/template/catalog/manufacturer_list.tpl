@@ -17,10 +17,10 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
-      <div class="text-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+      <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
         <button type="submit" form="form-manufacturer" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
+      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-manufacturer">

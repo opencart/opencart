@@ -7,10 +7,10 @@
   </ul>
   <div class="panel">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-envelope"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons">
+      <div class="pull-right">
         <button id="button-send" class="btn" onclick="send('index.php?route=marketing/contact/send&token=<?php echo $token; ?>');"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="icon-envelope"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form class="form-horizontal">

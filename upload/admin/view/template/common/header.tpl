@@ -28,12 +28,23 @@
 <?php } ?>
 </head>
 <body>
-<div class="navbar navbar-inverse navbar-static-top">
+<header class="navbar navbar-inverse navbar-static-top">
   <div class="container">
-    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-responsive-collapse"> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span></button>
+    <div class="navbar-header">
+    
+    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+      <span class="sr-only">Toggle navigation</span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+      <span class="icon-bar"></span>
+    </button>    
+    
     <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="" /></a>
+    
+    </div>
+    
     <?php if ($logged) { ?>
-    <div class="nav-collapse collapse navbar-responsive-collapse">
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">
         <li id="dashboard"><a href="<?php echo $home; ?>"><?php echo $text_dashboard; ?></a></li>
         <li class="dropdown" id="catalog"><a data-toggle="dropdown"><?php echo $text_catalog; ?> <i class="icon-caret-down"></i></a>
@@ -208,4 +219,4 @@
     </div>
     <?php } ?>
   </div>
-</div>
+</header>

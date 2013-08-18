@@ -6,7 +6,6 @@
 <base href="<?php echo $base; ?>" />
 <script type="text/javascript" src="//code.jquery.com/jquery-2.0.0.min.js"></script>
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
-<link href="view/javascript/bootstrap/css/bootstrap-responsive.css" rel="stylesheet" />
 <script src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link rel="stylesheet" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <style type="text/css">
@@ -32,44 +31,53 @@ body {
 </style>
 </head>
 <body>
-<div class="container-fluid">
-  <div id="menu">
-    <div class="row-fluid">
-      <div class="span12">
-        <button id="button-create" class="btn"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
-        <button id="button-upload" class="btn"><i class="icon-upload"></i></button>
-        <button id="button-refresh" class="btn"><i class="icon-refresh"></i></button>
+<div class="container">
+  <ul class="breadcrumb">
+    <li><i class="icon-home"></i></li>
+  </ul>
+  <div class="row">
+    <div class="col-6">
+      <button id="button-create" class="btn btn-default"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
+      <button id="button-upload" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+      <button id="button-refresh" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
+    </div>
+    <div class="col-6">
+      <div class="btn-group">
+        <button id="button-cut" class="btn btn-default"><i class="icon-cut"></i></button>
+        <button id="button-cut" class="btn btn-default"><i class="icon-copy"></i></button>
+        <button id="button-cut" class="btn btn-default"><i class="icon-remove"></i></button>
       </div>
     </div>
   </div>
-  <div id="directory" class="well">
-    <ul class="nav nav-list">
-      <li><a href=""><i class="icon-caret-right"></i> Image</a></li>
-    </ul>
-  </div>
-  <div id="file">
-    <table class="table table-striped table-bordered table-hover">
-      <thead>
-        <tr>
-        <td></td>
-          <td>Name</td>
-          <td>Size</td>
-          <td>Type</td>
-          <td>Date Modified</td>
-          <td>Action</td>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-        <td><input type="checkbox" name="" value="" /></td>
-          <td><i class="icon-folder-close"></i> Test</td>
-          <td>13kb</td>
-          <td>jPeg</td>
-          <td>1/2/1999</td>
-          <td><i title="<?php echo $button_rename; ?>" class="icon-edit"></i> <i title="<?php echo $button_move; ?>" class="icon-remove-sign"></i> <i title="<?php echo $button_delete; ?>" class="icon-trash"></i></td>
-        </tr>
-      </tbody>
-    </table>
+  <div class="row">
+    <div class="col-12">
+      <table class="table table-striped table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-center"><input type="checkbox" name="" value="" /></td>
+            <td>Name</td>
+            <td>Size</td>
+            <td>Type</td>
+            <td>Date Modified</td>
+            <td>Action</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center"><input type="checkbox" name="" value="" /></td>
+            <td><i class="icon-folder-close"></i> Test</td>
+            <td>13kb</td>
+            <td>jPeg</td>
+            <td>1/2/1999</td>
+            <td><button type="button" title="<?php echo $button_rename; ?>" class="btn btn-default"><i class="icon-edit"></i></button>
+              <i title="<?php echo $button_move; ?>" class="icon-remove-sign"></i> <i title="<?php echo $button_delete; ?>" class="icon-trash"></i></td>
+          </tr>
+        </tbody>
+      </table>
+      <ul class="pagination">
+        <li><a>1</a></li>
+      </ul>
+    </div>
   </div>
 </div>
 <div id="upload" style="display: none;">

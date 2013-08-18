@@ -16,9 +16,11 @@
   </div>
   <?php } ?>
   <div class="panel">
-    <div class="panel-heading"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <a href="<?php echo $repair; ?>" class="btn btn-default"><i class="icon-wrench"></i> <?php echo $button_repair; ?></a>
-      <button type="submit" form="form-category" class="btn btn-default"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
-      <h1><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
+    <div class="panel-heading">
+      <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <a href="<?php echo $repair; ?>" class="btn btn-default"><i class="icon-wrench"></i> <?php echo $button_repair; ?></a>
+        <button type="submit" form="form-category" class="btn btn-default"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+      </div>
+      <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-category">

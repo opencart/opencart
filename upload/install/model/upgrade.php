@@ -342,6 +342,21 @@ class ModelUpgrade extends Model {
 			$this->db->query("ALTER TABLE `" . DB_PREFIX . "customer_group` DROP `name`");	
 		}
 
+		// Move blacklisted ip to ban ip table
+		
+		$query = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "customer_ip_blacklist'");
+		
+		if ($query->num_rows) {
+			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip_blacklist");
+		
+			foreach ($query->rows as $result) {
+				$db->query("INSERT INTO " . DB_PREFIX . "customer_ban_ip SET ip = '" . $this->db->escape($result['ip']) . "'");
+			}
+			
+			// drop unused table
+			$this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "customer_ip_blacklist`");
+		}
+
 		// Sort the categories to take advantage of the nested set model
 		$this->repairCategories(0);
 	}

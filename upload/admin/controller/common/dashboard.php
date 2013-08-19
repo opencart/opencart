@@ -49,45 +49,11 @@ class ControllerCommonDashboard extends Controller {
 		$sale_total = $this->model_report_dashboard->getTotalSales();
 		
 		$this->data['sale_total'] = $this->currency->format($sale_total, $this->config->get('config_currency'));
-
-		$monthly_total = 0;
-
-		$results = $this->model_report_dashboard->getTotalSalesByMonth();
-		
-		foreach ($results as $result) {
-			$monthly_total += $result['total'];
-		}
-		
-		if ($monthly_total) {
-			$growth = round(($monthly_total / $sale_total) * 100, 2);
-		} else {
-			$growth = 0;
-		}
-				
-		$this->data['sale_growth'] = $growth;
 		
 		// Total Orders
 		$this->load->model('sale/order');
 		
-		$order_total = $this->model_sale_order->getTotalOrders();
-		
-		$this->data['order_total'] = $order_total;
-				
-		$monthly_total = 0;
-
-		$results = $this->model_report_dashboard->getTotalOrdersByMonth();
-		
-		foreach ($results as $result) {
-			$monthly_total += $result['total'];
-		}
-			
-		if ($monthly_total) {
-			$growth = round(($monthly_total / $order_total) * 100, 2);
-		} else {
-			$growth = 0;
-		}
-							
-		$this->data['order_growth'] = $growth;		
+		$this->data['order_total'] = $this->model_sale_order->getTotalOrders();
 				
 		// Customers
 		$this->load->model('sale/customer');
@@ -96,44 +62,10 @@ class ControllerCommonDashboard extends Controller {
 		
 		$this->data['customer_total'] = $customer_total;
 		
-		$monthly_total = 0;
-
-		$results = $this->model_report_dashboard->getTotalOrdersByMonth();
-		
-		foreach ($results as $result) {
-			$monthly_total += $result['total'];
-		}
-		
-		if ($monthly_total) {
-			$growth = round(($monthly_total / $customer_total) * 100, 2);
-		} else {
-			$growth = 0;
-		}
-			
-		$this->data['customer_growth'] = $growth;		
-		
 		// Marketing
 		$this->load->model('marketing/marketing');
 		
-		$marketing_total = $this->model_marketing_marketing->getTotalMarketings();
-
-		$this->data['marketing_total'] = $marketing_total;
-
-		$monthly_total = 0;
-
-		$results = $this->model_report_dashboard->getTotalMarketingsByMonth();
-		
-		foreach ($results as $result) {
-			$monthly_total += $result['click'];
-		}
-		
-		if ($monthly_total) {
-			$growth = round(($monthly_total / $marketing_total) * 100, 2);
-		} else {
-			$growth = 0;
-		}			
-		
-		$this->data['marketing_growth'] = $growth;
+		$this->data['marketing_total'] = $this->model_marketing_marketing->getTotalMarketings();
 		
 		$this->load->model('report/customer');
 		

@@ -12,10 +12,10 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons">
+      <div class="pull-right">
         <button type="submit" form="form-product" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-product" class="form-horizontal">
@@ -242,13 +242,13 @@
               <label class="col-lg-3 control-label" for="input-length"><?php echo $entry_dimension; ?></label>
               <div class="col-lg-9">
                 <div class="row">
-                  <div class="col-4">
+                  <div class="col-sm-4">
                     <input type="text" name="length" value="<?php echo $length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="form-control" />
                   </div>
-                  <div class="col-4">
+                  <div class="col-sm-4">
                     <input type="text" name="width" value="<?php echo $width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="form-control" />
                   </div>
-                  <div class="col-4">
+                  <div class="col-sm-4">
                     <input type="text" name="height" value="<?php echo $height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="form-control" />
                   </div>
                 </div>

@@ -17,12 +17,12 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons">
+      <div class="pull-right">
         <button type="submit" form="form-customer" formaction="<?php echo $approve; ?>" class="btn"><i class="icon-ok"></i> <?php echo $button_approve; ?></button>
         <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
-        <button type="submit" form="form-customer" class="btn"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+        <button type="submit" form="form-customer" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
+      <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-customer">
       <table class="table table-striped table-bordered table-hover">
@@ -148,7 +148,8 @@
           <?php } ?>
         </tbody>
       </table>
-    </form>    <div class="row">
+    </form>
+    <div class="row">
       <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
       <div class="col-lg-6 text-right"><?php echo $results; ?></div>
     </div>

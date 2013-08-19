@@ -12,10 +12,10 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons">
+      <div class="pull-right">
         <button type="submit" form="form-usps" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-usps" class="form-horizontal">
@@ -41,204 +41,248 @@
           <label class="col-lg-3 control-label"><?php echo $entry_domestic; ?></label>
           <div class="col-lg-9">
             <div class="well">
-              <label class="checkbox">
-                <?php if ($usps_domestic_00) { ?>
-                <input type="checkbox" name="usps_domestic_00" value="1" checked="checked" />
-                <?php echo $text_domestic_00; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_00" value="1" />
-                <?php echo $text_domestic_00; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_01) { ?>
-                <input type="checkbox" name="usps_domestic_01" value="1" checked="checked" />
-                <?php echo $text_domestic_01; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_01" value="1" />
-                <?php echo $text_domestic_01; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_02) { ?>
-                <input type="checkbox" name="usps_domestic_02" value="1" checked="checked" />
-                <?php echo $text_domestic_02; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_02" value="1" />
-                <?php echo $text_domestic_02; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_03) { ?>
-                <input type="checkbox" name="usps_domestic_03" value="1" checked="checked" />
-                <?php echo $text_domestic_03; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_03" value="1" />
-                <?php echo $text_domestic_03; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_1) { ?>
-                <input type="checkbox" name="usps_domestic_1" value="1" checked="checked" />
-                <?php echo $text_domestic_1; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_1" value="1" />
-                <?php echo $text_domestic_1; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_2) { ?>
-                <input type="checkbox" name="usps_domestic_2" value="1" checked="checked" />
-                <?php echo $text_domestic_2; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_2" value="1" />
-                <?php echo $text_domestic_2; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_3) { ?>
-                <input type="checkbox" name="usps_domestic_3" value="1" checked="checked" />
-                <?php echo $text_domestic_3; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_3" value="1" />
-                <?php echo $text_domestic_3; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_4) { ?>
-                <input type="checkbox" name="usps_domestic_4" value="1" checked="checked" />
-                <?php echo $text_domestic_4; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_4" value="1" />
-                <?php echo $text_domestic_4; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_5) { ?>
-                <input type="checkbox" name="usps_domestic_5" value="1" checked="checked" />
-                <?php echo $text_domestic_5; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_5" value="1" />
-                <?php echo $text_domestic_5; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_6) { ?>
-                <input type="checkbox" name="usps_domestic_6" value="1" checked="checked" />
-                <?php echo $text_domestic_6; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_6" value="1" />
-                <?php echo $text_domestic_6; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_7) { ?>
-                <input type="checkbox" name="usps_domestic_7" value="1" checked="checked" />
-                <?php echo $text_domestic_7; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_7" value="1" />
-                <?php echo $text_domestic_7; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_12) { ?>
-                <input type="checkbox" name="usps_domestic_12" value="1" checked="checked" />
-                <?php echo $text_domestic_12; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_12" value="1" />
-                <?php echo $text_domestic_12; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_13) { ?>
-                <input type="checkbox" name="usps_domestic_13" value="1" checked="checked" />
-                <?php echo $text_domestic_13; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_13" value="1" />
-                <?php echo $text_domestic_13; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_16) { ?>
-                <input type="checkbox" name="usps_domestic_16" value="1" checked="checked" />
-                <?php echo $text_domestic_16; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_16" value="1" />
-                <?php echo $text_domestic_16; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_17) { ?>
-                <input type="checkbox" name="usps_domestic_17" value="1" checked="checked" />
-                <?php echo $text_domestic_17; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_17" value="1" />
-                <?php echo $text_domestic_17; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_18) { ?>
-                <input type="checkbox" name="usps_domestic_18" value="1" checked="checked" />
-                <?php echo $text_domestic_18; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_18" value="1" />
-                <?php echo $text_domestic_18; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_19) { ?>
-                <input type="checkbox" name="usps_domestic_19" value="1" checked="checked" />
-                <?php echo $text_domestic_19; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_19" value="1" />
-                <?php echo $text_domestic_19; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_22) { ?>
-                <input type="checkbox" name="usps_domestic_22" value="1" checked="checked" />
-                <?php echo $text_domestic_22; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_22" value="1" />
-                <?php echo $text_domestic_22; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_23) { ?>
-                <input type="checkbox" name="usps_domestic_23" value="1" checked="checked" />
-                <?php echo $text_domestic_23; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_23" value="1" />
-                <?php echo $text_domestic_23; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_25) { ?>
-                <input type="checkbox" name="usps_domestic_25" value="1" checked="checked" />
-                <?php echo $text_domestic_25; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_25" value="1" />
-                <?php echo $text_domestic_25; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_27) { ?>
-                <input type="checkbox" name="usps_domestic_27" value="1" checked="checked" />
-                <?php echo $text_domestic_27; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_27" value="1" />
-                <?php echo $text_domestic_27; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_domestic_28) { ?>
-                <input type="checkbox" name="usps_domestic_28" value="1" checked="checked" />
-                <?php echo $text_domestic_28; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_domestic_28" value="1" />
-                <?php echo $text_domestic_28; ?>
-                <?php } ?>
-              </label>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_00) { ?>
+                  <input type="checkbox" name="usps_domestic_00" value="1" checked="checked" />
+                  <?php echo $text_domestic_00; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_00" value="1" />
+                  <?php echo $text_domestic_00; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_01) { ?>
+                  <input type="checkbox" name="usps_domestic_01" value="1" checked="checked" />
+                  <?php echo $text_domestic_01; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_01" value="1" />
+                  <?php echo $text_domestic_01; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_02) { ?>
+                  <input type="checkbox" name="usps_domestic_02" value="1" checked="checked" />
+                  <?php echo $text_domestic_02; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_02" value="1" />
+                  <?php echo $text_domestic_02; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_03) { ?>
+                  <input type="checkbox" name="usps_domestic_03" value="1" checked="checked" />
+                  <?php echo $text_domestic_03; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_03" value="1" />
+                  <?php echo $text_domestic_03; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_1) { ?>
+                  <input type="checkbox" name="usps_domestic_1" value="1" checked="checked" />
+                  <?php echo $text_domestic_1; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_1" value="1" />
+                  <?php echo $text_domestic_1; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_2) { ?>
+                  <input type="checkbox" name="usps_domestic_2" value="1" checked="checked" />
+                  <?php echo $text_domestic_2; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_2" value="1" />
+                  <?php echo $text_domestic_2; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_3) { ?>
+                  <input type="checkbox" name="usps_domestic_3" value="1" checked="checked" />
+                  <?php echo $text_domestic_3; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_3" value="1" />
+                  <?php echo $text_domestic_3; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_4) { ?>
+                  <input type="checkbox" name="usps_domestic_4" value="1" checked="checked" />
+                  <?php echo $text_domestic_4; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_4" value="1" />
+                  <?php echo $text_domestic_4; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_5) { ?>
+                  <input type="checkbox" name="usps_domestic_5" value="1" checked="checked" />
+                  <?php echo $text_domestic_5; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_5" value="1" />
+                  <?php echo $text_domestic_5; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_6) { ?>
+                  <input type="checkbox" name="usps_domestic_6" value="1" checked="checked" />
+                  <?php echo $text_domestic_6; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_6" value="1" />
+                  <?php echo $text_domestic_6; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_7) { ?>
+                  <input type="checkbox" name="usps_domestic_7" value="1" checked="checked" />
+                  <?php echo $text_domestic_7; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_7" value="1" />
+                  <?php echo $text_domestic_7; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_12) { ?>
+                  <input type="checkbox" name="usps_domestic_12" value="1" checked="checked" />
+                  <?php echo $text_domestic_12; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_12" value="1" />
+                  <?php echo $text_domestic_12; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_13) { ?>
+                  <input type="checkbox" name="usps_domestic_13" value="1" checked="checked" />
+                  <?php echo $text_domestic_13; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_13" value="1" />
+                  <?php echo $text_domestic_13; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_16) { ?>
+                  <input type="checkbox" name="usps_domestic_16" value="1" checked="checked" />
+                  <?php echo $text_domestic_16; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_16" value="1" />
+                  <?php echo $text_domestic_16; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_17) { ?>
+                  <input type="checkbox" name="usps_domestic_17" value="1" checked="checked" />
+                  <?php echo $text_domestic_17; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_17" value="1" />
+                  <?php echo $text_domestic_17; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_18) { ?>
+                  <input type="checkbox" name="usps_domestic_18" value="1" checked="checked" />
+                  <?php echo $text_domestic_18; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_18" value="1" />
+                  <?php echo $text_domestic_18; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_19) { ?>
+                  <input type="checkbox" name="usps_domestic_19" value="1" checked="checked" />
+                  <?php echo $text_domestic_19; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_19" value="1" />
+                  <?php echo $text_domestic_19; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_22) { ?>
+                  <input type="checkbox" name="usps_domestic_22" value="1" checked="checked" />
+                  <?php echo $text_domestic_22; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_22" value="1" />
+                  <?php echo $text_domestic_22; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_23) { ?>
+                  <input type="checkbox" name="usps_domestic_23" value="1" checked="checked" />
+                  <?php echo $text_domestic_23; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_23" value="1" />
+                  <?php echo $text_domestic_23; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_25) { ?>
+                  <input type="checkbox" name="usps_domestic_25" value="1" checked="checked" />
+                  <?php echo $text_domestic_25; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_25" value="1" />
+                  <?php echo $text_domestic_25; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_27) { ?>
+                  <input type="checkbox" name="usps_domestic_27" value="1" checked="checked" />
+                  <?php echo $text_domestic_27; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_27" value="1" />
+                  <?php echo $text_domestic_27; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_domestic_28) { ?>
+                  <input type="checkbox" name="usps_domestic_28" value="1" checked="checked" />
+                  <?php echo $text_domestic_28; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_domestic_28" value="1" />
+                  <?php echo $text_domestic_28; ?>
+                  <?php } ?>
+                </label>
+              </div>
             </div>
             <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
@@ -246,150 +290,182 @@
           <label class="col-lg-3 control-label"><?php echo $entry_international; ?></label>
           <div class="col-lg-9">
             <div class="well">
-              <label class="checkbox">
-                <?php if ($usps_international_1) { ?>
-                <input type="checkbox" name="usps_international_1" value="1" checked="checked" />
-                <?php echo $text_international_1; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_1" value="1" />
-                <?php echo $text_international_1; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_2) { ?>
-                <input type="checkbox" name="usps_international_2" value="1" checked="checked" />
-                <?php echo $text_international_2; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_2" value="1" />
-                <?php echo $text_international_2; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_4) { ?>
-                <input type="checkbox" name="usps_international_4" value="1" checked="checked" />
-                <?php echo $text_international_4; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_4" value="1" />
-                <?php echo $text_international_4; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_5) { ?>
-                <input type="checkbox" name="usps_international_5" value="1" checked="checked" />
-                <?php echo $text_international_5; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_5" value="1" />
-                <?php echo $text_international_5; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_6) { ?>
-                <input type="checkbox" name="usps_international_6" value="1" checked="checked" />
-                <?php echo $text_international_6; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_6" value="1" />
-                <?php echo $text_international_6; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_7) { ?>
-                <input type="checkbox" name="usps_international_7" value="1" checked="checked" />
-                <?php echo $text_international_7; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_7" value="1" />
-                <?php echo $text_international_7; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_8) { ?>
-                <input type="checkbox" name="usps_international_8" value="1" checked="checked" />
-                <?php echo $text_international_8; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_8" value="1" />
-                <?php echo $text_international_8; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_9) { ?>
-                <input type="checkbox" name="usps_international_9" value="1" checked="checked" />
-                <?php echo $text_international_9; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_9" value="1" />
-                <?php echo $text_international_9; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_10) { ?>
-                <input type="checkbox" name="usps_international_10" value="1" checked="checked" />
-                <?php echo $text_international_10; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_10" value="1" />
-                <?php echo $text_international_10; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_11) { ?>
-                <input type="checkbox" name="usps_international_11" value="1" checked="checked" />
-                <?php echo $text_international_11; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_11" value="1" />
-                <?php echo $text_international_11; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_12) { ?>
-                <input type="checkbox" name="usps_international_12" value="1" checked="checked" />
-                <?php echo $text_international_12; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_12" value="1" />
-                <?php echo $text_international_12; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_13) { ?>
-                <input type="checkbox" name="usps_international_13" value="1" checked="checked" />
-                <?php echo $text_international_13; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_13" value="1" />
-                <?php echo $text_international_13; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_14) { ?>
-                <input type="checkbox" name="usps_international_14" value="1" checked="checked" />
-                <?php echo $text_international_14; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_14" value="1" />
-                <?php echo $text_international_14; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_15) { ?>
-                <input type="checkbox" name="usps_international_15" value="1" checked="checked" />
-                <?php echo $text_international_15; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_15" value="1" />
-                <?php echo $text_international_15; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_16) { ?>
-                <input type="checkbox" name="usps_international_16" value="1" checked="checked" />
-                <?php echo $text_international_16; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_16" value="1" />
-                <?php echo $text_international_16; ?>
-                <?php } ?>
-              </label>
-              <label class="checkbox">
-                <?php if ($usps_international_21) { ?>
-                <input type="checkbox" name="usps_international_21" value="1" checked="checked" />
-                <?php echo $text_international_21; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="usps_international_21" value="1" />
-                <?php echo $text_international_21; ?>
-                <?php } ?>
-              </label>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_1) { ?>
+                  <input type="checkbox" name="usps_international_1" value="1" checked="checked" />
+                  <?php echo $text_international_1; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_1" value="1" />
+                  <?php echo $text_international_1; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_2) { ?>
+                  <input type="checkbox" name="usps_international_2" value="1" checked="checked" />
+                  <?php echo $text_international_2; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_2" value="1" />
+                  <?php echo $text_international_2; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_4) { ?>
+                  <input type="checkbox" name="usps_international_4" value="1" checked="checked" />
+                  <?php echo $text_international_4; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_4" value="1" />
+                  <?php echo $text_international_4; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_5) { ?>
+                  <input type="checkbox" name="usps_international_5" value="1" checked="checked" />
+                  <?php echo $text_international_5; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_5" value="1" />
+                  <?php echo $text_international_5; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_6) { ?>
+                  <input type="checkbox" name="usps_international_6" value="1" checked="checked" />
+                  <?php echo $text_international_6; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_6" value="1" />
+                  <?php echo $text_international_6; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_7) { ?>
+                  <input type="checkbox" name="usps_international_7" value="1" checked="checked" />
+                  <?php echo $text_international_7; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_7" value="1" />
+                  <?php echo $text_international_7; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_8) { ?>
+                  <input type="checkbox" name="usps_international_8" value="1" checked="checked" />
+                  <?php echo $text_international_8; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_8" value="1" />
+                  <?php echo $text_international_8; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_9) { ?>
+                  <input type="checkbox" name="usps_international_9" value="1" checked="checked" />
+                  <?php echo $text_international_9; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_9" value="1" />
+                  <?php echo $text_international_9; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_10) { ?>
+                  <input type="checkbox" name="usps_international_10" value="1" checked="checked" />
+                  <?php echo $text_international_10; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_10" value="1" />
+                  <?php echo $text_international_10; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_11) { ?>
+                  <input type="checkbox" name="usps_international_11" value="1" checked="checked" />
+                  <?php echo $text_international_11; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_11" value="1" />
+                  <?php echo $text_international_11; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_12) { ?>
+                  <input type="checkbox" name="usps_international_12" value="1" checked="checked" />
+                  <?php echo $text_international_12; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_12" value="1" />
+                  <?php echo $text_international_12; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_13) { ?>
+                  <input type="checkbox" name="usps_international_13" value="1" checked="checked" />
+                  <?php echo $text_international_13; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_13" value="1" />
+                  <?php echo $text_international_13; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_14) { ?>
+                  <input type="checkbox" name="usps_international_14" value="1" checked="checked" />
+                  <?php echo $text_international_14; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_14" value="1" />
+                  <?php echo $text_international_14; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_15) { ?>
+                  <input type="checkbox" name="usps_international_15" value="1" checked="checked" />
+                  <?php echo $text_international_15; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_15" value="1" />
+                  <?php echo $text_international_15; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_16) { ?>
+                  <input type="checkbox" name="usps_international_16" value="1" checked="checked" />
+                  <?php echo $text_international_16; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_16" value="1" />
+                  <?php echo $text_international_16; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <div class="checkbox">
+                <label>
+                  <?php if ($usps_international_21) { ?>
+                  <input type="checkbox" name="usps_international_21" value="1" checked="checked" />
+                  <?php echo $text_international_21; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="usps_international_21" value="1" />
+                  <?php echo $text_international_21; ?>
+                  <?php } ?>
+                </label>
+              </div>
             </div>
             <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
@@ -439,13 +515,13 @@
           <label class="col-lg-3 control-label" for="input-length"><?php echo $entry_dimension; ?> </label>
           <div class="col-lg-9">
             <div class="row">
-              <div class="col-lg-4">
+              <div class="col-sm-4">
                 <input type="text" name="usps_length" value="<?php echo $usps_length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="form-control" />
               </div>
-              <div class="col-lg-4">
+              <div class="col-sm-4">
                 <input type="text" name="usps_width" value="<?php echo $usps_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-width" class="form-control" />
               </div>
-              <div class="col-lg-4">
+              <div class="col-sm-4">
                 <input type="text" name="usps_height" value="<?php echo $usps_height; ?>" placeholder="<?php echo $entry_height; ?>" id="input-height" class="form-control" />
               </div>
             </div>

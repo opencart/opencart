@@ -17,8 +17,8 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
+      <div class="pull-right"><a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a></div>
       <h1 class="panel-title"><i class="icon-warning-sign icon-large"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a></div>
     </div>
     <div class="panel-body">
       <textarea wrap="off" rows="15" readonly="readonly" class="form-control"><?php echo $log; ?></textarea>

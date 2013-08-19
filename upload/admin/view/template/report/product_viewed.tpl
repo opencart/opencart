@@ -12,8 +12,8 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
+      <div class="pull-right"><a href="<?php echo $reset; ?>" class="btn btn-danger"><i class="icon-refresh"></i> <?php echo $button_reset; ?></a></div>
       <h1 class="panel-title"><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $reset; ?>" class="btn btn-danger"><i class="icon-refresh"></i> <?php echo $button_reset; ?></a></div>
     </div>
     <div class="panel-body">
       <table class="table table-striped table-bordered table-hover">

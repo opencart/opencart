@@ -22,51 +22,53 @@
       </div>
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-customer-ban-ip">
-      <table class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-            <td class="text-left"><?php if ($sort == 'ip') { ?>
-              <a href="<?php echo $sort_ip; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_ip; ?></a>
-              <?php } else { ?>
-              <a href="<?php echo $sort_ip; ?>"><?php echo $column_ip; ?></a>
-              <?php } ?></td>
-            <td class="text-right"><?php echo $column_customer; ?></td>
-            <td class="text-right"><?php echo $column_action; ?></td>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($customer_ban_ips) { ?>
-          <?php foreach ($customer_ban_ips as $customer_ban_ip) { ?>
-          <tr>
-            <td class="text-center"><?php if ($customer_ban_ip['selected']) { ?>
-              <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ban_ip_id']; ?>" checked="checked" />
-              <?php } else { ?>
-              <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ban_ip_id']; ?>" />
-              <?php } ?></td>
-            <td class="text-left"><?php echo $customer_ban_ip['ip']; ?></td>
-            <td class="text-right"><?php if ($customer_ban_ip['total']) { ?>
-              <a href="<?php echo $customer_ban_ip['customer']; ?>"><?php echo $customer_ban_ip['total']; ?></a>
-              <?php } else { ?>
-              <?php echo $customer_ban_ip['total']; ?>
-              <?php } ?></td>
-            <td class="text-right"><?php foreach ($customer_ban_ip['action'] as $action) { ?>
-              [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-              <?php } ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td class="text-center" colspan="10"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
-    </form>
-    <div class="row">
-      <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-lg-6 text-right"><?php echo $results; ?></div>
+    <div class="panel-body">
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-customer-ban-ip">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+              <td class="text-left"><?php if ($sort == 'ip') { ?>
+                <a href="<?php echo $sort_ip; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_ip; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_ip; ?>"><?php echo $column_ip; ?></a>
+                <?php } ?></td>
+              <td class="text-right"><?php echo $column_customer; ?></td>
+              <td class="text-right"><?php echo $column_action; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($customer_ban_ips) { ?>
+            <?php foreach ($customer_ban_ips as $customer_ban_ip) { ?>
+            <tr>
+              <td class="text-center"><?php if ($customer_ban_ip['selected']) { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ban_ip_id']; ?>" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ban_ip_id']; ?>" />
+                <?php } ?></td>
+              <td class="text-left"><?php echo $customer_ban_ip['ip']; ?></td>
+              <td class="text-right"><?php if ($customer_ban_ip['total']) { ?>
+                <a href="<?php echo $customer_ban_ip['customer']; ?>"><?php echo $customer_ban_ip['total']; ?></a>
+                <?php } else { ?>
+                <?php echo $customer_ban_ip['total']; ?>
+                <?php } ?></td>
+              <td class="text-right"><?php foreach ($customer_ban_ip['action'] as $action) { ?>
+                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <?php } ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center" colspan="10"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </form>
+      <div class="row">
+        <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-lg-6 text-right"><?php echo $results; ?></div>
+      </div>
     </div>
   </div>
 </div>

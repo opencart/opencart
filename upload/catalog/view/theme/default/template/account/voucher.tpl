@@ -49,7 +49,7 @@
         </div>
       </div>
       <div class="form-group required">
-        <div class="col-lg-3 control-label"><?php echo $entry_theme; ?></div>
+        <label class="col-lg-3 control-label"><?php echo $entry_theme; ?></label>
         <div class="col-lg-9">
           <?php foreach ($voucher_themes as $voucher_theme) { ?>
           <?php if ($voucher_theme['voucher_theme_id'] == $voucher_theme_id) { ?>

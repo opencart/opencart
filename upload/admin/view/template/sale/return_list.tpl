@@ -74,12 +74,12 @@
           <tbody>
             <tr class="filter">
               <td></td>
-              <td align="right"><input type="text" name="filter_return_id" value="<?php echo $filter_return_id; ?>" class="input-mini" style="text-align: right;" /></td>
-              <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="input-mini" style="text-align: right;" /></td>
-              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="input-medium" /></td>
-              <td><input type="text" name="filter_product" value="<?php echo $filter_product; ?>" class="input-medium" /></td>
-              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" class="input-medium" /></td>
-              <td><select name="filter_return_status_id" class="input-medium">
+              <td align="right"><input type="text" name="filter_return_id" value="<?php echo $filter_return_id; ?>" class="form-control" /></td>
+              <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="form-control" /></td>
+              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
+              <td><input type="text" name="filter_product" value="<?php echo $filter_product; ?>" class="form-control" /></td>
+              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" class="form-control" /></td>
+              <td><select name="filter_return_status_id" class="form-control">
                   <option value="*"></option>
                   <?php foreach ($return_statuses as $return_status) { ?>
                   <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
@@ -89,9 +89,9 @@
                   <?php } ?>
                   <?php } ?>
                 </select></td>
-              <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" /></td>
-              <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="input-medium" /></td>
-              <td align="right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+              <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
+              <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="form-control" /></td>
+              <td class="text-right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
             </tr>
             <?php if ($returns) { ?>
             <?php foreach ($returns as $return) { ?>

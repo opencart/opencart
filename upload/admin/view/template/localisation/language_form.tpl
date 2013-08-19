@@ -14,7 +14,7 @@
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-language" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
@@ -37,8 +37,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-locale"><?php echo $entry_locale; ?></label>
+        <div class="form-groupd">
+          <label class="col-lg-3 control-label require" for="input-locale"><?php echo $entry_locale; ?></label>
           <div class="col-lg-9">
             <input type="text" name="locale" value="<?php echo $locale; ?>" placeholder="<?php echo $entry_locale; ?>" id="input-locale" class="form-control" />
             <?php if ($error_locale) { ?>

@@ -93,7 +93,7 @@
           </div>
         </div>
         <div class="form-group required">
-          <div class="col-lg-3 control-label"><?php echo $entry_reason; ?></div>
+          <label class="col-lg-3 control-label"><?php echo $entry_reason; ?></label>
           <div class="col-lg-9">
             <?php foreach ($return_reasons as $return_reason) { ?>
             <?php if ($return_reason['return_reason_id'] == $return_reason_id) { ?>
@@ -112,7 +112,7 @@
           </div>
         </div>
         <div class="form-group required">
-          <div class="col-lg-3 control-label"><?php echo $entry_opened; ?></div>
+          <label class="col-lg-3 control-label"><?php echo $entry_opened; ?></label>
           <div class="col-lg-9">
             <label class="radio">
               <?php if ($opened) { ?>

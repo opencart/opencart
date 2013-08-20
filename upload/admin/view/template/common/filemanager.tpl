@@ -36,16 +36,16 @@ body {
     <li><i class="icon-home"></i></li>
   </ul>
   <div class="row">
-    <div class="col-6">
-      <button id="button-create" class="btn btn-default"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
-      <button id="button-upload" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-      <button id="button-refresh" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
-    </div>
-    <div class="col-6">
-      <div class="btn-group">
-        <button id="button-cut" class="btn btn-default"><i class="icon-cut"></i></button>
-        <button id="button-cut" class="btn btn-default"><i class="icon-copy"></i></button>
-        <button id="button-cut" class="btn btn-default"><i class="icon-remove"></i></button>
+    <div class="col-12">
+      <div class="btn-toolbar">
+        <button id="button-create" class="btn btn-default"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
+        <button id="button-upload" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+        <button id="button-refresh" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
+        <div class="btn-group">
+          <button id="button-cut" class="btn btn-default"><i class="icon-cut"></i></button>
+          <button id="button-cut" class="btn btn-default"><i class="icon-copy"></i></button>
+          <button id="button-cut" class="btn btn-default"><i class="icon-remove"></i></button>
+        </div>
       </div>
     </div>
   </div>

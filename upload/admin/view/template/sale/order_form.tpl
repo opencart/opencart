@@ -121,8 +121,8 @@
                 </select>
               </div>
             </div>
-            <div class="form-group">
-              <label class="col-lg-3 control-labe requiredl" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
+            <div class="form-group required">
+              <label class="col-lg-3 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
               <div class="col-lg-9">
                 <input type="text" name="payment_firstname" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" class="form-control" />
                 <?php if ($error_payment_firstname) { ?>

@@ -31,12 +31,8 @@ body {
 </style>
 </head>
 <body>
-<div class="container">
-  <ul class="breadcrumb">
-    <li><i class="icon-home"></i></li>
-  </ul>
-  <div class="row">
-    <div class="col-12">
+<!--
+    <div class="col-6">
       <div class="btn-toolbar">
         <button id="button-create" class="btn btn-default"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
         <button id="button-upload" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
@@ -47,6 +43,16 @@ body {
           <button id="button-cut" class="btn btn-default"><i class="icon-remove"></i></button>
         </div>
       </div>
+-->
+
+<div class="container">
+  <div class="row">
+  <div class="col-6">
+  <div class="well well-sm">
+  <ul></ul>
+  </div>
+  </div>
+  
     </div>
   </div>
   <div class="row">

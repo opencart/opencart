@@ -458,7 +458,7 @@ class ModelEbayOpenbay extends Model{
             $this->ebay->createLink($data['product_id'], $response['ItemID'], $variant);
             $this->ebay->insertReserve($data, $response['ItemID'], $variant);
 
-            $data2['data']['viewLink']  = $this->config->get('openbaypro_ebay_itm_link') . $response['ItemID'];
+            $data2['data']['viewLink']  = html_entity_decode($this->config->get('openbaypro_ebay_itm_link') . $response['ItemID']);
         }else{
             $data2['error']             = false;
             $data2['msg']               = 'ok';

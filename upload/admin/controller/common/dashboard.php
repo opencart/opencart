@@ -302,5 +302,56 @@ class ControllerCommonDashboard extends Controller {
 						
 		$this->response->setOutput(json_encode($json));
 	}
+	
+	public function remove_install() {
+		$this->language->load('common/dashboard');
+
+		$json = array();
+		
+		$directory = '../install';
+		
+		if (!is_dir($directory)) {
+			$json['error'] = $this->language->get('error_directory');
+		}
+
+		if (!$json) {
+
+		$files = array();
+
+			$path = array($directory . '*');
+
+			while(count($path) != 0) {
+				$next = array_shift($path);
+
+				foreach(glob($next) as $file) {
+					if (is_dir($file)) {
+						$path[] = $file . '/*';
+					}
+
+					$files[] = $file;
+				}
+			}
+
+			sort($files);
+
+			rsort($files);
+
+			foreach ($files as $file) {
+				if (is_file($file)) {
+					unlink($file);
+				} elseif (is_dir($file)) {
+					rmdir($file);	
+				}
+			}
+
+			if (file_exists($directory)) {
+				rmdir($directory);
+			}
+
+			$json['success'] = $this->language->get('text_success');
+		}
+
+		$this->response->setOutput(json_encode($json));
+  	}
 }
 ?>

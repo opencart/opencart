@@ -278,5 +278,35 @@ $('a[data-toggle=\'tab\']').on('shown.bs.tab', function(e) {
 		$('#button-refresh').trigger('click');
 	}	
 });
+//--></script>
+<script type="text/javascript"><!--
+$('#remove_install').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=common/dashboard/remove_install&token=<?php echo $token; ?>',	
+		dataType: 'json',
+		beforeSend: function() {
+			$('#remove_install i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+		},	
+		complete: function() {
+			$('#remove_install i').replaceWith('<i class="icon-eraser"></i>');
+		},		
+		success: function(json) {
+			$('.alert').remove();
+
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			} 
+		
+			if (json['success']) {
+				$('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+
+				
+			}
+		},			
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
 //--></script> 
 <?php echo $footer; ?>

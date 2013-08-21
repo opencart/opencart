@@ -186,11 +186,6 @@ class ControllerCommonHeader extends Controller {
 			$this->data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
-			
-			// Get total number of customers online
-			$this->load->model('report/customer');
-			 
-			$this->data['online'] = $this->model_report_customer->getTotalCustomersOnline();
 						
 			// Get total number of stores online
 			$this->data['store_name'] = $this->config->get('config_name');
@@ -222,13 +217,13 @@ class ControllerCommonHeader extends Controller {
 			$this->data['profile_image'] = $user_info['image'];
 			
 			if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
-				$this->data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 25, 25);
+				$this->data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 23, 23);
 			} else {
-				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 25, 25);
+				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
 			}
 		} else {
 			$this->data['profile_name'] = '';
-			$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 25, 25);
+			$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
 		}
 					
 		$this->template = 'common/header.tpl';

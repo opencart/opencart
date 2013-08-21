@@ -1,7 +1,7 @@
 <?php echo $header; ?>
 <ul class="breadcrumb">
   <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-  <li> <a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?> </a> </li>
+  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
   <?php } ?>
 </ul>
 <div class="row">
@@ -144,7 +144,7 @@
         <h1><?php echo $heading_title; ?></h1>
         
         <!-- Product Info -->
-        <ul class="unstyled">
+        <ul class="list-unstyled">
           <?php if ($manufacturer) { ?>
           <li><?php echo $text_manufacturer; ?> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
           <?php } ?>
@@ -157,7 +157,7 @@
         
         <!-- Price -->
         <?php if ($price) { ?>
-        <ul class="unstyled">
+        <ul class="list-unstyled">
           <!-- <li><?php echo $text_price; ?></li> -->
           <?php if (!$special) { ?>
           <li>

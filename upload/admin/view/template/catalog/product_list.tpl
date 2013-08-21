@@ -89,12 +89,12 @@
                 <?php } else { ?>
                 <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
                 <?php } ?></td>
-              <td class="text-center"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" style="padding: 1px; border: 1px solid #DDDDDD;" /></td>
+              <td class="text-center"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" /></td>
               <td class="text-left"><?php echo $product['name']; ?></td>
               <td class="text-left"><?php echo $product['model']; ?></td>
               <td class="text-left"><?php if ($product['special']) { ?>
                 <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
-                <span style="color: #b00;"><?php echo $product['special']; ?></span>
+                <span class="text-danger"><?php echo $product['special']; ?></span>
                 <?php } else { ?>
                 <?php echo $product['price']; ?>
                 <?php } ?></td>
@@ -107,7 +107,7 @@
                 <?php } ?></td>
               <td class="text-left"><?php echo $product['status']; ?></td>
               <td class="text-right"><?php foreach ($product['action'] as $action) { ?>
-                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
                 <?php } ?></td>
             </tr>
             <?php } ?>

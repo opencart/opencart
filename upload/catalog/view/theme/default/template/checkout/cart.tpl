@@ -20,7 +20,7 @@
 </div>
 <?php } ?>
 <div class="row"><?php echo $column_left; ?>
-  <div id="content" class="span12"><?php echo $content_top; ?>
+  <div id="content" class="col-12"><?php echo $content_top; ?>
     <h1><?php echo $heading_title; ?>
       <?php if ($weight) { ?>
       &nbsp;(<?php echo $weight; ?>)

@@ -172,9 +172,10 @@ class ControllerDesignLayout extends Controller {
 		$results = $this->model_design_layout->getLayouts($data);
 		
 		foreach ($results as $result) {
-			$action = array();
+			$action = array();			
 			
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('design/layout/update', 'token=' . $this->session->data['token'] . '&layout_id=' . $result['layout_id'] . $url, 'SSL')
 			);

@@ -17,7 +17,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
           <div class="col-lg-9">
-            <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
+            <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
             <?php if ($error_firstname) { ?>
             <div class="error"><?php echo $error_firstname; ?></div>
             <?php } ?>
@@ -26,7 +26,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
           <div class="col-lg-9">
-            <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
+            <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
             <?php if ($error_lastname) { ?>
             <div class="error"><?php echo $error_lastname; ?></div>
             <?php } ?>
@@ -35,7 +35,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
           <div class="col-lg-9">
-            <input type="email" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
+            <input type="email" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
             <?php if ($error_email) { ?>
             <div class="error"><?php echo $error_email; ?></div>
             <?php } ?>
@@ -44,7 +44,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
           <div class="col-lg-9">
-            <input type="tel" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
+            <input type="tel" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
             <?php if ($error_telephone) { ?>
             <div class="error"><?php echo $error_telephone; ?></div>
             <?php } ?>
@@ -53,7 +53,7 @@
         <div class="form-group">
           <label class="col-lg-3 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
           <div class="col-lg-9">
-            <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" />
+            <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
           </div>
         </div>
       </fieldset>
@@ -62,19 +62,19 @@
         <div class="form-group">
           <label class="col-lg-3 control-label" for="input-company"><?php echo $entry_company; ?></label>
           <div class="col-lg-9">
-            <input type="text" name="company" value="<?php echo $company; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company" />
+            <input type="text" name="company" value="<?php echo $company; ?>" placeholder="<?php echo $entry_company; ?>" id="input-company" class="form-control" />
           </div>
         </div>
         <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'display' : 'none'); ?>;">
-          <div class="col-lg-3 control-label"><?php echo $entry_customer_group; ?></div>
+          <label class="col-lg-3 control-label"><?php echo $entry_customer_group; ?></label>
           <div class="col-lg-9">
             <?php foreach ($customer_groups as $customer_group) { ?>
             <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-            <label class="radio">
+            <label class="radio-inline">
               <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
               <?php echo $customer_group['name']; ?></label>
             <?php } else { ?>
-            <label class="radio">
+            <label class="radio-inline">
               <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" />
               <?php echo $customer_group['name']; ?></label>
             <?php } ?>
@@ -84,7 +84,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
           <div class="col-lg-9">
-            <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" />
+            <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" class="form-control" />
             <?php if ($error_address_1) { ?>
             <div class="error"><?php echo $error_address_1; ?></div>
             <?php } ?>
@@ -95,13 +95,13 @@
           <?php echo $entry_address_2; ?>
           </label>
           <div class="col-lg-9">
-            <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" />
+            <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" class="form-control" />
           </div>
         </div>
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-city"><?php echo $entry_city; ?></label>
           <div class="col-lg-9">
-            <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" />
+            <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" class="form-control" />
             <?php if ($error_city) { ?>
             <div class="error"><?php echo $error_city; ?></div>
             <?php } ?>
@@ -110,7 +110,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
           <div class="col-lg-9">
-            <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" />
+            <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
             <?php if ($error_postcode) { ?>
             <div class="error"><?php echo $error_postcode; ?></div>
             <?php } ?>
@@ -119,7 +119,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-country"><?php echo $entry_country; ?></label>
           <div class="col-lg-9">
-            <select name="country_id" id="input-country">
+            <select name="country_id" id="input-country" class="form-control">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($countries as $country) { ?>
               <?php if ($country['country_id'] == $country_id) { ?>
@@ -137,7 +137,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-zone"><?php echo $entry_zone; ?></label>
           <div class="col-lg-9">
-            <select name="zone_id" id="input-zone">
+            <select name="zone_id" id="input-zone" class="form-control">
             </select>
             <?php if ($error_zone) { ?>
             <div class="error"><?php echo $error_zone; ?></div>
@@ -150,7 +150,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?></label>
           <div class="col-lg-9">
-            <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" />
+            <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
             <?php if ($error_password) { ?>
             <div class="error"><?php echo $error_password; ?></div>
             <?php } ?>
@@ -159,7 +159,7 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
           <div class="col-lg-9">
-            <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" />
+            <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" class="form-control" />
             <?php if ($error_confirm) { ?>
             <div class="error"><?php echo $error_confirm; ?></div>
             <?php } ?>
@@ -169,20 +169,20 @@
       <fieldset>
         <legend><?php echo $text_newsletter; ?></legend>
         <div class="form-group">
-          <div class="col-lg-3 control-label"><?php echo $entry_newsletter; ?></div>
+          <label class="col-lg-3 control-label"><?php echo $entry_newsletter; ?></label>
           <div class="col-lg-9">
             <?php if ($newsletter) { ?>
-            <label class="radio">
+            <label class="radio-inline">
               <input type="radio" name="newsletter" value="1" checked="checked" />
               <?php echo $text_yes; ?></label>
-            <label class="radio">
+            <label class="radio-inline">
               <input type="radio" name="newsletter" value="0" />
               <?php echo $text_no; ?></label>
             <?php } else { ?>
-            <label class="radio">
+            <label class="radio-inline">
               <input type="radio" name="newsletter" value="1" />
               <?php echo $text_yes; ?></label>
-            <label class="radio">
+            <label class="radio-inline">
               <input type="radio" name="newsletter" value="0" checked="checked" />
               <?php echo $text_no; ?></label>
             <?php } ?>

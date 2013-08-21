@@ -123,7 +123,12 @@
             <div class="form-group">
               <label class="col-lg-3 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
               <div class="col-lg-9">
-                <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
+                <div class="input-group">
+                  <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
+                  <span class="input-group-btn">
+                  <button class="btn btn-info" type="button"><i class="icon-question-sign icon-large"></i></button>
+                  </span>
+                </div>
                 <span class="help-block"><?php echo $help_keyword; ?></span></div>
             </div>
             <div class="form-group">
@@ -148,7 +153,7 @@
                   <input type="checkbox" name="top" value="1" id="input-top" />
                   <?php } ?>
                 </label>
-                <span class="help-block"><?php echo $help_top; ?></span> </div>
+                <span class="help-block"><?php echo $help_top; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-lg-3 control-label" for="input-column"><?php echo $entry_column; ?></label>

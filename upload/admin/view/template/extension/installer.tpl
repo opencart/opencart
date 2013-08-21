@@ -41,7 +41,6 @@
           <div class="col-lg-9">
             <textarea rows="10" readonly="readonly" id="overwrite" class="form-control"></textarea>
             <br />
-            <br />
             <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="icon-ok"></i> <?php echo $button_continue; ?></button>
           </div>
         </div>

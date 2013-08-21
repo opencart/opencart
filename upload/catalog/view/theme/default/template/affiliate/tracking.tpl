@@ -4,28 +4,31 @@
   <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
   <?php } ?>
 </ul>
-<div class="row"> <?php echo $column_left; ?>
-  <div class="span9"><?php echo $content_top; ?>
+<div class="row"><?php echo $column_left; ?>
+  <div id="content" class="col-9"><?php echo $content_top; ?>
     <h1><?php echo $heading_title; ?></h1>
     <p><?php echo $text_description; ?></p>
-    <div class="form-group">
-      <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?></label>
-      <div class="col-lg-9">
-        <textarea cols="40" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code"><?php echo $code; ?></textarea>
+    <form class="form-horizontal">
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?></label>
+        <div class="col-lg-9">
+          <textarea cols="40" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control"><?php echo $code; ?></textarea>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-lg-3 control-label" for="input-generator"><?php echo $entry_generator; ?><span class="help-block"><?php echo $help_generator; ?></span></label>
-      <div class="col-lg-9">
-        <input type="text" name="product" value="" placeholder="<?php echo $entry_generator; ?>" id="input-generator" />
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="input-generator"><?php echo $entry_generator; ?></label>
+        <div class="col-lg-9">
+          <input type="text" name="product" value="" placeholder="<?php echo $entry_generator; ?>" id="input-generator" class="form-control" />
+          <span class="help-block"><?php echo $help_generator; ?></span>
+        </div>
       </div>
-    </div>
-    <div class="form-group">
-      <label class="col-lg-3 control-label" for="input-link"><?php echo $entry_link; ?></label>
-      <div class="col-lg-9">
-        <textarea name="link" cols="40" rows="5" placeholder="<?php echo $entry_link; ?>" id="input-link"></textarea>
+      <div class="form-group">
+        <label class="col-lg-3 control-label" for="input-link"><?php echo $entry_link; ?></label>
+        <div class="col-lg-9">
+          <textarea name="link" cols="40" rows="5" placeholder="<?php echo $entry_link; ?>" id="input-link" class="form-control"></textarea>
+        </div>
       </div>
-    </div>
+    </form>
     <div class="buttons clearfix">
       <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
     </div>

@@ -14,7 +14,7 @@
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-coupon" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
@@ -27,7 +27,7 @@
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
-            <div class="form-group required">
+            <div class="form-group"> required
               <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
               <div class="col-lg-9">
                 <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />

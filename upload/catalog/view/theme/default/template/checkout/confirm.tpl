@@ -1,6 +1,6 @@
 <?php if (!isset($redirect)) { ?>
-<div class="row-fluid">
-  <div class="span12">
+<div class="row">
+  <div class="col-12">
     <table class="table table-bordered table-hover">
       <thead>
         <tr>
@@ -46,8 +46,8 @@
     </table>
   </div>
 </div>
-<div class="row-fluid">
-  <div class="span12"><?php echo $payment; ?></div>
+<div class="row">
+  <div class="col-12"><?php echo $payment; ?></div>
 </div>
 <?php } else { ?>
 <script type="text/javascript"><!--

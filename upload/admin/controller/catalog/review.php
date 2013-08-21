@@ -173,8 +173,9 @@ class ControllerCatalogReview extends Controller {
  
     	foreach ($results as $result) {
 			$action = array();
-						
+			
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('catalog/review/update', 'token=' . $this->session->data['token'] . '&review_id=' . $result['review_id'] . $url, 'SSL')
 			);

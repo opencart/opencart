@@ -10,22 +10,22 @@
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <fieldset>
         <div class="form-group">
-          <div class="col-lg-3 control-label"><?php echo $entry_newsletter; ?></div>
+          <label class="col-lg-3 control-label"><?php echo $entry_newsletter; ?></label>
           <div class="col-lg-9">
             <?php if ($newsletter) { ?>
-            <label class="radio inline">
+            <label class="radio-inline">
               <input type="radio" name="newsletter" value="1" checked="checked" />
               <?php echo $text_yes; ?> </label>
-            <label class="radio inline">
+            <label class="radio-inline">
               <input type="radio" name="newsletter" value="0" />
-              <?php echo $text_no; ?> </label>
+              <?php echo $text_no; ?></label>
             <?php } else { ?>
-            <label class="radio inline">
+            <label class="radio-inline">
               <input type="radio" name="newsletter" value="1" />
               <?php echo $text_yes; ?> </label>
-            <label class="radio inline">
+            <label class="radio-inline">
               <input type="radio" name="newsletter" value="0" checked="checked" />
-              <?php echo $text_no; ?> </label>
+              <?php echo $text_no; ?></label>
             <?php } ?>
           </div>
         </div>

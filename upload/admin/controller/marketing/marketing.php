@@ -248,6 +248,7 @@ class ControllerMarketingMarketing extends Controller {
 			$action = array();
 		
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('marketing/marketing/update', 'token=' . $this->session->data['token'] . '&marketing_id=' . $result['marketing_id'] . $url, 'SSL')
 			);

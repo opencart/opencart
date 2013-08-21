@@ -59,7 +59,7 @@
               <td class="text-left"><?php echo $weight_class['unit']; ?></td>
               <td class="text-right"><?php echo $weight_class['value']; ?></td>
               <td class="text-right"><?php foreach ($weight_class['action'] as $action) { ?>
-                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
                 <?php } ?></td>
             </tr>
             <?php } ?>

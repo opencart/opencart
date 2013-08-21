@@ -14,13 +14,13 @@
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-return-action" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-return-action" class="form-horizontal">
         <div class="form-group required">
-          <div class="col-lg-3 control-label"><?php echo $entry_name; ?></div>
+          <label class="col-lg-3 control-label"><?php echo $entry_name; ?></label>
           <div class="col-lg-9">
             <?php foreach ($languages as $language) { ?>
             <div class="input-group"> <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>

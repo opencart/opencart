@@ -203,7 +203,7 @@
             <li>
               <select class="input-block-level" name="option[<?php echo $option['product_option_id']; ?>]">
                 <option value=""><?php echo $text_select; ?></option>
-                <?php foreach ($option['option_value'] as $option_value) { ?>
+                <?php foreach ($option['product_option_value'] as $option_value) { ?>
                 <option value="<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
                 <?php if ($option_value['price']) { ?>
                 (<?php echo $option_value['price_prefix']; ?><?php echo $option_value['price']; ?>)
@@ -223,7 +223,7 @@
               <span class="text-error">*</span>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
-            <?php foreach ($option['option_value'] as $option_value) { ?>
+            <?php foreach ($option['product_option_value'] as $option_value) { ?>
             <li>
               <label class="radio" for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
                 <input type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
@@ -244,7 +244,7 @@
               <span class="text-error">*</span>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
-            <?php foreach ($option['option_value'] as $option_value) { ?>
+            <?php foreach ($option['product_option_value'] as $option_value) { ?>
             <li>
               <label class="checkbox" for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
                 <input type="checkbox" name="option[<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
@@ -265,7 +265,7 @@
               <span class="text-error">*</span>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
-            <?php foreach ($option['option_value'] as $option_value) { ?>
+            <?php foreach ($option['product_option_value'] as $option_value) { ?>
             <input class="pull-left" type="radio" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option_value['product_option_value_id']; ?>" id="option-value-<?php echo $option_value['product_option_value_id']; ?>" />
             <label class="pull-left" for="option-value-<?php echo $option_value['product_option_value_id']; ?>"> <img src="<?php echo $option_value['image']; ?>" alt="<?php echo $option_value['name'] . ($option_value['price'] ? ' ' . $option_value['price_prefix'] . $option_value['price'] : ''); ?>" /> </label>
             <label class="pull-left" for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
@@ -286,7 +286,7 @@
               <span class="text-error">*</span>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
-            <input class="input-block-level" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" />
+            <input class="input-block-level" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
           </ul>
         </div>
         <?php } ?>
@@ -298,7 +298,7 @@
               <span class="text-error">*</span>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
-            <textarea class="input-block-level" name="option[<?php echo $option['product_option_id']; ?>]" cols="40" rows="5"><?php echo $option['option_value']; ?></textarea>
+            <textarea class="input-block-level" name="option[<?php echo $option['product_option_id']; ?>]" cols="40" rows="5"><?php echo $option['value']; ?></textarea>
           </ul>
         </div>
         <?php } ?>
@@ -323,7 +323,7 @@
               <span class="text-error">*</span>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
-            <input class="input-block-level date" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" class="date" />
+            <input class="input-block-level date" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" class="date" />
           </ul>
         </div>
         <?php } ?>
@@ -335,7 +335,7 @@
               <span class="text-error">*</span>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
-            <input class="input-block-level datetime" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" />
+            <input class="input-block-level datetime" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
           </ul>
         </div>
         <?php } ?>
@@ -347,7 +347,7 @@
               <span class="text-error">*</span>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
-            <input class="input-block-level time" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" />
+            <input class="input-block-level time" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
           </ul>
         </div>
         <?php } ?>

@@ -42,6 +42,7 @@
             <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
           </ul>
         </li>
+        <?php if ($logged) { ?>
         <li class="dropdown"><a class="profile" data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> <i class="icon-caret-down"></i></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
@@ -49,6 +50,7 @@
             <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
           </ul>
         </li>
+        <?php } ?>
       </ul>
     </nav>
   </div>

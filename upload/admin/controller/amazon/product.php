@@ -465,6 +465,11 @@ class ControllerAmazonProduct extends Controller{
             $defaults['value'] = $product_info['ean'];
         }
         
+        $meta_keywords = explode(',', $product_info['meta_keyword']);
+        foreach ($meta_keywords as $index => $meta_keyword) {
+            $defaults['searchterms' . $index] = trim($meta_keyword);
+        }
+        
         $this->load->library('amazon');
         if($var !== '' && $this->amazon->addonLoad('openstock')) {
             $this->load->model('tool/image');

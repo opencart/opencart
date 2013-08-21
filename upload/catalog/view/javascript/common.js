@@ -28,7 +28,7 @@ $(document).ready(function() {
 
     // Cart Dropdown
     $(document).on('click', '#cart > .dropdown-toggle', function() {
-        $('#cart').load('/index.php?route=module/cart #cart > *');
+        $('#cart').load('index.php?route=module/cart #cart > *');
     });
     
     // Notifications.

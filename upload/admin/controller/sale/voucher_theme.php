@@ -175,6 +175,7 @@ class ControllerSaleVoucherTheme extends Controller {
 			$action = array();
 			
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('sale/voucher_theme/update', 'token=' . $this->session->data['token'] . '&voucher_theme_id=' . $result['voucher_theme_id'] . $url, 'SSL')
 			);

@@ -175,6 +175,7 @@ class ControllerCatalogInformation extends Controller {
 			$action = array();
 						
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('catalog/information/update', 'token=' . $this->session->data['token'] . '&information_id=' . $result['information_id'] . $url, 'SSL')
 			);

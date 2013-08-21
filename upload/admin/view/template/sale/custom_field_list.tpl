@@ -65,7 +65,7 @@
               <td class="text-left"><?php echo $custom_field['location']; ?></td>
               <td class="text-right"><?php echo $custom_field['sort_order']; ?></td>
               <td class="text-right"><?php foreach ($custom_field['action'] as $action) { ?>
-                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
                 <?php } ?></td>
             </tr>
             <?php } ?>

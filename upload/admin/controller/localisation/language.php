@@ -175,6 +175,7 @@ class ControllerLocalisationLanguage extends Controller {
 			$action = array();
 			
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('localisation/language/update', 'token=' . $this->session->data['token'] . '&language_id=' . $result['language_id'] . $url, 'SSL')
 			);

@@ -34,7 +34,7 @@
     </table>
     <div class="pagination"><?php echo $pagination; ?></div>
     <?php } else { ?>
-    <div class="empty"><?php echo $text_empty; ?></div>
+    <p><?php echo $text_empty; ?></p>
     <?php } ?>
     <div class="buttons clearfix">
       <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>

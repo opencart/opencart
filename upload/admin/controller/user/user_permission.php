@@ -175,6 +175,7 @@ class ControllerUserUserPermission extends Controller {
 			$action = array();
 			
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('user/user_permission/update', 'token=' . $this->session->data['token'] . '&user_group_id=' . $result['user_group_id'] . $url, 'SSL')
 			);		

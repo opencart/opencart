@@ -251,6 +251,7 @@ class ControllerExtensionModification extends Controller {
 			$action = array();
 			
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('extension/modification/update', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'] . $url, 'SSL')
 			);

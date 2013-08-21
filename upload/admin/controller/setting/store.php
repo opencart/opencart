@@ -107,6 +107,7 @@ class ControllerSettingStore extends Controller {
 		$action = array();
 					
 		$action[] = array(
+			'icon' => 'pencil',
 			'text' => $this->language->get('text_edit'),
 			'href' => $this->url->link('setting/setting', 'token=' . $this->session->data['token'], 'SSL')
 		);
@@ -127,6 +128,7 @@ class ControllerSettingStore extends Controller {
 			$action = array();
 						
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('setting/store/update', 'token=' . $this->session->data['token'] . '&store_id=' . $result['store_id'], 'SSL')
 			);

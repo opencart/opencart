@@ -16,34 +16,34 @@
         <div class="form-group required">
           <label class="col-lg-3 control-label" for="input-firstname"><?php echo $entry_firstname; ?> </label>
           <div class="col-lg-9">
-            <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" />
+            <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
             <?php if ($error_firstname) { ?>
             <div class="error"><?php echo $error_firstname; ?></div>
             <?php } ?>
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-lastname"><?php echo $entry_lastname; ?> </label>
+          <label class="col-lg-3 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
           <div class="col-lg-9">
-            <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" />
+            <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
             <?php if ($error_lastname) { ?>
             <div class="error"><?php echo $error_lastname; ?></div>
             <?php } ?>
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?> </label>
+          <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
           <div class="col-lg-9">
-            <input type="email" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
+            <input type="email" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
             <?php if ($error_email) { ?>
             <div class="error"><?php echo $error_email; ?></div>
             <?php } ?>
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-telephone"><?php echo $entry_telephone; ?> </label>
+          <label class="col-lg-3 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
           <div class="col-lg-9">
-            <input type="tel" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" />
+            <input type="tel" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
             <?php if ($error_telephone) { ?>
             <div class="error"><?php echo $error_telephone; ?></div>
             <?php } ?>
@@ -52,7 +52,7 @@
         <div class="form-group">
           <label class="col-lg-3 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
           <div class="col-lg-9">
-            <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" />
+            <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
           </div>
         </div>
       </fieldset>

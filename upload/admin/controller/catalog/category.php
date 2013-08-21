@@ -148,6 +148,7 @@ class ControllerCatalogCategory extends Controller {
 			$action = array();
 						
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('catalog/category/update', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL')
 			);

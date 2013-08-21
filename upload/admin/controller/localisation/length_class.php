@@ -175,6 +175,7 @@ class ControllerLocalisationLengthClass extends Controller {
 			$action = array();
 			
 			$action[] = array(
+				'icon' => 'pencil',
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('localisation/length_class/update', 'token=' . $this->session->data['token'] . '&length_class_id=' . $result['length_class_id'] . $url, 'SSL')
 			);

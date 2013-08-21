@@ -65,7 +65,7 @@
               <td class="text-right"><?php echo $currency['value']; ?></td>
               <td class="text-left"><?php echo $currency['date_modified']; ?></td>
               <td class="text-right"><?php foreach ($currency['action'] as $action) { ?>
-                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
                 <?php } ?></td>
             </tr>
             <?php } ?>

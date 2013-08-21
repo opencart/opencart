@@ -9,25 +9,7 @@
 <script src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link rel="stylesheet" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <style type="text/css">
-body {
-	font-size: 12px;
-}
-.container-fluid {
-	width: 900px;
-	border: 1px solid #000;
-	margin: auto;
-}
-#menu {
-	margin-bottom: 10px;
-}
-#directory {
-	float: left;
-	margin-right: 5px;
-	width: 160px;
-}
-#file {
-	margin-left: 200px;
-}
+
 </style>
 </head>
 <body>
@@ -45,18 +27,28 @@ body {
       </div>
 -->
 
-<div class="container">
   <div class="row">
-  <div class="col-6">
-  <div class="well well-sm">
-  <ul></ul>
-  </div>
-  </div>
-  
+    <div class="col-sm-3">
+
+        <div class="list-group">
+          <a class="list-group-item">test</a>
+          <a class="list-group-item">test</a>
+          <a class="list-group-item">test</a>
+        </div>
+
     </div>
-  </div>
-  <div class="row">
-    <div class="col-12">
+    <div class="col-sm-9">
+    
+    
+   <div class="thumbnail">
+      <img data-src="holder.js/300x200" alt="...">
+      <div class="caption">
+        <p><a href="#" title="<?php echo $button_move; ?>" class="btn btn-primary"><i class="icon-remove-sign"></i></a> <a href="#" class="btn btn-default"><i title="<?php echo $button_delete; ?>" class="icon-trash"></i></a></p>
+      </div>    
+    
+    
+    
+    
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
@@ -76,7 +68,7 @@ body {
             <td>jPeg</td>
             <td>1/2/1999</td>
             <td><button type="button" title="<?php echo $button_rename; ?>" class="btn btn-default"><i class="icon-edit"></i></button>
-              <i title="<?php echo $button_move; ?>" class="icon-remove-sign"></i> <i title="<?php echo $button_delete; ?>" class="icon-trash"></i></td>
+               </td>
           </tr>
         </tbody>
       </table>
@@ -85,7 +77,6 @@ body {
       </ul>
     </div>
   </div>
-</div>
 <div id="upload" style="display: none;">
   <form enctype="multipart/form-data">
     <input type="file" name="image" id="image" />
@@ -116,13 +107,14 @@ $('#directory').delegate('a', 'click', function(e) {
 			},
 			success: function(json) {
 				$(node).find('> .icon-folder-close').attr('class', 'icon-folder-open');
+				
 				$(node).parent().find('ul').remove();
 				
 				if (json) {
 					html = '<ul>';
 					
 					for (i = 0; i < json.length; i++) {
-						html += '<li><a href="' + json[i]['directory'] + '"><i class="icon-folder-close"></i> ' + json[i]['name'] + '</a> </li>';
+						html += '<li><a href="' + json[i]['directory'] + '"><i class="icon-folder-close"></i> ' + json[i]['name'] + '</a></li>';
 					}
 					
 					html += '</ul>';
@@ -140,36 +132,6 @@ $('#directory').delegate('a', 'click', function(e) {
 	}
 });
 
-function handleDragStart(e) {
-  this.style.opacity = '0.4';  // this / e.target is the source node.
-}
-
-function handleDragOver(e) {
-  if (e.preventDefault) {
-    e.preventDefault(); // Necessary. Allows us to drop.
-  }
-
-  e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
-
-  return false;
-}
-
-function handleDragEnter(e) {
-  // this / e.target is the current hover target.
-  this.classList.add('over');
-}
-
-function handleDragLeave(e) {
-  this.classList.remove('over');  // this / e.target is previous target element.
-}
-
-var cols = document.querySelectorAll('#columns .column');
-[].forEach.call(cols, function(col) {
-  col.addEventListener('dragstart', handleDragStart, false);
-  col.addEventListener('dragenter', handleDragEnter, false);
-  col.addEventListener('dragover', handleDragOver, false);
-  col.addEventListener('dragleave', handleDragLeave, false);
-});
 
 /*
 $.ajax({

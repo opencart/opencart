@@ -71,7 +71,7 @@
               <td class="text-left"><?php echo $review['status']; ?></td>
               <td class="text-left"><?php echo $review['date_added']; ?></td>
               <td class="text-right"><?php foreach ($review['action'] as $action) { ?>
-                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
                 <?php } ?></td>
             </tr>
             <?php } ?>

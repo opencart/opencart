@@ -320,6 +320,7 @@ class ControllerSaleOrder extends Controller {
 			
 			if (strtotime($result['date_added']) > strtotime('-' . (int)$this->config->get('config_order_edit') . ' day')) {
 				$action[] = array(
+					'icon' => 'pencil',
 					'text' => $this->language->get('text_edit'),
 					'href' => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
 				);

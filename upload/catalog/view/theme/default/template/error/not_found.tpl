@@ -5,7 +5,7 @@
   <?php } ?>
 </ul>
 <div class="row"><?php echo $column_left; ?>
-  <div id="content" class="span9"><?php echo $content_top; ?>
+  <div id="content" class="col-sm-9"><?php echo $content_top; ?>
     <h1><?php echo $heading_title; ?></h1>
     <p><?php echo $text_error; ?></p>
     <div class="buttons">

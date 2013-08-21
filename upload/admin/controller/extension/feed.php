@@ -115,16 +115,19 @@ class ControllerExtensionFeed extends Controller {
 			
 				if (!in_array($extension, $extensions)) {
 					$action[] = array(
+						'icon' => 'plus',
 						'text' => $this->language->get('text_install'),
 						'href' => $this->url->link('extension/feed/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
 					);
 				} else {
 					$action[] = array(
+						'icon' => 'pencil',
 						'text' => $this->language->get('text_edit'),
 						'href' => $this->url->link('feed/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
 					);
 							
 					$action[] = array(
+						'icon' => 'minus',
 						'text' => $this->language->get('text_uninstall'),
 						'href' => $this->url->link('extension/feed/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
 					);

@@ -74,10 +74,11 @@
       <div class="col-sm-8">
         <div class="row">
           <div class="col-sm-5">
-            <div id="search" class="input-append">
-              <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" />
-              <div class="btn button-search"><i class="icon-search"></i></div>
-            </div>
+            <div id="search" class="input-group">
+              <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" class="form-control" />
+              <span class="input-group-btn">
+              <button type="button" class="btn btn-default"><i class="icon-search"></i></button>
+              </span> </div>
           </div>
           <div class="col-sm-3"><?php echo $cart; ?></div>
         </div>
@@ -95,7 +96,7 @@
                 <div class="dropdown-menu animated fadeIn">
                   <div class="dropdown-inner">
                     <?php for ($i = 0; $i < count($category['children']);) { ?>
-                    <ul class="unstyled">
+                    <ul class="list-unstyled">
                       <?php $j = $i + ceil(count($category['children']) / $category['column']); ?>
                       <?php for (; $i < $j; $i++) { ?>
                       <?php if (isset($category['children'][$i])) { ?>

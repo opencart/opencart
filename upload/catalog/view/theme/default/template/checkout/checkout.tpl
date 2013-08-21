@@ -1,78 +1,79 @@
 <?php echo $header; ?>
-<ul class="breadcrumb">
-  <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-  <?php } ?>
-</ul>
-<div class="row"><?php echo $column_left; ?>
-  <div id="content" class="col-12"><?php echo $content_top; ?>
-    <h1><?php echo $heading_title; ?></h1>
-    <div class="panel-group" id="accordion">
-      <div class="panel">
-        <div class="panel-heading">
-          <h4 class="panel-title"><a href="#collapse-checkout-option" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_option; ?> <i class="icon-caret-down"></i></a></h4>
+<div class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="row"><?php echo $column_left; ?>
+    <div id="content" class="col-12"><?php echo $content_top; ?>
+      <h1><?php echo $heading_title; ?></h1>
+      <div class="panel-group" id="accordion">
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a href="#collapse-checkout-option" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_option; ?> <i class="icon-caret-down"></i></a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-checkout-option">
+            <div class="panel-body"></div>
+          </div>
         </div>
-        <div class="panel-collapse collapse" id="collapse-checkout-option">
-          <div class="panel-body"></div>
+        <?php if (!$logged) { ?>
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_account; ?> <i class="icon-caret-down"></i></a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-payment-address">
+            <div class="panel-body"></div>
+          </div>
         </div>
-      </div>
-      <?php if (!$logged) { ?>
-      <div class="panel">
-        <div class="panel-heading">
-          <h4 class="panel-title"><a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_account; ?> <i class="icon-caret-down"></i></a></h4>
+        <?php } else { ?>
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_payment_address; ?> <i class="icon-caret-down"></i></a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-payment-address">
+            <div class="panel-body"></div>
+          </div>
         </div>
-        <div class="panel-collapse collapse" id="collapse-payment-address">
-          <div class="panel-body"></div>
+        <?php } ?>
+        <?php if ($shipping_required) { ?>
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a href="#collapse-shipping-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_shipping_address; ?> <i class="icon-caret-down"></i></a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-shipping-address">
+            <div class="panel-body"></div>
+          </div>
         </div>
-      </div>
-      <?php } else { ?>
-      <div class="panel">
-        <div class="panel-heading">
-          <h4 class="panel-title"><a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_payment_address; ?> <i class="icon-caret-down"></i></a></h4>
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a href="#collapse-shipping-method" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_shipping_method; ?> <i class="icon-caret-down"></i></a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-shipping-method">
+            <div class="panel-body"></div>
+          </div>
         </div>
-        <div class="panel-collapse collapse" id="collapse-payment-address">
-          <div class="panel-body"></div>
+        <?php } ?>
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a href="#collapse-payment-method" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_payment_method; ?> <i class="icon-caret-down"></i></a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-payment-method">
+            <div class="panel-body"></div>
+          </div>
         </div>
-      </div>
-      <?php } ?>
-      <?php if ($shipping_required) { ?>
-      <div class="panel">
-        <div class="panel-heading">
-          <h4 class="panel-title"><a href="#collapse-shipping-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_shipping_address; ?> <i class="icon-caret-down"></i></a></h4>
-        </div>
-        <div class="panel-collapse collapse" id="collapse-shipping-address">
-          <div class="panel-body"></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-heading">
-          <h4 class="panel-title"><a href="#collapse-shipping-method" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_shipping_method; ?> <i class="icon-caret-down"></i></a></h4>
-        </div>
-        <div class="panel-collapse collapse" id="collapse-shipping-method">
-          <div class="panel-body"></div>
-        </div>
-      </div>
-      <?php } ?>
-      <div class="panel">
-        <div class="panel-heading">
-          <h4 class="panel-title"><a href="#collapse-payment-method" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_payment_method; ?> <i class="icon-caret-down"></i></a></h4>
-        </div>
-        <div class="panel-collapse collapse" id="collapse-payment-method">
-          <div class="panel-body"></div>
-        </div>
-      </div>
-      <div class="panel">
-        <div class="panel-heading">
-          <h4 class="panel-title"><a href="#collapse-checkout-confirm" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_confirm; ?> <i class="icon-caret-down"></i></a></h4>
-        </div>
-        <div class="panel-collapse collapse" id="collapse-checkout-confirm">
-          <div class="panel-body"></div>
+        <div class="panel">
+          <div class="panel-heading">
+            <h4 class="panel-title"><a href="#collapse-checkout-confirm" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_confirm; ?> <i class="icon-caret-down"></i></a></h4>
+          </div>
+          <div class="panel-collapse collapse" id="collapse-checkout-confirm">
+            <div class="panel-body"></div>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-  <?php echo $content_bottom; ?></div>
-<?php echo $column_right; ?>
+    <?php echo $content_bottom; ?></div>
+  <?php echo $column_right; ?> </div>
 </div>
 <script type="text/javascript"><!--
 $(document).on('change', 'input[name=\'account\']', function() {

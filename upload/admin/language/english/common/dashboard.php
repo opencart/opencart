@@ -19,5 +19,8 @@ $_['column_action']     = 'Action';
 $_['column_date_added'] = 'Date Added';
 
 // Error
-$_['error_install']     = 'Warning: Install folder still exists and should be deleted for security reasons!';
+$_['error_install']     = 'Warning: Install folder still exists and should be <a id="remove_install"><strong>deleted</strong></a> for security reasons!';
+$_['error_directory']   = 'The installation directory could not be deleted.<strong>Remove manually!</strong>';
+
+
 ?>

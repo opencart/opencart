@@ -31,7 +31,7 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
             <div class="row">
-              <div class="col-lg-3">
+              <div class="col-sm-2">
                 <ul class="nav nav-pills nav-stacked" id="address">
                   <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                   <?php $address_row = 1; ?>
@@ -256,16 +256,18 @@
           <?php if ($customer_id) { ?>
           <div class="tab-pane" id="tab-history">
             <div id="history"></div>
+            <br />
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
               <div class="col-sm-10">
                 <textarea name="comment" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"></textarea>
               </div>
             </div>
-            <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+            <div class="text-right"><button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button></div>
           </div>
           <div class="tab-pane" id="tab-transaction">
             <div id="transaction"></div>
+            <br />
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-transaction-description"><?php echo $entry_description; ?></label>
               <div class="col-sm-10">
@@ -278,10 +280,11 @@
                 <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" class="form-control" />
               </div>
             </div>
-            <button type="button" id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
+            <div class="text-right"><button type="button" id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button></div>
           </div>
           <div class="tab-pane" id="tab-reward">
             <div id="reward"></div>
+            <br />
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-reward-description"><?php echo $entry_description; ?></label>
               <div class="col-sm-10">
@@ -294,7 +297,7 @@
                 <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" class="form-control" />
                 <span class="help-block"><?php echo $help_points; ?></span> </div>
             </div>
-            <button type="button" id="button-reward" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
+            <div class="text-right"><button type="button" id="button-reward" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button></div>
           </div>
           <?php } ?>
           <div class="tab-pane" id="tab-ip">

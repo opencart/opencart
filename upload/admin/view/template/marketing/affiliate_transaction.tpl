@@ -37,9 +37,7 @@
     <?php } ?>
   </tbody>
 </table>
-<div class="row-fluid">
-  <div class="span6"><?php echo $pagination; ?></div>
-  <div class="span6">
-    <div class="results"><?php echo $results; ?></div>
-  </div>
+<div class="row">
+  <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+  <div class="col-sm-6 text-right"><?php echo $results; ?></div>
 </div>

@@ -168,7 +168,7 @@ footer a {
 	text-decoration: none;
 }
 .breadcrumb li + li {
-	padding-left: 10px;
+	padding-left: 18px;
 }
 .breadcrumb > li + li:before {
 	content: '';

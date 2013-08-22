@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-user" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-user" class="form-horizontal">
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-username"><?php echo $entry_username; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-username"><?php echo $entry_username; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
             <?php if ($error_username) { ?>
             <span class="error"><?php echo $error_username; ?></span>
@@ -29,8 +29,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
+          <div class="col-sm-10">
             <select name="user_group_id" id="input-user-group" class="form-control">
               <?php foreach ($user_groups as $user_group) { ?>
               <?php if ($user_group['user_group_id'] == $user_group_id) { ?>
@@ -43,8 +43,8 @@
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
             <?php if ($error_firstname) { ?>
             <span class="error"><?php echo $error_firstname; ?></span>
@@ -52,8 +52,8 @@
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
             <?php if ($error_lastname) { ?>
             <span class="error"><?php echo $error_lastname; ?></span>
@@ -61,14 +61,14 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_image; ?></label>
-          <div class="col-lg-9"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
+          <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_image; ?></label>
+          <div class="col-sm-10"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
             <input type="hidden" name="image" value="<?php echo $image; ?>" />
             <br />
             <br />
@@ -79,8 +79,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
+          <div class="col-sm-10">
             <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
@@ -88,8 +88,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
+          <div class="col-sm-10">
             <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" class="form-control" />
             <?php if ($error_confirm) { ?>
             <span class="error"><?php echo $error_confirm; ?></span>
@@ -97,8 +97,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+          <div class="col-sm-10">
             <select name="status" id="input-status" class="form-control">
               <?php if ($status) { ?>
               <option value="0"><?php echo $text_disabled; ?></option>

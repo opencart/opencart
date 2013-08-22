@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-flat" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,14 +20,14 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-flat" class="form-horizontal">
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-cost"><?php echo $entry_cost; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-cost"><?php echo $entry_cost; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="flat_cost" value="<?php echo $flat_cost; ?>" placeholder="<?php echo $entry_cost; ?>" id="input-cost" class="form-control" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-tax-class"><?php echo $entry_tax_class; ?></label>
+          <div class="col-sm-10">
             <select name="flat_tax_class_id" id="input-tax-class" class="form-control">
               <option value="0"><?php echo $text_none; ?></option>
               <?php foreach ($tax_classes as $tax_class) { ?>
@@ -41,8 +41,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+          <div class="col-sm-10">
             <select name="flat_geo_zone_id" id="input-geo-zone" class="form-control">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
@@ -56,8 +56,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+          <div class="col-sm-10">
             <select name="flat_status" id="input-status" class="form-control">
               <?php if ($flat_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -70,8 +70,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="flat_sort_order" value="<?php echo $flat_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
           </div>
         </div>

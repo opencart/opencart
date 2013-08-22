@@ -1,4 +1,4 @@
-<div class="panel">
+<div class="panel panel-default">
   <div class="panel-heading"><?php echo $heading_title; ?></div>
   <ul class="box-filter">
     <?php foreach ($filter_groups as $filter_group) { ?>

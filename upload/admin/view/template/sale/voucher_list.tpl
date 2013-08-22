@@ -15,7 +15,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="button" id="button-send" class="btn"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>

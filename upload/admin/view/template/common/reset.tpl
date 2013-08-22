@@ -5,7 +5,7 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-repeat"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -13,8 +13,8 @@
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <p><?php echo $text_password; ?></p>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
+          <div class="col-sm-10">
             <input type="password" name="password" value="<?php echo $password; ?>" id="input-password" class="form-control" />
             <?php if ($error_password) { ?>
             <span class="text-error"><?php echo $error_password; ?></span>
@@ -22,8 +22,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
+          <div class="col-sm-10">
             <input type="password" name="confirm" value="<?php echo $confirm; ?>" id="input-confirm" class="form-control" />
             <?php if ($error_confirm) { ?>
             <span class="text-error"><?php echo $error_confirm; ?></span>

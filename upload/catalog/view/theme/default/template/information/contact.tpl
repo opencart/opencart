@@ -34,8 +34,8 @@
             <fieldset>
               <h3><?php echo $text_contact; ?></h3>
               <div class="form-group required">
-                <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
-                <div class="col-lg-9">
+                <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+                <div class="col-sm-10">
                   <input type="text" name="name" value="<?php echo $name; ?>" id="input-name" class="form-control" />
                   <?php if ($error_name) { ?>
                   <div class="text-danger"><?php echo $error_name; ?></div>
@@ -43,8 +43,8 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-lg-3 control-label"><?php echo $entry_email; ?></label>
-                <div class="col-lg-9">
+                <label class="col-sm-2 control-label"><?php echo $entry_email; ?></label>
+                <div class="col-sm-10">
                   <input type="text" name="email" value="<?php echo $email; ?>" class="form-control" />
                   <?php if ($error_email) { ?>
                   <div class="text-danger"><?php echo $error_email; ?></div>
@@ -52,8 +52,8 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-lg-3 control-label"><?php echo $entry_enquiry; ?></label>
-                <div class="col-lg-9">
+                <label class="col-sm-2 control-label"><?php echo $entry_enquiry; ?></label>
+                <div class="col-sm-10">
                   <textarea name="enquiry" rows="10" class="form-control"><?php echo $enquiry; ?></textarea>
                   <?php if ($error_enquiry) { ?>
                   <div class="text-danger"><?php echo $error_enquiry; ?></div>
@@ -61,8 +61,8 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-lg-3 control-label"><?php echo $entry_captcha; ?></label>
-                <div class="col-lg-9"><img class="captcha" src="index.php?route=information/contact/captcha" alt="" />
+                <label class="col-sm-2 control-label"><?php echo $entry_captcha; ?></label>
+                <div class="col-sm-10"><img class="captcha" src="index.php?route=information/contact/captcha" alt="" />
                   <input type="text" name="captcha" value="<?php echo $captcha; ?>" class="form-control" />
                   <?php if ($error_captcha) { ?>
                   <div class="text-danger"><?php echo $error_captcha; ?></div>

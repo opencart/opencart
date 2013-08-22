@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-carousel" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>

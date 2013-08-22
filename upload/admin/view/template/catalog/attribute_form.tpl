@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-attribute" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-attribute" class="form-horizontal">
         <div class="form-group required">
-          <label class="col-lg-3 control-label"><?php echo $entry_name; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
+          <div class="col-sm-10">
             <?php foreach ($languages as $language) { ?>
             <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
               <input type="text" name="attribute_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($attribute_description[$language['language_id']]) ? $attribute_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
@@ -33,8 +33,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-attribute-group"><?php echo $entry_attribute_group; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-attribute-group"><?php echo $entry_attribute_group; ?></label>
+          <div class="col-lg-10">
             <select name="attribute_group_id" id="input-attribute-group" class="form-control">
               <?php foreach ($attribute_groups as $attribute_group) { ?>
               <?php if ($attribute_group['attribute_group_id'] == $attribute_group_id) { ?>
@@ -47,8 +47,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
           </div>
         </div>

@@ -10,15 +10,15 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form class="form-horizontal">
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>
+          <div class="col-sm-10">
             <button type="button" id="button-upload" class="btn btn-primary" onclick="$('input[name=\'file\']').val(''); $('input[name=\'file\']').click();"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
             <?php if ($error_warning) { ?>
             <button type="button" id="button-clear" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></button>
@@ -28,8 +28,8 @@
             <span class="help-block"><?php echo $help_upload; ?></span></div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_progress; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
+          <div class="col-sm-10">
             <div class="progress">
               <div class="progress-bar" style="width: 0%;"></div>
             </div>
@@ -37,8 +37,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_overwrite; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_overwrite; ?></label>
+          <div class="col-sm-10">
             <textarea rows="10" readonly="readonly" id="overwrite" class="form-control"></textarea>
             <br />
             <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="icon-ok"></i> <?php echo $button_continue; ?></button>

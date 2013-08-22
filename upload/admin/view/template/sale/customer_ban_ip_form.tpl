@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-customer-ban-ip" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer-ban-ip" class="form-horizontal">
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" class="form-control" />
             <?php if ($error_ip) { ?>
             <span class="text-error"><?php echo $error_ip; ?></span>

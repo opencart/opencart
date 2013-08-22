@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-pickup" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pickup" class="form-horizontal">
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+          <div class="col-sm-10">
             <select name="pickup_geo_zone_id" id="input-geo-zone" class="form-control">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
@@ -35,8 +35,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+          <div class="col-sm-10">
             <select name="pickup_status" id="input-status" class="form-control">
               <?php if ($pickup_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -49,8 +49,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="pickup_sort_order" value="<?php echo $pickup_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
           </div>
         </div>

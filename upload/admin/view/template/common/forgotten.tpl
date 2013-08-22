@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-repeat"></i> <?php echo $heading_title; ?></h1>
     </div>

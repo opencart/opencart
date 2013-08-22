@@ -15,7 +15,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" class="btn btn-info"><i class="icon-print"></i> <?php echo $button_invoice; ?></button>

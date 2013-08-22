@@ -5,7 +5,7 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="icon-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       <h1 class="panel-title"><i class="icon-info-sign"></i> <?php echo $heading_title; ?></h1>
@@ -355,8 +355,8 @@
           <div id="history"></div>
           <div class="form-horizontal">
             <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
-              <div class="col-lg-9">
+              <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+              <div class="col-sm-10">
                 <select name="order_status_id" id="input-order-status" class="form-control">
                   <?php foreach ($order_statuses as $order_statuses) { ?>
                   <?php if ($order_statuses['order_status_id'] == $order_status_id) { ?>
@@ -369,14 +369,14 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
-              <div class="col-lg-9">
+              <label class="col-sm-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+              <div class="col-sm-10">
                 <input type="checkbox" name="notify" value="1" id="input-notify" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-              <div class="col-lg-9">
+              <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+              <div class="col-sm-10">
                 <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
               </div>
             </div>

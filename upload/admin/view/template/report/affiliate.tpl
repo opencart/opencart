@@ -5,7 +5,7 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-bar-chart"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -15,14 +15,14 @@
           <div class="row">
             <div class="col-lg-10">
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-                <div class="col-lg-9">
+                <label class="col-sm-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+                <div class="col-sm-10">
                   <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-lg-3 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-                <div class="col-lg-9">
+                <label class="col-sm-2 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+                <div class="col-sm-10">
                   <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
                 </div>
               </div>

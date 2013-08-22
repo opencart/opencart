@@ -15,15 +15,15 @@
     <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-exchange icon-large"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-import"><?php echo $entry_restore; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-import"><?php echo $entry_restore; ?></label>
+          <div class="col-sm-10">
             <input type="file" name="import" id="input-import" />
           </div>
         </div>
@@ -35,8 +35,8 @@
       </form>
       <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="backup" class="form-horizontal">
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_backup; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_backup; ?></label>
+          <div class="col-sm-10">
             <div class="well">
               <?php foreach ($tables as $table) { ?>
               <div class="checkbox">

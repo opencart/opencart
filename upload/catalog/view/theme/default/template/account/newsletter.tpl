@@ -10,8 +10,8 @@
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
       <fieldset>
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_newsletter; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_newsletter; ?></label>
+          <div class="col-sm-10">
             <?php if ($newsletter) { ?>
             <label class="radio-inline">
               <input type="radio" name="newsletter" value="1" checked="checked" />

@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-manufacturer" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-manufacturer" class="form-horizontal">
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-name"><?php echo $entry_name; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_name; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
             <?php if ($error_name) { ?>
             <span class="text-error"><?php echo $error_name; ?></span>
@@ -29,8 +29,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_store; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_store; ?></label>
+          <div class="col-sm-10">
             <div class="checkbox">
               <label>
                 <?php if (in_array(0, $manufacturer_store)) { ?>
@@ -58,14 +58,14 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
             <span class="help-block"><?php echo $help_keyword; ?></span> </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_image; ?></label>
-          <div class="col-lg-9"> <img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
+          <label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
+          <div class="col-sm-10"> <img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
             <input type="hidden" name="image" value="<?php echo $image; ?>" />
             <br />
             <br />
@@ -76,8 +76,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
           </div>
         </div>

@@ -15,7 +15,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
         <button type="submit" form="form-download" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>

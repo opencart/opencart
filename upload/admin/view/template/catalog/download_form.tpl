@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-download" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-download" class="form-horizontal">
         <div class="form-group required">
-          <label class="col-lg-3 control-label"><?php echo $entry_name; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>
+          <div class="col-sm-10">
             <?php foreach ($languages as $language) { ?>
             <div class="input-group"> <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
               <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
@@ -33,8 +33,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-filename"><?php echo $entry_filename; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-filename"><?php echo $entry_filename; ?></label>
+          <div class="col-sm-10">
             <div class="input-group">
               <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
               <span class="input-group-btn">
@@ -47,8 +47,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-mask"><?php echo $entry_mask; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-mask"><?php echo $entry_mask; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" class="form-control" />
             <span class="help-block"><?php echo $help_mask; ?></span>
             <?php if ($error_mask) { ?>
@@ -57,15 +57,15 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-remaining"><?php echo $entry_remaining; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-remaining"><?php echo $entry_remaining; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="remaining" value="<?php echo $remaining; ?>" id="input-remaining" class="form-control" />
           </div>
         </div>
         <?php if ($download_id) { ?>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-update"><?php echo $entry_update; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-update"><?php echo $entry_update; ?></label>
+          <div class="col-sm-10">
             <?php if ($update) { ?>
             <input type="checkbox" name="update" value="1" checked="checked" id="input-update" />
             <?php } else { ?>

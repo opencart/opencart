@@ -4,32 +4,32 @@
       <fieldset>
         <legend><?php echo $text_your_details; ?></legend>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="firstname" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="lastname" value="" placeholder="<?php echo $entry_lastname; ?>" id="input-payment-lastname" class="form-control" />
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-email"><?php echo $entry_email; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-email"><?php echo $entry_email; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-payment-email" class="form-control" />
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-telephone"><?php echo $entry_telephone; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-telephone"><?php echo $entry_telephone; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="telephone" value="" placeholder="<?php echo $entry_telephone; ?>" id="input-payment-telephone" class="form-control" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-payment-fax"><?php echo $entry_fax; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-fax"><?php echo $entry_fax; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="fax" value="" placeholder="<?php echo $entry_fax; ?>" id="input-payment-fax" class="form-control" />
           </div>
         </div>
@@ -37,14 +37,14 @@
       <fieldset>
         <legend><?php echo $text_your_password; ?></legend>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-password"><?php echo $entry_password; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-password"><?php echo $entry_password; ?></label>
+          <div class="col-sm-10">
             <input type="password" name="password" value="" placeholder="<?php echo $entry_password; ?>" id="input-payment-password" class="form-control" />
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-confirm"><?php echo $entry_confirm; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-confirm"><?php echo $entry_confirm; ?></label>
+          <div class="col-sm-10">
             <input type="password" name="confirm" value="" placeholder="<?php echo $entry_confirm; ?>" id="input-payment-confirm" class="form-control" />
           </div>
         </div>
@@ -54,14 +54,14 @@
       <fieldset>
         <legend><?php echo $text_your_address; ?></legend>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="company" value="" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" class="form-control" />
           </div>
         </div>
         <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
-          <label class="col-lg-3 control-label"><?php echo $entry_customer_group; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_customer_group; ?></label>
+          <div class="col-sm-10">
             <?php foreach ($customer_groups as $customer_group) { ?>
             <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
             <div class="radio">
@@ -80,32 +80,32 @@
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="address_1" value="" placeholder="<?php echo $entry_address_1; ?>" id="input-payment-address-1" class="form-control" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="address_2" value="" placeholder="<?php echo $entry_address_2; ?>" id="input-payment-address-2" class="form-control" />
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="city" value="" placeholder="<?php echo $entry_city; ?>" id="input-payment-city" class="form-control" />
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="postcode" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
+          <div class="col-sm-10">
             <select name="country_id" id="input-payment-country" class="form-control">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($countries as $country) { ?>
@@ -119,8 +119,8 @@
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-payment-zone"><?php echo $entry_zone;; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-payment-zone"><?php echo $entry_zone;; ?></label>
+          <div class="col-sm-10">
             <select name="zone_id" id="input-payment-zone" class="form-control">
             </select>
           </div>

@@ -5,7 +5,7 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
       <h1 class="panel-title"><i class="icon-info-sign"></i> <?php echo $heading_title; ?></h1>
@@ -110,8 +110,8 @@
         <div class="tab-pane form-horizontal" id="tab-history">
           <div id="history"></div>
           <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-return-action"><?php echo $entry_return_action; ?></label>
-            <div class="col-lg-9">
+            <label class="col-sm-2 control-label" for="input-return-action"><?php echo $entry_return_action; ?></label>
+            <div class="col-sm-10">
               <select name="return_action_id" id="input-return-action" class="form-control">
                 <option value="0"></option>
                 <?php foreach ($return_actions as $return_action) { ?>
@@ -125,8 +125,8 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-return-status"><?php echo $entry_return_status; ?></label>
-            <div class="col-lg-9">
+            <label class="col-sm-2 control-label" for="input-return-status"><?php echo $entry_return_status; ?></label>
+            <div class="col-sm-10">
               <select name="return_status_id" id="input-return-status" class="form-control">
                 <?php foreach ($return_statuses as $return_status) { ?>
                 <?php if ($return_status['return_status_id'] == $return_status_id) { ?>
@@ -139,14 +139,14 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
-            <div class="col-lg-9">
+            <label class="col-sm-2 control-label" for="input-notify"><?php echo $entry_notify; ?></label>
+            <div class="col-sm-10">
               <input type="checkbox" name="notify" value="1" id="input-notify" />
             </div>
           </div>
           <div class="form-group">
-            <label class="col-lg-3 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
-            <div class="col-lg-9">
+            <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+            <div class="col-sm-10">
               <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
             </div>
           </div>

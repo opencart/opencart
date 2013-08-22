@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-usps" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-usps" class="form-horizontal">
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-user-id"><?php echo $entry_user_id; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-user-id"><?php echo $entry_user_id; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="usps_user_id" value="<?php echo $usps_user_id; ?>" placeholder="<?php echo $entry_user_id; ?>" id="input-user-id" class="form-control" />
             <?php if ($error_user_id) { ?>
             <span class="error"><?php echo $error_user_id; ?></span>
@@ -29,8 +29,8 @@
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="usps_postcode" value="<?php echo $usps_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
             <?php if ($error_postcode) { ?>
             <span class="error"><?php echo $error_postcode; ?></span>
@@ -38,8 +38,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_domestic; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_domestic; ?></label>
+          <div class="col-sm-10">
             <div class="well">
               <div class="checkbox">
                 <label>
@@ -287,8 +287,8 @@
             <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_international; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_international; ?></label>
+          <div class="col-sm-10">
             <div class="well">
               <div class="checkbox">
                 <label>
@@ -470,8 +470,8 @@
             <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-size"><?php echo $entry_size; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-size"><?php echo $entry_size; ?></label>
+          <div class="col-sm-10">
             <select name="usps_size" id="input-size" class="form-control">
               <?php foreach ($sizes as $size) { ?>
               <?php if ($size['value'] == $usps_size) { ?>
@@ -484,8 +484,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-container"><?php echo $entry_container; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-container"><?php echo $entry_container; ?></label>
+          <div class="col-sm-10">
             <select name="usps_container" id="input-container" class="form-control">
               <?php foreach ($containers as $container) { ?>
               <?php if ($container['value'] == $usps_container) { ?>
@@ -498,8 +498,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-machinable"><?php echo $entry_machinable; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-machinable"><?php echo $entry_machinable; ?></label>
+          <div class="col-sm-10">
             <select name="usps_machinable" id="input-machinable" class="form-control">
               <?php if ($usps_machinable) { ?>
               <option value="1" selected="selected"><?php echo $text_yes; ?></option>
@@ -512,8 +512,8 @@
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-length"><?php echo $entry_dimension; ?> </label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-length"><?php echo $entry_dimension; ?> </label>
+          <div class="col-sm-10">
             <div class="row">
               <div class="col-sm-4">
                 <input type="text" name="usps_length" value="<?php echo $usps_length; ?>" placeholder="<?php echo $entry_length; ?>" id="input-length" class="form-control" />
@@ -532,8 +532,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_display_time; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_display_time; ?></label>
+          <div class="col-sm-10">
             <label class="radio-inline">
               <?php if ($usps_display_time) { ?>
               <input type="radio" name="usps_display_time" value="1" checked="checked" />
@@ -555,8 +555,8 @@
             <span class="help-block"><?php echo $help_display_time; ?></span> </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label"><?php echo $entry_display_weight; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label"><?php echo $entry_display_weight; ?></label>
+          <div class="col-sm-10">
             <label class="radio-inline">
               <?php if ($usps_display_weight) { ?>
               <input type="radio" name="usps_display_weight" value="1" checked="checked" />
@@ -578,8 +578,8 @@
             <span class="help-block"><?php echo $help_display_weight; ?></span> </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
+          <div class="col-sm-10">
             <select name="usps_weight_class_id" id="input-weight-class" class="form-control">
               <?php foreach ($weight_classes as $weight_class) { ?>
               <?php if ($weight_class['weight_class_id'] == $usps_weight_class_id) { ?>
@@ -592,8 +592,8 @@
             <span class="help-block"><?php echo $help_weight_class; ?></span> </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-tax-class"><?php echo $entry_tax; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-tax-class"><?php echo $entry_tax; ?></label>
+          <div class="col-sm-10">
             <select name="usps_tax_class_id" id="input-tax-class" class="form-control">
               <option value="0"><?php echo $text_none; ?></option>
               <?php foreach ($tax_classes as $tax_class) { ?>
@@ -607,8 +607,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-geo-zone"><?php echo $entry_geo_zone; ?></label>
+          <div class="col-sm-10">
             <select name="usps_geo_zone_id" id="input-geo-zone" class="form-control">
               <option value="0"><?php echo $text_all_zones; ?></option>
               <?php foreach ($geo_zones as $geo_zone) { ?>
@@ -622,8 +622,8 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-status"><?php echo $entry_status; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+          <div class="col-sm-10">
             <select name="usps_status" id="input-status" class="form-control">
               <?php if ($usps_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -636,14 +636,14 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="usps_sort_order" value="<?php echo $usps_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
           </div>
         </div>
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
+          <div class="col-sm-10">
             <select name="usps_debug" id="input-debug" class="form-control">
               <?php if ($usps_debug) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>

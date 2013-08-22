@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-tax-class" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal" id="form-tax-class">
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-title"><?php echo $entry_title; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-title"><?php echo $entry_title; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" class="form-control" />
             <?php if ($error_title) { ?>
             <span class="text-error"><?php echo $error_title; ?></span>
@@ -29,8 +29,8 @@
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-description"><?php echo $entry_description; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control" />
             <?php if ($error_description) { ?>
             <br />

@@ -15,8 +15,8 @@
       <fieldset>
         <legend><?php echo $text_your_email; ?></legend>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
+          <div class="col-sm-10">
             <input type="email" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
           </div>
         </div>

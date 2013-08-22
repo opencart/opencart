@@ -10,21 +10,21 @@
     <p><?php echo $text_description; ?></p>
     <form class="form-horizontal">
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-code"><?php echo $entry_code; ?></label>
-        <div class="col-lg-9">
+        <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
+        <div class="col-sm-10">
           <textarea cols="40" rows="5" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control"><?php echo $code; ?></textarea>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-generator"><?php echo $entry_generator; ?></label>
-        <div class="col-lg-9">
+        <label class="col-sm-2 control-label" for="input-generator"><?php echo $entry_generator; ?></label>
+        <div class="col-sm-10">
           <input type="text" name="product" value="" placeholder="<?php echo $entry_generator; ?>" id="input-generator" class="form-control" />
           <span class="help-block"><?php echo $help_generator; ?></span>
         </div>
       </div>
       <div class="form-group">
-        <label class="col-lg-3 control-label" for="input-link"><?php echo $entry_link; ?></label>
-        <div class="col-lg-9">
+        <label class="col-sm-2 control-label" for="input-link"><?php echo $entry_link; ?></label>
+        <div class="col-sm-10">
           <textarea name="link" cols="40" rows="5" placeholder="<?php echo $entry_link; ?>" id="input-link" class="form-control"></textarea>
         </div>
       </div>

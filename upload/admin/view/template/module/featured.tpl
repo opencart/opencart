@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-featured" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
         <div class="form-group">
-          <label class="col-lg-3 control-label" for="input-product"><?php echo $entry_product; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
+          <div class="col-sm-10">
             <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
             <span class="help-block"><?php echo $help_product; ?></span>
             <div id="featured-product" class="well">

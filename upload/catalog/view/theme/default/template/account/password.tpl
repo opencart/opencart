@@ -11,8 +11,8 @@
       <fieldset>
         <legend><?php echo $text_password; ?></legend>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
+          <div class="col-sm-10">
             <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
             <?php if ($error_password) { ?>
             <span class="error"><?php echo $error_password; ?></span>
@@ -20,8 +20,8 @@
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-lg-3 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
-          <div class="col-lg-9">
+          <label class="col-sm-2 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
+          <div class="col-sm-10">
             <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" class="form-control" />
             <?php if ($error_confirm) { ?>
             <span class="error"><?php echo $error_confirm; ?></span>

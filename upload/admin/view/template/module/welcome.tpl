@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-welcome" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -30,7 +30,7 @@
               <li id="module-add"><a onclick="addModule();"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></a></li>
             </ul>
           </div>
-          <div class="col-lg-9">
+          <div class="col-sm-10">
             <div class="tab-content">
               <?php $module_row = 1; ?>
               <?php foreach ($modules as $module) { ?>
@@ -44,8 +44,8 @@
                   <?php foreach ($languages as $language) { ?>
                   <div class="tab-pane" id="tab-module<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>">
                     <div class="form-group">
-                      <label class="col-lg-3 control-label" for="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
-                      <div class="col-lg-9">
+                      <label class="col-sm-2 control-label" for="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
+                      <div class="col-sm-10">
                         <textarea name="welcome_module[<?php echo $module_row; ?>][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($module['description'][$language['language_id']]) ? $module['description'][$language['language_id']] : ''; ?></textarea>
                       </div>
                     </div>
@@ -53,8 +53,8 @@
                   <?php } ?>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-3 control-label" for="input-layout<?php echo $module_row; ?>"><?php echo $entry_layout; ?></label>
-                  <div class="col-lg-9">
+                  <label class="col-sm-2 control-label" for="input-layout<?php echo $module_row; ?>"><?php echo $entry_layout; ?></label>
+                  <div class="col-sm-10">
                     <select name="welcome_module[<?php echo $module_row; ?>][layout_id]" id="input-layout<?php echo $module_row; ?>" class="form-control">
                       <?php foreach ($layouts as $layout) { ?>
                       <?php if ($layout['layout_id'] == $module['layout_id']) { ?>
@@ -67,8 +67,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-3 control-label" for="input-position<?php echo $module_row; ?>"><?php echo $entry_position; ?></label>
-                  <div class="col-lg-9">
+                  <label class="col-sm-2 control-label" for="input-position<?php echo $module_row; ?>"><?php echo $entry_position; ?></label>
+                  <div class="col-sm-10">
                     <select name="welcome_module[<?php echo $module_row; ?>][position]" id="input-position<?php echo $module_row; ?>" class="form-control">
                       <?php if ($module['position'] == 'content_top') { ?>
                       <option value="content_top" selected="selected"><?php echo $text_content_top; ?></option>
@@ -94,8 +94,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-3 control-label" for="input-status<?php echo $module_row; ?>"><?php echo $entry_status; ?></label>
-                  <div class="col-lg-9">
+                  <label class="col-sm-2 control-label" for="input-status<?php echo $module_row; ?>"><?php echo $entry_status; ?></label>
+                  <div class="col-sm-10">
                     <select name="welcome_module[<?php echo $module_row; ?>][status]" id="input-status<?php echo $module_row; ?>" class="form-control">
                       <?php if ($module['status']) { ?>
                       <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -108,8 +108,8 @@
                   </div>
                 </div>
                 <div class="form-group">
-                  <label class="col-lg-3 control-label" for="input-sort-order<?php echo $module_row; ?>"><?php echo $entry_sort_order; ?></label>
-                  <div class="col-lg-9">
+                  <label class="col-sm-2 control-label" for="input-sort-order<?php echo $module_row; ?>"><?php echo $entry_sort_order; ?></label>
+                  <div class="col-sm-10">
                     <input type="text" name="welcome_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order<?php echo $module_row; ?>" class="form-control" />
                   </div>
                 </div>
@@ -157,8 +157,8 @@ function addModule() {
 	<?php foreach ($languages as $language) { ?>
 	html += '    <div class="tab-pane" id="tab-module' + module_row + '-language<?php echo $language['language_id']; ?>">';
 	html += '      <div class="form-group">';
-	html += '        <label class="col-lg-3 control-label" for="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>';
-	html += '        <div class="col-lg-9"><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></div>';
+	html += '        <label class="col-sm-2 control-label" for="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>';
+	html += '        <div class="col-sm-10"><textarea name="welcome_module[' + module_row + '][description][<?php echo $language['language_id']; ?>]" placeholder="<?php echo $entry_description; ?>" id="input-description' + module_row + '-language<?php echo $language['language_id']; ?>"></textarea></div>';
 	html += '      </div>'; 	
 	html += '    </div>';
 	<?php } ?>
@@ -166,8 +166,8 @@ function addModule() {
 	html += '  </div>';
 
 	html += '  <div class="form-group">';
-	html += '    <label class="col-lg-3 control-label" for="input-layout' + module_row + '"><?php echo $entry_layout; ?></label>';
-	html += '    <div class="col-lg-9"><select name="welcome_module[' + module_row + '][layout_id]" id="input-layout' + module_row + '" class="form-control">';
+	html += '    <label class="col-sm-2 control-label" for="input-layout' + module_row + '"><?php echo $entry_layout; ?></label>';
+	html += '    <div class="col-sm-10"><select name="welcome_module[' + module_row + '][layout_id]" id="input-layout' + module_row + '" class="form-control">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '           <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';
 	<?php } ?>
@@ -175,8 +175,8 @@ function addModule() {
 	html += '  </div>';
 
 	html += '  <div class="form-group">';
-	html += '    <label class="col-lg-3 control-label" for="input-position' + module_row + '"><?php echo $entry_position; ?></label>';
-	html += '    <div class="col-lg-9"><select name="welcome_module[' + module_row + '][position]" id="input-position' + module_row + '" class="form-control">';
+	html += '    <label class="col-sm-2 control-label" for="input-position' + module_row + '"><?php echo $entry_position; ?></label>';
+	html += '    <div class="col-sm-10"><select name="welcome_module[' + module_row + '][position]" id="input-position' + module_row + '" class="form-control">';
 	html += '        <option value="content_top"><?php echo $text_content_top; ?></option>';
 	html += '        <option value="content_bottom"><?php echo $text_content_bottom; ?></option>';
 	html += '        <option value="column_left"><?php echo $text_column_left; ?></option>';
@@ -184,15 +184,15 @@ function addModule() {
 	html += '      </select></div>';
 	html += '  </div>';
 	html += '  <div class="form-group">';
-	html += '    <label class="col-lg-3 control-label" for="input-status' + module_row + '"><?php echo $entry_status; ?></label>';
-	html += '    <div class="col-lg-9"><select name="welcome_module[' + module_row + '][status]" id="input-status' + module_row + '" class="form-control">';
+	html += '    <label class="col-sm-2 control-label" for="input-status' + module_row + '"><?php echo $entry_status; ?></label>';
+	html += '    <div class="col-sm-10"><select name="welcome_module[' + module_row + '][status]" id="input-status' + module_row + '" class="form-control">';
 	html += '          <option value="1"><?php echo $text_enabled; ?></option>';
 	html += '          <option value="0"><?php echo $text_disabled; ?></option>';
 	html += '        </select></div>';
 	html += '  </div>';
 	html += '  <div class="form-group">';
-	html += '    <label class="col-lg-3 control-label" for="input-sort-order' + module_row + '"><?php echo $entry_sort_order; ?></label>';
-	html += '    <div class="col-lg-9"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order' + module_row + '" class="form-control" /></div>';
+	html += '    <label class="col-sm-2 control-label" for="input-sort-order' + module_row + '"><?php echo $entry_sort_order; ?></label>';
+	html += '    <div class="col-sm-10"><input type="text" name="welcome_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order' + module_row + '" class="form-control" /></div>';
 	html += '  </div>';
 	html += '</div>';
 	

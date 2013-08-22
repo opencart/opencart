@@ -9,7 +9,7 @@
     <div id="content" class="col-12"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <div class="panel-group" id="accordion">
-        <div class="panel">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title"><a href="#collapse-checkout-option" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_option; ?> <i class="icon-caret-down"></i></a></h4>
           </div>
@@ -18,7 +18,7 @@
           </div>
         </div>
         <?php if (!$logged) { ?>
-        <div class="panel">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title"><a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_account; ?> <i class="icon-caret-down"></i></a></h4>
           </div>
@@ -27,7 +27,7 @@
           </div>
         </div>
         <?php } else { ?>
-        <div class="panel">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title"><a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_payment_address; ?> <i class="icon-caret-down"></i></a></h4>
           </div>
@@ -37,7 +37,7 @@
         </div>
         <?php } ?>
         <?php if ($shipping_required) { ?>
-        <div class="panel">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title"><a href="#collapse-shipping-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_shipping_address; ?> <i class="icon-caret-down"></i></a></h4>
           </div>
@@ -45,7 +45,7 @@
             <div class="panel-body"></div>
           </div>
         </div>
-        <div class="panel">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title"><a href="#collapse-shipping-method" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_shipping_method; ?> <i class="icon-caret-down"></i></a></h4>
           </div>
@@ -54,7 +54,7 @@
           </div>
         </div>
         <?php } ?>
-        <div class="panel">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title"><a href="#collapse-payment-method" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_payment_method; ?> <i class="icon-caret-down"></i></a></h4>
           </div>
@@ -62,7 +62,7 @@
             <div class="panel-body"></div>
           </div>
         </div>
-        <div class="panel">
+        <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title"><a href="#collapse-checkout-confirm" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_confirm; ?> <i class="icon-caret-down"></i></a></h4>
           </div>

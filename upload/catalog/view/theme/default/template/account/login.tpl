@@ -26,14 +26,14 @@
           <p><strong><?php echo $text_i_am_returning_customer; ?></strong></p>
           <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
             <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
-              <div class="col-lg-9">
+              <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
+              <div class="col-sm-10">
                 <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-lg-3 control-label" for="input-password"><?php echo $entry_password; ?></label>
-              <div class="col-lg-9">
+              <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
+              <div class="col-sm-10">
                 <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
                 <br />
                 <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a></div>

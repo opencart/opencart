@@ -3,7 +3,7 @@
   <br />
   <div class="row">
     <div class="col-sm-offset-4 col-sm-4">
-      <div class="panel">
+      <div class="panel panel-default">
         <div class="panel-heading">
           <h1 class="panel-title"><i class="icon-lock icon-large"></i> <?php echo $text_login; ?></h1>
         </div>

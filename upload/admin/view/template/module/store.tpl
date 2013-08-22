@@ -10,7 +10,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
         <button type="submit" form="form-store" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
@@ -20,8 +20,8 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-store" class="form-horizontal">
         <div class="form-group">
-          <div class="col-lg-3 control-label" for="input-admin"><?php echo $entry_admin; ?></div>
-          <div class="col-lg-9">
+          <div class="col-sm-2 control-label" for="input-admin"><?php echo $entry_admin; ?></div>
+          <div class="col-sm-10">
             <label class="radio-inline">
               <?php if ($store_admin) { ?>
               <input type="radio" name="store_admin" value="1" checked="checked" />

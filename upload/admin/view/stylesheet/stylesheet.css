@@ -8,7 +8,7 @@ html, body, label, input, textarea, select, td {
 }
 @media (min-width: 768px) {
 	.container {
-		max-width: 95%;
+		max-width: 98%;
 	}
 }
 header.navbar {
@@ -37,7 +37,7 @@ header.navbar .navbar-header {
 }
 header.navbar .navbar-brand {
 	margin: 0px;
-	padding: 8px 0px 0px 0px;
+	padding: 8px 0px 6px 0px;
 }
 header.navbar-inverse .navbar-nav > li > a {
 	padding: 12px 11px 12px 11px;
@@ -153,20 +153,16 @@ footer a {
 	padding: 0px 15px;
 	margin-bottom: 15px;
 }
-.breadcrumb li {
-	position: relative;
-	line-height: 18px;
-}
 .breadcrumb li:first-child a {
 	font-size: 20px;
 }
 .breadcrumb li a {
+	float: left;
+	padding: 5px 0px;
+	line-height: 20px;
 	color: #464646;
-	display: inline-block;
-	padding: 2px 0px;
-}
-.breadcrumb li + li a {
 	font-size: 12px;
+	font-weight: bold;
 }
 .breadcrumb li a:hover {
 	text-decoration: none;
@@ -175,15 +171,15 @@ footer a {
 	padding-left: 10px;
 }
 .breadcrumb > li + li:before {
-	content: normal;
+	content: '';
 }
 .breadcrumb > li:after {
 	position: relative;
 	top: 4px;
 	content: '';
 	display: inline-block;
-	width: 21px;
-	height: 21px;
+	width: 22px;
+	height: 22px;
 	border-top: 1px solid #E5E5E5;
 	border-right: 1px solid #E5E5E5;
 	transform: rotate(45deg);
@@ -199,6 +195,17 @@ footer a {
 	font-size: 13px;
 	padding: 5px 12px;
 }
+
+.btn-sm, .btn-xs {
+  padding: 5px 10px;
+  font-size: 11px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+.btn-xs {
+	padding: 1px 5px;
+}
+  
 .panel-heading {
 	overflow: auto;
 	padding: 8px 15px;
@@ -226,7 +233,6 @@ div.required .control-label:before, td.required:before {
 input.form-control, select.form-control {
 	height: 30px;
 }
-
 .table a.asc:after {
 	content: "  \f0d7";
 	font-family: FontAwesome;

@@ -1,4 +1,4 @@
-<div class="panel">
+<div class="panel panel-default">
   <div class="panel-heading"><?php echo $heading_title; ?></div>
   <div class="box-product">
     <?php foreach ($products as $product) { ?>

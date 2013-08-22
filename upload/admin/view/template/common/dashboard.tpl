@@ -5,25 +5,24 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-eye-open"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-sm-3">
-          <p style="font-size: 50px;"><i class="icon-money"></i> </p>
-          <?php echo $sale_total; ?>
+        <div class="col-md-3">
+          <h3><i class="icon-money"></i> <?php echo $sale_total; ?></h3>
           <p><?php echo $text_sale; ?></p>
         </div>
-        <div class="col-sm-3">
-          <h2><i class="icon-shopping-cart"></i> <?php echo $text_order; ?></h2>
+        <div class="col-md-3">
+          <h3><i class="icon-shopping-cart"></i> <?php echo $text_order; ?></h3>
           <?php echo $order_total; ?></div>
-        <div class="col-sm-3">
-          <h2><i class="icon-user"></i> <?php echo $text_customer; ?></h2>
+        <div class="col-md-3">
+          <h3><i class="icon-user"></i> <?php echo $text_customer; ?></h3>
           <?php echo $customer_total; ?></div>
-        <div class="col-sm-3">
-          <h2><i class="icon-globe"></i> <?php echo $text_marketing; ?></h2>
+        <div class="col-md-3">
+          <h3><i class="icon-globe"></i> <?php echo $text_marketing; ?></h3>
           <?php echo $marketing_total; ?></div>
       </div>
       <br />

@@ -15,7 +15,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel">
+  <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <a href="<?php echo $repair; ?>" class="btn btn-default"><i class="icon-wrench"></i> <?php echo $button_repair; ?></a>
         <button type="submit" form="form-category" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
@@ -45,7 +45,7 @@
               <td class="text-left"><?php echo $category['name']; ?></td>
               <td class="text-right"><?php echo $category['sort_order']; ?></td>
               <td class="text-right"><?php foreach ($category['action'] as $action) { ?>
-                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary btn-sm"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
                 <?php } ?></td>
             </tr>
             <?php } ?>

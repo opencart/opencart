@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="auspost_postcode" value="<?php echo $auspost_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" maxlength="4" />
             <?php if ($error_postcode) { ?>
-            <span class="error"><?php echo $error_postcode; ?></span>
+            <div class="text-danger"><?php echo $error_postcode; ?></div>
             <?php } ?>
           </div>
         </div>

@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="fedex_key" value="<?php echo $fedex_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
             <?php if ($error_key) { ?>
-            <span class="error"><?php echo $error_key; ?></span>
+            <div class="text-danger"><?php echo $error_key; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <input type="text" name="fedex_password" value="<?php echo $fedex_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
             <?php if ($error_password) { ?>
-            <span class="error"><?php echo $error_password; ?></span>
+            <div class="text-danger"><?php echo $error_password; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -42,7 +42,7 @@
           <div class="col-sm-10">
             <input type="text" name="fedex_account" value="<?php echo $fedex_account; ?>" placeholder="<?php echo $entry_account; ?>" id="input-account" class="form-control" />
             <?php if ($error_account) { ?>
-            <span class="error"><?php echo $error_account; ?></span>
+            <div class="text-danger"><?php echo $error_account; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -51,7 +51,7 @@
           <div class="col-sm-10">
             <input type="text" name="fedex_meter" value="<?php echo $fedex_meter; ?>" placeholder="<?php echo $entry_meter; ?>" id="input-meter" class="form-control" />
             <?php if ($error_meter) { ?>
-            <span class="error"><?php echo $error_meter; ?></span>
+            <div class="text-danger"><?php echo $error_meter; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -60,7 +60,7 @@
           <div class="col-sm-10">
             <input type="text" name="fedex_postcode" value="<?php echo $fedex_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
             <?php if ($error_postcode) { ?>
-            <span class="error"><?php echo $error_postcode; ?></span>
+            <div class="text-danger"><?php echo $error_postcode; ?></div>
             <?php } ?>
           </div>
         </div>

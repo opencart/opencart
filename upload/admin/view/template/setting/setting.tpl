@@ -42,7 +42,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_name" value="<?php echo $config_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
                 <?php if ($error_name) { ?>
-                <span class="text-error"><?php echo $error_name; ?></span>
+                <div class="text-danger"><?php echo $error_name; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -51,7 +51,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_owner" value="<?php echo $config_owner; ?>" placeholder="<?php echo $entry_owner; ?>" id="input-owner" class="form-control" />
                 <?php if ($error_owner) { ?>
-                <span class="text-error"><?php echo $error_owner; ?></span>
+                <div class="text-danger"><?php echo $error_owner; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -60,7 +60,7 @@
               <div class="col-sm-10">
                 <textarea name="config_address" rows="5" placeholder="<?php echo $entry_owner; ?>" id="input-address" class="form-control"><?php echo $config_address; ?></textarea>
                 <?php if ($error_address) { ?>
-                <span class="text-error"><?php echo $error_address; ?></span>
+                <div class="text-danger"><?php echo $error_address; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -69,7 +69,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_email" value="<?php echo $config_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
                 <?php if ($error_email) { ?>
-                <span class="text-error"><?php echo $error_email; ?></span>
+                <div class="text-danger"><?php echo $error_email; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -78,7 +78,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
                 <?php if ($error_telephone) { ?>
-                <span class="text-error"><?php echo $error_telephone; ?></span>
+                <div class="text-danger"><?php echo $error_telephone; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -95,7 +95,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_title" value="<?php echo $config_title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" class="form-control" />
                 <?php if ($error_title) { ?>
-                <span class="text-error"><?php echo $error_title; ?></span>
+                <div class="text-danger"><?php echo $error_title; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -260,7 +260,7 @@
                   <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" id="input-catalog-limit" class="form-control" />
                   <span class="help-block"><?php echo $help_catalog_limit; ?></span>
                   <?php if ($error_catalog_limit) { ?>
-                  <span class="text-error"><?php echo $error_catalog_limit; ?></span>
+                  <div class="text-danger"><?php echo $error_catalog_limit; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -270,7 +270,7 @@
                   <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" id="input-list-description-limit" class="form-control" />
                   <span class="help-block"><?php echo $help_list_description_limit; ?></span>
                   <?php if ($error_list_description_limit) { ?>
-                  <span class="text-error"><?php echo $error_list_description_limit; ?></span>
+                  <div class="text-danger"><?php echo $error_list_description_limit; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -280,7 +280,7 @@
                   <input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" placeholder="<?php echo $entry_admin_limit; ?>" id="input-admin-limit" class="form-control" />
                   <span class="help-block"><?php echo $help_admin_limit; ?></span>
                   <?php if ($error_admin_limit) { ?>
-                  <span class="text-error"><?php echo $error_admin_limit; ?></span>
+                  <div class="text-danger"><?php echo $error_admin_limit; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -388,7 +388,7 @@
                   <input type="text" name="config_voucher_min" value="<?php echo $config_voucher_min; ?>" placeholder="<?php echo $entry_voucher_min; ?>" id="input-voucher-min" class="form-control" />
                   <span class="help-block"><?php echo $help_voucher_min; ?></span>
                   <?php if ($error_voucher_min) { ?>
-                  <span class="text-error"><?php echo $error_voucher_min; ?></span>
+                  <div class="text-danger"><?php echo $error_voucher_min; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -398,7 +398,7 @@
                   <input type="text" name="config_voucher_max" value="<?php echo $config_voucher_max; ?>" placeholder="<?php echo $entry_voucher_max; ?>" id="input-voucher-max" class="form-control" />
                   <span class="help-block"><?php echo $help_voucher_max; ?></span>
                   <?php if ($error_voucher_max) { ?>
-                  <span class="text-error"><?php echo $error_voucher_max; ?></span>
+                  <div class="text-danger"><?php echo $error_voucher_max; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -522,7 +522,7 @@
                   <?php } ?>
                   <span class="help-block"><?php echo $help_customer_group_display; ?></span>
                   <?php if ($error_customer_group_display) { ?>
-                  <span class="text-error"><?php echo $error_customer_group_display; ?></span>
+                  <div class="text-danger"><?php echo $error_customer_group_display; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -851,7 +851,7 @@
                   </div>
                 </div>
                 <?php if ($error_image_category) { ?>
-                <span class="text-error"><?php echo $error_image_category; ?></span>
+                <div class="text-danger"><?php echo $error_image_category; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -867,7 +867,7 @@
                   </div>
                 </div>
                 <?php if ($error_image_thumb) { ?>
-                <span class="text-error"><?php echo $error_image_thumb; ?></span>
+                <div class="text-danger"><?php echo $error_image_thumb; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -883,7 +883,7 @@
                   </div>
                 </div>
                 <?php if ($error_image_popup) { ?>
-                <span class="text-error"><?php echo $error_image_popup; ?></span>
+                <div class="text-danger"><?php echo $error_image_popup; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -899,7 +899,7 @@
                   </div>
                 </div>
                 <?php if ($error_image_product) { ?>
-                <span class="text-error"><?php echo $error_image_product; ?></span>
+                <div class="text-danger"><?php echo $error_image_product; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -915,7 +915,7 @@
                   </div>
                 </div>
                 <?php if ($error_image_additional) { ?>
-                <span class="text-error"><?php echo $error_image_additional; ?></span>
+                <div class="text-danger"><?php echo $error_image_additional; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -931,7 +931,7 @@
                   </div>
                 </div>
                 <?php if ($error_image_related) { ?>
-                <span class="text-error"><?php echo $error_image_related; ?></span>
+                <div class="text-danger"><?php echo $error_image_related; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -947,7 +947,7 @@
                   </div>
                 </div>
                 <?php if ($error_image_compare) { ?>
-                <span class="text-error"><?php echo $error_image_compare; ?></span>
+                <div class="text-danger"><?php echo $error_image_compare; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -963,7 +963,7 @@
                   </div>
                 </div>
                 <?php if ($error_image_wishlist) { ?>
-                <span class="text-error"><?php echo $error_image_wishlist; ?></span>
+                <div class="text-danger"><?php echo $error_image_wishlist; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -979,7 +979,7 @@
                   </div>
                 </div>
                 <?php if ($error_image_cart) { ?>
-                <span class="text-error"><?php echo $error_image_cart; ?></span>
+                <div class="text-danger"><?php echo $error_image_cart; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -990,7 +990,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_ftp_host" value="<?php echo $config_ftp_host; ?>" placeholder="<?php echo $entry_ftp_host; ?>" id="input-ftp-host" class="form-control" />
                 <?php if ($error_ftp_host) { ?>
-                <span class="text-error"><?php echo $error_ftp_host; ?></span>
+                <div class="text-danger"><?php echo $error_ftp_host; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -999,7 +999,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_ftp_port" value="<?php echo $config_ftp_port; ?>" placeholder="<?php echo $entry_ftp_port; ?>" id="input-ftp-port" class="form-control" />
                 <?php if ($error_ftp_port) { ?>
-                <span class="text-error"><?php echo $error_ftp_port; ?></span>
+                <div class="text-danger"><?php echo $error_ftp_port; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -1008,7 +1008,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_ftp_username" value="<?php echo $config_ftp_username; ?>" placeholder="<?php echo $entry_ftp_username; ?>" id="input-ftp-username" class="form-control" />
                 <?php if ($error_ftp_username) { ?>
-                <span class="text-error"><?php echo $error_ftp_username; ?></span>
+                <div class="text-danger"><?php echo $error_ftp_username; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -1017,7 +1017,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_ftp_password" value="<?php echo $config_ftp_password; ?>" placeholder="<?php echo $entry_ftp_password; ?>" id="input-ftp-password" class="form-control" />
                 <?php if ($error_ftp_password) { ?>
-                <span class="text-error"><?php echo $error_ftp_password; ?></span>
+                <div class="text-danger"><?php echo $error_ftp_password; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -1378,7 +1378,7 @@
                 <input type="text" name="config_encryption" value="<?php echo $config_encryption; ?>" placeholder="<?php echo $entry_encryption; ?>" id="input-encryption" class="form-control" />
                 <span class="help-block"><?php echo $help_encryption; ?></span>
                 <?php if ($error_encryption) { ?>
-                <span class="text-error"><?php echo $error_encryption; ?></span>
+                <div class="text-danger"><?php echo $error_encryption; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -1386,7 +1386,7 @@
               <label class="col-sm-2 control-label" for="input-compression"><?php echo $entry_compression; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="config_compression" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="form-control" />
-                <span class="help-block"><?php echo $help_compression; ?></span> </div>
+                <span class="help-block"><?php echo $help_compression; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_error_display; ?></label>
@@ -1439,7 +1439,7 @@
               <div class="col-sm-10">
                 <input type="text" name="config_error_filename" value="<?php echo $config_error_filename; ?>" placeholder="<?php echo $entry_error_filename; ?>" id="input-error-filename" class="form-control" />
                 <?php if ($error_error_filename) { ?>
-                <span class="text-error"><?php echo $error_error_filename; ?></span>
+                <div class="text-danger"><?php echo $error_error_filename; ?></div>
                 <?php } ?>
               </div>
             </div>

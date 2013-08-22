@@ -27,7 +27,7 @@
               <input type="text" name="filter_group_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter_group_description[$language['language_id']]) ? $filter_group_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_group; ?>" class="form-control" />
             </div>
             <?php if (isset($error_name[$language['language_id']])) { ?>
-            <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+            <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>
@@ -56,7 +56,7 @@
                   <input type="text" name="filter[<?php echo $filter_row; ?>][filter_description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($filter['filter_description'][$language['language_id']]) ? $filter['filter_description'][$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name ?>" class="form-control" />
                 </div>
                 <?php if (isset($error_filter[$filter_row][$language['language_id']])) { ?>
-                <span class="text-error"><?php echo $error_filter[$filter_row][$language['language_id']]; ?></span>
+                <div class="text-danger"><?php echo $error_filter[$filter_row][$language['language_id']]; ?></div>
                 <?php } ?>
                 <?php } ?></td>
               <td class="text-right"><input type="text" name="filter[<?php echo $filter_row; ?>][sort_order]" value="<?php echo $filter['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" /></td>

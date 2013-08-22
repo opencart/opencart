@@ -25,7 +25,7 @@
             <input type="text" name="ups_key" value="<?php echo $ups_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
             <span class="help-block"><?php echo $help_key; ?></span>
             <?php if ($error_key) { ?>
-            <span class="error"><?php echo $error_key; ?></span>
+            <div class="text-danger"><?php echo $error_key; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -35,7 +35,7 @@
             <input type="text" name="ups_username" value="<?php echo $ups_username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
             <span class="help-block"><?php echo $help_username; ?></span>
             <?php if ($error_username) { ?>
-            <span class="error"><?php echo $error_username; ?></span>
+            <div class="text-danger"><?php echo $error_username; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -45,7 +45,7 @@
             <input type="text" name="ups_password" value="<?php echo $ups_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
             <span class="help-block"><?php echo $help_password; ?></span>
             <?php if ($error_password) { ?>
-            <span class="error"><?php echo $error_password; ?></span>
+            <div class="text-danger"><?php echo $error_password; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -111,7 +111,7 @@
             <input type="text" name="ups_city" value="<?php echo $ups_city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" class="form-control" />
             <span class="help-block"><?php echo $help_city; ?></span>
             <?php if ($error_city) { ?>
-            <span class="error"><?php echo $error_city; ?></span>
+            <div class="text-danger"><?php echo $error_city; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -121,7 +121,7 @@
             <input type="text" name="ups_state" value="<?php echo $ups_state; ?>" placeholder="<?php echo $entry_state; ?>" id="input-state" class="form-control" maxlength="2" />
             <span class="help-block"><?php echo $help_state; ?></span>
             <?php if ($error_state) { ?>
-            <span class="error"><?php echo $error_state; ?></span>
+            <div class="text-danger"><?php echo $error_state; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -131,7 +131,7 @@
             <input type="text" name="ups_country" value="<?php echo $ups_country; ?>" placeholder="<?php echo $entry_country; ?>" id="input-country" class="form-control" maxlength="2" />
             <span class="help-block"><?php echo $help_country; ?></span>
             <?php if ($error_country) { ?>
-            <span class="error"><?php echo $error_country; ?></span>
+            <div class="text-danger"><?php echo $error_country; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -826,7 +826,7 @@
             </div>
             <span class="help-block"><?php echo $help_dimension; ?></span>
             <?php if ($error_dimension) { ?>
-            <span class="error"><?php echo $error_dimension; ?></span>
+            <div class="text-danger"><?php echo $error_dimension; ?></div>
             <?php } ?>
           </div>
         </div>

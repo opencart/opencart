@@ -39,7 +39,7 @@
               <td class="text-left"><input type="text" name="bestseller_module[<?php echo $module_row; ?>][image_width]" value="<?php echo $module['image_width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
                 <input type="text" name="bestseller_module[<?php echo $module_row; ?>][image_height]" value="<?php echo $module['image_height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                 <?php if (isset($error_image[$module_row])) { ?>
-                <span class="text-error"><?php echo $error_image[$module_row]; ?></span>
+                <div class="text-danger"><?php echo $error_image[$module_row]; ?></div>
                 <?php } ?></td>
               <td class="text-left"><select name="bestseller_module[<?php echo $module_row; ?>][layout_id]" class="form-control">
                   <?php foreach ($layouts as $layout) { ?>

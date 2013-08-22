@@ -20,7 +20,7 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-royal-mail" class="form-horizontal">
         <div class="row">
-          <div class="col-lg-3">
+          <div class="col-sm-2">
             <ul class="nav nav-pills nav-stacked">
               <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
               <li><a href="#tab-1st-class-standard" data-toggle="tab"><?php echo $tab_1st_class_standard; ?></a></li>

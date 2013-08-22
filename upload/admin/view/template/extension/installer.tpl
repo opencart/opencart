@@ -83,7 +83,7 @@ $('#file').on('change', function() {
 		success: function(json) {
 			if (json['error']) {
 				$('#progress-bar').addClass('progress-bar-danger');				
-				$('#progress-text').html('<span class="text-danger">' + json['error'] + '</span>');
+				$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 			}
 			
 			if (json['step']) {
@@ -132,7 +132,7 @@ function next() {
 			success: function(json) {
 				if (json['error']) {
 					$('.progress-bar').addClass('progress-bar-danger');
-					$('.progress-text').html('<span class="text-danger">' + json['error'] + '</span>');
+					$('.progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 					$('.button-clear').prop('disabled', false);
 				} 
 				

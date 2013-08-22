@@ -109,6 +109,7 @@
         </div>
         <div class="tab-pane form-horizontal" id="tab-history">
           <div id="history"></div>
+          <br />
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-return-action"><?php echo $entry_return_action; ?></label>
             <div class="col-sm-10">
@@ -150,7 +151,9 @@
               <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
             </div>
           </div>
-          <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+          <div class="text-right">
+            <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+          </div>
         </div>
       </div>
     </div>

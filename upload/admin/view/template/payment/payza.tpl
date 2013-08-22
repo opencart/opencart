@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="payza_merchant" value="<?php echo $payza_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
             <?php if ($error_merchant) { ?>
-            <span class="text-error"><?php echo $error_merchant; ?></span>
+            <div class="text-danger"><?php echo $error_merchant; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <input type="text" name="payza_security" value="<?php echo $payza_security; ?>" placeholder="<?php echo $entry_security; ?>" id="input-security" class="form-control" />
             <?php if ($error_security) { ?>
-            <span class="text-error"><?php echo $error_security; ?></span>
+            <div class="text-danger"><?php echo $error_security; ?></div>
             <?php } ?>
           </div>
         </div>

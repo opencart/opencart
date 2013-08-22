@@ -71,7 +71,7 @@
               <div class="col-sm-10">
                 <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-firstname" class="form-control" />
                 <?php if ($error_firstname) { ?>
-                <span class="text-danger"><?php echo $error_firstname; ?></span>
+                <div class="text-danger"><?php echo $error_firstname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -80,7 +80,7 @@
               <div class="col-sm-10">
                 <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-lastname" class="form-control" />
                 <?php if ($error_lastname) { ?>
-                <span class="text-danger"><?php echo $error_lastname; ?></span>
+                <div class="text-danger"><?php echo $error_lastname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -89,7 +89,7 @@
               <div class="col-sm-10">
                 <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />
                 <?php if ($error_email) { ?>
-                <span class="text-danger"><?php echo $error_email; ?></span>
+                <div class="text-danger"><?php echo $error_email; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -98,7 +98,7 @@
               <div class="col-sm-10">
                 <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-telephone" class="form-control" />
                 <?php if ($error_telephone) { ?>
-                <span class="text-danger"><?php echo $error_telephone; ?></span>
+                <div class="text-danger"><?php echo $error_telephone; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -126,7 +126,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_firstname" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" class="form-control" />
                 <?php if ($error_payment_firstname) { ?>
-                <span class="text-danger"><?php echo $error_payment_firstname; ?></span>
+                <div class="text-danger"><?php echo $error_payment_firstname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -135,7 +135,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_lastname" value="<?php echo $payment_lastname; ?>" id="input-payment-lastname" class="form-control" />
                 <?php if ($error_payment_lastname) { ?>
-                <span class="text-danger"><?php echo $error_payment_lastname; ?></span>
+                <div class="text-danger"><?php echo $error_payment_lastname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -150,7 +150,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" id="input-payment-address-1" class="form-control" />
                 <?php if ($error_payment_address_1) { ?>
-                <span class="text-danger"><?php echo $error_payment_address_1; ?></span>
+                <div class="text-danger"><?php echo $error_payment_address_1; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -165,7 +165,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_city" value="<?php echo $payment_city; ?>" id="input-payment-city" class="form-control" />
                 <?php if ($error_payment_city) { ?>
-                <span class="text-danger"><?php echo $error_payment_city; ?></span>
+                <div class="text-danger"><?php echo $error_payment_city; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -174,7 +174,7 @@
               <div class="col-sm-10">
                 <input type="text" name="payment_postcode" value="<?php echo $payment_postcode; ?>" id="input-payment-postcode" class="form-control" />
                 <?php if ($error_payment_postcode) { ?>
-                <span class="text-danger"><?php echo $error_payment_postcode; ?></span>
+                <div class="text-danger"><?php echo $error_payment_postcode; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -192,7 +192,7 @@
                   <?php } ?>
                 </select>
                 <?php if ($error_payment_country) { ?>
-                <span class="text-danger"><?php echo $error_payment_country; ?></span>
+                <div class="text-danger"><?php echo $error_payment_country; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -202,7 +202,7 @@
                 <select name="payment_zone_id" id="input-payment-zone" class="form-control">
                 </select>
                 <?php if ($error_payment_zone) { ?>
-                <span class="text-danger"><?php echo $error_payment_zone; ?></span>
+                <div class="text-danger"><?php echo $error_payment_zone; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -224,7 +224,7 @@
               <div class="col-sm-10">
                 <input type="text" name="shipping_firstname" value="<?php echo $shipping_firstname; ?>" id="input-shipping-firstname" class="form-control" />
                 <?php if ($error_shipping_firstname) { ?>
-                <span class="text-danger"><?php echo $error_shipping_firstname; ?></span>
+                <div class="text-danger"><?php echo $error_shipping_firstname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -233,7 +233,7 @@
               <div class="col-sm-10">
                 <input type="text" name="shipping_lastname" value="<?php echo $shipping_lastname; ?>" id="input-shipping-lastname" class="form-control" />
                 <?php if ($error_shipping_lastname) { ?>
-                <span class="text-danger"><?php echo $error_shipping_lastname; ?></span>
+                <div class="text-danger"><?php echo $error_shipping_lastname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -248,7 +248,7 @@
               <div class="col-sm-10">
                 <input type="text" name="shipping_address_1" value="<?php echo $shipping_address_1; ?>" id="input-shipping-address-1" class="form-control" />
                 <?php if ($error_shipping_address_1) { ?>
-                <span class="text-danger"><?php echo $error_shipping_address_1; ?></span>
+                <div class="text-danger"><?php echo $error_shipping_address_1; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -269,7 +269,7 @@
               <div class="col-sm-10">
                 <input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" id="input-shipping-postcode" class="form-control" />
                 <?php if ($error_shipping_postcode) { ?>
-                <span class="text-danger"><?php echo $error_shipping_postcode; ?></span>
+                <div class="text-danger"><?php echo $error_shipping_postcode; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -287,7 +287,7 @@
                   <?php } ?>
                 </select>
                 <?php if ($error_shipping_country) { ?>
-                <span class="text-danger"><?php echo $error_shipping_country; ?></span>
+                <div class="text-danger"><?php echo $error_shipping_country; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -297,7 +297,7 @@
                 <select name="shipping_zone_id" id="input-shipping-zone" class="form-control">
                 </select>
                 <?php if ($error_shipping_zone) { ?>
-                <span class="text-danger"><?php echo $error_shipping_zone; ?></span>
+                <div class="text-danger"><?php echo $error_shipping_zone; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -321,7 +321,7 @@
                 <?php if ($order_products) { ?>
                 <?php foreach ($order_products as $order_product) { ?>
                 <tr id="product-row<?php echo $product_row; ?>">
-                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');" class="btn btn-danger"><i class="icon-minus-sign"></i></button></td>
+                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');" class="btn btn-danger btn-sm"><i class="icon-minus-sign"></i></button></td>
                   <td class="text-left"><?php echo $order_product['name']; ?><br />
                     <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
                     <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
@@ -381,7 +381,9 @@
               </div>
               <div id="option"></div>
             </fieldset>
-            <button type="button" id="button-product" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_product; ?></button>
+            <div class="text-right">
+              <button type="button" id="button-product" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_product; ?></button>
+            </div>
           </div>
           <div class="tab-pane" id="tab-voucher">
             <table class="table table-striped table-bordered table-hover">
@@ -400,7 +402,7 @@
                 <?php if ($order_vouchers) { ?>
                 <?php foreach ($order_vouchers as $order_voucher) { ?>
                 <tr id="voucher-row<?php echo $voucher_row; ?>">
-                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');" class="btn btn-danger"><i class="icon-minus-sign"></i></button></td>
+                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');" class="btn btn-danger btn-sm"><i class="icon-minus-sign"></i></button></td>
                   <td class="text-left"><?php echo $order_voucher['description']; ?>
                     <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][order_voucher_id]" value="<?php echo $order_voucher['order_voucher_id']; ?>" />
                     <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
@@ -476,7 +478,9 @@
                 </div>
               </div>
             </fieldset>
-            <button type="button" id="button-voucher" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_voucher; ?></button>
+            <div class="text-right">
+              <button type="button" id="button-voucher" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_voucher; ?></button>
+            </div>
           </div>
           <div class="tab-pane" id="tab-total">
             <table class="table table-striped table-bordered table-hover">
@@ -547,7 +551,7 @@
                   <input type="hidden" name="shipping_method" value="<?php echo $shipping_method; ?>" />
                   <input type="hidden" name="shipping_code" value="<?php echo $shipping_code; ?>" />
                   <?php if ($error_shipping_method) { ?>
-                  <span class="text-danger"><?php echo $error_shipping_method; ?></span>
+                  <div class="text-danger"><?php echo $error_shipping_method; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -563,7 +567,7 @@
                   <input type="hidden" name="payment_method" value="<?php echo $payment_method; ?>" />
                   <input type="hidden" name="payment_code" value="<?php echo $payment_code; ?>" />
                   <?php if ($error_payment_method) { ?>
-                  <span class="text-danger"><?php echo $error_payment_method; ?></span>
+                  <div class="text-danger"><?php echo $error_payment_method; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -613,7 +617,9 @@
                 </div>
               </div>
             </fieldset>
-            <button type="button" id="button-update" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_update_total; ?></button>
+            <div class="text-right">
+              <button type="button" id="button-update" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_update_total; ?></button>
+            </div>
           </div>
         </div>
       </form>
@@ -1057,7 +1063,7 @@ function upload(product_option_id) {
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$('#option' + product_option_id).after('<span class="text-danger">' + json['error'] + '</span>');
+					$('#option' + product_option_id).after('<div class="text-danger">' + json['error'] + '</div>');
 				}
 							
 				if (json['success']) {
@@ -1140,52 +1146,52 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 							
 				// Order Details
 				if (json['error']['customer']) {
-					$('.box').before('<span class="text-danger">' + json['error']['customer'] + '</span>');
+					$('.box').before('<div class="text-danger">' + json['error']['customer'] + '</div>');
 				}	
 								
 				if (json['error']['firstname']) {
-					$('input[name=\'firstname\']').after('<span class="text-danger">' + json['error']['firstname'] + '</span>');
+					$('input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['firstname'] + '</div>');
 				}
 				
 				if (json['error']['lastname']) {
-					$('input[name=\'lastname\']').after('<span class="text-danger">' + json['error']['lastname'] + '</span>');
+					$('input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['lastname'] + '</div>');
 				}	
 				
 				if (json['error']['email']) {
-					$('input[name=\'email\']').after('<span class="text-danger">' + json['error']['email'] + '</span>');
+					$('input[name=\'email\']').after('<div class="text-danger">' + json['error']['email'] + '</div>');
 				}
 				
 				if (json['error']['telephone']) {
-					$('input[name=\'telephone\']').after('<span class="text-danger">' + json['error']['telephone'] + '</span>');
+					$('input[name=\'telephone\']').after('<div class="text-danger">' + json['error']['telephone'] + '</div>');
 				}	
 			
 				// Payment Address
 				if (json['error']['payment']) {	
 					if (json['error']['payment']['country']) {
-						$('select[name=\'payment_country_id\']').after('<span class="text-danger">' + json['error']['payment']['country'] + '</span>');
+						$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['payment']['country'] + '</div>');
 					}	
 					
 					if (json['error']['payment']['zone']) {
-						$('select[name=\'payment_zone_id\']').after('<span class="text-danger">' + json['error']['payment']['zone'] + '</span>');
+						$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['payment']['zone'] + '</div>');
 					}
 					
 					if (json['error']['payment']['postcode']) {
-						$('input[name=\'payment_postcode\']').after('<span class="text-danger">' + json['error']['payment']['postcode'] + '</span>');
+						$('input[name=\'payment_postcode\']').after('<div class="text-danger">' + json['error']['payment']['postcode'] + '</div>');
 					}						
 				}
 			
 				// Shipping	Address
 				if (json['error']['shipping']) {		
 					if (json['error']['shipping']['country']) {
-						$('select[name=\'shipping_country_id\']').after('<span class="text-danger">' + json['error']['shipping']['country'] + '</span>');
+						$('select[name=\'shipping_country_id\']').after('<div class="text-danger">' + json['error']['shipping']['country'] + '</div>');
 					}	
 					
 					if (json['error']['shipping_zone']) {
-						$('select[name=\'shipping_zone_id\']').after('<span class="text-danger">' + json['error']['shipping']['zone'] + '</span>');
+						$('select[name=\'shipping_zone_id\']').after('<div class="text-danger">' + json['error']['shipping']['zone'] + '</div>');
 					}
 					
 					if (json['error']['shipping']['postcode']) {
-						$('input[name=\'shipping_postcode\']').after('<span class="text-danger">' + json['error']['shipping']['postcode'] + '</span>');
+						$('input[name=\'shipping_postcode\']').after('<div class="text-danger">' + json['error']['shipping']['postcode'] + '</div>');
 					}	
 				}
 				
@@ -1193,7 +1199,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				if (json['error']['product']) {
 					if (json['error']['product']['option']) {	
 						for (i in json['error']['product']['option']) {
-							$('#input-option' + i).after('<span class="text-danger">' + json['error']['product']['option'][i] + '</span>');
+							$('#input-option' + i).after('<div class="text-danger">' + json['error']['product']['option'][i] + '</div>');
 						}
 					}
 					
@@ -1220,23 +1226,23 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				// Voucher
 				if (json['error']['vouchers']) {
 					if (json['error']['vouchers']['from_name']) {
-						$('input[name=\'from_name\']').after('<span class="text-danger">' + json['error']['vouchers']['from_name'] + '</span>');
+						$('input[name=\'from_name\']').after('<div class="text-danger">' + json['error']['vouchers']['from_name'] + '</div');
 					}	
 					
 					if (json['error']['vouchers']['from_email']) {
-						$('input[name=\'from_email\']').after('<span class="text-danger">' + json['error']['vouchers']['from_email'] + '</span>');
+						$('input[name=\'from_email\']').after('<div class="text-danger">' + json['error']['vouchers']['from_email'] + '</div>');
 					}	
 								
 					if (json['error']['vouchers']['to_name']) {
-						$('input[name=\'to_name\']').after('<span class="text-danger">' + json['error']['vouchers']['to_name'] + '</span>');
+						$('input[name=\'to_name\']').after('<div class="text-danger">' + json['error']['vouchers']['to_name'] + '</div>');
 					}	
 					
 					if (json['error']['vouchers']['to_email']) {
-						$('input[name=\'to_email\']').after('<span class="text-danger">' + json['error']['vouchers']['to_email'] + '</span>');
+						$('input[name=\'to_email\']').after('<div class="text-danger">' + json['error']['vouchers']['to_email'] + '</div>');
 					}	
 					
 					if (json['error']['vouchers']['amount']) {
-						$('input[name=\'amount\']').after('<span class="text-danger">' + json['error']['vouchers']['amount'] + '</span>');
+						$('input[name=\'amount\']').after('<div class="text-danger">' + json['error']['vouchers']['amount'] + '</div>');
 					}	
 				} else {
 					$('input[name=\'from_name\']').attr('value', '');	
@@ -1300,7 +1306,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					product = json['order_product'][i];
 					
 					html += '<tr id="product-row' + product_row + '">';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" class="btn btn-danger"><i class="icon-minus-sign"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" class="btn btn-danger btn-sm"><i class="icon-minus-sign"></i></button></td>';
 					html += '  <td class="text-left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][order_product_id]" value="" /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" /><input type="hidden" name="order_product[' + product_row + '][name]" value="' + product['name'] + '" />';
 					
 					if (product['option']) {
@@ -1362,7 +1368,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					voucher = json['order_voucher'][i];
 					 
 					html += '<tr id="voucher-row' + voucher_row + '">';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" class="btn btn-danger"><i class="icon-minus-sign"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" class="btn btn-danger btn-sm"><i class="icon-minus-sign"></i></button></td>';
 					html += '  <td class="text-left">' + voucher['description'];
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][order_voucher_id]" value="" />';
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][voucher_id]" value="' + voucher['voucher_id'] + '" />';

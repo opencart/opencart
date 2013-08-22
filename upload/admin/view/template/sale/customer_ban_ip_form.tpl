@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="ip" value="<?php echo $ip; ?>" id="input-ip" class="form-control" />
             <?php if ($error_ip) { ?>
-            <span class="text-error"><?php echo $error_ip; ?></span>
+            <div class="text-danger"><?php echo $error_ip; ?></div>
             <?php } ?>
           </div>
         </div>

@@ -198,7 +198,7 @@ $(document).delegate('#button-register', 'click', function() {
                 }
                 
 				for (i in json['error']) {
-                    $('#input-payment-' + i.replace('_', '-')).after('<span class="text-error"><br />' + json['error'][i] + '</span>');
+                    $('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger"><br />' + json['error'][i] + '</div>');
 				}
             } else {
                 <?php if ($shipping_required) { ?>              
@@ -330,7 +330,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
                 }
                                 
 				for (i in json['error']) {
-                    $('#input-payment-' + i.replace('_', '-')).after('<span class="text-error"><br />' + json['error'][i] + '</span>');
+                    $('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger"><br />' + json['error'][i] + '</div>');
 				}
             } else {
                 <?php if ($shipping_required) { ?>
@@ -419,7 +419,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
                 }
   				
 				for (i in json['error']) {
-                    $('#input-shipping-' + i.replace('_', '-')).after('<span class="text-error"><br />' + json['error'][i] + '</span>');
+                    $('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger"><br />' + json['error'][i] + '</div>');
 				}
             } else {
                 $.ajax({
@@ -496,7 +496,7 @@ $(document).delegate('#button-guest', 'click', function() {
                 }
                                 
 				for (i in json['error']) {
-                    $('#input-payment-' + i.replace('_', '-')).after('<span class="text-error"><br />' + json['error'][i] + '</span>');
+                    $('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger"><br />' + json['error'][i] + '</div>');
 				}
             } else {
                 <?php if ($shipping_required) { ?>  
@@ -612,7 +612,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
                 }
                                 
 				for (i in json['error']) {
-                    $('#input-shipping-' + i.replace('_', '-')).after('<span class="text-error"><br />' + json['error'][i] + '</span>');
+                    $('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger"><br />' + json['error'][i] + '</div>');
 				}
             } else {
                 $.ajax({

@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="authorizenet_merchant" value="<?php echo $authorizenet_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
             <?php if ($error_merchant) { ?>
-            <span class="text-error"><?php echo $error_merchant; ?></span>
+            <div class="text-danger"><?php echo $error_merchant; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <input type="text" name="authorizenet_key" value="<?php echo $authorizenet_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
             <?php if ($error_key) { ?>
-            <span class="text-error"><?php echo $error_key; ?></span>
+            <div class="text-danger"><?php echo $error_key; ?></div>
             <?php } ?>
           </div>
         </div>

@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
             <?php if ($error_name) { ?>
-            <span class="text-error"><?php echo $error_name; ?></span>
+            <div class="text-danger"><?php echo $error_name; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" class="form-control" />
             <?php if ($error_address_1) { ?>
-            <span class="text-error"><?php echo $error_address_1; ?></span>
+            <div class="text-danger"><?php echo $error_address_1; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -48,7 +48,7 @@
           <div class="col-sm-10">
             <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" class="form-control" />
             <?php if ($error_city) { ?>
-            <span class="text-error"><?php echo $error_city; ?></span>
+            <div class="text-danger"><?php echo $error_city; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -72,7 +72,7 @@
               <?php } ?>
             </select>
             <?php if ($error_country) { ?>
-            <span class="text-error"><?php echo $error_country; ?></span>
+            <div class="text-danger"><?php echo $error_country; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -82,7 +82,7 @@
             <select name="zone_id" id="input-zone" class="form-control">
             </select>
             <?php if ($error_zone) { ?>
-            <span class="text-error"><?php echo $error_zone; ?></span>
+            <div class="text-danger"><?php echo $error_zone; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -96,7 +96,7 @@
               </span></div>
             <span class="help-block"><?php echo $help_geocode; ?></span>
             <?php if ($error_geocode) { ?>
-            <span class="text-error"><?php echo $error_geocode; ?></span>
+            <div class="text-danger"><?php echo $error_geocode; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -116,13 +116,13 @@
           <label class="col-sm-2 control-label" for="input-open"><?php echo $entry_open; ?></label>
           <div class="col-sm-10">
             <textarea name="open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $open; ?></textarea>
-            <span class="help-block"><?php echo $help_open; ?></span> </div>
+            <span class="help-block"><?php echo $help_open; ?></span></div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
           <div class="col-sm-10">
             <textarea name="comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
-            <span class="help-block"><?php echo $help_comment; ?></span> </div>
+            <span class="help-block"><?php echo $help_comment; ?></span></div>
         </div>
       </form>
     </div>

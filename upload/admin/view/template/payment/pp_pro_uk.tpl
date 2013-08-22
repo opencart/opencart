@@ -25,7 +25,7 @@
             <input type="text" name="pp_pro_uk_vendor" value="<?php echo $pp_pro_uk_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="input-vendor" class="form-control" />
             <span class="help-block"><?php echo $help_vendor; ?></span>
             <?php if ($error_vendor) { ?>
-            <span class="text-error"><?php echo $error_vendor; ?></span>
+            <div class="text-danger"><?php echo $error_vendor; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -35,7 +35,7 @@
             <input type="text" name="pp_pro_uk_user" value="<?php echo $pp_pro_uk_user; ?>" placeholder="<?php echo $entry_user; ?>" id="input-user" class="form-control" />
             <span class="help-block"><?php echo $help_user; ?></span>
             <?php if ($error_user) { ?>
-            <span class="text-error"><?php echo $error_user; ?></span>
+            <div class="text-danger"><?php echo $error_user; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -45,7 +45,7 @@
             <input type="text" name="pp_pro_uk_password" value="<?php echo $pp_pro_uk_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
             <span class="help-block"><?php echo $help_password; ?></span>
             <?php if ($error_password) { ?>
-            <span class="text-error"><?php echo $error_password; ?></span>
+            <div class="text-danger"><?php echo $error_password; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -55,7 +55,7 @@
             <input type="text" name="pp_pro_uk_partner" value="<?php echo $pp_pro_uk_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="input-partner" class="form-control" />
             <span class="help-block"><?php echo $help_partner; ?></span>
             <?php if ($error_partner) { ?>
-            <span class="text-error"><?php echo $error_partner; ?></span>
+            <div class="text-danger"><?php echo $error_partner; ?></div>
             <?php } ?>
           </div>
         </div>

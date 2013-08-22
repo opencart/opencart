@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="usps_user_id" value="<?php echo $usps_user_id; ?>" placeholder="<?php echo $entry_user_id; ?>" id="input-user-id" class="form-control" />
             <?php if ($error_user_id) { ?>
-            <span class="error"><?php echo $error_user_id; ?></span>
+            <div class="text-danger"><?php echo $error_user_id; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <input type="text" name="usps_postcode" value="<?php echo $usps_postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
             <?php if ($error_postcode) { ?>
-            <span class="error"><?php echo $error_postcode; ?></span>
+            <div class="text-danger"><?php echo $error_postcode; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -527,7 +527,7 @@
             </div>
             <span class="help-block"><?php echo $help_dimension; ?></span>
             <?php if ($error_dimension) { ?>
-            <span class="error"><?php echo $error_dimension; ?></span>
+            <div class="text-danger"><?php echo $error_dimension; ?></div>
             <?php } ?>
           </div>
         </div>

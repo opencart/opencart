@@ -46,7 +46,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_name[$language['language_id']])) { ?>
-                    <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span>
+                    <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
                     <?php } ?>
                   </div>
                 </div>
@@ -72,7 +72,7 @@
                   <label class="col-sm-2 control-label" for="input-tag<?php echo $language['language_id']; ?>"><?php echo $entry_tag; ?> </label>
                   <div class="col-sm-10">
                     <input type="text" name="product_description[<?php echo $language['language_id']; ?>][tag]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['tag'] : ''; ?>" placeholder="<?php echo $entry_tag; ?>" id="input-tag<?php echo $language['language_id']; ?>" class="form-control" />
-                    <span class="help-block"><?php echo $help_tag; ?></span> </div>
+                    <span class="help-block"><?php echo $help_tag; ?></span></div>
                 </div>
               </div>
               <?php } ?>
@@ -84,7 +84,7 @@
               <div class="col-sm-10">
                 <input type="text" name="model" value="<?php echo $model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
                 <?php if ($error_model) { ?>
-                <span class="text-error"><?php echo $error_model; ?></span>
+                <div class="text-danger"><?php echo $error_model; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -92,37 +92,37 @@
               <label class="col-sm-2 control-label" for="input-sku"><?php echo $entry_sku; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="sku" value="<?php echo $sku; ?>" placeholder="<?php echo $entry_sku; ?>" id="input-sku" class="form-control" />
-                <span class="help-block"><?php echo $help_sku; ?></span> </div>
+                <span class="help-block"><?php echo $help_sku; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-upc"><?php echo $entry_upc; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="upc" value="<?php echo $upc; ?>" placeholder="<?php echo $entry_upc; ?>" id="input-upc" class="form-control" />
-                <span class="help-block"><?php echo $help_upc; ?></span> </div>
+                <span class="help-block"><?php echo $help_upc; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-ean"><?php echo $entry_ean; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="ean" value="<?php echo $ean; ?>" placeholder="<?php echo $entry_ean; ?>" id="input-ean" class="form-control" />
-                <span class="help-block"><?php echo $help_ean; ?></span> </div>
+                <span class="help-block"><?php echo $help_ean; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-jan"><?php echo $entry_jan; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="jan" value="<?php echo $jan; ?>" placeholder="<?php echo $entry_jan; ?>" id="input-jan" class="form-control" />
-                <span class="help-block"><?php echo $help_jan; ?></span> </div>
+                <span class="help-block"><?php echo $help_jan; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-isbn"><?php echo $entry_isbn; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="isbn" value="<?php echo $isbn; ?>" placeholder="<?php echo $entry_isbn; ?>" id="input-isbn" class="form-control" />
-                <span class="help-block"><?php echo $help_isbn; ?></span> </div>
+                <span class="help-block"><?php echo $help_isbn; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-mpn"><?php echo $entry_mpn; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="mpn" value="<?php echo $mpn; ?>" placeholder="<?php echo $entry_mpn; ?>" id="input-mpn" class="form-control" />
-                <span class="help-block"><?php echo $help_mpn; ?></span> </div>
+                <span class="help-block"><?php echo $help_mpn; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
@@ -161,7 +161,7 @@
               <label class="col-sm-2 control-label" for="input-minimum"><?php echo $entry_minimum; ?> </label>
               <div class="col-sm-10">
                 <input type="text" name="minimum" value="<?php echo $minimum; ?>" placeholder="<?php echo $entry_minimum; ?>" id="input-minimum" class="form-control" />
-                <span class="help-block"><?php echo $help_minimum; ?></span> </div>
+                <span class="help-block"><?php echo $help_minimum; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-subtract"><?php echo $entry_subtract; ?></label>
@@ -438,7 +438,7 @@
           </div>
           <div class="tab-pane" id="tab-option">
             <div class="row">
-              <div class="col-lg-3">
+              <div class="col-sm-2">
                 <ul class="nav nav-pills nav-stacked" id="option">
                   <?php $option_row = 0; ?>
                   <?php foreach ($product_options as $product_option) { ?>
@@ -751,7 +751,7 @@
               <label class="col-lg-2 control-label" for="input-points"><?php echo $entry_points; ?></label>
               <div class="col-lg-10">
                 <input type="text" name="points" value="<?php echo $points; ?>" placeholder="<?php echo $entry_points; ?>" id="input-points" class="form-control" />
-                <span class="help-block"><?php echo $help_points; ?></span> </div>
+                <span class="help-block"><?php echo $help_points; ?></span></div>
             </div>
             <table class="table table-striped table-bordered table-hover">
               <thead>

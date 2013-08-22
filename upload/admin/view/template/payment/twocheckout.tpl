@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="twocheckout_account" value="<?php echo $twocheckout_account; ?>" placeholder="<?php echo $entry_account; ?>" id="input-account" class="form-control" />
             <?php if ($error_account) { ?>
-            <span class="text-error"><?php echo $error_account; ?></span>
+            <div class="text-danger"><?php echo $error_account; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -34,7 +34,7 @@
             <input type="text" name="twocheckout_secret" value="<?php echo $twocheckout_secret; ?>" placeholder="<?php echo $entry_secret; ?>" id="input-secret" class="form-control" />
             <span class="help-block"><?php echo $help_secret; ?></span>
             <?php if ($error_secret) { ?>
-            <span class="text-error"><?php echo $error_secret; ?></span>
+            <div class="text-danger"><?php echo $error_secret; ?></div>
             <?php } ?>
           </div>
         </div>

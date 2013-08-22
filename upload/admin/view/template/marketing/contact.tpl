@@ -50,9 +50,10 @@
           </div>
         </div>
         <div class="form-group to" id="to-customer">
-          <label class="col-sm-2 control-label" for="input-customer"><?php echo $entry_customer; ?> <span class="help-block"><?php echo $help_customer; ?></span></label>
+          <label class="col-sm-2 control-label" for="input-customer"><?php echo $entry_customer; ?></label>
           <div class="col-sm-10">
             <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
+            <span class="help-block"><?php echo $help_customer; ?></span>
             <br />
             <div id="customer" class="well"></div>
           </div>
@@ -222,11 +223,11 @@ function send(url) {
 				}
 				
 				if (json['error']['subject']) {
-					$('input[name=\'subject\']').after('<span class="text-error">' + json['error']['subject'] + '</span>');
+					$('input[name=\'subject\']').after('<div class="text-danger">' + json['error']['subject'] + '</div>');
 				}	
 				
 				if (json['error']['message']) {
-					$('textarea[name=\'message\']').parent().append('<span class="text-error">' + json['error']['message'] + '</span>');
+					$('textarea[name=\'message\']').parent().append('<div class="text-danger">' + json['error']['message'] + '</div>');
 				}									
 			}			
 			

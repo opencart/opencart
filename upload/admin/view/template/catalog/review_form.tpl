@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" class="form-control" />
             <?php if ($error_author) { ?>
-            <span class="text-error"><?php echo $error_author; ?></span>
+            <div class="text-danger"><?php echo $error_author; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -35,7 +35,7 @@
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
             <span class="help-block"><?php echo $help_product; ?></span>
             <?php if ($error_product) { ?>
-            <span class="text-error"><?php echo $error_product; ?></span>
+            <div class="text-danger"><?php echo $error_product; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -44,7 +44,7 @@
           <div class="col-sm-10">
             <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>" id="input-text" class="form-control"><?php echo $text; ?></textarea>
             <?php if ($error_text) { ?>
-            <span class="text-error"><?php echo $error_text; ?></span>
+            <div class="text-danger"><?php echo $error_text; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -97,7 +97,7 @@
               <?php } ?>
             </label>
             <?php if ($error_rating) { ?>
-            <span class="text-error"><?php echo $error_rating; ?></span>
+            <div class="text-danger"><?php echo $error_rating; ?></div>
             <?php } ?>
           </div>
         </div>

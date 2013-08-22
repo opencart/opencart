@@ -27,7 +27,7 @@
               <input type="text" name="length_class_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" class="form-control" />
             </div>
             <?php if (isset($error_title[$language['language_id']])) { ?>
-            <span class="text-error"><?php echo $error_title[$language['language_id']]; ?></span><br />
+            <div class="text-danger"><?php echo $error_title[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>
@@ -40,7 +40,7 @@
               <input type="text" name="length_class_description[<?php echo $language['language_id']; ?>][unit]" value="<?php echo isset($length_class_description[$language['language_id']]) ? $length_class_description[$language['language_id']]['unit'] : ''; ?>" placeholder="<?php echo $entry_unit; ?>" class="form-control" />
             </div>
             <?php if (isset($error_unit[$language['language_id']])) { ?>
-            <span class="text-error"><?php echo $error_unit[$language['language_id']]; ?></span><br />
+            <div class="text-danger"><?php echo $error_unit[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>
@@ -49,7 +49,7 @@
           <label class="col-sm-2 control-label" for="input-value"><?php echo $entry_value; ?></label>
           <div class="col-sm-10">
             <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
-            <span class="help-block"><?php echo $help_value; ?></span> </div>
+            <span class="help-block"><?php echo $help_value; ?></span></div>
         </div>
       </form>
     </div>

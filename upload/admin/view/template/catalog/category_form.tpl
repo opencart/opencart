@@ -39,7 +39,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_name[$language['language_id']])) { ?>
-                    <p class="text-danger"><?php echo $error_name[$language['language_id']]; ?></p>
+                    <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
                     <?php } ?>
                   </div>
                 </div>
@@ -133,7 +133,7 @@
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
-              <div class="col-lg-3"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
+              <div class="col-sm-10"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
                 <input type="hidden" name="image" value="<?php echo $image; ?>" />
                 <br />
                 <br />

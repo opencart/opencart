@@ -27,7 +27,7 @@
               <input type="text" name="order_status[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($order_status[$language['language_id']]) ? $order_status[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
             </div>
             <?php if (isset($error_name[$language['language_id']])) { ?>
-            <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+            <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>

@@ -27,7 +27,7 @@
               <input type="text" name="voucher_theme_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($voucher_theme_description[$language['language_id']]) ? $voucher_theme_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
             </div>
             <?php if (isset($error_name[$language['language_id']])) { ?>
-            <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+            <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>
@@ -43,7 +43,7 @@
               <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
             </div>
             <?php if ($error_image) { ?>
-            <span class="text-error"><?php echo $error_image; ?></span>
+            <div class="text-danger"><?php echo $error_image; ?></div>
             <?php } ?>
           </div>
         </div>

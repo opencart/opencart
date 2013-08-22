@@ -353,7 +353,8 @@
         </div>
         <div class="tab-pane " id="tab-history">
           <div id="history"></div>
-          <div class="form-horizontal">
+          <br />
+          <form class="form-horizontal">
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
               <div class="col-sm-10">
@@ -380,8 +381,10 @@
                 <textarea name="comment" rows="8" id="input-comment" class="form-control"></textarea>
               </div>
             </div>
+          </form>
+          <div class="text-right">
+            <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
           </div>
-          <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
         </div>
         <?php if ($maxmind_id) { ?>
         <div class="tab-pane" id="tab-fraud">

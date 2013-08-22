@@ -197,7 +197,7 @@
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <li>
@@ -220,7 +220,7 @@
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <?php foreach ($option['option_value'] as $option_value) { ?>
@@ -241,7 +241,7 @@
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <?php foreach ($option['option_value'] as $option_value) { ?>
@@ -262,7 +262,7 @@
           <ul class="unstyled option option-image" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <?php foreach ($option['option_value'] as $option_value) { ?>
@@ -283,7 +283,7 @@
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <input class="input-block-level" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" />
@@ -295,7 +295,7 @@
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <textarea class="input-block-level" name="option[<?php echo $option['product_option_id']; ?>]" cols="40" rows="5"><?php echo $option['option_value']; ?></textarea>
@@ -307,7 +307,7 @@
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <input type="button" class="btn" value="<?php echo $button_upload; ?>" id="button-option-<?php echo $option['product_option_id']; ?>">
@@ -320,7 +320,7 @@
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <input class="input-block-level date" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" class="date" />
@@ -332,7 +332,7 @@
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <input class="input-block-level datetime" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" />
@@ -344,7 +344,7 @@
           <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
             <li>
               <?php if ($option['required']) { ?>
-              <span class="text-error">*</span>
+              <div class="text-danger">*</div>
               <?php } ?>
               <?php echo $option['name']; ?> </li>
             <input class="input-block-level time" type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['option_value']; ?>" />

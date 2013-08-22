@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="username" value="<?php echo $username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
             <?php if ($error_username) { ?>
-            <span class="error"><?php echo $error_username; ?></span>
+            <div class="text-danger"><?php echo $error_username; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -47,7 +47,7 @@
           <div class="col-sm-10">
             <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
             <?php if ($error_firstname) { ?>
-            <span class="error"><?php echo $error_firstname; ?></span>
+            <div class="text-danger"><?php echo $error_firstname; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -56,7 +56,7 @@
           <div class="col-sm-10">
             <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
             <?php if ($error_lastname) { ?>
-            <span class="error"><?php echo $error_lastname; ?></span>
+            <div class="text-danger"><?php echo $error_lastname; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -83,7 +83,7 @@
           <div class="col-sm-10">
             <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
             <?php if ($error_password) { ?>
-            <span class="error"><?php echo $error_password; ?></span>
+            <div class="text-danger"><?php echo $error_password; ?></div>
             <?php  } ?>
           </div>
         </div>
@@ -92,7 +92,7 @@
           <div class="col-sm-10">
             <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" class="form-control" />
             <?php if ($error_confirm) { ?>
-            <span class="error"><?php echo $error_confirm; ?></span>
+            <div class="text-danger"><?php echo $error_confirm; ?></div>
             <?php  } ?>
           </div>
         </div>

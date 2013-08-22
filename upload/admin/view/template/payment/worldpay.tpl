@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="worldpay_merchant" value="<?php echo $worldpay_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
             <?php if ($error_merchant) { ?>
-            <span class="text-error"><?php echo $error_merchant; ?></span>
+            <div class="text-danger"><?php echo $error_merchant; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -34,7 +34,7 @@
             <input type="text" name="worldpay_password" value="<?php echo $worldpay_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
             <span class="help-block"><?php echo $help_password; ?></span>
             <?php if ($error_password) { ?>
-            <span class="text-error"><?php echo $error_password; ?></span>
+            <div class="text-danger"><?php echo $error_password; ?></div>
             <?php } ?>
           </div>
         </div>

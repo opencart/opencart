@@ -30,7 +30,7 @@
               <div class="col-sm-10">
                 <input type="text" name="order_id" value="<?php echo $order_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
                 <?php if ($error_order_id) { ?>
-                <span class="text-error"><?php echo $error_order_id; ?></span>
+                <div class="text-danger"><?php echo $error_order_id; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -52,7 +52,7 @@
               <div class="col-sm-10">
                 <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
                 <?php if ($error_firstname) { ?>
-                <span class="text-error"><?php echo $error_firstname; ?></span>
+                <div class="text-danger"><?php echo $error_firstname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -61,7 +61,7 @@
               <div class="col-sm-10">
                 <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
                 <?php if ($error_lastname) { ?>
-                <span class="text-error"><?php echo $error_lastname; ?></span>
+                <div class="text-danger"><?php echo $error_lastname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -70,7 +70,7 @@
               <div class="col-sm-10">
                 <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
                 <?php if ($error_email) { ?>
-                <span class="text-error"><?php echo $error_email; ?></span>
+                <div class="text-danger"><?php echo $error_email; ?></div>
                 <?php  } ?>
               </div>
             </div>
@@ -79,7 +79,7 @@
               <div class="col-sm-10">
                 <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
                 <?php if ($error_telephone) { ?>
-                <span class="text-error"><?php echo $error_telephone; ?></span>
+                <div class="text-danger"><?php echo $error_telephone; ?></div>
                 <?php  } ?>
               </div>
             </div>
@@ -92,7 +92,7 @@
                 <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
                 <span class="help-block"><?php echo $help_product; ?></span>
                 <?php if ($error_product) { ?>
-                <span class="text-error"><?php echo $error_product; ?></span>
+                <div class="text-danger"><?php echo $error_product; ?></div>
                 <?php  } ?>
               </div>
             </div>

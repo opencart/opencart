@@ -27,7 +27,7 @@
               <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
             </div>
             <?php if (isset($error_name[$language['language_id']])) { ?>
-            <span class="text-error"><?php echo $error_name[$language['language_id']]; ?></span><br />
+            <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>
@@ -39,10 +39,10 @@
               <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
               <span class="input-group-btn">
               <button type="button" onclick="$('input[name=\'file\']').click();" id="button-upload" class="btn btn-primary"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-              </span> </div>
+              </span></div>
             <span class="help-block"><?php echo $help_filename; ?></span>
             <?php if ($error_filename) { ?>
-            <span class="text-error"><?php echo $error_filename; ?></span>
+            <div class="text-danger"><?php echo $error_filename; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -52,7 +52,7 @@
             <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" class="form-control" />
             <span class="help-block"><?php echo $help_mask; ?></span>
             <?php if ($error_mask) { ?>
-            <span class="text-error"><?php echo $error_mask; ?></span>
+            <div class="text-danger"><?php echo $error_mask; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -71,7 +71,7 @@
             <?php } else { ?>
             <input type="checkbox" name="update" value="1" id="input-update" />
             <?php } ?>
-            <span class="help-block"><?php echo $help_update; ?></span> </div>
+            <span class="help-block"><?php echo $help_update; ?></span></div>
         </div>
         <?php } ?>
       </form>

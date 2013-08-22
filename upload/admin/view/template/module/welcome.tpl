@@ -20,7 +20,7 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-welcome" class="form-horizontal">
         <div class="row">
-          <div class="col-lg-3">
+          <div class="col-sm-2">
             <ul class="nav nav-pills nav-stacked" id="module">
               <?php $module_row = 1; ?>
               <?php foreach ($modules as $module) { ?>
@@ -114,9 +114,9 @@
                   </div>
                 </div>
               </div>
+              <?php $module_row++; ?>
+              <?php } ?>
             </div>
-            <?php $module_row++; ?>
-            <?php } ?>
           </div>
         </div>
       </form>

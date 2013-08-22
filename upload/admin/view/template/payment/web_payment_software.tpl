@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="web_payment_software_merchant_name" value="<?php echo $web_payment_software_merchant_name; ?>" placeholder="<?php echo $entry_login; ?>" id="input-login" class="form-control" />
             <?php if ($error_login) { ?>
-            <span class="text-error"><?php echo $error_login; ?></span>
+            <div class="text-danger"><?php echo $error_login; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <input type="text" name="web_payment_software_merchant_key" value="<?php echo $web_payment_software_merchant_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
             <?php if ($error_key) { ?>
-            <span class="text-error"><?php echo $error_key; ?></span>
+            <div class="text-danger"><?php echo $error_key; ?></div>
             <?php } ?>
           </div>
         </div>

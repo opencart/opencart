@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="sagepay_direct_vendor" value="<?php echo $sagepay_direct_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="input-vendor" class="form-control" />
             <?php if ($error_vendor) { ?>
-            <span class="text-error"><?php echo $error_vendor; ?></span>
+            <div class="text-danger"><?php echo $error_vendor; ?></div>
             <?php } ?>
           </div>
         </div>

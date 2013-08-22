@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
             <?php if ($error_name) { ?>
-            <span class="text-error"><?php echo $error_name; ?></span>
+            <div class="text-danger"><?php echo $error_name; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -44,7 +44,7 @@
           <label class="col-sm-2 control-label" for="input-address-format"><?php echo $entry_address_format; ?> </label>
           <div class="col-sm-10">
             <textarea name="address_format" rows="5" placeholder="<?php echo $entry_address_format; ?>" id="input-address-format" class="form-control"><?php echo $address_format; ?></textarea>
-            <span class="help-block"><?php echo $help_address_format; ?></span> </div>
+            <span class="help-block"><?php echo $help_address_format; ?></span></div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_postcode_required; ?></label>

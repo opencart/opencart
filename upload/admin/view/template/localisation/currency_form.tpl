@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="title" value="<?php echo $title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" class="form-control" />
             <?php if ($error_title) { ?>
-            <span class="text-error"><?php echo $error_title; ?></span>
+            <div class="text-danger"><?php echo $error_title; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -34,7 +34,7 @@
             <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
             <span class="help-block"><?php echo $help_code; ?></span>
             <?php if ($error_code) { ?>
-            <span class="text-error"><?php echo $error_code; ?></span>
+            <div class="text-danger"><?php echo $error_code; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -60,7 +60,7 @@
           <label class="col-sm-2 control-label" for="input-value"><?php echo $entry_value; ?></label>
           <div class="col-sm-10">
             <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
-            <span class="help-block"><?php echo $help_value; ?></span> </div>
+            <span class="help-block"><?php echo $help_value; ?></span></div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>

@@ -20,7 +20,7 @@
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-weight" class="form-horizontal">
         <div class="row">
-          <div class="col-lg-3">
+          <div class="col-sm-2">
             <ul class="nav nav-pills nav-stacked">
               <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
               <?php foreach ($geo_zones as $geo_zone) { ?>

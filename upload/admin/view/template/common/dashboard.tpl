@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div class="container">
+<div id="content" class="container">
   <?php if ($error_install) { ?>
   <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_install; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -7,7 +7,7 @@
   <?php } ?>
   <div class="panel">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-eye-open icon-large"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="icon-eye-open"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">

@@ -1,7 +1,8 @@
 <?php echo $header; ?>
-<div class="container">
+<div id="content" class="container"><br />
+  <br />
   <div class="row">
-    <div class="col-lg-offset-4 col-lg-4">
+    <div class="col-sm-offset-4 col-sm-4">
       <div class="panel">
         <div class="panel-heading">
           <h1 class="panel-title"><i class="icon-lock icon-large"></i> <?php echo $text_login; ?></h1>

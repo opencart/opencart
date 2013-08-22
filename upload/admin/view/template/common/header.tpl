@@ -28,11 +28,13 @@
 <?php } ?>
 </head>
 <body>
+<div id="container">
 <header class="navbar navbar-inverse navbar-static-top">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
       <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
+    <?php if ($logged) { ?>
     <nav class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav pull-right">
         <li class="dropdown"><a title="<?php echo $text_help; ?>" data-toggle="dropdown"><i class="icon-question-sign icon-large"></i></a>
@@ -51,6 +53,7 @@
         </li>
       </ul>
     </nav>
+    <?php } ?>
   </div>
 </header>
 <?php if ($logged) { ?>

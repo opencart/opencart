@@ -17,7 +17,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-exchange icon-large"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="icon-exchange"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">

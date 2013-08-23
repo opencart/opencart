@@ -222,7 +222,7 @@ class ControllerCommonHeader extends Controller {
 				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
 			}
 		} else {
-			$this->data['profile_name'] = '';
+			$this->data['profile_name'] = $this->user->getUserName();
 			$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
 		}
 					

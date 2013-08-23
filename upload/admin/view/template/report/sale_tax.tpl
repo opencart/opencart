@@ -7,13 +7,13 @@
   </ul>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="icon-bar-chart"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form class="form-horizontal">
         <div class="well">
           <div class="row">
-            <div class="col-lg-5">
+            <div class="col-sm-5">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
                 <div class="col-sm-10">
@@ -27,7 +27,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-5">
+            <div class="col-sm-5">
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-group"><?php echo $entry_group; ?></label>
                 <div class="col-sm-10">
@@ -58,8 +58,8 @@
                 </div>
               </div>
             </div>
-            <div class="col-lg-2">
-              <button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
+            <div class="col-sm-2">
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>
@@ -93,8 +93,8 @@
         </tbody>
       </table>
       <div class="row">
-        <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
-        <div class="col-lg-6 text-right"><?php echo $results; ?></div>
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
       </div>
     </div>
   </div>

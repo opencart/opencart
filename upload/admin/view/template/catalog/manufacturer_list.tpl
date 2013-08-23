@@ -20,7 +20,7 @@
       <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
         <button type="submit" form="form-manufacturer" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
-      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-manufacturer">
@@ -66,8 +66,8 @@
         </table>
       </form>
       <div class="row">
-        <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
-        <div class="col-lg-6 text-right"><?php echo $results; ?></div>
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
       </div>
     </div>
   </div>

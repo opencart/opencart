@@ -17,7 +17,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-puzzle-piece icon-large"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="icon-puzzle-piece"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <table class="table table-striped table-bordered table-hover">

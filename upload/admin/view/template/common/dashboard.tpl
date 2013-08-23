@@ -11,17 +11,17 @@
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-md-3">
+        <div class="col-sm-3"><div class="well well-sm">
           <h3><i class="icon-money"></i> <?php echo $sale_total; ?></h3>
           <p><?php echo $text_sale; ?></p>
-        </div>
-        <div class="col-md-3">
+        </div></div>
+        <div class="col-sm-3">
           <h3><i class="icon-shopping-cart"></i> <?php echo $text_order; ?></h3>
           <?php echo $order_total; ?></div>
-        <div class="col-md-3">
+        <div class="col-sm-3">
           <h3><i class="icon-user"></i> <?php echo $text_customer; ?></h3>
           <?php echo $customer_total; ?></div>
-        <div class="col-md-3">
+        <div class="col-sm-3">
           <h3><i class="icon-globe"></i> <?php echo $text_marketing; ?></h3>
           <?php echo $marketing_total; ?></div>
       </div>

@@ -6,17 +6,20 @@ html, body {
 html, body, label, input, textarea, select, td {
 	font-size: 12px;
 }
+/*
 @media (min-width: 768px) {
 	.container {
-		max-width: 98%;
+		max-width: none;
 	}
 }
-header.navbar {
-	padding: 0;
-	margin-bottom: 0px;
-	min-height: 44px;
+
+.container {
+	border: 1px solid #000;
 }
-header.navbar-inverse {
+*/	
+header.navbar {	
+	min-height: 45px;
+	margin-bottom: 0px;
 	background-color: #2D2D2E;
 	background-repeat: no-repeat, repeat;
 	background-size: auto, 5px 5px;
@@ -25,38 +28,43 @@ header.navbar-inverse {
 	-moz-box-shadow: inset 0 0 8px 0px #000000;
 	-webkit-box-shadow: inset 0 0 8px 0px #000000;
 	box-shadow: inset 0 0 8px 0px #000000;	
-	border-bottom: 4px solid #2FC5F0;	
+	border-bottom: 4px solid #2FC5F0;
 }
-header.navbar-inverse:after {
-	border-bottom: 1px solid #000000;
-	width: 100%;
+header.navbar > .container .navbar-brand {
+	padding-top: 8px;
+	padding-bottom: 5px;
 }
-header.navbar .navbar-header {
-	padding-left: 5px;
-	padding-right: 0px;
-}
-header.navbar .navbar-brand {
-	margin: 0px;
-	padding: 8px 0px 6px 0px;
-}
-header.navbar-inverse .navbar-nav > li > a {
+header.navbar > .container .navbar-nav > li > a {
 	padding: 12px 11px 12px 11px;
 	color: #FFFFFF;
 	text-shadow: 1px 1px 1px #000000;
 	cursor: pointer;
 }
-header.navbar-inverse .navbar-nav > li > a.profile {
-	padding: 8px 8px 7px 10px;
+
+#user-menu {
+	border: 1px solid #000; 
+	margin-top: 5px;
+	cursor: pointer;
 }
-header.navbar-inverse .navbar-nav > li > a.profile img {
+#user-menu img {
+	float: left;
 	padding: 1px;
 	background: #FFFFFF;
 	border: 1px solid #000000;
+	margin-right: 10px;	
+}
+#user-menu div {
+	float: left;
+}
+#user-menu div > * {
+	margin: 0; 
+	color: #FFF;
+	text-shadow: 1px 1px 1px #000000;
 }
 
 /* menu */
 #menu {
-	padding: 0;
+	min-height: 30px;
 	margin-bottom: 15px;
 	background-color: #FFFFFF;
 	background-repeat: repeat-x;
@@ -67,10 +75,13 @@ header.navbar-inverse .navbar-nav > li > a.profile img {
 	box-shadow: 0px 0px 4px 0px #CCCCCC;
 	border-bottom: 1px solid #CCCCCC;
 }
-#menu .navbar-nav > li {
-	padding: 0px;
-	line-height: 13px;
+#menu .navbar-nav, #menu .navbar-collapse {
+	padding: 0;
 }
+#menu .icon-bar {
+	color: #000;
+}
+
 #menu .navbar-nav > li > a {
 	color: #444444;
 	cursor: pointer;
@@ -146,7 +157,6 @@ footer {
 footer a {
 	color: #005580;
 }
-
 .breadcrumb {
 	border: 1px solid #E5E5E5;
 	background: #FFFFFF;
@@ -168,7 +178,7 @@ footer a {
 	text-decoration: none;
 }
 .breadcrumb li + li {
-	padding-left: 18px;
+	padding-left: 15px;
 }
 .breadcrumb > li + li:before {
 	content: '';
@@ -195,7 +205,6 @@ footer a {
 	font-size: 13px;
 	padding: 5px 12px;
 }
-
 .btn-sm, .btn-xs {
   padding: 5px 10px;
   font-size: 11px;
@@ -211,11 +220,10 @@ footer a {
 	padding: 8px 15px;
 }
 .panel-title {
-	margin-top: 3px;
-	font-size: 20px;
+	font-size: 19px;	
+	line-height: 30px;
 	color: #666666;
 	text-shadow: 1px 1px 1px #FFFFFF;
-	vertical-align: middle;
 }
 .nav-tabs {
 	margin-bottom: 15px;
@@ -229,9 +237,17 @@ div.required .control-label:before, td.required:before {
 	padding: 5px 12px;
 	font-size: 12px;
 }
-
 input.form-control, select.form-control {
 	height: 30px;
+}
+.table {
+	border-radius: 7px;	
+}
+.table thead td {
+	font-weight: bold;
+}
+.table a:hover {
+	text-decoration: none;
 }
 .table a.asc:after {
 	content: "  \f0d7";

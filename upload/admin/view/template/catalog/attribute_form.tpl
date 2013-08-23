@@ -15,7 +15,7 @@
       <div class="pull-right">
         <button type="submit" form="form-attribute" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="icon-edit icon-large"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-attribute" class="form-horizontal">
@@ -34,7 +34,7 @@
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-attribute-group"><?php echo $entry_attribute_group; ?></label>
-          <div class="col-lg-10">
+          <div class="col-sm-10">
             <select name="attribute_group_id" id="input-attribute-group" class="form-control">
               <?php foreach ($attribute_groups as $attribute_group) { ?>
               <?php if ($attribute_group['attribute_group_id'] == $attribute_group_id) { ?>

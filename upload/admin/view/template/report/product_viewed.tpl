@@ -13,7 +13,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $reset; ?>" class="btn btn-danger"><i class="icon-refresh"></i> <?php echo $button_reset; ?></a></div>
-      <h1 class="panel-title"><i class="icon-bar-chart icon-large"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="icon-bar-chart"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <table class="table table-striped table-bordered table-hover">
@@ -43,8 +43,8 @@
         </tbody>
       </table>
       <div class="row">
-        <div class="col-lg-6 text-left"><?php echo $pagination; ?></div>
-        <div class="col-lg-6 text-right"><?php echo $results; ?></div>
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
       </div>
     </div>
   </div>

@@ -50,34 +50,36 @@
           </div>
         </div>
       </form>
-      <table class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <td class="text-left"><?php echo $column_campaign; ?></td>
-            <td class="text-left"><?php echo $column_code; ?></td>
-            <td class="text-right"><?php echo $column_clicks; ?></td>
-            <td class="text-right"><?php echo $column_orders; ?></td>
-            <td class="text-right"><?php echo $column_total; ?></td>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($marketings) { ?>
-          <?php foreach ($marketings as $marketing) { ?>
-          <tr>
-            <td class="text-left"><?php echo $marketing['campaign']; ?></td>
-            <td class="text-left"><?php echo $marketing['code']; ?></td>
-            <td class="text-right"><?php echo $marketing['clicks']; ?></td>
-            <td class="text-right"><?php echo $marketing['orders']; ?></td>
-            <td class="text-right"><?php echo $marketing['total']; ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-left"><?php echo $column_campaign; ?></td>
+              <td class="text-left"><?php echo $column_code; ?></td>
+              <td class="text-right"><?php echo $column_clicks; ?></td>
+              <td class="text-right"><?php echo $column_orders; ?></td>
+              <td class="text-right"><?php echo $column_total; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($marketings) { ?>
+            <?php foreach ($marketings as $marketing) { ?>
+            <tr>
+              <td class="text-left"><?php echo $marketing['campaign']; ?></td>
+              <td class="text-left"><?php echo $marketing['code']; ?></td>
+              <td class="text-right"><?php echo $marketing['clicks']; ?></td>
+              <td class="text-right"><?php echo $marketing['orders']; ?></td>
+              <td class="text-right"><?php echo $marketing['total']; ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>

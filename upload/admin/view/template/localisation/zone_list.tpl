@@ -24,52 +24,54 @@
     </div>
     <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-zone">
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-              <td class="text-left"><?php if ($sort == 'c.name') { ?>
-                <a href="<?php echo $sort_country; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_country; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_country; ?>"><?php echo $column_country; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'z.name') { ?>
-                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'z.code') { ?>
-                <a href="<?php echo $sort_code; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_code; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php echo $column_action; ?></td>
-            </tr>
-          </thead>
-          <tbody>
-            <?php if ($zones) { ?>
-            <?php foreach ($zones as $zone) { ?>
-            <tr>
-              <td class="text-center"><?php if ($zone['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" checked="checked" />
-                <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" />
-                <?php } ?></td>
-              <td class="text-left"><?php echo $zone['country']; ?></td>
-              <td class="text-left"><?php echo $zone['name']; ?></td>
-              <td class="text-left"><?php echo $zone['code']; ?></td>
-              <td class="text-right"><?php foreach ($zone['action'] as $action) { ?>
-                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
-                <?php } ?></td>
-            </tr>
-            <?php } ?>
-            <?php } else { ?>
-            <tr>
-              <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                <td class="text-left"><?php if ($sort == 'c.name') { ?>
+                  <a href="<?php echo $sort_country; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_country; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_country; ?>"><?php echo $column_country; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'z.name') { ?>
+                  <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'z.code') { ?>
+                  <a href="<?php echo $sort_code; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_code; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_code; ?>"><?php echo $column_code; ?></a>
+                  <?php } ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if ($zones) { ?>
+              <?php foreach ($zones as $zone) { ?>
+              <tr>
+                <td class="text-center"><?php if ($zone['selected']) { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" checked="checked" />
+                  <?php } else { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" />
+                  <?php } ?></td>
+                <td class="text-left"><?php echo $zone['country']; ?></td>
+                <td class="text-left"><?php echo $zone['name']; ?></td>
+                <td class="text-left"><?php echo $zone['code']; ?></td>
+                <td class="text-right"><?php foreach ($zone['action'] as $action) { ?>
+                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                  <?php } ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
       </form>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>

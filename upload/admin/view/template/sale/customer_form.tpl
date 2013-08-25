@@ -263,7 +263,9 @@
                 <textarea name="comment" rows="8" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"></textarea>
               </div>
             </div>
-            <div class="text-right"><button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button></div>
+            <div class="text-right">
+              <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+            </div>
           </div>
           <div class="tab-pane" id="tab-transaction">
             <div id="transaction"></div>
@@ -280,7 +282,9 @@
                 <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" id="input-amount" class="form-control" />
               </div>
             </div>
-            <div class="text-right"><button type="button" id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button></div>
+            <div class="text-right">
+              <button type="button" id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
+            </div>
           </div>
           <div class="tab-pane" id="tab-reward">
             <div id="reward"></div>
@@ -297,40 +301,44 @@
                 <input type="text" name="points" value="" placeholder="<?php echo $entry_points; ?>" id="input-points" class="form-control" />
                 <span class="help-block"><?php echo $help_points; ?></span> </div>
             </div>
-            <div class="text-right"><button type="button" id="button-reward" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button></div>
+            <div class="text-right">
+              <button type="button" id="button-reward" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
+            </div>
           </div>
           <?php } ?>
           <div class="tab-pane" id="tab-ip">
-            <table class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td class="text-left"><?php echo $column_ip; ?></td>
-                  <td class="text-right"><?php echo $column_total; ?></td>
-                  <td class="text-left"><?php echo $column_date_added; ?></td>
-                  <td class="text-right"><?php echo $column_action; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php if ($ips) { ?>
-                <?php foreach ($ips as $ip) { ?>
-                <tr>
-                  <td class="text-left"><a href="http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>" target="_blank"><?php echo $ip['ip']; ?></a></td>
-                  <td class="text-right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
-                  <td class="text-left"><?php echo $ip['date_added']; ?></td>
-                  <td class="text-right"><?php if ($ip['ban_ip']) { ?>
-                    <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-default btn-xs button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
-                    <?php } else { ?>
-                    <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-danger btn-xs button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
-                    <?php } ?></td>
-                </tr>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-left"><?php echo $column_ip; ?></td>
+                    <td class="text-right"><?php echo $column_total; ?></td>
+                    <td class="text-left"><?php echo $column_date_added; ?></td>
+                    <td class="text-right"><?php echo $column_action; ?></td>
+                  </tr>
+                </thead>
+                <tbody>
+                  <?php if ($ips) { ?>
+                  <?php foreach ($ips as $ip) { ?>
+                  <tr>
+                    <td class="text-left"><a href="http://www.geoiptool.com/en/?IP=<?php echo $ip['ip']; ?>" target="_blank"><?php echo $ip['ip']; ?></a></td>
+                    <td class="text-right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
+                    <td class="text-left"><?php echo $ip['date_added']; ?></td>
+                    <td class="text-right"><?php if ($ip['ban_ip']) { ?>
+                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-default btn-xs button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
+                      <?php } else { ?>
+                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-danger btn-xs button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
+                      <?php } ?></td>
+                  </tr>
+                  <?php } ?>
+                  <?php } else { ?>
+                  <tr>
+                    <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </form>

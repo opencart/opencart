@@ -33,40 +33,42 @@
           </div>
         </div>
       </form>
-      <table class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <td class="text-left"><?php echo $column_affiliate; ?></td>
-            <td class="text-left"><?php echo $column_email; ?></td>
-            <td class="text-left"><?php echo $column_status; ?></td>
-            <td class="text-right"><?php echo $column_commission; ?></td>
-            <td class="text-right"><?php echo $column_orders; ?></td>
-            <td class="text-right"><?php echo $column_total; ?></td>
-            <td class="text-right"><?php echo $column_action; ?></td>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($affiliates) { ?>
-          <?php foreach ($affiliates as $affiliate) { ?>
-          <tr>
-            <td class="text-left"><?php echo $affiliate['affiliate']; ?></td>
-            <td class="text-left"><?php echo $affiliate['email']; ?></td>
-            <td class="text-left"><?php echo $affiliate['status']; ?></td>
-            <td class="text-right"><?php echo $affiliate['commission']; ?></td>
-            <td class="text-right"><?php echo $affiliate['orders']; ?></td>
-            <td class="text-right"><?php echo $affiliate['total']; ?></td>
-            <td class="text-right"><?php foreach ($affiliate['action'] as $action) { ?>
-              <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
-              <?php } ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-left"><?php echo $column_affiliate; ?></td>
+              <td class="text-left"><?php echo $column_email; ?></td>
+              <td class="text-left"><?php echo $column_status; ?></td>
+              <td class="text-right"><?php echo $column_commission; ?></td>
+              <td class="text-right"><?php echo $column_orders; ?></td>
+              <td class="text-right"><?php echo $column_total; ?></td>
+              <td class="text-right"><?php echo $column_action; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($affiliates) { ?>
+            <?php foreach ($affiliates as $affiliate) { ?>
+            <tr>
+              <td class="text-left"><?php echo $affiliate['affiliate']; ?></td>
+              <td class="text-left"><?php echo $affiliate['email']; ?></td>
+              <td class="text-left"><?php echo $affiliate['status']; ?></td>
+              <td class="text-right"><?php echo $affiliate['commission']; ?></td>
+              <td class="text-right"><?php echo $affiliate['orders']; ?></td>
+              <td class="text-right"><?php echo $affiliate['total']; ?></td>
+              <td class="text-right"><?php foreach ($affiliate['action'] as $action) { ?>
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                <?php } ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>

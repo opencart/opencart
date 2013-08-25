@@ -6,6 +6,9 @@ html, body {
 html, body, label, input, textarea, select, td {
 	font-size: 12px;
 }
+h1, h4 {
+	margin-top: 0;
+}
 /*
 @media (min-width: 768px) {
 	.container {
@@ -17,8 +20,8 @@ html, body, label, input, textarea, select, td {
 	border: 1px solid #000;
 }
 */	
-header.navbar {	
-	min-height: 45px;
+#header {
+	min-height: 49px;
 	margin-bottom: 0px;
 	background-color: #2D2D2E;
 	background-repeat: no-repeat, repeat;
@@ -30,38 +33,39 @@ header.navbar {
 	box-shadow: inset 0 0 8px 0px #000000;	
 	border-bottom: 4px solid #2FC5F0;
 }
-header.navbar > .container .navbar-brand {
+#header > .container .navbar-brand {
 	padding-top: 8px;
-	padding-bottom: 5px;
+	padding-bottom: 0px;
 }
-header.navbar > .container .navbar-nav > li > a {
-	padding: 12px 11px 12px 11px;
+#header > .container .navbar-nav > li {
+
+}
+#header > .container .navbar-nav > li > a {
+	padding: 10px 10px 9px 10px;
+	line-height: 12px;
+	font-size: 12px;
 	color: #FFFFFF;
 	text-shadow: 1px 1px 1px #000000;
 	cursor: pointer;
 }
-
-#user-menu {
-	border: 1px solid #000; 
-	margin-top: 5px;
-	cursor: pointer;
+#header > .container .navbar-nav > li > a > i {
+	float: right;
+	display: block;
+	margin-top: 6px;
+	margin-left: 7px;
 }
-#user-menu img {
+#header > .container .navbar-nav > li > a > img {
 	float: left;
-	padding: 1px;
-	background: #FFFFFF;
 	border: 1px solid #000000;
-	margin-right: 10px;	
-}
-#user-menu div {
-	float: left;
-}
-#user-menu div > * {
-	margin: 0; 
-	color: #FFF;
-	text-shadow: 1px 1px 1px #000000;
+	background: #FFF;
+	padding: 1px;
+	margin-right: 7px;
 }
 
+#user-menu .dropdown-menu {
+	z-index: 1000;
+	
+}
 /* menu */
 #menu {
 	min-height: 30px;
@@ -80,8 +84,11 @@ header.navbar > .container .navbar-nav > li > a {
 }
 #menu .icon-bar {
 	color: #000;
+	border: 1px solid #000;
 }
-
+#menu li.active {
+	color: #000000;
+}
 #menu .navbar-nav > li > a {
 	color: #444444;
 	cursor: pointer;
@@ -214,9 +221,7 @@ footer a {
 .btn-xs {
 	padding: 1px 5px;
 }
-  
 .panel-heading {
-	overflow: auto;
 	padding: 8px 15px;
 }
 .panel-title {

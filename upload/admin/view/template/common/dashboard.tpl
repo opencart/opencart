@@ -4,28 +4,39 @@
   <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_install; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
+  <?php } else { ?>
   <?php } ?>
+  <div class="alert alert-info"><i class="icon-thumbs-up-alt"></i> <?php echo $text_welcome; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="icon-eye-open"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-sm-3"><div class="well well-sm">
-          <h3><i class="icon-money"></i> <?php echo $sale_total; ?></h3>
-          <p><?php echo $text_sale; ?></p>
-        </div></div>
         <div class="col-sm-3">
-          <h3><i class="icon-shopping-cart"></i> <?php echo $text_order; ?></h3>
-          <?php echo $order_total; ?></div>
+          <div class="well well-sm"> <i style="font-size: 30px; float: left; color: #2FC5F0;" class="icon-money icon-large"></i>
+            <h4 style="margin-left: 45px;"><?php echo $sale_total; ?></h4>
+            <p style="margin-left: 45px;"><?php echo $text_sale; ?></p>
+          </div>
+        </div>
         <div class="col-sm-3">
-          <h3><i class="icon-user"></i> <?php echo $text_customer; ?></h3>
-          <?php echo $customer_total; ?></div>
+          <div class="well well-sm">
+            <h3><i class="icon-shopping-cart icon-large"></i> <?php echo $order_total; ?></h3>
+            <?php echo $text_order; ?></div>
+        </div>
         <div class="col-sm-3">
-          <h3><i class="icon-globe"></i> <?php echo $text_marketing; ?></h3>
-          <?php echo $marketing_total; ?></div>
+          <div class="well well-sm">
+            <h3><i class="icon-user icon-large"></i> <?php echo $customer_total; ?></h3>
+            <?php echo $text_customer; ?></div>
+        </div>
+        <div class="col-sm-3">
+          <div class="well well-sm">
+            <h3><i class="icon-globe icon-large"></i> <?php echo $marketing_total; ?></h3>
+            <?php echo $text_marketing; ?></div>
+        </div>
       </div>
-      <br />
       <br />
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-sale" data-toggle="tab"><?php echo $tab_sale; ?></a></li>
@@ -80,28 +91,30 @@
           <div id="chart-online" class="chart" style="width: 100%; height: 250px;"></div>
         </div>
         <div class="tab-pane" id="tab-activity">
-          <table class="table table-striped table-bordered table-hover">
-            <thead>
-              <tr>
-                <td class="text-left"><?php echo $column_action; ?></td>
-                <td class="text-left"><?php echo $column_date_added; ?></td>
-              </tr>
-            </thead>
-            <tbody>
-              <?php if ($activities) { ?>
-              <?php foreach ($activities as $activity) { ?>
-              <tr>
-                <td class="text-left"><?php echo $activity['action']; ?></td>
-                <td class="text-left"><?php echo $activity['action']; ?></td>
-              </tr>
-              <?php } ?>
-              <?php } else { ?>
-              <tr>
-                <td colspan="2" class="text-center"><?php echo $text_no_results; ?></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
+          <div class="table-responsive">
+            <table class="table table-striped table-bordered table-hover">
+              <thead>
+                <tr>
+                  <td class="text-left"><?php echo $column_action; ?></td>
+                  <td class="text-left"><?php echo $column_date_added; ?></td>
+                </tr>
+              </thead>
+              <tbody>
+                <?php if ($activities) { ?>
+                <?php foreach ($activities as $activity) { ?>
+                <tr>
+                  <td class="text-left"><?php echo $activity['action']; ?></td>
+                  <td class="text-left"><?php echo $activity['action']; ?></td>
+                </tr>
+                <?php } ?>
+                <?php } else { ?>
+                <tr>
+                  <td colspan="2" class="text-center"><?php echo $text_no_results; ?></td>
+                </tr>
+                <?php } ?>
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     </div>

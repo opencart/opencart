@@ -207,22 +207,22 @@ class ControllerCommonHeader extends Controller {
 		}
 		
 		$this->load->model('user/user');
-		
+
 		$this->load->model('tool/image');
-		
+
 		$user_info = $this->model_user_user->getUser($this->user->getId());
-		
+
 		if ($user_info) {
 			$this->data['profile_name'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
-			$this->data['profile_image'] = $user_info['image'];
-			
+			$this->data['profile_group'] = $user_info['user_group'];
+
 			if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
 				$this->data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 23, 23);
 			} else {
 				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
 			}
 		} else {
-			$this->data['profile_name'] = $this->user->getUserName();
+			$this->data['profile_name'] = '';
 			$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
 		}
 					

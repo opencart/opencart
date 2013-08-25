@@ -303,67 +303,69 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-product">
-            <table class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td class="text-left"><?php echo $column_product; ?></td>
-                  <td class="text-left"><?php echo $column_model; ?></td>
-                  <td class="text-right"><?php echo $column_quantity; ?></td>
-                  <td class="text-right"><?php echo $column_price; ?></td>
-                  <td class="text-right"><?php echo $column_total; ?></td>
-                </tr>
-              </thead>
-              <?php $product_row = 0; ?>
-              <?php $option_row = 0; ?>
-              <?php $download_row = 0; ?>
-              <tbody id="product">
-                <?php if ($order_products) { ?>
-                <?php foreach ($order_products as $order_product) { ?>
-                <tr id="product-row<?php echo $product_row; ?>">
-                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');" class="btn btn-danger btn-sm"><i class="icon-minus-sign"></i></button></td>
-                  <td class="text-left"><?php echo $order_product['name']; ?><br />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][name]" value="<?php echo $order_product['name']; ?>" />
-                    <?php foreach ($order_product['option'] as $option) { ?>
-                    - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][order_option_id]" value="<?php echo $option['order_option_id']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_id]" value="<?php echo $option['product_option_id']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_value_id]" value="<?php echo $option['product_option_value_id']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][name]" value="<?php echo $option['name']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][value]" value="<?php echo $option['value']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][type]" value="<?php echo $option['type']; ?>" />
-                    <?php $option_row++; ?>
-                    <?php } ?>
-                    <?php foreach ($order_product['download'] as $download) { ?>
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][order_download_id]" value="<?php echo $download['order_download_id']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][name]" value="<?php echo $download['name']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][filename]" value="<?php echo $download['filename']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][mask]" value="<?php echo $download['mask']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][remaining]" value="<?php echo $download['remaining']; ?>" />
-                    <?php $download_row++; ?>
-                    <?php } ?></td>
-                  <td class="text-left"><?php echo $order_product['model']; ?>
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
-                  <td class="text-right"><?php echo $order_product['quantity']; ?>
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
-                  <td class="text-right"><?php echo $order_product['price']; ?>
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" /></td>
-                  <td class="text-right"><?php echo $order_product['total']; ?>
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['total']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['tax']; ?>" />
-                    <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>
-                </tr>
-                <?php $product_row++; ?>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td></td>
+                    <td class="text-left"><?php echo $column_product; ?></td>
+                    <td class="text-left"><?php echo $column_model; ?></td>
+                    <td class="text-right"><?php echo $column_quantity; ?></td>
+                    <td class="text-right"><?php echo $column_price; ?></td>
+                    <td class="text-right"><?php echo $column_total; ?></td>
+                  </tr>
+                </thead>
+                <?php $product_row = 0; ?>
+                <?php $option_row = 0; ?>
+                <?php $download_row = 0; ?>
+                <tbody id="product">
+                  <?php if ($order_products) { ?>
+                  <?php foreach ($order_products as $order_product) { ?>
+                  <tr id="product-row<?php echo $product_row; ?>">
+                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');" class="btn btn-danger btn-sm"><i class="icon-minus-sign"></i></button></td>
+                    <td class="text-left"><?php echo $order_product['name']; ?><br />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][name]" value="<?php echo $order_product['name']; ?>" />
+                      <?php foreach ($order_product['option'] as $option) { ?>
+                      - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][order_option_id]" value="<?php echo $option['order_option_id']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_id]" value="<?php echo $option['product_option_id']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_value_id]" value="<?php echo $option['product_option_value_id']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][name]" value="<?php echo $option['name']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][value]" value="<?php echo $option['value']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][type]" value="<?php echo $option['type']; ?>" />
+                      <?php $option_row++; ?>
+                      <?php } ?>
+                      <?php foreach ($order_product['download'] as $download) { ?>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][order_download_id]" value="<?php echo $download['order_download_id']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][name]" value="<?php echo $download['name']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][filename]" value="<?php echo $download['filename']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][mask]" value="<?php echo $download['mask']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_download][<?php echo $download_row; ?>][remaining]" value="<?php echo $download['remaining']; ?>" />
+                      <?php $download_row++; ?>
+                      <?php } ?></td>
+                    <td class="text-left"><?php echo $order_product['model']; ?>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
+                    <td class="text-right"><?php echo $order_product['quantity']; ?>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
+                    <td class="text-right"><?php echo $order_product['price']; ?>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" /></td>
+                    <td class="text-right"><?php echo $order_product['total']; ?>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['total']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['tax']; ?>" />
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>
+                  </tr>
+                  <?php $product_row++; ?>
+                  <?php } ?>
+                  <?php } else { ?>
+                  <tr>
+                    <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
             <fieldset>
               <legend><?php echo $text_product; ?></legend>
               <div class="form-group">
@@ -386,49 +388,51 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-voucher">
-            <table class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td></td>
-                  <td class="text-left"><?php echo $column_product; ?></td>
-                  <td class="text-left"><?php echo $column_model; ?></td>
-                  <td class="text-right"><?php echo $column_quantity; ?></td>
-                  <td class="text-right"><?php echo $column_price; ?></td>
-                  <td class="text-right"><?php echo $column_total; ?></td>
-                </tr>
-              </thead>
-              <tbody id="voucher">
-                <?php $voucher_row = 0; ?>
-                <?php if ($order_vouchers) { ?>
-                <?php foreach ($order_vouchers as $order_voucher) { ?>
-                <tr id="voucher-row<?php echo $voucher_row; ?>">
-                  <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');" class="btn btn-danger btn-sm"><i class="icon-minus-sign"></i></button></td>
-                  <td class="text-left"><?php echo $order_voucher['description']; ?>
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][order_voucher_id]" value="<?php echo $order_voucher['order_voucher_id']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][description]" value="<?php echo $order_voucher['description']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][code]" value="<?php echo $order_voucher['code']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $order_voucher['from_name']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $order_voucher['from_email']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $order_voucher['to_name']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $order_voucher['to_email']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $order_voucher['voucher_theme_id']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $order_voucher['message']; ?>" />
-                    <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $order_voucher['amount']; ?>" /></td>
-                  <td class="text-left"></td>
-                  <td class="text-right">1</td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                </tr>
-                <?php $voucher_row++; ?>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td></td>
+                    <td class="text-left"><?php echo $column_product; ?></td>
+                    <td class="text-left"><?php echo $column_model; ?></td>
+                    <td class="text-right"><?php echo $column_quantity; ?></td>
+                    <td class="text-right"><?php echo $column_price; ?></td>
+                    <td class="text-right"><?php echo $column_total; ?></td>
+                  </tr>
+                </thead>
+                <tbody id="voucher">
+                  <?php $voucher_row = 0; ?>
+                  <?php if ($order_vouchers) { ?>
+                  <?php foreach ($order_vouchers as $order_voucher) { ?>
+                  <tr id="voucher-row<?php echo $voucher_row; ?>">
+                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');" class="btn btn-danger btn-sm"><i class="icon-minus-sign"></i></button></td>
+                    <td class="text-left"><?php echo $order_voucher['description']; ?>
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][order_voucher_id]" value="<?php echo $order_voucher['order_voucher_id']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][description]" value="<?php echo $order_voucher['description']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][code]" value="<?php echo $order_voucher['code']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_name]" value="<?php echo $order_voucher['from_name']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][from_email]" value="<?php echo $order_voucher['from_email']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_name]" value="<?php echo $order_voucher['to_name']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][to_email]" value="<?php echo $order_voucher['to_email']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_theme_id]" value="<?php echo $order_voucher['voucher_theme_id']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][message]" value="<?php echo $order_voucher['message']; ?>" />
+                      <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][amount]" value="<?php echo $order_voucher['amount']; ?>" /></td>
+                    <td class="text-left"></td>
+                    <td class="text-right">1</td>
+                    <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                    <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                  </tr>
+                  <?php $voucher_row++; ?>
+                  <?php } ?>
+                  <?php } else { ?>
+                  <tr>
+                    <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
             <fieldset>
               <legend><?php echo $text_voucher; ?></legend>
               <div class="form-group required">
@@ -483,60 +487,62 @@
             </div>
           </div>
           <div class="tab-pane" id="tab-total">
-            <table class="table table-striped table-bordered table-hover">
-              <thead>
-                <tr>
-                  <td class="text-left"><?php echo $column_product; ?></td>
-                  <td class="text-left"><?php echo $column_model; ?></td>
-                  <td class="text-right"><?php echo $column_quantity; ?></td>
-                  <td class="text-right"><?php echo $column_price; ?></td>
-                  <td class="text-right"><?php echo $column_total; ?></td>
-                </tr>
-              </thead>
-              <tbody id="total">
-                <?php $total_row = 0; ?>
-                <?php if ($order_products || $order_vouchers || $order_totals) { ?>
-                <?php foreach ($order_products as $order_product) { ?>
-                <tr>
-                  <td class="text-left"><?php echo $order_product['name']; ?><br />
-                    <?php foreach ($order_product['option'] as $option) { ?>
-                    - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
-                    <?php } ?></td>
-                  <td class="text-left"><?php echo $order_product['model']; ?></td>
-                  <td class="text-right"><?php echo $order_product['quantity']; ?></td>
-                  <td class="text-right"><?php echo $order_product['price']; ?></td>
-                  <td class="text-right"><?php echo $order_product['total']; ?></td>
-                </tr>
-                <?php } ?>
-                <?php foreach ($order_vouchers as $order_voucher) { ?>
-                <tr>
-                  <td class="text-left"><?php echo $order_voucher['description']; ?></td>
-                  <td class="text-left"></td>
-                  <td class="text-right">1</td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                  <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                </tr>
-                <?php } ?>
-                <?php foreach ($order_totals as $order_total) { ?>
-                <tr id="total-row<?php echo $total_row; ?>">
-                  <td class="text-right" colspan="4"><?php echo $order_total['title']; ?>:
-                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][order_total_id]" value="<?php echo $order_total['order_total_id']; ?>" />
-                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][code]" value="<?php echo $order_total['code']; ?>" />
-                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][title]" value="<?php echo $order_total['title']; ?>" />
-                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][text]" value="<?php echo $order_total['text']; ?>" />
-                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][value]" value="<?php echo $order_total['value']; ?>" />
-                    <input type="hidden" name="order_total[<?php echo $total_row; ?>][sort_order]" value="<?php echo $order_total['sort_order']; ?>" /></td>
-                  <td class="text-right"><?php echo $order_total['value']; ?></td>
-                </tr>
-                <?php $total_row++; ?>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
+            <div class="table-responsive">
+              <table class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-left"><?php echo $column_product; ?></td>
+                    <td class="text-left"><?php echo $column_model; ?></td>
+                    <td class="text-right"><?php echo $column_quantity; ?></td>
+                    <td class="text-right"><?php echo $column_price; ?></td>
+                    <td class="text-right"><?php echo $column_total; ?></td>
+                  </tr>
+                </thead>
+                <tbody id="total">
+                  <?php $total_row = 0; ?>
+                  <?php if ($order_products || $order_vouchers || $order_totals) { ?>
+                  <?php foreach ($order_products as $order_product) { ?>
+                  <tr>
+                    <td class="text-left"><?php echo $order_product['name']; ?><br />
+                      <?php foreach ($order_product['option'] as $option) { ?>
+                      - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                      <?php } ?></td>
+                    <td class="text-left"><?php echo $order_product['model']; ?></td>
+                    <td class="text-right"><?php echo $order_product['quantity']; ?></td>
+                    <td class="text-right"><?php echo $order_product['price']; ?></td>
+                    <td class="text-right"><?php echo $order_product['total']; ?></td>
+                  </tr>
+                  <?php } ?>
+                  <?php foreach ($order_vouchers as $order_voucher) { ?>
+                  <tr>
+                    <td class="text-left"><?php echo $order_voucher['description']; ?></td>
+                    <td class="text-left"></td>
+                    <td class="text-right">1</td>
+                    <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                    <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                  </tr>
+                  <?php } ?>
+                  <?php foreach ($order_totals as $order_total) { ?>
+                  <tr id="total-row<?php echo $total_row; ?>">
+                    <td class="text-right" colspan="4"><?php echo $order_total['title']; ?>:
+                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][order_total_id]" value="<?php echo $order_total['order_total_id']; ?>" />
+                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][code]" value="<?php echo $order_total['code']; ?>" />
+                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][title]" value="<?php echo $order_total['title']; ?>" />
+                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][text]" value="<?php echo $order_total['text']; ?>" />
+                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][value]" value="<?php echo $order_total['value']; ?>" />
+                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][sort_order]" value="<?php echo $order_total['sort_order']; ?>" /></td>
+                    <td class="text-right"><?php echo $order_total['value']; ?></td>
+                  </tr>
+                  <?php $total_row++; ?>
+                  <?php } ?>
+                  <?php } else { ?>
+                  <tr>
+                    <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+                  </tr>
+                  <?php } ?>
+                </tbody>
+              </table>
+            </div>
             <fieldset>
               <legend><?php echo $text_order; ?></legend>
               <div class="form-group">

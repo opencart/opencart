@@ -26,7 +26,7 @@ $(document).ready(function() {
 	route = getURLVar('route');
 	
 	if (!route) {
-		$('#header #dashboard a').addClass('active');
+		$('#menu #dashboard').addClass('active');
 	} else {
 		part = route.split('/');
 		
@@ -36,7 +36,7 @@ $(document).ready(function() {
 			url += '/' + part[1];
 		}
 		
-		$('#header a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
+		$('#menu a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 	
 	$('[data-toggle=\'tooltip\']').tooltip();
@@ -182,7 +182,7 @@ $('[data-target=]').on('submit', function(event) {
 				}
 				
 				for (i in category) {
-					html += '<li class="disabled"><a href="#"><b>' + category[i]['name'] + '</b></a></li>';
+					html += '<li class="dropdown-header">' + category[i]['name'] + '</li>';
 					
 					for (j = 0; j < category[i]['item'].length; j++) {
 						html += '<li data-value="' + category[i]['item'][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[i]['item'][j]['label'] + '</a></li>';

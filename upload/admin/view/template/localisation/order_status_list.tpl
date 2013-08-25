@@ -24,40 +24,42 @@
     </div>
     <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-order-status">
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-              <td class="text-left"><?php if ($sort == 'name') { ?>
-                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php echo $column_action; ?></td>
-            </tr>
-          </thead>
-          <tbody>
-            <?php if ($order_statuses) { ?>
-            <?php foreach ($order_statuses as $order_status) { ?>
-            <tr>
-              <td class="text-center"><?php if ($order_status['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $order_status['order_status_id']; ?>" checked="checked" />
-                <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $order_status['order_status_id']; ?>" />
-                <?php } ?></td>
-              <td class="text-left"><?php echo $order_status['name']; ?></td>
-              <td class="text-right"><?php foreach ($order_status['action'] as $action) { ?>
-                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
-                <?php } ?></td>
-            </tr>
-            <?php } ?>
-            <?php } else { ?>
-            <tr>
-              <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                <td class="text-left"><?php if ($sort == 'name') { ?>
+                  <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                  <?php } ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if ($order_statuses) { ?>
+              <?php foreach ($order_statuses as $order_status) { ?>
+              <tr>
+                <td class="text-center"><?php if ($order_status['selected']) { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $order_status['order_status_id']; ?>" checked="checked" />
+                  <?php } else { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $order_status['order_status_id']; ?>" />
+                  <?php } ?></td>
+                <td class="text-left"><?php echo $order_status['name']; ?></td>
+                <td class="text-right"><?php foreach ($order_status['action'] as $action) { ?>
+                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                  <?php } ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="text-center" colspan="3"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
       </form>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>

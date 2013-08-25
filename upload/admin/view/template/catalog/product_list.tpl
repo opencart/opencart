@@ -25,99 +25,101 @@
     </div>
     <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-product">
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-              <td class="text-center"><?php echo $column_image; ?></td>
-              <td class="text-left"><?php if ($sort == 'pd.name') { ?>
-                <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'p.model') { ?>
-                <a href="<?php echo $sort_model; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_model; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'p.price') { ?>
-                <a href="<?php echo $sort_price; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_price; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_price; ?>"><?php echo $column_price; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php if ($sort == 'p.quantity') { ?>
-                <a href="<?php echo $sort_quantity; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_quantity; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_quantity; ?>"><?php echo $column_quantity; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'p.status') { ?>
-                <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php echo $column_action; ?></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td></td>
-              <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="form-control" /></td>
-              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" class="form-control" /></td>
-              <td align="left"><input type="text" name="filter_price" value="<?php echo $filter_price; ?>" class="form-control" /></td>
-              <td align="right"><input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" class="form-control" /></td>
-              <td><select name="filter_status" class="form-control">
-                  <option value="*"></option>
-                  <?php if ($filter_status) { ?>
-                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                <td class="text-center"><?php echo $column_image; ?></td>
+                <td class="text-left"><?php if ($sort == 'pd.name') { ?>
+                  <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
                   <?php } else { ?>
-                  <option value="1"><?php echo $text_enabled; ?></option>
-                  <?php } ?>
-                  <?php if (($filter_status !== null) && !$filter_status) { ?>
-                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'p.model') { ?>
+                  <a href="<?php echo $sort_model; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_model; ?></a>
                   <?php } else { ?>
-                  <option value="0"><?php echo $text_disabled; ?></option>
-                  <?php } ?>
-                </select></td>
-              <td><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
-            </tr>
-            <?php if ($products) { ?>
-            <?php foreach ($products as $product) { ?>
-            <tr>
-              <td class="text-center"><?php if ($product['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
-                <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
-                <?php } ?></td>
-              <td class="text-center"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" /></td>
-              <td class="text-left"><?php echo $product['name']; ?></td>
-              <td class="text-left"><?php echo $product['model']; ?></td>
-              <td class="text-left"><?php if ($product['special']) { ?>
-                <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
-                <div class="text-danger"><?php echo $product['special']; ?></div>
-                <?php } else { ?>
-                <?php echo $product['price']; ?>
-                <?php } ?></td>
-              <td class="text-right"><?php if ($product['quantity'] <= 0) { ?>
-                <span class="label label-warning"><?php echo $product['quantity']; ?></span>
-                <?php } elseif ($product['quantity'] <= 5) { ?>
-                <span class="label label-danger"><?php echo $product['quantity']; ?></span>
-                <?php } else { ?>
-                <span class="label label-success"><?php echo $product['quantity']; ?></span>
-                <?php } ?></td>
-              <td class="text-left"><?php echo $product['status']; ?></td>
-              <td class="text-right"><?php foreach ($product['action'] as $action) { ?>
-                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
-                <?php } ?></td>
-            </tr>
-            <?php } ?>
-            <?php } else { ?>
-            <tr>
-              <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
+                  <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'p.price') { ?>
+                  <a href="<?php echo $sort_price; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_price; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_price; ?>"><?php echo $column_price; ?></a>
+                  <?php } ?></td>
+                <td class="text-right"><?php if ($sort == 'p.quantity') { ?>
+                  <a href="<?php echo $sort_quantity; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_quantity; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_quantity; ?>"><?php echo $column_quantity; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'p.status') { ?>
+                  <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                  <?php } ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td></td>
+                <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="form-control" /></td>
+                <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" class="form-control" /></td>
+                <td align="left"><input type="text" name="filter_price" value="<?php echo $filter_price; ?>" class="form-control" /></td>
+                <td align="right"><input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" class="form-control" /></td>
+                <td><select name="filter_status" class="form-control">
+                    <option value="*"></option>
+                    <?php if ($filter_status) { ?>
+                    <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                    <?php } else { ?>
+                    <option value="1"><?php echo $text_enabled; ?></option>
+                    <?php } ?>
+                    <?php if (($filter_status !== null) && !$filter_status) { ?>
+                    <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                    <?php } else { ?>
+                    <option value="0"><?php echo $text_disabled; ?></option>
+                    <?php } ?>
+                  </select></td>
+                <td><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+              </tr>
+              <?php if ($products) { ?>
+              <?php foreach ($products as $product) { ?>
+              <tr>
+                <td class="text-center"><?php if ($product['selected']) { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
+                  <?php } else { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
+                  <?php } ?></td>
+                <td class="text-center"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" /></td>
+                <td class="text-left"><?php echo $product['name']; ?></td>
+                <td class="text-left"><?php echo $product['model']; ?></td>
+                <td class="text-left"><?php if ($product['special']) { ?>
+                  <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
+                  <div class="text-danger"><?php echo $product['special']; ?></div>
+                  <?php } else { ?>
+                  <?php echo $product['price']; ?>
+                  <?php } ?></td>
+                <td class="text-right"><?php if ($product['quantity'] <= 0) { ?>
+                  <span class="label label-warning"><?php echo $product['quantity']; ?></span>
+                  <?php } elseif ($product['quantity'] <= 5) { ?>
+                  <span class="label label-danger"><?php echo $product['quantity']; ?></span>
+                  <?php } else { ?>
+                  <span class="label label-success"><?php echo $product['quantity']; ?></span>
+                  <?php } ?></td>
+                <td class="text-left"><?php echo $product['status']; ?></td>
+                <td class="text-right"><?php foreach ($product['action'] as $action) { ?>
+                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                  <?php } ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
       </form>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>

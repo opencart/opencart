@@ -24,103 +24,105 @@
     </div>
     <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-return">
-        <table class="table table-striped table-bordered table-hover">
-          <thead>
-            <tr>
-              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-              <td class="text-right"><?php if ($sort == 'r.return_id') { ?>
-                <a href="<?php echo $sort_return_id; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_return_id; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_return_id; ?>"><?php echo $column_return_id; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php if ($sort == 'r.order_id') { ?>
-                <a href="<?php echo $sort_order_id; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order_id; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_order_id; ?>"><?php echo $column_order_id; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'customer') { ?>
-                <a href="<?php echo $sort_customer; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_customer; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_customer; ?>"><?php echo $column_customer; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'r.product') { ?>
-                <a href="<?php echo $sort_product; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_product; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_product; ?>"><?php echo $column_product; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'r.model') { ?>
-                <a href="<?php echo $sort_model; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_model; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'status') { ?>
-                <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'r.date_added') { ?>
-                <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
-                <?php } ?></td>
-              <td class="text-left"><?php if ($sort == 'r.date_modified') { ?>
-                <a href="<?php echo $sort_date_modified; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_modified; ?></a>
-                <?php } else { ?>
-                <a href="<?php echo $sort_date_modified; ?>"><?php echo $column_date_modified; ?></a>
-                <?php } ?></td>
-              <td class="text-right"><?php echo $column_action; ?></td>
-            </tr>
-          </thead>
-          <tbody>
-            <tr class="filter">
-              <td></td>
-              <td align="right"><input type="text" name="filter_return_id" value="<?php echo $filter_return_id; ?>" class="form-control" /></td>
-              <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="form-control" /></td>
-              <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
-              <td><input type="text" name="filter_product" value="<?php echo $filter_product; ?>" class="form-control" /></td>
-              <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" class="form-control" /></td>
-              <td><select name="filter_return_status_id" class="form-control">
-                  <option value="*"></option>
-                  <?php foreach ($return_statuses as $return_status) { ?>
-                  <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
-                  <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+              <tr>
+                <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                <td class="text-right"><?php if ($sort == 'r.return_id') { ?>
+                  <a href="<?php echo $sort_return_id; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_return_id; ?></a>
                   <?php } else { ?>
-                  <option value="<?php echo $return_status['return_status_id']; ?>"><?php echo $return_status['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select></td>
-              <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
-              <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="form-control" /></td>
-              <td class="text-right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
-            </tr>
-            <?php if ($returns) { ?>
-            <?php foreach ($returns as $return) { ?>
-            <tr>
-              <td class="text-center"><?php if ($return['selected']) { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $return['return_id']; ?>" checked="checked" />
-                <?php } else { ?>
-                <input type="checkbox" name="selected[]" value="<?php echo $return['return_id']; ?>" />
-                <?php } ?></td>
-              <td class="text-right"><?php echo $return['return_id']; ?></td>
-              <td class="text-right"><?php echo $return['order_id']; ?></td>
-              <td class="text-left"><?php echo $return['customer']; ?></td>
-              <td class="text-left"><?php echo $return['product']; ?></td>
-              <td class="text-left"><?php echo $return['model']; ?></td>
-              <td class="text-left"><?php echo $return['status']; ?></td>
-              <td class="text-left"><?php echo $return['date_added']; ?></td>
-              <td class="text-left"><?php echo $return['date_modified']; ?></td>
-              <td class="text-right"><?php foreach ($return['action'] as $action) { ?>
-                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
-                <?php } ?></td>
-            </tr>
-            <?php } ?>
-            <?php } else { ?>
-            <tr>
-              <td class="text-center" colspan="10"><?php echo $text_no_results; ?></td>
-            </tr>
-            <?php } ?>
-          </tbody>
-        </table>
+                  <a href="<?php echo $sort_return_id; ?>"><?php echo $column_return_id; ?></a>
+                  <?php } ?></td>
+                <td class="text-right"><?php if ($sort == 'r.order_id') { ?>
+                  <a href="<?php echo $sort_order_id; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order_id; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_order_id; ?>"><?php echo $column_order_id; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'customer') { ?>
+                  <a href="<?php echo $sort_customer; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_customer; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_customer; ?>"><?php echo $column_customer; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'r.product') { ?>
+                  <a href="<?php echo $sort_product; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_product; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_product; ?>"><?php echo $column_product; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'r.model') { ?>
+                  <a href="<?php echo $sort_model; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_model; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'status') { ?>
+                  <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'r.date_added') { ?>
+                  <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
+                  <?php } ?></td>
+                <td class="text-left"><?php if ($sort == 'r.date_modified') { ?>
+                  <a href="<?php echo $sort_date_modified; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_modified; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_date_modified; ?>"><?php echo $column_date_modified; ?></a>
+                  <?php } ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="filter">
+                <td></td>
+                <td align="right"><input type="text" name="filter_return_id" value="<?php echo $filter_return_id; ?>" class="form-control" /></td>
+                <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="form-control" /></td>
+                <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
+                <td><input type="text" name="filter_product" value="<?php echo $filter_product; ?>" class="form-control" /></td>
+                <td><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" class="form-control" /></td>
+                <td><select name="filter_return_status_id" class="form-control">
+                    <option value="*"></option>
+                    <?php foreach ($return_statuses as $return_status) { ?>
+                    <?php if ($return_status['return_status_id'] == $filter_return_status_id) { ?>
+                    <option value="<?php echo $return_status['return_status_id']; ?>" selected="selected"><?php echo $return_status['name']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $return_status['return_status_id']; ?>"><?php echo $return_status['name']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select></td>
+                <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
+                <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="form-control" /></td>
+                <td class="text-right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+              </tr>
+              <?php if ($returns) { ?>
+              <?php foreach ($returns as $return) { ?>
+              <tr>
+                <td class="text-center"><?php if ($return['selected']) { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $return['return_id']; ?>" checked="checked" />
+                  <?php } else { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $return['return_id']; ?>" />
+                  <?php } ?></td>
+                <td class="text-right"><?php echo $return['return_id']; ?></td>
+                <td class="text-right"><?php echo $return['order_id']; ?></td>
+                <td class="text-left"><?php echo $return['customer']; ?></td>
+                <td class="text-left"><?php echo $return['product']; ?></td>
+                <td class="text-left"><?php echo $return['model']; ?></td>
+                <td class="text-left"><?php echo $return['status']; ?></td>
+                <td class="text-left"><?php echo $return['date_added']; ?></td>
+                <td class="text-left"><?php echo $return['date_modified']; ?></td>
+                <td class="text-right"><?php foreach ($return['action'] as $action) { ?>
+                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                  <?php } ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="text-center" colspan="10"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
       </form>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>

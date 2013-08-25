@@ -3,6 +3,7 @@
 $_['heading_title']     = 'Dashboard';
 
 // Text
+$_['text_welcome']      = 'Welcome back <strong>%s</strong>!';
 $_['text_sale']         = 'Sales';
 $_['text_order']        = 'Orders';
 $_['text_customer']     = 'Customers';

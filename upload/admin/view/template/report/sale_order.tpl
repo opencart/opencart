@@ -64,36 +64,38 @@
           </div>
         </div>
       </form>
-      <table class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <td class="text-left"><?php echo $column_date_start; ?></td>
-            <td class="text-left"><?php echo $column_date_end; ?></td>
-            <td class="text-right"><?php echo $column_orders; ?></td>
-            <td class="text-right"><?php echo $column_products; ?></td>
-            <td class="text-right"><?php echo $column_tax; ?></td>
-            <td class="text-right"><?php echo $column_total; ?></td>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($orders) { ?>
-          <?php foreach ($orders as $order) { ?>
-          <tr>
-            <td class="text-left"><?php echo $order['date_start']; ?></td>
-            <td class="text-left"><?php echo $order['date_end']; ?></td>
-            <td class="text-right"><?php echo $order['orders']; ?></td>
-            <td class="text-right"><?php echo $order['products']; ?></td>
-            <td class="text-right"><?php echo $order['tax']; ?></td>
-            <td class="text-right"><?php echo $order['total']; ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-left"><?php echo $column_date_start; ?></td>
+              <td class="text-left"><?php echo $column_date_end; ?></td>
+              <td class="text-right"><?php echo $column_orders; ?></td>
+              <td class="text-right"><?php echo $column_products; ?></td>
+              <td class="text-right"><?php echo $column_tax; ?></td>
+              <td class="text-right"><?php echo $column_total; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($orders) { ?>
+            <?php foreach ($orders as $order) { ?>
+            <tr>
+              <td class="text-left"><?php echo $order['date_start']; ?></td>
+              <td class="text-left"><?php echo $order['date_end']; ?></td>
+              <td class="text-right"><?php echo $order['orders']; ?></td>
+              <td class="text-right"><?php echo $order['products']; ?></td>
+              <td class="text-right"><?php echo $order['tax']; ?></td>
+              <td class="text-right"><?php echo $order['total']; ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>

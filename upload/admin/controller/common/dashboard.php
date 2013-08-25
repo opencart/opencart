@@ -7,6 +7,7 @@ class ControllerCommonDashboard extends Controller {
 		
     	$this->data['heading_title'] = $this->language->get('heading_title');
 		
+		$this->data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->user->getUsername());
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		$this->data['text_sale'] = $this->language->get('text_sale');
 		$this->data['text_order'] = $this->language->get('text_order');

@@ -33,36 +33,38 @@
           </div>
         </div>
       </form>
-      <table class="table table-striped table-bordered table-hover">
-        <thead>
-          <tr>
-            <td class="text-left"><?php echo $column_name; ?></td>
-            <td class="text-left"><?php echo $column_code; ?></td>
-            <td class="text-right"><?php echo $column_orders; ?></td>
-            <td class="text-right"><?php echo $column_total; ?></td>
-            <td class="text-right"><?php echo $column_action; ?></td>
-          </tr>
-        </thead>
-        <tbody>
-          <?php if ($coupons) { ?>
-          <?php foreach ($coupons as $coupon) { ?>
-          <tr>
-            <td class="text-left"><?php echo $coupon['name']; ?></td>
-            <td class="text-left"><?php echo $coupon['code']; ?></td>
-            <td class="text-right"><?php echo $coupon['orders']; ?></td>
-            <td class="text-right"><?php echo $coupon['total']; ?></td>
-            <td class="text-right"><?php foreach ($coupon['action'] as $action) { ?>
-              <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
-              <?php } ?></td>
-          </tr>
-          <?php } ?>
-          <?php } else { ?>
-          <tr>
-            <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-          </tr>
-          <?php } ?>
-        </tbody>
-      </table>
+      <div class="table-responsive">
+        <table class="table table-striped table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-left"><?php echo $column_name; ?></td>
+              <td class="text-left"><?php echo $column_code; ?></td>
+              <td class="text-right"><?php echo $column_orders; ?></td>
+              <td class="text-right"><?php echo $column_total; ?></td>
+              <td class="text-right"><?php echo $column_action; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($coupons) { ?>
+            <?php foreach ($coupons as $coupon) { ?>
+            <tr>
+              <td class="text-left"><?php echo $coupon['name']; ?></td>
+              <td class="text-left"><?php echo $coupon['code']; ?></td>
+              <td class="text-right"><?php echo $coupon['orders']; ?></td>
+              <td class="text-right"><?php echo $coupon['total']; ?></td>
+              <td class="text-right"><?php foreach ($coupon['action'] as $action) { ?>
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                <?php } ?></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
+      </div>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>

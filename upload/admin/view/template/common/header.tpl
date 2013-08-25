@@ -29,25 +29,16 @@
 </head>
 <body>
 <div id="container">
-<header class="navbar navbar-inverse navbar-static-top">
+<header id="header" class="navbar navbar-inverse navbar-static-top">
   <div class="container">
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
       <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
     <?php if ($logged) { ?>
-    <nav class="collapse navbar-collapse navbar-ex1-collapse">
-      <ul class="nav navbar-nav pull-right">
-        <li id="user-menu" class="dropdown">
-   
-          <a data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" title="<?php echo $profile_name; ?>" /> 
-          <span>
-          <?php echo $profile_name; ?>
-          <small>Administrator</small>
-          </span></a>
-          
-          <i class="icon-caret-down" style="color: #FFF; margin-top: 50px; margin-left: 5px;"></i>
-
-         
+    <div class="collapse navbar-collapse navbar-ex1-collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" /><i class="icon-caret-down"></i> <?php echo $profile_name; ?><br />
+          <small>Administrator</small></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
             <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
@@ -55,7 +46,7 @@
           </ul>
         </li>
       </ul>
-    </nav>
+    </div>
     <?php } ?>
   </div>
 </header>
@@ -68,7 +59,7 @@
     <div class="collapse navbar-collapse navbar-ex2-collapse">
       <ul class="nav navbar-nav">
         <li id="dashboard"><a href="<?php echo $home; ?>"><?php echo $text_dashboard; ?></a></li>
-        <li class="dropdown" id="catalog"><a data-toggle="dropdown"><?php echo $text_catalog; ?></a>
+        <li id="catalog" class="dropdown"><a data-toggle="dropdown"><?php echo $text_catalog; ?></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
             <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
@@ -86,7 +77,7 @@
             <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
           </ul>
         </li>
-        <li class="dropdown" id="extension"><a data-toggle="dropdown"><?php echo $text_extension; ?></a>
+        <li id="extension" class="dropdown"><a data-toggle="dropdown"><?php echo $text_extension; ?></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
             <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
@@ -97,7 +88,7 @@
             <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
           </ul>
         </li>
-        <li class="dropdown" id="sale"><a data-toggle="dropdown"><?php echo $text_sale; ?></a>
+        <li id="sale" class="dropdown"><a data-toggle="dropdown"><?php echo $text_sale; ?></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
             <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
@@ -125,7 +116,7 @@
             </li>
           </ul>
         </li>
-        <li class="dropdown" id="system"><a data-toggle="dropdown"><?php echo $text_system; ?></i></a>
+        <li id="system" class="dropdown"><a data-toggle="dropdown"><?php echo $text_system; ?></i></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
             <li class="dropdown-submenu"><a><?php echo $text_design; ?></a>
@@ -172,7 +163,7 @@
             <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
           </ul>
         </li>
-        <li class="dropdown" id="reports"><a data-toggle="dropdown"><?php echo $text_reports; ?></a>
+        <li id="reports" class="dropdown"><a data-toggle="dropdown"><?php echo $text_reports; ?></a>
           <ul class="dropdown-menu">
             <li class="dropdown-submenu"><a><?php echo $text_sale; ?></a>
               <ul class="dropdown-menu">
@@ -206,7 +197,7 @@
             </li>
           </ul>
         </li>
-        <li class="dropdown"><a><?php echo $text_help; ?></a>
+        <li class="dropdown"><a data-toggle="dropdown"><?php echo $text_help; ?></a>
           <ul class="dropdown-menu">
             <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
             <li><a href="http://docs.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>

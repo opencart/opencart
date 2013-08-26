@@ -98,6 +98,7 @@ class ControllerReportCustomerActivity extends Controller {
  		$this->data['heading_title'] = $this->language->get('heading_title');
 		 
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		$this->data['text_confirm'] = $this->language->get('text_confirm');
 		
 		$this->data['column_customer'] = $this->language->get('column_customer');
 		$this->data['column_action'] = $this->language->get('column_action');

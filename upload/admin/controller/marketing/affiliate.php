@@ -380,6 +380,7 @@ class ControllerMarketingAffiliate extends Controller {
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		$this->data['text_confirm'] = $this->language->get('text_confirm');
 		$this->data['text_none'] = $this->language->get('text_none');
 
 		$this->data['column_name'] = $this->language->get('column_name');

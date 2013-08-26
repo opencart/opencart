@@ -18,9 +18,14 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-affiliate" formaction="<?php echo $approve; ?>" class="btn"><i class="icon-ok"></i> <?php echo $button_approve; ?></button>
-        <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
-        <button type="submit" form="form-affiliate" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+        <button type="submit" form="form-affiliate" formaction="<?php echo $approve; ?>" class="btn btn-default"><i class="icon-ok"></i> <?php echo $button_approve; ?></button>
+        <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><i class="icon-trash"></i> <?php echo $button_delete; ?> <i class="icon-caret-down"></i></button>
+          <ul class="dropdown-menu pull-right">
+            <li><a onclick="$('#form-affiliate').submit();"><?php echo $text_confirm; ?></a></li>
+          </ul>
+        </div>
       </div>
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -63,10 +68,10 @@
             <tbody>
               <tr class="filter">
                 <td></td>
-                <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="input-medium" /></td>
-                <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" class="input-medium" /></td>
+                <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="form-control" /></td>
+                <td><input type="text" name="filter_email" value="<?php echo $filter_email; ?>" class="form-control" /></td>
                 <td>&nbsp;</td>
-                <td><select name="filter_status" class="input-medium">
+                <td><select name="filter_status" class="form-control">
                     <option value="*"></option>
                     <?php if ($filter_status) { ?>
                     <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -79,7 +84,7 @@
                     <option value="0"><?php echo $text_disabled; ?></option>
                     <?php } ?>
                   </select></td>
-                <td><select name="filter_approved" class="input-mini">
+                <td><select name="filter_approved" class="form-control">
                     <option value="*"></option>
                     <?php if ($filter_approved) { ?>
                     <option value="1" selected="selected"><?php echo $text_yes; ?></option>
@@ -92,8 +97,8 @@
                     <option value="0"><?php echo $text_no; ?></option>
                     <?php } ?>
                   </select></td>
-                <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" /></td>
-                <td align="right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+                <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
+                <td align="right"><button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
               </tr>
               <?php if ($affiliates) { ?>
               <?php foreach ($affiliates as $affiliate) { ?>

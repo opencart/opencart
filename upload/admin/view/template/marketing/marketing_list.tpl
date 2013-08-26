@@ -18,7 +18,12 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
-        <button type="submit" form="form-marketing" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><i class="icon-trash"></i> <?php echo $button_delete; ?> <i class="icon-caret-down"></i></button>
+          <ul class="dropdown-menu pull-right">
+            <li><a onclick="$('#form-marketing').submit();"><?php echo $text_confirm; ?></a></li>
+          </ul>
+        </div>
       </div>
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -52,12 +57,12 @@
             <tbody>
               <tr class="filter">
                 <td></td>
-                <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="input-medium" /></td>
-                <td><input type="text" name="filter_code" value="<?php echo $filter_code; ?>" class="input-medium" /></td>
+                <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="form-control" /></td>
+                <td><input type="text" name="filter_code" value="<?php echo $filter_code; ?>" class="form-control" /></td>
                 <td>&nbsp;</td>
                 <td>&nbsp;</td>
-                <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="input-medium" /></td>
-                <td align="right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+                <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
+                <td align="right"><button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
               </tr>
               <?php if ($marketings) { ?>
               <?php foreach ($marketings as $marketing) { ?>

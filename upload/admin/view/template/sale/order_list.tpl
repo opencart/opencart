@@ -20,7 +20,12 @@
       <div class="pull-right">
         <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" class="btn btn-info"><i class="icon-print"></i> <?php echo $button_invoice; ?></button>
         <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
-        <button type="submit" form="form-order" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><i class="icon-trash"></i> <?php echo $button_delete; ?> <i class="icon-caret-down"></i></button>
+          <ul class="dropdown-menu pull-right">
+            <li><a onclick="$('#form-order').submit();"><?php echo $text_confirm; ?></a></li>
+          </ul>
+        </div>
       </div>
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -87,7 +92,7 @@
                 <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" class="form-control" /></td>
                 <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
                 <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="form-control" /></td>
-                <td align="right"><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+                <td align="right"><button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
               </tr>
               <?php if ($orders) { ?>
               <?php foreach ($orders as $order) { ?>

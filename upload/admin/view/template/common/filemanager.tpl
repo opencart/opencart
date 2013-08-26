@@ -9,46 +9,26 @@
 <script src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link rel="stylesheet" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
 <style type="text/css">
-
+html, body, label, input, textarea, select, td {
+	font-size: 12px;
+}
 </style>
 </head>
 <body>
-<!--
-    <div class="col-6">
-      <div class="btn-toolbar">
-        <button id="button-create" class="btn btn-default"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
-        <button id="button-upload" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
-        <button id="button-refresh" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
-        <div class="btn-group">
-          <button id="button-cut" class="btn btn-default"><i class="icon-cut"></i></button>
-          <button id="button-cut" class="btn btn-default"><i class="icon-copy"></i></button>
-          <button id="button-cut" class="btn btn-default"><i class="icon-remove"></i></button>
-        </div>
-      </div>
--->
-
+<div class="btn-toolbar">
+  <button id="button-create" class="btn btn-default"><i class="icon-folder-close"></i> <?php echo $button_folder; ?></button>
+  <button id="button-upload" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+  <button id="button-refresh" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></button>
+</div>
+<div class="col-6">
   <div class="row">
     <div class="col-sm-3">
-
-        <div class="list-group">
-          <a class="list-group-item">test</a>
-          <a class="list-group-item">test</a>
-          <a class="list-group-item">test</a>
-        </div>
-
+      <ul class="list-unstyled">
+        <li><a href=""><i class="icon-folder-close icon-large"></i> test</a></li>
+      </ul>
+      <div class="list-group"> <a class="list-group-item">test</a> <a class="list-group-item">test</a> <a class="list-group-item">test</a> </div>
     </div>
     <div class="col-sm-9">
-    
-    
-   <div class="thumbnail">
-      <img data-src="holder.js/300x200" alt="...">
-      <div class="caption">
-        <p><a href="#" title="<?php echo $button_move; ?>" class="btn btn-primary"><i class="icon-remove-sign"></i></a> <a href="#" class="btn btn-default"><i title="<?php echo $button_delete; ?>" class="icon-trash"></i></a></p>
-      </div>    
-    
-    
-    
-    
       <table class="table table-striped table-bordered table-hover">
         <thead>
           <tr>
@@ -63,12 +43,13 @@
         <tbody>
           <tr>
             <td class="text-center"><input type="checkbox" name="" value="" /></td>
-            <td><i class="icon-folder-close"></i> Test</td>
+            <td>Test</td>
             <td>13kb</td>
             <td>jPeg</td>
             <td>1/2/1999</td>
-            <td><button type="button" title="<?php echo $button_rename; ?>" class="btn btn-default"><i class="icon-edit"></i></button>
-               </td>
+            <td><a href="#" title="<?php echo $button_move; ?>" class="btn btn-primary"><i class="icon-remove-sign"></i></a>
+              <button type="button" title="<?php echo $button_rename; ?>" class="btn btn-default"><i class="icon-edit"></i></button>
+              <button type="button" title="<?php echo $button_delete; ?>" class="btn btn-default"><i class="icon-trash"></i></button></td>
           </tr>
         </tbody>
       </table>
@@ -77,6 +58,7 @@
       </ul>
     </div>
   </div>
+</div>
 <div id="upload" style="display: none;">
   <form enctype="multipart/form-data">
     <input type="file" name="image" id="image" />

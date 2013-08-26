@@ -16,7 +16,7 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-sm-3">
-          <div class="well well-sm"> <i style="font-size: 30px; float: left; color: #2FC5F0;" class="icon-money icon-large"></i>
+          <div class="well well-sm"> <i style="font-size: 40px; float: left; margin-right: 10px; color: #2FC5F0;" class="icon-money icon-large"></i>
             <h4 style="margin-left: 45px;"><?php echo $sale_total; ?></h4>
             <p style="margin-left: 45px;"><?php echo $text_sale; ?></p>
           </div>

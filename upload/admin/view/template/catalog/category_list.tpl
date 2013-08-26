@@ -17,21 +17,11 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right">
-      
-      <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i></a> 
-      
-      
-      <a href="<?php echo $repair; ?>" class="btn btn-default"><i class="icon-wrench"></i></a> 
-        
-        <!-- <?php echo $button_insert; ?> <?php echo $button_repair; ?>
-        <button type="submit" form="form-category" class="btn btn-danger"></button>
-        //-->
-        
+      <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a> <a href="<?php echo $repair; ?>" class="btn btn-default"><i class="icon-wrench"></i> <?php echo $button_repair; ?></a>
         <div class="btn-group">
-          <button type="button" form="form-category" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><i class="icon-cog"></i> <i class="icon-caret-down"></i></button>
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><i class="icon-trash"></i> <?php echo $button_delete; ?> <i class="icon-caret-down"></i></button>
           <ul class="dropdown-menu pull-right">
-            <li><a><i class="icon-trash"></i> <?php echo $button_delete; ?></a></li>
+            <li><a onclick="$('#form-category').submit();"><?php echo $text_confirm; ?></a></li>
           </ul>
         </div>
       </div>
@@ -61,7 +51,7 @@
                 <td class="text-left"><?php echo $category['name']; ?></td>
                 <td class="text-right"><?php echo $category['sort_order']; ?></td>
                 <td class="text-right"><?php foreach ($category['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary btn-sm"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-default btn-sm"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
                   <?php } ?></td>
               </tr>
               <?php } ?>

@@ -19,7 +19,12 @@
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
         <button type="submit" form="form-product" formaction="<?php echo $copy; ?>" class="btn"><i class="icon-copy"></i> <?php echo $button_copy; ?></button>
-        <button type="submit" form="form-product" class="btn btn-danger"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+        <div class="btn-group">
+          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><i class="icon-trash"></i> <?php echo $button_delete; ?> <i class="icon-caret-down"></i></button>
+          <ul class="dropdown-menu pull-right">
+            <li><a onclick="$('#form-product').submit();"><?php echo $text_confirm; ?></a></li>
+          </ul>
+        </div>
       </div>
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -80,7 +85,7 @@
                     <option value="0"><?php echo $text_disabled; ?></option>
                     <?php } ?>
                   </select></td>
-                <td><button type="button" id="button-filter" class="btn btn-default pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
+                <td><button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
               </tr>
               <?php if ($products) { ?>
               <?php foreach ($products as $product) { ?>

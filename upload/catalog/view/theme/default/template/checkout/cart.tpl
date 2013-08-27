@@ -329,7 +329,7 @@ $('#button-quote').on('click', function() {
 						}     
 					} else {
 						html += '<tr>';
-						html += '  <td colspan="3"><div class="error">' + json['shipping_method'][i]['error'] + '</div></td>';
+						html += '  <td colspan="3"><div class="text-danger">' + json['shipping_method'][i]['error'] + '</div></td>';
 						html += '</tr>';                 
 					}
 				}

@@ -815,6 +815,7 @@ pre code {
   .col-sm-7,
   .col-sm-8,
   .col-sm-9,
+
   .col-sm-10,
   .col-sm-11 {
     float: left;
@@ -2084,6 +2085,7 @@ fieldset[disabled] .btn-link {
   -webkit-box-shadow: none;
   box-shadow: none;
 }
+
 .btn-link,
 .btn-link:hover,
 .btn-link:focus,

@@ -62,8 +62,9 @@
               </div>
               <div class="form-group required">
                 <label class="col-sm-2 control-label"><?php echo $entry_captcha; ?></label>
-                <div class="col-sm-10"><img class="captcha" src="index.php?route=information/contact/captcha" alt="" />
+                <div class="col-sm-10">
                   <input type="text" name="captcha" value="<?php echo $captcha; ?>" class="form-control" />
+                  <img class="captcha" src="index.php?route=information/contact/captcha" alt="" />
                   <?php if ($error_captcha) { ?>
                   <div class="text-danger"><?php echo $error_captcha; ?></div>
                   <?php } ?>

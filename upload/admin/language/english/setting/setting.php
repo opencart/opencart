@@ -114,6 +114,7 @@ $_['entry_file_mime_allowed']      = 'Allowed File Mime Types';
 $_['entry_maintenance']            = 'Maintenance Mode';
 $_['entry_password']               = 'Allow Forgotten Password';
 $_['entry_encryption']             = 'Encryption Key';
+$_['entry_cache_expire']           = 'Cache expire time (sec)';
 $_['entry_compression']            = 'Output Compression Level';
 $_['entry_error_display']          = 'Display Errors';
 $_['entry_error_log']              = 'Log Errors';
@@ -174,6 +175,7 @@ $_['help_file_mime_allowed']       = 'Add which file mime types are allowed to b
 $_['help_maintenance']             = 'Prevents customers from browsing your store. They will instead see a maintenance message. If logged in as admin, you will see the store as normal.';
 $_['help_password']                = 'Allow forgotten password to be used for the admin. This will be disabled automatically if the system detects a hack attempt.';
 $_['help_encryption']              = 'Please provide a secret key that will be used to encrypt private information when processing orders.';
+$_['help_cache_expire']	           = 'Set cache expiration in seconds';
 $_['help_compression']             = 'GZIP for more efficient transfer to requesting clients. Compression level must be between 0 - 9';
 $_['help_google_analytics']        = 'Login to your <a href="http://www.google.com/analytics/" target="_blank"><u>Google Analytics</u></a> account and after creating your web site profile copy and paste the analytics code into this field.';
 
@@ -205,4 +207,5 @@ $_['error_ftp_username']           = 'FTP Username required!';
 $_['error_ftp_password']           = 'FTP Password required!';
 $_['error_error_filename']         = 'Error Log Filename required!';
 $_['error_encryption']             = 'Encryption Key must be between 3 and 32 characters!';
+$_['error_cache_expire']           = 'Cache expiration value must be numeric!';
 ?>

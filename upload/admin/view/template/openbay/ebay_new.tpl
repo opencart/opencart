@@ -378,7 +378,7 @@
                                             echo'<td class="center width50"><input id="qty_'.$v.'" type="text" name="opt['.$v.'][qty]" value="'.$option['stock'].'" onkeyup="updateReserveMessage('.$v.', '.$option['stock'].');" class="width50 textCenter"/></td>';
                                             echo'<td class="center width50" id="qty_reserve_'.$v.'">0</td>';
                                             echo'<td class="left">'.$option['combi'].'</td>';
-                                            echo'<td class="left width100"><input id="varPriceEx_'.$v.'" onkeyup="updateVarPriceFromEx('.$v.');" type="text" name="opt['.$v.'][priceex]" value="'.number_format($option['price'], 2).'" style="width:80px;" /></td>';
+                                            echo'<td class="left width100"><input id="varPriceEx_'.$v.'" onkeyup="updateVarPriceFromEx('.$v.');" type="text" name="opt['.$v.'][priceex]" value="'.number_format($option['price'], 2, '.', '').'" style="width:80px;" /></td>';
                                             echo'<td class="left width100"><input class="varPriceInc" id="varPriceInc_'.$v.'" onkeyup="updateVarPriceFromInc('.$v.');"  type="text" name="opt['.$v.'][price]" value="0" style="width:80px;" /></td>';
                                             echo'<td class="center width100"'; if($option['active'] != 1){ echo' style="background-color: #CC9933;"';} echo'>'; if($option['active'] == 1){ echo $lang_yes; }else{ echo $lang_no; } echo '</td>';
                                         echo'</tr>';
@@ -407,7 +407,7 @@
                     </tr>
                     <tr>
                         <td><?php echo $lang_price_ex_tax; ?> <span class="help"><?php echo $lang_price_ex_tax_help; ?></span></td>
-                        <td><p><input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2); ?>" onkeyup="updatePriceFromEx();" class="textRight width50" /></p></td>
+                        <td><p><input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" onkeyup="updatePriceFromEx();" class="textRight width50" /></p></td>
                     </tr>
                     </tr>
                     <tr>

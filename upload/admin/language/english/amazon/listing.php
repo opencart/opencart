@@ -173,4 +173,8 @@ $_['lang_no_results'] = 'No results found';
 //Messages
 $_['text_product_sent'] = 'Product was successfully sent to Amazon.';
 $_['text_product_not_sent'] = 'Product was not sent to Amazon. Reason: %s';
+$_['text_links_removed'] = 'Amazon product links deleted';
+
+
+
 ?>

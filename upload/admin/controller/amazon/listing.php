@@ -453,6 +453,8 @@ class ControllerAmazonListing extends Controller{
     }
     
     public function deleteLinks() {
+        $this->load->language('amazon/listing');
+
         $url = '';
 
         if (isset($this->request->get['filter_name'])) {
@@ -523,7 +525,7 @@ class ControllerAmazonListing extends Controller{
             $this->model_amazon_amazon->removeProductLink($link['amazon_sku']);
         }
         $this->model_amazon_amazon->deleteProduct($product_id);
-        $this->session->data['success'] = 'Amazon product links deleted.';
+        $this->session->data['success'] = $this->language->get('text_links_removed');
 
         $this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     }

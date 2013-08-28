@@ -180,4 +180,7 @@ $_['column_model'] = 'Model';
 $_['column_combination'] = 'Combination';
 $_['column_sku'] = 'SKU';
 $_['column_amazonus_sku'] = 'Amazon item SKU';
+
+//Messages
+$_['text_links_removed'] = 'Amazon product links deleted';
 ?>

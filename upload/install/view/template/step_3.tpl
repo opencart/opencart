@@ -19,7 +19,9 @@
         <tr>
           <td>Database Driver:</td>
           <td><select name="db_driver">
-              <option value="mysql">MySQL</option>
+              <?php foreach($select as $connector){ ?>
+                  <option value="<?php echo $connector ?>" <?php if($pdo_exist == true && $connector === 'mpdo') echo 'selected'; ?> ><?php echo $connector ?></option>
+              <?php } ?>
             </select></td>
         </tr>
         <tr>

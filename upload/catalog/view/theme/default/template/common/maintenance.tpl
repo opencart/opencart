@@ -1,5 +1,7 @@
 <?php echo $header; ?>
-<div class="row">
-  <div class="span12"><?php echo $message; ?></div>
+<div class="container">
+  <div class="row">
+    <div class="col-12"><?php echo $message; ?></div>
+  </div>
 </div>
 <?php echo $footer; ?>

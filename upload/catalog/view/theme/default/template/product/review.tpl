@@ -9,7 +9,7 @@
   <p class="text"><?php echo $review['text']; ?></p>
 </div>
 <?php } ?>
-<div class="pagination"><?php echo $pagination; ?></div>
+<div class="text-right"><?php echo $pagination; ?></div>
 <?php } else { ?>
-<div class="content"><?php echo $text_no_reviews; ?></div>
+<p><?php echo $text_no_reviews; ?></p>
 <?php } ?>

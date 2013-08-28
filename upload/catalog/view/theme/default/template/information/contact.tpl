@@ -11,23 +11,19 @@
       <div class="row">
         <div class="col-sm-3">
           <h3><?php echo $text_location; ?></h3>
-          <div class="contact-info">
-            <div class="content">
-              <address>
-              <strong><?php echo $text_address; ?></strong><br>
-              <?php echo $store; ?><br>
-              <?php echo $address; ?><br>
-              <?php if ($telephone) { ?>
-              <abbr title="<?php echo $text_telephone; ?>"><?php echo $text_telephone; ?></abbr><br>
-              <?php echo $telephone; ?><br>
-              <?php } ?>
-              <?php if ($fax) { ?>
-              <?php echo $text_fax; ?><br>
-              <?php echo $fax; ?><br>
-              <?php } ?>
-              </address>
-            </div>
-          </div>
+          <address>
+          <strong><?php echo $text_address; ?></strong><br>
+          <?php echo $store; ?><br>
+          <?php echo $address; ?><br>
+          <?php if ($telephone) { ?>
+          <abbr title="<?php echo $text_telephone; ?>"><?php echo $text_telephone; ?></abbr><br>
+          <?php echo $telephone; ?><br>
+          <?php } ?>
+          <?php if ($fax) { ?>
+          <?php echo $text_fax; ?><br>
+          <?php echo $fax; ?><br>
+          <?php } ?>
+          </address>
         </div>
         <div class="col-sm-9">
           <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
@@ -43,27 +39,27 @@
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label"><?php echo $entry_email; ?></label>
+                <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="email" value="<?php echo $email; ?>" class="form-control" />
+                  <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />
                   <?php if ($error_email) { ?>
                   <div class="text-danger"><?php echo $error_email; ?></div>
                   <?php } ?>
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label"><?php echo $entry_enquiry; ?></label>
+                <label class="col-sm-2 control-label" for="input-enquiry"><?php echo $entry_enquiry; ?></label>
                 <div class="col-sm-10">
-                  <textarea name="enquiry" rows="10" class="form-control"><?php echo $enquiry; ?></textarea>
+                  <textarea name="enquiry" rows="10" id="input-enquiry" class="form-control"><?php echo $enquiry; ?></textarea>
                   <?php if ($error_enquiry) { ?>
                   <div class="text-danger"><?php echo $error_enquiry; ?></div>
                   <?php } ?>
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label"><?php echo $entry_captcha; ?></label>
+                <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="captcha" value="<?php echo $captcha; ?>" class="form-control" />
+                  <input type="text" name="captcha" value="<?php echo $captcha; ?>" id="input-captcha" class="form-control" />
                   <img class="captcha" src="index.php?route=information/contact/captcha" alt="" />
                   <?php if ($error_captcha) { ?>
                   <div class="text-danger"><?php echo $error_captcha; ?></div>

@@ -26,26 +26,6 @@ $(document).ready(function() {
         }
     });
 
-    // Cart Dropdown
-    $(document).on('click', '#cart > .dropdown-toggle', function() {
-        $('#cart').load('/index.php?route=module/cart #cart > *');
-    });
-    
-    // Notifications.
-    $('.success img, .warning img, .attention img, .information img').click(function() {
-        $(this).parent().fadeOut('slow', function() {
-            $(this).remove();
-        });
-    });
-
-    // Language Dropdown
-    $('#language-menu li a').on('click', function(){
-
-        var languageVal = $(this).children('img').html();
-        $('#language-choice').html(languageVal);
-
-    });
-
     // Navigation - Columns
     $('.main-navbar .dropdown-menu').each(function(){
 
@@ -82,14 +62,12 @@ $(document).ready(function() {
     
     // change product-grid to product-list
     $('#list-view').click(function() {
-
         $('.product-grid').removeClass('product-grid').addClass('product-list');
         $('.product-thumb').addClass('clearfix');
 
     });
     // change product-list to product-grid
     $('#grid-view').click(function() {
-
         $('.product-list').removeClass('product-list').addClass('product-grid');
         $('.product-thumb').removeClass('clearfix');
 
@@ -198,6 +176,35 @@ function addToCompare(product_id) {
     });
 }
 
+/* Agree to terms */
+$(document).delegate('.agree', 'click', function(e) {
+	//e.De
+	
+	$('#agree').remove(); 
+	
+	$(this).attr('href'); 
+	
+	html = '<div class="modal fade" id="agree">';
+    html += '<div class="modal-dialog">';
+    html += '  <div class="modal-content">';
+    html += '    <div class="modal-header">';
+    html += '     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+    html += '      <h4 class="modal-title">Modal title</h4>';
+    html += '    </div>';
+    html += '    <div class="modal-body">';
+    
+    html += '    </div>';
+    html += '    <div class="modal-footer">';
+    html += '      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
+    html += '      <button type="button" class="btn btn-primary">Save changes</button>';
+    html += '    </div>;'
+    html += '  </div';
+    html += '</div>';
+	html += '</div>';
+
+});
+
+/* Autocomplete */
 (function($) {
 	function Autocomplete(element, options) {
 		this.element = element;
@@ -292,7 +299,7 @@ function addToCompare(product_id) {
 				}
 				
 				for (i in category) {
-					html += '<li class="disabled"><a href="#"><b>' + category[i]['name'] + '</b></a></li>';
+					html += '<li class="dropdown-header">' + category[i]['name'] + '</li>';
 					
 					for (j = 0; j < category[i]['item'].length; j++) {
 						html += '<li data-value="' + category[i]['item'][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[i]['item'][j]['label'] + '</a></li>';

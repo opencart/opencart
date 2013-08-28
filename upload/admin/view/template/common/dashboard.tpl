@@ -16,25 +16,25 @@
     <div class="panel-body">
       <div class="row">
         <div class="col-sm-3">
-          <div class="well well-sm"> <i style="font-size: 40px; float: left; margin-right: 10px; color: #2FC5F0;" class="icon-money icon-large"></i>
-            <h4 style="margin-left: 45px;"><?php echo $sale_total; ?></h4>
-            <p style="margin-left: 45px;"><?php echo $text_sale; ?></p>
+          <div class="well well-sm text-center">
+            <h2><?php echo $sale_total; ?></h2>
+            <p class="lead text-muted"><?php echo $text_sale; ?></p>
           </div>
         </div>
         <div class="col-sm-3">
-          <div class="well well-sm">
-            <h3><i class="icon-shopping-cart icon-large"></i> <?php echo $order_total; ?></h3>
-            <?php echo $text_order; ?></div>
+          <div class="well well-sm text-center">
+            <h2><?php echo $order_total; ?></h2>
+            <p class="lead text-muted"><?php echo $text_order; ?></p></div>
         </div>
         <div class="col-sm-3">
-          <div class="well well-sm">
-            <h3><i class="icon-user icon-large"></i> <?php echo $customer_total; ?></h3>
-            <?php echo $text_customer; ?></div>
+          <div class="well well-sm text-center">
+            <h2><?php echo $customer_total; ?></h2>
+            <p class="lead text-muted"><?php echo $text_customer; ?></p></div>
         </div>
         <div class="col-sm-3">
-          <div class="well well-sm">
-            <h3><i class="icon-globe icon-large"></i> <?php echo $marketing_total; ?></h3>
-            <?php echo $text_marketing; ?></div>
+          <div class="well well-sm text-center">
+            <h2><?php echo $marketing_total; ?></h2>
+            <p class="lead text-muted"><?php echo $text_marketing; ?></p></div>
         </div>
       </div>
       <br />

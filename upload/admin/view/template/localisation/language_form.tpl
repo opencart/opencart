@@ -37,8 +37,8 @@
             <?php } ?>
           </div>
         </div>
-        <div class="form-groupd">
-          <label class="col-lg-3 control-label require" for="input-locale"><?php echo $entry_locale; ?></label>
+        <div class="form-group">
+          <label class="col-sm-2 control-label required" for="input-locale"><?php echo $entry_locale; ?></label>
           <div class="col-sm-10">
             <input type="text" name="locale" value="<?php echo $locale; ?>" placeholder="<?php echo $entry_locale; ?>" id="input-locale" class="form-control" />
             <?php if ($error_locale) { ?>

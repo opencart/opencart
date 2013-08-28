@@ -269,17 +269,5 @@ $('select[name=\'country_id\']').bind('change', function() {
 });
 
 $('select[name=\'country_id\']').trigger('change');
-//--></script> 
-<script type="text/javascript"><!--
-$(document).ready(function() {
-	$('.agree').magnificPopup({
-		delegate: 'li a', // child items selector, by clicking on it popup will open
-		type: 'image',
-		gallery: {
-			enabled: true
-		}
-		// other options
-	});
-});
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

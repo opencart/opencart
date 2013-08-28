@@ -127,7 +127,7 @@
                   <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
                   <span class="input-group-btn">
                   <button class="btn btn-info" type="button"><i class="icon-question-sign icon-large"></i></button>
-                  </span> </div>
+                  </span></div>
                 <span class="help-block"><?php echo $help_keyword; ?></span></div>
             </div>
             <div class="form-group">

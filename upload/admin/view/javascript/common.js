@@ -42,7 +42,6 @@ $(document).ready(function() {
 	$('[data-toggle=\'tooltip\']').tooltip();
 });
 
-
 /*
 $('[data-target=]').on('submit', function(event) {
 	event.preventDefault();
@@ -87,7 +86,8 @@ $('[data-target=]').on('submit', function(event) {
 	});
 });
 */
-// Added my own autocomplete method for jquery since bootstraps is pretty much useless	
+
+// Autocomplete */	
 (function($) {
 	function Autocomplete(element, options) {
 		this.element = element;

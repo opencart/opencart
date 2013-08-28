@@ -187,9 +187,25 @@ class ControllerStep3 extends Controller {
 		} else {
 			$this->data['email'] = '';
 		}
-		
+
+        if ($get_connectors = opendir(DIR_DATABASE)) {
+            while (false !== ($connectors = readdir($get_connectors))) {
+                if ($connectors != "." && $connectors != "..") {
+                    $select[]= str_replace('.php','',$connectors);
+                }
+            }
+            closedir($get_connectors);
+        }
+
+        $this->data['pdo_exist'] = '';
+
+        if (class_exists('PDO')) {
+            $this->data['pdo_exist'] = true;
+        }
+
 		$this->data['back'] = $this->url->link('step_2');
-		
+		$this->data['select'] = $select;
+
 		$this->template = 'step_3.tpl';
 		$this->children = array(
 			'header',

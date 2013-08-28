@@ -12,8 +12,21 @@ class ControllerStep2 extends Controller {
 		} else {
 			$this->data['error_warning'] = '';	
 		}
-		
+
 		$this->data['action'] = $this->url->link('step_2');
+
+        $this->data['create_file_error'] = '';
+        if(!is_file(DIR_OPENCART . 'config.php')){
+            if(!file_put_contents(DIR_OPENCART . 'config.php','') === false ){
+                $this->data['create_file_error'] = "Can`t create config.php in ".DIR_OPENCART;
+            }
+        }
+
+        if(!is_file(DIR_OPENCART . 'admin/config.php')){
+            if(@file_put_contents(DIR_OPENCART . 'admin/config.php','') === false){
+                $this->data['create_file_error'] = "Can`t create config.php in ".DIR_OPENCART.'admin/';
+            }
+        }
 
 		$this->data['config_catalog'] = DIR_OPENCART . 'config.php';
 		$this->data['config_admin'] = DIR_OPENCART . 'admin/config.php';
@@ -26,7 +39,7 @@ class ControllerStep2 extends Controller {
 		$this->data['image_data'] = DIR_OPENCART . 'image/catalog';
 		
 		$this->data['back'] = $this->url->link('step_1');
-		
+//		var_dump($this->data);exit;
 		$this->template = 'step_2.tpl';
 		$this->children = array(
 			'header',
@@ -68,7 +81,7 @@ class ControllerStep2 extends Controller {
 		if (!extension_loaded('zlib')) {
 			$this->error['warning'] = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
 		}
-		
+
 		if (!file_exists(DIR_OPENCART . 'config.php')) {
 			$this->error['warning'] = 'Warning: config.php does not exist. You need to rename config-dist.php to config.php!';
 		} elseif (!is_writable(DIR_OPENCART . 'config.php')) {

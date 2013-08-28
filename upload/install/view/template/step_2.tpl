@@ -12,6 +12,12 @@
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
   <?php } ?>
+  <?php if ($create_file_error) { ?>
+    <div class="alert alert-danger">
+      <i class="icon-exclamation-sign"></i> <?php echo $create_file_error; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+  <?php } ?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <p>1. Please configure your PHP settings to match requirements listed below.</p>
     <fieldset>

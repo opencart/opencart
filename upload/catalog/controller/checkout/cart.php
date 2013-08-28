@@ -98,7 +98,8 @@ class ControllerCheckoutCart extends Controller {
 			$this->data['button_voucher'] = $this->language->get('button_voucher');
 			$this->data['button_reward'] = $this->language->get('button_reward');
 			$this->data['button_quote'] = $this->language->get('button_quote');
-			$this->data['button_shipping'] = $this->language->get('button_shipping');			
+			$this->data['button_shipping'] = $this->language->get('button_shipping');
+			$this->data['button_cancel'] = $this->language->get('button_cancel');			
       		$this->data['button_shopping'] = $this->language->get('button_shopping');
       		$this->data['button_checkout'] = $this->language->get('button_checkout');
 			

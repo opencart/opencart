@@ -70,7 +70,6 @@ $(document).ready(function() {
     $('#grid-view').click(function() {
         $('.product-list').removeClass('product-list').addClass('product-grid');
         $('.product-thumb').removeClass('clearfix');
-
     });
 
     // tooltips on hover
@@ -112,17 +111,14 @@ function addToCart(product_id, quantity) {
         data: 'product_id=' + product_id + '&quantity=' + quantity,
         dataType: 'json',
         success: function(json) {
-            $('.success, .warning, .attention, .information, .error').remove();
+            $('.alert, .text-danger').remove();
             
             if (json['redirect']) {
-                window.location = json['redirect'];
+                location = json['redirect'];
             }
             
             if (json['success']) {
-
-                $('#notification').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + json['success'] + '</div>');
-                
-                $('.success').fadeIn('slow');
+                $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 
                 $('#cart-total').html(json['total']);
                 
@@ -139,12 +135,10 @@ function addToWishList(product_id) {
         data: 'product_id=' + product_id,
         dataType: 'json',
         success: function(json) {
-            $('.success, .warning, .attention, .information').remove();
+            $('.alert').remove();
                         
             if (json['success']) {
-                $('#notification').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + json['success'] + '</div>');
-                
-                $('.success').fadeIn('slow');
+                $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 
                 $('#wishlist-total').html(json['total']);
                 
@@ -161,12 +155,10 @@ function addToCompare(product_id) {
         data: 'product_id=' + product_id,
         dataType: 'json',
         success: function(json) {
-            $('.success, .warning, .attention, .information').remove();
+            $('.alert').remove();
                         
             if (json['success']) {
-                $('#notification').html('<div class="alert alert-success"><button type="button" class="close" data-dismiss="alert">&times;</button>' + json['success'] + '</div>');
-                
-                $('.success').fadeIn('slow');
+                $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 
                 $('#compare-total').html(json['total']);
                 
@@ -176,32 +168,36 @@ function addToCompare(product_id) {
     });
 }
 
-/* Agree to terms */
-$(document).delegate('.agree', 'click', function(e) {
-	//e.De
+/* Agree to Terms */
+$(document).delegate('.agree', 'click', function(event) {
+	event.preventDefault();
 	
-	$('#agree').remove(); 
+	$('#modal-agree').remove(); 
 	
-	$(this).attr('href'); 
+	var element = this;
 	
-	html = '<div class="modal fade" id="agree">';
-    html += '<div class="modal-dialog">';
-    html += '  <div class="modal-content">';
-    html += '    <div class="modal-header">';
-    html += '     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
-    html += '      <h4 class="modal-title">Modal title</h4>';
-    html += '    </div>';
-    html += '    <div class="modal-body">';
-    
-    html += '    </div>';
-    html += '    <div class="modal-footer">';
-    html += '      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>';
-    html += '      <button type="button" class="btn btn-primary">Save changes</button>';
-    html += '    </div>;'
-    html += '  </div';
-    html += '</div>';
-	html += '</div>';
-
+    $.ajax({
+        url: $(element).attr('href'),
+        type: 'get',
+        dataType: 'html',
+        success: function(data) {
+			html  = '<div id="modal-agree" class="modal">';
+			html += '  <div class="modal-dialog">';
+			html += '    <div class="modal-content">';
+			html += '      <div class="modal-header">'; 
+			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
+			html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+			html += '      </div>';
+			html += '      <div class="modal-body">' + data + '</div>';
+			html += '    </div';
+			html += '  </div>';
+			html += '</div>';
+			
+			$('body').append(html);
+			
+			$('#modal-agree').modal('show')
+        }
+    });
 });
 
 /* Autocomplete */

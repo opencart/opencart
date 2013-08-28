@@ -340,27 +340,17 @@ $('#button-quote').on('click', function() {
 			}
 
 			if (json['shipping_method']) {
-				html = '';
+				$('#modal-shipping').remove();
+				
+				html  = '<div id="modal-shipping" class="modal">';
+				html += '  <div class="modal-dialog">';
+				html += '    <div class="modal-content">';
+				html += '      <div class="modal-header">';
+				html += '        <h4 class="modal-title"><?php echo $text_shipping_method; ?></h4>';
+				html += '      </div>';
+				html += '      <div class="modal-body">';				
 				
 				for (i in json['shipping_method']) {
-  <div class="modal fade" id="modal-shipping" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-          <h4 class="modal-title"><?php echo $text_shipping_method; ?></h4>
-        </div>
-        <div class="modal-body">
-
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
-        </div>
-      </div>
-    </div>
-  </div> 
-  					
 					html += '<p><strong>' + json['shipping_method'][i]['title'] + '</strong></p>';
 			
 					if (!json['shipping_method'][i]['error']) {
@@ -380,20 +370,57 @@ $('#button-quote').on('click', function() {
 						html += '<div class="alert alert-danger">' + json['shipping_method'][i]['error'] + '</div>';
 					}
 				}
-					
+				
+				html += '      </div>';
+				html += '      <div class="modal-footer">';
+				html += '        <button type="button" class="btn btn-default" data-dismiss="modal"><?php echo $button_cancel; ?></button>'; 
+				
 				<?php if ($shipping_method) { ?>
-				html += '<div class="text-right"><input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="btn btn-primary" /></div>';  
+				html += '        <input type="button" value="<?php echo $button_shipping; ?>" id="button-shipping" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />';  
 				<?php } else { ?>
-				html += '<div class="text-right"><input type="submit" value="<?php echo $button_shipping; ?>" id="button-shipping" class="btn btn-primary" disabled="disabled" /></div>';   
+				html += '        <input type="button" value="<?php echo $button_shipping; ?>" id="button-shipping" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" disabled="disabled" />';   
 				<?php } ?>
-	  
-				$('#modal-shipping .modal-body').html(html);
+				
+				html += '      </div>';
+				html += '    </div>';
+				html += '  </div>';
+				html += '</div> ';	
+  				
+				$('body').append(html);
   				
 				$('#modal-shipping').modal('show');
   
 				$('input[name=\'shipping_method\']').bind('change', function() {
 					$('#button-shipping').prop('disabled', false);
 				});
+			}
+		}
+	});
+});
+
+$(document).delegate('#button-shipping', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/cart/shipping',
+		type: 'post',
+		data: 'shipping_method=' + encodeURIComponent($('input[name=\'shipping_method\']:checked').val()),
+		dataType: 'json',    
+		beforeSend: function() {
+			$('#button-shipping').button('loading');
+		},
+		complete: function() {
+			$('#button-shipping').button('reset');
+		},
+		success: function(json) {
+			$('.alert').remove();   
+			
+			if (json['error']) {
+				$('.breadcrumb').after('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				
+				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+			}  
+
+			if (json['redirect']) {
+				location = json['redirect'];
 			}
 		}
 	});

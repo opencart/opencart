@@ -451,7 +451,7 @@ $('#button-cart').click(function() {
         data: $('.product-info input[type=\'text\'], .product-info input[type=\'hidden\'], .product-info input[type=\'radio\']:checked, .product-info input[type=\'checkbox\']:checked, .product-info select, .product-info textarea'),
         dataType: 'json',
         success: function(json) {
-            $('.alert-success, .alert-warning, .attention, information, .alert-error').remove();
+            $('.alert, .text-danger').remove();
             
             if (json['error']) {
                 if (json['error']['option']) {
@@ -462,8 +462,7 @@ $('#button-cart').click(function() {
             } 
             
             if (json['success']) {
-                $('#notification').html('<div class="alert alert-success" style="display: none;"><button type="button" class="close" data-dismiss="alert">&times;</button>' + json['success'] + '</div>');
-                $('.alert-success').fadeIn('slow');
+                $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                     
                 $('#cart-total').html(json['total']);
                 

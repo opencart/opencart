@@ -21,4 +21,6 @@ $_['lang_product_listings']         = 'New product listings per month';
 $_['lang_listings_remaining']       = 'Product listings remaining';
 $_['lang_listings_reserved']        = 'Products being processed';
 $_['lang_account_status']           = 'Account status';
+$_['lang_merchantid']               = 'Merchant ID';
+$_['lang_change_merchantid']        = 'Change';
 ?>

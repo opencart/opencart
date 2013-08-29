@@ -35,6 +35,10 @@
 
                         <tbody>
                             <tr>
+                                <td class="right"><b><?php echo $lang_merchantid;?>:</b></td>
+                                <td class="left"><?php echo $user_plan['merchant_id'] ?> [ <a href="<?php echo $server ?>account/changeSellerId/?token=<?php echo $token ?>" target="_blank"><?php echo $lang_change_merchantid; ?></a> ]</td>
+                            </tr>
+                            <tr>
                                 <td class="right"><b><?php echo $lang_account_status;?>:</b></td>
                                 <td class="left"><?php echo $user_plan['user_status'] ?></td>
                             </tr>

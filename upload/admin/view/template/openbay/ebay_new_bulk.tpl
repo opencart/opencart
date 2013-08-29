@@ -45,8 +45,8 @@
                                         <td class="center width100"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></td>
                                         <td class="left width390" valign="top">
                                             <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_title; ?>:</label><input type="text" name="title" class="openbayData_<?php echo $i; ?> width250" value="<?php echo $product['name']; ?>" id="title_<?php echo $i; ?>" /></p>
-                                            <input type="hidden" name="price_original" id="price_original_<?php echo $i; ?>" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2); ?>" />
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_price; ?>:</label><input id="price_<?php echo $i; ?>" type="text" name="price" class="openbayData_<?php echo $i; ?> width50" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2); ?>" /></p>
+                                            <input type="hidden" name="price_original" id="price_original_<?php echo $i; ?>" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
+                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_price; ?>:</label><input id="price_<?php echo $i; ?>" type="text" name="price" class="openbayData_<?php echo $i; ?> width50" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" /></p>
                                             <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_stock; ?>:</label><?php echo $product['quantity']; ?></p>
                                             <input type="hidden" name="qty" value="<?php echo $product['quantity']; ?>" class="openbayData_<?php echo $i; ?>" />
                                             

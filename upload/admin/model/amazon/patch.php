@@ -11,7 +11,15 @@ class ModelAmazonPatch extends Model {
         $settings = $this->model_setting_setting->getSetting('openbay_amazon');
         
         if($settings) {
-            // Put patching code here
+            $this->db->query("
+                CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_search` (
+                    `product_id` int(11) NOT NULL,
+                    `marketplace` enum('uk','de','es','it','fr') NOT NULL,
+                    `status` enum('searching','finished') NOT NULL,
+                    `matches` int(11) DEFAULT NULL,
+                    `data` text,
+                    PRIMARY KEY (`product_id`,`marketplace`)
+                ) DEFAULT COLLATE=utf8_general_ci;");
         }
 
         return true;

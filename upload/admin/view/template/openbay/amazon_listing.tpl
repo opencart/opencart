@@ -114,7 +114,7 @@
                                         <?php foreach ($conditions as $value => $title): ?>
                                             <?php if($value == $default_condition): ?>
                                                 <option selected="selected" value="<?php echo $value; ?>"><?php echo $title; ?></option>
-                                            <? else: ?>
+                                            <?php else: ?>
                                                 <option value="<?php echo $value; ?>"><?php echo $title; ?></option>
                                             <?php endif; ?>
                                         <?php endforeach; ?>
@@ -152,7 +152,7 @@
                                 </td>
                             </tr>
                             <tr>
-                                <td><label for="start_selling"><?php echo $entry_start_selling; ?></label><br /><span class="help">dd/mm/yy</span></td>
+                                <td><label for="start_selling"><?php echo $entry_start_selling; ?></label></td>
                                 <td><input type="text" name="start_selling" id="start_selling" class="date" /></td>
                             </tr>
                             <tr>

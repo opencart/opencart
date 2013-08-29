@@ -18,29 +18,33 @@
         </div>
         <div class="content">
             <div class="openbayLinks">
-                <div class="openbayPod" onclick="location='<?php echo $links_settings; ?>'">
+                <div class="openbayPod" onclick="location='<?php echo $link_settings; ?>'">
                     <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon1.png" title="" alt="" border="0" />
                     <h3><?php echo $lang_heading_settings; ?></h3>
                 </div>
 
-                <?php if($validation == true){ ?>
-                    <div class="openbayPod" onclick="location='<?php echo $links_subscription; ?>'">
+                <?php if( $validation == true) { ?>
+                    <div class="openbayPod" onclick="location='<?php echo $link_subscription; ?>'">
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon2.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_account; ?></h3>
                     </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_itemlink; ?>'">
+                    <div class="openbayPod" onclick="location='<?php echo $link_item_link; ?>'">
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon3.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_links; ?></h3>
                     </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_stockUpdates; ?>'">
+                    <div class="openbayPod" onclick="location='<?php echo $link_bulk_listing; ?>'">
+                        <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon5.png" title="" alt="" border="0" />
+                        <h3><?php echo $lang_heading_bulk_listing; ?></h3>
+                    </div>
+                    <div class="openbayPod" onclick="location='<?php echo $link_stock_updates; ?>'">
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon8.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_stock_updates; ?></h3>
                     </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_savedListings; ?>'">
+                    <div class="openbayPod" onclick="location='<?php echo $link_saved_listings; ?>'">
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon12.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_saved_listings; ?></h3>
                     </div>
-                <?php }else{ ?>
+                <?php } else { ?>
                     <a class="openbayPod" href="http://uk-amazon.openbaypro.com/account/register" target="_BLANK">
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon2.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_register; ?></h3>

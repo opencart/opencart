@@ -28,19 +28,19 @@ class ModelAmazonListing extends Model {
 
             switch ($marketplace) {
                 case 'uk':
-                    $link = 'http://www.amazon.co.uk/dp/' . $result['asin'] . '/';
+                    $link = 'https://www.amazon.co.uk/dp/' . $result['asin'] . '/';
                     break;
                 case 'de':
-                    $link = 'http://www.amazon.de/dp/' . $result['asin'] . '/';
+                    $link = 'https://www.amazon.de/dp/' . $result['asin'] . '/';
                     break;
                 case 'fr':
-                    $link = 'http://www.amazon.fr/dp/' . $result['asin'] . '/';
+                    $link = 'https://www.amazon.fr/dp/' . $result['asin'] . '/';
                     break;
                 case 'it':
-                    $link = 'http://www.amazon.it/dp/' . $result['asin'] . '/';
+                    $link = 'https://www.amazon.it/dp/' . $result['asin'] . '/';
                     break;
                 case 'es':
-                    $link = 'http://www.amazon.es/dp/' . $result['asin'] . '/';
+                    $link = 'https://www.amazon.es/dp/' . $result['asin'] . '/';
                     break;
             }
 
@@ -110,23 +110,25 @@ class ModelAmazonListing extends Model {
         
         $response = $this->amazon->callWithResponse('productv3/simpleListing', $request);
         $response = json_decode($response);
+        
         if(empty($response)) {
             return array(
                 'status' => 0,
                 'message' => 'Problem connecting OpenBay: API'
             );
         }
+        
         $response = (array)$response;
         
         if($response['status'] === 1) {
             $this->db->query("
-            REPLACE INTO `" . DB_PREFIX . "amazon_product`
-            SET `product_id` = " . (int) $data['product_id'] . ",
-                `status` = 'uploaded',
-                `marketplaces` = '" . $this->db->escape($data['marketplace']) . "',
-                `version` = 3,
-                `var` = ''
-            ");
+                REPLACE INTO `" . DB_PREFIX . "amazon_product`
+                SET `product_id` = " . (int) $data['product_id'] . ",
+                    `status` = 'uploaded',
+                    `marketplaces` = '" . $this->db->escape($data['marketplace']) . "',
+                    `version` = 3,
+                    `var` = ''
+                ");
         }
         
         return $response;
@@ -135,5 +137,99 @@ class ModelAmazonListing extends Model {
     public function getBrowseNodes($request){
         return $this->amazon->callWithResponse('productv3/getBrowseNodes', $request);
     }
+    
+    public function doBulkSearch($search_data) {        
+        foreach ($search_data as $products) {
+            foreach ($products as $product) {
+                $this->db->query("
+                    REPLACE INTO " . DB_PREFIX . "amazon_product_search (product_id, `status`, marketplace)
+                    VALUES (" . (int) $product['product_id'] . ", 'searching', '" . $this->db->escape($product['marketplace']) . "')");
+            }
+        }
+        
+        $request_data = array(
+            'search' => $search_data,
+            'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/search'
+        );
+        
+        $this->amazon->callWithResponse('productv3/bulkSearch', $request_data);
+    }
+    
+    public function deleteSearchResults($marketplace, $product_ids) {
+        $imploded_ids = array();
+        
+        foreach ($product_ids as $product_id) {
+            $imploded_ids[] = (int) $product_id;
+        }
+        
+        $imploded_ids = implode(',', $imploded_ids);
+        
+        $this->db->query("
+            DELETE FROM " . DB_PREFIX .  "amazon_product_search
+            WHERE marketplace = '" . $this->db->escape($marketplace) . "' AND product_id IN ($imploded_ids)
+        ");
+    }
+    
+    public function doBulkListing($data) {
+        $this->load->model('catalog/product');
+        $request = array();
+        
+        $marketplaceMapping = array(
+            'uk' => 'A1F83G8C2ARO7P',
+            'de' => 'A1PA6795UKMFR9',
+            'fr' => 'A13V1IB3VIYZZH',
+            'it' => 'APJ6JRA9NG5V4',
+            'es' => 'A1RKKUPIHCS9HS',
+        );
+        
+        foreach($data['products'] as $product_id => $asin) {
+            $product = $this->model_catalog_product->getProduct($product_id);
+            
+            if ($product) {
+                $price = $product['price'];
 
+                if ($this->config->get('openbay_amazon_listing_tax_added') && $this->config->get('openbay_amazon_listing_tax_added') > 0) {
+                    $price += $price * ($this->config->get('openbay_amazon_listing_tax_added') / 100);
+                }
+                
+                $request[] = array(
+                    'asin' => $asin,
+                    'sku' => $product['sku'],
+                    'quantity' => $product['quantity'],
+                    'price' => number_format($price, 2, '.', ''),
+                    'sale' => array(),
+                    'condition' => (isset($data['condition']) ? $data['condition'] : ''),
+                    'condition_note' => (isset($data['condition_note']) ? $data['condition_note'] : ''),
+                    'start_selling' => (isset($data['start_selling']) ? $data['start_selling'] : ''),
+                    'restock_date' => '',
+                    'marketplace' => $data['marketplace'],
+                    'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/listing',
+                    'product_id' => $product['product_id'],
+                );
+            }
+        }
+        
+        if ($request) {
+            $response = $this->amazon->callWithResponse('productv3/bulkListing', $request);
+            
+            $response = json_decode($response, 1);
+            
+            if ($response['status'] == 1) {
+                foreach ($request as $product) {
+                    $this->db->query("
+                        REPLACE INTO `" . DB_PREFIX . "amazon_product`
+                        SET `product_id` = " . (int) $product['product_id'] . ",
+                            `status` = 'uploaded',
+                            `marketplaces` = '" . $this->db->escape($data['marketplace']) . "',
+                            `version` = 3,
+                            `var` = ''
+                    ");
+                }
+                
+                return true;
+            }
+        }
+        
+        return false;
+    }
 }

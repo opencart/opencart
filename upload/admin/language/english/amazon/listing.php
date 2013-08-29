@@ -12,6 +12,7 @@ $_['button_amazon_price'] = "Get Amazon's price";
 $_['button_list'] = "List on Amazon";
 
 //Text
+$_['text_products_sent'] = 'Products were sent for processing';
 $_['text_view_on_amazon'] = 'View on Amazon';
 $_['text_list'] = 'List';
 $_['text_new'] = 'New';
@@ -27,7 +28,7 @@ $_['text_refurbished'] = 'Refurbished';
 $_['help_sku'] = "Unique product's ID assigned by the merchant";
 $_['help_restock_date'] = "This is the date you will be able to ship any back-ordered items to a customer. This date should not be greater than 30 days from the date listed or orders received may automatically be canceled.";
 $_['help_sale_price'] = "Sale Price must have a start and end date";
-$_['lang_not_in_catalog'] = 'Or, if its not in the catalog&nbsp;&nbsp;&nbsp;';
+$_['lang_not_in_catalog'] = "Or, if it's not in the catalog&nbsp;&nbsp;&nbsp;";
 
 //Table columns
 $_['column_image'] = 'Image';
@@ -168,7 +169,9 @@ $_['error_amazon_price'] = 'Could not get the price from Amazon';
 $_['error_stock'] = 'You cannot list an item with less than 1 item in stock';
 $_['error_sku'] = 'You must enter an SKU for the item';
 $_['error_price'] = 'You must enter a price for the item';
+$_['error_sending_products'] = 'Could not send products for listing. Please contact OpenBay Pro support';
 $_['lang_no_results'] = 'No results found';
+$_['error_no_products_selected'] = 'No products were selected for listing';
 
 //Messages
 $_['text_product_sent'] = 'Product was successfully sent to Amazon.';

@@ -453,6 +453,54 @@ class ModelAmazonAmazon extends Model {
         return $result;
     }
     
+    public function getProductSearchTotal($data = array()) {
+        $sql = "
+            SELECT COUNT(*) AS product_total
+            FROM " . DB_PREFIX . "product p 
+            LEFT JOIN " . DB_PREFIX . "amazon_product_search aps ON p.product_id = aps.product_id AND aps.marketplace = '" . $this->db->escape($data['filter_marketplace']) . "'
+            LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id 
+            LEFT JOIN " . DB_PREFIX . "amazon_product ap ON p.product_id = ap.product_id
+            WHERE apl.product_id IS NULL AND ap.product_id IS NULL ";
+        
+        if (!empty($data['status'])) {
+            $sql .= " AND aps.status = '" . $this->db->escape($data['status']) . "'";
+        }
+        
+        return $this->db->query($sql)->row['product_total'];
+    }
+    
+    public function getProductSearch($data = array()) {
+        $sql = "
+            SELECT p.product_id, marketplace, aps.status, aps.data, aps.matches
+            FROM " . DB_PREFIX . "product p 
+            LEFT JOIN " . DB_PREFIX . "amazon_product_search aps ON p.product_id = aps.product_id AND aps.marketplace = '" . $this->db->escape($data['filter_marketplace']) . "'
+            LEFT JOIN " . DB_PREFIX . "amazon_product_link apl ON p.product_id = apl.product_id 
+            LEFT JOIN " . DB_PREFIX . "amazon_product ap ON p.product_id = ap.product_id
+            WHERE apl.product_id IS NULL AND ap.product_id IS NULL ";
+        
+        if (!empty($data['status'])) {
+            $sql .= " AND aps.status = '" . $this->db->escape($data['status']) . "'";
+        }
+        
+        $sql .= " LIMIT " . (int) $data['start'] . ", " . (int) $data['limit'];
+        
+        $results = array();
+        
+        $rows = $this->db->query($sql)->rows;
+        
+        foreach ($rows as $row) {
+            $results[] = array(
+                'product_id' => $row['product_id'],
+                'marketplace' => $row['marketplace'],
+                'status' => $row['status'],
+                'matches' => $row['matches'],
+                'data' => json_decode($row['data'], 1),
+            );
+        }
+        
+        return $results;
+    }
+    
     public function install(){
         $this->db->query("
             CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order` (
@@ -512,7 +560,17 @@ class ModelAmazonAmazon extends Model {
           `var` char(100) NOT NULL DEFAULT '',
           `product_id` int(11) NOT NULL,
           PRIMARY KEY (`id`)
-        ) DEFAULT COLLATE=utf8_general_ci;;");
+        ) DEFAULT COLLATE=utf8_general_ci;");
+        
+        $this->db->query("
+        CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_search` (
+            `product_id` int(11) NOT NULL,
+            `marketplace` enum('uk','de','es','it','fr') NOT NULL,
+            `status` enum('searching','finished') NOT NULL,
+            `matches` int(11) DEFAULT NULL,
+            `data` text,
+            PRIMARY KEY (`product_id`,`marketplace`)
+        ) DEFAULT COLLATE=utf8_general_ci;");
     }
     
     public function uninstall(){
@@ -522,9 +580,11 @@ class ModelAmazonAmazon extends Model {
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_link`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_unshipped`");
-        $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazon'");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_error`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_process`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_unshipped`");
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product_search`");
+        
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazon'");
     }
 }

@@ -103,7 +103,7 @@
                                     <?php foreach($conditions as $value => $condition): ?>
                                         <?php if($value == $openbay_amazon_listing_default_condition): ?>
                                             <option selected="selected" value="<?php echo $value; ?>"><?php echo $condition; ?></option>
-                                        <? else: ?>
+                                        <?php else: ?>
                                             <option value="<?php echo $value; ?>"><?php echo $condition; ?></option>
                                         <?php endif; ?>
                                     <?php endforeach; ?>

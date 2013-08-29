@@ -199,12 +199,12 @@ class ControllerOpenbayAmazonus extends Controller {
         
         $this->data['link_overview'] = $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL');
         
-        $responseXml = simplexml_load_string($this->amazonus->callWithResponse('plans/getPlans'));
+        $response = simplexml_load_string($this->amazonus->callWithResponse('plans/getPlans'));
         
         $plans = array();
         
-        if ($responseXml) {
-            foreach ($responseXml->Plan as $plan) {
+        if ($response) {
+            foreach ($response->Plan as $plan) {
                 $plans[] = array(
                     'title' => (string) $plan->Title,
                     'description' => (string) $plan->Description,
@@ -217,20 +217,21 @@ class ControllerOpenbayAmazonus extends Controller {
         
         $this->data['plans'] = $plans;
         
-        $responseXml = simplexml_load_string($this->amazonus->callWithResponse('plans/getUsersPlans'));
+        $response = simplexml_load_string($this->amazonus->callWithResponse('plans/getUsersPlans'));
         
         $plan = false;
         
-        if ($responseXml) {
+        if ($response) {
             $plan = array(
-                'user_status' => (string) $responseXml->UserStatus,
-                'title' => (string) $responseXml->Title,
-                'description' => (string) $responseXml->Description,
-                'price' => (string) $responseXml->Price,
-                'order_frequency' => (string) $responseXml->OrderFrequency,
-                'product_listings' => (string) $responseXml->ProductListings,
-                'listings_remain' => (string) $responseXml->ListingsRemain,
-                'listings_reserved' => (string) $responseXml->ListingsReserved,
+                'merchant_id' => (string) $response->MerchantId,
+                'user_status' => (string) $response->UserStatus,
+                'title' => (string) $response->Title,
+                'description' => (string) $response->Description,
+                'price' => (string) $response->Price,
+                'order_frequency' => (string) $response->OrderFrequency,
+                'product_listings' => (string) $response->ProductListings,
+                'listings_remain' => (string) $response->ListingsRemain,
+                'listings_reserved' => (string) $response->ListingsReserved,
             );
         }
         

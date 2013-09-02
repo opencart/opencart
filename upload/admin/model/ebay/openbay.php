@@ -226,6 +226,49 @@ class ModelEbayOpenbay extends Model{
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
     }
 
+    public function loadUnlinked($limit = 100, $page = 1){
+
+        $unlinked = array();
+
+        // - continue until no more pages or 10 or more found
+
+        while(count($unlinked) < 5){
+
+            $this->ebay->log('Checking unlinked page: '.$page);
+
+            //some products from ebay (100)
+            $response = $this->ebay->getEbayItemList($limit, $page);
+
+            if($this->ebay->lasterror == true){
+                break;
+            }
+
+            //loop over these and check if any are not in the db
+            foreach($response['items'] as $itemId => $item){
+                if($this->ebay->getProductId($itemId) == false){
+                    //ebay item ID not in the db
+                    $unlinked[$itemId] = $item;
+                }
+            }
+
+            $this->ebay->log('Unlinked count: '.count($unlinked));
+
+            //if end of the loop and less than 10, request next page
+            //if the last page requested was the max page of results
+            if($response['max_page'] == $page || count($unlinked) >= 5){
+                break;
+            }else{
+                $page++;
+            }
+        }
+
+        return array(
+            'items' => $unlinked,
+            'next_page' => $response['page']+1,
+            'max_page' => $response['max_page']
+        );
+    }
+
     public function loadItemLinks(){
         $local      = $this->ebay->getLiveListingArray();
         $response   = $this->ebay->getEbayActiveListings();
@@ -246,6 +289,16 @@ class ModelEbayOpenbay extends Model{
         }
         
         return $data;
+
+
+
+
+
+
+
+
+
+
     }
     
     public function saveItemLink($data) {

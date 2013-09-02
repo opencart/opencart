@@ -908,22 +908,6 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     }
 
-    public function loadItemLinks() {
-        set_time_limit(0);
-        $this->load->model('ebay/openbay');
-        $data = $this->model_ebay_openbay->loadItemLinks();
-
-        $json = array('msg' => 'ok');
-
-        if (!empty($data)) {
-            $json['data'] = $data;
-        } else {
-            $json['data'] = null;
-        }
-
-        $this->response->setOutput(json_encode($json));
-    }
-
     public function saveItemLink() {
         $this->load->model('ebay/openbay');
         $response = $this->model_ebay_openbay->saveItemLink($this->request->get);
@@ -935,6 +919,31 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->ebay->removeItemId($this->request->get['ebay_id']);
         $this->response->setOutput(json_encode(array('error' => false, 'msg' => $this->language->get('item_link_removed'))));
     }
+
+    public function loadUnlinked(){
+        set_time_limit(10);
+
+        $this->load->model('ebay/openbay');
+        $data = $this->model_ebay_openbay->loadUnlinked(100, $this->request->get['page']);
+
+        if (!empty($data)) {
+            $data['more_pages'] = 1;
+
+            if($data['next_page'] > $data['max_page']){
+                $data['more_pages'] = 0;
+            }
+
+            $json['data'] = $data;
+        } else {
+            $json['data'] = null;
+        }
+
+        $this->response->setOutput(json_encode($json));
+    }
+
+
+
+
 
     private function validate() {
         if (!$this->user->hasPermission('modify', 'openbay/openbay')) {

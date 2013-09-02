@@ -3,7 +3,7 @@ final class Ebay
 {
     private $registry;
     private $url    = 'https://uk.openbaypro.com/';
-    private $noLog  = array('notification/getPublicNotifications/','setup/getEbayCategories/','item/getItemAllList/', 'account/validate/');
+    private $noLog  = array('notification/getPublicNotifications/','setup/getEbayCategories/','item/getItemAllList/', 'account/validate/', 'item/getItemListLimited/');
 
     public function __construct($registry) {
         $this->registry     = $registry;
@@ -331,8 +331,23 @@ final class Ebay
      *
      * returns full array data about live items.
      */
+        $this->load->model('tool/image');
+
+        $has_option = '';
+        if($this->addonLoad('openstock') == true){
+            $this->load->model('openstock/openstock');
+            $has_option = '`p`.`has_option`, ';
+        }
+
         $qry = $this->db->query("
-        SELECT `el`.`ebay_item_id`, `p`.*, `pd`.name 
+        SELECT
+			".$has_option."
+			`el`.`ebay_item_id`,
+			`p`.`product_id`,
+			`p`.`sku`,
+			`p`.`model`,
+			`p`.`quantity`,
+			`pd`.name
         FROM `" . DB_PREFIX . "ebay_listing` `el` 
         LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`) 
         LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) 
@@ -349,24 +364,11 @@ final class Ebay
                     'qty'           => $row['quantity'],
                     'name'          => $row['name']
                 );
-                
-                if(isset($row['has_option']) && $row['has_option'] == 1){
-                    if($this->addonLoad('openstock') == true){
-                        $this->load->model('openstock/openstock');
-                        $this->load->model('tool/image');
-                        $data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
-                    }else{
-                        $data[$row['ebay_item_id']]['options'] = 0;
-                    }
-                }else{
-                    $data[$row['ebay_item_id']]['options'] = 0;
-                }
 
-                //get the allocated stock - items that have been bought but not assigned to an order
-                if($this->config->get('openbaypro_stock_allocate') == 0){
-                    $data[$row['ebay_item_id']]['allocated'] = $this->getAllocatedStock($row['product_id']);
-                }else{
-                    $data[$row['ebay_item_id']]['allocated'] = 0;
+                $data[$row['ebay_item_id']]['options'] = 0;
+
+                if((isset($row['has_option']) && $row['has_option'] == 1) && $this->addonLoad('openstock') == true){
+                    $data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
                 }
             }
         }
@@ -759,6 +761,11 @@ final class Ebay
     public function getEbayActiveListings(){
         $this->log('getEbayActiveListings() - Get active eBay items from API');
         return $this->openbay_call('item/getItemAllList/');
+    }
+
+    public function getEbayItemList($limit = 100, $page = 1){
+        $this->log('getEbayItemList() - Get active eBay items from API');
+        return $this->openbay_call('item/getItemListLimited/', array('page' => $page, 'limit' => $limit));
     }
 
     public function putStockUpdate($item_id, $stock, $sku = null){

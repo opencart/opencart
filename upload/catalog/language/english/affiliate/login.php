@@ -13,8 +13,8 @@ $_['text_i_am_returning_affiliate'] = 'I am a returning affiliate.';
 $_['text_forgotten']                = 'Forgotten Password';
 
 // Entry
-$_['entry_email']                   = 'Affiliate E-Mail:';
-$_['entry_password']                = 'Password:';
+$_['entry_email']                   = 'Affiliate E-Mail';
+$_['entry_password']                = 'Password';
 
 // Error
 $_['error_login']                   = 'Warning: No match for E-Mail Address and/or Password.';

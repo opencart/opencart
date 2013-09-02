@@ -4,7 +4,7 @@
       <fieldset>
         <legend><?php echo $text_your_details; ?></legend>
         <div class="form-group required">
-          <label class="col-sm-2 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
+          <label class="control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
           <div class="col-sm-10">
             <input type="text" name="firstname" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
           </div>
@@ -212,15 +212,4 @@ $('#input-payment-country').on('change', function() {
 });
 
 $('#input-payment-country').trigger('change');
-//--></script> 
-<script type="text/javascript"><!--
-/*
-$(document).ready(function() {
-    $('.colorbox').colorbox({
-        maxWidth: 640,
-        width: "85%",
-        height: 480
-    });
-});
-*/
 //--></script>

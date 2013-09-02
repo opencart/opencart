@@ -98,7 +98,7 @@ class ControllerCheckoutGuest extends Controller {
 		if (isset($this->session->data['payment_address']['postcode'])) {
 			$this->data['postcode'] = $this->session->data['payment_address']['postcode'];							
 		} elseif (isset($this->session->data['shipping_address']['postcode'])) {
-			$this->data['postcode'] = $this->session->data['shipping_postcode'];			
+			$this->data['postcode'] = $this->session->data['shipping_address']['postcode'];			
 		} else {
 			$this->data['postcode'] = '';
 		}

@@ -185,8 +185,8 @@ $(document).delegate('.agree', 'click', function(event) {
 			html += '  <div class="modal-dialog">';
 			html += '    <div class="modal-content">';
 			html += '      <div class="modal-header">'; 
-			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
 			html += '        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>';
+			html += '        <h4 class="modal-title">' + $(element).text() + '</h4>';
 			html += '      </div>';
 			html += '      <div class="modal-body">' + data + '</div>';
 			html += '    </div';

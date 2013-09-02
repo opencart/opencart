@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <div class="row"><?php echo $column_left; ?>
-    <div id="content" class="col-12"><?php echo $content_top; ?>
+    <div id="content" class="col-sm-12"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <div class="panel-group" id="accordion">
         <div class="panel panel-default">
@@ -73,14 +73,13 @@
       </div>
     </div>
     <?php echo $content_bottom; ?></div>
-  <?php echo $column_right; ?> </div>
-</div>
+  <?php echo $column_right; ?></div>
 <script type="text/javascript"><!--
 $(document).on('change', 'input[name=\'account\']', function() {
     if (this.value == 'register') {
-        $('#collapse-payment-address').parent().find('.accordion-heading a').html('<?php echo $text_checkout_account; ?> <i class="icon-caret-down"></i>');
+        $('#collapse-payment-address').parent().find('.panel-title a').html('<?php echo $text_checkout_account; ?> <i class="icon-caret-down"></i>');
     } else {
-        $('#collapse-payment-address').parent().find('.accordion-heading a').html('<?php echo $text_checkout_payment_address; ?> <i class="icon-caret-down"></i>');
+        $('#collapse-payment-address').parent().find('.panel-title a').html('<?php echo $text_checkout_payment_address; ?> <i class="icon-caret-down"></i>');
     }
 });
 
@@ -91,8 +90,8 @@ $(document).ready(function() {
         dataType: 'html',
         success: function(html) {
             $('#collapse-checkout-option .panel-body').html(html);
-                
-            $('#collapse-checkout-option').collapse('show');
+            
+			$('a[href=\'#collapse-checkout-option\']').trigger('click');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -106,8 +105,8 @@ $(document).ready(function() {
         dataType: 'html',
         success: function(html) {
             $('#collapse-payment-address .panel-body').html(html);
-                
-            $('#collapse-payment-address').collapse('show');
+            
+			$('a[href=\'#collapse-payment-address\']').trigger('click');
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -128,13 +127,11 @@ $(document).delegate('#button-account', 'click', function() {
 			$('#button-account').button('reset');
         },          
         success: function(html) {
-            $('.alert').remove();
+            $('.alert, .text-danger').remove();
             
             $('#collapse-payment-address .panel-body').html(html);
-			
-			$('#collapse-payment-address').collapse('show');
 
-			$('#collapse-checkout-option').collapse('hide');
+			$('a[href=\'#collapse-payment-address\']').trigger('click');
 			
 			// $('.checkout-heading a').remove();
                 
@@ -160,7 +157,7 @@ $(document).delegate('#button-login', 'click', function() {
             $('#button-login').button('reset');
         },              
         success: function(json) {
-            $('.alert').remove();
+            $('.alert, .text-danger').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -198,7 +195,7 @@ $(document).delegate('#button-register', 'click', function() {
                 }
                 
 				for (i in json['error']) {
-                    $('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger"><br />' + json['error'][i] + '</div>');
+                    $('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
 				}
             } else {
                 <?php if ($shipping_required) { ?>              
@@ -246,9 +243,7 @@ $(document).delegate('#button-register', 'click', function() {
                         success: function(html) {
                             $('#collapse-shipping-address .panel-body').html(html);
                             
-							$('#collapse-shipping-address').collapse('show');
-                            
-							$('#collapse-payment-address').collapse('hide');
+							$('a[href=\'#collapse-shipping-address\']').trigger('click');
                             
                             $('#checkout .checkout-heading a').remove();
                             $('#payment-address .checkout-heading a').remove();
@@ -270,9 +265,7 @@ $(document).delegate('#button-register', 'click', function() {
                     success: function(html) {
                         $('#collapse-payment-method .panel-body').html(html);
                         
-                        $('#collapse-payment-method').collapse('show');
-                        
-						$('#collapse-payment-address').collapse('hide');
+						$('a[href=\'#collapse-payment-method\']').trigger('click');
 						
                         $('#checkout .checkout-heading a').remove();
                         $('#payment-address .checkout-heading a').remove();
@@ -320,7 +313,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
 			$('#button-payment-address').button('reset');
         },          
         success: function(json) {
-            $('.alert').remove();
+            $('.alert, .text-danger').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -340,9 +333,7 @@ $(document).delegate('#button-payment-address', 'click', function() {
                     success: function(html) {
                         $('#collapse-shipping-address .panel-body').html(html);
                         
-                        $('#collapse-shipping-address').collapse('show');
-                        
-						$('#collapse-payment-address').collapse('hide');
+						$('a[href=\'#collapse-shipping-address\']').trigger('click');
 						
                         $('#payment-address .checkout-heading a').remove();
                         $('#shipping-address .checkout-heading a').remove();
@@ -362,10 +353,8 @@ $(document).delegate('#button-payment-address', 'click', function() {
                     success: function(html) {
                         $('#collapse-payment-method .panel-body').html(html);
                     	
-						$('#collapse-payment-method').collapse('show');
-                        
-						$('#collapse-payment-address').collapse('hide');
-                        
+						$('a[href=\'#collapse-payment-method\']').trigger('click');
+						
                         $('#payment-address .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
                                                     
@@ -409,7 +398,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
 			$('#button-shipping-address').button('reset');
         },          
         success: function(json) {
-            $('.alert-warning, .alert-error').remove();
+            $('.alert, .text-danger').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -428,9 +417,7 @@ $(document).delegate('#button-shipping-address', 'click', function() {
                     success: function(html) {
                         $('#collapse-shipping-method .panel-body').html(html);
                         
-                        $('#collapse-shipping-method').collapse('show');
-                        
-						$('#collapse-shipping-address').collapse('hide');
+						$('a[href=\'#collapse-shipping-method\']').trigger('click');
 						
                         $('#shipping-address .checkout-heading a').remove();
                         $('#shipping-method .checkout-heading a').remove();
@@ -486,7 +473,7 @@ $(document).delegate('#button-guest', 'click', function() {
 			$('#button-guest').button('reset');
         },          
         success: function(json) {
-            $('.alert').remove();
+            $('.alert, .text-danger').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -509,9 +496,7 @@ $(document).delegate('#button-guest', 'click', function() {
                         success: function(html) {
                             $('#collapse-shipping-method .panel-body').html(html);
                             
-                            $('#collapse-shipping-method').collapse('show');
-                            
-							$('#collapse-payment-address').collapse('hide');
+							$('a[href=\'#collapse-shipping-method\']').trigger('click');
 							
                             $('#payment-address .checkout-heading a').remove();
                             $('#shipping-address .checkout-heading a').remove();
@@ -542,11 +527,9 @@ $(document).delegate('#button-guest', 'click', function() {
                         dataType: 'html',
                         success: function(html) {
                             $('#collapse-shipping-address .panel-body').html(html);
-                            
-							$('#collapse-shipping-address').collapse('show');
-                            
-							$('#collapse-payment-address').collapse('hide');
-                            
+                             
+							$('a[href=\'#collapse-shipping-address\']').trigger('click');
+							
                             $('#payment-address .checkout-heading a').remove();
                             $('#shipping-address .checkout-heading a').remove();
                             $('#shipping-method .checkout-heading a').remove();
@@ -566,9 +549,7 @@ $(document).delegate('#button-guest', 'click', function() {
                     success: function(html) {
                         $('#collapse-payment-method .panel-body').html(html);
                         
-						$('#collapse-payment-method').collapse('show');
-                        
-						$('#collapse-payment-address').collapse('hide');
+						$('a[href=\'#collapse-payment-method\']').trigger('click');
                             
                         $('#payment-address .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
@@ -602,7 +583,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
 			$('#button-guest-shipping').button('reset');
         },          
         success: function(json) {
-            $('.alert').remove();
+            $('.alert, .text-danger').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -612,7 +593,7 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
                 }
                                 
 				for (i in json['error']) {
-                    $('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger"><br />' + json['error'][i] + '</div>');
+                    $('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
 				}
             } else {
                 $.ajax({
@@ -620,11 +601,9 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
                     dataType: 'html',
                     success: function(html) {
                         $('#collapse-shipping-method .panel-body').html(html);
-                        
-                        $('#collapse-shipping-method').collapse('show');
-                        
-						$('#collapse-shipping-address').collapse('hide');
 						
+						$('a[href=\'#collapse-shipping-method\']').trigger('click');
+
                         $('#shipping-address .checkout-heading a').remove();
                         $('#shipping-method .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
@@ -656,7 +635,7 @@ $(document).delegate('#button-shipping-method', 'click', function() {
 			$('#button-shipping-method').button('reset');
         },          
         success: function(json) {
-            $('.alert').remove();
+            $('.alert, .text-danger').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -671,9 +650,7 @@ $(document).delegate('#button-shipping-method', 'click', function() {
                     success: function(html) {
                         $('#collapse-payment-method .panel-body').html(html);
                         
-						$('#collapse-payment-method').collapse('show');
-                        
-						$('#collapse-shipping-method').collapse('hide');
+						$('a[href=\'#collapse-payment-method\']').trigger('click');
 
                         $('#shipping-method .checkout-heading a').remove();
                         $('#payment-method .checkout-heading a').remove();
@@ -705,7 +682,7 @@ $(document).delegate('#button-payment-method', 'click', function() {
             $('#button-payment-method').button('reset');
         },          
         success: function(json) {
-            $('.alert').remove();
+            $('.alert, .text-danger').remove();
             
             if (json['redirect']) {
                 location = json['redirect'];
@@ -718,11 +695,9 @@ $(document).delegate('#button-payment-method', 'click', function() {
                     url: 'index.php?route=checkout/confirm',
                     dataType: 'html',
                     success: function(html) {
-                        $('#collapse-checkout-confirm .accordion-inner').html(html);
+                        $('#collapse-checkout-confirm .panel-body').html(html);
                         
-						$('#collapse-checkout-confirm').collapse('show');
-                        
-						$('#collapse-payment-method').collapse('hide');
+						$('a[href=\'#collapse-checkout-confirm\']').trigger('click');
                          
                         $('#payment-method .checkout-heading a').remove();
                         

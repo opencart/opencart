@@ -24,17 +24,16 @@ $_['text_note']         = '<span style="color: #FF0000;">Note:</span> HTML is no
 $_['text_share']        = 'Share';
 $_['text_success']      = 'Thank you for your review. It has been submitted to the webmaster for approval.';
 $_['text_upload']       = 'Your file was successfully uploaded!';
-$_['text_wait']         = 'Please Wait!';
 $_['text_tags']         = 'Tags:';
 $_['text_error']        = 'Product not found!';
 
 // Entry
-$_['entry_name']        = 'Your Name:';
-$_['entry_review']      = 'Your Review:';
-$_['entry_rating']      = 'Rating:';
+$_['entry_name']        = 'Your Name';
+$_['entry_review']      = 'Your Review';
+$_['entry_rating']      = 'Rating';
 $_['entry_good']        = 'Good';
 $_['entry_bad']         = 'Bad';
-$_['entry_captcha']     = 'Enter the code in the box below:';
+$_['entry_captcha']     = 'Enter the code in the box below';
 
 // Tabs
 $_['tab_description']   = 'Description';

@@ -13,8 +13,8 @@ $_['text_i_am_returning_customer'] = 'I am a returning customer';
 $_['text_forgotten']               = 'Forgotten Password';
 
 // Entry
-$_['entry_email']                  = 'E-Mail Address:';
-$_['entry_password']               = 'Password:';
+$_['entry_email']                  = 'E-Mail Address';
+$_['entry_password']               = 'Password';
 
 // Error
 $_['error_login']                  = 'Warning: No match for E-Mail Address and/or Password.';

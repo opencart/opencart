@@ -13,10 +13,10 @@ $_['text_fax']       = 'Fax:';
 $_['text_message']   = '<p>Your enquiry has been successfully sent to the store owner!</p>';
 
 // Entry Fields
-$_['entry_name']     = 'Your Name:';
-$_['entry_email']    = 'E-Mail Address:';
-$_['entry_enquiry']  = 'Enquiry:';
-$_['entry_captcha']  = 'Enter the code in the box below:';
+$_['entry_name']     = 'Your Name';
+$_['entry_email']    = 'E-Mail Address';
+$_['entry_enquiry']  = 'Enquiry';
+$_['entry_captcha']  = 'Enter the code in the box below';
 
 // Email
 $_['email_subject']  = 'Enquiry %s';

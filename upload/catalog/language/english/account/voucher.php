@@ -11,13 +11,13 @@ $_['text_message']     = '<p>Thank you for purchasing a gift certificate! Once y
 $_['text_for']         = '%s Gift Certificate for %s';
 
 // Entry
-$_['entry_to_name']    = 'Recipient\'s Name:';
-$_['entry_to_email']   = 'Recipient\'s Email:';
-$_['entry_from_name']  = 'Your Name:';
-$_['entry_from_email'] = 'Your Email:';
-$_['entry_theme']      = 'Gift Certificate Theme:';
-$_['entry_message']    = 'Message:';
-$_['entry_amount']     = 'Amount:';
+$_['entry_to_name']    = 'Recipient\'s Name';
+$_['entry_to_email']   = 'Recipient\'s Email';
+$_['entry_from_name']  = 'Your Name';
+$_['entry_from_email'] = 'Your Email';
+$_['entry_theme']      = 'Gift Certificate Theme';
+$_['entry_message']    = 'Message';
+$_['entry_amount']     = 'Amount';
 
 // Help
 $_['help_message']     = '(Optional)';

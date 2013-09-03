@@ -921,7 +921,7 @@ class ControllerOpenbayOpenbay extends Controller {
     }
 
     public function loadUnlinked(){
-        set_time_limit(10);
+        set_time_limit(0);
 
         $this->load->model('ebay/openbay');
         $data = $this->model_ebay_openbay->loadUnlinked(100, $this->request->get['page']);

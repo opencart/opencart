@@ -47,7 +47,7 @@
                 </thead>
                 <tbody id="eBayListings">
                 <tr class="filter">
-                    <td class="left" colspan="8" id="fetchingEbayItems"><?php echo $lang_linkup_header_text6; ?></td>
+                    <td class="left" colspan="8" id="fetchingEbayItems"><?php echo $lang_text_unlinked_info; ?></td>
                 </tr>
                 </tbody>
             </table>

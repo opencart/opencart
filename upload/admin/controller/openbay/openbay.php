@@ -899,7 +899,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['validation']   = $this->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
 
-        //$total_linked = $this->model_ebay_openbay->totalLinked();
+        $total_linked = $this->model_ebay_openbay->totalLinked();
 
         if(isset($this->request->get['linked_item_page'])){
             $linked_item_page = (int)$this->request->get['linked_item_page'];
@@ -912,6 +912,15 @@ class ControllerOpenbayOpenbay extends Controller {
         }else{
             $linked_item_limit = 1;
         }
+
+        $pagination = new Pagination();
+        $pagination->total = $total_linked;
+        $pagination->page = $linked_item_page;
+        $pagination->limit = $this->config->get('config_admin_limit');
+        $pagination->text = $this->language->get('text_pagination');
+        $pagination->url = $this->url->link('openbay/openbay/viewItemLinks', 'token=' . $this->session->data['token'] . '&linked_item_page={page}', 'SSL');
+
+        $this->data['pagination'] = $pagination->render();
 
         $this->data['linked_items'] = $this->model_ebay_openbay->loadLinked($linked_item_limit, $linked_item_page);
 

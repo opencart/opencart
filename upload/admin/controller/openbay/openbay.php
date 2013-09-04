@@ -863,6 +863,8 @@ class ControllerOpenbayOpenbay extends Controller {
 
 
     public function viewItemLinks() {
+        $this->load->model('ebay/openbay');
+
         $this->data = array_merge($this->data, $this->load->language('ebay/item_link'));
 
         $this->document->setTitle($this->language->get('lang_page_title'));

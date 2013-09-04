@@ -1,6 +1,7 @@
 <?php
 class Cache { 
 	private $expire; 
+	private $config;
 	
 	public function __construct($registry) {
 

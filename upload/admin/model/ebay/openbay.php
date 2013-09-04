@@ -226,6 +226,71 @@ class ModelEbayOpenbay extends Model{
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "ebay_profile`;");
     }
 
+    public function totalLinked(){
+        $sql = "SELECT COUNT(DISTINCT p.product_id) AS total
+                FROM `" . DB_PREFIX . "ebay_listing` `el`
+                LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
+                LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)
+                WHERE `el`.`status` = '1'
+                AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+        $query = $this->db->query($sql);
+
+        return $query->row['total'];
+    }
+
+    public function loadLinked($limit = 100, $page = 1){
+        $this->load->model('tool/image');
+
+        $start = $limit * $page - 1;
+
+        $has_option = '';
+        if($this->addonLoad('openstock') == true){
+            $this->load->model('openstock/openstock');
+            $has_option = '`p`.`has_option`, ';
+        }
+
+        $sql = "
+        SELECT
+			".$has_option."
+			`el`.`ebay_item_id`,
+			`p`.`product_id`,
+			`p`.`sku`,
+			`p`.`model`,
+			`p`.`quantity`,
+			`pd`.name
+        FROM `" . DB_PREFIX . "ebay_listing` `el`
+        LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
+        LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)
+        WHERE `el`.`status` = '1'
+        AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+
+        $sql .= " LIMIT " . (int)$start . "," . (int)$limit;
+
+        $qry = $this->db->query($sql);
+
+        $data = array();
+        if($qry->num_rows){
+            foreach($qry->rows as $row){
+                $data[$row['ebay_item_id']] = array(
+                    'product_id'    => $row['product_id'],
+                    'sku'           => $row['sku'],
+                    'model'         => $row['model'],
+                    'qty'           => $row['quantity'],
+                    'name'          => $row['name']
+                );
+
+                $data[$row['ebay_item_id']]['options'] = 0;
+
+                if((isset($row['has_option']) && $row['has_option'] == 1) && $this->addonLoad('openstock') == true){
+                    $data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
+                }
+            }
+        }
+
+        return $data;
+    }
+
     public function loadUnlinked($limit = 100, $page = 1){
 
         $unlinked = array();

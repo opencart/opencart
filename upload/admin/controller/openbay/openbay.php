@@ -861,6 +861,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     }
 
+
     public function viewItemLinks() {
         $this->data = array_merge($this->data, $this->load->language('ebay/item_link'));
 
@@ -897,7 +898,22 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['return']       = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['validation']   = $this->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
-        $this->data['items']        = $this->ebay->getLiveProducts();
+
+        //$total_linked = $this->model_ebay_openbay->totalLinked();
+
+        if(isset($this->request->get['linked_item_page'])){
+            $linked_item_page = (int)$this->request->get['linked_item_page'];
+        }else{
+            $linked_item_page = 1;
+        }
+
+        if(isset($this->request->get['linked_item_limit'])){
+            $linked_item_limit = (int)$this->request->get['linked_item_limit'];
+        }else{
+            $linked_item_limit = 1;
+        }
+
+        $this->data['linked_items'] = $this->model_ebay_openbay->loadLinked($linked_item_limit, $linked_item_page);
 
         $this->template = 'openbay/ebay_item_link.tpl';
         $this->children = array(
@@ -941,9 +957,20 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->response->setOutput(json_encode($json));
     }
 
+    public function loadLinkedStatus(){
+        set_time_limit(0);
 
+        $this->load->model('ebay/openbay');
+        $data = $this->model_ebay_openbay->loadLinkedStatus(100, $this->request->get['page']);
 
+        if (!empty($data)) {
+            $json['data'] = $data;
+        } else {
+            $json['data'] = null;
+        }
 
+        $this->response->setOutput(json_encode($json));
+    }
 
     private function validate() {
         if (!$this->user->hasPermission('modify', 'openbay/openbay')) {

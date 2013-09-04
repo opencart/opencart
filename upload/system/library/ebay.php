@@ -370,6 +370,13 @@ final class Ebay
                 if((isset($row['has_option']) && $row['has_option'] == 1) && $this->addonLoad('openstock') == true){
                     $data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
                 }
+
+                //get the allocated stock - items that have been bought but not assigned to an order
+                if($this->config->get('openbaypro_stock_allocate') == 0){
+                    $data[$row['ebay_item_id']]['allocated'] = $this->getAllocatedStock($row['product_id']);
+                }else{
+                    $data[$row['ebay_item_id']]['allocated'] = 0;
+                }
             }
         }
 

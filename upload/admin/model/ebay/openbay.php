@@ -245,7 +245,7 @@ class ModelEbayOpenbay extends Model{
         $start = $limit * $page - 1;
 
         $has_option = '';
-        if($this->addonLoad('openstock') == true){
+        if($this->ebay->addonLoad('openstock') == true){
             $this->load->model('openstock/openstock');
             $has_option = '`p`.`has_option`, ';
         }
@@ -282,8 +282,15 @@ class ModelEbayOpenbay extends Model{
 
                 $data[$row['ebay_item_id']]['options'] = 0;
 
-                if((isset($row['has_option']) && $row['has_option'] == 1) && $this->addonLoad('openstock') == true){
+                if((isset($row['has_option']) && $row['has_option'] == 1) && $this->ebay->addonLoad('openstock') == true){
                     $data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
+                }
+
+                //get the allocated stock - items that have been bought but not assigned to an order
+                if($this->config->get('openbaypro_stock_allocate') == 0){
+                    $data[$row['ebay_item_id']]['allocated'] = $this->ebay->getAllocatedStock($row['product_id']);
+                }else{
+                    $data[$row['ebay_item_id']]['allocated'] = 0;
                 }
             }
         }

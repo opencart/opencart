@@ -26,11 +26,8 @@
         <p><?php echo $lang_desc_local; ?></p>
         <p><?php echo $lang_desc_allocated; ?></p>
 
-        <div id="tabs" class="htabs">
-            <a href="#tab-linkup"><?php echo $lang_unlinked_items; ?></a>
-            <a href="#tab-linked"><?php echo $lang_linked_items; ?></a>
-        </div>
-        <div id="tab-linkup" class="displayNone">
+        <h3>Unlinked items</h3>
+
             <p><?php echo $lang_unlinked_description; ?></p>
             <table class="list" cellpadding="2">
                 <thead>
@@ -57,8 +54,9 @@
                 <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="checkUnlinkedItemsLoading" class="displayNone"/>
                 <input type="hidden" name="unlinked_page" id="unlinked_page" value="1" />
             </div>
-        </div>
-        <div id="tab-linked">
+
+            <h3>Linked items</h3>
+
             <p><?php echo $lang_linked_description; ?></p>
             <table class="list" cellpadding="2">
                 <thead>
@@ -103,7 +101,7 @@
             </table>
 
             <div class="pagination"><?php echo $pagination; ?></div>
-        </div>
+
         <?php }else{ ?>
         <div class="warning"><?php echo $lang_error_validation; ?></div>
         <?php } ?>
@@ -441,6 +439,8 @@ $(".localName:not(.ui-autocomplete-input)").live("focus", function (event) {
 
 $(document).ready(function() {
     $('#tabs a').tabs();
+
+
 });
 //--></script>
 <?php echo $footer; ?>

@@ -119,15 +119,55 @@ function checkLinkedItems(){
         type: 'POST',
         dataType: 'json',
         success: function(json) {
-            if(json.data.unlinked === null){
+            if(json.data === null){
                 $('#eBayListings').append('<tr><td colspan="7"><p><?php echo $lang_ajax_error_listings; ?></p></td></tr>');
             }else{
-                
+                $.each(json.data, function(key, val){
+                    var product_id      = $('#product_id_'+key).val();
+                    var storeQty        = $('#store_qty_'+key).val();
+
+                    if(val.variants == 0){
+                        $('#text_qty_'+key).text(val.qty);
+                        $('#ebay_qty_'+key).val(val.qty);
+
+                        if(val.status == 1){
+                            $('#item_id_'+key).removeClass('unprocessed');
+                        }else{
+                            $('#text_status_'+$(this).val()).text('Listing ended');
+                            $('#row_'+$(this).val()+' > td').css('background-color', '#FFD4D4');
+                            $('#text_buttons_'+$(this).val()).html('<a onclick="removeLink('+$(this).val()+');" class="button"><span>Remove link</span></a>');
+                        }
+
+                        if($('#ebay_qty_'+key).val() == $('#store_qty_'+key).val()){
+                            $('#text_status_'+key).text('OK');
+                            $('#row_'+key+' > td').css('background-color', '#E3FFC8');
+                        }else{
+                            $('#text_status_'+key).text('Stock error');
+                            $('#row_'+key+' > td').css('background-color', '#FFD4D4');
+                            $('#text_buttons_'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+storeQty+');" class="button"><span><?php echo $lang_resync; ?></span></a>');
+                        }
+                    }else{
+                        var htmlInj = '';
+
+                        $.each(val.variants, function(key1, val1){
+                            htmlInj += val1.qty+' x ';
+                            $.each(val1.nv.NameValueList, function(key2, val2){
+                                htmlInj += val2.Value+' > ';
+                            });
+                            htmlInj += '<br />';
+                        });
+
+                        $('#text_qty_'+key).html(htmlInj);
+                        $('#item_id_'+key).removeClass('unprocessed');
+                    }
+                });
             }
         },
         failure: function(){
+
         },
         error: function(){
+
         }
     });
 }

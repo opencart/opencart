@@ -62,7 +62,7 @@
                 <table class="list" cellpadding="2">
                 <thead>
                 <tr>
-                    <td class="left"><?php echo $lang_column_product_name; ?></td>
+                    <td class="left"><?php echo $lang_column_product; ?></td>
                     <td class="center"><?php echo $lang_column_itemId; ?></td>
                     <td class="center"><?php echo $lang_column_allocated; ?></td>
                     <td class="center"><?php echo $lang_column_stock_available; ?></td>

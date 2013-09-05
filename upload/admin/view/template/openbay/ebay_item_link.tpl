@@ -75,23 +75,23 @@
                     <?php foreach($linked_items as $id => $item) { ?>
                     <input type="hidden" class="refreshClear" name="ebay_qty_<?php echo $id; ?>" value="" id="ebay_qty_<?php echo $id; ?>" />
                     <input type="hidden" name="store_qty_<?php echo $id; ?>" value="<?php echo $item['qty']; ?>" id="store_qty_<?php echo $id; ?>" />
-                    <input type="hidden" name="item_id" id="item_id_<?php echo $id; ?>" value="<?php echo $id; ?>" class="item_id"  />
-                    <input type="hidden" name="product_id" id="product_id_<?php echo $id; ?>" value="<?php echo $item['product_id']; ?>" />
+                    <input type="hidden" name="item_id[]" id="item_id_<?php echo $id; ?>" value="<?php echo $id; ?>" class="item_id"  />
+                    <input type="hidden" name="product_id[]" id="product_id_<?php echo $id; ?>" value="<?php echo $item['product_id']; ?>" />
                     <input type="hidden" name="options" id="options_<?php echo $id; ?>" value="<?php echo (int)$item['options']; ?>" />
 
                     <tr id="row_<?php echo $id; ?>" class="refreshRow">
-                        <td class="left"><a href="<?php echo HTTPS_SERVER . 'index.php?route=catalog/product/update&token=' . $this->session->data['token'] .'&product_id='.$item['product_id']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
-                        <td class="center"><a href="<?php echo $this->config->get('openbaypro_ebay_itm_link').$id; ?>" target="_BLANK"><?php echo $id; ?></a></td>
+                        <td class="left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
+                        <td class="center"><a href="<?php echo $item['link_ebay']; ?>" target="_BLANK"><?php echo $id; ?></a></td>
                         <?php if($item['options'] == 0){ ?>
-                        <td class="center"><?php echo $item['allocated']; ?></td>
-                        <td class="center"><?php echo $item['qty']; ?></td>
-                        <td id="text_qty_<?php echo $id; ?>" class="center refreshClear"></td>
-                        <td class="center" align="center"><img title="" alt="" src="view/image/delete.png" style="margin-top:3px;"></td>
+                            <td class="center"><?php echo $item['allocated']; ?></td>
+                            <td class="center"><?php echo $item['qty']; ?></td>
+                            <td id="text_qty_<?php echo $id; ?>" class="center refreshClear"></td>
+                            <td class="center" align="center"><img title="" alt="" src="view/image/delete.png" style="margin-top:3px;"></td>
                         <?php }else{ ?>
-                        <td class="center">-</td>
-                        <td class="center"><?php foreach($item['options'] as $option){ echo $option['stock'] .' x ' . $option['combi'] . '<br />'; } ?></td>
-                        <td id="text_qty_<?php echo $id; ?>" class="center refreshClear"></td>
-                        <td class="center" align="center"><img title="" alt="" src="view/image/success.png" style="margin-top:3px;"></td>
+                            <td class="center">-</td>
+                            <td class="center"><?php foreach($item['options'] as $option){ echo $option['stock'] .' x ' . $option['combi'] . '<br />'; } ?></td>
+                            <td id="text_qty_<?php echo $id; ?>" class="center refreshClear"></td>
+                            <td class="center" align="center"><img title="" alt="" src="view/image/success.png" style="margin-top:3px;"></td>
                         <?php } ?>
                         <td class="center refreshClear" id="text_status_<?php echo $id; ?>"></td>
                         <td class="center buttons refreshClear" id="text_buttons_<?php echo $id; ?>"></td>
@@ -103,7 +103,7 @@
             <div class="pagination"><?php echo $pagination; ?></div>
 
         <?php }else{ ?>
-        <div class="warning"><?php echo $lang_error_validation; ?></div>
+            <div class="warning"><?php echo $lang_error_validation; ?></div>
         <?php } ?>
 
     </div>
@@ -111,7 +111,28 @@
 
 <script type="text/javascript"><!--
 
-function loadListingsForLink(){
+function checkLinkedItems(){
+
+    $.ajax({
+        url: 'index.php?route=openbay/openbay/loadLinkedStatus&token=<?php echo $token; ?>',
+        data: $('.item_id').serialize(),
+        type: 'POST',
+        dataType: 'json',
+        success: function(json) {
+            if(json.data.unlinked === null){
+                $('#eBayListings').append('<tr><td colspan="7"><p><?php echo $lang_ajax_error_listings; ?></p></td></tr>');
+            }else{
+                
+            }
+        },
+        failure: function(){
+        },
+        error: function(){
+        }
+    });
+}
+
+function checkLinkedItemsddddddd(){
     $('.listing').remove();
     $('#fetchingEbayItems').show();
     $('#loadListingsForLink').hide();
@@ -125,7 +146,7 @@ function loadListingsForLink(){
     $('.item_id').addClass('unprocessed');
 
     $.ajax({
-        url: 'index.php?route=openbay/openbay/loadItemLinks&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/openbay/loadLinkedStatus&token=<?php echo $token; ?>',
         type: 'get',
         dataType: 'json',
         success: function(json) {
@@ -440,7 +461,7 @@ $(".localName:not(.ui-autocomplete-input)").live("focus", function (event) {
 $(document).ready(function() {
     $('#tabs a').tabs();
 
-
+    checkLinkedItems();
 });
 //--></script>
 <?php echo $footer; ?>

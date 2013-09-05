@@ -861,7 +861,6 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     }
 
-
     public function viewItemLinks() {
         $this->load->model('ebay/openbay');
 
@@ -912,7 +911,7 @@ class ControllerOpenbayOpenbay extends Controller {
         if(isset($this->request->get['linked_item_limit'])){
             $linked_item_limit = (int)$this->request->get['linked_item_limit'];
         }else{
-            $linked_item_limit = 1;
+            $linked_item_limit = 100;
         }
 
         $pagination = new Pagination();
@@ -972,7 +971,11 @@ class ControllerOpenbayOpenbay extends Controller {
         set_time_limit(0);
 
         $this->load->model('ebay/openbay');
-        $data = $this->model_ebay_openbay->loadLinkedStatus(100, $this->request->get['page']);
+
+        /**
+         * will this still be an array if there is 1 item from jquery?
+         */
+        $data = $this->model_ebay_openbay->loadLinkedStatus($this->request->post['item_id']);
 
         if (!empty($data)) {
             $json['data'] = $data;

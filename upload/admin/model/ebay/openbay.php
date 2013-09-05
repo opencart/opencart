@@ -277,7 +277,9 @@ class ModelEbayOpenbay extends Model{
                     'sku'           => $row['sku'],
                     'model'         => $row['model'],
                     'qty'           => $row['quantity'],
-                    'name'          => $row['name']
+                    'name'          => $row['name'],
+                    'link_edit'     => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id='.$row['product_id'], 'SSL'),
+                    'link_ebay'     => $this->config->get('openbaypro_ebay_itm_link').$row['ebay_item_id'],
                 );
 
                 $data[$row['ebay_item_id']]['options'] = 0;
@@ -296,6 +298,11 @@ class ModelEbayOpenbay extends Model{
         }
 
         return $data;
+    }
+
+    public function loadLinkedStatus($item_ids){
+        $this->ebay->log('loadLinkedStatus() - Get item status from ebay for multiple IDs');
+        return $this->ebay->openbay_call('item/getItemsById/', array('item_ids' => $item_ids));
     }
 
     public function loadUnlinked($limit = 100, $page = 1){

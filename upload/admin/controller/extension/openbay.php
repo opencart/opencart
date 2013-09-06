@@ -326,9 +326,28 @@ class ControllerExtensionOpenbay extends Controller {
         $this->load->model('ebay/patch');
         $this->load->model('amazon/patch');
         $this->load->model('amazonus/patch');
+        $this->load->model('setting/extension');
+        $this->load->model('user/user_group');
+        $this->load->model('setting/setting');
+        
         $this->model_ebay_patch->runPatch();
         $this->model_amazon_patch->runPatch();
         $this->model_amazonus_patch->runPatch();
+
+        $installed_modules = $this->model_setting_extension->getInstalled('module');
+        
+        if (!in_array('openbaypro', $installed_modules)) {
+            $this->model_setting_extension->install('module', 'openbaypro');
+
+            $this->model_user_user_group->addPermission($this->user->getId(), 'access', 'module/openbaypro');
+            $this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/openbaypro');
+            
+            $settings = $this->model_setting_setting->getSetting('openbaymanager');
+            $settings['openbaymanager_show_menu'] = 1;
+
+            $this->model_setting_setting->editSetting('openbaymanager', $settings);
+        }
+        
         sleep(1);
         return $this->response->setOutput(json_encode(array('msg' => 'ok')));
     }
@@ -1320,6 +1339,12 @@ class ControllerExtensionOpenbay extends Controller {
             'href'      => $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'),
             'separator' => ' :: '
         );
+        
+        if ($this->config->get('amazon_status')) {
+            $this->data['href_amazon_bulk_list'] = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . $url, 'SSL');
+        } else {
+            $this->data['href_amazon_bulk_list'] = '';
+        }
 
         $this->data['products'] = array();
 

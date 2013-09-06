@@ -14,6 +14,7 @@ $_['lang_play_stock_updating']      = 'Stock updating';
 
 $_['lang_markets']                  = 'Markets';
 $_['lang_bulk_btn']                 = 'eBay bulk upload';
+$_['lang_bulk_amazon_btn']          = 'Amazon EU bulk upload';
 
 $_['lang_marketplace']              = 'Marketplace';
 $_['lang_status']                   = 'Status';

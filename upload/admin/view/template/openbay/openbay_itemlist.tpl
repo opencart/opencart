@@ -14,7 +14,11 @@
   <div class="box">
     <div class="heading">
       <h1><img src="view/image/product.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"></div>
+      <div class="buttons">
+          <?php if ($href_amazon_bulk_list) { ?>
+            <a class="button" href="<?php echo $href_amazon_bulk_list ?>"><?php echo $lang_bulk_amazon_btn ?></a>
+          <?php } ?>
+      </div>
     </div>
     <div class="content">
         <table class="list">

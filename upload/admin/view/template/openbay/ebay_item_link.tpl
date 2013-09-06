@@ -27,7 +27,7 @@
                 <p><?php echo $lang_link_desc3; ?></p>
                 <p><?php echo $lang_link_desc4; ?></p>
 
-                <h2><?php echo $lang_linked_items; ?></h2>
+                <h2><?php echo $lang_unlinked_items; ?></h2>
                 <p><?php echo $lang_text_unlinked_desc; ?></p>
 
                 <table class="list" cellpadding="2">
@@ -56,7 +56,7 @@
                     <input type="hidden" name="unlinked_page" id="unlinked_page" value="1" />
                 </div>
 
-                <h2><?php echo $lang_unlinked_items; ?></h2>
+                <h2><?php echo $lang_linked_items; ?></h2>
                 <p><?php echo $lang_text_linked_desc; ?></p>
 
                 <table class="list" cellpadding="2">

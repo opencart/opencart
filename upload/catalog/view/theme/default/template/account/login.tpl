@@ -18,7 +18,7 @@
     <?php $cols = 9; ?>
     <?php } else { ?>
     <?php $cols = 12; ?>
-    <?php } ?>  
+    <?php } ?>
     <div id="content" class="col-sm-9"><?php echo $content_top; ?>
       <div class="row">
         <div class="col-sm-6">
@@ -40,7 +40,6 @@
               <div class="form-group">
                 <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
                 <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
-
                 <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a></div>
               <input type="submit" value="<?php echo $button_login; ?>" class="btn btn-primary" />
               <?php if ($redirect) { ?>

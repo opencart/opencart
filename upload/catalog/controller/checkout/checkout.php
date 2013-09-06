@@ -27,9 +27,6 @@ class ControllerCheckoutCheckout extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title')); 
 		
-		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
-					
 		$this->data['breadcrumbs'] = array();
 
       	$this->data['breadcrumbs'][] = array(
@@ -58,6 +55,13 @@ class ControllerCheckoutCheckout extends Controller {
 		$this->data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
 		
 		$this->data['logged'] = $this->customer->isLogged();
+		
+		if (isset($this->session->data['account'])) {
+			$this->data['account'] = $this->session->data['account'];
+		} else {
+			$this->data['account'] = '';
+		}
+		
 		$this->data['shipping_required'] = $this->cart->hasShipping();	
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/checkout.tpl')) {

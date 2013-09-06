@@ -8,8 +8,10 @@ class DB {
 		} else {
 			exit('Error: Could not load database file ' . $driver . '!');
 		}
-
-		$this->db = new $type($hostname, $username, $password, $database);
+		
+		$class = 'DB' . $type;
+		
+		$this->db = new $class($hostname, $username, $password, $database);
 	}
 
 	public function query($sql) {

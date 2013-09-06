@@ -16,7 +16,7 @@
     <?php } else { ?>
     <?php $cols = 12; ?>
     <?php } ?>
-    <div id="content" class="col-sm-<?php echo $col; ?>"><?php echo $content_top; ?>
+    <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h2><?php echo $text_my_account; ?></h2>
       <ul class="list-unstyled">
         <li><a href="<?php echo $edit; ?>"><?php echo $text_edit; ?></a></li>

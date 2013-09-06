@@ -1,25 +1,22 @@
 <?php
-final class mMySQLi {
+final class DBMySQLi {
 	private $mysqli;
 
 	public function __construct($hostname, $username, $password, $database) {
+		$this->link = new mysqli($hostname, $username, $password, $database);
 
-		$this->mysqli = new mysqli($hostname, $username, $password, $database);
-
-		if ($this->mysqli->connect_error) {
-			trigger_error('Error: Could not make a database link (' . $this->mysqli->connect_errno . ') ' . $this->mysqli->connect_error);
+		if ($this->link->connect_error) {
+			trigger_error('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
 		}
 
-		$this->mysqli->set_charset("utf-8");
-
+		$this->link->set_charset("utf-8");
 	}
 
 	public function query($sql) {
+		$query = $this->link->query($sql);
 
-		$query = $this->mysqli->query($sql);
-
-		if ($this->mysqli->errno) {
-			trigger_error('Error: ' . $this->mysqli->error . '<br />Error No: ' . $this->mysqli->errno . '<br />' . $sql);
+		if ($this->link->errno) {
+			trigger_error('Error: ' . $this->link->error . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
 			exit();
 		}
 
@@ -52,25 +49,25 @@ final class mMySQLi {
 			}
 
 		}else {
-			trigger_error('Error: ' . $this->mysqli->error . '<br />Error No: ' . $this->mysqli->errno . '<br />' . $sql);
+			trigger_error('Error: ' . $this->link->error . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
 			exit();
 		}
 	}
 
 	public function escape($value) {
-		return $this->mysqli->real_escape_string($value);
+		return $this->link->real_escape_string($value);
 	}
 
 	public function countAffected() {
-		return $this->mysqli->affected_rows;
+		return $this->link->affected_rows;
 	}
 
 	public function getLastId() {
-		return $this->mysqli->insert_id;
+		return $this->link->insert_id;
 	}
 
 	public function __destruct() {
-		$this->mysqli->close();
+		$this->link->close();
 	}
 }
 ?>

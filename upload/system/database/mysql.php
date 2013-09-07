@@ -1,5 +1,5 @@
 <?php
-final class MySQL {
+final class DBMySQL {
 	private $link;
 
 	public function __construct($hostname, $username, $password, $database) {

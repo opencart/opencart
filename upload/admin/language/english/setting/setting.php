@@ -44,7 +44,6 @@ $_['entry_admin_limit']   	       = 'Default Items Per Page (Admin)';
 $_['entry_product_count']          = 'Category Product Count';
 $_['entry_review']       	       = 'Allow Reviews';
 $_['entry_guest_review']       	   = 'Allow Guest Reviews';
-$_['entry_download']               = 'Allow Downloads';
 $_['entry_voucher_min']            = 'Voucher Min';
 $_['entry_voucher_max']            = 'Voucher Max';
 $_['entry_tax']                    = 'Display Prices With Tax';

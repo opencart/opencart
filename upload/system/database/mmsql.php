@@ -1,5 +1,5 @@
 <?php
-final class MSSQL {
+final class DBMSSQL {
 	private $link;
 
 	public function __construct($hostname, $username, $password, $database) {

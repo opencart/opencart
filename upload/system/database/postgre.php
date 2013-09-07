@@ -1,5 +1,5 @@
 <?php
-final class Postgre {
+final class DBPostgre {
 	private $link;
 
 	public function __construct($hostname, $username, $password, $database) {

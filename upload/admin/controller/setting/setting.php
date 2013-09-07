@@ -68,7 +68,6 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_product_count'] = $this->language->get('entry_product_count');
 		$this->data['entry_review'] = $this->language->get('entry_review');
 		$this->data['entry_guest_review'] = $this->language->get('entry_guest_review');
-		$this->data['entry_download'] = $this->language->get('entry_download');
 		$this->data['entry_voucher_min'] = $this->language->get('entry_voucher_min');
 		$this->data['entry_voucher_max'] = $this->language->get('entry_voucher_max');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
@@ -583,12 +582,6 @@ class ControllerSettingSetting extends Controller {
 			$this->data['config_guest_review'] = $this->request->post['config_guest_review'];
 		} else {
 			$this->data['config_guest_review'] = $this->config->get('config_guest_review');
-		}
-		
-		if (isset($this->request->post['config_download'])) {
-			$this->data['config_download'] = $this->request->post['config_download'];
-		} else {
-			$this->data['config_download'] = $this->config->get('config_download');
 		}
 		
 		if (isset($this->request->post['config_voucher_min'])) {

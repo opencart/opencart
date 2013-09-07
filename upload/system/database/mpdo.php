@@ -6,7 +6,7 @@
 *      please set zend_optimizerplus.dups_fix=1 in your php.ini "
 */
 
-final class mPDO {
+final class DBmPDO {
     private $pdo = null;
     private $statement = null;
 

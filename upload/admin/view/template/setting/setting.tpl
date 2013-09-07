@@ -356,29 +356,6 @@
                   </label>
                   <span class="help-block"><?php echo $help_guest_review; ?></span> </div>
               </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_download; ?></label>
-                <div class="col-sm-10">
-                  <label class="radio-inline">
-                    <?php if ($config_download) { ?>
-                    <input type="radio" name="config_download" value="1" checked="checked" />
-                    <?php echo $text_yes; ?>
-                    <?php } else { ?>
-                    <input type="radio" name="config_download" value="1" />
-                    <?php echo $text_yes; ?>
-                    <?php } ?>
-                  </label>
-                  <label class="radio-inline">
-                    <?php if (!$config_download) { ?>
-                    <input type="radio" name="config_download" value="0" checked="checked" />
-                    <?php echo $text_no; ?>
-                    <?php } else { ?>
-                    <input type="radio" name="config_download" value="0" />
-                    <?php echo $text_no; ?>
-                    <?php } ?>
-                  </label>
-                </div>
-              </div>
             </fieldset>
             <fieldset>
               <legend><?php echo $text_voucher; ?></legend>

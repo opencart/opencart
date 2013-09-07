@@ -10,7 +10,9 @@
 </div>
 <div id="content">
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <p>1. Please enter your database connection details.</p>
@@ -19,7 +21,12 @@
         <tr>
           <td>Database Driver:</td>
           <td><select name="db_driver">
+              <?php if (extension_loaded('mysqli')) { ?>
+              <option value="mysqli">MySQLi</option>
+              <?php } ?>
+              <?php if (extension_loaded('mysql')) { ?>
               <option value="mysql">MySQL</option>
+              <?php } ?>
             </select></td>
         </tr>
         <tr>

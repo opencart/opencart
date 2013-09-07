@@ -478,7 +478,7 @@ $('#button-cart').click(function() {
 <?php if ($option['type'] == 'file') { ?>
 <script type="text/javascript"><!--
 new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
-    action: 'index.php?route=product/product/upload',
+    action: '<?php echo $upload_path; ?>',
     name: 'file',
     autoSubmit: true,
     responseType: 'json',

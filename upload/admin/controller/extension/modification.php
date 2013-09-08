@@ -360,6 +360,7 @@ class ControllerExtensionModification extends Controller {
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_author'] = $this->language->get('entry_author');
+		$this->data['entry_version'] = $this->language->get('entry_version');
     	$this->data['entry_code'] = $this->language->get('entry_code');
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -433,6 +434,14 @@ class ControllerExtensionModification extends Controller {
 			$this->data['author'] = $modification_info['author'];
 		} else {
 			$this->data['author'] = '';
+		}
+
+		if (isset($this->request->post['version'])) {
+			$this->data['version'] = $this->request->post['version'];
+		} elseif (!empty($modification_info)) {
+			$this->data['version'] = $modification_info['version'];
+		} else {
+			$this->data['version'] = '';
 		}
 						
 		if (isset($this->request->post['code'])) {

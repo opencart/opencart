@@ -448,6 +448,13 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
+
+            // Protection for file upload
+            $this->session->data['csrf'] = md5(mt_rand());
+            $this->data['upload_path'] = $this->url->link(
+                'product/product/upload',
+                'csrf=' . $this->session->data['csrf'] . $url, 'SSL'
+            );
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/product.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/product/product.tpl';
@@ -669,6 +676,11 @@ class ControllerProductProduct extends Controller {
 	
 	public function upload() {
 		$this->language->load('product/product');
+        // Protection for against unauthorized file upload
+        if (!isset($this->request->get['csrf']) OR $this->request->get['csrf'] !== $this->session->data['csrf']) {
+            header($this->language->get('error_upload'), null, 400);
+            exit;
+        }
 		
 		$json = array();
 		

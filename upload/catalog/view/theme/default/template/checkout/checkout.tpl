@@ -76,17 +76,19 @@
   <?php echo $column_right; ?></div>
 <script type="text/javascript"><!--
 $(document).on('change', 'input[name=\'account\']', function() {
-	var element = $('#collapse-payment-address').parent().find('.panel-heading .panel-title');
+	$('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').is('a');
 	
-    if (this.value == 'register') {
-		if (element.is('a')) {
-        	element.html('<?php echo $text_checkout_account; ?>');
+	alert($('#collapse-payment-address').parent().find('.panel-heading .panel-title').text().replace('<?php echo $text_checkout_account; ?>', '<?php echo $text_checkout_payment_address; ?>'));
+	
+	if () {	
+		if (this.value == 'register') {
+			$('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').html('<?php echo $text_checkout_account; ?>');
 		} else {
-			
+			$('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').html('<?php echo $text_checkout_payment_address; ?>');
 		}
 	} else {
-        $('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<?php echo $text_checkout_payment_address; ?>');
-    }
+	
+	}
 });
 
 <?php if (!$logged) { ?> 

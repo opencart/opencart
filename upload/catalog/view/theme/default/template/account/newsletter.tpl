@@ -13,7 +13,7 @@
     <?php } else { ?>
     <?php $cols = 12; ?>
     <?php } ?>  
-    <div id="content" class="col-sm-9"><?php echo $content_top; ?>
+    <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>

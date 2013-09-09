@@ -44,30 +44,29 @@
               <?php foreach ($products as $product) { ?>
               <tr>
                 <td class="text-center"><?php if ($product['thumb']) { ?>
-                  <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
+                  <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-thumbnail" /></a>
                   <?php } ?></td>
                 <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
                   <?php if (!$product['stock']) { ?>
                   <span class="stock">***</span>
                   <?php } ?>
-                  <div>
-                    <?php foreach ($product['option'] as $option) { ?>
-                    <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
-                    <?php } ?>
-                  </div>
+                  <?php if ($product['option']) { ?>
+                  <br />
+                  <?php foreach ($product['option'] as $option) { ?>
+                  <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
+                  <?php } ?>
+                  <?php } ?>
                   <?php if ($product['reward']) { ?>
                   <small><?php echo $product['reward']; ?></small>
                   <?php } ?></td>
                 <td class="text-left"><?php echo $product['model']; ?></td>
                 <td class="text-left"><div class="row">
-                    <div class="col-sm-6">
-                      <div class="input-group">
-                        <input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control" />
-                        <div class="input-group-btn btn-group">
-                          <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="icon-refresh"></i></button>
-                          <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="icon-remove"></i></a> </div>
-                      </div>
+                    <div class="col-sm-7">
+                      <input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control" />
                     </div>
+                    <div class="col-sm-4">
+                      <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="icon-refresh"></i></button>
+                      <a href="<?php echo $product['remove']; ?>" title="<?php echo $button_remove; ?>" data-toggle="tooltip" class="btn btn-danger"><i class="icon-remove-sign"></i></a></div>
                   </div></td>
                 <td class="text-right"><?php echo $product['price']; ?></td>
                 <td class="text-right"><?php echo $product['total']; ?></td>

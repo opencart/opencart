@@ -19,7 +19,7 @@
     <?php } else { ?>
     <?php $cols = 12; ?>
     <?php } ?>
-    <div id="content" class="col-sm-9"><?php echo $content_top; ?>
+    <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <div class="row">
         <div class="col-sm-6">
           <div class="well">

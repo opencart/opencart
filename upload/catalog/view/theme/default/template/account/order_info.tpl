@@ -6,7 +6,14 @@
     <?php } ?>
   </ul>
   <div class="row"><?php echo $column_left; ?>
-    <div id="content" class="col-sm-9"><?php echo $content_top; ?>
+    <?php if ($column_left && $column_right) { ?>
+    <?php $cols = 6; ?>
+    <?php } elseif ($column_left || $column_right) { ?>
+    <?php $cols = 9; ?>
+    <?php } else { ?>
+    <?php $cols = 12; ?>
+    <?php } ?>  
+    <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h2><?php echo $heading_title; ?></h2>
       <table class="table table-bordered table-hover">
         <thead>

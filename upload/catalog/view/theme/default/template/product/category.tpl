@@ -7,14 +7,14 @@
 </ul>
 <div class="row">
 <?php echo $column_left; ?>
-<div id="content" class="col-lg-9"><?php echo $content_top; ?>
+<div id="content" class="col-sm-9"><?php echo $content_top; ?>
   <h2><?php echo $heading_title; ?></h2>
   
   
   <?php if ($thumb || $description) { ?>
   <div class="category-info">
     <?php if ($thumb) { ?>
-    <div class="image"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" /></div>
+    <div class="pull-left"><img src="<?php echo $thumb; ?>" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" class="img-thumbnail" /></div>
     <?php } ?>
     <?php if ($description) { ?>
     <?php echo $description; ?>
@@ -44,12 +44,12 @@
     <?php } else { ?>
     <div class="row">
       <?php for ($i = 0; $i < count($categories);) { ?>
-      <div class="span3">
+      <div class="cols-sm-3">
         <ul>
           <?php $j = $i + ceil(count($categories) / 4); ?>
           <?php for (; $i < $j; $i++) { ?>
           <?php if (isset($categories[$i])) { ?>
-          <li> <a href="<?php echo $categories[$i]['href']; ?>"> <?php echo $categories[$i]['name']; ?> </a> </li>
+          <li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>
           <?php } ?>
           <?php } ?>
         </ul>
@@ -59,12 +59,17 @@
     <?php } ?>
   </div>
   <?php } ?>
+  
+  
   <?php if ($products) { ?>
   <div class="product-compare"><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></div>
   <div class="product-filter">
+    
     <div class="display pull-left">
-      <div class="btn-group"><a id="list-view" class="btn square tooltip-item" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="icon-th-list"></i></a> <a id="grid-view" class="btn square tooltip-item" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="icon-th"></i></a> </div>
+      <div class="btn-group"><a id="list-view" class="btn btn-default tooltip-item" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="icon-th-list"></i></a> <a id="grid-view" class="btn square tooltip-item" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="icon-th"></i></a> </div>
     </div>
+    
+    
     <div class="limit"><?php echo $text_limit; ?>
       <select class="input-small" onchange="location = this.value;">
         <?php foreach ($limits as $limits) { ?>
@@ -130,12 +135,12 @@
         </div>
         <?php } ?>
       </div>
-      <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="text-right"><?php echo $pagination; ?></div>
       <?php } ?>
       <?php if (!$categories && !$products) { ?>
-      <div class="content"><?php echo $text_empty; ?></div>
+      <p><?php echo $text_empty; ?></p>
       <div class="buttons">
-        <div class="right"><a href="<?php echo $continue; ?>" class="btn"><?php echo $button_continue; ?></a></div>
+        <div class="right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
       </div>
       <?php } ?>
       <?php echo $content_bottom; ?></div>

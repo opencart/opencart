@@ -66,8 +66,9 @@ $(document).ready(function() {
         $('.product-thumb').addClass('clearfix');
 
     });
-    // change product-list to product-grid
-    $('#grid-view').click(function() {
+    
+	// change product-list to product-grid
+	$('#grid-view').click(function() {
         $('.product-list').removeClass('product-list').addClass('product-grid');
         $('.product-thumb').removeClass('clearfix');
     });

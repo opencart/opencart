@@ -51,7 +51,7 @@
       <li><?php echo $language; ?></li>
     </ul>
     <ul class="nav navbar-nav pull-right">
-      <li><a href="tel:<?php echo $telephone; ?>"><i class="icon-phone"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></a></li>
+      <li><a href="tel:<?php echo $telephone; ?>"><i class="icon-phone"></i> <span class="hidden-xs hidden-sm hidden-md span"><?php echo $telephone; ?></span></a></li>
       <li><a href="<?php echo $account; ?>"><i class="icon-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span></a></li>
       <li><a href="<?php echo $wishlist; ?>" id="wishlist-total"> <i class="icon-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a></li>
       <li><a href="<?php echo $shopping_cart; ?>"><i class="icon-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a></li>
@@ -85,7 +85,7 @@
 <?php if ($categories) { ?>
 <div class="container">
   <nav class="navbar navbar-inverse">
-    <div class="navbar-header"> <span class="visible-xs"><?php echo $text_category; ?></span>
+    <div class="navbar-header"><span class="visible-xs"><?php echo $text_category; ?></span>
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">

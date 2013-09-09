@@ -32,6 +32,12 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-version"><?php echo $entry_version; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="version" value="<?php echo $version; ?>" id="input-version" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
           <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
           <div class="col-sm-10">
             <textarea name="code" rows="15" id="input-code" class="form-control"><?php echo $code; ?></textarea>

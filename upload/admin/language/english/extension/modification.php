@@ -17,6 +17,7 @@ $_['column_action']        = 'Action';
 // Entry
 $_['entry_name']           = 'Modification Name';
 $_['entry_author']         = 'Author';
+$_['entry_version']        = 'Version';
 $_['entry_code']           = 'Modification';
 $_['entry_status']         = 'Status';
 $_['entry_sort_order']     = 'Sort Order';

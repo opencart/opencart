@@ -44,11 +44,11 @@ class ModelEbayProfile extends Model{
             LIMIT 1
             ");
     }
-    
-    public function delete($id){
-        $qry = $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_profile` WHERE `ebay_profile_id` = '".(int)$id."' LIMIT 1");
 
-        if($qry->countAffected > 0){
+    public function delete($id){
+        $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_profile` WHERE `ebay_profile_id` = '".(int)$id."' LIMIT 1");
+
+        if($this->db->countAffected() > 0){
             return true;
         }else{
             return false;

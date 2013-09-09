@@ -76,18 +76,18 @@
   <?php echo $column_right; ?></div>
 <script type="text/javascript"><!--
 $(document).on('change', 'input[name=\'account\']', function() {
-	$('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').is('a');
-	
-	alert($('#collapse-payment-address').parent().find('.panel-heading .panel-title').text().replace('<?php echo $text_checkout_account; ?>', '<?php echo $text_checkout_payment_address; ?>'));
-	
-	if () {	
+	if ($('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').is('a')) {	
 		if (this.value == 'register') {
-			$('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').html('<?php echo $text_checkout_account; ?>');
+			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_account; ?> <i class="icon-caret-down"></i></a>');
 		} else {
-			$('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').html('<?php echo $text_checkout_payment_address; ?>');
+			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_payment_address; ?> <i class="icon-caret-down"></i></a>');
 		}
 	} else {
-	
+		if (this.value == 'register') {
+			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<?php echo $text_checkout_account; ?>');
+		} else {
+			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<?php echo $text_checkout_payment_address; ?>');
+		}	
 	}
 });
 
@@ -143,7 +143,11 @@ $(document).delegate('#button-account', 'click', function() {
             
             $('#collapse-payment-address .panel-body').html(html);
 
-			$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_payment_address; ?> <i class="icon-caret-down"></i></a>');
+			if ($('input[name=\'account\']:checked').val() == 'register') {
+				$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_account; ?> <i class="icon-caret-down"></i></a>');
+			} else {
+				$('#collapse-payment-address').parent().find('.panel-heading .panel-title').html('<a href="#collapse-payment-address" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $text_checkout_payment_address; ?> <i class="icon-caret-down"></i></a>');
+			}	
 			
 			$('a[href=\'#collapse-payment-address\']').trigger('click');
         },

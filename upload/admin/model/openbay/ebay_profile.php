@@ -6,7 +6,7 @@
  * 
  */
 
-class ModelEbayProfile extends Model{
+class ModelOpenbayEbayProfile extends Model{
     public function add($data){
         if($data['default'] == 1){
             $this->clearDefault($data['type']);

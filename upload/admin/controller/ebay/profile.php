@@ -6,7 +6,7 @@ class ControllerEbayProfile extends Controller {
     public function profileAll() {
         $this->data = array_merge($this->data, $this->load->language('ebay/profile'));
 
-        $this->load->model('ebay/profile');
+        $this->load->model('openbay/ebay_profile');
 
         $this->document->setTitle($this->data['lang_title_list']);
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -30,8 +30,8 @@ class ControllerEbayProfile extends Controller {
         }
 
         $this->data['btn_add']  = $this->url->link('ebay/profile/add', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['types']    = $this->model_ebay_profile->getTypes();
-        $this->data['profiles'] = $this->model_ebay_profile->getAll();
+        $this->data['types']    = $this->model_openbay_ebay_profile->getTypes();
+        $this->data['profiles'] = $this->model_openbay_ebay_profile->getAll();
         $this->data['token']    = $this->session->data['token'];
 
         $this->data['breadcrumbs'] = array();
@@ -67,7 +67,7 @@ class ControllerEbayProfile extends Controller {
     public function add() {
         $this->data = array_merge($this->data, $this->load->language('ebay/profile'));
 
-        $this->load->model('ebay/profile');
+        $this->load->model('openbay/ebay_profile');
 
         $this->data['page_title']   = $this->data['lang_title_list_add'];
         $this->data['btn_save']     = $this->url->link('ebay/profile/add', 'token=' . $this->session->data['token'], 'SSL');
@@ -77,7 +77,7 @@ class ControllerEbayProfile extends Controller {
             if ($this->request->post && $this->profileValidate()) {
                 $this->session->data['success'] = $this->data['lang_added'];
 
-                $this->model_ebay_profile->add($this->request->post);
+                $this->model_openbay_ebay_profile->add($this->request->post);
 
                 $this->redirect($this->url->link('ebay/profile/ProfileAll&token=' . $this->session->data['token'], 'SSL'));
             }
@@ -87,13 +87,13 @@ class ControllerEbayProfile extends Controller {
     }
 
     public function delete() {
-        $this->load->model('ebay/profile');
+        $this->load->model('openbay/ebay_profile');
 
         if (!$this->user->hasPermission('modify', 'ebay/profile')) {
             $this->error['warning'] = $this->language->get('invalid_permission');
         }else{
             if (isset($this->request->get['ebay_profile_id'])) {
-                $this->model_ebay_profile->delete($this->request->get['ebay_profile_id']);
+                $this->model_openbay_ebay_profile->delete($this->request->get['ebay_profile_id']);
             }
         }
 
@@ -103,7 +103,7 @@ class ControllerEbayProfile extends Controller {
     public function edit() {
         $this->data = array_merge($this->data, $this->load->language('ebay/profile'));
 
-        $this->load->model('ebay/profile');
+        $this->load->model('openbay/ebay_profile');
 
         $this->data['page_title']   = $this->data['lang_title_list_edit'];
         $this->data['btn_save']     = $this->url->link('ebay/profile/edit', 'token=' . $this->session->data['token'], 'SSL');
@@ -112,7 +112,7 @@ class ControllerEbayProfile extends Controller {
         if ($this->request->post && $this->profileValidate()) {
             $this->session->data['success'] = $this->data['lang_updated'];
 
-            $this->model_ebay_profile->edit($this->request->post['ebay_profile_id'], $this->request->post);
+            $this->model_openbay_ebay_profile->edit($this->request->post['ebay_profile_id'], $this->request->post);
 
             $this->redirect($this->url->link('ebay/profile/profileAll&token=' . $this->session->data['token'], 'SSL'));
         }
@@ -127,7 +127,7 @@ class ControllerEbayProfile extends Controller {
         $this->data['token']                            = $this->session->data['token'];
         $this->data['shipping_international_zones']     = $this->model_ebay_openbay->getShippingLocations();
         $this->data['templates']                        = $this->model_ebay_template->getAll();
-        $this->data['types']                            = $this->model_ebay_profile->getTypes();
+        $this->data['types']                            = $this->model_openbay_ebay_profile->getTypes();
         $this->data['dispatchTimes']                    = $this->ebay->getSetting('dispatch_time_max');
         $this->data['countries']                        = $this->ebay->getSetting('countries');
 
@@ -145,7 +145,7 @@ class ControllerEbayProfile extends Controller {
         }
 
         if (isset($this->request->get['ebay_profile_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-            $profile_info = $this->model_ebay_profile->get($this->request->get['ebay_profile_id']);
+            $profile_info = $this->model_openbay_ebay_profile->get($this->request->get['ebay_profile_id']);
         }
 
         if (isset($this->request->post['type'])) {
@@ -289,11 +289,11 @@ class ControllerEbayProfile extends Controller {
     }
 
     public function profileGet(){
-        $this->load->model('ebay/profile');
+        $this->load->model('openbay/ebay_profile');
         $this->load->model('ebay/openbay');
         $this->load->language('ebay/profile');
 
-        $profile_info = $this->model_ebay_profile->get($this->request->get['ebay_profile_id']);
+        $profile_info = $this->model_openbay_ebay_profile->get($this->request->get['ebay_profile_id']);
         $zones = $this->model_ebay_openbay->getShippingLocations();
 
         $national = array();

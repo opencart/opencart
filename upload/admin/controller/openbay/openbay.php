@@ -1213,7 +1213,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->load->model('ebay/openbay');
                 $this->load->model('ebay/template');
                 $this->load->model('ebay/product');
-                $this->load->model('ebay/profile');
+                $this->load->model('openbay/ebay_profile');
 
                 //set the title and page info
                 $this->document->setTitle($this->data['lang_page_title']);
@@ -1245,25 +1245,25 @@ class ControllerOpenbayOpenbay extends Controller {
                 $product_info['popular_cats'] = $this->model_ebay_openbay->getPopularCategories();
 
                 //get shipping profiles
-                $product_info['profiles_shipping'] = $this->model_ebay_profile->getAll(0);
+                $product_info['profiles_shipping'] = $this->model_openbay_ebay_profile->getAll(0);
                 //get default shipping profile
-                $product_info['profiles_shipping_def'] = $this->model_ebay_profile->getDefault(0);
+                $product_info['profiles_shipping_def'] = $this->model_openbay_ebay_profile->getDefault(0);
 
                 //get returns profiles
-                $product_info['profiles_returns'] = $this->model_ebay_profile->getAll(1);
+                $product_info['profiles_returns'] = $this->model_openbay_ebay_profile->getAll(1);
                 //get default returns profile
-                $product_info['profiles_returns_def'] = $this->model_ebay_profile->getDefault(1);
+                $product_info['profiles_returns_def'] = $this->model_openbay_ebay_profile->getDefault(1);
                 $this->data['data']['shipping_international_zones']     = $this->model_ebay_openbay->getShippingLocations();
 
                 //get theme profiles
-                $product_info['profiles_theme'] = $this->model_ebay_profile->getAll(2);
+                $product_info['profiles_theme'] = $this->model_openbay_ebay_profile->getAll(2);
                 //get default returns profile
-                $product_info['profiles_theme_def'] = $this->model_ebay_profile->getDefault(2);
+                $product_info['profiles_theme_def'] = $this->model_openbay_ebay_profile->getDefault(2);
 
                 //get generic profiles
-                $product_info['profiles_generic'] = $this->model_ebay_profile->getAll(3);
+                $product_info['profiles_generic'] = $this->model_openbay_ebay_profile->getAll(3);
                 //get default generic profile
-                $product_info['profiles_generic_def'] = $this->model_ebay_profile->getDefault(3);
+                $product_info['profiles_generic_def'] = $this->model_openbay_ebay_profile->getDefault(3);
 
                 //product attributes - this is just a direct pass through used with the template tag
                 $product_info['attributes'] = base64_encode(json_encode($this->model_ebay_openbay->getProductAttributes($this->request->get['product_id'])));
@@ -1354,7 +1354,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->load->model('tool/image');
                 $this->load->model('catalog/manufacturer');
                 $this->load->model('ebay/openbay');
-                $this->load->model('ebay/profile');
+                $this->load->model('openbay/ebay_profile');
 
                 $this->data['error_warning'] = array();
 
@@ -1409,35 +1409,35 @@ class ControllerOpenbayOpenbay extends Controller {
                             }
 
                             //get generic profiles
-                            $product_info['profiles_generic'] = $this->model_ebay_profile->getAll(3);
+                            $product_info['profiles_generic'] = $this->model_openbay_ebay_profile->getAll(3);
                             //get default generic profile
-                            $product_info['profiles_generic_def'] = $this->model_ebay_profile->getDefault(3);
+                            $product_info['profiles_generic_def'] = $this->model_openbay_ebay_profile->getDefault(3);
                             if($product_info['profiles_generic_def'] === false) {
                                 $this->data['error_fail'][] = $this->language->get('lang_error_generic_profile');
                             }
 
                             //get shipping profiles
-                            $product_info['profiles_shipping'] = $this->model_ebay_profile->getAll(0);
+                            $product_info['profiles_shipping'] = $this->model_openbay_ebay_profile->getAll(0);
                             //get default shipping profile
-                            $product_info['profiles_shipping_def'] = $this->model_ebay_profile->getDefault(0);
+                            $product_info['profiles_shipping_def'] = $this->model_openbay_ebay_profile->getDefault(0);
                             //check it has a default profile
                             if($product_info['profiles_shipping_def'] === false) {
                                 $this->data['error_fail'][] = $this->language->get('lang_error_ship_profile');
                             }
 
                             //get returns profiles
-                            $product_info['profiles_returns'] = $this->model_ebay_profile->getAll(1);
+                            $product_info['profiles_returns'] = $this->model_openbay_ebay_profile->getAll(1);
                             //get default returns profile
-                            $product_info['profiles_returns_def'] = $this->model_ebay_profile->getDefault(1);
+                            $product_info['profiles_returns_def'] = $this->model_openbay_ebay_profile->getDefault(1);
                             //check it has a default profile
                             if($product_info['profiles_returns_def'] === false) {
                                 $this->data['error_fail'][] = $this->language->get('lang_error_return_profile');
                             }
 
                             //get returns profiles
-                            $product_info['profiles_theme'] = $this->model_ebay_profile->getAll(2);
+                            $product_info['profiles_theme'] = $this->model_openbay_ebay_profile->getAll(2);
                             //get default returns profile
-                            $product_info['profiles_theme_def'] = $this->model_ebay_profile->getDefault(2);
+                            $product_info['profiles_theme_def'] = $this->model_openbay_ebay_profile->getDefault(2);
                             //check it has a default profile
                             if($product_info['profiles_theme_def'] === false) {
                                 $this->data['error_fail'][] = $this->language->get('lang_error_theme_profile');
@@ -1541,7 +1541,7 @@ class ControllerOpenbayOpenbay extends Controller {
     }
 
     public function verifyBulk() {
-        $this->load->model('ebay/profile');
+        $this->load->model('openbay/ebay_profile');
         $this->load->model('ebay/openbay');
         $this->load->model('ebay/template');
         $this->load->model('catalog/product');
@@ -1553,10 +1553,10 @@ class ControllerOpenbayOpenbay extends Controller {
                 $data = array();
 
                 //load all of the listing defaults and assign to correct variable names
-                $profile_shipping           = $this->model_ebay_profile->get($post['shipping_profile']);
-                $profile_return             = $this->model_ebay_profile->get($post['return_profile']);
-                $profile_template           = $this->model_ebay_profile->get($post['theme_profile']);
-                $profile_generic            = $this->model_ebay_profile->get($post['generic_profile']);
+                $profile_shipping           = $this->model_openbay_ebay_profile->get($post['shipping_profile']);
+                $profile_return             = $this->model_openbay_ebay_profile->get($post['return_profile']);
+                $profile_template           = $this->model_openbay_ebay_profile->get($post['theme_profile']);
+                $profile_generic            = $this->model_openbay_ebay_profile->get($post['generic_profile']);
 
                 $payments                   = $this->model_ebay_openbay->getPaymentTypes();
                 $paymentsAccepted           = $this->config->get('ebay_payment_types');
@@ -1724,7 +1724,7 @@ class ControllerOpenbayOpenbay extends Controller {
     }
 
     public function listItemBulk() {
-        $this->load->model('ebay/profile');
+        $this->load->model('openbay/ebay_profile');
         $this->load->model('ebay/openbay');
         $this->load->model('ebay/template');
         $this->load->model('catalog/product');
@@ -1736,10 +1736,10 @@ class ControllerOpenbayOpenbay extends Controller {
                 $data = array();
 
                 //load all of the listing defaults and assign to correct variable names
-                $profile_shipping           = $this->model_ebay_profile->get($post['shipping_profile']);
-                $profile_return             = $this->model_ebay_profile->get($post['return_profile']);
-                $profile_template           = $this->model_ebay_profile->get($post['theme_profile']);
-                $profile_generic            = $this->model_ebay_profile->get($post['generic_profile']);
+                $profile_shipping           = $this->model_openbay_ebay_profile->get($post['shipping_profile']);
+                $profile_return             = $this->model_openbay_ebay_profile->get($post['return_profile']);
+                $profile_template           = $this->model_openbay_ebay_profile->get($post['theme_profile']);
+                $profile_generic            = $this->model_openbay_ebay_profile->get($post['generic_profile']);
                 $payments                   = $this->model_ebay_openbay->getPaymentTypes();
                 $paymentsAccepted           = $this->config->get('ebay_payment_types');
                 $product_info               = $this->model_catalog_product->getProduct($post['product_id']);

@@ -136,6 +136,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['entry_maintenance'] = $this->language->get('entry_maintenance');
 		$this->data['entry_password'] = $this->language->get('entry_password');
 		$this->data['entry_encryption'] = $this->language->get('entry_encryption');
+		$this->data['entry_cache_expire'] = $this->language->get('entry_cache_expire');
 		$this->data['entry_seo_url'] = $this->language->get('entry_seo_url');
 		$this->data['entry_compression'] = $this->language->get('entry_compression');
 		$this->data['entry_error_display'] = $this->language->get('entry_error_display');
@@ -196,6 +197,7 @@ class ControllerSettingSetting extends Controller {
 		$this->data['help_maintenance'] = $this->language->get('help_maintenance');
 		$this->data['help_password'] = $this->language->get('help_password');
 		$this->data['help_encryption'] = $this->language->get('help_encryption');
+		$this->data['help_cache_expire'] = $this->language->get('help_cache_expire');
 		$this->data['help_compression'] = $this->language->get('help_compression');
 		$this->data['help_google_analytics'] = $this->language->get('help_google_analytics');
 		
@@ -380,6 +382,12 @@ class ControllerSettingSetting extends Controller {
 			$this->data['error_encryption'] = $this->error['encryption'];
 		} else {
 			$this->data['error_encryption'] = '';
+		}
+
+		if (isset($this->error['cache_expire'])) {
+			$this->data['error_cache_expire'] = $this->error['cache_expire'];
+		} else {
+			$this->data['error_cache_expire'] = '';
 		}		
 		
   		$this->data['breadcrumbs'] = array();
@@ -1099,6 +1107,12 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$this->data['config_encryption'] = $this->config->get('config_encryption');
 		}
+
+		if (isset($this->request->post['config_cache_expire'])) {
+			$this->data['config_cache_expire'] = $this->request->post['config_cache_expire'];
+		} else {
+			$this->data['config_cache_expire'] = $this->config->get('config_cache_expire');
+		}
 		
 		if (isset($this->request->post['config_compression'])) {
 			$this->data['config_compression'] = $this->request->post['config_compression']; 
@@ -1252,6 +1266,10 @@ class ControllerSettingSetting extends Controller {
 				
 		if ((utf8_strlen($this->request->post['config_encryption']) < 3) || (utf8_strlen($this->request->post['config_encryption']) > 32)) {
 			$this->error['encryption'] = $this->language->get('error_encryption');
+		}
+
+		if ((preg_match('/^\d+$/',$this->request->post['config_cache_expire']) == 0)) {
+			$this->error['cache_expire'] = $this->language->get('error_cache_expire');
 		}
 				
 		if ($this->error && !isset($this->error['warning'])) {

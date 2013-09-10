@@ -1,8 +1,13 @@
 <?php
 class Cache { 
-	private $expire = 3600; 
+	private $expire; 
+	private $config;
 	
-	public function __construct() {
+	public function __construct($registry) {
+
+		$this->config = $registry->get('config');
+		$this->expire = $this->config->get('config_cache_expire');
+
 		$files = glob(DIR_CACHE . 'cache.*');
 
 		if ($files) {			
@@ -17,7 +22,18 @@ class Cache {
 			}
 		}
 	}
+
+	public function getExpire(){
+
+		return $this->expire;
+	}
 	
+
+	public function setExpire($cache_expire){
+
+		$this->expire = $cache_expire;
+	}
+
 	public function get($key) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 

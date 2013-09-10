@@ -1360,6 +1360,16 @@
               </div>
             </div>
             <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-cache-expire"><?php echo $entry_cache_expire; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="config_cache_expire" value="<?php echo $config_cache_expire; ?>" placeholder="<?php echo $entry_cache_expire; ?>" id="input-cache-expire" class="form-control" />
+                <span class="help-block"><?php echo $help_cache_expire; ?></span>
+                <?php if ($error_cache_expire) { ?>
+                <div class="text-danger"><?php echo $error_cache_expire; ?></div>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group">
               <label class="col-sm-2 control-label" for="input-compression"><?php echo $entry_compression; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="config_compression" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="form-control" />

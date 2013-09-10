@@ -80,7 +80,7 @@ $response->addHeader('Content-Type: text/html; charset=utf-8');
 $registry->set('response', $response); 
 
 // Cache
-$cache = new Cache();
+$cache = new Cache($registry);
 $registry->set('cache', $cache); 
 
 // Session

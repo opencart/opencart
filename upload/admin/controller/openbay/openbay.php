@@ -1211,7 +1211,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->load->model('tool/image');
                 $this->load->model('catalog/manufacturer');
                 $this->load->model('ebay/openbay');
-                $this->load->model('ebay/template');
+                $this->load->model('openbay/ebay_template');
                 $this->load->model('ebay/product');
                 $this->load->model('openbay/ebay_profile');
 
@@ -1299,7 +1299,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
                 $product_info['manufacturers']                      = $this->model_catalog_manufacturer->getManufacturers();
                 $product_info['payments']                           = $this->model_ebay_openbay->getPaymentTypes();
-                $product_info['templates']                          = $this->model_ebay_template->getAll();
+                $product_info['templates']                          = $this->model_openbay_ebay_template->getAll();
                 $product_info['store_cats']                         = $this->model_ebay_openbay->getSellerStoreCategories();
 
                 $product_info['dispatchTimes']                      = $this->ebay->getSetting('dispatch_time_max');
@@ -1491,7 +1491,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
     public function verify() {
         $this->load->model('ebay/openbay');
-        $this->load->model('ebay/template');
+        $this->load->model('openbay/ebay_template');
         $this->load->model('catalog/product');
 
         if ($this->request->server['REQUEST_METHOD'] == 'POST') {
@@ -1504,7 +1504,7 @@ class ControllerOpenbayOpenbay extends Controller {
                     $data = $this->request->post;
 
                     if($data['template'] != 'None') {
-                        $template = $this->model_ebay_template->get($data['template']);
+                        $template = $this->model_openbay_ebay_template->get($data['template']);
                         $data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
                     }else{
                         $data['template_html'] = '';
@@ -1543,7 +1543,7 @@ class ControllerOpenbayOpenbay extends Controller {
     public function verifyBulk() {
         $this->load->model('openbay/ebay_profile');
         $this->load->model('ebay/openbay');
-        $this->load->model('ebay/template');
+        $this->load->model('openbay/ebay_template');
         $this->load->model('catalog/product');
         $this->load->model('tool/image');
 
@@ -1598,7 +1598,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $data['get_it_fast']        = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);
 
                 if(isset($profile_template['data']['ebay_template_id'])) {
-                    $template = $this->model_ebay_template->get($profile_template['data']['ebay_template_id']);
+                    $template = $this->model_openbay_ebay_template->get($profile_template['data']['ebay_template_id']);
                     $data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
                     $data['template'] = $profile_template['data']['ebay_template_id'];
                 }else{
@@ -1684,14 +1684,14 @@ class ControllerOpenbayOpenbay extends Controller {
 
     public function listItem() {
         $this->load->model('ebay/openbay');
-        $this->load->model('ebay/template');
+        $this->load->model('openbay/ebay_template');
         $this->load->model('catalog/product');
 
         if ($this->checkConfig() == true && $this->request->server['REQUEST_METHOD'] == 'POST') {
             $data = $this->request->post;
 
             if($data['template'] != 'None') {
-                $template = $this->model_ebay_template->get($data['template']);
+                $template = $this->model_openbay_ebay_template->get($data['template']);
                 $data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
             }else{
                 $data['template_html'] = '';
@@ -1726,7 +1726,7 @@ class ControllerOpenbayOpenbay extends Controller {
     public function listItemBulk() {
         $this->load->model('openbay/ebay_profile');
         $this->load->model('ebay/openbay');
-        $this->load->model('ebay/template');
+        $this->load->model('openbay/ebay_template');
         $this->load->model('catalog/product');
         $this->load->model('tool/image');
 
@@ -1781,7 +1781,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $data['get_it_fast']        = (isset($profile_shipping['data']['get_it_fast']) ? $profile_shipping['data']['get_it_fast'] : 0);
 
                 if(isset($profile_template['data']['ebay_template_id'])) {
-                    $template = $this->model_ebay_template->get($profile_template['data']['ebay_template_id']);
+                    $template = $this->model_openbay_ebay_template->get($profile_template['data']['ebay_template_id']);
                     $data['template_html'] = (isset($template['html']) ? base64_encode($template['html']) : '');
                     $data['template'] = $profile_template['data']['ebay_template_id'];
                 }else{

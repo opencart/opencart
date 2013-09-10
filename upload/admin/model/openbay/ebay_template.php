@@ -1,15 +1,15 @@
 <?php
-class ModelEbayTemplate extends Model{
-    public function add($data){
+class ModelOpenbayEbayTemplate extends Model {
+    public function add($data) {
         $this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_template` SET `name` = '".$this->db->escape($data['name'])."', `html` = '".$this->db->escape($data['html'])."'");
         return $this->db->getLastId();
     }
     
-    public function edit($id, $data){
+    public function edit($id, $data) {
         $this->db->query("UPDATE `" . DB_PREFIX . "ebay_template` SET `name` = '".$this->db->escape($data['name'])."', `html` = '".$this->db->escape($data['html'])."' WHERE `template_id` = '".(int)$id."' LIMIT 1");
     }
     
-    public function delete($id){
+    public function delete($id) {
         $qry = $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_template` WHERE `template_id` = '".(int)$id."' LIMIT 1");
 
         if($qry->countAffected > 0){
@@ -19,7 +19,7 @@ class ModelEbayTemplate extends Model{
         }
     }
     
-    public function get($id){
+    public function get($id) {
         $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_template` WHERE `template_id` = '".(int)$id."' LIMIT 1");
 
         if($qry->num_rows){
@@ -33,7 +33,7 @@ class ModelEbayTemplate extends Model{
         }
     }
     
-    public function getAll(){
+    public function getAll() {
         $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_template`");
 
         if($qry->num_rows){
@@ -50,3 +50,4 @@ class ModelEbayTemplate extends Model{
         }
     }
 }
+?>

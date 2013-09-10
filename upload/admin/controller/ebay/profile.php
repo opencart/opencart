@@ -122,11 +122,11 @@ class ControllerEbayProfile extends Controller {
 
     public function profileForm() {
         $this->load->model('ebay/openbay');
-        $this->load->model('ebay/template');
+        $this->load->model('openbay/ebay_template');
 
         $this->data['token']                            = $this->session->data['token'];
         $this->data['shipping_international_zones']     = $this->model_ebay_openbay->getShippingLocations();
-        $this->data['templates']                        = $this->model_ebay_template->getAll();
+        $this->data['templates']                        = $this->model_openbay_ebay_template->getAll();
         $this->data['types']                            = $this->model_openbay_ebay_profile->getTypes();
         $this->data['dispatchTimes']                    = $this->ebay->getSetting('dispatch_time_max');
         $this->data['countries']                        = $this->ebay->getSetting('countries');

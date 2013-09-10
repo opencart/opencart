@@ -6,7 +6,7 @@ class ControllerEbayTemplate extends Controller {
     public function listAll(){
         $this->data = array_merge($this->data, $this->load->language('ebay/template'));
 
-        $this->load->model('ebay/template');
+        $this->load->model('openbay/ebay_template');
 
         $this->document->setTitle($this->data['lang_title_list']);
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -30,7 +30,7 @@ class ControllerEbayTemplate extends Controller {
         }
 
         $this->data['btn_add']  = $this->url->link('ebay/template/add', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['templates'] = $this->model_ebay_template->getAll();
+        $this->data['templates'] = $this->model_openbay_ebay_template->getAll();
         $this->data['token']    = $this->session->data['token'];
 
         $this->data['breadcrumbs'] = array();
@@ -65,7 +65,7 @@ class ControllerEbayTemplate extends Controller {
     public function add(){
         $this->data = array_merge($this->data, $this->load->language('ebay/template'));
 
-        $this->load->model('ebay/template');
+        $this->load->model('openbay/ebay_template');
 
         $this->data['page_title']   = $this->data['lang_title_list_add'];
         $this->data['btn_save']     = $this->url->link('ebay/template/add', 'token=' . $this->session->data['token'], 'SSL');
@@ -74,7 +74,7 @@ class ControllerEbayTemplate extends Controller {
         if ($this->request->post && $this->templateValidate()) {
             $this->session->data['success'] = $this->data['lang_added'];
 
-            $this->model_ebay_template->add($this->request->post);
+            $this->model_openbay_ebay_template->add($this->request->post);
 
             $this->redirect($this->url->link('ebay/template/listAll&token=' . $this->session->data['token'], 'SSL'));
         }
@@ -83,13 +83,13 @@ class ControllerEbayTemplate extends Controller {
     }
 
     public function delete(){
-        $this->load->model('ebay/template');
+        $this->load->model('openbay/ebay_template');
 
         if (!$this->user->hasPermission('modify', 'ebay/template')) {
             $this->error['warning'] = $this->language->get('invalid_permission');
         }else{
             if (isset($this->request->get['template_id'])) {
-                $this->model_ebay_template->delete($this->request->get['template_id']);
+                $this->model_openbay_ebay_template->delete($this->request->get['template_id']);
             }
         }
         $this->redirect($this->url->link('ebay/template/listAll&token=' . $this->session->data['token'], 'SSL'));
@@ -98,7 +98,7 @@ class ControllerEbayTemplate extends Controller {
     public function edit(){
         $this->data = array_merge($this->data, $this->load->language('ebay/template'));
 
-        $this->load->model('ebay/template');
+        $this->load->model('openbay/ebay_template');
 
         $this->data['page_title']   = $this->data['lang_title_list_edit'];
         $this->data['btn_save']     = $this->url->link('ebay/template/edit', 'token=' . $this->session->data['token'], 'SSL');
@@ -108,7 +108,7 @@ class ControllerEbayTemplate extends Controller {
 
             $this->session->data['success'] = $this->data['lang_updated'];
 
-            $this->model_ebay_template->edit($this->request->post['template_id'], $this->request->post);
+            $this->model_openbay_ebay_template->edit($this->request->post['template_id'], $this->request->post);
 
             $this->redirect($this->url->link('ebay/template/listAll&token=' . $this->session->data['token'], 'SSL'));
         }
@@ -128,7 +128,7 @@ class ControllerEbayTemplate extends Controller {
         }
 
         if (isset($this->request->get['template_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
-            $template_info = $this->model_ebay_template->get($this->request->get['template_id']);
+            $template_info = $this->model_openbay_ebay_template->get($this->request->get['template_id']);
         }
 
         $this->document->setTitle($this->data['page_title']);

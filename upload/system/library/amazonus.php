@@ -533,33 +533,33 @@ class Amazonus {
         }
     }
 
-    public function getCarriers(){
+    public function getCarriers() {
         return array(
-            "USPS",
-            "UPS",
-            "FedEx",
+            "Blue Package",
+            "Canada Post",
+            "City Link",
             "DHL",
+            "DHL Global Mail",
             "Fastway",
+            "FedEx",
+            "FedEx SmartPost",
             "GLS",
             "GO!",
             "Hermes Logistik Gruppe",
-            "Royal Mail",
-            "Parcelforce",
-            "City Link",
-            "TNT",
-            "Target",
-            "SagawaExpress",
+            "Newgistics",
             "NipponExpress",
-            "YamatoTransport",
-            "DHL Global Mail",
-            "UPS Mail Innovations",
-            "FedEx SmartPost",
             "OSM",
             "OnTrac",
+            "Parcelforce",
+            "Royal Mail",
+            "SagawaExpress",
             "Streamlite",
-            "Newgistics",
-            "Canada Post",
-            "Blue Package",
+            "TNT",
+            "Target",
+            "UPS",
+            "UPS Mail Innovations",
+            "USPS",
+            "YamatoTransport",
         );
     }
     

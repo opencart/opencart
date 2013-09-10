@@ -1,7 +1,6 @@
 <?php
-class ModelPlayPlay extends Model
-{   
-    public function install(){
+class ModelOpenbayPlayPlay extends Model {
+    public function install() {
 
         $settings                           = array();
         $settings['obp_play_def_currency']  = 'GBP';
@@ -60,7 +59,7 @@ class ModelPlayPlay extends Model
             ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
     }
 
-    public function uninstall(){
+    public function uninstall() {
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "play_product_insert`;");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "play_product_insert_error`;");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "play_order`;");
@@ -69,11 +68,12 @@ class ModelPlayPlay extends Model
         $this->model_setting_setting->deleteSetting('obp_play');
     }
 
-    public function updatePlayOrderTracking($order_id, $courier_id, $tracking){
+    public function updatePlayOrderTracking($order_id, $courier_id, $tracking) {
         $order_qry = $this->db->query("UPDATE `" . DB_PREFIX . "play_order` SET `tracking_no` = '".$this->db->escape($tracking)."', `carrier_id` = '".(int)$courier_id."' WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
     }
 
-    public function updatePlayOrderRefund($order_id, $message, $reason){
+    public function updatePlayOrderRefund($order_id, $message, $reason) {
         $order_qry = $this->db->query("UPDATE `" . DB_PREFIX . "play_order` SET `refund_message` = '".$this->db->escape($message)."', `refund_reason` = '".$this->db->escape($reason)."' WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
     }
 }
+?>

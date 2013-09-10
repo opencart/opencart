@@ -465,16 +465,16 @@ class ControllerExtensionOpenbay extends Controller {
                 //if status is shipped
                 if($this->config->get('obp_play_shipped_id') == $this->request->get['status_id']){
                     if(!empty($this->request->post['play_courier']) && !empty($this->request->post['play_tracking_no'])){
-                        $this->load->model('play/play');
-                        $this->model_play_play->updatePlayOrderTracking($this->request->get['order_id'], $this->request->post['play_courier'], $this->request->post['play_tracking_no']);
+                        $this->load->model('openbay/play_play');
+                        $this->model_openbay_play_play->updatePlayOrderTracking($this->request->get['order_id'], $this->request->post['play_courier'], $this->request->post['play_tracking_no']);
                         $this->play->orderStatusModified($this->request->get['order_id'], $this->request->get['old_status_id']);
                     }
                 }
                 //if status is refunded
                 if($this->config->get('obp_play_refunded_id') == $this->request->get['status_id']){
                     if(!empty($this->request->post['play_refund_message']) && !empty($this->request->post['play_refund_reason'])){
-                        $this->load->model('play/play');
-                        $this->model_play_play->updatePlayOrderRefund($this->request->get['order_id'], $this->request->post['play_refund_message'], $this->request->post['play_refund_reason']);
+                        $this->load->model('openbay/play_play');
+                        $this->model_openbay_play_play->updatePlayOrderRefund($this->request->get['order_id'], $this->request->post['play_refund_message'], $this->request->post['play_refund_reason']);
                         $this->play->orderStatusModified($this->request->get['order_id'], $this->request->get['old_status_id']);
                     }
                 }
@@ -874,7 +874,7 @@ class ControllerExtensionOpenbay extends Controller {
     public function orderListComplete(){
 
         $this->load->model('sale/order');
-        $this->load->model('play/play');
+        $this->load->model('openbay/play_play');
         $this->load->model('localisation/order_status');
 
         $this->data = array_merge($this->data, $this->load->language('extension/openbay_order'));
@@ -930,14 +930,14 @@ class ControllerExtensionOpenbay extends Controller {
                 //if status is shipped
                 if($this->config->get('obp_play_shipped_id') == $this->request->post['order_status_id']){
                     if(!empty($this->request->post['play_courier']) && !empty($this->request->post['play_tracking_no'])){
-                        $this->model_play_play->updatePlayOrderTracking($order_id, $this->request->post['carrier'][$order_id], $this->request->post['tracking'][$order_id]);
+                        $this->model_openbay_play_play->updatePlayOrderTracking($order_id, $this->request->post['carrier'][$order_id], $this->request->post['tracking'][$order_id]);
                         $this->play->orderStatusModified($order_id, $this->request->post['old_status'][$order_id]);
                     }
                 }
                 //if status is refunded
                 if($this->config->get('obp_play_refunded_id') == $this->request->post['order_status_id']){
                     if(!empty($this->request->post['refund_message'][$order_id]) && !empty($this->request->post['refund_reason'][$order_id])){
-                        $this->model_play_play->updatePlayOrderRefund($order_id, $this->request->post['refund_message'][$order_id], $this->request->post['refund_reason'][$order_id]);
+                        $this->model_openbay_play_play->updatePlayOrderRefund($order_id, $this->request->post['refund_message'][$order_id], $this->request->post['refund_reason'][$order_id]);
                         $this->play->orderStatusModified($order_id, $this->request->post['old_status'][$order_id]);
                     }
                 }
@@ -1066,8 +1066,8 @@ class ControllerExtensionOpenbay extends Controller {
         }
 
         if ($this->config->get('play_status') == '1') {
-            $this->load->model('play/product');
-            $playStatus = $this->model_play_product->getStatus($product_id);
+            $this->load->model('openbay/play_product');
+            $playStatus = $this->model_openbay_play_product->getStatus($product_id);
 
             if($playStatus == 1) {
                 $markets[] = array(
@@ -1577,8 +1577,8 @@ class ControllerExtensionOpenbay extends Controller {
             }
 
             if ($this->config->get('play_status') == '1') {
-                $this->load->model('play/product');
-                $playStatus = $this->model_play_product->getStatus($result['product_id']);
+                $this->load->model('openbay/play_product');
+                $playStatus = $this->model_openbay_play_product->getStatus($result['product_id']);
 
                 if($playStatus == 1) {
                     $markets[] = array(

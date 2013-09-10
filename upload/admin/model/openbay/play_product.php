@@ -1,6 +1,6 @@
 <?php
-class ModelPlayProduct extends Model{
-    public function add($data){
+class ModelOpenbayPlayProduct extends Model {
+    public function add($data) {
         $this->db->query("
             INSERT INTO `" . DB_PREFIX . "play_product_insert` SET
                 `play_product_id`       = '".$this->db->escape((string)$data['product_id'])."',
@@ -17,7 +17,7 @@ class ModelPlayProduct extends Model{
                 `status`                = 1");
     }
 
-    public function edit($data){
+    public function edit($data) {
         $this->db->query("
             UPDATE `" . DB_PREFIX . "play_product_insert` SET
                 `dispatch_to`           = '".(int)$data['dispatch_to']."',
@@ -31,7 +31,7 @@ class ModelPlayProduct extends Model{
             WHERE `product_id`          = '".(int)$data['sku']."' LIMIT 1");
     }
 
-    public function getPending(){
+    public function getPending() {
         $data = array();
 
         $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "play_product_insert` `pi` LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`p`.`product_id` = `pi`.`product_id`) WHERE `pi`.`status` = 1");
@@ -47,7 +47,7 @@ class ModelPlayProduct extends Model{
         }
     }
 
-    public function getStatus($id){
+    public function getStatus($id) {
         $qry = $this->db->query("SELECT status FROM `" . DB_PREFIX . "play_product_insert` WHERE product_id = '".(int)$id."'");
 
         if($qry->num_rows > 0){
@@ -57,7 +57,7 @@ class ModelPlayProduct extends Model{
         }
     }
 
-    public function getListing($id){
+    public function getListing($id) {
         $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "play_product_insert` WHERE product_id = '".(int)$id."'");
 
         if($qry->num_rows > 0){
@@ -67,7 +67,7 @@ class ModelPlayProduct extends Model{
         }
     }
 
-    public function getListingErrors($id){
+    public function getListingErrors($id) {
         $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "play_product_insert_error` WHERE product_id = '".(int)$id."'");
 
         if($qry->num_rows > 0){
@@ -84,11 +84,11 @@ class ModelPlayProduct extends Model{
         }
     }
 
-    public function getPricingReport(){
+    public function getPricingReport() {
         return $this->play->call('product/pricingReport');
     }
     
-    public function delete($product_id){
+    public function delete($product_id) {
         $this->db->query("
             UPDATE `" . DB_PREFIX . "play_product_insert` SET
                 `action`                = 'd',
@@ -97,3 +97,4 @@ class ModelPlayProduct extends Model{
                 `product_id`            = '".(int)$product_id."'");
     }
 }
+?>

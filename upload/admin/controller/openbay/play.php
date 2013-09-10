@@ -2,22 +2,22 @@
 class ControllerOpenbayPlay extends Controller {
     public function install() {
         $this->load->language('play/install');
-        $this->load->model('play/play');
+        $this->load->model('openbay/play_play');
         $this->load->model('setting/setting');
         $this->load->model('setting/extension');
 
-        $this->model_play_play->install();
+        $this->model_openbay_play_play->install();
 
         $this->model_setting_extension->install('openbay', $this->request->get['extension']);
     }
 
     public function uninstall() {
         $this->load->language('play/install');
-        $this->load->model('play/play');
+        $this->load->model('openbay/play_play');
         $this->load->model('setting/setting');
         $this->load->model('setting/extension');
 
-        $this->model_play_play->uninstall();
+        $this->model_openbay_play_play->uninstall();
 
         $this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
         $this->model_setting_setting->deleteSetting($this->request->get['extension']);
@@ -76,7 +76,7 @@ class ControllerOpenbayPlay extends Controller {
         $this->data = array_merge($this->data, $this->load->language('play/settings'));
 
         $this->load->model('setting/setting');
-        $this->load->model('play/play');
+        $this->load->model('openbay/play_play');
         $this->load->model('localisation/currency');
         $this->load->model('sale/customer_group');
 
@@ -273,8 +273,8 @@ class ControllerOpenbayPlay extends Controller {
         $this->load->model('catalog/product');
         $this->load->model('tool/image');
         $this->load->model('catalog/manufacturer');
-        $this->load->model('play/play');
-        $this->load->model('play/product');
+        $this->load->model('openbay/play_play');
+        $this->load->model('openbay/play_product');
 
         //set the title and page info
         $this->document->setTitle($this->data['lang_page_title']);
@@ -284,7 +284,7 @@ class ControllerOpenbayPlay extends Controller {
         $this->children         = array('common/header','common/footer');
         $this->data['cancel']   = HTTPS_SERVER . 'index.php?route=extension/openbay/itemList&token=' . $this->session->data['token'];
         $this->data['token']    = $this->session->data['token'];
-        $this->data['pricing']  = $this->model_play_product->getPricingReport();
+        $this->data['pricing']  = $this->model_openbay_play_product->getPricingReport();
 
         if (isset($this->error['warning'])) {
             $this->data['error_warning'] = $this->error['warning'];
@@ -322,13 +322,13 @@ class ControllerOpenbayPlay extends Controller {
     public function newProduct() {
         if ($this->checkConfig() == true) {
 
-            $this->load->model('play/product');
+            $this->load->model('openbay/play_product');
 
             //load the language
             $this->data = array_merge($this->data, $this->load->language('play/product'));
 
             if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-                $this->model_play_product->add($this->request->post);
+                $this->model_openbay_play_product->add($this->request->post);
 
                 $this->session->data['success'] = $this->language->get('lang_text_success');
 
@@ -341,7 +341,7 @@ class ControllerOpenbayPlay extends Controller {
                 $this->load->model('catalog/product');
                 $this->load->model('tool/image');
                 $this->load->model('catalog/manufacturer');
-                $this->load->model('play/play');
+                $this->load->model('openbay/play_play');
 
                 //set the title and page info
                 $this->document->setTitle($this->data['lang_page_title']);
@@ -404,12 +404,12 @@ class ControllerOpenbayPlay extends Controller {
     public function editProduct() {
         if ($this->checkConfig() == true) {
 
-            $this->load->model('play/product');
+            $this->load->model('openbay/play_product');
 
             $this->data = array_merge($this->data, $this->load->language('play/product'));
 
             if ($this->request->server['REQUEST_METHOD'] == 'POST') {
-                $this->model_play_product->edit($this->request->post);
+                $this->model_openbay_play_product->edit($this->request->post);
                 $this->session->data['success'] = $this->language->get('lang_text_success_updated');
                 $this->redirect(HTTPS_SERVER . 'index.php?route=extension/openbay/itemList&token=' . $this->session->data['token']);
             }
@@ -419,7 +419,7 @@ class ControllerOpenbayPlay extends Controller {
                 $this->load->model('catalog/product');
                 $this->load->model('tool/image');
                 $this->load->model('catalog/manufacturer');
-                $this->load->model('play/play');
+                $this->load->model('openbay/play_play');
 
                 $this->document->setTitle($this->data['lang_page_title_edit']);
                 $this->document->addScript('view/javascript/openbay/faq.js');
@@ -432,8 +432,8 @@ class ControllerOpenbayPlay extends Controller {
                 $this->data['token']    = $this->session->data['token'];
 
                 $product_info           = $this->model_catalog_product->getProduct($this->request->get['product_id']);
-                $listing_info           = $this->model_play_product->getListing($this->request->get['product_id']);
-                $listing_info['errors'] = $this->model_play_product->getListingErrors($this->request->get['product_id']);
+                $listing_info           = $this->model_openbay_play_product->getListing($this->request->get['product_id']);
+                $listing_info['errors'] = $this->model_openbay_play_product->getListingErrors($this->request->get['product_id']);
 
                 if (isset($this->error['warning'])) {
                     $this->data['error_warning'] = $this->error['warning'];
@@ -480,11 +480,11 @@ class ControllerOpenbayPlay extends Controller {
 
     public function deleteProduct() {
         if ($this->checkConfig() == true) {
-            $this->load->model('play/product');
+            $this->load->model('openbay/play_product');
 
             $this->data = array_merge($this->data, $this->load->language('play/product'));
 
-            $this->model_play_product->delete($this->request->get['product_id']);
+            $this->model_openbay_play_product->delete($this->request->get['product_id']);
 
             $this->session->data['success'] = $this->language->get('lang_text_success_deleted');
 

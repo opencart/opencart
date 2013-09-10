@@ -2,7 +2,7 @@
 /**
  * Created by James Allsup
  */
-class ModelAmazonusPatch extends Model
+class ModelOpenbayAmazonusPatch extends Model
 { 
     public function runPatch($manual = true){
         /*

@@ -1,5 +1,5 @@
 <?php
-class ModelAmazonPatch extends Model { 
+class ModelOpenbayAmazonPatch extends Model {
     
     public function runPatch($manual = true){
         /*

@@ -323,16 +323,18 @@ class ControllerExtensionOpenbay extends Controller {
     }
 
     public function runPatch() {
-        $this->load->model('ebay/patch');
-        $this->load->model('amazon/patch');
-        $this->load->model('amazonus/patch');
+        $this->load->model('openbay/ebay_patch');
+        $this->load->model('openbay/amazon_patch');
+        $this->load->model('openbay/amazonus_patch');
+        $this->load->model('openbay/play_patch');
         $this->load->model('setting/extension');
         $this->load->model('user/user_group');
         $this->load->model('setting/setting');
         
-        $this->model_ebay_patch->runPatch();
-        $this->model_amazon_patch->runPatch();
-        $this->model_amazonus_patch->runPatch();
+        $this->model_openbay_ebay_patch->runPatch();
+        $this->model_openbay_amazon_patch->runPatch();
+        $this->model_openbay_amazonus_patch->runPatch();
+        $this->model_openbay_play_patch->runPatch();
 
         $installed_modules = $this->model_setting_extension->getInstalled('module');
         

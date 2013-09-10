@@ -180,14 +180,14 @@ class ModelOpenbayOpenbay extends Model
                     /**
                      * Run the patch files
                      */
-                    $this->load->model('ebay/patch');
-                    $this->model_ebay_patch->runPatch(false);
-                    $this->load->model('amazon/patch');
-                    $this->model_amazon_patch->runPatch(false);
-                    $this->load->model('amazonus/patch');
-                    $this->model_amazonus_patch->runPatch(false);
-                    $this->load->model('play/patch');
-                    $this->model_play_patch->runPatch(false);
+                    $this->load->model('openbay/ebay_patch');
+                    $this->model_openbay_ebay_patch->runPatch(false);
+                    $this->load->model('openbay/amazon_patch');
+                    $this->model_openbay_amazon_patch->runPatch(false);
+                    $this->load->model('openbay/amazonus_patch');
+                    $this->model_openbay_amazonus_patch->runPatch(false);
+                    $this->load->model('openbay/play_patch');
+                    $this->model_openbay_play_patch->runPatch(false);
 
                     /**
                      * File remove operation (clean up old files)

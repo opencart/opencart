@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayPlayPlay extends Model {
+class ModelOpenbayPlay extends Model {
     public function install() {
 
         $settings                           = array();

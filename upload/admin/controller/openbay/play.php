@@ -2,22 +2,22 @@
 class ControllerOpenbayPlay extends Controller {
     public function install() {
         $this->load->language('play/install');
-        $this->load->model('openbay/play_play');
+        $this->load->model('openbay/play');
         $this->load->model('setting/setting');
         $this->load->model('setting/extension');
 
-        $this->model_openbay_play_play->install();
+        $this->model_openbay_play->install();
 
         $this->model_setting_extension->install('openbay', $this->request->get['extension']);
     }
 
     public function uninstall() {
         $this->load->language('play/install');
-        $this->load->model('openbay/play_play');
+        $this->load->model('openbay/play');
         $this->load->model('setting/setting');
         $this->load->model('setting/extension');
 
-        $this->model_openbay_play_play->uninstall();
+        $this->model_openbay_play->uninstall();
 
         $this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
         $this->model_setting_setting->deleteSetting($this->request->get['extension']);
@@ -76,7 +76,7 @@ class ControllerOpenbayPlay extends Controller {
         $this->data = array_merge($this->data, $this->load->language('play/settings'));
 
         $this->load->model('setting/setting');
-        $this->load->model('openbay/play_play');
+        $this->load->model('openbay/play');
         $this->load->model('localisation/currency');
         $this->load->model('sale/customer_group');
 
@@ -273,7 +273,7 @@ class ControllerOpenbayPlay extends Controller {
         $this->load->model('catalog/product');
         $this->load->model('tool/image');
         $this->load->model('catalog/manufacturer');
-        $this->load->model('openbay/play_play');
+        $this->load->model('openbay/play');
         $this->load->model('openbay/play_product');
 
         //set the title and page info
@@ -341,7 +341,7 @@ class ControllerOpenbayPlay extends Controller {
                 $this->load->model('catalog/product');
                 $this->load->model('tool/image');
                 $this->load->model('catalog/manufacturer');
-                $this->load->model('openbay/play_play');
+                $this->load->model('openbay/play');
 
                 //set the title and page info
                 $this->document->setTitle($this->data['lang_page_title']);
@@ -419,7 +419,7 @@ class ControllerOpenbayPlay extends Controller {
                 $this->load->model('catalog/product');
                 $this->load->model('tool/image');
                 $this->load->model('catalog/manufacturer');
-                $this->load->model('openbay/play_play');
+                $this->load->model('openbay/play');
 
                 $this->document->setTitle($this->data['lang_page_title_edit']);
                 $this->document->addScript('view/javascript/openbay/faq.js');

@@ -117,9 +117,9 @@ class ControllerEbayTemplate extends Controller {
     }
 
     public function templateForm(){
-        $this->load->model('ebay/openbay');
+        $this->load->model('openbay/ebay');
 
-        $this->data['token']                            = $this->session->data['token'];
+        $this->data['token'] = $this->session->data['token'];
 
         if (isset($this->error['warning'])) {
             $this->data['error_warning'] = $this->error['warning'];

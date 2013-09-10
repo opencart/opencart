@@ -1,10 +1,10 @@
 <?php
-class ModelEbayProduct extends Model{
-    public function getTaxRate($class_id){
+class ModelOpenbayEbayProduct extends Model {
+    public function getTaxRate($class_id) {
         return $this->openbay->getTaxRate($class_id);
     }
 
-    public function countImportImages(){
+    public function countImportImages() {
         $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_image_import`");
 
         return $qry->num_rows;
@@ -53,7 +53,7 @@ class ModelEbayProduct extends Model{
         return $product_option_data;
     }
 
-    public function repairLinks(){
+    public function repairLinks() {
         //get distinct product id's where they are active
         $sql = $this->db->query("
             SELECT DISTINCT `product_id`
@@ -74,7 +74,7 @@ class ModelEbayProduct extends Model{
         /* @todo */
     }
     
-    public function searchEbayCatalog($data){
+    public function searchEbayCatalog($data) {
         
         if(!isset($data['page'])){ $page = 1; }else{ $page = $data['page']; }
         
@@ -88,3 +88,4 @@ class ModelEbayProduct extends Model{
         return $response;
     }
 }
+?>

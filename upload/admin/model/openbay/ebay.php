@@ -1,5 +1,5 @@
 <?php
-class ModelEbayOpenbay extends Model{
+class ModelOpenbayEbay extends Model{
     public function install(){
         $value                                  = array();
         $value["openbaypro_token"]              = '';

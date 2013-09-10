@@ -121,11 +121,11 @@ class ControllerEbayProfile extends Controller {
     }
 
     public function profileForm() {
-        $this->load->model('ebay/openbay');
+        $this->load->model('openbay/ebay');
         $this->load->model('openbay/ebay_template');
 
         $this->data['token']                            = $this->session->data['token'];
-        $this->data['shipping_international_zones']     = $this->model_ebay_openbay->getShippingLocations();
+        $this->data['shipping_international_zones']     = $this->model_openbay_ebay->getShippingLocations();
         $this->data['templates']                        = $this->model_openbay_ebay_template->getAll();
         $this->data['types']                            = $this->model_openbay_ebay_profile->getTypes();
         $this->data['dispatchTimes']                    = $this->ebay->getSetting('dispatch_time_max');
@@ -251,7 +251,7 @@ class ControllerEbayProfile extends Controller {
                         'id' => $service,
                         'price' => $profile_info['data']['price_national'][$key],
                         'additional' => $profile_info['data']['priceadditional_national'][$key],
-                        'name' => $this->model_ebay_openbay->getShippingServiceName('0', $service)
+                        'name' => $this->model_openbay_ebay->getShippingServiceName('0', $service)
                     );
                     $i++;
                 }
@@ -274,7 +274,7 @@ class ControllerEbayProfile extends Controller {
                         'id'            => $service,
                         'price'         => $profile_info['data']['price_international'][$key],
                         'additional'    => $profile_info['data']['priceadditional_international'][$key],
-                        'name'          => $this->model_ebay_openbay->getShippingServiceName('1', $service),
+                        'name'          => $this->model_openbay_ebay->getShippingServiceName('1', $service),
                         'shipto'        => $profile_info['data']['shipto_international'][$key]
                     );
                     $i++;
@@ -290,11 +290,11 @@ class ControllerEbayProfile extends Controller {
 
     public function profileGet(){
         $this->load->model('openbay/ebay_profile');
-        $this->load->model('ebay/openbay');
+        $this->load->model('openbay/ebay');
         $this->load->language('ebay/profile');
 
         $profile_info = $this->model_openbay_ebay_profile->get($this->request->get['ebay_profile_id']);
-        $zones = $this->model_ebay_openbay->getShippingLocations();
+        $zones = $this->model_openbay_ebay->getShippingLocations();
 
         $national = array();
 
@@ -306,7 +306,7 @@ class ControllerEbayProfile extends Controller {
                     'id'            => $service,
                     'price'         => $profile_info['data']['price_national'][$key],
                     'additional'    => $profile_info['data']['priceadditional_national'][$key],
-                    'name'          => $this->model_ebay_openbay->getShippingServiceName('0', $service)
+                    'name'          => $this->model_openbay_ebay->getShippingServiceName('0', $service)
                 );
             }
         }
@@ -323,7 +323,7 @@ class ControllerEbayProfile extends Controller {
                     'id'            => $service,
                     'price'         => $profile_info['data']['price_international'][$key],
                     'additional'    => $profile_info['data']['priceadditional_international'][$key],
-                    'name'          => $this->model_ebay_openbay->getShippingServiceName('1', $service),
+                    'name'          => $this->model_openbay_ebay->getShippingServiceName('1', $service),
                     'shipto'        => $profile_info['data']['shipto_international'][$key]
                 );
             }

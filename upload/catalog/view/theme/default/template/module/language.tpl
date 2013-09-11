@@ -5,7 +5,7 @@
     
     <button class="btn btn-default navbar-btn dropdown-toggle" data-toggle="dropdown">
     
-    <span>
+
     
     
     <?php foreach ($languages as $language) { ?>
@@ -14,7 +14,7 @@
     <?php } ?>
     <?php } ?>
     
-    </span> 
+
     
     <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_language; ?></span> <i class="icon-caret-down"></i>
     

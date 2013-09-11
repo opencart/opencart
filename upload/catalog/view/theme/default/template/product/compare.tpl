@@ -10,14 +10,21 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="row"> <?php echo $column_left; ?>
-    <div id="content" class="span12"><?php echo $content_top; ?>
+  <div class="row"><?php echo $column_left; ?>
+    <?php if ($column_left && $column_right) { ?>
+    <?php $cols = 6; ?>
+    <?php } elseif ($column_left || $column_right) { ?>
+    <?php $cols = 9; ?>
+    <?php } else { ?>
+    <?php $cols = 12; ?>
+    <?php } ?>
+    <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <?php if ($products) { ?>
-      <table class="table table-bordered square">
+      <table class="table table-bordered">
         <thead>
           <tr>
-            <td class="compare-product" colspan="<?php echo count($products) + 1; ?>"><?php echo $text_product; ?></td>
+            <td colspan="<?php echo count($products) + 1; ?>"><strong><?php echo $text_product; ?></strong></td>
           </tr>
         </thead>
         <tbody>
@@ -30,8 +37,8 @@
           <tr>
             <td><?php echo $text_image; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><?php if ($products[$product['product_id']]['thumb']) { ?>
-              <img src="<?php echo $products[$product['product_id']]['thumb']; ?>" alt="<?php echo $products[$product['product_id']]['name']; ?>" />
+            <td class="text-center"><?php if ($products[$product['product_id']]['thumb']) { ?>
+              <img src="<?php echo $products[$product['product_id']]['thumb']; ?>" alt="<?php echo $products[$product['product_id']]['name']; ?>" title="<?php echo $products[$product['product_id']]['name']; ?>" class="img-thumbnail" />
               <?php } ?></td>
             <?php } ?>
           </tr>
@@ -95,7 +102,7 @@
         <?php foreach ($attribute_groups as $attribute_group) { ?>
         <thead>
           <tr>
-            <td class="compare-attribute" colspan="<?php echo count($products) + 1; ?>"><?php echo $attribute_group['name']; ?></td>
+            <td colspan="<?php echo count($products) + 1; ?>"><strong><?php echo $attribute_group['name']; ?></strong></td>
           </tr>
         </thead>
         <?php foreach ($attribute_group['attribute'] as $key => $attribute) { ?>
@@ -116,18 +123,16 @@
         <tr>
           <td></td>
           <?php foreach ($products as $product) { ?>
-          <td><input class="btn btn-primary" type="button" value="<?php echo $button_cart; ?>" onclick="addToCart('<?php echo $product['product_id']; ?>');" />
-            <a class="btn btn-danger" href="<?php echo $product['remove']; ?>"><?php echo $button_remove; ?></a></td>
+          <td><input type="button" value="<?php echo $button_cart; ?>" class="btn btn-primary btn-block" onclick="addToCart('<?php echo $product['product_id']; ?>');" />
+            <a href="<?php echo $product['remove']; ?>" class="btn btn-danger btn-block"><?php echo $button_remove; ?></a></td>
           <?php } ?>
         </tr>
       </table>
-      
-      <!-- <a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a> -->
-      
       <?php } else { ?>
-      <div class="empty"><?php echo $text_empty; ?> </div>
-      
-      <!-- <a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a> -->
+      <p><?php echo $text_empty; ?></p>
+      <div class="buttons">
+        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-default"><?php echo $button_continue; ?></a></div>
+      </div>
       <?php } ?>
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>

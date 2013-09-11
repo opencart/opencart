@@ -61,11 +61,13 @@ final class DBmPDO {
         try{
             if ($this->statement && $this->statement->execute($params)){
                 $data = array();
-                while ($row = $this->statement->fetch(PDO::FETCH_ASSOC)){
+                
+				while ($row = $this->statement->fetch(PDO::FETCH_ASSOC)){
                     $data[] = $row;
                 }
+				
                 $result = new stdClass();
-                $result->row = ( isset($data[0]) ? $data[0] : array() );
+                $result->row = (isset($data[0]) ? $data[0] : array());
                 $result->rows = $data;
                 $result->num_rows = $this->statement->rowCount();
             }

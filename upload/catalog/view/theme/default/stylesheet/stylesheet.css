@@ -1,3 +1,7 @@
+span.hidden-xs {
+    display: inline !important;
+}
+/*
 body {
 	font-family: 'Open Sans', sans-serif;
 	font-weight: 400;
@@ -6,7 +10,6 @@ body {
 body > .container {
 	min-height: 600px;
 }
-/*Type*/
 
 h1, h2, h3, h4, h5, h6 {
 	color: #444;
@@ -30,7 +33,7 @@ input[class^="icon-"]:hover {
 .remove {
 	cursor: pointer;
 }
-/*Fancy*/
+
 .box-shadow {
 	-webkit-box-shadow: 0px 0px 5px 0px #000;
 	box-shadow: 0px 0px 5px 0px #000;
@@ -89,7 +92,7 @@ opacity: 1;
 	-o-animation-name: fadeIn;
 	animation-name: fadeIn;
 }
-/*Table*/
+
 .table tbody + tbody {
 	border-top: none;
 }
@@ -97,7 +100,7 @@ thead {
 	font-weight: bold;
 	background-color: #eee;
 }
-/*Well*/
+
 .well {
 	background-color: #eee;
 	border: 1px solid #ddd;
@@ -106,12 +109,12 @@ thead {
 	margin-top: 20px;
 	padding: 10px 0;
 }
-/*Alerts*/
+
 
 .alert.alert-form {
 	margin: 10px 0 0 0;
 }
-/*Topbar*/
+
 
 .topbar .nav>li>a {
 	padding: 10px;
@@ -149,12 +152,12 @@ thead {
 	position: relative;
 	top: -2px;
 }
-/*Header*/
+
 
 header {
 	padding: 20px 0 0 0;
 }
-/*Search*/
+
 
 #search {
 	width: 100%;
@@ -174,7 +177,7 @@ header {
 	height: 40px;
 	line-height: 30px;
 }
-/*Cart*/
+
 
 #cart {
 	margin-bottom: 10px;
@@ -238,7 +241,7 @@ header {
 #cart .table .image .thumbnail {
 	display: inline-block;
 }
-/*Navbar*/
+
 
 
 header .navbar {
@@ -411,7 +414,7 @@ header .navbar {
 	background-repeat: repeat-x;
  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff23a1d1', endColorstr='#ff1f90bb', GradientType=0);
 }
-/*Breadcrumb*/
+
 
 .breadcrumb {
 	margin: 0 0 20px 0;
@@ -439,7 +442,6 @@ header .navbar {
 	-o-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 }
-/*Buttons*/
 
 .btn {
 	color: #777;
@@ -454,7 +456,6 @@ header .navbar {
 	border-color: #dddddd #dddddd #b7b7b7;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
  *background-color: #dddddd;
-    /* Darken IE7 buttons by default so they stand out more given they won't have borders */
 
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 	border: 1px solid #cccccc;
@@ -476,7 +477,6 @@ header .navbar {
 .btn:active, .btn.active {
 	background-color: #c4c4c4 \9;
 }
-/*Button Primary*/
 
 .btn-primary {
 	color: #ffffff;
@@ -492,7 +492,6 @@ header .navbar {
 	border-color: #1f90bb #1f90bb #145e7a;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
  *background-color: #1f90bb;
-    /* Darken IE7 buttons by default so they stand out more given they won't have borders */
 
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -504,7 +503,6 @@ header .navbar {
 .btn-primary:active, .btn-primary.active {
 	background-color: #186f8f \9;
 }
-/*Button warning*/
 
 .btn-warning {
 	color: #ffffff;
@@ -520,7 +518,6 @@ header .navbar {
 	border-color: #f89406 #f89406 #ad6704;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
  *background-color: #f89406;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -546,7 +543,6 @@ header .navbar {
 	border-color: #bd362f #bd362f #802420;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
  *background-color: #bd362f;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -558,7 +554,6 @@ header .navbar {
 .btn-danger:active, .btn-danger.active {
 	background-color: #942a25 \9;
 }
-/*Button succes*/
 
 .btn-success {
 	color: #ffffff;
@@ -574,7 +569,6 @@ header .navbar {
 	border-color: #51a351 #51a351 #387038;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
  *background-color: #51a351;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -586,7 +580,6 @@ header .navbar {
 .btn-success:active, .btn-success.active {
 	background-color: #408140 \9;
 }
-/*Button Info*/
 
 .btn-info {
 	color: #ffffff;
@@ -602,7 +595,6 @@ header .navbar {
 	border-color: #dc512c #dc512c #a2371a;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
  *background-color: #dc512c;
-    /* Darken IE7 buttons by default so they stand out more given they won't have borders */
 
     filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -614,7 +606,6 @@ header .navbar {
 .btn-info:active, .btn-info.active {
 	background-color: #b73e1e \9;
 }
-/* Button Link */
 
 .btn-link, .btn-link:active, .btn-link[disabled] {
 	background-color: rgba(0, 0, 0, 0);
@@ -631,7 +622,6 @@ header .navbar {
 	-moz-border-radius: 0;
 	border-radius: 0;
 }
-/*Button inverse*/
 
 .btn-inverse {
 	color: #ffffff;
@@ -647,7 +637,6 @@ header .navbar {
 	border-color: #222222 #222222 #000000;
 	border-color: rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.1) rgba(0, 0, 0, 0.25);
  *background-color: #222222;
-  /* Darken IE7 buttons by default so they stand out more given they won't have borders */
 
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
 }
@@ -659,12 +648,10 @@ header .navbar {
 .btn-inverse:active, .btn-inverse.active {
 	background-color: #080808 \9;
 }
-/*Button Large*/
 
 .btn-large {
 	font-size: 16px;
 }
-/* Category Module */
 
 .nav-tabs.nav-stacked > li > a {
 	color: #888888;
@@ -706,7 +693,6 @@ header .navbar {
 .sidebar .nav-tabs li.active ul.nav li:first-child a {
 	border-top: 0;
 }
-/* Category Page */
 
 .category-info .image img {
 	float: left;
@@ -724,7 +710,6 @@ header .navbar {
 .product-filter .sort {
 	float: right;
 }
-/*Product page*/
 
 
 .image-additional a {
@@ -772,7 +757,6 @@ ul.option li, ul.cart li {
 .review-list {
 	margin: 2em 0;
 }
-/* Product Thumb - Generic + Grid */
 
 .product-thumb {
 	margin-bottom: 20px;
@@ -835,7 +819,6 @@ ul.option li, ul.cart li {
 	font-size: 12px;
 	display: block;
 }
-/* Product Thumb - List */
 
 .product-list .span3 {
 	float: none;
@@ -860,7 +843,6 @@ ul.option li, ul.cart li {
 	width: 250px;
 	border: 1px solid #DDD;
 }
-/*Cart Page*/
 
 .cart-info {
 	margin-top: 20px;
@@ -871,7 +853,6 @@ ul.option li, ul.cart li {
 #shipping {
 	margin-bottom: 20px;
 }
-/* Checkout Page*/
 
 .checkout-heading {
 	border: 1px solid #ddd;
@@ -889,12 +870,10 @@ ul.option li, ul.cart li {
 #content .checkout .alert-warning, #content #payment-new .alert, #content #shipping-new .alert {
 	display: block;
 }
-/*Contact Page*/
 
 img.captcha {
 	margin-bottom: 10px;
 }
-/*Footer*/
 
 .footer {
 	margin-top: 30px;
@@ -917,7 +896,6 @@ img.captcha {
 	color: #fff;
 	font-size: 13px;
 }
-/* Search Page */
 
 .search-content {
 	margin-bottom: 20px;
@@ -929,10 +907,8 @@ img.captcha {
 	margin-right: 10px;
 }
 
-/*Responsive*/
 
 @media (min-width: 980px) {
-/* Nav - hover */
 
 .nav > .dropdown:before {
 	content: "";
@@ -952,7 +928,6 @@ img.captcha {
 }
 }
 
-/* Portrait tablet to landscape and desktop */
 
 @media (max-width: 979px) {
 body {
@@ -961,7 +936,7 @@ body {
 .container {
 	padding: 0 20px;
 }
-/*nav*/
+
 
 .navbar-inverse .nav-collapse .nav>li>a, .navbar-inverse .nav-collapse .dropdown-menu a {
 	color: #fff;
@@ -979,17 +954,14 @@ body {
 .see-all {
 	display: none;
 }
-/*Product thumb*/
 
 .product-thumb .button-group a, .product-thumb .button-group a.add-to-cart {
 	width: 33.33%;
 }
 }
 
-/* Landscape phone to portrait tablet */
 
 @media (max-width: 767px) {
-/*Topbar*/
 
 .navbar-static-top .nav>li>a {
 	padding: 10px 10px;
@@ -1000,17 +972,14 @@ body {
 .topbar .navbar-inner {
 	padding: 0;
 }
-/* Logo */
 .logo {
 	margin: 0 0 20px 0;
 	text-align: center;
 }
-/* Breadcrumb */
 
 .breadcrumb > li:after {
 	display: none;
 }
-/*Product thumb*/
 
 .product-thumb .button-group a {
 	width: 20%;
@@ -1018,7 +987,6 @@ body {
 .product-thumb .button-group a.add-to-cart {
 	width: 60%;
 }
-/*Category*/
 
 .product-filter .display {
 	display: none;
@@ -1033,14 +1001,12 @@ body {
 	width: 100%;
 	margin: 10px 0;
 }
-/* Product page */
 .image-additional .span1 {
 	width: 70px;
 	margin-right: 20px;
 	float: left;
 }
 }
-/* Date Picker */
 .ui-datepicker {
 	background: #fff;
 	border: 1px solid #aaa;
@@ -1073,3 +1039,4 @@ div.required .control-label:before {
 	color: #F00;
 	font-weight: bold;
 }
+*/

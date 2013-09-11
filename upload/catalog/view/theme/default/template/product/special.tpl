@@ -5,8 +5,8 @@
     <li> <a href="<?php echo $breadcrumb['href']; ?>"> <?php echo $breadcrumb['text']; ?> </a> </li>
     <?php } ?>
   </ul>
-  <div class="row"> <?php echo $column_left; ?>
-    <div class="span12"> <?php echo $content_top; ?>
+  <div class="row"><?php echo $column_left; ?>
+    <div class="span12"><?php echo $content_top; ?>
       <h2><?php echo $heading_title; ?></h2>
       <?php if ($products) { ?>
       <div class="product-compare"> <a href="<?php echo $compare; ?>" id="compare-total"> <?php echo $text_compare; ?> </a> </div>
@@ -77,14 +77,17 @@
       </div>
       <!-- product-items -->
       
-      <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="row">
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+      </div>
       <?php } else { ?>
-      <div class="content"><?php echo $text_empty; ?></div>
+      <p><?php echo $text_empty; ?></p>
       <div class="buttons">
-        <div class="right"><a href="<?php echo $continue; ?>" class="btn"><?php echo $button_continue; ?></a></div>
+        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn"><?php echo $button_continue; ?></a></div>
       </div>
       <?php } ?>
-      <?php echo $content_bottom; ?> </div>
-    <?php echo $column_right; ?> </div>
+      <?php echo $content_bottom; ?></div>
+    <?php echo $column_right; ?></div>
 </div>
 <?php echo $footer; ?>

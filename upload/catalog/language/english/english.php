@@ -15,7 +15,7 @@ $_['text_no']               = 'No';
 $_['text_none']             = ' --- None --- ';
 $_['text_select']           = ' --- Please Select --- ';
 $_['text_all_zones']        = 'All Zones';
-$_['text_pagination']       = 'Showing {start} to {end} of {total} ({pages} Pages)';
+$_['text_pagination']       = 'Showing %d to %d of %d (%d Pages)';
 $_['text_loading']          = 'Loading...';
 
 // Buttons
@@ -51,6 +51,8 @@ $_['button_voucher']        = 'Apply Voucher';
 $_['button_upload']         = 'Upload File';
 $_['button_reward']         = 'Apply Points';
 $_['button_quote']          = 'Get Quotes';
+$_['button_list']           = 'List';
+$_['button_grid']           = 'Grid';
 
 // Error
 $_['error_exception']       = 'Error Code(%s): %s in %s on line %s';

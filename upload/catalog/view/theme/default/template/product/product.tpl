@@ -139,7 +139,7 @@
           <?php } ?>
           
           <!-- Wishlist / Compare buttons -->
-          <div class="btn-group"> <a data-toggle="tooltip" class="btn square tooltip-item" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product_id; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" class="btn square tooltip-item" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product_id; ?>');"><i class="icon-exchange"></i></a> </div>
+          <div class="btn-group"> <a data-toggle="tooltip" class="btn" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product_id; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" class="btn" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product_id; ?>');"><i class="icon-exchange"></i></a> </div>
           
           <!-- Product Name -->
           <h1><?php echo $heading_title; ?></h1>
@@ -417,7 +417,7 @@
               <img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" />
               <?php } ?>
             </div>
-            <div class="button-group"> <a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" class="tooltip-item" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" class="tooltip-item" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a>
+            <div class="button-group"> <a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a>
               <div class="clearfix"></div>
             </div>
           </div>
@@ -489,7 +489,7 @@ new AjaxUpload('#button-option-<?php echo $option['product_option_id']; ?>', {
     onComplete: function(file, json) {
         $('#button-option-<?php echo $option['product_option_id']; ?>').prop('disabled', false);
         
-        $('.alert-error').remove();
+        $('.text-danger').remove();
         
         if (json['success']) {
             alert(json['success']);

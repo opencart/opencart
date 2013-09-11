@@ -51,7 +51,7 @@
                 <td class="text-left"><?php echo $category['name']; ?></td>
                 <td class="text-right"><?php echo $category['sort_order']; ?></td>
                 <td class="text-right"><?php foreach ($category['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-default btn-sm"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                  <a href="<?php echo $action['href']; ?>" class="btn btn-default"><i class="icon-<?php echo $action['icon']; ?>"></i> <?php echo $action['text']; ?></a>
                   <?php } ?></td>
               </tr>
               <?php } ?>

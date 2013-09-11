@@ -772,8 +772,6 @@ $(document).delegate('#button-credit-remove', 'click', function() {
 						
 			if (json['error']) {
 				$('.box').before('<div class="alert alert-danger">' + json['error'] + '</div>');
-				
-				$('.alert-error').fadeIn('slow');
 			}
 			
 			if (json['success']) {
@@ -861,8 +859,6 @@ $(document).delegate('#button-commission-add', 'click', function() {
 						
 			if (json['error']) {
 				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
-				
-				$('.alert-error').fadeIn('slow');
 			}
 			
 			if (json['success']) {

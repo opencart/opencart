@@ -27,6 +27,9 @@
               <?php if (extension_loaded('mysql')) { ?>
               <option value="mysql">MySQL</option>
               <?php } ?>
+              <?php if (extension_loaded('pdo')) { ?>
+              <option value="mpdo">PDO</option>
+              <?php } ?>              
             </select></td>
         </tr>
         <tr>

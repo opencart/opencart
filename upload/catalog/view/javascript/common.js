@@ -74,9 +74,7 @@ $(document).ready(function() {
     });
 
     // tooltips on hover
-
-
-   $('[data-toggle=\'tooltip\']').tooltip();
+   $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 });
 
 function getURLVar(key) {

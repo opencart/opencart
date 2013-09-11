@@ -2,7 +2,9 @@
 class Cache { 
 	private $expire = 3600; 
 	
-	public function __construct() {
+	public function __construct($expire = 3600) {
+		$this->expire = $expire;
+		
 		$files = glob(DIR_CACHE . 'cache.*');
 
 		if ($files) {			

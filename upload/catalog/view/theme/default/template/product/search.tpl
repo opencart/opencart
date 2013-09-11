@@ -66,7 +66,7 @@
       <div class="product-compare"><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></div>
       <div class="product-filter">
         <div class="display pull-left">
-          <div class="btn-group"><a id="list-view" class="btn square tooltip-item" data-toggle="tooltip" title="<?php echo $button_list_view; ?>"><i class="icon-th-list"></i></a> <a id="grid-view" class="btn square tooltip-item" data-toggle="tooltip" title="<?php echo $button_grid_view; ?>"><i class="icon-th"></i></a></div>
+          <div class="btn-group"><a id="list-view" class="btn" data-toggle="tooltip" title="<?php echo $button_list_view; ?>"><i class="icon-th-list"></i></a> <a id="grid-view" class="btn" data-toggle="tooltip" title="<?php echo $button_grid_view; ?>"><i class="icon-th"></i></a></div>
         </div>
         <div class="limit"><?php echo $text_limit; ?>
           <select class="input-small" onchange="location = this.value;">
@@ -121,19 +121,22 @@
               <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
               <?php } ?>
             </div>
-            <div class="button-group"> <a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" class="tooltip-item" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" class="tooltip-item" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a>
+            <div class="button-group"><a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a>
               <div class="clearfix"></div>
             </div>
           </div>
         </div>
         <?php } ?>
       </div>
-      <div class="pagination"> <?php echo $pagination; ?> </div>
+      <div class="row">
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+      </div>
       <?php } else { ?>
-      <div class="content"><?php echo $text_empty; ?></div>
+      <p><?php echo $text_empty; ?></p>
       <?php } ?>
-      <?php echo $content_bottom; ?> </div>
-    <?php echo $column_right; ?> </div>
+      <?php echo $content_bottom; ?></div>
+    <?php echo $column_right; ?></div>
 </div>
 <?php echo $footer; ?> 
 <script type="text/javascript"><!--

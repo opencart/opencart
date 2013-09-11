@@ -34,7 +34,6 @@
               <div class="form-group">
                 <label class="control-label" for="input-password"><?php echo $entry_password; ?></label>
                 <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
-                <br />
                 <a href="<?php echo $forgotten; ?>"><?php echo $text_forgotten; ?></a>
               </div>
               <input type="submit" value="<?php echo $button_login; ?>" class="btn btn-primary" />

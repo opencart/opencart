@@ -1,7 +1,5 @@
 <?php
-
 final class Openbay {
-
     private $registry;
 
     public function __construct($registry) {
@@ -76,7 +74,7 @@ final class Openbay {
         }
     }
 
-    public function putStockUpdateBulk($productIdArray, $productSkuArray = null, $endInactive = false){
+    public function putStockUpdateBulk($productIdArray, $productSkuArray = null, $endInactive = false) {
         /**
          * putStockUpdateBulk
          *
@@ -106,27 +104,27 @@ final class Openbay {
         }
     }
 
-    public function testDbColumn($table, $column){
+    public function testDbColumn($table, $column) {
         //check profile table for default column
         $res = $this->db->query("SHOW COLUMNS FROM `".DB_PREFIX.$table."` LIKE '".$column."'");
-        if($res->num_rows != 0){
+        if($res->num_rows != 0) {
             return true;
         }else{
             return false;
         }
     }
 
-    public function testDbTable($table){
+    public function testDbTable($table) {
         //check profile table for default column
         $res = $this->db->query("SELECT `table_name` AS `c` FROM `information_schema`.`tables` WHERE `table_schema` = DATABASE()");
         
         $tables = array();
 		
-        foreach($res->rows as $row){
+        foreach($res->rows as $row) {
            $tables[] = $row['c'];
         }
         
-        if(in_array($table, $tables)){
+        if(in_array($table, $tables)) {
             return true;
         }else{
             return false;
@@ -179,11 +177,11 @@ final class Openbay {
         return $tax_rates;
     }
 
-    public function getTaxRate($class_id){
+    public function getTaxRate($class_id) {
         $rates = $this->getTaxRates($class_id);
         $percentage = 0.00;
-        foreach($rates as $rate){
-            if($rate['type'] == 'P'){
+        foreach($rates as $rate) {
+            if($rate['type'] == 'P') {
                 $percentage += $rate['rate'];
             }
         }
@@ -191,17 +189,17 @@ final class Openbay {
         return $percentage;
     }
 
-    public function getZoneId($name, $country_id){
+    public function getZoneId($name, $country_id) {
         $query = $this->db->query("SELECT `zone_id` FROM `" . DB_PREFIX . "zone` WHERE `country_id` = '" . (int)$country_id . "' AND status = '1' AND `name` = '".$this->db->escape($name)."'");
 
-        if($query->num_rows > 0){
+        if($query->num_rows > 0) {
             return $query->row['zone_id'];
         }else{
             return 0;
         }
     }
 
-    public function newOrderAdminNotify($order_id, $order_status_id){
+    public function newOrderAdminNotify($order_id, $order_status_id) {
 
         $this->load->model('checkout/order');
         $order_info = $this->model_checkout_order->getOrder($order_id);
@@ -243,7 +241,7 @@ final class Openbay {
             }
         }
 
-        if(isset($order_voucher_query) && is_array($order_voucher_query)){
+        if(isset($order_voucher_query) && is_array($order_voucher_query)) {
             foreach ($order_voucher_query->rows as $voucher) {
                 $text .= '1x ' . $voucher['description'] . ' ' . $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']);
             }
@@ -289,7 +287,7 @@ final class Openbay {
         }
     }
 
-    public function deleteProduct($product_id){
+    public function deleteProduct($product_id) {
         // eBay Module
         if ($this->config->get('openbay_status') == 1) {
             $this->ebay->deleteProduct($product_id);
@@ -311,7 +309,7 @@ final class Openbay {
         }
     }
 
-    public function deleteOrder($order_id){
+    public function deleteOrder($order_id) {
         /**
          * Called when an order is deleted - usually by the admin. Helpful to loop over the products to add the stock back to the markets.
          */
@@ -336,11 +334,11 @@ final class Openbay {
         }
     }
 
-    public function getProductModelNumber($product_id, $sku = null){
-        if($sku != null){
+    public function getProductModelNumber($product_id, $sku = null) {
+        if($sku != null) {
             $qry = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '".(int)$product_id."' AND `var` = '".$this->db->escape($sku)."'");
 
-            if($qry->num_rows > 0){
+            if($qry->num_rows > 0) {
                 return $qry->row['sku'];
             }else{
                 return false;
@@ -349,7 +347,7 @@ final class Openbay {
         }else{
             $qry = $this->db->query("SELECT `model` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".(int)$product_id."' LIMIT 1");
 
-            if($qry->num_rows > 0){
+            if($qry->num_rows > 0) {
                 return $qry->row['model'];
             }else{
                 return false;
@@ -357,3 +355,4 @@ final class Openbay {
         }
     }
 }
+?>

@@ -57,8 +57,7 @@ class ControllerCommonHeader extends Controller {
 		$status = true;
 		
 		if (isset($this->request->server['HTTP_USER_AGENT'])) {
-			$config_robots = preg_replace('~\r?\n~', "\n", trim($this->config->get('config_robots')));
-			$robots = explode("\n", $config_robots);
+			$robots = explode("\n", str_replace(array("\r\n", "\r"), "\n", trim($this->config->get('config_robots'))));
 
 			foreach ($robots as $robot) {
 				if ($robot && strpos($this->request->server['HTTP_USER_AGENT'], trim($robot)) !== false) {

@@ -66,7 +66,7 @@
       <div class="product-compare"><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></div>
       <div class="product-filter">
         <div class="display pull-left">
-          <div class="btn-group"><a id="list-view" class="btn" data-toggle="tooltip" title="<?php echo $button_list_view; ?>"><i class="icon-th-list"></i></a> <a id="grid-view" class="btn" data-toggle="tooltip" title="<?php echo $button_grid_view; ?>"><i class="icon-th"></i></a></div>
+          <div class="btn-group"><a id="list-view" class="btn" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="icon-th-list"></i></a> <a id="grid-view" class="btn" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="icon-th"></i></a></div>
         </div>
         <div class="limit"><?php echo $text_limit; ?>
           <select class="input-small" onchange="location = this.value;">

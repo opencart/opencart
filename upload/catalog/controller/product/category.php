@@ -334,11 +334,11 @@ class ControllerProductCategory extends Controller {
 
 			sort($limits);
 
-			foreach($limits as $limits){
+			foreach($limits as $value) {
 				$this->data['limits'][] = array(
-					'text'  => $limits,
-					'value' => $limits,
-					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=' . $limits)
+					'text'  => $value,
+					'value' => $value,
+					'href'  => $this->url->link('product/category', 'path=' . $this->request->get['path'] . $url . '&limit=' . $value)
 				);
 			}
 

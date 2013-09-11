@@ -225,11 +225,11 @@ class ControllerProductSpecial extends Controller {
 		
 		sort($limits);
 
-		foreach($limits as $limits){
+		foreach($limits as $value) {
 			$this->data['limits'][] = array(
-				'text'  => $limits,
-				'value' => $limits,
-				'href'  => $this->url->link('product/special', $url . '&limit=' . $limits)
+				'text'  => $value,
+				'value' => $value,
+				'href'  => $this->url->link('product/special', $url . '&limit=' . $value)
 			);
 		}
 			

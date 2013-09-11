@@ -7,6 +7,10 @@
 </ul>
 <div class="row">
 <?php echo $column_left; ?>
+
+
+
+
 <?php if ($column_left) { ?>
 <div class="span9">
 <?php } elseif ($column_right) { ?>

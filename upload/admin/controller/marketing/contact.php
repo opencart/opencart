@@ -233,20 +233,22 @@ class ControllerMarketingContact extends Controller {
 					$message .= '</html>' . "\n";
 					
 					foreach ($emails as $email) {
-						$mail = new Mail();	
-						$mail->protocol = $this->config->get('config_mail_protocol');
-						$mail->parameter = $this->config->get('config_mail_parameter');
-						$mail->hostname = $this->config->get('config_smtp_host');
-						$mail->username = $this->config->get('config_smtp_username');
-						$mail->password = $this->config->get('config_smtp_password');
-						$mail->port = $this->config->get('config_smtp_port');
-						$mail->timeout = $this->config->get('config_smtp_timeout');				
-						$mail->setTo($email);
-						$mail->setFrom($this->config->get('config_email'));
-						$mail->setSender($store_name);
-						$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));					
-						$mail->setHtml($message);
-						$mail->send();
+						if (preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+							$mail = new Mail();	
+							$mail->protocol = $this->config->get('config_mail_protocol');
+							$mail->parameter = $this->config->get('config_mail_parameter');
+							$mail->hostname = $this->config->get('config_smtp_host');
+							$mail->username = $this->config->get('config_smtp_username');
+							$mail->password = $this->config->get('config_smtp_password');
+							$mail->port = $this->config->get('config_smtp_port');
+							$mail->timeout = $this->config->get('config_smtp_timeout');				
+							$mail->setTo($email);
+							$mail->setFrom($this->config->get('config_email'));
+							$mail->setSender($store_name);
+							$mail->setSubject(html_entity_decode($this->request->post['subject'], ENT_QUOTES, 'UTF-8'));					
+							$mail->setHtml($message);
+							$mail->send();
+						}
 					}
 				}
 			}

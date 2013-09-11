@@ -3,6 +3,8 @@ class ControllerErrorNotFound extends Controller {
 	public function index() {		
 		$this->language->load('error/not_found');
 		
+		$this->response->addHeader($this->request->server['SERVER_PROTOCOL'] . '/1.1 404 Not Found');
+		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->data['breadcrumbs'] = array();

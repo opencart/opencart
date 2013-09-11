@@ -216,7 +216,6 @@ $registry->set('cart', new Cart($registry));
 //OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 $registry->set('play', new Play($registry));
-$registry->set('ebay', new Ebay($registry));
 $registry->set('amazon', new Amazon($registry));
 $registry->set('amazonus', new Amazonus($registry));
 

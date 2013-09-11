@@ -82,9 +82,9 @@ class ModelOpenbayEbayProduct extends Model {
         
         //validation for saerch term
         
-	$response['data']   = $this->ebay->openbay_call('listing/searchCatalog/', array('page' => (int)$page, 'categoryId' => $data['categoryId'], 'search' => $data['search']));
-        $response['error']  = $this->ebay->lasterror;
-        $response['msg']    = $this->ebay->lastmsg;
+	$response['data']   = $this->openbay->ebay->openbay_call('listing/searchCatalog/', array('page' => (int)$page, 'categoryId' => $data['categoryId'], 'search' => $data['search']));
+        $response['error']  = $this->openbay->ebay->lasterror;
+        $response['msg']    = $this->openbay->ebay->lastmsg;
         return $response;
     }
 }

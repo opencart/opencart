@@ -54,7 +54,7 @@ class ControllerOpenbayOpenbay extends Controller {
             $this->data['success'] = '';
         }
 
-        $this->data['validation']               = $this->ebay->validate();
+        $this->data['validation']               = $this->openbay->ebay->validate();
         $this->data['links_settings']           = $this->url->link('openbay/openbay/settings', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_itemlink']           = $this->url->link('openbay/openbay/viewItemLinks', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_addons']             = $this->url->link('openbay/openbay/viewAddons', 'token=' . $this->session->data['token'], 'SSL');
@@ -356,7 +356,7 @@ class ControllerOpenbayOpenbay extends Controller {
             $this->data['EBAY_DEF_REFUNDED_ID'] = $this->config->get('EBAY_DEF_REFUNDED_ID');
         }
 
-        $this->data['api_server']       = $this->ebay->getApiServer();
+        $this->data['api_server']       = $this->openbay->ebay->getApiServer();
         $this->data['order_statuses']   = $this->model_localisation_order_status->getOrderStatuses();
 
         $this->template = 'openbay/ebay_settings.tpl';
@@ -370,17 +370,17 @@ class ControllerOpenbayOpenbay extends Controller {
 
     public function loadSettings() {
         set_time_limit(0);
-        $this->response->setOutput(json_encode($this->ebay->loadSettings()));
+        $this->response->setOutput(json_encode($this->openbay->ebay->loadSettings()));
     }
 
     public function loadCategories() {
         set_time_limit(0);
-        $this->response->setOutput(json_encode($this->ebay->loadCategories()));
+        $this->response->setOutput(json_encode($this->openbay->ebay->loadCategories()));
     }
 
     public function loadSellerStore() {
         set_time_limit(0);
-        $this->response->setOutput(json_encode($this->ebay->loadSellerStore()));
+        $this->response->setOutput(json_encode($this->openbay->ebay->loadSellerStore()));
     }
 
     public function getCategories() {
@@ -453,7 +453,7 @@ class ControllerOpenbayOpenbay extends Controller {
         );
 
         $this->data['return'] = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['validation'] = $this->ebay->validate();
+        $this->data['validation'] = $this->openbay->ebay->validate();
         $this->data['token'] = $this->session->data['token'];
 
         $this->template = 'openbay/ebay_summary.tpl';
@@ -479,12 +479,12 @@ class ControllerOpenbayOpenbay extends Controller {
 
     public function importItems() {
         $data = array('d' => $this->request->get['desc'], 'c' => 1, 'n' => $this->request->get['note']);
-        $this->ebay->openbay_call_noresponse('setup/getItemsMain/', $data);
+        $this->openbay->ebay->openbay_call_noresponse('setup/getItemsMain/', $data);
         $this->response->setOutput(json_encode(array('msg' => 'ok')));
     }
 
     public function importOrdersManual() {
-        $this->ebay->openbay_call_noresponse('order/getOrdersManual/');
+        $this->openbay->ebay->openbay_call_noresponse('order/getOrdersManual/');
         $this->response->setOutput(json_encode(array('msg' => 'ok')));
     }
 
@@ -501,9 +501,9 @@ class ControllerOpenbayOpenbay extends Controller {
         $product_id = $this->request->get['product_id'];
         $data       = $this->model_catalog_product->getProduct($product_id);
 
-        $this->ebay->log('User updating eBay stock of product id: ' . $product_id);
+        $this->openbay->ebay->log('User updating eBay stock of product id: ' . $product_id);
 
-        $this->ebay->productUpdateListen($product_id, $data);
+        $this->openbay->ebay->productUpdateListen($product_id, $data);
 
         $this->response->setOutput(json_encode(array('msg' => 'ok', 'error' => false)));
     }
@@ -512,8 +512,8 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->load->model('openbay/ebay');
         $data               = $this->model_openbay_ebay->getUsage();
         $data['html']       = base64_decode($data['html']);
-        $data['lasterror']  = $this->ebay->lasterror;
-        $data['lastmsg']    = $this->ebay->lastmsg;
+        $data['lasterror']  = $this->openbay->ebay->lasterror;
+        $data['lastmsg']    = $this->openbay->ebay->lastmsg;
         return $this->response->setOutput(json_encode($data));
     }
 
@@ -571,7 +571,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->db->query("TRUNCATE `" . DB_PREFIX . "option_value`");
                 $this->db->query("TRUNCATE `" . DB_PREFIX . "option_value_description`");
 
-                if ($this->ebay->addonLoad('openstock') == true) {
+                if ($this->openbay->ebay->addonLoad('openstock') == true) {
                     $this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
                 }
 
@@ -614,7 +614,7 @@ class ControllerOpenbayOpenbay extends Controller {
         );
 
         $this->data['return']       = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['validation']   = $this->ebay->validate();
+        $this->data['validation']   = $this->openbay->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
         $this->data['obp_token']    = $this->config->get('openbaypro_token');
 
@@ -660,8 +660,8 @@ class ControllerOpenbayOpenbay extends Controller {
         );
 
         $this->data['return'] = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['addons'] = $this->ebay->addonList();
-        $this->data['validation'] = $this->ebay->validate();
+        $this->data['addons'] = $this->openbay->ebay->addonList();
+        $this->data['validation'] = $this->openbay->ebay->validate();
 
         $this->template = 'openbay/ebay_addons.tpl';
         $this->children = array(
@@ -708,7 +708,7 @@ class ControllerOpenbayOpenbay extends Controller {
         );
 
         $this->data['return']           = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['validation']       = $this->ebay->validate();
+        $this->data['validation']       = $this->openbay->ebay->validate();
         $this->data['token']            = $this->session->data['token'];
         $this->data['imgImport']        = $this->model_openbay_ebay_product->countImportImages();
         $this->data['imgImportLink']    = $this->url->link('openbay/openbay/getImportImages', 'token=' . $this->session->data['token'], 'SSL');
@@ -757,7 +757,7 @@ class ControllerOpenbayOpenbay extends Controller {
         );
 
         $this->data['return']       = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['validation']   = $this->ebay->validate();
+        $this->data['validation']   = $this->openbay->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
 
         $this->template = 'openbay/ebay_stock_report.tpl';
@@ -803,7 +803,7 @@ class ControllerOpenbayOpenbay extends Controller {
         );
 
         $this->data['return']       = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['validation']   = $this->ebay->validate();
+        $this->data['validation']   = $this->openbay->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
 
         $this->template = 'openbay/ebay_order_import.tpl';
@@ -849,7 +849,7 @@ class ControllerOpenbayOpenbay extends Controller {
         );
 
         $this->data['return']       = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['validation']   = $this->ebay->validate();
+        $this->data['validation']   = $this->openbay->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
 
         $this->template = 'openbay/ebay_syncronise.tpl';
@@ -897,7 +897,7 @@ class ControllerOpenbayOpenbay extends Controller {
         );
 
         $this->data['return']       = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['validation']   = $this->ebay->validate();
+        $this->data['validation']   = $this->openbay->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
 
         $total_linked = $this->model_openbay_ebay->totalLinked();
@@ -942,7 +942,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
     public function removeItemLink() {
         $this->load->language('openbay/openbay');
-        $this->ebay->removeItemId($this->request->get['ebay_id']);
+        $this->openbay->ebay->removeItemId($this->request->get['ebay_id']);
         $this->response->setOutput(json_encode(array('error' => false, 'msg' => $this->language->get('item_link_removed'))));
     }
 
@@ -1007,7 +1007,7 @@ class ControllerOpenbayOpenbay extends Controller {
     }
 
     public function getStockCheck() {
-        $this->ebay->log('Requesting stock report.');
+        $this->openbay->ebay->log('Requesting stock report.');
         $this->load->model('openbay/ebay');
         $this->model_openbay_ebay->getStockCheck();
     }
@@ -1036,7 +1036,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
                 $this->data['action']       = $this->url->link('openbay/openbay/create', 'token=' . $this->session->data['token'], 'SSL');
                 $this->data['cancel']       = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
-                $this->data['view_link']    = $this->config->get('openbaypro_ebay_itm_link') . $this->ebay->getEbayItemId($this->request->get['product_id']);
+                $this->data['view_link']    = $this->config->get('openbaypro_ebay_itm_link') . $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
                 $this->data['token']        = $this->session->data['token'];
                 $this->data['product_id']   = $this->request->get['product_id'];
 
@@ -1078,18 +1078,18 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->load->model('openbay/ebay_product');
         $this->load->model('tool/image');
 
-        $item_id        = $this->ebay->getEbayItemId($this->request->get['product_id']);
+        $item_id        = $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
         $product_info   = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
         if (!empty($item_id)) {
-            $listings   = $this->ebay->getEbayListing($item_id);
-            $stock      = $this->ebay->getProductStockLevel($this->request->get['product_id']);
-            $reserve    = $this->ebay->getReserve($this->request->get['product_id'], $item_id);
+            $listings   = $this->openbay->ebay->getEbayListing($item_id);
+            $stock      = $this->openbay->ebay->getProductStockLevel($this->request->get['product_id']);
+            $reserve    = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id);
             $options    = array();
 
             $product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
-            if ($this->ebay->addonLoad('openstock') == true && $product_info['has_option'] == 1) {
+            if ($this->openbay->ebay->addonLoad('openstock') == true && $product_info['has_option'] == 1) {
                 $this->load->model('openstock/openstock');
                 $this->data['addon']['openstock'] = true;
                 $product_info['options'] = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
@@ -1115,11 +1115,11 @@ class ControllerOpenbayOpenbay extends Controller {
 
                 foreach($product_info['options'] as $option) {
                     $option['base64']   = base64_encode(serialize($option['opts']));
-                    $optionReserve      = $this->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
+                    $optionReserve      = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
                     if($optionReserve == false) {
                         $option['reserve'] = 0;
                     }else{
-                        $option['reserve']  = $this->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
+                        $option['reserve']  = $this->openbay->ebay->getReserve($this->request->get['product_id'], $item_id, $option['var']);
                     }
 
                     $ebay_listing = '';
@@ -1227,7 +1227,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->data['token']    = $this->session->data['token'];
                 $product_info           = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
-                if ($this->ebay->addonLoad('openstock') == true && $product_info['has_option'] == 1) {
+                if ($this->openbay->ebay->addonLoad('openstock') == true && $product_info['has_option'] == 1) {
                     $this->load->model('openstock/openstock');
                     $this->data['addon']['openstock'] = true;
                     $product_info['options'] = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
@@ -1302,10 +1302,10 @@ class ControllerOpenbayOpenbay extends Controller {
                 $product_info['templates']                          = $this->model_openbay_ebay_template->getAll();
                 $product_info['store_cats']                         = $this->model_openbay_ebay->getSellerStoreCategories();
 
-                $product_info['dispatchTimes']                      = $this->ebay->getSetting('dispatch_time_max');
+                $product_info['dispatchTimes']                      = $this->openbay->ebay->getSetting('dispatch_time_max');
                 if(is_array($product_info['dispatchTimes'])) { ksort($product_info['dispatchTimes']); }
 
-                $product_info['countries']                          = $this->ebay->getSetting('countries');
+                $product_info['countries']                          = $this->openbay->ebay->getSetting('countries');
                 if(is_array($product_info['countries'])) { ksort($product_info['countries']); }
 
                 $product_info['defaults']['ebay_payment_types']     = $this->config->get('ebay_payment_types');
@@ -1362,7 +1362,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
                 $products = array();
 
-                if ($this->ebay->addonLoad('openstock') == true) {
+                if ($this->openbay->ebay->addonLoad('openstock') == true) {
                     $openstock = 1;
                 }else{
                     $openstock = 0;
@@ -1498,7 +1498,7 @@ class ControllerOpenbayOpenbay extends Controller {
             if ($this->checkConfig() == true) {
                 $this->model_openbay_ebay->logCategoryUsed($this->request->post['finalCat']);
 
-                $item_id = $this->ebay->getEbayItemId($this->request->post['product_id']);
+                $item_id = $this->openbay->ebay->getEbayItemId($this->request->post['product_id']);
 
                 if ($item_id == false) { // ensure that the sku is not already listed
                     $data = $this->request->post;
@@ -1867,7 +1867,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
     public function getImportImages() {
         set_time_limit(0);
-        $this->ebay->getImages();
+        $this->openbay->ebay->getImages();
         $this->response->setOutput(json_encode(array('error' => false, 'msg' => 'OK')));
     }
 
@@ -1878,13 +1878,13 @@ class ControllerOpenbayOpenbay extends Controller {
     }
 
     public function deleteAllLocks() {
-        $this->ebay->log('deleteAllLocks() - Deleting all locks');
+        $this->openbay->ebay->log('deleteAllLocks() - Deleting all locks');
         $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_order_lock`");
         return $this->response->setOutput(json_encode(array('msg' => 'Locks deleted')));
     }
 
     public function endItem() {
-        return $this->response->setOutput(json_encode($this->ebay->endItem($this->request->get['id'])));
+        return $this->response->setOutput(json_encode($this->openbay->ebay->endItem($this->request->get['id'])));
     }
 }
 ?>

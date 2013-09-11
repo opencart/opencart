@@ -245,7 +245,7 @@ class ModelOpenbayEbay extends Model{
         $start = $limit * $page - 1;
 
         $has_option = '';
-        if($this->ebay->addonLoad('openstock') == true){
+        if($this->openbay->ebay->addonLoad('openstock') == true){
             $this->load->model('openstock/openstock');
             $has_option = '`p`.`has_option`, ';
         }
@@ -284,13 +284,13 @@ class ModelOpenbayEbay extends Model{
 
                 $data[$row['ebay_item_id']]['options'] = 0;
 
-                if((isset($row['has_option']) && $row['has_option'] == 1) && $this->ebay->addonLoad('openstock') == true){
+                if((isset($row['has_option']) && $row['has_option'] == 1) && $this->openbay->ebay->addonLoad('openstock') == true){
                     $data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
                 }
 
                 //get the allocated stock - items that have been bought but not assigned to an order
                 if($this->config->get('openbaypro_stock_allocate') == 0){
-                    $data[$row['ebay_item_id']]['allocated'] = $this->ebay->getAllocatedStock($row['product_id']);
+                    $data[$row['ebay_item_id']]['allocated'] = $this->openbay->ebay->getAllocatedStock($row['product_id']);
                 }else{
                     $data[$row['ebay_item_id']]['allocated'] = 0;
                 }
@@ -301,8 +301,8 @@ class ModelOpenbayEbay extends Model{
     }
 
     public function loadLinkedStatus($item_ids){
-        $this->ebay->log('loadLinkedStatus() - Get item status from ebay for multiple IDs');
-        return $this->ebay->openbay_call('item/getItemsById/', array('item_ids' => $item_ids));
+        $this->openbay->ebay->log('loadLinkedStatus() - Get item status from ebay for multiple IDs');
+        return $this->openbay->ebay->openbay_call('item/getItemsById/', array('item_ids' => $item_ids));
     }
 
     public function loadUnlinked($limit = 100, $page = 1){
@@ -313,24 +313,24 @@ class ModelOpenbayEbay extends Model{
 
         while(count($unlinked) < 5){
 
-            $this->ebay->log('Checking unlinked page: '.$page);
+            $this->openbay->ebay->log('Checking unlinked page: '.$page);
 
             //some products from ebay (100)
-            $response = $this->ebay->getEbayItemList($limit, $page);
+            $response = $this->openbay->ebay->getEbayItemList($limit, $page);
 
-            if($this->ebay->lasterror == true){
+            if($this->openbay->ebay->lasterror == true){
                 break;
             }
 
             //loop over these and check if any are not in the db
             foreach($response['items'] as $itemId => $item){
-                if($this->ebay->getProductId($itemId) == false){
+                if($this->openbay->ebay->getProductId($itemId) == false){
                     //ebay item ID not in the db
                     $unlinked[$itemId] = $item;
                 }
             }
 
-            $this->ebay->log('Unlinked count: '.count($unlinked));
+            $this->openbay->ebay->log('Unlinked count: '.count($unlinked));
 
             //if end of the loop and less than 10, request next page
             //if the last page requested was the max page of results
@@ -349,8 +349,8 @@ class ModelOpenbayEbay extends Model{
     }
 
     public function loadItemLinks(){
-        $local      = $this->ebay->getLiveListingArray();
-        $response   = $this->ebay->getEbayActiveListings();
+        $local      = $this->openbay->ebay->getLiveListingArray();
+        $response   = $this->openbay->ebay->getEbayActiveListings();
         
         $data = array(
             'unlinked'  => array(),
@@ -381,14 +381,14 @@ class ModelOpenbayEbay extends Model{
     }
     
     public function saveItemLink($data) {
-        $this->ebay->log('Creating item link.');
-        $this->ebay->createLink($data['pid'], $data['itemId'], $data['variants']);
+        $this->openbay->ebay->log('Creating item link.');
+        $this->openbay->ebay->createLink($data['pid'], $data['itemId'], $data['variants']);
         if(($data['qty'] != $data['ebayqty']) || $data['variants'] == 1){
             $this->load->model('catalog/product');
-            $this->ebay->log('Updating eBay with new qty');
-            $this->ebay->productUpdateListen($data['pid'], $this->model_catalog_product->getProduct($data['pid']));
+            $this->openbay->ebay->log('Updating eBay with new qty');
+            $this->openbay->ebay->productUpdateListen($data['pid'], $this->model_catalog_product->getProduct($data['pid']));
         }else{
-            $this->ebay->log('Qty on eBay is the same as our stock, no update needed');
+            $this->openbay->ebay->log('Qty on eBay is the same as our stock, no update needed');
             return array('msg' => 'ok', 'error' => false);
         }
     }
@@ -464,9 +464,9 @@ class ModelOpenbayEbay extends Model{
     public function getSuggestedCategories($qry){
         $this->load->language('openbay/openbay');
         
-        $response['data']   = $this->ebay->openbay_call('listing/getSuggestedCategories/', array('qry' => $qry));
-	    $response['error']  = $this->ebay->lasterror;
-        $response['msg']    = $this->ebay->lastmsg;
+        $response['data']   = $this->openbay->ebay->openbay_call('listing/getSuggestedCategories/', array('qry' => $qry));
+	    $response['error']  = $this->openbay->ebay->lasterror;
+        $response['msg']    = $this->openbay->ebay->lastmsg;
         
         if(empty($response['data'])){
             $response['msg'] = $this->language->get('error_category_nosuggestions');
@@ -511,23 +511,23 @@ class ModelOpenbayEbay extends Model{
     }
     
     public function getEbayCategorySpecifics($catId){
-	$response['data']   = $this->ebay->openbay_call('listing/getEbayCategorySpecifics/', array('id' => $catId));
-        $response['error']  = $this->ebay->lasterror;
-        $response['msg']    = $this->ebay->lastmsg;
+	$response['data']   = $this->openbay->ebay->openbay_call('listing/getEbayCategorySpecifics/', array('id' => $catId));
+        $response['error']  = $this->openbay->ebay->lasterror;
+        $response['msg']    = $this->openbay->ebay->lastmsg;
         return $response;
     }
 
     public function getCategoryFeatures($catId){
-	$response['data']   = $this->ebay->openbay_call('listing/getCategoryFeatures/', array('id' => $catId));
-        $response['error']  = $this->ebay->lasterror;
-        $response['msg']    = $this->ebay->lastmsg;
+	$response['data']   = $this->openbay->ebay->openbay_call('listing/getCategoryFeatures/', array('id' => $catId));
+        $response['error']  = $this->openbay->ebay->lasterror;
+        $response['msg']    = $this->openbay->ebay->lastmsg;
         return $response;
     }
 
     public function getSellerSummary(){
-	$response['data']   = $this->ebay->openbay_call('account/getSellerSummary/');
-        $response['error']  = $this->ebay->lasterror;
-        $response['msg']    = $this->ebay->lastmsg;
+	$response['data']   = $this->openbay->ebay->openbay_call('account/getSellerSummary/');
+        $response['error']  = $this->openbay->ebay->lasterror;
+        $response['msg']    = $this->openbay->ebay->lastmsg;
 
         return $response;
     }
@@ -561,34 +561,34 @@ class ModelOpenbayEbay extends Model{
         
     public function ebayVerifyAddItem($data, $options){
         if($options == 'yes'){
-            $response['data'] = $this->ebay->openbay_call('listing/verifyFixedPrice/', $data);
+            $response['data'] = $this->openbay->ebay->openbay_call('listing/verifyFixedPrice/', $data);
         }else{
-            $response['data'] = $this->ebay->openbay_call('listing/ebayVerifyAddItem/', $data);
+            $response['data'] = $this->openbay->ebay->openbay_call('listing/ebayVerifyAddItem/', $data);
         }
         
-	    $response['error']  = $this->ebay->lasterror;
-        $response['msg']    = $this->ebay->lastmsg;
+	    $response['error']  = $this->openbay->ebay->lasterror;
+        $response['msg']    = $this->openbay->ebay->lastmsg;
         
         return $response;
     }
     
     public function ebayAddItem($data, $options){
         if($options == 'yes'){
-            $response = $this->ebay->openbay_call('listing/addFixedPrice/', $data);
+            $response = $this->openbay->ebay->openbay_call('listing/addFixedPrice/', $data);
             $variant = 1;
         }else{
-            $response = $this->ebay->openbay_call('listing/ebayAddItem/', $data);
+            $response = $this->openbay->ebay->openbay_call('listing/ebayAddItem/', $data);
             $variant = 0;
         }
 
         $data2           = array();
         $data2['data']   = $response;
-        $data2['error']  = $this->ebay->lasterror;
-        $data2['msg']    = $this->ebay->lastmsg;
+        $data2['error']  = $this->openbay->ebay->lasterror;
+        $data2['msg']    = $this->openbay->ebay->lastmsg;
         
         if(!empty($response['ItemID'])){
-            $this->ebay->createLink($data['product_id'], $response['ItemID'], $variant);
-            $this->ebay->insertReserve($data, $response['ItemID'], $variant);
+            $this->openbay->ebay->createLink($data['product_id'], $response['ItemID'], $variant);
+            $this->openbay->ebay->insertReserve($data, $response['ItemID'], $variant);
 
             $data2['data']['viewLink']  = html_entity_decode($this->config->get('openbaypro_ebay_itm_link') . $response['ItemID']);
         }else{
@@ -634,7 +634,7 @@ class ModelOpenbayEbay extends Model{
         $res = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".$this->db->escape($id)."' LIMIT 1");
 
         if(isset($res->row['has_option']) && $res->row['has_option'] == 1){
-            if($this->ebay->addonLoad('openstock') == true){
+            if($this->openbay->ebay->addonLoad('openstock') == true){
                 $this->load->model('openstock/openstock');
                 $this->load->model('tool/image');
                 $variant        = $this->model_openstock_openstock->getProductOptionStocks((int)$id);
@@ -648,21 +648,21 @@ class ModelOpenbayEbay extends Model{
         return array(
             'qty'           => $res->row['quantity'],
             'subtract'      => (int)$res->row['subtract'],
-            'allocated'     => $this->ebay->getAllocatedStock($id),
+            'allocated'     => $this->openbay->ebay->getAllocatedStock($id),
             'variant'       => $variant
         );
     }
     
     public function getUsage(){
-        return $this->ebay->openbay_call('report/accountUse/');
+        return $this->openbay->ebay->openbay_call('report/accountUse/');
     }
     
     public function getPlans(){
-        return $this->ebay->openbay_call('plan/getPlans/');
+        return $this->openbay->ebay->openbay_call('plan/getPlans/');
     }
     
     public function getMyPlan(){
-        return $this->ebay->openbay_call('plan/myPlan/');
+        return $this->openbay->ebay->openbay_call('plan/myPlan/');
     }
     
     public function getLiveListingArray(){
@@ -681,50 +681,50 @@ class ModelOpenbayEbay extends Model{
     public function verifyCreds(){
         $this->request->post['domain'] = HTTPS_SERVER;
 
-        $data = $this->ebay->openbay_call('account/validate/', $this->request->post, array(), 'json', 1);
+        $data = $this->openbay->ebay->openbay_call('account/validate/', $this->request->post, array(), 'json', 1);
         
-        if($this->ebay->lasterror == true){
+        if($this->openbay->ebay->lasterror == true){
             return array(
-                'error'     => $this->ebay->lasterror, 
-                'msg'       => $this->ebay->lastmsg
+                'error'     => $this->openbay->ebay->lasterror,
+                'msg'       => $this->openbay->ebay->lastmsg
             );
         }else{
             return array(
-                'error'     => $this->ebay->lasterror, 
-                'msg'       => $this->ebay->lastmsg,
+                'error'     => $this->openbay->ebay->lasterror,
+                'msg'       => $this->openbay->ebay->lastmsg,
                 'data'      => $data
             );
         }
     }
 
     public function getStockCheck(){
-        $this->ebay->openbay_call_noresponse('item/getStockCheck/');
-        $this->ebay->log('Requesting stock report.');
+        $this->openbay->ebay->openbay_call_noresponse('item/getStockCheck/');
+        $this->openbay->ebay->log('Requesting stock report.');
         $this->response->setOutput(json_encode(array('msg' => 'Report has been requested')));
     }
     
     public function editSave($data){
-        $this->ebay->log('editSave() - start..');
+        $this->openbay->ebay->log('editSave() - start..');
 
         //get product id
-        $product_id = $this->ebay->getProductId($data['itemId']);
+        $product_id = $this->openbay->ebay->getProductId($data['itemId']);
 
-        $this->ebay->log('editSave() - product_id: '.$product_id);
+        $this->openbay->ebay->log('editSave() - product_id: '.$product_id);
 
         if($data['variant'] == 0){
             //save the reserve level
-            $this->ebay->updateReserve($product_id, $data['itemId'], $data['qty_reserve']);
+            $this->openbay->ebay->updateReserve($product_id, $data['itemId'], $data['qty_reserve']);
 
             //get the stock info
-            $stock = $this->ebay->getProductStockLevel($product_id);
+            $stock = $this->openbay->ebay->getProductStockLevel($product_id);
 
             //do the stock sync
-            $this->ebay->putStockUpdate($data['itemId'], $stock['quantity']);
+            $this->openbay->ebay->putStockUpdate($data['itemId'], $stock['quantity']);
 
             //finish the revise item call
-            return $this->ebay->openbay_call('listing/reviseItem/', $data);
+            return $this->openbay->ebay->openbay_call('listing/reviseItem/', $data);
         }else{
-            $this->ebay->log('editSave() - variant item');
+            $this->openbay->ebay->log('editSave() - variant item');
 
             $varData = array();
             $this->load->model('tool/image');
@@ -744,27 +744,27 @@ class ModelOpenbayEbay extends Model{
 
             foreach($data['opt'] as $k => $opt){
                 //update the variant reserve level
-                $this->ebay->updateReserve($product_id, $data['itemId'], $opt['reserve'], $opt['sku'], 1);
+                $this->openbay->ebay->updateReserve($product_id, $data['itemId'], $opt['reserve'], $opt['sku'], 1);
 
                 //get the stock info
-                $stock = $this->ebay->getProductStockLevel($product_id, $opt['sku']);
+                $stock = $this->openbay->ebay->getProductStockLevel($product_id, $opt['sku']);
 
-                $this->ebay->log('editSave() - stock: '.serialize($stock));
+                $this->openbay->ebay->log('editSave() - stock: '.serialize($stock));
 
                 if($stock['quantity'] > 0 || $stock == true){
                     $stockFlag = true;
                 }
 
                 // PRODUCT RESERVE LEVELS FOR VARIANT ITEMS (DOES NOT PASS THROUGH NORMAL SYSTEM)
-                $reserve = $this->ebay->getReserve($product_id, $data['itemId'], $opt['sku']);
+                $reserve = $this->openbay->ebay->getReserve($product_id, $data['itemId'], $opt['sku']);
 
-                $this->ebay->log('editSave() - reserve level: '.$reserve);
+                $this->openbay->ebay->log('editSave() - reserve level: '.$reserve);
 
                 if($reserve != false){
-                    $this->ebay->log('editSave() / Variant ('.$opt['sku'].') - Reserve stock: '.$reserve);
+                    $this->openbay->ebay->log('editSave() / Variant ('.$opt['sku'].') - Reserve stock: '.$reserve);
 
                     if($stock['quantity'] > $reserve){
-                        $this->ebay->log('editSave() - Stock ('.$stock['quantity'].') is larger than reserve ('.$reserve.'), setting level to reserve');
+                        $this->openbay->ebay->log('editSave() - Stock ('.$stock['quantity'].') is larger than reserve ('.$reserve.'), setting level to reserve');
                         $stock['quantity'] = $reserve;
                     }
                 }
@@ -775,16 +775,16 @@ class ModelOpenbayEbay extends Model{
                 $varData['opt'][$k]['active']  = $opt['active'];
             }
 
-            $this->ebay->log('editSave() - Debug - '.serialize($varData));
+            $this->openbay->ebay->log('editSave() - Debug - '.serialize($varData));
 
             //send to the api to process
             if($stockFlag == true){
-                $this->ebay->log('editSave() - Sending to API');
-                $response = $this->ebay->openbay_call('item/reviseVariants', $varData);
+                $this->openbay->ebay->log('editSave() - Sending to API');
+                $response = $this->openbay->ebay->openbay_call('item/reviseVariants', $varData);
                 return $response;
             }else{
-                $this->ebay->log('editSave() - Ending item');
-                $this->ebay->endItem($data['itemId']);
+                $this->openbay->ebay->log('editSave() - Ending item');
+                $this->openbay->ebay->endItem($data['itemId']);
             }
         }
     }

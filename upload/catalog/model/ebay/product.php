@@ -1,7 +1,7 @@
 <?php
 class ModelEbayProduct extends Model{
     public function stockCheck($products, $summary){
-        $this->ebay->log('Inside the stock check method');
+        $this->openbay->ebay->log('Inside the stock check method');
 
         //items not linked to a store item
         //total ebay items
@@ -14,7 +14,7 @@ class ModelEbayProduct extends Model{
 
         $template->data['summary']  = $summary;
 
-        $liveArray                              = $this->ebay->getLiveProducts();
+        $liveArray                              = $this->openbay->ebay->getLiveProducts();
         $template->data['storelinked_products'] = count($liveArray);
         $template->data['store_products']       = $this->countStoreProducts();
         $template->data['ebay_products']        = count($products);
@@ -22,7 +22,7 @@ class ModelEbayProduct extends Model{
 
         foreach($products as $id => $product)
         {
-            $this->ebay->log('Product: '.$id);
+            $this->openbay->ebay->log('Product: '.$id);
             $eQty = (int)$product['qty'];
 
             if(array_key_exists((int)$id, $liveArray)){
@@ -82,11 +82,11 @@ class ModelEbayProduct extends Model{
     }
 
     public function getRelistRule($id){
-        return $this->ebay->openbay_call('item/getAutomationRule', array('id' => $id));
+        return $this->openbay->ebay->openbay_call('item/getAutomationRule', array('id' => $id));
     }
 
     public function importItems($data) {
-        $this->ebay->log('Starting item import');
+        $this->openbay->ebay->log('Starting item import');
         $this->load->model('catalog/product');
         
         //check for ebay import img table
@@ -105,12 +105,12 @@ class ModelEbayProduct extends Model{
             ");
         }
 
-        if($this->ebay->addonLoad('openstock') == true){
+        if($this->openbay->ebay->addonLoad('openstock') == true){
             $openstock = true;
             $this->load->model('openstock/openstock');
         }else{
             $openstock = false;
-            $this->ebay->log('Openstock module not found');
+            $this->openbay->ebay->log('Openstock module not found');
         }
 
         $categories     = array();
@@ -119,17 +119,17 @@ class ModelEbayProduct extends Model{
 
         unset($data['data']);
 
-        $this->ebay->log('Decoded data');
+        $this->openbay->ebay->log('Decoded data');
 
         $newData1   = unserialize($newData);
         unset($newData);
 
-        $this->ebay->log('Data unserialized');
+        $this->openbay->ebay->log('Data unserialized');
 
         $itemCountLoop = 0;
         foreach($newData1 as $item){
             $itemCountLoop++;
-            $this->ebay->log('Processing item: '.$itemCountLoop);
+            $this->openbay->ebay->log('Processing item: '.$itemCountLoop);
 
             $parts = explode(':', $item['CategoryName']);
 
@@ -245,15 +245,15 @@ class ModelEbayProduct extends Model{
             }
         }
 
-        $this->ebay->log('Categories done');
+        $this->openbay->ebay->log('Categories done');
 
         $imgCount = 0;
 
-        $current = $this->ebay->getLiveListingArray();
+        $current = $this->openbay->ebay->getLiveListingArray();
 
         foreach($newData1 as $item){
             if(!in_array($item['ItemID'], $current)){
-                $this->ebay->log('New item being created: '.$item['ItemID']);
+                $this->openbay->ebay->log('New item being created: '.$item['ItemID']);
                 
                 //find or create the manufacturer id if it is provided.
                 $manufacturer_id = 0;
@@ -300,7 +300,7 @@ class ModelEbayProduct extends Model{
 
                 $product_id = $this->db->getLastId();
 
-                $this->ebay->log('Product insert done');
+                $this->openbay->ebay->log('Product insert done');
 
                 //Insert product description
                 $originalDescription = $item['Description'];
@@ -309,8 +309,8 @@ class ModelEbayProduct extends Model{
                     if ( false !== ($item['Description'] = gzuncompress($originalDescription))){
                         $item['Description'] = html_entity_decode($item['Description']);
                     }else{
-                        $this->ebay->log('Description could not be decompressed, output below');
-                        $this->ebay->log($originalDescription);
+                        $this->openbay->ebay->log('Description could not be decompressed, output below');
+                        $this->openbay->ebay->log($originalDescription);
                         $item['Description'] = '';
                     }
                 }
@@ -322,11 +322,11 @@ class ModelEbayProduct extends Model{
                         `description`           = '".$this->db->escape(htmlspecialchars($item['Description'], ENT_COMPAT))."'";
 
                 $this->db->query($sql);
-                $this->ebay->log('Product description done');
+                $this->openbay->ebay->log('Product description done');
 
                 //Insert product store link
                 $this->db->query("INSERT INTO `" . DB_PREFIX . "product_to_store` SET `product_id` = '".(int)$product_id."', `store_id` = '0'");
-                $this->ebay->log('Store link done');
+                $this->openbay->ebay->log('Store link done');
                 
                 //Create any attributes from eBay for the item
                 if(!empty($item['specs'])){
@@ -348,15 +348,15 @@ class ModelEbayProduct extends Model{
                     $variant = 1;
 
                     if($openstock == true){
-                        $this->ebay->log('OpenStock Loaded');
+                        $this->openbay->ebay->log('OpenStock Loaded');
                         $this->createVariants($product_id, $item);
                     }
 
-                    $this->ebay->log('Variants done');
+                    $this->openbay->ebay->log('Variants done');
                 }
 
                 //insert store to eBay item link
-                $this->ebay->createLink($product_id, $item['ItemID'], $variant);
+                $this->openbay->ebay->createLink($product_id, $item['ItemID'], $variant);
 
                 //Insert product/category link
                 $this->createCategoryLink($product_id, $catLink[$item['CategoryName']]);
@@ -372,15 +372,15 @@ class ModelEbayProduct extends Model{
                         }
                     }
                 }
-                $this->ebay->log('Product import completed.');
+                $this->openbay->ebay->log('Product import completed.');
                 
             }else{
-                $this->ebay->log($item['ItemID'].' exists already');
+                $this->openbay->ebay->log($item['ItemID'].' exists already');
             }
         }
 
-        $this->ebay->log('Product data import done');
-        $this->ebay->getImages();
+        $this->openbay->ebay->log('Product data import done');
+        $this->openbay->ebay->getImages();
     }
 
     public function getDisplayProducts(){
@@ -392,7 +392,7 @@ class ModelEbayProduct extends Model{
         $data['sort']           = $this->config->get('ebaydisplay_module_sort');
         $data['search_desc']    = $this->config->get('ebaydisplay_module_description');
 
-        return $this->ebay->openbay_call('item/searchListingsForDisplay', $data);
+        return $this->openbay->ebay->openbay_call('item/searchListingsForDisplay', $data);
     }
     
     private function countStoreProducts(){
@@ -417,18 +417,18 @@ class ModelEbayProduct extends Model{
                 $product_option_id          = $this->getProductOption($product_id, $option['id']);
                 $product_option_value_id    = $this->getProductOptionValue($product_id, $option['id'], $opt['id'], $product_option_id);
 
-                $this->ebay->log('Option data: '.serialize($option));
+                $this->openbay->ebay->log('Option data: '.serialize($option));
 
                 $s          = $option['sort'];
                 $vars[$s]   = $product_option_value_id;
             }
 
-            //$this->ebay->log('Unsorted: '.serialize($vars));
+            //$this->openbay->ebay->log('Unsorted: '.serialize($vars));
 
             //sort the array to the natural sort order
             ksort($vars);
 
-            //$this->ebay->log('Sorted: '.serialize($vars));
+            //$this->openbay->ebay->log('Sorted: '.serialize($vars));
 
             //remove the key from the array to pass to implode
             $vars2 = array();
@@ -440,7 +440,7 @@ class ModelEbayProduct extends Model{
             //implode the values
             $vars = implode(':', $vars2);
 
-            //$this->ebay->log('Vars: '.$vars);
+            //$this->openbay->ebay->log('Vars: '.$vars);
 
             //create the variant
             $this->createProductVariant(array('var' => $vars, 'price' => $variant['price'], 'stock' => $variant['qty'], 'product_id' => $product_id, 'sku' => $variant['sku']));
@@ -448,7 +448,7 @@ class ModelEbayProduct extends Model{
 
         $this->updateVariantListing($product_id, $data['ItemID']);
 
-        //$this->ebay->log('Item variant stuff done..');
+        //$this->openbay->ebay->log('Item variant stuff done..');
     }
 
     private function getOption($name){
@@ -462,7 +462,7 @@ class ModelEbayProduct extends Model{
             LIMIT 1");
 
         if($qry->num_rows){
-            $this->ebay->log('Option found: "'.$name.' / '.$qry->row['option_id'].'" with sort order of "'.$qry->row['sort_order'].'"');
+            $this->openbay->ebay->log('Option found: "'.$name.' / '.$qry->row['option_id'].'" with sort order of "'.$qry->row['sort_order'].'"');
             return array('id' => (int)$qry->row['option_id'], 'sort' => (int)$qry->row['sort_order']);
         }else{
             return $this->createOption($name);
@@ -477,7 +477,7 @@ class ModelEbayProduct extends Model{
 
         $this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `language_id` = '".(int)$this->config->get('config_language_id')."', `name` = '".$this->db->escape($name)."', `option_id` = '".$option_id."'");
 
-        $this->ebay->log('No option found, creating: "'.$name.' / '.$option_id.'" with sort order of "'.$qry_sort->row['sort_order'].'"');
+        $this->openbay->ebay->log('No option found, creating: "'.$name.' / '.$option_id.'" with sort order of "'.$qry_sort->row['sort_order'].'"');
         return array('id' => (int)$option_id, 'sort' => (int)$qry_sort->row['sort_order']);
     }
 
@@ -494,10 +494,10 @@ class ModelEbayProduct extends Model{
             LIMIT 1");
 
         if($qry->num_rows){
-            //$this->ebay->log('Option value found: "'.$name.'"');
+            //$this->openbay->ebay->log('Option value found: "'.$name.'"');
             return array('id' => (int)$qry->row['option_value_id'], 'sort' => (int)$qry->row['sort_order']);
         }else{
-            //$this->ebay->log('No option value found, creating "'.$name.'"');
+            //$this->openbay->ebay->log('No option value found, creating "'.$name.'"');
             return $this->createOptionValue($name, $option_id);
         }
     }
@@ -606,18 +606,18 @@ class ModelEbayProduct extends Model{
         $varData['id']      = $item_id;
 
         //send to the api to process
-        $this->ebay->openbay_call_noresponse('item/reviseVariants', $varData);
+        $this->openbay->ebay->openbay_call_noresponse('item/reviseVariants', $varData);
     }
     
     private function attributeGroupExists($name){
-        $this->ebay->log('Checking attribute group: '.$name);
+        $this->openbay->ebay->log('Checking attribute group: '.$name);
         $qry = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "attribute_group_description` WHERE `name` = '".$this->db->escape(htmlspecialchars($name, ENT_COMPAT))."' AND `language_id` = '".(int)$this->config->get('config_language_id')."' LIMIT 1");
 
         if($qry->num_rows){
-            $this->ebay->log('Group exists');
+            $this->openbay->ebay->log('Group exists');
             return $qry->row['attribute_group_id'];
         }else{
-            $this->ebay->log('New group');
+            $this->openbay->ebay->log('New group');
             $qry2 = $this->db->query("SELECT `sort_order` FROM  `" . DB_PREFIX . "attribute_group` ORDER BY `sort_order` DESC LIMIT 1");
             
             if($qry2->num_rows){
@@ -637,7 +637,7 @@ class ModelEbayProduct extends Model{
     }
     
     private function attributeExists($groupId, $name){
-        $this->ebay->log('Checking attribute: '.$name);
+        $this->openbay->ebay->log('Checking attribute: '.$name);
         
         $qry = $this->db->query("
             SELECT * FROM  
@@ -651,10 +651,10 @@ class ModelEbayProduct extends Model{
         ");
 
         if($qry->num_rows){
-            $this->ebay->log('Attribute exists');
+            $this->openbay->ebay->log('Attribute exists');
             return $qry->row['attribute_id'];
         }else{
-            $this->ebay->log('New attribute');
+            $this->openbay->ebay->log('New attribute');
             $qry2 = $this->db->query("SELECT `sort_order` FROM  `" . DB_PREFIX . "attribute` ORDER BY `sort_order` DESC LIMIT 1");
             
             if($qry2->num_rows){
@@ -674,7 +674,7 @@ class ModelEbayProduct extends Model{
     }
     
     private function attributeAdd($product_id, $attrId, $name){
-        $this->ebay->log('Adding product attribute');
+        $this->openbay->ebay->log('Adding product attribute');
         $sql = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_attribute` WHERE `product_id` = '".(int)$product_id."' AND `attribute_id` = '".(int)$attrId."' AND `language_id` = '".(int)$this->config->get('config_language_id')."'");
         
         if($sql->num_rows == 0){
@@ -687,14 +687,14 @@ class ModelEbayProduct extends Model{
     }
     
     private function manufacturerExists($name){
-        $this->ebay->log('Checking manufacturer: '.$name);
+        $this->openbay->ebay->log('Checking manufacturer: '.$name);
         $qry = $this->db->query("SELECT * FROM  `" . DB_PREFIX . "manufacturer` WHERE `name` = '".$this->db->escape(htmlspecialchars($name, ENT_COMPAT))."' LIMIT 1");
 
         if($qry->num_rows){
-            $this->ebay->log('Manufacturer exists');
+            $this->openbay->ebay->log('Manufacturer exists');
             return $qry->row['manufacturer_id'];
         }else{
-            $this->ebay->log('New manufacturer');
+            $this->openbay->ebay->log('New manufacturer');
             $qry2 = $this->db->query("SELECT `sort_order` FROM  `" . DB_PREFIX . "manufacturer` ORDER BY `sort_order` DESC LIMIT 1");
             
             if($qry2->num_rows){

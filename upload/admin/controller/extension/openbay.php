@@ -379,11 +379,11 @@ class ControllerExtensionOpenbay extends Controller {
         $this->data = array_merge($this->data, $this->load->language('extension/openbay'));
 
         if ($this->config->get('openbay_status') == 1) {
-            if($this->ebay->isEbayOrder($this->request->get['order_id']) !== false){
+            if($this->openbay->ebay->isEbayOrder($this->request->get['order_id']) !== false){
                 //if status is shipped
                 if($this->config->get('EBAY_DEF_SHIPPED_ID') == $this->request->get['status_id']){
-                    $this->data['carriers']     = $this->ebay->getCarriers();
-                    $this->data['order_info']   = $this->ebay->getOrder($this->request->get['order_id']);
+                    $this->data['carriers']     = $this->openbay->ebay->getCarriers();
+                    $this->data['order_info']   = $this->openbay->ebay->getOrder($this->request->get['order_id']);
                     $this->template             = 'openbay/ebay_ajax_shippinginfo.tpl';
                     $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
                 }
@@ -448,11 +448,11 @@ class ControllerExtensionOpenbay extends Controller {
     public function ajaxAddOrderInfo(){
         //ebay
         if ($this->config->get('openbay_status') == 1) {
-            if($this->ebay->isEbayOrder($this->request->get['order_id']) !== false){
+            if($this->openbay->ebay->isEbayOrder($this->request->get['order_id']) !== false){
                 if($this->config->get('EBAY_DEF_SHIPPED_ID') == $this->request->get['status_id']){
-                    $this->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id'], array('tracking_no' => $this->request->post['tracking_no'], 'carrier_id' => $this->request->post['carrier_id']));
+                    $this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id'], array('tracking_no' => $this->request->post['tracking_no'], 'carrier_id' => $this->request->post['carrier_id']));
                 }else{
-                    $this->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id']);
+                    $this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id']);
                 }
             }
         }
@@ -799,7 +799,7 @@ class ControllerExtensionOpenbay extends Controller {
             $this->data['market_options'] = array();
 
             if ($this->config->get('openbay_status') == 1) {
-                $this->data['market_options']['ebay']['carriers'] = $this->ebay->getCarriers();
+                $this->data['market_options']['ebay']['carriers'] = $this->openbay->ebay->getCarriers();
             }
 
             if ($this->config->get('amazon_status') == 1) {
@@ -891,9 +891,9 @@ class ControllerExtensionOpenbay extends Controller {
             //ebay
             if ($this->config->get('openbay_status') == 1 && $this->request->post['channel'][$order_id] == 'eBay') {
                 if($this->config->get('EBAY_DEF_SHIPPED_ID') == $this->request->post['order_status_id']){
-                    $this->ebay->orderStatusListen($order_id, $this->request->post['order_status_id'], array('tracking_no' => $this->request->post['tracking'][$order_id], 'carrier_id' => $this->request->post['carrier'][$order_id]));
+                    $this->openbay->ebay->orderStatusListen($order_id, $this->request->post['order_status_id'], array('tracking_no' => $this->request->post['tracking'][$order_id], 'carrier_id' => $this->request->post['carrier'][$order_id]));
                 }else{
-                    $this->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id']);
+                    $this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id']);
                 }
             }
 
@@ -968,7 +968,7 @@ class ControllerExtensionOpenbay extends Controller {
         if ($this->config->get('openbay_status') == '1') {
             $this->load->model('openbay/ebay');
 
-            if($this->ebay->getEbayItemId($product_id) == false) {
+            if($this->openbay->ebay->getEbayItemId($product_id) == false) {
                 $markets[] = array(
                     'name'      => 'eBay',
                     'status'    => 0,
@@ -1166,7 +1166,7 @@ class ControllerExtensionOpenbay extends Controller {
         $this->load->model('catalog/manufacturer');
         $this->load->model('openbay/openbay');
         $this->load->model('tool/image');
-        if($this->ebay->addonLoad('openstock') == true) {
+        if($this->openbay->ebay->addonLoad('openstock') == true) {
             $this->load->model('openstock/openstock');
             $openstock_installed = true;
         } else {

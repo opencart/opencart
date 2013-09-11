@@ -4,6 +4,7 @@ final class Openbay {
 
     public function __construct($registry) {
         $this->registry = $registry;
+        $this->ebay = new Ebay($registry);
     }
 
     public function __get($name) {

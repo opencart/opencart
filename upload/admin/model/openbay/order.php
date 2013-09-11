@@ -104,7 +104,7 @@ class ModelOpenbayOrder extends Model{
         }
 
         if($this->config->get('openbay_status') == 1){
-            if($this->ebay->isEbayOrder($order_id) != false){
+            if($this->openbay->ebay->isEbayOrder($order_id) != false){
                 return 'eBay';
             }
         }

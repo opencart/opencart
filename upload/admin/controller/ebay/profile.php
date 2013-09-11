@@ -128,8 +128,8 @@ class ControllerEbayProfile extends Controller {
         $this->data['shipping_international_zones']     = $this->model_openbay_ebay->getShippingLocations();
         $this->data['templates']                        = $this->model_openbay_ebay_template->getAll();
         $this->data['types']                            = $this->model_openbay_ebay_profile->getTypes();
-        $this->data['dispatchTimes']                    = $this->ebay->getSetting('dispatch_time_max');
-        $this->data['countries']                        = $this->ebay->getSetting('countries');
+        $this->data['dispatchTimes']                    = $this->openbay->ebay->getSetting('dispatch_time_max');
+        $this->data['countries']                        = $this->openbay->ebay->getSetting('countries');
 
         if(is_array($this->data['dispatchTimes'])){
             ksort($this->data['dispatchTimes']);

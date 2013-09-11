@@ -827,7 +827,7 @@ final class Ebay {
                 }
             }
         }else{
-            $this->ebay->removeItemId($item_id);
+            $this->openbay->ebay->removeItemId($item_id);
             $this->log('putStockUpdate() - Listing not active, item id: '. $item_id .', status returned: '.$listing['statusActual']);
         }
     }

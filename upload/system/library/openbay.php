@@ -383,5 +383,15 @@ final class Openbay {
         
         return in_array($addon, $this->installed_modules);
     }
+
+    public function getUserByEmail($email) {
+        $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer` WHERE `email` = '".$this->db->escape($email)."'");
+
+        if($qry->num_rows){
+            return $qry->row['customer_id'];
+        }else{
+            return false;
+        }
+    }
 }
 ?>

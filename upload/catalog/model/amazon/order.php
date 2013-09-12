@@ -1,7 +1,5 @@
 <?php
-
 class ModelAmazonOrder extends Model {
-
     public function acknowledgeOrder($orderId) {
         $amazonOrderId = $this->getAmazonOrderId($orderId);
         
@@ -248,6 +246,5 @@ class ModelAmazonOrder extends Model {
         
         return $options;
     }
-
-    
 }
+?>

@@ -1,7 +1,6 @@
 <?php
-class ModelPlayProduct extends Model
-{
-    public function updateProduct($product_id, $status){
+class ModelPlayProduct extends Model  {
+    public function updateProduct($product_id, $status) {
         $this->db->query("
             UPDATE `" . DB_PREFIX . "play_product_insert` 
             SET `status` = '".(int)$status."' 
@@ -10,7 +9,7 @@ class ModelPlayProduct extends Model
         $this->openbay->play->log('updateProduct() - $product_id: '.$product_id.', $status: '.$status);
     }
     
-    public function addWarning($msg, $product_id){
+    public function addWarning($msg, $product_id) {
         $this->db->query("
             INSERT INTO `" . DB_PREFIX . "play_product_insert_error`
             SET
@@ -20,7 +19,7 @@ class ModelPlayProduct extends Model
         $this->openbay->play->log('addWarning() - $product_id: '.$product_id.', msg: '.$msg);
     }
     
-    public function removeAllWarnings($product_id){
+    public function removeAllWarnings($product_id) {
         $this->db->query("
             DELETE FROM `" . DB_PREFIX . "play_product_insert_error`
             WHERE `product_id` = '".(int)$product_id."'");
@@ -28,7 +27,7 @@ class ModelPlayProduct extends Model
         $this->openbay->play->log('removeAllWarnings() - $product_id: '.$product_id);
     }
 
-    public function getProduct($sku){
+    public function getProduct($sku) {
         $qry = $this->db->query("
             SELECT * FROM `" . DB_PREFIX . "product` `p`
             LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)
@@ -43,3 +42,4 @@ class ModelPlayProduct extends Model
         }
     }
 }
+?>

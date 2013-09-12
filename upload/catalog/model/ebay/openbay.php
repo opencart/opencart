@@ -1,6 +1,6 @@
 <?php
 class ModelEbayOpenbay extends Model{
-    public function importOrders($data){
+    public function importOrders($data) {
         $this->default_shipped_id         = $this->config->get('EBAY_DEF_SHIPPED_ID');
         $this->default_paid_id            = $this->config->get('EBAY_DEF_PAID_ID');
         $this->default_refunded_id        = $this->config->get('EBAY_DEF_REFUNDED_ID');
@@ -34,10 +34,9 @@ class ModelEbayOpenbay extends Model{
         }
     }
     
-    public function orderHandle($order){
+    public function orderHandle($order) {
         $this->load->model('checkout/order');
         $this->load->model('ebay/order');
-        $this->load->model('ebay/customer');
 
         /**
          * Check the order is not locked
@@ -218,7 +217,7 @@ class ModelEbayOpenbay extends Model{
         $this->model_ebay_order->lockDelete($order->smpId);
     }
     
-    private function create($order){
+    private function create($order) {
         if ($this->openbay->addonLoad('openstock')) {
             $openstock = true;
         }else{
@@ -390,7 +389,7 @@ class ModelEbayOpenbay extends Model{
         return $order_id;
     }
     
-    private function updateOrderWithConfirmedData($order_id, $order, $user){
+    private function updateOrderWithConfirmedData($order_id, $order, $user) {
         $this->load->model('localisation/currency');
         $this->load->model('catalog/product');
         $totals_language = $this->load->language('ebay/order');
@@ -548,7 +547,7 @@ class ModelEbayOpenbay extends Model{
         }
     }
     
-    private function handleUserAccount($order){
+    private function handleUserAccount($order) {
         $name_parts     = $this->openbay->splitName((string)$order->address->name);
         $user           = array();
         $user['fname']  = $name_parts['firstname'];
@@ -568,7 +567,7 @@ class ModelEbayOpenbay extends Model{
         }
 
         $user['email']  = (string)$order->user->email;
-        $user['id']     = $this->model_ebay_customer->getByEmail($user['email']);
+        $user['id']     = $this->openbay->getUserByEmail($user['email']);
 
         if($user['id'] != false){
             $this->db->query("UPDATE `" . DB_PREFIX . "customer` SET
@@ -596,7 +595,7 @@ class ModelEbayOpenbay extends Model{
         return $user;
     }
 
-    private function externalApplicationNotify($order_id){
+    private function externalApplicationNotify($order_id) {
         /* This is used by the Mosaic Fullfilment solutions @ www.mosaic-fs.co.uk */
         if ($this->openbay->addonLoad('mosaic') && !$this->mosaic->isOrderAdded($order_id)) {
             $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_code` = 'ebay.STD' WHERE `order_id` = '".(int)$order_id."' LIMIT 1");
@@ -610,7 +609,7 @@ class ModelEbayOpenbay extends Model{
         $this->openbay->orderNew($order_id);
     }
 
-    public function outputLog(){
+    public function outputLog() {
         header('Pragma: public');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
@@ -624,7 +623,7 @@ class ModelEbayOpenbay extends Model{
         exit();
     }
 
-    public function updateLog(){
+    public function updateLog() {
         header('Pragma: public');
         header('Expires: 0');
         header('Cache-Control: must-revalidate, post-check=0, pre-check=0');

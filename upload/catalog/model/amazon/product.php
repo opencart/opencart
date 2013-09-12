@@ -1,7 +1,5 @@
 <?php
-class ModelAmazonProduct extends Model
-{
-    
+class ModelAmazonProduct extends Model {
     public function setStatus($insertionId, $statusString) {
         $this->db->query("
             UPDATE `" . DB_PREFIX . "amazon_product`
@@ -33,7 +31,7 @@ class ModelAmazonProduct extends Model
         }
     }
     
-     public function insertError($data) {
+    public function insertError($data) {
         $this->db->query("
             INSERT INTO `" . DB_PREFIX . "amazon_product_error`
             SET `sku` = '" . $this->db->escape($data['sku']) . "',
@@ -49,11 +47,11 @@ class ModelAmazonProduct extends Model
             ");
      }
      
-     public function deleteErrors($insertionId) {
+    public function deleteErrors($insertionId) {
          $this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_error` WHERE `insertion_id` = '" . $this->db->escape($insertionId) . "'");
      }
      
-     public function setSubmitError($insertionId, $message) {
+    public function setSubmitError($insertionId, $message) {
         $skuRows = $this->db->query("SELECT `sku`
             FROM `" . DB_PREFIX . "amazon_product`
             WHERE `insertion_id` = '" . $this->db->escape($insertionId) . "'
@@ -70,7 +68,7 @@ class ModelAmazonProduct extends Model
         }
      }
      
-     //Copy from admin amazon model method
+    //Copy from admin amazon model method
     public function linkProduct($amazon_sku, $product_id, $var = '') {
         $count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazon_sku` = '" . $this->db->escape($amazon_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
         if($count['count'] == 0) {
@@ -111,8 +109,7 @@ class ModelAmazonProduct extends Model
         }
         return $result;
     }
-     
-    
+
     public function updateSearch($results) {
         foreach ($results as $result) {
             $resultsFound = count($result['results']);

@@ -1,6 +1,6 @@
 <?php
 class ModelPlayCustomer extends Model {
-    public function getCustomerId($email){
+    public function getCustomerId($email) {
         $qry = $this->db->query("
             SELECT * FROM `" . DB_PREFIX . "customer` 
             WHERE `email` = '".$this->db->escape($email)."' LIMIT 1");
@@ -14,7 +14,7 @@ class ModelPlayCustomer extends Model {
         }
     }
 
-    public function getCustomer($customer_id){
+    public function getCustomer($customer_id) {
 
         $this->openbay->play->log('Getting customer ID: '.$customer_id);
 
@@ -29,7 +29,7 @@ class ModelPlayCustomer extends Model {
         }
     }
 
-    public function createCustomer($email, $name){
+    public function createCustomer($email, $name) {
         
         $name = explode(' ', $name);
         $fname = $name[0];
@@ -48,3 +48,4 @@ class ModelPlayCustomer extends Model {
         return $this->db->getLastId();
     }
 }
+?>

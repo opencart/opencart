@@ -5,7 +5,7 @@ class ControllerAmazonProduct extends Controller{
         $this->load->language('catalog/product');
         $this->load->language('openbay/amazon');
         
-        $this->load->model('amazon/amazon');
+        $this->load->model('openbay/amazon');
         $this->load->model('catalog/product');
         $this->load->model('tool/image');
         
@@ -106,7 +106,7 @@ class ControllerAmazonProduct extends Controller{
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $dataArray = $this->request->post;
             
-            $this->model_amazon_amazon->saveProduct($product_id, $dataArray);
+            $this->model_openbay_amazon->saveProduct($product_id, $dataArray);
             
             if($dataArray['upload_after'] === 'true') {
                 $uploadResult = $this->uploadSaved();
@@ -127,14 +127,14 @@ class ControllerAmazonProduct extends Controller{
             unset($this->session->data['success']);
         }
         
-        $savedListingData = $this->model_amazon_amazon->getProduct($product_id, $variation);
+        $savedListingData = $this->model_openbay_amazon->getProduct($product_id, $variation);
         if(empty($savedListingData)) {
             $listingSaved = false;
         } else {
             $listingSaved = true;
         }
         
-        $errors = $this->model_amazon_amazon->getProductErrors($product_id);
+        $errors = $this->model_openbay_amazon->getProductErrors($product_id);
         foreach($errors as $error) {
             $error['message'] =  'Error for SKU: "' . $error['sku'] . '" - ' . $this->formatUrlsInText($error['message']);
             $this->data['errors'][] = $error;
@@ -290,8 +290,8 @@ class ControllerAmazonProduct extends Controller{
         } else {
             $this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
-        $this->load->model('amazon/amazon');
-        $this->model_amazon_amazon->removeAdvancedErrors($product_id);
+        $this->load->model('openbay/amazon');
+        $this->model_openbay_amazon->removeAdvancedErrors($product_id);
         $this->session->data['success'] = 'Errors removed';
         $this->redirect($this->url->link('amazon/product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
     }
@@ -306,12 +306,12 @@ class ControllerAmazonProduct extends Controller{
     private function uploadSaved() {
         $this->load->language('amazon/listing');
         $this->load->library('amazon');
-        $this->load->model('amazon/amazon');
+        $this->load->model('openbay/amazon');
         $logger = new Log('amazon_product.log');
         
         $logger->write('Uploading process started.');
         
-        $savedProducts = $this->model_amazon_amazon->getSavedProductsData();
+        $savedProducts = $this->model_openbay_amazon->getSavedProductsData();
         
         if(empty($savedProducts)) {
             $logger->write('No saved listings found. Uploading canceled.');
@@ -344,7 +344,7 @@ class ControllerAmazonProduct extends Controller{
                 break;
             }
             $logger->write('Product upload success');
-            $this->model_amazon_amazon->setProductUploaded($savedProduct['product_id'], $insertion_response['insertion_id'], $savedProduct['var']);
+            $this->model_openbay_amazon->setProductUploaded($savedProduct['product_id'], $insertion_response['insertion_id'], $savedProduct['var']);
         }
         
         if(!isset($result['status'])) {
@@ -413,7 +413,7 @@ class ControllerAmazonProduct extends Controller{
     private function fillDefaultValues($product_id, $fields_array, $var = '') {
         $this->load->model('catalog/product');
         $this->load->model('setting/setting');
-        $this->load->model('amazon/amazon');
+        $this->load->model('openbay/amazon');
         
         $openbay_settings = $this->model_setting_setting->getSetting('openbay_amazon');
         
@@ -520,14 +520,14 @@ class ControllerAmazonProduct extends Controller{
     
     private function fillSavedValues($product_id, $fields_array, $var = '') {
         
-        $this->load->model('amazon/amazon');
-        $savedListing = $this->model_amazon_amazon->getProduct($product_id, $var);
+        $this->load->model('openbay/amazon');
+        $savedListing = $this->model_openbay_amazon->getProduct($product_id, $var);
         
         $decoded_data = (array)json_decode($savedListing['data']);
         $saved_fields = (array)$decoded_data['fields'];
         
         //Show current quantity instead of last uploaded
-        $saved_fields['Quantity'] = $this->model_amazon_amazon->getProductQuantity($product_id, $var);
+        $saved_fields['Quantity'] = $this->model_openbay_amazon->getProductQuantity($product_id, $var);
         
         $filledArray = array();
         

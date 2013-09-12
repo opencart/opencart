@@ -2,10 +2,10 @@
 class ControllerOpenbayAmazonus extends Controller {
     
     public function allUpdate() {
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $this->load->model('catalog/product');
         
-        $itemLinks = $this->model_amazonus_amazonus->getProductLinks();
+        $itemLinks = $this->model_openbay_amazonus->getProductLinks();
         
         $ids = array();
         foreach($itemLinks as $link) {
@@ -116,7 +116,7 @@ class ControllerOpenbayAmazonus extends Controller {
     public function overview() {
         $this->load->model('setting/setting');
         $this->load->model('localisation/order_status');
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $this->load->model('sale/customer_group');
         
         $this->data = array_merge($this->data, $this->load->language('amazonus/overview'));
@@ -256,7 +256,7 @@ class ControllerOpenbayAmazonus extends Controller {
         
         $this->load->model('setting/setting');
         $this->load->model('localisation/order_status');
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $this->load->model('sale/customer_group');
         
         $settings = $this->model_setting_setting->getSetting('openbay_amazonus');
@@ -278,7 +278,7 @@ class ControllerOpenbayAmazonus extends Controller {
             $this->config->set('openbay_amazonus_enc_string1', $this->request->post['openbay_amazonus_enc_string1']);
             $this->config->set('openbay_amazonus_enc_string2', $this->request->post['openbay_amazonus_enc_string2']);
             
-            $this->model_amazonus_amazonus->scheduleOrders($settings);
+            $this->model_openbay_amazonus->scheduleOrders($settings);
             
             $this->session->data['success'] = $this->language->get('lang_setttings_updated');
             $this->redirect($this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'));
@@ -510,8 +510,8 @@ class ControllerOpenbayAmazonus extends Controller {
         );
         
         $this->data['token'] = $this->session->data['token']; 
-        $this->load->model('amazonus/amazonus');
-        $saved_products = $this->model_amazonus_amazonus->getSavedProducts();
+        $this->load->model('openbay/amazonus');
+        $saved_products = $this->model_openbay_amazonus->getSavedProducts();
         
         $this->data['saved_products'] = array();
         
@@ -534,20 +534,20 @@ class ControllerOpenbayAmazonus extends Controller {
     }
     
     public function install() {
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $this->load->model('setting/setting');
         $this->load->model('setting/extension');
 
-        $this->model_amazonus_amazonus->install();
+        $this->model_openbay_amazonus->install();
         $this->model_setting_extension->install('openbay', $this->request->get['extension']);
     }
     
     public function uninstall() {
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $this->load->model('setting/setting');
         $this->load->model('setting/extension');
 
-        $this->model_amazonus_amazonus->uninstall();
+        $this->model_openbay_amazonus->uninstall();
         $this->model_setting_extension->uninstall('openbay', $this->request->get['extension']);
         $this->model_setting_setting->deleteSetting($this->request->get['extension']);
     }
@@ -588,9 +588,9 @@ class ControllerOpenbayAmazonus extends Controller {
             $this->response->setOutput($result);
             return;
         }
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $this->load->library('amazonus');
-        $this->model_amazonus_amazonus->linkProduct($amazonus_sku, $product_id, $var);
+        $this->model_openbay_amazonus->linkProduct($amazonus_sku, $product_id, $var);
         $logger = new Log('amazonus_stocks.log');
         $logger->write('addItemLink() called for product id: ' . $product_id . ', amazonus sku: ' . $amazonus_sku . ', var: ' . $var);
         
@@ -629,28 +629,28 @@ class ControllerOpenbayAmazonus extends Controller {
             $this->response->setOutput($result);
             return;
         }
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         
-        $this->model_amazonus_amazonus->removeProductLink($amazonus_sku);
+        $this->model_openbay_amazonus->removeProductLink($amazonus_sku);
         
         $result = json_encode('ok');
         $this->response->setOutput($result);   
     }
     
     public function getItemLinksAjax() {
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $this->load->model('catalog/product');
         
-        $itemLinks = $this->model_amazonus_amazonus->getProductLinks();
+        $itemLinks = $this->model_openbay_amazonus->getProductLinks();
         $result = json_encode($itemLinks);
         $this->response->setOutput($result);   
     }
     
     public function getUnlinkedItemsAjax() {
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $this->load->model('catalog/product');
         
-        $unlinkedProducts = $this->model_amazonus_amazonus->getUnlinkedProducts();
+        $unlinkedProducts = $this->model_openbay_amazonus->getUnlinkedProducts();
         $result = json_encode($unlinkedProducts);
         $this->response->setOutput($result);  
     }
@@ -660,8 +660,8 @@ class ControllerOpenbayAmazonus extends Controller {
             return;
         }
         
-        $this->load->model('amazonus/amazonus');
-        $this->model_amazonus_amazonus->deleteSaved($this->request->get['product_id'], $this->request->get['var']);
+        $this->load->model('openbay/amazonus');
+        $this->model_openbay_amazonus->deleteSaved($this->request->get['product_id'], $this->request->get['var']);
     }
 }
 ?>

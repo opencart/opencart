@@ -988,8 +988,8 @@ class ControllerExtensionOpenbay extends Controller {
         }
 
         if ($this->config->get('amazon_status') == '1') {
-            $this->load->model('amazon/amazon');
-            $amazon_status = $this->model_amazon_amazon->getProductStatus($product_id);
+            $this->load->model('openbay/amazon');
+            $amazon_status = $this->model_openbay_amazon->getProductStatus($product_id);
 
             if ($amazon_status == 'processing') {
                 $markets[] = array(
@@ -1027,8 +1027,8 @@ class ControllerExtensionOpenbay extends Controller {
         }
 
         if ($this->config->get('amazonus_status') == '1') {
-            $this->load->model('amazonus/amazonus');
-            $amazonus_status = $this->model_amazonus_amazonus->getProductStatus($product_id);
+            $this->load->model('openbay/amazonus');
+            $amazonus_status = $this->model_openbay_amazonus->getProductStatus($product_id);
 
             if ($amazonus_status == 'processing') {
                 $markets[] = array(
@@ -1507,8 +1507,8 @@ class ControllerExtensionOpenbay extends Controller {
             }
 
             if ($this->config->get('amazon_status') == '1') {
-                $this->load->model('amazon/amazon');
-                $amazon_status = $this->model_amazon_amazon->getProductStatus($result['product_id']);
+                $this->load->model('openbay/amazon');
+                $amazon_status = $this->model_openbay_amazon->getProductStatus($result['product_id']);
                 
                 if($amazon_status == 'processing') {
                     $markets[] = array(
@@ -1542,8 +1542,8 @@ class ControllerExtensionOpenbay extends Controller {
             }
 
             if ($this->config->get('amazonus_status') == '1') {
-                $this->load->model('amazonus/amazonus');
-                $amazonus_status = $this->model_amazonus_amazonus->getProductStatus($result['product_id']);
+                $this->load->model('openbay/amazonus');
+                $amazonus_status = $this->model_openbay_amazonus->getProductStatus($result['product_id']);
 
                 if($amazonus_status == 'processing') {
                     $markets[] = array(

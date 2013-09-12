@@ -1,5 +1,5 @@
 <?php
-class ModelAmazonusListing extends Model {
+class ModelOpenbayAmazonusListing extends Model {
 
     private $tabs = array();
 

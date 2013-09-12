@@ -5,7 +5,7 @@ class ControllerAmazonusProduct extends Controller{
         $this->load->language('catalog/product');
         $this->load->language('openbay/amazonus');
         
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $this->load->model('catalog/product');
         $this->load->model('tool/image');
         
@@ -106,7 +106,7 @@ class ControllerAmazonusProduct extends Controller{
         if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
             $dataArray = $this->request->post;
             
-            $this->model_amazonus_amazonus->saveProduct($product_id, $dataArray);
+            $this->model_openbay_amazonus->saveProduct($product_id, $dataArray);
             
             if($dataArray['upload_after'] === 'true') {
                 $uploadResult = $this->uploadSaved();
@@ -127,14 +127,14 @@ class ControllerAmazonusProduct extends Controller{
             unset($this->session->data['success']);
         }
         
-        $savedListingData = $this->model_amazonus_amazonus->getProduct($product_id, $variation);
+        $savedListingData = $this->model_openbay_amazonus->getProduct($product_id, $variation);
         if(empty($savedListingData)) {
             $listingSaved = false;
         } else {
             $listingSaved = true;
         }
         
-        $errors = $this->model_amazonus_amazonus->getProductErrors($product_id);
+        $errors = $this->model_openbay_amazonus->getProductErrors($product_id);
         foreach($errors as $error) {
             $error['message'] =  'Error for SKU: "' . $error['sku'] . '" - ' . $this->formatUrlsInText($error['message']);
             $this->data['errors'][] = $error;
@@ -266,8 +266,8 @@ class ControllerAmazonusProduct extends Controller{
         } else {
             $this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
         }
-        $this->load->model('amazonus/amazonus');
-        $this->model_amazonus_amazonus->removeAdvancedErrors($product_id);
+        $this->load->model('openbay/amazonus');
+        $this->model_openbay_amazonus->removeAdvancedErrors($product_id);
         $this->session->data['success'] = 'Errors removed';
         $this->redirect($this->url->link('amazonus/product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
     }
@@ -282,12 +282,12 @@ class ControllerAmazonusProduct extends Controller{
     private function uploadSaved() {
         $this->load->language('amazonus/listing');
         $this->load->library('amazonus');
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         $logger = new Log('amazonus_product.log');
         
         $logger->write('Uploading process started.');
         
-        $savedProducts = $this->model_amazonus_amazonus->getSavedProductsData();
+        $savedProducts = $this->model_openbay_amazonus->getSavedProductsData();
         
         if(empty($savedProducts)) {
             $logger->write('No saved listings found. Uploading canceled.');
@@ -320,7 +320,7 @@ class ControllerAmazonusProduct extends Controller{
                 break;
             }
             $logger->write('Product upload success');
-            $this->model_amazonus_amazonus->setProductUploaded($savedProduct['product_id'], $insertion_response['insertion_id'], $savedProduct['var']);
+            $this->model_openbay_amazonus->setProductUploaded($savedProduct['product_id'], $insertion_response['insertion_id'], $savedProduct['var']);
         }
         
         if(!isset($result['status'])) {
@@ -389,7 +389,7 @@ class ControllerAmazonusProduct extends Controller{
     private function fillDefaultValues($product_id, $fields_array, $var = '') {
         $this->load->model('catalog/product');
         $this->load->model('setting/setting');
-        $this->load->model('amazonus/amazonus');
+        $this->load->model('openbay/amazonus');
         
         $openbay_settings = $this->model_setting_setting->getSetting('openbay_amazonus');
         
@@ -491,14 +491,14 @@ class ControllerAmazonusProduct extends Controller{
     
     private function fillSavedValues($product_id, $fields_array, $var = '') {
         
-        $this->load->model('amazonus/amazonus');
-        $savedListing = $this->model_amazonus_amazonus->getProduct($product_id, $var);
+        $this->load->model('openbay/amazonus');
+        $savedListing = $this->model_openbay_amazonus->getProduct($product_id, $var);
         
         $decoded_data = (array)json_decode($savedListing['data']);
         $saved_fields = (array)$decoded_data['fields'];
         
         //Show current quantity instead of last uploaded
-        $saved_fields['Quantity'] = $this->model_amazonus_amazonus->getProductQuantity($product_id, $var);
+        $saved_fields['Quantity'] = $this->model_openbay_amazonus->getProductQuantity($product_id, $var);
         
         $filledArray = array();
         

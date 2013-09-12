@@ -1,6 +1,6 @@
 <?php
 
-class ModelAmazonAmazon extends Model {
+class ModelOpenbayAmazon extends Model {
     
     public function scheduleOrders($data) {
         $log = new Log('amazon.log');

@@ -1,6 +1,7 @@
 <?php
 final class Openbay {
     private $registry;
+    private $installed_modules = array();
 
     public function __construct($registry) {
         $this->registry = $registry;
@@ -357,6 +358,30 @@ final class Openbay {
                 return false;
             }
         }
+    }
+    
+    /**
+     * Checks if a module is installed and enabled
+     * @param string $addon name of the module
+     * @return bool True - module is installed and enabled, False - otherwise
+     */
+    public function addonLoad($addon) {
+        $addon = strtolower((string) $addon); //ensure the addon name is a string value.
+        
+        if (empty($this->installed_modules)) {
+            $this->installed_modules = array();
+            
+            $rows = $this->db->query("
+                SELECT `code`
+                FROM " . DB_PREFIX . "extension
+            ")->rows;
+            
+            foreach ($rows as $row) {
+                $this->installed_modules[] = strtolower($row['code']);
+            }
+        }
+        
+        return in_array($addon, $this->installed_modules);
     }
 }
 ?>

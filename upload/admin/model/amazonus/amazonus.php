@@ -286,7 +286,7 @@ class ModelAmazonusAmazonus extends Model {
         $rows = $this->db->query($query)->rows;
         
         $this->load->library('amazonus');
-        if($this->openbay->amazonus->addonLoad('openstock') == true) {
+        if ($this->openbay->addonLoad('openstock')) {
             $this->load->model('openstock/openstock');
             $this->load->model('tool/image');
             $rowsWithVar = array();
@@ -309,7 +309,7 @@ class ModelAmazonusAmazonus extends Model {
     
     public function getUnlinkedProducts() {
         $this->load->library('amazonus');
-        if($this->openbay->amazonus->addonLoad('openstock') == true) {
+        if ($this->openbay->addonLoad('openstock')) {
             
             $rows = $this->db->query("
                 SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combi`, `p`.`has_option`
@@ -426,7 +426,7 @@ class ModelAmazonusAmazonus extends Model {
         
         $result = null;
         
-        if($var !== '' && $this->openbay->amazonus->addonLoad('openstock')) {
+        if($var !== '' && $this->openbay->addonLoad('openstock')) {
             $this->load->model('tool/image');
             $this->load->model('openstock/openstock');
             $optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);

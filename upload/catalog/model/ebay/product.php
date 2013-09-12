@@ -105,7 +105,7 @@ class ModelEbayProduct extends Model{
             ");
         }
 
-        if($this->openbay->ebay->addonLoad('openstock') == true){
+        if ($this->openbay->addonLoad('openstock')) {
             $openstock = true;
             $this->load->model('openstock/openstock');
         }else{

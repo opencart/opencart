@@ -187,7 +187,7 @@ class ControllerAmazonusProduct extends Controller{
         $this->data['token'] = $this->session->data['token'];
         $this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
          
-        if($this->openbay->amazonus->addonLoad('openstock') == true) {
+        if ($this->openbay->addonLoad('openstock')) {
             $this->load->model('openstock/openstock');
             $this->data['options'] = $this->model_openstock_openstock->getProductOptionStocks($product_id);
         } else {
@@ -442,7 +442,7 @@ class ControllerAmazonusProduct extends Controller{
         }
         
         $this->load->library('amazonus');
-        if($var !== '' && $this->openbay->amazonus->addonLoad('openstock')) {
+        if ($var !== '' && $this->openbay->addonLoad('openstock')) {
             $this->load->model('tool/image');
             $this->load->model('openstock/openstock');
             $optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);

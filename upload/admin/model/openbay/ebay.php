@@ -245,7 +245,7 @@ class ModelOpenbayEbay extends Model{
         $start = $limit * $page - 1;
 
         $has_option = '';
-        if($this->openbay->ebay->addonLoad('openstock') == true){
+        if ($this->openbay->addonLoad('openstock') ) {
             $this->load->model('openstock/openstock');
             $has_option = '`p`.`has_option`, ';
         }
@@ -284,7 +284,7 @@ class ModelOpenbayEbay extends Model{
 
                 $data[$row['ebay_item_id']]['options'] = 0;
 
-                if((isset($row['has_option']) && $row['has_option'] == 1) && $this->openbay->ebay->addonLoad('openstock') == true){
+                if ((isset($row['has_option']) && $row['has_option'] == 1) && $this->openbay->addonLoad('openstock')) {
                     $data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
                 }
 
@@ -633,8 +633,8 @@ class ModelOpenbayEbay extends Model{
     public function getProductStock($id){
         $res = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".$this->db->escape($id)."' LIMIT 1");
 
-        if(isset($res->row['has_option']) && $res->row['has_option'] == 1){
-            if($this->openbay->ebay->addonLoad('openstock') == true){
+        if (isset($res->row['has_option']) && $res->row['has_option'] == 1) {
+            if ($this->openbay->addonLoad('openstock')) {
                 $this->load->model('openstock/openstock');
                 $this->load->model('tool/image');
                 $variant        = $this->model_openstock_openstock->getProductOptionStocks((int)$id);

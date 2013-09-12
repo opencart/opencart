@@ -333,7 +333,7 @@ final class Ebay {
         $this->load->model('tool/image');
 
         $has_option = '';
-        if($this->addonLoad('openstock') == true) {
+        if ($this->openbay->addonLoad('openstock') == true) {
             $this->load->model('openstock/openstock');
             $has_option = '`p`.`has_option`, ';
         }
@@ -366,7 +366,7 @@ final class Ebay {
 
                 $data[$row['ebay_item_id']]['options'] = 0;
 
-                if((isset($row['has_option']) && $row['has_option'] == 1) && $this->addonLoad('openstock') == true) {
+                if ((isset($row['has_option']) && $row['has_option'] == 1) && $this->openbay->addonLoad('openstock') == true) {
                     $data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
                 }
 
@@ -642,34 +642,6 @@ final class Ebay {
         return $addons;
     }
 
-    public function addonLoad($addon) {
-    /*
-     * addonLoad
-     *
-     * Loads a 3rd party module for OpenBay to use.
-     * @param $addon
-     * @return bool
-     */
-        $addon = (string)$addon; //ensure the addon name is a string value.
-
-        $this->log('addonLoad() - Testing for addon: '.$addon);
-        
-        if(file_exists(DIR_SYSTEM."ebay_addon/".$addon.".php")) {
-            include_once(DIR_SYSTEM."ebay_addon/".$addon.".php");
-            
-            if(empty($this->addon) || !is_object($this->addon)) {
-                $this->addon = new stdClass();
-            }
-        
-            $this->addon->$addon = new $addon;
-            $this->log('addonLoad() - Addon found: '.$addon);
-            return true;
-        }else{
-            $this->log('addonLoad() - Addon not installed: '.$addon);
-            return false;
-        }
-    }
-
     private function eBayShippingStatus($item, $txn, $status, $tracking_no = '', $carrier_id = '') {
         $this->log('eBayShippingStatus() - Update order shipping status (Item: '.$item.',Txn: '.$txn.',Status:'.$status.',Tracking: '.$tracking_no.', Carrier: '.$carrier_id.')');
         return $this->openbay_call('order/shippingStatus/', array('item' => $item, 'txn' => $txn, 'status' => $status, 'carrier' => $carrier_id, 'tracking' => $tracking_no));
@@ -684,7 +656,7 @@ final class Ebay {
         $this->log('getSaleRecord() - Get ebay sale record ID: '.$saleId);
         return $this->openbay_call('order/getSmpRecord/', array('id' => $saleId));
     }
-
+    
     public function isEbayOrder($id) {
         $this->log('isEbayOrder() - Is eBay order? ID: '.$id);
 
@@ -703,7 +675,7 @@ final class Ebay {
     public function orderNew($order_id) {
         $this->log('orderNew() - Order id:'.$order_id.' passed');
         if(!$this->isEbayOrder($order_id)) {
-            if($this->addonLoad('openstock') == true) {
+            if ($this->openbay->addonLoad('openstock') == true) {
                 $this->log('orderNew() - Loop over products (with OpenStock)');
 
                 $os_array = $this->osProducts($order_id);
@@ -917,7 +889,7 @@ final class Ebay {
         $item_id = $this->getEbayItemId($product_id);
         if($item_id != false) {
             //if so update stock or end item (based on qty)
-            if($this->addonLoad('openstock') == true && (isset($data['has_option']) && $data['has_option'] == 1)) {
+            if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
                     $varData = array();
                     $this->load->model('tool/image');
                     $this->load->model('catalog/product');
@@ -992,7 +964,7 @@ final class Ebay {
             $this->log('productUpdateListen() - Got item: '.$old_item_id);
             if($old_item_id != false) {
                 //yes, check if its a multi variant listing
-                if($this->addonLoad('openstock') == true && (isset($data['has_option']) && $data['has_option'] == 1)) {
+                if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
                     //yes, mutli variant listing
                     $this->log('productUpdateListen() - multi variant items relist not supported');
                 }else{

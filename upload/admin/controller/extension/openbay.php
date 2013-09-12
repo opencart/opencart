@@ -1166,7 +1166,7 @@ class ControllerExtensionOpenbay extends Controller {
         $this->load->model('catalog/manufacturer');
         $this->load->model('openbay/openbay');
         $this->load->model('tool/image');
-        if($this->openbay->ebay->addonLoad('openstock') == true) {
+        if ($this->openbay->addonLoad('openstock')) {
             $this->load->model('openstock/openstock');
             $openstock_installed = true;
         } else {

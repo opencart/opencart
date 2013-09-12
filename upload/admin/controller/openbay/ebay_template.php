@@ -1,5 +1,5 @@
 <?php
-class ControllerEbayTemplate extends Controller {
+class ControllerOpenbayEbayTemplate extends Controller {
 
     private $error = array();
 
@@ -29,7 +29,7 @@ class ControllerEbayTemplate extends Controller {
             unset($this->session->data['success']);
         }
 
-        $this->data['btn_add']  = $this->url->link('ebay/template/add', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['btn_add']  = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['templates'] = $this->model_openbay_ebay_template->getAll();
         $this->data['token']    = $this->session->data['token'];
 
@@ -54,7 +54,7 @@ class ControllerEbayTemplate extends Controller {
         );
 
         $this->data['breadcrumbs'][] = array(
-            'href' => $this->url->link('ebay/template/listAll', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL'),
             'text' => $this->language->get('lang_heading'),
             'separator' => ' :: '
         );
@@ -68,15 +68,15 @@ class ControllerEbayTemplate extends Controller {
         $this->load->model('openbay/ebay_template');
 
         $this->data['page_title']   = $this->data['lang_title_list_add'];
-        $this->data['btn_save']     = $this->url->link('ebay/template/add', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['cancel']       = $this->url->link('ebay/template/listAll', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['btn_save']     = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['cancel']       = $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL');
 
         if ($this->request->post && $this->templateValidate()) {
             $this->session->data['success'] = $this->data['lang_added'];
 
             $this->model_openbay_ebay_template->add($this->request->post);
 
-            $this->redirect($this->url->link('ebay/template/listAll&token=' . $this->session->data['token'], 'SSL'));
+            $this->redirect($this->url->link('openbay/ebay_template/listAll&token=' . $this->session->data['token'], 'SSL'));
         }
 
         $this->templateForm();
@@ -85,14 +85,14 @@ class ControllerEbayTemplate extends Controller {
     public function delete(){
         $this->load->model('openbay/ebay_template');
 
-        if (!$this->user->hasPermission('modify', 'ebay/template')) {
+        if (!$this->user->hasPermission('modify', 'openbay/ebay_template')) {
             $this->error['warning'] = $this->language->get('invalid_permission');
         }else{
             if (isset($this->request->get['template_id'])) {
                 $this->model_openbay_ebay_template->delete($this->request->get['template_id']);
             }
         }
-        $this->redirect($this->url->link('ebay/template/listAll&token=' . $this->session->data['token'], 'SSL'));
+        $this->redirect($this->url->link('openbay/ebay_template/listAll&token=' . $this->session->data['token'], 'SSL'));
     }
 
     public function edit(){
@@ -101,8 +101,8 @@ class ControllerEbayTemplate extends Controller {
         $this->load->model('openbay/ebay_template');
 
         $this->data['page_title']   = $this->data['lang_title_list_edit'];
-        $this->data['btn_save']     = $this->url->link('ebay/template/edit', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['cancel']       = $this->url->link('ebay/template/listAll', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['btn_save']     = $this->url->link('openbay/ebay_template/edit', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['cancel']       = $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL');
 
         if ($this->request->post && $this->templateValidate()) {
 
@@ -110,7 +110,7 @@ class ControllerEbayTemplate extends Controller {
 
             $this->model_openbay_ebay_template->edit($this->request->post['template_id'], $this->request->post);
 
-            $this->redirect($this->url->link('ebay/template/listAll&token=' . $this->session->data['token'], 'SSL'));
+            $this->redirect($this->url->link('openbay/ebay_template/listAll&token=' . $this->session->data['token'], 'SSL'));
         }
 
         $this->templateForm();
@@ -196,7 +196,7 @@ class ControllerEbayTemplate extends Controller {
     }
 
     private function templateValidate() {
-        if (!$this->user->hasPermission('modify', 'ebay/template')) {
+        if (!$this->user->hasPermission('modify', 'openbay/ebay_template')) {
             $this->error['warning'] = $this->language->get('invalid_permission');
         }
 

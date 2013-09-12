@@ -89,7 +89,7 @@ function upload() {
         },	
         success: function(data) {
             if(data == null) {
-                alert('Error. No response from amazonus/product/uploadSaved.');
+                alert('Error. No response from openbay/amazonus_product/uploadSaved.');
                 return;
             } else if(data['status'] == 'ok') {
                 alert('<?php echo $lang_uploaded_alert; ?>');

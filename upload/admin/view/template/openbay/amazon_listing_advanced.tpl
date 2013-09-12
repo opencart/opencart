@@ -667,7 +667,7 @@ $('.browseNode').live('click', function(){
     nodeStringSimple = '';
 
     $.ajax({
-        url: 'index.php?route=amazon/listing/getBrowseNodes&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/amazon_listing/getBrowseNodes&token=<?php echo $token; ?>',
         type: 'POST',
         data: { marketplaceId: market},
         dataType: 'json',
@@ -713,7 +713,7 @@ $('.nodeSelect').live('change', function(){
     nodeStringSimple += parentNodeName+' > ';
 
     $.ajax({
-        url: 'index.php?route=amazon/listing/getBrowseNodes&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/amazon_listing/getBrowseNodes&token=<?php echo $token; ?>',
         type: 'POST',
         data: { marketplaceId: market, node: node},
         dataType: 'json',

@@ -24,8 +24,8 @@ class ModelOpenbayEbayTemplate extends Model {
 
         if($qry->num_rows){
             $row                = $qry->row;
-            $row['link_edit']   = HTTPS_SERVER . 'index.php?route=ebay/template/edit&token=' . $this->session->data['token'].'&template_id='.$row['template_id'];
-            $row['link_delete'] = HTTPS_SERVER . 'index.php?route=ebay/template/delete&token=' . $this->session->data['token'].'&template_id='.$row['template_id'];
+            $row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_template/edit&token=' . $this->session->data['token'].'&template_id='.$row['template_id'];
+            $row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_template/delete&token=' . $this->session->data['token'].'&template_id='.$row['template_id'];
             
             return $row;
         }else{
@@ -39,8 +39,8 @@ class ModelOpenbayEbayTemplate extends Model {
         if($qry->num_rows){
             $templates = array();
             foreach($qry->rows as $row){
-                $row['link_edit']   = HTTPS_SERVER . 'index.php?route=ebay/template/edit&token=' . $this->session->data['token'].'&template_id='.$row['template_id'];
-                $row['link_delete'] = HTTPS_SERVER . 'index.php?route=ebay/template/delete&token=' . $this->session->data['token'].'&template_id='.$row['template_id'];
+                $row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_template/edit&token=' . $this->session->data['token'].'&template_id='.$row['template_id'];
+                $row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_template/delete&token=' . $this->session->data['token'].'&template_id='.$row['template_id'];
                 $templates[]         = $row;
             }
             

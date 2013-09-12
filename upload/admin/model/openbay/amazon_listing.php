@@ -102,7 +102,6 @@ class ModelOpenbayAmazonListing extends Model {
             'condition_note' => $data['condition_note'],
             'start_selling' => $data['start_selling'],
             'restock_date' => $data['restock_date'],
-            
             'marketplace' => $data['marketplace'],
             'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/listing',
             'product_id' => $data['product_id'],

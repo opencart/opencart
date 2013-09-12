@@ -162,7 +162,7 @@ function doSearch(){
     $('#search_string').val($.trim($('#search_string').val()));
 
     $.ajax({
-        url: 'index.php?route=amazonus/listing/search&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/amazonus_listing/search&token=<?php echo $token; ?>',
         type: 'POST',
         dataType: 'json',
         data: {search_string : encodeURIComponent($('#search_string').val())},
@@ -229,7 +229,7 @@ function doSearch(){
 
 function getProduct(asin){
     $.ajax({
-        url: 'index.php?route=amazonus/listing/getProductByAsin&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/amazonus_listing/getProductByAsin&token=<?php echo $token; ?>',
         type: 'POST',
         dataType: 'json',
         data: {asin : asin },
@@ -261,7 +261,7 @@ function getProduct(asin){
 
 function getBestPrice() {
     $.ajax({
-        url: 'index.php?route=amazonus/listing/bestPrice&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/amazonus_listing/bestPrice&token=<?php echo $token; ?>',
         type: 'POST',
         dataType: 'json',
         data: $('form input[name="asin"], form select[name="condition"]'),

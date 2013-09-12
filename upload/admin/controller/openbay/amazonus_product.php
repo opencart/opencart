@@ -1,5 +1,5 @@
 <?php
-class ControllerAmazonusProduct extends Controller{
+class ControllerOpenbayAmazonusProduct extends Controller{
     
     public function index() {
         $this->load->language('catalog/product');
@@ -118,7 +118,7 @@ class ControllerAmazonusProduct extends Controller{
                 }
             } else {
                 $this->session->data['success'] = $this->language->get('saved_localy_text');
-                $this->redirect($this->url->link('amazonus/product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
+                $this->redirect($this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
             }
         }
         
@@ -175,15 +175,15 @@ class ControllerAmazonusProduct extends Controller{
         
 
          if($listingSaved) {
-            $this->data['template_parser_url'] = $this->url->link('amazonus/product/parseTemplateAjax&edit_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['template_parser_url'] = $this->url->link('openbay/amazonus_product/parseTemplateAjax&edit_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
         } else {
-            $this->data['template_parser_url'] = $this->url->link('amazonus/product/parseTemplateAjax&product_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['template_parser_url'] = $this->url->link('openbay/amazonus_product/parseTemplateAjax&product_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
         }
         
-        $this->data['url_remove_errors'] = $this->url->link('amazonus/product/removeErrors', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
+        $this->data['url_remove_errors'] = $this->url->link('openbay/amazonus_product/removeErrors', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
         $this->data['cancel_url'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $this->data['saved_listings_url'] = $this->url->link('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['main_url'] = $this->url->link('amazonus/product', 'token=' . $this->session->data['token'] . $url, 'SSL');
+        $this->data['main_url'] = $this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $this->data['token'] = $this->session->data['token'];
         $this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
          
@@ -269,7 +269,7 @@ class ControllerAmazonusProduct extends Controller{
         $this->load->model('openbay/amazonus');
         $this->model_openbay_amazonus->removeAdvancedErrors($product_id);
         $this->session->data['success'] = 'Errors removed';
-        $this->redirect($this->url->link('amazonus/product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
+        $this->redirect($this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
     }
     
     public function uploadSavedAjax() {
@@ -374,11 +374,11 @@ class ControllerAmazonusProduct extends Controller{
                         $result = $json_decoded;
                     } else {
                         $result = array('status' => 'error');
-                        $log->write("admin/amazon/product/parseTemplateAjax failed to parse template response: " . $response);
+                        $log->write("admin/openbay/amazon_product/parseTemplateAjax failed to parse template response: " . $response);
                     }
                 }
             } else {
-                $log->write("admin/amazonus/product/parseTemplateAjax failed calling productv2/GetTemplateXml with params: " . print_r($request, true));
+                $log->write("admin/openbay/amazonus_product/parseTemplateAjax failed calling productv2/GetTemplateXml with params: " . print_r($request, true));
             }
         }
             

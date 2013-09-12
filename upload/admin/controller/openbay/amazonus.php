@@ -365,7 +365,7 @@ class ControllerOpenbayAmazonus extends Controller {
         $this->data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
         $this->data['subscription_url'] = $this->url->link('openbay/amazonus/subscription', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['itemLinks_url'] = $this->url->link('amazonus/product/linkItems', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['itemLinks_url'] = $this->url->link('openbay/amazonus_product/linkItems', 'token=' . $this->session->data['token'], 'SSL');
 
         $this->data['openbay_amazonus_notify_admin'] = isset($settings['openbay_amazonus_notify_admin']) ? $settings['openbay_amazonus_notify_admin'] : '';
        
@@ -523,12 +523,12 @@ class ControllerOpenbayAmazonus extends Controller {
                 'product_sku' => $saved_product['product_sku'],
                 'amazonus_sku' => $saved_product['amazonus_sku'],
                 'var' => $saved_product['var'],
-                'edit_link' => $this->url->link('amazonus/product', 'token=' . $this->session->data['token'] . '&product_id=' . $saved_product['product_id'] . '&var=' . $saved_product['var'], 'SSL'),
+                'edit_link' => $this->url->link('openbay/amazonus_product', 'token=' . $this->session->data['token'] . '&product_id=' . $saved_product['product_id'] . '&var=' . $saved_product['var'], 'SSL'),
             );
         } 
         
         $this->data['deleteSavedAjax'] = $this->url->link('openbay/amazonus/deleteSavedAjax', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['uploadSavedAjax'] = $this->url->link('amazonus/product/uploadSavedAjax', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['uploadSavedAjax'] = $this->url->link('openbay/amazonus_product/uploadSavedAjax', 'token=' . $this->session->data['token'], 'SSL');
         
         $this->response->setOutput($this->render());
     }

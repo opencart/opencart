@@ -549,7 +549,7 @@ class ControllerOpenbayAmazon extends Controller {
     
     public function getOpenstockOptionsAjax() {
         $options = array();
-        if($this->openbay->amazon->addonLoad('openstock') == true && isset($this->request->get['product_id'])) {
+        if($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
             $this->load->model('openstock/openstock');
             $this->load->model('tool/image');
             $options = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
@@ -577,7 +577,7 @@ class ControllerOpenbayAmazon extends Controller {
         $logger = new Log('amazon_stocks.log');
         $logger->write('addItemLink() called for product id: ' . $product_id . ', amazon sku: ' . $amazon_sku . ', var: ' . $var);
         
-        if($var != '' && $this->openbay->amazon->addonLoad('openstock') == true) {
+        if($var != '' && $this->openbay->addonLoad('openstock')) {
             $logger->write('Using openStock');
             $this->load->model('tool/image');
             $this->load->model('openstock/openstock');

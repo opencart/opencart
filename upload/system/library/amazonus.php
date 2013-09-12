@@ -37,7 +37,7 @@ class Amazonus {
             $logger->write('orderNew() called with order id: ' . $orderId);
 
             //Stock levels update
-            if($this->addonLoad('openstock') == true){
+            if ($this->openbay->addonLoad('openstock') == true) {
                 $logger->write('openStock found installed.');
 
                 $osProducts = $this->osProducts($orderId);
@@ -72,7 +72,7 @@ class Amazonus {
         $logger = new Log('amazonus_stocks.log');
         $logger->write('productUpdateListen called for product id: ' . $productId);
         
-        if($this->addonLoad('openstock') == true && (isset($data['has_option']) && $data['has_option'] == 1)) {
+        if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
             $logger->write('openStock found installed and product has options.');
             $quantityData = array();
             foreach($data['product_option_stock'] as $optStock) {
@@ -464,42 +464,6 @@ class Amazonus {
         }
 
         return $passArray;
-    }
-    
-    /*
-     * addonLoad (copy from ebay library)
-     *
-     * Loads a 3rd party module for OpenBay to use.
-     * @param $addon
-     * @return bool
-     */
-    public function addonLoad($addon){
-        $addon = (string)$addon; //ensure the addon name is a string value.
-
-
-        if(file_exists(DIR_SYSTEM."ebay_addon/".$addon.".php"))
-        {
-            if($addon == "openstock") {
-                $isInstalled = $this->db->query("
-                    SELECT COUNT(*) as count FROM `" . DB_PREFIX . "extension`
-                    WHERE `code` = 'openstock'")->row;
-                if($isInstalled['count'] == 0) {
-                    return false;
-                }
-            }
-            
-            include_once(DIR_SYSTEM."ebay_addon/".$addon.".php");
-            
-            if(empty($this->addon) || !is_object($this->addon))
-            {
-                $this->addon = new stdClass();
-            }
-        
-            $this->addon->$addon = new $addon;
-            return true;
-        }else{
-            return false;
-        }
     }
 
     public function validate(){

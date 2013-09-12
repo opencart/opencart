@@ -570,7 +570,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->db->query("TRUNCATE `" . DB_PREFIX . "option_value`");
                 $this->db->query("TRUNCATE `" . DB_PREFIX . "option_value_description`");
 
-                if ($this->openbay->ebay->addonLoad('openstock') == true) {
+                if ($this->openbay->addonLoad('openstock')) {
                     $this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
                 }
 
@@ -1043,7 +1043,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
             $product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
-            if ($this->openbay->ebay->addonLoad('openstock') == true && $product_info['has_option'] == 1) {
+            if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
                 $this->load->model('openstock/openstock');
                 $this->data['addon']['openstock'] = true;
                 $product_info['options'] = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
@@ -1181,7 +1181,7 @@ class ControllerOpenbayOpenbay extends Controller {
                 $this->data['token']    = $this->session->data['token'];
                 $product_info           = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
-                if ($this->openbay->ebay->addonLoad('openstock') == true && $product_info['has_option'] == 1) {
+                if ($this->openbay->addonLoad('openstock') && $product_info['has_option'] == 1) {
                     $this->load->model('openstock/openstock');
                     $this->data['addon']['openstock'] = true;
                     $product_info['options'] = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
@@ -1316,7 +1316,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
                 $products = array();
 
-                if ($this->openbay->ebay->addonLoad('openstock') == true) {
+                if ($this->openbay->addonLoad('openstock')) {
                     $openstock = 1;
                 }else{
                     $openstock = 0;

@@ -219,7 +219,7 @@ class ModelEbayOpenbay extends Model{
     }
     
     private function create($order){
-        if($this->openbay->ebay->addonLoad('openstock') == true){
+        if ($this->openbay->addonLoad('openstock')) {
             $openstock = true;
         }else{
             $openstock = false;
@@ -598,7 +598,7 @@ class ModelEbayOpenbay extends Model{
 
     private function externalApplicationNotify($order_id){
         /* This is used by the Mosaic Fullfilment solutions @ www.mosaic-fs.co.uk */
-        if($this->openbay->ebay->addonLoad('mosaicfs') == true && !$this->mosaic->isOrderAdded($order_id)){
+        if ($this->openbay->addonLoad('mosaic') && !$this->mosaic->isOrderAdded($order_id)) {
             $this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_code` = 'ebay.STD' WHERE `order_id` = '".(int)$order_id."' LIMIT 1");
             $this->mosaic->sendOrder($order_id, 'PP', '');
             $this->openbay->ebay->log('Mosaic module has been notified about order ID: '.$order_id);

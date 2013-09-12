@@ -4,7 +4,7 @@ class ControllerEbayProfile extends Controller {
     private $error = array();
 
     public function profileAll() {
-        $this->data = array_merge($this->data, $this->load->language('ebay/profile'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/ebay_profile'));
 
         $this->load->model('openbay/ebay_profile');
 
@@ -65,7 +65,7 @@ class ControllerEbayProfile extends Controller {
     }
 
     public function add() {
-        $this->data = array_merge($this->data, $this->load->language('ebay/profile'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/ebay_profile'));
 
         $this->load->model('openbay/ebay_profile');
 
@@ -101,7 +101,7 @@ class ControllerEbayProfile extends Controller {
     }
 
     public function edit() {
-        $this->data = array_merge($this->data, $this->load->language('ebay/profile'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/ebay_profile'));
 
         $this->load->model('openbay/ebay_profile');
 
@@ -291,7 +291,7 @@ class ControllerEbayProfile extends Controller {
     public function profileGet(){
         $this->load->model('openbay/ebay_profile');
         $this->load->model('openbay/ebay');
-        $this->load->language('ebay/profile');
+        $this->load->language('openbay/ebay_profile');
 
         $profile_info = $this->model_openbay_ebay_profile->get($this->request->get['ebay_profile_id']);
         $zones = $this->model_openbay_ebay->getShippingLocations();

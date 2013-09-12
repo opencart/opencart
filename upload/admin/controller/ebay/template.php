@@ -4,7 +4,7 @@ class ControllerEbayTemplate extends Controller {
     private $error = array();
 
     public function listAll(){
-        $this->data = array_merge($this->data, $this->load->language('ebay/template'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/ebay_template'));
 
         $this->load->model('openbay/ebay_template');
 
@@ -63,7 +63,7 @@ class ControllerEbayTemplate extends Controller {
     }
 
     public function add(){
-        $this->data = array_merge($this->data, $this->load->language('ebay/template'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/ebay_template'));
 
         $this->load->model('openbay/ebay_template');
 
@@ -96,7 +96,7 @@ class ControllerEbayTemplate extends Controller {
     }
 
     public function edit(){
-        $this->data = array_merge($this->data, $this->load->language('ebay/template'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/ebay_template'));
 
         $this->load->model('openbay/ebay_template');
 

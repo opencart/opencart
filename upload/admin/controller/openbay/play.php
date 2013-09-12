@@ -24,7 +24,7 @@ class ControllerOpenbayPlay extends Controller {
     }
 
     public function index() {
-        $this->data = array_merge($this->data, $this->load->language('play/main'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/play_main'));
 
         $this->document->setTitle('OpenBay Pro for Play.com');
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -73,7 +73,7 @@ class ControllerOpenbayPlay extends Controller {
     }
 
     public function settings() {
-        $this->data = array_merge($this->data, $this->load->language('play/settings'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/play_settings'));
 
         $this->load->model('setting/setting');
         $this->load->model('openbay/play');
@@ -267,7 +267,7 @@ class ControllerOpenbayPlay extends Controller {
     public function pricingReport() {
     if ($this->checkConfig() == true) {
         //load the language
-        $this->data = array_merge($this->data, $this->load->language('play/reportprice'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/play_reportprice'));
 
         //load the models
         $this->load->model('catalog/product');
@@ -325,7 +325,7 @@ class ControllerOpenbayPlay extends Controller {
             $this->load->model('openbay/play_product');
 
             //load the language
-            $this->data = array_merge($this->data, $this->load->language('play/product'));
+            $this->data = array_merge($this->data, $this->load->language('openbay/play_product'));
 
             if ($this->request->server['REQUEST_METHOD'] == 'POST') {
                 $this->model_openbay_play_product->add($this->request->post);
@@ -406,7 +406,7 @@ class ControllerOpenbayPlay extends Controller {
 
             $this->load->model('openbay/play_product');
 
-            $this->data = array_merge($this->data, $this->load->language('play/product'));
+            $this->data = array_merge($this->data, $this->load->language('openbay/play_product'));
 
             if ($this->request->server['REQUEST_METHOD'] == 'POST') {
                 $this->model_openbay_play_product->edit($this->request->post);
@@ -482,7 +482,7 @@ class ControllerOpenbayPlay extends Controller {
         if ($this->checkConfig() == true) {
             $this->load->model('openbay/play_product');
 
-            $this->data = array_merge($this->data, $this->load->language('play/product'));
+            $this->data = array_merge($this->data, $this->load->language('openbay/play_product'));
 
             $this->model_openbay_play_product->delete($this->request->get['product_id']);
 

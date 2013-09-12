@@ -1,5 +1,5 @@
 <?php
-class ControllerEbayProfile extends Controller {
+class ControllerOpenbayEbayProfile extends Controller {
 
     private $error = array();
 
@@ -29,7 +29,7 @@ class ControllerEbayProfile extends Controller {
             unset($this->session->data['success']);
         }
 
-        $this->data['btn_add']  = $this->url->link('ebay/profile/add', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['btn_add']  = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['types']    = $this->model_openbay_ebay_profile->getTypes();
         $this->data['profiles'] = $this->model_openbay_ebay_profile->getAll();
         $this->data['token']    = $this->session->data['token'];
@@ -55,7 +55,7 @@ class ControllerEbayProfile extends Controller {
         );
 
         $this->data['breadcrumbs'][] = array(
-            'href' => $this->url->link('ebay/profile/profileAll', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL'),
             'text' => $this->language->get('lang_heading'),
             'separator' => ' :: '
         );
@@ -70,8 +70,8 @@ class ControllerEbayProfile extends Controller {
         $this->load->model('openbay/ebay_profile');
 
         $this->data['page_title']   = $this->data['lang_title_list_add'];
-        $this->data['btn_save']     = $this->url->link('ebay/profile/add', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['cancel']       = $this->url->link('ebay/profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['btn_save']     = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['cancel']       = $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
 
         if (!isset($this->request->post['step1'])) {
             if ($this->request->post && $this->profileValidate()) {
@@ -79,7 +79,7 @@ class ControllerEbayProfile extends Controller {
 
                 $this->model_openbay_ebay_profile->add($this->request->post);
 
-                $this->redirect($this->url->link('ebay/profile/ProfileAll&token=' . $this->session->data['token'], 'SSL'));
+                $this->redirect($this->url->link('openbay/ebay_profile/ProfileAll&token=' . $this->session->data['token'], 'SSL'));
             }
         }
 
@@ -89,7 +89,7 @@ class ControllerEbayProfile extends Controller {
     public function delete() {
         $this->load->model('openbay/ebay_profile');
 
-        if (!$this->user->hasPermission('modify', 'ebay/profile')) {
+        if (!$this->user->hasPermission('modify', 'openbay/ebay_profile')) {
             $this->error['warning'] = $this->language->get('invalid_permission');
         }else{
             if (isset($this->request->get['ebay_profile_id'])) {
@@ -97,7 +97,7 @@ class ControllerEbayProfile extends Controller {
             }
         }
 
-        $this->redirect($this->url->link('ebay/profile/profileAll&token=' . $this->session->data['token'], 'SSL'));
+        $this->redirect($this->url->link('openbay/ebay_profile/profileAll&token=' . $this->session->data['token'], 'SSL'));
     }
 
     public function edit() {
@@ -106,15 +106,15 @@ class ControllerEbayProfile extends Controller {
         $this->load->model('openbay/ebay_profile');
 
         $this->data['page_title']   = $this->data['lang_title_list_edit'];
-        $this->data['btn_save']     = $this->url->link('ebay/profile/edit', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['cancel']       = $this->url->link('ebay/profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['btn_save']     = $this->url->link('openbay/ebay_profile/edit', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['cancel']       = $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
 
         if ($this->request->post && $this->profileValidate()) {
             $this->session->data['success'] = $this->data['lang_updated'];
 
             $this->model_openbay_ebay_profile->edit($this->request->post['ebay_profile_id'], $this->request->post);
 
-            $this->redirect($this->url->link('ebay/profile/profileAll&token=' . $this->session->data['token'], 'SSL'));
+            $this->redirect($this->url->link('openbay/ebay_profile/profileAll&token=' . $this->session->data['token'], 'SSL'));
         }
 
         $this->profileForm();
@@ -157,7 +157,7 @@ class ControllerEbayProfile extends Controller {
         if (!array_key_exists($type, $this->data['types'])) {
             $this->session->data['error'] = $this->data['lang_no_template'];
 
-            $this->redirect($this->url->link('ebay/profile/profileAll&token=' . $this->session->data['token']));
+            $this->redirect($this->url->link('openbay/ebay_profile/profileAll&token=' . $this->session->data['token']));
         }
 
         $this->document->setTitle($this->data['page_title']);
@@ -192,7 +192,7 @@ class ControllerEbayProfile extends Controller {
         );
 
         $this->data['breadcrumbs'][] = array(
-            'href' => $this->url->link('ebay/profile/profileAll', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL'),
             'text' => 'Profiles',
             'separator' => ' :: '
         );
@@ -383,7 +383,7 @@ class ControllerEbayProfile extends Controller {
     }
 
     private function profileValidate() {
-        if (!$this->user->hasPermission('modify', 'ebay/profile')) {
+        if (!$this->user->hasPermission('modify', 'openbay/ebay_profile')) {
             $this->error['warning'] = $this->language->get('invalid_permission');
         }
 

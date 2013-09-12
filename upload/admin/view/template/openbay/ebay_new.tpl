@@ -1512,7 +1512,7 @@
             $.ajax({
                 type:'GET',
                 dataType: 'json',
-                url: 'index.php?route=ebay/profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile_shipping').val(),
+                url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile_shipping').val(),
                 success: function(data){ 
                     setTimeout(function(){
                         $('#location').val(data.data.location);
@@ -1552,7 +1552,7 @@
             $.ajax({
                 type:'GET',
                 dataType: 'json',
-                url: 'index.php?route=ebay/profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile_return').val(),
+                url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile_return').val(),
                 success: function(data){ 
                     setTimeout(function(){
                         $('#returns_accepted').val(data.data.returns_accepted);
@@ -1574,7 +1574,7 @@
         $.ajax({
             type:'GET',
             dataType: 'json',
-            url: 'index.php?route=ebay/profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile_theme').val(),
+            url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile_theme').val(),
             success: function(data){
                 setTimeout(function(){
                     $('#gallery_height').val(data.data.ebay_gallery_height);
@@ -1622,7 +1622,7 @@
             $.ajax({
                 type:'GET',
                 dataType: 'json',
-                url: 'index.php?route=ebay/profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile_generic').val(),
+                url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#profile_generic').val(),
                 success: function(data){
                     setTimeout(function(){
                         if(data.data.private_listing == 1){

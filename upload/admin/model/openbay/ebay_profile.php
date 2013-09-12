@@ -66,8 +66,8 @@ class ModelOpenbayEbayProfile extends Model{
         if($qry->num_rows)
         {
             $row                = $qry->row;
-            $row['link_edit']   = HTTPS_SERVER . 'index.php?route=ebay/profile/edit&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
-            $row['link_delete'] = HTTPS_SERVER . 'index.php?route=ebay/profile/delete&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
+            $row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/edit&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
+            $row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/delete&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
             $row['data']        = unserialize($row['data']);
             
             return $row;
@@ -88,8 +88,8 @@ class ModelOpenbayEbayProfile extends Model{
         if($qry->num_rows){
             $profiles = array();
             foreach($qry->rows as $row){
-                $row['link_edit']   = HTTPS_SERVER . 'index.php?route=ebay/profile/edit&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
-                $row['link_delete'] = HTTPS_SERVER . 'index.php?route=ebay/profile/delete&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
+                $row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/edit&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
+                $row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/delete&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
                 $row['data']        = unserialize($row['data']);
                 $profiles[]         = $row;
             }

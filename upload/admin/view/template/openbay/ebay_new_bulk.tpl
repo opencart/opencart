@@ -217,7 +217,7 @@
         var modify_percent = '';
 
         $.ajax({
-            url: 'index.php?route=ebay/profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#generic_profile_'+id).val(),
+            url: 'index.php?route=openbay/ebay_profile/profileGet&token=<?php echo $token; ?>&ebay_profile_id='+$('#generic_profile_'+id).val(),
             type: 'GET',
             async: true,
             dataType: 'json',

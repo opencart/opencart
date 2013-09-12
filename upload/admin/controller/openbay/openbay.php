@@ -65,7 +65,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['links_stockreport']        = $this->url->link('openbay/openbay/viewStockReport', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_linkmaintenance']    = $this->url->link('openbay/openbay/viewItemLinkMaintenance', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_summary']            = $this->url->link('openbay/openbay/viewSellerSummary', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['links_profile']            = $this->url->link('ebay/profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['links_profile']            = $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_template']           = $this->url->link('ebay/template/listAll', 'token=' . $this->session->data['token'], 'SSL');
 
         $this->template = 'openbay/ebay_overview.tpl';

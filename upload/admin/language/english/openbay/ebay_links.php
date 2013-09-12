@@ -17,7 +17,7 @@ $_['lang_btn_remove_link']          = 'Remove link';
 // Errors & alerts
 $_['lang_error_validation']         = 'You need to register for your API token and enable the module.';
 $_['lang_alert_stock_local']        = 'Your eBay listing will be updated with your local stock levels!';
-$_['lang_ajax_error_listings']      = 'No listings found or all items are already linked.';
+$_['lang_ajax_error_listings']      = 'No linked products found';
 $_['lang_ajax_load_error']          = 'Sorry, could not get a response. Try later.';
 $_['lang_ajax_error_link']          = 'The product link is not value';
 $_['lang_ajax_error_link_no_sk']    = 'A link cannot be created for an out of stock item. End the item manually on eBay.';

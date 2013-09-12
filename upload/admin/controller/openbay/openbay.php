@@ -926,15 +926,13 @@ class ControllerOpenbayOpenbay extends Controller {
 
         $this->load->model('openbay/ebay');
 
-        /**
-         * will this still be an array if there is 1 item from jquery?
-         */
-        $data = $this->model_openbay_ebay->loadLinkedStatus($this->request->post['item_id']);
+        $json['data'] = '';
+        if(isset($this->request->post['item_id']) && !empty($this->request->post['item_id'])){
+            $data = $this->model_openbay_ebay->loadLinkedStatus($this->request->post['item_id']);
 
-        if (!empty($data)) {
-            $json['data'] = $data;
-        } else {
-            $json['data'] = null;
+            if (!empty($data)) {
+                $json['data'] = $data;
+            }
         }
 
         $this->response->setOutput(json_encode($json));

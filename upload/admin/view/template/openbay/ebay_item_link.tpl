@@ -126,8 +126,10 @@
             type: 'POST',
             dataType: 'json',
             success: function(json) {
-                if(json.data === null){
-                    $('#eBayListings').append('<tr><td colspan="7"><p><?php echo $lang_ajax_error_listings; ?></p></td></tr>');
+                if(json.data == ''){
+                    $('#checking_linked_items').hide();
+                    $('.pagination').hide();
+                    $('#show_linked_items').html('<tr><td colspan="8"><p><?php echo $lang_ajax_error_listings; ?></p></td></tr>').show();
                 }else{
                     $.each(json.data, function(key, val){
                         var product_id      = $('#product_id_'+key).val();

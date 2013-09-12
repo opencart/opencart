@@ -108,7 +108,6 @@ class ControllerProductCategory extends Controller {
 			$this->data['text_tax'] = $this->language->get('text_tax');
 			$this->data['text_points'] = $this->language->get('text_points');
 			$this->data['text_compare'] = sprintf($this->language->get('text_compare'), (isset($this->session->data['compare']) ? count($this->session->data['compare']) : 0));
-			$this->data['text_display'] = $this->language->get('text_display');
 			$this->data['text_sort'] = $this->language->get('text_sort');
 			$this->data['text_limit'] = $this->language->get('text_limit');
 

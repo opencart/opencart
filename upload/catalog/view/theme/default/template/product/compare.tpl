@@ -31,7 +31,7 @@
           <tr>
             <td><?php echo $text_name; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td class="name"><a href="<?php echo $products[$product['product_id']]['href']; ?>"><?php echo $products[$product['product_id']]['name']; ?></a></td>
+            <td><a href="<?php echo $products[$product['product_id']]['href']; ?>"><strong><?php echo $products[$product['product_id']]['name']; ?></strong></a></td>
             <?php } ?>
           </tr>
           <tr>
@@ -49,7 +49,7 @@
               <?php if (!$products[$product['product_id']]['special']) { ?>
               <?php echo $products[$product['product_id']]['price']; ?>
               <?php } else { ?>
-              <span class="price-old"> <?php echo $products[$product['product_id']]['price']; ?> </span> <span class="price-new"> <?php echo $products[$product['product_id']]['special']; ?> </span>
+              <span class="price-old"><?php echo $products[$product['product_id']]['price']; ?> </span> <span class="price-new"> <?php echo $products[$product['product_id']]['special']; ?> </span>
               <?php } ?>
               <?php } ?></td>
             <?php } ?>
@@ -76,7 +76,15 @@
           <tr>
             <td><?php echo $text_rating; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><img src="catalog/view/theme/default/image/stars-<?php echo $products[$product['product_id']]['rating']; ?>.png" alt="<?php echo $products[$product['product_id']]['reviews']; ?>" /> <?php echo $products[$product['product_id']]['reviews']; ?></td>
+            <td><?php for ($i = 1; $i <= 5; $i++) { ?>
+              <?php if ($products[$product['product_id']]['rating'] < $i) { ?>
+              <i class="icon-star-empty" style="color: #999;"></i>
+              <?php } else { ?>
+              <span class="icon-stack"><i class="icon-star" style="color: #FC0;"></i><i class="icon-star-empty " style="color: #F90;"></i></span>
+              <?php } ?>
+              <?php } ?>
+              <br />
+              <?php echo $products[$product['product_id']]['reviews']; ?></td>
             <?php } ?>
           </tr>
           <?php } ?>

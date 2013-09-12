@@ -1,32 +1,19 @@
 <?php echo $header; ?>
 <div class="container">
-<ul class="breadcrumb">
-  <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-  <?php } ?>
-</ul>
-<div class="row">
-<?php echo $column_left; ?>
-
-
-
-
-<?php if ($column_left) { ?>
-<div class="span9">
-<?php } elseif ($column_right) { ?>
-<div class="span9">
-<?php } else { ?>
-<div class="span12">
-<?php } ?>
-<?php echo $content_top; ?>
-<div class="row">
-<?php if ($column_left) { ?>
-<div class="span6">
-  <?php } elseif ($column_right) { ?>
-  <div class="span6">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="row"><?php echo $column_left; ?>
+    <?php if ($column_left && $column_right) { ?>
+    <?php $cols = 6; ?>
+    <?php } elseif ($column_left || $column_right) { ?>
+    <?php $cols = 9; ?>
     <?php } else { ?>
-    <div class="span8">
-      <?php } ?>
+    <?php $cols = 12; ?>
+    <?php } ?>
+    <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?> 
       
       <!-- Product image -->
       
@@ -44,7 +31,6 @@
       <?php } ?>
       
       <!-- Tabs -->
-      <div class="tabbable"> 
         
         <!-- The Tabs -->
         <ul class="nav nav-tabs">
@@ -134,6 +120,9 @@
         </div>
       </div>
     </div>
+    
+    
+    
     <?php if ($column_left) { ?>
     <div class="span3 product-info">
       <?php } elseif ($column_right) { ?>
@@ -359,6 +348,8 @@
           <?php } ?>
           <?php } ?>
           
+          
+          
           <!-- Cart -->
           <ul class="unstyled cart">
             <li><?php echo $text_qty; ?></li>
@@ -442,10 +433,12 @@
         <?php } ?>
       </div>
       <?php } ?>
-      <?php echo $content_bottom; ?> </div>
-    <!-- /span12 or /span9 --> 
-    
-    <?php echo $column_right; ?> </div>
+      
+      
+      
+      
+      <?php echo $content_bottom; ?></div>
+    <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
 $('#button-cart').click(function() {

@@ -14,32 +14,31 @@ class Mail {
 	public $port = 25;
 	public $timeout = 5;
 	public $newline = "\n";
-	public $crlf = "\r\n";
 	public $verp = false;
 	public $parameter = '';
 
 	public function setTo($to) {
-		$this->to = $to;
+		$this->to = html_entity_decode($to, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setFrom($from) {
-		$this->from = $from;
+		$this->from = html_entity_decode($from, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setSender($sender) {
-		$this->sender = $sender;
+		$this->sender = html_entity_decode($sender, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setSubject($subject) {
-		$this->subject = $subject;
+		$this->subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setText($text) {
-		$this->text = $text;
+		$this->text = html_entity_decode($text, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function setHtml($html) {
-		$this->html = $html;
+		$this->html = html_entity_decode($html, ENT_QUOTES, 'UTF-8');
 	}
 
 	public function addAttachment($filename) {
@@ -167,7 +166,7 @@ class Mail {
 				}
 
 				if (substr($this->hostname, 0, 3) == 'tls') {
-					fputs($handle, 'STARTTLS' . $this->crlf);
+					fputs($handle, 'STARTTLS' . "\r\n");
 
 					while ($line = fgets($handle, 515)) {
 						$reply .= $line;
@@ -184,7 +183,7 @@ class Mail {
 				}
 
 				if (!empty($this->username)  && !empty($this->password)) {
-					fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . $this->crlf);
+					fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
 
 					$reply = '';
 
@@ -201,7 +200,7 @@ class Mail {
 						exit();
 					}
 
-					fputs($handle, 'AUTH LOGIN' . $this->crlf);
+					fputs($handle, 'AUTH LOGIN' . "\r\n");
 
 					$reply = '';
 
@@ -218,7 +217,7 @@ class Mail {
 						exit();
 					}
 
-					fputs($handle, base64_encode($this->username) . $this->crlf);
+					fputs($handle, base64_encode($this->username) . "\r\n");
 
 					$reply = '';
 
@@ -235,7 +234,7 @@ class Mail {
 						exit();
 					}
 
-					fputs($handle, base64_encode($this->password) . $this->crlf);
+					fputs($handle, base64_encode($this->password) . "\r\n");
 
 					$reply = '';
 
@@ -252,7 +251,7 @@ class Mail {
 						exit();
 					}
 				} else {
-					fputs($handle, 'HELO ' . getenv('SERVER_NAME') . $this->crlf);
+					fputs($handle, 'HELO ' . getenv('SERVER_NAME') . "\r\n");
 
 					$reply = '';
 
@@ -271,9 +270,9 @@ class Mail {
 				}
 
 				if ($this->verp) {
-					fputs($handle, 'MAIL FROM: <' . $this->from . '>XVERP' . $this->crlf);
+					fputs($handle, 'MAIL FROM: <' . $this->from . '>XVERP' . "\r\n");
 				} else {
-					fputs($handle, 'MAIL FROM: <' . $this->from . '>' . $this->crlf);
+					fputs($handle, 'MAIL FROM: <' . $this->from . '>' . "\r\n");
 				}
 
 				$reply = '';
@@ -292,7 +291,7 @@ class Mail {
 				}
 
 				if (!is_array($this->to)) {
-					fputs($handle, 'RCPT TO: <' . $this->to . '>' . $this->crlf);
+					fputs($handle, 'RCPT TO: <' . $this->to . '>' . "\r\n");
 
 					$reply = '';
 
@@ -310,7 +309,7 @@ class Mail {
 					}
 				} else {
 					foreach ($this->to as $recipient) {
-						fputs($handle, 'RCPT TO: <' . $recipient . '>' . $this->crlf);
+						fputs($handle, 'RCPT TO: <' . $recipient . '>' . "\r\n");
 
 						$reply = '';
 
@@ -329,7 +328,7 @@ class Mail {
 					}
 				}
 
-				fputs($handle, 'DATA' . $this->crlf);
+				fputs($handle, 'DATA' . "\r\n");
 
 				$reply = '';
 
@@ -357,14 +356,14 @@ class Mail {
 					
 					foreach ($results as $result) {
 						if (substr(PHP_OS, 0, 3) != 'WIN') {
-							fputs($handle, $result . $this->crlf);
+							fputs($handle, $result . "\r\n");
 						} else {
-							fputs($handle, str_replace("\n", "\r\n", $result) . $this->crlf);
+							fputs($handle, str_replace("\n", "\r\n", $result) . "\r\n");
 						}
 					}
 				}
 
-				fputs($handle, '.' . $this->crlf);
+				fputs($handle, '.' . "\r\n");
 
 				$reply = '';
 
@@ -381,7 +380,7 @@ class Mail {
 					exit();
 				}
 				
-				fputs($handle, 'QUIT' . $this->crlf);
+				fputs($handle, 'QUIT' . "\r\n");
 
 				$reply = '';
 

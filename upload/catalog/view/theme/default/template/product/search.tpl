@@ -6,16 +6,22 @@
     <?php } ?>
   </ul>
   <div class="row"><?php echo $column_left; ?>
-    <div id="content" class="span12"><?php echo $content_top; ?>
+    <?php if ($column_left && $column_right) { ?>
+    <?php $cols = 6; ?>
+    <?php } elseif ($column_left || $column_right) { ?>
+    <?php $cols = 9; ?>
+    <?php } else { ?>
+    <?php $cols = 12; ?>
+    <?php } ?>  
+  
+  
+  
+    <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <div class="search-content">
         <div class="form-inline search-inline">
-          <?php if ($search) { ?>
-          <input class="input-medium" type="text" name="search" value="<?php echo $search; ?>" />
-          <?php } else { ?>
-          <input class="input-medium" type="text" name="search" value="<?php echo $search; ?>" onclick="this.value = '';" onkeydown="this.style.color = '000000'" style="color: #999;" />
-          <?php } ?>
-          <select name="category_id">
+          <input type="text" name="search" value="<?php echo $search; ?>" placeholder="<?php echo $text_keyword; ?>" class="form-control" />
+          <select name="category_id" class="form-control">
             <option value="0"><?php echo $text_category; ?></option>
             <?php foreach ($categories as $category_1) { ?>
             <?php if ($category_1['category_id'] == $category_id) { ?>
@@ -58,12 +64,17 @@
         </div>
         <div class="buttons">
           <div class="pull-right">
-            <input type="button" value="<?php echo $button_search; ?>" id="button-search" class="btn" />
+            <input type="button" value="<?php echo $button_search; ?>" id="button-search" class="btn btn-primary" />
           </div>
         </div>
       </div>
       <?php if ($products) { ?>
-      <div class="product-compare"><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></div>
+      
+      
+      <p><a href="<?php echo $compare; ?>" id="compare-total"> <?php echo $text_compare; ?></a></p>
+      
+      
+      
       <div class="product-filter">
         <div class="display pull-left">
           <div class="btn-group"><a id="list-view" class="btn" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="icon-th-list"></i></a> <a id="grid-view" class="btn" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="icon-th"></i></a></div>
@@ -92,6 +103,9 @@
         </div>
         <div class="clearfix"></div>
       </div>
+     
+     
+     
       <div class="product-items layout-row-4 product-grid">
         <?php foreach ($products as $product) { ?>
         <div class="span3"> 
@@ -128,6 +142,10 @@
         </div>
         <?php } ?>
       </div>
+      
+      
+      
+      
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>

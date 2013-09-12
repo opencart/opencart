@@ -125,7 +125,7 @@ class ModelMarketingAffiliate extends Model {
 			$mail->setTo($affiliate_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_name'));
-			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(sprintf($this->language->get('text_approve_subject'), $this->config->get('config_name')));
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 		}
@@ -211,7 +211,7 @@ class ModelMarketingAffiliate extends Model {
 			$mail->setTo($affiliate_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_name'));
-			$mail->setSubject(html_entity_decode(sprintf($this->language->get('text_transaction_subject'), $this->config->get('config_name')), ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject(sprintf($this->language->get('text_transaction_subject'), $this->config->get('config_name')));
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 		}

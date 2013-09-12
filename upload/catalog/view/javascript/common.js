@@ -1,25 +1,21 @@
 $(document).ready(function() {
     /* Search */
-    $('.button-search').on('click', function() {
+    $('header input[name=\'search\']').on('click', function() {
         url = $('base').attr('href') + 'index.php?route=product/search';
                  
-        var search = $('input[name=\'search\']').prop('value');
-        
-        if (search) {
-            url += '&search=' + encodeURIComponent(search);
+        if (this.value) {
+            url += '&search=' + encodeURIComponent(this.value);
         }
         
         location = url;
     });
 
-    $('#search input[name=\'search\']').keydown(function(e) {
+    $('header input[name=\'search\']').keydown(function(e) {
         if (e.keyCode == 13) {
             url = $('base').attr('href') + 'index.php?route=product/search';
              
-            var search = $('input[name=\'search\']').prop('value');
-            
-            if (search) {
-                url += '&search=' + encodeURIComponent(search);
+            if (this.value) {
+                url += '&search=' + encodeURIComponent(this.value);
             }
             
             location = url;
@@ -309,7 +305,6 @@ $(document).delegate('.agree', 'click', function(event) {
 			}
 			
 			$(this.element).siblings('ul.dropdown-menu').html(html);
-
 		}
 	};
 

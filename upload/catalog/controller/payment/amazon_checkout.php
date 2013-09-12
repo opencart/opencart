@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentAmazonCheckout extends Controller {
-    
     public function address() {
         if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
             $amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
@@ -868,4 +866,19 @@ class ControllerPaymentAmazonCheckout extends Controller {
         $this->response->setOutput(json_encode($json));
     }
     
+    public function cron() {
+        if (isset($this->request->get['token']) && $this->request->get['token'] == $this->config->get('amazon_checkout_cron_job_token') && $this->config->get('amazon_checkout_status') == 1) {
+            $this->load->model('payment/amazon_checkout');
+            $this->load->library('cba');
+            
+            $cba = new CBA($this->config->get('amazon_checkout_merchant_id'), $this->config->get('amazon_checkout_access_key'), $this->config->get('amazon_checkout_access_secret'));
+            $cba->setMode('live');
+
+            $cba->processOrderReports($this->config, $this->db);
+            $cba->processFeedResponses($this->config, $this->db);
+            
+            $this->model_payment_amazon_checkout->updateCronJobRunTime();
+        }
+    }
 }
+?>

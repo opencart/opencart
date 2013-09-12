@@ -1,12 +1,11 @@
 <?php
-
 class ModelPaymentPPExpress extends Model {
-    public function cleanReturn($data){
+    public function cleanReturn($data) {
         $data = explode('&', $data);
 
         $arr = array();
 
-        foreach($data as $k=>$v){
+        foreach($data as $k=>$v) {
             $tmp = explode('=', $v);
             $arr[$tmp[0]] = urldecode($tmp[1]);
         }
@@ -14,7 +13,7 @@ class ModelPaymentPPExpress extends Model {
         return $arr;
     }
 
-    public function call($data){
+    public function call($data) {
 
         if ($this->config->get('pp_express_test') == 1) {
             $api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
@@ -50,7 +49,7 @@ class ModelPaymentPPExpress extends Model {
 
         curl_setopt_array($ch, $defaults);
 
-        if( ! $result = curl_exec($ch)){
+        if( ! $result = curl_exec($ch)) {
             $this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
         }
         
@@ -61,7 +60,7 @@ class ModelPaymentPPExpress extends Model {
         return $this->cleanReturn($result);
     }
 
-    public function createToken($len = 32){
+    public function createToken($len = 32) {
         $base='ABCDEFGHKLMNOPQRSTWXYZabcdefghjkmnpqrstwxyz123456789';
         $max=strlen($base)-1;
         $activatecode='';
@@ -72,8 +71,8 @@ class ModelPaymentPPExpress extends Model {
         return $activatecode;
     }
 
-    public function log($data, $title = null){
-        if($this->config->get('pp_express_debug')){
+    public function log($data, $title = null) {
+        if($this->config->get('pp_express_debug')) {
             $this->log->write('PayPal Express debug ('.$title.'): '.json_encode($data));
         }
     }
@@ -107,7 +106,7 @@ class ModelPaymentPPExpress extends Model {
         return $method_data;
     }
 
-    public function addOrder($order_data){
+    public function addOrder($order_data) {
         /**
          * 1 to 1 relationship with order table (extends order info)
          */
@@ -124,7 +123,7 @@ class ModelPaymentPPExpress extends Model {
         return $this->db->getLastId();
     }
 
-    public function addTransaction($transaction_data){
+    public function addTransaction($transaction_data) {
         /**
          * 1 to many relationship with paypal order table, many transactions per 1 order
          */
@@ -145,7 +144,7 @@ class ModelPaymentPPExpress extends Model {
             `debug_data` = '".$this->db->escape($transaction_data['debug_data'])."'");
     }
 
-    public function paymentRequestInfo(){
+    public function paymentRequestInfo() {
 
         $data['PAYMENTREQUEST_0_SHIPPINGAMT'] = '';
         $data['PAYMENTREQUEST_0_CURRENCYCODE'] = $this->currency->getCode();
@@ -269,24 +268,24 @@ class ModelPaymentPPExpress extends Model {
         $z = 0;
 
         $recurring_products = $this->cart->getRecurringProducts();
-        if(!empty($recurring_products)){
+        if(!empty($recurring_products)) {
             
             $this->language->load('payment/pp_express');
 
-            foreach($recurring_products as $item){
+            foreach($recurring_products as $item) {
                 $data['L_BILLINGTYPE' . $z] = 'RecurringPayments';
 
-                if($item['recurring_trial'] == 1){
+                if($item['recurring_trial'] == 1) {
                     $trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'].' '.$this->currency->getCode();
                     $trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring_trial_cycle'], $item['recurring_trial_frequency'], $item['recurring_trial_duration']);
-                }else{
+                } else {
                     $trial_text = '';
                 }
 
                 $recurring_amt = $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'].' '.$this->currency->getCode();
                 $recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring_cycle'], $item['recurring_frequency']);
 
-                if($item['recurring_duration'] > 0){
+                if($item['recurring_duration'] > 0) {
                     $recurring_description .= sprintf($this->language->get('text_length'), $item['recurring_duration']);
                 }
 
@@ -298,7 +297,7 @@ class ModelPaymentPPExpress extends Model {
         return $data;
     }
 
-    public function isMobile(){
+    public function isMobile() {
         /*
          * This will check the user agent and "try" to match if it is a mobile device
          */
@@ -309,33 +308,33 @@ class ModelPaymentPPExpress extends Model {
         }
     }
 
-    public function getTransactionRow($transaction_id){
+    public function getTransactionRow($transaction_id) {
         $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "paypal_order_transaction` `pt` LEFT JOIN `" . DB_PREFIX . "paypal_order` `po` ON `pt`.`paypal_order_id` = `po`.`paypal_order_id`  WHERE `pt`.`transaction_id` = '" . $this->db->escape($transaction_id) . "' LIMIT 1");
 
-        if($qry->num_rows > 0){
+        if($qry->num_rows > 0) {
             return $qry->row;
-        }else{
+        } else {
             return false;
         }
     }
 
-    public function totalCaptured($paypal_order_id){
-        $qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '".(int)$paypal_order_id."' AND `pending_reason` != 'authorization' AND `pending_reason` != 'paymentreview' AND (`payment_status` = 'Partially-Refunded' OR `payment_status` = 'Completed' OR `payment_statu AND `transaction_entity` = 'payment'");
+    public function totalCaptured($paypal_order_id) {
+        $qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '" . (int) $paypal_order_id . "' AND `pending_reason` != 'authorization' AND `pending_reason` != 'paymentreview' AND (`payment_status` = 'Partially-Refunded' OR `payment_status` = 'Completed' OR `payment_status` = 'Pending') AND `transaction_entity` = 'payment'");
         
         return $qry->row['amount'];
     }
 
-    public function totalRefundedOrder($paypal_order_id){
+    public function totalRefundedOrder($paypal_order_id) {
         $qry = $this->db->query("SELECT SUM(`amount`) AS `amount` FROM `" . DB_PREFIX . "paypal_order_transaction` WHERE `paypal_order_id` = '" . (int)$paypal_order_id . "' AND `payment_status` = 'Refunded'");
         
         return $qry->row['amount'];
     }
 
-    public function updateOrder($capture_status, $order_id){
+    public function updateOrder($capture_status, $order_id) {
         $this->db->query("UPDATE `" . DB_PREFIX . "paypal_order` SET `modified` = now(), `capture_status` = '".$this->db->escape($capture_status)."' WHERE `order_id` = '".(int)$order_id."'");
     }
 
-    public function recurringCancel($ref){
+    public function recurringCancel($ref) {
 
         $data = array(
             'METHOD' => 'ManageRecurringPaymentsProfileStatus',
@@ -346,7 +345,7 @@ class ModelPaymentPPExpress extends Model {
         return $this->call($data);
     }
 
-    public function recurringPayments(){
+    public function recurringPayments() {
         /*
          * Used by the checkout to state the module
          * supports recurring profiles.
@@ -354,3 +353,4 @@ class ModelPaymentPPExpress extends Model {
         return true;
     }
 }
+?>

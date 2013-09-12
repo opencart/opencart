@@ -1,7 +1,5 @@
 <?php
-
 class ModelPaymentPPExpress extends Model {
-
     public function install() {
         $this->db->query("
             CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "paypal_order` (
@@ -276,7 +274,7 @@ class ModelPaymentPPExpress extends Model {
         );
     }
 
-    public function recurringCancel($ref){
+    public function recurringCancel($ref) {
 
         $data = array(
             'METHOD' => 'ManageRecurringPaymentsProfileStatus',
@@ -287,3 +285,4 @@ class ModelPaymentPPExpress extends Model {
         return $this->call($data);
     }
 }
+?>

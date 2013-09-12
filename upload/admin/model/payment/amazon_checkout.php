@@ -1,5 +1,4 @@
 <?php
-
 class ModelPaymentAmazonCheckout extends Model {
 
     public function install() {
@@ -99,5 +98,5 @@ class ModelPaymentAmazonCheckout extends Model {
 
         return $order;
     }
-
 }
+?>

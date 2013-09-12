@@ -403,7 +403,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
         $this->response->setOutput(json_encode($json));
     }
     
-    public function void(){
+    public function void() {
         $this->load->model('payment/pp_payflow_iframe');
         $this->load->language('payment/pp_payflow_iframe');
         
@@ -453,7 +453,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
         $this->response->setOutput(json_encode($json));
     }
     
-    public function orderAction(){        
+    public function orderAction() {        
         $this->load->model('payment/pp_payflow_iframe');
         $this->load->language('payment/pp_payflow_iframe');
         

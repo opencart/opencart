@@ -172,6 +172,22 @@
             <td><input name="amazon_checkout_sort_order" value="<?php echo $amazon_checkout_sort_order ?>" id="amazon_checkout_sort_order" /></td>
           </tr>
           <tr>
+            <td>
+                <label for="amazon_checkout_cron_job_token"><?php echo $text_cron_job_token ?></label><br />
+                <span class="help"><?php echo $help_cron_job_token ?></span>
+            </td>
+            <td><input name="amazon_checkout_cron_job_token" value="<?php echo $amazon_checkout_cron_job_token ?>" id="amazon_checkout_cron_job_token" /></td>
+          </tr>
+          <tr>
+            <td>
+                <?php echo $text_cron_job_url ?><br />
+                <span class="help"><?php echo $help_cron_job_url ?></span>
+            </td>
+            <td>
+                <span id="cron-job-url"><?php echo $cron_job_url ?></span>
+            </td>
+          </tr>
+          <tr>
             <td><?php echo $text_last_cron_job_run ?></td>
             <td><?php echo $last_cron_job_run ?></td>
           </tr>
@@ -274,6 +290,10 @@ $('#allowed-ips img').click(function(){
     
     $('#allowed-ips div:odd').attr('class', 'odd');
 	$('#allowed-ips div:even').attr('class', 'even');
+});
+
+$('input[name="amazon_checkout_cron_job_token"]').keyup(function(){
+    $('#cron-job-url').html('<?php echo HTTPS_CATALOG ?>index.php?route=payment/amazon_checkout/cron&token=' + $(this).val());
 });
 
 //--></script>

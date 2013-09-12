@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentPPProIframe extends Controller {
-
     protected function index() {
         $this->load->model('checkout/order');
         $this->load->model('payment/pp_pro_iframe');
@@ -303,7 +301,5 @@ class ControllerPaymentPPProIframe extends Controller {
             return $response_data['HOSTEDBUTTONID'];
         }
     }
-
 }
-
 ?>

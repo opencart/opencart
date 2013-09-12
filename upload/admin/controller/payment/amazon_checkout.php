@@ -1,7 +1,5 @@
 <?php
-
 class ControllerPaymentAmazonCheckout extends Controller {
-
     private $errors = array();
     
     public function index() {
@@ -175,6 +173,20 @@ class ControllerPaymentAmazonCheckout extends Controller {
             $this->data['amazon_checkout_button_background'] = '';
         }
         
+        if (isset($this->request->post['amazon_checkout_cron_job_token'])) {
+            $this->data['amazon_checkout_cron_job_token'] = $this->request->post['amazon_checkout_cron_job_token'];
+        } elseif ($this->config->get('amazon_checkout_cron_job_token')) {
+            $this->data['amazon_checkout_cron_job_token'] = $this->config->get('amazon_checkout_cron_job_token');
+        } else {
+            $this->data['amazon_checkout_cron_job_token'] = sha1(uniqid(mt_rand(), 1));
+        }
+        
+        $this->data['cron_job_url'] = HTTPS_CATALOG . 'index.php?route=payment/amazon_checkout/cron&token=' . $this->data['amazon_checkout_cron_job_token'];
+        
+        $this->data['text_cron_job_token'] = $this->language->get('text_cron_job_token');
+        $this->data['help_cron_job_token'] = $this->language->get('help_cron_job_token');
+        $this->data['text_cron_job_url'] = $this->language->get('text_cron_job_url');
+        $this->data['help_cron_job_url'] = $this->language->get('help_cron_job_url');
         $this->data['text_amazon_join'] = $this->language->get('text_amazon_join');
         $this->data['text_home'] = $this->language->get('text_home');
         $this->data['heading_title'] = $this->language->get('heading_title');
@@ -389,6 +401,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
                     'quantity' => $product['quantity'],
                     'price' => $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value']),
                     'total' => $this->currency->format($product['total'], $order_info['currency_code'], $order_info['currency_value']),
+                    'href' => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL')
                 );
             }
 
@@ -460,5 +473,5 @@ class ControllerPaymentAmazonCheckout extends Controller {
         
         return empty($this->errors);
     }
-    
 }
+?>

@@ -48,10 +48,6 @@
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon13.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_order_import; ?></h3>
                     </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_addons; ?>'">
-                        <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon6.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_adds; ?></h3>
-                    </div>
                     <div class="openbayPod" onclick="location='<?php echo $links_summary; ?>'">
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon8.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_summary; ?></h3>

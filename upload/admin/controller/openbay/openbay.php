@@ -57,7 +57,6 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['validation']               = $this->openbay->ebay->validate();
         $this->data['links_settings']           = $this->url->link('openbay/openbay/settings', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_itemlink']           = $this->url->link('openbay/openbay/viewItemLinks', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['links_addons']             = $this->url->link('openbay/openbay/viewAddons', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_subscribe']          = $this->url->link('openbay/openbay/viewSubscription', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_itemimport']         = $this->url->link('openbay/openbay/viewItemImport', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_orderimport']        = $this->url->link('openbay/openbay/viewOrderImport', 'token=' . $this->session->data['token'], 'SSL');
@@ -608,7 +607,7 @@ class ControllerOpenbayOpenbay extends Controller {
         );
 
         $this->data['breadcrumbs'][] = array(
-            'href' => $this->url->link('openbay/openbay/viewAddons', 'token=' . $this->session->data['token'], 'SSL'),
+            'href' => $this->url->link('openbay/openbay/viewSubscription', 'token=' . $this->session->data['token'], 'SSL'),
             'text' => $this->language->get('lang_heading'),
             'separator' => ' :: '
         );
@@ -619,51 +618,6 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['obp_token']    = $this->config->get('openbaypro_token');
 
         $this->template = 'openbay/ebay_subscription.tpl';
-        $this->children = array(
-            'common/header',
-            'common/footer'
-        );
-
-        $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
-    }
-
-    public function viewAddons() {
-        $this->data = array_merge($this->data, $this->load->language('ebay/addons'));
-        $this->document->setTitle($this->language->get('lang_page_title'));
-        $this->document->addStyle('view/stylesheet/openbay.css');
-        $this->document->addScript('view/javascript/openbay/faq.js');
-
-        $this->data['breadcrumbs'] = array();
-
-        $this->data['breadcrumbs'][] = array(
-            'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-            'text' => $this->language->get('text_home'),
-            'separator' => FALSE
-        );
-
-        $this->data['breadcrumbs'][] = array(
-            'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-            'text' => $this->language->get('lang_openbay'),
-            'separator' => ' :: '
-        );
-
-        $this->data['breadcrumbs'][] = array(
-            'href' => $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-            'text' => $this->language->get('lang_ebay'),
-            'separator' => ' :: '
-        );
-
-        $this->data['breadcrumbs'][] = array(
-            'href' => $this->url->link('openbay/openbay/viewAddons', 'token=' . $this->session->data['token'], 'SSL'),
-            'text' => $this->language->get('lang_heading'),
-            'separator' => ' :: '
-        );
-
-        $this->data['return'] = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['addons'] = $this->openbay->ebay->addonList();
-        $this->data['validation'] = $this->openbay->ebay->validate();
-
-        $this->template = 'openbay/ebay_addons.tpl';
         $this->children = array(
             'common/header',
             'common/footer'

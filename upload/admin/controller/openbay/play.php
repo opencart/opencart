@@ -57,7 +57,7 @@ class ControllerOpenbayPlay extends Controller {
             $this->data['success'] = '';
         }
 
-        $this->data['validation'] = $this->play->validate();
+        $this->data['validation'] = $this->openbay->play->validate();
         $this->data['links_settings'] = HTTPS_SERVER . 'index.php?route=openbay/play/settings&token=' . $this->session->data['token'];
         $this->data['links_pricing'] = HTTPS_SERVER . 'index.php?route=openbay/play/pricingReport&token=' . $this->session->data['token'];
         $this->data['image']['icon1'] = HTTPS_SERVER . 'view/image/openbay/openbay_icon1.png';
@@ -251,9 +251,9 @@ class ControllerOpenbayPlay extends Controller {
             $this->data['obp_play_default_tax'] = $this->config->get('obp_play_default_tax');
         }
 
-        $this->data['dispatch_to']      = $this->play->getDispatchTo();
-        $this->data['dispatch_from']    = $this->play->getDispatchFrom();
-        $this->data['item_conditions']  = $this->play->getItemCondition();
+        $this->data['dispatch_to']      = $this->openbay->play->getDispatchTo();
+        $this->data['dispatch_from']    = $this->openbay->play->getDispatchFrom();
+        $this->data['item_conditions']  = $this->openbay->play->getItemCondition();
 
         $this->template = 'openbay/play_settings.tpl';
         $this->children = array(
@@ -292,11 +292,11 @@ class ControllerOpenbayPlay extends Controller {
             $this->data['error_warning'] = '';
         }
 
-        $this->data['product_id_types']     = $this->play->getProductIdType();
+        $this->data['product_id_types']     = $this->openbay->play->getProductIdType();
 
-        $this->data['product_conditions']   = $this->play->getItemCondition();
+        $this->data['product_conditions']   = $this->openbay->play->getItemCondition();
 
-        $this->data['product_dispatch_to']  = $this->play->getDispatchTo();
+        $this->data['product_dispatch_to']  = $this->openbay->play->getDispatchTo();
 
         if(isset($this->request->get['page'])) {
             $page = $this->request->get['page'];
@@ -364,13 +364,13 @@ class ControllerOpenbayPlay extends Controller {
 
                 $this->data['actionCode']           = 'a';
 
-                $this->data['product_id_types']     = $this->play->getProductIdType();
+                $this->data['product_id_types']     = $this->openbay->play->getProductIdType();
 
-                $this->data['product_conditions']   = $this->play->getItemCondition();
+                $this->data['product_conditions']   = $this->openbay->play->getItemCondition();
 
-                $this->data['product_dispatch_to']  = $this->play->getDispatchTo();
+                $this->data['product_dispatch_to']  = $this->openbay->play->getDispatchTo();
 
-                $this->data['product_dispatch_fr']  = $this->play->getDispatchFrom();
+                $this->data['product_dispatch_fr']  = $this->openbay->play->getDispatchFrom();
 
                 //check if product has isbn db column
                 if($this->openbay->testDbColumn('product', 'isbn') != true) {
@@ -444,10 +444,10 @@ class ControllerOpenbayPlay extends Controller {
                 $this->data['product']              = $product_info;
                 $this->data['listing']              = $listing_info;
                 $this->data['actionCode']           = '';
-                $this->data['product_id_types']     = $this->play->getProductIdType();
-                $this->data['product_conditions']   = $this->play->getItemCondition();
-                $this->data['product_dispatch_to']  = $this->play->getDispatchTo();
-                $this->data['product_dispatch_fr']  = $this->play->getDispatchFrom();
+                $this->data['product_id_types']     = $this->openbay->play->getProductIdType();
+                $this->data['product_conditions']   = $this->openbay->play->getItemCondition();
+                $this->data['product_dispatch_to']  = $this->openbay->play->getDispatchTo();
+                $this->data['product_dispatch_fr']  = $this->openbay->play->getDispatchFrom();
 
                 //check if product has isbn db column
                 if($this->openbay->testDbColumn('product', 'isbn') != true) {

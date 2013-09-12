@@ -161,7 +161,7 @@ class ControllerAmazonProduct extends Controller{
          */       
         $this->data['amazon_categories'] = array();
         
-        $amazon_templates = $this->amazon->getCategoryTemplates();
+        $amazon_templates = $this->openbay->amazon->getCategoryTemplates();
         
         foreach($amazon_templates as $template) {
             $template = (array)$template;
@@ -187,7 +187,7 @@ class ControllerAmazonProduct extends Controller{
         $this->data['token'] = $this->session->data['token'];
         $this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
          
-        if($this->amazon->addonLoad('openstock') == true) {
+        if($this->openbay->amazon->addonLoad('openstock') == true) {
             $this->load->model('openstock/openstock');
             $this->data['options'] = $this->model_openstock_openstock->getProductOptionStocks($product_id);
         } else {
@@ -332,7 +332,7 @@ class ControllerAmazonProduct extends Controller{
             $marketplaces_data = array('marketplaces' => $mpArray);
             
             $productData = array_merge($category_data, $fields_data, $response_data, $marketplaces_data);
-            $insertion_response = $this->amazon->insertProduct($productData);
+            $insertion_response = $this->openbay->amazon->insertProduct($productData);
             
             $logger->write("Uploading product with data:" . print_r($productData, true) . "
                 Got response:" . print_r($insertion_response, true));
@@ -366,9 +366,9 @@ class ControllerAmazonProduct extends Controller{
         
         if(isset($this->request->get['xml'])) {
             $request = array('template' => $this->request->get['xml'], 'version' => 2);
-            $response = $this->amazon->callWithResponse("productv2/GetTemplateXml", $request);
+            $response = $this->openbay->amazon->callWithResponse("productv2/GetTemplateXml", $request);
             if ($response) {
-                $template = $this->amazon->parseCategoryTemplate($response);
+                $template = $this->openbay->amazon->parseCategoryTemplate($response);
                 if ($template) {
                     $variation = isset($this->request->get['var']) ? $this->request->get['var'] : '';
                     
@@ -471,7 +471,7 @@ class ControllerAmazonProduct extends Controller{
         }
         
         $this->load->library('amazon');
-        if($var !== '' && $this->amazon->addonLoad('openstock')) {
+        if($var !== '' && $this->openbay->amazon->addonLoad('openstock')) {
             $this->load->model('tool/image');
             $this->load->model('openstock/openstock');
             $optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);

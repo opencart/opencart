@@ -13,7 +13,7 @@ class ControllerOpenbayAmazonus extends Controller {
         }
         echo "Products to be updated:";
         print_r($ids);
-        $this->amazonus->putStockUpdateBulk($ids, true);
+        $this->openbay->amazonus->putStockUpdateBulk($ids, true);
         echo "Completed. More info amazonus_stocks.log";
     }
     
@@ -73,7 +73,7 @@ class ControllerOpenbayAmazonus extends Controller {
         $this->data['date_start'] = $requestArgs['date_start'];
         $this->data['date_end'] = $requestArgs['date_end'];
 
-        $xml = $this->amazonus->getStockUpdatesStatus($requestArgs);
+        $xml = $this->openbay->amazonus->getStockUpdatesStatus($requestArgs);
         $simpleXmlObj = simplexml_load_string($xml);
          $this->data['tableData'] = array();
         if($simpleXmlObj !== false) {
@@ -155,7 +155,7 @@ class ControllerOpenbayAmazonus extends Controller {
             $this->data['success'] = '';
         }
         
-        $this->data['validation']               = $this->amazonus->validate();
+        $this->data['validation']               = $this->openbay->amazonus->validate();
         $this->data['links_settings']           = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_subscription']       = $this->url->link('openbay/amazonus/subscription', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['links_itemlink']           = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
@@ -199,7 +199,7 @@ class ControllerOpenbayAmazonus extends Controller {
         
         $this->data['link_overview'] = $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL');
         
-        $response = simplexml_load_string($this->amazonus->callWithResponse('plans/getPlans'));
+        $response = simplexml_load_string($this->openbay->amazonus->callWithResponse('plans/getPlans'));
         
         $plans = array();
         
@@ -217,7 +217,7 @@ class ControllerOpenbayAmazonus extends Controller {
         
         $this->data['plans'] = $plans;
         
-        $response = simplexml_load_string($this->amazonus->callWithResponse('plans/getUsersPlans'));
+        $response = simplexml_load_string($this->openbay->amazonus->callWithResponse('plans/getUsersPlans'));
         
         $plan = false;
         
@@ -236,7 +236,7 @@ class ControllerOpenbayAmazonus extends Controller {
         }
         
         $this->data['user_plan'] = $plan;
-        $this->data['server'] = $this->amazonus->getServer();
+        $this->data['server'] = $this->openbay->amazonus->getServer();
         $this->data['token'] = $this->config->get('openbay_amazonus_token');
         
         $this->template = 'openbay/amazonus_subscription.tpl';
@@ -376,7 +376,7 @@ class ControllerOpenbayAmazonus extends Controller {
             'common/footer'
         );
         
-        $pingInfo = simplexml_load_string($this->amazonus->callWithResponse('ping/info'));
+        $pingInfo = simplexml_load_string($this->openbay->amazonus->callWithResponse('ping/info'));
         
         $api_status = false;
         $api_auth = false;
@@ -566,7 +566,7 @@ class ControllerOpenbayAmazonus extends Controller {
     
     public function getOpenstockOptionsAjax() {
         $options = array();
-        if($this->amazonus->addonLoad('openstock') == true && isset($this->request->get['product_id'])) {
+        if($this->openbay->amazonus->addonLoad('openstock') == true && isset($this->request->get['product_id'])) {
             $this->load->model('openstock/openstock');
             $this->load->model('tool/image');
             $options = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
@@ -594,7 +594,7 @@ class ControllerOpenbayAmazonus extends Controller {
         $logger = new Log('amazonus_stocks.log');
         $logger->write('addItemLink() called for product id: ' . $product_id . ', amazonus sku: ' . $amazonus_sku . ', var: ' . $var);
         
-        if($var != '' && $this->amazonus->addonLoad('openstock') == true) {
+        if($var != '' && $this->openbay->amazonus->addonLoad('openstock') == true) {
             $logger->write('Using openStock');
             $this->load->model('tool/image');
             $this->load->model('openstock/openstock');
@@ -608,12 +608,12 @@ class ControllerOpenbayAmazonus extends Controller {
             }
             if(!empty($quantityData)) {
                 $logger->write('Updating quantities with data: ' . print_r($quantityData, true));
-                $this->amazonus->updateQuantities($quantityData);
+                $this->openbay->amazonus->updateQuantities($quantityData);
             } else {
                 $logger->write('No quantity data will be posted.');
             } 
         } else {
-            $this->amazonus->putStockUpdateBulk(array($product_id));
+            $this->openbay->amazonus->putStockUpdateBulk(array($product_id));
         }
         
         $result = json_encode('ok');

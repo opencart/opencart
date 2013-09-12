@@ -85,7 +85,7 @@ class ModelOpenbayPlayProduct extends Model {
     }
 
     public function getPricingReport() {
-        return $this->play->call('product/pricingReport');
+        return $this->openbay->play->call('product/pricingReport');
     }
     
     public function delete($product_id) {

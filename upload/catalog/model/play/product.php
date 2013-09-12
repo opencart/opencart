@@ -7,7 +7,7 @@ class ModelPlayProduct extends Model
             SET `status` = '".(int)$status."' 
             WHERE `product_id` = '".(int)$product_id."' LIMIT 1");
 
-        $this->play->log('updateProduct() - $product_id: '.$product_id.', $status: '.$status);
+        $this->openbay->play->log('updateProduct() - $product_id: '.$product_id.', $status: '.$status);
     }
     
     public function addWarning($msg, $product_id){
@@ -17,7 +17,7 @@ class ModelPlayProduct extends Model
                 `status_msg` = '".$this->db->escape($msg)."',
                 `product_id` = '".(int)$product_id."'");
 
-        $this->play->log('addWarning() - $product_id: '.$product_id.', msg: '.$msg);
+        $this->openbay->play->log('addWarning() - $product_id: '.$product_id.', msg: '.$msg);
     }
     
     public function removeAllWarnings($product_id){
@@ -25,7 +25,7 @@ class ModelPlayProduct extends Model
             DELETE FROM `" . DB_PREFIX . "play_product_insert_error`
             WHERE `product_id` = '".(int)$product_id."'");
 
-        $this->play->log('removeAllWarnings() - $product_id: '.$product_id);
+        $this->openbay->play->log('removeAllWarnings() - $product_id: '.$product_id);
     }
 
     public function getProduct($sku){
@@ -35,10 +35,10 @@ class ModelPlayProduct extends Model
             WHERE `p`.`product_id` = '".(int)$sku."' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "' LIMIT 1");
         
         if($qry->num_rows > 0){
-            $this->play->log('getProduct() - $sku: '.$sku);
+            $this->openbay->play->log('getProduct() - $sku: '.$sku);
             return $qry->row;
         }else{
-            $this->play->log('getProduct() - $sku: '.$sku.' not found');
+            $this->openbay->play->log('getProduct() - $sku: '.$sku.' not found');
             return 0;
         }
     }

@@ -10,7 +10,7 @@ class ModelAmazonOrder extends Model {
   <MerchantOrderId>$orderId</MerchantOrderId>
 </Request>";
      
-        $this->amazon->callNoResponse('order/acknowledge', $requestXml, false);
+        $this->openbay->amazon->callNoResponse('order/acknowledge', $requestXml, false);
     }
     
     public function getProductId($sku) {

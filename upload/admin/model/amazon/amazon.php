@@ -17,7 +17,7 @@ class ModelAmazonAmazon extends Model {
   </MarketplaceIDs>
 </Request>';
         
-        $response = $this->amazon->callWithResponse('order/scheduleOrders', $requestXml, false);
+        $response = $this->openbay->amazon->callWithResponse('order/scheduleOrders', $requestXml, false);
 
         libxml_use_internal_errors(true);
         $responseXml = simplexml_load_string($response);
@@ -286,7 +286,7 @@ class ModelAmazonAmazon extends Model {
         $rows = $this->db->query($query)->rows;
         
         $this->load->library('amazon');
-        if($this->amazon->addonLoad('openstock') == true) {
+        if($this->openbay->amazon->addonLoad('openstock') == true) {
             $this->load->model('openstock/openstock');
             $this->load->model('tool/image');
             $rowsWithVar = array();
@@ -309,7 +309,7 @@ class ModelAmazonAmazon extends Model {
     
     public function getUnlinkedProducts() {
         $this->load->library('amazon');
-        if($this->amazon->addonLoad('openstock') == true) {
+        if($this->openbay->amazon->addonLoad('openstock') == true) {
             
             $rows = $this->db->query("
                 SELECT `p`.`product_id`, `p`.`model`, `p`.`sku`, `pd`.`name` as `product_name`, '' as `var`, '' as `combi`, `p`.`has_option`
@@ -426,7 +426,7 @@ class ModelAmazonAmazon extends Model {
         
         $result = null;
         
-        if($var !== '' && $this->amazon->addonLoad('openstock')) {
+        if($var !== '' && $this->openbay->amazon->addonLoad('openstock')) {
             $this->load->model('tool/image');
             $this->load->model('openstock/openstock');
             $optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);

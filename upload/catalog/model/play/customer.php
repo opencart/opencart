@@ -6,17 +6,17 @@ class ModelPlayCustomer extends Model {
             WHERE `email` = '".$this->db->escape($email)."' LIMIT 1");
         
         if($qry->num_rows > 0){
-            $this->play->log('Found customer ID: '.$qry->row['customer_id']);
+            $this->openbay->play->log('Found customer ID: '.$qry->row['customer_id']);
             return $qry->row['customer_id'];
         }else{
-            $this->play->log('No customer ID found');
+            $this->openbay->play->log('No customer ID found');
             return 0;
         }
     }
 
     public function getCustomer($customer_id){
 
-        $this->play->log('Getting customer ID: '.$customer_id);
+        $this->openbay->play->log('Getting customer ID: '.$customer_id);
 
         $qry = $this->db->query("
             SELECT * FROM `" . DB_PREFIX . "customer` 
@@ -43,7 +43,7 @@ class ModelPlayCustomer extends Model {
                 `firstname` = '".$this->db->escape($fname)."',
                 `lastname` = '".$this->db->escape($lname)."'");
 
-        $this->play->log('Created customer ID: '.$this->db->getLastId());
+        $this->openbay->play->log('Created customer ID: '.$this->db->getLastId());
         
         return $this->db->getLastId();
     }

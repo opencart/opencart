@@ -57,7 +57,7 @@ class ControllerOpenbayAmazon extends Controller {
         $this->data['date_start'] = $requestArgs['date_start'];
         $this->data['date_end'] = $requestArgs['date_end'];
 
-        $xml = $this->amazon->getStockUpdatesStatus($requestArgs);
+        $xml = $this->openbay->amazon->getStockUpdatesStatus($requestArgs);
         $simpleXmlObj = simplexml_load_string($xml);
          $this->data['tableData'] = array();
         if($simpleXmlObj !== false) {
@@ -133,7 +133,7 @@ class ControllerOpenbayAmazon extends Controller {
             $this->data['success'] = '';
         }
         
-        $this->data['validation'] = $this->amazon->validate();
+        $this->data['validation'] = $this->openbay->amazon->validate();
         $this->data['link_settings'] = $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['link_subscription'] = $this->url->link('openbay/amazon/subscription', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['link_item_link'] = $this->url->link('openbay/amazon/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
@@ -182,7 +182,7 @@ class ControllerOpenbayAmazon extends Controller {
         
         $this->data['link_overview'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
         
-        $response = simplexml_load_string($this->amazon->callWithResponse('plans/getPlans'));
+        $response = simplexml_load_string($this->openbay->amazon->callWithResponse('plans/getPlans'));
         
         $plans = array();
         
@@ -200,7 +200,7 @@ class ControllerOpenbayAmazon extends Controller {
         
         $this->data['plans'] = $plans;
         
-        $response = simplexml_load_string($this->amazon->callWithResponse('plans/getUsersPlans'));
+        $response = simplexml_load_string($this->openbay->amazon->callWithResponse('plans/getUsersPlans'));
         
         $plan = false;
         
@@ -219,7 +219,7 @@ class ControllerOpenbayAmazon extends Controller {
         }
         
         $this->data['user_plan'] = $plan;
-        $this->data['server'] = $this->amazon->getServer();
+        $this->data['server'] = $this->openbay->amazon->getServer();
         $this->data['token'] = $this->config->get('openbay_amazon_token');
         
         $this->template = 'openbay/amazon_subscription.tpl';
@@ -359,7 +359,7 @@ class ControllerOpenbayAmazon extends Controller {
             'common/footer'
         );
         
-        $pingInfo = simplexml_load_string($this->amazon->callWithResponse('ping/info'));
+        $pingInfo = simplexml_load_string($this->openbay->amazon->callWithResponse('ping/info'));
         
         $api_status = false;
         $api_auth = false;
@@ -549,7 +549,7 @@ class ControllerOpenbayAmazon extends Controller {
     
     public function getOpenstockOptionsAjax() {
         $options = array();
-        if($this->amazon->addonLoad('openstock') == true && isset($this->request->get['product_id'])) {
+        if($this->openbay->amazon->addonLoad('openstock') == true && isset($this->request->get['product_id'])) {
             $this->load->model('openstock/openstock');
             $this->load->model('tool/image');
             $options = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
@@ -577,7 +577,7 @@ class ControllerOpenbayAmazon extends Controller {
         $logger = new Log('amazon_stocks.log');
         $logger->write('addItemLink() called for product id: ' . $product_id . ', amazon sku: ' . $amazon_sku . ', var: ' . $var);
         
-        if($var != '' && $this->amazon->addonLoad('openstock') == true) {
+        if($var != '' && $this->openbay->amazon->addonLoad('openstock') == true) {
             $logger->write('Using openStock');
             $this->load->model('tool/image');
             $this->load->model('openstock/openstock');
@@ -591,12 +591,12 @@ class ControllerOpenbayAmazon extends Controller {
             }
             if(!empty($quantityData)) {
                 $logger->write('Updating quantities with data: ' . print_r($quantityData, true));
-                $this->amazon->updateQuantities($quantityData);
+                $this->openbay->amazon->updateQuantities($quantityData);
             } else {
                 $logger->write('No quantity data will be posted.');
             } 
         } else {
-            $this->amazon->putStockUpdateBulk(array($product_id));
+            $this->openbay->amazon->putStockUpdateBulk(array($product_id));
         }
         
         $result = json_encode('ok');

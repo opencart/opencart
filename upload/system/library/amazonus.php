@@ -386,7 +386,7 @@ class Amazonus {
         }
         if(!empty($quantityData)) {
             $logger->write('Quantity data to be sent:' . print_r($quantityData, true));
-            $response = $this->amazonus->updateQuantities($quantityData);
+            $response = $this->updateQuantities($quantityData);
             $logger->write('Submit to API. Response: ' . print_r($response, true));
         } else {
             $logger->write('No quantity data need to be posted.');

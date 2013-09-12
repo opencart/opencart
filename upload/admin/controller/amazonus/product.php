@@ -161,7 +161,7 @@ class ControllerAmazonusProduct extends Controller{
          */       
         $this->data['amazonus_categories'] = array();
         
-        $amazonus_templates = $this->amazonus->getCategoryTemplates();
+        $amazonus_templates = $this->openbay->amazonus->getCategoryTemplates();
         
         foreach($amazonus_templates as $template) {
             $template = (array)$template;
@@ -187,7 +187,7 @@ class ControllerAmazonusProduct extends Controller{
         $this->data['token'] = $this->session->data['token'];
         $this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
          
-        if($this->amazonus->addonLoad('openstock') == true) {
+        if($this->openbay->amazonus->addonLoad('openstock') == true) {
             $this->load->model('openstock/openstock');
             $this->data['options'] = $this->model_openstock_openstock->getProductOptionStocks($product_id);
         } else {
@@ -308,7 +308,7 @@ class ControllerAmazonusProduct extends Controller{
             $marketplaces_data = array('marketplaces' => $mpArray);
             
             $productData = array_merge($category_data, $fields_data, $response_data, $marketplaces_data);
-            $insertion_response = $this->amazonus->insertProduct($productData);
+            $insertion_response = $this->openbay->amazonus->insertProduct($productData);
             
             $logger->write("Uploading product with data:" . print_r($productData, true) . "
                 Got response:" . print_r($insertion_response, true));
@@ -342,9 +342,9 @@ class ControllerAmazonusProduct extends Controller{
         
         if(isset($this->request->get['xml'])) {
             $request = array('template' => $this->request->get['xml'], 'version' => 2);
-            $response = $this->amazonus->callWithResponse("productv2/GetTemplateXml", $request);
+            $response = $this->openbay->amazonus->callWithResponse("productv2/GetTemplateXml", $request);
             if ($response) {
-                $template = $this->amazonus->parseCategoryTemplate($response);
+                $template = $this->openbay->amazonus->parseCategoryTemplate($response);
                 if ($template) {
                     $variation = isset($this->request->get['var']) ? $this->request->get['var'] : '';
                     
@@ -442,7 +442,7 @@ class ControllerAmazonusProduct extends Controller{
         }
         
         $this->load->library('amazonus');
-        if($var !== '' && $this->amazonus->addonLoad('openstock')) {
+        if($var !== '' && $this->openbay->amazonus->addonLoad('openstock')) {
             $this->load->model('tool/image');
             $this->load->model('openstock/openstock');
             $optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);

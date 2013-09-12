@@ -391,12 +391,12 @@ class ControllerExtensionOpenbay extends Controller {
         }
 
         if ($this->config->get('play_status') == 1) {
-            if($this->play->isPlayOrder($this->request->get['order_id']) !== false){
-                $this->data['order_info']   = $this->play->getPlayOrder($this->request->get['order_id']);
+            if($this->openbay->play->isPlayOrder($this->request->get['order_id']) !== false){
+                $this->data['order_info']   = $this->openbay->play->getPlayOrder($this->request->get['order_id']);
 
                 //if status is shipped
                 if($this->config->get('obp_play_shipped_id') == $this->request->get['status_id']){
-                    $this->data['carriers']     = $this->play->getCarriers();
+                    $this->data['carriers']     = $this->openbay->play->getCarriers();
                     if(!empty($this->data['order_info'])){
                         $this->template = 'openbay/play_ajax_shippinginfo.tpl';
                         $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
@@ -404,7 +404,7 @@ class ControllerExtensionOpenbay extends Controller {
                 }
                 //if status is refunded
                 if($this->config->get('obp_play_refunded_id') == $this->request->get['status_id']){
-                    $this->data['refund_reason'] = $this->play->getRefundReason();
+                    $this->data['refund_reason'] = $this->openbay->play->getRefundReason();
                     if(!empty($this->data['order_info'])){
                         $this->template = 'openbay/play_ajax_refundinfo.tpl';
                         $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
@@ -415,13 +415,13 @@ class ControllerExtensionOpenbay extends Controller {
 
         if($this->config->get('amazon_status') == 1) {
 
-            $this->data['order_info'] = $this->amazon->getOrder($this->request->get['order_id']);
+            $this->data['order_info'] = $this->openbay->amazon->getOrder($this->request->get['order_id']);
 
             //if is amazon order
             if($this->data['order_info']){
                 //if status is shipped
                 if($this->request->get['status_id'] == $this->config->get('openbay_amazon_order_status_shipped')){
-                    $this->data['couriers'] = $this->amazon->getCarriers();
+                    $this->data['couriers'] = $this->openbay->amazon->getCarriers();
                     $this->template = 'openbay/amazon_ajax_shippinginfo.tpl';
                     $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
                 }
@@ -430,13 +430,13 @@ class ControllerExtensionOpenbay extends Controller {
         
         if($this->config->get('amazonus_status') == 1) {
 
-            $this->data['order_info'] = $this->amazonus->getOrder($this->request->get['order_id']);
+            $this->data['order_info'] = $this->openbay->amazonus->getOrder($this->request->get['order_id']);
 
             //if is amazonus order
             if($this->data['order_info']){
                 //if status is shipped
                 if($this->request->get['status_id'] == $this->config->get('openbay_amazonus_order_status_shipped')){
-                    $this->data['couriers'] = $this->amazonus->getCarriers();
+                    $this->data['couriers'] = $this->openbay->amazonus->getCarriers();
                     $this->template = 'openbay/amazonus_ajax_shippinginfo.tpl';
                     $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
                 }
@@ -459,15 +459,15 @@ class ControllerExtensionOpenbay extends Controller {
 
         //play.com
         if ($this->config->get('play_status') == 1) {
-            if($this->play->isPlayOrder($this->request->get['order_id']) !== false){
-                $this->data['order_info'] = $this->play->getPlayOrder($this->request->get['order_id']);
+            if($this->openbay->play->isPlayOrder($this->request->get['order_id']) !== false){
+                $this->data['order_info'] = $this->openbay->play->getPlayOrder($this->request->get['order_id']);
 
                 //if status is shipped
                 if($this->config->get('obp_play_shipped_id') == $this->request->get['status_id']){
                     if(!empty($this->request->post['play_courier']) && !empty($this->request->post['play_tracking_no'])){
                         $this->load->model('openbay/play');
                         $this->model_openbay_play->updatePlayOrderTracking($this->request->get['order_id'], $this->request->post['play_courier'], $this->request->post['play_tracking_no']);
-                        $this->play->orderStatusModified($this->request->get['order_id'], $this->request->get['old_status_id']);
+                        $this->openbay->play->orderStatusModified($this->request->get['order_id'], $this->request->get['old_status_id']);
                     }
                 }
                 //if status is refunded
@@ -475,7 +475,7 @@ class ControllerExtensionOpenbay extends Controller {
                     if(!empty($this->request->post['play_refund_message']) && !empty($this->request->post['play_refund_reason'])){
                         $this->load->model('openbay/play');
                         $this->model_openbay_play->updatePlayOrderRefund($this->request->get['order_id'], $this->request->post['play_refund_message'], $this->request->post['play_refund_reason']);
-                        $this->play->orderStatusModified($this->request->get['order_id'], $this->request->get['old_status_id']);
+                        $this->openbay->play->orderStatusModified($this->request->get['order_id'], $this->request->get['old_status_id']);
                     }
                 }
             }
@@ -483,34 +483,34 @@ class ControllerExtensionOpenbay extends Controller {
 
         //Amazon EU
         if ($this->config->get('amazon_status') == 1) {
-            $amazonOrder = $this->amazon->getOrder($this->request->get['order_id']);
+            $amazonOrder = $this->openbay->amazon->getOrder($this->request->get['order_id']);
             if($amazonOrder){
                 if($this->config->get('openbay_amazon_order_status_shipped') == $this->request->get['status_id']){
                     if(!empty($this->request->post['courier_other'])) {
-                        $this->amazon->updateOrder($this->request->get['order_id'], 'shipped', $this->request->post['courier_other'], false, $this->request->post['tracking_no']);
+                        $this->openbay->amazon->updateOrder($this->request->get['order_id'], 'shipped', $this->request->post['courier_other'], false, $this->request->post['tracking_no']);
                     } else {
-                        $this->amazon->updateOrder($this->request->get['order_id'], 'shipped', $this->request->post['courier_id'], true, $this->request->post['tracking_no']);
+                        $this->openbay->amazon->updateOrder($this->request->get['order_id'], 'shipped', $this->request->post['courier_id'], true, $this->request->post['tracking_no']);
                     }
                 }
                 if($this->config->get('openbay_amazon_order_status_canceled') == $this->request->get['status_id']){
-                    $this->amazon->updateOrder($this->request->get['order_id'], 'canceled');
+                    $this->openbay->amazon->updateOrder($this->request->get['order_id'], 'canceled');
                 }
             }
         }
         
         //Amazon US
         if ($this->config->get('amazonus_status') == 1) {
-            $amazonusOrder = $this->amazonus->getOrder($this->request->get['order_id']);
+            $amazonusOrder = $this->openbay->amazonus->getOrder($this->request->get['order_id']);
             if($amazonusOrder){
                 if($this->config->get('openbay_amazonus_order_status_shipped') == $this->request->get['status_id']){
                     if(!empty($this->request->post['courier_other'])) {
-                        $this->amazonus->updateOrder($this->request->get['order_id'], 'shipped', $this->request->post['courier_other'], false, $this->request->post['tracking_no']);
+                        $this->openbay->amazonus->updateOrder($this->request->get['order_id'], 'shipped', $this->request->post['courier_other'], false, $this->request->post['tracking_no']);
                     } else {
-                        $this->amazonus->updateOrder($this->request->get['order_id'], 'shipped', $this->request->post['courier_id'], true, $this->request->post['tracking_no']);
+                        $this->openbay->amazonus->updateOrder($this->request->get['order_id'], 'shipped', $this->request->post['courier_id'], true, $this->request->post['tracking_no']);
                     }
                 }
                 if($this->config->get('openbay_amazonus_order_status_canceled') == $this->request->get['status_id']){
-                    $this->amazonus->updateOrder($this->request->get['order_id'], 'canceled');
+                    $this->openbay->amazonus->updateOrder($this->request->get['order_id'], 'canceled');
                 }
             }
         }
@@ -803,15 +803,15 @@ class ControllerExtensionOpenbay extends Controller {
             }
 
             if ($this->config->get('amazon_status') == 1) {
-                $this->data['market_options']['amazon']['carriers'] = $this->amazon->getCarriers();
+                $this->data['market_options']['amazon']['carriers'] = $this->openbay->amazon->getCarriers();
             }
             
             if ($this->config->get('amazonus_status') == 1) {
-                $this->data['market_options']['amazonus']['carriers'] = $this->amazonus->getCarriers();
+                $this->data['market_options']['amazonus']['carriers'] = $this->openbay->amazonus->getCarriers();
             }
 
             if ($this->config->get('play_status') == 1) {
-                $this->data['market_options']['play']['carriers'] = $this->play->getCarriers();
+                $this->data['market_options']['play']['carriers'] = $this->openbay->play->getCarriers();
             }
 
 
@@ -901,13 +901,13 @@ class ControllerExtensionOpenbay extends Controller {
             if ($this->config->get('amazon_status') == 1 && $this->request->post['channel'][$order_id] == 'Amazon') {
                 if($this->config->get('openbay_amazon_order_status_shipped') == $this->request->post['order_status_id']){
                     if(isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
-                        $this->amazon->updateOrder($order_id, 'shipped', $this->request->post['carrier_other'][$order_id], false, $this->request->post['tracking'][$order_id]);
+                        $this->openbay->amazon->updateOrder($order_id, 'shipped', $this->request->post['carrier_other'][$order_id], false, $this->request->post['tracking'][$order_id]);
                     } else {
-                        $this->amazon->updateOrder($order_id, 'shipped', $this->request->post['carrier'][$order_id], true, $this->request->post['tracking'][$order_id]);
+                        $this->openbay->amazon->updateOrder($order_id, 'shipped', $this->request->post['carrier'][$order_id], true, $this->request->post['tracking'][$order_id]);
                     }
                 }
                 if($this->config->get('openbay_amazon_order_status_canceled') == $this->request->post['order_status_id']){
-                    $this->amazon->updateOrder($order_id, 'canceled');
+                    $this->openbay->amazon->updateOrder($order_id, 'canceled');
                 }
             }
             
@@ -915,13 +915,13 @@ class ControllerExtensionOpenbay extends Controller {
             if ($this->config->get('amazonus_status') == 1 && $this->request->post['channel'][$order_id] == 'Amazonus') {
                 if($this->config->get('openbay_amazonus_order_status_shipped') == $this->request->post['order_status_id']){
                     if(isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
-                        $this->amazonus->updateOrder($order_id, 'shipped', $this->request->post['carrier_other'][$order_id], false, $this->request->post['tracking'][$order_id]);
+                        $this->openbay->amazonus->updateOrder($order_id, 'shipped', $this->request->post['carrier_other'][$order_id], false, $this->request->post['tracking'][$order_id]);
                     } else {
-                        $this->amazonus->updateOrder($order_id, 'shipped', $this->request->post['carrier'][$order_id], true, $this->request->post['tracking'][$order_id]);
+                        $this->openbay->amazonus->updateOrder($order_id, 'shipped', $this->request->post['carrier'][$order_id], true, $this->request->post['tracking'][$order_id]);
                     }
                 }
                 if($this->config->get('openbay_amazonus_order_status_canceled') == $this->request->post['order_status_id']){
-                    $this->amazonus->updateOrder($order_id, 'canceled');
+                    $this->openbay->amazonus->updateOrder($order_id, 'canceled');
                 }
             }
 
@@ -931,14 +931,14 @@ class ControllerExtensionOpenbay extends Controller {
                 if($this->config->get('obp_play_shipped_id') == $this->request->post['order_status_id']){
                     if(!empty($this->request->post['play_courier']) && !empty($this->request->post['play_tracking_no'])){
                         $this->model_openbay_play->updatePlayOrderTracking($order_id, $this->request->post['carrier'][$order_id], $this->request->post['tracking'][$order_id]);
-                        $this->play->orderStatusModified($order_id, $this->request->post['old_status'][$order_id]);
+                        $this->openbay->play->orderStatusModified($order_id, $this->request->post['old_status'][$order_id]);
                     }
                 }
                 //if status is refunded
                 if($this->config->get('obp_play_refunded_id') == $this->request->post['order_status_id']){
                     if(!empty($this->request->post['refund_message'][$order_id]) && !empty($this->request->post['refund_reason'][$order_id])){
                         $this->model_openbay_play->updatePlayOrderRefund($order_id, $this->request->post['refund_message'][$order_id], $this->request->post['refund_reason'][$order_id]);
-                        $this->play->orderStatusModified($order_id, $this->request->post['old_status'][$order_id]);
+                        $this->openbay->play->orderStatusModified($order_id, $this->request->post['old_status'][$order_id]);
                     }
                 }
             }

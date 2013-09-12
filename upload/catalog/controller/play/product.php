@@ -1,7 +1,7 @@
 <?php
 class ControllerPlayProduct extends Controller{
     public function getProductChanges(){
-        $this->play->log('getProductChanges()');
+        $this->openbay->play->log('getProductChanges()');
 
         if(!empty($this->request->post)){
             $auth = $this->validateAuth();
@@ -10,7 +10,7 @@ class ControllerPlayProduct extends Controller{
                 $this->load->model('play/product');
                 
                 //get the formatted array of products
-                $products = $this->play->getLinkedProducts(true);
+                $products = $this->openbay->play->getLinkedProducts(true);
                 $response = array(
                     'error' => false,
                     'msg'   => ''
@@ -38,7 +38,7 @@ class ControllerPlayProduct extends Controller{
                     }
                 }
                 
-                $remove = $this->play->getRemovedProducts();
+                $remove = $this->openbay->play->getRemovedProducts();
 
                 if($remove != 0){
                     foreach($remove as $product){
@@ -57,12 +57,12 @@ class ControllerPlayProduct extends Controller{
                                 'add-delete'            => html_entity_decode($product['action']),
                             );
 
-                            $this->play->delete($product['product_id']);
+                            $this->openbay->play->delete($product['product_id']);
                         }
                     }
                 }
 
-                $this->play->log('getProductChanges() - '.json_encode($response));
+                $this->openbay->play->log('getProductChanges() - '.json_encode($response));
             }else{
                 $response = array(
                     'error' => true,
@@ -82,14 +82,14 @@ class ControllerPlayProduct extends Controller{
     }
 
     public function updateProductChanges(){
-        $this->play->log('updateProductChanges()');
+        $this->openbay->play->log('updateProductChanges()');
         if(!empty($this->request->post)){
 
             if($this->validateAuth() == true){
                 
                 $this->load->model('play/product');
                 
-                $data = $this->play->decrypt($this->request->post['data'], true);
+                $data = $this->openbay->play->decrypt($this->request->post['data'], true);
 
                 $pWarnings = array();
                 
@@ -130,7 +130,7 @@ class ControllerPlayProduct extends Controller{
     }
 
     private function validateAuth(){
-        $this->play->log('validateAuth()');
+        $this->openbay->play->log('validateAuth()');
 
         if($this->request->post['token'] == $this->config->get('obp_play_token') &&
            $this->request->post['secret'] == $this->config->get('obp_play_secret'))

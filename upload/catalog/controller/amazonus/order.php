@@ -25,7 +25,7 @@ class ControllerAmazonusOrder extends Controller {
             return;
         }
         
-        $decrypted = $this->amazonus->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
         
         if (!$decrypted) {
             $logger->write('amazonus/order Failed to decrypt data');

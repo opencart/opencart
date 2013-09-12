@@ -21,7 +21,7 @@ class ControllerAmazonSearch extends Controller {
             return;
         }
         
-        $decrypted = $this->amazon->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->amazon->decryptArgs($this->request->post['data']);
         
         if (!$decrypted) {
             $logger->write('amazon/search Failed to decrypt data');

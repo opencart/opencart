@@ -9,7 +9,7 @@ class ModelAmazonusListing extends Model {
             'search_string' => $search_string,
         );
 
-        $results = json_decode($this->amazonus->callWithResponse('productv3/search', $search_params), 1);
+        $results = json_decode($this->openbay->amazonus->callWithResponse('productv3/search', $search_params), 1);
 
         $products = array();
 
@@ -42,7 +42,7 @@ class ModelAmazonusListing extends Model {
             'asin' => $asin,
         );
 
-        $results = json_decode($this->amazonus->callWithResponse('productv3/getProduct', $data), 1);
+        $results = json_decode($this->openbay->amazonus->callWithResponse('productv3/getProduct', $data), 1);
 
         return $results;
     }
@@ -55,7 +55,7 @@ class ModelAmazonusListing extends Model {
 
         $bestPrice = '';
 
-        $result = json_decode($this->amazonus->callWithResponse('productv3/getPrice', $search_params), 1);
+        $result = json_decode($this->openbay->amazonus->callWithResponse('productv3/getPrice', $search_params), 1);
         
         if (isset($result['Price']['Amount']) && $result['Price']['Currency'] && $this->currency->has($result['Price']['Currency'])) {
             $bestPrice['amount'] = number_format($this->currency->convert($result['Price']['Amount'], $result['Price']['Currency'], $this->config->get('config_currency')), 2);
@@ -85,7 +85,7 @@ class ModelAmazonusListing extends Model {
             'product_id' => $data['product_id'],
         );
 
-        $response = $this->amazonus->callWithResponse('productv3/simpleListing', $request); 
+        $response = $this->openbay->amazonus->callWithResponse('productv3/simpleListing', $request);
         $response = json_decode($response);
         if (empty($response)) {
             return array(
@@ -109,7 +109,7 @@ class ModelAmazonusListing extends Model {
     }
 
     public function getBrowseNodes($request){
-        return $this->amazonus->callWithResponse('productv3/getBrowseNodes', $request);
+        return $this->openbay->amazonus->callWithResponse('productv3/getBrowseNodes', $request);
     }
 
 }

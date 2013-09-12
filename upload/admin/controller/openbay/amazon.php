@@ -2,7 +2,7 @@
 class ControllerOpenbayAmazon extends Controller {
     
     public function stockUpdates() {
-        $this->data = array_merge($this->data, $this->load->language('amazon/stock_updates'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazon_stockupdates'));
         
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -103,7 +103,7 @@ class ControllerOpenbayAmazon extends Controller {
         $this->load->model('openbay/amazon');
         $this->load->model('sale/customer_group');
         
-        $this->data = array_merge($this->data, $this->load->language('amazon/overview'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazon_overview'));
         
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -151,7 +151,7 @@ class ControllerOpenbayAmazon extends Controller {
     }
     
     public function subscription() {   
-        $this->data = array_merge($this->data, $this->load->language('amazon/subscription'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazon_subscription'));
         
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -231,8 +231,8 @@ class ControllerOpenbayAmazon extends Controller {
     }
     
     public function settings() {
-        $this->data = array_merge($this->data, $this->load->language('amazon/settings'));
-        $this->load->language('amazon/listing');
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazon_settings'));
+        $this->load->language('openbay/amazon_listing');
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
         $this->document->addScript('view/javascript/openbay/faq.js');
@@ -407,7 +407,7 @@ class ControllerOpenbayAmazon extends Controller {
     }
     
     public function itemLinks() {
-        $this->data = array_merge($this->data, $this->load->language('amazon/item_links'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazon_links'));
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
         $this->document->addScript('view/javascript/openbay/faq.js');
@@ -455,7 +455,7 @@ class ControllerOpenbayAmazon extends Controller {
     
     public function savedListings() {
         
-        $this->data = array_merge($this->data, $this->load->language('amazon/saved_listings'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazon_listingsaved'));
         
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -648,7 +648,7 @@ class ControllerOpenbayAmazon extends Controller {
     }
     
     public function doBulkList() {
-        $this->load->language('amazon/listing');
+        $this->load->language('openbay/amazon_listing');
         $this->load->model('openbay/amazon_listing');
        
         $delete_search_results = array();
@@ -706,7 +706,7 @@ class ControllerOpenbayAmazon extends Controller {
     public function doBulkSearch() {
         $this->load->model('catalog/product');
         $this->load->model('openbay/amazon_listing');
-        $this->load->language('amazon/bulk');
+        $this->load->language('openbay/amazon_bulk');
         
         $json = array();
         $search_data = array();
@@ -764,7 +764,7 @@ class ControllerOpenbayAmazon extends Controller {
         $this->load->model('catalog/product');
         $this->load->model('tool/image');
         
-        $this->data = array_merge($this->data, $this->load->language('amazon/bulk'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazon_bulk'));
         
         $this->document->setTitle($this->language->get('heading_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');

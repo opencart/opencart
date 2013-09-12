@@ -1,7 +1,7 @@
 <?php
 class ControllerAmazonListing extends Controller{
     public function create(){
-        $this->load->language('amazon/listing');
+        $this->load->language('openbay/amazon_listing');
         $this->load->model('openbay/amazon_listing');
         $this->load->model('openbay/amazon');
         $this->load->model('catalog/product');
@@ -238,7 +238,7 @@ class ControllerAmazonListing extends Controller{
     public function edit() {
         $this->load->model('openbay/amazon_listing');
         $this->load->model('openbay/amazon');
-        $this->load->language('amazon/listing');
+        $this->load->language('openbay/amazon_listing');
         
         $url = '';
 
@@ -453,7 +453,7 @@ class ControllerAmazonListing extends Controller{
     }
     
     public function deleteLinks() {
-        $this->load->language('amazon/listing');
+        $this->load->language('openbay/amazon_listing');
 
         $url = '';
 
@@ -532,7 +532,7 @@ class ControllerAmazonListing extends Controller{
     
     public function search(){
         $this->load->model('openbay/amazon_listing');
-        $this->load->language('amazon/listing');
+        $this->load->language('openbay/amazon_listing');
 
         $error = '';
         
@@ -562,7 +562,7 @@ class ControllerAmazonListing extends Controller{
     
     public function bestPrice() {
         $this->load->model('openbay/amazon_listing');
-        $this->load->language('amazon/listing');
+        $this->load->language('openbay/amazon_listing');
 
         $error = '';
         

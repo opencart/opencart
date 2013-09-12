@@ -18,7 +18,7 @@ class ControllerOpenbayAmazonus extends Controller {
     }
     
     public function stockUpdates() {
-        $this->data = array_merge($this->data, $this->load->language('amazonus/stock_updates'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazonus_stockupdates'));
         
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -119,7 +119,7 @@ class ControllerOpenbayAmazonus extends Controller {
         $this->load->model('openbay/amazonus');
         $this->load->model('sale/customer_group');
         
-        $this->data = array_merge($this->data, $this->load->language('amazonus/overview'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazonus_overview'));
         
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -168,7 +168,7 @@ class ControllerOpenbayAmazonus extends Controller {
     }
     
     public function subscription() {   
-        $this->data = array_merge($this->data, $this->load->language('amazonus/subscription'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazonus_subscription'));
         
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
@@ -248,8 +248,8 @@ class ControllerOpenbayAmazonus extends Controller {
     }
     
     public function settings() {
-        $this->data = array_merge($this->data, $this->load->language('amazonus/settings'));
-        $this->load->language('amazonus/listing');
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazonus_settings'));
+        $this->load->language('openbay/amazonus_listing');
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
         $this->document->addScript('view/javascript/openbay/faq.js');
@@ -424,7 +424,7 @@ class ControllerOpenbayAmazonus extends Controller {
     }
     
     public function itemLinks() {
-        $this->data = array_merge($this->data, $this->load->language('amazonus/item_links'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazonus_links'));
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');
         $this->document->addScript('view/javascript/openbay/faq.js');
@@ -472,7 +472,7 @@ class ControllerOpenbayAmazonus extends Controller {
     
     public function savedListings() {
         
-        $this->data = array_merge($this->data, $this->load->language('amazonus/saved_listings'));
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazonus_listingsaved'));
         
         $this->document->setTitle($this->language->get('lang_title'));
         $this->document->addStyle('view/stylesheet/openbay.css');

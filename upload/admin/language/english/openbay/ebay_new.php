@@ -68,7 +68,7 @@ $_['lang_template_link']            = 'Need a custom theme?';
 $_['lang_description']              = 'Description';
 
 //Images
-$_['lang_images_text_1']            = 'eBay images will be uploaded to eBay and will incur additional listing fees.<br />Supersize and Gallery plus are also listing enhancements that will cost more.';
+$_['lang_images_text_1']            = 'eBay images will be uploaded to eBay.<br />Supersize and Gallery plus are also listing enhancements that may cost more to list.';
 $_['lang_images_text_2']            = 'Template images will be added to your listing description and hosted from your web site, these are free. (Your listing template must have the {gallery} tag)';
 $_['lang_image_gallery']            = 'Gallery image size';
 $_['lang_image_thumb']              = 'Thumb image size';

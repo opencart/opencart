@@ -186,7 +186,7 @@ final class Ebay {
     }
 
     public function getSetting($key) {
-        $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = '".$key."' LIMIT 1");
+        $qry = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = '".$key."' LIMIT 1");
         
         if($qry->num_rows > 0) {
             return unserialize($qry->row['data']);
@@ -196,14 +196,6 @@ final class Ebay {
     }
 
     public function getEbayItemId($product_id) {
-        /*
-        * getEbayItemId
-        *
-        * Gets an ebay item id from a product id
-        *
-        * @param $product_id
-        * @return bool
-        */
         $this->log('getEbayItemId() - Product ID: '.$product_id);
 
         $qry = $this->db->query("SELECT `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '".$product_id."' AND `status` = '1' LIMIT 1");
@@ -232,14 +224,18 @@ final class Ebay {
     }
 
     public function removeItemId($id) {
-        //this will only remove the link.
+        /**
+         * this will only remove the link.
+         */
         $this->log('removeItemId() - ID: '.$id.'');
         $this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = '0' WHERE `ebay_item_id` = '".$this->db->escape($id)."'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `item_id` = '".$this->db->escape($id)."'");
     }
 
     public function deleteProduct($product_id) {
-        //this is called when the product is removed from the database
+        /**
+         * this is called when the product is removed from the database
+         */
         $this->log('deleteProduct() - Removing product id '.$product_id.' from ebay_listing table');
         $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '".(int)$product_id."'");
         $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '".(int)$product_id."'");
@@ -253,10 +249,7 @@ final class Ebay {
 
     public function getLiveListingArray() {
     /*
-     * getLiveListingArray
-     *
      * Returns the list of linked items with eBay from the database
-     *
      * @return array ([product id] = ebay item id)
      */
         $this->log('getLiveListingArray()');
@@ -264,7 +257,7 @@ final class Ebay {
         $qry = $this->db->query("SELECT `product_id`, `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = '1'");
 
         $data = array();
-        if($qry->num_rows) {
+        if($qry->num_rows > 0) {
             foreach($qry->rows as $row) {
                 $data[$row['product_id']] = $row['ebay_item_id'];
             }
@@ -277,19 +270,10 @@ final class Ebay {
         $this->log('getEndedListingArray()');
         $active = $this->getLiveListingArray();
 
-        $qry = $this->db->query("SELECT e.*
-            FROM
-                (SELECT `product_id`,
-                MAX(`ebay_listing_id`) as `ebay_listing_id`
-                FROM `" . DB_PREFIX . "ebay_listing`
-                WHERE `status` = 0
-                GROUP BY `product_id`) `a`
-            INNER JOIN `" . DB_PREFIX . "ebay_listing` `e`
-            ON (`e`.`ebay_listing_id` = `a`.`ebay_listing_id`)
-        ");
+        $qry = $this->db->query("SELECT e.* FROM (SELECT `product_id`, MAX(`ebay_listing_id`) as `ebay_listing_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = 0 GROUP BY `product_id`) `a` INNER JOIN `" . DB_PREFIX . "ebay_listing` `e` ON (`e`.`ebay_listing_id` = `a`.`ebay_listing_id`)");
 
         $data = array();
-        if($qry->num_rows) {
+        if($qry->num_rows > 0) {
             foreach($qry->rows as $row) {
                 $data[$row['product_id']] = $row['ebay_item_id'];
             }
@@ -305,13 +289,10 @@ final class Ebay {
     }
 
     public function getLiveProductArray() {
-    /*
-     * getLiveProductArray
-     *
-     * Returns the list of linked items with eBay from the database
-     *
-     * @return array ([ebay item id] = product id)
-     */
+        /**
+        * Returns the list of linked items with eBay from the database
+        * @return array ([ebay item id] = product id)
+        */
         $qry = $this->db->query("SELECT `product_id`, `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `status` = '1'");
 
         $data = array();
@@ -325,11 +306,9 @@ final class Ebay {
     }
 
     public function getLiveProducts() {
-    /*
-     * getLiveProducts
-     *
-     * returns full array data about live items.
-     */
+        /**
+        * returns full array data about live items.
+        */
         $this->load->model('tool/image');
 
         $has_option = '';
@@ -340,26 +319,26 @@ final class Ebay {
 
         $qry = $this->db->query("
         SELECT
-			".$has_option."
-			`el`.`ebay_item_id`,
-			`p`.`product_id`,
-			`p`.`sku`,
-			`p`.`model`,
-			`p`.`quantity`,
-			`pd`.name
-        FROM `" . DB_PREFIX . "ebay_listing` `el` 
-        LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`) 
-        LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`) 
-        WHERE `el`.`status` = '1' 
+            ".$has_option."
+            `el`.`ebay_item_id`,
+            `p`.`product_id`,
+            `p`.`sku`,
+            `p`.`model`,
+            `p`.`quantity`,
+            `pd`.name
+        FROM `" . DB_PREFIX . "ebay_listing` `el`
+        LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
+        LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)
+        WHERE `el`.`status` = '1'
         AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
 
         $data = array();
         if($qry->num_rows) {
             foreach($qry->rows as $row) {
                 $data[$row['ebay_item_id']] = array(
-                    'product_id'    => $row['product_id'], 
-                    'sku'           => $row['sku'], 
-                    'model'         => $row['model'], 
+                    'product_id'    => $row['product_id'],
+                    'sku'           => $row['sku'],
+                    'model'         => $row['model'],
                     'qty'           => $row['quantity'],
                     'name'          => $row['name']
                 );
@@ -410,14 +389,9 @@ final class Ebay {
     }
 
     public function ebaySaleStockReduce($product_id, $sku = null) {
-    /*
-     * ebaySaleStockReduce
-     *
-     * Gets the product info from an ID and sends to ebay update method.
-     *
-     * @param $product_id
-     * @param null $sku
-     */
+        /**
+        * Gets the product info from an ID and sends to ebay update method.
+        */
         $this->log('ebaySaleStockReduce() - Is stock update needed (Item ID: '.$product_id.',SKU: '.$sku.')');
 
         if(!empty($product_id)) {
@@ -434,14 +408,9 @@ final class Ebay {
     }
 
     public function notifyAdmin($subject, $message) {
-    /*
-     * notifyAdmin
-     *
-     * Sends an email to the store admin
-     *
-     * @param $subject
-     * @param $message
-     */
+        /**
+        * Sends an email to the store admin
+        */
         $this->log('Sending email to: '.$this->config->get('config_email').' - notifyAdmin()');
 
         $mail               = new Mail();
@@ -452,7 +421,7 @@ final class Ebay {
         $mail->password     = $this->config->get('config_smtp_password');
         $mail->port         = $this->config->get('config_smtp_port');
         $mail->timeout      = $this->config->get('config_smtp_timeout');
-        
+
         $mail->setTo($this->config->get('config_email'));
         $mail->setFrom($this->config->get('config_email'));
         $mail->setSender($this->config->get('config_name'));
@@ -462,57 +431,43 @@ final class Ebay {
     }
 
     public function encrypt($msg,$k,$base64 = false) {
-    /*
-     * encrypt
-     *
-     * Encrypts data based on key
-     *
-     * @param $msg
-     * @param $k
-     * @param bool $base64
-     * @return bool|string
-     */
+        /**
+        * Encrypts data based on key
+        */
         if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '')) { return false; }
 
-        $msg = serialize($msg);			
-        $iv  = mcrypt_create_iv(32, MCRYPT_RAND);		
+        $msg = serialize($msg);
+        $iv  = mcrypt_create_iv(32, MCRYPT_RAND);
 
         if(mcrypt_generic_init($td, $k, $iv) !== 0 ) { return false; }
 
-        $msg  = mcrypt_generic($td, $msg);			
-        $msg  = $iv . $msg;							
-        $mac  = $this->pbkdf2($msg, $k, 1000, 32);	
-        $msg .= $mac;									
+        $msg  = mcrypt_generic($td, $msg);
+        $msg  = $iv . $msg;
+        $mac  = $this->pbkdf2($msg, $k, 1000, 32);
+        $msg .= $mac;
 
-        mcrypt_generic_deinit($td);						
-        mcrypt_module_close($td);					
+        mcrypt_generic_deinit($td);
+        mcrypt_module_close($td);
 
-        if ($base64) { $msg = base64_encode($msg); }	
+        if ($base64) { $msg = base64_encode($msg); }
 
-        return $msg;								
+        return $msg;
     }
 
     public function decrypt($msg,$k,$base64 = false) {
-    /*
-     * decrypt
-     *
-     * Decrypts data based on key
-     *
-     * @param $msg
-     * @param $k
-     * @param bool $base64
-     * @return bool|mixed
-     */
+        /**
+        * Decrypts data based on key
+        */
         if ( $base64 ) { $msg = base64_decode($msg); }
-        
+
         if ( ! $td = mcrypt_module_open('rijndael-256', '', 'ctr', '') ) {
             $this->log('decrypt() - Failed to open cipher');
             return false;
         }
-        
-        $iv  = substr($msg, 0, 32);						
-        $mo  = strlen($msg) - 32;						
-        $em  = substr($msg, $mo);			
+
+        $iv  = substr($msg, 0, 32);
+        $mo  = strlen($msg) - 32;
+        $em  = substr($msg, $mo);
         $msg = substr($msg, 32, strlen($msg)-64);
         $mac = $this->pbkdf2($iv . $msg, $k, 1000, 32);
 
@@ -520,34 +475,34 @@ final class Ebay {
             $this->log('decrypt() - Mac authenticate failed');
             return false;
         }
-        
+
         if ( mcrypt_generic_init($td, $k, $iv) !== 0 ) {
             $this->log('decrypt() - Buffer init failed');
             return false;
         }
-        
-        $msg = mdecrypt_generic($td, $msg);					
-        $msg = unserialize($msg);							
 
-        mcrypt_generic_deinit($td);							
-        mcrypt_module_close($td);							
+        $msg = mdecrypt_generic($td, $msg);
+        $msg = unserialize($msg);
 
-        return $msg;										
+        mcrypt_generic_deinit($td);
+        mcrypt_module_close($td);
+
+        return $msg;
     }
 
     public function pbkdf2( $p, $s, $c, $kl, $a = 'sha256' ) {
-    /*
-     * pbkdf2
-     *
-     * Creates encryption/decryption key
-     *
-     * @param $p
-     * @param $s
-     * @param $c
-     * @param $kl
-     * @param string $a
-     * @return string
-     */
+        /**
+         * pbkdf2
+         *
+         * Creates encryption/decryption key
+         *
+         * @param $p
+         * @param $s
+         * @param $c
+         * @param $kl
+         * @param string $a
+         * @return string
+         */
         $hl = strlen(hash($a, null, true));	
         $kb = ceil($kl / $hl);			
         $dk = '';					
@@ -565,14 +520,14 @@ final class Ebay {
     }
 
     public function validateJsonDecode($data) {
-    /*
-     * validateJsonDecode
-     *
-     * Validates JSON data and logs any errors.
-     *
-     * @param $data
-     * @return mixed
-     */
+        /**
+         * validateJsonDecode
+         *
+         * Validates JSON data and logs any errors.
+         *
+         * @param $data
+         * @return mixed
+         */
         $data = (string)$data;
         
         $encoding = mb_detect_encoding($data);
@@ -616,13 +571,13 @@ final class Ebay {
     }
 
     public function addonList() {
-    /*
-     * addonList
-     *
-     * Returns array of installed 3rd party modules for OpenBay
-     *
-     * @return array
-     */
+        /**
+         * addonList
+         *
+         * Returns array of installed 3rd party modules for OpenBay
+         *
+         * @return array
+         */
         $this->log('addonList() - Getting list of addons');
 
         $addons = array();
@@ -733,6 +688,9 @@ final class Ebay {
     }
 
     public function getApiServer() {
+        /**
+         * Returns the API connection URL
+         */
         return $this->url;
     }
 
@@ -776,9 +734,6 @@ final class Ebay {
                     return false;
                 }
             }else{
-                /**
-                * Need to loop over current item check if other variants have stock.
-                */
                 $variantStock = false;
                 foreach($listing['variation']['vars'] as $var) {
                     if(($var['sku'] != $sku) && ($var['qty'] > 0)) {
@@ -1071,6 +1026,9 @@ final class Ebay {
     }
 
     public function getProductId($ebay_item) {
+        /**
+         * Gets the product ID from the eBay item ID
+         */
         $this->log('getProductId() - Item: '.$ebay_item);
 
         $qry = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `ebay_item_id` = '".$ebay_item."' LIMIT 1");
@@ -1134,12 +1092,7 @@ final class Ebay {
                     $this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = 'data/".$img['name']."' WHERE `product_id` = '".$img['product_id']."' LIMIT 1");
                 }else{
                     //add to gallery table
-                    $this->db->query("
-                        INSERT INTO `" . DB_PREFIX . "product_image` SET
-                            `product_id`            = '".$img['product_id']."',
-                            `image`                 = 'data/".$img['name']."',
-                            `sort_order`            = '".$img['imgcount']."'
-                    ");
+                    $this->db->query("INSERT INTO `" . DB_PREFIX . "product_image` SET `product_id` = '".$img['product_id']."', `image` = 'data/".$img['name']."', `sort_order` = '".$img['imgcount']."'");
                 }
                 
                 $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_image_import` WHERE `id` = '".$img['id']."' LIMIT 1");
@@ -1148,6 +1101,9 @@ final class Ebay {
     }
     
     public function getEbayListing($itemId) {
+        /**
+         * Gets a single listing from eBay
+         */
         $this->log('getEbayListing()');
         return $this->openbay_call('item/getItem/', array('itemId' => $itemId));
     }
@@ -1158,7 +1114,7 @@ final class Ebay {
          */
         $this->log('relistItem() - Starting relist item, ID: '.$itemId.', product: '.$productId.', qty: '.$qty);
 
-        $response = $this->openbay_call('listing/relistItem', array('itemId' => $itemId, 'qty' => $qty));
+        $response = $this->openbay_call('listing/relistItem/', array('itemId' => $itemId, 'qty' => $qty));
 
         if(!empty($response['ItemID'])) {
             $this->log('relistItem() - Created: '.$response['ItemID']);
@@ -1175,13 +1131,7 @@ final class Ebay {
         $this->deleteProduct($product_id);
         $this->removeItemId($item_id);
 
-        $this->db->query("
-            INSERT INTO `" . DB_PREFIX . "ebay_listing`
-            SET
-                `product_id`    = '".(int)$product_id."',
-                `ebay_item_id`  = '".$this->db->escape($item_id)."',
-                `variant`       = '".(int)$variant."',
-                `status`        = '1'");
+        $this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_listing` SET `product_id` = '".(int)$product_id."', `ebay_item_id` = '".$this->db->escape($item_id)."', `variant` = '".(int)$variant."', `status` = '1'");
     }
 
     public function insertReserve($data, $item_id, $variant) {

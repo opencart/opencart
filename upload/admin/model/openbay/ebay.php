@@ -242,7 +242,7 @@ class ModelOpenbayEbay extends Model{
     public function loadLinked($limit = 100, $page = 1){
         $this->load->model('tool/image');
 
-        $start = $limit * $page - 1;
+        $start = $limit * ($page - 1);
 
         $has_option = '';
         if ($this->openbay->addonLoad('openstock') ) {
@@ -324,7 +324,7 @@ class ModelOpenbayEbay extends Model{
 
             //loop over these and check if any are not in the db
             foreach($response['items'] as $itemId => $item){
-                if($this->openbay->ebay->getProductId($itemId) == false){
+                if($this->openbay->ebay->getProductId($itemId, 1) == false){
                     //ebay item ID not in the db
                     $unlinked[$itemId] = $item;
                 }

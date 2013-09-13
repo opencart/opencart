@@ -126,24 +126,25 @@ class ModelOpenbayOpenbay extends Model
                         $dirLevel   = 0;
                         if(isset($file['locations']['location']) && is_array($file['locations']['location'])){
                             foreach($file['locations']['location'] as $location){
-                                $dir            .= $location.'/';
-
                                 $updatelog .= "Current location: ".$dir."\n";
 
                                 // Added to allow OC security where the admin directory is renamed
                                 if($location == 'admin') { $location = $data['adminDir']; }
 
-                                if(ftp_chdir($connection, $location)){
+                                $dir .= $location.'/';
+                                $updatelog .= "Trying to get to: ".$dir."\n";
+                                $updatelog .= "ftp_pwd output: ".ftp_pwd($connection)."\n";
 
+                                if(ftp_chdir($connection, $location)){
+                                    $dirLevel++;
                                 }else{
                                     if(ftp_mkdir($connection, $location.'/')){
                                         $updatelog .= "Created directory: ".$dir."\n";
+                                        $dirLevel++;
                                     }else{
                                         $updatelog .= "FAILED TO CREATE DIRECTORY: ".$dir."\n";
                                     }
                                 }
-
-                                $dirLevel++;
                             }
                         }
 

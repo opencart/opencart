@@ -22,8 +22,8 @@
     
       <h2><?php echo $heading_title; ?></h2>
       <?php if ($products) { ?>
-      <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
       
+      <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
       
       <div class="row">
         <div class="col-sm-2">
@@ -72,18 +72,25 @@
       
       
       <div class="product-items layout-row-4 product-grid">
+        
         <?php foreach ($products as $product) { ?>
+        
         <div class="col-sm-3"> 
-          <!-- Product thumb -->
+          
           <div class="product-thumb transition">
+            
             <?php if ($product['thumb']) { ?>
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" title="<?php echo $product['name']; ?>" alt="<?php echo $product['name']; ?>" /></a></div>
             <?php } else { ?>
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="catalog/view/theme/default/image/placeholder.png" title="<?php echo $product['name']; ?>" alt="<?php echo $product['name']; ?>" /></a></div>
             <?php } ?>
+            
+            
             <div class="caption">
               <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
+              
               <p><?php echo $product['description']; ?></p>
+              
               <?php if ($product['price']) { ?>
               <p class="price">
                 <?php if (!$product['special']) { ?>
@@ -96,12 +103,14 @@
                 <?php } ?>
               </p>
               <?php } ?>
+              
               <?php if ($product['rating']) { ?>
               <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /></div>
               <?php } ?>
             </div>
-            <div class="button-group"> <a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span> </a> <a onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a> <a onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a>
-            </div>
+            
+            <div class="button-group"><a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"><span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span></a><a onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a><a onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a></div>
+          
           </div>
         </div>
         <?php } ?>

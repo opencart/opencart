@@ -133,7 +133,6 @@ class ControllerProductSearch extends Controller {
 		}
 
 		$this->data['text_empty'] = $this->language->get('text_empty');
-    	$this->data['text_critea'] = $this->language->get('text_critea');
     	$this->data['text_search'] = $this->language->get('text_search');
 		$this->data['text_keyword'] = $this->language->get('text_keyword');
 		$this->data['text_category'] = $this->language->get('text_category');

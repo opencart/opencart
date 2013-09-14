@@ -1,76 +1,68 @@
 $(document).ready(function() {
     /* Search */
-    $('header input[name=\'search\']').on('click', function() {
+    $('header input[name=\'search\']').parent().find('button').on('click', function() {
         url = $('base').attr('href') + 'index.php?route=product/search';
-                 
-        if (this.value) {
-            url += '&search=' + encodeURIComponent(this.value);
+        
+		var search = $('header input[name=\'search\']').val();
+		         
+        if (search) {
+            url += '&search=' + encodeURIComponent(search);
         }
         
         location = url;
     });
 
-    $('header input[name=\'search\']').keydown(function(e) {
+    $('header input[name=\'search\']').on('keydown', function(e) {
         if (e.keyCode == 13) {
-            url = $('base').attr('href') + 'index.php?route=product/search';
-             
-            if (this.value) {
-                url += '&search=' + encodeURIComponent(this.value);
-            }
-            
-            location = url;
+            $('header input[name=\'search\']').parent().find('button').trigger('click');
         }
     });
 
-    // Navigation - Columns
-    $('.main-navbar .dropdown-menu').each(function(){
-
-        var menu = $('.main-navbar').offset();
-        var dropdown = $(this).parent().offset();
-
-        var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('.main-navbar').outerWidth());
-
-        if (i > 0) {
-            $(this).css('margin-left', '-' + (i + 5) + 'px');
-        }
-
-    });
-
-    // every 3 product-thumbs gets put into .row div
-    $('.layout-row-3').each(function(){
-
-        var divs = $(this).children();
-        for(var i = 0; i < divs.length; i+=3) {
-          divs.slice(i, i+3).wrapAll("<div class='row'></div>");
-        }
-
-    });
-
-    // every 4 product-thumbs gets put into .row div
-    $('.layout-row-4').each(function(){
-
-        var divs = $(this).children();
-        for(var i = 0; i < divs.length; i+=4) {
-          divs.slice(i, i+4).wrapAll("<div class='row'></div>");
-        }
-
-    });
-    
-    // change product-grid to product-list
-    $('#list-view').click(function() {
-        $('.product-grid').removeClass('product-grid').addClass('product-list');
-        $('.product-thumb').addClass('clearfix');
-
-    });
-    
+	// Navigation - Columns
+	$('.main-navbar .dropdown-menu').each(function(){
+		var menu = $('.main-navbar').offset();
+		var dropdown = $(this).parent().offset();
+		
+		var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('.main-navbar').outerWidth());
+		
+		if (i > 0) {
+			$(this).css('margin-left', '-' + (i + 5) + 'px');
+		}
+	});
+	
+	// every 3 product-thumbs gets put into .row div
+	$('.layout-row-3').each(function(){
+		var divs = $(this).children();
+		
+		for (var i = 0; i < divs.length; i+=3) {
+			divs.slice(i, i+3).wrapAll('<div class="row"></div>');
+		}
+	});
+	
+	// every 4 product-thumbs gets put into .row div
+	$('.layout-row-4').each(function(){
+		var divs = $(this).children();
+		
+		for (var i = 0; i < divs.length; i += 4) {
+			divs.slice(i, i+4).wrapAll("<div class='row'></div>");
+		}
+	});
+	
+	// change product-grid to product-list
+	$('#list-view').click(function() {
+	$('.product-grid').removeClass('product-grid').addClass('product-list');
+	$('.product-thumb').addClass('clearfix');
+	
+	});
+	
 	// change product-list to product-grid
 	$('#grid-view').click(function() {
-        $('.product-list').removeClass('product-list').addClass('product-grid');
-        $('.product-thumb').removeClass('clearfix');
-    });
-
-    // tooltips on hover
-   $('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	$('.product-list').removeClass('product-list').addClass('product-grid');
+	$('.product-thumb').removeClass('clearfix');
+	});
+	
+	// tooltips on hover
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 });
 
 function getURLVar(key) {

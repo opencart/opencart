@@ -20,7 +20,7 @@ class ControllerInformationContact extends Controller {
 	  		$mail->setFrom($this->request->post['email']);
 	  		$mail->setSender($this->request->post['name']);
 	  		$mail->setSubject(sprintf($this->language->get('email_subject'), $this->request->post['name']));
-	  		$mail->setText(strip_tags(html_entity_decode($this->request->post['enquiry'], ENT_QUOTES, 'UTF-8')));
+	  		$mail->setText(strip_tags($this->request->post['enquiry'], ENT_QUOTES, 'UTF-8'));
       		$mail->send();
 
 	  		$this->redirect($this->url->link('information/contact/success'));
@@ -45,7 +45,7 @@ class ControllerInformationContact extends Controller {
 		$this->data['text_address'] = $this->language->get('text_address');
     	$this->data['text_telephone'] = $this->language->get('text_telephone');
     	$this->data['text_fax'] = $this->language->get('text_fax');
-        $this->data['text_open']= $this->language->get('text_open');
+        $this->data['text_open'] = $this->language->get('text_open');
 
     	$this->data['entry_name'] = $this->language->get('entry_name');
     	$this->data['entry_email'] = $this->language->get('entry_email');
@@ -80,11 +80,39 @@ class ControllerInformationContact extends Controller {
     
 		$this->data['action'] = $this->url->link('information/contact');
 		
-		$this->data['store'] = $this->config->get('config_name');
-    	$this->data['address'] = nl2br($this->config->get('config_address'));
-    	$this->data['telephone'] = $this->config->get('config_telephone');
-    	$this->data['fax'] = $this->config->get('config_fax');
-    	
+        $this->data['locations'] = array();
+		
+		$this->load->model('localisation/location');
+		
+		$location_info = $this->model_localisation_location->getLocation($this->config->get('config_location_id'));
+		
+		if ($location_info) {
+			$this->data['store'] = $this->config->get('config_name');
+			$this->data['address'] = nl2br($this->config->get('config_address'));
+			$this->data['telephone'] = $this->config->get('config_telephone');
+			$this->data['fax'] = $this->config->get('config_fax');			
+		} else {
+			$this->data['store'] = $this->config->get('config_name');
+			$this->data['address'] = nl2br($this->config->get('config_address'));
+			$this->data['telephone'] = $this->config->get('config_telephone');
+			$this->data['fax'] = $this->config->get('config_fax');
+		}
+        
+		$results = $this->model_localisation_location->getLocations();
+        
+        foreach($results as $result) {
+             $this->data['locations'][] = array(
+                  'name'      => $result['name'],
+                  'address_1' => $result['address_1'],
+                  'address_2' => $result['address_2'],
+                  'city'      => $result['city'],
+                  'postcode'  => $result['postcode'],   
+                  'geocode'   => $result['geocode'],
+				  'open'      => $result['open'],   
+                  'comment'   => $result['comment']   
+             );
+        }  
+		
 		if (isset($this->request->post['name'])) {
 			$this->data['name'] = $this->request->post['name'];
 		} else {
@@ -109,26 +137,6 @@ class ControllerInformationContact extends Controller {
 			$this->data['captcha'] = '';
 		}		
 
-        $this->data['locations'] = array();
-        
-        $this->load->model('setting/location');
-        
-		$results = $this->model_setting_location->getLocations();
-        
-        foreach($results as $result) {
-             $this->data['locations'][] = array(
-                  'location_id' => $result['location_id'],
-                  'name'        => $result['name'],
-                  'address_1'   => $result['address_1'],
-                  'address_2'   => $result['address_2'],
-                  'city'        => $result['city'],
-                  'postcode'    => $result['postcode'],   
-                  'geocode'     => $result['geocode'],
-				  'open'        => $result['open'],   
-                  'comment'     => $result['comment']   
-             );
-        }        
-        
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/contact.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/information/contact.tpl';
 		} else {

@@ -58,7 +58,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-address"><?php echo $entry_address; ?></label>
               <div class="col-sm-10">
-                <textarea name="config_address" rows="5" placeholder="<?php echo $entry_owner; ?>" id="input-address" class="form-control"><?php echo $config_address; ?></textarea>
+                <textarea name="config_address" rows="5" id="input-address" class="form-control"><?php echo $config_address; ?></textarea>
                 <?php if ($error_address) { ?>
                 <div class="text-danger"><?php echo $error_address; ?></div>
                 <?php } ?>
@@ -87,6 +87,39 @@
               <div class="col-sm-10">
                 <input type="text" name="config_fax" value="<?php echo $config_fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
               </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
+              <div class="col-sm-10">
+                <select name="config_location_id" id="input-location" class="form-control">
+                  <option value=""><?php echo $text_none; ?></option>
+                  <?php foreach ($locations as $location) { ?>
+                  <?php if ($location['location_id'] == $config_location_id) { ?>
+                  <option value="<?php echo $location['location_id']; ?>" selected="selected"><?php echo $location['name']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $location['location_id']; ?>"><?php echo $location['name']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+                <span class="help-block"><?php echo $help_location; ?></span></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_locations; ?></label>
+              <div class="col-sm-10">
+                <?php foreach ($locations as $location) { ?>
+                <div class="checkbox">
+                  <label>
+                    <?php if (in_array($location['location_id'], $config_location)) { ?>
+                    <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" checked="checked" />
+                    <?php echo $location['name']; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" />
+                    <?php echo $location['name']; ?>
+                    <?php } ?>
+                  </label>
+                </div>
+                <?php } ?>
+                <span class="help-block"><?php echo $help_locations; ?></span></div>
             </div>
           </div>
           <div class="tab-pane" id="tab-store">
@@ -468,7 +501,7 @@
                   <span class="help-block"><?php echo $help_customer_online; ?></span> </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?>s</label>
+                <label class="col-sm-2 control-label" for="input-customer-group"><?php echo $entry_customer_group; ?></label>
                 <div class="col-sm-10">
                   <select name="config_customer_group_id" id="input-customer-group" class="form-control">
                     <?php foreach ($customer_groups as $customer_group) { ?>
@@ -479,7 +512,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $help_customer_group; ?></span> </div>
+                  <span class="help-block"><?php echo $help_customer_group; ?></span></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_customer_group_display; ?> </label>

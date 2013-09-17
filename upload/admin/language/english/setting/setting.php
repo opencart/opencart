@@ -26,6 +26,8 @@ $_['entry_address']                = 'Address';
 $_['entry_email']                  = 'E-Mail';
 $_['entry_telephone']              = 'Telephone';
 $_['entry_fax']                    = 'Fax';
+$_['entry_location']               = 'Store Location';
+$_['entry_locations']              = 'Store Locations';
 $_['entry_title']                  = 'Title';
 $_['entry_meta_description']       = 'Meta Tag Description';
 $_['entry_layout']                 = 'Default Layout';
@@ -120,6 +122,8 @@ $_['entry_error_filename']         = 'Error Log Filename';
 $_['entry_google_analytics']       = 'Google Analytics Code';
 
 // Help
+$_['help_location']                = 'The default store location and details you want to be displayed at the top of the contact us form.';
+$_['help_locations']               = 'The different store locations you have that you want displayed on the contact us form.';
 $_['help_currency']                = 'Change the default currency. Clear your browser cache to see the change and reset your existing cookie.';
 $_['help_currency_auto']           = 'Set your store to automatically update currencies daily.';
 $_['help_catalog_limit'] 	       = 'Determines how many catalog items are shown per page (products, categories, etc)';

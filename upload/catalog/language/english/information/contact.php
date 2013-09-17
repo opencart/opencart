@@ -4,15 +4,15 @@ $_['heading_title']  = 'Contact Us';
 
 // Text 
 $_['text_location']  = 'Our Location';
-$_['text_open']      = 'Opening Times';
 $_['text_contact']   = 'Contact Form';
-$_['text_address']   = 'Address:';
+$_['text_address']   = 'Address';
+$_['text_telephone'] = 'Telephone';
+$_['text_fax']       = 'Fax';
+$_['text_open']      = 'Opening Times';
 $_['text_email']     = 'E-Mail:';
-$_['text_telephone'] = 'Telephone:';
-$_['text_fax']       = 'Fax:';
 $_['text_message']   = '<p>Your enquiry has been successfully sent to the store owner!</p>';
 
-// Entry Fields
+// Entry
 $_['entry_name']     = 'Your Name';
 $_['entry_email']    = 'E-Mail Address';
 $_['entry_enquiry']  = 'Enquiry';

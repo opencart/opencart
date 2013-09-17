@@ -80,7 +80,7 @@
                   <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
                   <span class="input-group-btn">
                   <button class="btn btn-info" type="button"><i class="icon-question-sign icon-large"></i></button>
-                  </span></div>
+                  </span> </div>
                 <span class="help-block"><?php echo $help_filter; ?></span>
                 <div id="category-filter" class="well">
                   <?php foreach ($category_filters as $category_filter) { ?>

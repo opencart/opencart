@@ -56,6 +56,9 @@
           <label class="col-sm-2 control-label" for="input-postcode"><?php echo $entry_postcode; ?></label>
           <div class="col-sm-10">
             <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
+            <?php if ($error_postcode) { ?>
+            <div class="text-danger"><?php echo $error_postcode; ?></div>
+            <?php } ?>
           </div>
         </div>
         <div class="form-group required">
@@ -92,12 +95,9 @@
             <div class="input-group">
               <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
               <span class="input-group-btn">
-              <button type="button" onclick="getGeoCode()" class="btn btn-primary"><i class="icon-search"></i> <?php echo $button_geocode; ?></button>
+              <button type="button" onclick="geocode()" class="btn btn-primary"><i class="icon-search"></i> <?php echo $button_geocode; ?></button>
               </span></div>
             <span class="help-block"><?php echo $help_geocode; ?></span>
-            <?php if ($error_geocode) { ?>
-            <div class="text-danger"><?php echo $error_geocode; ?></div>
-            <?php } ?>
           </div>
         </div>
         <div class="form-group">
@@ -130,7 +130,7 @@
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
 <script type="text/javascript"><!--
-function getGeoCode() { 
+function geocode() { 
 	var address = new Array();
 	
 	address[0] = $('input[name=\'address_1\']').attr('value');

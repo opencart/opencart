@@ -16,23 +16,33 @@
     <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <h3><?php echo $text_location; ?></h3>
-      <div class="row">
-        <div class="col-sm-3">
-          <address>
-          <strong><?php echo $text_address; ?></strong><br>
-          <?php echo $store; ?><br>
-          <?php echo $address; ?><br>
-          <?php if ($telephone) { ?>
-          <abbr title="<?php echo $text_telephone; ?>"><?php echo $text_telephone; ?></abbr><br>
-          <?php echo $telephone; ?><br>
-          <?php } ?>
-          <?php if ($fax) { ?>
-          <?php echo $text_fax; ?><br>
-          <?php echo $fax; ?><br>
-          <?php } ?>
-          </address>
+      
+      <?php foreach ($locations as $location) { ?>
+      <div class="panel-group" id="accordion">
+        <div class="panel panel-default">
+          <div class="panel-heading">
+            <h4 class="panel-title"></h4>
+          </div>
+          <div class="panel-collapse collapse" id="">
+            <div class="panel-body"></div>
+          </div>
         </div>
-      </div>
+      </div>      
+      <?php } ?>
+      
+      <address>
+      <strong></strong><br>
+      <?php echo $store; ?><br>
+      <?php echo $address; ?><br>
+      <?php if ($telephone) { ?>
+      <abbr title="<?php echo $text_telephone; ?>"><?php echo $text_telephone; ?></abbr><br>
+      <?php echo $telephone; ?><br>
+      <?php } ?>
+      <?php if ($fax) { ?>
+      <?php echo $text_fax; ?><br>
+      <?php echo $fax; ?><br>
+      <?php } ?>
+      </address>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <h3><?php echo $text_contact; ?></h3>

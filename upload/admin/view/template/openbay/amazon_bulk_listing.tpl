@@ -15,126 +15,130 @@
                 <a class="button" onclick="location = '<?php echo $link_overview; ?>';" ><?php echo $button_return; ?></a>
             </div>
         </div>
-
+            
         <div class="content">
-            <form id="product-form" action="" method="POST">
-                <table class="list">
-                    <thead>
-                        <tr>
-                            <td class="left" colspan="2"><?php echo $text_filter_results ?></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="left"><label for="filter_marketplace"><?php echo $text_marketplace ?></label></td>
-                            <td class="left">
-                                <select id="filter_marketplace" name="filter_marketplace">
-                                    <?php foreach ($marketplaces as $marketplace) { ?>
-
-                                        <?php if ($filter_marketplace == $marketplace['code']) { ?>
-                                            <option selected="selected" value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
-                                        <?php } else { ?>
-                                            <option value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
-                                        <?php } ?>
-
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="right" colspan="2">
-                                <a class="button" onclick="filter()"><?php echo $button_filter ?></a>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="list">
-                    <thead>
-                        <tr>
-                            <td colspan="4" class="left"><?php echo $text_listing_values ?></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td class="left"><?php echo $text_condition ?></td>
-                            <td class="left">
-                                <select name="condition">
-                                    <option value=""></option>
-                                    <?php foreach ($conditions as $value => $name) { ?>
-                                        <?php if ($value == $default_condition) { ?>
-                                            <option selected="selected" value="<?php echo $value ?>"><?php echo $name ?></option>
-                                        <?php } else { ?>
-                                            <option value="<?php echo $value ?>"><?php echo $name ?></option>
-                                        <?php } ?>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                            <td class="left"><?php echo $text_condition_note ?></td>
-                            <td class="left">
-                                <input type="text" name="condition_note" style="width: 98%" />
-                            </td>
-                        </tr>
-                        <tr>
-                            <td class="left"><?php echo $text_start_selling ?></td>
-                            <td class="left">
-                                <input type="text" name="start_selling" class="date" />
-                            </td>
-                            <td colspan="2"></td>
-                        </tr>
-                    </tbody>
-                </table>
-                <table class="list">
-                    <thead>
-                        <tr>
-                            <td width="5" class="center"><input type="checkbox" /></td>
-                            <td class="center"><?php echo $column_image; ?></td>
-                            <td class="left"><?php echo $column_name; ?></td>
-                            <td class="right"><?php echo $column_model; ?></td>
-                            <td class="right"><?php echo $column_status; ?></td>
-                            <td class="right"><?php echo $column_matches; ?></td>
-                            <td class="left"><?php echo $column_result; ?></td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php foreach ($products as $product) { ?>
+            <?php if ($bulk_listing_status) { ?>
+                <form id="product-form" action="" method="POST">
+                    <table class="list">
+                        <thead>
                             <tr>
-                                <td class="center"><input type="checkbox" name="product_ids[]" value="<?php echo $product['product_id'] ?>" /></td>
-                                <td class="center"><img src="<?php echo $product['image'] ?>" /></td>
-                                <td class="left"><a href="<?php echo $product['href'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
-                                <td class="right"><?php echo $product['model'] ?></td>
-                                <td class="right"><?php echo $product['search_status'] ?></td>
-                                <td class="right">
-                                    <?php if ($product['matches'] !== null) { ?>
-                                        <?php echo $product['matches'] ?>
-                                    <?php } else { ?>
-                                        -
-                                    <?php } ?>
-                                </td>
-                                <td class="left" id="result-<?php echo $product['product_id'] ?>">
-                                    <?php if ($product['matches'] !== null) { ?>
-                                        <?php $checked = false; ?>
-                                        <?php if ($product['matches'] > 0) { ?>
-                                            <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="" /> <?php echo $text_dont_list ?> <br />
-                                            <?php foreach ($product['search_results'] as $search_result) { ?>
-                                                <?php if (!$checked) { ?>
-                                                    <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>" />
-                                                    <?php $checked = true; ?>
-                                                <?php } else { ?>
-                                                    <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>" />
-                                                <?php } ?>
-                                                <a target="_blank" href="<?php echo $search_result['href'] ?>"><?php echo $search_result['title'] ?></a><br />
+                                <td class="left" colspan="2"><?php echo $text_filter_results ?></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="left"><label for="filter_marketplace"><?php echo $text_marketplace ?></label></td>
+                                <td class="left">
+                                    <select id="filter_marketplace" name="filter_marketplace">
+                                        <?php foreach ($marketplaces as $marketplace) { ?>
+                                                
+                                            <?php if ($filter_marketplace == $marketplace['code']) { ?>
+                                                <option selected="selected" value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
                                             <?php } ?>
-                                        <?php } else { ?>
-                                            <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="" /> <?php echo $text_dont_list ?> <br />
+                                                    
                                         <?php } ?>
-                                    <?php } ?>
+                                    </select>
                                 </td>
                             </tr>
-                        <?php } ?>
-                    </tbody>
-                </table>
-            </form>
-            <div class="pagination"><?php echo $pagination; ?></div>
+                            <tr>
+                                <td class="right" colspan="2">
+                                    <a class="button" onclick="filter()"><?php echo $button_filter ?></a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="list">
+                        <thead>
+                            <tr>
+                                <td colspan="4" class="left"><?php echo $text_listing_values ?></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="left"><?php echo $text_condition ?></td>
+                                <td class="left">
+                                    <select name="condition">
+                                        <option value=""></option>
+                                        <?php foreach ($conditions as $value => $name) { ?>
+                                            <?php if ($value == $default_condition) { ?>
+                                                <option selected="selected" value="<?php echo $value ?>"><?php echo $name ?></option>
+                                            <?php } else { ?>
+                                                <option value="<?php echo $value ?>"><?php echo $name ?></option>
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </select>
+                                </td>
+                                <td class="left"><?php echo $text_condition_note ?></td>
+                                <td class="left">
+                                    <input type="text" name="condition_note" style="width: 98%" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="left"><?php echo $text_start_selling ?></td>
+                                <td class="left">
+                                    <input type="text" name="start_selling" class="date" />
+                                </td>
+                                <td colspan="2"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <table class="list">
+                        <thead>
+                            <tr>
+                                <td width="5" class="center"><input type="checkbox" /></td>
+                                <td class="center"><?php echo $column_image; ?></td>
+                                <td class="left"><?php echo $column_name; ?></td>
+                                <td class="right"><?php echo $column_model; ?></td>
+                                <td class="right"><?php echo $column_status; ?></td>
+                                <td class="right"><?php echo $column_matches; ?></td>
+                                <td class="left"><?php echo $column_result; ?></td>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php foreach ($products as $product) { ?>
+                                <tr>
+                                    <td class="center"><input type="checkbox" name="product_ids[]" value="<?php echo $product['product_id'] ?>" /></td>
+                                    <td class="center"><img src="<?php echo $product['image'] ?>" /></td>
+                                    <td class="left"><a href="<?php echo $product['href'] ?>" target="_blank"><?php echo $product['name'] ?></a></td>
+                                    <td class="right"><?php echo $product['model'] ?></td>
+                                    <td class="right"><?php echo $product['search_status'] ?></td>
+                                    <td class="right">
+                                        <?php if ($product['matches'] !== null) { ?>
+                                            <?php echo $product['matches'] ?>
+                                        <?php } else { ?>
+                                            -
+                                        <?php } ?>
+                                    </td>
+                                    <td class="left" id="result-<?php echo $product['product_id'] ?>">
+                                        <?php if ($product['matches'] !== null) { ?>
+                                            <?php $checked = false; ?>
+                                            <?php if ($product['matches'] > 0) { ?>
+                                                <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="" /> <?php echo $text_dont_list ?> <br />
+                                                <?php foreach ($product['search_results'] as $search_result) { ?>
+                                                    <?php if (!$checked) { ?>
+                                                        <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>" />
+                                                        <?php $checked = true; ?>
+                                                    <?php } else { ?>
+                                                        <input class="amazon-listing" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="<?php echo $search_result['asin'] ?>" />
+                                                    <?php } ?>
+                                                    <a target="_blank" href="<?php echo $search_result['href'] ?>"><?php echo $search_result['title'] ?></a><br />
+                                                <?php } ?>
+                                            <?php } else { ?>
+                                                <input class="amazon-listing" checked="checked" type="radio" name="products[<?php echo $product['product_id'] ?>]" value="" /> <?php echo $text_dont_list ?> <br />
+                                            <?php } ?>
+                                        <?php } ?>
+                                    </td>
+                                </tr>
+                            <?php } ?>
+                        </tbody>
+                    </table>
+                </form>
+                <div class="pagination"><?php echo $pagination; ?></div>
+            <?php } else { ?>
+                <div class="warning"><?php echo $error_bulk_listing_not_allowed ?></div>
+            <?php } ?>
         </div>
     </div>
 </div>

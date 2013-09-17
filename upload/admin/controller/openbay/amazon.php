@@ -193,6 +193,7 @@ class ControllerOpenbayAmazon extends Controller {
                     'description' => (string) $plan->Description,
                     'order_frequency' => (string) $plan->OrderFrequency,
                     'product_listings' => (string) $plan->ProductListings,
+                    'bulk_listing' => (string) $plan->BulkListing,
                     'price' => (string) $plan->Price,
                 );
             }
@@ -215,6 +216,7 @@ class ControllerOpenbayAmazon extends Controller {
                 'product_listings' => (string) $response->ProductListings,
                 'listings_remain' => (string) $response->ListingsRemain,
                 'listings_reserved' => (string) $response->ListingsReserved,
+                'bulk_listing' => (string) $response->BulkListing,
             );
         }
         

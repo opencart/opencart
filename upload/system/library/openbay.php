@@ -79,7 +79,7 @@ final class Openbay {
         }
     }
 
-    public function putStockUpdateBulk($productIdArray, $productSkuArray = null, $endInactive = false) {
+    public function putStockUpdateBulk($productIdArray, $endInactive = false) {
         /**
          * putStockUpdateBulk
          *
@@ -90,7 +90,7 @@ final class Openbay {
 
         // eBay Module
         if ($this->config->get('openbay_status') == 1) {
-            $this->ebay->putStockUpdateBulk($productIdArray, $productSkuArray, $endInactive);
+            $this->ebay->putStockUpdateBulk($productIdArray, $endInactive);
         }
 
         // Amazon EU Module

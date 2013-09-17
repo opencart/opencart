@@ -86,7 +86,7 @@ class ControllerOpenbayAmazonListing extends Controller{
             if($listing_status === 'processing' || $listing_status === 'ok') {
                 $this->redirect($this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL'));
             } else if ($listing_status === 'error_advanced' || $listing_status === 'saved' || $listing_status === 'error_few') {
-                $this->redirect($this->url->lilink('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL'));
+                $this->redirect($this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL'));
             }
         } else {
             $this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
@@ -110,7 +110,7 @@ class ControllerOpenbayAmazonListing extends Controller{
         
         $this->data['url_return']  = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $this->data['url_search']  = $this->url->link('openbay/amazon_listing/search', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['url_advanced']  = $this->url->lilink('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id='.$this->request->get['product_id'] . $url, 'SSL');
+        $this->data['url_advanced']  = $this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id='.$this->request->get['product_id'] . $url, 'SSL');
 
         $this->data['button_search'] = $this->language->get('button_search');
         $this->data['button_new'] = $this->language->get('button_new');

@@ -118,7 +118,7 @@ class ControllerOpenbayAmazonProduct extends Controller{
                 }
             } else {
                 $this->session->data['success'] = $this->language->get('saved_localy_text');
-                $this->redirect($this->url->lilink('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
+                $this->redirect($this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
             }
         }
         
@@ -175,15 +175,15 @@ class ControllerOpenbayAmazonProduct extends Controller{
         
 
          if($listingSaved) {
-            $this->data['template_parser_url'] = $this->url->lilink('openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
         } else {
-            $this->data['template_parser_url'] = $this->url->lilink('openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
         }
         
-        $this->data['url_remove_errors'] = $this->url->lilink('openbay/amazon_product/removeErrors', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
+        $this->data['url_remove_errors'] = $this->url->link('openbay/amazon_product/removeErrors', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL');
         $this->data['cancel_url'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $this->data['saved_listings_url'] = $this->url->link('openbay/amazon/savedListings', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['main_url'] = $this->url->lilink('openbay/amazon_product', 'token=' . $this->session->data['token'] . $url, 'SSL');
+        $this->data['main_url'] = $this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $this->data['token'] = $this->session->data['token'];
         $this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
          
@@ -293,7 +293,7 @@ class ControllerOpenbayAmazonProduct extends Controller{
         $this->load->model('openbay/amazon');
         $this->model_openbay_amazon->removeAdvancedErrors($product_id);
         $this->session->data['success'] = 'Errors removed';
-        $this->redirect($this->url->lilink('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
+        $this->redirect($this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'));
     }
     
     public function uploadSavedAjax() {

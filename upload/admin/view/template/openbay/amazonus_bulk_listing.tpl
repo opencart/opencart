@@ -22,36 +22,6 @@
                     <table class="list">
                         <thead>
                             <tr>
-                                <td class="left" colspan="2"><?php echo $text_filter_results ?></td>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td class="left"><label for="filter_marketplace"><?php echo $text_marketplace ?></label></td>
-                                <td class="left">
-                                    <select id="filter_marketplace" name="filter_marketplace">
-                                        <?php foreach ($marketplaces as $marketplace) { ?>
-                                                
-                                            <?php if ($filter_marketplace == $marketplace['code']) { ?>
-                                                <option selected="selected" value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
-                                            <?php } else { ?>
-                                                <option value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
-                                            <?php } ?>
-                                                    
-                                        <?php } ?>
-                                    </select>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="right" colspan="2">
-                                    <a class="button" onclick="filter()"><?php echo $button_filter ?></a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                    <table class="list">
-                        <thead>
-                            <tr>
                                 <td colspan="4" class="left"><?php echo $text_listing_values ?></td>
                             </tr>
                         </thead>
@@ -164,21 +134,8 @@
         });
     });
     
-    function filter() {
-        url = 'index.php?route=openbay/amazon/bulkListProducts&token=<?php echo $token ?>';
-        
-        url += '&filter_marketplace=' + $("select[name='filter_marketplace']").val();
-        
-        location = url;
-        
-    }
-    
     function bulkList() {
         var request_data = $('input.amazon-listing:checked').serialize();
-        
-        if (request_data) {
-            request_data += '&marketplace=<?php echo $filter_marketplace ?>';
-        }
         
         var condition = $('select[name="condition"]').val();
         var condition_note = $('input[name="condition_note"]').val();
@@ -194,7 +151,7 @@
         }
         
         $.ajax({
-            url: 'index.php?route=openbay/amazon/doBulkList&token=<?php echo $token ?>',
+            url: 'index.php?route=openbay/amazonus/doBulkList&token=<?php echo $token ?>',
             data: request_data,
             dataType: 'json',
             type: 'POST',
@@ -218,13 +175,9 @@
     
     function searchListings() {
         var request_data = $('input[name="product_ids[]"]:checked').serialize();
-        
-        if (request_data) {
-            request_data += '&marketplace=<?php echo $filter_marketplace ?>';
-        }
-    
+
         $.ajax({
-            url: 'index.php?route=openbay/amazon/doBulkSearch&token=<?php echo $token ?>',
+            url: 'index.php?route=openbay/amazonus/doBulkSearch&token=<?php echo $token ?>',
             data:  request_data,
             dataType: 'json',
             type: 'POST',

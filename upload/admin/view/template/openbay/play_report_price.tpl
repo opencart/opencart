@@ -2,16 +2,17 @@
 <div id="content">
 
     <?php if ($error_warning) { ?>
-    <div class="warning"><?php echo $error_warning; ?></div>
+        <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
 
     <div class="box" style="margin-bottom:130px;">
         <div class="heading">
             <h1><?php echo $lang_page_title; ?></h1>
             <div class="buttons">
-                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_btn_cancel; ?></span></a>
+                <a href="<?php echo $cancel; ?>" class="button"><span><?php echo $lang_btn_cancel; ?></span></a>
             </div>
         </div>
+
         <div class="content">
             <h3><?php echo $lang_created; echo $pricing['created']; ?></h3>
             <table class="list">

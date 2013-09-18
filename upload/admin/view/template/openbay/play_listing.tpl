@@ -2,7 +2,7 @@
 <div id="content">
 
     <?php if ($error_warning) { ?>
-    <div class="warning"><?php echo $error_warning; ?></div>
+        <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
 
     <div class="box" style="margin-bottom:130px;">
@@ -10,8 +10,8 @@
             <h1><?php echo $lang_page_title; ?></h1>
             <div class="buttons">
                 <a onclick="validateForm(); return false;" class="button"><span><?php echo $lang_btn_save; ?></span></a>
-                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_btn_cancel; ?></span></a>
-                <a onclick="location = '<?php echo $delete; ?>';" class="button"><span><?php echo $lang_btn_delete; ?></span></a>
+                <a href="<?php echo $cancel; ?>" class="button"><span><?php echo $lang_btn_cancel; ?></span></a>
+                <a href="<?php echo $delete; ?>" class="button"><span><?php echo $lang_btn_delete; ?></span></a>
             </div>
         </div>
         <div class="content">
@@ -27,7 +27,6 @@
                 <input type="hidden" name="isbn" id="isbn" value="<?php echo $product['isbn']; ?>" />
                 <input type="hidden" name="upc" id="upc" value="<?php echo $product['upc']; ?>" />
                 <input type="hidden" name="ean" id="ean" value="<?php echo $product['ean']; ?>" />
-
                 <input type="hidden" name="sku" value="<?php echo $product['product_id']; ?>" />
                 <input type="hidden" name="add_delete" value="<?php echo $actionCode; ?>" />
 
@@ -82,15 +81,11 @@
                     </tr>
                     <tr id="price_tr_uk">
                         <td><p><label for="price_uk"><?php echo $lang_price_uk; ?></p></td>
-                        <td>
-                            <p>&pound;<input type="text" name="price_uk" id="price_uk" style="width:75px;" value="<?php if(isset($listing['price_gb'])){ echo $listing['price_gb']; } ?>" /></p>
-                        </td>
+                        <td><p>&pound;<input type="text" name="price_uk" id="price_uk" style="width:75px;" value="<?php if(isset($listing['price_gb'])){ echo $listing['price_gb']; } ?>" /></p></td>
                     </tr>
                     <tr id="price_tr_euro">
                         <td><p><label for="price_euro"><?php echo $lang_price_euro; ?></p></td>
-                        <td>
-                            <p><input type="text" name="price_euro" id="price_euro" style="width:75px;" value="<?php if(isset($listing['price_eu'])){ echo $listing['price_eu']; } ?>" />&euro;</p>
-                        </td>
+                        <td><p><input type="text" name="price_euro" id="price_euro" style="width:75px;" value="<?php if(isset($listing['price_eu'])){ echo $listing['price_eu']; } ?>" />&euro;</p></td>
                     </tr>
                     <tr>
                         <td><p><label for="qty"><?php echo $lang_quantity; ?></p></td>
@@ -143,9 +138,7 @@
                     </tr>
                     <tr>
                         <td><?php echo $lang_comment; ?></td>
-                        <td>
-                            <textarea name="comment" style="width:400px; height:100px;"><?php if(isset($listing['comment'])){ echo $listing['comment']; } ?></textarea>
-                        </td>
+                        <td><textarea name="comment" style="width:400px; height:100px;"><?php if(isset($listing['comment'])){ echo $listing['comment']; } ?></textarea></td>
                     </tr>
                 </table>
                 <div class="buttons" style="text-align:right;">
@@ -157,7 +150,6 @@
 </div>
 
 <script type="text/javascript"><!--
-
     function validateForm() {
         //check that the prices have been entered based on the ship to location
         var dispatchId  = $('#dispatch_to').val();
@@ -249,7 +241,6 @@
         displayPriceBoxes();
         loadProductId();
     });
-	
 //--></script>
 	
 <?php echo $footer; ?>

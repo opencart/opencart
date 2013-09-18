@@ -109,5 +109,22 @@ class ModelAmazonusProduct extends Model {
         }
         return $result;
     }
+    
+    public function updateSearch($results) {
+        foreach ($results as $result) {
+            $resultsFound = count($result['results']);
+                     
+            $data = json_encode($result['results']);
+            
+            $this->db->query("
+                UPDATE " . DB_PREFIX . "amazonus_product_search
+                SET matches = " . (int) $resultsFound . ",
+                    `data` = '" . $this->db->escape($data) . "',
+                    `status` = 'finished'
+                WHERE product_id = " . (int) $result['product_id'] . "
+                LIMIT 1
+            ");
+        }
+    }
 }
 ?>

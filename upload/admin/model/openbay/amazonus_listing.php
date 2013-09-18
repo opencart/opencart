@@ -111,5 +111,90 @@ class ModelOpenbayAmazonusListing extends Model {
     public function getBrowseNodes($request){
         return $this->openbay->amazonus->callWithResponse('productv3/getBrowseNodes', $request);
     }
+    
+    public function deleteSearchResults($product_ids) {
+        $imploded_ids = array();
+        
+        foreach ($product_ids as $product_id) {
+            $imploded_ids[] = (int) $product_id;
+        }
+        
+        $imploded_ids = implode(',', $imploded_ids);
+        
+        $this->db->query("
+            DELETE FROM " . DB_PREFIX .  "amazonus_product_search
+            WHERE product_id IN ($imploded_ids)
+        ");
+    }
+    
+    public function doBulkListing($data) {
+        $this->load->model('catalog/product');
+        $request = array();
+        
+        foreach($data['products'] as $product_id => $asin) {
+            $product = $this->model_catalog_product->getProduct($product_id);
+            
+            if ($product) {
+                $price = $product['price'];
+
+                if ($this->config->get('openbay_amazonus_listing_tax_added') && $this->config->get('openbay_amazonus_listing_tax_added') > 0) {
+                    $price += $price * ($this->config->get('openbay_amazonus_listing_tax_added') / 100);
+                }
+                
+                $request[] = array(
+                    'asin' => $asin,
+                    'sku' => $product['sku'],
+                    'quantity' => $product['quantity'],
+                    'price' => number_format($price, 2, '.', ''),
+                    'sale' => array(),
+                    'condition' => (isset($data['condition']) ? $data['condition'] : ''),
+                    'condition_note' => (isset($data['condition_note']) ? $data['condition_note'] : ''),
+                    'start_selling' => (isset($data['start_selling']) ? $data['start_selling'] : ''),
+                    'restock_date' => '',
+                    'response_url' => HTTPS_CATALOG . 'index.php?route=amazonus/listing',
+                    'product_id' => $product['product_id'],
+                );
+            }
+        }
+        
+        if ($request) {
+            $response = $this->openbay->amazonus->callWithResponse('productv3/bulkListing', $request);
+            
+            $response = json_decode($response, 1);
+            
+            if ($response['status'] == 1) {
+                foreach ($request as $product) {
+                    $this->db->query("
+                        REPLACE INTO `" . DB_PREFIX . "amazonus_product`
+                        SET `product_id` = " . (int) $product['product_id'] . ",
+                            `status` = 'uploaded',
+                            `var` = '',
+                            `version` = 3
+                    ");
+                }
+                
+                return true;
+            }
+        }
+        
+        return false;
+    }
+    
+    public function doBulkSearch($search_data) {        
+        foreach ($search_data as $products) {
+            foreach ($products as $product) {
+                $this->db->query("
+                    REPLACE INTO " . DB_PREFIX . "amazonus_product_search (product_id, `status`)
+                    VALUES (" . (int) $product['product_id'] . ", 'searching')");
+            }
+        }
+        
+        $request_data = array(
+            'search' => $search_data,
+            'response_url' => HTTPS_CATALOG . 'index.php?route=amazonus/search'
+        );
+        
+        $response = $this->openbay->amazonus->callWithResponse('productv3/bulkSearch', $request_data);
+    }
 
 }

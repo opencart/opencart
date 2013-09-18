@@ -83,6 +83,6 @@
     $('#price_modify').on('change', function(){
         $(this).text().replace('%', '');
     });
+//--></script>
 
-//--></script> 
 <?php echo $footer; ?>

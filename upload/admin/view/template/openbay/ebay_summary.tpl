@@ -126,9 +126,10 @@
     }
 //--></script> 
 
-<?php if($validation == true) {
-    echo '<script type="text/javascript"><!--
-            $(document).ready(function() { loadSummary(); });
-          //--></script>'; } 
-?>
+<?php if($validation == true) { ?>
+    <script type="text/javascript"><!--
+        $(document).ready(function() { loadSummary(); });
+    //--></script>
+<?php } ?>
+
 <?php echo $footer; ?>

@@ -1,9 +1,9 @@
 <?php
 
-$_['heading_title'] = 'OpenBay Pro for Amazon | Bulk Listing';
+$_['heading_title'] = 'OpenBay Pro for Amazon US | Bulk Listing';
 
 $_['text_openbay'] = 'OpenBay Pro';
-$_['text_overview'] = 'Amazon Overview';
+$_['text_overview'] = 'Amazon US Overview';
 $_['text_bulk_listing'] = 'Bulk Listing';
 $_['text_searching'] = 'Searching';
 $_['text_finished'] = 'Finished';

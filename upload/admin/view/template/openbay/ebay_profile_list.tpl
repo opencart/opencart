@@ -72,5 +72,6 @@
             }
         });
     });
-//--></script> 
+//--></script>
+
 <?php echo $footer; ?>

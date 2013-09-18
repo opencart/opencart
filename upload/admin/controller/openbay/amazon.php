@@ -193,6 +193,7 @@ class ControllerOpenbayAmazon extends Controller {
                     'description' => (string) $plan->Description,
                     'order_frequency' => (string) $plan->OrderFrequency,
                     'product_listings' => (string) $plan->ProductListings,
+                    'bulk_listing' => (string) $plan->BulkListing,
                     'price' => (string) $plan->Price,
                 );
             }
@@ -215,6 +216,7 @@ class ControllerOpenbayAmazon extends Controller {
                 'product_listings' => (string) $response->ProductListings,
                 'listings_remain' => (string) $response->ListingsRemain,
                 'listings_reserved' => (string) $response->ListingsReserved,
+                'bulk_listing' => (string) $response->BulkListing,
             );
         }
         
@@ -296,9 +298,6 @@ class ControllerOpenbayAmazon extends Controller {
         $this->data['marketplace_ids']                  = (isset($settings['openbay_amazon_orders_marketplace_ids']) ? (array)$settings['openbay_amazon_orders_marketplace_ids'] : array() );
         $this->data['default_listing_marketplace_ids']  = ( isset($settings['openbay_amazon_default_listing_marketplace_ids']) ? (array)$settings['openbay_amazon_default_listing_marketplace_ids'] : array() );
         
-                
-                
-                
         $this->data['marketplaces'] = array(
             array('name' => $this->language->get('lang_de'), 'id' => 'A1PA6795UKMFR9', 'code' => 'de'),
             array('name' => $this->language->get('lang_fr'), 'id' => 'A13V1IB3VIYZZH', 'code' => 'fr'),
@@ -723,7 +722,7 @@ class ControllerOpenbayAmazon extends Controller {
 
                 $key = '';
 
-                $id_types = array('isbn', 'ean', 'upc', 'jan');
+                $id_types = array('isbn', 'upc', 'ean', 'jan');
 
                 foreach ($id_types as $id_type) {
                     if (!empty($product[$id_type])) {
@@ -793,129 +792,141 @@ class ControllerOpenbayAmazon extends Controller {
             'separator' => ' :: '
         );
         
-        $this->data['link_overview'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['link_search'] = $this->url->link('openbay/amazon/doBulkSearch', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['token'] = $this->session->data['token'];
+        $pingInfo = simplexml_load_string($this->openbay->amazon->callWithResponse('ping/info'));
         
-        $this->data['default_condition'] = $this->config->get('openbay_amazon_listing_default_condition');
-        $this->data['conditions'] = array(
-            'New' => $this->language->get('text_new'),
-            'UsedLikeNew' => $this->language->get('text_used_like_new'),
-            'UsedVeryGood' => $this->language->get('text_used_very_good'),
-            'UsedGood' => $this->language->get('text_used_good'),
-            'UsedAcceptable' => $this->language->get('text_used_acceptable'),
-            'CollectibleLikeNew' => $this->language->get('text_collectible_like_new'),
-            'CollectibleVeryGood' => $this->language->get('text_collectible_very_good'),
-            'CollectibleGood' => $this->language->get('text_collectible_good'),
-            'CollectibleAcceptable' => $this->language->get('text_collectible_acceptable'),
-            'Refurbished' => $this->language->get('text_refurbished'),
-        );
-        
-        $this->data['marketplaces'] = array(
-            array('name' => $this->language->get('text_de'), 'code' => 'de'),
-            array('name' => $this->language->get('text_fr'), 'code' => 'fr'),
-            array('name' => $this->language->get('text_it'), 'code' => 'it'),
-            array('name' => $this->language->get('text_es'), 'code' => 'es'),
-            array('name' => $this->language->get('text_uk'), 'code' => 'uk'),
-        );
+        $bulk_listing_status = false;
+        if ($pingInfo) {
+            $bulk_listing_status = ((string) $pingInfo->BulkListing == 'true') ? true : false;
+        }
         
         if (!empty($this->request->get['filter_marketplace'])) {
-            $filter_markteplace = $this->request->get['filter_marketplace'];
+            $filter_marketplace = $this->request->get['filter_marketplace'];
         } else {
-            $filter_markteplace = $this->config->get('openbay_amazon_default_listing_marketplace');
+            $filter_marketplace = $this->config->get('openbay_amazon_default_listing_marketplace');
         }
         
-        if (!empty($this->request->get['page'])) {
-            $page = $this->request->get['page'];
-        } else {
-            $page = 1;
-        }
+        $this->data['filter_marketplace'] = $filter_marketplace;
         
-        $this->data['filter_marketplace'] = $filter_markteplace;
-        
-        $data = array();
-        
-        $data['filter_marketplace'] = $filter_markteplace;
-        $data['start'] = ($page - 1) * $this->config->get('config_admin_limit');
-        $data['limit'] = $this->config->get('config_admin_limit');
-        
-        $results = $this->model_openbay_amazon->getProductSearch($data);
-        $product_total = $this->model_openbay_amazon->getProductSearchTotal($data);
-        
-        $this->data['products'] = array();
-                
-        foreach ($results as $result) {
-            $product = $this->model_catalog_product->getProduct($result['product_id']);
-            
-            if ($product['image'] && file_exists(DIR_IMAGE . $product['image'])) {
-				$image = $this->model_tool_image->resize($product['image'], 40, 40);
-			} else {
-				$image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
-			}
-            
-            if ($result['status'] == 'searching') {
-                $search_status = $this->language->get('text_searching');
-            } else if ($result['status'] == 'finished') {
-                $search_status = $this->language->get('text_finished');
-            } else {
-                $search_status = '-';
-            }
-            
-            $href = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL');
-            
-            $search_results = array();
-            
-            if ($result['data']) {
-                foreach ($result['data'] as $search_result) {
-                    
-                    $link = '';
+        $this->data['bulk_listing_status'] = $bulk_listing_status;
 
-                    switch ($result['marketplace']) {
-                        case 'uk':
-                            $link = 'https://www.amazon.co.uk/dp/' . $search_result['asin'] . '/';
-                            break;
-                        case 'de':
-                            $link = 'https://www.amazon.de/dp/' . $search_result['asin'] . '/';
-                            break;
-                        case 'fr':
-                            $link = 'https://www.amazon.fr/dp/' . $search_result['asin'] . '/';
-                            break;
-                        case 'it':
-                            $link = 'https://www.amazon.it/dp/' . $search_result['asin'] . '/';
-                            break;
-                        case 'es':
-                            $link = 'https://www.amazon.es/dp/' . $search_result['asin'] . '/';
-                            break;
-                    }
-                    
-                    $search_results[] = array(
-                        'title' => $search_result['title'],
-                        'asin' => $search_result['asin'],
-                        'href' => $link,
-                    );
-                }
-            }
-            
-            $this->data['products'][] = array(
-                'product_id' => $product['product_id'],
-                'href' => $href,
-                'name' => $product['name'],
-                'model' => $product['model'],
-                'image' => $image,
-                'matches' => $result['matches'],
-                'search_status' => $search_status,
-                'search_results' => $search_results,
-            );
-        }
+        $this->data['link_overview'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['token'] = $this->session->data['token'];
         
-        $pagination = new Pagination();
-		$pagination->total = $product_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->text = $this->language->get('text_pagination');
-		$pagination->url = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . '&page={page}&filter_marketplace=' . $filter_markteplace, 'SSL');
-			
-		$this->data['pagination'] = $pagination->render();
+        if ($bulk_listing_status) {
+            $this->data['link_search'] = $this->url->link('openbay/amazon/doBulkSearch', 'token=' . $this->session->data['token'], 'SSL');
+
+            $this->data['default_condition'] = $this->config->get('openbay_amazon_listing_default_condition');
+            $this->data['conditions'] = array(
+                'New' => $this->language->get('text_new'),
+                'UsedLikeNew' => $this->language->get('text_used_like_new'),
+                'UsedVeryGood' => $this->language->get('text_used_very_good'),
+                'UsedGood' => $this->language->get('text_used_good'),
+                'UsedAcceptable' => $this->language->get('text_used_acceptable'),
+                'CollectibleLikeNew' => $this->language->get('text_collectible_like_new'),
+                'CollectibleVeryGood' => $this->language->get('text_collectible_very_good'),
+                'CollectibleGood' => $this->language->get('text_collectible_good'),
+                'CollectibleAcceptable' => $this->language->get('text_collectible_acceptable'),
+                'Refurbished' => $this->language->get('text_refurbished'),
+            );
+
+            $this->data['marketplaces'] = array(
+                array('name' => $this->language->get('text_de'), 'code' => 'de'),
+                array('name' => $this->language->get('text_fr'), 'code' => 'fr'),
+                array('name' => $this->language->get('text_it'), 'code' => 'it'),
+                array('name' => $this->language->get('text_es'), 'code' => 'es'),
+                array('name' => $this->language->get('text_uk'), 'code' => 'uk'),
+            );
+
+            if (!empty($this->request->get['page'])) {
+                $page = $this->request->get['page'];
+            } else {
+                $page = 1;
+            }
+
+            $data = array();
+
+            $data['filter_marketplace'] = $filter_marketplace;
+            $data['start'] = ($page - 1) * $this->config->get('config_admin_limit');
+            $data['limit'] = $this->config->get('config_admin_limit');
+
+            $results = $this->model_openbay_amazon->getProductSearch($data);
+            $product_total = $this->model_openbay_amazon->getProductSearchTotal($data);
+
+            $this->data['products'] = array();
+
+            foreach ($results as $result) {
+                $product = $this->model_catalog_product->getProduct($result['product_id']);
+
+                if ($product['image'] && file_exists(DIR_IMAGE . $product['image'])) {
+                    $image = $this->model_tool_image->resize($product['image'], 40, 40);
+                } else {
+                    $image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
+                }
+
+                if ($result['status'] == 'searching') {
+                    $search_status = $this->language->get('text_searching');
+                } else if ($result['status'] == 'finished') {
+                    $search_status = $this->language->get('text_finished');
+                } else {
+                    $search_status = '-';
+                }
+
+                $href = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL');
+
+                $search_results = array();
+
+                if ($result['data']) {
+                    foreach ($result['data'] as $search_result) {
+
+                        $link = '';
+
+                        switch ($result['marketplace']) {
+                            case 'uk':
+                                $link = 'https://www.amazon.co.uk/dp/' . $search_result['asin'] . '/';
+                                break;
+                            case 'de':
+                                $link = 'https://www.amazon.de/dp/' . $search_result['asin'] . '/';
+                                break;
+                            case 'fr':
+                                $link = 'https://www.amazon.fr/dp/' . $search_result['asin'] . '/';
+                                break;
+                            case 'it':
+                                $link = 'https://www.amazon.it/dp/' . $search_result['asin'] . '/';
+                                break;
+                            case 'es':
+                                $link = 'https://www.amazon.es/dp/' . $search_result['asin'] . '/';
+                                break;
+                        }
+
+                        $search_results[] = array(
+                            'title' => $search_result['title'],
+                            'asin' => $search_result['asin'],
+                            'href' => $link,
+                        );
+                    }
+                }
+
+                $this->data['products'][] = array(
+                    'product_id' => $product['product_id'],
+                    'href' => $href,
+                    'name' => $product['name'],
+                    'model' => $product['model'],
+                    'image' => $image,
+                    'matches' => $result['matches'],
+                    'search_status' => $search_status,
+                    'search_results' => $search_results,
+                );
+            }
+
+            $pagination = new Pagination();
+            $pagination->total = $product_total;
+            $pagination->page = $page;
+            $pagination->limit = $this->config->get('config_admin_limit');
+            $pagination->text = $this->language->get('text_pagination');
+            $pagination->url = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . '&page={page}&filter_marketplace=' . $filter_marketplace, 'SSL');
+
+            $this->data['pagination'] = $pagination->render();
+        }
         
         $this->template = 'openbay/amazon_bulk_listing.tpl';
         $this->children = array(

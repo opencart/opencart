@@ -88,5 +88,6 @@
             $(this).css('background-color', '#FFFFFF').css('border-color', '#CCCCCC');
         });
     });
-//--></script> 
+//--></script>
+
 <?php echo $footer; ?>

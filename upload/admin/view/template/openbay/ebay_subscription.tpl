@@ -167,11 +167,12 @@
             }
 	});
     }
-//--></script> 
+//--></script>
 
-<?php if($validation == true) {
-    echo '<script type="text/javascript"><!--
-            $(document).ready(function() { loadAccount(); loadUsage(); }); 
-          //--></script>'; } 
-?>
+<?php if($validation == true) { ?>
+    <script type="text/javascript"><!--
+        $(document).ready(function() { loadAccount(); loadUsage(); });
+    //--></script>
+<?php } ?>
+
 <?php echo $footer; ?>

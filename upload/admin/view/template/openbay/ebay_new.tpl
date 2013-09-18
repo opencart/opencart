@@ -661,7 +661,6 @@
 
   </div>
 </div>
-<?php echo $footer; ?>
 
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 
@@ -1733,3 +1732,5 @@
         <?php } ?>
     });
 //--></script>
+
+<?php echo $footer; ?>

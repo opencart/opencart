@@ -234,8 +234,9 @@
     </div>
   </div>
 </div>
+
 <script type="text/javascript"><!--
-function filter() {
+    function filter() {
 	url = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
 	
 	var filter_name = $('input[name=\'filter_name\']').attr('value');
@@ -313,14 +314,16 @@ function filter() {
     location = url;
 }
 //--></script>
-<script type="text/javascript">
-    <?php  if ($this->config->get('openbay_status') == '1') { ?>
+
+<?php  if ($this->config->get('openbay_status') == '1') { ?>
+    <script type="text/javascript"><!--
         $('.buttons').prepend('<a onclick="bulkUpload();" class="button"><span><?php echo $lang_bulk_btn; ?></span></a>');
 
         function bulkUpload(){
             $('#form').attr('action', 'index.php?route=openbay/openbay/createBulk&token=<?php echo $this->request->get['token']; ?>');
             $('#form').submit();
         }
-    <?php } ?>
-</script>
+    //--></script>
+<?php } ?>
+
 <?php echo $footer; ?>

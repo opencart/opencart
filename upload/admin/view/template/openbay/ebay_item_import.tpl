@@ -91,5 +91,6 @@
             return 0;
         }
     }
-//--></script> 
+//--></script>
+
 <?php echo $footer; ?>

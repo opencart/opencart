@@ -704,7 +704,7 @@ final class Ebay {
         return $this->openbay_call('item/getItemListLimited/', array('page' => $page, 'limit' => $limit));
     }
 
-    public function putStockUpdate($item_id, $stock, $sku = null) {
+    public function putStockUpdate($item_id, $stock, $sku = null){
         $this->log('putStockUpdate()');
         $this->log('putStockUpdate() - New local stock: '.$stock);
 
@@ -712,20 +712,23 @@ final class Ebay {
         $product_id = $this->getProductId($item_id);
         $reserve    = $this->getReserve($product_id, $item_id, ($sku != null ? $sku : ''));
 
-        if($listing['status'] == 1 ) {
-            if($reserve != false) {
+        if($listing['status'] == 1 ){
+            if($reserve != false){
                 $this->log('putStockUpdate() - Reserve stock: '.$reserve);
 
-                if($stock > $reserve) {
+                if($stock > $reserve){
                     $this->log('putStockUpdate() - Stock is larger than reserve, setting level to reserve');
                     $stock = $reserve;
                 }
             }
 
-            if($sku == null) {
+            if($sku == null){
                 $this->log('putStockUpdate() - Listing stock: '.$listing['qty'].', new stock: '.$stock);
 
-                if($listing['qty'] != $stock) {
+                if($stock == 0){
+                    $this->endItem($item_id);
+                    return true;
+                }elseif($listing['qty'] != $stock){
                     $this->openbay_call('item/reviseStock/', array('itemId' => $item_id, 'stock' => $stock));
                     $this->log('putStockUpdate() - OK');
                     return true;
@@ -734,9 +737,12 @@ final class Ebay {
                     return false;
                 }
             }else{
+                /**
+                 * Need to loop over current item check if other variants have stock.
+                 */
                 $variantStock = false;
-                foreach($listing['variation']['vars'] as $var) {
-                    if(($var['sku'] != $sku) && ($var['qty'] > 0)) {
+                foreach($listing['variation']['vars'] as $var){
+                    if(($var['sku'] != $sku) && ($var['qty'] > 0)){
                         //other variations have stock
                         $variantStock = true;
                         $this->log('Another variation has stock (SKU: '.$var['sku'].')');
@@ -744,7 +750,7 @@ final class Ebay {
                     }
                 }
 
-                if($variantStock == true || $stock > 0) {
+                if($variantStock == true || $stock > 0){
                     $this->log('putStockUpdate() - Revising item with Item ID "'.$item_id.'" to stock level "'.$stock.'", sku "'.$sku.'"');
                     $this->openbay_call('item/reviseStock/', array('itemId' => $item_id, 'stock' => $stock, 'sku' => $sku));
                     return true;
@@ -754,71 +760,160 @@ final class Ebay {
                 }
             }
         }else{
-            $this->openbay->ebay->removeItemId($item_id);
+            $this->ebay->removeItemId($item_id);
             $this->log('putStockUpdate() - Listing not active, item id: '. $item_id .', status returned: '.$listing['statusActual']);
         }
     }
 
-    public function putStockUpdateBulk($productIdArray, $productSkuArray = null, $endInactive = false) {
+    public function putStockUpdateBulk($product_id_array, $endInactive = false){
+        /**
+         * We know is that these product ID's have been modified.
+         * They should only be passed if the stock has changed so we can assume this.
+         */
         $this->log('putStockUpdateBulk()');
 
-        $ebayData           = $this->getEbayActiveListings();
-        $liveData           = $this->getLiveListingArray();
-        $endedData          = $this->getEndedListingArray();
+        /**
+         * Try to load OpenStock module
+         */
+        $openstock = false;
+        if($this->addonLoad('openstock') == true) {
+            $this->load->model('openstock/openstock');
+            $openstock = true;
+        }
+
+        /**
+         * Get the active OpenCart items that were linked to eBay
+         * If they have stock now, relist them.
+         */
+        $endedData = $this->getEndedListingArray();
+
+        /**
+         * Get the active OpenCart items that are also linked
+         * Compare against the stock from eBay
+         * If listing active and local stock = 0, end it
+         * If listing inactive, remove link
+         * If listing active and local stock not the same, update it
+         */
+        $ebay_listings = $this->getEbayActiveListings();
+        $live_data = $this->getLiveListingArray();
+
         $linkedItems        = array();
         $linkedEndedItems   = array();
 
-        foreach($productIdArray as $productId) {
-            if(array_key_exists((int)$productId, $liveData)) {
+        foreach($product_id_array as $product_id){
+            if(array_key_exists((int)$product_id, $live_data)){
                 //product has been passed and is linked to active item
-                $linkedItems[] = array('productId' => (int)$productId, 'itemId' => $liveData[$productId]);
-            }elseif(array_key_exists((int)$productId, $endedData)) {
+                $linkedItems[] = array('productId' => (int)$product_id, 'itemId' => $live_data[$product_id]);
+            }elseif(array_key_exists((int)$product_id, $endedData)){
                 //product has been passed and is not currently active
-                $linkedEndedItems[] = array('productId' => (int)$productId, 'itemId' => $endedData[$productId]);
+                $linkedEndedItems[] = array('productId' => (int)$product_id, 'itemId' => $endedData[$product_id]);
             }else{
                 //product does not exist in live or ended links so has never been linked.
             }
         }
 
         //loop through ended listings, if back in stock and not multi var - relist it
-        foreach($linkedEndedItems as $item) {
-            //get the stock level of the linked items
-            $localStock = $this->getProductStockLevel($item['productId']);
+        foreach($linkedEndedItems as $item){
+            if($openstock == true) {
+                $options = $this->model_openstock_openstock->getProductOptionStocks($item['productId']);
+            } else {
+                $options = array();
+            }
 
-            if((int)$localStock['quantity'] > 0 && $localStock['status'] == 1) {
-                //product has stock and is enabled, so re list it.
-                $reserve    = $this->getReserve($item['productId'], $item['itemId']);
+            if(empty($options)){
+                //get the stock level of the linked items
+                $local_stock = $this->getProductStockLevel($item['productId']);
 
-                if($reserve != false) {
-                    if($localStock['quantity'] > $reserve) {
-                        $localStock['quantity'] = $reserve;
+                if((int)$local_stock['quantity'] > 0 && $local_stock['status'] == 1){
+                    //product has stock and is enabled, so re list it.
+                    $reserve = $this->getReserve($item['productId'], $item['itemId']);
+
+                    if($reserve != false){
+                        if($local_stock['quantity'] > $reserve){
+                            $local_stock['quantity'] = $reserve;
+                        }
                     }
-                }
 
-                $this->relistItem($item['itemId'], $item['productId'],(int)$localStock['quantity']);
+                    $this->relistItem($item['itemId'], $item['productId'],(int)$local_stock['quantity']);
+                }
+            }else{
+                $this->log('putStockUpdateBulk() - options existed for item ('.$item['itemId'].') when trying to relist');
+                /**
+                 * @todo - support relisting of variant items, if possible with ebay!
+                 */
             }
         }
 
         //loop through the active listings and update the store or end the item
-        foreach($linkedItems as $item) {
-            //get the stock level of the linked items
-            $localStock = $this->getProductStockLevel($item['productId']);
+        foreach($linkedItems as $item){
+            //get the stock level of the linked item
+            $local_stock = $this->getProductStockLevel($item['productId']);
 
-            //compare to the ebay data get retrieved
-            if((int)$localStock['quantity'] != (int)$ebayData[$item['itemId']]) {
-                //if different, send an update
-                if(((int)$localStock['quantity'] <= 0) || ($endInactive == true && $localStock['status'] == 0)) {
+            //check if the itemid was returned by ebay, if not unlink it as it is ended.
+            if(!isset($ebay_listings[$item['itemId']])){
+                $this->log('eBay item was not returned, removing link ('.$item['itemId'].')');
+                $this->removeItemId($item['itemId']);
+            }else{
+                //check if the local item is now inactive - end if it is
+                if($endInactive == true && $local_stock['status'] == 0){
                     $this->endItem($item['itemId']);
                 }else{
-                    $reserve    = $this->getReserve($item['productId'], $item['itemId']);
-
-                    if($reserve != false) {
-                        if($localStock['quantity'] > $reserve) {
-                            $localStock['quantity'] = $reserve;
-                        }
+                    //get any options that are set for this product
+                    if($openstock == true) {
+                        $options = $this->model_openstock_openstock->getProductOptionStocks($item['productId']);
+                    } else {
+                        $options = array();
                     }
 
-                    $this->putStockUpdate($item['itemId'], (int)$localStock['quantity']);
+                    if(empty($options) && empty($ebay_listings[$item['itemId']]['variants'])){
+                        /**
+                         * No variants for this item exist
+                         */
+                        $this->log('putStockUpdateBulk() - Item has no variants');
+
+                        //compare to the ebay data get retrieved
+                        if((int)$local_stock['quantity'] != (int)$ebay_listings[$item['itemId']]['qty']){
+                            $reserve = $this->getReserve($item['productId'], $item['itemId']);
+
+                            if($reserve != false){
+                                if($local_stock['quantity'] > $reserve){
+                                    $local_stock['quantity'] = $reserve;
+                                }
+                            }
+
+                            $this->putStockUpdate($item['itemId'], (int)$local_stock['quantity']);
+                        }
+                    }elseif(!empty($options) && !empty($ebay_listings[$item['itemId']]['variants'])){
+                        /**
+                         * This item has variants
+                         */
+                        $this->log('putStockUpdateBulk() - Variants found');
+
+                        //create an index of var codes to search against
+                        $var_ids = array();
+                        foreach($options as $k => $v){
+                            $var_ids[$k] = $v['var'];
+                        }
+
+                        //loop over eBay variants
+                        foreach($ebay_listings[$item['itemId']]['variants'] as $ebay_variant){
+                            $this->log('Checking eBay SKU: '.$ebay_variant['sku'].' for item: '.$item['itemId']);
+
+                            if(in_array($ebay_variant['sku'], $var_ids)){
+                                $option_id = array_search($ebay_variant['sku'], $var_ids);
+
+                                //compare the stock - if different trigger update
+                                if($ebay_variant['qty'] != $options[$option_id]['stock']){
+                                    $this->log('putStockUpdateBulk() - Revising variant item: '.$item['itemId'].',Stock: '.$options[$option_id]['stock'].', SKU '.$ebay_variant['sku']);
+                                    $this->openbay_call('item/reviseStock/', array('itemId' => $item['itemId'], 'stock' => $options[$option_id]['stock'], 'sku' => $ebay_variant['sku']));
+                                }
+                            }
+                        }
+                    }else{
+                        $this->log('Unsure if this item has variants, debug:');
+                        $this->log('Local: ' . $options);
+                        $this->log('eBay: ' . serialize($ebay_listings[$item['itemId']]['variants']));
+                    }
                 }
             }
         }

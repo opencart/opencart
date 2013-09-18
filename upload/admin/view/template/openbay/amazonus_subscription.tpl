@@ -67,6 +67,16 @@
                                 <td class="left"><?php echo $user_plan['listings_reserved'] ?></td>
                             </tr>
                             <tr>
+                                <td class="right"><b><?php echo $lang_bulk_listing ?>:</b></td>
+                                <td class="left">
+                                    <?php if ($user_plan['bulk_listing']) { ?>
+                                        <?php echo $text_enabled ?>
+                                    <?php } else { ?>
+                                        <?php echo $text_disabled ?>
+                                    <?php } ?>
+                                </td>
+                            </tr>
+                            <tr>
                                 <td class="right"><b><?php echo $lang_price ?>:</b></td>
                                 <td class="left">&pound;<?php echo $user_plan['price'] ?></td>
                             </tr>
@@ -84,6 +94,7 @@
                                     <td class="left"><?php echo $lang_description ?></td>
                                     <td class="left"><?php echo $lang_order_frequency ?></td>
                                     <td class="left"><?php echo $lang_product_listings ?></td>
+                                    <td class="left"><?php echo $lang_bulk_listing ?></td>
                                     <td class="left"><?php echo $lang_price ?></td>
                                 </tr>
                             </thead>
@@ -95,6 +106,13 @@
                                     <td class="left"><?php echo $plan['description'] ?></td>
                                     <td class="left"><?php echo $plan['order_frequency'] ?></td>
                                     <td class="left"><?php echo $plan['product_listings'] ?></td>
+                                    <td class="left">
+                                        <?php if ($plan['bulk_listing']) { ?>
+                                            <?php echo $text_enabled ?>
+                                        <?php } else { ?>
+                                            <?php echo $text_disabled ?>
+                                        <?php } ?>
+                                    </td>
                                     <td class="left">&pound;<?php echo $plan['price'] ?></td>
                                 </tr>
                                 <?php endforeach; ?>

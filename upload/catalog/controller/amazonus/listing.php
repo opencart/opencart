@@ -36,13 +36,13 @@ class ControllerAmazonusListing extends Controller {
         $logger->write("Received data: " . print_r($data, 1));
         
         if ($data['status']) {
-            $logger->write("Updating " . $data['product_id'] . ' from ' . $data['marketplace'] . ' as successful');
-            $this->model_amazonus_listing->listingSuccessful($data['product_id'], $data['marketplace']);
+            $logger->write("Updating " . $data['product_id'] . ' as successful');
+            $this->model_amazonus_listing->listingSuccessful($data['product_id']);
             $this->model_amazonus_product->linkProduct($data['sku'], $data['product_id']);
             $logger->write("Updated successfully");
         } else {
-            $logger->write("Updating " . $data['product_id'] . ' from ' . $data['marketplace'] . ' as failed');
-            $this->model_amazonus_listing->listingFailed($data['product_id'], $data['marketplace'], $data['messages']);
+            $logger->write("Updating " . $data['product_id'] . ' as failed');
+            $this->model_amazonus_listing->listingFailed($data['product_id'], $data['messages']);
             $logger->write("Updated successfully");
         }
     }

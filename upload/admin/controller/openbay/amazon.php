@@ -722,7 +722,7 @@ class ControllerOpenbayAmazon extends Controller {
 
                 $key = '';
 
-                $id_types = array('isbn', 'ean', 'upc', 'jan');
+                $id_types = array('isbn', 'upc', 'ean', 'jan');
 
                 foreach ($id_types as $id_type) {
                     if (!empty($product[$id_type])) {
@@ -800,12 +800,12 @@ class ControllerOpenbayAmazon extends Controller {
         }
         
         if (!empty($this->request->get['filter_marketplace'])) {
-            $filter_markteplace = $this->request->get['filter_marketplace'];
+            $filter_marketplace = $this->request->get['filter_marketplace'];
         } else {
-            $filter_markteplace = $this->config->get('openbay_amazon_default_listing_marketplace');
+            $filter_marketplace = $this->config->get('openbay_amazon_default_listing_marketplace');
         }
         
-        $this->data['filter_marketplace'] = $filter_markteplace;
+        $this->data['filter_marketplace'] = $filter_marketplace;
         
         $this->data['bulk_listing_status'] = $bulk_listing_status;
 
@@ -845,7 +845,7 @@ class ControllerOpenbayAmazon extends Controller {
 
             $data = array();
 
-            $data['filter_marketplace'] = $filter_markteplace;
+            $data['filter_marketplace'] = $filter_marketplace;
             $data['start'] = ($page - 1) * $this->config->get('config_admin_limit');
             $data['limit'] = $this->config->get('config_admin_limit');
 
@@ -923,7 +923,7 @@ class ControllerOpenbayAmazon extends Controller {
             $pagination->page = $page;
             $pagination->limit = $this->config->get('config_admin_limit');
             $pagination->text = $this->language->get('text_pagination');
-            $pagination->url = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . '&page={page}&filter_marketplace=' . $filter_markteplace, 'SSL');
+            $pagination->url = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . '&page={page}&filter_marketplace=' . $filter_marketplace, 'SSL');
 
             $this->data['pagination'] = $pagination->render();
         }

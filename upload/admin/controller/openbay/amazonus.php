@@ -155,15 +155,14 @@ class ControllerOpenbayAmazonus extends Controller {
             $this->data['success'] = '';
         }
         
-        $this->data['validation']               = $this->openbay->amazonus->validate();
-        $this->data['links_settings']           = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['links_subscription']       = $this->url->link('openbay/amazonus/subscription', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['links_itemlink']           = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['links_stockUpdates']       = $this->url->link('openbay/amazonus/stockUpdates', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['links_savedListings']       = $this->url->link('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['validation'] = $this->openbay->amazonus->validate();
+        $this->data['links_settings'] = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['links_subscription'] = $this->url->link('openbay/amazonus/subscription', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['links_itemlink'] = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['links_stockUpdates'] = $this->url->link('openbay/amazonus/stockUpdates', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['links_savedListings'] = $this->url->link('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['link_bulk_listing'] = $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'], 'SSL');
 
-        
-        
         $this->response->setOutput($this->render());
     }
     
@@ -210,6 +209,7 @@ class ControllerOpenbayAmazonus extends Controller {
                     'description' => (string) $plan->Description,
                     'order_frequency' => (string) $plan->OrderFrequency,
                     'product_listings' => (string) $plan->ProductListings,
+                    'bulk_listing' => (string) $plan->BulkListing,
                     'price' => (string) $plan->Price,
                 );
             }
@@ -232,6 +232,7 @@ class ControllerOpenbayAmazonus extends Controller {
                 'product_listings' => (string) $response->ProductListings,
                 'listings_remain' => (string) $response->ListingsRemain,
                 'listings_reserved' => (string) $response->ListingsReserved,
+                'bulk_listing' => (string) $response->BulkListing,
             );
         }
         
@@ -662,6 +663,260 @@ class ControllerOpenbayAmazonus extends Controller {
         
         $this->load->model('openbay/amazonus');
         $this->model_openbay_amazonus->deleteSaved($this->request->get['product_id'], $this->request->get['var']);
+    }
+    
+    public function doBulkList() {
+        $this->load->language('openbay/amazonus_listing');
+        $this->load->model('openbay/amazonus_listing');
+       
+        $delete_search_results = array();
+        
+        $bulk_list_products = array();
+        
+        foreach ($this->request->post['products'] as $product_id => $asin) {
+            $delete_search_results[] = $product_id;
+            
+            if (!empty($asin)) {
+                $bulk_list_products[$product_id] = $asin;
+            }
+        }
+        
+        $status = false;
+        
+        if ($bulk_list_products) {
+            $data = array();
+            
+            $data['products'] = $bulk_list_products;
+            
+            if (!empty($this->request->post['start_selling'])) {
+                $data['start_selling'] = $this->request->post['start_selling'];
+            }
+            
+            if (!empty($this->request->post['condition']) && !empty($this->request->post['condition_note'])) {
+                $data['condition'] = $this->request->post['condition'];
+                $data['condition_note'] = $this->request->post['condition_note'];
+            }
+            
+            $status = $this->model_openbay_amazonus_listing->doBulkListing($data);
+            
+            if ($status) {
+                $message = $this->language->get('text_products_sent');
+                
+                if ($delete_search_results) {
+                    $this->model_openbay_amazonus_listing->deleteSearchResults($delete_search_results);
+                }
+            } else {
+                $message = $this->language->get('error_sending_products');
+            }
+        } else {
+            $message = $this->language->get('error_no_products_selected');
+        }
+        
+        $json = array(
+            'status' => $status,
+            'message' => $message,
+        );
+        
+        $this->response->setOutput(json_encode($json));
+    }
+    
+    public function doBulkSearch() {
+        $this->load->model('catalog/product');
+        $this->load->model('openbay/amazonus_listing');
+        $this->load->language('openbay/amazonus_bulk');
+        
+        $json = array();
+        $search_data = array();
+        
+        if (!empty($this->request->post['product_ids'])) {
+            foreach ($this->request->post['product_ids'] as $product_id) {
+                $product = $this->model_catalog_product->getProduct($product_id);
+
+                if (empty($product['sku'])) {
+                    $json[$product_id] = array(
+                        'error' => $this->language->get('error_product_sku')
+                    );
+                }
+
+                $key = '';
+
+                $id_types = array('isbn', 'upc', 'ean', 'jan');
+
+                foreach ($id_types as $id_type) {
+                    if (!empty($product[$id_type])) {
+                        $key = $id_type;
+                        break;
+                    }
+                }
+
+                if (!$key) {
+                    $json[$product_id] = array(
+                        'error' => $this->language->get('error_product_no_searchable_fields')
+                    );
+                }
+
+                if (!isset($json[$product_id])) {
+                    $search_data[$key][] = array(
+                        'product_id' => $product['product_id'],
+                        'value' => trim($product[$id_type]),
+                    );
+
+                    $json[$product_id] = array(
+                        'success' => $this->language->get('text_searching')
+                    );
+                }
+            }
+        }
+        
+        if ($search_data) {
+            $this->model_openbay_amazonus_listing->doBulkSearch($search_data);
+        }
+        
+        $this->response->setOutput(json_encode($json));
+    }
+    
+    public function bulkListProducts() {
+        $this->load->model('openbay/amazonus');
+        $this->load->model('catalog/product');
+        $this->load->model('tool/image');
+        
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazonus_bulk'));
+        
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->addStyle('view/stylesheet/openbay.css');
+        $this->document->addScript('view/javascript/openbay/faq.js');
+        
+        $this->data['breadcrumbs'] = array();
+        $this->data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_home'),
+            'separator' => FALSE
+        );
+        $this->data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_openbay'),
+            'separator' => ' :: '
+        );
+        $this->data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_overview'),
+            'separator' => ' :: '
+        );
+        
+        $this->data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_bulk_listing'),
+            'separator' => ' :: '
+        );
+        
+        $pingInfo = simplexml_load_string($this->openbay->amazonus->callWithResponse('ping/info'));
+        
+        $bulk_listing_status = false;
+        if ($pingInfo) {
+            $bulk_listing_status = ((string) $pingInfo->BulkListing == 'true') ? true : false;
+        }
+        
+        $this->data['bulk_listing_status'] = $bulk_listing_status;
+
+        $this->data['link_overview'] = $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['token'] = $this->session->data['token'];
+        
+        if ($bulk_listing_status) {
+            $this->data['link_search'] = $this->url->link('openbay/amazonus/doBulkSearch', 'token=' . $this->session->data['token'], 'SSL');
+
+            $this->data['default_condition'] = $this->config->get('openbay_amazonus_listing_default_condition');
+            $this->data['conditions'] = array(
+                'New' => $this->language->get('text_new'),
+                'UsedLikeNew' => $this->language->get('text_used_like_new'),
+                'UsedVeryGood' => $this->language->get('text_used_very_good'),
+                'UsedGood' => $this->language->get('text_used_good'),
+                'UsedAcceptable' => $this->language->get('text_used_acceptable'),
+                'CollectibleLikeNew' => $this->language->get('text_collectible_like_new'),
+                'CollectibleVeryGood' => $this->language->get('text_collectible_very_good'),
+                'CollectibleGood' => $this->language->get('text_collectible_good'),
+                'CollectibleAcceptable' => $this->language->get('text_collectible_acceptable'),
+                'Refurbished' => $this->language->get('text_refurbished'),
+            );
+
+            if (!empty($this->request->get['page'])) {
+                $page = $this->request->get['page'];
+            } else {
+                $page = 1;
+            }
+
+            $data = array();
+
+            $data['start'] = ($page - 1) * $this->config->get('config_admin_limit');
+            $data['limit'] = $this->config->get('config_admin_limit');
+
+            $results = $this->model_openbay_amazonus->getProductSearch($data);
+            $product_total = $this->model_openbay_amazonus->getProductSearchTotal($data);
+
+            $this->data['products'] = array();
+
+            foreach ($results as $result) {
+                $product = $this->model_catalog_product->getProduct($result['product_id']);
+
+                if ($product['image'] && file_exists(DIR_IMAGE . $product['image'])) {
+                    $image = $this->model_tool_image->resize($product['image'], 40, 40);
+                } else {
+                    $image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
+                }
+
+                if ($result['status'] == 'searching') {
+                    $search_status = $this->language->get('text_searching');
+                } else if ($result['status'] == 'finished') {
+                    $search_status = $this->language->get('text_finished');
+                } else {
+                    $search_status = '-';
+                }
+
+                $href = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $product['product_id'], 'SSL');
+
+                $search_results = array();
+
+                if ($result['data']) {
+                    foreach ($result['data'] as $search_result) {
+
+                        $link = 'https://www.amazon.com/dp/' . $search_result['asin'] . '/';;
+                        
+                        $search_results[] = array(
+                            'title' => $search_result['title'],
+                            'asin' => $search_result['asin'],
+                            'href' => $link,
+                        );
+                    }
+                }
+
+                $this->data['products'][] = array(
+                    'product_id' => $product['product_id'],
+                    'href' => $href,
+                    'name' => $product['name'],
+                    'model' => $product['model'],
+                    'image' => $image,
+                    'matches' => $result['matches'],
+                    'search_status' => $search_status,
+                    'search_results' => $search_results,
+                );
+            }
+
+            $pagination = new Pagination();
+            $pagination->total = $product_total;
+            $pagination->page = $page;
+            $pagination->limit = $this->config->get('config_admin_limit');
+            $pagination->text = $this->language->get('text_pagination');
+            $pagination->url = $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
+
+            $this->data['pagination'] = $pagination->render();
+        }
+        
+        $this->template = 'openbay/amazonus_bulk_listing.tpl';
+        $this->children = array(
+            'common/header',
+            'common/footer'
+        );
+        
+        $this->response->setOutput($this->render());
     }
 }
 ?>

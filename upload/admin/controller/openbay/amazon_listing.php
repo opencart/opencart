@@ -110,7 +110,7 @@ class ControllerOpenbayAmazonListing extends Controller{
         
         $this->data['url_return']  = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL');
         $this->data['url_search']  = $this->url->link('openbay/amazon_listing/search', 'token=' . $this->session->data['token'], 'SSL');
-        $this->data['url_advanced']  = $this->url->lilink('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id='.$this->request->get['product_id'] . $url, 'SSL');
+        $this->data['url_advanced']  = $this->url->link('openbay/amazon_product', 'token=' . $this->session->data['token'] . '&product_id='.$this->request->get['product_id'] . $url, 'SSL');
 
         $this->data['button_search'] = $this->language->get('button_search');
         $this->data['button_new'] = $this->language->get('button_new');

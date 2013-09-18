@@ -104,16 +104,16 @@
                                 <input type="hidden" name="data[count_national]" value="<?php echo $data['shipping_national_count']; ?>" id="count_national" />
                                 <?php
                                 if(isset($data['shipping_national']) && is_array($data['shipping_national'])){
-                                foreach($data['shipping_national'] as $key => $service){
-                                echo'<p class="shipping_national_'.$key.'" style="border-top:1px dotted; margin:0; padding:5px 0;"><label><strong>'.$lang_shipping_service.'</strong><label>';
+                                    foreach($data['shipping_national'] as $key => $service){
+                                        echo'<p class="shipping_national_'.$key.'" style="border-top:1px dotted; margin:0; padding:5px 0;"><label><strong>'.$lang_shipping_service.'</strong><label>';
 
-                                echo'<input type="hidden" name="data[service_national]['.$key.']" value="'.$service['id'].'" /> '.$service['name'].'</p>';
+                                        echo'<input type="hidden" name="data[service_national]['.$key.']" value="'.$service['id'].'" /> '.$service['name'].'</p>';
 
-                                echo'<p class="shipping_national_'.$key.'"><label>'.$lang_shipping_first.'</label>';
-                                echo'<input type="text" name="data[price_national]['.$key.']" style="width:50px;" value="'.$service['price'].'" />';
-                                echo'&nbsp;&nbsp;<label>'.$lang_shipping_add.'</label>';
-                                echo'<input type="text" name="data[priceadditional_national]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'national\',\''.$key.'\');" class="button"><span>'.$lang_btn_remove.'</span></a></p>';
-                                }
+                                        echo'<p class="shipping_national_'.$key.'"><label>'.$lang_shipping_first.'</label>';
+                                        echo'<input type="text" name="data[price_national]['.$key.']" style="width:50px;" value="'.$service['price'].'" />';
+                                        echo'&nbsp;&nbsp;<label>'.$lang_shipping_add.'</label>';
+                                        echo'<input type="text" name="data[priceadditional_national]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'national\',\''.$key.'\');" class="button"><span>'.$lang_btn_remove.'</span></a></p>';
+                                    }
                                 }
                                 ?>
                             </td>
@@ -127,34 +127,32 @@
                                 <input type="hidden" name="data[count_international]" value="<?php echo $data['shipping_international_count']; ?>" id="count_international" />
                                 <?php
                                 if(isset($data['shipping_international']) && is_array($data['shipping_international'])){
-                                foreach($data['shipping_international'] as $key => $service){
-                                echo'<p class="shipping_international_'.$key.'" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong>'.$lang_shipping_service.'</strong><label>';
+                                    foreach($data['shipping_international'] as $key => $service){
+                                        echo'<p class="shipping_international_'.$key.'" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong>'.$lang_shipping_service.'</strong><label>';
 
-                                echo'<input type="hidden" name="data[service_international]['.$key.']" value="'.$service['id'].'" /> '.$service['name'].'</p>';
+                                        echo'<input type="hidden" name="data[service_international]['.$key.']" value="'.$service['id'].'" /> '.$service['name'].'</p>';
 
-                                echo'<h5 style="margin:5px 0;" class="shipping_international_'.$key.'">Ship to zones</h5>';
-                                echo'<div style="border:1px solid #000; background-color:#F5F5F5; width:100%; min-height:40px; margin-bottom:10px; display:inline-block;" class="shipping_international_'.$key.'">';
+                                        echo'<h5 style="margin:5px 0;" class="shipping_international_'.$key.'">Ship to zones</h5>';
+                                        echo'<div style="border:1px solid #000; background-color:#F5F5F5; width:100%; min-height:40px; margin-bottom:10px; display:inline-block;" class="shipping_international_'.$key.'">';
 
-                                echo'<div style="display:inline; float:left; padding:10px 6px;line-height:20px; height:20px;">';
-                                echo'<input type="checkbox" name="data[shipto_international]['.$key.'][]" value="Worldwide" ';
-                                if(in_array('Worldwide', $service['shipto'])){ echo' checked="checked"'; }
-                                echo'/> Worldwide</div>';
+                                        echo'<div style="display:inline; float:left; padding:10px 6px;line-height:20px; height:20px;">';
+                                        echo'<input type="checkbox" name="data[shipto_international]['.$key.'][]" value="Worldwide" '.(in_array("Worldwide", $service["shipto"]) ? ' checked="checked"' : '').'/> Worldwide</div>';
 
-                                foreach($shipping_international_zones as $zone){
-                                    echo'<div style="display:inline; float:left; padding:10px 6px;line-height:20px; height:20px;">';
-                                    echo'<input type="checkbox" name="data[shipto_international]['.$key.'][]" value="'.$zone['shipping_location'].'" ';
-                                    if(in_array($zone['shipping_location'], $service['shipto'])){ echo' checked="checked"'; }
-                                    echo'/> '.$zone['description'].'</div>';
-                                }
-                                echo'</div>';
+                                        foreach($shipping_international_zones as $zone){
+                                            echo'<div style="display:inline; float:left; padding:10px 6px;line-height:20px; height:20px;">';
+                                            echo'<input type="checkbox" name="data[shipto_international]['.$key.'][]" value="'.$zone['shipping_location'].'" ';
+                                            if(in_array($zone['shipping_location'], $service['shipto'])){ echo' checked="checked"'; }
+                                            echo'/> '.$zone['description'].'</div>';
+                                        }
+                                        echo'</div>';
 
-                                echo'<div style="clear:both;" class="shipping_international_'.$key.'"></div>';
-                                echo'<p class="shipping_international_'.$key.'"><label>'.$lang_shipping_first.'</label>';
-                                echo'<input type="text" name="data[price_international]['.$key.']" style="width:50px;" value="'.$service['price'].'" />';
-                                echo'&nbsp;&nbsp;<label>'.$lang_shipping_add.'</label>';
-                                echo'<input type="text" name="data[priceadditional_international]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'international\',\''.$key.'\');" class="button"><span>'.$lang_btn_remove.'</span></a></p>';
-                                echo'<div style="clear:both;"></div>';
-                                }
+                                        echo'<div style="clear:both;" class="shipping_international_'.$key.'"></div>';
+                                        echo'<p class="shipping_international_'.$key.'"><label>'.$lang_shipping_first.'</label>';
+                                        echo'<input type="text" name="data[price_international]['.$key.']" style="width:50px;" value="'.$service['price'].'" />';
+                                        echo'&nbsp;&nbsp;<label>'.$lang_shipping_add.'</label>';
+                                        echo'<input type="text" name="data[priceadditional_international]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'international\',\''.$key.'\');" class="button"><span>'.$lang_btn_remove.'</span></a></p>';
+                                        echo'<div style="clear:both;"></div>';
+                                    }
                                 }
                                 ?>
                             </td>
@@ -239,5 +237,6 @@
     $(document).ready(function() {
         updateDisplayShippingOptions();
     });
-//--></script> 
+//--></script>
+
 <?php echo $footer; ?>

@@ -832,4 +832,5 @@
         modifyPrices(id);
     }
 </script>
+
 <?php echo $footer; ?>

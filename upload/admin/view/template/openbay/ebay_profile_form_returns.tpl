@@ -117,5 +117,6 @@
 
 <script type="text/javascript"><!--
 $('#tabs a').tabs();
-//--></script> 
+//--></script>
+
 <?php echo $footer; ?>

@@ -540,7 +540,6 @@
 </div>
 
 <script type="text/javascript">
-
     function devClearData() {
         var pass = prompt("<?php echo $lang_ajax_dev_enter_pw; ?>", "");
 
@@ -636,7 +635,6 @@
         checkCredentials();
         changeTaxHandler();
     });
-
 //--></script>
 
 <?php echo $footer; ?>

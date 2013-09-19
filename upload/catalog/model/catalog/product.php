@@ -138,31 +138,14 @@ class ModelCatalogProduct extends Model {
 			}
 
 			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.model) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.sku) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}	
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.upc) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}		
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.ean) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.jan) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.isbn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}		
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.mpn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				$filter_name = $this->db->escape(utf8_strtolower($data['filter_name']));
+				$sql .= " OR LCASE(p.model) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.sku) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.upc) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.ean) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.jan) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.isbn) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.mpn) = '" . $filter_name. "'";
 			}
 
 			$sql .= ")";
@@ -529,31 +512,14 @@ class ModelCatalogProduct extends Model {
 			}
 
 			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.model) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.sku) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}	
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.upc) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}		
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.ean) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.jan) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.isbn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
-			}		
-
-			if (!empty($data['filter_name'])) {
-				$sql .= " OR LCASE(p.mpn) = '" . $this->db->escape(utf8_strtolower($data['filter_name'])) . "'";
+				$filter_name = $this->db->escape(utf8_strtolower($data['filter_name']));
+				$sql .= " OR LCASE(p.model) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.sku) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.upc) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.ean) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.jan) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.isbn) = '" . $filter_name . "'";
+				$sql .= " OR LCASE(p.mpn) = '" . $filter_name. "'";
 			}
 
 			$sql .= ")";				

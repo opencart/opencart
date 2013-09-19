@@ -1,5 +1,5 @@
 <div id="openbayInfo">
-    <div class="attention mTop15"><?php echo $lang_ajax_amazonuseu_shipped; ?></div>
+    <div class="attention mTop15"><?php echo $lang_ajax_amazonus_shipped; ?></div>
     <table class="form">
         <tbody>
         <tr>

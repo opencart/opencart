@@ -130,6 +130,7 @@ class ControllerOpenbayEbayProfile extends Controller {
         $this->data['types']                            = $this->model_openbay_ebay_profile->getTypes();
         $this->data['dispatchTimes']                    = $this->openbay->ebay->getSetting('dispatch_time_max');
         $this->data['countries']                        = $this->openbay->ebay->getSetting('countries');
+        $this->data['returns']                          = $this->openbay->ebay->getSetting('returns');
 
         if(is_array($this->data['dispatchTimes'])){
             ksort($this->data['dispatchTimes']);

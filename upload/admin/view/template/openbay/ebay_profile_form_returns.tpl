@@ -59,8 +59,9 @@
                                 <?php if(!isset($data['returns_accepted'])){ $data['returns_accepted'] = ''; } ?>
                                 
                                 <select name="data[returns_accepted]" class="width250">
-                                    <option value="ReturnsNotAccepted" <?php if($data['returns_accepted'] == 'ReturnsNotAccepted'){ echo'selected'; } ?>><?php echo $lang_no; ?></option>
-                                    <option value="ReturnsAccepted" <?php if($data['returns_accepted'] == 'ReturnsAccepted'){ echo'selected'; } ?>><?php echo $lang_yes; ?></option>
+                                    <?php foreach($returns['accepted'] as $v) { ?>
+                                        <option value="<?php echo $v['ReturnsAcceptedOption']; ?>" <?php if($data['returns_accepted'] == $v['ReturnsAcceptedOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
+                                    <?php } ?>
                                 </select>
                             </td>
                         </tr>

@@ -57,8 +57,8 @@ $(document).ready(function() {
 	
 	// change product-list to product-grid
 	$('#grid-view').click(function() {
-	$('.product-list').removeClass('product-list').addClass('product-grid');
-	$('.product-thumb').removeClass('clearfix');
+		$('.product-list').removeClass('product-list').addClass('product-grid');
+		$('.product-thumb').removeClass('clearfix');
 	});
 	
 	// tooltips on hover

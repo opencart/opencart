@@ -29,6 +29,21 @@
           </div>
         </div>
         <div class="form-group required">
+          <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
+            <?php if ($error_telephone) { ?>
+            <div class="text-danger"><?php echo $error_telephone; ?></div>
+            <?php  } ?>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
           <div class="col-sm-10">
             <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" class="form-control" />
@@ -95,10 +110,9 @@
             <div class="input-group">
               <input type="text" name="geocode" value="<?php echo $geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
               <span class="input-group-btn">
-              <button type="button" onclick="geocode()" class="btn btn-primary"><i class="icon-search"></i> <?php echo $button_geocode; ?></button>
+              <button type="button" onclick="Geocode()" class="btn btn-primary"><i class="icon-search"></i> <?php echo $button_geocode; ?></button>
               </span></div>
-            <span class="help-block"><?php echo $help_geocode; ?></span>
-          </div>
+            <span class="help-block"><?php echo $help_geocode; ?></span> </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
@@ -130,7 +144,7 @@
 </div>
 <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script> 
 <script type="text/javascript"><!--
-function geocode() { 
+function Geocode() { 
 	var address = new Array();
 	
 	address[0] = $('input[name=\'address_1\']').attr('value');

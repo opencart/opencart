@@ -61,21 +61,11 @@
                   <small><?php echo $product['reward']; ?></small>
                   <?php } ?></td>
                 <td class="text-left"><?php echo $product['model']; ?></td>
-                <td class="text-left row" style="width:40%;">
-                
-    
- 
-    
-                <div class="input-group">
+                <td class="text-left row" style="width:40%;"><div class="input-group">
                     <input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control col-span-1" />
                     <span class="input-group-btn">
                     <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="icon-refresh"></i></button>
-                    <a href="<?php echo $product['remove']; ?>" title="<?php echo $button_remove; ?>" data-toggle="tooltip" class="btn btn-danger"><i class="icon-remove-sign"></i></a></span></div>
-                    
-              
-                    
-                    
-                    </td>
+                    <a href="<?php echo $product['remove']; ?>" title="<?php echo $button_remove; ?>" data-toggle="tooltip" class="btn btn-danger"><i class="icon-remove-sign"></i></a></span></div></td>
                 <td class="text-right"><?php echo $product['price']; ?></td>
                 <td class="text-right"><?php echo $product['total']; ?></td>
               </tr>

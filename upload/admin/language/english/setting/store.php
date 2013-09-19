@@ -61,6 +61,7 @@ $_['entry_image_related']          = 'Related Product Image Size';
 $_['entry_image_compare']          = 'Compare Image Size';
 $_['entry_image_wishlist']         = 'Wish List Image Size';
 $_['entry_image_cart']             = 'Cart Image Size';
+$_['entry_image_location']         = 'Store Image Size';
 $_['entry_width']                  = 'Width';
 $_['entry_height']                 = 'Height';
 $_['entry_secure']                 = 'Use SSL';
@@ -105,6 +106,7 @@ $_['error_image_related']          = 'Related Product Image Size dimensions requ
 $_['error_image_compare']          = 'Compare Image Size dimensions required!';
 $_['error_image_wishlist']         = 'Wish List Image Size dimensions required!';
 $_['error_image_cart']             = 'Cart Image Size dimensions required!';
+$_['error_image_location']         = 'Store Image Size dimensions required!';
 $_['error_default']                = 'Warning: You can not delete your default store!';
 $_['error_store']                  = 'Warning: This Store cannot be deleted as it is currently assigned to %s orders!';
 ?>

@@ -1746,6 +1746,8 @@ DROP TABLE IF EXISTS `oc_location`;
 CREATE TABLE `oc_location` (
   `location_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
+  `telephone` varchar(32) NOT NULL,
+  `fax` varchar(32) NOT NULL,  
   `address_1` varchar(128) NOT NULL,
   `address_2` varchar(128) NOT NULL,
   `city` varchar(128) NOT NULL,

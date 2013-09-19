@@ -36,7 +36,7 @@ class ControllerAmazonusOrder extends Controller {
         
         $amazonusOrderStatus = trim(strtolower((string) $orderXml->Status));
         
-        $amazonusOrderId = (string)$orderXml->AmazonusOrderId;
+        $amazonusOrderId = (string)$orderXml->AmazonOrderId;
         $orderStatus = $this->model_amazonus_order->getMappedStatus((string) $orderXml->Status);
         
         $logger->write('Received order ' . $amazonusOrderId);

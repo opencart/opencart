@@ -64,6 +64,7 @@ $_['lang_returns_type_exch']    = 'Money back or exchange';
 $_['lang_returns_costs']        = 'Return Shipping costs';
 $_['lang_returns_costs_b']      = 'Buyer pays';
 $_['lang_returns_costs_s']      = 'Seller pays';
+$_['lang_returns_restock']      = 'Restocking Fee';
 
 //Template profile
 $_['lang_template_choose']      = 'Default template<span class="help">A default template will auto load when listing to save time</span>';

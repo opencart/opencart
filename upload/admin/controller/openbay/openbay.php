@@ -806,7 +806,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->data['validation']   = $this->openbay->ebay->validate();
         $this->data['token']        = $this->session->data['token'];
 
-        if (isset($this->error['warning'])) {
+        if (isset($this->session->data['warning'])) {
             $this->data['error_warning'] = $this->session->data['warning'];
         } else {
             $this->data['error_warning'] = '';

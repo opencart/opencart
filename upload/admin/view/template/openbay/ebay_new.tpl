@@ -568,7 +568,7 @@
                                 <select name="returns_accepted" id="returns_accepted" class="returns_input">
                                     <?php foreach($setting['returns']['accepted'] as $v) { ?>
                                         <option value="<?php echo $v['ReturnsAcceptedOption']; ?>"><?php echo $v['Description']; ?></option>
-                                    <?php { ?>
+                                    <?php } ?>
                                 </select>
                             </td>
                         </tr>
@@ -581,7 +581,7 @@
                                 <select name="returns_within" id="returns_within" class="returns_input">
                                     <?php foreach($setting['returns']['within'] as $v) { ?>
                                         <option value="<?php echo $v['ReturnsWithinOption']; ?>"><?php echo $v['Description']; ?></option>
-                                    <?php { ?>
+                                    <?php } ?>
                                 </select>
                             </td>
                         </tr>
@@ -594,7 +594,7 @@
                                 <select name="returns_shipping" id="returns_shipping" class="returns_input">
                                     <?php foreach($setting['returns']['paidby'] as $v) { ?>
                                         <option value="<?php echo $v['ShippingCostPaidByOption']; ?>"><?php echo $v['Description']; ?></option>
-                                    <?php { ?>
+                                    <?php } ?>
                                 </select>
                             </td>
                         </tr>
@@ -607,7 +607,7 @@
                                 <select name="returns_option" id="returns_option" class="returns_input">
                                     <?php foreach($setting['returns']['refund'] as $v) { ?>
                                         <option value="<?php echo $v['RefundOption']; ?>"><?php echo $v['Description']; ?></option>
-                                    <?php { ?>
+                                    <?php } ?>
                                 </select>
                             </td>
                         </tr>
@@ -627,7 +627,7 @@
                                 <select name="returns_restocking_fee" id="returns_restocking_fee" class="returns_input">
                                     <?php foreach($setting['returns']['restocking_fee'] as $v) { ?>
                                         <option value="<?php echo $v['RestockingFeeValueOption']; ?>"><?php echo $v['Description']; ?></option>
-                                    <?php { ?>
+                                    <?php } ?>
                                 </select>
                             </td>
                         </tr>

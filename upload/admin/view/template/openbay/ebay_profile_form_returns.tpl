@@ -53,14 +53,14 @@
 
                     <table class="form">
 
-                        <?php if(!empty($returns['accepted'])) { ?>
+                        <?php if(!empty($setting['returns']['accepted'])) { ?>
                             <tr>
                                 <td><label for="returns_accepted"><?php echo $lang_returns_accept; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_accepted'])){ $data['returns_accepted'] = ''; } ?>
 
                                     <select name="data[returns_accepted]" class="width250">
-                                        <?php foreach($returns['accepted'] as $v) { ?>
+                                        <?php foreach($setting['returns']['accepted'] as $v) { ?>
                                             <option value="<?php echo $v['ReturnsAcceptedOption']; ?>" <?php if($data['returns_accepted'] == $v['ReturnsAcceptedOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                                         <?php } ?>
                                     </select>
@@ -70,14 +70,14 @@
                             <input type="hidden" name="data[returns_accepted]" value="" />
                         <?php } ?>
 
-                        <?php if(!empty($returns['within'])) { ?>
+                        <?php if(!empty($setting['returns']['within'])) { ?>
                             <tr>
                                 <td><label for="returns_within"><?php echo $lang_returns_days; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_within'])){ $data['returns_within'] = ''; } ?>
 
                                     <select name="data[returns_within]" class="width250">
-                                        <?php foreach($returns['within'] as $v) { ?>
+                                        <?php foreach($setting['returns']['within'] as $v) { ?>
                                             <option value="<?php echo $v['ReturnsWithinOption']; ?>" <?php if($data['returns_within'] == $v['ReturnsWithinOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                                         <?php } ?>
                                     </select>
@@ -87,14 +87,14 @@
                             <input type="hidden" name="data[returns_within]" value="" />
                         <?php } ?>
 
-                        <?php if(!empty($returns['paidby'])) { ?>
+                        <?php if(!empty($setting['returns']['paidby'])) { ?>
                             <tr>
                                 <td><label for="returns_shipping"><?php echo $lang_returns_costs; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_shipping'])){ $data['returns_shipping'] = ''; } ?>
 
                                     <select name="data[returns_shipping]" class="width250">
-                                        <?php foreach($returns['paidby'] as $v) { ?>
+                                        <?php foreach($setting['returns']['paidby'] as $v) { ?>
                                             <option value="<?php echo $v['ShippingCostPaidByOption']; ?>" <?php if($data['returns_shipping'] == $v['ShippingCostPaidByOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                                         <?php } ?>
                                     </select>
@@ -104,14 +104,14 @@
                             <input type="hidden" name="data[returns_shipping]" value="" />
                         <?php } ?>
 
-                        <?php if(!empty($returns['refund'])) { ?>
+                        <?php if(!empty($setting['returns']['refund'])) { ?>
                             <tr>
                                 <td><label for="returns_option"><?php echo $lang_returns_type; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_option'])){ $data['returns_option'] = ''; } ?>
 
                                     <select name="data[returns_option]" class="width250">
-                                        <?php foreach($returns['refund'] as $v) { ?>
+                                        <?php foreach($setting['returns']['refund'] as $v) { ?>
                                             <option value="<?php echo $v['RefundOption']; ?>" <?php if($data['returns_option'] == $v['RefundOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                                         <?php } ?>
                                     </select>
@@ -121,7 +121,7 @@
                             <input type="hidden" name="data[returns_option]" value="" />
                         <?php } ?>
 
-                        <?php if($returns['description'] == true) { ?>
+                        <?php if($setting['returns']['description'] == true) { ?>
 
                             <?php if(!isset($data['returns_policy'])){ $data['returns_policy'] = ''; } ?>
 
@@ -133,14 +133,14 @@
                             <input type="hidden" name="data[returns_policy]" value="" />
                         <?php } ?>
 
-                        <?php if(!empty($returns['restocking_fee'])) { ?>
+                        <?php if(!empty($setting['returns']['restocking_fee'])) { ?>
                             <tr>
                                 <td><label for="returns_restocking_fee"><?php echo $lang_returns_restock; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_restocking_fee'])){ $data['returns_restocking_fee'] = ''; } ?>
 
                                     <select name="data[returns_restocking_fee]" class="width250">
-                                        <?php foreach($returns['restocking_fee'] as $v) { ?>
+                                        <?php foreach($setting['returns']['restocking_fee'] as $v) { ?>
                                             <option value="<?php echo $v['RestockingFeeValueOption']; ?>" <?php if($data['returns_restocking_fee'] == $v['RestockingFeeValueOption']){ echo'selected'; } ?>><?php echo $v['Description']; ?></option>
                                         <?php } ?>
                                     </select>

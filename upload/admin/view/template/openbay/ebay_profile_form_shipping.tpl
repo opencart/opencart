@@ -61,7 +61,7 @@
                             <td><label><?php echo $lang_shipping_dispatch_country; ?></label></td>
                             <td>
                                 <select name="data[country]" id="country" class="width100">
-                                    <?php foreach($countries as $country){ ?>
+                                    <?php foreach($setting['countries'] as $country){ ?>
                                     <option value="<?php echo $country['code'];?>"
                                     <?php if(isset($data['country']) && $data['country'] == $country['code']){ echo' selected'; } ?>
                                     ><?php echo $country['name'];?></option>
@@ -73,7 +73,7 @@
                             <td><label><?php echo $lang_shipping_despatch; ?></label></td>
                             <td>
                                 <select name="data[dispatch_time]" id="dispatch_time" class="width100">
-                                    <?php foreach($dispatchTimes as $dis){ ?>
+                                    <?php foreach($setting['dispatch_times'] as $dis){ ?>
                                         <option value="<?php echo $dis['DispatchTimeMax'];?>" 
                                         <?php if(isset($data['dispatch_time']) && $data['dispatch_time'] == $dis['DispatchTimeMax']){ echo' selected'; } ?>
                                         ><?php echo $dis['Description'];?></option>

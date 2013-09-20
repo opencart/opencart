@@ -11,4 +11,5 @@ $_['lang_heading_bulk_listing'] = 'Bulk Listing';
 $_['lang_heading_register'] = 'Register';
 $_['lang_heading_stock_updates'] = 'Stock updates';
 $_['lang_heading_saved_listings'] = 'Saved listings';
+$_['lang_heading_bulk_linking'] = 'Bulk Linking';
 ?>

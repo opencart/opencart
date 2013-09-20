@@ -140,6 +140,7 @@ class ControllerOpenbayAmazon extends Controller {
         $this->data['link_stock_updates'] = $this->url->link('openbay/amazon/stockUpdates', 'token=' . $this->session->data['token'], 'SSL');
         $this->data['link_saved_listings'] = $this->url->link('openbay/amazon/savedListings', 'token=' . $this->session->data['token'], 'SSL');        
         $this->data['link_bulk_listing'] = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['link_bulk_linking'] = $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'], 'SSL');
         
         $this->template = 'openbay/amazon_overview.tpl';
         $this->children = array(
@@ -877,26 +878,7 @@ class ControllerOpenbayAmazon extends Controller {
 
                 if ($result['data']) {
                     foreach ($result['data'] as $search_result) {
-
-                        $link = '';
-
-                        switch ($result['marketplace']) {
-                            case 'uk':
-                                $link = 'https://www.amazon.co.uk/dp/' . $search_result['asin'] . '/';
-                                break;
-                            case 'de':
-                                $link = 'https://www.amazon.de/dp/' . $search_result['asin'] . '/';
-                                break;
-                            case 'fr':
-                                $link = 'https://www.amazon.fr/dp/' . $search_result['asin'] . '/';
-                                break;
-                            case 'it':
-                                $link = 'https://www.amazon.it/dp/' . $search_result['asin'] . '/';
-                                break;
-                            case 'es':
-                                $link = 'https://www.amazon.es/dp/' . $search_result['asin'] . '/';
-                                break;
-                        }
+                        $link = $this->model_openbay_amazon->getAsinLink($search_result['asin'], $result['marketplace']);
 
                         $search_results[] = array(
                             'title' => $search_result['title'],
@@ -935,6 +917,174 @@ class ControllerOpenbayAmazon extends Controller {
         );
         
         $this->response->setOutput($this->render());
+    }
+    
+    public function bulkLinking() {        
+        $this->load->model('openbay/amazon');
+        
+        $this->data = array_merge($this->data, $this->load->language('openbay/amazon_bulk_linking'));
+        
+        $this->document->setTitle($this->language->get('heading_title'));
+        $this->document->addStyle('view/stylesheet/openbay.css');
+        $this->document->addScript('view/javascript/openbay/faq.js');
+        
+        $this->data['breadcrumbs'] = array();
+        $this->data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_home'),
+            'separator' => FALSE
+        );
+        $this->data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_openbay'),
+            'separator' => ' :: '
+        );
+        $this->data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_overview'),
+            'separator' => ' :: '
+        );
+        
+        $this->data['breadcrumbs'][] = array(
+            'href'      => $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'], 'SSL'),
+            'text'      => $this->language->get('text_bulk_linking'),
+            'separator' => ' :: '
+        );
+        
+        $this->template = 'openbay/amazon_bulk_linking.tpl';
+        $this->children = array(
+            'common/header',
+            'common/footer'
+        );
+        
+        $pingInfo = simplexml_load_string($this->openbay->amazon->callWithResponse('ping/info'));
+        
+        $bulk_linking_status = false;
+        if ($pingInfo) {
+            $bulk_linking_status = ((string) $pingInfo->BulkLinking == 'true') ? true : false;
+        }
+        
+        $this->data['bulk_linking_status'] = $bulk_linking_status;
+        
+        $marketplaces = array(
+            array(
+                'name' => $this->language->get('text_uk'), 
+                'code' => 'uk',
+                'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=uk', 'SSL'),
+            ),
+            array(
+                'name' => $this->language->get('text_de'), 
+                'code' => 'de',
+                'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=de', 'SSL'),
+            ),
+            array(
+                'name' => $this->language->get('text_fr'), 
+                'code' => 'fr',
+                'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=fr', 'SSL'),
+            ),
+            array(
+                'name' => $this->language->get('text_it'), 
+                'code' => 'it',
+                'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=it', 'SSL'),
+            ),
+            array(
+                'name' => $this->language->get('text_es'), 
+                'code' => 'es',
+                'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=es', 'SSL'),
+            ),
+        );
+        
+        foreach ($marketplaces as &$marketplace) {
+            $results = $this->model_openbay_amazon->getUnlinkedItemsFromReport($marketplace['code']);
+            
+            $products = array();
+            
+            foreach ($results as $result) {
+                $products[] = array(
+                    'asin' => $result['asin'],
+                    'href_amazon' => $this->model_openbay_amazon->getAsinLink($result['asin'], $marketplace['code']),
+                    'amazon_sku' => $result['amazon_sku'],
+                    'amazon_quantity' => $result['amazon_quantity'],
+                    'amazon_price' => $result['amazon_price'],
+                    'name' => $result['name'],
+                    'sku' => $result['sku'],
+                    'quantity' => $result['quantity'],
+                    'combination' => $result['combination'],
+                    'product_id' => $result['product_id'],
+                    'var' => $result['var'],
+                    'href_product' => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'], 'SSL'),
+                );
+            }
+            
+            $marketplace['unlinked_products'] = $products;
+        }
+
+        $this->data['marketplaces'] = $marketplaces;
+        
+        $this->data['marketplaces_processing'] = $this->config->get('openbay_amazon_processing_listing_reports');
+        $this->data['href_return'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['href_do_bulk_linking'] = $this->url->link('openbay/amazon/doBulkLinking', 'token=' . $this->session->data['token'], 'SSL');
+        $this->data['token'] = $this->session->data['token'];
+        
+        $this->response->setOutput($this->render());
+    }
+    
+    public function loadListingReport() {
+        $this->load->model('openbay/amazon');
+        $this->load->model('setting/setting');
+        $this->load->language('openbay/amazon_bulk_linking');
+        
+        $marketplace = $this->request->get['marketplace'];
+        
+        $this->model_openbay_amazon->deleteListingReports($marketplace);
+        
+        $request_data = array(
+            'marketplace' => $marketplace,
+            'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/listingReport',
+        );
+        
+        $response = $this->openbay->amazon->callWithResponse('report/listing', $request_data);
+        $response = json_decode($response, 1);
+        
+        $json = array();
+        $json['status'] = $response['status'];
+        
+        if ($json['status']) {
+            $json['message'] = $this->language->get('text_report_requested');
+            
+            $settings = $this->model_setting_setting->getSetting('openbay_amazon');
+            $settings['openbay_amazon_processing_listing_reports'][] = $marketplace;
+            
+            $this->model_setting_setting->editSetting('openbay_amazon', $settings);
+        } else {
+            $json['message'] = $this->language->get('text_report_request_failed');
+        }
+        
+        $this->response->setOutput(json_encode($json));
+    }
+    
+    public function doBulkLinking() {
+        $this->load->model('openbay/amazon');
+        
+        $links = array();
+        $amazonSkus = array();
+        
+        if (!empty($this->request->post['link'])) {
+            foreach ($this->request->post['link'] as $link) {
+                if (!empty($link['product_id'])) {
+                    $links[] = $link;
+                    $amazonSkus[] = $link['amazon_sku'];
+                }
+            }
+        }
+        
+        if (!empty($links)) {
+            foreach ($links as $link) {
+                $this->model_openbay_amazon->linkProduct($link['amazon_sku'], $link['product_id'], $link['var']);
+            }
+            
+            $this->model_openbay_amazon->updateAmazonSkusQuantities($amazonSkus);
+        }
     }
 }
 

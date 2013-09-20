@@ -363,7 +363,7 @@ final class Openbay {
     /**
      * Checks if a module is installed and enabled
      * @param string $addon name of the module
-     * @return bool True - module is installed and enabled, False - otherwise
+     * @return bool True - module is installed, False - otherwise
      */
     public function addonLoad($addon) {
         $addon = strtolower((string) $addon); //ensure the addon name is a string value.

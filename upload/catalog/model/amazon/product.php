@@ -127,5 +127,32 @@ class ModelAmazonProduct extends Model {
             ");
         }
     }
+    
+    public function addListingReport($data) {
+        $sql = "INSERT INTO " . DB_PREFIX . "amazon_listing_report (marketplace, sku, quantity, asin, price) VALUES ";
+        
+        $sqlValues = array();
+        
+        foreach ($data as $product) {
+            $sqlValues[] = " ('" . $this->db->escape($product['marketplace']) . "', '" . $this->db->escape($product['sku']) . "', " . (int) $product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double) $product['price'] . ") ";
+        }
+        
+        $sql .= implode(',', $sqlValues);
+        
+        $this->db->query($sql);
+    }
+    
+    public function removeListingReportLock($marketplace) {
+        $marketplaces = $this->config->get('openbay_amazon_processing_listing_reports');
+        
+        if ($marketplaces && ($key = array_search($marketplace, $marketplaces)) !== false) {
+            unset($marketplaces[$key]);
+            
+            $this->config->set('openbay_amazon_processing_listing_reports', $marketplaces);
+            
+            $this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape(serialize($marketplaces)) . "' WHERE `key` = 'openbay_amazon_processing_listing_reports'");
+        }
+    }
 }
+
 ?>

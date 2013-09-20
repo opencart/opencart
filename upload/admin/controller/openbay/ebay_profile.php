@@ -139,14 +139,10 @@ class ControllerOpenbayEbayProfile extends Controller {
             $this->redirect($this->url->link('openbay/openbay/viewSync&token=' . $this->session->data['token'], 'SSL'));
         }
 
-        $this->data['setting']                          = $setting;
+        if(is_array($setting['dispatch_times'])){ ksort($setting['dispatch_times']); }
+        if(is_array($setting['countries'])){ ksort($setting['countries']); }
 
-        if(is_array($this->data['dispatch_times'])){
-            ksort($this->data['dispatch_times']);
-        }
-        if(is_array($this->data['countries'])){
-            ksort($this->data['countries']);
-        }
+        $this->data['setting']                          = $setting;
 
         if (isset($this->error['warning'])) {
             $this->data['error_warning'] = $this->error['warning'];

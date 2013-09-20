@@ -141,8 +141,8 @@ class ControllerOpenbayEbayProfile extends Controller {
 
         $this->data['setting']                          = $setting;
 
-        if(is_array($this->data['dispatchTimes'])){
-            ksort($this->data['dispatchTimes']);
+        if(is_array($this->data['dispatch_times'])){
+            ksort($this->data['dispatch_times']);
         }
         if(is_array($this->data['countries'])){
             ksort($this->data['countries']);

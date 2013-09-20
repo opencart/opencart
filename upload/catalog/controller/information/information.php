@@ -21,7 +21,9 @@ class ControllerInformationInformation extends Controller {
 		$information_info = $this->model_catalog_information->getInformation($information_id);
    		
 		if ($information_info) {
-	  		$this->document->setTitle($information_info['title']); 
+	  		$this->document->setTitle($information_info['meta_title']); 
+			$this->document->setDescription($information_info['meta_description']);
+			$this->document->setKeywords($information_info['meta_keyword']);
 
       		$this->data['breadcrumbs'][] = array(
         		'text' => $information_info['title'],

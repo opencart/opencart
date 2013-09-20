@@ -42,21 +42,13 @@
 <?php echo $google_analytics; ?>
 </head>
 <body>
-<div class="container">
-  <nav class="navbar navbar-static-top">
-    <ul class="nav navbar-nav">
-      <li><?php echo $currency; ?></li>
-      <li><?php echo $language; ?></li>
-    </ul>
-    <ul class="nav navbar-nav pull-right">
-      <li><a href="tel:<?php echo $telephone; ?>"><i class="icon-phone"></i> <span class="hidden-xs hidden-sm hidden-md span"><?php echo $telephone; ?></span></a></li>
-      <li><a href="<?php echo $account; ?>"><i class="icon-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span></a></li>
-      <li><a href="<?php echo $wishlist; ?>" id="wishlist-total"> <i class="icon-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a></li>
-      <li><a href="<?php echo $shopping_cart; ?>"><i class="icon-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a></li>
-      <li><a href="<?php echo $checkout; ?>"> <i class="icon-share-alt"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a></li>
-    </ul>
-  </nav>
-</div>
+<nav>
+  <div class="container">
+    <div class="pull-left"><?php echo $currency; ?></div>
+    <div class="pull-left"><?php echo $language; ?></div>
+    <div class="pull-right"><a href="tel:<?php echo $telephone; ?>"><i class="icon-phone"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></a> <a href="<?php echo $account; ?>"><i class="icon-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span></a> <a href="<?php echo $wishlist; ?>" id="wishlist-total"><i class="icon-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a> <a href="<?php echo $shopping_cart; ?>"><i class="icon-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a> <a href="<?php echo $checkout; ?>"><i class="icon-share-alt"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a> </div>
+  </div>
+</nav>
 <header>
   <div class="container">
     <div class="row">
@@ -71,9 +63,9 @@
       </div>
       <div class="col-sm-5">
         <div id="search" class="input-group">
-          <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" class="form-control" />
+          <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" class="form-control input-lg" />
           <span class="input-group-btn">
-          <button type="button" class="btn btn-default"><i class="icon-search"></i></button>
+          <button type="button" class="btn btn-default btn-lg"><i class="icon-search"></i></button>
           </span> </div>
       </div>
       <div class="col-sm-3"><?php echo $cart; ?></div>

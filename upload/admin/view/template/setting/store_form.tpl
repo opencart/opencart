@@ -659,6 +659,22 @@
                 <?php } ?>
               </div>
             </div>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-image-location"><?php echo $entry_image_location; ?></label>
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-6">
+                    <input type="text" name="config_image_location_width" value="<?php echo $config_image_location_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-location" class="form-control" />
+                  </div>
+                  <div class="col-sm-6">
+                    <input type="text" name="config_image_location_height" value="<?php echo $config_image_location_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                  </div>
+                </div>
+                <?php if ($error_image_location) { ?>
+                <div class="text-danger"><?php echo $error_image_location; ?></div>
+                <?php } ?>
+              </div>
+            </div>            
           </div>
           <div class="tab-pane" id="tab-server">
             <div class="form-group">

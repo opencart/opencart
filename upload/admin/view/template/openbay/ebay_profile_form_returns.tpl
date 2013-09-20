@@ -70,7 +70,7 @@
                             <input type="hidden" name="data[returns_accepted]" value="" />
                         <?php } ?>
 
-                        <?php if(!empty($returns['returns_within'])) { ?>
+                        <?php if(!empty($returns['within'])) { ?>
                             <tr>
                                 <td><label for="returns_within"><?php echo $lang_returns_days; ?></td>
                                 <td>

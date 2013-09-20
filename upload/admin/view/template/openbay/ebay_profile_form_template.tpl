@@ -128,6 +128,7 @@
 </div>
 
 <script type="text/javascript"><!--
-$('#tabs a').tabs();
-//--></script> 
+    $('#tabs a').tabs();
+//--></script>
+
 <?php echo $footer; ?>

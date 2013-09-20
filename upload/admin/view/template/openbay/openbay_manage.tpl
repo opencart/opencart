@@ -1,11 +1,10 @@
 <?php echo $header; ?>
 <div id="content">
+
     <div class="breadcrumb">
-<?php 
-        foreach ($breadcrumbs as $breadcrumb) {
-            echo $breadcrumb['separator'].'<a href="'.$breadcrumb['href'].'">'.$breadcrumb['text'].'</a>';
-        } 
-?>
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+        <?php } ?>
     </div>
 
     <div class="box mBottom130">
@@ -140,8 +139,7 @@
     </div>
 </div>
 
-<script type="text/javascript">
-    
+<script type="text/javascript"><!--
     var token = "<?php echo $_GET['token']; ?>";
     
     $('.ftpsetting').keypress(function(){
@@ -241,8 +239,7 @@
         });
     }
 
-</script>
+    $('#tabs a').tabs();
+//--></script>
 
-<script type="text/javascript"><!--
-$('#tabs a').tabs();
-//--></script> 
+<?php echo $footer; ?>

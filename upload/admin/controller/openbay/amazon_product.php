@@ -448,6 +448,7 @@ class ControllerOpenbayAmazonProduct extends Controller{
     	$manufacturer = $this->model_catalog_manufacturer->getManufacturer($product_info['manufacturer_id']);
         if(!empty($manufacturer)) {
             $defaults['manufacturer'] = $manufacturer['name'];
+            $defaults['brand'] = $manufacturer['name'];
         }
         
         $productImages = $this->model_catalog_product->getProductImages($product_id);
@@ -469,7 +470,7 @@ class ControllerOpenbayAmazonProduct extends Controller{
         foreach ($meta_keywords as $index => $meta_keyword) {
             $defaults['searchterms' . $index] = trim($meta_keyword);
         }
-        
+          
         $this->load->library('amazon');
         if($var !== '' && $this->openbay->addonLoad('openstock')) {
             $this->load->model('tool/image');

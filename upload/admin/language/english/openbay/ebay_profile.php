@@ -64,6 +64,7 @@ $_['lang_returns_type_exch']    = 'Money back or exchange';
 $_['lang_returns_costs']        = 'Return Shipping costs';
 $_['lang_returns_costs_b']      = 'Buyer pays';
 $_['lang_returns_costs_s']      = 'Seller pays';
+$_['lang_returns_restock']      = 'Restocking Fee';
 
 //Template profile
 $_['lang_template_choose']      = 'Default template<span class="help">A default template will auto load when listing to save time</span>';
@@ -88,4 +89,5 @@ $_['lang_updated']              = 'Profile has been updated';
 $_['invalid_permission']        = 'You do not have permission to edit profiles';
 $_['lang_error_name']           = 'You must enter a profile name';
 $_['lang_no_template']          = 'Template ID does not exist';
+$_['lang_error_missing_settings'] = 'You cannot add,edit or delete profiles until you syncronise your eBay settings';
 ?>

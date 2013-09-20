@@ -1509,6 +1509,21 @@ final class Ebay {
             } else {
                 $this->log('No countries set!');
             }
+
+            //returns
+            if (isset($response['returns'])) {
+                $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'returns' LIMIT 1");
+
+                if ($qry->num_rows > 0) {
+                    $this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['returns'])) . "', `last_updated`  = now() WHERE `key` = 'returns' LIMIT 1");
+                    $this->log('Updated countries into ebay_setting_option table');
+                } else {
+                    $this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'returns', `data` = '" . $this->db->escape(serialize($response['returns'])) . "', `last_updated`  = now()");
+                    $this->log('Inserted countries into ebay_setting_option table');
+                }
+            } else {
+                $this->log('No returns set!');
+            }
         }
 
         return array('msg' => $this->lastmsg, 'error' => $this->lasterror);

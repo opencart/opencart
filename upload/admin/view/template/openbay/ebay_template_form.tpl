@@ -40,7 +40,6 @@
     </div>
 </div>
 <script type="text/javascript">
-
     var editor = CodeMirror.fromTextArea(document.getElementById("code"), {
         mode: 'text/html',
         autoCloseTags: true,
@@ -50,4 +49,5 @@
         indentUnit: 4
     });
 </script>
+
 <?php echo $footer; ?>

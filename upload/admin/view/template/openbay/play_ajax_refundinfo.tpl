@@ -24,7 +24,6 @@
 </div>
 
 <script type="text/javascript"><!--
-
     function verifyStatusChange(){
         var message = '';
 
@@ -45,5 +44,4 @@
             }
         }
     }
-	
 //--></script>

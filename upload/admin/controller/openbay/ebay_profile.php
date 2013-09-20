@@ -128,15 +128,21 @@ class ControllerOpenbayEbayProfile extends Controller {
         $this->data['shipping_international_zones']     = $this->model_openbay_ebay->getShippingLocations();
         $this->data['templates']                        = $this->model_openbay_ebay_template->getAll();
         $this->data['types']                            = $this->model_openbay_ebay_profile->getTypes();
-        $this->data['dispatchTimes']                    = $this->openbay->ebay->getSetting('dispatch_time_max');
-        $this->data['countries']                        = $this->openbay->ebay->getSetting('countries');
 
-        if(is_array($this->data['dispatchTimes'])){
-            ksort($this->data['dispatchTimes']);
+        $setting                                        = array();
+        $setting['dispatch_times']                      = $this->openbay->ebay->getSetting('dispatch_time_max');
+        $setting['countries']                           = $this->openbay->ebay->getSetting('countries');
+        $setting['returns']                             = $this->openbay->ebay->getSetting('returns');
+
+        if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
+            $this->session->data['warning'] = $this->language->get('lang_error_missing_settings');
+            $this->redirect($this->url->link('openbay/openbay/viewSync&token=' . $this->session->data['token'], 'SSL'));
         }
-        if(is_array($this->data['countries'])){
-            ksort($this->data['countries']);
-        }
+
+        if(is_array($setting['dispatch_times'])){ ksort($setting['dispatch_times']); }
+        if(is_array($setting['countries'])){ ksort($setting['countries']); }
+
+        $this->data['setting']                          = $setting;
 
         if (isset($this->error['warning'])) {
             $this->data['error_warning'] = $this->error['warning'];

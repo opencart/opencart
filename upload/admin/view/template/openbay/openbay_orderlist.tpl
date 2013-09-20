@@ -115,7 +115,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function filter() {
+    function filter() {
 	url = 'index.php?route=extension/openbay/orderList&token=<?php echo $token; ?>';
 	
 	var filter_order_id = $('input[name=\'filter_order_id\']').attr('value');
@@ -144,58 +144,62 @@ function filter() {
 				
 	location = url;
 }
-//--></script>  
+//--></script>
+
 <script type="text/javascript"><!--
-$(document).ready(function() {
+    $(document).ready(function() {
 	$('.date').datepicker({dateFormat: 'yy-mm-dd'});
 });
-//--></script> 
+//--></script>
+
 <script type="text/javascript"><!--
-$('#form input').keydown(function(e) {
+    $('#form input').keydown(function(e) {
 	if (e.keyCode == 13) {
 		filter();
 	}
 });
-//--></script> 
-<script type="text/javascript"><!--
-$.widget('custom.catcomplete', $.ui.autocomplete, {
-	_renderMenu: function(ul, items) {
-		var self = this, currentCategory = '';
-		
-		$.each(items, function(index, item) {
-			if (item.category != currentCategory) {
-				ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
-				
-				currentCategory = item.category;
-			}
-			
-			self._renderItem(ul, item);
-		});
-	}
-});
+//--></script>
 
-$('input[name=\'filter_customer\']').catcomplete({
-	delay: 0,
-	source: function(request, response) {
-		$.ajax({
-			url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
-			dataType: 'json',
-			success: function(json) {		
-				response($.map(json, function(item) {
-					return {
-						category: item.customer_group,
-						label: item.name,
-						value: item.customer_id
-					}
-				}));
-			}
-		});
-	}, 
-	select: function(event, ui) {
-		$('input[name=\'filter_customer\']').val(ui.item.label);
-						
-		return false;
-	}
-});
-//--></script> 
+<script type="text/javascript"><!--
+    $.widget('custom.catcomplete', $.ui.autocomplete, {
+        _renderMenu: function(ul, items) {
+            var self = this, currentCategory = '';
+
+            $.each(items, function(index, item) {
+                if (item.category != currentCategory) {
+                    ul.append('<li class="ui-autocomplete-category">' + item.category + '</li>');
+
+                    currentCategory = item.category;
+                }
+
+                self._renderItem(ul, item);
+            });
+        }
+    });
+
+    $('input[name=\'filter_customer\']').catcomplete({
+        delay: 0,
+        source: function(request, response) {
+            $.ajax({
+                url: 'index.php?route=sale/customer/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request.term),
+                dataType: 'json',
+                success: function(json) {
+                    response($.map(json, function(item) {
+                        return {
+                            category: item.customer_group,
+                            label: item.name,
+                            value: item.customer_id
+                        }
+                    }));
+                }
+            });
+        },
+        select: function(event, ui) {
+            $('input[name=\'filter_customer\']').val(ui.item.label);
+
+            return false;
+        }
+    });
+//--></script>
+
 <?php echo $footer; ?>

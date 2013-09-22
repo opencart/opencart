@@ -36,7 +36,7 @@ class ControllerCommonFileManager extends Controller {
 				
 		$this->load->model('tool/image');
 
-		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 50, 50);
 		
 		if (isset($this->request->get['field'])) {
 			$this->data['field'] = $this->request->get['field'];
@@ -57,46 +57,26 @@ class ControllerCommonFileManager extends Controller {
 	
 	public function directory() {	
 		$json = array();
-		
-		if (isset($this->request->post['directory'])) {
-			$directories = glob(DIR_IMAGE . rtrim('catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
-			
-			if ($directories) {
-				$i = 0;
-			
-				foreach ($directories as $directory) {
-					$json[$i]['name'] = basename($directory);
-					$json[$i]['directory'] = utf8_substr($directory, strlen(DIR_IMAGE . 'catalog/'));
-					
-					$children = glob(rtrim($directory, '/') . '/*', GLOB_ONLYDIR);
-					
-					if ($children)  {
-						$json[$i]['children'] = ' ';
-					}
-					
-					$i++;
-				}
-			}		
-		}
-		
-		$this->response->setOutput(json_encode($json));		
-	}
-	
-	public function files() {
-		$json = array();
-		
+
 		if (!empty($this->request->post['directory'])) {
-			$directory = DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']);
+			$directory = DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']);
 		} else {
-			$directory = DIR_IMAGE . 'data/';
+			$directory = DIR_IMAGE . 'catalog/';
 		}
+
+		$json['directory'] = array();
 		
-		if (isset($this->request->get['page'])) {
-			$page = $this->request->get['page'];
-		} else {
-			$page = 1;
+		$directories = glob(DIR_IMAGE . rtrim('catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
+				
+		if ($directories) {
+			foreach ($directories as $directory) {
+				$json['directory'][] = array(
+					'name' => basename($directory),
+					'path' => utf8_substr($directory, strlen(DIR_IMAGE . 'catalog/'))
+				);
+			}
 		}
-		
+	
 		$allowed = array(
 			'.jpg',
 			'.jpeg',
@@ -104,13 +84,11 @@ class ControllerCommonFileManager extends Controller {
 			'.gif'
 		);
 		
-		$files = glob(rtrim($directory, '/') . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+		$json['file'] = array();
+		
+		$files = glob(DIR_IMAGE . rtrim('catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
 		
 		if ($files) {
-			$total = count($files);
-			
-
-			
 			foreach ($files as $file) {
 				if (is_file($file)) {
 					$ext = strrchr($file, '.');
@@ -140,25 +118,17 @@ class ControllerCommonFileManager extends Controller {
 						$i++;
 					}
 						
-					$json[] = array(
-						'filename' => basename($file),
-						'file'     => utf8_substr($file, utf8_strlen(DIR_IMAGE . 'data/')),
-						'size'     => round(utf8_substr($size, 0, utf8_strpos($size, '.') + 4), 2) . $suffix[$i]
+					$json['file'][] = array(
+						'name' => basename($file),
+						'path' => utf8_substr($file, utf8_strlen(DIR_IMAGE . 'catalog/')),
+						'size' => round(utf8_substr($size, 0, utf8_strpos($size, '.') + 4), 2) . $suffix[$i]
 					);
 				}
 			}
 		}
 		
-		$pagination = new Pagination();
-		$pagination->total = $attribute_total;
-		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_admin_limit');
-		$pagination->url = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
-			
-		$json['pagination'] = $pagination->render();
-		
-		$this->response->setOutput(json_encode($json));	
-	}	
+		$this->response->setOutput(json_encode($json));		
+	}
 
 	public function image() {
 		$this->load->model('tool/image');
@@ -168,7 +138,7 @@ class ControllerCommonFileManager extends Controller {
 		}
 	}
 		
-	public function create() {
+	public function folder() {
 		$this->language->load('common/filemanager');
 				
 		$json = array();
@@ -345,6 +315,31 @@ class ControllerCommonFileManager extends Controller {
 			if (is_file($old_name)) {
 				copy($old_name, $new_name);
 			} else {
+				// Get a list of files ready to upload
+				$files = array();
+				
+				$path = array($directory . '*');
+				
+				while(count($path) != 0) {
+					$next = array_shift($path);
+			
+					foreach(glob($next) as $file) {
+						if (is_dir($file)) {
+							$path[] = $file . '/*';
+						}
+							
+						$files[] = $file;
+					}
+				}				
+				
+				
+				foreach ($files as $file) {
+				
+				}
+				
+				
+				
+				
 				$this->recursiveCopy($old_name, $new_name);
 			}
 			
@@ -371,25 +366,7 @@ class ControllerCommonFileManager extends Controller {
 		
 		closedir($directory); 
 	} 
-
-	public function folders() {
-		$this->response->setOutput($this->recursiveFolders(DIR_IMAGE . 'data/'));	
-	}
-	
-	protected function recursiveFolders($directory) {
-		$output = '';
 		
-		$output .= '<option value="' . utf8_substr($directory, strlen(DIR_IMAGE . 'data/')) . '">' . utf8_substr($directory, strlen(DIR_IMAGE . 'data/')) . '</option>';
-		
-		$directories = glob(rtrim(str_replace('../', '', $directory), '/') . '/*', GLOB_ONLYDIR);
-		
-		foreach ($directories  as $directory) {
-			$output .= $this->recursiveFolders($directory);
-		}
-		
-		return $output;
-	}
-	
 	public function rename() {
 		$this->language->load('common/filemanager');
 		

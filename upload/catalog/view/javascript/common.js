@@ -182,7 +182,7 @@ $(document).delegate('.agree', 'click', function(event) {
 			
 			$('body').append(html);
 			
-			$('#modal-agree').modal('show')
+			$('#modal-agree').modal('show');
         }
     });
 });

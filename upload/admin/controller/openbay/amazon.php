@@ -1040,7 +1040,7 @@ class ControllerOpenbayAmazon extends Controller {
         
         $request_data = array(
             'marketplace' => $marketplace,
-            'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/listingReport',
+            'response_url' => HTTPS_CATALOG . 'index.php?route=amazon/listing_report',
         );
         
         $response = $this->openbay->amazon->callWithResponse('report/listing', $request_data);

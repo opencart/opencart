@@ -508,13 +508,22 @@ class ModelOpenbayAmazon extends Model {
             $skuArray[] = "'" . $this->db->escape($sku) . "'";
         }
         
-        $rows = $this->db->query("
-            SELECT apl.amazon_sku, IF(por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
-            FROM oc_amazon_product_link apl
-            JOIN oc_product p ON apl.product_id = p.product_id
-            LEFT JOIN oc_product_option_relation por ON apl.product_id = por.product_id AND apl.var = por.var
-            WHERE apl.amazon_sku IN (" . implode(',', $skuArray) . ")
-        ")->rows;
+        if ($this->openbay->addonLoad('openstock')) {
+            $rows = $this->db->query("
+                SELECT apl.amazon_sku, IF(por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
+                FROM " . DB_PREFIX . "amazon_product_link apl
+                JOIN " . DB_PREFIX . "product p ON apl.product_id = p.product_id
+                LEFT JOIN " . DB_PREFIX . "product_option_relation por ON apl.product_id = por.product_id AND apl.var = por.var
+                WHERE apl.amazon_sku IN (" . implode(',', $skuArray) . ")
+            ")->rows;
+        } else {
+            $rows = $this->db->query("
+                SELECT apl.amazon_sku, p.quantity
+                FROM " . DB_PREFIX . "amazon_product_link apl
+                JOIN " . DB_PREFIX . "product p ON apl.product_id = p.product_id
+                WHERE apl.amazon_sku IN (" . implode(',', $skuArray) . ")
+            ")->rows;
+        }
         
         $return = array();
         

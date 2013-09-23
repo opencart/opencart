@@ -126,5 +126,26 @@ class ModelAmazonusProduct extends Model {
             ");
         }
     }
+    
+    
+    public function addListingReport($data) {
+        $sql = "INSERT INTO " . DB_PREFIX . "amazonus_listing_report (sku, quantity, asin, price) VALUES ";
+        
+        $sqlValues = array();
+        
+        foreach ($data as $product) {
+            $sqlValues[] = " ('" . $this->db->escape($product['sku']) . "', " . (int) $product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double) $product['price'] . ") ";
+        }
+        
+        $sql .= implode(',', $sqlValues);
+        
+        $this->db->query($sql);
+    }
+    
+    public function removeListingReportLock($marketplace) {
+        $this->config->set('openbay_amazonus_processing_listing_reports', false);
+
+        $this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '0', serialized = 0 WHERE `key` = 'openbay_amazonus_processing_listing_reports'");
+    }
 }
 ?>

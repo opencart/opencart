@@ -150,7 +150,7 @@ class ModelAmazonProduct extends Model {
             
             $this->config->set('openbay_amazon_processing_listing_reports', $marketplaces);
             
-            $this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape(serialize($marketplaces)) . "' WHERE `key` = 'openbay_amazon_processing_listing_reports'");
+            $this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '" . $this->db->escape(serialize($marketplaces)) . "', serialized = 1 WHERE `key` = 'openbay_amazon_processing_listing_reports'");
         }
     }
 }

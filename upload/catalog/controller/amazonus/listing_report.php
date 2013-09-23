@@ -1,30 +1,30 @@
 <?php
 
-class ControllerAmazonListingReport extends Controller {
+class ControllerAmazonusListingReport extends Controller {
 
     public function index() {
-        if ($this->config->get('amazon_status') != '1') {
+        if ($this->config->get('amazonus_status') != '1') {
             return;
         }
         
-        $this->load->model('amazon/product');
+        $this->load->model('amazonus/product');
         
-        $logger = new Log('amazon.log');
-        $logger->write('amazon/listing_reports - started');
+        $logger = new Log('amazonus.log');
+        $logger->write('amazonus/listing_reports - started');
         
-        $token = $this->config->get('openbay_amazon_token');
+        $token = $this->config->get('openbay_amazonus_token');
         
         $incomingToken = isset($this->request->post['token']) ? $this->request->post['token'] : '';
         
         if ($incomingToken !== $token) {
-            $logger->write('amazon/listing_reports - Incorrect token: ' . $incomingToken);
+            $logger->write('amazonus/listing_reports - Incorrect token: ' . $incomingToken);
             return;
         }
         
-        $decrypted = $this->openbay->amazon->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
         
         if (!$decrypted) {
-            $logger->write('amazon/listing_reports - Failed to decrypt data');
+            $logger->write('amazonus/listing_reports - Failed to decrypt data');
             return;
         }
         
@@ -36,7 +36,6 @@ class ControllerAmazonListingReport extends Controller {
         
         foreach ($request['products'] as $product) {
             $data[] = array(
-                'marketplace' => $request['marketplace'],
                 'sku' => $product['sku'],
                 'quantity' => $product['quantity'],
                 'asin' => $product['asin'],
@@ -45,12 +44,12 @@ class ControllerAmazonListingReport extends Controller {
         }
         
         if ($data) {
-            $this->model_amazon_product->addListingReport($data);
+            $this->model_amazonus_product->addListingReport($data);
         }
         
-        $this->model_amazon_product->removeListingReportLock($request['marketplace']);
-
-        $logger->write('amazon/listing_reports - Finished');
+        $this->model_amazonus_product->removeListingReportLock($request['marketplace']);
+        
+        $logger->write('amazonus/listing_reports - Finished');
     }
 
 }

@@ -500,6 +500,97 @@ class ModelOpenbayAmazonus extends Model {
         return $results;
     }
     
+    public function updateAmazonSkusQuantities($skus) {
+        $skuArray = array();
+        
+        foreach ($skus as $sku) {
+            $skuArray[] = "'" . $this->db->escape($sku) . "'";
+        }
+        
+        if ($this->openbay->addonLoad('openstock')) {
+            $rows = $this->db->query("
+                SELECT apl.amazon_sku, IF(por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
+                FROM " . DB_PREFIX . "amazonus_product_link apl
+                JOIN " . DB_PREFIX . "product p ON apl.product_id = p.product_id
+                LEFT JOIN " . DB_PREFIX . "product_option_relation por ON apl.product_id = por.product_id AND apl.var = por.var
+                WHERE apl.amazon_sku IN (" . implode(',', $skuArray) . ")
+            ")->rows;
+        } else {
+            $rows = $this->db->query("
+                SELECT apl.amazon_sku, p.quantity
+                FROM " . DB_PREFIX . "amazonus_product_link apl
+                JOIN " . DB_PREFIX . "product p ON apl.product_id = p.product_id
+                WHERE apl.amazon_sku IN (" . implode(',', $skuArray) . ")
+            ")->rows;
+        }
+        
+        $return = array();
+        
+        foreach ($rows as $row) {
+            $return[$row['amazon_sku']] = $row['quantity'];
+        }
+        
+        $this->amazonus->updateQuantities($return);
+    }
+    
+    public function getUnlinkedItemsFromReport() {
+        $products = array();
+        
+        if ($this->openbay->addonLoad('openstock')) {
+            $rows = $this->db->query("
+                SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity,
+                  (
+                    SELECT GROUP_CONCAT(ovd.name ORDER BY o.sort_order SEPARATOR ' > ')
+                    FROM " . DB_PREFIX . "product_option_value pov
+                    JOIN " . DB_PREFIX . "option_value_description ovd ON ovd.option_value_id = pov.option_value_id AND ovd.language_id = " . (int)$this->config->get('config_language_id') . "
+                    JOIN `" . DB_PREFIX . "option` o ON o.option_id = pov.option_id
+                    WHERE oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id ,':%') OR oc_sku.var LIKE CONCAT(pov.product_option_value_id ,':%') 
+                      OR oc_sku.var LIKE CONCAT('%:', pov.product_option_value_id) OR oc_sku.var LIKE pov.product_option_value_id
+                  ) AS 'combination'
+                FROM " . DB_PREFIX . "amazonus_listing_report alr
+                LEFT JOIN (
+                  SELECT p.product_id, IF(por.product_id IS NULL, p.sku, por.sku) AS 'sku', IF(por.product_id IS NULL, NULL, por.var) AS 'var', IF(por.product_id IS NULL, p.quantity, por.stock) AS 'quantity'
+                  FROM " . DB_PREFIX . "product p
+                  LEFT JOIN " . DB_PREFIX . "product_option_relation por USING(product_id)
+                ) AS oc_sku ON alr.sku = oc_sku.sku
+                LEFT JOIN " . DB_PREFIX . "amazonus_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
+                LEFT JOIN " . DB_PREFIX . "product_description pd ON oc_sku.product_id = pd.product_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
+                WHERE apl.product_id IS NULL
+                ORDER BY alr.sku
+            ")->rows;
+        } else {
+            $rows = $this->db->query("
+                SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
+                FROM " . DB_PREFIX . "amazonus_listing_report alr
+                LEFT JOIN (
+                    SELECT p.product_id, p.sku, NULL AS 'var', p.quantity
+                    FROM " . DB_PREFIX . "product p
+                ) AS oc_sku ON alr.sku = oc_sku.sku
+                LEFT JOIN " . DB_PREFIX . "amazonus_product_link apl ON (oc_sku.var IS NULL AND oc_sku.product_id = apl.product_id) OR (oc_sku.var IS NOT NULL AND oc_sku.product_id = apl.product_id AND oc_sku.var = apl.var)
+                LEFT JOIN " . DB_PREFIX . "product_description pd ON oc_sku.product_id = pd.product_id AND pd.language_id = " . (int)$this->config->get('config_language_id') . "
+                WHERE apl.product_id IS NULL
+                ORDER BY alr.sku
+            ")->rows;
+        }
+        
+        foreach ($rows as $row) {
+            $products[] = array(
+                'product_id' => $row['product_id'],
+                'name' => $row['name'],
+                'sku' => $row['sku'],
+                'var' => $row['var'],
+                'quantity' => $row['quantity'],
+                'amazon_sku' => $row['amazon_sku'],
+                'amazon_quantity' => $row['amazon_quantity'],
+                'amazon_price' => number_format($row['amazon_price'], 2, '.', ''),
+                'asin' => $row['asin'],
+                'combination' => $row['combination'],
+            );
+        }
+        
+        return $products;
+    }
+    
     public function install(){
         $this->db->query("
             CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazonus_order` (
@@ -569,6 +660,22 @@ class ModelOpenbayAmazonus extends Model {
             `data` text,
             PRIMARY KEY (`product_id`)
         ) DEFAULT COLLATE=utf8_general_ci;");
+        
+        $this->db->query("
+            CREATE TABLE IF NOT EXISTS`" . DB_PREFIX . "amazonus_listing_report` (
+                `sku` varchar(255) NOT NULL,
+                `quantity` int(10) unsigned NOT NULL,
+                `asin` varchar(255) NOT NULL,
+                `price` decimal(10,4) NOT NULL,
+                PRIMARY KEY (`sku`)
+            ) DEFAULT COLLATE=utf8_general_ci;
+        ");
+    }
+    
+    public function deleteListingReports() {
+        $this->db->query("
+            DELETE FROM " . DB_PREFIX . "amazon_listing_report
+        ");
     }
     
     public function uninstall(){
@@ -581,6 +688,7 @@ class ModelOpenbayAmazonus extends Model {
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_error`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_process`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_product_search`");
+        $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazonus_listing_report`");
         
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazonus'");
     }

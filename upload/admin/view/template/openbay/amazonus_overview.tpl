@@ -32,6 +32,10 @@
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon3.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_links; ?></h3>
                     </div>
+                    <div class="openbayPod" onclick="location='<?php echo $link_bulk_linking; ?>'">
+                        <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon3.png" title="" alt="" border="0" />
+                        <h3><?php echo $lang_heading_bulk_linking; ?></h3>
+                    </div>
                     <div class="openbayPod" onclick="location='<?php echo $link_bulk_listing; ?>'">
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon5.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_bulk_listing; ?></h3>

@@ -12,15 +12,8 @@ class ControllerModuleLatest extends Controller {
 		$this->load->model('tool/image');
 		
 		$this->data['products'] = array();
-		
-		$data = array(
-			'sort'  => 'p.date_added',
-			'order' => 'DESC',
-			'start' => 0,
-			'limit' => $setting['limit']
-		);
 
-		$results = $this->model_catalog_product->getProducts($data);
+		$results = $this->model_catalog_product->getLatestProducts($data);
 
 		foreach ($results as $result) {
 			if ($result['image']) {

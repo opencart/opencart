@@ -85,6 +85,14 @@ require_once(DIR_SYSTEM . 'engine/registry.php');
 
 // Library
 function __autoload($class) {
+	//foreach () {
+		
+	//}
+	
+	if (substr(0, 5, $class) == 'Controller') {
+		
+	}
+	
 	$file = DIR_SYSTEM . 'library/' . strtolower($class) . '.php';
 	
 	if (file_exists($file)) {

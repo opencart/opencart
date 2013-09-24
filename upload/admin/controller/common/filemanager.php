@@ -13,22 +13,16 @@ class ControllerCommonFileManager extends Controller {
 			$this->data['base'] = HTTP_SERVER;
 		}
 		
-		$this->data['entry_folder'] = $this->language->get('entry_folder');
-		$this->data['entry_move'] = $this->language->get('entry_move');
-		$this->data['entry_copy'] = $this->language->get('entry_copy');
 		$this->data['entry_rename'] = $this->language->get('entry_rename');
 		
 		$this->data['button_folder'] = $this->language->get('button_folder');
 		$this->data['button_delete'] = $this->language->get('button_delete');
-		$this->data['button_move'] = $this->language->get('button_move');
+		$this->data['button_cut'] = $this->language->get('button_cut');
 		$this->data['button_copy'] = $this->language->get('button_copy');
-		$this->data['button_rename'] = $this->language->get('button_rename');
+		$this->data['button_paste'] = $this->language->get('button_paste');
+		
 		$this->data['button_upload'] = $this->language->get('button_upload');
 		$this->data['button_refresh'] = $this->language->get('button_refresh');
-		$this->data['button_submit'] = $this->language->get('button_submit'); 
-		
-		$this->data['error_select'] = $this->language->get('error_select');
-		$this->data['error_directory'] = $this->language->get('error_directory');
 		
 		$this->data['token'] = $this->session->data['token'];
 		
@@ -58,44 +52,42 @@ class ControllerCommonFileManager extends Controller {
 	public function directory() {	
 		$json = array();
 
-		if (!empty($this->request->post['directory'])) {
-			$directory = DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']);
-		} else {
-			$directory = DIR_IMAGE . 'catalog/';
-		}
-
 		$json['directory'] = array();
 		
 		$directories = glob(DIR_IMAGE . rtrim('catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
 				
 		if ($directories) {
 			foreach ($directories as $directory) {
+				
+				
+				
 				$json['directory'][] = array(
 					'name' => basename($directory),
-					'path' => utf8_substr($directory, strlen(DIR_IMAGE . 'catalog/'))
+					'path' => utf8_substr($directory, strlen(DIR_IMAGE . 'catalog/')),
+					'date' => date('Y-m-d G:i:s', filemtime($directory))
 				);
 			}
 		}
 	
-		$allowed = array(
-			'.jpg',
-			'.jpeg',
-			'.png',
-			'.gif'
-		);
-		
 		$json['file'] = array();
 		
 		$files = glob(DIR_IMAGE . rtrim('catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
 		
 		if ($files) {
 			foreach ($files as $file) {
+				$allowed = array(
+					'.jpg',
+					'.jpeg',
+					'.png',
+					'.gif'
+				);				
+			
 				if (is_file($file)) {
 					$ext = strrchr($file, '.');
 				} else {
 					$ext = '';
 				}	
-				
+			
 				if (in_array(strtolower($ext), $allowed)) {
 					$size = filesize($file);
 		
@@ -117,11 +109,24 @@ class ControllerCommonFileManager extends Controller {
 						$size = $size / 1024;
 						$i++;
 					}
+					
+					$time = filemtime($file);
+					
+					if ($time > (time() - $time)) {
+						
+						
+						$date = date('Y-m-d G:i:s', $time);
+					} elseif ($time > (time() - $time)) {
+						$date = date($this->language->get('time_format'), $time);
+					} else {
+						$date = date('d m Y', $time);
+					}
 						
 					$json['file'][] = array(
 						'name' => basename($file),
 						'path' => utf8_substr($file, utf8_strlen(DIR_IMAGE . 'catalog/')),
-						'size' => round(utf8_substr($size, 0, utf8_strpos($size, '.') + 4), 2) . $suffix[$i]
+						'size' => round(utf8_substr($size, 0, utf8_strpos($size, '.') + 4), 2) . $suffix[$i],
+						'date' => $date
 					);
 				}
 			}
@@ -130,7 +135,7 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput(json_encode($json));		
 	}
 
-	public function image() {
+	public function thumbnail() {
 		$this->load->model('tool/image');
 		
 		if (isset($this->request->get['image'])) {
@@ -334,7 +339,7 @@ class ControllerCommonFileManager extends Controller {
 				
 				
 				foreach ($files as $file) {
-				
+					//copy($old_name, $new_name);
 				}
 				
 				

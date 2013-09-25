@@ -185,15 +185,18 @@
           <?php if ($options) { ?>
           <hr>
           <h3><?php echo $text_option; ?></h3>
+          
+          
           <?php foreach ($options as $option) { ?>
           <?php if ($option['type'] == 'select') { ?>
+          
           <div class="form-group">
             <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
               <li>
                 <?php if ($option['required']) { ?>
                 <div class="text-danger">*</div>
                 <?php } ?>
-                <?php echo $option['name']; ?> </li>
+                <?php echo $option['name']; ?></li>
               <li>
                 <select class="input-block-level" name="option[<?php echo $option['product_option_id']; ?>]">
                   <option value=""><?php echo $text_select; ?></option>
@@ -208,15 +211,20 @@
               </li>
             </ul>
           </div>
+          
+          
           <?php } ?>
+          
+          
           <?php if ($option['type'] == 'radio') { ?>
+          
           <div class="form-group">
             <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">
               <li>
                 <?php if ($option['required']) { ?>
                 <div class="text-danger">*</div>
                 <?php } ?>
-                <?php echo $option['name']; ?> </li>
+                <?php echo $option['name']; ?></li>
               <?php foreach ($option['option_value'] as $option_value) { ?>
               <li>
                 <label class="radio" for="option-value-<?php echo $option_value['product_option_value_id']; ?>"><?php echo $option_value['name']; ?>
@@ -229,7 +237,13 @@
               <?php } ?>
             </ul>
           </div>
+          
+          
           <?php } ?>
+          
+          
+          
+          
           <?php if ($option['type'] == 'checkbox') { ?>
           <div class="form-group">
             <ul class="unstyled option" id="option-<?php echo $option['product_option_id']; ?>">

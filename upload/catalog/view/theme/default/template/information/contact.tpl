@@ -15,34 +15,57 @@
     <?php } ?>
     <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
+      <?php if ($locations) { ?>
       <h3><?php echo $text_location; ?></h3>
-      
-      <?php foreach ($locations as $location) { ?>
       <div class="panel-group" id="accordion">
+        <?php foreach ($locations as $location) { ?>
         <div class="panel panel-default">
           <div class="panel-heading">
-            <h4 class="panel-title"></h4>
+            <h4 class="panel-title"><a href="#collapse-location<?php echo $location['location_id']; ?>" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $location['name']; ?> <i class="icon-caret-down"></i></a></h4>
           </div>
-          <div class="panel-collapse collapse" id="">
-            <div class="panel-body"></div>
+          <div class="panel-collapse collapse<?php echo ($location['location_id'] == $location_id ? ' in' : ''); ?>" id="collapse-location<?php echo $location['location_id']; ?>">
+            <div class="panel-body">
+              <div class="row">
+                <?php if ($location['image']) { ?>
+                <div class="col-sm-3"><img src="<?php echo $location['image']; ?>" alt="<?php echo $location['name']; ?>" title="<?php echo $location['name']; ?>" class="img-thumbnail" /></div>
+                <?php } ?>
+                <div class="col-sm-3"><strong><?php echo $location['name']; ?></strong><br />
+                  <address>
+                  <?php echo $location['address']; ?>
+                  </address>
+                  <?php if ($location['geocode']) { ?>
+                  <a href="https://maps.google.com.hk/maps?q=<?php echo urlencode($location['geocode']); ?>&hl=en&sll=22.352734,114.1277&sspn=1.022417,1.108246&t=h&brcurrent=3,0x0:0x0,0&z=15" target="_blank" class="btn btn-info"><i class="icon-map-marker"></i> <?php echo $button_map; ?></a>
+                  <?php } ?>
+                </div>
+                <div class="col-sm-3">
+                  <?php if ($location['telephone']) { ?>
+                  <strong><?php echo $text_telephone; ?></strong><br>
+                  <?php echo $location['telephone']; ?><br />
+                  <br />
+                  <?php } ?>
+                  <?php if ($location['fax']) { ?>
+                  <strong><?php echo $text_fax; ?></strong><br>
+                  <?php echo $location['fax']; ?>
+                  <?php } ?>
+                </div>
+                <div class="col-sm-3">
+                  <?php if ($location['open']) { ?>
+                  <strong><?php echo $text_open; ?></strong><br />
+                  <?php echo $location['open']; ?><br />
+                  <br />
+                  <?php } ?>
+                  <?php if ($location['comment']) { ?>
+                  <strong><?php echo $text_comment; ?></strong><br />
+                  <?php echo $location['comment']; ?>
+                  <?php } ?>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-      </div>      
+        <?php } ?>
+      </div>
       <?php } ?>
-      
-      <address>
-      <strong></strong><br>
-      <?php echo $store; ?><br>
-      <?php echo $address; ?><br>
-      <?php if ($telephone) { ?>
-      <abbr title="<?php echo $text_telephone; ?>"><?php echo $text_telephone; ?></abbr><br>
-      <?php echo $telephone; ?><br>
-      <?php } ?>
-      <?php if ($fax) { ?>
-      <?php echo $text_fax; ?><br>
-      <?php echo $fax; ?><br>
-      <?php } ?>
-      </address>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <h3><?php echo $text_contact; ?></h3>

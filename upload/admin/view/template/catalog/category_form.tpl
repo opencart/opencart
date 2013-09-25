@@ -44,6 +44,21 @@
                   </div>
                 </div>
                 <div class="form-group">
+                  <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
+                  <div class="col-sm-10">
+                    <textarea name="category_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description'] : ''; ?></textarea>
+                  </div>
+                </div>
+                <div class="form-group required">
+                  <label class="col-sm-2 control-label" for="input-meta-title<?php echo $language['language_id']; ?>"><?php echo $entry_meta_title; ?></label>
+                  <div class="col-sm-10">
+                    <input type="text" name="category_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control" />
+                    <?php if (isset($error_meta_title[$language['language_id']])) { ?>
+                    <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
+                    <?php } ?>
+                  </div>
+                </div>
+                <div class="form-group">
                   <label class="col-sm-2 control-label" for="input-meta-description<?php echo $language['language_id']; ?>"><?php echo $entry_meta_description; ?></label>
                   <div class="col-sm-10">
                     <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_description]" rows="5" placeholder="<?php echo $entry_meta_description; ?>" id="input-meta-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_description'] : ''; ?></textarea>
@@ -53,12 +68,6 @@
                   <label class="col-sm-2 control-label" for="input-meta-keyword<?php echo $language['language_id']; ?>"><?php echo $entry_meta_keyword; ?></label>
                   <div class="col-sm-10">
                     <textarea name="category_description[<?php echo $language['language_id']; ?>][meta_keyword]" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_keyword'] : ''; ?></textarea>
-                  </div>
-                </div>
-                <div class="form-group">
-                  <label class="col-sm-2 control-label" for="input-description<?php echo $language['language_id']; ?>"><?php echo $entry_description; ?></label>
-                  <div class="col-sm-10">
-                    <textarea name="category_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['description'] : ''; ?></textarea>
                   </div>
                 </div>
               </div>
@@ -132,12 +141,21 @@
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
-              <div class="col-sm-10"><img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
+              <div class="col-sm-10">
+				<div class="img-thumbnail" style="width: 100px; line-height: 100px; background: #EEEEEE; border: 1px solid #CCC; text-align: center;">
+                  <i class="icon-camera" style="font-size: 40px; color: #FFF; vertical-align: middle;"></i>
+                </div>
+              
+                <img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
                 <input type="hidden" name="image" value="<?php echo $image; ?>" />
+                
+                
+                
+                
                 <br />
                 <br />
                 <div class="btn-group">
-                  <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
+                  <button type="button" onclick="filemanager()"  class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
                   <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
                 </div>
               </div>
@@ -298,13 +316,12 @@ $('#category-filter').delegate('.icon-minus-sign', 'click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-function image_upload(field, thumb) {
-	$('#dialog').remove();
+function filemanager() {
+	window.open('index.php?route=common/filemanager&token=<?php echo $token; ?>', '<?php echo $text_image_manager; ?>', 'width=700,height=500,menubar=no,resizable=no,scrollbars=no,titlebar=yes,toolbar=no', true);
 	
-	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
-	
+	/*
 	$('#dialog').dialog({
-		title: '<?php echo $text_image_manager; ?>',
+		title: '',
 		close: function (event, ui) {
 			if ($('#' + field).attr('value')) {
 				$.ajax({
@@ -322,6 +339,7 @@ function image_upload(field, thumb) {
 		resizable: false,
 		modal: false
 	});
+	*/
 };
 //--></script> 
 <script type="text/javascript"><!--

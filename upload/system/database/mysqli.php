@@ -1,12 +1,12 @@
 <?php
 final class DBMySQLi {
-	private $mysqli;
+	private $link;
 
 	public function __construct($hostname, $username, $password, $database) {
 		$this->link = new mysqli($hostname, $username, $password, $database);
 
 		if ($this->link->connect_error) {
-			trigger_error('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
+			throw new ErrorException('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
 		}
 
 		$this->link->set_charset("utf-8");
@@ -15,41 +15,29 @@ final class DBMySQLi {
 	public function query($sql) {
 		$query = $this->link->query($sql);
 
-		if ($this->link->errno) {
-			trigger_error('Error: ' . $this->link->error . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
-			exit();
-		}
-
-		if ($query){
-
-			if (isset($query->num_rows)){
-				$result = new stdClass();
+		if (!$this->link->errno){
+			if (isset($query->num_rows)) {
 				$data = array();
 
 				while ($row = $query->fetch_array()) {
 					$data[] = $row;
 				}
-
+				
+				$result = new stdClass();
 				$result->num_rows = $query->num_rows;
-				$query->close();
 				$result->row = isset($data[0]) ? $data[0] : array();
 				$result->rows = $data;
+				
 				unset($data);
-
+				
+				$query->close();
+				
 				return $result;
-
-			}else{
-
-				$result = new stdClass(); // to handle older opencart actions
-				$result->row = array(); // to handle older opencart actions
-				$result->rows = array(); // to handle older opencart actions
-				$result->num_rows = 0; // to handle older opencart actions
-				return $result; // should be false
-
+			} else{
+				return true;
 			}
-
-		}else {
-			trigger_error('Error: ' . $this->link->error . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
+		} else {
+			throw new ErrorException('Error: ' . $this->link->error . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
 			exit();
 		}
 	}

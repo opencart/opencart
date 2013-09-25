@@ -271,8 +271,11 @@ class ControllerCatalogInformation extends Controller {
 		
 		$this->data['entry_title'] = $this->language->get('entry_title');
 		$this->data['entry_description'] = $this->language->get('entry_description');
-		$this->data['entry_store'] = $this->language->get('entry_store');
+		$this->data['entry_meta_title'] = $this->language->get('entry_meta_title');
+		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
+		$this->data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
+		$this->data['entry_store'] = $this->language->get('entry_store');
 		$this->data['entry_bottom'] = $this->language->get('entry_bottom');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_status'] = $this->language->get('entry_status');
@@ -305,7 +308,13 @@ class ControllerCatalogInformation extends Controller {
 		} else {
 			$this->data['error_description'] = array();
 		}
-		
+
+ 		if (isset($this->error['meta_title'])) {
+			$this->data['error_meta_title'] = $this->error['meta_title'];
+		} else {
+			$this->data['error_meta_title'] = array();
+		}	
+				
 		$url = '';
 			
 		if (isset($this->request->get['sort'])) {
@@ -436,6 +445,10 @@ class ControllerCatalogInformation extends Controller {
 			if (utf8_strlen($value['description']) < 3) {
 				$this->error['description'][$language_id] = $this->language->get('error_description');
 			}
+			
+      		if ((utf8_strlen($value['meta_title']) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
+        		$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+      		}			
 		}
 		
 		if ($this->error && !isset($this->error['warning'])) {

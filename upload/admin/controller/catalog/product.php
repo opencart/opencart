@@ -536,10 +536,10 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_amount'] = $this->language->get('text_amount');
 
 		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
-		$this->data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
 		$this->data['entry_description'] = $this->language->get('entry_description');
-		$this->data['entry_store'] = $this->language->get('entry_store');
+		$this->data['entry_meta_title'] = $this->language->get('entry_meta_title');
+		$this->data['entry_meta_description'] = $this->language->get('entry_meta_description');
+		$this->data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');		
 		$this->data['entry_keyword'] = $this->language->get('entry_keyword');
     	$this->data['entry_model'] = $this->language->get('entry_model');
 		$this->data['entry_sku'] = $this->language->get('entry_sku');
@@ -550,7 +550,6 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_mpn'] = $this->language->get('entry_mpn');
 		$this->data['entry_location'] = $this->language->get('entry_location');
 		$this->data['entry_minimum'] = $this->language->get('entry_minimum');
-		$this->data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
     	$this->data['entry_shipping'] = $this->language->get('entry_shipping');
     	$this->data['entry_date_available'] = $this->language->get('entry_date_available');
     	$this->data['entry_quantity'] = $this->language->get('entry_quantity');
@@ -568,7 +567,9 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_width'] = $this->language->get('entry_width');
 		$this->data['entry_height'] = $this->language->get('entry_height');
     	$this->data['entry_image'] = $this->language->get('entry_image');
-    	$this->data['entry_download'] = $this->language->get('entry_download');
+    	$this->data['entry_store'] = $this->language->get('entry_store');
+		$this->data['entry_manufacturer'] = $this->language->get('entry_manufacturer');
+		$this->data['entry_download'] = $this->language->get('entry_download');
     	$this->data['entry_category'] = $this->language->get('entry_category');
 		$this->data['entry_filter'] = $this->language->get('entry_filter');
 		$this->data['entry_related'] = $this->language->get('entry_related');
@@ -639,19 +640,13 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$this->data['error_name'] = array();
 		}
-
- 		if (isset($this->error['meta_description'])) {
-			$this->data['error_meta_description'] = $this->error['meta_description'];
-		} else {
-			$this->data['error_meta_description'] = array();
-		}		
-   
-   		if (isset($this->error['description'])) {
-			$this->data['error_description'] = $this->error['description'];
-		} else {
-			$this->data['error_description'] = array();
-		}	
 		
+ 		if (isset($this->error['meta_title'])) {
+			$this->data['error_meta_title'] = $this->error['meta_title'];
+		} else {
+			$this->data['error_meta_title'] = array();
+		}	
+				
    		if (isset($this->error['model'])) {
 			$this->data['error_model'] = $this->error['model'];
 		} else {
@@ -1095,28 +1090,30 @@ class ControllerCatalogProduct extends Controller {
 		foreach ($product_options as $product_option) {
 			$product_option_value_data = array();
 			
-			foreach ($product_option['product_option_value'] as $product_option_value) {
-				$product_option_value_data[] = array(
-					'product_option_value_id' => $product_option_value['product_option_value_id'],
-					'option_value_id'         => $product_option_value['option_value_id'],
-					'quantity'                => $product_option_value['quantity'],
-					'subtract'                => $product_option_value['subtract'],
-					'price'                   => $product_option_value['price'],
-					'price_prefix'            => $product_option_value['price_prefix'],
-					'points'                  => $product_option_value['points'],
-					'points_prefix'           => $product_option_value['points_prefix'],						
-					'weight'                  => $product_option_value['weight'],
-					'weight_prefix'           => $product_option_value['weight_prefix']	
-				);
+			if (isset($product_option['product_option_value'])) {
+				foreach ($product_option['product_option_value'] as $product_option_value) {
+					$product_option_value_data[] = array(
+						'product_option_value_id' => $product_option_value['product_option_value_id'],
+						'option_value_id'         => $product_option_value['option_value_id'],
+						'quantity'                => $product_option_value['quantity'],
+						'subtract'                => $product_option_value['subtract'],
+						'price'                   => $product_option_value['price'],
+						'price_prefix'            => $product_option_value['price_prefix'],
+						'points'                  => $product_option_value['points'],
+						'points_prefix'           => $product_option_value['points_prefix'],						
+						'weight'                  => $product_option_value['weight'],
+						'weight_prefix'           => $product_option_value['weight_prefix']	
+					);
+				}
 			}
-					
+			
 			$this->data['product_options'][] = array(
 				'product_option_id'    => $product_option['product_option_id'],
 				'product_option_value' => $product_option_value_data,
 				'option_id'            => $product_option['option_id'],
 				'name'                 => $product_option['name'],
 				'type'                 => $product_option['type'],
-				'value'                => $product_option['value'],
+				'value'                => isset($product_option['value']) ? $product_option['value'] : '',
 				'required'             => $product_option['required']
 			);				
 		}
@@ -1269,6 +1266,10 @@ class ControllerCatalogProduct extends Controller {
       		if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 255)) {
         		$this->error['name'][$language_id] = $this->language->get('error_name');
       		}
+			
+      		if ((utf8_strlen($value['meta_title']) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
+        		$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
+      		}			
     	}
 		
     	if ((utf8_strlen($this->request->post['model']) < 1) || (utf8_strlen($this->request->post['model']) > 64)) {

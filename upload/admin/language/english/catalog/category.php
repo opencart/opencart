@@ -14,13 +14,14 @@ $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_name']             = 'Category Name';
+$_['entry_description']      = 'Description';
+$_['entry_meta_title'] 	     = 'Meta Tag Title';
 $_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
-$_['entry_description']      = 'Description';
+$_['entry_keyword']          = 'SEO Keyword';
 $_['entry_parent']           = 'Parent';
 $_['entry_filter']           = 'Filters';
 $_['entry_store']            = 'Stores';
-$_['entry_keyword']          = 'SEO Keyword';
 $_['entry_image']            = 'Image';
 $_['entry_top']              = 'Top';
 $_['entry_column']           = 'Columns';
@@ -38,4 +39,5 @@ $_['help_column']            = 'Number of columns to use for the bottom 3 catego
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify categories!';
 $_['error_name']             = 'Category Name must be between 2 and 32 characters!';
+$_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 ?>

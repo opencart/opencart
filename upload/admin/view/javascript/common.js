@@ -39,53 +39,9 @@ $(document).ready(function() {
 		$('#menu a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 	
-	$('[data-toggle=\'tooltip\']').tooltip();
+	// tooltips on hover
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 });
-
-/*
-$('[data-target=]').on('submit', function(event) {
-	event.preventDefault();
-	
-	$.ajax({
-		url: $(this).attr('action'),
-		type: $(this).attr('method'),
-		data: $(this).serialize(),
-		dataType: 'json',
-		cache: false,
-		contentType: false,
-		processData: false,		
-		beforeSend: function() {
-			$('#button-option').prop('disabled', true);
-		},	
-		complete: function() {
-			$('#button-option').prop('disabled', false);
-		},		
-		success: function(json) {
-			$('.alert, .error .help-block').remove();
-			$('.error').removeClass('error');
-						
-			if (json['error']) {
-				if (json['error']['warning']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-				
-				for (i in json['error']) {
-					$('#input-' + i).parent().parent().addClass('error');
-				
-					$('#input-' + i).after('<span class="help-block">' + json['error'][i] + '</span>');
-				}				
-			}
-						
-			if (json['success']) {
-				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-	});
-});
-*/
 
 // Autocomplete */	
 (function($) {
@@ -213,3 +169,49 @@ $('[data-target=]').on('submit', function(event) {
 		});	
 	}
 })(window.jQuery);
+
+
+/*
+$('[data-target=]').on('submit', function(event) {
+	event.preventDefault();
+	
+	$.ajax({
+		url: $(this).attr('action'),
+		type: $(this).attr('method'),
+		data: $(this).serialize(),
+		dataType: 'json',
+		cache: false,
+		contentType: false,
+		processData: false,		
+		beforeSend: function() {
+			$('#button-option').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-option').prop('disabled', false);
+		},		
+		success: function(json) {
+			$('.alert, .error .help-block').remove();
+			$('.error').removeClass('error');
+						
+			if (json['error']) {
+				if (json['error']['warning']) {
+					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				
+				for (i in json['error']) {
+					$('#input-' + i).parent().parent().addClass('error');
+				
+					$('#input-' + i).after('<span class="help-block">' + json['error'][i] + '</span>');
+				}				
+			}
+						
+			if (json['success']) {
+				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});
+*/

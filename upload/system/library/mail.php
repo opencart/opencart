@@ -166,8 +166,9 @@ class Mail {
 				}
 
 				if (substr($this->hostname, 0, 3) == 'tls') {
-					fputs($handle, 'STARTTLS' . "\r\n");
+starttls:			fputs($handle, 'STARTTLS' . "\r\n");
 
+                    $reply='';
 					while ($line = fgets($handle, 515)) {
 						$reply .= $line;
 
@@ -179,7 +180,9 @@ class Mail {
 					if (substr($reply, 0, 3) != 220) {
 						trigger_error('Error: STARTTLS not accepted from server!');
 						exit();
-					}
+					} else
+                        if(!($success = @stream_socket_enable_crypto($handle, 1, STREAM_CRYPTO_METHOD_TLS_CLIENT)))
+                            trigger_error('could not start TLS connection encryption protocol');
 				}
 
 				if (!empty($this->username)  && !empty($this->password)) {
@@ -212,7 +215,12 @@ class Mail {
 						}
 					}
 
-					if (substr($reply, 0, 3) != 334) {
+                    if(strpos($line,'STARTTLS')!==false){
+                        if(!isset($tlsstarted))
+                            goto starttls;
+                    }
+
+                    if (substr($reply, 0, 3) != 334) {
 						trigger_error('Error: AUTH LOGIN not accepted from server!');
 						exit();
 					}

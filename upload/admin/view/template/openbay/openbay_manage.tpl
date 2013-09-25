@@ -25,6 +25,7 @@
             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
                 <div id="tab-updates">
                     <p><?php echo $lang_patch_notes1; ?> <a href="http://shop.openbaypro.com/index.php?route=information/information/changelog" title="OpenBay Pro change log" target="_BLANK"><?php echo $lang_patch_notes2; ?></a></p>
+                    <p><?php echo $lang_patch_notes3; ?></p>
                     
                     <table class="form">
                         <tr>

@@ -14,7 +14,7 @@ class ModelOpenbayOpenbay extends Model {
         $data = $this->request->post;
         $data['user'] = $data['openbay_ftp_username'];
         $data['pw'] = html_entity_decode($data['openbay_ftp_pw']);
-        $data['server'] = $data['openbay_ftp_server'];
+        $data['server'] = trim($data['openbay_ftp_server'], '/\\');
         $data['rootpath'] = $data['openbay_ftp_rootpath'];
 
         if (empty($data['user'])) {
@@ -79,7 +79,7 @@ class ModelOpenbayOpenbay extends Model {
     }
 
     public function ftpUpdateModule() {
-        /**
+        /*
          * Disable error reporting due to noticed thrown when directories are checked
          * It will cause constant loading icon otherwise.
          */
@@ -113,7 +113,7 @@ class ModelOpenbayOpenbay extends Model {
 
         $connection = @ftp_connect($data['server']);
         $updatelog = "Connecting to server\n";
-
+        
         if ($connection != false) {
             $updatelog .= "Connected\n";
             $updatelog .= "Checking login details\n";
@@ -135,17 +135,17 @@ class ModelOpenbayOpenbay extends Model {
                 $current_version = $this->config->get('openbay_version');
 
                 $send = array('version' => $current_version, 'ocversion' => VERSION, 'beta' => $data['beta']);
-
+                
                 $files = $this->call('update/getList/', $send);
                 $updatelog .= "Requesting file list\n";
-
+                
                 if ($this->lasterror == true) {
                     $updatelog .= $this->lastmsg;
                     return array('connection' => true, 'msg' => $this->lastmsg);
                 } else {
                     $updatelog .= "Received list of files\n";
-
-                    foreach ($files['asset']['file'] as $file) {
+                    
+                    foreach ($files['asset']['file'] as $file) {                    
                         $dir = '';
                         $dirLevel = 0;
                         if (isset($file['locations']['location']) && is_array($file['locations']['location'])) {
@@ -162,27 +162,26 @@ class ModelOpenbayOpenbay extends Model {
                                 $updatelog .= "ftp_pwd output: " . ftp_pwd($connection) . "\n";
 
                                 if (@ftp_chdir($connection, $location)) {
-                                    $dirLevel++;
+                                    $dirLevel++;                                
                                 } else {
                                     if (@ftp_mkdir($connection, $location)) {
                                         $updatelog .= "Created directory: " . $dir . "\n";
 
                                         ftp_chdir($connection, $location);
                                         $dirLevel++;
-                                    } else {
+                                    } else {    
                                         $updatelog .= "FAILED TO CREATE DIRECTORY: " . $dir . "\n";
                                     }
                                 }
                             }
                         }
-
-                        $filedata = base64_decode($this->call('update/getFileContent/', array('file' => $dir . $file['name'], 'beta' => $data['beta'])));
+                        
+                        $filedata = base64_decode($this->call('update/getFileContent/', array('file' => implode('/', $file['locations']['location']) . '/' . $file['name'], 'beta' => $data['beta'])));
 
                         $tmpFile = DIR_CACHE . 'openbay.tmp';
 
                         $fp = fopen($tmpFile, 'w');
-                        fwrite($fp, $filedata);
-
+                        fwrite($fp, $filedata);                        
                         fclose($fp);
 
                         if (ftp_put($connection, $file['name'], $tmpFile, FTP_BINARY)) {
@@ -203,7 +202,7 @@ class ModelOpenbayOpenbay extends Model {
                     $openbay_settings = $this->model_setting_setting->getSetting('openbaymanager');
                     $openbay_settings['openbay_version'] = $files['version'];
                     $this->model_setting_setting->editSetting('openbaymanager', $openbay_settings);
-
+                    
                     @ftp_close($connection);
 
                     /**
@@ -284,7 +283,7 @@ class ModelOpenbayOpenbay extends Model {
                         }
                     }
                 }
-
+                
                 $updatelog .= "Update complete\n\n\n";
                 $output = ob_get_contents();
                 ob_end_clean();

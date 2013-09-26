@@ -47,15 +47,18 @@ class ControllerPaymentPPPayflowIframe extends Controller {
             'BILLTOSTATE' => $payment_zone['code'],
             'BILLTOZIP' => $order_info['payment_postcode'],
             'BILLTOCOUNTRY' => $payment_country['iso_code_2'],
-            
-            'SHIPTOFIRSTNAME' => $order_info['shipping_firstname'],
-            'SHIPTOLASTNAME' => $order_info['shipping_lastname'],
-            'SHIPTOSTREET' => trim($order_info['shipping_address_1'] . ' ' . $order_info['shipping_address_2']),
-            'SHIPTOCITY' => $order_info['shipping_city'],
-            'SHIPTOSTATE' => $shipping_zone['code'],
-            'SHIPTOZIP' => $order_info['shipping_postcode'],
-            'SHIPTOCOUNTRY' => $shipping_country['iso_code_2'],
         );
+        
+        // Does the order have shipping ?
+        if ($shipping_country) {
+            $urlParams['SHIPTOFIRSTNAME'] = $order_info['shipping_firstname'];
+            $urlParams['SHIPTOLASTNAME'] = $order_info['shipping_lastname'];
+            $urlParams['SHIPTOSTREET'] = trim($order_info['shipping_address_1'] . ' ' . $order_info['shipping_address_2']);
+            $urlParams['SHIPTOCITY'] = $order_info['shipping_city'];
+            $urlParams['SHIPTOSTATE'] = $shipping_zone['code'];
+            $urlParams['SHIPTOZIP'] = $order_info['shipping_postcode'];
+            $urlParams['SHIPTOCOUNTRY'] = $shipping_country['iso_code_2'];
+        }
         
         $response_params = $this->model_payment_pp_payflow_iframe->call($urlParams);
              

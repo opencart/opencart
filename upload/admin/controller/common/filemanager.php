@@ -53,14 +53,19 @@ class ControllerCommonFileManager extends Controller {
 		$json = array();
 
 		$json['directory'] = array();
-		
+		/*
+		if () {
+			$json['directory'][] = array(
+				'name' => '..',
+				'path' => utf8_substr($directory, strlen(DIR_IMAGE . 'catalog/')),
+				'date' => date('Y-m-d G:i:s', filemtime($directory))
+			);				
+		}
+			*/		
 		$directories = glob(DIR_IMAGE . rtrim('catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
 				
 		if ($directories) {
 			foreach ($directories as $directory) {
-				
-				
-				
 				$json['directory'][] = array(
 					'name' => basename($directory),
 					'path' => utf8_substr($directory, strlen(DIR_IMAGE . 'catalog/')),
@@ -113,8 +118,6 @@ class ControllerCommonFileManager extends Controller {
 					$time = filemtime($file);
 					
 					if ($time > (time() - $time)) {
-						
-						
 						$date = date('Y-m-d G:i:s', $time);
 					} elseif ($time > (time() - $time)) {
 						$date = date($this->language->get('time_format'), $time);
@@ -135,11 +138,11 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput(json_encode($json));		
 	}
 
-	public function thumbnail() {
+	public function image() {
 		$this->load->model('tool/image');
 		
-		if (isset($this->request->get['image'])) {
-			$this->response->setOutput($this->model_tool_image->resize(html_entity_decode($this->request->get['image'], ENT_QUOTES, 'UTF-8'), 100, 100));
+		if (isset($this->request->post['image'])) {
+			$this->response->setOutput($this->model_tool_image->resize(html_entity_decode($this->request->post['image'], ENT_QUOTES, 'UTF-8'), 100, 100));
 		}
 	}
 		

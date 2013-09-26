@@ -13,16 +13,18 @@ class ControllerCommonFileManager extends Controller {
 			$this->data['base'] = HTTP_SERVER;
 		}
 		
+		$this->data['text_selected'] = $this->language->get('text_selected');
+		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		
 		$this->data['entry_rename'] = $this->language->get('entry_rename');
 		
-		$this->data['button_folder'] = $this->language->get('button_folder');
-		$this->data['button_delete'] = $this->language->get('button_delete');
-		$this->data['button_cut'] = $this->language->get('button_cut');
-		$this->data['button_copy'] = $this->language->get('button_copy');
-		$this->data['button_paste'] = $this->language->get('button_paste');
-		
 		$this->data['button_upload'] = $this->language->get('button_upload');
-		$this->data['button_refresh'] = $this->language->get('button_refresh');
+		$this->data['button_folder'] = $this->language->get('button_folder');
+		$this->data['button_selected'] = $this->language->get('button_selected');
+		$this->data['button_move'] = $this->language->get('button_move');
+		$this->data['button_copy'] = $this->language->get('button_copy');
+		$this->data['button_delete'] = $this->language->get('button_delete');
+		$this->data['button_remove'] = $this->language->get('button_remove');
 		
 		$this->data['token'] = $this->session->data['token'];
 		

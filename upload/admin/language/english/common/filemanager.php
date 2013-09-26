@@ -10,11 +10,10 @@ $_['text_delete']      = 'Success: Your file or directory has been deleted!';
 $_['text_move']        = 'Success: Your file or directory has been moved!';
 $_['text_copy']        = 'Success: Your file or directory has been copied!';
 $_['text_rename']      = 'Success: Your file or directory has been renamed!';
+$_['text_selected']    = 'Selected Items';
 
 // Entry
 $_['entry_folder']     = 'New Folder:';
-$_['entry_move']       = 'Move:';
-$_['entry_copy']       = 'Name:';
 $_['entry_rename']     = 'Name:';
 
 // Error
@@ -36,11 +35,11 @@ $_['error_uploaded']   = 'Warning: File could not be uploaded for an unknown rea
 $_['error_permission'] = 'Warning: Permission Denied!';
 
 // Button
+$_['button_upload']    = 'Upload';
 $_['button_folder']    = 'New Folder';
-$_['button_delete']    = 'Delete';
+$_['button_selected']  = 'With Selected';
 $_['button_move']      = 'Move';
 $_['button_copy']      = 'Copy';
+$_['button_delete']    = 'Delete';
 $_['button_rename']    = 'Rename';
-$_['button_upload']    = 'Upload';
-$_['button_refresh']   = 'Refresh';
 ?>

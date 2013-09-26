@@ -49,7 +49,13 @@ html, body {
 	padding-left: 65px;
 }
 #selected {
-	width: 400px;
+	width: 200px;
+	max-height: 300px;
+	overflow-y: auto;	
+}
+#selected div {
+	overflow: auto;
+	padding: 5px 0px;
 }
 </style>
 </head>
@@ -59,13 +65,7 @@ html, body {
     <button type="button" id="button-upload" data-toggle="tooltip" title="<?php echo $button_upload; ?>" class="btn btn-default navbar-btn"><i class="icon-upload"></i></button>
     <button type="button" id="button-folder" data-toggle="tooltip" title="<?php echo $button_folder; ?>" class="btn btn-default navbar-btn"><i class="icon-folder-close"></i></button>
     <div class="btn-group">
-      <button type="button" id="button-cut" data-toggle="tooltip" title="<?php echo $button_cut; ?>" class="btn btn-default navbar-btn"><i class="icon-cut"></i></button>
-      <button type="button" id="button-copy" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn btn-default navbar-btn"><i class="icon-copy"></i></button>
-      <button type="button" id="button-paste" data-toggle="tooltip" title="<?php echo $button_paste; ?>" class="btn btn-default navbar-btn"><i class="icon-paste"></i></button>
-    </div>
-    <button type="button" id="button-delete" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="icon-trash"></i></button>
-    <div class="btn-group">
-      <button type="button" id="button-selected" class="btn btn-default">Selected</button>
+      <button type="button" id="button-selected" class="btn btn-default"><?php echo $button_selected; ?> <i class="icon-caret-down"></i></button>
     </div>
   </div>
 </header>
@@ -99,13 +99,7 @@ html, body {
   </div>
 </div>
 <div id="selected">
-  <table class="table table-hover">
-    <tbody>
-      <tr>
-        <td>No results</td>
-      </tr>
-    </tbody>
-  </table>
+  <p class="text-center"><?php echo $text_no_results; ?></p>
 </div>
 <div id="upload" style="display: none;">
   <form enctype="multipart/form-data">
@@ -296,42 +290,85 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 
 // When selecting in the right column add it to the selected list
 $('#column-right').delegate('input[type=\'checkbox\']', 'change', function() {
-	$('#selected input[value=\'' + this.value + '\']').parent().parent().remove();
+	$('#selected input[value=\'' + this.value + '\']').parent().remove();
 	
 	if (this.checked) {
-		html += '<tr>';
-		html += '  <td>' + this.value + '<input type="hidden" name="selected[]" value="' + this.value + '" /></td>';
-		html += '  <td><button type="button" class="btn btn-danger btn-sm" onclick="$(this).parent().parent().remove();"><i class="icon-minus-sign"></i></button></td>';
-		html += '</tr>';
+		html = '<div class="alert"><button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-minus-sign"></i></button>' + this.value + '<input type="hidden" name="selected[]" value="' + this.value + '" /></div>';
 		
-		$('#selected table tbody').prepend(html);
+		if (!$('#selected input').length) {
+			html += '<div class="text-center">';
+			html += '  <div class="btn-group">';
+			html += '    <button type="button" id="button-move" data-toggle="tooltip" title="<?php echo $button_move; ?>" class="btn btn-default navbar-btn"><i class="icon-move"></i></button>';
+			html += '    <button type="button" id="button-copy" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn btn-default navbar-btn"><i class="icon-copy"></i></button>';
+			html += '  </div>';
+			html += '  <button type="button" id="button-delete" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="icon-trash"></i></button>';
+			html += '</div>';
+			
+			$('#selected').html(html);
+		} else {
+			$('#selected').prepend(html);
+		}
 	}
-});
 
-$('#button-selected').on('click', function() {
-	$(this).popover({
-		html: true,
-		title: 'Selected Items',
-		content: $('#selected'),
-		placement: 'bottom'
-	});
-});
-
-
-$('#button-cut').on('click', function() {
-	$('#selected input').remove();
+	// If no selected items display the empty message
+	if (!$('#selected input').length) {
+		$('#selected').html('<p class="text-center"><?php echo $text_no_results; ?></p>');
+	}
 	
-	$('#column-right input[type=\'checkbox\']:checked').each(function(index, element) {
-		$('#selected').append('<input type="hidden" name="selected[]" value="' + element.value + '" />');
+	// tooltips on hover
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});		
+});
+
+// Display the popover when the selected button is clicked 
+$('#button-selected').popover({
+	html: true,
+	trigger: 'click',
+	title: '<?php echo $text_selected; ?>',
+	content: $('#selected'),
+	placement: 'bottom'
+});
+
+// tooltips on hover
+$('#button-selected').on('shown.bs.popover', function() {
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});		
+})
+
+// Remove items and untick the left column if slected remove button is clicked
+$('#selected').delegate('button', 'click', function() {
+	// Remove the check if its on in the right column
+	$('#column-right input[value=\'' + $(this).parent().find('input').attr('value') + '\']').prop('checked', false);
+	
+	// Remove item
+	$(this).parent().remove();
+	
+	// If no selected items display the empty message
+	if (!$('#selected input').length) {
+		$('#selected').html('<p class="text-center"><?php echo $text_no_results; ?></p>');
+	}	
+});
+
+$('#button-move').on('click', function() {
+	// Remove all from copy and paste buttons
+	$('#selected input[type=\'checkbox\']:checked');
+	
+	// Loop through each slected item. If there is an error it should appear and break the loop.
+	$.ajax({
+		url: 'index.php?route=common/filemanager/' + action + '&token=<?php echo $token; ?>',
+		type: 'post',
+		data: $('#selected input[name=\'selected\']'),
+		dataType: 'json',
+		success: function(json) {
+			$('#selected input').remove();
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}	
 	});
 });
 
 $('#button-copy').on('click', function() {
-	$('#selected input').remove();
-	
-	$('#column-right input[type=\'checkbox\']:checked').each(function(index, element) {
-		$('#selected').append('<input type="hidden" name="selected[]" value="' + element.value + '" />');
-	});
+
+
 });
 
 $('#button-upload').on('click', function() {
@@ -351,35 +388,6 @@ $('#button-folder').on('click', function() {
 	});
 });
 
-
-
-$('#button-paste').on('click', function() {
-	// Remove all from copy and paste buttons
-	if (this.active == 'cut') {
-		action = 'move';
-	} else {
-		action = 'copy';
-	}
-	
-	$('#selected input[type=\'checkbox\']:checked');
-	
-	// Loop through each slected item. If there is an error it should appear and break the loop.
-	for (i = 0; i > length; i++) {
-		$.ajax({
-			url: 'index.php?route=common/filemanager/' + action + '&token=<?php echo $token; ?>',
-			type: 'post',
-			data: $('#selected input[name=\'selected\']'),
-			dataType: 'json',
-			success: function(json) {
-				
-			},
-			error: function(xhr, ajaxOptions, thrownError) {
-				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-			}	
-		});
-	}
-});
-
 $('#button-delete').on('click', function() {
 	// Loop through each slected item. If there is an error it should appear and break the loop.
 	$.ajax({
@@ -396,7 +404,6 @@ $('#button-delete').on('click', function() {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}	
 	});
-
 });
 
 $('#button-rename').on('click', function() {

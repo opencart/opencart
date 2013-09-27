@@ -315,7 +315,7 @@ class Cart {
         return $recurring_products;
     }
 		  
-  	public function add($product_id, $qty = 1, $option, $profile_id) {
+  	public function add($product_id, $qty = 1, $option, $profile_id = '') {
         $key = (int) $product_id . ':';
         
         if ($option) {

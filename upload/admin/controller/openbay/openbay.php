@@ -1037,7 +1037,6 @@ class ControllerOpenbayOpenbay extends Controller {
         $this->load->model('tool/image');
 
         $item_id        = $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
-        $product_info   = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
         if (!empty($item_id)) {
             $listings   = $this->openbay->ebay->getEbayListing($item_id);
@@ -1111,8 +1110,8 @@ class ControllerOpenbayOpenbay extends Controller {
                     'variant' => 1,
                     'data' => array(
                         'grp_info' => array(
-                            'optGroupArray'     => base64_encode(serialize($t)),
-                            'optGroupRelArray'  => base64_encode(serialize($t_rel)),
+                            'optGroupArray' => base64_encode(serialize($t)),
+                            'optGroupRelArray' => base64_encode(serialize($t_rel)),
                         ),
                         'options' => $options,
                         'optionsinactive' => $notlive
@@ -1127,8 +1126,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
             if($reserve == false) { $reserve = 0; }
 
-
-            $data       = array(
+            $data = array(
                 'listing'   => $listings,
                 'stock'     => $stock,
                 'reserve'   => $reserve,

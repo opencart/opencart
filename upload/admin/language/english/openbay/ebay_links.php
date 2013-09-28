@@ -11,6 +11,7 @@ $_['lang_unlinked_items']           = 'Unlinked items';
 $_['lang_btn_resync']               = 'Re-sync';
 $_['lang_btn_return']               = 'Return';
 $_['lang_btn_save']                 = 'Save';
+$_['lang_btn_edit']                 = 'Edit';
 $_['lang_btn_check_unlinked']       = 'Check unlinked items';
 $_['lang_btn_remove_link']          = 'Remove link';
 

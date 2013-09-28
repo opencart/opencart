@@ -44,8 +44,8 @@
                 </tr>
                 </thead>
                 <tbody id="eBayListings">
-                <tr class="filter">
-                    <td class="left" colspan="8" id="fetchingEbayItems"><?php echo $lang_text_unlinked_info; ?></td>
+                <tr class="filter" id="fetchingEbayItems">
+                    <td class="left" colspan="8"><?php echo $lang_text_unlinked_info; ?></td>
                 </tr>
                 </tbody>
             </table>
@@ -143,6 +143,7 @@ function checkLinkedItems(){
                             if($('#ebay_qty_'+key).val() == $('#store_qty_'+key).val()){
                                 $('#text_status_'+key).text('OK');
                                 $('#row_'+key+' > td').css('background-color', '#E3FFC8');
+                                $('#text_buttons_'+key).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="button"><span><?php echo $lang_btn_edit; ?></span></a>');
                             }else{
                                 $('#text_status_'+key).text('Stock error');
                                 $('#row_'+key+' > td').css('background-color', '#FFD4D4');
@@ -212,6 +213,7 @@ function updateLink(itemid, qty, product_id, storeQty){
             success: function(json) {
                 if(json.error === false){
                     $('#text_status_'+itemid).text('OK');
+                    $('#text_buttons_'+itemid).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="button"><span><?php echo $lang_btn_edit; ?></span></a>');
                     $('#row_'+itemid+' > td').css('background-color', '#E3FFC8');
                     $('#l_'+itemid+'_qtyinput').val(qty);
                     $('#l_'+itemid+'_qty').val(qty);
@@ -299,6 +301,7 @@ function checkUnlinkedItems(){
         type: 'get',
         dataType: 'json',
         beforeSend: function(){
+            $('#fetchingEbayItems').hide();
             $('#checkUnlinkedItems').hide();
             $('#checkUnlinkedItemsLoading').show();
         },
@@ -337,7 +340,7 @@ function checkUnlinkedItems(){
                         htmlInj += '<input type="hidden" name="variants" id="l_'+key+'_variants" value="1" />';
                         htmlInj += '<td class="center"><img title="" alt="" src="<?php echo HTTPS_SERVER; ?>view/image/success.png" style="margin-top:3px;"></td>';
                     }
-                    htmlInj += '<td class="center"><a class="button displayNone" onclick="saveListingLink('+key+'); return false;" id="l_'+key+'_saveBtn"><span><?php echo $lang_btn_save; ?></span></a> <img src="<?php echo HTTPS_SERVER; ?>/view/image/loading.gif" class="displayNone" id="l_'+key+'_saveLoading" /></td>';
+                    htmlInj += '<td class="center"><a style="display:none;" class="button" onclick="saveListingLink('+key+'); return false;" id="l_'+key+'_saveBtn"><span><?php echo $lang_btn_save; ?></span></a> <img src="<?php echo HTTPS_SERVER; ?>/view/image/loading.gif" class="displayNone" id="l_'+key+'_saveLoading" /></td>';
                     htmlInj += '</tr>';
 
                     $('#eBayListings').append(htmlInj);

@@ -119,7 +119,7 @@
         var local   = parseInt($('#qty_local').val());
 
         if(reserve > local){
-            alert('<?php echo $lang_error_reserve_size');
+            alert('<?php echo $lang_error_reserve_size; ?>');
             $('#qty_reserve').val(local);
         }
     }

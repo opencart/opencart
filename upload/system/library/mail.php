@@ -167,6 +167,8 @@ class Mail {
 
 				if (substr($this->hostname, 0, 3) == 'tls') {
 					fputs($handle, 'STARTTLS' . "\r\n");
+					
+					$reply = '';
 
 					while ($line = fgets($handle, 515)) {
 						$reply .= $line;

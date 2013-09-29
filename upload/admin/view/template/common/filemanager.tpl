@@ -50,12 +50,12 @@ html, body {
 }
 #selected {
 	width: 200px;
-	max-height: 300px;
-	overflow-y: auto;	
+	max-height: 150px;
+	overflow-y: auto;
 }
-#selected div {
+#selected > div {
 	overflow: auto;
-	padding: 5px 0px;
+	padding: 5px;
 }
 </style>
 </head>
@@ -64,9 +64,7 @@ html, body {
   <div class="container">
     <button type="button" id="button-upload" data-toggle="tooltip" title="<?php echo $button_upload; ?>" class="btn btn-default navbar-btn"><i class="icon-upload"></i></button>
     <button type="button" id="button-folder" data-toggle="tooltip" title="<?php echo $button_folder; ?>" class="btn btn-default navbar-btn"><i class="icon-folder-close"></i></button>
-    <div class="btn-group">
-      <button type="button" id="button-selected" class="btn btn-default"><?php echo $button_selected; ?> <i class="icon-caret-down"></i></button>
-    </div>
+    <button type="button" id="button-selected" class="btn btn-default"><?php echo $button_selected; ?> <i class="icon-caret-down"></i></button>
   </div>
 </header>
 <div class="container">
@@ -98,9 +96,6 @@ html, body {
     </div>
   </div>
 </div>
-<div id="selected">
-  <p class="text-center"><?php echo $text_no_results; ?></p>
-</div>
 <div id="upload" style="display: none;">
   <form enctype="multipart/form-data">
     <input type="file" name="image" id="image" />
@@ -113,6 +108,8 @@ $('[data-toggle=\'tooltip\']').tooltip({
 	container: 'body',
 	placement: 'bottom'
 });
+
+var selected = new Array();
 
 $('#column-left').delegate('a', 'click', function(e) {
 	e.preventDefault();
@@ -180,7 +177,14 @@ $('#column-left').delegate('a', 'click', function(e) {
 					
 					for (i = 0; i < json['directory'].length; i++) {
 						html += '<tr>';
-						html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
+					
+						// If in selected list make it checked
+						if (selected.indexOf(json['directory'][i]['path']) !== -1) {
+							html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" checked="checked" /></td>';
+						} else {
+							html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
+						}
+					
 						html += '  <td class="text-center"><i class="icon-folder-close icon-large"></i></td>';
 						html += '  <td><a href="' + json['directory'][i]['path'] + '" class="directory">' + json['directory'][i]['name'] + '</a></td>';
 						html += '  <td>Directory</td>';
@@ -197,7 +201,14 @@ $('#column-left').delegate('a', 'click', function(e) {
 						
 						for (i = 0; i < json['file'].length; i++) {
 							html += '<tr>';
-							html += '  <td class="text-center"><input type="checkbox" value="' + json['file'][i]['path'] + '" /></td>';
+							
+							// If in selected list make it checked
+							if (selected.indexOf(json['file'][i]['path']) !== -1) {
+								html += '  <td class="text-center"><input type="checkbox" value="' + json['file'][i]['path'] + '" checked="checked" /></td>';
+							} else {
+								html += '  <td class="text-center"><input type="checkbox" value="' + json['file'][i]['path'] + '" /></td>';
+							}
+							
 							html += '  <td class="text-center"><img src="<?php echo $no_image; ?>" alt="' + json['file'][i]['name'] + '" title="' + json['file'][i]['name'] + '" class="img-responsive" /></td>';
 							html += '  <td><a href="' + json['file'][i]['path'] + '">' + json['file'][i]['name'] + '</a></td>';
 							html += '  <td>Image</td>';
@@ -246,7 +257,14 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 				
 				for (i = 0; i < json['directory'].length; i++) {
 					html += '<tr>';
-					html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
+					
+					// If in selected list make it checked
+					if (selected.indexOf(json['directory'][i]['path']) !== -1) {
+						html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" checked="checked" /></td>';
+					} else {
+						html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
+					}
+					
 					html += '  <td class="text-center"><i class="icon-folder-close icon-large"></i></td>';
 					html += '  <td><a href="' + json['directory'][i]['path'] + '" class="directory">' + json['directory'][i]['name'] + '</a></td>';
 					html += '  <td>Directory</td>';
@@ -263,7 +281,14 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 					
 					for (i = 0; i < json['file'].length; i++) {
 						html += '<tr>';
-						html += '  <td class="text-center"><input type="checkbox" value="' + json['file'][i]['path'] + '" /></td>';
+						
+						// If in selected list make it checked
+						if (selected.indexOf(json['file'][i]['path']) !== -1) {
+							html += '  <td class="text-center"><input type="checkbox" value="' + json['file'][i]['path'] + '" checked="checked" /></td>';
+						} else {
+							html += '  <td class="text-center"><input type="checkbox" value="' + json['file'][i]['path'] + '" /></td>';
+						}
+						
 						html += '  <td class="text-center"><img src="<?php echo $no_image; ?>" alt="' + json['file'][i]['name'] + '" title="' + json['file'][i]['name'] + '" class="img-thumbnail" /></td>';
 						html += '  <td><a href="' + json['file'][i]['path'] + '">' + json['file'][i]['name'] + '</a></td>';
 						html += '  <td>Image</td>';
@@ -288,89 +313,6 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 	});
 });
 
-// When selecting in the right column add it to the selected list
-$('#column-right').delegate('input[type=\'checkbox\']', 'change', function() {
-	$('#selected input[value=\'' + this.value + '\']').parent().remove();
-	
-	if (this.checked) {
-		html = '<div class="alert"><button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-minus-sign"></i></button>' + this.value + '<input type="hidden" name="selected[]" value="' + this.value + '" /></div>';
-		
-		if (!$('#selected input').length) {
-			html += '<div class="text-center">';
-			html += '  <div class="btn-group">';
-			html += '    <button type="button" id="button-move" data-toggle="tooltip" title="<?php echo $button_move; ?>" class="btn btn-default navbar-btn"><i class="icon-move"></i></button>';
-			html += '    <button type="button" id="button-copy" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn btn-default navbar-btn"><i class="icon-copy"></i></button>';
-			html += '  </div>';
-			html += '  <button type="button" id="button-delete" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="icon-trash"></i></button>';
-			html += '</div>';
-			
-			$('#selected').html(html);
-		} else {
-			$('#selected').prepend(html);
-		}
-	}
-
-	// If no selected items display the empty message
-	if (!$('#selected input').length) {
-		$('#selected').html('<p class="text-center"><?php echo $text_no_results; ?></p>');
-	}
-	
-	// tooltips on hover
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});		
-});
-
-// Display the popover when the selected button is clicked 
-$('#button-selected').popover({
-	html: true,
-	trigger: 'click',
-	title: '<?php echo $text_selected; ?>',
-	content: $('#selected'),
-	placement: 'bottom'
-});
-
-// tooltips on hover
-$('#button-selected').on('shown.bs.popover', function() {
-	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});		
-})
-
-// Remove items and untick the left column if slected remove button is clicked
-$('#selected').delegate('button', 'click', function() {
-	// Remove the check if its on in the right column
-	$('#column-right input[value=\'' + $(this).parent().find('input').attr('value') + '\']').prop('checked', false);
-	
-	// Remove item
-	$(this).parent().remove();
-	
-	// If no selected items display the empty message
-	if (!$('#selected input').length) {
-		$('#selected').html('<p class="text-center"><?php echo $text_no_results; ?></p>');
-	}	
-});
-
-$('#button-move').on('click', function() {
-	// Remove all from copy and paste buttons
-	$('#selected input[type=\'checkbox\']:checked');
-	
-	// Loop through each slected item. If there is an error it should appear and break the loop.
-	$.ajax({
-		url: 'index.php?route=common/filemanager/' + action + '&token=<?php echo $token; ?>',
-		type: 'post',
-		data: $('#selected input[name=\'selected\']'),
-		dataType: 'json',
-		success: function(json) {
-			$('#selected input').remove();
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}	
-	});
-});
-
-$('#button-copy').on('click', function() {
-
-
-});
-
 $('#button-upload').on('click', function() {
 	
 });
@@ -388,16 +330,124 @@ $('#button-folder').on('click', function() {
 	});
 });
 
-$('#button-delete').on('click', function() {
+$('#button-rename').on('click', function() {
+	
+});
+
+// When selecting in the right column add it to the selected list
+$('#column-right').delegate('input[type=\'checkbox\']', 'change', function() {
+	var index = selected.indexOf(this.value);
+	
+	// Remove from the array
+	if (index != -1) {
+		selected.splice(index, 1);
+	}
+	
+	// Remove if in the selected box
+ 	$('#selected').find('input[value=\'' + this.value + '\']').parent().remove();
+	
+	if (this.checked) {
+		html = '<div><button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-minus-sign"></i></button>' + this.value + '<input type="hidden" name="selected[]" value="' + this.value + '" /></div>';
+		
+		if (!selected.length) {
+			$('#selected').html(html);
+		} else {
+			$('#selected').prepend(html);
+		}
+		
+		// Add the value to the array
+		selected.push(this.value);
+	}
+
+	// If no selected items display the empty message
+	if (!selected.length) {
+		$('#selected').html('<p class="text-center"><?php echo $text_no_results; ?></p>');
+	}
+	
+	// tooltips on hover
+	$('[data-toggle=\'tooltip\']').tooltip();
+});
+
+// Display the popover when the selected button is clicked 
+$('#button-selected').on('click', function() {
+	$(this).popover({
+		html: true,
+		trigger: 'click',
+		title: '<?php echo $text_selected; ?>',
+		content: function() {
+			// Create the popover menu
+			html  = '<div>';
+			html += '  <div id="selected">';
+			
+			if (selected.length) {
+				for (i = 0; i < selected.length; i++) {
+					html += '<div><button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-minus-sign"></i></button>' + selected[i] + '<input type="hidden" name="selected[]" value="' + selected[i] + '" /></div>';
+				}
+			} else {
+				html += '<p class="text-center"><?php echo $text_no_results; ?></p>';
+			}
+			
+			html += '  </div>';
+			html += '  <div class="text-center">';
+			html += '    <div class="btn-group">';
+			html += '      <button type="button" id="button-move" data-toggle="tooltip" title="<?php echo $button_move; ?>" class="btn btn-default navbar-btn"><i class="icon-move"></i></button>';
+			html += '      <button type="button" id="button-copy" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn btn-default navbar-btn"><i class="icon-copy"></i></button>';
+			html += '    </div>';
+			html += '    <button type="button" id="button-delete" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="icon-trash"></i></button>';
+			html += '  </div>';
+			html += '</div>';
+			
+			return html;
+		},
+		placement: 'bottom'
+	});	
+});
+
+$('#button-selected').on('shown.bs.popover', function() {
+	$('[data-toggle=\'tooltip\']').tooltip();
+})
+
+// Remove items and untick the left column if slected remove button is clicked
+$('header').delegate('#selected button', 'click', function() {
+	var index = selected.indexOf($(this).parent().find('input').attr('value'));
+	
+	// Remove from the array
+	if (index != -1) {
+		selected.splice(index, 1);
+	}
+	
+	// Remove the check if its on in the right column
+	$('#column-right input[value=\'' + $(this).parent().find('input').attr('value') + '\']').prop('checked', false);
+	
+	// Remove item
+	$(this).parent().remove();
+	
+	// If no selected items display the empty message
+	if (!selected.length) {
+		$('#selected').html('<p class="text-center"><?php echo $text_no_results; ?></p>');
+	}
+});
+	
+$('#button-move').on('click', function() {
+	alert('hi');
+	// Remove all from copy and paste buttons
+	var node = $('#selected').find('div:first-child input');
+	
 	// Loop through each slected item. If there is an error it should appear and break the loop.
 	$.ajax({
-		url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',
+		url: 'index.php?route=common/filemanager/move&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $('#file input[name=\'selected\']'),
+		data: 'path=' + encodeURIComponent(node.attr('value')),
 		dataType: 'json',
 		success: function(json) {
 			if (json['error']) {
-				alert(json['error']);	
+				alert(json['error']);
+			} else {
+				$(node).parent().fadeOut('slow', function() {
+    				//$(node).parent().find('button').trigger('click');
+					
+					//$('#button-move').trigger('click');
+				});
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -406,8 +456,58 @@ $('#button-delete').on('click', function() {
 	});
 });
 
-$('#button-rename').on('click', function() {
+$('#button-copy').on('click', function() {
+	// Remove all from copy and paste buttons
+	var node = $('#selected div:first-child input');
 	
+	// Loop through each slected item. If there is an error it should appear and break the loop.
+	$.ajax({
+		url: 'index.php?route=common/filemanager/copy&token=<?php echo $token; ?>',
+		type: 'post',
+		data: 'path=' + encodeURIComponent(node.attr('value')),
+		dataType: 'json',
+		success: function(json) {
+			if (json['error']) {
+				alert(json['error']);
+			} else {
+				$(node).parent().fadeOut('slow', function() {
+    				$(node).parent().find('button').trigger('click');
+					
+					$('#button-move').trigger('click');
+				});
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}	
+	});
+});
+
+$('#button-delete').on('click', function() {
+	// Remove all from copy and paste buttons
+	var node = $('#selected div:first-child input');
+	
+	// Loop through each slected item. If there is an error it should appear and break the loop.
+	$.ajax({
+		url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',
+		type: 'post',
+		data: 'path=' + encodeURIComponent(node.attr('value')),
+		dataType: 'json',
+		success: function(json) {
+			if (json['error']) {
+				alert(json['error']);
+			} else {
+				$(node).parent().fadeOut('slow', function() {
+    				$(node).parent().find('button').trigger('click');
+					
+					$('#button-move').trigger('click');
+				});
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}	
+	});
 });
 //--></script>
 </body>

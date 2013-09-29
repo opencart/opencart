@@ -3,7 +3,7 @@
  * For licensing, see LICENSE.html or http://ckeditor.com/license
  */
 
-CKEDITOR.editorConfig = function( config ) {
+CKEDITOR.editorConfig = function (config) {
 	// Define changes to default configuration here.
 	// For the complete reference:
 	// http://docs.ckeditor.com/#!/api/CKEDITOR.config
@@ -19,15 +19,15 @@ CKEDITOR.editorConfig = function( config ) {
 	config.toolbar_Custom = [
 		['Source'],
 		['Maximize'],
-		['Bold','Italic','Underline','Strike','-','Subscript','Superscript'],
-		['NumberedList','BulletedList','-','Outdent','Indent'],
-		['JustifyLeft','JustifyCenter','JustifyRight','JustifyFull'],
+		['Bold', 'Italic', 'Underline', 'Strike', '-', 'Subscript', 'Superscript'],
+		['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+		['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyFull'],
 		['SpecialChar'],
 		'/',
-		['Undo','Redo'],
-		['Font','FontSize'],
-		['TextColor','BGColor'],
-		['Link','Unlink','Anchor'],
-		['Image','Table','HorizontalRule']
+		['Undo', 'Redo'],
+		['Font', 'FontSize'],
+		['TextColor', 'BGColor'],
+		['Link', 'Unlink', 'Anchor'],
+		['Image', 'Table', 'HorizontalRule']
 	];
 };

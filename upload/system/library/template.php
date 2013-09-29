@@ -12,9 +12,7 @@ class Template {
       
 	  		include($file);
       
-	  		$content = ob_get_contents();
-
-      		ob_end_clean();
+	  		$content = ob_get_clean();
 
       		return $content;
     	} else {

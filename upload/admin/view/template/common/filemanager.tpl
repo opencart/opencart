@@ -65,6 +65,7 @@ html, body {
     <button type="button" id="button-upload" data-toggle="tooltip" title="<?php echo $button_upload; ?>" class="btn btn-default navbar-btn"><i class="icon-upload"></i></button>
     <button type="button" id="button-folder" data-toggle="tooltip" title="<?php echo $button_folder; ?>" class="btn btn-default navbar-btn"><i class="icon-folder-close"></i></button>
     <button type="button" id="button-selected" class="btn btn-default"><?php echo $button_selected; ?> <i class="icon-caret-down"></i></button>
+    <input type="hidden" name="folder" value="" />
   </div>
 </header>
 <div class="container">
@@ -104,7 +105,7 @@ html, body {
 <script type="text/javascript"><!--
 // Set tooltip
 $('header [data-toggle=\'tooltip\']').tooltip({
-	container: 'body',
+	container: 'header',
 	placement: 'bottom'
 });
 
@@ -159,7 +160,10 @@ $('#column-left').delegate('a', 'click', function(e) {
 	} else {
 		// Remove all active classes
 		$('#column-left a').removeClass('active');
-	
+		
+		// Set the current folder
+		$('input[name=\'folder\']').attr('value', $(node).attr('href'));
+			
 		// Add active class to current node
 		$(node).addClass('active');
 		
@@ -238,6 +242,9 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 	
 	var node = this;
 	
+	// Set the current folder
+	$('input[name=\'folder\']').attr('value', $(node).attr('href'));
+	
 	// Remove all active classes
 	$('#column-left a').removeClass('active');
 	
@@ -308,21 +315,6 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 	});
 });
 
-// Display the popover when the selected button is clicked 
-$('#column-right table').delegate('i', 'click', function() {
-	$(this).popover({
-		html: true,
-		trigger: 'click',
-		title: '<?php echo $text_selected; ?>',
-		content: function() {
-			// Create the popover menu
-			
-			return html;
-		},
-		placement: 'bottom'
-	});	
-});
-
 $('#button-upload').on('click', function() {
 	
 });
@@ -330,7 +322,7 @@ $('#button-upload').on('click', function() {
 $('#button-folder').on('click', function() {
 	html  = '<div class="input-group">';
 	html += '  <input type="text" name="rename" value="" class="form-control" />';
-	html += '  <span class="input-group-btn"><button type="button" class="btn btn-default">Go!</button></span>';
+	html += '  <span class="input-group-btn"><button type="button" id="button-rename" class="btn btn-default">Go!</button></span>';
 	html += '</div>';
 	
 	$(this).popover({
@@ -339,27 +331,6 @@ $('#button-folder').on('click', function() {
 		placement: 'bottom'
 	});
 });
-
-$('header').delegate('button', 'change', function() {
-	// Loop through each slected item. If there is an error it should appear and break the loop.
-	$.ajax({
-		url: 'index.php?route=common/filemanager/folder&token=<?php echo $token; ?>',
-		type: 'post',
-		data: 'name=' + encodeURIComponent(node.attr('value')),
-		dataType: 'json',
-		success: function(json) {
-			if (json['error']) {
-				alert(json['error']);
-			} else {
-			
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}	
-	});	
-});
-
 
 $('#button-rename').on('click', function() {
 	
@@ -468,7 +439,7 @@ $('header').delegate('#button-move', 'click', function() {
 		$.ajax({
 			url: 'index.php?route=common/filemanager/move&token=<?php echo $token; ?>',
 			type: 'post',
-			data: 'from=' + encodeURIComponent(node.attr('value')) + '&to=',
+			data: 'from=' + encodeURIComponent(node.attr('value')) + '&to=' + encodeURIComponent($('input[name=\'folder\']').attr('value')),
 			dataType: 'json',
 			success: function(json) {
 				if (json['error']) {
@@ -494,7 +465,7 @@ $('header').delegate('#button-copy', 'click', function() {
 	$.ajax({
 		url: 'index.php?route=common/filemanager/copy&token=<?php echo $token; ?>',
 		type: 'post',
-		data: 'path=' + encodeURIComponent(node.attr('value')),
+		data: 'from=' + encodeURIComponent(node.attr('value')) + '&to=' + encodeURIComponent($('input[name=\'folder\']').attr('value')),
 		dataType: 'json',
 		success: function(json) {
 			if (json['error']) {

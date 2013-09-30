@@ -319,7 +319,7 @@ $('#category-filter').delegate('.icon-minus-sign', 'click', function() {
 function filemanager() {
 	window.open('index.php?route=common/filemanager&token=<?php echo $token; ?>', '<?php echo $text_image_manager; ?>', 'width=700,height=500,menubar=no,resizable=no,scrollbars=no,titlebar=yes,toolbar=no', true);
 	
-	/*
+
 	$('#dialog').dialog({
 		title: '',
 		close: function (event, ui) {
@@ -339,7 +339,6 @@ function filemanager() {
 		resizable: false,
 		modal: false
 	});
-	*/
 };
 //--></script> 
 <script type="text/javascript"><!--

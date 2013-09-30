@@ -33,7 +33,7 @@
             <table class="list" cellpadding="2">
                 <thead>
                 <tr>
-                    <td class="left" width="20%"><?php echo $lang_column_itemId; ?></td>
+                    <td class="left"><?php echo $lang_column_itemId; ?></td>
                     <td class="left"><?php echo $lang_column_listing_title; ?></td>
                     <td class="left"><?php echo $lang_column_product_auto; ?></span></td>
                     <td class="center width100"><?php echo $lang_column_stock_available; ?></td>

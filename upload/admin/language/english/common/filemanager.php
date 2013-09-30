@@ -12,6 +12,11 @@ $_['text_copy']        = 'Success: Your file or directory has been copied!';
 $_['text_rename']      = 'Success: Your file or directory has been renamed!';
 $_['text_selected']    = 'Selected Items';
 
+// Column
+$_['column_name']       = 'Name';
+$_['column_size']       = 'Size';
+$_['column_date']       = 'Date';
+
 // Entry
 $_['entry_folder']     = 'New Folder:';
 $_['entry_rename']     = 'Name:';

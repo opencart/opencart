@@ -16,6 +16,10 @@ class ControllerCommonFileManager extends Controller {
 		$this->data['text_selected'] = $this->language->get('text_selected');
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		
+		$this->data['column_name'] = $this->language->get('column_name');
+		$this->data['column_size'] = $this->language->get('column_size');
+		$this->data['column_date'] = $this->language->get('column_date');
+		
 		$this->data['entry_rename'] = $this->language->get('entry_rename');
 		
 		$this->data['button_upload'] = $this->language->get('button_upload');
@@ -221,6 +225,48 @@ class ControllerCommonFileManager extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 		
+	public function rename() {
+		$this->language->load('common/filemanager');
+		
+		$json = array();
+		
+		if (isset($this->request->post['path']) && isset($this->request->post['name'])) {
+			if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 255)) {
+				$json['error'] = $this->language->get('error_filename');
+			}
+				
+			$old_name = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
+			
+			if (!file_exists($old_name) || $old_name == DIR_IMAGE . 'data') {
+				$json['error'] = $this->language->get('error_rename');
+			}
+			
+			if (is_file($old_name)) {
+				$ext = strrchr($old_name, '.');
+			} else {
+				$ext = '';
+			}		
+			
+			$new_name = dirname($old_name) . '/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
+																			   
+			if (file_exists($new_name)) {
+				$json['error'] = $this->language->get('error_exists');
+			}			
+		}
+		
+		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
+      		$json['error'] = $this->language->get('error_permission');  
+    	}
+		
+		if (!isset($json['error'])) {
+			rename($old_name, $new_name);
+			
+			$json['success'] = $this->language->get('text_rename');
+		}
+		
+		$this->response->setOutput(json_encode($json));
+	}	
+		
 	public function folder() {
 		$this->language->load('common/filemanager');
 				
@@ -261,16 +307,15 @@ class ControllerCommonFileManager extends Controller {
 		$this->language->load('common/filemanager');
 		
 		$json = array();
-		
-		/*
+
 		if (isset($this->request->post['from']) && isset($this->request->post['to'])) {
-			$from = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['from'], ENT_QUOTES, 'UTF-8')), '/');
+			$from = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['from'], ENT_QUOTES, 'UTF-8')), '/');
 			
 			if (!file_exists($from)) {
 				$json['error'] = $this->language->get('error_missing');
 			}
 			
-			if ($from == DIR_IMAGE . 'data') {
+			if ($from == DIR_IMAGE . 'catalog') {
 				$json['error'] = $this->language->get('error_default');
 			}
 			
@@ -296,7 +341,6 @@ class ControllerCommonFileManager extends Controller {
 			
 			$json['success'] = $this->language->get('text_move');
 		}
-		*/
 		
 		$this->response->setOutput(json_encode($json));
 	}	
@@ -453,47 +497,5 @@ class ControllerCommonFileManager extends Controller {
 		
 		$this->response->setOutput(json_encode($json));
 	}
-		
-	public function rename() {
-		$this->language->load('common/filemanager');
-		
-		$json = array();
-		
-		if (isset($this->request->post['path']) && isset($this->request->post['name'])) {
-			if ((utf8_strlen($this->request->post['name']) < 3) || (utf8_strlen($this->request->post['name']) > 255)) {
-				$json['error'] = $this->language->get('error_filename');
-			}
-				
-			$old_name = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
-			
-			if (!file_exists($old_name) || $old_name == DIR_IMAGE . 'data') {
-				$json['error'] = $this->language->get('error_rename');
-			}
-			
-			if (is_file($old_name)) {
-				$ext = strrchr($old_name, '.');
-			} else {
-				$ext = '';
-			}		
-			
-			$new_name = dirname($old_name) . '/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
-																			   
-			if (file_exists($new_name)) {
-				$json['error'] = $this->language->get('error_exists');
-			}			
-		}
-		
-		if (!$this->user->hasPermission('modify', 'common/filemanager')) {
-      		$json['error'] = $this->language->get('error_permission');  
-    	}
-		
-		if (!isset($json['error'])) {
-			rename($old_name, $new_name);
-			
-			$json['success'] = $this->language->get('text_rename');
-		}
-		
-		$this->response->setOutput(json_encode($json));
-	}	
 } 
 ?>

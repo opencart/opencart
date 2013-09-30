@@ -81,12 +81,11 @@ html, body {
         <table class="table table-hover">
           <thead>
             <tr>
-              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+              <td width="1" class="text-center"><input type="checkbox" onclick="$('table tbody input[type=\'checkbox\']').trigger('click');" /></td>
               <td></td>
-              <td class="text-left">Name</td>
-              <td class="text-left">Type</td>
-              <td class="text-left">Size</td>
-              <td class="text-left">Date</td>
+              <td class="text-left"><?php echo $column_name; ?></td>
+              <td class="text-left"><?php echo $column_size; ?></td>
+              <td class="text-left"><?php echo $column_date; ?></td>
             </tr>
           </thead>
           <tbody>
@@ -104,7 +103,7 @@ html, body {
 </div>
 <script type="text/javascript"><!--
 // Set tooltip
-$('[data-toggle=\'tooltip\']').tooltip({
+$('header [data-toggle=\'tooltip\']').tooltip({
 	container: 'body',
 	placement: 'bottom'
 });
@@ -180,14 +179,13 @@ $('#column-left').delegate('a', 'click', function(e) {
 					
 						// If in selected list make it checked
 						if (selected.indexOf(json['directory'][i]['path']) !== -1) {
-							html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" checked="checked" /></td>';
+							html += '  <td class="text-center"><input type="checkbox" name="selected" value="' + json['directory'][i]['path'] + '" checked="checked" /></td>';
 						} else {
 							html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
 						}
 					
-						html += '  <td class="text-center"><i class="icon-folder-close icon-large"></i></td>';
-						html += '  <td><a href="' + json['directory'][i]['path'] + '" class="directory">' + json['directory'][i]['name'] + '</a></td>';
-						html += '  <td>Directory</td>';
+						html += '  <td class="text-center"><i class="icon-folder-close-alt  icon-large"></i></td>';
+						html += '  <td><a href="' + json['directory'][i]['path'] + '">' + json['directory'][i]['name'] + '</a></td>';
 						html += '  <td></td>';
 						html += '  <td>' + json['directory'][i]['date'] + '</td>';
 						html += '</tr>';						
@@ -209,9 +207,8 @@ $('#column-left').delegate('a', 'click', function(e) {
 								html += '  <td class="text-center"><input type="checkbox" value="' + json['file'][i]['path'] + '" /></td>';
 							}
 							
-							html += '  <td class="text-center"><img src="<?php echo $no_image; ?>" alt="' + json['file'][i]['name'] + '" title="' + json['file'][i]['name'] + '" class="img-responsive" /></td>';
+							html += '  <td class="text-center"><i class="icon-file-alt icon-large"></i></td>';
 							html += '  <td><a href="' + json['file'][i]['path'] + '">' + json['file'][i]['name'] + '</a></td>';
-							html += '  <td>Image</td>';
 							html += '  <td>' + json['file'][i]['size'] + '</td>';
 							html += '  <td>' + json['file'][i]['date'] + '</td>';
 							html += '</tr>';
@@ -265,9 +262,8 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 						html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
 					}
 					
-					html += '  <td class="text-center"><i class="icon-folder-close icon-large"></i></td>';
+					html += '  <td class="text-center"><i class="icon-folder-close-alt icon-large"></i></td>';
 					html += '  <td><a href="' + json['directory'][i]['path'] + '" class="directory">' + json['directory'][i]['name'] + '</a></td>';
-					html += '  <td>Directory</td>';
 					html += '  <td></td>';
 					html += '  <td>' + json['directory'][i]['date'] + '</td>';
 					html += '</tr>';						
@@ -289,9 +285,8 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 							html += '  <td class="text-center"><input type="checkbox" value="' + json['file'][i]['path'] + '" /></td>';
 						}
 						
-						html += '  <td class="text-center"><img src="<?php echo $no_image; ?>" alt="' + json['file'][i]['name'] + '" title="' + json['file'][i]['name'] + '" class="img-thumbnail" /></td>';
+						html += '  <td class="text-center"><i class="icon-file-alt icon-large"></i></td>';
 						html += '  <td><a href="' + json['file'][i]['path'] + '">' + json['file'][i]['name'] + '</a></td>';
-						html += '  <td>Image</td>';
 						html += '  <td>' + json['file'][i]['size'] + '</td>';
 						html += '  <td>' + json['file'][i]['date'] + '</td>';
 						html += '</tr>';
@@ -313,6 +308,21 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 	});
 });
 
+// Display the popover when the selected button is clicked 
+$('#column-right table').delegate('i', 'click', function() {
+	$(this).popover({
+		html: true,
+		trigger: 'click',
+		title: '<?php echo $text_selected; ?>',
+		content: function() {
+			// Create the popover menu
+			
+			return html;
+		},
+		placement: 'bottom'
+	});	
+});
+
 $('#button-upload').on('click', function() {
 	
 });
@@ -320,22 +330,43 @@ $('#button-upload').on('click', function() {
 $('#button-folder').on('click', function() {
 	html  = '<div class="input-group">';
 	html += '  <input type="text" name="rename" value="" class="form-control" />';
-	html += '  <span class="input-group-btn"><button class="btn btn-default" type="button">Go!</button></span>';
+	html += '  <span class="input-group-btn"><button type="button" class="btn btn-default">Go!</button></span>';
 	html += '</div>';
 	
 	$(this).popover({
 		html: true,
-		content: '#selector',
+		content: html,
 		placement: 'bottom'
 	});
 });
+
+$('header').delegate('button', 'change', function() {
+	// Loop through each slected item. If there is an error it should appear and break the loop.
+	$.ajax({
+		url: 'index.php?route=common/filemanager/folder&token=<?php echo $token; ?>',
+		type: 'post',
+		data: 'name=' + encodeURIComponent(node.attr('value')),
+		dataType: 'json',
+		success: function(json) {
+			if (json['error']) {
+				alert(json['error']);
+			} else {
+			
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}	
+	});	
+});
+
 
 $('#button-rename').on('click', function() {
 	
 });
 
 // When selecting in the right column add it to the selected list
-$('#column-right').delegate('input[type=\'checkbox\']', 'change', function() {
+$('#column-right table tbody').delegate('input[type=\'checkbox\']', 'change', function() {
 	var index = selected.indexOf(this.value);
 	
 	// Remove from the array
@@ -404,7 +435,7 @@ $('#button-selected').on('click', function() {
 });
 
 $('#button-selected').on('shown.bs.popover', function() {
-	$('[data-toggle=\'tooltip\']').tooltip();
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'header'});
 })
 
 // Remove items and untick the left column if slected remove button is clicked
@@ -428,37 +459,36 @@ $('header').delegate('#selected button', 'click', function() {
 	}
 });
 	
-$('#button-move').on('click', function() {
-	alert('hi');
+$('header').delegate('#button-move', 'click', function() {
 	// Remove all from copy and paste buttons
-	var node = $('#selected').find('div:first-child input');
+	var node = $('#selected div:first input');
 	
 	// Loop through each slected item. If there is an error it should appear and break the loop.
-	$.ajax({
-		url: 'index.php?route=common/filemanager/move&token=<?php echo $token; ?>',
-		type: 'post',
-		data: 'path=' + encodeURIComponent(node.attr('value')),
-		dataType: 'json',
-		success: function(json) {
-			if (json['error']) {
-				alert(json['error']);
-			} else {
-				$(node).parent().fadeOut('slow', function() {
-    				//$(node).parent().find('button').trigger('click');
+	if (node) {
+		$.ajax({
+			url: 'index.php?route=common/filemanager/move&token=<?php echo $token; ?>',
+			type: 'post',
+			data: 'from=' + encodeURIComponent(node.attr('value')) + '&to=',
+			dataType: 'json',
+			success: function(json) {
+				if (json['error']) {
+					alert(json['error']);
+				} else {
+					$(node).parent().find('button').trigger('click');
 					
-					//$('#button-move').trigger('click');
-				});
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}	
-	});
+					$('#button-move').trigger('click');
+				}
+			},
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+			}	
+		});
+	}
 });
 
-$('#button-copy').on('click', function() {
+$('header').delegate('#button-copy', 'click', function() {
 	// Remove all from copy and paste buttons
-	var node = $('#selected div:first-child input');
+	var node = $('#selected div:first input');
 	
 	// Loop through each slected item. If there is an error it should appear and break the loop.
 	$.ajax({
@@ -469,12 +499,10 @@ $('#button-copy').on('click', function() {
 		success: function(json) {
 			if (json['error']) {
 				alert(json['error']);
-			} else {
-				$(node).parent().fadeOut('slow', function() {
-    				$(node).parent().find('button').trigger('click');
+			} else {    				
+				$(node).parent().find('button').trigger('click');
 					
-					$('#button-move').trigger('click');
-				});
+				$('#button-copy').trigger('click');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -483,9 +511,9 @@ $('#button-copy').on('click', function() {
 	});
 });
 
-$('#button-delete').on('click', function() {
+$('header').delegate('#button-delete', 'click', function() {
 	// Remove all from copy and paste buttons
-	var node = $('#selected div:first-child input');
+	var node = $('#selected div:first input');
 	
 	// Loop through each slected item. If there is an error it should appear and break the loop.
 	$.ajax({
@@ -497,11 +525,9 @@ $('#button-delete').on('click', function() {
 			if (json['error']) {
 				alert(json['error']);
 			} else {
-				$(node).parent().fadeOut('slow', function() {
-    				$(node).parent().find('button').trigger('click');
-					
-					$('#button-move').trigger('click');
-				});
+				$(node).parent().find('button').trigger('click');
+				
+				$('#button-delete').trigger('click');
 			}
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

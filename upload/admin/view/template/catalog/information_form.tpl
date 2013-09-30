@@ -56,7 +56,7 @@
                  <div class="form-group required">
                   <label class="col-sm-2 control-label" for="input-meta-title<?php echo $language['language_id']; ?>"><?php echo $entry_meta_title; ?></label>
                   <div class="col-sm-10">
-                    <input type="text" name="information_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control" />
+                    <input type="text" name="information_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_meta_title[$language['language_id']])) { ?>
                     <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
                     <?php } ?>

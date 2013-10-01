@@ -437,6 +437,8 @@ class ControllerProductCategory extends Controller {
 
       		$this->data['continue'] = $this->url->link('common/home');
 
+            $this->response->addHeader('HTTP/1.0 404 Not Found');
+
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
 			} else {

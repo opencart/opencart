@@ -5,7 +5,7 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } else { ?>
-  <?php } ?>
+  <?php } ?> 
   <div class="alert alert-info"><i class="icon-thumbs-up-alt"></i> <?php echo $text_welcome; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>

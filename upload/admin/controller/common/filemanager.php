@@ -59,17 +59,17 @@ class ControllerCommonFileManager extends Controller {
 		$json = array();
 
 		$json['directory'] = array();
-		/*
-		if () {
+
+		if ($this->request->post['directory']) {
 			$json['directory'][] = array(
 				'name' => '..',
-				'path' => utf8_substr($directory, strlen(DIR_IMAGE . 'catalog/')),
-				'date' => date('Y-m-d G:i:s', filemtime($directory))
-			);				
+				'path' => utf8_substr($this->request->post['directory'], 0, strrpos($this->request->post['directory'], '/')),
+				'date' => ''
+			);
 		}
-			*/		
-		$directories = glob(DIR_IMAGE . rtrim('catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
 				
+		$directories = glob(DIR_IMAGE . 'catalog/' . rtrim(str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
+		
 		if ($directories) {
 			foreach ($directories as $directory) {
 				$json['directory'][] = array(
@@ -82,7 +82,7 @@ class ControllerCommonFileManager extends Controller {
 	
 		$json['file'] = array();
 		
-		$files = glob(DIR_IMAGE . rtrim('catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+		$files = glob(DIR_IMAGE . 'catalog/' . rtrim(str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
 		
 		if ($files) {
 			foreach ($files as $file) {

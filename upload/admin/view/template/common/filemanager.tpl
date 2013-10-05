@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
-<script type="text/javascript" src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+<script type="text/javascript" src="view/javascript/jquery/jquery-2.0.3.min.js"></script>
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link rel="stylesheet" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
@@ -73,7 +73,7 @@ html, body {
     <div id="column-left" class="col-xs-3">
       <div class="well well-sm">
         <ul>
-          <li><a href="/"><i class="icon-caret-right icon-fixed-width"></i> Catalog</a></li>
+          <li><a href=""><i class="icon-caret-right icon-fixed-width"></i> Catalog</a></li>
         </ul>
       </div>
     </div>
@@ -141,7 +141,9 @@ $('#column-left').delegate('a', 'click', function(e) {
 					html = '<ul class="icons-ul">';
 					
 					for (i = 0; i < json['directory'].length; i++) {
-						html += '<li><a href="' + json['directory'][i]['path'] + '"><i class="icon-caret-right icon-fixed-width"></i> ' + json['directory'][i]['name'] + '</a></li>';
+						if (json['directory'][i]['path']) {
+							html += '<li><a href="' + json['directory'][i]['path'] + '"><i class="icon-caret-right icon-fixed-width"></i> ' + json['directory'][i]['name'] + '</a></li>';
+						}
 					}
 				
 					html += '</ul>';
@@ -157,13 +159,13 @@ $('#column-left').delegate('a', 'click', function(e) {
 		$(e.target).removeClass('icon-caret-down');
 		$(e.target).addClass('icon-caret-right');		
 		$(node).parent().find('ul').remove();
-	} else {
+	} else {		
+		// Set the current folder
+		$('input[name=\'folder\']').attr('value', $(node).attr('href'));
+		
 		// Remove all active classes
 		$('#column-left a').removeClass('active');
 		
-		// Set the current folder
-		$('input[name=\'folder\']').attr('value', $(node).attr('href'));
-			
 		// Add active class to current node
 		$(node).addClass('active');
 		
@@ -179,20 +181,30 @@ $('#column-left').delegate('a', 'click', function(e) {
 					html = '';
 					
 					for (i = 0; i < json['directory'].length; i++) {
-						html += '<tr>';
-					
-						// If in selected list make it checked
-						if (selected.indexOf(json['directory'][i]['path']) !== -1) {
-							html += '  <td class="text-center"><input type="checkbox" name="selected" value="' + json['directory'][i]['path'] + '" checked="checked" /></td>';
+						if (json['directory'][i]['name'] == '..') {
+							html += '<tr>';
+							html += '  <td></td>';
+							html += '  <td class="text-center"><i class="icon-file-alt icon-large"></i></td>';
+							html += '  <td><a href="' + json['directory'][i]['path'] + '" class="directory">' + json['directory'][i]['name'] + '</a></td>';
+							html += '  <td></td>';
+							html += '  <td></td>';
+							html += '</tr>';	
 						} else {
-							html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
+							html += '<tr>';
+						
+							// If in selected list make it checked
+							if (selected.indexOf(json['directory'][i]['path']) !== -1) {
+								html += '  <td class="text-center"><input type="checkbox" name="selected" value="' + json['directory'][i]['path'] + '" checked="checked" /></td>';
+							} else {
+								html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
+							}
+						
+							html += '  <td class="text-center"><i class="icon-folder-close-alt icon-large"></i></td>';
+							html += '  <td><a href="' + json['directory'][i]['path'] + '" class="directory">' + json['directory'][i]['name'] + '</a></td>';
+							html += '  <td></td>';
+							html += '  <td>' + json['directory'][i]['date'] + '</td>';
+							html += '</tr>';
 						}
-					
-						html += '  <td class="text-center"><i class="icon-folder-close-alt  icon-large"></i></td>';
-						html += '  <td><a href="' + json['directory'][i]['path'] + '">' + json['directory'][i]['name'] + '</a></td>';
-						html += '  <td></td>';
-						html += '  <td>' + json['directory'][i]['date'] + '</td>';
-						html += '</tr>';						
 					}
 					
 					$('#column-right table tbody').html(html);
@@ -222,11 +234,13 @@ $('#column-left').delegate('a', 'click', function(e) {
 					}
 				} else {
 					html  = '<tr>';
-					html += '  <td colspan="6" class="text-center">No results!</td>';
+					html += '  <td colspan="5" class="text-center">No results!</td>';
 					html += '</tr>';
 					
 					$('#column-right table tbody').html(html);
+					
 				}
+
 			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -241,14 +255,13 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 	e.preventDefault();
 	
 	var node = this;
-	
+			
 	// Set the current folder
 	$('input[name=\'folder\']').attr('value', $(node).attr('href'));
 	
 	// Remove all active classes
 	$('#column-left a').removeClass('active');
 	
-	// If current node is closed we open it.
 	$.ajax({
 		url: 'index.php?route=common/filemanager/directory&token=<?php echo $token; ?>',
 		type: 'post',
@@ -260,20 +273,31 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 				html = '';
 				
 				for (i = 0; i < json['directory'].length; i++) {
-					html += '<tr>';
-					
-					// If in selected list make it checked
-					if (selected.indexOf(json['directory'][i]['path']) !== -1) {
-						html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" checked="checked" /></td>';
+					// If link is to previous directory
+					if (json['directory'][i]['name'] == '..') {
+						html += '<tr>';
+						html += '  <td></td>';
+						html += '  <td class="text-center"><i class="icon-file-alt icon-large"></i></td>';
+						html += '  <td><a href="' + json['directory'][i]['path'] + '" class="directory">' + json['directory'][i]['name'] + '</a></td>';
+						html += '  <td></td>';
+						html += '  <td></td>';
+						html += '</tr>';	
 					} else {
-						html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
+						html += '<tr>';
+						
+						// If in selected list make it checked
+						if (selected.indexOf(json['directory'][i]['path']) !== -1) {
+							html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" checked="checked" /></td>';
+						} else {
+							html += '  <td class="text-center"><input type="checkbox" value="' + json['directory'][i]['path'] + '" /></td>';
+						}
+						
+						html += '  <td class="text-center"><i class="icon-folder-close-alt icon-large"></i></td>';
+						html += '  <td><a href="' + json['directory'][i]['path'] + '" class="directory">' + json['directory'][i]['name'] + '</a></td>';
+						html += '  <td></td>';
+						html += '  <td>' + json['directory'][i]['date'] + '</td>';
+						html += '</tr>';						
 					}
-					
-					html += '  <td class="text-center"><i class="icon-folder-close-alt icon-large"></i></td>';
-					html += '  <td><a href="' + json['directory'][i]['path'] + '" class="directory">' + json['directory'][i]['name'] + '</a></td>';
-					html += '  <td></td>';
-					html += '  <td>' + json['directory'][i]['date'] + '</td>';
-					html += '</tr>';						
 				}
 				
 				$('#column-right table tbody').html(html);
@@ -303,7 +327,7 @@ $('#column-right').delegate('a.directory', 'click', function(e) {
 				}
 			} else {
 				html  = '<tr>';
-				html += '  <td colspan="6" class="text-center">No results!</td>';
+				html += '  <td colspan="5" class="text-center">No results!</td>';
 				html += '</tr>';
 				
 				$('#column-right table tbody').html(html);
@@ -372,35 +396,33 @@ $('#column-right table tbody').delegate('input[type=\'checkbox\']', 'change', fu
 
 // Display the popover when the selected button is clicked 
 $('#button-selected').on('click', function() {
+	// Create the popover menu
+	html  = '<div>';
+	html += '  <div id="selected">';
+	
+	if (selected.length) {
+		for (i = 0; i < selected.length; i++) {
+			html += '<div><button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-minus-sign"></i></button>' + selected[i] + '<input type="hidden" name="selected[]" value="' + selected[i] + '" /></div>';
+		}
+	} else {
+		html += '<p class="text-center"><?php echo $text_no_results; ?></p>';
+	}
+	
+	html += '  </div>';
+	html += '  <div class="text-center">';
+	html += '    <div class="btn-group">';
+	html += '      <button type="button" id="button-move" data-toggle="tooltip" title="<?php echo $button_move; ?>" class="btn btn-default navbar-btn"><i class="icon-move"></i></button>';
+	html += '      <button type="button" id="button-copy" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn btn-default navbar-btn"><i class="icon-copy"></i></button>';
+	html += '    </div>';
+	html += '    <button type="button" id="button-delete" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="icon-trash"></i></button>';
+	html += '  </div>';
+	html += '</div>';	
+	
 	$(this).popover({
 		html: true,
 		trigger: 'click',
 		title: '<?php echo $text_selected; ?>',
-		content: function() {
-			// Create the popover menu
-			html  = '<div>';
-			html += '  <div id="selected">';
-			
-			if (selected.length) {
-				for (i = 0; i < selected.length; i++) {
-					html += '<div><button type="button" class="btn btn-danger btn-sm pull-right" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="icon-minus-sign"></i></button>' + selected[i] + '<input type="hidden" name="selected[]" value="' + selected[i] + '" /></div>';
-				}
-			} else {
-				html += '<p class="text-center"><?php echo $text_no_results; ?></p>';
-			}
-			
-			html += '  </div>';
-			html += '  <div class="text-center">';
-			html += '    <div class="btn-group">';
-			html += '      <button type="button" id="button-move" data-toggle="tooltip" title="<?php echo $button_move; ?>" class="btn btn-default navbar-btn"><i class="icon-move"></i></button>';
-			html += '      <button type="button" id="button-copy" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn btn-default navbar-btn"><i class="icon-copy"></i></button>';
-			html += '    </div>';
-			html += '    <button type="button" id="button-delete" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn btn-danger"><i class="icon-trash"></i></button>';
-			html += '  </div>';
-			html += '</div>';
-			
-			return html;
-		},
+		content: html,
 		placement: 'bottom'
 	});	
 });

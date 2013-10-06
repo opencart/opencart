@@ -83,3 +83,4 @@ $_['text_close_date']           = 'Closing date';
 $_['text_multi_item']           = 'Multi item';
 $_['text_sub_amt']              = 'Subscription amount';
 $_['text_sub_period']           = 'Subscription period';
+?>

@@ -68,7 +68,7 @@ class ControllerCommonFileManager extends Controller {
 			);
 		}
 				
-		$directories = glob(DIR_IMAGE . 'catalog/' . rtrim(str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
+		$directories = glob(DIR_IMAGE . 'catalog/' . rtrim($this->_sanitizePath($this->request->post['directory']), '/') . '/*', GLOB_ONLYDIR); 
 		
 		if ($directories) {
 			foreach ($directories as $directory) {
@@ -82,7 +82,7 @@ class ControllerCommonFileManager extends Controller {
 	
 		$json['file'] = array();
 		
-		$files = glob(DIR_IMAGE . 'catalog/' . rtrim(str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/') . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
+		$files = glob(DIR_IMAGE . 'catalog/' . rtrim($this->_sanitizePath($this->request->post['directory']), '/') . '/*.{jpg,jpeg,png,gif}', GLOB_BRACE);
 		
 		if ($files) {
 			foreach ($files as $file) {
@@ -165,7 +165,7 @@ class ControllerCommonFileManager extends Controller {
 					$json['error'] = $this->language->get('error_filename');
 				}
 					
-				$directory = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/');
+				$directory = rtrim(DIR_IMAGE . 'data/' . $this->_sanitizePath($this->request->post['directory']), '/');
 				
 				if (!is_dir($directory)) {
 					$json['error'] = $this->language->get('error_directory');
@@ -235,7 +235,7 @@ class ControllerCommonFileManager extends Controller {
 				$json['error'] = $this->language->get('error_filename');
 			}
 				
-			$old_name = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
+			$old_name = rtrim(DIR_IMAGE . 'data/' . $this->_sanitizePath(html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
 			
 			if (!file_exists($old_name) || $old_name == DIR_IMAGE . 'data') {
 				$json['error'] = $this->language->get('error_rename');
@@ -247,7 +247,7 @@ class ControllerCommonFileManager extends Controller {
 				$ext = '';
 			}		
 			
-			$new_name = dirname($old_name) . '/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
+			$new_name = dirname($old_name) . '/' . $this->_sanitizePath(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
 																			   
 			if (file_exists($new_name)) {
 				$json['error'] = $this->language->get('error_exists');
@@ -274,13 +274,13 @@ class ControllerCommonFileManager extends Controller {
 		
 		if (isset($this->request->post['directory'])) {
 			if (isset($this->request->post['name']) || $this->request->post['name']) {
-				$directory = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['directory']), '/');							   
+				$directory = rtrim(DIR_IMAGE . 'data/' . $this->_sanitizePath($this->request->post['directory']), '/');							   
 				
 				if (!is_dir($directory)) {
 					$json['error'] = $this->language->get('error_directory');
 				}
 				
-				if (file_exists($directory . '/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['name']))) {
+				if (file_exists($directory . '/' . $this->_sanitizePath($this->request->post['name']))) {
 					$json['error'] = $this->language->get('error_exists');
 				}
 			} else {
@@ -295,7 +295,7 @@ class ControllerCommonFileManager extends Controller {
     	}
 		
 		if (!isset($json['error'])) {	
-			mkdir($directory . '/' . str_replace(array('../', '..\\', '..'), '', $this->request->post['name']), 0777);
+			mkdir($directory . '/' . $this->_sanitizePath($this->request->post['name']), 0777);
 			
 			$json['success'] = $this->language->get('text_create');
 		}	
@@ -309,7 +309,7 @@ class ControllerCommonFileManager extends Controller {
 		$json = array();
 
 		if (isset($this->request->post['from']) && isset($this->request->post['to'])) {
-			$from = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['from'], ENT_QUOTES, 'UTF-8')), '/');
+			$from = rtrim(DIR_IMAGE . 'catalog/' . $this->_sanitizePath(html_entity_decode($this->request->post['from'], ENT_QUOTES, 'UTF-8')), '/');
 			
 			if (!file_exists($from)) {
 				$json['error'] = $this->language->get('error_missing');
@@ -319,7 +319,7 @@ class ControllerCommonFileManager extends Controller {
 				$json['error'] = $this->language->get('error_default');
 			}
 			
-			$to = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['to'], ENT_QUOTES, 'UTF-8')), '/');
+			$to = rtrim(DIR_IMAGE . 'data/' . $this->_sanitizePath(html_entity_decode($this->request->post['to'], ENT_QUOTES, 'UTF-8')), '/');
 
 			if (!file_exists($to)) {
 				$json['error'] = $this->language->get('error_move');
@@ -356,7 +356,7 @@ class ControllerCommonFileManager extends Controller {
 				$json['error'] = $this->language->get('error_filename');
 			}
 				
-			$old_name = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
+			$old_name = rtrim(DIR_IMAGE . 'data/' . $this->_sanitizePath(html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
 			
 			if (!file_exists($old_name) || $old_name == DIR_IMAGE . 'data') {
 				$json['error'] = $this->language->get('error_copy');
@@ -368,7 +368,7 @@ class ControllerCommonFileManager extends Controller {
 				$ext = '';
 			}		
 			
-			$new_name = dirname($old_name) . '/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
+			$new_name = dirname($old_name) . '/' . $this->_sanitizePath(html_entity_decode($this->request->post['name'], ENT_QUOTES, 'UTF-8') . $ext);
 																			   
 			if (file_exists($new_name)) {
 				$json['error'] = $this->language->get('error_exists');
@@ -444,7 +444,7 @@ class ControllerCommonFileManager extends Controller {
 		$json = array();
 		
 		if (isset($this->request->post['path'])) {
-			$path = rtrim(DIR_IMAGE . 'data/' . str_replace(array('../', '..\\', '..'), '', html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
+			$path = rtrim(DIR_IMAGE . 'data/' . $this->_sanitizePath(html_entity_decode($this->request->post['path'], ENT_QUOTES, 'UTF-8')), '/');
 			 
 			if (!file_exists($path)) {
 				$json['error'] = $this->language->get('error_select');
@@ -497,5 +497,19 @@ class ControllerCommonFileManager extends Controller {
 		
 		$this->response->setOutput(json_encode($json));
 	}
+	
+	/**
+	 * Better path sanitation
+	 * @see http://www.exploit-db.com/exploits/24877/
+	 *
+	 * @param type $path
+	 */
+	private function _sanitizePath($path) {
+		while (strstr($path, '..')) {
+			$path = str_replace(array('../', '..\\', '..'), '', $path);
+		}
+		return $path;
+	}
+	
 } 
 ?>

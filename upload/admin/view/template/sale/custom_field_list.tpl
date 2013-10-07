@@ -44,11 +44,7 @@
                   <?php } else { ?>
                   <a href="<?php echo $sort_type; ?>"><?php echo $column_type; ?></a>
                   <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'cf.location') { ?>
-                  <a href="<?php echo $sort_location; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_location; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_location; ?>"><?php echo $column_location; ?></a>
-                  <?php } ?></td>
+                <td class="text-left"><?php echo $column_location; ?></td>
                 <td class="text-right"><?php if ($sort == 'cf.sort_order') { ?>
                   <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
                   <?php } else { ?>

@@ -124,7 +124,7 @@ $('#button-quote').on('click', function() {
   				
 				$('#modal-shipping').modal('show');
   
-				$('input[name=\'shipping_method\']').bind('change', function() {
+				$('input[name=\'shipping_method\']').on('change', function() {
 					$('#button-shipping').prop('disabled', false);
 				});
 			}

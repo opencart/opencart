@@ -17,10 +17,14 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
+      <div class="pull-right">
+        <button type="submit" form="form-backup" class="btn btn-default"><i class="icon-download"></i> <?php echo $button_backup; ?></button>
+        <button type="submit" form="form-restore" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_restore; ?></button>
+      </div>
       <h1 class="panel-title"><i class="icon-exchange"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
-      <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
+      <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-restore" class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-import"><?php echo $entry_restore; ?></label>
           <div class="col-sm-10">
@@ -28,12 +32,10 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-lg-12">
-            <button type="submit" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_restore; ?></button>
-          </div>
+          <div class="col-lg-12"> </div>
         </div>
       </form>
-      <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="backup" class="form-horizontal">
+      <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_backup; ?></label>
           <div class="col-sm-10">
@@ -48,7 +50,6 @@
             </div>
             <a onclick="$(this).parent().find(':checkbox').prop('checked', true);"><?php echo $text_select_all; ?></a> / <a onclick="$(this).parent().find(':checkbox').prop('checked', false);"><?php echo $text_unselect_all; ?></a></div>
         </div>
-        <button type="submit" class="btn btn-default"><i class="icon-download"></i> <?php echo $button_backup; ?></button>
       </form>
     </div>
   </div>

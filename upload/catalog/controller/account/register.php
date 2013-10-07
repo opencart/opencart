@@ -10,8 +10,6 @@ class ControllerAccountRegister extends Controller {
     	$this->language->load('account/register');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 					
 		$this->load->model('account/customer');
 		
@@ -88,6 +86,7 @@ class ControllerAccountRegister extends Controller {
     	$this->data['entry_confirm'] = $this->language->get('entry_confirm');
 
 		$this->data['button_continue'] = $this->language->get('button_continue');
+		$this->data['button_upload'] = $this->language->get('button_upload');
     
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -231,20 +230,6 @@ class ControllerAccountRegister extends Controller {
 			$this->data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
 		
-		// Company ID
-		if (isset($this->request->post['company_id'])) {
-    		$this->data['company_id'] = $this->request->post['company_id'];
-		} else {
-			$this->data['company_id'] = '';
-		}
-		
-		// Tax ID
-		if (isset($this->request->post['tax_id'])) {
-    		$this->data['tax_id'] = $this->request->post['tax_id'];
-		} else {
-			$this->data['tax_id'] = '';
-		}
-						
 		if (isset($this->request->post['address_1'])) {
     		$this->data['address_1'] = $this->request->post['address_1'];
 		} else {
@@ -290,7 +275,7 @@ class ControllerAccountRegister extends Controller {
 		$this->load->model('localisation/country');
 		
     	$this->data['countries'] = $this->model_localisation_country->getCountries();
-		
+	
 		if (isset($this->request->post['password'])) {
     		$this->data['password'] = $this->request->post['password'];
 		} else {
@@ -418,6 +403,17 @@ class ControllerAccountRegister extends Controller {
       			$this->error['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
+				
+		// Custom Field Validation
+		$this->load->model('account/custom_field');
+		
+		$custom_fields = $this->model_account_custom_field->getCustomFields('registration', $customer_group_id);
+		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+			}
+		}
 		
     	if (!$this->error) {
       		return true;
@@ -450,5 +446,24 @@ class ControllerAccountRegister extends Controller {
 		
 		$this->response->setOutput(json_encode($json));
 	}	
+	
+	public function custom_field() {
+		$json = array();
+		
+		$this->load->model('account/custom_field');
+
+		// Customer Group
+		$this->load->model('account/customer_group');
+		
+		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			$customer_group_id = $this->request->get['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+		
+		$json = $this->model_account_custom_field->getCustomFields('registration', $customer_group_id);
+
+		$this->response->setOutput(json_encode($json));
+	}		
 }
 ?>

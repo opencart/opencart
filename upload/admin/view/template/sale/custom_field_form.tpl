@@ -99,6 +99,24 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_location; ?></label>
+          <div class="col-sm-10">
+             <?php foreach ($locations as $location) { ?>
+             <div class="checkbox">
+              <label>
+                <?php if (in_array($location['value'], $custom_field_location)) { ?>
+                <input type="checkbox" name="location[]" value="<?php echo $location['value']; ?>" checked="checked" />
+                <?php echo $location['text']; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="location[]" value="<?php echo $location['value']; ?>" />
+                <?php echo $location['text']; ?>
+                <?php } ?>
+              </label>
+            </div>      
+            <?php } ?>
+          </div>
+        </div>
+        <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_customer_group; ?></label>
           <div class="col-sm-10">
             <?php $customer_group_row = 0; ?>
@@ -137,110 +155,6 @@
             <?php $customer_group_row++; ?>
             <?php } ?>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
-          <div class="col-sm-10">
-            <select name="location" id="input-location" class="form-control">
-              <?php if ($location == 'customer') { ?>
-              <option value="customer" selected="selected"><?php echo $text_customer; ?></option>
-              <?php } else { ?>
-              <option value="customer"><?php echo $text_customer; ?></option>
-              <?php } ?>
-              <?php if ($location == 'address') { ?>
-              <option value="address" selected="selected"><?php echo $text_address; ?></option>
-              <?php } else { ?>
-              <option value="address"><?php echo $text_address; ?></option>
-              <?php } ?>
-              <?php if ($location == 'payment_address') { ?>
-              <option value="payment_address" selected="selected"><?php echo $text_payment_address; ?></option>
-              <?php } else { ?>
-              <option value="payment_address"><?php echo $text_payment_address; ?></option>
-              <?php } ?>
-              <?php if ($location == 'shipping_address') { ?>
-              <option value="shipping_address" selected="selected"><?php echo $text_shipping_address; ?></option>
-              <?php } else { ?>
-              <option value="shipping_address"><?php echo $text_shipping_address; ?></option>
-              <?php } ?>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-position"><?php echo $entry_position; ?></label>
-          <div class="col-sm-10">
-            <select name="position" id="input-position" class="form-control">
-              <?php if ($position == 'begining') { ?>
-              <option value="begining" selected="selected"><?php echo $text_begining; ?></option>
-              <?php } else { ?>
-              <option value="begining"><?php echo $text_begining; ?></option>
-              <?php } ?>
-              <?php if ($position == 'firstname') { ?>
-              <option value="firstname" selected="selected"><?php echo $text_firstname; ?></option>
-              <?php } else { ?>
-              <option value="firstname"><?php echo $text_firstname; ?></option>
-              <?php } ?>
-              <?php if ($position == 'lastname') { ?>
-              <option value="lastname" selected="selected"><?php echo $text_lastname; ?></option>
-              <?php } else { ?>
-              <option value="lastname"><?php echo $text_lastname; ?></option>
-              <?php } ?>
-              <?php if ($position == 'email') { ?>
-              <option value="email" selected="selected"><?php echo $text_email; ?></option>
-              <?php } else { ?>
-              <option value="email"><?php echo $text_email; ?></option>
-              <?php } ?>
-              <?php if ($position == 'telephone') { ?>
-              <option value="telephone" selected="selected"><?php echo $text_telephone; ?></option>
-              <?php } else { ?>
-              <option value="telephone"><?php echo $text_telephone; ?></option>
-              <?php } ?>
-              <?php if ($position == 'fax') { ?>
-              <option value="fax" selected="selected"><?php echo $text_fax; ?></option>
-              <?php } else { ?>
-              <option value="fax"><?php echo $text_fax; ?></option>
-              <?php } ?>
-              <?php if ($position == 'company') { ?>
-              <option value="company" selected="selected"><?php echo $text_company; ?></option>
-              <?php } else { ?>
-              <option value="company"><?php echo $text_company; ?></option>
-              <?php } ?>
-              <?php if ($position == 'customer_group_id') { ?>
-              <option value="customer_group_id" selected="selected"><?php echo $text_customer_group; ?></option>
-              <?php } else { ?>
-              <option value="customer_group_id"><?php echo $text_customer_group; ?></option>
-              <?php } ?>
-              <?php if ($position == 'address_1') { ?>
-              <option value="address_1" selected="selected"><?php echo $text_address_1; ?></option>
-              <?php } else { ?>
-              <option value="address_1"><?php echo $text_address_1; ?></option>
-              <?php } ?>
-              <?php if ($position == 'address_2') { ?>
-              <option value="address_2" selected="selected"><?php echo $text_address_2; ?></option>
-              <?php } else { ?>
-              <option value="address_2"><?php echo $text_address_2; ?></option>
-              <?php } ?>
-              <?php if ($position == 'city') { ?>
-              <option value="city" selected="selected"><?php echo $text_city; ?></option>
-              <?php } else { ?>
-              <option value="city"><?php echo $text_city; ?></option>
-              <?php } ?>
-              <?php if ($position == 'postcode') { ?>
-              <option value="postcode" selected="selected"><?php echo $text_postcode; ?></option>
-              <?php } else { ?>
-              <option value="postcode"><?php echo $text_postcode; ?></option>
-              <?php } ?>
-              <?php if ($position == 'country_id') { ?>
-              <option value="country_id" selected="selected"><?php echo $text_country; ?></option>
-              <?php } else { ?>
-              <option value="country_id"><?php echo $text_country; ?></option>
-              <?php } ?>
-              <?php if ($position == 'zone_id') { ?>
-              <option value="zone_id" selected="selected"><?php echo $text_zone; ?></option>
-              <?php } else { ?>
-              <option value="zone_id"><?php echo $text_zone; ?></option>
-              <?php } ?>
-            </select>
-            <span class="help-block"><?php echo $help_position; ?></span> </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>

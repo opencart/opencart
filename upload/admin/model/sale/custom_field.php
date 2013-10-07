@@ -1,7 +1,7 @@
 <?php
 class ModelSaleCustomField extends Model {
 	public function addCustomField($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', location = '" . $this->db->escape($data['location']) . "', position = '" . $this->db->escape($data['position']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', location = '" . $this->db->escape(implode(',', $data['location'])) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
 		
 		$custom_field_id = $this->db->getLastId();
 		
@@ -12,7 +12,7 @@ class ModelSaleCustomField extends Model {
 		if (isset($data['custom_field_customer_group'])) {
 			foreach ($data['custom_field_customer_group'] as $custom_field_customer_group) {
 				if (isset($custom_field_customer_group['customer_group_id'])) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_customer_group SET custom_field_id = '" . (int)$custom_field_id . "', customer_group_id = '" . (int)$custom_field_customer_group['customer_group_id'] . "', required = '" . (int)(!empty($custom_field_customer_group['required']) ? true : false) . "'");
+					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_customer_group SET custom_field_id = '" . (int)$custom_field_id . "', customer_group_id = '" . (int)$custom_field_customer_group['customer_group_id'] . "', required = '" . (int)(!empty($custom_field_customer_group['required']) ? $custom_field_customer_group['required'] : 0) . "'");
 				}
 			}
 		}
@@ -31,7 +31,7 @@ class ModelSaleCustomField extends Model {
 	}
 	
 	public function editCustomField($custom_field_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', location = '" . $this->db->escape($data['location']) . "', position = '" . $this->db->escape($data['position']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE custom_field_id = '" . (int)$custom_field_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', location = '" . $this->db->escape(implode(',', $data['location'])) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "custom_field_description WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
@@ -44,7 +44,7 @@ class ModelSaleCustomField extends Model {
 		if (isset($data['custom_field_customer_group'])) {
 			foreach ($data['custom_field_customer_group'] as $custom_field_customer_group) {
 				if (isset($custom_field_customer_group['customer_group_id'])) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_customer_group SET custom_field_id = '" . (int)$custom_field_id . "', customer_group_id = '" . (int)$custom_field_customer_group['customer_group_id'] . "', required = '" . (int)(!empty($custom_field_customer_group['required']) ? true : false) . "'");
+					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_customer_group SET custom_field_id = '" . (int)$custom_field_id . "', customer_group_id = '" . (int)$custom_field_customer_group['customer_group_id'] . "', required = '" . (int)(!empty($custom_field_customer_group['required']) ? $custom_field_customer_group['required'] : 0) . "'");
 				}
 			}
 		}
@@ -93,7 +93,6 @@ class ModelSaleCustomField extends Model {
 		$sort_data = array(
 			'cfd.name',
 			'cf.type',
-			'cf.location',
 			'cf.status',
 			'cf.sort_order'
 		);	

@@ -949,7 +949,7 @@ $('input[name=\'product\']').autocomplete({
 					for (j = 0; j < option['product_option_value'].length; j++) {
 						option_value = option['product_option_value'][j];
 						
-						html += '<div class="chekbox">';
+						html += '<div class="checkbox">';
 						
 						html += '  <label><input type="checkbox" name="option[' + option['product_option_id'] + '][]" value="' + option_value['product_option_value_id'] + '" /> ' + option_value['name'];
 						

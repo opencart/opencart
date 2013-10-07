@@ -105,7 +105,7 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('input[name=\'payment\']').bind('change', function() {
+$('input[name=\'payment\']').on('change', function() {
     $('.payment').hide();
     
     $('#payment-' + this.value).show();

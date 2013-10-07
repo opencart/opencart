@@ -265,7 +265,7 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('select[name=\'country_id\']').bind('change', function() {
+$('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=affiliate/register/country&country_id=' + this.value,
 		dataType: 'json',
@@ -309,7 +309,7 @@ $('select[name=\'country_id\']').bind('change', function() {
 $('select[name=\'country_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
-$('input[name=\'payment\']').bind('change', function() {
+$('input[name=\'payment\']').on('change', function() {
 	$('.payment').hide();
 	
 	$('#payment-' + this.value).show();

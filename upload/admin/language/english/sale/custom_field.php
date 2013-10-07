@@ -15,24 +15,11 @@ $_['text_file']             = 'File';
 $_['text_date']             = 'Date';
 $_['text_datetime']         = 'Date &amp; Time';
 $_['text_time']             = 'Time';
-$_['text_customer']         = 'Customer Details';
+$_['text_registration']     = 'Registration';
+$_['text_account']          = 'Account';
 $_['text_address']          = 'Address';
 $_['text_payment_address']  = 'Payment Address';
 $_['text_shipping_address'] = 'Shipping Address';
-$_['text_begining']         = 'At the Begining';
-$_['text_firstname']        = 'First Name';
-$_['text_lastname']         = 'Last Name';
-$_['text_email']            = 'E-Mail';
-$_['text_telephone']        = 'Telephone';
-$_['text_fax']              = 'Fax';
-$_['text_company']          = 'Company';
-$_['text_customer_group']   = 'Customer Group';
-$_['text_address_1']        = 'Address 1';
-$_['text_address_2']        = 'Address 2';
-$_['text_city']             = 'City';
-$_['text_postcode']         = 'Post Code';
-$_['text_country']          = 'Country';
-$_['text_zone']             = 'Region / State';
 
 // Column
 $_['column_name']           = 'Custom Field Name';
@@ -46,15 +33,11 @@ $_['entry_name']            = 'Custom Field Name';
 $_['entry_type']            = 'Type';
 $_['entry_value']           = 'Value';
 $_['entry_custom_value']    = 'Custom Field Value Name';
+$_['entry_location']        = 'Location';
 $_['entry_customer_group']  = 'Customer Group';
 $_['entry_required']        = 'Required';
-$_['entry_location']        = 'Location';
-$_['entry_position']        = 'Position';
 $_['entry_status']          = 'Status';
 $_['entry_sort_order']      = 'Sort Order';
-
-// Help
-$_['help_position']         = 'Select which field you want the new field to appear after.';
 
 // Error
 $_['error_permission']      = 'Warning: You do not have permission to modify custom fields!';

@@ -1187,13 +1187,9 @@ class ControllerSaleOrder extends Controller {
       		$this->error['payment_zone'] = $this->language->get('error_zone');
     	}	
 		
-    	if ($this->request->post['payment_method'] == '') {
-      		$this->error['payment_zone'] = $this->language->get('error_zone');
-    	}			
-		
-		if (!$this->request->post['payment_method']) {
+    	if (!isset($this->request->post['payment_method']) || $this->request->post['payment_method'] == '') {
 			$this->error['payment_method'] = $this->language->get('error_payment');
-		}	
+		}
 					
 		// Check if any products require shipping
 		$shipping = false;

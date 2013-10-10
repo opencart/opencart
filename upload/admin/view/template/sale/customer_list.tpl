@@ -18,8 +18,8 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-customer" formaction="<?php echo $approve; ?>" class="btn"><i class="icon-ok"></i> <?php echo $button_approve; ?></button>
-        <a href="<?php echo $insert; ?>" class="btn"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+        <button type="submit" form="form-customer" formaction="<?php echo $approve; ?>" class="btn btn-default"><i class="icon-ok"></i> <?php echo $button_approve; ?></button>
+        <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
         <div class="btn-group">
           <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><i class="icon-trash"></i> <?php echo $button_delete; ?> <i class="icon-caret-down"></i></button>
           <ul class="dropdown-menu pull-right">

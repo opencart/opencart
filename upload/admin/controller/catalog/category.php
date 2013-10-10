@@ -19,21 +19,29 @@ class ControllerCatalogCategory extends Controller {
 		
 		$this->load->model('catalog/category');
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_catalog_category->addCategory($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
+		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+			$json = array();
+			
+			if ($this->validateForm()) {
+				$this->model_catalog_category->addCategory($this->request->post);
+	
+				$this->session->data['success'] = $this->language->get('text_success');
+	
+				$url = '';
+	
+				if (isset($this->request->get['page'])) {
+					$url .= '&page=' . $this->request->get['page'];
+				}
 						
-			$this->redirect($this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL')); 
+				$json['redirect'] = $this->url->link('catalog/category', 'token=' . $this->session->data['token'] . $url, 'SSL'); 
+			} else {
+				$json['error'] = $this->error;
+			}
+			
+			$this->response->setOutput($json);
+		} else {
+			$this->getForm();
 		}
-
-		$this->getForm();
 	}
 
 	public function update() {

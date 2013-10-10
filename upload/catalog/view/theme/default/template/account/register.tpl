@@ -19,10 +19,10 @@
     <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <p><?php echo $text_account_already; ?></p>
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
+      <form action="index.php?route=account/register/submit" method="post" enctype="multipart/form-data" class="form-horizontal test">
         <fieldset>
           <legend><?php echo $text_your_details; ?></legend>
-          <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'display' : 'none'); ?>;">
+          <div class="form-group required" style="display: <?php echo (count($customer_groups) > 1 ? 'display' : 'none'); ?>;">
             <label class="col-sm-2 control-label"><?php echo $entry_customer_group; ?></label>
             <div class="col-sm-10">
               <?php foreach ($customer_groups as $customer_group) { ?>
@@ -41,7 +41,7 @@
               <?php } ?>
               <?php } ?>
             </div>
-          </div>          
+          </div>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
             <div class="col-sm-10">
@@ -228,13 +228,7 @@
 $('input[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=account/register/custom_field&customer_group_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			//$('select[name=\'country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
-		},
-		complete: function() {
-			//$('.icon-spinner').remove();
-		},			
+		dataType: 'json',	
 		success: function(json) {
 			$('.custom-field').remove();
 			

@@ -50,14 +50,15 @@ $(document).ready(function() {
 	
 	// change product-grid to product-list
 	$('#list-view').click(function() {
-	$('.product-grid').removeClass('product-grid').addClass('product-list');
-	$('.product-thumb').addClass('clearfix');
-	
+		$('.product-grid').removeClass('product-grid').addClass('product-list');
+		
+		$('.product-thumb').addClass('clearfix');
 	});
 	
 	// change product-list to product-grid
 	$('#grid-view').click(function() {
 		$('.product-list').removeClass('product-list').addClass('product-grid');
+		
 		$('.product-thumb').removeClass('clearfix');
 	});
 	
@@ -312,3 +313,61 @@ $(document).delegate('.agree', 'click', function(event) {
 		});	
 	}
 })(window.jQuery);
+
+// AJAX Form Submission
+$(document).delegate('.test', 'submit', function(e) {
+	e.preventDefault();
+	
+	//alert($(e.currentTarget).html());
+	//alert($(e.target).html());
+	
+	//alert($(this).attr('formaction'));
+	
+	var node = this;
+	
+	$.ajax({
+		url: $(this).attr('action'),
+		type: 'post',
+		data: new FormData($(this)[0]),
+		dataType: 'html',
+		cache: false,
+		contentType: false,
+		processData: false,		
+        beforeSend: function() {
+        	$(node).find('input[type=\'submit\']').button('loading');
+		},  
+        complete: function() {
+			$(node).find('input[type=\'submit\']').button('reset');
+        },
+		success: function(json) {
+			alert(json);
+			$('.alert, .text-danger').remove();
+			
+			$('.has-error').removeClass('has-error');
+						
+			if (json['error']) {
+				if (json['error']['warning']) {
+					$('#content').prepend('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				}
+				
+				for (i in json['error']) {
+					$('#input-' + i.replace('_', '-')).parent().parent().addClass('has-error');
+				
+					$('#input-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
+				}				
+			}
+						
+			if (json['success']) {
+				$('#content').prepend('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+			}
+			
+			if (json['redirect']) {
+				location = json['redirect'];
+				//stop
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
+});

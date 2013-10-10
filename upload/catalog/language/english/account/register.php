@@ -43,5 +43,5 @@ $_['error_city']           = 'City must be between 2 and 128 characters!';
 $_['error_postcode']       = 'Postcode must be between 2 and 10 characters!';
 $_['error_country']        = 'Please select a country!';
 $_['error_zone']           = 'Please select a region / state!';
-$_['error_agree']          = 'Warning: You must agree to the %s!';
+$_['error_custom_field']   = '%s required!';
 ?>

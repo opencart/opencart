@@ -63,7 +63,6 @@ $_['error_email']           = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']       = 'Telephone must be between 3 and 32 characters!';
 $_['error_password']        = 'Password must be between 4 and 20 characters!';
 $_['error_confirm']         = 'Password and password confirmation do not match!';
-$_['error_vat']             = 'VAT number is invalid!';
 $_['error_address_1']       = 'Address 1 must be between 3 and 128 characters!';
 $_['error_city']            = 'City must be between 2 and 128 characters!';
 $_['error_postcode']        = 'Postcode must be between 2 and 10 characters for this country!';

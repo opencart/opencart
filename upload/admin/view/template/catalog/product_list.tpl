@@ -19,12 +19,7 @@
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
         <button type="submit" form="form-product" formaction="<?php echo $copy; ?>" class="btn"><i class="icon-copy"></i> <?php echo $button_copy; ?></button>
-        <div class="btn-group">
-          <button type="button" class="btn btn-danger dropdown-toggle" data-toggle="dropdown"><i class="icon-trash"></i> <?php echo $button_delete; ?> <i class="icon-caret-down"></i></button>
-          <ul class="dropdown-menu pull-right">
-            <li><a onclick="$('#form-product').submit();"><?php echo $text_confirm; ?></a></li>
-          </ul>
-        </div>
+        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-product').submit() : false;"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
     </div>

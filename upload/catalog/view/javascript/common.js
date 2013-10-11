@@ -319,7 +319,7 @@ $(document).delegate('.test', 'submit', function(e) {
 	e.preventDefault();
 	
 	//alert($(e.currentTarget).html());
-	//alert($(e.target).html());
+	alert(e.explicitOriginalTarget);
 	
 	//alert($(this).attr('formaction'));
 	
@@ -329,7 +329,7 @@ $(document).delegate('.test', 'submit', function(e) {
 		url: $(this).attr('action'),
 		type: 'post',
 		data: new FormData($(this)[0]),
-		dataType: 'html',
+		dataType: 'json',
 		cache: false,
 		contentType: false,
 		processData: false,		
@@ -340,7 +340,6 @@ $(document).delegate('.test', 'submit', function(e) {
 			$(node).find('input[type=\'submit\']').button('reset');
         },
 		success: function(json) {
-			alert(json);
 			$('.alert, .text-danger').remove();
 			
 			$('.has-error').removeClass('has-error');

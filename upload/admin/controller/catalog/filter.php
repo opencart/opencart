@@ -184,7 +184,7 @@ class ControllerCatalogFilter extends Controller {
 				'filter_group_id' => $result['filter_group_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
-				'selected'        => isset($this->request->post['selected']) && in_array($result['filter_id'], $this->request->post['selected']),
+				'selected'        => isset($this->request->post['selected']) && in_array($result['filter_group_id'], $this->request->post['selected']),
 				'action'          => $action
 			);
 		}

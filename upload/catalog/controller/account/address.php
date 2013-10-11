@@ -466,7 +466,18 @@ class ControllerAccountAddress extends Controller {
     	if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
       		$this->error['zone'] = $this->language->get('error_zone');
     	}
+
+		// Custom Field Validation
+		$this->load->model('account/custom_field');
 		
+		$custom_fields = $this->model_account_custom_field->getCustomFields('address', $this->config->get('config_customer_group_id'));
+		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+			}
+		}
+				
     	if (!$this->error) {
       		return true;
 		} else {

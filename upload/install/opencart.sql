@@ -1057,13 +1057,14 @@ CREATE TABLE `oc_customer_activity` (
 
 DROP TABLE IF EXISTS `oc_customer_field`;
 CREATE TABLE `oc_customer_field` (
+  `customer_field_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
   `custom_field_id` int(11) NOT NULL,
   `custom_field_value_id` int(11) NOT NULL,
   `name` int(128) NOT NULL,
   `value` text NOT NULL,
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY (`customer_id`,`custom_field_id`,`custom_field_value_id`)
+  PRIMARY KEY (`customer_field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -1279,23 +1280,6 @@ CREATE TABLE `oc_custom_field_description` (
 
 --
 -- Dumping data for table `oc_custom_field_description`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_custom_field_to_customer_group`
---
-
-DROP TABLE IF EXISTS `oc_custom_field_to_customer_group`;
-CREATE TABLE `oc_custom_field_to_customer_group` (
-  `custom_field_id` int(11) NOT NULL,
-  `customer_group_id` int(11) NOT NULL,
-  PRIMARY KEY (`custom_field_id`,`customer_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_custom_field_to_customer_group`
 --
 
 -- --------------------------------------------------------
@@ -2160,13 +2144,14 @@ CREATE TABLE `oc_order_fraud` (
 
 DROP TABLE IF EXISTS `oc_order_field`;
 CREATE TABLE `oc_order_field` (
+  `order_field_id` int(11) NOT NULL,
   `order_id` int(11) NOT NULL,
   `custom_field_id` int(11) NOT NULL,
   `custom_field_value_id` int(11) NOT NULL,
   `name` int(128) NOT NULL,
   `value` text NOT NULL,
   `sort_order` int(3) NOT NULL,
-  PRIMARY KEY (`order_id`,`custom_field_id`,`custom_field_value_id`)
+  PRIMARY KEY (`order_field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --

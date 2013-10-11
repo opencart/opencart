@@ -20,23 +20,20 @@ class ControllerAccountRegister extends Controller {
 			
 			unset($this->session->data['guest']);
 			
-			// Default Shipping Address
-			if ($this->config->get('config_tax_customer') == 'shipping') {
-				$this->session->data['shipping_country_id'] = $this->request->post['country_id'];
-				$this->session->data['shipping_zone_id'] = $this->request->post['zone_id'];
-				$this->session->data['shipping_postcode'] = $this->request->post['postcode'];				
-			}
+			$this->load->model('account/address');
 			
 			// Default Payment Address
 			if ($this->config->get('config_tax_customer') == 'payment') {
-				$this->session->data['payment_country_id'] = $this->request->post['country_id'];
-				$this->session->data['payment_zone_id'] = $this->request->post['zone_id'];			
+				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());		
 			}
-							  	  
-	  		$this->redirect($this->url->link('account/success'));
-    	} else {
 			
-		}
+			// Default Shipping Address
+			if ($this->config->get('config_tax_customer') == 'shipping') {
+				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
+			}
+										  	  
+	  		$this->redirect($this->url->link('account/success'));
+    	}
 
       	$this->data['breadcrumbs'] = array();
 
@@ -130,18 +127,6 @@ class ControllerAccountRegister extends Controller {
 			$this->data['error_confirm'] = $this->error['confirm'];
 		} else {
 			$this->data['error_confirm'] = '';
-		}
-		
-  		if (isset($this->error['company_id'])) {
-			$this->data['error_company_id'] = $this->error['company_id'];
-		} else {
-			$this->data['error_company_id'] = '';
-		}
-		
-  		if (isset($this->error['tax_id'])) {
-			$this->data['error_tax_id'] = $this->error['tax_id'];
-		} else {
-			$this->data['error_tax_id'] = '';
 		}
 								
   		if (isset($this->error['address_1'])) {
@@ -357,8 +342,6 @@ class ControllerAccountRegister extends Controller {
     	}
 		
 		// Customer Group
-		$this->load->model('account/customer_group');
-		
 		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->post['customer_group_id'];
 		} else {
@@ -425,7 +408,7 @@ class ControllerAccountRegister extends Controller {
     	}
   	}
 
-  	public function submit() {
+  	public function save() {
 		$this->language->load('account/register');
 		
 		$json = array();
@@ -452,15 +435,6 @@ class ControllerAccountRegister extends Controller {
       		$json['error']['telephone'] = $this->language->get('error_telephone');
     	}
 		
-		// Customer Group
-		$this->load->model('account/customer_group');
-		
-		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->post['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
     	if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
       		$json['error']['address_1'] = $this->language->get('error_address_1');
     	}
@@ -502,6 +476,12 @@ class ControllerAccountRegister extends Controller {
       			$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
 			}
 		}
+
+		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			$customer_group_id = $this->request->post['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
 			
 		// Custom Field Validation
 		$this->load->model('account/custom_field');
@@ -512,10 +492,6 @@ class ControllerAccountRegister extends Controller {
 			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 				$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 			}
-		}
-		
-		if (!$json['error']) {
-			
 		}
 		
 		$this->response->setOutput(json_encode($json));

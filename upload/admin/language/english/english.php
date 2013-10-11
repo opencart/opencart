@@ -24,7 +24,7 @@ $_['text_pagination']               = 'Showing %d to %d of %d (%d Pages)';
 $_['text_no_results']               = 'No results!';
 $_['text_edit']                     = 'Edit';
 $_['text_view']                     = 'View';
-$_['text_confirm']                  = 'Confirm';
+$_['text_confirm']                  = 'Are you sure?';
 $_['text_home']                     = '<i class="icon-home"></i>';
 
 // Button

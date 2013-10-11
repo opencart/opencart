@@ -9,7 +9,14 @@
   <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?></div>
   <?php } ?>
   <div class="row"><?php echo $column_left; ?>
-    <div id="content" class="col-sm-9"><?php echo $content_top; ?>
+    <?php if ($column_left && $column_right) { ?>
+    <?php $cols = 6; ?>
+    <?php } elseif ($column_left || $column_right) { ?>
+    <?php $cols = 9; ?>
+    <?php } else { ?>
+    <?php $cols = 12; ?>
+    <?php } ?>  
+    <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h2><?php echo $text_my_account; ?></h2>
       <ul class="list-unstyled">
         <li><a href="<?php echo $edit; ?>"><?php echo $text_edit; ?></a></li>

@@ -224,6 +224,19 @@
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
+
+<div style="display: none;">
+          <div class="form-group customer-group- sort-9">
+            <label class="col-sm-2 control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" class="form-control" />
+              <?php if ($error_address_1) { ?>
+              <div class="text-danger"><?php echo $error_address_1; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+ </div>          
+          
 <script type="text/javascript"><!--
 $('input[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({

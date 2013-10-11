@@ -53,7 +53,7 @@ $('input[name=\'product\']').autocomplete({
 	},
 	'select': function(item) {
 		$('input[name=\'product\']').val(item['label']);
-		$('textarea[name=\'link\']').attr('value', item['value']);	
+		$('textarea[name=\'link\']').val( item['value']);	
 	}	
 });
 //--></script> 

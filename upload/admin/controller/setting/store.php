@@ -209,6 +209,8 @@ class ControllerSettingStore extends Controller {
 		$this->data['entry_zone'] = $this->language->get('entry_zone');
 		$this->data['entry_language'] = $this->language->get('entry_language');
 		$this->data['entry_currency'] = $this->language->get('entry_currency');
+		$this->data['entry_length_class'] = $this->language->get('entry_length_class');
+		$this->data['entry_weight_class'] = $this->language->get('entry_weight_class');
 		$this->data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
 		$this->data['entry_list_description_limit'] = $this->language->get('entry_list_description_limit');
 		$this->data['entry_tax'] = $this->language->get('entry_tax');
@@ -584,6 +586,30 @@ class ControllerSettingStore extends Controller {
 		$this->load->model('localisation/currency');
 		
 		$this->data['currencies'] = $this->model_localisation_currency->getCurrencies();
+		
+		if (isset($this->request->post['config_length_class_id'])) {
+			$this->data['config_length_class_id'] = $this->request->post['config_length_class_id'];
+		} elseif (isset($store_info['config_length_class_id'])) {
+			$this->data['config_length_class_id'] = $store_info['config_length_class_id'];
+		} else {
+			$this->data['config_length_class_id'] = '';
+		}
+		
+		$this->load->model('localisation/length_class');
+		
+		$this->data['length_classes'] = $this->model_localisation_length_class->getLengthClasses();
+		
+		if (isset($this->request->post['config_weight_class_id'])) {
+			$this->data['config_weight_class_id'] = $this->request->post['config_weight_class_id'];
+		} elseif (isset($store_info['config_weight_class_id'])) {
+			$this->data['config_weight_class_id'] = $store_info['config_weight_class_id'];
+		} else {
+			$this->data['config_weight_class_id'] = '';
+		}
+		
+		$this->load->model('localisation/weight_class');
+		
+		$this->data['weight_classes'] = $this->model_localisation_weight_class->getWeightClasses();
 		
 		if (isset($this->request->post['config_catalog_limit'])) {
 			$this->data['config_catalog_limit'] = $this->request->post['config_catalog_limit'];

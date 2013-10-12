@@ -19,7 +19,7 @@
     <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
       <p><?php echo $text_account_already; ?></p>
-      <form action="index.php?route=account/register/submit" method="post" enctype="multipart/form-data" class="form-horizontal test">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
           <legend><?php echo $text_your_details; ?></legend>
           <div class="form-group required" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
@@ -224,19 +224,12 @@
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>
-
-<div style="display: none;">
-          <div class="form-group customer-group- sort-9">
-            <label class="col-sm-2 control-label" for="input-address-1"><?php echo $entry_address_1; ?></label>
-            <div class="col-sm-10">
-              <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" class="form-control" />
-              <?php if ($error_address_1) { ?>
-              <div class="text-danger"><?php echo $error_address_1; ?></div>
-              <?php } ?>
-            </div>
-          </div>
- </div>          
-          
+<?php foreach ($custom_fields as $custom_field) { ?>
+  <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" />
+  <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
+  <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+  <?php } ?>
+  <?php } ?>
 <script type="text/javascript"><!--
 $('input[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({

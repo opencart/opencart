@@ -34,7 +34,7 @@ class ModelAccountCustomField extends Model {
 		return $custom_field_data;
 	}
 	
-	public function getCustomField($custom_field_id) {
+	public function getCustomField($custom_field_id, $customer_group_id) {
 		$custom_field_data = array();
 		
 		$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` cf ON (cfcg.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfcg.customer_group_id = '" . (int)$customer_group_id . "' AND cf.location = '" . $this->db->escape($location) . "' AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cf.sort_order ASC");

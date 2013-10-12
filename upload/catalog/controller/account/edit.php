@@ -85,6 +85,12 @@ class ControllerAccountEdit extends Controller {
 		} else {
 			$this->data['error_telephone'] = '';
 		}	
+		
+		if (isset($this->error['custom_field'])) {
+			$this->data['error_custom_field'] = $this->error['custom_field'];
+		} else {
+			$this->data['error_custom_field'] = array();
+		}
 
 		$this->data['action'] = $this->url->link('account/edit', '', 'SSL');
 
@@ -131,7 +137,13 @@ class ControllerAccountEdit extends Controller {
 		} else {
 			$this->data['fax'] = '';
 		}
-
+		
+		if (isset($this->request->post['custom_field'])) {
+      		$this->data['custom_fields'] = $this->request->post['custom_field'];
+		} else {
+			$this->data['custom_fields'] = array();
+		}
+		
 		$this->data['back'] = $this->url->link('account/account', '', 'SSL');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/edit.tpl')) {
@@ -172,7 +184,18 @@ class ControllerAccountEdit extends Controller {
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
-
+		
+		// Custom Field Validation
+		$this->load->model('account/custom_field');
+		
+		$custom_fields = $this->model_account_custom_field->getCustomFields('registration', $customer_group_id);
+		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+			}
+		}
+		
 		if (!$this->error) {
 			return true;
 		} else {

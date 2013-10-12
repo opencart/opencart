@@ -319,7 +319,7 @@ $(document).delegate('.test', 'submit', function(e) {
 	e.preventDefault();
 	
 	//alert($(e.currentTarget).html());
-	alert(e.explicitOriginalTarget);
+	//alert(e.explicitOriginalTarget);
 	
 	//alert($(this).attr('formaction'));
 	

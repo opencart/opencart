@@ -198,6 +198,34 @@
                 </select>
               </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-length-class"><?php echo $entry_length_class; ?></label>
+              <div class="col-sm-10">
+                <select name="config_length_class_id" id="input-length-class" class="form-control">
+                  <?php foreach ($length_classes as $length_class) { ?>
+                  <?php if ($length_class['length_class_id'] == $config_length_class_id) { ?>
+                  <option value="<?php echo $length_class['length_class_id']; ?>" selected="selected"><?php echo $length_class['title']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $length_class['length_class_id']; ?>"><?php echo $length_class['title']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+	    <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-weight-class"><?php echo $entry_weight_class; ?></label>
+              <div class="col-sm-10">
+                <select name="config_length_class_id" id="input-weight-class" class="form-control">
+                  <?php foreach ($weight_classes as $weight_class) { ?>
+                  <?php if ($weight_class['weight_class_id'] == $config_weight_class_id) { ?>
+                  <option value="<?php echo $weight_class['weight_class_id']; ?>" selected="selected"><?php echo $weight_class['title']; ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $weight_class['weight_class_id']; ?>"><?php echo $weight_class['title']; ?></option>
+                  <?php } ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
           </div>
           <div class="tab-pane" id="tab-option">
             <fieldset>

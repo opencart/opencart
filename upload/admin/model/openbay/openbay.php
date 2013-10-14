@@ -311,7 +311,7 @@ class ModelOpenbayOpenbay extends Model {
 
     public function faqGet($route) {
         if ($this->faqIsDismissed($route) != true) {
-            $data = $this->call('notification/getFaq/', array('route' => $route));
+            $data = $this->call('faq/get/', array('route' => $route));
             return $data;
         } else {
             return false;

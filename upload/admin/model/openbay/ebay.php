@@ -368,16 +368,6 @@ class ModelOpenbayEbay extends Model{
         }
         
         return $data;
-
-
-
-
-
-
-
-
-
-
     }
     
     public function saveItemLink($data) {

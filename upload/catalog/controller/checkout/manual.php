@@ -439,6 +439,10 @@ class ControllerCheckoutManual extends Controller {
 					}
 				}
 			}
+			
+			// saving payment_code to session b4 total. Some extensions may need this.
+			$this->session->data['payment_method']['code'] = isset($this->request->post['payment_code']) ?
+				$this->request->post['payment_code'] : '';
 
 			// Totals
 			$json['order_total'] = array();					

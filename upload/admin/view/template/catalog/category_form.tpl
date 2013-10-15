@@ -142,16 +142,9 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
               <div class="col-sm-10">
-				<div class="img-thumbnail" style="width: 100px; line-height: 100px; background: #EEEEEE; border: 1px solid #CCC; text-align: center;">
-                  <i class="icon-camera" style="font-size: 40px; color: #FFF; vertical-align: middle;"></i>
-                </div>
-              
+                <div class="img-thumbnail" style="width: 100px; line-height: 100px; background: #EEEEEE; border: 1px solid #CCC; text-align: center;"> <i class="icon-camera" style="font-size: 40px; color: #FFF; vertical-align: middle;"></i> </div>
                 <img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
                 <input type="hidden" name="image" value="<?php echo $image; ?>" />
-                
-                
-                
-                
                 <br />
                 <br />
                 <div class="btn-group">

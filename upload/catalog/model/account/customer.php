@@ -14,37 +14,7 @@ class ModelAccountCustomer extends Model {
       	$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET store_id = '" . (int)$this->config->get('config_store_id') . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', newsletter = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', customer_group_id = '" . (int)$customer_group_id . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '" . (int)!$customer_group_info['approval'] . "', date_added = NOW()");
       	
 		$customer_id = $this->db->getLastId();
-		
-		// Custom Fields
-		if (isset($data['custom_field'])) {
-			$this->load->model('account/custom_field');
-			
-			foreach ($data['custom_field'] as $custom_field_id => $value) {
-				$custom_field_info = $this->model_account_custom_field->getCustomField($custom_field_id);
-
-				if ($custom_field_info) {
-					
-					
-					if ($custom_field_info['type'] == 'select' || $custom_field_info['type'] == 'radio') {
-						
-						
-						$this->db->query("INSERT INTO " . DB_PREFIX . "customer_field SET customer_id = '" . (int)$customer_id . "', name = '" . $this->db->escape($custom_field_info['name']) . "', value = '" . $this->db->escape($value) . "', sort_order = '" . (int)$custom_field_info['sort_order'] . "'");
-					
-					
-					} elseif ($custom_field_info['type'] == 'checkbox' && is_array($value)) {
-						
-						
-						foreach ($value as $custom_field_value_id) {
-							
-							$this->db->query("INSERT INTO " . DB_PREFIX . "customer_field SET customer_id = '" . (int)$customer_id . "', name = '" . $this->db->escape($custom_field_info['name']) . "', value = '" . $this->db->escape($value) . "', sort_order = '" . (int)$custom_field_info['sort_order'] . "'");
-						}
-					} elseif ($custom_field_info['type'] == 'text' || $custom_field_info['type'] == 'textarea' || $custom_field_info['type'] == 'file' || $custom_field_info['type'] == 'date' || $custom_field_info['type'] == 'datetime' || $custom_field_info['type'] == 'time') {
-						$this->db->query("INSERT INTO " . DB_PREFIX . "customer_field SET customer_id = '" . (int)$customer_id . "', name = '" . $this->db->escape($custom_field_info['name']) . "', value = '" . $this->db->escape($value) . "', sort_order = '" . (int)$custom_field_info['sort_order'] . "'");
-					}
-				}
-			}
-		}
-		
+				
       	$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int)$customer_id . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', city = '" . $this->db->escape($data['city']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', country_id = '" . (int)$data['country_id'] . "', zone_id = '" . (int)$data['zone_id'] . "'");
 		
 		$address_id = $this->db->getLastId();

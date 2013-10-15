@@ -69,7 +69,7 @@
           </div>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-date-ordered"><?php echo $entry_date_ordered; ?></label>
-            <div class="col-sm-10">
+            <div class="col-sm-3">
               <input type="date" name="date_ordered" value="<?php echo $date_ordered; ?>" placeholder="<?php echo $entry_date_ordered; ?>" id="input-date-ordered" class="form-control date" />
             </div>
           </div>

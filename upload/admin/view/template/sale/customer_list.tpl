@@ -112,7 +112,7 @@
                     <?php } ?>
                   </select></td>
                 <td><input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" class="form-control" /></td>
-                <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" id="date" class="form-control" /></td>
+                <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
                 <td></td>
                 <td align="right"><button type="button" id="button-filter" class="btn btn-primary"><i class="icon-search"></i> <?php echo $button_filter; ?></button></td>
               </tr>

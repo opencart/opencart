@@ -151,13 +151,13 @@
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-              <div class="col-sm-10">
+              <div class="col-sm-3">
                 <input type="date" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" id="input-date-start" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-              <div class="col-sm-10">
+              <div class="col-sm-3">
                 <input type="date" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" id="input-date-end" class="form-control" />
               </div>
             </div>

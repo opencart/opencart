@@ -214,7 +214,6 @@
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script> 
 <script type="text/javascript"><!--
 $('select[name=\'type\']').on('change', function() {
 	if (this.value == 'select' || this.value == 'radio' || this.value == 'checkbox') {
@@ -237,6 +236,17 @@ $('select[name=\'type\']').on('change', function() {
 });
 
 $('select[name=\'type\']').trigger('change');
+
+$('input[name^=\'location\']').on('change', function() {
+	
+	if (this.value == 'account') {
+		//$('#custom-field-value').show();
+		//$('#display-value').hide();
+	}
+	
+	
+	
+});
 
 var custom_field_value_row = <?php echo $custom_field_value_row; ?>;
 

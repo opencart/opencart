@@ -140,6 +140,8 @@ class ControllerAccountEdit extends Controller {
 		
 		if (isset($this->request->post['custom_field'])) {
       		$this->data['custom_fields'] = $this->request->post['custom_field'];
+		} elseif (isset($customer_info)) {
+			$this->data['custom_fields'] = unserialize($customer_info['email']);
 		} else {
 			$this->data['custom_fields'] = array();
 		}

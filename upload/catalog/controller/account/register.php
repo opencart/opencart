@@ -308,9 +308,19 @@ class ControllerAccountRegister extends Controller {
 		}
 		
 		if (isset($this->request->post['custom_field'])) {
-      		$this->data['custom_fields'] = $this->request->post['custom_field'];
+      		$custom_fields = $this->request->post['custom_field'];
 		} else {
-			$this->data['custom_fields'] = array();
+			$custom_fields = array();
+		}
+		
+		$this->data['custom_fields'] = array();
+		
+		foreach ($custom_fields as $custom_field_id => $value) {
+			$this->data['custom_fields'][] = array(
+				'custom_field_id' => $custom_field_id,
+				'type'            => is_array($value) ? 'checkbox' : '',
+				'value'           => $value
+			);
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/register.tpl')) {

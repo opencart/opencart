@@ -243,7 +243,7 @@
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-available"><?php echo $entry_date_available; ?></label>
-              <div class="col-sm-10">
+              <div class="col-sm-3">
                 <input type="date" name="date_available" value="<?php echo $date_available; ?>" placeholder="<?php echo $entry_date_available; ?>" id="input-available" class="form-control" />
               </div>
             </div>
@@ -512,7 +512,7 @@
                     <?php if ($product_option['type'] == 'date') { ?>
                     <div class="form-group">
                       <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
-                      <div class="col-sm-10">
+                      <div class="col-sm-3">
                         <input type="date" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" id="input-value<?php echo $option_row; ?>" class="form-control" />
                       </div>
                     </div>
@@ -1104,7 +1104,7 @@ $('input[name=\'option\']').autocomplete({
 		if (item['type'] == 'date') {
 			html += '	<div class="form-group">';
 			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-			html += '	  <div class="col-sm-10"><input type="date" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control" /></div>';
+			html += '	  <div class="col-sm-3"><input type="date" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control" /></div>';
 			html += '	</div>';
 		}
 		

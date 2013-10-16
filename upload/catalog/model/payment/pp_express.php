@@ -169,6 +169,8 @@ class ModelPaymentPPExpress extends Model {
 
                 $option_count++;
             }
+            
+            $data['L_PAYMENTREQUEST_0_DESC' . $i] = substr($data['L_PAYMENTREQUEST_0_DESC' . $i], 0, 126);
 
             $item_price = $this->currency->format($item['price'], false, false, false);
 

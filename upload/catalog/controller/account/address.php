@@ -413,7 +413,33 @@ class ControllerAccountAddress extends Controller {
     	} else {
 			$this->data['default'] = false;
 		}
-
+		
+		// Custom Fields
+		$this->load->model('account/custom_field');
+		
+		$this->data['custom_fields'] = array();
+		
+		if (isset($this->request->post['custom_field']) || isset($customer_info)) {
+			if (isset($this->request->post['custom_field'])) {
+				$custom_field_info = $this->request->post['custom_field'];		
+			} elseif (isset($customer_info)) {
+				$custom_field_info = unserialize($address_info['custom_field']);
+			} else {
+				$custom_field_info = array();
+			}
+			
+			// If a post request then get a list of all fields that should have been posted for validation checking.
+			$custom_fields = $this->model_account_custom_field->getCustomFields('address', $this->customer->getGroupId());
+			
+			foreach ($custom_fields as $custom_field) {
+				$this->data['custom_fields'][] = array(
+					'custom_field_id' => $custom_field['custom_field_id'],
+					'type'            => $custom_field['type'],
+					'value'           => isset($custom_field_info[$custom_field['custom_field_id']]) ? $custom_field_info[$custom_field['custom_field_id']] : ''
+				);
+			}		
+		}		
+		
     	$this->data['back'] = $this->url->link('account/address', '', 'SSL');
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/address_form.tpl')) {

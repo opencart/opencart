@@ -307,20 +307,22 @@ class ControllerAccountRegister extends Controller {
 			$this->data['agree'] = false;
 		}
 		
-		if (isset($this->request->post['custom_field'])) {
-      		$custom_fields = $this->request->post['custom_field'];
-		} else {
-			$custom_fields = array();
-		}
+		// Custom Fields
+		$this->load->model('account/custom_field');
 		
 		$this->data['custom_fields'] = array();
-		
-		foreach ($custom_fields as $custom_field_id => $value) {
-			$this->data['custom_fields'][] = array(
-				'custom_field_id' => $custom_field_id,
-				'type'            => is_array($value) ? 'checkbox' : '',
-				'value'           => $value
-			);
+				
+		// If a post request then get a list of all fields that should have been posted for validation checking.
+		if (isset($this->request->post['customer_group_id'])) {
+			$custom_fields = $this->model_account_custom_field->getCustomFields('registration', $this->request->post['customer_group_id']);
+			
+			foreach ($custom_fields as $custom_field) {
+				$this->data['custom_fields'][] = array(
+					'custom_field_id' => $custom_field['custom_field_id'],
+					'type'            => $custom_field['type'],
+					'value'           => isset($this->request->post['custom_field'][$custom_field['custom_field_id']]) ? $this->request->post['custom_field'][$custom_field['custom_field_id']] : ''
+				);
+			}
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/register.tpl')) {

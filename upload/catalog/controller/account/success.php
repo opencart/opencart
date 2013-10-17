@@ -26,7 +26,7 @@ class ControllerAccountSuccess extends Controller {
 
 		$this->load->model('account/customer_group');
 		
-		$customer_group = $this->model_account_customer_group->getCustomerGroup($this->customer->getCustomerGroupId());
+		$customer_group = $this->model_account_customer_group->getCustomerGroup($this->customer->getGroupId());
 
 		if ($customer_group && !$customer_group['approval']) {
     		$this->data['text_message'] = sprintf($this->language->get('text_message'), $this->url->link('information/contact'));

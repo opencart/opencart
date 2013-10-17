@@ -878,7 +878,7 @@ class ControllerOpenbayOpenbay extends Controller {
         $pagination = new Pagination();
         $pagination->total = $total_linked;
         $pagination->page = $linked_item_page;
-        $pagination->limit = $this->config->get('config_admin_limit');
+        $pagination->limit = 100;
         $pagination->text = $this->language->get('text_pagination');
         $pagination->url = $this->url->link('openbay/openbay/viewItemLinks', 'token=' . $this->session->data['token'] . '&linked_item_page={page}', 'SSL');
 

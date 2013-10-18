@@ -1,2 +1,0 @@
-<li class="closed"><a href="#"><ins>&nbsp;</ins>Node 1</a></li>
-<li><a href="#"><ins>&nbsp;</ins>Node 2</a></li>

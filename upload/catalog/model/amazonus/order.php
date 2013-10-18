@@ -1,7 +1,5 @@
 <?php
-
 class ModelAmazonusOrder extends Model {
-
     public function acknowledgeOrder($orderId) {
         $amazonusOrderId = $this->getAmazonusOrderId($orderId);
         
@@ -10,7 +8,7 @@ class ModelAmazonusOrder extends Model {
   <MerchantOrderId>$orderId</MerchantOrderId>
 </Request>";
      
-        $this->amazonus->callNoResponse('order/acknowledge', $requestXml, false);
+        $this->openbay->amazonus->callNoResponse('order/acknowledge', $requestXml, false);
     }
     
     public function getProductId($sku) {
@@ -248,6 +246,5 @@ class ModelAmazonusOrder extends Model {
         
         return $options;
     }
-
-    
 }
+?>

@@ -9,9 +9,6 @@
   </ul>
 </div>
 <div id="content">
-  <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
-  <?php } ?>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
     <div class="terms">
       <h3>GNU GENERAL PUBLIC LICENSE</h3>
@@ -580,8 +577,7 @@
         &lt;http://www.gnu.org/philosophy/why-not-lgpl.html&gt;.</p>
     </div>
     <div class="buttons">
-      <div class="right">I agree to the license
-        <input type="checkbox" name="agree" />&nbsp;
+      <div class="right">
         <input type="submit" value="Continue" class="button" />
       </div>
     </div>

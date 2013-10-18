@@ -92,25 +92,25 @@ class ModelOpenbayOrder extends Model{
     public function findOrderChannel($order_id){
 
         if($this->config->get('amazon_status') == 1){
-            if($this->amazon->getOrder($order_id) != false){
+            if($this->openbay->amazon->getOrder($order_id) != false){
                 return 'Amazon';
             }
         }
         
         if($this->config->get('amazonus_status') == 1){
-            if($this->amazonus->getOrder($order_id) != false){
+            if($this->openbay->amazonus->getOrder($order_id) != false){
                 return 'amazonus';
             }
         }
 
         if($this->config->get('openbay_status') == 1){
-            if($this->ebay->isEbayOrder($order_id) != false){
+            if($this->openbay->ebay->isEbayOrder($order_id) != false){
                 return 'eBay';
             }
         }
 
         if($this->config->get('play_status') == 1){
-            if($this->play->isPlayOrder($order_id) != false){
+            if($this->openbay->play->isPlayOrder($order_id) != false){
                 return 'Play';
             }
         }

@@ -194,22 +194,24 @@ class ControllerCommonHeader extends Controller {
 			$this->data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
 			$this->data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
 
-            $this->data['openbay_link_extension']           = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_orders']              = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_items']               = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_ebay']                = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_ebay_settings']       = $this->url->link('openbay/openbay/settings', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_ebay_links']          = $this->url->link('openbay/openbay/viewItemLinks', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_ebay_orderimport']    = $this->url->link('openbay/openbay/viewOrderImport', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_amazon']              = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_amazon_settings']     = $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_amazon_links']        = $this->url->link('openbay/amazon/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_amazonus']            = $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_amazonus_settings']   = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_amazonus_links']      = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_play']                = $this->url->link('openbay/play', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_play_settings']       = $this->url->link('openbay/play/settings', 'token=' . $this->session->data['token'], 'SSL');
-            $this->data['openbay_link_play_report_price']   = $this->url->link('play/product/pricingReport', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_show_menu'] = $this->config->get('openbaymanager_show_menu');
+            
+            $this->data['openbay_link_extension'] = $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_orders'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_items'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_ebay'] = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_ebay_settings'] = $this->url->link('openbay/openbay/settings', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_ebay_links'] = $this->url->link('openbay/openbay/viewItemLinks', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_ebay_orderimport'] = $this->url->link('openbay/openbay/viewOrderImport', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_amazon'] = $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_amazon_settings'] = $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_amazon_links'] = $this->url->link('openbay/amazon/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_amazonus'] = $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_amazonus_settings'] = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_amazonus_links'] = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_play'] = $this->url->link('openbay/play', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_play_settings'] = $this->url->link('openbay/play/settings', 'token=' . $this->session->data['token'], 'SSL');
+            $this->data['openbay_link_play_report_price'] = $this->url->link('openbay/play/pricingReport', 'token=' . $this->session->data['token'], 'SSL');
 
             $this->data['openbay_markets'] = array(
                 'ebay' => $this->config->get('openbay_status'),

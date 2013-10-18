@@ -1,7 +1,5 @@
 <?php
-class ModelAmazonusProduct extends Model
-{
-    
+class ModelAmazonusProduct extends Model {
     public function setStatus($insertionId, $statusString) {
         $this->db->query("
             UPDATE `" . DB_PREFIX . "amazonus_product`
@@ -33,7 +31,7 @@ class ModelAmazonusProduct extends Model
         }
     }
     
-     public function insertError($data) {
+    public function insertError($data) {
         $this->db->query("
             INSERT INTO `" . DB_PREFIX . "amazonus_product_error`
             SET `sku` = '" . $this->db->escape($data['sku']) . "',
@@ -49,11 +47,11 @@ class ModelAmazonusProduct extends Model
             ");
      }
      
-     public function deleteErrors($insertionId) {
+    public function deleteErrors($insertionId) {
          $this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_error` WHERE `insertion_id` = '" . $this->db->escape($insertionId) . "'");
      }
      
-     public function setSubmitError($insertionId, $message) {
+    public function setSubmitError($insertionId, $message) {
         $skuRows = $this->db->query("SELECT `sku`
             FROM `" . DB_PREFIX . "amazonus_product`
             WHERE `insertion_id` = '" . $this->db->escape($insertionId) . "'
@@ -70,7 +68,7 @@ class ModelAmazonusProduct extends Model
         }
      }
      
-     //Copy from admin amazonus model method
+    //Copy from admin amazonus model method
     public function linkProduct($amazonus_sku, $product_id, $var = '') {
         $count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
         if($count['count'] == 0) {
@@ -85,7 +83,7 @@ class ModelAmazonusProduct extends Model
         
         $result = null;
         
-        if($var !== '' && $this->amazonus->addonLoad('openstock')) {
+        if ($var !== '' && $this->openbay->addonLoad('openstock')) {
             $this->load->model('tool/image');
             $this->load->model('openstock/openstock');
             $optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
@@ -111,6 +109,43 @@ class ModelAmazonusProduct extends Model
         }
         return $result;
     }
-     
+    
+    public function updateSearch($results) {
+        foreach ($results as $result) {
+            $resultsFound = count($result['results']);
+                     
+            $data = json_encode($result['results']);
+            
+            $this->db->query("
+                UPDATE " . DB_PREFIX . "amazonus_product_search
+                SET matches = " . (int) $resultsFound . ",
+                    `data` = '" . $this->db->escape($data) . "',
+                    `status` = 'finished'
+                WHERE product_id = " . (int) $result['product_id'] . "
+                LIMIT 1
+            ");
+        }
+    }
+    
+    
+    public function addListingReport($data) {
+        $sql = "INSERT INTO " . DB_PREFIX . "amazonus_listing_report (sku, quantity, asin, price) VALUES ";
+        
+        $sqlValues = array();
+        
+        foreach ($data as $product) {
+            $sqlValues[] = " ('" . $this->db->escape($product['sku']) . "', " . (int) $product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double) $product['price'] . ") ";
+        }
+        
+        $sql .= implode(',', $sqlValues);
+        
+        $this->db->query($sql);
+    }
+    
+    public function removeListingReportLock($marketplace) {
+        $this->config->set('openbay_amazonus_processing_listing_reports', false);
+
+        $this->db->query("UPDATE " . DB_PREFIX . "setting SET `value` = '0', serialized = 0 WHERE `key` = 'openbay_amazonus_processing_listing_reports'");
+    }
 }
 ?>

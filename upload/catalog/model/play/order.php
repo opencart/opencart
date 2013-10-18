@@ -1,6 +1,6 @@
 <?php
 class ModelPlayOrder extends Model{
-    public function createOrder($customer_id, $order_info){
+    public function createOrder($customer_id, $order_info) {
         //total of order
         $total = 0;
 
@@ -77,21 +77,21 @@ class ModelPlayOrder extends Model{
                    date_added               = NOW(),
                    date_modified            = NOW()");
 
-        $this->play->log('createOrder() - Order ID created: '.$this->db->getLastId());
+        $this->openbay->play->log('createOrder() - Order ID created: '.$this->db->getLastId());
         
         return $this->db->getLastId();
     }
     
-    public function getCurrency($code){
+    public function getCurrency($code) {
         $qry = $this->db->query("
             SELECT * FROM `" . DB_PREFIX . "currency` 
             WHERE `code` = '".$this->db->escape($code)."' LIMIT 1");
         
         if($qry->num_rows > 0){
-            $this->play->log('getCurrency() - '.$code. ' currency found');
+            $this->openbay->play->log('getCurrency() - '.$code. ' currency found');
             return $qry->row;
         }else{
-            $this->play->log('getCurrency() - '.$code. ' currency not found in DB - please add it');
+            $this->openbay->play->log('getCurrency() - '.$code. ' currency not found in DB - please add it');
             return 0;
         }
     }
@@ -103,12 +103,12 @@ class ModelPlayOrder extends Model{
 
         $notify = $this->config->get('obp_play_order_update_notify');
 
-        if ($order_info && ($this->play->isModified($order_id) == false)) {
+        if ($order_info && ($this->openbay->play->isModified($order_id) == false)) {
 
             $this->db->query("UPDATE `" . DB_PREFIX . "order` SET order_status_id = '" . (int)$order_status_id . "', date_modified = NOW() WHERE order_id = '" . (int)$order_id . "'");
             $this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '" . (int)$notify . "', comment = '" . $this->db->escape($comment) . "', date_added = NOW()");
             
-            $old_status_id = $this->play->getOldOrderStatus($order_id);
+            $old_status_id = $this->openbay->play->getOldOrderStatus($order_id);
             
             $this->db->query("UPDATE `" . DB_PREFIX . "play_order` SET `old_status` = '".$old_status_id."' WHERE `order_id` = '".(int)$order_id."'");
             
@@ -162,10 +162,10 @@ class ModelPlayOrder extends Model{
         }
     }
 
-    public function addProduct($order_id, $product_id, $product_name, $model, $quantity, $price, $total, $tax){
+    public function addProduct($order_id, $product_id, $product_name, $model, $quantity, $price, $total, $tax) {
 
-        $this->play->log('addProduct() - Price: '.$price);
-        $this->play->log('addProduct() - Total: '.$total);
+        $this->openbay->play->log('addProduct() - Price: '.$price);
+        $this->openbay->play->log('addProduct() - Total: '.$total);
 
         $this->db->query("INSERT INTO `" . DB_PREFIX . "order_product`
         SET
@@ -183,13 +183,13 @@ class ModelPlayOrder extends Model{
         }
     }
     
-    public function updateStock($product_id, $quantity, $modifier){
+    public function updateStock($product_id, $quantity, $modifier) {
         $this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity ".$modifier." " . (int)$quantity . ") WHERE product_id = '" . (int)$product_id . "' AND subtract = '1'");
 
-        $this->play->stockModified($product_id);
+        $this->openbay->play->stockModified($product_id);
     }
     
-    public function restockProducts($order_id){
+    public function restockProducts($order_id) {
         
         $order_products = $this->getOrderProducts($order_id);
         
@@ -200,7 +200,7 @@ class ModelPlayOrder extends Model{
         }
     }
     
-    public function getOrderProducts($order_id){
+    public function getOrderProducts($order_id) {
         $qry = $this->db->query("
             SELECT * FROM `" . DB_PREFIX . "order_product` 
             WHERE `order_id` = '".(int)$order_id."'");
@@ -216,7 +216,7 @@ class ModelPlayOrder extends Model{
         return $products;
     }
 
-    public function addPlayOrder($order_id, $play_order_id, $gbp, $eur){
+    public function addPlayOrder($order_id, $play_order_id, $gbp, $eur) {
         $this->db->query("
             INSERT INTO `" . DB_PREFIX . "play_order` 
             SET 
@@ -500,7 +500,7 @@ class ModelPlayOrder extends Model{
         }
     }
     
-    public function getModifiedOrders(){
+    public function getModifiedOrders() {
         $qry = $this->db->query("
             SELECT * 
             FROM 
@@ -522,3 +522,4 @@ class ModelPlayOrder extends Model{
         }
     }
 }
+?>

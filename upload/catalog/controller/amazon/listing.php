@@ -24,7 +24,7 @@ class ControllerAmazonListing extends Controller {
             return;
         }
         
-        $decrypted = $this->amazon->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->amazon->decryptArgs($this->request->post['data']);
         
         if (!$decrypted) {
             $logger->write('amazon/order Failed to decrypt data');

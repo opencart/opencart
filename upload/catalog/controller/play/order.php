@@ -12,7 +12,7 @@ class ControllerPlayOrder extends Controller{
                 $data = $this->request->post;
                 
                 //decrypt the order data
-                $data['data'] = $this->play->decrypt($data['data'], true);
+                $data['data'] = $this->openbay->play->decrypt($data['data'], true);
                 
                 $import_id      = $this->config->get('obp_play_import_id');
                 $paid_id        = $this->config->get('obp_play_paid_id');
@@ -24,7 +24,7 @@ class ControllerPlayOrder extends Controller{
                     foreach($data['data']['orders'] as $order){
                         if($order['payments-status'] != 'Sale Pending'){
 
-                            $order_id = $this->play->getOrderId($order['order-id']);
+                            $order_id = $this->openbay->play->getOrderId($order['order-id']);
 
                             if(!$order_id){
                                 //new order

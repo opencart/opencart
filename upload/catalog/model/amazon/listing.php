@@ -1,7 +1,5 @@
 <?php
-
 class ModelAmazonListing extends Model {
-
     public function listingSuccessful($product_id, $marketplace) {
         $this->db->query("
             UPDATE `" . DB_PREFIX . "amazon_product`
@@ -19,3 +17,4 @@ class ModelAmazonListing extends Model {
         ");
     }
 }
+?>

@@ -66,6 +66,7 @@ $_['update_failed_connect']             = 'Could not connect to server';
 $_['update_success']                    = 'Module has been updated (v.%s)';
 $_['lang_patch_notes1']                 = 'To read about the recent and past updates';
 $_['lang_patch_notes2']                 = 'click here';
+$_['lang_patch_notes3']                 = "The update tool will make changes to your shop's file system. Make sure you have a backup before using this tool.";
 
 //Help tab
 $_['lang_help_title']                   = 'Information on help & support';
@@ -115,3 +116,4 @@ $_['lang_pod_shop']                     = 'Store';
 
 $_['lang_checking_messages']            = 'Checking for messages';
 $_['lang_title_messages']               = 'Messages &amp; notifications';
+?>

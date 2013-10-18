@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_title'] = 'Credit or Debit Card PAYFLOW';
+$_['text_title'] = 'Credit or Debit Card';
 $_['text_secure_connection'] = 'Creating a secure connection...';
 
 //Errors

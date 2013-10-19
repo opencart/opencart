@@ -740,11 +740,11 @@ $(document).delegate('#button-credit-add', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('.alert-success').fadeIn('slow');
 				
@@ -771,11 +771,11 @@ $(document).delegate('#button-credit-remove', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-danger">' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('#button-credit-remove').replaceWith('<button id="button-credit-add" class="btn btn-success btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_credit_add; ?></button>');
 			}
@@ -800,11 +800,11 @@ $(document).delegate('#button-reward-add', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>');
 			}
@@ -829,11 +829,11 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-success btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>');
 			}
@@ -858,11 +858,11 @@ $(document).delegate('#button-commission-add', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
                 
 				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_remove; ?></button>');
 			}
@@ -887,11 +887,11 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-success btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_commission_add; ?></button>');
 			}

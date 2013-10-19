@@ -17,7 +17,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a> <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+      <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a>
         <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-modification').submit() : false;"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
@@ -44,22 +44,11 @@
                   <?php } else { ?>
                   <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                   <?php } ?></td>
-                <td class="text-right"><?php if ($sort == 'sort_order') { ?>
-                  <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
-                  <?php } ?></td>
                 <td class="text-left"><?php if ($sort == 'date_added') { ?>
                   <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
                   <?php } else { ?>
                   <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                   <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'date_modified') { ?>
-                  <a href="<?php echo $sort_date_modified; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_modified; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_date_modified; ?>"><?php echo $column_date_modified; ?></a></td>
-                <td class="text-right"><?php } ?>
-                  <?php echo $column_action; ?></td>
               </tr>
             </thead>
             <tbody>
@@ -73,18 +62,17 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $modification['name']; ?></td>
                 <td class="text-left"><?php echo $modification['author']; ?></td>
-                <td class="text-left"><?php echo $modification['status']; ?></td>
-                <td class="text-right"><?php echo $modification['sort_order']; ?></td>
+                <td class="text-left"><?php if ($modification['status']) { ?>
+                <button type="button" class="btn btn-success btn-xs"><i class="icon-ok"></i> <?php echo $button_enable; ?></button>
+                <?php } else { ?>
+                <button type="button" class="btn btn-danger btn-xs"><i class="icon-minus"></i> <?php echo $button_disable; ?></button>
+                <?php } ?></td>
                 <td class="text-left"><?php echo $modification['date_added']; ?></td>
-                <td class="text-left"><?php echo $modification['date_modified']; ?></td>
-                <td class="text-right"><?php foreach ($modification['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
-                  <?php } ?></td>
               </tr>
               <?php } ?>
               <?php } else { ?>
               <tr>
-                <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -98,4 +86,63 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$(document).delegate('#button-enable', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=extension/modification/status&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-reward-add i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-reward-add').prop('disabled', true);				
+		},
+		complete: function() {
+			$('#button-reward-add i').replaceWith('<i class="icon-minus-sign"></i>');
+			$('#button-reward-add').prop('disabled', false);
+		},									
+		success: function(json) {
+			$('.alert').remove();
+						
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>');
+			}
+		}
+	});
+});
+
+$(document).delegate('#button-disable', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/removereward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-reward-remove i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-reward-remove').prop('disabled', true);		
+		},
+		complete: function() {
+			$('#button-reward-remove i').replaceWith('<i class="icon-minus-sign"></i>');
+			$('#button-reward-remove').prop('disabled', false);
+		},				
+		success: function(json) {
+			$('.alert').remove();
+						
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-success btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>');
+			}
+		}
+	});
+});
+//--></script> 
 <?php echo $footer; ?>

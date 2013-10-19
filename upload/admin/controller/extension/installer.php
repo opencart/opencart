@@ -399,11 +399,10 @@ class ControllerExtensionInstaller extends Controller {
 
 					$data = array(
 						'name'       => $dom->getElementsByTagName('name')->item(0)->nodeValue,
-						'version'    => $dom->getElementsByTagName('version')->item(0)->nodeValue,
 						'author'     => $dom->getElementsByTagName('author')->item(0)->nodeValue,
+						'version'    => $dom->getElementsByTagName('version')->item(0)->nodeValue,
 						'code'       => $file,
-						'status'     => 1,
-						'sort_order' => 0
+						'status'     => 1
 					);
 				
 					$this->model_setting_modification->addModification($data);

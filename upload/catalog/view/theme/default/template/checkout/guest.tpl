@@ -2,6 +2,24 @@
   <div class="col-sm-6">
     <fieldset>
       <legend><?php echo $text_your_details; ?></legend>
+      <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
+        <label class="control-label"><?php echo $entry_customer_group; ?></label>
+        <?php foreach ($customer_groups as $customer_group) { ?>
+        <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+        <div class="radio">
+          <label>
+            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+            <?php echo $customer_group['name']; ?></label>
+        </div>
+        <?php } else { ?>
+        <div class="radio">
+          <label>
+            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" />
+            <?php echo $customer_group['name']; ?></label>
+        </div>
+        <?php } ?>
+        <?php } ?>
+      </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
         <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
@@ -30,24 +48,6 @@
       <div class="form-group">
         <label class="control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
         <input type="text" name="company" value="<?php echo $company; ?>" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" class="form-control" />
-      </div>
-      <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
-        <label class="control-label"><?php echo $entry_customer_group; ?></label>
-        <?php foreach ($customer_groups as $customer_group) { ?>
-        <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-        <div class="radio">
-          <label>
-            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-            <?php echo $customer_group['name']; ?></label>
-        </div>
-        <?php } else { ?>
-        <div class="radio">
-          <label>
-            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" />
-            <?php echo $customer_group['name']; ?></label>
-        </div>
-        <?php } ?>
-        <?php } ?>
       </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
@@ -101,6 +101,22 @@
   <div class="pull-right">
     <input type="button" value="<?php echo $button_continue; ?>" id="button-guest" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
   </div>
+</div>
+<div style="display: none;">
+  <?php foreach ($custom_fields as $custom_field) { ?>
+  <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>">
+    <?php if ($custom_field['type'] != 'checkbox') { ?>
+    <div class="custom-field-value"><?php echo $custom_field['value']; ?></div>
+    <?php } else { ?>
+    <?php foreach ($custom_field['value'] as $custom_field_value_id) { ?>
+    <div class="custom-field-value"><?php echo $custom_field_value_id; ?></div>
+    <?php } ?>
+    <?php } ?>
+    <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
+    <div class="custom-field-error"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+    <?php } ?>
+  </div>
+  <?php } ?>
 </div>
 <script type="text/javascript"><!--
 $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
@@ -175,7 +191,7 @@ $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', fu
 					if (custom_field['type'] == 'checkbox') {
 						html += '<div class="form-group custom-field">';
 						html += '  <label class="control-label">' + custom_field['name'] + '</label>';
-						html += '  <div id="input-custom-field' + custom_field['custom_field_id'] + '">';
+						html += '  <div id="input-payment-custom-field' + custom_field['custom_field_id'] + '">';
 						
 						for (j = 0; j < custom_field['custom_field_value'].length; j++) {
 							custom_field_value = custom_field['custom_field_value'][j];

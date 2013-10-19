@@ -136,8 +136,26 @@ class ControllerCheckoutGuest extends Controller {
 			$this->data['shipping_address'] = $this->session->data['guest']['shipping_address'];			
 		} else {
 			$this->data['shipping_address'] = true;
-		}			
+		}	
+				
+		// Custom Fields
+		$this->load->model('account/custom_field');
 		
+		$this->data['custom_fields'] = array();
+				
+		// If a post request then get a list of all fields that should have been posted for validation checking.
+		if (isset($this->session->data['guest']['customer_group_id'])) {
+			$custom_fields = $this->model_account_custom_field->getCustomFields('registration', $this->session->data['guest']['customer_group_id']);
+			
+			foreach ($custom_fields as $custom_field) {
+				$this->data['custom_fields'][] = array(
+					'custom_field_id' => $custom_field['custom_field_id'],
+					'type'            => $custom_field['type'],
+					'value'           => isset($this->session->data['guest']['custom_field'][$custom_field['custom_field_id']]) ? $this->session->data['guest']['custom_field'][$custom_field['custom_field_id']] : ''
+				);
+			}
+		}
+				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/guest.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/checkout/guest.tpl';
 		} else {
@@ -237,6 +255,8 @@ class ControllerCheckoutGuest extends Controller {
 			$this->session->data['guest']['telephone'] = $this->request->post['telephone'];
 			$this->session->data['guest']['fax'] = $this->request->post['fax'];
 			
+			$this->session->data['guest']['custom_field'] = $this->request->post['custom_field'];
+			
 			$this->session->data['payment_address']['firstname'] = $this->request->post['firstname'];
 			$this->session->data['payment_address']['lastname'] = $this->request->post['lastname'];				
 			$this->session->data['payment_address']['company'] = $this->request->post['company'];
@@ -324,8 +344,6 @@ class ControllerCheckoutGuest extends Controller {
 	}
 	
 	public function custom_field() {
-		$json = array();
-
 		$this->load->model('account/custom_field');
 
 		// Customer Group

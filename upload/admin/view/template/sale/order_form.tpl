@@ -1147,12 +1147,12 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 							
 				// Order Details
 				if (json['error']['customer']) {
-					$('.box').before('<div class="text-danger">' + json['error']['customer'] + '</div>');
+					$('.panel').before('<div class="text-danger">' + json['error']['customer'] + '</div>');
 				}	
 								
 				if (json['error']['firstname']) {
@@ -1210,16 +1210,16 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					}
 					
 					if (json['error']['product']['stock']) {
-						$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['stock'] + '</div>');
+						$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['stock'] + '</div>');
 					}	
 					
 					if (json['error']['product']['store']) {
-						$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['store'] + '</div>');
+						$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['store'] + '</div>');
 					}	
 																
 					if (json['error']['product']['minimum']) {	
 						for (i in json['error']['product']['minimum']) {
-							$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['minimum'][i] + '</div>');
+							$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['minimum'][i] + '</div>');
 						}						
 					}
 				} else {
@@ -1261,27 +1261,27 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				
 				// Shipping Method	
 				if (json['error']['shipping_method']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['shipping_method'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['shipping_method'] + '</div>');
 				}	
 				
 				// Payment Method
 				if (json['error']['payment_method']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['payment_method'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['payment_method'] + '</div>');
 				}	
 															
 				// Coupon
 				if (json['error']['coupon']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['coupon'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['coupon'] + '</div>');
 				}
 				
 				// Voucher
 				if (json['error']['voucher']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['voucher'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['voucher'] + '</div>');
 				}
 				
 				// Reward Points		
 				if (json['error']['reward']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['reward'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['reward'] + '</div>');
 				}	
 			} else {
 				$('input[name=\'product\']').val('');
@@ -1298,7 +1298,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				$('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 			}
 			
 			if (json['order_product'] != '') {

@@ -496,7 +496,7 @@ class ControllerAccountAddress extends Controller {
 		// Custom Field Validation
 		$this->load->model('account/custom_field');
 		
-		$custom_fields = $this->model_account_custom_field->getCustomFields('address', $this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields('address', $this->customer->getGroupId());
 		
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
@@ -553,8 +553,6 @@ class ControllerAccountAddress extends Controller {
 	}
 	
 	public function custom_field() {
-		$json = array();
-
 		$this->load->model('account/custom_field');
 
 		$json = $this->model_account_custom_field->getCustomFields('address', $this->customer->getGroupId());

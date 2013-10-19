@@ -73,6 +73,8 @@ $_['button_add_link']               = 'Add Link';
 $_['button_update_total']           = 'Update Totals';
 $_['button_approve']                = 'Approve';
 $_['button_reset']                  = 'Reset';
+$_['button_enable']                 = 'Enable';
+$_['button_disable']                = 'Disable';
 
 // Tab
 $_['tab_address']                   = 'Address';

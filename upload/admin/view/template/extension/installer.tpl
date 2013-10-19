@@ -31,9 +31,9 @@
           <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
           <div class="col-sm-10">
             <div class="progress">
-              <div class="progress-bar" style="width: 0%;"></div>
+              <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
             </div>
-            <div class="progress-text"></div>
+            <div id="progress-text"></div>
           </div>
         </div>
         <div class="form-group">
@@ -60,9 +60,9 @@ var total = 0;
 $('#file').on('change', function() {
 	// Reset everything
 	$('.alert').remove();
-	$('.progress-bar').css('width', '0%');
-	$('.progress-bar').removeClass('progress-bar-danger progress-bar-success');		
-	$('.progress-text').html('');
+	$('#progress-bar').css('width', '0%');
+	$('#progress-bar').removeClass('progress-bar-danger, progress-bar-success');		
+	$('#progress-text').html('');
 	
 	$.ajax({
         url: 'index.php?route=extension/installer/upload&token=<?php echo $token; ?>',
@@ -102,7 +102,7 @@ $('#file').on('change', function() {
 					$('#button-continue').prop('disabled', false);
 				} else {
 					next();
-				}				
+				}	
 			}	
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -121,8 +121,8 @@ function next() {
 	data = step.shift();
 	
 	if (data) {
-		$('.progress-bar').css('width', (100 - (step.length / total) * 100) + '%');
-		$('.progress-text').html('<span class="text-info">' + data['text'] + '</span>');
+		$('#progress-bar').css('width', (100 - (step.length / total) * 100) + '%');
+		$('#progress-text').html('<span class="text-info">' + data['text'] + '</span>');
 		
 		$.ajax({
 			url: data.url,
@@ -131,8 +131,8 @@ function next() {
 			data: 'path=' + data.path,
 			success: function(json) {
 				if (json['error']) {
-					$('.progress-bar').addClass('progress-bar-danger');
-					$('.progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
+					$('#progress-bar').addClass('progress-bar-danger');
+					$('#progress-text').html('<div class="text-danger">' + json['error'] + '</div>');
 					$('.button-clear').prop('disabled', false);
 				} 
 				
@@ -167,11 +167,11 @@ $('#button-clear').bind('click', function() {
 			$('.alert').remove();
 				
 			if (json['error']) {
-				$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} 
 		
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('#button-clear').prop('disabled', true);
 			}

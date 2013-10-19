@@ -222,5 +222,15 @@ class ControllerAccountEdit extends Controller {
 			return false;
 		}
 	}
+	
+	public function custom_field() {
+		$json = array();
+
+		$this->load->model('account/custom_field');
+
+		$json = $this->model_account_custom_field->getCustomFields('edit', $this->customer->getGroupId());
+
+		$this->response->setOutput(json_encode($json));
+	}	
 }
 ?>

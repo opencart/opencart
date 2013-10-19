@@ -2,6 +2,24 @@
   <div class="col-sm-6">
     <fieldset>
       <legend><?php echo $text_your_details; ?></legend>
+      <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
+        <label class="control-label"><?php echo $entry_customer_group; ?></label>
+        <?php foreach ($customer_groups as $customer_group) { ?>
+        <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
+        <div class="radio">
+          <label>
+            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+            <?php echo $customer_group['name']; ?></label>
+        </div>
+        <?php } else { ?>
+        <div class="radio">
+          <label>
+            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" />
+            <?php echo $customer_group['name']; ?></label>
+        </div>
+        <?php } ?>
+        <?php } ?>
+      </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
         <input type="text" name="firstname" value="" placeholder="<?php echo $entry_firstname; ?>" id="input-payment-firstname" class="form-control" />
@@ -41,24 +59,6 @@
       <div class="form-group">
         <label class="control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
         <input type="text" name="company" value="" placeholder="<?php echo $entry_company; ?>" id="input-payment-company" class="form-control" />
-      </div>
-      <div class="form-group" style="display: <?php echo (count($customer_groups) > 1 ? 'block' : 'none'); ?>;">
-        <label class="control-label"><?php echo $entry_customer_group; ?></label>
-        <?php foreach ($customer_groups as $customer_group) { ?>
-        <?php if ($customer_group['customer_group_id'] == $customer_group_id) { ?>
-        <div class="radio">
-          <label>
-            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-            <?php echo $customer_group['name']; ?></label>
-        </div>
-        <?php } else { ?>
-        <div class="radio">
-          <label>
-            <input type="radio" name="customer_group_id" value="<?php echo $customer_group['customer_group_id']; ?>" />
-            <?php echo $customer_group['name']; ?></label>
-        </div>
-        <?php } ?>
-        <?php } ?>
       </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
@@ -124,14 +124,130 @@
 </div>
 <?php } ?>
 <script type="text/javascript"><!--
-/*
-$('#payment-address input[name=\'customer_group_id\']:checked').on('change', function() {
-    var customer_group = [];
-    
+$('#collapse-payment-address input[name=\'customer_group_id\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=checkout/register/custom_field&customer_group_id=' + this.value,
+		dataType: 'json',	
+		success: function(json) {
+			$('#collapse-payment-address .custom-field').hide();
+			
+			for (i = 0; i < json.length; i++) {
+				custom_field = json[i];
+				
+				if (!$('#collapse-payment-address input[name^=\'custom_field[' + custom_field['custom_field_id'] + ']\'], #collapse-payment-address textarea[name=\'custom_field[' + custom_field['custom_field_id'] + ']\']').length) {
+					html = '';
+					
+					if (custom_field['type'] == 'select') {
+						html += '<div class="form-group custom-field">';
+						html += '  <label class="control-label" for="input-payment-custom-field' + custom_field['custom_field_id'] + '">' + custom_field['name'] + '</label>';
+						html += '  <select name="custom_field[' + custom_field['custom_field_id'] + ']" id="input-payment-custom-field' + custom_field['custom_field_id'] + '" class="form-control">';
+						html += '    <option value=""><?php echo $text_select; ?></option>';
+					
+						for (j = 0; j < custom_field['custom_field_value'].length; j++) {
+							html += '<option value="' + custom_field['custom_field_value'][j]['custom_field_value_id'] + '">' + custom_field['custom_field_value'][j]['name'] + '</option>';
+						}
+							
+						html += '  </select>';
+
+						html += '</div>';					
+					}
+					
+					if (custom_field['type'] == 'radio') {
+						html += '<div class="form-group custom-field">';
+						html += '  <label class="control-label">' + custom_field['name'] + '</label>';
+						html += '  <div id="input-payment-custom-field' + custom_field['custom_field_id'] + '">';
+						
+						for (j = 0; j < custom_field['custom_field_value'].length; j++) {
+							custom_field_value = custom_field['custom_field_value'][j];
+							
+							html += '<div class="radio">';
+							html += '  <label><input type="radio" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field_value['custom_field_value_id'] + '" /> ' + custom_field_value['name'] + '</label>';
+							html += '</div>';
+						}
+						
+						html += '  </div>';
+						html += '</div>';				
+					}
+					
+					if (custom_field['type'] == 'checkbox') {
+						html += '<div class="form-group custom-field">';
+						html += '  <label class="control-label">' + custom_field['name'] + '</label>';
+						html += '  <div id="input-payment-custom-field' + custom_field['custom_field_id'] + '">';
+						
+						for (j = 0; j < custom_field['custom_field_value'].length; j++) {
+							custom_field_value = custom_field['custom_field_value'][j];
+							
+							html += '<div class="checkbox">';
+							html += '  <label><input type="checkbox" name="custom_field[' + custom_field['custom_field_id'] + '][]" value="' + custom_field_value['custom_field_value_id'] + '" /> ' + custom_field_value['name'] + '</label>';
+							html += '</div>';
+						}
+						
+						html += '  </div>';					
+						html += '</div>';				
+					}
+					
+					if (custom_field['type'] == 'text') {
+						html += '<div class="form-group custom-field">';
+						html += '  <label class="control-label" for="input-payment-custom-field' + custom_field['custom_field_id'] + '">' + custom_field['name'] + '</label>';
+						html += '  <input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" placeholder="' + custom_field['name'] + '" id="input-payment-custom-field' + custom_field['custom_field_id'] + '" class="form-control" />';
+						html += '</div>';					
+					}
+					
+					if (custom_field['type'] == 'textarea') {
+						html += '<div class="form-group custom-field">';
+						html += '  <label class="control-label" for="input-payment-custom-field' + custom_field['custom_field_id'] + '">' + custom_field['name'] + '</label>';
+						html += '  <textarea name="custom_field[' + custom_field['custom_field_id'] + ']" rows="5" placeholder="' + custom_field['name'] + '" id="input-payment-custom-field' + custom_field['custom_field_id'] + '" class="form-control">' + custom_field['value'] + '</textarea>';
+						html += '</div>';
+					}
+					
+					if (custom_field['type'] == 'file') {
+						html += '<div class="form-group custom-field">';
+						html += '  <label class="control-label">' + custom_field['name'] + '</label>';
+						html += '  <button type="button" id="button-payment-custom-field' + custom_field['custom_field_id'] + '" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>';
+						html += '  <input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="" id="input-payment-custom-field' + custom_field['custom_field_id'] + '" />';
+						html += '</div>';
+					}
+					
+					if (custom_field['type'] == 'date') {
+						html += '<div class="form-group custom-field">';
+						html += '  <label class="control-label" for="input-payment-custom-field' + custom_field['custom_field_id'] + '">' + custom_field['name'] + '</label>';
+						html += '  <input type="date" name="custom_field[' + custom_field['custom_field_id'] + ']" value="" id="input-payment-custom-field' + custom_field['custom_field_id'] + '" class="form-control" />';
+						html += '</div>';
+					}
+					
+					if (custom_field['type'] == 'datetime') {
+						html += '<div class="form-group custom-field">';
+						html += '  <label class="control-label" for="input-payment-custom-field' + custom_field['custom_field_id'] + '">' + custom_field['name'] + '</label>';
+						html += '  <input type="datetime-local" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" id="input-payment-custom-field' + custom_field['custom_field_id'] + '" class="form-control" />';
+						html += '</div>';					
+					}
+					
+					if (custom_field['type'] == 'time') {
+						html += '<div class="form-group custom-field">';
+						html += '  <label class="control-label" for="input-payment-custom-field' + custom_field['custom_field_id'] + '">' + custom_field['name'] + '</label>';
+						html += '  <input type="time" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + custom_field['value'] + '" id="input-payment-custom-field' + custom_field['custom_field_id'] + '" class="form-control" />';
+						html += '</div>';					
+					}
+					
+					$('#collapse-payment-address .form-group:eq(' + custom_field['sort_order'] + ')').after(html);
+				} else {
+					$('#input-payment-custom-field' + custom_field['custom_field_id']).parent().show();
+				}
+				
+				if (custom_field['required']) {
+					$('#input-payment-custom-field' + custom_field['custom_field_id']).parent().addClass('required');
+				} else {
+					$('#input-payment-custom-field' + custom_field['custom_field_id']).parent().removeClass('required');
+				}
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});
 });
 
-$('#payment-address input[name=\'customer_group_id\']:checked').trigger('change');
-*/
+$('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
 $('#input-payment-country').on('change', function() {

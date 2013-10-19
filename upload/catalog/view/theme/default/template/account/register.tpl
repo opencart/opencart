@@ -360,7 +360,7 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 					if (custom_field['type'] == 'text') {
 						html += '<div class="form-group custom-field">';
 						html += '  <label class="col-sm-2 control-label" for="input-custom-field' + custom_field['custom_field_id'] + '">' + custom_field['name'] + '</label>';
-						html += '  <div class="col-sm-10"><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + value + '" id="input-custom-field' + custom_field['custom_field_id'] + '" class="form-control" />';
+						html += '  <div class="col-sm-10"><input type="text" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + value + '" placeholder="' + custom_field['name'] + '" id="input-custom-field' + custom_field['custom_field_id'] + '" class="form-control" />';
 						
 						if ($('#custom-field' + custom_field['custom_field_id'] + ' .custom-field-error').length) {
 							html += '<div class="text-danger">' + $('#custom-field' + custom_field['custom_field_id'] + ' .custom-field-error').html() + '</div>';
@@ -373,7 +373,7 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 					if (custom_field['type'] == 'textarea') {
 						html += '<div class="form-group custom-field">';
 						html += '  <label class="col-sm-2 control-label" for="input-custom-field' + custom_field['custom_field_id'] + '">' + custom_field['name'] + '</label>';
-						html += '  <div class="col-sm-10"><textarea name="custom_field[' + custom_field['custom_field_id'] + ']" rows="5" id="input-custom-field' + custom_field['custom_field_id'] + '" class="form-control">' + value + '</textarea>';
+						html += '  <div class="col-sm-10"><textarea name="custom_field[' + custom_field['custom_field_id'] + ']" rows="5" placeholder="' + custom_field['name'] + '" id="input-custom-field' + custom_field['custom_field_id'] + '" class="form-control">' + value + '</textarea>';
 						
 						if ($('#custom-field' + custom_field['custom_field_id'] + ' .custom-field-error').length) {
 							html += '<div class="text-danger">' + $('#custom-field' + custom_field['custom_field_id'] + ' .custom-field-error').html() + '</div>';

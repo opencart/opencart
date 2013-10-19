@@ -30,6 +30,7 @@ class ControllerCheckoutRegister extends Controller {
 		$this->data['entry_shipping'] = $this->language->get('entry_shipping');
 
 		$this->data['button_continue'] = $this->language->get('button_continue');
+		$this->data['button_upload'] = $this->language->get('button_upload');
 
 		$this->data['customer_groups'] = array();
 		
@@ -207,7 +208,7 @@ class ControllerCheckoutRegister extends Controller {
 			
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
 			}			
 		}
@@ -240,6 +241,23 @@ class ControllerCheckoutRegister extends Controller {
 		}	
 		
 		$this->response->setOutput(json_encode($json));	
-	} 
+	}
+	
+	public function custom_field() {
+		$json = array();
+
+		$this->load->model('account/custom_field');
+
+		// Customer Group
+		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			$customer_group_id = $this->request->get['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+
+		$json = $this->model_account_custom_field->getCustomFields('registration', $customer_group_id);
+
+		$this->response->setOutput(json_encode($json));
+	}	
 }
 ?>

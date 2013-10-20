@@ -384,7 +384,7 @@
               <div id="option"></div>
             </fieldset>
             <div class="text-right">
-              <button type="button" id="button-product" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_product; ?></button>
+              <button type="button" id="button-product" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_product_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-voucher">
@@ -483,7 +483,7 @@
               </div>
             </fieldset>
             <div class="text-right">
-              <button type="button" id="button-voucher" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_voucher; ?></button>
+              <button type="button" id="button-voucher" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_voucher_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-total">
@@ -624,18 +624,13 @@
               </div>
             </fieldset>
             <div class="text-right">
-              <button type="button" id="button-update" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_update_total; ?></button>
+              <button type="button" id="button-update" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_total; ?></button>
             </div>
           </div>
         </div>
       </form>
     </div>
   </div>
-</div>
-<div style="display: none;">
-  <form enctype="multipart/form-data">
-    <input type="file" name="file" id="file" />
-  </form>
 </div>
 <script type="text/javascript"><!--
 $('input[name=\'customer\']').autocomplete({
@@ -1008,7 +1003,7 @@ $('input[name=\'product\']').autocomplete({
 					html += '<div class="form-group' + (option['required'] ? ' required' : '') + '">';
 					html += '  <label class="col-sm-2 control-label">' + option['name'] + '</label>';
 					html += '  <div class="col-sm-10">';
-					html += '    <button type="button" id="button-option' + option['product_option_id'] + '" class="btn btn-default" onclick="upload(\'' + option['product_option_id'] + '\');"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>';
+					html += '    <button type="button" id="button-upload' + option['product_option_id'] + '" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>';
 					html += '    <input type="hidden" name="option[' + option['product_option_id'] + ']" value="' + option['value'] + '" id="input-option' + option['product_option_id'] + '" />';
 					html += '  </div>';
 					html += '</div>';
@@ -1045,10 +1040,16 @@ $('input[name=\'product\']').autocomplete({
 	}	
 });
 
-function upload(product_option_id) {
-	$('#file').off();
+$('#option').delegate('button[id^=\'button-upload\']', 'click', function() {
+	var node = this;
 	
-	$('#file').on('change', function() {
+	$('#form-upload').remove();
+	
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+
+	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
 			url: 'index.php?route=sale/order/upload&token=<?php echo $token; ?>',
 			type: 'post',		
@@ -1056,36 +1057,33 @@ function upload(product_option_id) {
 			data: new FormData($(this).parent()[0]),
 			cache: false,
 			contentType: false,
-			processData: false,				
+			processData: false,		
 			beforeSend: function() {
-				$('#button-option' + product_option_id).after(' <i class="icon-spinner icon-spin"></i>');
-				$('#button-option' + product_option_id).prop('disabled', true);
-				$('#option' + product_option_id + ' + .error').remove();
-			},	
-			complete: function() {
-				$('.icon-spinner').remove();
+				$(node).find('i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+				$(node).prop('disabled', true);
 				
-				$('#button-option' + product_option_id).prop('disabled', false);
+			},
+			complete: function() {
+				$(node).find('i').replaceWith('<i class="icon-upload"></i>');
+				$(node).prop('disabled', false);
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$('#option' + product_option_id).after('<div class="text-danger">' + json['error'] + '</div>');
+					$(node).parent().find('input[name^=\'option\']').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
 							
 				if (json['success']) {
 					alert(json['success']);
 					
-					$('input[name=\'option[' + product_option_id + ']\']').attr('value', json['file']);
+					$(node).parent().find('input[name^=\'option\']').attr('value', json['file']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
-	});		
-	
-	$('input[name=\'file\']').click();
-}
+	});
+});
 //--></script> 
 <script type="text/javascript"><!--
 $('select[name=\'payment\']').on('change', function() {
@@ -1131,7 +1129,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 	$.ajax({
 		url: '<?php echo $store_url; ?>index.php?route=checkout/manual&token=<?php echo $token; ?>',
 		type: 'post',
-		data: $(data).serialize(),
+		data: $(data),
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-product i, #button-voucher i, #button-update i').replaceWith('<i class="icon-spinner icon-spin"></i>');
@@ -1147,28 +1145,12 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			// Check for errors
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 							
 				// Order Details
 				if (json['error']['customer']) {
-					$('.box').before('<div class="text-danger">' + json['error']['customer'] + '</div>');
-				}	
-								
-				if (json['error']['firstname']) {
-					$('input[name=\'firstname\']').after('<div class="text-danger">' + json['error']['firstname'] + '</div>');
-				}
-				
-				if (json['error']['lastname']) {
-					$('input[name=\'lastname\']').after('<div class="text-danger">' + json['error']['lastname'] + '</div>');
-				}	
-				
-				if (json['error']['email']) {
-					$('input[name=\'email\']').after('<div class="text-danger">' + json['error']['email'] + '</div>');
-				}
-				
-				if (json['error']['telephone']) {
-					$('input[name=\'telephone\']').after('<div class="text-danger">' + json['error']['telephone'] + '</div>');
+					$('.panel').before('<div class="text-danger">' + json['error']['customer'] + '</div>');
 				}	
 			
 				// Payment Address
@@ -1183,7 +1165,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					
 					if (json['error']['payment']['postcode']) {
 						$('input[name=\'payment_postcode\']').after('<div class="text-danger">' + json['error']['payment']['postcode'] + '</div>');
-					}						
+					}
 				}
 			
 				// Shipping	Address
@@ -1192,7 +1174,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 						$('select[name=\'shipping_country_id\']').after('<div class="text-danger">' + json['error']['shipping']['country'] + '</div>');
 					}	
 					
-					if (json['error']['shipping_zone']) {
+					if (json['error']['shipping']['zone']) {
 						$('select[name=\'shipping_zone_id\']').after('<div class="text-danger">' + json['error']['shipping']['zone'] + '</div>');
 					}
 					
@@ -1210,16 +1192,16 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					}
 					
 					if (json['error']['product']['stock']) {
-						$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['stock'] + '</div>');
+						$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['stock'] + '</div>');
 					}	
 					
 					if (json['error']['product']['store']) {
-						$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['store'] + '</div>');
+						$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['store'] + '</div>');
 					}	
 																
 					if (json['error']['product']['minimum']) {	
 						for (i in json['error']['product']['minimum']) {
-							$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['minimum'][i] + '</div>');
+							$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['product']['minimum'][i] + '</div>');
 						}						
 					}
 				} else {
@@ -1261,27 +1243,27 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				
 				// Shipping Method	
 				if (json['error']['shipping_method']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['shipping_method'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['shipping_method'] + '</div>');
 				}	
 				
 				// Payment Method
 				if (json['error']['payment_method']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['payment_method'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['payment_method'] + '</div>');
 				}	
 															
 				// Coupon
 				if (json['error']['coupon']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['coupon'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['coupon'] + '</div>');
 				}
 				
 				// Voucher
 				if (json['error']['voucher']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['voucher'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['voucher'] + '</div>');
 				}
 				
 				// Reward Points		
 				if (json['error']['reward']) {
-					$('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['reward'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error']['reward'] + '</div>');
 				}	
 			} else {
 				$('input[name=\'product\']').val('');
@@ -1298,7 +1280,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				$('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 			}
 			
 			if (json['order_product'] != '') {

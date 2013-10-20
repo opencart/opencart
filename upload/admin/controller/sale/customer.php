@@ -637,10 +637,10 @@ class ControllerSaleCustomer extends Controller {
  
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-    	$this->data['button_add_address'] = $this->language->get('button_add_address');
-		$this->data['button_add_history'] = $this->language->get('button_add_history');
-		$this->data['button_add_transaction'] = $this->language->get('button_add_transaction');
-		$this->data['button_add_reward'] = $this->language->get('button_add_reward');
+    	$this->data['button_address_add'] = $this->language->get('button_address_add');
+		$this->data['button_history_add'] = $this->language->get('button_history_add');
+		$this->data['button_transaction_add'] = $this->language->get('button_transaction_add');
+		$this->data['button_reward_add'] = $this->language->get('button_reward_add');
     	$this->data['button_remove'] = $this->language->get('button_remove');
 	
 		$this->data['tab_general'] = $this->language->get('tab_general');

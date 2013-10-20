@@ -68,7 +68,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="text-left"><a onclick="addFilterRow();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_filter; ?></a></td>
+              <td class="text-left"><a onclick="addFilterRow();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_filter_add; ?></a></td>
             </tr>
           </tfoot>
         </table>

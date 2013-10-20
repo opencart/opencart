@@ -108,7 +108,7 @@
       
       
 
-      <div class="product-items layout-row-<?php echo $cols; ?> product-grid">
+      <div class="row product-grid">
         <?php foreach ($products as $product) { ?>
         <div class="col-sm-3">
           <div class="product-thumb transition">
@@ -148,8 +148,6 @@
               <?php } ?> 
               
               <img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" />
-              
-              
               
               </div>
               <?php } ?>

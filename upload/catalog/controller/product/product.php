@@ -230,20 +230,20 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_points'] = $this->language->get('text_points');	
 			$this->data['text_discount'] = $this->language->get('text_discount');
 			$this->data['text_stock'] = $this->language->get('text_stock');
-			$this->data['text_price'] = $this->language->get('text_price');
 			$this->data['text_tax'] = $this->language->get('text_tax');
 			$this->data['text_discount'] = $this->language->get('text_discount');
 			$this->data['text_option'] = $this->language->get('text_option');
-			$this->data['text_qty'] = $this->language->get('text_qty');
 			$this->data['text_minimum'] = sprintf($this->language->get('text_minimum'), $product_info['minimum']);
-			$this->data['text_or'] = $this->language->get('text_or');
 			$this->data['text_write'] = $this->language->get('text_write');
 			$this->data['text_login_write'] = sprintf($this->language->get('text_login_write'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
 			$this->data['text_note'] = $this->language->get('text_note');
 			$this->data['text_share'] = $this->language->get('text_share');
 			$this->data['text_wait'] = $this->language->get('text_wait');
 			$this->data['text_tags'] = $this->language->get('text_tags');
+			$this->data['text_related'] = $this->language->get('text_related');
+			$this->data['text_loading'] = $this->language->get('text_loading');
 			
+			$this->data['entry_qty'] = $this->language->get('entry_qty');
 			$this->data['entry_name'] = $this->language->get('entry_name');
 			$this->data['entry_review'] = $this->language->get('entry_review');
 			$this->data['entry_rating'] = $this->language->get('entry_rating');
@@ -262,7 +262,6 @@ class ControllerProductProduct extends Controller {
 			$this->data['tab_description'] = $this->language->get('tab_description');
 			$this->data['tab_attribute'] = $this->language->get('tab_attribute');
 			$this->data['tab_review'] = sprintf($this->language->get('tab_review'), $product_info['reviews']);
-			$this->data['tab_related'] = $this->language->get('tab_related');
 			
 			$this->data['product_id'] = (int)$this->request->get['product_id'];
 			$this->data['manufacturer'] = $product_info['manufacturer'];
@@ -414,7 +413,13 @@ class ControllerProductProduct extends Controller {
 				} else {
 					$special = false;
 				}
-				
+
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
+				} else {
+					$tax = false;
+				}
+								
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
@@ -422,14 +427,16 @@ class ControllerProductProduct extends Controller {
 				}
 							
 				$this->data['products'][] = array(
-					'product_id' => $result['product_id'],
-					'thumb'   	 => $image,
-					'name'    	 => $result['name'],
-					'price'   	 => $price,
-					'special' 	 => $special,
-					'rating'     => $rating,
-					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-					'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'product_id'  => $result['product_id'],
+					'thumb'   	  => $image,
+					'name'    	  => $result['name'],
+					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
+					'price'   	  => $price,
+					'special' 	  => $special,
+					'tax'         => $tax,
+					'rating'      => $rating,
+					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+					'href'    	  => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}	
 			
@@ -601,8 +608,6 @@ class ControllerProductProduct extends Controller {
 	public function write() {
 		$this->language->load('product/product');
 		
-		$this->load->model('catalog/review');
-		
 		$json = array();
 		
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
@@ -623,6 +628,8 @@ class ControllerProductProduct extends Controller {
 			}
 				
 			if (!isset($json['error'])) {
+				$this->load->model('catalog/review');
+				
 				$this->model_catalog_review->addReview($this->request->get['product_id'], $this->request->post);
 				
 				$json['success'] = $this->language->get('text_success');
@@ -682,6 +689,7 @@ class ControllerProductProduct extends Controller {
 			$allowed = array();
 			
 			$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_extension_allowed'));
+			
 			$filetypes = explode("\n", $extension_allowed);
 			
 			foreach ($filetypes as $filetype) {
@@ -696,6 +704,7 @@ class ControllerProductProduct extends Controller {
 		    $allowed = array();
 			
 			$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
+			
 			$filetypes = explode("\n", $mime_allowed);
 			
 			foreach ($filetypes as $filetype) {
@@ -713,11 +722,11 @@ class ControllerProductProduct extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 		
-		if (!$json && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
+		if (!$json && is_uploaded_file($this->request->files['file']['tmp_name'])) {
 			$file = basename($filename) . '.' . md5(mt_rand());
 			
 			// Hide the uploaded file name so people can not link to it directly.
-			$json['file'] = $this->encryption->encrypt($file);
+			$json['file'] = $file;
 			
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 						

@@ -85,7 +85,7 @@
           <tfoot>
             <tr>
               <td colspan="3"></td>
-              <td class="text-left"><button type="button" onclick="addRule();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_rule; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addRule();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_rule_add; ?></button></td>
             </tr>
           </tfoot>
         </table>

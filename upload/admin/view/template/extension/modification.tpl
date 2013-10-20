@@ -15,9 +15,12 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
+  <div class="alert alert-info"><i class="icon-info-sign"></i> <?php echo $text_refresh; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>  
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a> <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="icon-plus"></i> <?php echo $button_insert; ?></a>
+      <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-info"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a>
         <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-modification').submit() : false;"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
@@ -44,22 +47,11 @@
                   <?php } else { ?>
                   <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                   <?php } ?></td>
-                <td class="text-right"><?php if ($sort == 'sort_order') { ?>
-                  <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_sort_order; ?>"><?php echo $column_sort_order; ?></a>
-                  <?php } ?></td>
                 <td class="text-left"><?php if ($sort == 'date_added') { ?>
                   <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
                   <?php } else { ?>
                   <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                   <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'date_modified') { ?>
-                  <a href="<?php echo $sort_date_modified; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_modified; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_date_modified; ?>"><?php echo $column_date_modified; ?></a></td>
-                <td class="text-right"><?php } ?>
-                  <?php echo $column_action; ?></td>
               </tr>
             </thead>
             <tbody>
@@ -73,18 +65,17 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $modification['name']; ?></td>
                 <td class="text-left"><?php echo $modification['author']; ?></td>
-                <td class="text-left"><?php echo $modification['status']; ?></td>
-                <td class="text-right"><?php echo $modification['sort_order']; ?></td>
+                <td class="text-left"><?php if ($modification['status']) { ?>
+                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-success btn-xs" onclick="disableModification(<?php echo $modification['modification_id']; ?>);"><i class="icon-ok"></i> <?php echo $button_enable; ?></button>
+                <?php } else { ?>
+                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-danger btn-xs" onclick="enableModification(<?php echo $modification['modification_id']; ?>);"><i class="icon-remove"></i> <?php echo $button_disable; ?></button>
+                <?php } ?></td>
                 <td class="text-left"><?php echo $modification['date_added']; ?></td>
-                <td class="text-left"><?php echo $modification['date_modified']; ?></td>
-                <td class="text-right"><?php foreach ($modification['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
-                  <?php } ?></td>
               </tr>
               <?php } ?>
               <?php } else { ?>
               <tr>
-                <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -98,4 +89,61 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+function enableModification(modification_id) {
+	$.ajax({
+		url: 'index.php?route=extension/modification/enable&token=<?php echo $token; ?>&modification_id=' + modification_id,
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-modification' + modification_id).prop('disabled', true);				
+		},
+		success: function(json) {
+			$('.alert').remove();
+			
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-remove"></i>');
+			$('#button-modification' + modification_id).prop('disabled', false);
+						
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				
+				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-success btn-xs" onclick="disableModification(' + modification_id + ')"><i class="icon-ok"></i> <?php echo $button_enable; ?></button>');
+			}
+		}
+	});
+};
+
+function disableModification(modification_id) {
+	$.ajax({
+		url: 'index.php?route=extension/modification/disable&token=<?php echo $token; ?>&modification_id=' + modification_id,
+		type: 'post',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-modification' + modification_id).prop('disabled', true);		
+		},
+		success: function(json) {
+			$('.alert').remove();
+			
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-ok"></i>');
+			$('#button-modification' + modification_id).prop('disabled', false);
+
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				
+				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-danger btn-xs" onclick="enableModification(' + modification_id + ')"><i class="icon-remove"></i> <?php echo $button_disable; ?></button>');
+			}
+		}
+	});
+};
+//--></script> 
 <?php echo $footer; ?>

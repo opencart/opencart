@@ -291,7 +291,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
+              <button id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_transaction_add; ?></button>
             </div>
           </div>
           <?php } ?>
@@ -354,10 +354,10 @@ $('input[name=\'payment\']').on('change', function() {
 $('input[name=\'payment\']:checked').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
-$('#transaction .pagination a').on('click', function() {
+$('#transaction').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
 	$('#transaction').load(this.href);
-	
-	return false;
 });			
 
 $('#transaction').load('index.php?route=marketing/affiliate/transaction&token=<?php echo $token; ?>&affiliate_id=<?php echo $affiliate_id; ?>');

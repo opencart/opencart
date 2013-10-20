@@ -31,9 +31,6 @@
             <input type="file" name="import" id="input-import" />
           </div>
         </div>
-        <div class="row">
-          <div class="col-lg-12"> </div>
-        </div>
       </form>
       <form action="<?php echo $backup; ?>" method="post" enctype="multipart/form-data" id="form-backup" class="form-horizontal">
         <div class="form-group">

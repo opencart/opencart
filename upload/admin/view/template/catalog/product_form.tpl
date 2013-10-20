@@ -441,7 +441,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2"></td>
-                    <td class="text-left"><button type="button" onclick="addAttribute();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_attribute; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addAttribute();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_attribute_add; ?></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -619,7 +619,7 @@
                         <tfoot>
                           <tr>
                             <td colspan="6"></td>
-                            <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_option_value; ?></button></td>
+                            <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_option_value_add; ?></button></td>
                           </tr>
                         </tfoot>
                       </table>
@@ -679,7 +679,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="6"></td>
-                    <td class="text-left"><button type="button" onclick="addDiscount();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_discount; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addDiscount();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_discount_add; ?></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -723,7 +723,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="5"></td>
-                    <td class="text-left"><button type="button" onclick="addSpecial();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_special; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addSpecial();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_special_add; ?></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -759,7 +759,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="3"></td>
-                    <td class="text-left"><button type="button" onclick="addImage();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_image; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addImage();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_image_add; ?></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -1141,7 +1141,7 @@ $('input[name=\'option\']').autocomplete({
 			html += '    <tfoot>';
 			html += '      <tr>';
 			html += '        <td colspan="6"></td>';
-			html += '        <td class="text-left"><button type="button" onclick="addOptionValue(' + option_row + ');" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_option_value; ?></button></td>';
+			html += '        <td class="text-left"><button type="button" onclick="addOptionValue(' + option_row + ');" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_option_value_add; ?></button></td>';
 			html += '      </tr>';
 			html += '    </tfoot>';
 			html += '  </table>';

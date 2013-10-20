@@ -1,40 +1,42 @@
 <?php
 class ModelSettingModification extends Model {
 	public function addModification($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', code = '" . $this->db->escape($data['code']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_added = NOW(), date_modified = NOW()");
-	}
-	
-	public function editModification($modification_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', code = '" . $this->db->escape($data['code']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "', date_modified = NOW() WHERE modification_id = '" . (int)$modification_id . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "modification SET name = '" . $this->db->escape($data['name']) . "', author = '" . $this->db->escape($data['author']) . "', version = '" . $this->db->escape($data['version']) . "', code = '" . $this->db->escape($data['code']) . "', status = '" . (int)$data['status'] . "', date_added = NOW()");
 	}
 	
 	public function deleteModification($modification_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "modification WHERE modification_id = '" . (int)$modification_id . "'");
+	}
+
+	public function enableModification($modification_id) {
+		$this->db->query("UPDATE " . DB_PREFIX . "modification SET status = '1' WHERE modification_id = '" . (int)$modification_id . "'");
+	}
+	
+	public function disableModification($modification_id) {
+		$this->db->query("UPDATE " . DB_PREFIX . "modification SET status = '0' WHERE modification_id = '" . (int)$modification_id . "'");
 	}
 	
 	public function getModification($modification_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "modification WHERE modification_id = '" . (int)$modification_id . "'");
 		
 		return $query->row;
-	}	
-	
+	}
+			
 	public function getModifications() {
 		$sql = "SELECT * FROM " . DB_PREFIX . "modification";
 								
 		$sort_data = array(
-			'code',
 			'name',
 			'author',
+			'version',
 			'status',
-			'sort_order',
-			'date_added',
-			'date_modified'
+			'date_added'
 		);
 		
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];	
 		} else {
-			$sql .= " ORDER BY code";	
+			$sql .= " ORDER BY name";	
 		}	
 		
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

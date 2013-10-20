@@ -59,7 +59,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="text-left"><button type="button" onclick="addRoute();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_route; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addRoute();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_route_add; ?></button></td>
             </tr>
           </tfoot>
         </table>

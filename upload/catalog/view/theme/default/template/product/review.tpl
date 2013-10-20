@@ -6,7 +6,7 @@
     <div class="rating pull-right"> <img src="catalog/view/theme/default/image/stars-<?php echo $review['rating'] . '.png'; ?>" alt="<?php echo $review['reviews']; ?>" /> </div>
     <div class="clearfix"></div>
   </div>
-  <p class="text"><?php echo $review['text']; ?></p>
+  <p><?php echo $review['text']; ?></p>
 </div>
 <?php } ?>
 <div class="text-right"><?php echo $pagination; ?></div>

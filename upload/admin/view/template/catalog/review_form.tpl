@@ -28,7 +28,7 @@
             <?php } ?>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-product"><?php echo $entry_product; ?></label>
           <div class="col-sm-10">
             <input type="text" name="product" value="<?php echo $product; ?>" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
@@ -48,7 +48,7 @@
             <?php } ?>
           </div>
         </div>
-        <div class="form-group">
+        <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-name"><?php echo $entry_rating; ?></label>
           <div class="col-sm-10">
             <label class="radio-inline">

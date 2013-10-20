@@ -270,7 +270,7 @@ class ControllerDesignLayout extends Controller {
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_add_route'] = $this->language->get('button_add_route');
+		$this->data['button_route_add'] = $this->language->get('button_route_add');
 		$this->data['button_remove'] = $this->language->get('button_remove');
 
  		if (isset($this->error['warning'])) {

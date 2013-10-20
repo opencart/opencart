@@ -458,8 +458,6 @@ class ControllerAccountRegister extends Controller {
 	}
 	
 	public function custom_field() {
-		$json = array();
-
 		$this->load->model('account/custom_field');
 
 		// Customer Group

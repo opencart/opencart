@@ -272,7 +272,7 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_add_geo_zone'] = $this->language->get('button_add_geo_zone');
+		$this->data['button_geo_zone_add'] = $this->language->get('button_geo_zone_add');
 		$this->data['button_remove'] = $this->language->get('button_remove');
 
  		if (isset($this->error['warning'])) {

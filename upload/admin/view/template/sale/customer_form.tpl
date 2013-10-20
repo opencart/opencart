@@ -39,7 +39,7 @@
                   <li><a href="#tab-address<?php echo $address_row; ?>" data-toggle="tab"><i class="icon-minus-sign" onclick="$('#address a[href=\'#tab-address<?php echo $address_row; ?>\']').parent().remove(); $('#tab-address<?php echo $address_row; ?>').remove();"></i> <?php echo $tab_address . ' ' . $address_row; ?></a></li>
                   <?php $address_row++; ?>
                   <?php } ?>
-                  <li id="address-add"><a onclick="addAddress();"><i class="icon-plus-sign"></i> <?php echo $button_add_address; ?></a></li>
+                  <li id="address-add"><a onclick="addAddress();"><i class="icon-plus-sign"></i> <?php echo $button_address_add; ?></a></li>
                 </ul>
               </div>
               <div class="col-sm-10">
@@ -264,7 +264,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+              <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_history_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-transaction">
@@ -283,7 +283,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button type="button" id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
+              <button type="button" id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_transaction_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-reward">
@@ -302,7 +302,7 @@
                 <span class="help-block"><?php echo $help_points; ?></span> </div>
             </div>
             <div class="text-right">
-              <button type="button" id="button-reward" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
+              <button type="button" id="button-reward" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_reward_add; ?></button>
             </div>
           </div>
           <?php } ?>
@@ -474,10 +474,10 @@ function country(element, index, zone_id) {
 $('select[name$=\'[country_id]\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
-$('#history .pagination a').on('click', function() {
-	$('#history').load(this.href);
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
 	
-	return false;
+	$('#history').load(this.href);
 });			
 
 $('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
@@ -507,10 +507,10 @@ $('#button-history').on('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('#transaction .pagination a').on('click', function() {
+$('#transaction').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
 	$('#transaction').load(this.href);
-	
-	return false;
 });			
 
 $('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
@@ -541,10 +541,10 @@ $('#button-transaction').on('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('#reward .pagination a').on('click', function() {
-	$('#reward').load(this.href);
+$('#reward').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
 	
-	return false;
+	$('#reward').load(this.href);
 });			
 
 $('#reward').load('index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
@@ -592,13 +592,13 @@ $('body').delegate('.button-ban-add', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				 $('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				 $('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 				
 				$('.alert').fadeIn('slow');
 			}
 						
 			if (json['success']) {
-				$('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				$('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
                 
 				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-default btn-xs button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
 			}
@@ -624,11 +624,11 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				 $('.box').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				 $('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-				 $('.box').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				 $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
 				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-danger btn-xs button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
 			}

@@ -59,18 +59,20 @@ class ControllerExtensionInstaller extends Controller {
       		$json['error'] = $this->language->get('error_permission');
     	}
 		
-		if (!empty($this->request->files['file']['name'])) {
-			if (strrchr($this->request->files['file']['name'], '.') != '.zip' && strrchr($this->request->files['file']['name'], '.') != '.xml') {
-				$json['error'] = $this->language->get('error_filetype');
-       		}
-					
-			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
-				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+		if (!$json) {
+			if (!empty($this->request->files['file']['name'])) {
+				if (strrchr($this->request->files['file']['name'], '.') != '.zip' && strrchr($this->request->files['file']['name'], '.') != '.xml') {
+					$json['error'] = $this->language->get('error_filetype');
+				}
+						
+				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
+					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+				}
+			} else {
+				$json['error'] = $this->language->get('error_upload');
 			}
-		} else {
-			$json['error'] = $this->language->get('error_upload');
 		}
-			
+		
 		if (!$json) {
 			// If no temp directory exists create it
 			$path = 'temp-' . md5(mt_rand());
@@ -399,11 +401,10 @@ class ControllerExtensionInstaller extends Controller {
 
 					$data = array(
 						'name'       => $dom->getElementsByTagName('name')->item(0)->nodeValue,
-						'version'    => $dom->getElementsByTagName('version')->item(0)->nodeValue,
 						'author'     => $dom->getElementsByTagName('author')->item(0)->nodeValue,
+						'version'    => $dom->getElementsByTagName('version')->item(0)->nodeValue,
 						'code'       => $file,
-						'status'     => 1,
-						'sort_order' => 0
+						'status'     => 1
 					);
 				
 					$this->model_setting_modification->addModification($data);

@@ -540,9 +540,9 @@ class ControllerSaleOrder extends Controller {
 			
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_add_product'] = $this->language->get('button_add_product');
-		$this->data['button_add_voucher'] = $this->language->get('button_add_voucher');
-		$this->data['button_update_total'] = $this->language->get('button_update_total');
+		$this->data['button_product_add'] = $this->language->get('button_product_add');
+		$this->data['button_voucher_add'] = $this->language->get('button_voucher_add');
+		$this->data['button_total'] = $this->language->get('button_total');
 		$this->data['button_upload'] = $this->language->get('button_upload');
 
 		$this->data['tab_order'] = $this->language->get('tab_order');
@@ -1347,13 +1347,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$this->data['text_payment_method'] = $this->language->get('text_payment_method');	
 			$this->data['text_download'] = $this->language->get('text_download');
-			$this->data['text_generate'] = $this->language->get('text_generate');
-			$this->data['text_reward_add'] = $this->language->get('text_reward_add');
-			$this->data['text_reward_remove'] = $this->language->get('text_reward_remove');
-			$this->data['text_commission_add'] = $this->language->get('text_commission_add');
-			$this->data['text_commission_remove'] = $this->language->get('text_commission_remove');
-			$this->data['text_credit_add'] = $this->language->get('text_credit_add');
-			$this->data['text_credit_remove'] = $this->language->get('text_credit_remove');
 			$this->data['text_country_match'] = $this->language->get('text_country_match');
 			$this->data['text_country_code'] = $this->language->get('text_country_code');
 			$this->data['text_high_risk_country'] = $this->language->get('text_high_risk_country');
@@ -1471,7 +1464,14 @@ class ControllerSaleOrder extends Controller {
 			
 			$this->data['button_invoice'] = $this->language->get('button_invoice');
 			$this->data['button_cancel'] = $this->language->get('button_cancel');
-			$this->data['button_add_history'] = $this->language->get('button_add_history');
+			$this->data['button_generate'] = $this->language->get('button_generate');
+			$this->data['button_reward_add'] = $this->language->get('button_reward_add');
+			$this->data['button_reward_remove'] = $this->language->get('button_reward_remove');
+			$this->data['button_commission_add'] = $this->language->get('button_commission_add');
+			$this->data['button_commission_remove'] = $this->language->get('button_commission_remove');
+			$this->data['button_credit_add'] = $this->language->get('button_credit_add');
+			$this->data['button_credit_remove'] = $this->language->get('button_credit_remove');
+			$this->data['button_history_add'] = $this->language->get('button_history_add');
 		
 			$this->data['tab_order'] = $this->language->get('tab_order');
 			$this->data['tab_payment'] = $this->language->get('tab_payment');
@@ -2281,7 +2281,11 @@ class ControllerSaleOrder extends Controller {
 		
 		$json = array();
 		
-		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+      		$json['error'] = $this->language->get('error_permission');
+    	}	
+				
+		if (!$json) {
 			if (!empty($this->request->files['file']['name'])) {
 				$filename = html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8');
 				
@@ -2292,7 +2296,9 @@ class ControllerSaleOrder extends Controller {
 				// Allowed file extension types
 				$allowed = array();
 				
-				$filetypes = explode("\n", $this->config->get('config_file_extension_allowed'));
+				$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_extension_allowed'));
+				
+				$filetypes = explode("\n", $extension_allowed);
 				
 				foreach ($filetypes as $filetype) {
 					$allowed[] = trim($filetype);
@@ -2305,7 +2311,9 @@ class ControllerSaleOrder extends Controller {
 				// Allowed file mime types		
 				$allowed = array();
 				
-				$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
+				$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
+				
+				$filetypes = explode("\n", $mime_allowed);
 				
 				foreach ($filetypes as $filetype) {
 					$allowed[] = trim($filetype);
@@ -2322,17 +2330,15 @@ class ControllerSaleOrder extends Controller {
 				$json['error'] = $this->language->get('error_upload');
 			}
 		
-			if (!isset($json['error'])) {
-				if (is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-					$file = basename($filename) . '.' . md5(mt_rand());
-					
-					$json['file'] = $file;
-					
-					move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
-				}
-							
+			if (!$json && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
+				$file = basename($filename) . '.' . md5(mt_rand());
+				
+				$json['file'] = $file;
+				
+				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
+				
 				$json['success'] = $this->language->get('text_upload');
-			}	
+			}
 		}
 		
 		$this->response->setOutput(json_encode($json));

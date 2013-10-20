@@ -27,7 +27,7 @@
               <li><a href="#tab-module<?php echo $module_row; ?>" data-toggle="tab"><i class="icon-minus-sign" onclick="$('a[href=\'#tab-module<?php echo $module_row; ?>\']').parent().remove(); $('#tab-module<?php echo $module_row; ?>').remove(); $('#module a:first').tab('show');"></i> <?php echo $tab_module . ' ' . $module_row; ?></a></li>
               <?php $module_row++; ?>
               <?php } ?>
-              <li id="module-add"><a onclick="addModule();"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></a></li>
+              <li id="module-add"><a onclick="addModule();"><i class="icon-plus-sign"></i> <?php echo $button_module_add; ?></a></li>
             </ul>
           </div>
           <div class="col-sm-10">

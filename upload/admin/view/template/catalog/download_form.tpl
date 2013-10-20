@@ -38,7 +38,7 @@
             <div class="input-group">
               <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
               <span class="input-group-btn">
-              <button type="button" onclick="$('input[name=\'file\']').click();" id="button-upload" class="btn btn-primary"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-upload" class="btn btn-primary"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>
               </span></div>
             <span class="help-block"><?php echo $help_filename; ?></span>
             <?php if ($error_filename) { ?>
@@ -78,45 +78,48 @@
     </div>
   </div>
 </div>
-<div style="display: none;">
-  <form enctype="multipart/form-data">
-    <input type="file" name="file" id="file" />
-  </form>
-</div>
 <script type="text/javascript"><!--
-$('#file').on('change', function() {
-    $.ajax({
-        url: 'index.php?route=catalog/download/upload&token=<?php echo $token; ?>',
-        type: 'post',		
-		dataType: 'json',
-		data: new FormData($(this).parent()[0]),
-		cache: false,
-		contentType: false,
-		processData: false,		
-		beforeSend: function() {
-			$('#button-upload i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-upload').prop('disabled', true);
-		},	
-		complete: function() {
-			$('#button-upload i').replaceWith('<i class="icon-upload"></i>');
-			$('#button-upload').prop('disabled', false);
-		},		
-		success: function(json) {
-			if (json['error']) {
-				alert(json['error']);
+$('#button-upload').on('click', function() {
+	$('#form-upload').remove();
+	
+	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
+
+	$('#form-upload input[name=\'file\']').trigger('click');
+	
+	$('#form-upload input[name=\'file\']').on('change', function() {
+		$.ajax({
+			url: 'index.php?route=catalog/download/upload&token=<?php echo $token; ?>',
+			type: 'post',		
+			dataType: 'json',
+			data: new FormData($(this).parent()[0]),
+			cache: false,
+			contentType: false,
+			processData: false,		
+			beforeSend: function() {
+				$('#button-upload i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+				$('#button-upload').prop('disabled', true);
+			},	
+			complete: function() {
+				$('#button-upload i').replaceWith('<i class="icon-upload"></i>');
+				$('#button-upload').prop('disabled', false);
+			},		
+			success: function(json) {
+				if (json['error']) {
+					alert(json['error']);
+				}
+							
+				if (json['success']) {
+					alert(json['success']);
+					
+					$('input[name=\'filename\']').attr('value', json['filename']);
+					$('input[name=\'mask\']').attr('value', json['mask']);
+				}
+			},			
+			error: function(xhr, ajaxOptions, thrownError) {
+				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
-						
-			if (json['success']) {
-				alert(json['success']);
-				
-				$('input[name=\'filename\']').attr('value', json['filename']);
-				$('input[name=\'mask\']').attr('value', json['mask']);
-			}
-		},			
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-		}
-    });
+		});
+	});
 });
 //--></script> 
 <?php echo $footer; ?>

@@ -325,8 +325,6 @@ class ControllerAccountRegister extends Controller {
 			}
 		}
 		
-		$this->data['custom_fields'] = $this->getChild('account/custom_field', $this->request->post['customer_group_id']);
-		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/register.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/register.tpl';
 		} else {

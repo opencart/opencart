@@ -461,7 +461,7 @@ class ControllerCatalogDownload extends Controller {
       		$json['error'] = $this->language->get('error_permission');
     	}	
 		
-		if (!isset($json['error'])) {	
+		if (!$json) {	
 			if (!empty($this->request->files['file']['name'])) {
 				$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
 				
@@ -473,6 +473,7 @@ class ControllerCatalogDownload extends Controller {
 				$allowed = array();
 				
 				$extension_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_extension_allowed'));
+				
 				$filetypes = explode("\n", $extension_allowed);
 				
 				foreach ($filetypes as $filetype) {
@@ -487,6 +488,7 @@ class ControllerCatalogDownload extends Controller {
 				$allowed = array();
 				
 				$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
+				
 				$filetypes = explode("\n", $mime_allowed);
 				
 				foreach ($filetypes as $filetype) {
@@ -500,28 +502,22 @@ class ControllerCatalogDownload extends Controller {
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 				}
-									
-				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
-					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
-				}
 			} else {
 				$json['error'] = $this->language->get('error_upload');
 			}
 		}
 		
-		if (!isset($json['error'])) {
-			if (is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-				$ext = md5(mt_rand());
-				 
-				$json['filename'] = $filename . '.' . $ext;
-				$json['mask'] = $filename;
-				
-				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $filename . '.' . $ext);
-			}
-						
+		if (!$json && is_uploaded_file($this->request->files['file']['tmp_name'])) {
+			$file = $filename . '.' . md5(mt_rand());
+			 
+			$json['filename'] = $file;
+			$json['mask'] = $filename;
+			
+			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
+		
 			$json['success'] = $this->language->get('text_upload');
-		}	
-	
+		}
+						
 		$this->response->setOutput(json_encode($json));
 	}
 

@@ -230,7 +230,6 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_points'] = $this->language->get('text_points');	
 			$this->data['text_discount'] = $this->language->get('text_discount');
 			$this->data['text_stock'] = $this->language->get('text_stock');
-			$this->data['text_price'] = $this->language->get('text_price');
 			$this->data['text_tax'] = $this->language->get('text_tax');
 			$this->data['text_discount'] = $this->language->get('text_discount');
 			$this->data['text_option'] = $this->language->get('text_option');
@@ -414,7 +413,13 @@ class ControllerProductProduct extends Controller {
 				} else {
 					$special = false;
 				}
-				
+
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
+				} else {
+					$tax = false;
+				}
+								
 				if ($this->config->get('config_review_status')) {
 					$rating = (int)$result['rating'];
 				} else {
@@ -422,14 +427,16 @@ class ControllerProductProduct extends Controller {
 				}
 							
 				$this->data['products'][] = array(
-					'product_id' => $result['product_id'],
-					'thumb'   	 => $image,
-					'name'    	 => $result['name'],
-					'price'   	 => $price,
-					'special' 	 => $special,
-					'rating'     => $rating,
-					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
-					'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'product_id'  => $result['product_id'],
+					'thumb'   	  => $image,
+					'name'    	  => $result['name'],
+					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
+					'price'   	  => $price,
+					'special' 	  => $special,
+					'tax'         => $tax,
+					'rating'      => $rating,
+					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
+					'href'    	  => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}	
 			
@@ -715,11 +722,11 @@ class ControllerProductProduct extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 		
-		if (!$json && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
+		if (!$json && is_uploaded_file($this->request->files['file']['tmp_name'])) {
 			$file = basename($filename) . '.' . md5(mt_rand());
 			
 			// Hide the uploaded file name so people can not link to it directly.
-			$json['file'] = $this->encryption->encrypt($file);
+			$json['file'] = $file;
 			
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 						

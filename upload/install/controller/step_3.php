@@ -34,7 +34,17 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DB_USERNAME\', \'' . addslashes($this->request->post['db_user']) . '\');' . "\n";
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
 			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_name']) . '\');' . "\n";
-			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
+			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n ";
+			
+			$output .= '//Cache' ."\n";
+			$output .= 'define(\'CACHE_DRIVER\',\''.addslashes($this->request->post['cache_driver']) . '\');' . "\n";
+			$output .= 'define(\'CACHE_PREFIX\',\''.addslashes($this->request->post['cache_prefix']) . '\');' . "\n";
+			if($this->request->post['cache_driver']=='memcache'){
+				$output .= 'define(\'CACHE_HOSTNAME\',\''.addslashes($this->request->post['cache_host']) . '\');' . "\n";		
+				$output .= 'define(\'CACHE_PORT\',\''.addslashes($this->request->post['cache_port']) . '\');' . "\n";
+				
+			}
+			
 			$output .= '?>';				
 		
 			$file = fopen(DIR_OPENCART . 'config.php', 'w');
@@ -73,6 +83,16 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($this->request->post['db_password']) . '\');' . "\n";
 			$output .= 'define(\'DB_DATABASE\', \'' . addslashes($this->request->post['db_name']) . '\');' . "\n";
 			$output .= 'define(\'DB_PREFIX\', \'' . addslashes($this->request->post['db_prefix']) . '\');' . "\n";
+
+			$output .= '//Cache' ."\n";
+			$output .= 'define(\'CACHE_DRIVER\',\''.addslashes($this->request->post['cache_driver']) . '\');' . "\n";
+			$output .= 'define(\'CACHE_PREFIX\',\''.addslashes($this->request->post['cache_prefix']) . '\');' . "\n";
+			if($this->request->post['cache_driver']=='memcache'){
+				$output .= 'define(\'CACHE_HOSTNAME\',\''.addslashes($this->request->post['cache_host']) . '\');' . "\n";		
+				$output .= 'define(\'CACHE_PORT\',\''.addslashes($this->request->post['cache_port']) . '\');' . "\n";
+			}
+			
+
 			$output .= '?>';	
 
 			$file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
@@ -126,6 +146,18 @@ class ControllerStep3 extends Controller {
 			$this->data['error_password'] = '';
 		}		
 		
+		if (isset($this->error['cache_host'])) {
+			$this->data['error_cache_host'] = $this->error['cache_host'];
+		} else {
+			$this->data['error_cache_host'] = '';
+		}		
+
+		if (isset($this->error['cache_port'])) {
+			$this->data['error_cache_port'] = $this->error['cache_port'];
+		} else {
+			$this->data['error_cache_port'] = '';
+		}		
+
 		if (isset($this->error['email'])) {
 			$this->data['error_email'] = $this->error['email'];
 		} else {
@@ -188,6 +220,21 @@ class ControllerStep3 extends Controller {
 			$this->data['email'] = '';
 		}
 		
+		if (isset($this->request->post['cache_port'])){$this->data['cache_port']=$this->request->post['cache_port'];}
+		else{$this->data['cache_port']=11211;}
+		
+		if(isset($this->request->post['cache_host'])){$this->data['cache_host']=$this->request->post['cache_host'];}
+		else{$this->data['cache_host']="localhost";}
+			
+		if(isset($this->request->post['cache_prefix'])){$this->data['cache_prefix']=$this->request->post['cache_prefix'];}
+		else{$this->data['cache_prefix']="";}
+		
+		if (isset($this->request->post['cache_driver'])) {
+			$this->data['cache_driver'] = $this->request->post['cache_driver'];
+		} else {
+			$this->data['cache_driver'] = 'default';
+		}
+
 		$this->data['back'] = $this->url->link('step_2');
 		
 		$this->template = 'step_3.tpl';
@@ -239,7 +286,11 @@ class ControllerStep3 extends Controller {
 		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
 			$this->error['email'] = 'Invalid E-Mail!';
 		}
-		
+		#validate cache settings
+		if ($this->request->post['cache_driver']=="memcache"){
+			if(!$this->request->post['cache_host']){$this->error['cache_host']="Memcache host required";}
+			if(!$this->request->post['cache_port']){$this->error['cache_port']="Memcache port required";}		
+		}				
 		if (!is_writable(DIR_OPENCART . 'config.php')) {
 			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'config.php!';
 		}

@@ -99,6 +99,47 @@
         </tr>
       </table>
     </fieldset>
+    <p>3. Please enter cache configuration</p>
+    <fieldset>
+      <table class="form">
+        <tr>
+          <td>Cache System:</td>
+          <td>
+		<select name="cache_driver">
+	              <option value="default">File cache</option>
+	              <?php if(class_exists("Memcache",FALSE)){?><option value="memcache">Memcache</option><?php } ?> 
+		      <?php if(extension_loaded("apc")&&ini_get('apc.enabled')){?> <option value="apc"> APC </option> <?php } ?>              
+		</select>
+         </td>
+        </tr>
+        <tr>
+          <td>Key prefix:</td>
+          <td><input type="text" name="cache_prefix" value="<?php echo $cache_prefix; ?>" />
+          </td>
+        </tr>
+	<?php if(class_exists('Memcache',FALSE)){?>
+	<tr class="memcache_config">
+	<td>Memcache host:</td>
+        <td><input type="text" name="cache_host" value="<?php echo $cache_host; ?>" />
+            <br />
+            <?php if ($error_cache_host) { ?>
+            <span class="required"><?php echo $error_cache_host; ?></span>
+            <?php } ?></td>
+        </tr>
+        <tr class="memcache_config">
+          <td>Memcache port:</td>
+          <td><input type="text" name="cache_port" value="<?php echo $cache_port; ?>" />
+            <br />
+            <?php if ($error_cache_port) { ?>
+            <span class="required"><?php echo $error_cache_port; ?></span>
+            <?php } ?></td>
+        </tr>
+	<?php } ?>
+	
+	
+      </table>
+    </fieldset>
+    
     <div class="buttons">
       <div class="left"><a href="<?php echo $back; ?>" class="btn">Back</a></div>
       <div class="right">

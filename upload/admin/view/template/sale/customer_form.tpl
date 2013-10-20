@@ -39,7 +39,7 @@
                   <li><a href="#tab-address<?php echo $address_row; ?>" data-toggle="tab"><i class="icon-minus-sign" onclick="$('#address a[href=\'#tab-address<?php echo $address_row; ?>\']').parent().remove(); $('#tab-address<?php echo $address_row; ?>').remove();"></i> <?php echo $tab_address . ' ' . $address_row; ?></a></li>
                   <?php $address_row++; ?>
                   <?php } ?>
-                  <li id="address-add"><a onclick="addAddress();"><i class="icon-plus-sign"></i> <?php echo $button_add_address; ?></a></li>
+                  <li id="address-add"><a onclick="addAddress();"><i class="icon-plus-sign"></i> <?php echo $button_address_add; ?></a></li>
                 </ul>
               </div>
               <div class="col-sm-10">
@@ -264,7 +264,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+              <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_history_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-transaction">
@@ -283,7 +283,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button type="button" id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
+              <button type="button" id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_transaction_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-reward">
@@ -302,7 +302,7 @@
                 <span class="help-block"><?php echo $help_points; ?></span> </div>
             </div>
             <div class="text-right">
-              <button type="button" id="button-reward" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_reward; ?></button>
+              <button type="button" id="button-reward" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_reward_add; ?></button>
             </div>
           </div>
           <?php } ?>

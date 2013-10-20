@@ -343,7 +343,7 @@ class ControllerSaleCustomField extends Controller {
 
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_add_custom_field_value'] = $this->language->get('button_add_custom_field_value');
+		$this->data['button_custom_field_value_add'] = $this->language->get('button_custom_field_value_add');
 		$this->data['button_remove'] = $this->language->get('button_remove');
 
  		if (isset($this->error['warning'])) {

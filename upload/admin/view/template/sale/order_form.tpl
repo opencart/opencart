@@ -384,7 +384,7 @@
               <div id="option"></div>
             </fieldset>
             <div class="text-right">
-              <button type="button" id="button-product" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_product; ?></button>
+              <button type="button" id="button-product" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_product_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-voucher">
@@ -483,7 +483,7 @@
               </div>
             </fieldset>
             <div class="text-right">
-              <button type="button" id="button-voucher" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_voucher; ?></button>
+              <button type="button" id="button-voucher" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_voucher_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-total">
@@ -624,7 +624,7 @@
               </div>
             </fieldset>
             <div class="text-right">
-              <button type="button" id="button-update" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_update_total; ?></button>
+              <button type="button" id="button-update" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_total; ?></button>
             </div>
           </div>
         </div>

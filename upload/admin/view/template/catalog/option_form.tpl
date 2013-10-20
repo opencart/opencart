@@ -142,7 +142,7 @@
           <tfoot>
             <tr>
               <td colspan="3"></td>
-              <td class="text-left"><button type="button" onclick="addOptionValue();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_option_value; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addOptionValue();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_option_value_add; ?></button></td>
             </tr>
           </tfoot>
         </table>

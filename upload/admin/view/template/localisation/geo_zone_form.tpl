@@ -68,7 +68,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="text-left"><button type="button" onclick="addGeoZone();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_geo_zone; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addGeoZone();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_geo_zone_add; ?></button></td>
             </tr>
           </tfoot>
         </table>

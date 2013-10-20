@@ -608,12 +608,12 @@ class ControllerCatalogProduct extends Controller {
 				
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_add_attribute'] = $this->language->get('button_add_attribute');
-		$this->data['button_add_option'] = $this->language->get('button_add_option');
-		$this->data['button_add_option_value'] = $this->language->get('button_add_option_value');
-		$this->data['button_add_discount'] = $this->language->get('button_add_discount');
-		$this->data['button_add_special'] = $this->language->get('button_add_special');
-		$this->data['button_add_image'] = $this->language->get('button_add_image');
+		$this->data['button_attribute_add'] = $this->language->get('button_attribute_add');
+		$this->data['button_option_add'] = $this->language->get('button_option_add');
+		$this->data['button_option_value_add'] = $this->language->get('button_option_value_add');
+		$this->data['button_discount_add'] = $this->language->get('button_discount_add');
+		$this->data['button_special_add'] = $this->language->get('button_special_add');
+		$this->data['button_image_add'] = $this->language->get('button_image_add');
 		$this->data['button_remove'] = $this->language->get('button_remove');
 		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_clear'] = $this->language->get('button_clear');

@@ -553,7 +553,7 @@ class ControllerMarketingAffiliate extends Controller {
 
 		$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-    	$this->data['button_add_transaction'] = $this->language->get('button_add_transaction');
+    	$this->data['button_transaction_add'] = $this->language->get('button_transaction_add');
     	$this->data['button_remove'] = $this->language->get('button_remove');
 	
 		$this->data['tab_general'] = $this->language->get('tab_general');

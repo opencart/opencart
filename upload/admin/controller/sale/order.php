@@ -540,9 +540,9 @@ class ControllerSaleOrder extends Controller {
 			
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_add_product'] = $this->language->get('button_add_product');
-		$this->data['button_add_voucher'] = $this->language->get('button_add_voucher');
-		$this->data['button_update_total'] = $this->language->get('button_update_total');
+		$this->data['button_product_add'] = $this->language->get('button_product_add');
+		$this->data['button_voucher_add'] = $this->language->get('button_voucher_add');
+		$this->data['button_total'] = $this->language->get('button_total');
 		$this->data['button_upload'] = $this->language->get('button_upload');
 
 		$this->data['tab_order'] = $this->language->get('tab_order');
@@ -1347,13 +1347,6 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$this->data['text_payment_method'] = $this->language->get('text_payment_method');	
 			$this->data['text_download'] = $this->language->get('text_download');
-			$this->data['text_generate'] = $this->language->get('text_generate');
-			$this->data['text_reward_add'] = $this->language->get('text_reward_add');
-			$this->data['text_reward_remove'] = $this->language->get('text_reward_remove');
-			$this->data['text_commission_add'] = $this->language->get('text_commission_add');
-			$this->data['text_commission_remove'] = $this->language->get('text_commission_remove');
-			$this->data['text_credit_add'] = $this->language->get('text_credit_add');
-			$this->data['text_credit_remove'] = $this->language->get('text_credit_remove');
 			$this->data['text_country_match'] = $this->language->get('text_country_match');
 			$this->data['text_country_code'] = $this->language->get('text_country_code');
 			$this->data['text_high_risk_country'] = $this->language->get('text_high_risk_country');
@@ -1471,7 +1464,14 @@ class ControllerSaleOrder extends Controller {
 			
 			$this->data['button_invoice'] = $this->language->get('button_invoice');
 			$this->data['button_cancel'] = $this->language->get('button_cancel');
-			$this->data['button_add_history'] = $this->language->get('button_add_history');
+			$this->data['button_generate'] = $this->language->get('button_generate');
+			$this->data['button_reward_add'] = $this->language->get('button_reward_add');
+			$this->data['button_reward_remove'] = $this->language->get('button_reward_remove');
+			$this->data['button_commission_add'] = $this->language->get('button_commission_add');
+			$this->data['button_commission_remove'] = $this->language->get('button_commission_remove');
+			$this->data['button_credit_add'] = $this->language->get('button_credit_add');
+			$this->data['button_credit_remove'] = $this->language->get('button_credit_remove');
+			$this->data['button_history_add'] = $this->language->get('button_history_add');
 		
 			$this->data['tab_order'] = $this->language->get('tab_order');
 			$this->data['tab_payment'] = $this->language->get('tab_payment');

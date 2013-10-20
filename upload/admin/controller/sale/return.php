@@ -902,7 +902,7 @@ class ControllerSaleReturn extends Controller {
 			
 			$this->data['button_save'] = $this->language->get('button_save');
 			$this->data['button_cancel'] = $this->language->get('button_cancel');
-			$this->data['button_add_history'] = $this->language->get('button_add_history');				
+			$this->data['button_history_add'] = $this->language->get('button_history_add');				
 			
 			$this->data['tab_return'] = $this->language->get('tab_return');
 			$this->data['tab_product'] = $this->language->get('tab_product');

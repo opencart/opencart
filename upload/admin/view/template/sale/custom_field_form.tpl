@@ -206,7 +206,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="text-left"><button type="button" onclick="addCustomFieldValue();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_custom_field_value; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addCustomFieldValue();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_custom_field_value_add; ?></button></td>
             </tr>
           </tfoot>
         </table>

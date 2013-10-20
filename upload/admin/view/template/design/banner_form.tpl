@@ -78,7 +78,7 @@
           <tfoot>
             <tr>
               <td colspan="4"></td>
-              <td class="text-left"><button type="button" onclick="addImage();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_banner; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addImage();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_banner_add; ?></button></td>
             </tr>
           </tfoot>
         </table>

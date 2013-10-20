@@ -15,9 +15,12 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
+  <div class="alert alert-info"><i class="icon-info-sign"></i> <?php echo $text_refresh; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>  
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-default"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a>
+      <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-info"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a>
         <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-modification').submit() : false;"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
       </div>
       <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
@@ -63,9 +66,9 @@
                 <td class="text-left"><?php echo $modification['name']; ?></td>
                 <td class="text-left"><?php echo $modification['author']; ?></td>
                 <td class="text-left"><?php if ($modification['status']) { ?>
-                <button type="button" class="btn btn-success btn-xs"><i class="icon-ok"></i> <?php echo $button_enable; ?></button>
+                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-success btn-xs" onclick="disableModification(<?php echo $modification['modification_id']; ?>);"><i class="icon-ok"></i> <?php echo $button_enable; ?></button>
                 <?php } else { ?>
-                <button type="button" class="btn btn-danger btn-xs"><i class="icon-minus"></i> <?php echo $button_disable; ?></button>
+                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-danger btn-xs" onclick="enableModification(<?php echo $modification['modification_id']; ?>);"><i class="icon-remove"></i> <?php echo $button_disable; ?></button>
                 <?php } ?></td>
                 <td class="text-left"><?php echo $modification['date_added']; ?></td>
               </tr>
@@ -87,21 +90,20 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-$(document).delegate('#button-enable', 'click', function() {
+function enableModification(modification_id) {
 	$.ajax({
-		url: 'index.php?route=extension/modification/status&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=extension/modification/enable&token=<?php echo $token; ?>&modification_id=' + modification_id,
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-reward-add i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-reward-add').prop('disabled', true);				
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-modification' + modification_id).prop('disabled', true);				
 		},
-		complete: function() {
-			$('#button-reward-add i').replaceWith('<i class="icon-minus-sign"></i>');
-			$('#button-reward-add').prop('disabled', false);
-		},									
 		success: function(json) {
 			$('.alert').remove();
+			
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-remove"></i>');
+			$('#button-modification' + modification_id).prop('disabled', false);
 						
 			if (json['error']) {
 				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
@@ -110,28 +112,27 @@ $(document).delegate('#button-enable', 'click', function() {
 			if (json['success']) {
                 $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="icon-minus-sign"></i> <?php echo $text_reward_remove; ?></button>');
+				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-success btn-xs" onclick="disableModification(' + modification_id + ')"><i class="icon-ok"></i> <?php echo $button_enable; ?></button>');
 			}
 		}
 	});
-});
+};
 
-$(document).delegate('#button-disable', 'click', function() {
+function disableModification(modification_id) {
 	$.ajax({
-		url: 'index.php?route=sale/order/removereward&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=extension/modification/disable&token=<?php echo $token; ?>&modification_id=' + modification_id,
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-reward-remove i').replaceWith('<i class="icon-spinner icon-spin"></i>');
-			$('#button-reward-remove').prop('disabled', true);		
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-modification' + modification_id).prop('disabled', true);		
 		},
-		complete: function() {
-			$('#button-reward-remove i').replaceWith('<i class="icon-minus-sign"></i>');
-			$('#button-reward-remove').prop('disabled', false);
-		},				
 		success: function(json) {
 			$('.alert').remove();
-						
+			
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-ok"></i>');
+			$('#button-modification' + modification_id).prop('disabled', false);
+
 			if (json['error']) {
 				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
@@ -139,10 +140,10 @@ $(document).delegate('#button-disable', 'click', function() {
 			if (json['success']) {
                 $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-success btn-xs"><i class="icon-plus-sign"></i> <?php echo $text_reward_add; ?></button>');
+				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-danger btn-xs" onclick="enableModification(' + modification_id + ')"><i class="icon-remove"></i> <?php echo $button_disable; ?></button>');
 			}
 		}
 	});
-});
+};
 //--></script> 
 <?php echo $footer; ?>

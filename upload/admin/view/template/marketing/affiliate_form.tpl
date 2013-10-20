@@ -291,7 +291,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_transaction; ?></button>
+              <button id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_transaction_add; ?></button>
             </div>
           </div>
           <?php } ?>

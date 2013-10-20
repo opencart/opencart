@@ -82,7 +82,7 @@
           <tfoot>
             <tr>
               <td colspan="4"></td>
-              <td class="text-left"><button type="button" onclick="addModule();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_module; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addModule();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_module_add; ?></button></td>
             </tr>
           </tfoot>
         </table>

@@ -198,6 +198,7 @@ class ControllerExtensionModification extends Controller {
 		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$this->data['text_refresh'] = $this->language->get('text_refresh');
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_author'] = $this->language->get('column_author');
@@ -210,6 +211,8 @@ class ControllerExtensionModification extends Controller {
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_enable'] = $this->language->get('button_enable');
 		$this->data['button_disable'] = $this->language->get('button_disable');
+		
+		$this->data['token'] = $this->session->data['token'];
 				
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -292,9 +295,11 @@ class ControllerExtensionModification extends Controller {
 		
 		$json = array(); 
      	
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
+		if (!$this->user->hasPermission('modify', 'extension/modification')) {
       		$json['error'] = $this->language->get('error_permission'); 
     	} elseif (isset($this->request->get['modification_id'])) {
+			$this->load->model('setting/modification');
+			
 			$this->model_setting_modification->enableModification($this->request->get['modification_id']);
 			      		
 			$json['success'] = $this->language->get('text_success');
@@ -308,11 +313,13 @@ class ControllerExtensionModification extends Controller {
 		
 		$json = array(); 
      	
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
+		if (!$this->user->hasPermission('modify', 'extension/modification')) {
       		$json['error'] = $this->language->get('error_permission'); 
     	} elseif (isset($this->request->get['modification_id'])) {
-			$this->model_setting_modification->enableModification($this->request->get['modification_id']);
-			      		
+			$this->load->model('setting/modification');
+			
+			$this->model_setting_modification->disableModification($this->request->get['modification_id']);
+						      		
 			$json['success'] = $this->language->get('text_success');
    		}
 	

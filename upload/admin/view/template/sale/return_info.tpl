@@ -152,7 +152,7 @@
             </div>
           </div>
           <div class="text-right">
-            <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_add_history; ?></button>
+            <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_history_add; ?></button>
           </div>
         </div>
       </div>

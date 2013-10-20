@@ -474,10 +474,10 @@ function country(element, index, zone_id) {
 $('select[name$=\'[country_id]\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
-$('#history .pagination a').on('click', function() {
-	$('#history').load(this.href);
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
 	
-	return false;
+	$('#history').load(this.href);
 });			
 
 $('#history').load('index.php?route=sale/customer/history&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
@@ -507,10 +507,10 @@ $('#button-history').on('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('#transaction .pagination a').on('click', function() {
+$('#transaction').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
 	$('#transaction').load(this.href);
-	
-	return false;
 });			
 
 $('#transaction').load('index.php?route=sale/customer/transaction&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');
@@ -541,10 +541,10 @@ $('#button-transaction').on('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('#reward .pagination a').on('click', function() {
-	$('#reward').load(this.href);
+$('#reward').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
 	
-	return false;
+	$('#reward').load(this.href);
 });			
 
 $('#reward').load('index.php?route=sale/customer/reward&token=<?php echo $token; ?>&customer_id=<?php echo $customer_id; ?>');

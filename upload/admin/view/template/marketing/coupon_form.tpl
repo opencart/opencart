@@ -258,10 +258,10 @@ $('#coupon-category').delegate('.icon-minus-sign', 'click', function() {
 //--></script>
 <?php if ($coupon_id) { ?>
 <script type="text/javascript"><!--
-$('#history .pagination a').on('click', function() {
-	$('#history').load(this.href);
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
 	
-	return false;
+	$('#history').load(this.href);
 });			
 
 $('#history').load('index.php?route=marketing/coupon/history&token=<?php echo $token; ?>&coupon_id=<?php echo $coupon_id; ?>');

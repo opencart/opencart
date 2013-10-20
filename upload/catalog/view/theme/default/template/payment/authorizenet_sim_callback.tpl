@@ -16,12 +16,12 @@
 <?php echo $exact_ctr; ?></pre>
 <div class="buttons">
   <div class="buttons">
-    <div class="pull-left"><a href="<?php echo $back; ?>" class="btn"><?php echo $button_back; ?></a></div>
+    <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
   </div>
 </div>
 <?php } else { ?>
 <p>An error occurred while processing your payment. Please try again later.</p>
 <div class="buttons">
-  <div class="pull-left"><a href="<?php echo $back; ?>" class="btn"><?php echo $button_back; ?></a></div>
+  <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
 </div>
 <?php } ?>

@@ -899,10 +899,10 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 	});
 });
 
-$('#history .pagination a').on('click', function() {
-	$('#history').load(this.href);
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
 	
-	return false;
+	$('#history').load(this.href);
 });			
 
 $('#history').load('index.php?route=sale/order/history&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>');

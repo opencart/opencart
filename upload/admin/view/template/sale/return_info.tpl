@@ -191,10 +191,11 @@ $('select[name=\'return_action_id\']').on('change', function() {
 	});	
 });
 
-$('#history .pagination a').on('click', function() {
-	$('#history').load(this.href);
+
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
 	
-	return false;
+	$('#history').load(this.href);
 });			
 
 $('#history').load('index.php?route=sale/return/history&token=<?php echo $token; ?>&return_id=<?php echo $return_id; ?>');

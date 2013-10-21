@@ -520,7 +520,7 @@ class ControllerOpenbayAmazonListing extends Controller{
         }
         $this->load->model('openbay/amazon');
         
-        $links = $this->model_openbay_amazon->getProductLinks();
+        $links = $this->model_openbay_amazon->getProductLinks($product_id);
         foreach ($links as $link) {
             $this->model_openbay_amazon->removeProductLink($link['amazon_sku']);
         }

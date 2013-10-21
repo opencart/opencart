@@ -52,3 +52,4 @@ $_['text_transaction_expired'] = 'Expired';
 $_['error_not_cancelled'] = 'Error: %s';
 $_['error_not_found'] = 'Could not cancel profile';
 $_['success_cancelled'] = 'Recurring payment has been cancelled';
+?>

@@ -16,7 +16,6 @@ $_['text_file']           = 'File';
 $_['text_date']           = 'Date';
 $_['text_datetime']       = 'Date &amp; Time';
 $_['text_time']           = 'Time';
-$_['text_image_manager']  = 'Image Manager';
 
 // Column
 $_['column_name']         = 'Option Name';

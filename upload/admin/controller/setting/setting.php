@@ -38,7 +38,6 @@ class ControllerSettingSetting extends Controller {
 		$this->data['text_stock'] = $this->language->get('text_stock');
 		$this->data['text_affiliate'] = $this->language->get('text_affiliate');
 		$this->data['text_return'] = $this->language->get('text_return');
-		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 		$this->data['text_shipping'] = $this->language->get('text_shipping');	
 		$this->data['text_payment'] = $this->language->get('text_payment');					
 		$this->data['text_mail'] = $this->language->get('text_mail');
@@ -206,8 +205,6 @@ class ControllerSettingSetting extends Controller {
 		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_clear'] = $this->language->get('button_clear');
 		
 		$this->data['tab_general'] = $this->language->get('tab_general');
 		$this->data['tab_store'] = $this->language->get('tab_store');

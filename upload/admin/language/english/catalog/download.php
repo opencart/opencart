@@ -25,7 +25,7 @@ $_['help_update']      = 'Check this to update previously purchased versions as 
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify downloads!';
-$_['error_name']       = 'Name must be between 3 and 64 characters!';
+$_['error_name']       = 'Download Name must be between 3 and 64 characters!';
 $_['error_upload']     = 'Upload required!';
 $_['error_filename']   = 'Filename must be between 3 and 128 characters!';
 $_['error_exists']     = 'File does not exist!';

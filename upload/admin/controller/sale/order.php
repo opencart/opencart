@@ -2287,6 +2287,7 @@ class ControllerSaleOrder extends Controller {
 				
 		if (!$json) {
 			if (!empty($this->request->files['file']['name'])) {
+				// Sanitize the filename
 				$filename = html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8');
 				
 				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
@@ -2322,7 +2323,8 @@ class ControllerSaleOrder extends Controller {
 				if (!in_array($this->request->files['file']['type'], $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}
-							
+				
+				// Return any upload error			
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
 				}
@@ -2331,11 +2333,11 @@ class ControllerSaleOrder extends Controller {
 			}
 		
 			if (!$json && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-				$file = basename($filename) . '.' . md5(mt_rand());
-				
-				$json['file'] = $file;
+				$file = $filename . '.' . md5(mt_rand());
 				
 				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
+				
+				$json['file'] = $file;
 				
 				$json['success'] = $this->language->get('text_upload');
 			}

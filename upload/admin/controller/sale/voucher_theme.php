@@ -262,15 +262,11 @@ class ControllerSaleVoucherTheme extends Controller {
   	protected function getForm() {
      	$this->data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
-   	
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_image'] = $this->language->get('entry_image');
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_clear'] = $this->language->get('button_clear');
 		    
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];

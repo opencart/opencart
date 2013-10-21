@@ -41,14 +41,11 @@
       </div>
       <?php } else { ?>
       <div class="row">
-        <?php for ($i = 0; $i < count($categories);) { ?>
+        <?php foreach (array_chunk($categories, ceil(count($categories) / 4)) as $categories) { ?>
         <div class="col-sm-3">
           <ul>
-            <?php $j = $i + ceil(count($categories) / 4); ?>
-            <?php for (; $i < $j; $i++) { ?>
-            <?php if (isset($categories[$i])) { ?>
-            <li><a href="<?php echo $categories[$i]['href']; ?>"><?php echo $categories[$i]['name']; ?></a></li>
-            <?php } ?>
+            <?php foreach ($categories as $category) { ?>
+            <li><a href="<?php echo $category['href']; ?>"><?php echo $category['name']; ?></a></li>
             <?php } ?>
           </ul>
         </div>
@@ -56,12 +53,8 @@
       </div>
       <?php } ?>
       <?php } ?>
-      
-      
-      
       <?php if ($products) { ?>
       <p><a href="<?php echo $compare; ?>" id="compare-total"><?php echo $text_compare; ?></a></p>
-      
       <div class="row">
         <div class="col-sm-2">
           <div class="btn-group">
@@ -69,11 +62,9 @@
             <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="icon-th"></i></button>
           </div>
         </div>
-        
         <div class="col-sm-2 col-sm-offset-2 text-right">
           <label class="control-label" for="input-sort"><?php echo $text_sort; ?></label>
         </div>
-        
         <div class="col-sm-3 text-right">
           <select id="input-sort" class="form-control col-sm-3" onchange="location = this.value;">
             <?php foreach ($sorts as $sorts) { ?>
@@ -85,11 +76,9 @@
             <?php } ?>
           </select>
         </div>
-          
         <div class="col-sm-1 text-right">
           <label class="control-label" for="input-limit"><?php echo $text_limit; ?></label>
         </div>
-        
         <div class="col-sm-2 text-right">
           <select id="input-limit" class="form-control" onchange="location = this.value;">
             <?php foreach ($limits as $limits) { ?>
@@ -101,28 +90,19 @@
             <?php } ?>
           </select>
         </div>
-        
       </div>
-      
-      
-      
-      
-
       <div class="row product-grid">
         <?php foreach ($products as $product) { ?>
         <div class="col-sm-3">
           <div class="product-thumb transition">
-            
             <?php if ($product['thumb']) { ?>
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a></div>
             <?php } else { ?>
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="catalog/view/theme/default/image/placeholder.png" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a></div>
             <?php } ?>
-            
             <div class="caption">
               <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
               <p><?php echo $product['description']; ?></p>
-              
               <?php if ($product['price']) { ?>
               <p class="price">
                 <?php if (!$product['special']) { ?>
@@ -135,32 +115,23 @@
                 <?php } ?>
               </p>
               <?php } ?>
-              
               <?php if ($product['rating']) { ?>
               <div class="rating">
-            
-              <?php for ($i = 1; $i <= 5; $i++) { ?>
-              <?php if ($product['rating'] < $i) { ?>
-              <i class="icon-star-empty" style="color: #FC0;"></i>
-              <?php } else { ?>
-              <i class="icon-star" style="color: #FC0;"></i>
+                <?php for ($i = 1; $i <= 5; $i++) { ?>
+                <?php if ($product['rating'] < $i) { ?>
+                <span class="icon-stack" style="font-size: 10px; display: inline-block;"> <i class="icon-sign-blank icon-stack-base" style="color: #F7941D;"></i> <i class="icon-star icon-large" style="color: #FFFFFF;"></i> </span>
+                <?php } else { ?>
+                <span class="icon-stack" style="font-size: 10px; display: inline-block;"> <i class="icon-sign-blank icon-stack-base" style="color: #D1D1D1;"></i> <i class="icon-star icon-large" style="color: #FFFFFF;"></i> </span>
+                <?php } ?>
+                <?php } ?>
+                <img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /> </div>
               <?php } ?>
-              <?php } ?> 
-              
-              <img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" />
-              
-              </div>
-              <?php } ?>
-              
             </div>
-            
             <div class="button-group"><a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a></div>
           </div>
         </div>
         <?php } ?>
       </div>
-      
-      
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>

@@ -277,7 +277,6 @@ class ControllerCatalogOption extends Controller {
 		$this->data['text_date'] = $this->language->get('text_date');
 		$this->data['text_datetime'] = $this->language->get('text_datetime');
 		$this->data['text_time'] = $this->language->get('text_time');
-		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 		
 		$this->data['entry_name'] = $this->language->get('entry_name');
 		$this->data['entry_type'] = $this->language->get('entry_type');
@@ -289,8 +288,6 @@ class ControllerCatalogOption extends Controller {
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 		$this->data['button_option_value_add'] = $this->language->get('button_option_value_add');
 		$this->data['button_remove'] = $this->language->get('button_remove');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_clear'] = $this->language->get('button_clear');
 		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];

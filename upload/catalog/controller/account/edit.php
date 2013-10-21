@@ -100,7 +100,7 @@ class ControllerAccountEdit extends Controller {
 
 		if (isset($this->request->post['firstname'])) {
 			$this->data['firstname'] = $this->request->post['firstname'];
-		} elseif (isset($customer_info)) {
+		} elseif (!empty($customer_info)) {
 			$this->data['firstname'] = $customer_info['firstname'];
 		} else {
 			$this->data['firstname'] = '';
@@ -108,7 +108,7 @@ class ControllerAccountEdit extends Controller {
 
 		if (isset($this->request->post['lastname'])) {
 			$this->data['lastname'] = $this->request->post['lastname'];
-		} elseif (isset($customer_info)) {
+		} elseif (!empty($customer_info)) {
 			$this->data['lastname'] = $customer_info['lastname'];
 		} else {
 			$this->data['lastname'] = '';
@@ -116,7 +116,7 @@ class ControllerAccountEdit extends Controller {
 
 		if (isset($this->request->post['email'])) {
 			$this->data['email'] = $this->request->post['email'];
-		} elseif (isset($customer_info)) {
+		} elseif (!empty($customer_info)) {
 			$this->data['email'] = $customer_info['email'];
 		} else {
 			$this->data['email'] = '';
@@ -124,7 +124,7 @@ class ControllerAccountEdit extends Controller {
 
 		if (isset($this->request->post['telephone'])) {
 			$this->data['telephone'] = $this->request->post['telephone'];
-		} elseif (isset($customer_info)) {
+		} elseif (!empty($customer_info)) {
 			$this->data['telephone'] = $customer_info['telephone'];
 		} else {
 			$this->data['telephone'] = '';
@@ -132,7 +132,7 @@ class ControllerAccountEdit extends Controller {
 
 		if (isset($this->request->post['fax'])) {
 			$this->data['fax'] = $this->request->post['fax'];
-		} elseif (isset($customer_info)) {
+		} elseif (!empty($customer_info)) {
 			$this->data['fax'] = $customer_info['fax'];
 		} else {
 			$this->data['fax'] = '';
@@ -143,10 +143,10 @@ class ControllerAccountEdit extends Controller {
 		
 		$this->data['custom_fields'] = array();
 		
-		if (isset($this->request->post['custom_field']) || isset($customer_info)) {
+		if (isset($this->request->post['custom_field']) || !empty($customer_info)) {
 			if (isset($this->request->post['custom_field'])) {
 				$custom_field_info = $this->request->post['custom_field'];		
-			} elseif (isset($customer_info)) {
+			} elseif (!empty($customer_info)) {
 				$custom_field_info = unserialize($customer_info['custom_field']);
 			} else {
 				$custom_field_info = array();

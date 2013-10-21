@@ -1,7 +1,6 @@
 <?php
 // Text
 $_['text_search']       = 'Search';
-$_['text_brand']        = 'Brand';
 $_['text_manufacturer'] = 'Brand:';
 $_['text_model']        = 'Product Code:';
 $_['text_reward']       = 'Reward Points:'; 
@@ -14,11 +13,10 @@ $_['text_option']       = 'Available Options';
 $_['text_minimum']      = 'This product has a minimum quantity of %s';
 $_['text_reviews']      = '%s reviews'; 
 $_['text_write']        = 'Write a review';
-$_['text_login_write']  = 'Please <a href="%s">login</a> or <a href="%s">register</a> to review';
+$_['text_login']        = 'Please <a href="%s">login</a> or <a href="%s">register</a> to review';
 $_['text_no_reviews']   = 'There are no reviews for this product.';
 $_['text_on']           = ' on ';
 $_['text_note']         = '<span style="color: #FF0000;">Note:</span> HTML is not translated!';
-$_['text_share']        = 'Share';
 $_['text_success']      = 'Thank you for your review. It has been submitted to the webmaster for approval.';
 $_['text_upload']       = 'Your file was successfully uploaded!';
 $_['text_related']      = 'Related Products'; 

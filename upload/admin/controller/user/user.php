@@ -283,8 +283,6 @@ class ControllerUserUser extends Controller {
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
- 		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_clear'] = $this->language->get('button_clear');
    
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];

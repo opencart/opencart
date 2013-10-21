@@ -24,16 +24,13 @@
       <?php foreach ($categories as $category) { ?>
       <h2 id="<?php echo $category['name']; ?>"><?php echo $category['name']; ?></h2>
       <?php if ($category['manufacturer']) { ?>
+      <?php foreach (array_chunk($category['manufacturer'], 4) as $manufacturers) { ?>
       <div class="row">
-        <?php for ($i = 0; $i < count($category['manufacturer']);) { ?>
-        <?php $j = $i + ceil(count($category['manufacturer']) / 4); ?>
-        <?php for (; $i < $j; $i++) { ?>
-        <?php if (isset($category['manufacturer'][$i])) { ?>
-        <div class="col-sm-4"><a href="<?php echo $category['manufacturer'][$i]['href']; ?>"><?php echo $category['manufacturer'][$i]['name']; ?></a></div>
-        <?php } ?>
-        <?php } ?>
+        <?php foreach ($manufacturers as $manufacturer) { ?>
+        <div class="col-sm-3"><a href="<?php echo $manufacturer['href']; ?>"><?php echo $manufacturer['name']; ?></a></div>
         <?php } ?>
       </div>
+      <?php } ?>
       <?php } ?>
       <?php } ?>
       <?php } else { ?>

@@ -268,7 +268,6 @@ class ControllerCatalogManufacturer extends Controller {
     	$this->data['text_enabled'] = $this->language->get('text_enabled');
     	$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_default'] = $this->language->get('text_default');
-    	$this->data['text_image_manager'] = $this->language->get('text_image_manager');	
 		$this->data['text_percent'] = $this->language->get('text_percent');
 		$this->data['text_amount'] = $this->language->get('text_amount');
 				
@@ -283,8 +282,6 @@ class ControllerCatalogManufacturer extends Controller {
 
     	$this->data['button_save'] = $this->language->get('button_save');
     	$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_clear'] = $this->language->get('button_clear');
 					  
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];

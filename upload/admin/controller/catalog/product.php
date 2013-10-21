@@ -372,11 +372,11 @@ class ControllerCatalogProduct extends Controller {
 	
       		$this->data['products'][] = array(
 				'product_id' => $result['product_id'],
+				'image'      => $image,
 				'name'       => $result['name'],
 				'model'      => $result['model'],
 				'price'      => $result['price'],
 				'special'    => $special,
-				'image'      => $image,
 				'quantity'   => $result['quantity'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'selected'   => isset($this->request->post['selected']) && in_array($result['product_id'], $this->request->post['selected']),
@@ -528,7 +528,6 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['text_plus'] = $this->language->get('text_plus');
 		$this->data['text_minus'] = $this->language->get('text_minus');
 		$this->data['text_default'] = $this->language->get('text_default');
-		$this->data['text_image_manager'] = $this->language->get('text_image_manager');
 		$this->data['text_option'] = $this->language->get('text_option');
 		$this->data['text_option_value'] = $this->language->get('text_option_value');
 		$this->data['text_select'] = $this->language->get('text_select');
@@ -615,8 +614,6 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['button_special_add'] = $this->language->get('button_special_add');
 		$this->data['button_image_add'] = $this->language->get('button_image_add');
 		$this->data['button_remove'] = $this->language->get('button_remove');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_clear'] = $this->language->get('button_clear');
 				
     	$this->data['tab_general'] = $this->language->get('tab_general');
     	$this->data['tab_data'] = $this->language->get('tab_data');

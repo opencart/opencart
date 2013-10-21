@@ -142,15 +142,8 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
               <div class="col-sm-10">
-                <div class="img-thumbnail" style="width: 100px; line-height: 100px; background: #EEEEEE; border: 1px solid #CCC; text-align: center;"> <i class="icon-camera" style="font-size: 40px; color: #FFF; vertical-align: middle;"></i> </div>
-                <img src="<?php echo $thumb; ?>" alt="" class="img-thumbnail" />
-                <input type="hidden" name="image" value="<?php echo $image; ?>" />
-                <br />
-                <br />
-                <div class="btn-group">
-                  <button type="button" onclick="filemanager()"  class="btn btn-default"><span class="icon-pencil"></span> <?php echo $button_edit; ?></button>
-                  <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="icon-trash"></span> <?php echo $button_clear; ?></button>
-                </div>
+                <img src="<?php echo $thumb; ?>" alt="" id="thumb" class="img-thumbnail" />
+                <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
               </div>
             </div>
             <div class="form-group">
@@ -239,6 +232,9 @@
     </div>
   </div>
 </div>
+
+
+
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
@@ -279,6 +275,7 @@ $('input[name=\'path\']').autocomplete({
 	}	
 });
 //--></script> 
+
 <script type="text/javascript"><!--
 $('input[name=\'filter\']').autocomplete({
 	'source': function(request, response) {
@@ -308,31 +305,54 @@ $('#category-filter').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script> 
-<script type="text/javascript"><!--
-function filemanager() {
-	window.open('index.php?route=common/filemanager&token=<?php echo $token; ?>', '<?php echo $text_image_manager; ?>', 'width=700,height=500,menubar=no,resizable=no,scrollbars=no,titlebar=yes,toolbar=no', true);
-	
 
-	$('#dialog').dialog({
-		title: '',
-		close: function (event, ui) {
-			if ($('#' + field).attr('value')) {
-				$.ajax({
-					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).val()),
-					dataType: 'text',
-					success: function(data) {
-						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
-					}
-				});
-			}
-		},	
-		bgiframe: false,
-		width: 800,
-		height: 400,
-		resizable: false,
-		modal: false
+<div id="test1" class="modal"></div>
+
+<script type="text/javascript"><!--
+$('#thumb').popover({
+	html: true,
+	placement: 'right',
+	trigger: 'click',
+	title: 'Edit Image',
+	content: function() {
+		return '<a href="index.php?route=common/filemanager&token=<?php echo $token; ?>" id="button-image" class="btn btn-primary" data-toggle="modal" data-target="#test1"><i class="icon-pencil"></i></a> <button type="button" id="button-clear" class="btn btn-default"><i class="icon-trash"></i></button>';
+	}
+});
+
+//$('#myModal').modal(\remote')
+
+/*
+$(document).delegate('#button-image', 'click', function() {
+	$('#model-image').remove();
+	
+	$.ajax({
+		url: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
+		dataType: 'html',
+		beforeSend: function() {
+			$('#button-image i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-image').prop('disabled', true);			
+		},
+		complete: function() {
+			$('#button-image i').replaceWith('<i class="icon-minus-sign"></i>');
+			$('#button-image').prop('disabled', false);
+		},						
+		success: function(html) {
+			$('body').prepend('<div id="modal-image" class="modal">' + html + '</div>');
+			
+			$('#modal-image').modal('show');
+
+			$('#modal-image').delegate('a.thumbnail', 'click', function(e) {
+				e.preventDefault();
+				
+				$('#thumb').attr('src', $(this).find('img').attr('src'));
+				
+				$('#input-image').attr('value', $(this).find('input').attr('value'));
+			});			
+		}
 	});
-};
+	
+});
+*/
 //--></script> 
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');

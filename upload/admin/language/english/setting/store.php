@@ -9,7 +9,6 @@ $_['text_tax']                     = 'Taxes';
 $_['text_account']                 = 'Account';
 $_['text_checkout']                = 'Checkout';
 $_['text_stock']                   = 'Stock';
-$_['text_image_manager']           = 'Image Manager';
 $_['text_shipping']                = 'Shipping Address';
 $_['text_payment']                 = 'Payment Address';
 

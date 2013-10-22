@@ -3,10 +3,12 @@ class DB {
 	private $db;
 
 	public function __construct($type, $hostname, $username, $password, $database) {
-		if (file_exists(DIR_DATABASE . $type . '.php')) {
-			require_once(DIR_DATABASE . $type . '.php');
+		$file = dirname(__FILE__) . '/driver/database/' . $type . '.php';
+		
+		if (file_exists($file)) {
+			require_once($file);
 		} else {
-			exit('Error: Could not load database file ' . $driver . '!');
+			exit('Error: Could not load database ' . $type . '!');
 		}
 		
 		$class = 'DB' . $type;

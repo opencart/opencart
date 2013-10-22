@@ -1,61 +1,28 @@
 <?php
 class Cache { 
-	private $expire = 3600; 
-	
-	public function __construct($expire = 3600) {
-		$this->expire = $expire;
-		
-		$files = glob(DIR_CACHE . 'cache.*');
-
-		if ($files) {			
-			foreach ($files as $file) {
-				$time = substr(strrchr($file, '.'), 1);
-
-				if ($time < time()) {
-					if (file_exists($file)) {
-						unlink($file);
-					}
-				}
-			}
+	private $cache;
+	public function __construct($expire=3600){
+		if(defined('CACHE_DRIVER')){$driver=CACHE_DRIVER;}
+		else{$driver="file";}
+		if(file_exists(dirname(__FILE__) . "/driver/cache/". $driver. "cache" . ".php")){
+			require_once(dirname(__FILE__) . "/driver/cache/". $driver. "cache" . ".php");	
+		}else {
+			exit("Error: Could not load cache driver ". $driver . "cache" . "!");
 		}
+		$class="Cache".$driver;
+		$this->cache=new $class($expire);
 	}
 	
-	public function get($key) {
-		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
-
-		if ($files) {
-			$handle = fopen($files[0], 'r');
-      		
-			$cache = fread($handle, filesize($files[0]));
-			
-			fclose($handle);
-		
-			return unserialize($cache);
-		}
+	public function get($key){
+		return $this->cache->get($key);
 	}
-
+	
 	public function set($key, $value) {
-		$this->delete($key);
-
-		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
-
-		$handle = fopen($file, 'w');
-
-		fwrite($handle, serialize($value));
-
-		fclose($handle);
+		return $this->cache->set($key,$value);		
 	}
-
+	
 	public function delete($key) {
-		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
-
-		if ($files) {
-			foreach ($files as $file) {
-				if (file_exists($file)) {
-					unlink($file);
-				}
-			}
-		}
+		return $this->cache->delete($key);
 	}
 }
 ?>

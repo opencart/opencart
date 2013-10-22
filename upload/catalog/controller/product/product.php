@@ -676,7 +676,7 @@ class ControllerProductProduct extends Controller {
 		
 		$json = array();
 		
-		if (!empty($this->request->files['file']['name'])) {
+		if (is_uploaded_file($this->request->files['file']['tmp_name'])) {
 			// Sanitize the filename
 			$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8')));
 			
@@ -723,7 +723,7 @@ class ControllerProductProduct extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 		
-		if (!$json && is_uploaded_file($this->request->files['file']['tmp_name'])) {
+		if (!$json) {
 			$file = $filename . '.' . md5(mt_rand());
 			
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);

@@ -35,7 +35,7 @@ class ModelCatalogImage extends Model {
 		$sql = "SELECT * FROM " . DB_PREFIX . "image i LEFT JOIN " . DB_PREFIX . "image_description id ON (i.image_id = id.image_id) WHERE id.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_name'])) {
-			$sql .= " AND id.name LIKE '" . $this->db->escape($data['filter_name']) . "%'";
+			$sql .= " AND (id.name LIKE '%" . $this->db->escape($data['filter_name']) . "%' OR i.filename LIKE '" . $this->db->escape($data['filter_name']) . "%' OR i.tag LIKE '%" . $this->db->escape($data['filter_name']) . "%')";
 		}
 		
 		$sort_data = array(
@@ -86,7 +86,13 @@ class ModelCatalogImage extends Model {
 	}
 	
 	public function getTotalImages() {
-      	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "image");
+		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "image";
+		
+		if (!empty($data['filter_name'])) {
+			$sql .= "WHERE id.name LIKE '%" . $this->db->escape($data['filter_name']) . "%' OR i.filename LIKE '" . $this->db->escape($data['filter_name']) . "%' OR i.tag LIKE '%" . $this->db->escape($data['filter_name']) . "%'";
+		}
+
+      	$query = $this->db->query($sql);
 		
 		return $query->row['total'];
 	}	

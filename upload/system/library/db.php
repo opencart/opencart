@@ -7,13 +7,13 @@ class DB {
 		
 		if (file_exists($file)) {
 			require_once($file);
+			
+			$class = 'DB' . $type;
+			
+			$this->db = new $class($hostname, $username, $password, $database);
 		} else {
 			exit('Error: Could not load database ' . $type . '!');
-		}
-		
-		$class = 'DB' . $type;
-		
-		$this->db = new $class($hostname, $username, $password, $database);
+		}		
 	}
 
 	public function query($sql) {

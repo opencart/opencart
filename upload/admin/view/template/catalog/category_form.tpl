@@ -232,9 +232,6 @@
     </div>
   </div>
 </div>
-
-
-
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
@@ -305,9 +302,6 @@ $('#category-filter').delegate('.icon-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script> 
-
-<div id="test1" class="modal"></div>
-
 <script type="text/javascript"><!--
 $('#thumb').popover({
 	html: true,
@@ -315,15 +309,12 @@ $('#thumb').popover({
 	trigger: 'click',
 	title: 'Edit Image',
 	content: function() {
-		return '<a href="index.php?route=common/filemanager&token=<?php echo $token; ?>" id="button-image" class="btn btn-primary" data-toggle="modal" data-target="#test1"><i class="icon-pencil"></i></a> <button type="button" id="button-clear" class="btn btn-default"><i class="icon-trash"></i></button>';
+		return '<button type="button" id="button-image" class="btn btn-primary"><i class="icon-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-default"><i class="icon-trash"></i></button>';
 	}
 });
 
-//$('#myModal').modal(\remote')
-
-/*
 $(document).delegate('#button-image', 'click', function() {
-	$('#model-image').remove();
+	$('#modal-image').remove();
 	
 	$.ajax({
 		url: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
@@ -333,26 +324,24 @@ $(document).delegate('#button-image', 'click', function() {
 			$('#button-image').prop('disabled', true);			
 		},
 		complete: function() {
-			$('#button-image i').replaceWith('<i class="icon-minus-sign"></i>');
+			$('#button-image i').replaceWith('<i class="icon-edit"></i>');
 			$('#button-image').prop('disabled', false);
 		},						
 		success: function(html) {
-			$('body').prepend('<div id="modal-image" class="modal">' + html + '</div>');
+			$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 			
 			$('#modal-image').modal('show');
-
-			$('#modal-image').delegate('a.thumbnail', 'click', function(e) {
+			
+			$('#modal-image a.thumbnail').on('click', function(e) {
 				e.preventDefault();
 				
 				$('#thumb').attr('src', $(this).find('img').attr('src'));
 				
-				$('#input-image').attr('value', $(this).find('input').attr('value'));
-			});			
+				$('#input-image').attr('value', $(this).attr('href'));
+			});
 		}
 	});
-	
 });
-*/
 //--></script> 
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');

@@ -1,5 +1,4 @@
 <?php
-
 class ControllerModuleOpenbaypro extends Controller {
 
     private $error = array();
@@ -45,7 +44,7 @@ class ControllerModuleOpenbaypro extends Controller {
     }
 
     protected function validate() {
-        if (!$this->user->hasPermission('modify', 'module/openbay')) {
+        if (!$this->user->hasPermission('modify', 'module/openbaypro')) {
             $this->error['warning'] = $this->language->get('error_permission');
         }
 
@@ -61,16 +60,14 @@ class ControllerModuleOpenbaypro extends Controller {
         
         $settings = $this->model_setting_setting->getSetting('openbaymanager');
         $settings['openbaymanager_show_menu'] = 1;
-        
         $this->model_setting_setting->editSetting('openbaymanager', $settings);
     }
     
     public function uninstall() {
         $this->load->model('setting/setting');
-        
+
         $settings = $this->model_setting_setting->getSetting('openbaymanager');
         $settings['openbaymanager_show_menu'] = 0;
-        
         $this->model_setting_setting->editSetting('openbaymanager', $settings);
     }
 

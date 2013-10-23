@@ -331,26 +331,26 @@ class ControllerExtensionOpenbay extends Controller {
         $this->load->model('openbay/amazonus_patch');
         $this->load->model('openbay/play_patch');
         $this->load->model('setting/extension');
-        $this->load->model('user/user_group');
         $this->load->model('setting/setting');
+        $this->load->model('user/user_group');
+        $this->load->model('openbay/version');
         
         $this->model_openbay_ebay_patch->runPatch();
         $this->model_openbay_amazon_patch->runPatch();
         $this->model_openbay_amazonus_patch->runPatch();
         $this->model_openbay_play_patch->runPatch();
 
+        $openbaymanager = $this->model_setting_setting->getSetting('openbaymanager');
+        $openbaymanager['openbay_version'] = (int)$this->model_openbay_version->getVersion();
+        $openbaymanager['openbaymanager_show_menu'] = 1;
+        $this->model_setting_setting->editSetting('openbaymanager', $openbaymanager);
+
         $installed_modules = $this->model_setting_extension->getInstalled('module');
         
         if (!in_array('openbaypro', $installed_modules)) {
             $this->model_setting_extension->install('module', 'openbaypro');
-
             $this->model_user_user_group->addPermission($this->user->getId(), 'access', 'module/openbaypro');
             $this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'module/openbaypro');
-            
-            $settings = $this->model_setting_setting->getSetting('openbaymanager');
-            $settings['openbaymanager_show_menu'] = 1;
-
-            $this->model_setting_setting->editSetting('openbaymanager', $settings);
         }
         
         sleep(1);

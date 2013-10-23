@@ -89,7 +89,7 @@ $(document).ready(function(){
           <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
           <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
           <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
-          <?php if ($openbay_show_menu) { ?>
+          <?php if ($openbay_show_menu == 1) { ?>
             <li><a class="parent"><?php echo $text_openbay_extension; ?></a>
                 <ul>
                     <li><a href="<?php echo $openbay_link_extension; ?>"><?php echo $text_openbay_dashboard; ?></a></li>

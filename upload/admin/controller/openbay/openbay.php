@@ -1589,7 +1589,8 @@ class ControllerOpenbayOpenbay extends Controller {
                     $data['returns_restocking_fee'] = $profile_return['data']['returns_restocking_fee'];
                 }
 
-                $data['location']           = $profile_shipping['data']['postcode'];
+                $data['location']           = $profile_shipping['data']['location'];
+                $data['postcode']           = $profile_shipping['data']['postcode'];
                 $data['dispatch_time']      = $profile_shipping['data']['dispatch_time'];
 
                 if(isset($profile_shipping['data']['country'])) {

@@ -212,81 +212,80 @@ function setup_mysql($dbdata) {
 
 
 function write_config_files($options) {
-    $output  = '<?php' . "\n";
-    $output .= '// HTTP' . "\n";
-    $output .= 'define(\'HTTP_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
-    $output .= 'define(\'HTTP_IMAGE\', \'' . $options['http_server'] . 'image/\');' . "\n";
-    $output .= 'define(\'HTTP_ADMIN\', \'' . $options['http_server'] . 'admin/\');' . "\n\n";
+    $siteConfig  = "<?php\n";
 
-    $output .= '// HTTPS' . "\n";
-    $output .= 'define(\'HTTPS_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
-    $output .= 'define(\'HTTPS_IMAGE\', \'' . $options['http_server'] . 'image/\');' . "\n\n";
+    $siteConfig .= 'define(\'WWW_ROOT\', $_SERVER[\'HTTP_HOST\'] . str_replace(\'index.php\', \'\', $_SERVER[\'SCRIPT_NAME\']));' . "\n";
+    $siteConfig .= "define('ROOT', dirname(__FILE__));\n\n";
 
-    $output .= '// DIR' . "\n";
-    $output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
-    $output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART. 'system/\');' . "\n";
-    $output .= 'define(\'DIR_DATABASE\', \'' . DIR_OPENCART . 'system/database/\');' . "\n";
-    $output .= 'define(\'DIR_LANGUAGE\', \'' . DIR_OPENCART . 'catalog/language/\');' . "\n";
-    $output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_OPENCART . 'catalog/view/theme/\');' . "\n";
-    $output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
-    $output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
-    $output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
-    $output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
-    $output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
+    $siteConfig .= "// HTTP\n";
+    $siteConfig .= "define('HTTP_SERVER', 'http://' . WWW_ROOT);\n\n";
 
-    $output .= '// DB' . "\n";
-    $output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
-    $output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_host']) . '\');' . "\n";
-    $output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_user']) . '\');' . "\n";
-    $output .= 'define(\'DB_PASSWORD\', \'' . addslashes($options['db_password']) . '\');' . "\n";
-    $output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_name']) . '\');' . "\n";
-    $output .= 'define(\'DB_PREFIX\', \'' . addslashes($options['db_prefix']) . '\');' . "\n";
-    $output .= '?>';
+    $siteConfig .= "// HTTPS\n";
+    $siteConfig .= "define('HTTPS_SERVER', 'http://' . WWW_ROOT);\n\n";
 
-    $file = fopen(DIR_OPENCART . 'config.php', 'w');
 
-    fwrite($file, $output);
+    $siteConfig .= "// DIR\n";
+    $siteConfig .= "define('DIR_APPLICATION', ROOT . '/catalog/');\n";
+    $siteConfig .= "define('DIR_SYSTEM', ROOT. '/system/');\n";
+    $siteConfig .= "define('DIR_DATABASE', ROOT . '/system/database/');\n";
+    $siteConfig .= "define('DIR_LANGUAGE', ROOT . '/catalog/language/');\n";
+    $siteConfig .= "define('DIR_TEMPLATE', ROOT . '/catalog/view/theme/');\n";
+    $siteConfig .= "define('DIR_CONFIG', ROOT . '/system/config/');\n";
+    $siteConfig .= "define('DIR_IMAGE', ROOT . '/image/');\n";
+    $siteConfig .= "define('DIR_CACHE', ROOT . '/system/cache/');\n";
+    $siteConfig .= "define('DIR_DOWNLOAD', ROOT . '/system/download/');\n";
+    $siteConfig .= "define('DIR_MODIFICATION', ROOT . '/system/modification/');\n";
+    $siteConfig .= "define('DIR_LOGS', ROOT . '/system/logs/');\n\n";
 
-    fclose($file);
+    $siteConfig .= "// DB\n";
+    $siteConfig .= "include_once ROOT . '/db_config.php';\n";
+    $siteConfig .= "?>";
 
-    $output  = '<?php' . "\n";
-    $output .= '// HTTP' . "\n";
-    $output .= 'define(\'HTTP_SERVER\', \'' . $options['http_server'] . 'admin/\');' . "\n";
-    $output .= 'define(\'HTTP_CATALOG\', \'' . $options['http_server'] . '\');' . "\n";
-    $output .= 'define(\'HTTP_IMAGE\', \'' . $options['http_server'] . 'image/\');' . "\n\n";
+    $dbConfig  = "<?php\n";
+    $dbConfig .= "define('DB_DRIVER', 'mysql');\n";
+    $dbConfig .= "define('DB_HOSTNAME', '" . addslashes($options['db_host']) . "');\n";
+    $dbConfig .= "define('DB_USERNAME', '" . addslashes($options['db_user']) . "');\n";
+    $dbConfig .= "define('DB_PASSWORD', '" . addslashes($options['db_password']) . "');\n";
+    $dbConfig .= "define('DB_DATABASE', '" . addslashes($options['db_name']) . "');\n";
+    $dbConfig .= "define('DB_PREFIX', '" . addslashes($options['db_prefix']) . "');\n";
+    $dbConfig .= "?>";
 
-    $output .= '// HTTPS' . "\n";
-    $output .= 'define(\'HTTPS_SERVER\', \'' . $options['http_server'] . 'admin/\');' . "\n";
-    $output .= 'define(\'HTTPS_CATALOG\', \'' . $options['http_server'] . '\');' . "\n";
-    $output .= 'define(\'HTTPS_IMAGE\', \'' . $options['http_server'] . 'image/\');' . "\n\n";
+    file_put_contents(DIR_OPENCART . 'config.php', $siteConfig);
+    file_put_contents(DIR_OPENCART . 'db_config.php', $dbConfig);
 
-    $output .= '// DIR' . "\n";
-    $output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'admin/\');' . "\n";
-    $output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART . 'system/\');' . "\n";
-    $output .= 'define(\'DIR_DATABASE\', \'' . DIR_OPENCART . 'system/database/\');' . "\n";
-    $output .= 'define(\'DIR_LANGUAGE\', \'' . DIR_OPENCART . 'admin/language/\');' . "\n";
-    $output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_OPENCART . 'admin/view/template/\');' . "\n";
-    $output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
-    $output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
-    $output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
-    $output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
-    $output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n";
-    $output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
+    $adminConfig  = "<?php\n";
+    $adminConfig .= 'define(\'WWW_ROOT\', $_SERVER[\'HTTP_HOST\'] . str_replace(\'admin/index.php\', \'\', $_SERVER[\'SCRIPT_NAME\']));' . "\n";
+    $adminConfig .= "define('ROOT', dirname(__FILE__) . '/..');\n\n";
 
-    $output .= '// DB' . "\n";
-    $output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
-    $output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_host']) . '\');' . "\n";
-    $output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_user']) . '\');' . "\n";
-    $output .= 'define(\'DB_PASSWORD\', \'' . addslashes($options['db_password']) . '\');' . "\n";
-    $output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_name']) . '\');' . "\n";
-    $output .= 'define(\'DB_PREFIX\', \'' . addslashes($options['db_prefix']) . '\');' . "\n";
-    $output .= '?>';
+    $adminConfig .= "// HTTP\n";
+    $adminConfig .= "define('HTTP_SERVER', 'http://' . WWW_ROOT . 'admin/');\n";
+    $adminConfig .= "define('HTTP_CATALOG', 'http://' . WWW_ROOT);\n\n";;
 
-    $file = fopen(DIR_OPENCART . 'admin/config.php', 'w');
+    $adminConfig .= "// HTTPS\n";
+    $adminConfig .= "define('HTTPS_SERVER', 'http://' . WWW_ROOT . 'admin/');\n";
+    $adminConfig .= "define('HTTPS_CATALOG', 'http://' . WWW_ROOT);\n\n";
 
-    fwrite($file, $output);
 
-    fclose($file);
+    $adminConfig .= "// DIR\n";
+    $adminConfig .= "define('DIR_APPLICATION', ROOT . '/admin/');\n";
+    $adminConfig .= "define('DIR_SYSTEM', ROOT. '/system/');\n";
+    $adminConfig .= "define('DIR_DATABASE', ROOT . '/system/database/');\n";
+    $adminConfig .= "define('DIR_LANGUAGE', ROOT . '/admin/language/');\n";
+    $adminConfig .= "define('DIR_TEMPLATE', ROOT . '/admin/view/template/');\n";
+    $adminConfig .= "define('DIR_CONFIG', ROOT . '/system/config/');\n";
+    $adminConfig .= "define('DIR_IMAGE', ROOT . '/image/');\n";
+    $adminConfig .= "define('DIR_CACHE', ROOT . '/system/cache/');\n";
+    $adminConfig .= "define('DIR_DOWNLOAD', ROOT . '/system/download/');\n";
+    $adminConfig .= "define('DIR_MODIFICATION', ROOT . '/system/modification/');\n";
+    $adminConfig .= "define('DIR_LOGS', ROOT . '/system/logs/');\n";
+    $adminConfig .= "define('DIR_CATALOG', ROOT . '/catalog/');\n\n";
+
+    $adminConfig .= "// DB\n";
+    $adminConfig .= "include_once ROOT . '/db_config.php';\n";
+    $adminConfig .= "?>";
+
+    file_put_contents(DIR_OPENCART . 'admin/config.php', $adminConfig);
+
 }
 
 

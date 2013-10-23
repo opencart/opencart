@@ -14,6 +14,7 @@ define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
+define('ROOT', dirname(__FILE__) . '/..');
 
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
@@ -50,7 +51,7 @@ if (file_exists('../config.php')) {
 		$upgrade = true;
 		
 		$lines = file(DIR_OPENCART . 'config.php');
-		
+
 		foreach ($lines as $line) {
 			if (strpos(strtoupper($line), 'DB_') !== false) {
 				eval($line);

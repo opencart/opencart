@@ -1516,10 +1516,10 @@ final class Ebay {
 
                 if ($qry->num_rows > 0) {
                     $this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['returns'])) . "', `last_updated`  = now() WHERE `key` = 'returns' LIMIT 1");
-                    $this->log('Updated countries into ebay_setting_option table');
+                    $this->log('Updated returns info in to ebay_setting_option table');
                 } else {
                     $this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'returns', `data` = '" . $this->db->escape(serialize($response['returns'])) . "', `last_updated`  = now()");
-                    $this->log('Inserted countries into ebay_setting_option table');
+                    $this->log('Inserted returns info in to ebay_setting_option table');
                 }
             } else {
                 $this->log('No returns set!');

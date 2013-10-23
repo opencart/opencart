@@ -1515,6 +1515,10 @@ class ControllerOpenbayOpenbay extends Controller {
 
                     $data['product_info'] = $query->row;
 
+                    if(!empty($data['product_info']['sku'])){
+                        $data['sku'] = $data['product_info']['sku'];
+                    }
+
                     $verifyResponse = $this->model_openbay_ebay->ebayVerifyAddItem($data, $this->request->get['options']);
 
                     $this->response->setOutput(json_encode($verifyResponse));
@@ -1561,6 +1565,11 @@ class ControllerOpenbayOpenbay extends Controller {
                 $data['price'][0]           = $post['price'];
                 $data['qty'][0]             = (int)$post['qty'];
                 $data['product_id']         = (int)$post['product_id'];
+
+                if(!empty($product_info['sku'])){
+                    $data['sku'] = $product_info['sku'];
+                }
+
                 $data['auction_duration']   = $post['duration'];
                 $data['condition']          = (isset($post['condition']) && $post['condition'] != 0 ? $post['condition'] : '');
                 $data['auction_type']       = 'FixedPriceItem';
@@ -1717,6 +1726,10 @@ class ControllerOpenbayOpenbay extends Controller {
 
             $data['product_info'] = $query->row;
 
+            if(!empty($data['product_info']['sku'])){
+                $data['sku'] = $data['product_info']['sku'];
+            }
+
             $verifyResponse = $this->model_openbay_ebay->ebayAddItem($data, $this->request->get['options']);
 
             $this->response->setOutput(json_encode($verifyResponse));
@@ -1758,6 +1771,11 @@ class ControllerOpenbayOpenbay extends Controller {
                 $data['price'][0]           = $post['price'];
                 $data['qty'][0]             = $post['qty'];
                 $data['product_id']         = $post['product_id'];
+
+                if(!empty($product_info['sku'])){
+                    $data['sku'] = $product_info['sku'];
+                }
+
                 $data['auction_duration']   = $post['duration'];
                 $data['condition']          = (isset($post['condition']) && $post['condition'] != 0 ? $post['condition'] : '');
                 $data['auction_type']       = 'FixedPriceItem';

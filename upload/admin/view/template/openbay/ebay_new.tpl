@@ -240,7 +240,7 @@
                                         <input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
                                         <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad(<?php echo $i; ?>)" id="imgChk<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> /> <?php echo $lang_image_ebay; ?>
                                     </p>
-                                    <p id="imgRad<?php echo $i; ?>"<?php echo ( ($i == 0) ? '' : ' class="displayNone"'); ?>><input type="radio" name="main_image"<?php echo ( ($i == 0) ? '' : ' checked="checked"'); ?> value="<?php echo $i; ?>" /> <?php echo $lang_main_image_ebay; ?></p>
+                                    <p id="imgRad<?php echo $i; ?>"<?php echo ( ($i == 0) ? '' : ' class="displayNone"'); ?>><input type="radio" name="main_image"<?php echo (($i == 0) ? ' checked' : ''); ?> value="<?php echo $i; ?>" /> <?php echo $lang_main_image_ebay; ?></p>
                                     </div>
     <?php
                                     $i++;

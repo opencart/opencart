@@ -36,7 +36,7 @@
             <td class="text-right"><?php echo $download['remaining']; ?></td>
             <td class="text-left"><?php echo $download['date_added']; ?></td>
             <td><?php if ($download['remaining'] > 0) { ?>
-              <a href="<?php echo $download['href']; ?>" data-toggle="tooltip" title="<?php echo $button_download; ?>" class="btn btn-default"><i class="icon-cloud-download"></i></a>
+              <a href="<?php echo $download['href']; ?>" data-toggle="tooltip" title="<?php echo $button_download; ?>" class="btn btn-default"><i class="fa-cloud-download"></i></a>
               <?php } ?></td>
           </tr>
           <?php } ?>

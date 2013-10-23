@@ -2,7 +2,7 @@
 <div class="alert alert-danger"><?php echo $error; ?></div>
 <?php } ?>
 <?php if ($success) { ?>
-<div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+<div class="alert alert-success"><i class="fa-ok-sign"></i> <?php echo $success; ?>
   <button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
 <?php } ?>

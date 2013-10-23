@@ -106,7 +106,7 @@ function addToCart(product_id, quantity) {
             }
             
             if (json['success']) {
-                $('.breadcrumb').after('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('.breadcrumb').after('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 
                 $('#cart-total').html(json['total']);
                 
@@ -126,7 +126,7 @@ function addToWishList(product_id) {
             $('.alert').remove();
                         
             if (json['success']) {
-                $('.breadcrumb').after('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('.breadcrumb').after('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 
                 $('#wishlist-total').html(json['total']);
                 
@@ -146,7 +146,7 @@ function addToCompare(product_id) {
             $('.alert').remove();
                         
             if (json['success']) {
-                $('.breadcrumb').after('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+                $('.breadcrumb').after('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
                 
                 $('#compare-total').html(json['total']);
                 

@@ -6,18 +6,18 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa-ok-sign"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-puzzle-piece"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa-puzzle-piece"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="table-responsive">
@@ -38,7 +38,7 @@
               <td class="text-left"><?php echo $extension['status'] ?></td>
               <td class="text-right"><?php echo $extension['sort_order']; ?></td>
               <td class="text-right"><?php foreach ($extension['action'] as $action) { ?>
-                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="icon-<?php echo $action['icon']; ?> icon-large"></i></a>
+                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa-<?php echo $action['icon']; ?> icon-large"></i></a>
                 <?php } ?></td>
             </tr>
             <?php } ?>

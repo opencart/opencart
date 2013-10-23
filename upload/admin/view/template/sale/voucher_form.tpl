@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -14,11 +14,11 @@
     <div class="panel-heading">
       <div class="pull-right">
         <?php if ($voucher_id) { ?>
-        <button type="button" id="button-send" class="btn btn-default"><i class="icon-envelope"></i> <?php echo $button_send; ?></button>
+        <button type="button" id="button-send" class="btn btn-default"><i class="fa-envelope"></i> <?php echo $button_send; ?></button>
         <?php } ?>
-        <button type="submit" form="form-voucher" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-voucher" class="btn btn-primary"><i class="fa-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-voucher" class="form-horizontal">
@@ -139,22 +139,22 @@ $('#button-send').on('click', function() {
 		dataType: 'json',
 		data: 'voucher_id=<?php echo $voucher_id; ?>',
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-send i').replaceWith('<i class="fa-spinner icon-spin"></i>');
 			$('#button-send').prop('disabled', true);
 		},	
 		complete: function() {
-			$('#button-send i').replaceWith('<i class="icon-envelope"></i>');
+			$('#button-send i').replaceWith('<i class="fa-envelope"></i>');
 			$('#button-send').prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-				$('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i>  ' + json['success'] + '</div>');
+				$('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i>  ' + json['success'] + '</div>');
 			}		
 		},
 		error: function(xhr, ajaxOptions, thrownError) {

@@ -6,16 +6,16 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-customer" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-customer" class="btn btn-primary"><i class="fa-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer" class="form-horizontal">
@@ -36,10 +36,10 @@
                   <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_general; ?></a></li>
                   <?php $address_row = 1; ?>
                   <?php foreach ($addresses as $address) { ?>
-                  <li><a href="#tab-address<?php echo $address_row; ?>" data-toggle="tab"><i class="icon-minus-sign" onclick="$('#address a[href=\'#tab-address<?php echo $address_row; ?>\']').parent().remove(); $('#tab-address<?php echo $address_row; ?>').remove();"></i> <?php echo $tab_address . ' ' . $address_row; ?></a></li>
+                  <li><a href="#tab-address<?php echo $address_row; ?>" data-toggle="tab"><i class="fa-minus-sign" onclick="$('#address a[href=\'#tab-address<?php echo $address_row; ?>\']').parent().remove(); $('#tab-address<?php echo $address_row; ?>').remove();"></i> <?php echo $tab_address . ' ' . $address_row; ?></a></li>
                   <?php $address_row++; ?>
                   <?php } ?>
-                  <li id="address-add"><a onclick="addAddress();"><i class="icon-plus-sign"></i> <?php echo $button_address_add; ?></a></li>
+                  <li id="address-add"><a onclick="addAddress();"><i class="fa-plus-sign"></i> <?php echo $button_address_add; ?></a></li>
                 </ul>
               </div>
               <div class="col-sm-10">
@@ -264,7 +264,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button id="button-history" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_history_add; ?></button>
+              <button id="button-history" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_history_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-transaction">
@@ -283,7 +283,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button type="button" id="button-transaction" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_transaction_add; ?></button>
+              <button type="button" id="button-transaction" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_transaction_add; ?></button>
             </div>
           </div>
           <div class="tab-pane" id="tab-reward">
@@ -302,7 +302,7 @@
                 <span class="help-block"><?php echo $help_points; ?></span> </div>
             </div>
             <div class="text-right">
-              <button type="button" id="button-reward" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_reward_add; ?></button>
+              <button type="button" id="button-reward" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_reward_add; ?></button>
             </div>
           </div>
           <?php } ?>
@@ -325,9 +325,9 @@
                     <td class="text-right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                     <td class="text-left"><?php echo $ip['date_added']; ?></td>
                     <td class="text-right"><?php if ($ip['ban_ip']) { ?>
-                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-default btn-xs button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
+                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-default btn-xs button-ban-remove"><i class="fa-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>
                       <?php } else { ?>
-                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-danger btn-xs button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
+                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-danger btn-xs button-ban-add"><i class="fa-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>
                       <?php } ?></td>
                   </tr>
                   <?php } ?>
@@ -420,7 +420,7 @@ function addAddress() {
 	
 	$('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');	
 	
-	$('#address-add').before('<li><a href="#tab-address' + address_row + '" data-toggle="tab"><i class="icon-minus-sign" onclick="$(\'#address a:first-child\').tab(\'show\'); $(\'a[href=\\\'#tab-address' + address_row + '\\\']\').parent().remove(); $(\'#tab-address' + address_row + '\').remove();"></i> <?php echo $tab_address; ?> ' + address_row + '</a></li>');
+	$('#address-add').before('<li><a href="#tab-address' + address_row + '" data-toggle="tab"><i class="fa-minus-sign" onclick="$(\'#address a:first-child\').tab(\'show\'); $(\'a[href=\\\'#tab-address' + address_row + '\\\']\').parent().remove(); $(\'#tab-address' + address_row + '\').remove();"></i> <?php echo $tab_address; ?> ' + address_row + '</a></li>');
 	
 	$('#address a[href=\'#tab-address' + address_row + '\']').tab('show');
 	
@@ -434,7 +434,7 @@ function country(element, index, zone_id) {
 			url: 'index.php?route=sale/customer/country&token=<?php echo $token; ?>&country_id=' + element.value,
 			dataType: 'json',
 			beforeSend: function() {
-				$('select[name=\'address[' + index + '][country_id]\']').after(' <i class="icon-spinner icon-spin"></i>');
+				$('select[name=\'address[' + index + '][country_id]\']').after(' <i class="fa-spinner icon-spin"></i>');
 			},
 			complete: function() {
 				$('.icon-spinner').remove();
@@ -489,11 +489,11 @@ $('#button-history').on('click', function() {
 		dataType: 'html',
 		data: 'comment=' + encodeURIComponent($('#tab-history textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-history i').replaceWith('<i class="fa-spinner icon-spin"></i>');
 			$('#button-history').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-history i').replaceWith('<i class="icon-plus-sign"></i>');
+			$('#button-history i').replaceWith('<i class="fa-plus-sign"></i>');
 			$('#button-history').prop('disabled', false);
 		},
 		success: function(html) {
@@ -522,11 +522,11 @@ $('#button-transaction').on('click', function() {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-transaction input[name=\'description\']').val()) + '&amount=' + encodeURIComponent($('#tab-transaction input[name=\'amount\']').val()),
 		beforeSend: function() {
-			$('#button-transaction i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-transaction i').replaceWith('<i class="fa-spinner icon-spin"></i>');
 			$('#button-transaction').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-transaction i').replaceWith('<i class="icon-plus-sign"></i>');
+			$('#button-transaction i').replaceWith('<i class="fa-plus-sign"></i>');
 			$('#button-transaction').prop('disabled', false);
 		},
 		success: function(html) {
@@ -556,11 +556,11 @@ $('#button-reward').on('click', function() {
 		dataType: 'html',
 		data: 'description=' + encodeURIComponent($('#tab-reward input[name=\'description\']').val()) + '&points=' + encodeURIComponent($('#tab-reward input[name=\'points\']').val()),
 		beforeSend: function() {
-			$('#button-reward i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-reward i').replaceWith('<i class="fa-spinner icon-spin"></i>');
 			$('#button-reward').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-reward i').replaceWith('<i class="icon-plus-sign"></i>');
+			$('#button-reward i').replaceWith('<i class="fa-plus-sign"></i>');
 			$('#button-reward').prop('disabled', false);
 		},
 		success: function(html) {
@@ -583,24 +583,24 @@ $('body').delegate('.button-ban-add', 'click', function() {
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$(element).find('i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$(element).find('i').replaceWith('<i class="fa-spinner icon-spin"></i>');
 		},
 		complete: function() {
-			$(element).find('i').replaceWith('<i class="icon-plus-sign"></i>');
+			$(element).find('i').replaceWith('<i class="fa-plus-sign"></i>');
 		},			
 		success: function(json) {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				 $('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				 $('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
 				
 				$('.alert').fadeIn('slow');
 			}
 						
 			if (json['success']) {
-				$('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				$('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
                 
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-default btn-xs button-ban-remove"><i class="icon-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-default btn-xs button-ban-remove"><i class="fa-minus-sign"></i> <?php echo $text_remove_ban_ip; ?></button>');
 			}
 		}
 	});	
@@ -615,22 +615,22 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 		dataType: 'json',
 		data: 'ip=' + encodeURIComponent(this.value),
 		beforeSend: function() {
-			$(element).find('i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$(element).find('i').replaceWith('<i class="fa-spinner icon-spin"></i>');
 		},	
 		complete: function() {
-			$(element).find('i').replaceWith('<i class="icon-plus-sign"></i>');
+			$(element).find('i').replaceWith('<i class="fa-plus-sign"></i>');
 		},			
 		success: function(json) {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				 $('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				 $('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-				 $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+				 $('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-danger btn-xs button-ban-add"><i class="icon-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-danger btn-xs button-ban-add"><i class="fa-plus-sign"></i> <?php echo $text_add_ban_ip; ?></button>');
 			}
 		}
 	});	

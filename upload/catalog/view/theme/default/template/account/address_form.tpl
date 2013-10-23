@@ -141,7 +141,7 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=account/address/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="icon-spinner icon-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa-spinner icon-spin"></i>');
 		},		
 		complete: function() {
 			$('.icon-spinner').remove();

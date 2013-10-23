@@ -258,7 +258,7 @@ $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', fu
 						html += '<div class="form-group custom-field">';
 						html += '  <label class="col-sm-2 control-label">' + custom_field['name'] + '</label>';
 						html += '  <div class="col-sm-10">';
-						html += '    <button type="button" id="button-custom-field' + custom_field['custom_field_id'] + '" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>';
+						html += '    <button type="button" id="button-custom-field' + custom_field['custom_field_id'] + '" class="btn btn-default"><i class="fa-upload"></i> <?php echo $button_upload; ?></button>';
 						html += '    <input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + value + '" id="input-payment-custom-field' + custom_field['custom_field_id'] + '" />';
 						
 						if ($('#custom-field' + custom_field['custom_field_id'] + ' .custom-field-error').length) {
@@ -331,7 +331,7 @@ $('#input-payment-country').on('change', function() {
         url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
-			$('#input-payment-country').after(' <i class="icon-spinner icon-spin"></i>');
+			$('#input-payment-country').after(' <i class="fa-spinner icon-spin"></i>');
         },
         complete: function() {
             $('.icon-spinner').remove();

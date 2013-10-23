@@ -6,16 +6,16 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-coupon" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-coupon" class="btn btn-primary"><i class="fa-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-coupon" class="form-horizontal">
@@ -128,7 +128,7 @@
                 <span class="help-block"><?php echo $help_product; ?></span>
                 <div id="coupon-product" class="well">
                   <?php foreach ($coupon_product as $coupon_product) { ?>
-                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_product['name']; ?>
+                  <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="fa-minus-sign"></i> <?php echo $coupon_product['name']; ?>
                     <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -142,7 +142,7 @@
                 <span class="help-block"><?php echo $help_category; ?></span> <br />
                 <div id="coupon-category" class="well">
                   <?php foreach ($coupon_category as $coupon_category) { ?>
-                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $coupon_category['name']; ?>
+                  <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="fa-minus-sign"></i> <?php echo $coupon_category['name']; ?>
                     <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -219,7 +219,7 @@ $('input[name=\'product\']').autocomplete({
 		
 		$('#coupon-product' + item['value']).remove();
 		
-		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');	
+		$('#coupon-product').append('<div id="coupon-product' + item['value'] + '"><i class="fa-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="coupon_product[]" value="' + item['value'] + '" /></div>');	
 	}
 });
 
@@ -248,7 +248,7 @@ $('input[name=\'category\']').autocomplete({
 		
 		$('#coupon-category' + item['value']).remove();
 		
-		$('#coupon-category').append('<div id="coupon-category' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '" /></div>');
+		$('#coupon-category').append('<div id="coupon-category' + item['value'] + '"><i class="fa-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="coupon_category[]" value="' + item['value'] + '" /></div>');
 	}	
 });
 

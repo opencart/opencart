@@ -6,14 +6,14 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa-ok-sign"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $reset; ?>" class="btn btn-danger"><i class="icon-refresh"></i> <?php echo $button_reset; ?></a></div>
-      <h1 class="panel-title"><i class="icon-bar-chart"></i> <?php echo $heading_title; ?></h1>
+      <div class="pull-right"><a href="<?php echo $reset; ?>" class="btn btn-danger"><i class="fa-refresh"></i> <?php echo $button_reset; ?></a></div>
+      <h1 class="panel-title"><i class="fa-bar-chart"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="table-responsive">

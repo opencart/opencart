@@ -7,7 +7,7 @@
   </ul>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="icon-bar-chart"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa-bar-chart"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form class="form-horizontal">
@@ -45,7 +45,7 @@
               </div>
             </div>
             <div class="col-sm-2">
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="icon-search"></i> <?php echo $button_filter; ?></button>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa-search"></i> <?php echo $button_filter; ?></button>
             </div>
           </div>
         </div>

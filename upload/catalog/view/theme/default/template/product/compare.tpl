@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa-ok-sign"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -78,9 +78,9 @@
             <?php foreach ($products as $product) { ?>
             <td><?php for ($i = 1; $i <= 5; $i++) { ?>
               <?php if ($products[$product['product_id']]['rating'] < $i) { ?>
-              <i class="icon-star-empty" style="color: #999;"></i>
+              <i class="fa-star-empty" style="color: #999;"></i>
               <?php } else { ?>
-              <span class="icon-stack"><i class="icon-star" style="color: #FC0;"></i><i class="icon-star-empty " style="color: #F90;"></i></span>
+              <span class="fa-stack"><i class="fa-star" style="color: #FC0;"></i><i class="fa-star-empty " style="color: #F90;"></i></span>
               <?php } ?>
               <?php } ?>
               <br />

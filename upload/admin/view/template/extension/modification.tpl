@@ -6,24 +6,24 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="icon-ok-sign"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa-ok-sign"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="alert alert-info"><i class="icon-info-sign"></i> <?php echo $text_refresh; ?>
+  <div class="alert alert-info"><i class="fa-info-sign"></i> <?php echo $text_refresh; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>  
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-info"><i class="icon-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="icon-eraser"></i> <?php echo $button_clear; ?></a>
-        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-modification').submit() : false;"><i class="icon-trash"></i> <?php echo $button_delete; ?></button>
+      <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-info"><i class="fa-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="fa-eraser"></i> <?php echo $button_clear; ?></a>
+        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-modification').submit() : false;"><i class="fa-trash"></i> <?php echo $button_delete; ?></button>
       </div>
-      <h1 class="panel-title"><i class="icon-list"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-modification">
@@ -66,9 +66,9 @@
                 <td class="text-left"><?php echo $modification['name']; ?></td>
                 <td class="text-left"><?php echo $modification['author']; ?></td>
                 <td class="text-left"><?php if ($modification['status']) { ?>
-                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-success btn-xs" onclick="disableModification(<?php echo $modification['modification_id']; ?>);"><i class="icon-ok"></i> <?php echo $button_enable; ?></button>
+                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-success btn-xs" onclick="disableModification(<?php echo $modification['modification_id']; ?>);"><i class="fa-ok"></i> <?php echo $button_enable; ?></button>
                 <?php } else { ?>
-                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-danger btn-xs" onclick="enableModification(<?php echo $modification['modification_id']; ?>);"><i class="icon-remove"></i> <?php echo $button_disable; ?></button>
+                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-danger btn-xs" onclick="enableModification(<?php echo $modification['modification_id']; ?>);"><i class="fa-remove"></i> <?php echo $button_disable; ?></button>
                 <?php } ?></td>
                 <td class="text-left"><?php echo $modification['date_added']; ?></td>
               </tr>
@@ -96,23 +96,23 @@ function enableModification(modification_id) {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa-spinner icon-spin"></i>');
 			$('#button-modification' + modification_id).prop('disabled', true);				
 		},
 		success: function(json) {
 			$('.alert').remove();
 			
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-remove"></i>');
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa-remove"></i>');
 			$('#button-modification' + modification_id).prop('disabled', false);
 						
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-success btn-xs" onclick="disableModification(' + modification_id + ')"><i class="icon-ok"></i> <?php echo $button_enable; ?></button>');
+				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-success btn-xs" onclick="disableModification(' + modification_id + ')"><i class="fa-ok"></i> <?php echo $button_enable; ?></button>');
 			}
 		}
 	});
@@ -124,23 +124,23 @@ function disableModification(modification_id) {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa-spinner icon-spin"></i>');
 			$('#button-modification' + modification_id).prop('disabled', true);		
 		},
 		success: function(json) {
 			$('.alert').remove();
 			
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="icon-ok"></i>');
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa-ok"></i>');
 			$('#button-modification' + modification_id).prop('disabled', false);
 
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="icon-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
 				
-				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-danger btn-xs" onclick="enableModification(' + modification_id + ')"><i class="icon-remove"></i> <?php echo $button_disable; ?></button>');
+				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-danger btn-xs" onclick="enableModification(' + modification_id + ')"><i class="fa-remove"></i> <?php echo $button_disable; ?></button>');
 			}
 		}
 	});

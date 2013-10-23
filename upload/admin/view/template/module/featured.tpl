@@ -6,16 +6,16 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-featured" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-featured" class="btn btn-primary"><i class="fa-ok"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-featured" class="form-horizontal">
@@ -26,7 +26,7 @@
             <span class="help-block"><?php echo $help_product; ?></span>
             <div id="featured-product" class="well">
               <?php foreach ($products as $product) { ?>
-              <div id="featured-product<?php echo $product['product_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $product['name']; ?>
+              <div id="featured-product<?php echo $product['product_id']; ?>"><i class="fa-minus-sign"></i> <?php echo $product['name']; ?>
                 <input type="hidden" value="<?php echo $product['product_id']; ?>" />
               </div>
               <?php } ?>
@@ -97,7 +97,7 @@
                   <?php } ?>
                 </select></td>
               <td class="text-right"><input type="text" name="featured_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
-              <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn btn-danger"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></button></td>
+              <td class="text-left"><button type="button" onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>
             </tr>
             <?php $module_row++; ?>
             <?php } ?>
@@ -105,7 +105,7 @@
           <tfoot>
             <tr>
               <td colspan="6"></td>
-              <td class="text-left"><button type="button" onclick="addModule();" class="btn btn-primary"><i class="icon-plus-sign"></i> <?php echo $button_module_add; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addModule();" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_module_add; ?></button></td>
             </tr>
           </tfoot>
         </table>
@@ -132,7 +132,7 @@ $('input[name=\'product\']').autocomplete({
 	'select': function(item) {
 		$('#featured-product' + item['value']).remove();
 		
-		$('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" value="' + item['value'] + '" /></div>');	
+		$('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fa-minus-sign"></i> ' + item['label'] + '<input type="hidden" value="' + item['value'] + '" /></div>');	
 	
 		data = $.map($('#featured-product input'), function(element){
 			return $(element).attr('value');
@@ -175,7 +175,7 @@ function addModule() {
     html += '    <option value="0"><?php echo $text_disabled; ?></option>';
     html += '  </select></td>';
 	html += '  <td class="text-right"><input type="text" name="featured_module[' + module_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" class="btn btn-danger"><i class="icon-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#module-row' + module_row + '\').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';
 	
 	$('#module tbody').append(html);

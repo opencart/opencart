@@ -46,7 +46,7 @@
   <div class="container">
     <div class="pull-left"><?php echo $currency; ?></div>
     <div class="pull-left"><?php echo $language; ?></div>
-    <div class="pull-right"><a href="tel:<?php echo $telephone; ?>"><i class="icon-phone"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></a> <a href="<?php echo $account; ?>"><i class="icon-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span></a> <a href="<?php echo $wishlist; ?>" id="wishlist-total"><i class="icon-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a> <a href="<?php echo $shopping_cart; ?>"><i class="icon-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a> <a href="<?php echo $checkout; ?>"><i class="icon-share-alt"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a> </div>
+    <div class="pull-right"><a href="tel:<?php echo $telephone; ?>"><i class="fa-phone"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></a> <a href="<?php echo $account; ?>"><i class="fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span></a> <a href="<?php echo $wishlist; ?>" id="wishlist-total"><i class="fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a> <a href="<?php echo $shopping_cart; ?>"><i class="fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a> <a href="<?php echo $checkout; ?>"><i class="fa-share-alt"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a> </div>
   </div>
 </nav>
 <header>
@@ -65,7 +65,7 @@
         <div id="search" class="input-group">
           <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" placeholder="<?php echo $text_search; ?>" class="form-control input-lg" />
           <span class="input-group-btn">
-          <button type="button" class="btn btn-default btn-lg"><i class="icon-search"></i></button>
+          <button type="button" class="btn btn-default btn-lg"><i class="fa-search"></i></button>
           </span> </div>
       </div>
       <div class="col-sm-3"><?php echo $cart; ?></div>
@@ -76,7 +76,7 @@
 <div class="container">
   <nav class="navbar navbar-inverse">
     <div class="navbar-header"><span class="visible-xs"><?php echo $text_category; ?></span>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="fa-bar"></span><span class="fa-bar"></span><span class="fa-bar"></span></button>
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">

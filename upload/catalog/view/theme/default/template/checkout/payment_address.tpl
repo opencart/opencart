@@ -186,7 +186,7 @@ $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', fu
 					if (custom_field['type'] == 'file') {
 						html += '<div class="form-group custom-field">';
 						html += '  <label class="control-label">' + custom_field['name'] + '</label>';
-						html += '  <button type="button" id="button-payment-custom-field' + custom_field['custom_field_id'] + '" class="btn btn-default"><i class="icon-upload"></i> <?php echo $button_upload; ?></button>';
+						html += '  <button type="button" id="button-payment-custom-field' + custom_field['custom_field_id'] + '" class="btn btn-default"><i class="fa-upload"></i> <?php echo $button_upload; ?></button>';
 						html += '  <input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="" id="input-payment-custom-field' + custom_field['custom_field_id'] + '" />';
 						html += '</div>';
 					}
@@ -236,7 +236,7 @@ $('#input-payment-country').on('change', function() {
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#input-payment-country').after(' <i class="icon-spinner icon-spin"></i>');
+			$('#input-payment-country').after(' <i class="fa-spinner icon-spin"></i>');
 		},
 		complete: function() {
 			$('.icon-spinner').remove();

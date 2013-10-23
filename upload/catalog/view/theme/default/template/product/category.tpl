@@ -58,8 +58,8 @@
       <div class="row">
         <div class="col-sm-2">
           <div class="btn-group">
-            <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="icon-th-list"></i></button>
-            <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="icon-th"></i></button>
+            <button type="button" id="list-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_list; ?>"><i class="fa-th-list"></i></button>
+            <button type="button" id="grid-view" class="btn btn-default" data-toggle="tooltip" title="<?php echo $button_grid; ?>"><i class="fa-th"></i></button>
           </div>
         </div>
         <div class="col-sm-2 col-sm-offset-2 text-right">
@@ -119,15 +119,15 @@
               <div class="rating">
                 <?php for ($i = 1; $i <= 5; $i++) { ?>
                 <?php if ($product['rating'] < $i) { ?>
-                <span class="icon-stack" style="font-size: 10px; display: inline-block;"> <i class="icon-sign-blank icon-stack-base" style="color: #F7941D;"></i> <i class="icon-star icon-large" style="color: #FFFFFF;"></i> </span>
+                <span class="fa-stack" style="font-size: 10px; display: inline-block;"> <i class="fa-sign-blank icon-stack-base" style="color: #F7941D;"></i> <i class="fa-star icon-large" style="color: #FFFFFF;"></i> </span>
                 <?php } else { ?>
-                <span class="icon-stack" style="font-size: 10px; display: inline-block;"> <i class="icon-sign-blank icon-stack-base" style="color: #D1D1D1;"></i> <i class="icon-star icon-large" style="color: #FFFFFF;"></i> </span>
+                <span class="fa-stack" style="font-size: 10px; display: inline-block;"> <i class="fa-sign-blank icon-stack-base" style="color: #D1D1D1;"></i> <i class="fa-star icon-large" style="color: #FFFFFF;"></i> </span>
                 <?php } ?>
                 <?php } ?>
                 <img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /> </div>
               <?php } ?>
             </div>
-            <div class="button-group"><a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a> <a data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a></div>
+            <div class="button-group"><a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="fa-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="fa-heart"></i></a> <a data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="fa-exchange"></i></a></div>
           </div>
         </div>
         <?php } ?>

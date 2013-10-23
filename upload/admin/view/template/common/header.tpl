@@ -14,8 +14,8 @@
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.0.3.min.js"></script>
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
-<link type="text/css" href="view/javascript/font-awesome/css/font-awesome.min.css" rel="stylesheet" />
-<link href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
+<link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
+<link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
 <?php foreach ($styles as $style) { ?>
 <link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
 <?php } ?>
@@ -32,12 +32,12 @@
 <header id="header" class="navbar navbar-inverse navbar-static-top">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="fa-bar"></span><span class="fa-bar"></span><span class="fa-bar"></span></button>
       <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a></div>
     <?php if ($logged) { ?>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" /><i class="icon-caret-down"></i> <?php echo $profile_name; ?><br />
+        <li><a data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" /><i class="fa-caret-down"></i> <?php echo $profile_name; ?><br />
           <small><?php echo $profile_group; ?></small></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
@@ -54,7 +54,7 @@
 <nav id="menu" class="navbar navbar-static-top">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex2-collapse"><span class="fa-bar"></span><span class="fa-bar"></span><span class="fa-bar"></span></button>
     </div>
     <div class="collapse navbar-collapse navbar-ex2-collapse">
       <ul class="nav navbar-nav">
@@ -207,7 +207,7 @@
       </ul>
       <ul class="nav navbar-nav pull-right">
         <?php if ($stores) { ?>
-        <li class="dropdown"><a data-toggle="dropdown"><?php echo $text_store; ?> <i class="icon-caret-down"></i></a>
+        <li class="dropdown"><a data-toggle="dropdown"><?php echo $text_store; ?> <i class="fa-caret-down"></i></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $store; ?>" target="_blank"><?php echo $store_name; ?></a></li>
             <?php foreach ($stores as $store) { ?>

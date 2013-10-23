@@ -37,10 +37,10 @@
             </div>
             <div class="button-group">
                 <a title="<?php echo $button_cart; ?>" class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');" href="#">
-                    <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="icon-shopping-cart visible-tablet"></i></span>
+                    <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="fa-shopping-cart visible-tablet"></i></span>
                 </a>
-                <a title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="icon-heart"></i></a>
-                <a title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="icon-exchange"></i></a>
+                <a title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="fa-heart"></i></a>
+                <a title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="fa-exchange"></i></a>
                 <div class="clearfix"></div>
             </div>
         </div>

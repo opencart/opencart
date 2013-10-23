@@ -1,7 +1,7 @@
 <?php if ($status) { ?>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4 class="panel-title"><a href="#collapse-reward" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="icon-caret-down"></i></a></h4>
+    <h4 class="panel-title"><a href="#collapse-reward" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="fa-caret-down"></i></a></h4>
   </div>
   <div id="collapse-reward" class="panel-collapse collapse">
     <div class="panel-body">
@@ -28,7 +28,7 @@ $('#button-reward').on('click', function() {
 			$('.alert').remove();   
 
 			if (json['error']) {
-				$('.breadcrumb').after('<div class="alert alert-danger"><i class="icon-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 		
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}  

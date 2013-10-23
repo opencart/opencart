@@ -26,7 +26,7 @@
         <div class="col-sm-3">
           <?php if ($image['type'] == 'directory') { ?>
           <div class="thumbnail">
-            <div style="width: 100px; height: 100px; background: #CCC;"> <a href="<?php echo $image['href']; ?>" class="directory"><i class="icon-folder-close" style="font-size: 100px; color: #FFF;"></i><?php echo $image['name']; ?></a></div>
+            <div style="width: 100px; height: 100px; background: #CCC;"><a href="<?php echo $image['href']; ?>" class="directory"><i class="icon-folder-close" style="font-size: 100px; color: #FFF;"></i><?php echo $image['name']; ?></a></div>
             <div class="caption">
               <p>
                 <input type="checkbox" name="delete[]" value="<?php echo $image['path']; ?>" />
@@ -35,13 +35,13 @@
           </div>
           <?php } ?>
           <?php if ($image['type'] == 'image') { ?>
-          <div class="thumbnail"><a href="<?php echo $image['path']; ?>"><img src="<?php echo $image['image']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
+          <a href="<?php echo $image['path']; ?>" class="thumbnail"><img src="<?php echo $image['image']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
             <div class="caption">
               <p>
                 <input type="checkbox" name="delete[]" value="<?php echo $image['path']; ?>" />
                 <?php echo $image['name']; ?></p>
             </div>
-          </div>
+          
           <?php } ?>
         </div>
         <?php } ?>

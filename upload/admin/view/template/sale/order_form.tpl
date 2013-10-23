@@ -716,10 +716,10 @@ $('select[name=\'payment_country_id\']').on('change', function() {
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_country_id\']').after(' <i class="fa-spinner icon-spin"></i>');
+			$('select[name=\'payment_country_id\']').after(' <i class="fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -759,10 +759,10 @@ $('select[name=\'payment_address\']').on('change', function() {
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_address\']').after(' <i class="fa-spinner icon-spin"></i>');
+			$('select[name=\'payment_address\']').after(' <i class="fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
 		},		
 		success: function(json) {
 			if (json != '') {	
@@ -790,10 +790,10 @@ $('select[name=\'shipping_country_id\']').on('change', function() {
 		url: 'index.php?route=sale/order/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'shipping_country_id\']').after(' <i class="fa-spinner icon-spin"></i>');
+			$('select[name=\'shipping_country_id\']').after(' <i class="fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -833,10 +833,10 @@ $('select[name=\'shipping_address\']').on('change', function() {
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'shipping_address\']').after(' <i class="fa-spinner icon-spin"></i>');
+			$('select[name=\'shipping_address\']').after(' <i class="fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
 		},		
 		success: function(json) {
 			if (json != '') {	
@@ -1059,7 +1059,7 @@ $('#option').delegate('button[id^=\'button-upload\']', 'click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+				$(node).find('i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 				$(node).prop('disabled', true);
 				
 			},
@@ -1132,7 +1132,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 		data: $(data),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-product i, #button-voucher i, #button-update i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-product i, #button-voucher i, #button-update i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-product, #button-voucher , #button-update').prop('disabled', true);
 		},	
 		complete: function() {

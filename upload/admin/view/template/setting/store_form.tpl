@@ -712,10 +712,10 @@ $('select[name=\'config_template\']').on('change', function() {
 		url: 'index.php?route=setting/setting/template&token=<?php echo $token; ?>&template=' + encodeURIComponent(this.value),
 		dataType: 'html',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa-spinner icon-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa-spinner fa-spin"></i>');
 		},		
 		complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
 		},			
 		success: function(html) {
 			$('#template').attr('src', html);
@@ -734,10 +734,10 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		url: 'index.php?route=setting/store/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'config_country_id\']').after(' <i class="fa-spinner icon-spin"></i>');
+			$('select[name=\'config_country_id\']').after(' <i class="fa-spinner fa-spin"></i>');
 		},		
 		complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
 		},			
 		success: function(json) {
 			html = '<option value=""><?php echo $text_select; ?></option>';

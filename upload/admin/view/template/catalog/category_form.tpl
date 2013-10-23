@@ -88,7 +88,7 @@
                 <div class="input-group">
                   <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
                   <span class="input-group-btn">
-                  <button class="btn btn-info" type="button"><i class="fa-question-sign icon-large"></i></button>
+                  <button class="btn btn-info" type="button"><i class="fa-question-sign fa-large"></i></button>
                   </span> </div>
                 <span class="help-block"><?php echo $help_filter; ?></span>
                 <div id="category-filter" class="well">
@@ -135,7 +135,7 @@
                 <div class="input-group">
                   <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
                   <span class="input-group-btn">
-                  <button class="btn btn-info" type="button"><i class="fa-question-sign icon-large"></i></button>
+                  <button class="btn btn-info" type="button"><i class="fa-question-sign fa-large"></i></button>
                   </span></div>
                 <span class="help-block"><?php echo $help_keyword; ?></span></div>
             </div>
@@ -298,7 +298,7 @@ $('input[name=\'filter\']').autocomplete({
 	}	
 });
 
-$('#category-filter').delegate('.icon-minus-sign', 'click', function() {
+$('#category-filter').delegate('.fa-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script> 
@@ -320,7 +320,7 @@ $(document).delegate('#button-image', 'click', function() {
 		url: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 		dataType: 'html',
 		beforeSend: function() {
-			$('#button-image i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-image i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-image').prop('disabled', true);			
 		},
 		complete: function() {

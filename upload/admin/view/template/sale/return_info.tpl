@@ -167,10 +167,10 @@ $('select[name=\'return_action_id\']').on('change', function() {
 		dataType: 'json',
 		data: 'return_action_id=' + this.value,
 		beforeSend: function() {
-			$('select[name=\'return_action_id\']').after(' <i class="fa-spinner icon-spin"></i>');
+			$('select[name=\'return_action_id\']').after(' <i class="fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
 		},				
 		success: function(json) {
 			$('.alert').remove();
@@ -207,7 +207,7 @@ $('#button-history').on('click', function() {
 		dataType: 'html',
 		data: 'return_status_id=' + encodeURIComponent($('select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-history i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-history').prop('disabled', true);
 		},
 		complete: function() {

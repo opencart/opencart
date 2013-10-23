@@ -255,10 +255,10 @@ $('#input-payment-country').on('change', function() {
         url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
-			$('#input-payment-country').after(' <i class="fa-spinner icon-spin"></i>');
+			$('#input-payment-country').after(' <i class="fa-spinner fa-spin"></i>');
         },
         complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
         },          
         success: function(json) {
 			if (json['postcode_required'] == '1') {

@@ -136,7 +136,7 @@ $('input[name=\'customers\']').autocomplete({
 	}	
 });
 
-$('#customer').delegate('.icon-minus-sign', 'click', function() {
+$('#customer').delegate('.fa-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -165,7 +165,7 @@ $('input[name=\'affiliates\']').autocomplete({
 	}	
 });
 
-$('#affiliate').delegate('.icon-minus-sign', 'click', function() {
+$('#affiliate').delegate('.fa-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -194,7 +194,7 @@ $('input[name=\'products\']').autocomplete({
 	}	
 });
 
-$('#product').delegate('.icon-minus-sign', 'click', function() {
+$('#product').delegate('.fa-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -207,7 +207,7 @@ function send(url) {
 		data: $('select, input, textarea'),		
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-send i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-send').prop('disabled', true);
 		},
 		complete: function() {

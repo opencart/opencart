@@ -96,7 +96,7 @@ function enableModification(modification_id) {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-modification' + modification_id).prop('disabled', true);				
 		},
 		success: function(json) {
@@ -124,7 +124,7 @@ function disableModification(modification_id) {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-modification' + modification_id).prop('disabled', true);		
 		},
 		success: function(json) {

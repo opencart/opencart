@@ -306,10 +306,10 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=marketing/affiliate/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa-spinner icon-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
@@ -371,7 +371,7 @@ $('#button-transaction').on('click', function() {
 		beforeSend: function() {
 			$('.alert').remove();
 			
-			$('#button-transaction i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-transaction i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-transaction').prop('disabled', true);
 		},
 		complete: function() {

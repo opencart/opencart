@@ -119,9 +119,9 @@
               <div class="rating">
                 <?php for ($i = 1; $i <= 5; $i++) { ?>
                 <?php if ($product['rating'] < $i) { ?>
-                <span class="fa-stack" style="font-size: 10px; display: inline-block;"> <i class="fa-sign-blank icon-stack-base" style="color: #F7941D;"></i> <i class="fa-star icon-large" style="color: #FFFFFF;"></i> </span>
+                <span class="fa-stack" style="font-size: 10px; display: inline-block;"> <i class="fa-sign-blank fa-stack-base" style="color: #F7941D;"></i> <i class="fa-star fa-large" style="color: #FFFFFF;"></i> </span>
                 <?php } else { ?>
-                <span class="fa-stack" style="font-size: 10px; display: inline-block;"> <i class="fa-sign-blank icon-stack-base" style="color: #D1D1D1;"></i> <i class="fa-star icon-large" style="color: #FFFFFF;"></i> </span>
+                <span class="fa-stack" style="font-size: 10px; display: inline-block;"> <i class="fa-sign-blank fa-stack-base" style="color: #D1D1D1;"></i> <i class="fa-star fa-large" style="color: #FFFFFF;"></i> </span>
                 <?php } ?>
                 <?php } ?>
                 <img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /> </div>

@@ -142,7 +142,7 @@ $('input[name=\'product\']').autocomplete({
 	}	
 });
 
-$('#featured-product').delegate('.icon-minus-sign', 'click', function() {
+$('#featured-product').delegate('.fa-minus-sign', 'click', function() {
 	$(this).parent().remove();
 
 	data = $.map($('#featured-product input'), function(element){

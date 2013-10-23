@@ -48,7 +48,7 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $return_action['name']; ?></td>
                 <td class="text-right"><?php foreach ($return_action['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa-<?php echo $action['icon']; ?> icon-large"></i></a>
+                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa-<?php echo $action['icon']; ?> fa-large"></i></a>
                   <?php } ?></td>
               </tr>
               <?php } ?>

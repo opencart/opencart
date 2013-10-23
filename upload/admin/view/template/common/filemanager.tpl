@@ -104,7 +104,7 @@ $('#modal-image #button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#modal-image #button-upload i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+				$('#modal-image #button-upload i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 				$('#modal-image #button-upload').prop('disabled', true);
 			},
 			complete: function() {
@@ -152,7 +152,7 @@ $('#modal-image').delegate('#button-create', 'click', function() {
 		dataType: 'json',
 		data: 'folder=' + encodeURIComponent($('#modal-image input[name=\'folder\']').val()),
 		beforeSend: function() {
-			$('#modal-image #button-create i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#modal-image #button-create i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#modal-image #button-create').prop('disabled', true);
 		},
 		complete: function() {
@@ -186,7 +186,7 @@ $('#modal-image #button-delete').on('click', function(e) {
 			dataType: 'json',
 			data: $('#modal-image input[name^=\'delete\']:checked'),
 			beforeSend: function() {
-				$('#modal-image #button-delete i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+				$('#modal-image #button-delete i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 				$('#modal-image #button-delete').prop('disabled', true);
 			},	
 			complete: function() {

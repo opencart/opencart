@@ -96,7 +96,7 @@ $('#button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+				$('#button-upload i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 				$('#button-upload').prop('disabled', true);
 			},	
 			complete: function() {

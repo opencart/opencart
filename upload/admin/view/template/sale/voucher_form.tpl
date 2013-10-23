@@ -139,7 +139,7 @@ $('#button-send').on('click', function() {
 		dataType: 'json',
 		data: 'voucher_id=<?php echo $voucher_id; ?>',
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-send i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-send').prop('disabled', true);
 		},	
 		complete: function() {

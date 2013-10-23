@@ -54,7 +54,7 @@
                 <td class="text-left"><?php echo $filter['name']; ?></td>
                 <td class="text-right"><?php echo $filter['sort_order']; ?></td>
                 <td class="text-right"><?php foreach ($filter['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa-<?php echo $action['icon']; ?> icon-large"></i></a>
+                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa-<?php echo $action['icon']; ?> fa-large"></i></a>
                   <?php } ?></td>
               </tr>
               <?php } ?>

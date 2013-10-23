@@ -702,7 +702,7 @@ $(document).delegate('#button-invoice', 'click', function() {
 		url: 'index.php?route=sale/order/createinvoiceno&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-invoice i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-invoice i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-invoice').prop('disabled', true);			
 		},
 		complete: function() {
@@ -729,7 +729,7 @@ $(document).delegate('#button-credit-add', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-credit-add i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-credit-add i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-credit-add').prop('disabled', true);			
 		},
 		complete: function() {
@@ -760,7 +760,7 @@ $(document).delegate('#button-credit-remove', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-credit-remove i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-credit-remove i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-credit-remove').prop('disabled', true);			
 		},
 		complete: function() {
@@ -789,7 +789,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-reward-add i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-reward-add i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-reward-add').prop('disabled', true);				
 		},
 		complete: function() {
@@ -818,7 +818,7 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-reward-remove i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-reward-remove i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-reward-remove').prop('disabled', true);		
 		},
 		complete: function() {
@@ -847,7 +847,7 @@ $(document).delegate('#button-commission-add', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-commission-add i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-commission-add i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-commission-add').prop('disabled', true);					
 		},
 		complete: function() {
@@ -876,7 +876,7 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-commission-remove i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-commission-remove i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-commission-remove').prop('disabled', true);					
 		},
 		complete: function() {
@@ -914,7 +914,7 @@ $('#button-history').on('click', function() {
 		dataType: 'html',
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-history i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-history').prop('disabled', true);				
 		},
 		complete: function() {

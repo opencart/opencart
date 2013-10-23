@@ -86,7 +86,7 @@
                 <td class="text-left"><?php echo $voucher['status']; ?></td>
                 <td class="text-left"><?php echo $voucher['date_added']; ?></td>
                 <td class="text-right"><?php foreach ($voucher['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa-<?php echo $action['icon']; ?> icon-large"></i></a>
+                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa-<?php echo $action['icon']; ?> fa-large"></i></a>
                   <?php } ?></td>
               </tr>
               <?php } ?>
@@ -114,7 +114,7 @@ $('#button-send').on('click', function() {
 		dataType: 'json',
 		data: $('input[name^=\'selected\']'),
 		beforeSend: function() {
-			$('#button-send i').replaceWith('<i class="fa-spinner icon-spin"></i>');
+			$('#button-send i').replaceWith('<i class="fa-spinner fa-spin"></i>');
 			$('#button-send').prop('disabled', true);
 		},	
 		complete: function() {

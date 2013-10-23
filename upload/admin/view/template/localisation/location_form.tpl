@@ -201,10 +201,10 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=localisation/location/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa-spinner icon-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
-			$('.icon-spinner').remove();
+			$('.fa-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {

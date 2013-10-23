@@ -50,7 +50,6 @@ class ControllerCommonHeader extends Controller {
 		$this->data['text_geo_zone'] = $this->language->get('text_geo_zone');
 		$this->data['text_dashboard'] = $this->language->get('text_dashboard');
 		$this->data['text_help'] = $this->language->get('text_help');
-		$this->data['text_image'] = $this->language->get('text_image');
 		$this->data['text_information'] = $this->language->get('text_information');
 		$this->data['text_installer'] = $this->language->get('text_installer');
 		$this->data['text_language'] = $this->language->get('text_language');

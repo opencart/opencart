@@ -63,7 +63,6 @@
           <ul class="dropdown-menu">
             <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
             <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
-            <li><a href="<?php echo $image; ?>"><?php echo $text_image; ?></a></li>
             <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
             <li class="dropdown-submenu"><a><?php echo $text_attribute; ?></a>
               <ul class="dropdown-menu">

@@ -463,7 +463,7 @@ class ControllerCatalogDownload extends Controller {
     	}	
 		
 		if (!$json) {
-			if (is_uploaded_file($this->request->files['file']['tmp_name'])) {
+			if (!empty($this->request->files['file']['name'])) {
 				// Sanitize the filename
 				$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
 				
@@ -483,7 +483,7 @@ class ControllerCatalogDownload extends Controller {
 					$allowed[] = trim($filetype);
 				}
 				
-				if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
+				if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}	
 				

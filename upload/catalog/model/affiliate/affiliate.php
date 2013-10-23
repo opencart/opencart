@@ -56,7 +56,7 @@ class ModelAffiliateAffiliate extends Model {
 			$emails = explode(',', $this->config->get('config_alert_emails'));
 			
 			foreach ($emails as $email) {
-				if (strlen($email) > 0 && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+				if (utf8_strlen($email) > 0 && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
 					$mail->setTo($email);
 					$mail->send();
 				}

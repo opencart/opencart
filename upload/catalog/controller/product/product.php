@@ -676,7 +676,7 @@ class ControllerProductProduct extends Controller {
 		
 		$json = array();
 		
-		if (is_uploaded_file($this->request->files['file']['tmp_name'])) {
+		if (!empty($this->request->files['file']['name'])) {
 			// Sanitize the filename
 			$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8')));
 			
@@ -696,11 +696,11 @@ class ControllerProductProduct extends Controller {
 				$allowed[] = trim($filetype);
 			}
 			
-			if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
+			if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
 				$json['error'] = $this->language->get('error_filetype');
        		}	
 			
-			// Allowed file mime types		
+			// Allowed file mime types
 		    $allowed = array();
 			
 			$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));

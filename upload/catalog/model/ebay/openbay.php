@@ -149,7 +149,7 @@ class ModelEbayOpenbay extends Model{
                 }
 
                 //new order, set to pending initially.
-                $this->model_ebay_order->confirm($order_id, $this->default_pending_id, '[eBay Import:' . (int)$order->smpId . ']', false);
+                $this->model_ebay_order->confirm($order_id, $this->default_pending_id, '[eBay Import:' . (int)$order->smpId . ']');
                 $this->openbay->ebay->log('Order ID: '.$order_id.' -> Pending');
                 $order_status_id = $this->default_pending_id;
 

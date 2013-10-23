@@ -262,6 +262,7 @@ class ControllerExtensionOpenbay extends Controller {
          * Updating language
          */
         $this->data['txt_obp_version'] = $this->config->get('openbay_version');
+        $this->data['openbaymanager_show_menu'] = $this->config->get('openbaymanager_show_menu');
 
         $this->document->setTitle($this->language->get('lang_text_manager'));
 

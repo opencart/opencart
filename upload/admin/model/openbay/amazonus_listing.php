@@ -1,6 +1,5 @@
 <?php
 class ModelOpenbayAmazonusListing extends Model {
-
     private $tabs = array();
 
     public function search($search_string) {
@@ -196,5 +195,5 @@ class ModelOpenbayAmazonusListing extends Model {
         
         $response = $this->openbay->amazonus->callWithResponse('productv3/bulkSearch', $request_data);
     }
-
 }
+?>

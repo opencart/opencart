@@ -1,14 +1,6 @@
 <?php
-/**
- * Created by James Allsup
- */
-class ModelOpenbayAmazonusPatch extends Model
-{ 
-    public function runPatch($manual = true){
-        /*
-         * Manual flag to true is set when the user runs the patch method manually
-         * false is when the module is updated using the update system
-         */
+class ModelOpenbayAmazonusPatch extends Model {
+    public function runPatch($manual = true) {
         $this->load->model('setting/setting');
 
         $settings = $this->model_setting_setting->getSetting('openbay_amazonus');
@@ -33,10 +25,8 @@ class ModelOpenbayAmazonusPatch extends Model
                 ) DEFAULT COLLATE=utf8_general_ci;
             ");
         }
-        
-        /*
-         * Always return true
-         */
+
         return true;
     } 
 }
+?>

@@ -1,6 +1,5 @@
 <?php
 class ControllerOpenbayAmazonus extends Controller {
-    
     public function stockUpdates() {
         $this->data = array_merge($this->data, $this->load->language('openbay/amazonus_stockupdates'));
         

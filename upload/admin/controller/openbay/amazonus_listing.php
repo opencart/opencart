@@ -1,6 +1,6 @@
 <?php
 class ControllerOpenbayAmazonusListing extends Controller{
-    public function create(){
+    public function create() {
         $this->load->language('openbay/amazonus_listing');
         $this->load->model('openbay/amazonus_listing');
         $this->load->model('openbay/amazonus');
@@ -520,7 +520,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
         $this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     }
     
-    public function search(){
+    public function search() {
         $this->load->model('openbay/amazonus_listing');
         $this->load->language('openbay/amazonus_listing');
 
@@ -585,7 +585,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
         $this->response->setOutput(json_encode($response));
     }
 
-    public function getProductByAsin(){
+    public function getProductByAsin() {
         $this->load->model('openbay/amazonus_listing');
 
         $data = $this->model_openbay_amazonus_listing->getProductByAsin($this->request->post['asin']);
@@ -598,3 +598,4 @@ class ControllerOpenbayAmazonusListing extends Controller{
         $this->response->setOutput(json_encode($response));
     }
 }
+?>

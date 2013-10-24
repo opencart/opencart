@@ -6,16 +6,16 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-affiliate" class="btn btn-primary"><i class="fa-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-affiliate" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" fid="form-affiliate" class="form-horizontal">
@@ -291,7 +291,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button id="button-transaction" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_transaction_add; ?></button>
+              <button id="button-transaction" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_transaction_add; ?></button>
             </div>
           </div>
           <?php } ?>
@@ -306,7 +306,7 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=marketing/affiliate/country&token=<?php echo $token; ?>&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa-spinner fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spinner').remove();
@@ -371,11 +371,11 @@ $('#button-transaction').on('click', function() {
 		beforeSend: function() {
 			$('.alert').remove();
 			
-			$('#button-transaction i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-transaction i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-transaction').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-transaction i').replaceWith('<i class="fa-plus-sign"></i>');
+			$('#button-transaction i').replaceWith('<i class="fa fa-plus-circle"></i>');
 			$('#button-transaction').prop('disabled', false);
 		},
 		success: function(html) {

@@ -6,16 +6,16 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-filter" class="btn btn-primary"><i class="fa-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-filter" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-filter" class="form-horizontal">
@@ -60,7 +60,7 @@
                 <?php } ?>
                 <?php } ?></td>
               <td class="text-right"><input type="text" name="filter[<?php echo $filter_row; ?>][sort_order]" value="<?php echo $filter['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" /></td>
-              <td class="text-left"><button type="button" onclick="$('#filter-row<?php echo $filter_row; ?>').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>
+              <td class="text-left"><button type="button" onclick="$('#filter-row<?php echo $filter_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
             </tr>
             <?php $filter_row++; ?>
             <?php } ?>
@@ -68,7 +68,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="text-left"><a onclick="addFilterRow();" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_filter_add; ?></a></td>
+              <td class="text-left"><a onclick="addFilterRow();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_filter_add; ?></a></td>
             </tr>
           </tfoot>
         </table>
@@ -89,7 +89,7 @@ function addFilterRow() {
 	<?php } ?>
 	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" value="" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';	
 	
 	$('#filter tbody').append(html);

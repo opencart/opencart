@@ -7,8 +7,8 @@
   </ul>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa-info-sign"></i> <?php echo $heading_title; ?></h1>
+      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa fa-info-circle"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <ul class="nav nav-tabs">
@@ -152,7 +152,7 @@
             </div>
           </div>
           <div class="text-right">
-            <button id="button-history" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_history_add; ?></button>
+            <button id="button-history" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
           </div>
         </div>
       </div>
@@ -167,7 +167,7 @@ $('select[name=\'return_action_id\']').on('change', function() {
 		dataType: 'json',
 		data: 'return_action_id=' + this.value,
 		beforeSend: function() {
-			$('select[name=\'return_action_id\']').after(' <i class="fa-spinner fa-spin"></i>');
+			$('select[name=\'return_action_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spinner').remove();
@@ -176,11 +176,11 @@ $('select[name=\'return_action_id\']').on('change', function() {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-				$('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
+				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
 				$('#return-action').html($('select[name=\'return_action_id\'] option:selected').text());
 			}
@@ -207,11 +207,11 @@ $('#button-history').on('click', function() {
 		dataType: 'html',
 		data: 'return_status_id=' + encodeURIComponent($('select[name=\'return_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-history i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-history').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-history i').replaceWith('<i class="fa-plus-sign"></i>');
+			$('#button-history i').replaceWith('<i class="fa fa-plus-circle"></i>');
 			$('#button-history').prop('disabled', false);
 		},
 		success: function(html) {

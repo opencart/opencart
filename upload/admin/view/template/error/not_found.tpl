@@ -7,7 +7,7 @@
   </ul>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa-warning-sign"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-exclamation-circle"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <p class="text-center"><?php echo $text_not_found; ?></p>

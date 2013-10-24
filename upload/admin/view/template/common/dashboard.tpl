@@ -1,17 +1,17 @@
 <?php echo $header; ?>
 <div id="content" class="container">
   <?php if ($error_install) { ?>
-  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_install; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_install; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } else { ?>
   <?php } ?> 
-  <div class="alert alert-info"><i class="fa-thumbs-up-alt"></i> <?php echo $text_welcome; ?>
+  <div class="alert alert-info"><i class="fa fa-thumbs-up-alt"></i> <?php echo $text_welcome; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa-eye-open"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-eye-open"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">
@@ -86,7 +86,7 @@
         </div>
         <div class="tab-pane" id="tab-online">
           <div class="text-right">
-            <button type="button" id="button-refresh" class="btn btn-default"><i class="fa-refresh"></i> <?php echo $button_refresh; ?></button>
+            <button type="button" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i> <?php echo $button_refresh; ?></button>
           </div>
           <div id="chart-online" class="chart" style="width: 100%; height: 250px;"></div>
         </div>

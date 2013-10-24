@@ -6,16 +6,16 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-product" class="btn btn-primary"><i class="fa-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-product" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-product" class="form-horizontal">
@@ -236,8 +236,8 @@
                 <br />
                 <br />
                 <div class="btn-group">
-                  <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="fa-pencil"></span> <?php echo $button_edit; ?></button>
-                  <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="fa-trash"></span> <?php echo $button_clear; ?></button>
+                  <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="fa fa-pencil"></span> <?php echo $button_edit; ?></button>
+                  <button type="button" onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="fa fa-trash-o"></span> <?php echo $button_clear; ?></button>
                 </div>
               </div>
             </div>
@@ -333,7 +333,7 @@
                 <span class="help-block"><?php echo $help_category; ?></span>
                 <div id="product-category" class="well">
                   <?php foreach ($product_categories as $product_category) { ?>
-                  <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="fa-minus-sign"></i> <?php echo $product_category['name']; ?>
+                  <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_category['name']; ?>
                     <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -347,7 +347,7 @@
                 <span class="help-block"><?php echo $help_filter; ?></span>
                 <div id="product-filter" class="well">
                   <?php foreach ($product_filters as $product_filter) { ?>
-                  <div id="product-filter<?php echo $product_filter['filter_id']; ?>"><i class="fa-minus-sign"></i> <?php echo $product_filter['name']; ?>
+                  <div id="product-filter<?php echo $product_filter['filter_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_filter['name']; ?>
                     <input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -390,7 +390,7 @@
                 <span class="help-block"><?php echo $help_download; ?></span>
                 <div id="product-download" class="well">
                   <?php foreach ($product_downloads as $product_download) { ?>
-                  <div id="product-download<?php echo $product_download['download_id']; ?>"><i class="fa-minus-sign"></i> <?php echo $product_download['name']; ?>
+                  <div id="product-download<?php echo $product_download['download_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_download['name']; ?>
                     <input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -404,7 +404,7 @@
                 <span class="help-block"><?php echo $help_related; ?></span>
                 <div id="product-related" class="well">
                   <?php foreach ($product_relateds as $product_related) { ?>
-                  <div id="product-related<?php echo $product_related['product_id']; ?>"><i class="fa-minus-sign"></i> <?php echo $product_related['name']; ?>
+                  <div id="product-related<?php echo $product_related['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_related['name']; ?>
                     <input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -433,7 +433,7 @@
                         <textarea name="product_attribute[<?php echo $attribute_row; ?>][product_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="5" placeholder="<?php echo $entry_text; ?>" class="form-control"><?php echo isset($product_attribute['product_attribute_description'][$language['language_id']]) ? $product_attribute['product_attribute_description'][$language['language_id']]['text'] : ''; ?></textarea>
                       </div>
                       <?php } ?></td>
-                    <td class="text-left"><button type="button" onclick="$('#attribute-row<?php echo $attribute_row; ?>').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="$('#attribute-row<?php echo $attribute_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
                   </tr>
                   <?php $attribute_row++; ?>
                   <?php } ?>
@@ -441,7 +441,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2"></td>
-                    <td class="text-left"><button type="button" onclick="addAttribute();" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_attribute_add; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addAttribute();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_attribute_add; ?></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -453,7 +453,7 @@
                 <ul class="nav nav-pills nav-stacked" id="option">
                   <?php $option_row = 0; ?>
                   <?php foreach ($product_options as $product_option) { ?>
-                  <li><a href="#tab-option<?php echo $option_row; ?>" data-toggle="tab"><i class="fa-minus-sign" onclick="$('a[href=\'#tab-option<?php echo $option_row; ?>\']').parent().remove(); $('#tab-option<?php echo $option_row; ?>').remove(); $('#option a:first').tab('show');"></i> <?php echo $product_option['name']; ?></a></li>
+                  <li><a href="#tab-option<?php echo $option_row; ?>" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$('a[href=\'#tab-option<?php echo $option_row; ?>\']').parent().remove(); $('#tab-option<?php echo $option_row; ?>').remove(); $('#option a:first').tab('show');"></i> <?php echo $product_option['name']; ?></a></li>
                   <?php $option_row++; ?>
                   <?php } ?>
                   <li>
@@ -611,7 +611,7 @@
                                 <?php } ?>
                               </select>
                               <input type="text" name="product_option[<?php echo $option_row; ?>][product_option_value][<?php echo $option_value_row; ?>][weight]" value="<?php echo $product_option_value['weight']; ?>" placeholder="<?php echo $entry_weight; ?>" class="form-control" /></td>
-                            <td class="text-left"><button type="button" onclick="$('#option-value-row<?php echo $option_value_row; ?>').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>
+                            <td class="text-left"><button type="button" onclick="$('#option-value-row<?php echo $option_value_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
                           </tr>
                           <?php $option_value_row++; ?>
                           <?php } ?>
@@ -619,7 +619,7 @@
                         <tfoot>
                           <tr>
                             <td colspan="6"></td>
-                            <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_option_value_add; ?></button></td>
+                            <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_option_value_add; ?></button></td>
                           </tr>
                         </tfoot>
                       </table>
@@ -671,7 +671,7 @@
                     <td class="text-right"><input type="text" name="product_discount[<?php echo $discount_row; ?>][price]" value="<?php echo $product_discount['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>
                     <td class="text-left"><input type="date" name="product_discount[<?php echo $discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" class="form-control" /></td>
                     <td class="text-left"><input type="date" name="product_discount[<?php echo $discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" class="form-control" /></td>
-                    <td class="text-left"><button type="button" onclick="$('#discount-row<?php echo $discount_row; ?>').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="$('#discount-row<?php echo $discount_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
                   </tr>
                   <?php $discount_row++; ?>
                   <?php } ?>
@@ -679,7 +679,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="6"></td>
-                    <td class="text-left"><button type="button" onclick="addDiscount();" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_discount_add; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addDiscount();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_discount_add; ?></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -715,7 +715,7 @@
                     <td class="text-right"><input type="text" name="product_special[<?php echo $special_row; ?>][price]" value="<?php echo $product_special['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>
                     <td class="text-left"><input type="date" name="product_special[<?php echo $special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" class="form-control" /></td>
                     <td class="text-left"><input type="date" name="product_special[<?php echo $special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" class="form-control" /></td>
-                    <td class="text-left"><button type="button" onclick="$('#special-row<?php echo $special_row; ?>').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="$('#special-row<?php echo $special_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
                   </tr>
                   <?php $special_row++; ?>
                   <?php } ?>
@@ -723,7 +723,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="5"></td>
-                    <td class="text-left"><button type="button" onclick="addSpecial();" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_special_add; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addSpecial();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_special_add; ?></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -747,11 +747,11 @@
                     <td class="text-left"><img src="<?php echo $product_image['thumb']; ?>" alt="" class="img-thumbnail" />
                       <input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $product_image['image']; ?>" /></td>
                     <td class="text-left"><div class="btn-group">
-                        <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="fa-pencil"></span> <?php echo $button_edit; ?></button>
-                        <button type="button" onclick="$('image-row<?php echo $image_row; ?> img').find('img').attr('src', '<?php echo $no_image; ?>'); $('image-row<?php echo $image_row; ?>').parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="fa-trash"></span> <?php echo $button_clear; ?></button>
+                        <button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="fa fa-pencil"></span> <?php echo $button_edit; ?></button>
+                        <button type="button" onclick="$('image-row<?php echo $image_row; ?> img').find('img').attr('src', '<?php echo $no_image; ?>'); $('image-row<?php echo $image_row; ?>').parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="fa fa-trash-o"></span> <?php echo $button_clear; ?></button>
                       </div></td>
                     <td class="text-right"><input type="text" name="product_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $product_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
-                    <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
                   </tr>
                   <?php $image_row++; ?>
                   <?php } ?>
@@ -759,7 +759,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="3"></td>
-                    <td class="text-left"><button type="button" onclick="addImage();" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_image_add; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addImage();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_image_add; ?></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -900,7 +900,7 @@ $('input[name=\'category\']').autocomplete({
 		
 		$('#product-category' + item['value']).remove();
 		
-		$('#product-category').append('<div id="product-category' + item['value'] + '"><i class="fa-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '" /></div>');	
+		$('#product-category').append('<div id="product-category' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_category[]" value="' + item['value'] + '" /></div>');	
 	}
 });
 
@@ -929,7 +929,7 @@ $('input[name=\'filter\']').autocomplete({
 		
 		$('#product-filter' + item['value']).remove();
 		
-		$('#product-filter').append('<div id="product-filter' + item['value'] + '"><i class="fa-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="product_filter[]" value="' + item['value'] + '" /></div>');	
+		$('#product-filter').append('<div id="product-filter' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_filter[]" value="' + item['value'] + '" /></div>');	
 	}	
 });
 
@@ -958,7 +958,7 @@ $('input[name=\'download\']').autocomplete({
 		
 		$('#product-download' + item['value']).remove();
 		
-		$('#product-download').append('<div id="product-download' + item['value'] + '"><i class="fa-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="product_download[]" value="' + item['value'] + '" /></div>');	
+		$('#product-download').append('<div id="product-download' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_download[]" value="' + item['value'] + '" /></div>');	
 	}	
 });
 
@@ -987,7 +987,7 @@ $('input[name=\'related\']').autocomplete({
 		
 		$('#product-related' + item['value']).remove();
 		
-		$('#product-related').append('<div id="product-related' + item['value'] + '"><i class="fa-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="product_related[]" value="' + item['value'] + '" /></div>');	
+		$('#product-related').append('<div id="product-related' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="product_related[]" value="' + item['value'] + '" /></div>');	
 	}	
 });
 
@@ -1006,7 +1006,7 @@ function addAttribute() {
 	html += '<div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><textarea name="product_attribute[' + attribute_row + '][product_attribute_description][<?php echo $language['language_id']; ?>][text]" rows="5" placeholder="<?php echo $entry_text; ?>" class="form-control"></textarea></div>';
     <?php } ?>
 	html += '  </td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#attribute-row' + attribute_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
     html += '</tr>';
 	
 	$('#attribute tbody').append(html);
@@ -1141,7 +1141,7 @@ $('input[name=\'option\']').autocomplete({
 			html += '    <tfoot>';
 			html += '      <tr>';
 			html += '        <td colspan="6"></td>';
-			html += '        <td class="text-left"><button type="button" onclick="addOptionValue(' + option_row + ');" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_option_value_add; ?></button></td>';
+			html += '        <td class="text-left"><button type="button" onclick="addOptionValue(' + option_row + ');" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_option_value_add; ?></button></td>';
 			html += '      </tr>';
 			html += '    </tfoot>';
 			html += '  </table>';
@@ -1159,7 +1159,7 @@ $('input[name=\'option\']').autocomplete({
 		
 		$('#tab-option .tab-content').append(html);
 		
-		$('#option > li:last-child').before('<li><a href="#tab-option' + option_row + '" data-toggle="tab"><i class="fa-minus-sign" onclick="$(\'a[href=\\\'#tab-option' + option_row + '\\\']\').parent().remove(); $(\'#tab-option' + option_row + '\').remove(); $(\'#option a:first\').tab(\'show\')"></i> ' + item['label'] + '</li>');
+		$('#option > li:last-child').before('<li><a href="#tab-option' + option_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'a[href=\\\'#tab-option' + option_row + '\\\']\').parent().remove(); $(\'#tab-option' + option_row + '\').remove(); $(\'#option a:first\').tab(\'show\')"></i> ' + item['label'] + '</li>');
 		
 		$('#option a[href=\'#tab-option' + option_row + '\']').tab('show');
 				
@@ -1195,7 +1195,7 @@ function addOptionValue(option_row) {
 	html += '    <option value="-">-</option>';
 	html += '  </select>';
 	html += '  <input type="text" name="product_option[' + option_row + '][product_option_value][' + option_value_row + '][weight]" value="" placeholder="<?php echo $entry_weight; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';
 	
 	$('#option-value' + option_row + ' tbody').append(html);
@@ -1218,7 +1218,7 @@ function addDiscount() {
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>';
     html += '  <td class="text-left"><input type="date" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="<?php echo $entry_date_start; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><input type="date" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="<?php echo $entry_date_end; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';	
 	
 	$('#discount tbody').append(html);
@@ -1240,7 +1240,7 @@ function addSpecial() {
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>';
     html += '  <td class="text-left"><input type="date" name="product_special[' + special_row + '][date_start]" value="" placeholder="<?php echo $entry_date_start; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><input type="date" name="product_special[' + special_row + '][date_end]" value="" placeholder="<?php echo $entry_date_end; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#special-row' + special_row + '\').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#special-row' + special_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';
 	
 	$('#special tbody').append(html);
@@ -1281,9 +1281,9 @@ var image_row = <?php echo $image_row; ?>;
 function addImage() {
 	html  = '<tr id="image-row' + image_row + '">';
 	html += '  <td class="text-left"><img src="<?php echo $no_image; ?>" alt="" class="img-thumbnail" /><input type="hidden" name="product_image[' + image_row + '][image]" value="" /></td>';
-	html += '  <td class="text-left"><div class="btn-group"><button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="fa-pencil"></span> <?php echo $button_edit; ?></button><button type="button" onclick="$(this).parent().parent().find(\'img\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(this).parent().parent().find(\'input\').attr(\'value\', \'\');" class="btn btn-danger"><span class="fa-trash"></span> <?php echo $button_clear; ?></button></div></td>';
+	html += '  <td class="text-left"><div class="btn-group"><button type="button" data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="fa fa-pencil"></span> <?php echo $button_edit; ?></button><button type="button" onclick="$(this).parent().parent().find(\'img\').attr(\'src\', \'<?php echo $no_image; ?>\'); $(this).parent().parent().find(\'input\').attr(\'value\', \'\');" class="btn btn-danger"><span class="fa fa-trash-o"></span> <?php echo $button_clear; ?></button></div></td>';
 	html += '  <td class="text-right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" class="btn btn-danger"><i class="fa-minus-sign"></i> <?php echo $button_remove; ?></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';
 	
 	$('#images tbody').append(html);

@@ -1,4 +1,4 @@
-<div id="cart" class="btn-group btn-block"><a class="btn btn-default btn-block btn-lg dropdown-toggle" data-toggle="dropdown"><i class="fa-shopping-cart"></i><span class="text-items" id="cart-total"> <?php echo $text_items; ?></span></a>
+<div id="cart" class="btn-group btn-block"><a class="btn btn-default btn-block btn-lg dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i><span class="text-items" id="cart-total"> <?php echo $text_items; ?></span></a>
   <div id="dropdown-menu" class="dropdown-menu">
     <?php if ($products || $vouchers) { ?>
     <table class="table table-bordered">
@@ -16,7 +16,7 @@
           <?php } ?></td>
         <td class="text-right">x <?php echo $product['quantity']; ?></td>
         <td class="text-right"><?php echo $product['total']; ?></td>
-        <td class="text-center"><button type="button" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $product['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $product['key']; ?>' + ' #cart > *');" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa-remove-sign"></i></button></td>
+        <td class="text-center"><button type="button" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $product['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $product['key']; ?>' + ' #cart > *');" title="<?php echo $button_remove; ?>" class="btn btn-danger btn-sm"><i class="fa fa-minus-circle"></i></button></td>
       </tr>
       <?php foreach ($vouchers as $voucher) { ?>
       <tr>
@@ -24,7 +24,7 @@
         <td class="text-left"><?php echo $voucher['description']; ?></td>
         <td class="text-right">x&nbsp;1</td>
         <td class="text-right"><?php echo $voucher['amount']; ?></td>
-        <td class="text-center text-danger"><button type="button" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $voucher['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $voucher['key']; ?>' + ' #cart > *');" title="<?php echo $button_remove; ?>" class="btn btn-sm"><i class="fa-remove-sign"></i></button></td>
+        <td class="text-center text-danger"><button type="button" onclick="(getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') ? location = 'index.php?route=checkout/cart&remove=<?php echo $voucher['key']; ?>' : $('#cart').load('index.php?route=module/cart&remove=<?php echo $voucher['key']; ?>' + ' #cart > *');" title="<?php echo $button_remove; ?>" class="btn btn-sm"><i class="fa fa-minus-circle"></i></button></td>
       </tr>
       <?php } ?>
       <?php } ?>
@@ -38,8 +38,8 @@
       <?php } ?>
     </table>
     <div>
-      <div class="pull-left"><a href="<?php echo $cart; ?>"><i class="fa-shopping-cart"></i> <?php echo $text_cart; ?></a> </div>
-      <div class="pull-right"><a href="<?php echo $checkout; ?>"><i class="fa-share-alt"></i> <?php echo $text_checkout; ?></a> </div>
+      <div class="pull-left"><a href="<?php echo $cart; ?>"><i class="fa fa-shopping-cart"></i> <?php echo $text_cart; ?></a> </div>
+      <div class="pull-right"><a href="<?php echo $checkout; ?>"><i class="fa fa-share-alt"></i> <?php echo $text_checkout; ?></a> </div>
     </div>
     <?php } else { ?>
     <p><?php echo $text_empty; ?></p>

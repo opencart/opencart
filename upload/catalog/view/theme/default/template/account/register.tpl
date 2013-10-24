@@ -6,7 +6,7 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><?php echo $error_warning; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
   <?php } ?>
   <div class="row"><?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>
@@ -387,7 +387,7 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 						html += '<div class="form-group custom-field">';
 						html += '  <label class="col-sm-2 control-label">' + custom_field['name'] + '</label>';
 						html += '  <div class="col-sm-10">';
-						html += '    <button type="button" id="button-custom-field' + custom_field['custom_field_id'] + '" class="btn btn-default" onclick=""><i class="fa-upload"></i> <?php echo $button_upload; ?></button>';
+						html += '    <button type="button" id="button-custom-field' + custom_field['custom_field_id'] + '" class="btn btn-default" onclick=""><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
 						html += '    <input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="' + value + '" id="input-custom-field' + custom_field['custom_field_id'] + '" />';
 						
 						if ($('#custom-field' + custom_field['custom_field_id'] + ' .custom-field-error').length) {
@@ -463,7 +463,7 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=account/register/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa-spinner fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spinner').remove();

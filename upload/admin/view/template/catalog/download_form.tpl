@@ -6,16 +6,16 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-download" class="btn btn-primary"><i class="fa-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-download" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-download" class="form-horizontal">
@@ -38,7 +38,7 @@
             <div class="input-group">
               <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
               <span class="input-group-btn">
-              <button type="button" id="button-upload" class="btn btn-primary"><i class="fa-upload"></i> <?php echo $button_upload; ?></button>
+              <button type="button" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
               </span></div>
             <span class="help-block"><?php echo $help_filename; ?></span>
             <?php if ($error_filename) { ?>
@@ -96,11 +96,11 @@ $('#button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+				$('#button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 				$('#button-upload').prop('disabled', true);
 			},	
 			complete: function() {
-				$('#button-upload i').replaceWith('<i class="fa-upload"></i>');
+				$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
 				$('#button-upload').prop('disabled', false);
 			},		
 			success: function(json) {

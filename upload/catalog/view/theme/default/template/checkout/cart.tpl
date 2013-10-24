@@ -6,17 +6,17 @@
     <?php } ?>
   </ul>
   <?php if ($attention) { ?>
-  <div class="alert alert-info"><?php echo $attention; ?>
+  <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $attention; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa-ok-sign"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -71,8 +71,8 @@
                 <td class="text-left row" style="width:40%;"><div class="input-group">
                     <input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control col-span-1" />
                     <span class="input-group-btn">
-                    <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="fa-refresh"></i></button>
-                    <a href="<?php echo $product['remove']; ?>" title="<?php echo $button_remove; ?>" data-toggle="tooltip" class="btn btn-danger"><i class="fa-remove-sign"></i></a></span></div></td>
+                    <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+                    <a href="<?php echo $product['remove']; ?>" title="<?php echo $button_remove; ?>" data-toggle="tooltip" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a></span></div></td>
                 <td class="text-right"><?php echo $product['price']; ?></td>
                 <td class="text-right"><?php echo $product['total']; ?></td>
               </tr>
@@ -83,7 +83,7 @@
                 <td class="text-left"><?php echo $vouchers['description']; ?></td>
                 <td class="text-left"></td>
                 <td class="text-left"><input type="text" name="" value="1" size="1" disabled="disabled" class="input-mini" />
-                  <a href="<?php echo $vouchers['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="fa-remove"></i></a></td>
+                  <a href="<?php echo $vouchers['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>"><i class="fa fa-times"></i></a></td>
                 <td class="text-right"><?php echo $vouchers['amount']; ?></td>
                 <td class="text-right"><?php echo $vouchers['amount']; ?></td>
               </tr>

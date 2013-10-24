@@ -1,7 +1,7 @@
 <?php if ($status) { ?>
 <div class="panel panel-default">
   <div class="panel-heading">
-    <h4 class="panel-title"><a href="#collapse-shipping" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="fa-caret-down"></i></a></h4>
+    <h4 class="panel-title"><a href="#collapse-shipping" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="fa fa-caret-down"></i></a></h4>
   </div>
   <div id="collapse-shipping" class="panel-collapse collapse">
     <div class="panel-body">
@@ -55,7 +55,7 @@ $('#button-quote').on('click', function() {
 		
 			if (json['error']) {
 				if (json['error']['warning']) {
-					$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['warning'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			
 					$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 				}  
@@ -148,7 +148,7 @@ $(document).delegate('#button-shipping', 'click', function() {
 			$('.alert').remove();   
 			
 			if (json['error']) {
-				$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.breadcrumb').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 			}  
@@ -166,7 +166,7 @@ $('select[name=\'country_id\']').on('change', function() {
 		url: 'index.php?route=module/shipping/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'country_id\']').after(' <i class="fa-spinner fa-spin"></i>');
+			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spinner').remove();

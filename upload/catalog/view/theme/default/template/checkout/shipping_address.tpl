@@ -186,7 +186,7 @@ $('#collapse-shipping-address input[name=\'customer_group_id\']').on('change', f
 					if (custom_field['type'] == 'file') {
 						html += '<div class="form-group custom-field">';
 						html += '  <label class="control-label">' + custom_field['name'] + '</label>';
-						html += '  <button type="button" id="button-shipping-custom-field' + custom_field['custom_field_id'] + '" class="btn btn-default"><i class="fa-upload"></i> <?php echo $button_upload; ?></button>';
+						html += '  <button type="button" id="button-shipping-custom-field' + custom_field['custom_field_id'] + '" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>';
 						html += '  <input type="hidden" name="custom_field[' + custom_field['custom_field_id'] + ']" value="" id="input-shipping-custom-field' + custom_field['custom_field_id'] + '" />';
 						html += '</div>';
 					}

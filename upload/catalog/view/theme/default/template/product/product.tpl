@@ -123,8 +123,8 @@
       
       <!-- Wishlist / Compare buttons -->
       <div class="btn-group">
-        <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product_id; ?>');"><i class="fa-heart"></i></button>
-        <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product_id; ?>');"><i class="fa-exchange"></i></button>
+        <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
+        <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
       </div>
       
       <!-- Product Name -->
@@ -262,7 +262,7 @@
         <?php if ($option['type'] == 'file') { ?>
         <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
           <label class="control-label"><?php echo $option['name']; ?></label>
-          <button type="button" id="button-upload<?php echo $option['product_option_id']; ?>" class="btn btn-default btn-block"><i class="fa-upload"></i> <?php echo $button_upload; ?></button>
+          <button type="button" id="button-upload<?php echo $option['product_option_id']; ?>" class="btn btn-default btn-block"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
           <input type="hidden" name="option[<?php echo $option['product_option_id']; ?>]" value="" id="input-option<?php echo $option['product_option_id']; ?>" />
         </div>
         <?php } ?>
@@ -293,7 +293,7 @@
           <button type="button" id="button-cart" class="btn btn-primary btn-lg btn-block"><?php echo $button_cart; ?></button>
         </div>
         <?php if ($minimum > 1) { ?>
-        <div class="alert alert-info"><i class="fa-info-sign"></i> <?php echo $text_minimum; ?></div>
+        <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_minimum; ?></div>
         <?php } ?>
       </div>
       
@@ -342,7 +342,7 @@
               <img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" />
               <?php } ?>
             </div>
-            <div class="button-group"><a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="fa-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="fa-heart"></i></a> <a data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="fa-exchange"></i></a>
+            <div class="button-group"><a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="fa fa-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></a> <a data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></a>
               <div class="clearfix"></div>
             </div>
           </div>
@@ -414,11 +414,11 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$(node).find('i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+				$(node).find('i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 				$(node).prop('disabled', true);
 			},
 			complete: function() {
-				$(node).find('i').replaceWith('<i class="fa-upload"></i>');
+				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
 				$(node).prop('disabled', false);			
 			},		
 			success: function(json) {
@@ -468,11 +468,11 @@ $('#button-review').on('click', function() {
 			$('.alert-success, .alert-danger').remove();
             
 			if (json['error']) {
-                $('#review').after('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
+                $('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
             }
             
             if (json['success']) {
-                $('#review').after('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
+                $('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
                                 
                 $('input[name=\'name\']').val('');
                 $('textarea[name=\'text\']').val('');

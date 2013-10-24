@@ -6,22 +6,22 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa-ok-sign"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
     <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-backup" class="btn btn-default"><i class="fa-download"></i> <?php echo $button_backup; ?></button>
-        <button type="submit" form="form-restore" class="btn btn-default"><i class="fa-upload"></i> <?php echo $button_restore; ?></button>
+        <button type="submit" form="form-backup" class="btn btn-default"><i class="fa fa-download"></i> <?php echo $button_backup; ?></button>
+        <button type="submit" form="form-restore" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_restore; ?></button>
       </div>
-      <h1 class="panel-title"><i class="fa-exchange"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-exchange"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-restore" class="form-horizontal">

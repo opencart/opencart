@@ -6,24 +6,24 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa-puzzle-piece"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form class="form-horizontal">
         <div class="form-group">
           <label class="col-sm-2 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>
           <div class="col-sm-10">
-            <button type="button" id="button-upload" class="btn btn-primary"><i class="fa-upload"></i> <?php echo $button_upload; ?></button>
+            <button type="button" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
             <?php if ($error_warning) { ?>
-            <button type="button" id="button-clear" class="btn btn-danger"><i class="fa-eraser"></i> <?php echo $button_clear; ?></button>
+            <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
             <?php } else { ?>
-            <button type="button" id="button-clear" disabled="disabled" class="btn btn-danger"><i class="fa-eraser"></i> <?php echo $button_clear; ?></button>
+            <button type="button" id="button-clear" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
             <?php } ?>
             <span class="help-block"><?php echo $help_upload; ?></span></div>
         </div>
@@ -41,7 +41,7 @@
           <div class="col-sm-10">
             <textarea rows="10" readonly="readonly" id="overwrite" class="form-control"></textarea>
             <br />
-            <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa-ok"></i> <?php echo $button_continue; ?></button>
+            <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
           </div>
         </div>
       </form>
@@ -75,11 +75,11 @@ $('#button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+				$('#button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 				$('#button-upload').prop('disabled', true);
 			},
 			complete: function() {
-				$('#button-upload i').replaceWith('<i class="fa-upload"></i>');
+				$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
 				$('#button-upload').prop('disabled', false);
 			},		
 			success: function(json) {
@@ -160,21 +160,21 @@ $('#button-clear').bind('click', function() {
 		url: 'index.php?route=extension/installer/clear&token=<?php echo $token; ?>',	
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-clear i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-clear i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-clear').prop('disabled', true);
 		},	
 		complete: function() {
-			$('#button-clear i').replaceWith('<i class="fa-eraser"></i>');
+			$('#button-clear i').replaceWith('<i class="fa fa-eraser"></i>');
 		},		
 		success: function(json) {
 			$('.alert').remove();
 				
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			} 
 		
 			if (json['success']) {
-				$('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				
 				$('#button-clear').prop('disabled', true);
 			}

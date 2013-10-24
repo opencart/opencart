@@ -6,16 +6,16 @@
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-xs-5"><a href="<?php echo $parent; ?>" id="button-parent" class="btn btn-default"><i class="fa-level-up"></i></a>
-          <button type="button" id="button-upload" class="btn btn-primary"><i class="fa-upload"></i></button>
-          <button type="button" id="button-folder" class="btn btn-default"><i class="fa-folder-close"></i></button>
-          <button type="button" id="button-delete" class="btn btn-danger"><i class="fa-trash"></i></button>
+        <div class="col-xs-5"><a href="<?php echo $parent; ?>" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a>
+          <button type="button" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+          <button type="button" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
+          <button type="button" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
         </div>
         <div class="col-sm-7">
           <div class="input-group">
             <input type="text" name="search" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_search; ?>" class="form-control">
             <span class="input-group-btn">
-            <button type="button" id="button-search" class="btn btn-primary"><i class="fa-search"></i></button>
+            <button type="button" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </span></div>
         </div>
       </div>
@@ -26,7 +26,7 @@
         <div class="col-sm-3">
           <?php if ($image['type'] == 'directory') { ?>
           <div class="thumbnail">
-            <div style="width: 100px; height: 100px; background: #CCC;"><a href="<?php echo $image['href']; ?>" class="directory"><i class="fa-folder-close" style="font-size: 100px; color: #FFF;"></i><?php echo $image['name']; ?></a></div>
+            <div style="width: 100px; height: 100px; background: #CCC;"><a href="<?php echo $image['href']; ?>" class="directory"><i class="fa fa-folder" style="font-size: 100px; color: #FFF;"></i><?php echo $image['name']; ?></a></div>
             <div class="caption">
               <p>
                 <input type="checkbox" name="delete[]" value="<?php echo $image['path']; ?>" />
@@ -104,11 +104,11 @@ $('#modal-image #button-upload').on('click', function() {
 			contentType: false,
 			processData: false,		
 			beforeSend: function() {
-				$('#modal-image #button-upload i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+				$('#modal-image #button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 				$('#modal-image #button-upload').prop('disabled', true);
 			},
 			complete: function() {
-				$('#modal-image #button-upload i').replaceWith('<i class="fa-upload"></i>');
+				$('#modal-image #button-upload i').replaceWith('<i class="fa fa-upload"></i>');
 				$('#modal-image #button-upload').prop('disabled', false);
 			},
 			success: function(json) {
@@ -136,7 +136,7 @@ $('#modal-image #button-folder').popover({
 	content: function() {
 		html  = '<div class="input-group">';
 		html += '  <input type="text" name="folder" value="" placeholder="<?php echo $entry_folder; ?>" class="form-control">';
-		html += '  <span class="input-group-btn"><button type="button" id="button-create" class="btn btn-primary"><i class="fa-search"></i></button></span>';
+		html += '  <span class="input-group-btn"><button type="button" id="button-create" class="btn btn-primary"><i class="fa fa-search"></i></button></span>';
 		html += '</div>';
 		
 		return html;
@@ -152,11 +152,11 @@ $('#modal-image').delegate('#button-create', 'click', function() {
 		dataType: 'json',
 		data: 'folder=' + encodeURIComponent($('#modal-image input[name=\'folder\']').val()),
 		beforeSend: function() {
-			$('#modal-image #button-create i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#modal-image #button-create i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#modal-image #button-create').prop('disabled', true);
 		},
 		complete: function() {
-			$('#modal-image #button-create i').replaceWith('<i class="fa-upload"></i>');
+			$('#modal-image #button-create i').replaceWith('<i class="fa fa-upload"></i>');
 			$('#modal-image #button-create').prop('disabled', false);
 		},
 		success: function(json) {
@@ -186,11 +186,11 @@ $('#modal-image #button-delete').on('click', function(e) {
 			dataType: 'json',
 			data: $('#modal-image input[name^=\'delete\']:checked'),
 			beforeSend: function() {
-				$('#modal-image #button-delete i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+				$('#modal-image #button-delete i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 				$('#modal-image #button-delete').prop('disabled', true);
 			},	
 			complete: function() {
-				$('#modal-image #button-delete i').replaceWith('<i class="fa-trash"></i>');
+				$('#modal-image #button-delete i').replaceWith('<i class="fa fa-trash-o"></i>');
 				$('#modal-image #button-delete').prop('disabled', false);
 			},		
 			success: function(json) {

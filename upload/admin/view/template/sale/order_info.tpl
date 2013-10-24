@@ -7,8 +7,8 @@
   </ul>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="fa-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa-info-sign"></i> <?php echo $heading_title; ?></h1>
+      <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="fa fa-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa fa-info-circle"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <ul class="nav nav-tabs">
@@ -35,7 +35,7 @@
               <td><?php if ($invoice_no) { ?>
                 <?php echo $invoice_no; ?>
                 <?php } else { ?>
-                <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa-cog"></i> <?php echo $button_generate; ?></button>
+                <button id="button-invoice" class="btn btn-success btn-xs"><i class="fa fa-cog"></i> <?php echo $button_generate; ?></button>
                 <?php } ?></td>
             </tr>
             <tr>
@@ -89,9 +89,9 @@
                 <?php if ($customer && $credit) { ?>
                 <?php if (!$credit_total) { ?>
                 <span id="credit"><b>[</b> <a id="credit-add"><?php echo $button_credit_add; ?></a> <b>]</b></span>
-                <button id="button-credit-add" class="btn btn-success btn-xs"><i class="fa-plus-sign"></i> <?php echo $button_credit_add; ?></button>
+                <button id="button-credit-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_credit_add; ?></button>
                 <?php } else { ?>
-                <button id="button-credit-remove" class="btn btn-danger btn-xs"><i class="fa-minus-sign"></i> <?php echo $button_credit_remove; ?></button>
+                <button id="button-credit-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_credit_remove; ?></button>
                 <?php } ?>
                 <?php } ?></td>
             </tr>
@@ -100,9 +100,9 @@
               <td><?php echo $text_reward; ?></td>
               <td><?php echo $reward; ?>
                 <?php if (!$reward_total) { ?>
-                <button id="button-reward-add" class="btn btn-success btn-xs"><i class="fa-plus-sign"></i> <?php echo $button_reward_add; ?></button>
+                <button id="button-reward-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>
                 <?php } else { ?>
-                <button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="fa-minus-sign"></i> <?php echo $button_reward_remove; ?></button>
+                <button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_reward_remove; ?></button>
                 <?php } ?></td>
             </tr>
             <?php } ?>
@@ -127,9 +127,9 @@
               <td><?php echo $text_commission; ?></td>
               <td><?php echo $commission; ?>
                 <?php if (!$commission_total) { ?>
-                <button id="button-commission-add" class="btn btn-success btn-xs"><i class="fa-plus-sign"></i> <?php echo $button_commission_add; ?></button>
+                <button id="button-commission-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_commission_add; ?></button>
                 <?php } else { ?>
-                <button id="button-commission-remove" class="btn btn-danger btn-xs"><i class="fa-minus-sign"></i> <?php echo $button_commission_remove; ?></button>
+                <button id="button-commission-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_commission_remove; ?></button>
                 <?php } ?></td>
             </tr>
             <?php } ?>
@@ -383,7 +383,7 @@
             </div>
           </form>
           <div class="text-right">
-            <button id="button-history" class="btn btn-primary"><i class="fa-plus-sign"></i> <?php echo $button_history_add; ?></button>
+            <button id="button-history" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_history_add; ?></button>
           </div>
         </div>
         <?php if ($maxmind_id) { ?>
@@ -702,18 +702,18 @@ $(document).delegate('#button-invoice', 'click', function() {
 		url: 'index.php?route=sale/order/createinvoiceno&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-invoice i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-invoice i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-invoice').prop('disabled', true);			
 		},
 		complete: function() {
-			$('#button-invoice i').replaceWith('<i class="fa-cog"></i>');
+			$('#button-invoice i').replaceWith('<i class="fa fa-cog"></i>');
 			$('#button-invoice').prop('disabled', false);
 		},
 		success: function(json) {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('#tab-order').prepend('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('#tab-order').prepend('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['invoice_no']) {
@@ -729,26 +729,26 @@ $(document).delegate('#button-credit-add', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-credit-add i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-credit-add i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-credit-add').prop('disabled', true);			
 		},
 		complete: function() {
-			$('#button-credit-add i').replaceWith('<i class="fa-plus-sign"></i>');
+			$('#button-credit-add i').replaceWith('<i class="fa fa-plus-circle"></i>');
 			$('#button-credit-add').prop('disabled', false);
 		},			
 		success: function(json) {
 			$('.alert').remove();
 			
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
 				$('.alert-success').fadeIn('slow');
 				
-				$('#button-credit-add').replaceWith('<button id="button-credit-remove" class="btn btn-danger btn-xs"><i class="fa-minus-sign"></i> <?php echo $button_credit_remove; ?></button>');
+				$('#button-credit-add').replaceWith('<button id="button-credit-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_credit_remove; ?></button>');
 			}
 		}
 	});
@@ -760,24 +760,24 @@ $(document).delegate('#button-credit-remove', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-credit-remove i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-credit-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-credit-remove').prop('disabled', true);			
 		},
 		complete: function() {
-			$('#button-credit-remove i').replaceWith('<i class="fa-minus-sign"></i>');
+			$('#button-credit-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
 			$('#button-credit-remove').prop('disabled', false);
 		},			
 		success: function(json) {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('#button-credit-remove').replaceWith('<button id="button-credit-add" class="btn btn-success btn-xs"><i class="fa-plus-sign"></i> <?php echo $button_credit_add; ?></button>');
+				$('#button-credit-remove').replaceWith('<button id="button-credit-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_credit_add; ?></button>');
 			}
 		}
 	});
@@ -789,24 +789,24 @@ $(document).delegate('#button-reward-add', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-reward-add i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-reward-add i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-reward-add').prop('disabled', true);				
 		},
 		complete: function() {
-			$('#button-reward-add i').replaceWith('<i class="fa-minus-sign"></i>');
+			$('#button-reward-add i').replaceWith('<i class="fa fa-minus-circle"></i>');
 			$('#button-reward-add').prop('disabled', false);
 		},									
 		success: function(json) {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="fa-minus-sign"></i> <?php echo $button_reward_remove; ?></button>');
+				$('#button-reward-add').replaceWith('<button id="button-reward-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_reward_remove; ?></button>');
 			}
 		}
 	});
@@ -818,24 +818,24 @@ $(document).delegate('#button-reward-remove', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-reward-remove i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-reward-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-reward-remove').prop('disabled', true);		
 		},
 		complete: function() {
-			$('#button-reward-remove i').replaceWith('<i class="fa-minus-sign"></i>');
+			$('#button-reward-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
 			$('#button-reward-remove').prop('disabled', false);
 		},				
 		success: function(json) {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-success btn-xs"><i class="fa-plus-sign"></i> <?php echo $button_reward_add; ?></button>');
+				$('#button-reward-remove').replaceWith('<button id="button-reward-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_reward_add; ?></button>');
 			}
 		}
 	});
@@ -847,24 +847,24 @@ $(document).delegate('#button-commission-add', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-commission-add i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-commission-add i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-commission-add').prop('disabled', true);					
 		},
 		complete: function() {
-			$('#button-commission-add i').replaceWith('<i class="fa-plus-sign"></i>');
+			$('#button-commission-add i').replaceWith('<i class="fa fa-plus-circle"></i>');
 			$('#button-commission-add').prop('disabled', false);
 		},			
 		success: function(json) {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
                 
-				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-danger btn-xs"><i class="fa-minus-sign"></i> <?php echo $button_commission_remove; ?></button>');
+				$('#button-commission-add').replaceWith('<button id="button-commission-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_commission_remove; ?></button>');
 			}
 		}
 	});
@@ -876,24 +876,24 @@ $(document).delegate('#button-commission-remove', 'click', function() {
 		type: 'post',
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-commission-remove i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-commission-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-commission-remove').prop('disabled', true);					
 		},
 		complete: function() {
-			$('#button-commission-remove i').replaceWith('<i class="fa-minus-sign"></i>');
+			$('#button-commission-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
 			$('#button-commission-remove').prop('disabled', false);
 		},		
 		success: function(json) {
 			$('.alert').remove();
 						
 			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa-exclamation-sign"></i> ' + json['error'] + '</div>');
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
 			
 			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa-ok-sign"></i> ' + json['success'] + '</div>');
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-success btn-xs"><i class="fa-minus-sign"></i> <?php echo $button_commission_add; ?></button>');
+				$('#button-commission-remove').replaceWith('<button id="button-commission-add" class="btn btn-success btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_commission_add; ?></button>');
 			}
 		}
 	});
@@ -914,11 +914,11 @@ $('#button-history').on('click', function() {
 		dataType: 'html',
 		data: 'order_status_id=' + encodeURIComponent($('select[name=\'order_status_id\']').val()) + '&notify=' + ($('input[name=\'notify\']').prop('checked') ? 1 : 0) + '&append=' + ($('input[name=\'append\']').prop('checked') ? 1 : 0) + '&comment=' + encodeURIComponent($('textarea[name=\'comment\']').val()),
 		beforeSend: function() {
-			$('#button-history i').replaceWith('<i class="fa-spinner fa-spin"></i>');
+			$('#button-history i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-history').prop('disabled', true);				
 		},
 		complete: function() {
-			$('#button-history i').replaceWith('<i class="fa-plus-sign"></i>');
+			$('#button-history i').replaceWith('<i class="fa fa-plus-circle"></i>');
 			$('#button-history').prop('disabled', false);
 		},
 		success: function(html) {

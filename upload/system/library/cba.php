@@ -1,5 +1,4 @@
 <?php
-
 class CBA {
     
     private $access_key;
@@ -560,5 +559,5 @@ class CBA {
     public function setMode($mode) {
         $this->mode = $mode;
     }
-    
 }
+?>

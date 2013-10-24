@@ -173,3 +173,4 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 		}	
 	}
 }
+?>

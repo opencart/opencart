@@ -91,3 +91,4 @@ class ControllerTotalReward extends Controller {
 		}	
 	}
 }
+?>

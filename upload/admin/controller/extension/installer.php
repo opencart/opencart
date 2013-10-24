@@ -55,6 +55,7 @@ class ControllerExtensionInstaller extends Controller {
 		
 		$json = array();
 		
+		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'extension/installer')) {
       		$json['error'] = $this->language->get('error_permission');
     	}

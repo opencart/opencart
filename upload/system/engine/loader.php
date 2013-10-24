@@ -75,7 +75,7 @@ final class Loader {
 		if (file_exists($file)) {
 			foreach ($data as $key => $value) {
 				if (is_object($value)) {
-					${$key} = $value->execute(); 
+					${$key} = $value->index(); 
 				} else {
 					${$key} = $value;
 				}
@@ -118,14 +118,13 @@ final class Loader {
 		}
 	}
 	
-	public function database($driver, $hostname, $username, $password, $database) {
-		$file = DIR_SYSTEM . 'database/' . $driver . '.php';
-		$class = 'Database' . preg_replace('/[^a-zA-Z0-9]/', '', $driver);
+	public function database($type, $hostname, $username, $password, $database) {
+		$file = DIR_SYSTEM . 'library/' . $driver . '.php';
 
 		if (file_exists($file)) {
 			include_once($file);
 
-			$this->registry->set($driver, new $class($hostname, $username, $password, $database));
+			$this->registry->set($type, new $class($type, $hostname, $username, $password, $database));
 		} else {
 			trigger_error('Error: Could not load database ' . $file . '!');
 			exit();

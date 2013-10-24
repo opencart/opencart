@@ -2281,6 +2281,7 @@ class ControllerSaleOrder extends Controller {
 		
 		$json = array();
 		
+		// Check user has permission
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$json['error'] = $this->language->get('error_permission');
     	}	
@@ -2305,7 +2306,7 @@ class ControllerSaleOrder extends Controller {
 					$allowed[] = trim($filetype);
 				}
 				
-				if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
+				if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}	
 				
@@ -2331,18 +2332,18 @@ class ControllerSaleOrder extends Controller {
 			} else {
 				$json['error'] = $this->language->get('error_upload');
 			}
-		
-			if (!$json && is_uploaded_file($this->request->files['file']['tmp_name']) && file_exists($this->request->files['file']['tmp_name'])) {
-				$file = $filename . '.' . md5(mt_rand());
-				
-				move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
-				
-				$json['file'] = $file;
-				
-				$json['success'] = $this->language->get('text_upload');
-			}
 		}
 		
+		if (!$json) {
+			$file = $filename . '.' . md5(mt_rand());
+			
+			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
+			
+			$json['file'] = $file;
+			
+			$json['success'] = $this->language->get('text_upload');
+		}
+					
 		$this->response->setOutput(json_encode($json));
 	}
 			

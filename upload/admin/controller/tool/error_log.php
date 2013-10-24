@@ -1,7 +1,5 @@
 <?php 
 class ControllerToolErrorLog extends Controller { 
-	private $error = array();
-	
 	public function index() {		
 		$this->language->load('tool/error_log');
 
@@ -33,20 +31,37 @@ class ControllerToolErrorLog extends Controller {
 		
 		$this->data['clear'] = $this->url->link('tool/error_log/clear', 'token=' . $this->session->data['token'], 'SSL');
 		
+		$this->data['error_warning'] = '';
+		$this->data['log'] = '';
+		
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 		
 		if (file_exists($file)) {
-			if (filesize($file) >= 5242880){
-				$this->data['alert_filesize'] = sprintf($this->language->get('alert_filesize'), (filesize($file)/1024)/1024);
-			}else{
-				$this->data['alert_filesize'] = null;
-			}
+			$size = filesize($file);
 			
-			$this->data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
-		} else {
-			$this->data['alert_filesize'] = null;
-			$this->data['log'] = '';
-		}
+			if ($size >= 5242880){
+				$suffix = array(
+					'B',
+					'KB',
+					'MB',
+					'GB',
+					'TB',
+					'PB',
+					'EB',
+					'ZB',
+					'YB'
+				);
+
+				while (($size / 1024) > 1) {
+					$size = $size / 1024;
+					$i++;
+				}
+				
+				$this->data['error_warning'] = sprintf($this->language->get('error_warning'), basename($file), round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i]);
+			} else {
+				$this->data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
+			}
+		}		
 
 		$this->template = 'tool/error_log.tpl';
 		$this->children = array(

@@ -6,16 +6,16 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-weight" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-weight" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-weight" class="form-horizontal">

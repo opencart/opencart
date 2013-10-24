@@ -696,11 +696,11 @@ class ControllerProductProduct extends Controller {
 				$allowed[] = trim($filetype);
 			}
 			
-			if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
+			if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
 				$json['error'] = $this->language->get('error_filetype');
        		}	
 			
-			// Allowed file mime types		
+			// Allowed file mime types
 		    $allowed = array();
 			
 			$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
@@ -723,7 +723,7 @@ class ControllerProductProduct extends Controller {
 			$json['error'] = $this->language->get('error_upload');
 		}
 		
-		if (!$json && is_uploaded_file($this->request->files['file']['tmp_name'])) {
+		if (!$json) {
 			$file = $filename . '.' . md5(mt_rand());
 			
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);

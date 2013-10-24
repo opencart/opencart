@@ -6,16 +6,16 @@
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-category" class="btn btn-primary"><i class="icon-ok"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+        <button type="submit" form="form-category" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-category" class="form-horizontal">
@@ -88,12 +88,12 @@
                 <div class="input-group">
                   <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
                   <span class="input-group-btn">
-                  <button class="btn btn-info" type="button"><i class="icon-question-sign icon-large"></i></button>
+                  <button class="btn btn-info" type="button"><i class="fa fa-question-circle fa-large"></i></button>
                   </span> </div>
                 <span class="help-block"><?php echo $help_filter; ?></span>
                 <div id="category-filter" class="well">
                   <?php foreach ($category_filters as $category_filter) { ?>
-                  <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="icon-minus-sign"></i> <?php echo $category_filter['name']; ?>
+                  <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $category_filter['name']; ?>
                     <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -135,7 +135,7 @@
                 <div class="input-group">
                   <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
                   <span class="input-group-btn">
-                  <button class="btn btn-info" type="button"><i class="icon-question-sign icon-large"></i></button>
+                  <button class="btn btn-info" type="button"><i class="fa fa-question-circle fa-large"></i></button>
                   </span></div>
                 <span class="help-block"><?php echo $help_keyword; ?></span></div>
             </div>
@@ -232,9 +232,6 @@
     </div>
   </div>
 </div>
-
-
-
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
@@ -297,17 +294,14 @@ $('input[name=\'filter\']').autocomplete({
 		
 		$('#category-filter' + item['value']).remove();
 		
-		$('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="icon-minus-sign"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
+		$('#category-filter').append('<div id="category-filter' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" name="category_filter[]" value="' + item['value'] + '" /></div>');
 	}	
 });
 
-$('#category-filter').delegate('.icon-minus-sign', 'click', function() {
+$('#category-filter').delegate('.fa-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script> 
-
-<div id="test1" class="modal"></div>
-
 <script type="text/javascript"><!--
 $('#thumb').popover({
 	html: true,
@@ -315,44 +309,39 @@ $('#thumb').popover({
 	trigger: 'click',
 	title: 'Edit Image',
 	content: function() {
-		return '<a href="index.php?route=common/filemanager&token=<?php echo $token; ?>" id="button-image" class="btn btn-primary" data-toggle="modal" data-target="#test1"><i class="icon-pencil"></i></a> <button type="button" id="button-clear" class="btn btn-default"><i class="icon-trash"></i></button>';
+		return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-default"><i class="fa fa-trash-o"></i></button>';
 	}
 });
 
-//$('#myModal').modal(\remote')
-
-/*
 $(document).delegate('#button-image', 'click', function() {
-	$('#model-image').remove();
+	$('#modal-image').remove();
 	
 	$.ajax({
 		url: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 		dataType: 'html',
 		beforeSend: function() {
-			$('#button-image i').replaceWith('<i class="icon-spinner icon-spin"></i>');
+			$('#button-image i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-image').prop('disabled', true);			
 		},
 		complete: function() {
-			$('#button-image i').replaceWith('<i class="icon-minus-sign"></i>');
+			$('#button-image i').replaceWith('<i class="fa fa-edit"></i>');
 			$('#button-image').prop('disabled', false);
 		},						
 		success: function(html) {
-			$('body').prepend('<div id="modal-image" class="modal">' + html + '</div>');
+			$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 			
 			$('#modal-image').modal('show');
-
-			$('#modal-image').delegate('a.thumbnail', 'click', function(e) {
+			
+			$('#modal-image a.thumbnail').on('click', function(e) {
 				e.preventDefault();
 				
 				$('#thumb').attr('src', $(this).find('img').attr('src'));
 				
-				$('#input-image').attr('value', $(this).find('input').attr('value'));
-			});			
+				$('#input-image').attr('value', $(this).attr('href'));
+			});
 		}
 	});
-	
 });
-*/
 //--></script> 
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');

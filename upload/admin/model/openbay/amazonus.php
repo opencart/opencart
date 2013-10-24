@@ -1,7 +1,5 @@
 <?php
-
 class ModelOpenbayAmazonus extends Model {
-    
     public function scheduleOrders($data) {
         $log = new Log('amazonus.log');
 
@@ -693,3 +691,4 @@ class ModelOpenbayAmazonus extends Model {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazonus'");
     }
 }
+?>

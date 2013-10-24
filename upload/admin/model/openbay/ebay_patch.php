@@ -1,6 +1,6 @@
 <?php
-class ModelOpenbayEbayPatch extends Model{
-    public function runPatch($manual = true){
+class ModelOpenbayEbayPatch extends Model {
+    public function runPatch($manual = true) {
         $this->load->model('setting/setting');
 
         $this->openbay->ebay->loadSettings();
@@ -8,3 +8,4 @@ class ModelOpenbayEbayPatch extends Model{
         return true;
     } 
 }
+?>

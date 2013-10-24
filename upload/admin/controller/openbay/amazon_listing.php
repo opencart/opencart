@@ -1,6 +1,6 @@
 <?php
-class ControllerOpenbayAmazonListing extends Controller{
-    public function create(){
+class ControllerOpenbayAmazonListing extends Controller {
+    public function create() {
         $this->load->language('openbay/amazon_listing');
         $this->load->model('openbay/amazon_listing');
         $this->load->model('openbay/amazon');
@@ -530,7 +530,7 @@ class ControllerOpenbayAmazonListing extends Controller{
         $this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     }
     
-    public function search(){
+    public function search() {
         $this->load->model('openbay/amazon_listing');
         $this->load->language('openbay/amazon_listing');
 
@@ -603,7 +603,7 @@ class ControllerOpenbayAmazonListing extends Controller{
         $this->response->setOutput(json_encode($response));
     }
 
-    public function getProductByAsin(){
+    public function getProductByAsin() {
         $this->load->model('openbay/amazon_listing');
 
         $data = $this->model_openbay_amazon_listing->getProductByAsin($this->request->post['asin'], $this->request->post['market']);
@@ -616,7 +616,7 @@ class ControllerOpenbayAmazonListing extends Controller{
         $this->response->setOutput(json_encode($response));
     }
 
-    public function getBrowseNodes(){
+    public function getBrowseNodes() {
         $this->load->model('openbay/amazon_listing');
 
         $data = array(
@@ -629,3 +629,4 @@ class ControllerOpenbayAmazonListing extends Controller{
         $this->response->setOutput($response);
     }
 }
+?>

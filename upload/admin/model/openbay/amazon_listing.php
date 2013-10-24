@@ -1,6 +1,5 @@
 <?php
 class ModelOpenbayAmazonListing extends Model {
-
     private $tabs = array();
 
     public function search($search_string, $marketplace) {
@@ -133,7 +132,7 @@ class ModelOpenbayAmazonListing extends Model {
         return $response;
     }
     
-    public function getBrowseNodes($request){
+    public function getBrowseNodes($request) {
         return $this->openbay->amazon->callWithResponse('productv3/getBrowseNodes', $request);
     }
     
@@ -232,3 +231,4 @@ class ModelOpenbayAmazonListing extends Model {
         return false;
     }
 }
+?>

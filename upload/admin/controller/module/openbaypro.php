@@ -1,6 +1,5 @@
 <?php
 class ControllerModuleOpenbaypro extends Controller {
-
     private $error = array();
 
     public function index() {
@@ -70,5 +69,5 @@ class ControllerModuleOpenbaypro extends Controller {
         $settings['openbaymanager_show_menu'] = 0;
         $this->model_setting_setting->editSetting('openbaymanager', $settings);
     }
-
 }
+?>

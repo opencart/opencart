@@ -1,9 +1,9 @@
 <?php
 class ControllerPlayOrder extends Controller{
-    public function putOrders(){
-        if(!empty($this->request->post)){
+    public function putOrders() {
+        if(!empty($this->request->post)) {
             $auth = $this->validateAuth();
-            if($auth == true){
+            if($auth == true) {
                 $this->load->model('play/product');
                 $this->load->model('play/order');
                 $this->load->model('play/customer');
@@ -20,17 +20,17 @@ class ControllerPlayOrder extends Controller{
                 $cancelled_id   = $this->config->get('obp_play_cancelled_id');              
                 $refunded_id    = $this->config->get('obp_play_refunded_id');
 
-                if(!empty($data['data']) && is_array($data['data'])){
-                    foreach($data['data']['orders'] as $order){
-                        if($order['payments-status'] != 'Sale Pending'){
+                if(!empty($data['data']) && is_array($data['data'])) {
+                    foreach($data['data']['orders'] as $order) {
+                        if($order['payments-status'] != 'Sale Pending') {
 
                             $order_id = $this->openbay->play->getOrderId($order['order-id']);
 
-                            if(!$order_id){
+                            if(!$order_id) {
                                 //new order
                                 //handle customer account
                                 $customer_id = $this->model_play_customer->getCustomerId($order['buyer-email']);
-                                if(!$customer_id){
+                                if(!$customer_id) {
                                     $customer_id = $this->model_play_customer->createCustomer($order['buyer-email'], $order['recipient-name']);
                                 }
 
@@ -39,7 +39,7 @@ class ControllerPlayOrder extends Controller{
 
                                 //get product if it exists
                                 $product = $this->model_play_product->getProduct($order['sku']);
-                                if($product){
+                                if($product) {
                                     $product_id         = $product['product_id'];
                                     $product_name       = $product['name'];
                                     $model              = $product['model'];
@@ -52,7 +52,7 @@ class ControllerPlayOrder extends Controller{
                                 }
 
                                 //currency data
-                                if($order['sale-value-gbp'] != ''){
+                                if($order['sale-value-gbp'] != '') {
                                     $currency   = $this->model_play_order->getCurrency('GBP');
                                     $total      = (double)$order['sale-value-gbp'];
                                     $tax        = number_format(($total / 100) * $taxRate, 3);
@@ -62,7 +62,7 @@ class ControllerPlayOrder extends Controller{
                                     $eur        = '';
                                 }
 
-                                if($order['sale-value-euro'] != ''){
+                                if($order['sale-value-euro'] != '') {
                                     $currency   = $this->model_play_order->getCurrency('EUR');
                                     $total      = (double)$order['sale-value-euro'];
                                     $tax        = number_format(($total / 100) * $taxRate, 3);
@@ -113,25 +113,25 @@ class ControllerPlayOrder extends Controller{
                                 $this->model_play_order->confirm($order_id, $import_id);
 
                                 //if paid, mark as paid
-                                if($order['payments-status'] == 'Sold'){
+                                if($order['payments-status'] == 'Sold') {
                                     $this->model_play_order->update($order_id, $paid_id);
                                 }
 
                                 //if shipped, mark as paid then shipped
-                                if($order['payments-status'] == 'Posted'){
+                                if($order['payments-status'] == 'Posted') {
                                     $this->model_play_order->update($order_id, $paid_id);
                                     $this->model_play_order->update($order_id, $shipped_id);
                                 }
 
-                                if($order['payments-status'] == 'Refunded' || $order['payments-status'] == 'Cancelled'){
+                                if($order['payments-status'] == 'Refunded' || $order['payments-status'] == 'Cancelled') {
                                     //if cancelled, mark as cancelled
-                                    if($order['payments-status'] == 'Cancelled'){
+                                    if($order['payments-status'] == 'Cancelled') {
                                         $this->model_play_order->update($order_id, $cancelled_id);
                                         $this->model_play_order->restockProducts($order_id);
                                     }
 
                                     //if cancelled, mark as refunded
-                                    if($order['payments-status'] == 'Refunded'){
+                                    if($order['payments-status'] == 'Refunded') {
                                         $this->model_play_order->update($order_id, $refunded_id);
                                         $this->model_play_order->restockProducts($order_id);
                                     }
@@ -147,24 +147,24 @@ class ControllerPlayOrder extends Controller{
                                 $status = $order_info['order_status_id'];
 
                                 //if paid, mark as paid
-                                if($order['payments-status'] == 'Sold' && $status != $paid_id){
+                                if($order['payments-status'] == 'Sold' && $status != $paid_id) {
                                     $this->model_play_order->update($order_id, $paid_id);
                                 }
 
                                 //if shipped, mark as shipped
-                                if($order['payments-status'] == 'Posted' && $status != $shipped_id){
+                                if($order['payments-status'] == 'Posted' && $status != $shipped_id) {
                                     $this->model_play_order->update($order_id, $shipped_id);
                                 }
 
-                                if($order['payments-status'] == 'Refunded' || $order['payments-status'] == 'Cancelled'){
+                                if($order['payments-status'] == 'Refunded' || $order['payments-status'] == 'Cancelled') {
                                     //if cancelled, mark as cancelled
-                                    if($order['payments-status'] == 'Cancelled' && $status != $cancelled_id){
+                                    if($order['payments-status'] == 'Cancelled' && $status != $cancelled_id) {
                                         $this->model_play_order->update($order_id, $cancelled_id);
                                         $this->model_play_order->restockProducts($order_id);
                                     }
 
                                     //if cancelled, mark as refunded
-                                    if($order['payments-status'] == 'Refunded' && $status != $refunded_id){
+                                    if($order['payments-status'] == 'Refunded' && $status != $refunded_id) {
                                         $this->model_play_order->update($order_id, $refunded_id);
                                         $this->model_play_order->restockProducts($order_id);
                                     }
@@ -181,11 +181,11 @@ class ControllerPlayOrder extends Controller{
         }
     }
 
-    public function getModifiedOrders(){
-        if(!empty($this->request->post)){
+    public function getModifiedOrders() {
+        if(!empty($this->request->post)) {
 
             $auth = $this->validateAuth();
-            if($auth == true){
+            if($auth == true) {
                 $this->load->model('play/order');
                 $this->load->model('checkout/order');
                 
@@ -200,12 +200,12 @@ class ControllerPlayOrder extends Controller{
                 $shipped = array();
                 $refunded = array();
 
-                if(!empty($orders) && is_array($orders)){
-                    foreach($orders as $play_order){
+                if(!empty($orders) && is_array($orders)) {
+                    foreach($orders as $play_order) {
                         $order_info = $this->model_checkout_order->getOrder($play_order['order_id']);
 
                         //now shipped?
-                        if($order_info['order_status_id'] == $this->config->get('obp_play_shipped_id')){
+                        if($order_info['order_status_id'] == $this->config->get('obp_play_shipped_id')) {
                             
                             $tmp = array(
                                 'order-id'          => $play_order['play_order_id'],
@@ -220,13 +220,13 @@ class ControllerPlayOrder extends Controller{
                         }
 
                         //now refunded?
-                        if($order_info['order_status_id'] == $this->config->get('obp_play_refunded_id')){
+                        if($order_info['order_status_id'] == $this->config->get('obp_play_refunded_id')) {
                             
-                            if($play_order['paid_gbp'] != ''){
+                            if($play_order['paid_gbp'] != '') {
                                 $gbp = $play_order['paid_gbp'];
                                 $eur = '';
                                 
-                            }elseif($play_order['paid_euro'] != ''){
+                            }elseif($play_order['paid_euro'] != '') {
                                 $gbp = '';
                                 $eur = $play_order['paid_euro'];
                             }
@@ -270,12 +270,13 @@ class ControllerPlayOrder extends Controller{
         $this->response->setOutput(json_encode($response));
     }
 
-    private function validateAuth(){
+    private function validateAuth() {
         if($this->request->post['token'] == $this->config->get('obp_play_token') &&
-           $this->request->post['secret'] == $this->config->get('obp_play_secret')){
+           $this->request->post['secret'] == $this->config->get('obp_play_secret')) {
             return true;
         }else{
             return false;
         }
     }
 }
+?>

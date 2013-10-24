@@ -468,7 +468,7 @@ class ModelEbayOpenbay extends Model{
                 //calculate taxes that come in from eBay
                 $this->openbay->ebay->log('updateOrderWithConfirmedData() - Using tax rates from eBay');
 
-                $totalTax   += $txn->item->tax->total;
+                $totalTax   += (double)$txn->item->tax->total;
                 $totalNet   += $price * $qty;
             }else{
                 //use the store pre-set tax-rate for everything

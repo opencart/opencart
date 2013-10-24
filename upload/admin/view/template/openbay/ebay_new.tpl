@@ -181,8 +181,10 @@
                             <select name="template" id="template_id">
                                 <option value="None">None</option>
 
-                                <?php foreach($product['templates'] as $template){ ?>
-                                <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
+                                <?php if(is_array($product['templates']) && !empty($product['templates'])){ ?>
+                                    <?php foreach($product['templates'] as $template){ ?>
+                                        <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
+                                    <?php } ?>
                                 <?php } ?>
                             </select>
                         </td>

@@ -2213,7 +2213,7 @@ class ControllerSaleOrder extends Controller {
 		
 		$this->response->setOutput($this->render());
   	}
-	
+
 	public function download() {
 		$this->load->model('sale/order');
 		
@@ -2342,7 +2342,7 @@ class ControllerSaleOrder extends Controller {
 		
 		$this->response->setOutput(json_encode($json));
 	}
-			
+
   	public function invoice() {
 		$this->language->load('sale/order');
 

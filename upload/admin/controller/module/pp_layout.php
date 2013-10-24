@@ -1,7 +1,5 @@
 <?php
-
 class ControllerModulePPLayout extends Controller {
-
     public function index() {
         $this->language->load('module/pp_layout');
 
@@ -97,5 +95,5 @@ class ControllerModulePPLayout extends Controller {
             return false;
         }
     }
-
 }
+?>

@@ -1,6 +1,5 @@
 <?php
 class ControllerOpenbayAmazonusProduct extends Controller{
-    
     public function index() {
         $this->load->language('catalog/product');
         $this->load->language('openbay/amazonus');
@@ -523,22 +522,20 @@ class ControllerOpenbayAmazonusProduct extends Controller{
         return $filledArray;
     }
     
-    //Only for developer via direct link
     public function resetPending() {
         $this->db->query("UPDATE `" . DB_PREFIX . "amazonus_product` SET `status` = 'saved' WHERE `status` = 'uploaded'");
     }
     
-    //TODO if javascript validation is not enough
     private function validateForm() {
         return true;
     }
     
-    private function formatUrlsInText($text){
+    private function formatUrlsInText($text) {
         $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
         preg_match_all($reg_exUrl, $text, $matches);
         $usedPatterns = array();
-        foreach($matches[0] as $pattern){
-            if(!array_key_exists($pattern, $usedPatterns)){
+        foreach($matches[0] as $pattern) {
+            if(!array_key_exists($pattern, $usedPatterns)) {
                 $usedPatterns[$pattern]=true;
                 $text = str_replace($pattern, "<a target='_blank' href=" .$pattern .">" . $pattern . "</a>", $text);   
             }
@@ -546,3 +543,4 @@ class ControllerOpenbayAmazonusProduct extends Controller{
         return $text;
     }
 }
+?>

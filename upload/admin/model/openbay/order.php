@@ -1,5 +1,5 @@
 <?php
-class ModelOpenbayOrder extends Model{
+class ModelOpenbayOrder extends Model {
     public function getTotalOrders($data = array()) {
         $sql = "SELECT COUNT(*) AS `total` FROM `" . DB_PREFIX . "order`";
 
@@ -83,13 +83,13 @@ class ModelOpenbayOrder extends Model{
         return $query->rows;
     }
 
-    public function getOrder($order_id){
+    public function getOrder($order_id) {
         $sql = $this->db->query("SELECT o.order_id, o.order_status_id, o.shipping_method, CONCAT(o.firstname, ' ', o.lastname) AS customer, (SELECT os.name FROM " . DB_PREFIX . "order_status os WHERE os.order_status_id = o.order_status_id AND os.language_id = '" . (int)$this->config->get('config_language_id') . "') AS status, o.currency_code, o.currency_value, o.date_added FROM `" . DB_PREFIX . "order` o WHERE `o`.`order_id` = '".(int)$order_id."' LIMIT 1");
 
         return $sql->row;
     }
 
-    public function findOrderChannel($order_id){
+    public function findOrderChannel($order_id) {
 
         if($this->config->get('amazon_status') == 1){
             if($this->openbay->amazon->getOrder($order_id) != false){
@@ -118,3 +118,4 @@ class ModelOpenbayOrder extends Model{
         return 'Web';
     }
 }
+?>

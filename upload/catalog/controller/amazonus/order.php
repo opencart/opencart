@@ -1,7 +1,5 @@
 <?php
-
 class ControllerAmazonusOrder extends Controller {
-
     public function index() {
         if ($this->config->get('amazonus_status') != '1') {
             return;
@@ -328,5 +326,5 @@ class ControllerAmazonusOrder extends Controller {
         $logger->write("Ok");
         $this->response->setOutput('Ok');
     }
-
 }
+?>

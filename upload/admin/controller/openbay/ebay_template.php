@@ -1,9 +1,8 @@
 <?php
 class ControllerOpenbayEbayTemplate extends Controller {
-
     private $error = array();
 
-    public function listAll(){
+    public function listAll() {
         $this->data = array_merge($this->data, $this->load->language('openbay/ebay_template'));
 
         $this->load->model('openbay/ebay_template');
@@ -62,7 +61,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
         $this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
     }
 
-    public function add(){
+    public function add() {
         $this->data = array_merge($this->data, $this->load->language('openbay/ebay_template'));
 
         $this->load->model('openbay/ebay_template');
@@ -82,7 +81,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
         $this->templateForm();
     }
 
-    public function delete(){
+    public function delete() {
         $this->load->model('openbay/ebay_template');
 
         if (!$this->user->hasPermission('modify', 'openbay/ebay_template')) {
@@ -95,7 +94,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
         $this->redirect($this->url->link('openbay/ebay_template/listAll&token=' . $this->session->data['token'], 'SSL'));
     }
 
-    public function edit(){
+    public function edit() {
         $this->data = array_merge($this->data, $this->load->language('openbay/ebay_template'));
 
         $this->load->model('openbay/ebay_template');
@@ -116,7 +115,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
         $this->templateForm();
     }
 
-    public function templateForm(){
+    public function templateForm() {
         $this->load->model('openbay/ebay');
 
         $this->data['token'] = $this->session->data['token'];
@@ -215,3 +214,4 @@ class ControllerOpenbayEbayTemplate extends Controller {
         }
     }
 }
+?>

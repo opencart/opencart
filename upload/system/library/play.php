@@ -1,6 +1,5 @@
 <?php
 final class Play {
-    
     private $registry;
     private $url    = 'https://playuk.openbaypro.com/';
     private $productIdType = array(

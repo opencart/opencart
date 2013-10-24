@@ -1,14 +1,7 @@
 <?php
-/**
- * Class model_ebay_profile
- * 
- * Created by James Allsup
- * 
- */
-
 class ModelOpenbayEbayProfile extends Model{
-    public function add($data){
-        if($data['default'] == 1){
+    public function add($data) {
+        if($data['default'] == 1) {
             $this->clearDefault($data['type']);
         }
         
@@ -26,8 +19,8 @@ class ModelOpenbayEbayProfile extends Model{
         return $this->db->getLastId();
     }
     
-    public function edit($id, $data){
-        if($data['default'] == 1){
+    public function edit($id, $data) {
+        if($data['default'] == 1) {
             $this->clearDefault($data['type']);
         }
         
@@ -45,17 +38,17 @@ class ModelOpenbayEbayProfile extends Model{
             ");
     }
 
-    public function delete($id){
+    public function delete($id) {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_profile` WHERE `ebay_profile_id` = '".(int)$id."' LIMIT 1");
 
-        if($this->db->countAffected() > 0){
+        if($this->db->countAffected() > 0) {
             return true;
         }else{
             return false;
         }
     }
     
-    public function get($id){
+    public function get($id) {
         $qry = $this->db->query("
             SELECT * FROM 
                 `" . DB_PREFIX . "ebay_profile`
@@ -76,18 +69,18 @@ class ModelOpenbayEbayProfile extends Model{
         }
     }
     
-    public function getAll($type = ''){
+    public function getAll($type = '') {
         
         $type_sql = '';
-        if($type !== ''){
+        if($type !== '') {
             $type_sql = "WHERE `type` = '".(int)$type."'";
         }
         
         $qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_profile`".$type_sql);
 
-        if($qry->num_rows){
+        if($qry->num_rows) {
             $profiles = array();
-            foreach($qry->rows as $row){
+            foreach($qry->rows as $row) {
                 $row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/edit&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
                 $row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/delete&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
                 $row['data']        = unserialize($row['data']);
@@ -100,7 +93,7 @@ class ModelOpenbayEbayProfile extends Model{
         }
     }
     
-    public function getTypes(){
+    public function getTypes() {
         
         $types = array(
             0 => array(
@@ -124,7 +117,7 @@ class ModelOpenbayEbayProfile extends Model{
         return $types;
     }
     
-    public function getDefault($type){
+    public function getDefault($type) {
         $qry = $this->db->query("
             SELECT `ebay_profile_id` FROM 
                 `" . DB_PREFIX . "ebay_profile`
@@ -142,7 +135,8 @@ class ModelOpenbayEbayProfile extends Model{
         }
     }
     
-    private function clearDefault($type){
+    private function clearDefault($type) {
         $this->db->query("UPDATE `" . DB_PREFIX . "ebay_profile` SET `default` = '0' WHERE `type` = '".(int)$type."'");
     }
 }
+?>

@@ -1,6 +1,5 @@
 <?php
-class ControllerOpenbayAmazonProduct extends Controller{
-    
+class ControllerOpenbayAmazonProduct extends Controller {
     public function index() {
         $this->load->language('catalog/product');
         $this->load->language('openbay/amazon');
@@ -557,12 +556,12 @@ class ControllerOpenbayAmazonProduct extends Controller{
         return true;
     }
     
-    private function formatUrlsInText($text){
+    private function formatUrlsInText($text) {
         $reg_exUrl = "/(http|https|ftp|ftps)\:\/\/[a-zA-Z0-9\-\.]+\.[a-zA-Z]{2,3}(\/\S*)?/";
         preg_match_all($reg_exUrl, $text, $matches);
         $usedPatterns = array();
-        foreach($matches[0] as $pattern){
-            if(!array_key_exists($pattern, $usedPatterns)){
+        foreach($matches[0] as $pattern) {
+            if(!array_key_exists($pattern, $usedPatterns)) {
                 $usedPatterns[$pattern]=true;
                 $text = str_replace($pattern, "<a target='_blank' href=" .$pattern .">" . $pattern . "</a>", $text);   
             }
@@ -570,3 +569,4 @@ class ControllerOpenbayAmazonProduct extends Controller{
         return $text;
     }
 }
+?>

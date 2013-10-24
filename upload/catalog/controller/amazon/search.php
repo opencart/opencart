@@ -1,7 +1,5 @@
 <?php
-
 class ControllerAmazonSearch extends Controller {
-
     public function index() {
         if ($this->config->get('amazon_status') != '1') {
             return;
@@ -34,5 +32,5 @@ class ControllerAmazonSearch extends Controller {
         
         $this->model_amazon_product->updateSearch($json);
     }
-
 }
+?>

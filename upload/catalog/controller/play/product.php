@@ -1,11 +1,11 @@
 <?php
 class ControllerPlayProduct extends Controller{
-    public function getProductChanges(){
+    public function getProductChanges() {
         $this->openbay->play->log('getProductChanges()');
 
-        if(!empty($this->request->post)){
+        if(!empty($this->request->post)) {
             $auth = $this->validateAuth();
-            if($auth == true){
+            if($auth == true) {
                 
                 $this->load->model('play/product');
                 
@@ -16,9 +16,9 @@ class ControllerPlayProduct extends Controller{
                     'msg'   => ''
                 );
 
-                if($products != 0){
-                    foreach($products as $product){
-                        if($product['product_id'] != 0){
+                if($products != 0) {
+                    foreach($products as $product) {
+                        if($product['product_id'] != 0) {
                             $response['products'][] = array(
                                 'product-id'            => html_entity_decode($product['play_product_id']),
                                 'product-id-type'       => (int)$product['play_product_id_type'],
@@ -40,9 +40,9 @@ class ControllerPlayProduct extends Controller{
                 
                 $remove = $this->openbay->play->getRemovedProducts();
 
-                if($remove != 0){
-                    foreach($remove as $product){
-                        if($product['product_id'] != 0){
+                if($remove != 0) {
+                    foreach($remove as $product) {
+                        if($product['product_id'] != 0) {
                             $response['products'][] = array(
                                 'product-id'            => html_entity_decode($product['play_product_id']),
                                 'product-id-type'       => (int)$product['play_product_id_type'],
@@ -81,11 +81,11 @@ class ControllerPlayProduct extends Controller{
         $this->response->setOutput(json_encode($response));
     }
 
-    public function updateProductChanges(){
+    public function updateProductChanges() {
         $this->openbay->play->log('updateProductChanges()');
-        if(!empty($this->request->post)){
+        if(!empty($this->request->post)) {
 
-            if($this->validateAuth() == true){
+            if($this->validateAuth() == true) {
                 
                 $this->load->model('play/product');
                 
@@ -93,8 +93,8 @@ class ControllerPlayProduct extends Controller{
 
                 $pWarnings = array();
                 
-                if(isset($data['warnings']) && is_array($data['warnings'])){
-                    foreach($data['warnings'] as $warning){
+                if(isset($data['warnings']) && is_array($data['warnings'])) {
+                    foreach($data['warnings'] as $warning) {
                         $this->model_play_product->removeAllWarnings($warning['product_id']);
                         $this->model_play_product->updateProduct($warning['product_id'], 6);
                         $this->model_play_product->addWarning($warning['msg'], $warning['product_id']);
@@ -102,8 +102,8 @@ class ControllerPlayProduct extends Controller{
                     }
                 }
 
-                if(isset($data['errors']) && is_array($data['errors'])){
-                    foreach($data['errors'] as $error){
+                if(isset($data['errors']) && is_array($data['errors'])) {
+                    foreach($data['errors'] as $error) {
                         $this->model_play_product->removeAllWarnings($error['product_id']);
                         $this->model_play_product->updateProduct($error['product_id'], 4);
                         $this->model_play_product->addWarning($error['msg'], $error['product_id']);
@@ -111,9 +111,9 @@ class ControllerPlayProduct extends Controller{
                     }
                 }
 
-                if(isset($data['active']['products']) && is_array($data['active']['products'])){
-                    foreach($data['active']['products'] as $active){
-                        if(!in_array($active['sku'], $pWarnings)){
+                if(isset($data['active']['products']) && is_array($data['active']['products'])) {
+                    foreach($data['active']['products'] as $active) {
+                        if(!in_array($active['sku'], $pWarnings)) {
                             $this->model_play_product->removeAllWarnings($active['sku']);
                             $this->model_play_product->updateProduct($active['sku'], 3);
                         }
@@ -129,7 +129,7 @@ class ControllerPlayProduct extends Controller{
         }
     }
 
-    private function validateAuth(){
+    private function validateAuth() {
         $this->openbay->play->log('validateAuth()');
 
         if($this->request->post['token'] == $this->config->get('obp_play_token') &&
@@ -141,3 +141,4 @@ class ControllerPlayProduct extends Controller{
         }
     }
 }
+?>

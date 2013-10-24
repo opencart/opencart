@@ -1,7 +1,5 @@
 <?php
-
 class ControllerAmazonusSearch extends Controller {
-
     public function index() {
         if ($this->config->get('amazonus_status') != '1') {
             return;
@@ -34,5 +32,5 @@ class ControllerAmazonusSearch extends Controller {
         
         $this->model_amazonus_product->updateSearch($json);
     }
-
 }
+?>

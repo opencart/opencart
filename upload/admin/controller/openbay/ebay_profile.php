@@ -1,6 +1,5 @@
 <?php
 class ControllerOpenbayEbayProfile extends Controller {
-
     private $error = array();
 
     public function profileAll() {
@@ -408,3 +407,4 @@ class ControllerOpenbayEbayProfile extends Controller {
         }
     }
 }
+?>

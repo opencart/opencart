@@ -1,7 +1,5 @@
 <?php
-
 class ControllerAmazonListingReport extends Controller {
-
     public function index() {
         if ($this->config->get('amazon_status') != '1') {
             return;
@@ -52,5 +50,5 @@ class ControllerAmazonListingReport extends Controller {
 
         $logger->write('amazon/listing_reports - Finished');
     }
-
 }
+?>

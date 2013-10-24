@@ -1,7 +1,6 @@
 <?php
 class ModelOpenbayAmazonPatch extends Model {
-    
-    public function runPatch($manual = true){
+    public function runPatch($manual = true) {
         /*
          * Manual flag to true is set when the user runs the patch method manually
          * false is when the module is updated using the update system
@@ -41,3 +40,4 @@ class ModelOpenbayAmazonPatch extends Model {
         return true;
     } 
 }
+?>

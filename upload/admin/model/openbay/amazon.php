@@ -1,7 +1,5 @@
 <?php
-
 class ModelOpenbayAmazon extends Model {
-    
     public function scheduleOrders($data) {
         $log = new Log('amazon.log');
 
@@ -623,7 +621,7 @@ class ModelOpenbayAmazon extends Model {
         return $link;
     }
     
-    public function install(){
+    public function install() {
         $this->db->query("
             CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order` (
               `order_id` int(11) NOT NULL ,
@@ -705,7 +703,7 @@ class ModelOpenbayAmazon extends Model {
             ) DEFAULT COLLATE=utf8_general_ci;");
     }
     
-    public function uninstall(){
+    public function uninstall() {
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_order`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_order_product`");
         $this->db->query("DROP TABLE IF EXISTS `" . DB_PREFIX . "amazon_product2`");
@@ -721,3 +719,4 @@ class ModelOpenbayAmazon extends Model {
         $this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazon'");
     }
 }
+?>

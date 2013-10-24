@@ -9,7 +9,7 @@ final class DBMySQLi {
 			throw new ErrorException('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
 		}
 
-		$this->link->set_charset("utf-8");
+		$this->link->set_charset("utf8'");
 	}
 
 	public function query($sql) {

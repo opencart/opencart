@@ -71,7 +71,7 @@
             <?php } ?>
             <tr>
               <td><?php echo $text_email; ?></td>
-              <td><?php echo $email; ?></td>
+               <td><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></td>
             </tr>
             <tr>
               <td><?php echo $text_telephone; ?></td>

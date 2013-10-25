@@ -1,6 +1,6 @@
 /*
 Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
-For licensing, see LICENSE.html or http://ckeditor.com/license
+For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 
 body
@@ -73,21 +73,25 @@ hr
 	border-top: 1px solid #ccc;
 }
 
-img.right {
-    border: 1px solid #ccc;
-    float: right;
-    margin-left: 15px;
-    padding: 5px;
+img.right
+{
+	border: 1px solid #ccc;
+	float: right;
+	margin-left: 15px;
+	padding: 5px;
 }
 
-img.left {
-    border: 1px solid #ccc;
-    float: left;
-    margin-right: 15px;
-    padding: 5px;
+img.left
+{
+	border: 1px solid #ccc;
+	float: left;
+	margin-right: 15px;
+	padding: 5px;
 }
 
-img:hover {
+/* #10868: We use :not() selector to exclude IE8, which crashes on img:hover style. */
+:not(.ie8) img:hover
+{
 	opacity: .9;
 	filter: alpha(opacity = 90);
 }
@@ -98,6 +102,7 @@ pre
 	word-wrap: break-word; /* IE7 */
 }
 
-.marker {
-    background-color: Yellow;
+.marker
+{
+	background-color: Yellow;
 }

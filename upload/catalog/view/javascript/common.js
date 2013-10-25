@@ -157,8 +157,8 @@ function addToCompare(product_id) {
 }
 
 /* Agree to Terms */
-$(document).delegate('.agree', 'click', function(event) {
-	event.preventDefault();
+$(document).delegate('.agree', 'click', function(e) {
+	e.preventDefault();
 	
 	$('#modal-agree').remove(); 
 	

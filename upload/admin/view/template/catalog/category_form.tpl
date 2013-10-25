@@ -238,10 +238,8 @@
 CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>', {
 	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
 	filebrowserUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-	filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
+	filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
 });
 <?php } ?>
 //--></script> 
@@ -317,28 +315,20 @@ $(document).delegate('#button-image', 'click', function() {
 	$('#modal-image').remove();
 	
 	$.ajax({
-		url: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-		dataType: 'html',
+		url: 'index.php?route=common/filemanager&token=<?php echo $token; ?>&target=input-image&thumb=thumb',
+		dataType: 'html',	
 		beforeSend: function() {
-			$('#button-image i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-image').prop('disabled', true);			
+			$('#button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-upload').prop('disabled', true);
 		},
 		complete: function() {
-			$('#button-image i').replaceWith('<i class="fa fa-edit"></i>');
-			$('#button-image').prop('disabled', false);
-		},						
+			$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
+			$('#button-upload').prop('disabled', false);
+		},				
 		success: function(html) {
 			$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 			
 			$('#modal-image').modal('show');
-			
-			$('#modal-image a.thumbnail').on('click', function(e) {
-				e.preventDefault();
-				
-				$('#thumb').attr('src', $(this).find('img').attr('src'));
-				
-				$('#input-image').attr('value', $(this).attr('href'));
-			});
 		}
 	});
 });

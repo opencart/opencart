@@ -1,10 +1,8 @@
 <?php
 class ControllerCommonFileManager extends Controller {
-	private $error = array();
-	
 	public function index() {
 		$this->language->load('common/filemanager');
-		
+				
 		// Make sure we have the correct directory	
 		if (isset($this->request->get['directory'])) {
 			$directory = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $this->request->get['directory']), '/');
@@ -38,25 +36,23 @@ class ControllerCommonFileManager extends Controller {
 		$images = array_splice($images, ($page - 1) * 12, 12);
 		
 		foreach ($images as $image) {
-			
-			
 			if (is_dir($image)) {
-				$thumbnail = '';
-				$type = 'directory';
+				$this->data['images'][] = array(
+					'image' => '',
+					'name'  => basename($image),
+					'type'  => 'directory',
+					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/')),
+					'href'  => $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . '&directory=' . utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/')), 'SSL')
+				);				
 			} elseif (is_file($image)) {
-				$thumbnail = $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100);
-				$type = 'image';
+				$this->data['images'][] = array(
+					'image' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
+					'name'  => basename($image),
+					'type'  => 'image',
+					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/')),
+					'href'  => ''
+				);				
 			}
-			
-			$path = utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/'));
-			
-			$this->data['images'][] = array(
-            	'image' => $thumbnail,
-				'name'  => basename($image),
-				'type'  => $type,
-				'path'  => $path,
-				'href'  => $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . '&directory=' . $path, 'SSL')
-			);
 		}
 		
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -71,6 +67,7 @@ class ControllerCommonFileManager extends Controller {
 		$this->data['button_upload'] = $this->language->get('button_upload');
 		$this->data['button_folder'] = $this->language->get('button_folder');
 		$this->data['button_delete'] = $this->language->get('button_delete');
+		$this->data['button_search'] = $this->language->get('button_search');
 		
 		$this->data['token'] = $this->session->data['token'];
 		
@@ -85,15 +82,29 @@ class ControllerCommonFileManager extends Controller {
 		} else {
 			$this->data['filter_name'] = '';
 		}
+				
+		if (isset($this->request->get['target'])) {
+			$this->data['target'] = $this->request->get['target'];
+		} else {
+			$this->data['target'] = '';
+		}
 		
+		if (isset($this->request->get['thumb'])) {
+			$this->data['thumb'] = $this->request->get['thumb'];
+		} else {
+			$this->data['thumb'] = '';
+		}
+						
 		$url = '';
 		
 		if (isset($this->request->get['directory'])) {
-			$url .= '&directory=' . urlencode(html_entity_decode($this->request->get['directory'], ENT_QUOTES, 'UTF-8'));
+			$pos = strrpos($this->request->get['directory'], '/');
+			
+			if ($pos) {
+				$url .= '&directory=' . substr($this->request->get['directory'], 0, $pos);
+			}
 		}
 		
-		//echo strrchr($directory, '\\');
-
 		$this->data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
 		$url = '';

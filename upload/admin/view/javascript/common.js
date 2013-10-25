@@ -153,7 +153,6 @@ $(document).ready(function() {
 			}
 			
 			$(this.element).siblings('ul.dropdown-menu').html(html);
-
 		}
 	};
 

@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang("a11yhelp","eo",{title:"Uzindikoj pri atingeblo",contents:"Helpilenhavo. Por fermi tiun dialogon, premu la ESKAPAN klavon.",legend:[{name:"Ĝeneralaĵoj",items:[{name:"Ilbreto de la redaktilo",legend:"Premu ${toolbarFocus} por atingi la ilbreton. Moviĝu al la sekva aŭ antaŭa grupoj de la ilbreto per la klavoj TABA kaj MAJUSKLIGA-TABA. Moviĝu al la sekva aŭ antaŭa butonoj de la ilbreto per la klavoj SAGO DEKSTREN kaj SAGO MALDEKSTREN. Premu la SPACETklavon aŭ la ENENklavon por aktivigi la ilbretbutonon."},
 {name:"Redaktildialogo",legend:"En dialogo, premu la TABAN klavon por navigi al la sekva dialogkampo, premu la MAJUSKLIGAN + TABAN klavojn por reveni al la antaŭa kampo, premu la ENENklavon por sendi la dialogon, premu la ESKAPAN klavon por nuligi la dialogon. Por dialogoj kun pluraj retpaĝoj sub langetoj, premu ALT + F10 por navigi al la langetlisto. Poste moviĝu al la sekva langeto per la klavo TABA aŭ SAGO DEKSTREN. Moviĝu al la antaŭa langeto per la klavoj MAJUSKLIGA + TABA aŭ  SAGO MALDEKSTREN. Premu la SPACETklavon aŭ la ENENklavon por selekti la langetretpaĝon."},

@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 (function(){var r=function(c,j){function r(){var a=arguments,b=this.getContentElement("advanced","txtdlgGenStyle");b&&b.commit.apply(b,a);this.foreach(function(b){b.commit&&"txtdlgGenStyle"!=b.id&&b.commit.apply(b,a)})}function i(a){if(!s){s=1;var b=this.getDialog(),d=b.imageElement;if(d){this.commit(f,d);for(var a=[].concat(a),e=a.length,c,g=0;g<e;g++)(c=b.getContentElement.apply(b,a[g].split(":")))&&c.setup(f,d)}s=0}}var f=1,k=/^\s*(\d+)((px)|\%)?\s*$/i,v=/(^\s*(\d+)((px)|\%)?\s*$)|^$/i,o=/^\d+px$/,
 w=function(){var a=this.getValue(),b=this.getDialog(),d=a.match(k);d&&("%"==d[2]&&l(b,!1),a=d[1]);b.lockRatio&&(d=b.originalElement,"true"==d.getCustomData("isReady")&&("txtHeight"==this.id?(a&&"0"!=a&&(a=Math.round(d.$.width*(a/d.$.height))),isNaN(a)||b.setValueOf("info","txtWidth",a)):(a&&"0"!=a&&(a=Math.round(d.$.height*(a/d.$.width))),isNaN(a)||b.setValueOf("info","txtHeight",a))));g(b)},g=function(a){if(!a.originalElement||!a.preview)return 1;a.commitContent(4,a.preview);return 0},s,l=function(a,

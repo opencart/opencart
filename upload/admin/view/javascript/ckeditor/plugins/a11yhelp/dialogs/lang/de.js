@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang("a11yhelp","de",{title:"Barrierefreiheitinformationen",contents:"Hilfeinhalt. Um den Dialog zu schliessen die Taste 'ESC' drücken.",legend:[{name:"Allgemein",items:[{name:"Editor Symbolleiste",legend:"Drücken Sie ${toolbarFocus} auf der Symbolleiste. Gehen Sie zur nächsten oder vorherigen Symbolleistengruppe mit TAB und SHIFT-TAB. Gehen Sie zur nächsten oder vorherigen Symbolleiste auf die Schaltfläche mit dem RECHTS- oder LINKS-Pfeil. Drücken Sie die Leertaste oder Eingabetaste, um die Schaltfläche in der Symbolleiste aktivieren."},
 {name:"Editor Dialog",legend:"Innerhalb des Dialogs drücken Sie TAB um zum nächsten Dialogfeld zu gelangen, drücken Sie SHIFT-TAG um zum vorherigen Feld zu wechseln, drücken Sie ENTER um den Dialog abzusenden und ESC um den Dialog zu abzubrechen. Um zwischen den Reitern innerhalb eines Dialogs zu wechseln drücken sie ALT-F10. Um zum nächsten Reiter zu gelangen können Sie TAB oder die rechte Pfeiltaste. Zurück gelangt man mit SHIFT-TAB oder der linken Pfeiltaste. Mit der Leertaste oder Enter kann man den Reiter auswählen."},

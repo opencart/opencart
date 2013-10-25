@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang("a11yhelp","sk",{title:"Inštrukcie prístupnosti",contents:"Pomocný obsah. Pre zatvorenie tohto okna, stlačte ESC.",legend:[{name:"Všeobecne",items:[{name:"Lišta nástrojov editora",legend:"Stlačte ${toolbarFocus} pre navigáciu na lištu nástrojov. Medzi ďalšou a predchádzajúcou lištou nástrojov sa pohybujete s TAB a SHIFT-TAB. Medzi ďalším a predchádzajúcim tlačidlom na lište nástrojov sa pohybujete s pravou šípkou a ľavou šípkou. Stlačte medzerník alebo ENTER pre aktiváciu tlačidla lišty nástrojov."},
 {name:"Editorový dialóg",legend:"V dialogu, stlačte TAB pre navigáciu na ďalšie dialógové pole, stlačte STIFT + TAB pre presun na predchádzajúce pole, stlačte ENTER pre odoslanie dialógu, stlačte ESC pre zrušenie dialógu. Pre dialógy, ktoré majú viac záložiek, stlačte ALT + F10 pre navigácou do zoznamu záložiek. Potom sa posúvajte k ďalšej žáložke pomocou TAB alebo pravou šípkou. Pre presun k predchádzajúcej záložke, stlačte SHIFT + TAB alebo ľavú šípku. Stlačte medzerník alebo ENTER pre vybranie záložky."},

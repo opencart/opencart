@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang("a11yhelp","lv",{title:"Pieejamības instrukcija",contents:"Palīdzības saturs. Lai aizvērtu ciet šo dialogu nospiediet ESC.",legend:[{name:"Galvenais",items:[{name:"Redaktora rīkjosla",legend:"Nospiediet ${toolbarFocus} lai pārvietotos uz rīkjoslu. Lai pārvietotos uz nākošo vai iepriekšējo rīkjoslas grupu izmantojiet pogu TAB un SHIFT+TAB.  Lai pārvietotos uz nākošo vai iepriekšējo rīkjoslas pogu izmantojiet Kreiso vai Labo bultiņu. Nospiediet Atstarpi vai ENTER lai aktivizētu rīkjosla pogu."},
 {name:"Redaktora dialoga  logs",legend:"Dialoga logā nospiediet pogu TAB lai pārvietotos uz nākošo dialoga loga lauku, nospiediet SHIFT+TAB lai atgrieztos iepriekšējā laukā, nospiediet ENTER lai apstiprinātu dialoga datus, nospiediet ESC lai aizvērtu šo dialogu. Dialogam kuram ir vairākas cilnes, nospiediet ALT+F10 lai pārvietotos uz nepieciešamo cilni.  Lai pārvietotos uz nākošo cilni izmantojiet pogu TAB vai Labo bultiņu. Lai pārvietotos uz iepriekšējo cilni nospiediet SHIFT+TAB vai kreiso bultiņu. Nospiediet SPACE vai ENTER lai izvēlētos lapas cilni."},

@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang("specialchar","hr",{euro:"Euro znak",lsquo:"Lijevi jednostruki navodnik",rsquo:"Desni jednostruki navodnik",ldquo:"Lijevi dvostruki navodnik",rdquo:"Desni dvostruki navodnik",ndash:"En crtica",mdash:"Em crtica",iexcl:"Naopaki uskličnik",cent:"Cent znak",pound:"Funta znak",curren:"Znak valute",yen:"Yen znak",brvbar:"Potrgana prečka",sect:"Znak odjeljka",uml:"Prijeglasi",copy:"Copyright znak",ordf:"Feminine ordinal indicator",laquo:"Lijevi dvostruki uglati navodnik",not:"Not znak",
 reg:"Registered znak",macr:"Macron",deg:"Stupanj znak",sup2:"Superscript two",sup3:"Superscript three",acute:"Acute accent",micro:"Mikro znak",para:"Pilcrow sign",middot:"Srednja točka",cedil:"Cedilla",sup1:"Superscript one",ordm:"Masculine ordinal indicator",raquo:"Desni dvostruku uglati navodnik",frac14:"Vulgar fraction one quarter",frac12:"Vulgar fraction one half",frac34:"Vulgar fraction three quarters",iquest:"Naopaki upitnik",Agrave:"Veliko latinsko slovo A s akcentom",Aacute:"Latin capital letter A with acute accent",

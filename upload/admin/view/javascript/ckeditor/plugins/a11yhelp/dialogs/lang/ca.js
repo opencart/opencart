@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.plugins.setLang("a11yhelp","ca",{title:"Instruccions d'Accessibilitat",contents:"Continguts de l'Ajuda. Per tancar aquest quadre de diàleg premi ESC.",legend:[{name:"General",items:[{name:"Editor de barra d'eines",legend:"Premi ${toolbarFocus} per desplaçar-se per la barra d'eines. Vagi en el següent i anterior grup de barra d'eines amb TAB i SHIFT-TAB. Vagi en el següent i anterior botó de la barra d'eines amb RIGHT ARROW i LEFT ARROW. Premi SPACE o ENTER per activar el botó de la barra d'eines."},
 {name:"Editor de quadre de diàleg",legend:"Dins d'un quadre de diàleg, premi la tecla TAB per desplaçar-se al següent camp del quadre de diàleg, premi SHIFT + TAB per desplaçar-se a l'anterior camp, premi ENTER per acceptar el quadre de diàleg, premi ESC per cancel·lar el quadre de diàleg. Per els quadres de diàleg que tenen diverses pestanyes, premi ALT + F10 per anar a la llista de pestanyes. Després podrà desplaçar-se a la següent pestanya amb TAB o RIGHT ARROW. Anar a la pestanya anterior amb SHIFT + TAB o LEFT ARROW. Premi SPACE o ENTER per seleccionar la pestanya."},

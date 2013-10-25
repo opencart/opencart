@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 (function(){function b(a,b,c){var k=n[this.id];if(k)for(var f=this instanceof CKEDITOR.ui.dialog.checkbox,e=0;e<k.length;e++){var d=k[e];switch(d.type){case g:if(!a)continue;if(null!==a.getAttribute(d.name)){a=a.getAttribute(d.name);f?this.setValue("true"==a.toLowerCase()):this.setValue(a);return}f&&this.setValue(!!d["default"]);break;case o:if(!a)continue;if(d.name in c){a=c[d.name];f?this.setValue("true"==a.toLowerCase()):this.setValue(a);return}f&&this.setValue(!!d["default"]);break;case i:if(!b)continue;
 if(b.getAttribute(d.name)){a=b.getAttribute(d.name);f?this.setValue("true"==a.toLowerCase()):this.setValue(a);return}f&&this.setValue(!!d["default"])}}}function c(a,b,c){var k=n[this.id];if(k)for(var f=""===this.getValue(),e=this instanceof CKEDITOR.ui.dialog.checkbox,d=0;d<k.length;d++){var h=k[d];switch(h.type){case g:if(!a||"data"==h.name&&b&&!a.hasAttribute("data"))continue;var l=this.getValue();f||e&&l===h["default"]?a.removeAttribute(h.name):a.setAttribute(h.name,l);break;case o:if(!a)continue;

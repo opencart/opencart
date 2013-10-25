@@ -11,7 +11,7 @@
   </div>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-eye-open"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-eye"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">

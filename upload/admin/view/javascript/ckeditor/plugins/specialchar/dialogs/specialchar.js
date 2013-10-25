@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.dialog.add("specialchar",function(i){var e,l=i.lang.specialchar,k=function(c){var b,c=c.data?c.data.getTarget():new CKEDITOR.dom.element(c);if("a"==c.getName()&&(b=c.getChild(0).getHtml()))c.removeClass("cke_light_background"),e.hide(),c=i.document.createElement("span"),c.setHtml(b),i.insertText(c.getText())},m=CKEDITOR.tools.addFunction(k),j,g=function(c,b){var a,b=b||c.data.getTarget();"span"==b.getName()&&(b=b.getParent());if("a"==b.getName()&&(a=b.getChild(0).getHtml())){j&&d(null,j);
 var f=e.getContentElement("info","htmlPreview").getElement();e.getContentElement("info","charPreview").getElement().setHtml(a);f.setHtml(CKEDITOR.tools.htmlEncode(a));b.getParent().addClass("cke_light_background");j=b}},d=function(c,b){b=b||c.data.getTarget();"span"==b.getName()&&(b=b.getParent());"a"==b.getName()&&(e.getContentElement("info","charPreview").getElement().setHtml("&nbsp;"),e.getContentElement("info","htmlPreview").getElement().setHtml("&nbsp;"),b.getParent().removeClass("cke_light_background"),

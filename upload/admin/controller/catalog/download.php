@@ -453,7 +453,7 @@ class ControllerCatalogDownload extends Controller {
   	}
 
 	public function upload() {
-		$this->language->load('sale/order');
+		$this->language->load('catalog/download');
 		
 		$json = array();
     	

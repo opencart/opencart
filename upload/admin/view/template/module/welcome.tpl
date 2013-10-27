@@ -128,14 +128,7 @@
 <?php $module_row = 1; ?>
 <?php foreach ($modules as $module) { ?>
 <?php foreach ($languages as $language) { ?>
-CKEDITOR.replace('input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>', {
-	filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-	filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-	filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-	filebrowserUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-	filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-	filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
-});
+CKEDITOR.replace('input-description<?php echo $module_row; ?>-language<?php echo $language['language_id']; ?>');
 <?php } ?>
 <?php $module_row++; ?>
 <?php } ?>
@@ -199,14 +192,7 @@ function addModule() {
 	$('.tab-content:first-child').prepend(html);
 
 	<?php foreach ($languages as $language) { ?>
-	CKEDITOR.replace('input-description' + module_row + '-language<?php echo $language['language_id']; ?>', {
-		filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-		filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-		filebrowserFlashBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-		filebrowserUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-		filebrowserImageUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
-		filebrowserFlashUploadUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>'
-	});  
+	CKEDITOR.replace('input-description' + module_row + '-language<?php echo $language['language_id']; ?>');  
 	<?php } ?>
 	
 	$('#module-add').before('<li><a href="#tab-module' + module_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'a[href=\\\'#tab-module' + module_row + '\\\']\').parent().remove(); $(\'#tab-module' + module_row + '\').remove(); $(\'#module a:first\').tab(\'show\');"></i> <?php echo $tab_module; ?> ' + module_row + '</a></li>');

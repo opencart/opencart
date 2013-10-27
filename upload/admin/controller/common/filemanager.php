@@ -1,5 +1,7 @@
 <?php
 class ControllerCommonFileManager extends Controller {
+	public $image = '';
+	
 	public function index() {
 		$this->language->load('common/filemanager');
 				
@@ -33,24 +35,33 @@ class ControllerCommonFileManager extends Controller {
 		$image_total = count($images);
 		
 		// Split the array based on current page number and max number of items per page of 10
-		$images = array_splice($images, ($page - 1) * 12, 12);
+		$images = array_splice($images, ($page - 1) * 16, 16);
 		
 		foreach ($images as $image) {
+			$name = str_split(basename($image), 14);
+			
+			// Find which protocol to use to pass the full image link back to
+			if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+				$server = HTTPS_SERVER;
+			} else {
+				$server = HTTP_SERVER;
+			}
+					
 			if (is_dir($image)) {
 				$this->data['images'][] = array(
-					'image' => '',
-					'name'  => basename($image),
+					'thumb' => '',
+					'name'  => implode(' ', $name),
 					'type'  => 'directory',
 					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/')),
 					'href'  => $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . '&directory=' . utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/')), 'SSL')
 				);				
 			} elseif (is_file($image)) {
 				$this->data['images'][] = array(
-					'image' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
-					'name'  => basename($image),
+					'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 60, 60),
+					'name'  => implode(' ', $name),
 					'type'  => 'image',
 					'path'  => utf8_substr($image, utf8_strlen(DIR_IMAGE . 'catalog/')),
-					'href'  => ''
+					'href'  => $server . 'image/' . utf8_substr($image, utf8_strlen(DIR_IMAGE))
 				);				
 			}
 		}
@@ -94,7 +105,13 @@ class ControllerCommonFileManager extends Controller {
 		} else {
 			$this->data['thumb'] = '';
 		}
-						
+		
+		if (isset($this->request->get['ckeditor'])) {
+			$this->data['ckeditor'] = $this->request->get['ckeditor'];
+		} else {
+			$this->data['ckeditor'] = '';
+		}
+								
 		$url = '';
 		
 		if (isset($this->request->get['directory'])) {
@@ -102,7 +119,7 @@ class ControllerCommonFileManager extends Controller {
 			
 			if ($pos) {
 				$url .= '&directory=' . substr($this->request->get['directory'], 0, $pos);
-			}
+			}	
 		}
 		
 		$this->data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -120,7 +137,7 @@ class ControllerCommonFileManager extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $image_total;
 		$pagination->page = $page;
-		$pagination->limit = 12;
+		$pagination->limit = 16;
 		$pagination->url = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 		
 		$this->data['pagination'] = $pagination->render();

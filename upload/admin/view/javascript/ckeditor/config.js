@@ -13,7 +13,7 @@ CKEDITOR.editorConfig = function( config ) {
 	config.resize_enabled = false;
 	config.htmlEncodeOutput = false;
 	config.entities = false;
-	config.extraPlugins = 'image_custom';//codemirror,
+	config.extraPlugins = 'opencart';//codemirror,
 	//config.codemirror_theme = 'rubyblue';
 	config.toolbar = 'Custom';
 
@@ -29,6 +29,6 @@ CKEDITOR.editorConfig = function( config ) {
 		['Font','FontSize'],
 		['TextColor','BGColor'],
 		['Link','Unlink','Anchor'],
-		['Image','InsertImage','Table','HorizontalRule']
+		['Image','OpenCart','Table','HorizontalRule']
 	];
 };

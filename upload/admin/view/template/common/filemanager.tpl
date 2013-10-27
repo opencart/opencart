@@ -7,11 +7,11 @@
     <div class="modal-body">
       <div class="row">
         <div class="col-xs-5"><a href="<?php echo $parent; ?>" title="<?php echo $button_parent; ?>" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a>
-          <button type="button" title="<?php echo $button_upload; ?>" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
+          <button type="button" title="<?php echo $button_upload; ?>" id="button-upload" class="btn btn-primary" onhover="alert('hi');"><i class="fa fa-upload"></i></button>
           <button type="button" title="<?php echo $button_folder; ?>" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
           <button type="button" title="<?php echo $button_delete; ?>" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
         </div>
-        <div class="col-sm-7">
+        <div class="col-xs-7">
           <div class="input-group">
             <input type="text" name="search" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_search; ?>" class="form-control">
             <span class="input-group-btn">
@@ -25,19 +25,25 @@
         <?php foreach ($image as $image) { ?>
         <div class="col-sm-3">
           <?php if ($image['type'] == 'directory') { ?>
-          <a href="<?php echo $image['href']; ?>" class="directory thumbnail text-center"><i class="fa fa-folder fa-5x"></i></a>
-          <div class="caption">
-            <p>
-              <input type="checkbox" name="delete[]" value="<?php echo $image['path']; ?>" />
-              <?php echo $image['name']; ?></p>
+          <div class="text-center"><a href="<?php echo $image['href']; ?>" class="directory"><i class="fa fa-folder fa-5x"></i></a>
+            <div class="caption">
+              <p>
+                <label class="checkbox-inline">
+                  <input type="checkbox" name="delete[]" value="<?php echo $image['path']; ?>" />
+                  <?php echo $image['name']; ?></label>
+              </p>
+            </div>
           </div>
           <?php } ?>
           <?php if ($image['type'] == 'image') { ?>
-          <a href="<?php echo $image['path']; ?>" class="thumbnail"><img src="<?php echo $image['image']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
+          <a href="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
           <div class="caption">
             <p>
-              <input type="checkbox" name="delete[]" value="<?php echo $image['path']; ?>" />
-              <?php echo $image['name']; ?></p>
+              <label class="checkbox-inline">
+                <input type="checkbox" name="delete[]" value="<?php echo $image['path']; ?>" />
+                <?php echo $image['name']; ?></label>
+                <input type="hidden" name="image" value="<?php echo $image['image']; ?>" />
+            </p>
           </div>
           <?php } ?>
         </div>
@@ -53,11 +59,17 @@
 $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
 	
+	<?php if ($thumb) { ?>
 	$('#<?php echo $thumb; ?>').attr('src', $(this).find('img').attr('src'));
+	<?php } ?>
 	
-	$('#<?php echo $target; ?>').attr('value', $(this).attr('href'));
+	<?php if ($target) { ?>
+	$('#<?php echo $target; ?>').attr('value', $(this).find('img').attr('href'));
+	<?php } ?>
 	
-	alert($(this).attr('href'));
+	<?php if ($ckeditor) { ?>
+	CKEDITOR.instances['<?php echo $ckeditor; ?>'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title="" />');
+	<?php } ?>
 	
 	//$('#modal-image').modal('hide');
 });

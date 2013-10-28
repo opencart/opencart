@@ -1,7 +1,7 @@
 <?php 
 class ModelSaleVoucherTheme extends Model {
 	public function addVoucherTheme($data) {
-		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "'");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape($data['image']) . "'");
 		
 		$voucher_theme_id = $this->db->getLastId();
 		
@@ -13,7 +13,7 @@ class ModelSaleVoucherTheme extends Model {
 	}
 
 	public function editVoucherTheme($voucher_theme_id, $data) {
-		$this->db->query("UPDATE " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape(html_entity_decode($data['image'], ENT_QUOTES, 'UTF-8')) . "' WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
+		$this->db->query("UPDATE " . DB_PREFIX . "voucher_theme SET image = '" . $this->db->escape($data['image']) . "' WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_theme_description WHERE voucher_theme_id = '" . (int)$voucher_theme_id . "'");
 

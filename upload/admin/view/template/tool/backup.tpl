@@ -36,7 +36,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_backup; ?></label>
           <div class="col-sm-10">
-            <div class="well">
+            <div class="well well-sm">
               <?php foreach ($tables as $table) { ?>
               <div class="checkbox">
                 <label>

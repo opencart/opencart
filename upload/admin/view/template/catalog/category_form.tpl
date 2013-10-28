@@ -91,7 +91,7 @@
                   <button class="btn btn-info" type="button"><i class="fa fa-question-circle fa-large"></i></button>
                   </span> </div>
                 <span class="help-block"><?php echo $help_filter; ?></span>
-                <div id="category-filter" class="well">
+                <div id="category-filter" class="well well-sm">
                   <?php foreach ($category_filters as $category_filter) { ?>
                   <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $category_filter['name']; ?>
                     <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
@@ -233,10 +233,9 @@
   </div>
 </div>
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
-<script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script> 
 <script type="text/javascript"><!--
 <?php foreach ($languages as $language) { ?>
-$('#input-description<?php echo $language['language_id']; ?>').ckeditor();
+CKEDITOR.replace('input-description<?php echo $language['language_id']; ?>');
 <?php } ?>
 //--></script> 
 <script type="text/javascript"><!--

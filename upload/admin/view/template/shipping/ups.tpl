@@ -181,7 +181,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_service; ?></label>
           <div class="col-sm-10">
-            <div id="service" class="well">
+            <div id="service" class="well well-sm">
               <div id="US">
                 <div class="checkbox">
                   <label>

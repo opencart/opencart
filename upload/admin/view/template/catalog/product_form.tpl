@@ -331,12 +331,15 @@
               <div class="col-sm-10">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
                 <span class="help-block"><?php echo $help_category; ?></span>
-                <div id="product-category" class="well">
+                <div id="product-category" class="well well-sm">
+                  
                   <?php foreach ($product_categories as $product_category) { ?>
-                  <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_category['name']; ?>
+                  <div id="product-category<?php echo $product_category['category_id']; ?>"><p><button type="button" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>&nbsp;&nbsp;<?php echo $product_category['name']; ?></p>
                     <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
+                  
+                  
                 </div>
               </div>
             </div>
@@ -345,7 +348,7 @@
               <div class="col-sm-10">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
                 <span class="help-block"><?php echo $help_filter; ?></span>
-                <div id="product-filter" class="well">
+                <div id="product-filter" class="well well-sm">
                   <?php foreach ($product_filters as $product_filter) { ?>
                   <div id="product-filter<?php echo $product_filter['filter_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_filter['name']; ?>
                     <input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
@@ -388,9 +391,9 @@
               <div class="col-sm-10">
                 <input type="text" name="download" value="" placeholder="<?php echo $entry_download; ?>" id="input-download" class="form-control" />
                 <span class="help-block"><?php echo $help_download; ?></span>
-                <div id="product-download" class="well">
+                <div id="product-download" class="well well-sm">
                   <?php foreach ($product_downloads as $product_download) { ?>
-                  <div id="product-download<?php echo $product_download['download_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_download['name']; ?>
+                  <div id="product-download<?php echo $product_download['download_id']; ?>"><button type="button" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button> <?php echo $product_download['name']; ?>
                     <input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -402,7 +405,7 @@
               <div class="col-sm-10">
                 <input type="text" name="related" value="" placeholder="<?php echo $entry_related; ?>" id="input-related" class="form-control" />
                 <span class="help-block"><?php echo $help_related; ?></span>
-                <div id="product-related" class="well">
+                <div id="product-related" class="well well-sm">
                   <?php foreach ($product_relateds as $product_related) { ?>
                   <div id="product-related<?php echo $product_related['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_related['name']; ?>
                     <input type="hidden" name="product_related[]" value="<?php echo $product_related['product_id']; ?>" />

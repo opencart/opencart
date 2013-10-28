@@ -126,7 +126,7 @@
               <div class="col-sm-10">
                 <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
                 <span class="help-block"><?php echo $help_product; ?></span>
-                <div id="coupon-product" class="well">
+                <div id="coupon-product" class="well well-sm">
                   <?php foreach ($coupon_product as $coupon_product) { ?>
                   <div id="coupon-product<?php echo $coupon_product['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $coupon_product['name']; ?>
                     <input type="hidden" name="coupon_product[]" value="<?php echo $coupon_product['product_id']; ?>" />
@@ -140,7 +140,7 @@
               <div class="col-sm-10">
                 <input type="text" name="category" value="" placeholder="<?php echo $entry_category; ?>" id="input-category" class="form-control" />
                 <span class="help-block"><?php echo $help_category; ?></span> <br />
-                <div id="coupon-category" class="well">
+                <div id="coupon-category" class="well well-sm">
                   <?php foreach ($coupon_category as $coupon_category) { ?>
                   <div id="coupon-category<?php echo $coupon_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $coupon_category['name']; ?>
                     <input type="hidden" name="coupon_category[]" value="<?php echo $coupon_category['category_id']; ?>" />

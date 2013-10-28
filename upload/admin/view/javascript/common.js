@@ -43,6 +43,53 @@ $(document).ready(function() {
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 });
 
+// Image Manager
+$(document).delegate('.img-thumbnail', 'click', function() {
+	var element = this;
+	 
+	$(element).popover({
+		html: true,
+		placement: 'right',
+		trigger: 'click',
+		content: function() {
+			return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-default"><i class="fa fa-trash-o"></i></button>';
+		}
+	});
+	
+	$(element).popover('show');
+	
+	$('#button-image').on('click', function() {
+		$('#modal-image').remove();
+		
+		$.ajax({
+			url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
+			dataType: 'html',	
+			beforeSend: function() {
+				$('#button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-upload').prop('disabled', true);
+			},
+			complete: function() {
+				$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
+				$('#button-upload').prop('disabled', false);
+			},				
+			success: function(html) {
+				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+				
+				$('#modal-image').modal('show');
+			}
+		});
+		
+		$(element).popover('hide');
+	});
+	
+	$('#button-clear').on('click', function() {	
+		 $(element).parent().find('input').attr('value', '');
+		 $(element).attr('src', '');
+		 
+		 $(element).popover('hide');
+	});	
+});
+
 // Autocomplete */	
 (function($) {
 	function Autocomplete(element, options) {

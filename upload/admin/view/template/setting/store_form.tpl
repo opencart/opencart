@@ -493,26 +493,15 @@
           <div class="tab-pane" id="tab-image">
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-logo"><?php echo $entry_logo; ?></label>
-              <div class="col-sm-10"> <img src="<?php echo $logo; ?>" alt="" class="img-thumbnail" />
-                <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" />
-                <br />
-                <br />
-                <div class="btn-group">
-                  <button data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="fa fa-pencil"></span> <?php echo $button_edit; ?></button>
-                  <button onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="fa fa-trash-o"></span> <?php echo $button_clear; ?></button>
-                </div>
+              <div class="col-sm-10"> <img src="<?php echo $logo; ?>" alt="" id="thumb-logo" class="img-thumbnail" />
+                <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="input-logo" />
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-icon"><?php echo $entry_icon; ?> <span class="help-block"><?php echo $help_icon; ?></span></label>
-              <div class="col-sm-10"><img src="<?php echo $icon; ?>" alt="" class="img-thumbnail" />
-                <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" />
-                <br />
-                <br />
-                <div class="btn-group">
-                  <button data-toggle="modal" data-target="#modal" class="btn btn-default"><span class="fa fa-pencil"></span> <?php echo $button_edit; ?></button>
-                  <button onclick="$(this).parent().parent().find('img').attr('src', '<?php echo $no_image; ?>'); $(this).parent().parent().find('input').attr('value', '');" class="btn btn-danger"><span class="fa fa-trash-o"></span> <?php echo $button_clear; ?></button>
-                </div>
+              <label class="col-sm-2 control-label" for="input-icon"><?php echo $entry_icon; ?></label>
+              <div class="col-sm-10"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" class="img-thumbnail" />
+                <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="input-icon" />
+                <span class="help-block"><?php echo $help_icon; ?></span>
               </div>
             </div>
             <div class="form-group required">
@@ -765,32 +754,5 @@ $('select[name=\'config_country_id\']').on('change', function() {
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
-//--></script> 
-<script type="text/javascript"><!--
-function image_upload(field, thumb) {
-	$('#dialog').remove();
-	
-	$('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
-	
-	$('#dialog').dialog({
-		title: '<?php echo $text_image_manager; ?>',
-		close: function (event, ui) {
-			if ($('#' + field).attr('value')) {
-				$.ajax({
-					url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).val()),
-					dataType: 'text',
-					success: function(data) {
-						$('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
-					}
-				});
-			}
-		},	
-		bgiframe: false,
-		width: 800,
-		height: 400,
-		resizable: false,
-		modal: false
-	});
-};
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

@@ -55,7 +55,7 @@
             <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
             <span class="help-block"><?php echo $help_customer; ?></span>
             <br />
-            <div id="customer" class="well"></div>
+            <div id="customer" class="well well-sm"></div>
           </div>
         </div>
         <div class="form-group to" id="to-affiliate">
@@ -63,7 +63,7 @@
           <div class="col-sm-10">
             <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" class="form-control" />
             <br />
-            <div id="affiliate" class="well"></div>
+            <div id="affiliate" class="well well-sm"></div>
           </div>
         </div>
         <div class="form-group to" id="to-product">
@@ -71,7 +71,7 @@
           <div class="col-sm-10">
             <input type="text" name="products" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
             <span class="help-block"><?php echo $help_product; ?></span>
-            <div id="product" class="well"></div>
+            <div id="product" class="well well-sm"></div>
           </div>
         </div>
         <div class="form-group required">

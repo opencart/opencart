@@ -40,7 +40,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_domestic; ?></label>
           <div class="col-sm-10">
-            <div class="well">
+            <div class="well well-sm">
               <div class="checkbox">
                 <label>
                   <?php if ($usps_domestic_00) { ?>
@@ -289,7 +289,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_international; ?></label>
           <div class="col-sm-10">
-            <div class="well">
+            <div class="well well-sm">
               <div class="checkbox">
                 <label>
                   <?php if ($usps_international_1) { ?>

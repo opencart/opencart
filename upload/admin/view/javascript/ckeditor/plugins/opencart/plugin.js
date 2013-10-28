@@ -5,15 +5,7 @@ CKEDITOR.plugins.add('opencart', {
 			exec: function(editor) {
 				$.ajax({
 					url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&ckeditor=' + editor.name,
-					dataType: 'html',	
-					beforeSend: function() {
-						$('#button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-						$('#button-upload').prop('disabled', true);
-					},
-					complete: function() {
-						$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
-						$('#button-upload').prop('disabled', false);
-					},				
+					dataType: 'html',		
 					success: function(html) {
 						$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
 						
@@ -24,9 +16,9 @@ CKEDITOR.plugins.add('opencart', {
 		});
 		
 		editor.ui.addButton('OpenCart', {
-			label: editor.lang.image,
+			label: 'OpenCart',
         	command: 'OpenCart',
-			icon: this.path + 'images/image_add.png'
+			icon: this.path + 'images/icon.png'
 		});
     }
 });

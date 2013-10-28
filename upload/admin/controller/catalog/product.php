@@ -812,24 +812,6 @@ class ControllerCatalogProduct extends Controller {
 			$this->data['keyword'] = '';
 		}
 		
-		if (isset($this->request->post['image'])) {
-			$this->data['image'] = $this->request->post['image'];
-		} elseif (!empty($product_info)) {
-			$this->data['image'] = $product_info['image'];
-		} else {
-			$this->data['image'] = '';
-		}
-		
-		$this->load->model('tool/image');
-		
-		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
-			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($product_info) && $product_info['image'] && is_file(DIR_IMAGE . $product_info['image'])) {
-			$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
-		} else {
-			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
-		}
-		
     	if (isset($this->request->post['shipping'])) {
       		$this->data['shipping'] = $this->request->post['shipping'];
     	} elseif (!empty($product_info)) {
@@ -1144,7 +1126,25 @@ class ControllerCatalogProduct extends Controller {
 		} else {
 			$this->data['product_specials'] = array();
 		}
+
+		if (isset($this->request->post['image'])) {
+			$this->data['image'] = $this->request->post['image'];
+		} elseif (!empty($product_info)) {
+			$this->data['image'] = $product_info['image'];
+		} else {
+			$this->data['image'] = '';
+		}
 		
+		$this->load->model('tool/image');
+		
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
+			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+		} elseif (!empty($product_info) && $product_info['image'] && is_file(DIR_IMAGE . $product_info['image'])) {
+			$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
+		} else {
+			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+		}
+				
 		// Images
 		if (isset($this->request->post['product_image'])) {
 			$product_images = $this->request->post['product_image'];

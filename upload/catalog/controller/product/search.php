@@ -10,7 +10,7 @@ class ControllerProductSearch extends Controller {
 		$this->load->model('tool/image'); 
 		
 		if (isset($this->request->get['search'])) {
-			$search = $this->request->get['search'];
+			$search = htmlentities($this->request->get['search'], ENT_QUOTES);
 		} else {
 			$search = '';
 		} 

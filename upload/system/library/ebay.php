@@ -95,18 +95,15 @@ final class Ebay {
 			}
 			curl_close($ch);
 
-			/* There may be some calls we just dont want to log */
 			if(!in_array($call, $this->noLog)) {
 				$this->log('openbay_call() - Result of : "'.$result.'"');
 			}
 
-			/* JSON RESPONSE */
 			if($content_type == 'json') {
 				$encoding = mb_detect_encoding($result);
 
-				/* some json data may have BOM due to php not handling types correctly */
 				if($encoding == 'UTF-8') {
-				  $result = preg_replace('/[^(\x20-\x7F)]*/','', $result);
+					$result = preg_replace('/[^(\x20-\x7F)]*/','', $result);
 				}
 
 				$result             = json_decode($result, 1);
@@ -520,21 +517,13 @@ final class Ebay {
 	}
 
 	public function validateJsonDecode($data) {
-		/**
-		 * validateJsonDecode
-		 *
-		 * Validates JSON data and logs any errors.
-		 *
-		 * @param $data
-		 * @return mixed
-		 */
 		$data = (string)$data;
 
 		$encoding = mb_detect_encoding($data);
-		/* some json data may have BOM due to php not handling types correctly */
+
 		if($encoding == 'UTF-8') {
-		  $data = preg_replace('/[^(\x20-\x7F)]*/','', $data);
-		  $data = preg_replace('#\\\\x[0-9a-fA-F]{2,2}#', '', $data);
+		  $data = preg_replace('/[^(\x20-\x7F)]*/','',$data);
+		  $data = preg_replace('#\\\\x[0-9a-fA-F]{2,2}#','',$data);
 		}
 
 		$data = json_decode($data);
@@ -568,33 +557,6 @@ final class Ebay {
 		}
 
 		return $data;
-	}
-
-	public function addonList() {
-		/**
-		 * addonList
-		 *
-		 * Returns array of installed 3rd party modules for OpenBay
-		 *
-		 * @return array
-		 */
-		$this->log('addonList() - Getting list of addons');
-
-		$addons = array();
-
-		if($myDirectory = opendir(DIR_SYSTEM."ebay_addon/")) {
-			while (false !== ($file = readdir($myDirectory))) {
-				if ($file != "." && $file != ".." && $file != ".svn") {
-					include(DIR_SYSTEM."ebay_addon/".$file);
-					$class = (string)str_replace('.php', '', $file);
-					$addons[] = new $class;
-				}
-			}
-
-			closedir($myDirectory);
-		}
-
-		return $addons;
 	}
 
 	private function eBayShippingStatus($item, $txn, $status, $tracking_no = '', $carrier_id = '') {
@@ -661,8 +623,8 @@ final class Ebay {
 				$pOption_query = $this->db->query("
 						SELECT `" . DB_PREFIX . "order_option`.`product_option_value_id`
 						FROM `" . DB_PREFIX . "order_option`, `" . DB_PREFIX . "product_option`, `" . DB_PREFIX . "option`
-						WHERE `" . DB_PREFIX . "order_option`.`order_product_id` = '" . (int) $order_product['order_product_id'] . "'
-						AND `" . DB_PREFIX . "order_option`.`order_id` = '" . (int) $order_id . "'
+						WHERE `" . DB_PREFIX . "order_option`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
+						AND `" . DB_PREFIX . "order_option`.`order_id` = '" . (int)$order_id . "'
 						AND `" . DB_PREFIX . "order_option`.`product_option_id` = `" . DB_PREFIX . "product_option`.`product_option_id`
 						AND `" . DB_PREFIX . "product_option`.`option_id` = `" . DB_PREFIX . "option`.`option_id`
 						AND ((`" . DB_PREFIX . "option`.`type` = 'radio') OR (`" . DB_PREFIX . "option`.`type` = 'select'))
@@ -1370,7 +1332,7 @@ final class Ebay {
 		if ($this->lasterror === false) {
 			if (isset($response['urls']['ViewItemURL'])) {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE  `key` = 'openbaypro_ebay_itm_link' LIMIT 1");
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string) $response['urls']['ViewItemURL']) . "', `key` = 'openbaypro_ebay_itm_link', `group` = 'openbay'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$response['urls']['ViewItemURL']) . "', `key` = 'openbaypro_ebay_itm_link', `group` = 'openbay'");
 				$this->log('Updated eBay item link');
 			} else {
 				$this->log('Item link URL not set!');
@@ -1385,8 +1347,8 @@ final class Ebay {
 					$this->db->query("
 						INSERT INTO `" . DB_PREFIX . "ebay_payment_method`
 						SET
-							`ebay_name`         = '" . $this->db->escape((string) $child['PaymentOption']) . "',
-							`local_name`        = '" . $this->db->escape((string) $child['Description']) . "'
+							`ebay_name`         = '" . $this->db->escape((string)$child['PaymentOption']) . "',
+							`local_name`        = '" . $this->db->escape((string)$child['Description']) . "'
 					");
 				}
 
@@ -1413,12 +1375,12 @@ final class Ebay {
 					}
 
 					if (!empty($service['ShippingTimeMin'])) {
-						$min = (int) $service['ShippingTimeMin'];
+						$min = (int)$service['ShippingTimeMin'];
 					} else {
 						$min = 1;
 					}
 					if (!empty($service['ShippingTimeMax'])) {
-						$max = (int) $service['ShippingTimeMax'];
+						$max = (int)$service['ShippingTimeMax'];
 					} else {
 						$max = 21;
 					}
@@ -1426,13 +1388,13 @@ final class Ebay {
 					$this->db->query("
 						INSERT INTO `" . DB_PREFIX . "ebay_shipping`
 						SET
-							`description`               = '" . $this->db->escape((string) $service['Description']) . "',
+							`description`               = '" . $this->db->escape((string)$service['Description']) . "',
 							`InternationalService`      = '" . $this->db->escape($service['InternationalService']) . "',
-							`ShippingService`           = '" . $this->db->escape((string) $service['ShippingService']) . "' ,
-							`ShippingServiceID`         = '" . (int) $service['ShippingServiceID'] . "',
-							`ServiceType`               = '" . $this->db->escape((string) $service['ServiceType']) . "' ,
-							`ValidForSellingFlow`       = '" . $this->db->escape((string) $service['ValidForSellingFlow']) . "',
-							`ShippingCategory`          = '" . $this->db->escape((string) $service['ShippingCategory']) . "' ,
+							`ShippingService`           = '" . $this->db->escape((string)$service['ShippingService']) . "' ,
+							`ShippingServiceID`         = '" . (int)$service['ShippingServiceID'] . "',
+							`ServiceType`               = '" . $this->db->escape((string)$service['ServiceType']) . "' ,
+							`ValidForSellingFlow`       = '" . $this->db->escape((string)$service['ValidForSellingFlow']) . "',
+							`ShippingCategory`          = '" . $this->db->escape((string)$service['ShippingCategory']) . "' ,
 							`ShippingTimeMin`           = '" . $min . "',
 							`ShippingTimeMax`           = '" . $max . "',
 							`site`                      = '3'
@@ -1451,10 +1413,10 @@ final class Ebay {
 					$this->db->query("
 						INSERT INTO `" . DB_PREFIX . "ebay_shipping_location`
 						SET
-							`description`         = '" . $this->db->escape((string) $service['Description']) . "',
+							`description`         = '" . $this->db->escape((string)$service['Description']) . "',
 							`detail_version`      = '" . $this->db->escape($service['DetailVersion']) . "',
-							`shipping_location`   = '" . $this->db->escape((string) $service['ShippingLocation']) . "' ,
-							`update_time`         = '" . (int) $service['UpdateTime'] . "'
+							`shipping_location`   = '" . $this->db->escape((string)$service['ShippingLocation']) . "' ,
+							`update_time`         = '" . (int)$service['UpdateTime'] . "'
 					");
 				}
 				$this->log('Populated ebay_shipping_location table');
@@ -1470,9 +1432,9 @@ final class Ebay {
 					$this->db->query("
 						INSERT INTO `" . DB_PREFIX . "ebay_shipping_location_exclude`
 						SET
-							`description`   = '" . $this->db->escape((string) $service['Description']) . "',
-							`location`      = '" . $this->db->escape((string) $service['Location']) . "',
-							`region`        = '" . $this->db->escape((string) $service['Region']) . "'
+							`description`   = '" . $this->db->escape((string)$service['Description']) . "',
+							`location`      = '" . $this->db->escape((string)$service['Location']) . "',
+							`region`        = '" . $this->db->escape((string)$service['Region']) . "'
 					");
 				}
 				$this->log('Populated exclude_shipping_location table');

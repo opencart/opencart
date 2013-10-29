@@ -120,13 +120,12 @@ final class Openbay {
 	}
 
 	public function testDbTable($table) {
-		//check profile table for default column
 		$res = $this->db->query("SELECT `table_name` AS `c` FROM `information_schema`.`tables` WHERE `table_schema` = DATABASE()");
 
 		$tables = array();
 
 		foreach($res->rows as $row) {
-		   $tables[] = $row['c'];
+			$tables[] = $row['c'];
 		}
 
 		if(in_array($table, $tables)) {
@@ -361,15 +360,12 @@ final class Openbay {
 	}
 
 	public function addonLoad($addon) {
-		$addon = strtolower((string) $addon); //ensure the addon name is a string value.
+		$addon = strtolower((string)$addon);
 
 		if (empty($this->installed_modules)) {
 			$this->installed_modules = array();
 
-			$rows = $this->db->query("
-				SELECT `code`
-				FROM " . DB_PREFIX . "extension
-			")->rows;
+			$rows = $this->db->query("SELECT `code` FROM " . DB_PREFIX . "extension")->rows;
 
 			foreach ($rows as $row) {
 				$this->installed_modules[] = strtolower($row['code']);

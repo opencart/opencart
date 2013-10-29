@@ -158,13 +158,11 @@ final class Play {
 			}
 			curl_close($ch);
 
-			/* JSON RESPONSE */
 			if($content_type == 'json'){
 				$encoding = mb_detect_encoding($result);
 
-				/* some json data may have BOM due to php not handling types correctly */
 				if($encoding == 'UTF-8') {
-				  $result = preg_replace('/[^(\x20-\x7F)]*/','', $result);
+				  $result = preg_replace('/[^(\x20-\x7F)]*/','',$result);
 				}
 
 				$result = json_decode($result, 1);

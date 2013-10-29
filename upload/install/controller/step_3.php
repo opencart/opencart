@@ -6,7 +6,7 @@ class ControllerStep3 extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install');
 			
-			$this->model_install->mysql($this->request->post);
+			$this->model_install->install($this->request->post);
 			
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";

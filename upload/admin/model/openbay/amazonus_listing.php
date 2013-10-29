@@ -92,7 +92,7 @@ class ModelOpenbayAmazonusListing extends Model {
 				'message' => 'Problem connecting OpenBay: API'
 			);
 		}
-		$response = (array) $response;
+		$response = (array)$response;
 
 		if ($response['status'] === 1) {
 			$this->db->query("

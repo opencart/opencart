@@ -65,14 +65,14 @@ class ControllerOpenbayAmazon extends Controller {
 			$tableData = array();
 
 			foreach($simpleXmlObj->update as $updateNode) {
-				$row = array('date_requested' => (string) $updateNode->date_requested,
-					'date_updated' => (string) $updateNode->date_updated,
-					'status' => (string) $updateNode->status,
+				$row = array('date_requested' => (string)$updateNode->date_requested,
+					'date_updated' => (string)$updateNode->date_updated,
+					'status' => (string)$updateNode->status,
 					);
 				$data = array();
 				foreach($updateNode->data->product as $productNode) {
-					$data[] = array('sku' => (string) $productNode->sku,
-						'stock' => (int) $productNode->stock
+					$data[] = array('sku' => (string)$productNode->sku,
+						'stock' => (int)$productNode->stock
 						);
 				}
 				$row['data'] = $data;
@@ -190,12 +190,12 @@ class ControllerOpenbayAmazon extends Controller {
 		if ($response) {
 			foreach ($response->Plan as $plan) {
 				$plans[] = array(
-					'title' => (string) $plan->Title,
-					'description' => (string) $plan->Description,
-					'order_frequency' => (string) $plan->OrderFrequency,
-					'product_listings' => (string) $plan->ProductListings,
-					'bulk_listing' => (string) $plan->BulkListing,
-					'price' => (string) $plan->Price,
+					'title' => (string)$plan->Title,
+					'description' => (string)$plan->Description,
+					'order_frequency' => (string)$plan->OrderFrequency,
+					'product_listings' => (string)$plan->ProductListings,
+					'bulk_listing' => (string)$plan->BulkListing,
+					'price' => (string)$plan->Price,
 				);
 			}
 		}
@@ -208,16 +208,16 @@ class ControllerOpenbayAmazon extends Controller {
 
 		if ($response) {
 			$plan = array(
-				'merchant_id' => (string) $response->MerchantId,
-				'user_status' => (string) $response->UserStatus,
-				'title' => (string) $response->Title,
-				'description' => (string) $response->Description,
-				'price' => (string) $response->Price,
-				'order_frequency' => (string) $response->OrderFrequency,
-				'product_listings' => (string) $response->ProductListings,
-				'listings_remain' => (string) $response->ListingsRemain,
-				'listings_reserved' => (string) $response->ListingsReserved,
-				'bulk_listing' => (string) $response->BulkListing,
+				'merchant_id' => (string)$response->MerchantId,
+				'user_status' => (string)$response->UserStatus,
+				'title' => (string)$response->Title,
+				'description' => (string)$response->Description,
+				'price' => (string)$response->Price,
+				'order_frequency' => (string)$response->OrderFrequency,
+				'product_listings' => (string)$response->ProductListings,
+				'listings_remain' => (string)$response->ListingsRemain,
+				'listings_reserved' => (string)$response->ListingsReserved,
+				'bulk_listing' => (string)$response->BulkListing,
 			);
 		}
 
@@ -797,7 +797,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$bulk_listing_status = false;
 		if ($pingInfo) {
-			$bulk_listing_status = ((string) $pingInfo->BulkListing == 'true') ? true : false;
+			$bulk_listing_status = ((string)$pingInfo->BulkListing == 'true') ? true : false;
 		}
 
 		if (!empty($this->request->get['filter_marketplace'])) {
@@ -961,7 +961,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$bulk_linking_status = false;
 		if ($pingInfo) {
-			$bulk_linking_status = ((string) $pingInfo->BulkLinking == 'true') ? true : false;
+			$bulk_linking_status = ((string)$pingInfo->BulkLinking == 'true') ? true : false;
 		}
 
 		$this->data['bulk_linking_status'] = $bulk_linking_status;

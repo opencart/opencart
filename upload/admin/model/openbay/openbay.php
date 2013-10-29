@@ -540,11 +540,11 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		if (!empty($data['filter_price'])) {
-			$sql .= " AND p.price >= '" . (double) $data['filter_price'] . "'";
+			$sql .= " AND p.price >= '" . (double)$data['filter_price'] . "'";
 		}
 
 		if (!empty($data['filter_price_to'])) {
-			$sql .= " AND p.price <= '" . (double) $data['filter_price_to'] . "'";
+			$sql .= " AND p.price <= '" . (double)$data['filter_price_to'] . "'";
 		}
 
 		if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {
@@ -684,11 +684,11 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		if (!empty($data['filter_price'])) {
-			$sql .= " AND p.price >= '" . (double) $data['filter_price'] . "'";
+			$sql .= " AND p.price >= '" . (double)$data['filter_price'] . "'";
 		}
 
 		if (!empty($data['filter_price_to'])) {
-			$sql .= " AND p.price <= '" . (double) $data['filter_price_to'] . "'";
+			$sql .= " AND p.price <= '" . (double)$data['filter_price_to'] . "'";
 		}
 
 		if (isset($data['filter_quantity']) && !is_null($data['filter_quantity'])) {

@@ -132,9 +132,7 @@ class ControllerPlayProduct extends Controller{
 	private function validateAuth() {
 		$this->openbay->play->log('validateAuth()');
 
-		if($this->request->post['token'] == $this->config->get('obp_play_token') &&
-		   $this->request->post['secret'] == $this->config->get('obp_play_secret'))
-		{
+		if($this->request->post['token'] == $this->config->get('obp_play_token') && $this->request->post['secret'] == $this->config->get('obp_play_secret')) {
 			return true;
 		}else{
 			return false;

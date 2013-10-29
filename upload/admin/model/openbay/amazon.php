@@ -319,7 +319,7 @@ class ModelOpenbayAmazon extends Model {
 			$this->load->model('openstock/openstock');
 			$this->load->model('tool/image');
 			foreach($rows as $row) {
-				 if(!$this->productLinkExists($row['product_id'], $row['var'])) {
+				if(!$this->productLinkExists($row['product_id'], $row['var'])) {
 					$result[] = $row;
 				}
 				$stockOpts = $this->model_openstock_openstock->getProductOptionStocks($row['product_id']);
@@ -349,12 +349,13 @@ class ModelOpenbayAmazon extends Model {
 	}
 
 	private function productLinkExists($product_id, $var) {
-		 $link = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = " . (int)$product_id . " AND var = '" . $this->db->escape($var) . "'")->row;
-		 if(empty($link)) {
+		$link = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = " . (int)$product_id . " AND var = '" . $this->db->escape($var) . "'")->row;
+
+		if(empty($link)) {
 			 return false;
-		 } else {
+		} else {
 			 return true;
-		 }
+		}
 	}
 
 	public function getOrderStatusString($orderId) {

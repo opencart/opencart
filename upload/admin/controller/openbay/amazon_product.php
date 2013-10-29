@@ -155,9 +155,6 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$this->data['edit_product_category'] = '';
 		}
 
-		/*
-		 * Load available categories
-		 */
 		$this->data['amazon_categories'] = array();
 
 		$amazon_templates = $this->openbay->amazon->getCategoryTemplates();
@@ -172,8 +169,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			$this->data['amazon_categories'][] = $categoryData;
 		}
 
-
-		 if($listingSaved) {
+		if($listingSaved) {
 			$this->data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&edit_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
 		} else {
 			$this->data['template_parser_url'] = $this->url->link('openbay/amazon_product/parseTemplateAjax&product_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');

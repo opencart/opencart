@@ -304,9 +304,9 @@ class ControllerAmazonOrder extends Controller {
 		$this->model_amazon_order->addAmazonOrderProducts($orderId, $productMapping);
 
 		foreach($products as $product) {
-		   if($product['product_id'] != 0) {
-			   $this->model_amazon_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
-		   }
+			if($product['product_id'] != 0) {
+				$this->model_amazon_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
+			}
 		}
 
 		$logger->write('Order ' . $amazonOrderId . ' was added to the database (ID: ' . $orderId . ')');
@@ -318,7 +318,6 @@ class ControllerAmazonOrder extends Controller {
 
 		$this->model_amazon_order->acknowledgeOrder($orderId);
 
-		//send an email to the administrator about the sale
 		if($this->config->get('openbay_amazon_notify_admin') == 1){
 			$this->openbay->newOrderAdminNotify($orderId, $orderStatus);
 		}

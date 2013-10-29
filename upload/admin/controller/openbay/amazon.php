@@ -1,6 +1,5 @@
 <?php
 class ControllerOpenbayAmazon extends Controller {
-
 	public function stockUpdates() {
 		$this->data = array_merge($this->data, $this->load->language('openbay/amazon_stockupdates'));
 
@@ -59,7 +58,8 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$xml = $this->openbay->amazon->getStockUpdatesStatus($requestArgs);
 		$simpleXmlObj = simplexml_load_string($xml);
-		 $this->data['tableData'] = array();
+		$this->data['tableData'] = array();
+
 		if($simpleXmlObj !== false) {
 
 			$tableData = array();

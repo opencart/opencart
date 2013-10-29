@@ -7,7 +7,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
-
 		$this->data['breadcrumbs'] = array();
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
@@ -58,9 +57,9 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$xml = $this->openbay->amazonus->getStockUpdatesStatus($requestArgs);
 		$simpleXmlObj = simplexml_load_string($xml);
-		 $this->data['tableData'] = array();
-		if($simpleXmlObj !== false) {
+		$this->data['tableData'] = array();
 
+		if($simpleXmlObj !== false) {
 			$tableData = array();
 
 			foreach($simpleXmlObj->update as $updateNode) {
@@ -79,7 +78,6 @@ class ControllerOpenbayAmazonus extends Controller {
 			}
 
 			$this->data['tableData'] = $tableData;
-
 		} else {
 			$this->data['error'] = 'Could not connect to OpenBay PRO API.';
 		}
@@ -87,8 +85,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['token'] = $this->session->data['token'];
 
 		$this->response->setOutput($this->render());
-
-
 	}
 
 	public function index() {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ModelPaymentPPProUK extends Model {
   	public function getMethod($address, $total) { 
 		$this->language->load('payment/pp_pro_uk');

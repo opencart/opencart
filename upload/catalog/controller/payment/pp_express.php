@@ -556,13 +556,7 @@ class ControllerPaymentPPExpress extends Controller {
             );
         }
 
-        /**
-         * Vouchers
-         *
-         * @todo
-         */
         $this->data['vouchers'] = array();
-
 
         if($this->cart->hasShipping()) {
 

@@ -1,7 +1,5 @@
 <?php
-
 class ControllerModuleAmazonCheckoutLayout extends Controller {
-
     public function index() {   
 		$this->language->load('module/amazon_checkout_layout');
 
@@ -97,5 +95,5 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
             return false;
         }
     }
-
 }
+?>

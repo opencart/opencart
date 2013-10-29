@@ -49,13 +49,13 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
- 		if (isset($this->error['warning'])) {
+		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
 			$this->data['error_warning'] = '';
 		}
 
- 		if (isset($this->error['email'])) {
+		if (isset($this->error['email'])) {
 			$this->data['error_email'] = $this->error['email'];
 		} else {
 			$this->data['error_email'] = '';
@@ -63,23 +63,23 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$this->data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),      		
-      		'separator' => false
-   		);
+			'separator' => false
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_payment'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_payment'),
 			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
-   		);
+			'separator' => ' :: '
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('payment/pp_standard', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
-   		);
+			'separator' => ' :: '
+		);
 
 		$this->data['action'] = $this->url->link('payment/pp_standard', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -108,7 +108,7 @@ class ControllerPaymentPPStandard extends Controller {
 		} else {
 			$this->data['pp_standard_debug'] = $this->config->get('pp_standard_debug');
 		}
-		
+
 		if (isset($this->request->post['pp_standard_total'])) {
 			$this->data['pp_standard_total'] = $this->request->post['pp_standard_total'];
 		} else {
@@ -120,37 +120,37 @@ class ControllerPaymentPPStandard extends Controller {
 		} else {
 			$this->data['pp_standard_canceled_reversal_status_id'] = $this->config->get('pp_standard_canceled_reversal_status_id');
 		}
-		
+
 		if (isset($this->request->post['pp_standard_completed_status_id'])) {
 			$this->data['pp_standard_completed_status_id'] = $this->request->post['pp_standard_completed_status_id'];
 		} else {
 			$this->data['pp_standard_completed_status_id'] = $this->config->get('pp_standard_completed_status_id');
 		}	
-		
+
 		if (isset($this->request->post['pp_standard_denied_status_id'])) {
 			$this->data['pp_standard_denied_status_id'] = $this->request->post['pp_standard_denied_status_id'];
 		} else {
 			$this->data['pp_standard_denied_status_id'] = $this->config->get('pp_standard_denied_status_id');
 		}
-		
+
 		if (isset($this->request->post['pp_standard_expired_status_id'])) {
 			$this->data['pp_standard_expired_status_id'] = $this->request->post['pp_standard_expired_status_id'];
 		} else {
 			$this->data['pp_standard_expired_status_id'] = $this->config->get('pp_standard_expired_status_id');
 		}
-				
+
 		if (isset($this->request->post['pp_standard_failed_status_id'])) {
 			$this->data['pp_standard_failed_status_id'] = $this->request->post['pp_standard_failed_status_id'];
 		} else {
 			$this->data['pp_standard_failed_status_id'] = $this->config->get('pp_standard_failed_status_id');
 		}	
-								
+
 		if (isset($this->request->post['pp_standard_pending_status_id'])) {
 			$this->data['pp_standard_pending_status_id'] = $this->request->post['pp_standard_pending_status_id'];
 		} else {
 			$this->data['pp_standard_pending_status_id'] = $this->config->get('pp_standard_pending_status_id');
 		}
-									
+
 		if (isset($this->request->post['pp_standard_processed_status_id'])) {
 			$this->data['pp_standard_processed_status_id'] = $this->request->post['pp_standard_processed_status_id'];
 		} else {
@@ -194,7 +194,7 @@ class ControllerPaymentPPStandard extends Controller {
 		} else {
 			$this->data['pp_standard_status'] = $this->config->get('pp_standard_status');
 		}
-		
+
 		if (isset($this->request->post['pp_standard_sort_order'])) {
 			$this->data['pp_standard_sort_order'] = $this->request->post['pp_standard_sort_order'];
 		} else {

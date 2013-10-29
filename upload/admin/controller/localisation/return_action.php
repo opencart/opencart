@@ -1,31 +1,31 @@
 <?php 
 class ControllerLocalisationReturnAction extends Controller { 
 	private $error = array();
-   
-  	public function index() {
+
+	public function index() {
 		$this->language->load('localisation/return_action');
-	
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$this->load->model('localisation/return_action');
-		
-    	$this->getList();
-  	}
-              
-  	public function insert() {
+
+		$this->getList();
+	}
+
+	public function insert() {
 		$this->language->load('localisation/return_action');
-	
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$this->load->model('localisation/return_action');
-			
+
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-      		$this->model_localisation_return_action->addReturnAction($this->request->post);
-		  	
+			$this->model_localisation_return_action->addReturnAction($this->request->post);
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -37,61 +37,61 @@ class ControllerLocalisationReturnAction extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-						
-      		$this->redirect($this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-		}
-	
-    	$this->getForm();
-  	}
 
-  	public function update() {
-		$this->language->load('localisation/return_action');
-	
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
-		$this->load->model('localisation/return_action');
-		
-    	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-	  		$this->model_localisation_return_action->editReturnAction($this->request->get['return_action_id'], $this->request->post);
-			
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-			
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-			
 			$this->redirect($this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-    	}
-	
-    	$this->getForm();
-  	}
+		}
 
-  	public function delete() {
+		$this->getForm();
+	}
+
+	public function update() {
 		$this->language->load('localisation/return_action');
-	
-    	$this->document->setTitle($this->language->get('heading_title'));
-		
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
 		$this->load->model('localisation/return_action');
-		
-    	if (isset($this->request->post['selected']) && $this->validateDelete()) {
+
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
+			$this->model_localisation_return_action->editReturnAction($this->request->get['return_action_id'], $this->request->post);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+
+			$this->redirect($this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		}
+
+		$this->getForm();
+	}
+
+	public function delete() {
+		$this->language->load('localisation/return_action');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('localisation/return_action');
+
+		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $return_action_id) {
 				$this->model_localisation_return_action->deleteReturnAction($return_action_id);
 			}
-			      		
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -103,34 +103,34 @@ class ControllerLocalisationReturnAction extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-			
+
 			$this->redirect($this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-   		}
-	
-    	$this->getList();
-  	}
-    
-  	protected function getList() {
+		}
+
+		$this->getList();
+	}
+
+	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
 			$sort = 'name';
 		}
-		
+
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
 		} else {
 			$order = 'ASC';
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
 		}
-				
+
 		$url = '';
-			
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -138,25 +138,25 @@ class ControllerLocalisationReturnAction extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+		$this->data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
-   		);
+			'separator' => false
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
-   		);
-							
+			'separator' => ' :: '
+		);
+
 		$this->data['insert'] = $this->url->link('localisation/return_action/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['delete'] = $this->url->link('localisation/return_action/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
 
@@ -168,19 +168,19 @@ class ControllerLocalisationReturnAction extends Controller {
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit' => $this->config->get('config_admin_limit')
 		);
-		
+
 		$return_action_total = $this->model_localisation_return_action->getTotalReturnActions();
-	
+
 		$results = $this->model_localisation_return_action->getReturnActions($data);
- 
-    	foreach ($results as $result) {
+
+		foreach ($results as $result) {
 			$action = array();
-			
+
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('localisation/return_action/update', 'token=' . $this->session->data['token'] . '&return_action_id=' . $result['return_action_id'] . $url, 'SSL')
 			);
-						
+
 			$this->data['return_actions'][] = array(
 				'return_action_id' => $result['return_action_id'],
 				'name'             => $result['name'],
@@ -188,26 +188,26 @@ class ControllerLocalisationReturnAction extends Controller {
 				'action'           => $action
 			);
 		}	
-	
+
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_action'] = $this->language->get('column_action');		
-		
+
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
- 
- 		if (isset($this->error['warning'])) {
+
+		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
 			$this->data['error_warning'] = '';
 		}
-		
+
 		if (isset($this->session->data['success'])) {
 			$this->data['success'] = $this->session->data['success'];
-		
+
 			unset($this->session->data['success']);
 		} else {
 			$this->data['success'] = '';
@@ -224,15 +224,15 @@ class ControllerLocalisationReturnAction extends Controller {
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-		
+
 		$this->data['sort_name'] = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
-		
+
 		$url = '';
 
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
-												
+
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
@@ -243,7 +243,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
-			
+
 		$this->data['pagination'] = $pagination->render();
 
 		$this->data['sort'] = $sort;
@@ -254,32 +254,32 @@ class ControllerLocalisationReturnAction extends Controller {
 			'common/header',
 			'common/footer'
 		);
-				
+
 		$this->response->setOutput($this->render());
-  	}
-  
-  	protected function getForm() {
-     	$this->data['heading_title'] = $this->language->get('heading_title');
+	}
 
-    	$this->data['entry_name'] = $this->language->get('entry_name');
+	protected function getForm() {
+		$this->data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['button_save'] = $this->language->get('button_save');
-    	$this->data['button_cancel'] = $this->language->get('button_cancel');
-    
- 		if (isset($this->error['warning'])) {
+		$this->data['entry_name'] = $this->language->get('entry_name');
+
+		$this->data['button_save'] = $this->language->get('button_save');
+		$this->data['button_cancel'] = $this->language->get('button_cancel');
+
+		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
 			$this->data['error_warning'] = '';
 		}
 
- 		if (isset($this->error['name'])) {
+		if (isset($this->error['name'])) {
 			$this->data['error_name'] = $this->error['name'];
 		} else {
 			$this->data['error_name'] = array();
 		}
-		
+
 		$url = '';
-			
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -287,37 +287,37 @@ class ControllerLocalisationReturnAction extends Controller {
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+		$this->data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
-   		);
+			'separator' => false
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
-   		);
-		
+			'separator' => ' :: '
+		);
+
 		if (!isset($this->request->get['return_action_id'])) {
 			$this->data['action'] = $this->url->link('localisation/return_action/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
 			$this->data['action'] = $this->url->link('localisation/return_action/update', 'token=' . $this->session->data['token'] . '&return_action_id=' . $this->request->get['return_action_id'] . $url, 'SSL');
 		}
-			
+
 		$this->data['cancel'] = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		
+
 		$this->load->model('localisation/language');
-		
+
 		$this->data['languages'] = $this->model_localisation_language->getLanguages();
-		
+
 		if (isset($this->request->post['return_action'])) {
 			$this->data['return_action'] = $this->request->post['return_action'];
 		} elseif (isset($this->request->get['return_action_id'])) {
@@ -331,48 +331,48 @@ class ControllerLocalisationReturnAction extends Controller {
 			'common/header',
 			'common/footer'
 		);
-				
-		$this->response->setOutput($this->render());	
-  	}
-  	
-	protected function validateForm() {
-    	if (!$this->user->hasPermission('modify', 'localisation/return_action')) {
-      		$this->error['warning'] = $this->language->get('error_permission');
-    	}
-	
-    	foreach ($this->request->post['return_action'] as $language_id => $value) {
-      		if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
-        		$this->error['name'][$language_id] = $this->language->get('error_name');
-      		}
-    	}
-		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
-  	}
 
-  	protected function validateDelete() {
+		$this->response->setOutput($this->render());	
+	}
+
+	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'localisation/return_action')) {
-      		$this->error['warning'] = $this->language->get('error_permission');
-    	}
-		
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
+		foreach ($this->request->post['return_action'] as $language_id => $value) {
+			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 32)) {
+				$this->error['name'][$language_id] = $this->language->get('error_name');
+			}
+		}
+
+		if (!$this->error) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	protected function validateDelete() {
+		if (!$this->user->hasPermission('modify', 'localisation/return_action')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
+
 		$this->load->model('sale/return');
-		
+
 		foreach ($this->request->post['selected'] as $return_action_id) {
 			$return_total = $this->model_sale_return->getTotalReturnsByReturnActionId($return_action_id);
-		
+
 			if ($return_total) {
-	  			$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);	
+				$this->error['warning'] = sprintf($this->language->get('error_return'), $return_total);
 			}  
-	  	}
-		
-		if (!$this->error) { 
-	  		return true;
-		} else {
-	  		return false;
 		}
-  	}	  
+
+		if (!$this->error) { 
+			return true;
+		} else {
+			return false;
+		}
+	}
 }
 ?>

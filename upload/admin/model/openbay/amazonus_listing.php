@@ -97,7 +97,7 @@ class ModelOpenbayAmazonusListing extends Model {
 		if ($response['status'] === 1) {
 			$this->db->query("
 			REPLACE INTO `" . DB_PREFIX . "amazonus_product`
-			SET `product_id` = " . (int) $data['product_id'] . ",
+			SET `product_id` = " . (int)$data['product_id'] . ",
 				`status` = 'uploaded',
 				`version` = 3,
 				`var` = ''
@@ -115,7 +115,7 @@ class ModelOpenbayAmazonusListing extends Model {
 		$imploded_ids = array();
 
 		foreach ($product_ids as $product_id) {
-			$imploded_ids[] = (int) $product_id;
+			$imploded_ids[] = (int)$product_id;
 		}
 
 		$imploded_ids = implode(',', $imploded_ids);
@@ -165,7 +165,7 @@ class ModelOpenbayAmazonusListing extends Model {
 				foreach ($request as $product) {
 					$this->db->query("
 						REPLACE INTO `" . DB_PREFIX . "amazonus_product`
-						SET `product_id` = " . (int) $product['product_id'] . ",
+						SET `product_id` = " . (int)$product['product_id'] . ",
 							`status` = 'uploaded',
 							`var` = '',
 							`version` = 3
@@ -184,7 +184,7 @@ class ModelOpenbayAmazonusListing extends Model {
 			foreach ($products as $product) {
 				$this->db->query("
 					REPLACE INTO " . DB_PREFIX . "amazonus_product_search (product_id, `status`)
-					VALUES (" . (int) $product['product_id'] . ", 'searching')");
+					VALUES (" . (int)$product['product_id'] . ", 'searching')");
 			}
 		}
 

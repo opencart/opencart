@@ -173,7 +173,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		}
 
 
-		 if($listingSaved) {
+		if($listingSaved) {
 			$this->data['template_parser_url'] = $this->url->link('openbay/amazonus_product/parseTemplateAjax&edit_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');
 		} else {
 			$this->data['template_parser_url'] = $this->url->link('openbay/amazonus_product/parseTemplateAjax&product_id=' . $product_id, 'token=' . $this->session->data['token'], 'SSL');

@@ -181,7 +181,7 @@ class ModelOpenbayAmazon extends Model {
 			$quick = $this->db->query("
 				SELECT *
 				FROM `" . DB_PREFIX . "amazon_product`
-				WHERE `product_id` = " . (int) $product_id . " AND `version` = 3")->row;
+				WHERE `product_id` = " . (int)$product_id . " AND `version` = 3")->row;
 
 			if($quick) {
 				return 'error_quick';
@@ -276,7 +276,7 @@ class ModelOpenbayAmazon extends Model {
 			LEFT JOIN `" . DB_PREFIX . "product` as `p`
 			ON `apl`.`product_id` = `p`.`product_id`";
 		if($product_id != 'all') {
-			$query .= " WHERE `apl`.`product_id` = '" . (int) $product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
+			$query .= " WHERE `apl`.`product_id` = '" . (int)$product_id . "' AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}else{
 			$query .= "WHERE `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 		}
@@ -362,7 +362,7 @@ class ModelOpenbayAmazon extends Model {
 		$row = $this->db->query("
 			SELECT `s`.`key`
 			FROM `" . DB_PREFIX . "order` `o`
-			JOIN `" . DB_PREFIX . "setting` `s` ON `o`.`order_id` = " . (int) $orderId . " AND `s`.`value` = `o`.`order_status_id`
+			JOIN `" . DB_PREFIX . "setting` `s` ON `o`.`order_id` = " . (int)$orderId . " AND `s`.`value` = `o`.`order_status_id`
 			WHERE `s`.`key` = 'openbay_amazon_order_status_shipped' OR `s`.`key` = 'openbay_amazon_order_status_canceled'
 			LIMIT 1")->row;
 
@@ -394,14 +394,14 @@ class ModelOpenbayAmazon extends Model {
 			SET `courier_id` = '" . $courierId . "',
 				`courier_other` = " . (int)!$courierFromList . ",
 				`tracking_no` = '" . $trackingNo . "'
-			WHERE `order_id` = " . (int) $orderId . "");
+			WHERE `order_id` = " . (int)$orderId . "");
 	}
 
 	public function getAmazonOrderId($orderId) {
 		$row = $this->db->query("
 			SELECT `amazon_order_id`
 			FROM `" . DB_PREFIX . "amazon_order`
-			WHERE `order_id` = " . (int) $orderId . "
+			WHERE `order_id` = " . (int)$orderId . "
 			LIMIT 1")->row;
 
 		if (isset($row['amazon_order_id']) && !empty($row['amazon_order_id'])) {
@@ -416,7 +416,7 @@ class ModelOpenbayAmazon extends Model {
 			SELECT `aop`.`amazon_order_item_id`, `op`.`quantity`
 			FROM `" . DB_PREFIX . "amazon_order_product` `aop`
 			JOIN `" . DB_PREFIX . "order_product` `op` ON `op`.`order_product_id` = `aop`.`order_product_id`
-				AND `op`.`order_id` = " . (int) $orderId)->rows;
+				AND `op`.`order_id` = " . (int)$orderId)->rows;
 	}
 
 	public function getProductQuantity($product_id, $var = '') {
@@ -480,7 +480,7 @@ class ModelOpenbayAmazon extends Model {
 			$sql .= " AND aps.status = '" . $this->db->escape($data['status']) . "'";
 		}
 
-		$sql .= " LIMIT " . (int) $data['start'] . ", " . (int) $data['limit'];
+		$sql .= " LIMIT " . (int)$data['start'] . ", " . (int)$data['limit'];
 
 		$results = array();
 

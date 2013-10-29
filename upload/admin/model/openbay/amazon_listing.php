@@ -121,7 +121,7 @@ class ModelOpenbayAmazonListing extends Model {
 		if($response['status'] === 1) {
 			$this->db->query("
 				REPLACE INTO `" . DB_PREFIX . "amazon_product`
-				SET `product_id` = " . (int) $data['product_id'] . ",
+				SET `product_id` = " . (int)$data['product_id'] . ",
 					`status` = 'uploaded',
 					`marketplaces` = '" . $this->db->escape($data['marketplace']) . "',
 					`version` = 3,
@@ -141,7 +141,7 @@ class ModelOpenbayAmazonListing extends Model {
 			foreach ($products as $product) {
 				$this->db->query("
 					REPLACE INTO " . DB_PREFIX . "amazon_product_search (product_id, `status`, marketplace)
-					VALUES (" . (int) $product['product_id'] . ", 'searching', '" . $this->db->escape($product['marketplace']) . "')");
+					VALUES (" . (int)$product['product_id'] . ", 'searching', '" . $this->db->escape($product['marketplace']) . "')");
 			}
 		}
 
@@ -157,7 +157,7 @@ class ModelOpenbayAmazonListing extends Model {
 		$imploded_ids = array();
 
 		foreach ($product_ids as $product_id) {
-			$imploded_ids[] = (int) $product_id;
+			$imploded_ids[] = (int)$product_id;
 		}
 
 		$imploded_ids = implode(',', $imploded_ids);
@@ -216,7 +216,7 @@ class ModelOpenbayAmazonListing extends Model {
 				foreach ($request as $product) {
 					$this->db->query("
 						REPLACE INTO `" . DB_PREFIX . "amazon_product`
-						SET `product_id` = " . (int) $product['product_id'] . ",
+						SET `product_id` = " . (int)$product['product_id'] . ",
 							`status` = 'uploaded',
 							`marketplaces` = '" . $this->db->escape($data['marketplace']) . "',
 							`version` = 3,

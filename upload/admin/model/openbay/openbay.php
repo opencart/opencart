@@ -389,7 +389,7 @@ class ModelOpenbayOpenbay extends Model {
 			'secret' => '',
 			'server' => 1,
 			'domain' => $domain,
-			'openbay_version' => (int) $this->config->get('openbay_version'),
+			'openbay_version' => (int)$this->config->get('openbay_version'),
 			'data' => $post,
 			'content_type' => $content_type,
 			'ocversion' => VERSION
@@ -493,13 +493,13 @@ class ModelOpenbayOpenbay extends Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "play_product_insert` `play` ON (`p`.`product_id` = `play`.`product_id`)";
 		}
 
-		$sql .= " WHERE pd.language_id = '" . (int) $this->config->get('config_language_id') . "'";
+		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_category'])) {
 			if ($data['filter_category'] == 'none') {
 				$sql .= " AND p2c.category_id IS NULL";
 			} else {
-				$sql .= " AND p2c.category_id = '" . (int) $data['filter_category'] . "'";
+				$sql .= " AND p2c.category_id = '" . (int)$data['filter_category'] . "'";
 			}
 		}
 
@@ -527,7 +527,7 @@ class ModelOpenbayOpenbay extends Model {
 			if ($data['filter_market_id'] == 0) {
 				$sql .= " AND play.play_product_insert_id IS NULL";
 			} else {
-				$sql .= " AND play.status = '" . (int) $data['filter_market_id'] . "'";
+				$sql .= " AND play.status = '" . (int)$data['filter_market_id'] . "'";
 			}
 		}
 
@@ -556,7 +556,7 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-			$sql .= " AND p.status = '" . (int) $data['filter_status'] . "'";
+			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if (isset($data['filter_sku']) && !is_null($data['filter_sku'])) {
@@ -568,7 +568,7 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		if (isset($data['filter_manufacturer']) && !is_null($data['filter_manufacturer'])) {
-			$sql .= " AND pd.description != '" . (int) $data['filter_manufacturer'] . "'";
+			$sql .= " AND pd.description != '" . (int)$data['filter_manufacturer'] . "'";
 		}
 
 		$query = $this->db->query($sql);
@@ -625,13 +625,13 @@ class ModelOpenbayOpenbay extends Model {
 			$sql .= " LEFT JOIN `" . DB_PREFIX . "play_product_insert` `play` ON (`p`.`product_id` = `play`.`product_id`)";
 		}
 
-		$sql .= " WHERE pd.language_id = '" . (int) $this->config->get('config_language_id') . "'";
+		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_category'])) {
 			if ($data['filter_category'] == 'none') {
 				$sql .= " AND p2c.category_id IS NULL";
 			} else {
-				$sql .= " AND p2c.category_id = '" . (int) $data['filter_category'] . "'";
+				$sql .= " AND p2c.category_id = '" . (int)$data['filter_category'] . "'";
 			}
 		}
 
@@ -671,7 +671,7 @@ class ModelOpenbayOpenbay extends Model {
 			if ($data['filter_market_id'] == 0) {
 				$sql .= " AND play.play_product_insert_id IS NULL";
 			} else {
-				$sql .= " AND play.status = '" . (int) $data['filter_market_id'] . "'";
+				$sql .= " AND play.status = '" . (int)$data['filter_market_id'] . "'";
 			}
 		}
 
@@ -700,7 +700,7 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		if (isset($data['filter_status']) && !is_null($data['filter_status'])) {
-			$sql .= " AND p.status = '" . (int) $data['filter_status'] . "'";
+			$sql .= " AND p.status = '" . (int)$data['filter_status'] . "'";
 		}
 
 		if (isset($data['filter_sku']) && !is_null($data['filter_sku'])) {
@@ -712,7 +712,7 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		if (isset($data['filter_manufacturer']) && !is_null($data['filter_manufacturer'])) {
-			$sql .= " AND pd.description != '" . (int) $data['filter_manufacturer'] . "'";
+			$sql .= " AND pd.description != '" . (int)$data['filter_manufacturer'] . "'";
 		}
 
 		$sql .= " GROUP BY p.product_id";
@@ -747,7 +747,7 @@ class ModelOpenbayOpenbay extends Model {
 				$data['limit'] = 20;
 			}
 
-			$sql .= " LIMIT " . (int) $data['start'] . "," . (int) $data['limit'];
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
 		}
 
 		$query = $this->db->query($sql);

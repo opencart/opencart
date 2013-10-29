@@ -133,18 +133,18 @@ class ModelAmazonOrder extends Model {
     public function updateOrderStatus($orderId, $statusId) {
         $this->db->query("
             INSERT INTO `" . DB_PREFIX . "order_history` (`order_id`, `order_status_id`, `notify`, `comment`, `date_added`)
-            VALUES (" . (int) $orderId . ", " . (int) $statusId . ", 0, '', NOW())");
+            VALUES (" . (int)$orderId . ", " . (int)$statusId . ", 0, '', NOW())");
         
         $this->db->query("
             UPDATE `" . DB_PREFIX . "order`
-            SET `order_status_id` = " . (int) $statusId . "
-            WHERE `order_id` = " . (int) $orderId);
+            SET `order_status_id` = " . (int)$statusId . "
+            WHERE `order_id` = " . (int)$orderId);
     }
     
     public function addAmazonOrder($orderId, $amazonOrderId) {
         $this->db->query("
             INSERT INTO `" . DB_PREFIX . "amazon_order` (`order_id`, `amazon_order_id`)
-            VALUES (" . (int) $orderId . ", '" . $this->db->escape($amazonOrderId) . "')");
+            VALUES (" . (int)$orderId . ", '" . $this->db->escape($amazonOrderId) . "')");
     }
     
     /* $data = array(PRODUCT_SKU => ORDER_ITEM_ID) */
@@ -154,7 +154,7 @@ class ModelAmazonOrder extends Model {
             $row = $this->db->query("
                 SELECT `order_product_id`
                 FROM `" . DB_PREFIX . "order_product`
-                WHERE `model` = '" . $this->db->escape($sku) . "' AND `order_id` = " . (int) $orderId . "
+                WHERE `model` = '" . $this->db->escape($sku) . "' AND `order_id` = " . (int)$orderId . "
                 LIMIT 1")->row;
             
             if (!isset($row['order_product_id']) || empty($row['order_product_id'])) {
@@ -165,7 +165,7 @@ class ModelAmazonOrder extends Model {
             
             $this->db->query("
                 INSERT INTO `" . DB_PREFIX . "amazon_order_product` (`order_product_id`, `amazon_order_item_id`)
-                VALUES (" . (int) $orderProductId . ", '" . $this->db->escape($orderItemId) . "')");
+                VALUES (" . (int)$orderProductId . ", '" . $this->db->escape($orderItemId) . "')");
         }
     }
     
@@ -187,7 +187,7 @@ class ModelAmazonOrder extends Model {
         $row = $this->db->query("
             SELECT `order_status_id`
             FROM `" . DB_PREFIX . "order`
-            WHERE `order_id` = " . (int) $orderId)->row;
+            WHERE `order_id` = " . (int)$orderId)->row;
         
         if (isset($row['order_status_id']) && !empty($row['order_status_id'])) {
             return $row['order_status_id'];
@@ -200,7 +200,7 @@ class ModelAmazonOrder extends Model {
         $row = $this->db->query("
             SELECT `amazon_order_id`
             FROM `" . DB_PREFIX . "amazon_order`
-            WHERE `order_id` = " . (int) $orderId . "
+            WHERE `order_id` = " . (int)$orderId . "
             LIMIT 1")->row;
         
         if (isset($row['amazon_order_id']) && !empty($row['amazon_order_id'])) {

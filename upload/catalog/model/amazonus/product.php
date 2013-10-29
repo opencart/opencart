@@ -118,10 +118,10 @@ class ModelAmazonusProduct extends Model {
             
             $this->db->query("
                 UPDATE " . DB_PREFIX . "amazonus_product_search
-                SET matches = " . (int) $resultsFound . ",
+                SET matches = " . (int)$resultsFound . ",
                     `data` = '" . $this->db->escape($data) . "',
                     `status` = 'finished'
-                WHERE product_id = " . (int) $result['product_id'] . "
+                WHERE product_id = " . (int)$result['product_id'] . "
                 LIMIT 1
             ");
         }
@@ -134,7 +134,7 @@ class ModelAmazonusProduct extends Model {
         $sqlValues = array();
         
         foreach ($data as $product) {
-            $sqlValues[] = " ('" . $this->db->escape($product['sku']) . "', " . (int) $product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double) $product['price'] . ") ";
+            $sqlValues[] = " ('" . $this->db->escape($product['sku']) . "', " . (int)$product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double) $product['price'] . ") ";
         }
         
         $sql .= implode(',', $sqlValues);

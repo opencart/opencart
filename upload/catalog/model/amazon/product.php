@@ -118,10 +118,10 @@ class ModelAmazonProduct extends Model {
             
             $this->db->query("
                 UPDATE " . DB_PREFIX . "amazon_product_search
-                SET matches = " . (int) $resultsFound . ",
+                SET matches = " . (int)$resultsFound . ",
                     `data` = '" . $this->db->escape($data) . "',
                     `status` = 'finished'
-                WHERE product_id = " . (int) $result['product_id'] . " AND
+                WHERE product_id = " . (int)$result['product_id'] . " AND
                       marketplace = '" . $this->db->escape($result['marketplace']) . "'
                 LIMIT 1
             ");
@@ -134,7 +134,7 @@ class ModelAmazonProduct extends Model {
         $sqlValues = array();
         
         foreach ($data as $product) {
-            $sqlValues[] = " ('" . $this->db->escape($product['marketplace']) . "', '" . $this->db->escape($product['sku']) . "', " . (int) $product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double) $product['price'] . ") ";
+            $sqlValues[] = " ('" . $this->db->escape($product['marketplace']) . "', '" . $this->db->escape($product['sku']) . "', " . (int)$product['quantity'] . ", '" . $this->db->escape($product['asin']) . "', " . (double) $product['price'] . ") ";
         }
         
         $sql .= implode(',', $sqlValues);

@@ -54,7 +54,6 @@ class ModelOpenbayAmazonus extends Model {
 
 		$marketplaces = isset($dataArray['marketplace_ids']) ? serialize($dataArray['marketplace_ids']) : serialize(array());
 
-		//Todo: better serialize
 		$dataEncoded = json_encode(array('fields' => $dataArray['fields']));
 
 		$this->db->query("

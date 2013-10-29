@@ -105,14 +105,14 @@ class ControllerAmazonusProduct extends Controller
 			return;
 		}
 
-		$action = trim((string) $dataXml->action);
+		$action = trim((string)$dataXml->action);
 
 		if ($action === "get_amazonus_product") {
 			if(!isset($dataXml->product_id)) {
 				$this->response->setOutput("error 005");
 				return;
 			}
-			$product_id = trim((string) $dataXml->product_id);
+			$product_id = trim((string)$dataXml->product_id);
 			if ($product_id === "all") {
 				$all_rows = $this->db->query("
 					SELECT * FROM `" . DB_PREFIX . "amazonus_product`

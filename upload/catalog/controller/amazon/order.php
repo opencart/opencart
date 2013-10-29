@@ -32,10 +32,10 @@ class ControllerAmazonOrder extends Controller {
 
 		$orderXml = simplexml_load_string($decrypted);
 
-		$amazonOrderStatus = trim(strtolower((string) $orderXml->Status));
+		$amazonOrderStatus = trim(strtolower((string)$orderXml->Status));
 
 		$amazonOrderId = (string)$orderXml->AmazonOrderId;
-		$orderStatus = $this->model_amazon_order->getMappedStatus((string) $orderXml->Status);
+		$orderStatus = $this->model_amazon_order->getMappedStatus((string)$orderXml->Status);
 
 		$logger->write('Received order ' . $amazonOrderId);
 
@@ -51,7 +51,7 @@ class ControllerAmazonOrder extends Controller {
 		/* Check if order comes from subscribed marketplace */
 
 		$currencyTo = $this->config->get('config_currency');
-		$orderCurrency = (string) $orderXml->Payment->CurrencyCode;
+		$orderCurrency = (string)$orderXml->Payment->CurrencyCode;
 
 		$products = array();
 
@@ -72,7 +72,7 @@ class ControllerAmazonOrder extends Controller {
 		foreach ($orderXml->Items->Item as $item) {
 
 			$totalPrice = $this->currency->convert((double)$item->Totals->Price, $orderCurrency, $currencyTo);
-			$taxTotal = (double) $item->Totals->Tax;
+			$taxTotal = (double)$item->Totals->Tax;
 
 			if ($taxTotal == 0 && $this->config->get('openbay_amazon_order_tax') > 0) {
 				$taxTotal = (double)$item->Totals->Price * ($this->config->get('openbay_amazon_order_tax') / 100) / (1 + $this->config->get('openbay_amazon_order_tax') / 100);
@@ -83,63 +83,63 @@ class ControllerAmazonOrder extends Controller {
 			$productsTotal += $totalPrice;
 			$productsTax += $taxTotal;
 
-			$productsShipping += $this->currency->convert((double) $item->Totals->Shipping, $orderCurrency, $currencyTo);
+			$productsShipping += $this->currency->convert((double)$item->Totals->Shipping, $orderCurrency, $currencyTo);
 
-			$shippingTax = (double) $item->Totals->ShippingTax;
+			$shippingTax = (double)$item->Totals->ShippingTax;
 
 			if ($shippingTax == 0 && $this->config->get('openbay_amazon_order_tax') > 0) {
-				$shippingTax = (double) $item->Totals->Shipping * ($this->config->get('openbay_amazon_order_tax') / 100) / (1 + $this->config->get('openbay_amazon_order_tax') / 100);
+				$shippingTax = (double)$item->Totals->Shipping * ($this->config->get('openbay_amazon_order_tax') / 100) / (1 + $this->config->get('openbay_amazon_order_tax') / 100);
 			}
 
 			$productsShippingTax += $this->currency->convert($shippingTax, $orderCurrency, $currencyTo);
 
-			$giftWrap += $this->currency->convert((double) $item->Totals->GiftWrap, $orderCurrency, $currencyTo);
+			$giftWrap += $this->currency->convert((double)$item->Totals->GiftWrap, $orderCurrency, $currencyTo);
 
-			$itemGiftWrapTax = (double) $item->Totals->GiftWrapTax;
+			$itemGiftWrapTax = (double)$item->Totals->GiftWrapTax;
 
 			if ($itemGiftWrapTax == 0 && $this->config->get('openbay_amazon_order_tax') > 0) {
-				$itemGiftWrapTax = (double) $item->Totals->GiftWrap * ($this->config->get('openbay_amazon_order_tax') / 100) / (1 + $this->config->get('openbay_amazon_order_tax') / 100);
+				$itemGiftWrapTax = (double)$item->Totals->GiftWrap * ($this->config->get('openbay_amazon_order_tax') / 100) / (1 + $this->config->get('openbay_amazon_order_tax') / 100);
 			}
 
 			$giftWrapTax += $this->currency->convert($itemGiftWrapTax, $orderCurrency, $currencyTo);
 
-			$productCount += (int) $item->Ordered;
+			$productCount += (int)$item->Ordered;
 
-			if ((int) $item->Ordered == 0) {
+			if ((int)$item->Ordered == 0) {
 				continue;
 			}
 
-			$productId = $this->model_amazon_order->getProductId((string) $item->Sku);
-			$productVar = $this->model_amazon_order->getProductVar((string) $item->Sku);
+			$productId = $this->model_amazon_order->getProductId((string)$item->Sku);
+			$productVar = $this->model_amazon_order->getProductVar((string)$item->Sku);
 
 			$products[] = array(
 				'product_id' => $productId,
 				'var' => $productVar,
-				'sku' => (string) $item->Sku,
-				'asin' => (string) $item->Asin,
-				'order_item_id' => (string) $item->OrderItemId,
-				'name' => (string) $item->Title,
-				'model' => (string) $item->Sku,
-				'quantity' => (int) $item->Ordered,
-				'price' => sprintf('%.4f', ($totalPrice - $taxTotal) / (int) $item->Ordered),
+				'sku' => (string)$item->Sku,
+				'asin' => (string)$item->Asin,
+				'order_item_id' => (string)$item->OrderItemId,
+				'name' => (string)$item->Title,
+				'model' => (string)$item->Sku,
+				'quantity' => (int)$item->Ordered,
+				'price' => sprintf('%.4f', ($totalPrice - $taxTotal) / (int)$item->Ordered),
 				'total' => sprintf('%.4f', $totalPrice - $taxTotal),
-				'tax' => $taxTotal / (int) $item->Ordered,
+				'tax' => $taxTotal / (int)$item->Ordered,
 				'reward' => '0',
 				'option' => $this->model_amazon_order->getProductOptionsByVar($productVar),
 				'download' => array(),
 			);
 
-			$productMapping[(string) $item->Sku] = (string) $item->OrderItemId;
+			$productMapping[(string)$item->Sku] = (string)$item->OrderItemId;
 		}
 
-		$total = sprintf('%.4f', $this->currency->convert((double) $orderXml->Payment->Amount, $orderCurrency, $currencyTo));
+		$total = sprintf('%.4f', $this->currency->convert((double)$orderXml->Payment->Amount, $orderCurrency, $currencyTo));
 
-		$addressLine2 = (string) $orderXml->Shipping->AddressLine2;
-		if ((string) $orderXml->Shipping->AddressLine3 != '') {
-			$addressLine2 .= ', ' . (string) $orderXml->Shipping->AddressLine3;
+		$addressLine2 = (string)$orderXml->Shipping->AddressLine2;
+		if ((string)$orderXml->Shipping->AddressLine3 != '') {
+			$addressLine2 .= ', ' . (string)$orderXml->Shipping->AddressLine3;
 		}
 
-		$customer_info = $this->db->query("SELECT `customer_id` FROM " . DB_PREFIX . "customer WHERE email = '" . $this->db->escape((string) $orderXml->Payment->Email) . "'")->row;
+		$customer_info = $this->db->query("SELECT `customer_id` FROM " . DB_PREFIX . "customer WHERE email = '" . $this->db->escape((string)$orderXml->Payment->Email) . "'")->row;
 		$customer_id = '0';
 
 		if(isset($customer_info['customer_id'])) {
@@ -147,10 +147,10 @@ class ControllerAmazonOrder extends Controller {
 		} else {
 			/* Add a new customer */
 			$customerData = array(
-				'firstname' => (string) $orderXml->Shipping->Name,
+				'firstname' => (string)$orderXml->Shipping->Name,
 				'lastname' => '',
-				'email' => (string) $orderXml->Payment->Email,
-				'telephone' => (string) $orderXml->Shipping->Phone,
+				'email' => (string)$orderXml->Payment->Email,
+				'telephone' => (string)$orderXml->Shipping->Phone,
 				'fax' => '',
 				'newsletter' => '0',
 				'customer_group_id' => $this->config->get('openbay_amazon_order_customer_group'),
@@ -174,11 +174,11 @@ class ControllerAmazonOrder extends Controller {
 			$customer_id = $this->db->getLastId();
 		}
 
-		$shippingFirstName = (string) $orderXml->Shipping->FirstName;
-		$shippingLastName = (string) $orderXml->Shipping->LastName;
+		$shippingFirstName = (string)$orderXml->Shipping->FirstName;
+		$shippingLastName = (string)$orderXml->Shipping->LastName;
 
 		if (empty($shippingFirstName) || empty($shippingLastName)) {
-			$shippingFirstName = (string) $orderXml->Shipping->Name;
+			$shippingFirstName = (string)$orderXml->Shipping->Name;
 			$shippingLastName = '';
 		}
 
@@ -187,38 +187,38 @@ class ControllerAmazonOrder extends Controller {
 			'store_id' => $this->config->get('config_store_id'),
 			'store_name' => $this->config->get('config_name') . ' / Amazon',
 			'store_url' => $this->config->get('config_url'),
-			'customer_id' => (int) $customer_id,
+			'customer_id' => (int)$customer_id,
 			'customer_group_id' => $this->config->get('openbay_amazon_order_customer_group'),
 			'firstname' => $shippingFirstName,
 			'lastname' => $shippingLastName,
-			'email' => (string) $orderXml->Payment->Email,
-			'telephone' => (string) $orderXml->Shipping->Phone,
+			'email' => (string)$orderXml->Payment->Email,
+			'telephone' => (string)$orderXml->Shipping->Phone,
 			'fax' => '',
 			'shipping_firstname' => $shippingFirstName,
 			'shipping_lastname' => $shippingLastName,
 			'shipping_company' => '',
-			'shipping_address_1' => (string) $orderXml->Shipping->AddressLine1,
+			'shipping_address_1' => (string)$orderXml->Shipping->AddressLine1,
 			'shipping_address_2' => $addressLine2,
-			'shipping_city' => (string) $orderXml->Shipping->City,
-			'shipping_postcode' => (string) $orderXml->Shipping->PostCode,
-			'shipping_country' => $this->model_amazon_order->getCountryName((string) $orderXml->Shipping->CountryCode),
-			'shipping_country_id' => $this->model_amazon_order->getCountryId((string) $orderXml->Shipping->CountryCode),
-			'shipping_zone' => (string) $orderXml->Shipping->State,
-			'shipping_zone_id' => $this->model_amazon_order->getZoneId((string) $orderXml->Shipping->State),
+			'shipping_city' => (string)$orderXml->Shipping->City,
+			'shipping_postcode' => (string)$orderXml->Shipping->PostCode,
+			'shipping_country' => $this->model_amazon_order->getCountryName((string)$orderXml->Shipping->CountryCode),
+			'shipping_country_id' => $this->model_amazon_order->getCountryId((string)$orderXml->Shipping->CountryCode),
+			'shipping_zone' => (string)$orderXml->Shipping->State,
+			'shipping_zone_id' => $this->model_amazon_order->getZoneId((string)$orderXml->Shipping->State),
 			'shipping_address_format' => '',
-			'shipping_method' => (string) $orderXml->Shipping->Type,
-			'shipping_code' => 'amazon.' . (string) $orderXml->Shipping->Type,
+			'shipping_method' => (string)$orderXml->Shipping->Type,
+			'shipping_code' => 'amazon.' . (string)$orderXml->Shipping->Type,
 			'payment_firstname' => $shippingFirstName,
 			'payment_lastname' => $shippingLastName,
 			'payment_company' => '',
-			'payment_address_1' => (string) $orderXml->Shipping->AddressLine1,
+			'payment_address_1' => (string)$orderXml->Shipping->AddressLine1,
 			'payment_address_2' => $addressLine2,
-			'payment_city' => (string) $orderXml->Shipping->City,
-			'payment_postcode' => (string) $orderXml->Shipping->PostCode,
-			'payment_country' => $this->model_amazon_order->getCountryName((string) $orderXml->Shipping->CountryCode),
-			'payment_country_id' => $this->model_amazon_order->getCountryId((string) $orderXml->Shipping->CountryCode),
-			'payment_zone' => (string) $orderXml->Shipping->State,
-			'payment_zone_id' => $this->model_amazon_order->getZoneId((string) $orderXml->Shipping->State),
+			'payment_city' => (string)$orderXml->Shipping->City,
+			'payment_postcode' => (string)$orderXml->Shipping->PostCode,
+			'payment_country' => $this->model_amazon_order->getCountryName((string)$orderXml->Shipping->CountryCode),
+			'payment_country_id' => $this->model_amazon_order->getCountryId((string)$orderXml->Shipping->CountryCode),
+			'payment_zone' => (string)$orderXml->Shipping->State,
+			'payment_zone_id' => $this->model_amazon_order->getZoneId((string)$orderXml->Shipping->State),
 			'payment_address_format' => '',
 			'payment_method' => $this->language->get('paid_on_amazon_text'),
 			'payment_code' => 'amazon.amazon',
@@ -230,7 +230,7 @@ class ControllerAmazonOrder extends Controller {
 			'commission' => '0.00',
 			'language_id' => (int)$this->config->get('config_language_id'),
 			'currency_id' => $this->currency->getId($orderCurrency),
-			'currency_code' => (string) $orderCurrency,
+			'currency_code' => (string)$orderCurrency,
 			'currency_value' => $this->currency->getValue($orderCurrency),
 			'ip' => '',
 			'forwarded_ip' => '',

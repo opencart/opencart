@@ -363,7 +363,7 @@ class Amazonus {
 			$amazonusRows = $this->getLinkedSkus($productId);
 			foreach($amazonusRows as $amazonusRow) {
 				$productRow = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product`
-					WHERE `product_id` = '" . (int) $productId . "'")->row;
+					WHERE `product_id` = '" . (int)$productId . "'")->row;
 
 				if(!empty($productRow)) {
 					if($endInactive && $productRow['status'] == '0') {
@@ -388,19 +388,18 @@ class Amazonus {
 			FROM `" . DB_PREFIX . "amazonus_product_link`
 			WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $var . "'
 			")->rows;
-	 }
+	}
 
 	public function getOrderdProducts($orderId) {
-		 return $this->db->query("SELECT `op`.`product_id`, `p`.`quantity` as `quantity_left`
+		return $this->db->query("SELECT `op`.`product_id`, `p`.`quantity` as `quantity_left`
 			FROM `" . DB_PREFIX . "order_product` as `op`
 			LEFT JOIN `" . DB_PREFIX . "product` as `p`
 			ON `p`.`product_id` = `op`.`product_id`
-			WHERE `op`.`order_id` = '" . (int) $orderId . "'
+			WHERE `op`.`order_id` = '" . (int)$orderId . "'
 			")->rows;
 	}
 
 	public function osProducts($order_id){
-	 //   $this->log('Getting products from osProducts()');
 		$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
 
 		$passArray = array();
@@ -408,15 +407,15 @@ class Amazonus {
 			$product_query = $this->db->query("
 				SELECT *
 				FROM " . DB_PREFIX . "product
-				WHERE `product_id` = '" . (int) $order_product['product_id'] . "'
+				WHERE `product_id` = '" . (int)$order_product['product_id'] . "'
 				LIMIT 1");
 
 			if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
 				$pOption_query = $this->db->query("
 						SELECT `" . DB_PREFIX . "order_option`.`product_option_value_id`
 						FROM `" . DB_PREFIX . "order_option`, `" . DB_PREFIX . "product_option`, `" . DB_PREFIX . "option`
-						WHERE `" . DB_PREFIX . "order_option`.`order_product_id` = '" . (int) $order_product['order_product_id'] . "'
-						AND `" . DB_PREFIX . "order_option`.`order_id` = '" . (int) $order_id . "'
+						WHERE `" . DB_PREFIX . "order_option`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
+						AND `" . DB_PREFIX . "order_option`.`order_id` = '" . (int)$order_id . "'
 						AND `" . DB_PREFIX . "order_option`.`product_option_id` = `" . DB_PREFIX . "product_option`.`product_option_id`
 						AND `" . DB_PREFIX . "product_option`.`option_id` = `" . DB_PREFIX . "option`.`option_id`
 						AND ((`" . DB_PREFIX . "option`.`type` = 'radio') OR (`" . DB_PREFIX . "option`.`type` = 'select'))
@@ -520,7 +519,7 @@ class Amazonus {
 			$attributes = $tab->attributes();
 			$tabs[] = array(
 				'id' => (string)$attributes['id'],
-				'name' => (string) $tab->name,
+				'name' => (string)$tab->name,
 			);
 		}
 

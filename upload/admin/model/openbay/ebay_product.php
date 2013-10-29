@@ -69,9 +69,6 @@ class ModelOpenbayEbayProduct extends Model {
 				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = 1  WHERE `ebay_listing_id` = '".(int)$sql2->row['ebay_listing_id']."'");
 			}
 		}
-
-		//loop over products again and check product stock, if 0 set to inactive
-		/* @todo */
 	}
 
 	public function searchEbayCatalog($data) {

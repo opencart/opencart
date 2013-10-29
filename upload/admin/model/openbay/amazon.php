@@ -352,9 +352,9 @@ class ModelOpenbayAmazon extends Model {
 		$link = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = " . (int)$product_id . " AND var = '" . $this->db->escape($var) . "'")->row;
 
 		if(empty($link)) {
-			 return false;
+			return false;
 		} else {
-			 return true;
+			return true;
 		}
 	}
 

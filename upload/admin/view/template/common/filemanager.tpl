@@ -54,7 +54,7 @@ $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
 	
 	<?php if ($thumb) { ?>
-	$('#<?php echo $thumb; ?>').attr('src', $(this).find('img').attr('src'));
+	$('#<?php echo $thumb; ?>').html('<img src="' + $(this).find('img').attr('src') + '" alt="" title="" />');
 	<?php } ?>
 	
 	<?php if ($target) { ?>
@@ -181,7 +181,7 @@ $('#button-folder').on('shown.bs.popover', function() {
 	});	
 });
 
-$('#button-delete').on('click', function(e) {
+$('#modal-image #button-delete').on('click', function(e) {
 	if (confirm('<?php echo $text_confirm; ?>')) {
 		$.ajax({
 			url: 'index.php?route=common/filemanager/delete&token=<?php echo $token; ?>',

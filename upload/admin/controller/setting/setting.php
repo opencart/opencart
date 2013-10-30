@@ -817,7 +817,7 @@ class ControllerSettingSetting extends Controller {
 		if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo')) && is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
 			$this->data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), 100, 100);		
 		} else {
-			$this->data['logo'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+			$this->data['logo'] = '';
 		}
 
 		if (isset($this->request->post['config_icon'])) {
@@ -829,10 +829,8 @@ class ControllerSettingSetting extends Controller {
 		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon')) && is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$this->data['icon'] = $this->model_tool_image->resize($this->config->get('config_icon'), 100, 100);		
 		} else {
-			$this->data['icon'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+			$this->data['icon'] = '';
 		}
-		
-		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 
 		if (isset($this->request->post['config_image_category_width'])) {
 			$this->data['config_image_category_width'] = $this->request->post['config_image_category_width'];

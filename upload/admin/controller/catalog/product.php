@@ -355,7 +355,7 @@ class ControllerCatalogProduct extends Controller {
 			if (is_file(DIR_IMAGE . $result['image'])) {
 				$image = $this->model_tool_image->resize($result['image'], 40, 40);
 			} else {
-				$image = $this->model_tool_image->resize('no_image.jpg', 40, 40);
+				$image = '';
 			}
 	
 			$special = false;
@@ -1142,7 +1142,7 @@ class ControllerCatalogProduct extends Controller {
 		} elseif (!empty($product_info) && $product_info['image'] && is_file(DIR_IMAGE . $product_info['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
 		} else {
-			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+			$this->data['thumb'] = '';
 		}
 				
 		// Images
@@ -1160,7 +1160,7 @@ class ControllerCatalogProduct extends Controller {
 			if (is_file(DIR_IMAGE . $product_image['image'])) {
 				$image = $product_image['image'];
 			} else {
-				$image = 'no_image.jpg';
+				$image = '';
 			}
 			
 			$this->data['product_images'][] = array(
@@ -1169,8 +1169,6 @@ class ControllerCatalogProduct extends Controller {
 				'sort_order' => $product_image['sort_order']
 			);
 		}
-
-		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 
 		// Downloads
 		$this->load->model('catalog/download');

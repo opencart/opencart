@@ -493,25 +493,34 @@
           <div class="tab-pane" id="tab-image">
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-logo"><?php echo $entry_logo; ?></label>
-              <div class="col-sm-10"> <img src="<?php echo $logo; ?>" alt="" id="thumb-logo" class="img-thumbnail" />
+              <div class="col-sm-10">
+                <?php if ($logo) { ?>
+                <a href="" id="thumb-logo" class="img-thumbnail img-edit"><img src="<?php echo $logo; ?>" alt="" title="" /></a>
+                <?php } else { ?>
+                <a href="" id="thumb-logo" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+                <?php } ?>
                 <input type="hidden" name="config_logo" value="<?php echo $config_logo; ?>" id="input-logo" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-icon"><?php echo $entry_icon; ?></label>
-              <div class="col-sm-10"><img src="<?php echo $icon; ?>" alt="" id="thumb-icon" class="img-thumbnail" />
+              <div class="col-sm-10">
+                <?php if ($icon) { ?>
+                <a href="" id="thumb-icon" class="img-thumbnail img-edit"><img src="<?php echo $icon; ?>" alt="" title="" /></a>
+                <?php } else { ?>
+                <a href="" id="thumb-icon" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+                <?php } ?>
                 <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="input-icon" />
-                <span class="help-block"><?php echo $help_icon; ?></span>
-              </div>
+                <span class="help-block"><?php echo $help_icon; ?></span> </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-image-category-width"><?php echo $entry_image_category; ?></label>
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-category-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -524,10 +533,10 @@
               <label class="col-sm-2 control-label" for="input-image-thumb-width"><?php echo $entry_image_thumb; ?></label>
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-thumb-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -540,10 +549,10 @@
               <label class="col-sm-2 control-label" for="input-image-popup-width"><?php echo $entry_image_popup; ?></label>
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-popup-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -556,10 +565,10 @@
               <label class="col-sm-2 control-label" for="input-image-product-width"><?php echo $entry_image_product; ?></label>
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-product-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -572,10 +581,10 @@
               <label class="col-sm-2 control-label" for="input-image-additional-width"><?php echo $entry_image_additional; ?></label>
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-additional-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -588,10 +597,10 @@
               <label class="col-sm-2 control-label" for="input-image-related-width"><?php echo $entry_image_related; ?></label>
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-related-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -604,10 +613,10 @@
               <label class="col-sm-2 control-label" for="input-image-compare-width"><?php echo $entry_image_compare; ?></label>
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-compare-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -620,10 +629,10 @@
               <label class="col-sm-2 control-label" for="input-image-wishlist-width"><?php echo $entry_image_wishlist; ?></label>
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-wishlist-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -636,10 +645,10 @@
               <label class="col-sm-2 control-label" for="input-image-cart-width"><?php echo $entry_image_cart; ?></label>
               <div class="col-sm-10">
                 <div class="row">
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-cart-width" class="form-control" />
                   </div>
-                  <div class="col-lg-6">
+                  <div class="col-sm-6">
                     <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
@@ -663,7 +672,7 @@
                 <div class="text-danger"><?php echo $error_image_location; ?></div>
                 <?php } ?>
               </div>
-            </div>            
+            </div>
           </div>
           <div class="tab-pane" id="tab-server">
             <div class="form-group">
@@ -754,5 +763,5 @@ $('select[name=\'config_country_id\']').on('change', function() {
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

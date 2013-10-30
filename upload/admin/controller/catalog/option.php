@@ -391,7 +391,7 @@ class ControllerCatalogOption extends Controller {
 			if (is_file(DIR_IMAGE . $option_value['image'])) {
 				$image = $option_value['image'];
 			} else {
-				$image = 'no_image.jpg';
+				$image = '';
 			}
 			
 			$this->data['option_values'][] = array(
@@ -402,8 +402,6 @@ class ControllerCatalogOption extends Controller {
 				'sort_order'               => $option_value['sort_order']
 			);
 		}
-
-		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 
 		$this->template = 'catalog/option_form.tpl';
 		$this->children = array(

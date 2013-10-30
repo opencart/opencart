@@ -326,14 +326,7 @@ class ControllerCommonFileManager extends Controller {
 		
 		// Loop through each path to run validations
 		foreach ($paths as $path) {			
-			$path = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $path), '/');
-			
-			// Check path exsists
-			if (!file_exists($path)) {
-				$json['error'] = $this->language->get('error_missing');
-				
-				break;
-			}
+			$path = rtrim(DIR_IMAGE . str_replace(array('../', '..\\', '..'), '', $path), '/');
 			
 			// Check path exsists
 			if ($path == DIR_IMAGE . 'catalog') {
@@ -346,7 +339,7 @@ class ControllerCommonFileManager extends Controller {
 		if (!$json) {
 			// Loop through each path
 			foreach ($paths as $path) {		
-				$path = rtrim(DIR_IMAGE . 'catalog/' . str_replace(array('../', '..\\', '..'), '', $path), '/');
+				$path = rtrim(DIR_IMAGE . str_replace(array('../', '..\\', '..'), '', $path), '/');
 				
 				// If path is just a file delete it
 				if (is_file($path)) {

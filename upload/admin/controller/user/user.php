@@ -429,10 +429,8 @@ class ControllerUserUser extends Controller {
 		} elseif (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($user_info['image'], 100, 100);
 		} else {
-			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+			$this->data['thumb'] = '';
 		}
-		
-		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
  
      	if (isset($this->request->post['status'])) {
       		$this->data['status'] = $this->request->post['status'];

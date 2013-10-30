@@ -142,7 +142,11 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_image; ?></label>
               <div class="col-sm-10">
-                <img src="<?php echo $thumb; ?>" alt="" id="thumb-image" class="img-thumbnail" />
+                <?php if ($thumb) { ?>
+                <a href="" id="thumb-image" class="img-thumbnail img-edit"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
+                <?php } else { ?>
+                <a href="" id="thumb-image" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+                <?php } ?>
                 <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
               </div>
             </div>
@@ -293,7 +297,7 @@ $('input[name=\'filter\']').autocomplete({
 $('#category-filter').delegate('.fa-minus-sign', 'click', function() {
 	$(this).parent().remove();
 });
-//--></script>  
+//--></script> 
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
 //--></script> 

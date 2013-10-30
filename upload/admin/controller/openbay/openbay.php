@@ -1056,7 +1056,7 @@ class ControllerOpenbayOpenbay extends Controller {
 				$t = array();
 				$t_rel = array();
 
-				foreach($product_info['option_grp'] as $key => $grp) {
+				foreach($product_info['option_grp'] as $grp) {
 					$t_tmp = array();
 
 					foreach($grp['product_option_value'] as $grp_node) {

@@ -79,10 +79,13 @@ class ControllerOpenbayAmazonListing extends Controller {
 
 		if (isset($this->request->get['product_id'])) {
 			$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+
 			if(empty($product_info)) {
 				$this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 			}
+
 			$listing_status = $this->model_openbay_amazon->getProductStatus($this->request->get['product_id']);
+
 			if($listing_status === 'processing' || $listing_status === 'ok') {
 				$this->redirect($this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'] . $url, 'SSL'));
 			} else if ($listing_status === 'error_advanced' || $listing_status === 'saved' || $listing_status === 'error_few') {

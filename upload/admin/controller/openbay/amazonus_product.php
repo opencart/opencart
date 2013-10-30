@@ -265,6 +265,7 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		} else {
 			$this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
+
 		$this->load->model('openbay/amazonus');
 		$this->model_openbay_amazonus->removeAdvancedErrors($product_id);
 		$this->session->data['success'] = 'Errors removed';

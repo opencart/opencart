@@ -90,7 +90,11 @@
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
                   <?php } ?></td>
-                <td class="text-center"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" /></td>
+                <td class="text-center"><?php if ($product['image']) { ?>
+                  <a href="" class="img-thumbnail"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></a>
+                  <?php } else { ?>
+                  <a href="" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
+                  <?php } ?></td>
                 <td class="text-left"><?php echo $product['name']; ?></td>
                 <td class="text-left"><?php echo $product['model']; ?></td>
                 <td class="text-left"><?php if ($product['special']) { ?>

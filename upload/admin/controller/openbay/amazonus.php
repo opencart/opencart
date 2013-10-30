@@ -11,7 +11,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 			'text'      => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
@@ -108,7 +108,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 			'text'      => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
@@ -157,7 +157,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 			'text'      => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
@@ -272,7 +272,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 			'text'      => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
@@ -416,7 +416,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 			'text'      => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
@@ -465,7 +465,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 			'text'      => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 		$this->data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
@@ -770,7 +770,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 		$this->data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
@@ -912,7 +912,7 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 		$this->data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),

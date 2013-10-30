@@ -105,19 +105,14 @@ final class Play {
 		return $this->registry->get($name);
 	}
 
-	public function call($call, array $post = NULL, array $options = array(), $content_type = 'json', $statusOverride = false){
+	public function call($call, array $post = null, array $options = array(), $content_type = 'json', $statusOverride = false){
 		$this->log('call() - Call: '.$call);
 		$this->log('call() - $post: '.json_encode($post));
 		$this->log('call() - $options: '.json_encode($options));
 		$this->log('call() - $content_type: '.$content_type);
 		$this->log('call() - $statusOverride: '.$statusOverride);
 
-
-
-
-
 		if($this->config->get('play_status') == 1 || $statusOverride == true){
-
 			if(defined("HTTPS_CATALOG")){
 				$domain = HTTPS_CATALOG;
 			}else{
@@ -162,7 +157,7 @@ final class Play {
 				$encoding = mb_detect_encoding($result);
 
 				if($encoding == 'UTF-8') {
-				  $result = preg_replace('/[^(\x20-\x7F)]*/','',$result);
+					$result = preg_replace('/[^(\x20-\x7F)]*/','',$result);
 				}
 
 				$result = json_decode($result, 1);

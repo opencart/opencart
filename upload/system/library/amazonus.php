@@ -137,7 +137,7 @@ class Amazonus {
 		foreach ($amazonusOrderProducts as $product) {
 			$newOrderItem = $orderItemsNode->addChild('OrderItem');
 			$newOrderItem->addChild('ItemId', htmlspecialchars($product['amazonus_order_item_id']));
-			$newOrderItem->addChild('Quantity', (int) $product['quantity']);
+			$newOrderItem->addChild('Quantity', (int)$product['quantity']);
 		}
 
 		$doc = new DOMDocument('1.0');

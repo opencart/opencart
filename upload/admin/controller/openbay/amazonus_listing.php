@@ -202,7 +202,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -223,7 +223,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 			'separator' => ' :: '
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function edit() {
@@ -326,7 +326,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(

@@ -1,49 +1,47 @@
 <?php
-class ControllerAmazonusProduct extends Controller
-{   
+class ControllerAmazonusProduct extends Controller  {
 	public function inbound() {
 		if ($this->config->get('amazonus_status') != '1') {
 			$this->response->setOutput("disabled");
 			return;
 		}
-		 ob_start();
 
-		 $this->load->library('amazonus');
-		 $this->load->model('amazonus/product');
-		 $this->load->library('log');
-		 $logger = new Log('amazonus_product.log');
+		ob_start();
 
-		 $logger->write("AmazonusProduct/inbound: incoming data");
+		$this->load->library('amazonus');
+		$this->load->model('amazonus/product');
+		$this->load->library('log');
+		$logger = new Log('amazonus_product.log');
 
-		 $incomingToken = isset($this->request->post['token']) ? $this->request->post['token'] : '';
+		$logger->write("AmazonusProduct/inbound: incoming data");
 
-		 if($incomingToken != $this->config->get('openbay_amazonus_token')) {
-			 $logger->write("Error - Incorrect token: " . $this->request->post['token']);
-			 ob_get_clean();
-			 $this->response->setOutput("tokens did not match");
-			 return;
-		 }
+		$incomingToken = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
-		 $data = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
-		 if(!$data) {
-			 $logger->write("Error - Failed to decrypt received data.");
-			 ob_get_clean();
-			 $this->response->setOutput("failed to decrypt");
-			 return;
-		 }
+		if($incomingToken != $this->config->get('openbay_amazonus_token')) {
+			$logger->write("Error - Incorrect token: " . $this->request->post['token']);
+			ob_get_clean();
+			$this->response->setOutput("tokens did not match");
+			return;
+		}
 
+		$data = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
+		if(!$data) {
+			$logger->write("Error - Failed to decrypt received data.");
+			ob_get_clean();
+			$this->response->setOutput("failed to decrypt");
+			return;
+		}
 
-		 $decodedData = (array)json_decode($data);
-		 $logger->write("Received data: " . print_r($decodedData, true));
-		 $status = $decodedData['status'];
-		 if($status == "submit_error") {
-			 $message = 'Product was not submited to amazonus properly. Please try again or contact OpenBay.';
-			 $this->model_amazonus_product->setSubmitError($decodedData['insertion_id'], $message);
-		 }
-		 else {
+		$decodedData = (array)json_decode($data);
+		$logger->write("Received data: " . print_r($decodedData, true));
+		$status = $decodedData['status'];
+
+		if($status == "submit_error") {
+			$message = 'Product was not submited to amazonus properly. Please try again or contact OpenBay.';
+			$this->model_amazonus_product->setSubmitError($decodedData['insertion_id'], $message);
+		} else {
 			$status = (array)$status;
 			if($status['successful'] == 1) {
-
 				$this->model_amazonus_product->setStatus($decodedData['insertion_id'], 'ok');
 				$insertionProduct = $this->model_amazonus_product->getProduct($decodedData['insertion_id']);
 				$this->model_amazonus_product->linkProduct($insertionProduct['sku'], $insertionProduct['product_id'], $insertionProduct['var']);
@@ -54,7 +52,6 @@ class ControllerAmazonusProduct extends Controller
 				);
 				$logger->write('Updating quantity with data: ' . print_r($quantityData, true));
 				$logger->write('Response: ' . print_r($this->openbay->amazonus->updateQuantities($quantityData), true));
-
 			} else {
 				$msg = 'Product was not accepted by amazonus. Please try again or contact OpenBay.';
 				$this->model_amazonus_product->setSubmitError($decodedData['insertion_id'], $msg);
@@ -73,10 +70,11 @@ class ControllerAmazonusProduct extends Controller
 					}
 				}
 			}
-		 }
-		 $logger->write("Data processed successfully.");
-		 ob_get_clean();
-		 $this->response->setOutput("ok");
+		}
+
+		$logger->write("Data processed successfully.");
+		ob_get_clean();
+		$this->response->setOutput("ok");
 	}
 
 	public function dev() {

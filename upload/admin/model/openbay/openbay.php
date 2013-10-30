@@ -376,7 +376,7 @@ class ModelOpenbayOpenbay extends Model {
 		}
 	}
 
-	private function call($call, array $post = NULL, array $options = array(), $content_type = 'json') {
+	private function call($call, array $post = null, array $options = array(), $content_type = 'json') {
 		if (defined("HTTP_CATALOG")) {
 			$domain = HTTP_CATALOG;
 		} else {

@@ -32,7 +32,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -74,7 +74,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function settings() {
@@ -100,7 +100,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -364,7 +364,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function loadSettings() {
@@ -430,7 +430,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -461,7 +461,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function getSellerSummary() {
@@ -591,7 +591,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -623,7 +623,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function viewItemImport() {
@@ -640,7 +640,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -674,7 +674,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function viewStockReport() {
@@ -689,7 +689,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -720,7 +720,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function viewOrderImport() {
@@ -735,7 +735,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -766,7 +766,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function viewSync() {
@@ -781,7 +781,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -818,7 +818,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function viewItemLinks() {
@@ -835,7 +835,7 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -892,7 +892,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function saveItemLink() {
@@ -1004,7 +1004,7 @@ class ControllerOpenbayOpenbay extends Controller {
 				$this->data['breadcrumbs'][] = array(
 					'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 					'text' => $this->language->get('lang_home'),
-					'separator' => FALSE
+					'separator' => false
 				);
 
 				$this->data['breadcrumbs'][] = array(
@@ -1025,7 +1025,7 @@ class ControllerOpenbayOpenbay extends Controller {
 					'separator' => ' :: '
 				);
 
-				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 			} else {
 				$this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
 			}
@@ -1307,7 +1307,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
 				$this->data['product'] = $product_info;
 
-				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 			} else {
 				$this->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
 			}
@@ -1469,7 +1469,7 @@ class ControllerOpenbayOpenbay extends Controller {
 					'common/header',
 					'common/footer'
 				);
-				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 			}else{
 				$this->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
 			}

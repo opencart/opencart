@@ -35,7 +35,7 @@ final class Ebay {
 		}
 	}
 
-	public function openbay_call($call, array $post = NULL, array $options = array(), $content_type = 'json', $statusOverride = false) {
+	public function openbay_call($call, array $post = null, array $options = array(), $content_type = 'json', $statusOverride = false) {
 		/*
 		* openbay_call
 		*
@@ -132,7 +132,7 @@ final class Ebay {
 		}
 	}
 
-	public function openbay_call_noresponse($call, array $post = NULL, array $options = array(), $content_type = 'json') {
+	public function openbay_call_noresponse($call, array $post = null, array $options = array(), $content_type = 'json') {
 		/*
 		* openbay_call_noresponse
 		*
@@ -522,8 +522,8 @@ final class Ebay {
 		$encoding = mb_detect_encoding($data);
 
 		if($encoding == 'UTF-8') {
-		  $data = preg_replace('/[^(\x20-\x7F)]*/','',$data);
-		  $data = preg_replace('#\\\\x[0-9a-fA-F]{2,2}#','',$data);
+			$data = preg_replace('/[^(\x20-\x7F)]*/','',$data);
+			$data = preg_replace('#\\\\x[0-9a-fA-F]{2,2}#','',$data);
 		}
 
 		$data = json_decode($data);

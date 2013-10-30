@@ -35,7 +35,7 @@ class ControllerOpenbayPlay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -69,7 +69,7 @@ class ControllerOpenbayPlay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function settings() {
@@ -97,7 +97,7 @@ class ControllerOpenbayPlay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -261,7 +261,7 @@ class ControllerOpenbayPlay extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
 	public function pricingReport() {
@@ -313,7 +313,7 @@ class ControllerOpenbayPlay extends Controller {
 
 		$this->data['pagination'] = $pagination->render();
 
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	} else {
 		$this->redirect(HTTPS_SERVER . 'index.php?route=extension/openbay/itemList&token=' . $this->session->data['token']);
 	}
@@ -392,7 +392,7 @@ class ControllerOpenbayPlay extends Controller {
 				$this->data['defaults']['shipto'] = $this->config->get('obp_play_def_shipto');
 				$this->data['defaults']['condition'] = $this->config->get('obp_play_def_itemcond');
 
-				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 			} else {
 				$this->redirect(HTTPS_SERVER . 'index.php?route=extension/openbay/itemList&token=' . $this->session->data['token']);
 			}
@@ -469,7 +469,7 @@ class ControllerOpenbayPlay extends Controller {
 				$this->data['defaults']['shipto'] = $this->config->get('obp_play_def_shipto');
 				$this->data['defaults']['condition'] = $this->config->get('obp_play_def_itemcond');
 
-				$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+				$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 			} else {
 				$this->redirect(HTTPS_SERVER . 'index.php?route=extension/openbay/itemList&token=' . $this->session->data['token']);
 			}
@@ -509,9 +509,9 @@ class ControllerOpenbayPlay extends Controller {
 		}
 
 		if (!$this->error) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	}
 }

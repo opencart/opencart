@@ -408,7 +408,7 @@ class ModelOpenbayAmazon extends Model {
 			return $row['amazon_order_id'];
 		}
 
-		return NULL;
+		return null;
 	}
 
 	public function getAmazonOrderedProducts($orderId) {

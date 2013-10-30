@@ -304,9 +304,9 @@ class ControllerAmazonusOrder extends Controller {
 		$this->model_amazonus_order->addAmazonusOrderProducts($orderId, $productMapping);
 
 		foreach($products as $product) {
-		   if($product['product_id'] != 0) {
-			   $this->model_amazonus_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
-		   }
+			if($product['product_id'] != 0) {
+				$this->model_amazonus_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
+			}
 		}
 
 		$logger->write('Order ' . $amazonusOrderId . ' was added to the database (ID: ' . $orderId . ')');

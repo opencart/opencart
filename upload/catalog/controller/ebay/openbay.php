@@ -130,15 +130,15 @@ class ControllerEbayOpenbay extends Controller{
 		$this->response->addHeader('Content-type: application/json; charset=utf-8');
 
 		if(
-				(isset($settings['openbaypro_token']) && !empty($settings['openbaypro_token'])) ||
-				(isset($settings['openbaypro_secret']) && !empty($settings['openbaypro_secret'])) ||
-				(isset($settings['openbaypro_string1']) && !empty($settings['openbaypro_string1'])) ||
-				(isset($settings['openbaypro_string2']) && !empty($settings['openbaypro_string2'])) ||
-				!isset($this->request->post['token']) ||
-				!isset($this->request->post['secret']) ||
-				!isset($this->request->post['s1']) ||
-				!isset($this->request->post['s2'])
-		  ){
+			(isset($settings['openbaypro_token']) && !empty($settings['openbaypro_token'])) ||
+			(isset($settings['openbaypro_secret']) && !empty($settings['openbaypro_secret'])) ||
+			(isset($settings['openbaypro_string1']) && !empty($settings['openbaypro_string1'])) ||
+			(isset($settings['openbaypro_string2']) && !empty($settings['openbaypro_string2'])) ||
+			!isset($this->request->post['token']) ||
+			!isset($this->request->post['secret']) ||
+			!isset($this->request->post['s1']) ||
+			!isset($this->request->post['s2'])
+		){
 			$this->response->setOutput(json_encode(array('msg' => 'fail', 'reason' => 'Tokens are already setup or data missing')));
 		}else{
 			$settings['openbaypro_token']   = $this->request->post['token'];

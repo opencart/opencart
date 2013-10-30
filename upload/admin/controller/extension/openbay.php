@@ -274,7 +274,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->data['breadcrumbs'][] = array(
 			'href' => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
 			'text' => $this->language->get('text_home'),
-			'separator' => FALSE
+			'separator' => false
 		);
 
 		$this->data['breadcrumbs'][] = array(
@@ -389,7 +389,7 @@ class ControllerExtensionOpenbay extends Controller {
 					$this->data['carriers']     = $this->openbay->ebay->getCarriers();
 					$this->data['order_info']   = $this->openbay->ebay->getOrder($this->request->get['order_id']);
 					$this->template             = 'openbay/ebay_ajax_shippinginfo.tpl';
-					$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+					$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 				}
 			}
 		}
@@ -403,7 +403,7 @@ class ControllerExtensionOpenbay extends Controller {
 					$this->data['carriers']     = $this->openbay->play->getCarriers();
 					if(!empty($this->data['order_info'])){
 						$this->template = 'openbay/play_ajax_shippinginfo.tpl';
-						$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+						$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 					}
 				}
 				//if status is refunded
@@ -411,7 +411,7 @@ class ControllerExtensionOpenbay extends Controller {
 					$this->data['refund_reason'] = $this->openbay->play->getRefundReason();
 					if(!empty($this->data['order_info'])){
 						$this->template = 'openbay/play_ajax_refundinfo.tpl';
-						$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+						$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 					}
 				}
 			}
@@ -427,7 +427,7 @@ class ControllerExtensionOpenbay extends Controller {
 				if($this->request->get['status_id'] == $this->config->get('openbay_amazon_order_status_shipped')){
 					$this->data['couriers'] = $this->openbay->amazon->getCarriers();
 					$this->template = 'openbay/amazon_ajax_shippinginfo.tpl';
-					$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+					$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 				}
 			}
 		}
@@ -442,7 +442,7 @@ class ControllerExtensionOpenbay extends Controller {
 				if($this->request->get['status_id'] == $this->config->get('openbay_amazonus_order_status_shipped')){
 					$this->data['couriers'] = $this->openbay->amazonus->getCarriers();
 					$this->template = 'openbay/amazonus_ajax_shippinginfo.tpl';
-					$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+					$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 				}
 			}
 		}

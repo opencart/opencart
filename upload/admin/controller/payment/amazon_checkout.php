@@ -344,7 +344,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				$response = $cba->orderAdjustment($flat);
 
 				$response_xml = simplexml_load_string($response);
-				$submission_id = (string) $response_xml->SubmitFeedResult->FeedSubmissionInfo->FeedSubmissionId;
+				$submission_id = (string)$response_xml->SubmitFeedResult->FeedSubmissionInfo->FeedSubmissionId;
 
 				if (!empty($submission_id)) {
 					$json['success'] = $this->language->get('text_upload_success');

@@ -2,11 +2,11 @@
 class ControllerModuleAccount extends Controller {
 	protected function index() {
 		$this->language->load('module/account');
-		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
-    	
+
+		$this->data['heading_title'] = $this->language->get('heading_title');
+
 		$this->data['text_register'] = $this->language->get('text_register');
-    	$this->data['text_login'] = $this->language->get('text_login');
+		$this->data['text_login'] = $this->language->get('text_login');
 		$this->data['text_logout'] = $this->language->get('text_logout');
 		$this->data['text_forgotten'] = $this->language->get('text_forgotten');
 		$this->data['text_account'] = $this->language->get('text_account');
@@ -20,10 +20,10 @@ class ControllerModuleAccount extends Controller {
 		$this->data['text_transaction'] = $this->language->get('text_transaction');
 		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
 		$this->data['text_recurring'] = $this->language->get('text_recurring');
-		
+
 		$this->data['logged'] = $this->customer->isLogged();
 		$this->data['register'] = $this->url->link('account/register', '', 'SSL');
-    	$this->data['login'] = $this->url->link('account/login', '', 'SSL');
+		$this->data['login'] = $this->url->link('account/login', '', 'SSL');
 		$this->data['logout'] = $this->url->link('account/logout', '', 'SSL');
 		$this->data['forgotten'] = $this->url->link('account/forgotten', '', 'SSL');
 		$this->data['account'] = $this->url->link('account/account', '', 'SSL');
@@ -43,7 +43,7 @@ class ControllerModuleAccount extends Controller {
 		} else {
 			$this->template = 'default/template/module/account.tpl';
 		}
-		
+
 		$this->render();
 	}
 }

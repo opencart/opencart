@@ -117,7 +117,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			}
 
 			// The title stored in the DB gets truncated which causes order_info.tpl to not be displayed properly
-			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($this->language->get('text_title')) . "' WHERE `order_id` = " . (int) $this->session->data['order_id']);
+			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `payment_method` = '" . $this->db->escape($this->language->get('text_title')) . "' WHERE `order_id` = " . (int)$this->session->data['order_id']);
 
 			$klarna_account = $this->config->get('klarna_account');
 
@@ -401,7 +401,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					'country'         => $country,
 				);
 
-				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int) $order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int)$order_info['order_id']);
+				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int)$order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int)$order_info['order_id']);
 
 				foreach ($product_query->rows as $product) {
 					$goods_list[] = array(
@@ -442,7 +442,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$digest = '';
 
 				foreach ($goods_list as $goods) {
-					 $digest .= utf8_decode(htmlspecialchars(html_entity_decode($goods['goods']['title'], ENT_COMPAT, "UTF-8"))) . ':';
+					$digest .= utf8_decode(htmlspecialchars(html_entity_decode($goods['goods']['title'], ENT_COMPAT, "UTF-8"))) . ':';
 				}
 
 				$digest = base64_encode(pack('H*', hash('sha256', $digest . $klarna_account[$order_info['payment_iso_code_3']]['secret'])));
@@ -454,7 +454,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				}
 
 				if (isset($this->request->post['code'])) {
-					$pclass = (int) $this->request->post['code'];
+					$pclass = (int)$this->request->post['code'];
 				} else {
 					$pclass = '';
 				}
@@ -641,7 +641,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$log = new Log('klarna.log');
 				$log->write('Unknown country ' . $country);
 
-				$amount = NULL;
+				$amount = null;
 				break;
 		}
 

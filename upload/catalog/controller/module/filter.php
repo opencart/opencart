@@ -80,6 +80,6 @@ class ControllerModuleFilter extends Controller {
 				$this->render();
 			}
 		}
-  	}
+	}
 }
 ?>

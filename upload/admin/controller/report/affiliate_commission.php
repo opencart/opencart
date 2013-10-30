@@ -4,7 +4,7 @@ class ControllerReportAffiliateCommission extends Controller {
 		$this->language->load('report/affiliate_commission');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		if (isset($this->request->get['filter_date_start'])) {
 			$filter_date_start = $this->request->get['filter_date_start'];
 		} else {
@@ -16,7 +16,7 @@ class ControllerReportAffiliateCommission extends Controller {
 		} else {
 			$filter_date_end = '';
 		}
-		
+
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
@@ -24,56 +24,56 @@ class ControllerReportAffiliateCommission extends Controller {
 		}
 
 		$url = '';
-	
+
 		if (isset($this->request->get['filter_date_start'])) {
 			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
 		}
-		
+
 		if (isset($this->request->get['filter_date_end'])) {
 			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
 		}
-				
+
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
 		}
-						
+
 		$this->data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
-   		);
+			'separator' => false
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('report/affiliate_commission', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-      		'separator' => ' :: '
-   		);		
-		
+			'separator' => ' :: '
+		);
+
 		$this->load->model('report/affiliate');
-		
+
 		$this->data['affiliates'] = array();
-		
+
 		$data = array(
 			'filter_date_start'	=> $filter_date_start, 
 			'filter_date_end'	=> $filter_date_end, 
 			'start'             => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit'             => $this->config->get('config_admin_limit')
 		);
-		
+
 		$affiliate_total = $this->model_report_affiliate->getTotalCommission($data); 
-		
+
 		$results = $this->model_report_affiliate->getCommission($data);
-		
+
 		foreach ($results as $result) {
 			$action = array();
-		
+
 			$action[] = array(
 				'text' => $this->language->get('text_edit'),
 				'href' => $this->url->link('sale/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL')
 			);
-						
+
 			$this->data['affiliates'][] = array(
 				'affiliate'  => $result['affiliate'],
 				'email'      => $result['email'],
@@ -84,11 +84,11 @@ class ControllerReportAffiliateCommission extends Controller {
 				'action'     => $action
 			);
 		}
-					 
- 		$this->data['heading_title'] = $this->language->get('heading_title');
-		 
+
+		$this->data['heading_title'] = $this->language->get('heading_title');
+
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		
+
 		$this->data['column_affiliate'] = $this->language->get('column_affiliate');
 		$this->data['column_email'] = $this->language->get('column_email');
 		$this->data['column_status'] = $this->language->get('column_status');
@@ -96,42 +96,42 @@ class ControllerReportAffiliateCommission extends Controller {
 		$this->data['column_orders'] = $this->language->get('column_orders');
 		$this->data['column_total'] = $this->language->get('column_total');
 		$this->data['column_action'] = $this->language->get('column_action');
-		
+
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 
 		$this->data['button_filter'] = $this->language->get('button_filter');
-		
+
 		$this->data['token'] = $this->session->data['token'];
-		
+
 		$url = '';
-						
+
 		if (isset($this->request->get['filter_date_start'])) {
 			$url .= '&filter_date_start=' . $this->request->get['filter_date_start'];
 		}
-		
+
 		if (isset($this->request->get['filter_date_end'])) {
 			$url .= '&filter_date_end=' . $this->request->get['filter_date_end'];
 		}
-		
+
 		$pagination = new Pagination();
 		$pagination->total = $affiliate_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('report/affiliate_commission', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
-			
+
 		$this->data['pagination'] = $pagination->render();
-		
+
 		$this->data['filter_date_start'] = $filter_date_start;
 		$this->data['filter_date_end'] = $filter_date_end;	
-				 
+
 		$this->template = 'report/affiliate_commission.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'
 		);
-				
+
 		$this->response->setOutput($this->render());
 	}
 }

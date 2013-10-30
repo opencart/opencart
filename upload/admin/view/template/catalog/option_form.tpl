@@ -118,14 +118,18 @@
             <tr id="option-value-row<?php echo $option_value_row; ?>">
               <td class="text-left"><input type="hidden" name="option_value[<?php echo $option_value_row; ?>][option_value_id]" value="<?php echo $option_value['option_value_id']; ?>" />
                 <?php foreach ($languages as $language) { ?>
-                <div class="input-group"> <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
+                <div class="input-group"><span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span>
                   <input type="text" name="option_value[<?php echo $option_value_row; ?>][option_value_description][<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($option_value['option_value_description'][$language['language_id']]) ? $option_value['option_value_description'][$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_option_value; ?>" class="form-control" />
                 </div>
                 <?php if (isset($error_option_value[$option_value_row][$language['language_id']])) { ?>
                 <div class="text-danger"><?php echo $error_option_value[$option_value_row][$language['language_id']]; ?></div>
                 <?php } ?>
                 <?php } ?></td>
-              <td class="text-left"><img src="<?php echo $option_value['thumb']; ?>" alt="" id="thumb-image<?php echo $option_value_row; ?>" class="img-thumbnail" />
+              <td class="text-left"><?php if ($option_value['thumb']) { ?>
+                <a href="" id="thumb-image<?php echo $option_value_row; ?>" class="img-thumbnail img-edit"><img src="<?php echo $option_value['thumb']; ?>" alt="" title="" /></a>
+                <?php } else { ?>
+                <a href="" id="thumb-image<?php echo $option_value_row; ?>" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+                <?php } ?>
                 <input type="hidden" name="option_value[<?php echo $option_value_row; ?>][image]" value="<?php echo $option_value['image']; ?>" id="input-image<?php echo $option_value_row; ?>" /></td>
               <td class="text-right"><input type="text" name="option_value[<?php echo $option_value_row; ?>][sort_order]" value="<?php echo $option_value['sort_order']; ?>" class="form-control" /></td>
               <td class="text-left"><button type="button" onclick="$('#option-value-row<?php echo $option_value_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
@@ -166,7 +170,7 @@ function addOptionValue() {
     html += '    </div>';
 	<?php } ?>
 	html += '  </td>';
-    html += '  <td class="text-left"><img src="<?php echo $no_image; ?>" alt="" id="thumb-image' + option_value_row + '" class="img-thumbnail" /><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" /></td>';
+    html += '  <td class="text-left"><a href="" id="thumb-image' + option_value_row + '" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a><input type="hidden" name="option_value[' + option_value_row + '][image]" value="" id="input-image' + option_value_row + '" /></td>';
 	html += '  <td class="text-right"><input type="text" name="option_value[' + option_value_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#option-value-row' + option_value_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';	
@@ -175,5 +179,5 @@ function addOptionValue() {
 	
 	option_value_row++;
 }
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

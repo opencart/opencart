@@ -725,7 +725,12 @@
           <div class="tab-pane" id="tab-image">
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
-              <div class="col-sm-10"><img src="<?php echo $thumb; ?>" alt="" id="thumb-image" class="img-thumbnail" />
+              <div class="col-sm-10">
+                <?php if ($thumb) { ?>
+                <a href="" id="thumb-image" class="img-thumbnail img-edit"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
+                <?php } else { ?>
+                <a href="" id="thumb-image" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+                <?php } ?>
                 <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
               </div>
             </div>
@@ -742,7 +747,11 @@
                   <?php $image_row = 0; ?>
                   <?php foreach ($product_images as $product_image) { ?>
                   <tr id="image-row<?php echo $image_row; ?>">
-                    <td class="text-left"><img src="<?php echo $product_image['thumb']; ?>" alt="" id="thumb-image<?php echo $image_row; ?>" class="img-thumbnail" />
+                    <td class="text-left"><?php if ($product_image['thumb']) { ?>
+                      <a href="" id="thumb-image<?php echo $image_row; ?>" class="img-thumbnail img-edit"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a>
+                      <?php } else { ?>
+                      <a href="" id="thumb-image<?php echo $image_row; ?>" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+                      <?php } ?>
                       <input type="hidden" name="product_image[<?php echo $image_row; ?>][image]" value="<?php echo $product_image['image']; ?>" id="input-image<?php echo $image_row; ?>" /></td>
                     <td class="text-right"><input type="text" name="product_image[<?php echo $image_row; ?>][sort_order]" value="<?php echo $product_image['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
                     <td class="text-left"><button type="button" onclick="$('#image-row<?php echo $image_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
@@ -1240,7 +1249,7 @@ var image_row = <?php echo $image_row; ?>;
 
 function addImage() {
 	html  = '<tr id="image-row' + image_row + '">';
-	html += '  <td class="text-left"><img src="<?php echo $no_image; ?>" alt="" id="thumb-image' + image_row + '" class="img-thumbnail" /><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
+	html += '  <td class="text-left"><a href="" id="thumb-image' + image_row + '" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a><input type="hidden" name="product_image[' + image_row + '][image]" value="" id="input-image' + image_row + '" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_image[' + image_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#image-row' + image_row  + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';

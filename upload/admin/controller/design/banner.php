@@ -373,7 +373,7 @@ class ControllerDesignBanner extends Controller {
 			if ($banner_image['image'] && file_exists(DIR_IMAGE . $banner_image['image'])) {
 				$image = $banner_image['image'];
 			} else {
-				$image = 'no_image.jpg';
+				$image = '';
 			}			
 			
 			$this->data['banner_images'][] = array(
@@ -384,8 +384,6 @@ class ControllerDesignBanner extends Controller {
 				'sort_order'               => $banner_image['sort_order']
 			);	
 		} 
-	
-		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);		
 
 		$this->template = 'design/banner_form.tpl';
 		$this->children = array(

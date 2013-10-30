@@ -50,7 +50,6 @@ final class DBmPDO {
             }
         }catch(PDOException $e){ 
             trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
-            exit();
         }
     }
 
@@ -71,7 +70,7 @@ final class DBmPDO {
                 $result->rows = $data;
                 $result->num_rows = $this->statement->rowCount();
             }
-        }catch(PDOException $e){
+        } catch (PDOException $e){
             trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
             exit();    
         }

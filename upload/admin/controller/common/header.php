@@ -220,11 +220,11 @@ class ControllerCommonHeader extends Controller {
 			if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
 				$this->data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 23, 23);
 			} else {
-				$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
+				$this->data['profile_image'] = '';
 			}
 		} else {
 			$this->data['profile_name'] = '';
-			$this->data['profile_image'] = $this->model_tool_image->resize('no_image.jpg', 23, 23);
+			$this->data['profile_image'] = '';
 		}
 					
 		$this->template = 'common/header.tpl';

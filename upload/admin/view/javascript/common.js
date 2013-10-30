@@ -44,7 +44,9 @@ $(document).ready(function() {
 });
 
 // Image Manager
-$(document).delegate('.img-thumbnail', 'click', function() {
+$(document).delegate('.img-edit', 'click', function(e) {
+	e.preventDefault();
+	
 	var element = this;
 	 
 	$(element).popover({
@@ -65,12 +67,12 @@ $(document).delegate('.img-thumbnail', 'click', function() {
 			url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
 			dataType: 'html',	
 			beforeSend: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-				$('#button-upload').prop('disabled', true);
+				$('#button-image i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-image').prop('disabled', true);
 			},
 			complete: function() {
-				$('#button-upload i').replaceWith('<i class="fa fa-upload"></i>');
-				$('#button-upload').prop('disabled', false);
+				$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+				$('#button-image').prop('disabled', false);
 			},				
 			success: function(html) {
 				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
@@ -83,10 +85,10 @@ $(document).delegate('.img-thumbnail', 'click', function() {
 	});
 	
 	$('#button-clear').on('click', function() {	
-		 $(element).parent().find('input').attr('value', '');
-		 $(element).attr('src', '');
-		 
-		 $(element).popover('hide');
+		$(element).html('<i class="fa fa-camera fa-5x"></i>');
+		$(element).parent().find('input').attr('value', '');
+		
+		$(element).popover('hide');
 	});	
 });
 

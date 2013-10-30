@@ -488,10 +488,8 @@ class ControllerLocalisationLocation extends Controller {
 		} elseif (!empty($location_info) && $location_info['image'] && is_file(DIR_IMAGE . $location_info['image'])) {
 			$this->data['thumb'] = $this->model_tool_image->resize($location_info['image'], 100, 100);
 		} else {
-			$this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
+			$this->data['thumb'] = '';
 		}
-		
-		$this->data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 				
 		if (isset($this->request->post['open'])) {
 			$this->data['open'] = $this->request->post['open'];
@@ -509,7 +507,7 @@ class ControllerLocalisationLocation extends Controller {
 			$this->data['comment'] = '';
 		}
 		
-		$this->template = 'localisation/location_form.tpl';   //  Remember to create this template!!
+		$this->template = 'localisation/location_form.tpl';
 		$this->children = array(
 			'common/header',
 			'common/footer'

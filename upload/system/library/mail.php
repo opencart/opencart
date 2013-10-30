@@ -345,7 +345,7 @@ class Mail {
 					trigger_error('Error: DATA not accepted from server!');
 					exit();						
 				}
-            	
+
 				// According to rfc 821 we should not send more than 1000 including the CRLF
 				$message = str_replace("\r\n", "\n",  $header . $message);
 				$message = str_replace("\r", "\n", $message);

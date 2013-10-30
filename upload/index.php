@@ -110,20 +110,20 @@ function error_handler($errno, $errstr, $errfile, $errline) {
 
 	return true;
 }
-	
+
 // Error Handler
 set_error_handler('error_handler');
 
 // Request
 $request = new Request();
 $registry->set('request', $request);
- 
+
 // Response
 $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=utf-8');
 $response->setCompression($config->get('config_compression'));
 $registry->set('response', $response); 
-		
+
 // Cache
 $cache = new Cache();
 $registry->set('cache', $cache); 

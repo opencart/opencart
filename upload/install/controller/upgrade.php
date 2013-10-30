@@ -7,16 +7,16 @@ class ControllerUpgrade extends Controller {
 			$this->load->model('upgrade');
 
 			$this->model_upgrade->mysql();
-			
+
 			$this->redirect($this->url->link('upgrade/success'));
 		}		
-		
+
 		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
 			$this->data['error_warning'] = '';
 		}
-		
+
 		$this->data['action'] = $this->url->link('upgrade');
 
 		$this->template = 'upgrade.tpl';
@@ -46,16 +46,16 @@ class ControllerUpgrade extends Controller {
 				if (!mysql_select_db(DB_DATABASE, $connection)) {
 					$this->error['warning'] = 'Error: Database "'. DB_DATABASE . '" does not exist!';
 				}
-	
+
 				mysql_close($connection);
 			}
 		}
 
-    	if (!$this->error) {
-      		return true;
-    	} else {
-      		return false;
-    	}
+		if (!$this->error) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }
 ?>

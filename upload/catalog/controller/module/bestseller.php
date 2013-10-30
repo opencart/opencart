@@ -2,8 +2,8 @@
 class ControllerModuleBestSeller extends Controller {
 	protected function index($setting) {
 		$this->language->load('module/bestseller');
- 
-      	$this->data['heading_title'] = $this->language->get('heading_title');
+
+		$this->data['heading_title'] = $this->language->get('heading_title');
 				
 		$this->data['button_cart'] = $this->language->get('button_cart');
 		

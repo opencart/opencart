@@ -184,7 +184,7 @@ class ModelUpgrade extends Model {
 						if ($field['collation']) {
 							$sql .= " " . $field['collation'];
 						}
-						 
+
 						if ($field['notnull']) {
 							$sql .= " " . $field['notnull'];
 						}

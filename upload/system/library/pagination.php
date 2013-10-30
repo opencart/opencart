@@ -12,7 +12,7 @@ class Pagination {
 	public $text_prev = '&lt;';
 	public $style_links = 'links';
 	public $style_results = 'results';
-	 
+
 	public function render() {
 		$total = $this->total;
 		
@@ -35,7 +35,7 @@ class Pagination {
 		
 		if ($page > 1) {
 			$output .= ' <a href="' . str_replace('{page}', 1, $this->url) . '">' . $this->text_first . '</a> <a href="' . str_replace('{page}', $page - 1, $this->url) . '">' . $this->text_prev . '</a> ';
-    	}
+		}
 
 		if ($num_pages > 1) {
 			if ($num_pages <= $num_links) {
@@ -73,7 +73,7 @@ class Pagination {
 			}
 		}
 		
-   		if ($page < $num_pages) {
+		if ($page < $num_pages) {
 			$output .= ' <a href="' . str_replace('{page}', $page + 1, $this->url) . '">' . $this->text_next . '</a> <a href="' . str_replace('{page}', $num_pages, $this->url) . '">' . $this->text_last . '</a> ';
 		}
 		

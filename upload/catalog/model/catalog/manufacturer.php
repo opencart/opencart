@@ -52,7 +52,7 @@ class ModelCatalogManufacturer extends Model {
 			
 				$this->cache->set('manufacturer.' . (int)$this->config->get('config_store_id'), $manufacturer_data);
 			}
-		 
+
 			return $manufacturer_data;
 		}	
 	} 

@@ -592,7 +592,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				$this->config->get('amazon_checkout_access_secret'));
 		$cba->setMode($this->config->get('amazon_checkout_mode'));
 
-		if ($cba->setPurchaseItems($parameters_items) !== True) {
+		if ($cba->setPurchaseItems($parameters_items) !== true) {
 			$this->redirect($this->url->link('payment/amazon_checkout/failure', '', 'SSL'));
 		}
 
@@ -742,7 +742,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				$iso_code3 = $result['iso_code_3'];
 				$address_format = $result['address_format'];
 				$country_name = $result['name'];
-				$country_id = (int) $result['country_id'];
+				$country_id = (int)$result['country_id'];
 
 				$zone = (string)$address_xml->StateOrProvinceCode;
 

@@ -59,7 +59,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 		}
 				
 		$this->response->setOutput($this->render());
-  	}	
+	}
 	
 	public function validate() {
 		$this->language->load('checkout/checkout');

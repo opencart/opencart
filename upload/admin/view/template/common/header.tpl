@@ -37,7 +37,11 @@
     <?php if ($logged) { ?>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav navbar-right">
-        <li><a data-toggle="dropdown"><img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" /><i class="fa fa-caret-down"></i> <?php echo $profile_name; ?><br />
+        <li><a data-toggle="dropdown">
+          <?php if ($profile_image) { ?>
+          <img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" />
+          <?php } ?>
+          <i class="fa fa-caret-down"></i> <?php echo $profile_name; ?><br />
           <small><?php echo $profile_group; ?></small></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>

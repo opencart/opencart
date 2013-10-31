@@ -24,8 +24,10 @@ class Modification {
 	public function load($filename) {
 		if (file_exists($filename)) {
 			$xml = file_get_contents($filename);
-
-			$this->addModification($xml);
+			
+			if ($xml) {
+				$this->addModification($xml);
+			}
 		} else {
 			trigger_error('Error: Could not load modification ' . $filename . '!');
 			exit();

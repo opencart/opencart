@@ -92,13 +92,13 @@ class ControllerShippingUsps extends Controller {
 			$this->data['error_warning'] = '';
 		}
 
- 		if (isset($this->error['user_id'])) {
+		if (isset($this->error['user_id'])) {
 			$this->data['error_user_id'] = $this->error['user_id'];
 		} else {
 			$this->data['error_user_id'] = '';
 		}
 
- 		if (isset($this->error['postcode'])) {
+		if (isset($this->error['postcode'])) {
 			$this->data['error_postcode'] = $this->error['postcode'];
 		} else {
 			$this->data['error_postcode'] = '';
@@ -122,25 +122,25 @@ class ControllerShippingUsps extends Controller {
 			$this->data['error_height'] = '';
 		}
 
-  		$this->data['breadcrumbs'] = array();
+		$this->data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
-   		);
+			'separator' => false
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_shipping'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_shipping'),
 			'href'      => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
-   		);
+			'separator' => ' :: '
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
-   		);
+			'separator' => ' :: '
+		);
 
 		$this->data['action'] = $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -484,7 +484,7 @@ class ControllerShippingUsps extends Controller {
 		} else {
 			$this->data['usps_tax_class_id'] = $this->config->get('usps_tax_class_id');
 		}
-		
+
 		$this->load->model('localisation/tax_class');
 
 		$this->data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
@@ -494,7 +494,7 @@ class ControllerShippingUsps extends Controller {
 		} else {
 			$this->data['usps_geo_zone_id'] = $this->config->get('usps_geo_zone_id');
 		}
-		
+
 		$this->load->model('localisation/geo_zone');
 
 		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();

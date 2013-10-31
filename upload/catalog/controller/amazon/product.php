@@ -24,7 +24,7 @@ class ControllerAmazonProduct extends Controller
              return;
          }
          
-         $data = $this->amazon->decryptArgs($this->request->post['data']);
+         $data = $this->openbay->amazon->decryptArgs($this->request->post['data']);
          if(!$data) {
              $logger->write("Error - Failed to decrypt received data.");
              ob_get_clean();
@@ -53,7 +53,7 @@ class ControllerAmazonProduct extends Controller
                     $insertionProduct['sku'] => $this->model_amazon_product->getProductQuantity($insertionProduct['product_id'], $insertionProduct['var']) 
                 );
                 $logger->write('Updating quantity with data: ' . print_r($quantityData, true));
-                $logger->write('Response: ' . print_r($this->amazon->updateQuantities($quantityData), true));
+                $logger->write('Response: ' . print_r($this->openbay->amazon->updateQuantities($quantityData), true));
 
             } else {
                 $msg = 'Product was not accepted by amazon. Please try again or contact OpenBay.';
@@ -92,7 +92,7 @@ class ControllerAmazonProduct extends Controller
             return;
         }
 
-        $data = $this->amazon->decryptArgs($this->request->post['data']);
+        $data = $this->openbay->amazon->decryptArgs($this->request->post['data']);
         if (!$data) {
             $this->response->setOutput("error 003");
             return;

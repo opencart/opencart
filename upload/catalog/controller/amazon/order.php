@@ -1,7 +1,5 @@
 <?php
-
 class ControllerAmazonOrder extends Controller {
-
     public function index() {
         if ($this->config->get('amazon_status') != '1') {
             return;
@@ -25,7 +23,7 @@ class ControllerAmazonOrder extends Controller {
             return;
         }
         
-        $decrypted = $this->amazon->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->amazon->decryptArgs($this->request->post['data']);
         
         if (!$decrypted) {
             $logger->write('amazon/order Failed to decrypt data');
@@ -328,5 +326,5 @@ class ControllerAmazonOrder extends Controller {
         $logger->write("Ok");
         $this->response->setOutput('Ok');
     }
-
 }
+?>

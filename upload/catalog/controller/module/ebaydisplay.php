@@ -43,3 +43,4 @@ class ControllerModuleEbaydisplay extends Controller {
         $this->render();
     }
 }
+?>

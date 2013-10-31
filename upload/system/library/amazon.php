@@ -1,5 +1,5 @@
 <?php
-class Amazon { 
+class Amazon {
 
     private $token;
     private $encPass;
@@ -37,7 +37,7 @@ class Amazon {
             $logger->write('orderNew() called with order id: ' . $orderId);
 
             //Stock levels update
-            if($this->addonLoad('openstock') == true){
+            if ($this->openbay->addonLoad('openstock')) {
                 $logger->write('openStock found installed.');
 
                 $osProducts = $this->osProducts($orderId);
@@ -72,7 +72,7 @@ class Amazon {
         $logger = new Log('amazon_stocks.log');
         $logger->write('productUpdateListen called for product id: ' . $productId);
         
-        if($this->addonLoad('openstock') == true && (isset($data['has_option']) && $data['has_option'] == 1)) {
+        if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
             $logger->write('openStock found installed and product has options.');
             $quantityData = array();
             foreach($data['product_option_stock'] as $optStock) {
@@ -386,7 +386,7 @@ class Amazon {
         }
         if(!empty($quantityData)) {
             $logger->write('Quantity data to be sent:' . print_r($quantityData, true));
-            $response = $this->amazon->updateQuantities($quantityData);
+            $response = $this->updateQuantities($quantityData);
             $logger->write('Submit to API. Response: ' . print_r($response, true));
         } else {
             $logger->write('No quantity data need to be posted.');
@@ -465,42 +465,6 @@ class Amazon {
 
         return $passArray;
     }
-    
-    /*
-     * addonLoad (copy from ebay library)
-     *
-     * Loads a 3rd party module for OpenBay to use.
-     * @param $addon
-     * @return bool
-     */
-    public function addonLoad($addon){
-        $addon = (string)$addon; //ensure the addon name is a string value.
-
-
-        if(file_exists(DIR_SYSTEM."ebay_addon/".$addon.".php"))
-        {
-            if($addon == "openstock") {
-                $isInstalled = $this->db->query("
-                    SELECT COUNT(*) as count FROM `" . DB_PREFIX . "extension`
-                    WHERE `code` = 'openstock'")->row;
-                if($isInstalled['count'] == 0) {
-                    return false;
-                }
-            }
-            
-            include_once(DIR_SYSTEM."ebay_addon/".$addon.".php");
-            
-            if(empty($this->addon) || !is_object($this->addon))
-            {
-                $this->addon = new stdClass();
-            }
-        
-            $this->addon->$addon = new $addon;
-            return true;
-        }else{
-            return false;
-        }
-    }
 
     public function validate(){
         if($this->config->get('amazon_status') != 0 &&
@@ -533,34 +497,112 @@ class Amazon {
         }
     }
 
-    public function getCarriers(){
+    public function getCarriers() {
         return array(
-            "USPS",
-            "UPS",
-            "FedEx",
+            "Blue Package",
+            "Canada Post",
+            "City Link",
             "DHL",
+            "DHL Global Mail",
             "Fastway",
+            "FedEx",
+            "FedEx SmartPost",
             "GLS",
             "GO!",
             "Hermes Logistik Gruppe",
-            "Royal Mail",
-            "Parcelforce",
-            "City Link",
-            "TNT",
-            "Target",
-            "SagawaExpress",
+            "Newgistics",
             "NipponExpress",
-            "YamatoTransport",
-            "DHL Global Mail",
-            "UPS Mail Innovations",
-            "FedEx SmartPost",
             "OSM",
             "OnTrac",
+            "Parcelforce",
+            "Royal Mail",
+            "SagawaExpress",
             "Streamlite",
-            "Newgistics",
-            "Canada Post",
-            "Blue Package",
+            "TNT",
+            "Target",
+            "UPS",
+            "UPS Mail Innovations",
+            "USPS",
+            "YamatoTransport",
         );
     }
     
+    public function parseCategoryTemplate($xml) {
+        $simplexml = null;
+        
+        libxml_use_internal_errors(true);
+        if(($simplexml = simplexml_load_string($xml)) == false) {
+            return false;
+        }
+        
+        $category = (string)$simplexml->filename;
+        
+        $tabs = array();
+        foreach($simplexml->tabs->tab as $tab) {
+            $attributes = $tab->attributes();
+            $tabs[] = array(
+                'id' => (string)$attributes['id'],
+                'name' => (string) $tab->name,
+            );
+        }
+        
+        $fields = array();
+        $fieldTypes = array('required', 'desired', 'optional');
+        foreach ($fieldTypes as $type) {
+            foreach ($simplexml->fields->$type->field as $field) {
+                $attributes = $field->attributes();
+                $fields[] = array(
+                    'name' => (string)$attributes['name'],
+                    'title' => (string)$field->title,
+                    'definition' => (string)$field->definition,
+                    'accepted' => (array)$field->accepted,
+                    'type' => (string)$type,
+                    'child' => false,
+                    'order' => isset($attributes['order']) ? (string)$attributes['order'] : '',
+                    'tab' => (string)$attributes['tab'],
+                );
+            }
+            foreach ($simplexml->fields->$type->childfield as $field) {
+                $attributes = $field->attributes();
+                $fields[] = array(
+                    'name' => (string)$attributes['name'],
+                    'title' => (string)$field->title,
+                    'definition' => (string)$field->definition,
+                    'accepted' => (array)$field->accepted,
+                    'type' => (string)$type,
+                    'child' => true,
+                    'parent' => (array)$field->parent,
+                    'order' => isset($attributes['order']) ? (string)$attributes['order'] : '',
+                    'tab' => (string)$attributes['tab'],
+                );
+            }
+        }
+        
+        foreach($fields as $index => $field) {
+            $fields[$index]['unordered_index'] = $index;
+        }
+        
+        usort($fields, array('Amazon','compareFields'));
+        
+        return array(
+            'category' => $category,
+            'fields' => $fields,
+            'tabs' => $tabs,
+        );
+    }
+    
+    //Used to sort fields array
+    private static function compareFields($field1, $field2) {
+        if($field1['order'] == $field2['order']) {
+            return ($field1['unordered_index'] < $field2['unordered_index']) ? -1 : 1;
+        } else if(!empty($field1['order']) && empty($field2['order'])) {
+            return -1;
+        } else if(!empty($field2['order']) && empty($field1['order'])) {
+            return 1;
+        } else {
+            return ($field1['order'] < $field2['order']) ? -1 : 1;
+        }
+    }
+    
 }
+?>

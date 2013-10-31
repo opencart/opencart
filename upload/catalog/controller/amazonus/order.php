@@ -1,7 +1,5 @@
 <?php
-
 class ControllerAmazonusOrder extends Controller {
-
     public function index() {
         if ($this->config->get('amazonus_status') != '1') {
             return;
@@ -25,7 +23,7 @@ class ControllerAmazonusOrder extends Controller {
             return;
         }
         
-        $decrypted = $this->amazonus->decryptArgs($this->request->post['data']);
+        $decrypted = $this->openbay->amazonus->decryptArgs($this->request->post['data']);
         
         if (!$decrypted) {
             $logger->write('amazonus/order Failed to decrypt data');
@@ -36,7 +34,7 @@ class ControllerAmazonusOrder extends Controller {
         
         $amazonusOrderStatus = trim(strtolower((string) $orderXml->Status));
         
-        $amazonusOrderId = (string)$orderXml->AmazonusOrderId;
+        $amazonusOrderId = (string)$orderXml->AmazonOrderId;
         $orderStatus = $this->model_amazonus_order->getMappedStatus((string) $orderXml->Status);
         
         $logger->write('Received order ' . $amazonusOrderId);
@@ -328,5 +326,5 @@ class ControllerAmazonusOrder extends Controller {
         $logger->write("Ok");
         $this->response->setOutput('Ok');
     }
-
 }
+?>

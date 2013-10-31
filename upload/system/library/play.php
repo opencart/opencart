@@ -1,6 +1,5 @@
 <?php
 final class Play {
-    
     private $registry;
     private $url    = 'https://playuk.openbaypro.com/';
     private $productIdType = array(
@@ -523,6 +522,18 @@ final class Play {
     public function log($data){
         $logger = new Log('play.log');
         $logger->write($data);
+    }
+	
+	public function validate(){
+        if($this->config->get('play_status') != 0 &&
+            $this->config->get('obp_play_token') != '' &&
+            $this->config->get('obp_play_secret') != '' &&
+            $this->config->get('obp_play_key') != '' &&
+            $this->config->get('obp_play_key2') != ''){
+            return true;
+        }else{
+            return false;
+        }
     }
 }
 ?>

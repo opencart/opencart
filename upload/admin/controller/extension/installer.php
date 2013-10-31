@@ -404,7 +404,7 @@ class ControllerExtensionInstaller extends Controller {
 						'name'       => $dom->getElementsByTagName('name')->item(0)->nodeValue,
 						'author'     => $dom->getElementsByTagName('author')->item(0)->nodeValue,
 						'version'    => $dom->getElementsByTagName('version')->item(0)->nodeValue,
-						'code'       => $file,
+						'code'       => $xml,
 						'status'     => 1
 					);
 				

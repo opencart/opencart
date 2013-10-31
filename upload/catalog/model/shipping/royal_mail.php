@@ -671,4 +671,3 @@ class ModelShippingRoyalMail extends Model {
 		return $method_data;
 	}
 }
-?>

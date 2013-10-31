@@ -32,4 +32,3 @@ class DB {
 		return $this->db->getLastId();
 	}
 }
-?>

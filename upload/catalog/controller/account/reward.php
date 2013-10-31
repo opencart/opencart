@@ -102,4 +102,3 @@ class ControllerAccountReward extends Controller {
 		$this->response->setOutput($this->render());		
 	} 		
 }
-?>

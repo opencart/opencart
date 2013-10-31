@@ -410,4 +410,3 @@ class ControllerLocalisationWeightClass extends Controller {
 		}
 	}	
 }
-?>

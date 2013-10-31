@@ -36,4 +36,3 @@ class Request {
 		return $data;
 	}
 }
-?>

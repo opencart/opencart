@@ -123,4 +123,3 @@ class ControllerShippingCitylink extends Controller {
 		}	
 	}
 }
-?>

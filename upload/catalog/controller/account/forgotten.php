@@ -115,4 +115,3 @@ class ControllerAccountForgotten extends Controller {
 		}
 	}
 }
-?>

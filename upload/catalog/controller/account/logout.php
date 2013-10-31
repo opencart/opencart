@@ -69,4 +69,3 @@ class ControllerAccountLogout extends Controller {
 		$this->response->setOutput($this->render());	
   	}
 }
-?>

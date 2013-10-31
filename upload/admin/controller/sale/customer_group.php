@@ -416,4 +416,3 @@ class ControllerSaleCustomerGroup extends Controller {
 		}
 	}
 }
-?>

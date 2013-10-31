@@ -524,4 +524,3 @@ class ControllerMarketingMarketing extends Controller {
 		}  
   	} 
 }
-?>

@@ -461,4 +461,3 @@ class ControllerProductSearch extends Controller {
 		$this->response->setOutput($this->render());
   	}
 }
-?>

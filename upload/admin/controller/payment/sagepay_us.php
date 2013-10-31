@@ -154,4 +154,3 @@ class ControllerPaymentSagepayUS extends Controller {
 		}	
 	}
 }
-?>

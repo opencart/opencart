@@ -513,4 +513,3 @@ class ControllerUserUser extends Controller {
 		}
   	}
 }
-?>

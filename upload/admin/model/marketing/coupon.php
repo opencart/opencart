@@ -148,4 +148,3 @@ class ModelMarketingCoupon extends Model {
 		return $query->row['total'];
 	}			
 }
-?>

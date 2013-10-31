@@ -496,4 +496,3 @@ class ControllerCatalogInformation extends Controller {
 		}
 	}
 }
-?>

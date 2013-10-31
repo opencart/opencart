@@ -28,4 +28,3 @@ class ModelPaymentMoneybookers extends Model {
     	return $method_data;
   	}
 }
-?>

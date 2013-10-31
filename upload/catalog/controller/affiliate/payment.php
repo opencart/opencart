@@ -158,4 +158,3 @@ class ControllerAffiliatePayment extends Controller {
 		$this->response->setOutput($this->render());		
 	}
 }
-?>

@@ -107,4 +107,3 @@ class ModelTotalCoupon extends Model {
 		}						
 	}
 }
-?>

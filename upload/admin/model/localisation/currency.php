@@ -147,4 +147,3 @@ class ModelLocalisationCurrency extends Model {
 		return $query->row['total'];
 	}
 }
-?>

@@ -73,4 +73,3 @@ class Pagination {
 		return $output;
 	}
 }
-?>

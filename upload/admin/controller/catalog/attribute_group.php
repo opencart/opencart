@@ -390,4 +390,3 @@ class ControllerCatalogAttributeGroup extends Controller {
 		}
   	}	  
 }
-?>

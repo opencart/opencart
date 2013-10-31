@@ -86,4 +86,3 @@ class ControllerFeedGoogleBase extends Controller {
 		}	
 	}	
 }
-?>

@@ -96,4 +96,3 @@ class ControllerModuleCategory extends Controller {
 		}	
 	}
 }
-?>

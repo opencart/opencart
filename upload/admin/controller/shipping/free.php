@@ -110,4 +110,3 @@ class ControllerShippingFree extends Controller {
 		}	
 	}
 }
-?>

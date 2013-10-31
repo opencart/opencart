@@ -22,4 +22,3 @@ class CacheMemCache {
 		$this->cache->delete(CACHE_PREFIX . $key);        
 	}
 }
-?>

@@ -833,4 +833,3 @@ class ControllerShippingUPS extends Controller {
 		}	
 	}
 }
-?>

@@ -28,4 +28,3 @@ class ModelPaymentSagePayDirect extends Model {
     	return $method_data;
   	}
 }
-?>

@@ -138,5 +138,4 @@ final class Loader {
 	public function language($language) {
 		return $this->language->load($language);
 	}
-} 
-?>
+}

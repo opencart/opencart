@@ -68,4 +68,3 @@ class ModelSettingModification extends Model {
 		return $query->row['total'];
 	}		
 }
-?>

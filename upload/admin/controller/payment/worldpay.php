@@ -171,4 +171,3 @@ class ControllerPaymentWorldPay extends Controller {
 		}	
 	}
 }
-?>

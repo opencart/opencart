@@ -77,4 +77,3 @@ final class DBMSSQL {
 		mssql_close($this->link);
 	}
 }
-?>

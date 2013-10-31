@@ -96,4 +96,3 @@ class ControllerModuleInformation extends Controller {
 		}	
 	}
 }
-?>

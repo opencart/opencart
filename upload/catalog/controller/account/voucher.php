@@ -255,4 +255,3 @@ class ControllerAccountVoucher extends Controller {
     	}				
 	}
 }
-?>

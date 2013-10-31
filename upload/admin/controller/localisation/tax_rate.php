@@ -444,4 +444,3 @@ class ControllerLocalisationTaxRate extends Controller {
 		}
 	}	
 }
-?>

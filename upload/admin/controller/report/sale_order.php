@@ -187,4 +187,3 @@ class ControllerReportSaleOrder extends Controller {
 		$this->response->setOutput($this->render());
 	}
 }
-?>

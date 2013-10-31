@@ -57,4 +57,3 @@ class ModelShippingCitylink extends Model {
 		return $method_data;
 	}
 }
-?>

@@ -196,4 +196,3 @@ class ModelSaleCustomField extends Model {
 		return $query->row['total'];
 	}		
 }
-?>

@@ -132,4 +132,3 @@ class ControllerTotalKlarnaFee extends Controller {
         }
     }
 }
-?>

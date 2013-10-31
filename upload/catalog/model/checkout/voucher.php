@@ -124,4 +124,3 @@ class ModelCheckoutVoucher extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET voucher_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', amount = '" . (float)$amount . "', date_added = NOW()");
 	}
 }
-?>

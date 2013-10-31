@@ -686,4 +686,3 @@ class ControllerAccountReturn extends Controller {
 		imagedestroy($image);
 	}	
 }
-?>

@@ -33,4 +33,3 @@ $_['error_ftp_login']      = 'Could not login as %s';
 $_['error_ftp_root']       = 'Could not set root directory as %s';
 $_['error_ftp_directory']  = 'Could not change to directory %s';
 $_['error_ftp_file']       = 'Could not upload file %s';
-?>

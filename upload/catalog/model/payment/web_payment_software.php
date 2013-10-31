@@ -28,4 +28,3 @@ class ModelPaymentWebPaymentSoftware extends Model {
     	return $method_data;
   	}
 }
-?>

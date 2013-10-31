@@ -162,4 +162,3 @@ class ControllerExtensionFeed extends Controller {
 		}
   	}	
 }
-?>

@@ -161,4 +161,3 @@ class ControllerShippingParcelforce48 extends Controller {
 		}	
 	}
 }
-?>

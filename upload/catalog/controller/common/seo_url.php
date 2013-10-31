@@ -93,6 +93,8 @@ class ControllerCommonSeoUrl extends Controller {
 					}
 					
 					unset($data[$key]);
+				} elseif ($key == 'route' && $value == 'common/home'){
+					$url = '/';
 				}
 			}
 		}
@@ -118,4 +120,3 @@ class ControllerCommonSeoUrl extends Controller {
 		}
 	}	
 }
-?>

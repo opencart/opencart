@@ -18,4 +18,3 @@ class Session {
 		return session_id();
 	}
 }
-?>

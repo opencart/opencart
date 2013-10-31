@@ -36,4 +36,3 @@ class ControllerModuleSlideshow extends Controller {
 		$this->render();
 	}
 }
-?>

@@ -380,4 +380,3 @@ class ControllerLocalisationStockStatus extends Controller {
 		}
   	}	  
 }
-?>

@@ -96,4 +96,3 @@ class ModelLocalisationStockStatus extends Model {
 		return $query->row['total'];
 	}	
 }
-?>

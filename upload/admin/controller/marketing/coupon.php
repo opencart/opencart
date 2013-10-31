@@ -632,4 +632,3 @@ class ControllerMarketingCoupon extends Controller {
 		$this->response->setOutput($this->render());
   	}		
 }
-?>

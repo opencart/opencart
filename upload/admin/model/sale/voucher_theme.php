@@ -95,4 +95,3 @@ class ModelSaleVoucherTheme extends Model {
 		return $query->row['total'];
 	}	
 }
-?>

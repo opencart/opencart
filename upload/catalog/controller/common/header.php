@@ -128,4 +128,3 @@ class ControllerCommonHeader extends Controller {
     	$this->render();
 	} 	
 }
-?>

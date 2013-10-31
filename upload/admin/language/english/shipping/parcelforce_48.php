@@ -26,4 +26,3 @@ $_['help_display_time']      = 'Do you want to display the shipping time? (e.g. 
 
 // Error
 $_['error_permission']        = 'Warning: You do not have permission to modify Parcelforce 48 shipping!';
-?>

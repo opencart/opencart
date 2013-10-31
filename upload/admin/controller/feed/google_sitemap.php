@@ -86,4 +86,3 @@ class ControllerFeedGoogleSitemap extends Controller {
 		}	
 	}	
 }
-?>

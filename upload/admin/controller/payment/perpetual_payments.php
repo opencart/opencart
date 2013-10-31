@@ -164,4 +164,3 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		}	
 	}
 }
-?>

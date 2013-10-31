@@ -160,4 +160,3 @@ class ControllerReportCustomerOrder extends Controller {
 		$this->response->setOutput($this->render());
 	}
 }
-?>

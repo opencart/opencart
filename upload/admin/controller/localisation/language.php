@@ -513,4 +513,3 @@ class ControllerLocalisationLanguage extends Controller {
 		}
 	}	
 }
-?>

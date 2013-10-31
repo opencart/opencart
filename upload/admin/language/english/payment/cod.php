@@ -18,4 +18,3 @@ $_['help_total']         = 'The checkout total the order must reach before this 
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment Cash On Delivery!';
-?>

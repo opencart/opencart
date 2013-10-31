@@ -26,4 +26,3 @@ $_['help_total']         = 'The checkout total the order must reach before this 
 $_['error_permission']   = 'Warning: You do not have permission to modify payment 2Checkout!';
 $_['error_account']      = 'Account No. Required!';
 $_['error_secret']       = 'Secret Word Required!';
-?>

@@ -85,4 +85,3 @@ class ControllerCommonContentTop extends Controller {
 		$this->render();
 	}
 }
-?>

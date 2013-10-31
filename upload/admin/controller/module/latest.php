@@ -116,4 +116,3 @@ class ControllerModuleLatest extends Controller {
 		}	
 	}
 }
-?>

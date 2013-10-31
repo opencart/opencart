@@ -69,4 +69,3 @@ class ModelTotalReward extends Model {
 		}
 	}		
 }
-?>

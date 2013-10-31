@@ -14,4 +14,3 @@ $_['entry_email']     = 'E-Mail Address';
 
 // Error
 $_['error_email']     = 'Warning: The E-Mail Address was not found in our records, please try again!';
-?>

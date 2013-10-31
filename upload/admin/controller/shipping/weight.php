@@ -125,4 +125,3 @@ class ControllerShippingWeight extends Controller {
 		}	
 	}
 }
-?>

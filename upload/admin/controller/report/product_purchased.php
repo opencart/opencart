@@ -144,4 +144,3 @@ class ControllerReportProductPurchased extends Controller {
 		$this->response->setOutput($this->render());
 	}	
 }
-?>

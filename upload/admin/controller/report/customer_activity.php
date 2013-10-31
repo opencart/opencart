@@ -156,4 +156,3 @@ class ControllerReportCustomerActivity extends Controller {
 		$this->response->setOutput($this->render());
   	}
 }
-?>

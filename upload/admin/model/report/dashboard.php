@@ -347,4 +347,3 @@ class ModelReportDashboard extends Model {
 		return $marketing_data;
 	}
 }
-?>

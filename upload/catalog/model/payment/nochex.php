@@ -28,4 +28,3 @@ class ModelPaymentNOCHEX extends Model {
     	return $method_data;
   	}
 }
-?>

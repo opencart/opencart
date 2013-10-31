@@ -423,4 +423,3 @@ class ControllerProductManufacturer extends Controller {
 		}
   	}
 }
-?>

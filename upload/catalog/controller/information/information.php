@@ -109,4 +109,3 @@ class ControllerInformationInformation extends Controller {
 		$this->response->setOutput($output);
 	}
 }
-?>

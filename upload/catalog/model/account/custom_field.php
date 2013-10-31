@@ -40,4 +40,3 @@ class ModelAccountCustomField extends Model {
 		return $query->row;		
 	}	
 }
-?>

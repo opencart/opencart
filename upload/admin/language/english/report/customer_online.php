@@ -12,4 +12,3 @@ $_['column_url']        = 'Last Page Visited';
 $_['column_referer']    = 'Referer';
 $_['column_date_added'] = 'Last Click';
 $_['column_action']     = 'Action';
-?>

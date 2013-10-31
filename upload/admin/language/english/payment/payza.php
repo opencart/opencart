@@ -24,4 +24,3 @@ $_['help_total']         = 'The checkout total the order must reach before this 
 $_['error_permission']   = 'Warning: You do not have permission to modify payment Payza!';
 $_['error_merchant']     = 'Merchant ID Required!';
 $_['error_security']     = 'Security Code Required!';
-?>

@@ -12,4 +12,3 @@ class ModelLocalisationLocation extends Model {
 		return $query->rows;
     }
 }
-?>

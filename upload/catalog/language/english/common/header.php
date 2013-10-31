@@ -10,4 +10,3 @@ $_['text_logged']         = 'You are logged in as <a href="%s">%s</a> <b>(</b> <
 $_['text_account']        = 'My Account';
 $_['text_checkout']       = 'Checkout';
 $_['text_all']            = 'See All';
-?>

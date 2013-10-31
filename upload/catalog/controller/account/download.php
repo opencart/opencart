@@ -167,4 +167,3 @@ class ControllerAccountDownload extends Controller {
 		}
 	}
 }
-?>

@@ -116,4 +116,3 @@ class ModelReportAffiliate extends Model {
 		return $query->row['total'];
 	}	
 }
-?>

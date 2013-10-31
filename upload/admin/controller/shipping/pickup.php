@@ -101,4 +101,3 @@ class ControllerShippingPickup extends Controller {
 		}	
 	}
 }
-?>

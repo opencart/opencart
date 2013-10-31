@@ -10,4 +10,3 @@ class ModelDesignLayout extends Model {
 		}
 	}
 }
-?>

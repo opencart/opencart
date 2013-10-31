@@ -118,4 +118,3 @@ class ControllerReportProductViewed extends Controller {
 		$this->redirect($this->url->link('report/product_viewed', 'token=' . $this->session->data['token'], 'SSL'));
 	}
 }
-?>

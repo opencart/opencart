@@ -112,4 +112,3 @@ class ControllerCommonForgotten extends Controller {
 		}
 	}
 }
-?>

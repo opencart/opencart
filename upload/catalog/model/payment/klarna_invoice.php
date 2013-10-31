@@ -62,4 +62,3 @@ class ModelPaymentKlarnaInvoice extends Model {
         return $method;
     }
 }
-?>

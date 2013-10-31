@@ -96,4 +96,3 @@ class Affiliate {
 		return $this->code;
 	}
 }
-?>

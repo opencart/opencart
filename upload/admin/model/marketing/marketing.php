@@ -100,4 +100,3 @@ class ModelMarketingMarketing extends Model {
 		return $query->row['total'];
 	}	
 }
-?>

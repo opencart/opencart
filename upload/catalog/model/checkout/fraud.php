@@ -388,4 +388,3 @@ class ModelCheckoutFraud extends Model {
 		return $query->row;
 	}
 }
-?>

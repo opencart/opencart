@@ -164,4 +164,3 @@ class ControllerShippingAusPost extends Controller {
 		}       
 	}
 }
-?>

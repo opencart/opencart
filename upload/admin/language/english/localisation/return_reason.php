@@ -16,4 +16,3 @@ $_['entry_name']       = 'Return Reason Name';
 $_['error_permission'] = 'Warning: You do not have permission to modify return reasons!';
 $_['error_name']       = 'Return Reason Name must be between 3 and 128 characters!';
 $_['error_return']     = 'Warning: This return reason cannot be deleted as it is currently assigned to %s returned products!';
-?>

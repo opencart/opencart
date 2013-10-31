@@ -23,4 +23,3 @@ $_['help_code']           = 'Goto <a href="http://www.google.com/talk/service/ba
 // Error
 $_['error_permission']    = 'Warning: You do not have permission to modify module Google Talk!';
 $_['error_code']          = 'Code Required';
-?>

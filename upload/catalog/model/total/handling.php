@@ -28,4 +28,3 @@ class ModelTotalHandling extends Model {
 		}
 	}
 }
-?>

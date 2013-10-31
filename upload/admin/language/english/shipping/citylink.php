@@ -18,4 +18,3 @@ $_['help_rate']        = 'Enter values upto 5,2 decimal places. (12345.67) Examp
 
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify Citylink shipping!';
-?>

@@ -26,4 +26,3 @@ class ModelTotalShipping extends Model {
 		}			
 	}
 }
-?>

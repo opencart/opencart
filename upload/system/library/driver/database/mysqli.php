@@ -57,4 +57,3 @@ final class DBMySQLi {
 		$this->link->close();
 	}
 }
-?>

@@ -60,4 +60,3 @@ class ControllerAccountSuccess extends Controller {
 		$this->response->setOutput($this->render());				
   	}
 }
-?>

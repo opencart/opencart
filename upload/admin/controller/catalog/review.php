@@ -457,4 +457,3 @@ class ControllerCatalogReview extends Controller {
 		}
 	}	
 }
-?>

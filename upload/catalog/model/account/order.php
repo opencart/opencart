@@ -170,4 +170,3 @@ class ModelAccountOrder extends Model {
 	}	
 	
 }
-?>

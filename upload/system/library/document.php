@@ -62,4 +62,3 @@ class Document {
 		return $this->scripts;
 	}
 }
-?>

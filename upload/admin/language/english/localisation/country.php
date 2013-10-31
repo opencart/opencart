@@ -31,4 +31,3 @@ $_['error_address']           = 'Warning: This country cannot be deleted as it i
 $_['error_affiliate']         = 'Warning: This country cannot be deleted as it is currently assigned to %s affiliates!';
 $_['error_zone']              = 'Warning: This country cannot be deleted as it is currently assigned to %s zones!';
 $_['error_zone_to_geo_zone']  = 'Warning: This country cannot be deleted as it is currently assigned to %s zones to geo zones!';
-?>

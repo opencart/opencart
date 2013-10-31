@@ -407,4 +407,3 @@ class ControllerSaleVoucherTheme extends Controller {
 		}
   	}	  
 }
-?>

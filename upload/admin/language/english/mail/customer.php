@@ -11,4 +11,3 @@ $_['text_transaction_total']    = 'Your total amount of credit is now %s.' . "\n
 $_['text_reward_subject']       = '%s - Reward Points';
 $_['text_reward_received']      = 'You have received %s Reward Points!';
 $_['text_reward_total']         = 'Your total number of reward points is now %s.';
-?>

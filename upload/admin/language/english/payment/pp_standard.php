@@ -36,4 +36,3 @@ $_['help_total']                     = 'The checkout total the order must reach 
 // Error
 $_['error_permission']				 = 'Warning: You do not have permission to modify payment PayPal!';
 $_['error_email']					 = 'E-Mail required!';
-?>

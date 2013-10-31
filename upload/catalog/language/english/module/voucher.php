@@ -10,4 +10,3 @@ $_['entry_voucher'] = 'Enter your gift voucher code here';
 
 // Error
 $_['error_voucher'] = 'Warning: Gift Voucher is either invalid or the balance has been used up!';
-?>

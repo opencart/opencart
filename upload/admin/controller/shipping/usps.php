@@ -552,4 +552,3 @@ class ControllerShippingUsps extends Controller {
 		}
 	}
 }
-?>

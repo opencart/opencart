@@ -120,4 +120,3 @@ class ControllerModuleBanner extends Controller {
 		}	
 	}
 }
-?>

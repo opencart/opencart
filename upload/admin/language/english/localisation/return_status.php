@@ -17,4 +17,3 @@ $_['error_permission'] = 'Warning: You do not have permission to modify return s
 $_['error_name']       = 'Return Status Name must be between 3 and 32 characters!';
 $_['error_default']    = 'Warning: This return status cannot be deleted as it is currently assigned as the default return status!';
 $_['error_return']     = 'Warning: This return status cannot be deleted as it is currently assigned to %s returns!';
-?>

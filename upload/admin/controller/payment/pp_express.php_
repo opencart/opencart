@@ -174,4 +174,3 @@ class ControllerPaymentPPExpress extends Controller {
 		}	
 	}
 }
-?>

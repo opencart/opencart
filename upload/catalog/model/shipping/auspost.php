@@ -120,4 +120,3 @@ class ModelShippingAusPost extends Model {
 		return $method_data;
 	}
 }
-?>

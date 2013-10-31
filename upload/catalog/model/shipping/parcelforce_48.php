@@ -86,4 +86,3 @@ class ModelShippingParcelforce48 extends Model {
 		return $method_data;
 	}
 }
-?>

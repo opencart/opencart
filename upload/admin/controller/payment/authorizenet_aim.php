@@ -186,4 +186,3 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 		}	
 	}
 }
-?>

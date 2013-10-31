@@ -8,4 +8,3 @@ $_['text_guest']    = '<p>Your order has been successfully processed!</p><p>Plea
 $_['text_basket']   = 'Shopping Cart';
 $_['text_checkout'] = 'Checkout';
 $_['text_success']  = 'Success';
-?>

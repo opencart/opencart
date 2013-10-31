@@ -58,4 +58,3 @@ class ModelReportMarketing extends Model {
 		return $query->row['total'];	
 	}
 }
-?>

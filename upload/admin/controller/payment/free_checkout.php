@@ -100,4 +100,3 @@ class ControllerPaymentFreeCheckout extends Controller {
 		}	
 	}
 }
-?>

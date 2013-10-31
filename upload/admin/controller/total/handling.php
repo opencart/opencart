@@ -116,4 +116,3 @@ class ControllerTotalHandling extends Controller {
 		}	
 	}
 }
-?>

@@ -168,4 +168,3 @@ class ControllerExtensionShipping extends Controller {
 		}
   	}		
 }
-?>

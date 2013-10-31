@@ -100,4 +100,3 @@ $_['error_permission']       = 'Warning: You do not have permission to modify pr
 $_['error_name']             = 'Product Name must be greater than 3 and less than 255 characters!';
 $_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_model']            = 'Product Model must be greater than 3 and less than 64 characters!';
-?>

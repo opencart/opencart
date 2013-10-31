@@ -34,4 +34,3 @@ $_['help_company']         = 'Please enter your Company\'s registration number';
 $_['error_deu_terms']     = 'You must agree to Klarna\'s privacy policy (Datenschutz)';
 $_['error_address_match'] = 'Billing and Shipping addresses must match if you want to use Klarna Invoice';
 $_['error_network']       = 'Error occurred while connecting to Klarna. Please try again later.';
-?>

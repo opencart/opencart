@@ -28,5 +28,4 @@ $_['help_total']         = 'The checkout total the order must reach before this 
 $_['error_permission']   = 'Warning: You do not have permission to modify payment PayPal Express Checkout!';
 $_['error_username']     = 'API Username Required!'; 
 $_['error_password']     = 'API Password Required!'; 
-$_['error_signature']    = 'API Signature Required!'; 
-?>
+$_['error_signature']    = 'API Signature Required!';

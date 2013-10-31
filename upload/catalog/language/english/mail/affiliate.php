@@ -15,4 +15,3 @@ $_['text_company']			= 'Company:';
 $_['text_email']			= 'E-Mail:';
 $_['text_telephone']		= 'Telephone:';
 $_['text_website']			= 'Web Site:';
-?>

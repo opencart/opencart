@@ -14,4 +14,3 @@ class ControllerHeader extends Controller {
 		$this->render();
 	}
 }
-?>

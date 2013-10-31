@@ -115,4 +115,3 @@ class ControllerModuleGoogleTalk extends Controller {
 		}	
 	}
 }
-?>

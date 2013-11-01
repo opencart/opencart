@@ -32,7 +32,7 @@ class ModelLocalisationLanguage extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "banner_image_description SET banner_image_id = '" . (int)$banner_image['banner_image_id'] . "', banner_id = '" . (int)$banner_image['banner_id'] . "', language_id = '" . (int)$language_id . "', title = '" . $this->db->escape($banner_image['title']) . "'");
 		}
 
-		$this->cache->delete('attribute');
+		$this->cache->delete('banner');
 						
 		// Category
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");

@@ -1,22 +1,20 @@
+body {
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	color: #666;
+}
+
 span.hidden-xs {
     display: inline !important;
 }
 .nav-tabs {
 	margin-bottom: 15px;
 }
-/*
-body {
-	font-family: 'Open Sans', sans-serif;
-	font-weight: 400;
-	color: #666;
-}
-body > .container {
-	min-height: 600px;
-}
 
 h1, h2, h3, h4, h5, h6 {
 	color: #444;
 }
+
 input[class^="icon-"] {
 	background: 0;
 	padding: 0;
@@ -27,20 +25,18 @@ input[class^="icon-"] {
 input[class^="icon-"]:hover {
 	color: #0066cc;
 }
-.line-through {
-	text-decoration: line-through;
-}
-.buttons {
-	margin: 1em 0;
-}
-.remove {
-	cursor: pointer;
+#content {
+	min-height: 600px;
 }
 
-.box-shadow {
-	-webkit-box-shadow: 0px 0px 5px 0px #000;
-	box-shadow: 0px 0px 5px 0px #000;
+.buttons {
+	margin: 1em 0;
+	overflow: auto;
 }
+
+/*
+
+
 .transition, .transition a, .transition input {
 	-webkit-transition: all 0.2s ease-out;
 	-moz-transition: all 0.2s ease-out;

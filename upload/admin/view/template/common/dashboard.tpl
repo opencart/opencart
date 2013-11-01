@@ -6,7 +6,7 @@
   </div>
   <?php } else { ?>
   <?php } ?> 
-  <div class="alert alert-info"><i class="fa fa-thumbs-up-alt"></i> <?php echo $text_welcome; ?>
+  <div class="alert alert-info"><i class="fa fa-thumbs-o-up"></i> <?php echo $text_welcome; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <div class="panel panel-default">

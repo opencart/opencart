@@ -1331,7 +1331,12 @@
                                 Cur = val.Cur;
                             });
 
-                            $('#previewFrame').html('<iframe src="'+data.data.link+'" frameborder="0" height="600" width="100%" style="margin-left:auto; margin-right:auto;" scrolling="auto"></iframe>');
+                            if(document.location.protocol == 'https:') {
+                                $('#previewFrame').html('<div class="buttons"><a class="button" target="_BLANK" href="'+data.data.link+'">Preview</a></buttons>');
+                            } else {
+                                $('#previewFrame').html('<iframe src="'+data.data.link+'" frameborder="0" height="600" width="100%" style="margin-left:auto; margin-right:auto;" scrolling="auto"></iframe>');
+                            }
+
                             $('#previewFrameRow').show();
                             $('#reviewFormTableCostsTotal').html(Cur+' '+feeTot.toFixed(2));
                         }else{

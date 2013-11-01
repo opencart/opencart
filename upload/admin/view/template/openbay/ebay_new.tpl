@@ -181,8 +181,10 @@
                             <select name="template" id="template_id">
                                 <option value="None">None</option>
 
-                                <?php foreach($product['templates'] as $template){ ?>
-                                <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
+                                <?php if(is_array($product['templates']) && !empty($product['templates'])){ ?>
+                                    <?php foreach($product['templates'] as $template){ ?>
+                                        <?php echo '<option value="'.$template['template_id'].'">'.$template['name'].'</option>'; ?>
+                                    <?php } ?>
                                 <?php } ?>
                             </select>
                         </td>
@@ -1329,7 +1331,12 @@
                                 Cur = val.Cur;
                             });
 
-                            $('#previewFrame').html('<iframe src="'+data.data.link+'" frameborder="0" height="600" width="100%" style="margin-left:auto; margin-right:auto;" scrolling="auto"></iframe>');
+                            if(document.location.protocol == 'https:') {
+                                $('#previewFrame').html('<div class="buttons"><a class="button" target="_BLANK" href="'+data.data.link+'">Preview</a></buttons>');
+                            } else {
+                                $('#previewFrame').html('<iframe src="'+data.data.link+'" frameborder="0" height="600" width="100%" style="margin-left:auto; margin-right:auto;" scrolling="auto"></iframe>');
+                            }
+
                             $('#previewFrameRow').show();
                             $('#reviewFormTableCostsTotal').html(Cur+' '+feeTot.toFixed(2));
                         }else{

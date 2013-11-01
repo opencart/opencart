@@ -1,73 +1,73 @@
 <?php
 class ControllerModuleOpenbaypro extends Controller {
-    private $error = array();
+	private $error = array();
 
-    public function index() {
-        $this->language->load('module/openbaypro');
+	public function index() {
+		$this->language->load('module/openbaypro');
 
-        $this->document->setTitle($this->language->get('heading_title'));
-        
-        $this->data['breadcrumbs'] = array();
+		$this->document->setTitle($this->language->get('heading_title'));
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_home'),
+		$this->data['breadcrumbs'] = array();
+
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => false
-   		);
+			'separator' => false
+		);
 
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('text_module'),
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_module'),
 			'href'      => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
-   		);
-		
-   		$this->data['breadcrumbs'][] = array(
-       		'text'      => $this->language->get('heading_title'),
+			'separator' => ' :: '
+		);
+
+		$this->data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('module/openbaypro', 'token=' . $this->session->data['token'], 'SSL'),
-      		'separator' => ' :: '
-   		);
+			'separator' => ' :: '
+		);
 
-        $this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
-        
-        $this->data['heading_title'] = $this->language->get('heading_title');
-        $this->data['button_cancel'] = $this->language->get('button_cancel');
-        $this->data['text_installed'] = $this->language->get('text_installed');
+		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 
-        $this->template = 'module/openbaypro.tpl';
-        $this->children = array(
-            'common/header',
-            'common/footer'
-        );
+		$this->data['heading_title'] = $this->language->get('heading_title');
+		$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$this->data['text_installed'] = $this->language->get('text_installed');
 
-        $this->response->setOutput($this->render());
-    }
+		$this->template = 'module/openbaypro.tpl';
+		$this->children = array(
+			'common/header',
+			'common/footer'
+		);
 
-    protected function validate() {
-        if (!$this->user->hasPermission('modify', 'module/openbaypro')) {
-            $this->error['warning'] = $this->language->get('error_permission');
-        }
+		$this->response->setOutput($this->render());
+	}
 
-        if (!$this->error) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-    
-    public function install() {
-        $this->load->model('setting/setting');
-        
-        $settings = $this->model_setting_setting->getSetting('openbaymanager');
-        $settings['openbaymanager_show_menu'] = 1;
-        $this->model_setting_setting->editSetting('openbaymanager', $settings);
-    }
-    
-    public function uninstall() {
-        $this->load->model('setting/setting');
+	protected function validate() {
+		if (!$this->user->hasPermission('modify', 'module/openbaypro')) {
+			$this->error['warning'] = $this->language->get('error_permission');
+		}
 
-        $settings = $this->model_setting_setting->getSetting('openbaymanager');
-        $settings['openbaymanager_show_menu'] = 0;
-        $this->model_setting_setting->editSetting('openbaymanager', $settings);
-    }
+		if (!$this->error) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public function install() {
+		$this->load->model('setting/setting');
+
+		$settings = $this->model_setting_setting->getSetting('openbaymanager');
+		$settings['openbaymanager_show_menu'] = 1;
+		$this->model_setting_setting->editSetting('openbaymanager', $settings);
+	}
+
+	public function uninstall() {
+		$this->load->model('setting/setting');
+
+		$settings = $this->model_setting_setting->getSetting('openbaymanager');
+		$settings['openbaymanager_show_menu'] = 0;
+		$this->model_setting_setting->editSetting('openbaymanager', $settings);
+	}
 }
 ?>

@@ -205,6 +205,12 @@ class ControllerUserUserPermission extends Controller {
 			$this->data['success'] = '';
 		}
 		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+				
 		$url = '';
 
 		if ($order == 'ASC') {

@@ -161,6 +161,10 @@ $_['entry_payment']                           = 'Payment Method';
 $_['entry_coupon']                            = 'Coupon';
 $_['entry_voucher']                           = 'Voucher';
 $_['entry_reward']                            = 'Reward';
+$_['entry_order_id']                          = 'Order ID';
+$_['entry_total']                             = 'Total';
+$_['entry_date_added']                        = 'Date Added';
+$_['entry_date_modified']                     = 'Date Modified';
 
 // Help
 $_['help_country_match']                      = 'Whether country of IP address matches billing address country (mismatch = higher risk).';

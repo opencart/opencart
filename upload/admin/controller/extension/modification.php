@@ -129,7 +129,6 @@ class ControllerExtensionModification extends Controller {
 				
     	if (isset($this->request->get['modification_id']) && $this->validate()) {
 			$this->model_setting_modification->enableModification($this->request->get['modification_id']);
-
 			      		
 			$this->session->data['success'] = $this->language->get('text_success');
 

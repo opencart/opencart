@@ -10,29 +10,25 @@
       <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
-      <form class="form-horizontal">
-        <div class="well">
-          <div class="row">
-            <div class="col-sm-10">
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-                <div class="col-sm-10">
-                  <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-                <div class="col-sm-10">
-                  <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-2">
-              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="form-group">
+              <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+              <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
             </div>
           </div>
+          <div class="col-sm-5">  
+            <div class="form-group">
+              <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+              <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+          </div>
         </div>
-      </form>
+      </div>
       <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
           <thead>

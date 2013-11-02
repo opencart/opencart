@@ -5,18 +5,16 @@ $_['heading_title']         = 'Customer';
 // Text
 $_['text_success']          = 'Success: You have modified customers!';
 $_['text_default']          = 'Default';
-$_['text_approved']         = 'You have approved %s accounts!';
 $_['text_balance']          = 'Balance';
 $_['text_add_ban_ip']       = 'Add Ban IP';
 $_['text_remove_ban_ip']    = 'Remove Ban IP';
+$_['text_login']            = 'Login into Store';
 
 // Column
 $_['column_name']           = 'Customer Name';
 $_['column_email']          = 'E-Mail';
 $_['column_customer_group'] = 'Customer Group';
 $_['column_status']         = 'Status'; 
-$_['column_login']          = 'Login into Store';
-$_['column_approved']       = 'Approved';
 $_['column_date_added']     = 'Date Added';
 $_['column_comment']        = 'Comment';
 $_['column_description']    = 'Description';
@@ -49,6 +47,10 @@ $_['entry_comment']         = 'Comment';
 $_['entry_description']     = 'Description';
 $_['entry_amount']          = 'Amount';
 $_['entry_points']          = 'Points';
+$_['entry_name']            = 'Customer Name';
+$_['entry_approved']        = 'Approved';
+$_['entry_ip']              = 'IP';
+$_['entry_date_added']      = 'Date Added';
 
 // Help
 $_['help_points']           = 'Use minus to remove points';

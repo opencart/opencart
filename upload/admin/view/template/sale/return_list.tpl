@@ -23,6 +23,26 @@
       <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
+     
+     
+     <div class="well">
+        <div class="row">
+          <div class="col-sm-4">
+          
+          
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-date-start"></label>
+                <div class="col-sm-10">
+                  <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="form-control" />
+                </div>
+              </div>
+          
+          
+                  
+        </div>
+      </div>    
+    
+    
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-return">
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover">

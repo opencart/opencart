@@ -10,6 +10,23 @@
       <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
+          <div class="well">
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="form-group">
+              <label class="control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+              <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" id="input-ip" placeholder="<?php echo $entry_ip; ?>" i class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="form-group">
+              <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+              <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-2"><button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button></div>
+        </div>
+      </div>
       <div class="table-responsive">
         <table class="table table-striped table-bordered table-hover">
           <thead>
@@ -23,14 +40,6 @@
             </tr>
           </thead>
           <tbody>
-            <tr class="filter">
-              <td class="text-left"><input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" class="form-control" /></td>
-              <td class="text-left"><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td>&nbsp;</td>
-              <td class="text-right"><button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button></td>
-            </tr>
             <?php if ($customers) { ?>
             <?php foreach ($customers as $customer) { ?>
             <tr>

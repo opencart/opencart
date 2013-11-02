@@ -25,6 +25,57 @@
       <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label" for="input-order-id"><?php echo $entry_order_id; ?></label>
+              <input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+              <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
+              <select name="filter_order_status_id" id="input-order-status" class="form-control">
+                <option value="*"></option>
+                <?php if ($filter_order_status_id == '0') { ?>
+                <option value="0" selected="selected"><?php echo $text_missing; ?></option>
+                <?php } else { ?>
+                <option value="0"><?php echo $text_missing; ?></option>
+                <?php } ?>
+                <?php foreach ($order_statuses as $order_status) { ?>
+                <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
+                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-total"><?php echo $entry_total; ?></label>
+              <input type="text" name="filter_total" value="<?php echo $filter_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <div class="form-group">
+              <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
+              <input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" id="input-date-added" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-date-modified"><?php echo $entry_date_modified; ?></label>
+              <input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" id="input-date-modified" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-3">
+            <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+          </div>
+        </div>
+      </div>
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-order">
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover">
@@ -65,30 +116,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="filter">
-                <td></td>
-                <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="form-control" /></td>
-                <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
-                <td><select name="filter_order_status_id" class="form-control">
-                    <option value="*"></option>
-                    <?php if ($filter_order_status_id == '0') { ?>
-                    <option value="0" selected="selected"><?php echo $text_missing; ?></option>
-                    <?php } else { ?>
-                    <option value="0"><?php echo $text_missing; ?></option>
-                    <?php } ?>
-                    <?php foreach ($order_statuses as $order_status) { ?>
-                    <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                    <?php } else { ?>
-                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?>
-                    <?php } ?>
-                  </select></td>
-                <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" class="form-control" /></td>
-                <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
-                <td><input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" class="form-control" /></td>
-                <td align="right"><button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button></td>
-              </tr>
               <?php if ($orders) { ?>
               <?php foreach ($orders as $order) { ?>
               <tr>
@@ -103,11 +130,12 @@
                 <td class="text-right"><?php echo $order['total']; ?></td>
                 <td class="text-left"><?php echo $order['date_added']; ?></td>
                 <td class="text-left"><?php echo $order['date_modified']; ?></td>
-                <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> 
-                <?php if (!$order['expired']) { ?>
-                <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
-              	<?php } else { ?>
-                <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button></td>
+                <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a>
+                  <?php if (!$order['expired']) { ?>
+                  <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                <?php } else { ?>
+                <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
+                  </td>
                 <?php } ?>
               </tr>
               <?php } ?>

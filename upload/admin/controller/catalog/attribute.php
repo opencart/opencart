@@ -172,21 +172,12 @@ class ControllerCatalogAttribute extends Controller {
 		$results = $this->model_catalog_attribute->getAttributes($data);
  
     	foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('catalog/attribute/update', 'token=' . $this->session->data['token'] . '&attribute_id=' . $result['attribute_id'] . $url, 'SSL')
-			);
-						
 			$this->data['attributes'][] = array(
 				'attribute_id'    => $result['attribute_id'],
 				'name'            => $result['name'],
 				'attribute_group' => $result['attribute_group'],
 				'sort_order'      => $result['sort_order'],
-				'selected'        => isset($this->request->post['selected']) && in_array($result['attribute_id'], $this->request->post['selected']),
-				'action'          => $action
+				'edit'            => $this->url->link('catalog/attribute/update', 'token=' . $this->session->data['token'] . '&attribute_id=' . $result['attribute_id'] . $url, 'SSL')
 			);
 		}	
 	
@@ -201,8 +192,9 @@ class ControllerCatalogAttribute extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
- 
+		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -215,6 +207,12 @@ class ControllerCatalogAttribute extends Controller {
 			unset($this->session->data['success']);
 		} else {
 			$this->data['success'] = '';
+		}
+
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
 		}
 
 		$url = '';

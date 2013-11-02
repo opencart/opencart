@@ -91,7 +91,7 @@ class ControllerCommonFileManager extends Controller {
 		$this->data['button_folder'] = $this->language->get('button_folder');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_search'] = $this->language->get('button_search');
-		
+				
 		$this->data['token'] = $this->session->data['token'];
 		
 		if (isset($this->request->get['directory'])) {

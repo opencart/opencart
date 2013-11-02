@@ -77,6 +77,10 @@ class ControllerExtensionFeed extends Controller {
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_action'] = $this->language->get('column_action');
 
+		$this->data['button_edit'] = $this->language->get('button_edit');
+		$this->data['button_install'] = $this->language->get('button_install');
+		$this->data['button_uninstall'] = $this->language->get('button_uninstall');
+
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -110,33 +114,14 @@ class ControllerExtensionFeed extends Controller {
 				$extension = basename($file, '.php');
 			
 				$this->language->load('feed/' . $extension);
-
-				$action = array();
-			
-				if (!in_array($extension, $extensions)) {
-					$action[] = array(
-						'icon' => 'plus',
-						'text' => $this->language->get('text_install'),
-						'href' => $this->url->link('extension/feed/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				} else {
-					$action[] = array(
-						'icon' => 'pencil',
-						'text' => $this->language->get('text_edit'),
-						'href' => $this->url->link('feed/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
-					);
-							
-					$action[] = array(
-						'icon' => 'minus',
-						'text' => $this->language->get('text_uninstall'),
-						'href' => $this->url->link('extension/feed/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				}
 									
 				$this->data['extensions'][] = array(
-					'name'   => $this->language->get('heading_title'),
-					'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-					'action' => $action
+					'name'      => $this->language->get('heading_title'),
+					'status'    => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
+					'edit'      => $this->url->link('feed/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL'),
+					'install'   => $this->url->link('extension/feed/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'uninstall' => $this->url->link('extension/feed/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'installed' => in_array($extension, $extensions)
 				);
 			}
 		}

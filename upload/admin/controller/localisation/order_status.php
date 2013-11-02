@@ -172,19 +172,10 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$results = $this->model_localisation_order_status->getOrderStatuses($data);
  
     	foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('localisation/order_status/update', 'token=' . $this->session->data['token'] . '&order_status_id=' . $result['order_status_id'] . $url, 'SSL')
-			);
-						
 			$this->data['order_statuses'][] = array(
 				'order_status_id' => $result['order_status_id'],
 				'name'            => $result['name'] . (($result['order_status_id'] == $this->config->get('config_order_status_id')) ? $this->language->get('text_default') : null),
-				'selected'        => isset($this->request->post['selected']) && in_array($result['order_status_id'], $this->request->post['selected']),
-				'action'          => $action
+				'edit'            => $this->url->link('localisation/order_status/update', 'token=' . $this->session->data['token'] . '&order_status_id=' . $result['order_status_id'] . $url, 'SSL')
 			);
 		}	
 	
@@ -197,6 +188,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
@@ -212,7 +204,13 @@ class ControllerLocalisationOrderStatus extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if ($order == 'ASC') {

@@ -65,14 +65,6 @@ class ControllerReportAffiliate extends Controller {
 		$results = $this->model_report_affiliate->getCommission($data);
 		
 		foreach ($results as $result) {
-			$action = array();
-		
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL')
-			);
-						
 			$this->data['affiliates'][] = array(
 				'affiliate'  => $result['affiliate'],
 				'email'      => $result['email'],
@@ -80,7 +72,7 @@ class ControllerReportAffiliate extends Controller {
 				'commission' => $this->currency->format($result['commission'], $this->config->get('config_currency')),
 				'orders'     => $result['orders'],
 				'total'      => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'action'     => $action
+				'edit'       => $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL')
 			);
 		}
 					 
@@ -100,6 +92,7 @@ class ControllerReportAffiliate extends Controller {
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_filter'] = $this->language->get('button_filter');
 		
 		$this->data['token'] = $this->session->data['token'];

@@ -406,14 +406,6 @@ class ControllerSaleCustomer extends Controller {
 		$results = $this->model_sale_customer->getCustomers($data);
  
     	foreach ($results as $result) {
-			$action = array();
-		
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL')
-			);
-			
 			$this->data['customers'][] = array(
 				'customer_id'    => $result['customer_id'],
 				'name'           => $result['name'],
@@ -423,8 +415,7 @@ class ControllerSaleCustomer extends Controller {
 				'approved'       => ($result['approved'] ? $this->language->get('text_yes') : $this->language->get('text_no')),
 				'ip'             => $result['ip'],
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'selected'       => isset($this->request->post['selected']) && in_array($result['customer_id'], $this->request->post['selected']),
-				'action'         => $action
+				'edit'           => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL')
 			);
 		}	
 					
@@ -451,6 +442,7 @@ class ControllerSaleCustomer extends Controller {
 		
 		$this->data['button_approve'] = $this->language->get('button_approve');
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
 
@@ -470,6 +462,12 @@ class ControllerSaleCustomer extends Controller {
 			$this->data['success'] = '';
 		}
 		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+				
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {

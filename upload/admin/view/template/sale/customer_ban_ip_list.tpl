@@ -42,7 +42,7 @@
               <?php if ($customer_ban_ips) { ?>
               <?php foreach ($customer_ban_ips as $customer_ban_ip) { ?>
               <tr>
-                <td class="text-center"><?php if ($customer_ban_ip['selected']) { ?>
+                <td class="text-center"><?php if (in_array($customer_ban_ip['customer_ban_ip_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ban_ip_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $customer_ban_ip['customer_ban_ip_id']; ?>" />
@@ -53,9 +53,7 @@
                   <?php } else { ?>
                   <?php echo $customer_ban_ip['total']; ?>
                   <?php } ?></td>
-                <td class="text-right"><?php foreach ($customer_ban_ip['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $customer_ban_ip['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

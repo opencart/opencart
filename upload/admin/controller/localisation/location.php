@@ -173,22 +173,13 @@ class ControllerLocalisationLocation extends Controller {
 		$results = $this->model_localisation_location->getLocations($data); //  retrieve db information for locations from function in Model
 		
 		foreach($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('localisation/location/update', 'token=' . $this->session->data['token'] . '&location_id=' . $result['location_id'] . $url, 'SSL')
-			);			
-		
 			$this->data['location'][] =   array(
 				'location_id' => $result['location_id'],
 				'name'        => $result['name'],
 				'address_1'   => $result['address_1'], 
 				'zone'        => $result['zone'],    
 				'country'     => $result['country'],                   
-				'selected'    => isset($this->request->post['selected']) && in_array($result['location_id'], $this->request->post['selected']),
-				'action'      => $action
+				'edit'        => $this->url->link('localisation/location/update', 'token=' . $this->session->data['token'] . '&location_id=' . $result['location_id'] . $url, 'SSL')
 			);
 		}
 		
@@ -204,6 +195,7 @@ class ControllerLocalisationLocation extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		
  		if (isset($this->error['warning'])) {
@@ -219,7 +211,13 @@ class ControllerLocalisationLocation extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if ($order == 'ASC') {

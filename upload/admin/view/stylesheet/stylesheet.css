@@ -9,7 +9,6 @@ html, body, label, input, textarea, select, td, .dropdown-menu a {
 h1, h4 {
 	margin-top: 0;
 }
-
 @media (min-width: 768px) {
 	.container {
 		max-width: 95%;
@@ -265,7 +264,7 @@ input.form-control, select.form-control {
 .pagination {
 	margin: 0;
 }
-.img-edit i {
+.img-thumbnail i {
 	color: #FFFFFF;
 	background-color: #EEEEEE;
 	text-align: center;

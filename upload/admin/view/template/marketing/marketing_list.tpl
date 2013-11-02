@@ -62,7 +62,7 @@
               <?php if ($marketings) { ?>
               <?php foreach ($marketings as $marketing) { ?>
               <tr>
-                <td class="text-center"><?php if ($marketing['selected']) { ?>
+                <td class="text-center"><?php if (in_array($marketing['marketing_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $marketing['marketing_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $marketing['marketing_id']; ?>" />
@@ -72,9 +72,7 @@
                 <td class="text-right"><?php echo $marketing['clicks']; ?></td>
                 <td class="text-right"><?php echo $marketing['orders']; ?></td>
                 <td class="text-left"><?php echo $marketing['date_added']; ?></td>
-                <td class="text-right"><?php foreach ($marketing['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $marketing['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

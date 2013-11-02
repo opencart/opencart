@@ -85,15 +85,15 @@
               <?php if ($products) { ?>
               <?php foreach ($products as $product) { ?>
               <tr>
-                <td class="text-center"><?php if ($product['selected']) { ?>
+                <td class="text-center"><?php if (in_array($product['product_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
                   <?php } ?></td>
                 <td class="text-center"><?php if ($product['image']) { ?>
-                  <a href="" class="img-thumbnail"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></a>
+                  <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" />
                   <?php } else { ?>
-                  <a href="" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
+                  <span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>
                   <?php } ?></td>
                 <td class="text-left"><?php echo $product['name']; ?></td>
                 <td class="text-left"><?php echo $product['model']; ?></td>
@@ -111,9 +111,7 @@
                   <span class="label label-success"><?php echo $product['quantity']; ?></span>
                   <?php } ?></td>
                 <td class="text-left"><?php echo $product['status']; ?></td>
-                <td class="text-right"><?php foreach ($product['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $product['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

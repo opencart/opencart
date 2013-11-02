@@ -56,9 +56,7 @@
               <td class="text-right"><?php echo $affiliate['commission']; ?></td>
               <td class="text-right"><?php echo $affiliate['orders']; ?></td>
               <td class="text-right"><?php echo $affiliate['total']; ?></td>
-              <td class="text-right"><?php foreach ($affiliate['action'] as $action) { ?>
-                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                <?php } ?></td>
+              <td class="text-right"><a href="<?php echo $affiliate['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
             </tr>
             <?php } ?>
             <?php } else { ?>

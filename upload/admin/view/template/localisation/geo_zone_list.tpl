@@ -46,16 +46,14 @@
               <?php if ($geo_zones) { ?>
               <?php foreach ($geo_zones as $geo_zone) { ?>
               <tr>
-                <td class="text-center"><?php if ($geo_zone['selected']) { ?>
+                <td class="text-center"><?php if (in_array($geo_zone['geo_zone_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $geo_zone['geo_zone_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $geo_zone['geo_zone_id']; ?>" />
                   <?php } ?></td>
                 <td class="text-left"><?php echo $geo_zone['name']; ?></td>
                 <td class="text-left"><?php echo $geo_zone['description']; ?></td>
-                <td class="text-right"><?php foreach ($geo_zone['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $geo_zone['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

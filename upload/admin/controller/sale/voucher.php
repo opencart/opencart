@@ -172,14 +172,6 @@ class ControllerSaleVoucher extends Controller {
 		$results = $this->model_sale_voucher->getVouchers($data);
  
     	foreach ($results as $result) {
-			$action = array();
-									
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('sale/voucher/update', 'token=' . $this->session->data['token'] . '&voucher_id=' . $result['voucher_id'] . $url, 'SSL')
-			);
-						
 			$this->data['vouchers'][] = array(
 				'voucher_id' => $result['voucher_id'],
 				'code'       => $result['code'],
@@ -189,8 +181,7 @@ class ControllerSaleVoucher extends Controller {
 				'amount'     => $this->currency->format($result['amount'], $this->config->get('config_currency')),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'selected'   => isset($this->request->post['selected']) && in_array($result['voucher_id'], $this->request->post['selected']),
-				'action'     => $action
+				'edit'       => $this->url->link('sale/voucher/update', 'token=' . $this->session->data['token'] . '&voucher_id=' . $result['voucher_id'] . $url, 'SSL')
 			);
 		}
 									
@@ -209,6 +200,7 @@ class ControllerSaleVoucher extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  		$this->data['button_send'] = $this->language->get('button_send');
  
@@ -227,7 +219,13 @@ class ControllerSaleVoucher extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if ($order == 'ASC') {

@@ -41,9 +41,11 @@
                 <a href="<?php echo $customer['referer']; ?>" target="_blank"><?php echo implode('<br/>', str_split($customer['referer'], 30)); ?></a>
                 <?php } ?></td>
               <td class="text-left"><?php echo $customer['date_added']; ?></td>
-              <td class="text-right"><?php foreach ($customer['action'] as $action) { ?>
-                <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                <?php } ?></td>
+              <td class="text-right"><?php if ($customer['customer_id']) { ?>
+                <a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+              <?php } else { ?>
+              <button type="button" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
+              <?php } ?>
             </tr>
             <?php } ?>
             <?php } else { ?>

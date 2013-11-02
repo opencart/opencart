@@ -65,21 +65,13 @@ class ControllerReportCustomerCredit extends Controller {
 		$results = $this->model_report_customer->getCredit($data);
 		
 		foreach ($results as $result) {
-			$action = array();
-		
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL')
-			);
-						
 			$this->data['customers'][] = array(
 				'customer'       => $result['customer'],
 				'email'          => $result['email'],
 				'customer_group' => $result['customer_group'],
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'total'          => $this->currency->format($result['total'], $this->config->get('config_currency')),
-				'action'         => $action
+				'edit'           => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL')
 			);
 		}
 		 
@@ -98,6 +90,7 @@ class ControllerReportCustomerCredit extends Controller {
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_filter'] = $this->language->get('button_filter');
 		
 		$this->data['token'] = $this->session->data['token'];

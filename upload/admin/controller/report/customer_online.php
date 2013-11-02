@@ -66,15 +66,6 @@ class ControllerReportCustomerOnline extends Controller {
 		$results = $this->model_report_customer->getCustomersOnline($data);
     	
 		foreach ($results as $result) {
-			$action = array();
-			
-			if ($result['customer_id']) {
-				$action[] = array(
-					'text' => 'Edit',
-					'href' => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'], 'SSL')
-				);
-			}
-			
 			$customer_info = $this->model_sale_customer->getCustomer($result['customer_id']);
 					
 			if ($customer_info) {
@@ -84,12 +75,13 @@ class ControllerReportCustomerOnline extends Controller {
 			}
 								
       		$this->data['customers'][] = array(
-				'ip'         => $result['ip'],
-				'customer'   => $customer,
-				'url'        => $result['url'],
-				'referer'    => $result['referer'],
-				'date_added' => date('d/m/Y H:i:s', strtotime($result['date_added'])),
-				'action'     => $action
+				'customer_id' => $result['customer_id'],
+				'ip'          => $result['ip'],
+				'customer'    => $customer,
+				'url'         => $result['url'],
+				'referer'     => $result['referer'],
+				'date_added'  => date('d/m/Y H:i:s', strtotime($result['date_added'])),
+				'edit'        => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'], 'SSL')
 			);
 		}	
 		
@@ -105,6 +97,7 @@ class ControllerReportCustomerOnline extends Controller {
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_action'] = $this->language->get('column_action');
 		
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_filter'] = $this->language->get('button_filter');
 				
 		$this->data['token'] = $this->session->data['token'];

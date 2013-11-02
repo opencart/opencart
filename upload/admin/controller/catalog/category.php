@@ -146,20 +146,11 @@ class ControllerCatalogCategory extends Controller {
 		$results = $this->model_catalog_category->getCategories($data);
 
 		foreach ($results as $result) {
-			$action = array();
-						
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('catalog/category/update', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL')
-			);
-
 			$this->data['categories'][] = array(
 				'category_id' => $result['category_id'],
 				'name'        => $result['name'],
 				'sort_order'  => $result['sort_order'],
-				'selected'    => isset($this->request->post['selected']) && in_array($result['category_id'], $this->request->post['selected']),
-				'action'      => $action
+				'edit'        => $this->url->link('catalog/category/update', 'token=' . $this->session->data['token'] . '&category_id=' . $result['category_id'] . $url, 'SSL')
 			);
 		}
 		
@@ -173,9 +164,10 @@ class ControllerCatalogCategory extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  		$this->data['button_repair'] = $this->language->get('button_repair');
- 
+		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -190,6 +182,12 @@ class ControllerCatalogCategory extends Controller {
 			$this->data['success'] = '';
 		}
 		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+				
 		$pagination = new Pagination();
 		$pagination->total = $category_total;
 		$pagination->page = $page;

@@ -66,7 +66,7 @@
               <?php if ($coupons) { ?>
               <?php foreach ($coupons as $coupon) { ?>
               <tr>
-                <td class="text-center"><?php if ($coupon['selected']) { ?>
+                <td class="text-center"><?php if (in_array($coupon['coupon_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $coupon['coupon_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $coupon['coupon_id']; ?>" />
@@ -77,9 +77,7 @@
                 <td class="text-left"><?php echo $coupon['date_start']; ?></td>
                 <td class="text-left"><?php echo $coupon['date_end']; ?></td>
                 <td class="text-left"><?php echo $coupon['status']; ?></td>
-                <td class="text-right"><?php foreach ($coupon['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $coupon['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

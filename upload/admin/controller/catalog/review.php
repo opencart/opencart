@@ -172,14 +172,6 @@ class ControllerCatalogReview extends Controller {
 		$results = $this->model_catalog_review->getReviews($data);
  
     	foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('catalog/review/update', 'token=' . $this->session->data['token'] . '&review_id=' . $result['review_id'] . $url, 'SSL')
-			);
-						
 			$this->data['reviews'][] = array(
 				'review_id'  => $result['review_id'],
 				'name'       => $result['name'],
@@ -187,8 +179,7 @@ class ControllerCatalogReview extends Controller {
 				'rating'     => $result['rating'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'selected'   => isset($this->request->post['selected']) && in_array($result['review_id'], $this->request->post['selected']),
-				'action'     => $action
+				'edit'       => $this->url->link('catalog/review/update', 'token=' . $this->session->data['token'] . '&review_id=' . $result['review_id'] . $url, 'SSL')
 			);
 		}	
 	
@@ -205,8 +196,9 @@ class ControllerCatalogReview extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
- 
+		
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -220,7 +212,13 @@ class ControllerCatalogReview extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if ($order == 'ASC') {

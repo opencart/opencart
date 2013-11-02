@@ -77,6 +77,10 @@ class ControllerExtensionModule extends Controller {
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_action'] = $this->language->get('column_action');
+		
+		$this->data['button_edit'] = $this->language->get('button_edit');
+		$this->data['button_install'] = $this->language->get('button_install');
+		$this->data['button_uninstall'] = $this->language->get('button_uninstall');
 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
@@ -113,32 +117,13 @@ class ControllerExtensionModule extends Controller {
 				$extension = basename($file, '.php');
 				
 				$this->language->load('module/' . $extension);
-	
-				$action = array();
-				
-				if (!in_array($extension, $extensions)) {
-					$action[] = array(
-						'icon' => 'plus',
-						'text' => $this->language->get('text_install'),
-						'href' => $this->url->link('extension/module/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				} else {
-					$action[] = array(
-						'icon' => 'pencil',
-						'text' => $this->language->get('text_edit'),
-						'href' => $this->url->link('module/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
-					);
-								
-					$action[] = array(
-						'icon' => 'minus',
-						'text' => $this->language->get('text_uninstall'),
-						'href' => $this->url->link('extension/module/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				}
 												
 				$this->data['extensions'][] = array(
-					'name'   => $this->language->get('heading_title'),
-					'action' => $action
+					'name'      => $this->language->get('heading_title'),
+					'edit'      => $this->url->link('module/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL'),
+					'install'   => $this->url->link('extension/module/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'uninstall' => $this->url->link('extension/module/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'installed' => in_array($extension, $extensions)
 				);
 			}
 		}

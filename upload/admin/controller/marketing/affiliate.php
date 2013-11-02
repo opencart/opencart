@@ -352,14 +352,6 @@ class ControllerMarketingAffiliate extends Controller {
 		$results = $this->model_marketing_affiliate->getAffiliates($data);
  
     	foreach ($results as $result) {
-			$action = array();
-		
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL')
-			);
-			
 			$this->data['affiliates'][] = array(
 				'affiliate_id' => $result['affiliate_id'],
 				'name'         => $result['name'],
@@ -368,8 +360,7 @@ class ControllerMarketingAffiliate extends Controller {
 				'status'       => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'approved'     => ($result['approved'] ? $this->language->get('text_yes') : $this->language->get('text_no')),
 				'date_added'   => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'selected'     => isset($this->request->post['selected']) && in_array($result['affiliate_id'], $this->request->post['selected']),
-				'action'       => $action
+				'edit'         => $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $result['affiliate_id'] . $url, 'SSL')
 			);
 		}	
 					
@@ -393,6 +384,7 @@ class ControllerMarketingAffiliate extends Controller {
 		
 		$this->data['button_approve'] = $this->language->get('button_approve');
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
 
@@ -412,6 +404,12 @@ class ControllerMarketingAffiliate extends Controller {
 			$this->data['success'] = '';
 		}
 		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+				
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {

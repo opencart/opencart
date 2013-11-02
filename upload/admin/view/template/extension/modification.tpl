@@ -17,7 +17,7 @@
   <?php } ?>
   <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_refresh; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>  
+  </div>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-info"><i class="fa fa-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></a>
@@ -52,30 +52,32 @@
                   <?php } else { ?>
                   <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                   <?php } ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
               </tr>
             </thead>
             <tbody>
               <?php if ($modifications) { ?>
               <?php foreach ($modifications as $modification) { ?>
               <tr>
-                <td class="text-center"><?php if ($modification['selected']) { ?>
+                <td class="text-center"><?php if (in_array($modification['modification_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $modification['modification_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $modification['modification_id']; ?>" />
                   <?php } ?></td>
                 <td class="text-left"><?php echo $modification['name']; ?></td>
                 <td class="text-left"><?php echo $modification['author']; ?></td>
-                <td class="text-left"><?php if ($modification['status']) { ?>
-                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-success btn-xs" onclick="disableModification(<?php echo $modification['modification_id']; ?>);"><i class="fa fa-check"></i> <?php echo $button_enable; ?></button>
-                <?php } else { ?>
-                <button type="button" id="button-modification<?php echo $modification['modification_id']; ?>" class="btn btn-danger btn-xs" onclick="enableModification(<?php echo $modification['modification_id']; ?>);"><i class="fa fa-times"></i> <?php echo $button_disable; ?></button>
-                <?php } ?></td>
+                <td class="text-left"><?php echo $modification['status']; ?></td>
                 <td class="text-left"><?php echo $modification['date_added']; ?></td>
+                <td class="text-right"><?php if (!$modification['enabled']) { ?>
+                  <a href="<?php echo $modification['enable']; ?>" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $modification['disable']; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                  <?php } ?></td>
               </tr>
               <?php } ?>
               <?php } else { ?>
               <tr>
-                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+                <td class="text-center" colspan="7"><?php echo $text_no_results; ?></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -89,61 +91,4 @@
     </div>
   </div>
 </div>
-<script type="text/javascript"><!--
-function enableModification(modification_id) {
-	$.ajax({
-		url: 'index.php?route=extension/modification/enable&token=<?php echo $token; ?>&modification_id=' + modification_id,
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-modification' + modification_id).prop('disabled', true);				
-		},
-		success: function(json) {
-			$('.alert').remove();
-			
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa fa-times"></i>');
-			$('#button-modification' + modification_id).prop('disabled', false);
-						
-			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-			}
-			
-			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check"></i> ' + json['success'] + '</div>');
-				
-				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-success btn-xs" onclick="disableModification(' + modification_id + ')"><i class="fa fa-check"></i> <?php echo $button_enable; ?></button>');
-			}
-		}
-	});
-};
-
-function disableModification(modification_id) {
-	$.ajax({
-		url: 'index.php?route=extension/modification/disable&token=<?php echo $token; ?>&modification_id=' + modification_id,
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-modification' + modification_id).prop('disabled', true);		
-		},
-		success: function(json) {
-			$('.alert').remove();
-			
-			$('#button-modification' + modification_id + ' i').replaceWith('<i class="fa fa-check"></i>');
-			$('#button-modification' + modification_id).prop('disabled', false);
-
-			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-			}
-			
-			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check"></i> ' + json['success'] + '</div>');
-				
-				$('#button-modification' + modification_id).replaceWith('<button id="button-modification' + modification_id + '" class="btn btn-danger btn-xs" onclick="enableModification(' + modification_id + ')"><i class="fa fa-times"></i> <?php echo $button_disable; ?></button>');
-			}
-		}
-	});
-};
-//--></script> 
 <?php echo $footer; ?>

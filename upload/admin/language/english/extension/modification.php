@@ -12,6 +12,7 @@ $_['column_author']     = 'Author';
 $_['column_version']    = 'Version';
 $_['column_status']     = 'Status';
 $_['column_date_added'] = 'Date Added';
+$_['column_action']     = 'Action';
 
 // Error
 $_['error_permission']  = 'Warning: You do not have permission to modify modifications!';

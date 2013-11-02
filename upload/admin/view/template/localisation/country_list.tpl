@@ -51,7 +51,7 @@
               <?php if ($countries) { ?>
               <?php foreach ($countries as $country) { ?>
               <tr>
-                <td class="text-center"><?php if ($country['selected']) { ?>
+                <td class="text-center"><?php if (in_array($country['country_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $country['country_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $country['country_id']; ?>" />
@@ -59,9 +59,7 @@
                 <td class="text-left"><?php echo $country['name']; ?></td>
                 <td class="text-left"><?php echo $country['iso_code_2']; ?></td>
                 <td class="text-left"><?php echo $country['iso_code_3']; ?></td>
-                <td class="text-right"><?php foreach ($country['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $country['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

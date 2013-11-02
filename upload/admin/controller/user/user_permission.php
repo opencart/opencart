@@ -172,19 +172,10 @@ class ControllerUserUserPermission extends Controller {
 		$results = $this->model_user_user_group->getUserGroups($data);
 
 		foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('user/user_permission/update', 'token=' . $this->session->data['token'] . '&user_group_id=' . $result['user_group_id'] . $url, 'SSL')
-			);		
-		
 			$this->data['user_groups'][] = array(
 				'user_group_id' => $result['user_group_id'],
 				'name'          => $result['name'],
-				'selected'      => isset($this->request->post['selected']) && in_array($result['user_group_id'], $this->request->post['selected']),
-				'action'        => $action
+				'edit'          => $this->url->link('user/user_permission/update', 'token=' . $this->session->data['token'] . '&user_group_id=' . $result['user_group_id'] . $url, 'SSL')
 			);
 		}	
 	
@@ -197,6 +188,7 @@ class ControllerUserUserPermission extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {

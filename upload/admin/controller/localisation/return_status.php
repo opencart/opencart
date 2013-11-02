@@ -172,19 +172,10 @@ class ControllerLocalisationReturnStatus extends Controller {
 		$results = $this->model_localisation_return_status->getReturnStatuses($data);
  
     	foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('localisation/return_status/update', 'token=' . $this->session->data['token'] . '&return_status_id=' . $result['return_status_id'] . $url, 'SSL')
-			);
-						
 			$this->data['return_statuses'][] = array(
 				'return_status_id' => $result['return_status_id'],
-				'name'          => $result['name'] . (($result['return_status_id'] == $this->config->get('config_return_status_id')) ? $this->language->get('text_default') : null),
-				'selected'      => isset($this->request->post['selected']) && in_array($result['return_status_id'], $this->request->post['selected']),
-				'action'        => $action
+				'name'             => $result['name'] . (($result['return_status_id'] == $this->config->get('config_return_status_id')) ? $this->language->get('text_default') : null),
+				'edit'             => $this->url->link('localisation/return_status/update', 'token=' . $this->session->data['token'] . '&return_status_id=' . $result['return_status_id'] . $url, 'SSL')
 			);
 		}	
 	
@@ -197,6 +188,7 @@ class ControllerLocalisationReturnStatus extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
@@ -212,7 +204,13 @@ class ControllerLocalisationReturnStatus extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if ($order == 'ASC') {

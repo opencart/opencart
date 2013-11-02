@@ -51,7 +51,7 @@
               <?php if ($attributes) { ?>
               <?php foreach ($attributes as $attribute) { ?>
               <tr>
-                <td class="text-center"><?php if ($attribute['selected']) { ?>
+                <td class="text-center"><?php if (in_array($attribute['attribute_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $attribute['attribute_id']; ?>" />
@@ -59,9 +59,7 @@
                 <td class="text-left"><?php echo $attribute['name']; ?></td>
                 <td class="text-left"><?php echo $attribute['attribute_group']; ?></td>
                 <td class="text-right"><?php echo $attribute['sort_order']; ?></td>
-                <td class="text-right"><?php foreach ($attribute['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $attribute['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

@@ -172,20 +172,11 @@ class ControllerCatalogDownload extends Controller {
 		$results = $this->model_catalog_download->getDownloads($data);
  
     	foreach ($results as $result) {
-			$action = array();
-						
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('catalog/download/update', 'token=' . $this->session->data['token'] . '&download_id=' . $result['download_id'] . $url, 'SSL')
-			);
-						
 			$this->data['downloads'][] = array(
 				'download_id' => $result['download_id'],
 				'name'        => $result['name'],
 				'remaining'   => $result['remaining'],
-				'selected'    => isset($this->request->post['selected']) && in_array($result['download_id'], $this->request->post['selected']),
-				'action'      => $action
+				'edit'        => $this->url->link('catalog/download/update', 'token=' . $this->session->data['token'] . '&download_id=' . $result['download_id'] . $url, 'SSL')
 			);
 		}	
 	
@@ -199,6 +190,7 @@ class ControllerCatalogDownload extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
@@ -215,6 +207,12 @@ class ControllerCatalogDownload extends Controller {
 			$this->data['success'] = '';
 		}
 		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+				
 		$url = '';
 
 		if ($order == 'ASC') {

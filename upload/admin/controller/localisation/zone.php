@@ -172,21 +172,12 @@ class ControllerLocalisationZone extends Controller {
 		$results = $this->model_localisation_zone->getZones($data);
 
 		foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('localisation/zone/update', 'token=' . $this->session->data['token'] . '&zone_id=' . $result['zone_id'] . $url, 'SSL')
-			);
-					
 			$this->data['zones'][] = array(
-				'zone_id'  => $result['zone_id'],
-				'country'  => $result['country'],
-				'name'     => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : null),
-				'code'     => $result['code'],
-				'selected' => isset($this->request->post['selected']) && in_array($result['zone_id'], $this->request->post['selected']),
-				'action'   => $action			
+				'zone_id' => $result['zone_id'],
+				'country' => $result['country'],
+				'name'    => $result['name'] . (($result['zone_id'] == $this->config->get('config_zone_id')) ? $this->language->get('text_default') : null),
+				'code'    => $result['code'],
+				'edit'    => $this->url->link('localisation/zone/update', 'token=' . $this->session->data['token'] . '&zone_id=' . $result['zone_id'] . $url, 'SSL')
 			);
 		}
 	
@@ -201,6 +192,7 @@ class ControllerLocalisationZone extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');	
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
@@ -216,7 +208,13 @@ class ControllerLocalisationZone extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
- 
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		 
 		$url = '';
 
 		if ($order == 'ASC') {

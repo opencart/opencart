@@ -172,20 +172,11 @@ class ControllerCatalogFilter extends Controller {
 		$results = $this->model_catalog_filter->getFilterGroups($data);
 		
 		foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('catalog/filter/update', 'token=' . $this->session->data['token'] . '&filter_group_id=' . $result['filter_group_id'] . $url, 'SSL')
-			);
-
 			$this->data['filters'][] = array(
 				'filter_group_id' => $result['filter_group_id'],
 				'name'            => $result['name'],
 				'sort_order'      => $result['sort_order'],
-				'selected'        => isset($this->request->post['selected']) && in_array($result['filter_group_id'], $this->request->post['selected']),
-				'action'          => $action
+				'edit'            => $this->url->link('catalog/filter/update', 'token=' . $this->session->data['token'] . '&filter_group_id=' . $result['filter_group_id'] . $url, 'SSL')
 			);
 		}
 
@@ -199,6 +190,7 @@ class ControllerCatalogFilter extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');	
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
@@ -214,7 +206,13 @@ class ControllerCatalogFilter extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if ($order == 'ASC') {

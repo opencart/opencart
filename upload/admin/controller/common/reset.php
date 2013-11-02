@@ -92,6 +92,8 @@ class ControllerCommonReset extends Controller {
 
 			$this->response->setOutput($this->render());
 		} else {
+			$this->load->model('setting/setting');
+
 			$this->model_setting_setting->editSettingValue('config', 'config_password', '0');
 
 			return $this->forward('common/login');

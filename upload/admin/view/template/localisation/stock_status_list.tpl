@@ -41,15 +41,13 @@
               <?php if ($stock_statuses) { ?>
               <?php foreach ($stock_statuses as $stock_status) { ?>
               <tr>
-                <td class="text-center"><?php if ($stock_status['selected']) { ?>
+                <td class="text-center"><?php if (in_array($stock_status['stock_status_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $stock_status['stock_status_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $stock_status['stock_status_id']; ?>" />
                   <?php } ?></td>
                 <td class="text-left"><?php echo $stock_status['name']; ?></td>
-                <td class="text-right"><?php foreach ($stock_status['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $stock_status['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

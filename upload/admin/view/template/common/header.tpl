@@ -37,6 +37,10 @@
     <?php if ($logged) { ?>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav navbar-right">
+        <li><a data-toggle="dropdown"><i class="fa fa-bell-o fa-2x"></i> <span class="label label-danger">4</span></a>
+          <ul class="dropdown-menu">
+          </ul>
+        </li>
         <li><a data-toggle="dropdown">
           <?php if ($profile_image) { ?>
           <img src="<?php echo $profile_image; ?>" alt="<?php echo $profile_name; ?>" />
@@ -47,6 +51,11 @@
             <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
             <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
             <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
+            <li class="divider"></li>
+            <li class="dropdown-header"><?php echo $text_help; ?></li>
+            <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
+            <li><a href="http://docs.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>
+            <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
           </ul>
         </li>
       </ul>
@@ -199,13 +208,6 @@
                 <li><a href="<?php echo $report_affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
               </ul>
             </li>
-          </ul>
-        </li>
-        <li class="dropdown"><a data-toggle="dropdown"><?php echo $text_help; ?></a>
-          <ul class="dropdown-menu">
-            <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
-            <li><a href="http://docs.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>
-            <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
           </ul>
         </li>
       </ul>

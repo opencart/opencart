@@ -97,7 +97,7 @@
               <?php if ($returns) { ?>
               <?php foreach ($returns as $return) { ?>
               <tr>
-                <td class="text-center"><?php if ($return['selected']) { ?>
+                <td class="text-center"><?php if (in_array($return['return_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $return['return_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $return['return_id']; ?>" />
@@ -110,9 +110,7 @@
                 <td class="text-left"><?php echo $return['status']; ?></td>
                 <td class="text-left"><?php echo $return['date_added']; ?></td>
                 <td class="text-left"><?php echo $return['date_modified']; ?></td>
-                <td class="text-right"><?php foreach ($return['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $return['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> <a href="<?php echo $return['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

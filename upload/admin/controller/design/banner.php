@@ -172,18 +172,11 @@ class ControllerDesignBanner extends Controller {
 		$results = $this->model_design_banner->getBanners($data);
 		
 		foreach ($results as $result) {
-			$action = array();			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('design/banner/update', 'token=' . $this->session->data['token'] . '&banner_id=' . $result['banner_id'] . $url, 'SSL')
-			);
-
 			$this->data['banners'][] = array(
 				'banner_id' => $result['banner_id'],
 				'name'      => $result['name'],	
 				'status'    => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),				
-				'selected'  => isset($this->request->post['selected']) && in_array($result['banner_id'], $this->request->post['selected']),				
-				'action'    => $action
+				'edit'      => $this->url->link('design/banner/update', 'token=' . $this->session->data['token'] . '&banner_id=' . $result['banner_id'] . $url, 'SSL')
 			);
 		}
 
@@ -197,8 +190,9 @@ class ControllerDesignBanner extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');	
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
- 
+		 
  		if (isset($this->error['warning'])) {
 			$this->data['error_warning'] = $this->error['warning'];
 		} else {
@@ -212,7 +206,13 @@ class ControllerDesignBanner extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if ($order == 'ASC') {

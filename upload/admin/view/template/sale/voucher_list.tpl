@@ -73,7 +73,7 @@
               <?php if ($vouchers) { ?>
               <?php foreach ($vouchers as $voucher) { ?>
               <tr>
-                <td class="text-center"><?php if ($voucher['selected']) { ?>
+                <td class="text-center"><?php if (in_array($voucher['voucher_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $voucher['voucher_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $voucher['voucher_id']; ?>" />
@@ -85,9 +85,7 @@
                 <td class="text-left"><?php echo $voucher['theme']; ?></td>
                 <td class="text-left"><?php echo $voucher['status']; ?></td>
                 <td class="text-left"><?php echo $voucher['date_added']; ?></td>
-                <td class="text-right"><?php foreach ($voucher['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $voucher['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

@@ -1,4 +1,22 @@
 $(document).ready(function() {
+	// Currency
+	$('#currency a').on('click', function(e) {
+		e.preventDefault();
+		
+		$('#currency input[name=\'currency_code\']').attr('value', $(this).attr('href'));
+	
+		$('#currency').submit();
+	});	
+	
+	// Language
+	$('#language a').on('click', function(e) {
+		e.preventDefault();
+		
+		$('#language input[name=\'currency_code\']').attr('value', $(this).attr('href'));
+	
+		$('#language').submit();
+	});	
+	
     /* Search */
     $('header input[name=\'search\']').parent().find('button').on('click', function() {
         url = $('base').attr('href') + 'index.php?route=product/search';

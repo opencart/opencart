@@ -41,15 +41,13 @@
               <?php if ($return_actions) { ?>
               <?php foreach ($return_actions as $return_action) { ?>
               <tr>
-                <td class="text-center"><?php if ($return_action['selected']) { ?>
+                <td class="text-center"><?php if (in_array($return_action['return_action_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $return_action['return_action_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $return_action['return_action_id']; ?>" />
                   <?php } ?></td>
                 <td class="text-left"><?php echo $return_action['name']; ?></td>
-                <td class="text-right"><?php foreach ($return_action['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $return_action['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

@@ -119,7 +119,72 @@ class ControllerExtensionModification extends Controller {
 	
     	$this->getList();
   	}	
+	
+  	public function enable() {
+		$this->language->load('extension/modification');
+	
+    	$this->document->setTitle($this->language->get('heading_title'));
 		
+		$this->load->model('setting/modification');		
+				
+    	if (isset($this->request->get['modification_id']) && $this->validate()) {
+			$this->model_setting_modification->enableModification($this->request->get['modification_id']);
+
+			      		
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+			
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+			
+			$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+   		}
+	
+    	$this->getList();
+  	}
+	
+  	public function disable() {
+		$this->language->load('extension/modification');
+	
+    	$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->load->model('setting/modification');		
+				
+    	if (isset($this->request->get['modification_id']) && $this->validate()) {
+			$this->model_setting_modification->disableModification($this->request->get['modification_id']);
+
+			$this->session->data['success'] = $this->language->get('text_success');
+
+			$url = '';
+			
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+			
+			$this->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+   		}
+	
+    	$this->getList();
+  	}
+			
 	protected function getList() {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
@@ -188,9 +253,11 @@ class ControllerExtensionModification extends Controller {
 				'name'            => $result['name'],
 				'author'          => $result['author'],
 				'version'         => $result['version'],
-				'status'          => $result['status'],
+				'status'          => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'selected'        => isset($this->request->post['selected']) && in_array($result['modification_id'], $this->request->post['selected'])
+				'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], 'SSL'),
+				'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], 'SSL'),
+				'enabled'         => $result['status']
 			);
 		}			
 		
@@ -205,6 +272,7 @@ class ControllerExtensionModification extends Controller {
 		$this->data['column_version'] = $this->language->get('column_version');
 		$this->data['column_status'] = $this->language->get('column_status');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
+		$this->data['column_action'] = $this->language->get('column_action');
 		
 		$this->data['button_refresh'] = $this->language->get('button_refresh');
 		$this->data['button_clear'] = $this->language->get('button_clear');
@@ -228,6 +296,12 @@ class ControllerExtensionModification extends Controller {
 			$this->data['success'] = '';
 		}
 		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+				
 		$url = '';
 
 		if ($order == 'ASC') {
@@ -289,41 +363,5 @@ class ControllerExtensionModification extends Controller {
 	  		return false;
 		}
   	}
-	
-  	public function enable() {
-		$this->language->load('extension/modification');
-		
-		$json = array(); 
-     	
-		if (!$this->user->hasPermission('modify', 'extension/modification')) {
-      		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['modification_id'])) {
-			$this->load->model('setting/modification');
-			
-			$this->model_setting_modification->enableModification($this->request->get['modification_id']);
-			      		
-			$json['success'] = $this->language->get('text_success');
-   		}
-	
-    	$this->response->setOutput(json_encode($json));
-  	}
-	
-  	public function disable() {
-		$this->language->load('extension/modification');
-		
-		$json = array(); 
-     	
-		if (!$this->user->hasPermission('modify', 'extension/modification')) {
-      		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['modification_id'])) {
-			$this->load->model('setting/modification');
-			
-			$this->model_setting_modification->disableModification($this->request->get['modification_id']);
-						      		
-			$json['success'] = $this->language->get('text_success');
-   		}
-	
-    	$this->response->setOutput(json_encode($json));
-  	}	
 }
 ?>

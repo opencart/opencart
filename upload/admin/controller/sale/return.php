@@ -356,19 +356,6 @@ class ControllerSaleReturn extends Controller {
 		$results = $this->model_sale_return->getReturns($data);
  
     	foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'text' => $this->language->get('text_view'),
-				'href' => $this->url->link('sale/return/info', 'token=' . $this->session->data['token'] . '&return_id=' . $result['return_id'] . $url, 'SSL')
-			);
-					
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('sale/return/update', 'token=' . $this->session->data['token'] . '&return_id=' . $result['return_id'] . $url, 'SSL')
-			);
-						
 			$this->data['returns'][] = array(
 				'return_id'     => $result['return_id'],
 				'order_id'      => $result['order_id'],
@@ -378,8 +365,8 @@ class ControllerSaleReturn extends Controller {
 				'status'        => $result['status'],
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),	
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),				
-				'selected'      => isset($this->request->post['selected']) && in_array($result['return_id'], $this->request->post['selected']),
-				'action'        => $action
+				'view'          => $this->url->link('sale/return/info', 'token=' . $this->session->data['token'] . '&return_id=' . $result['return_id'] . $url, 'SSL'),
+				'edit'          => $this->url->link('sale/return/update', 'token=' . $this->session->data['token'] . '&return_id=' . $result['return_id'] . $url, 'SSL')
 			);
 		}	
 		
@@ -399,8 +386,10 @@ class ControllerSaleReturn extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
+		$this->data['button_view'] = $this->language->get('button_view');
 
 		$this->data['token'] = $this->session->data['token'];
 
@@ -422,6 +411,12 @@ class ControllerSaleReturn extends Controller {
 			$this->data['success'] = '';
 		}
 		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+				
 		$url = '';
 
 		if (isset($this->request->get['filter_return_id'])) {

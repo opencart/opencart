@@ -51,7 +51,7 @@
               <?php if ($zones) { ?>
               <?php foreach ($zones as $zone) { ?>
               <tr>
-                <td class="text-center"><?php if ($zone['selected']) { ?>
+                <td class="text-center"><?php if (in_array($zone['zone_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $zone['zone_id']; ?>" />
@@ -59,9 +59,7 @@
                 <td class="text-left"><?php echo $zone['country']; ?></td>
                 <td class="text-left"><?php echo $zone['name']; ?></td>
                 <td class="text-left"><?php echo $zone['code']; ?></td>
-                <td class="text-right"><?php foreach ($zone['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $zone['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

@@ -38,16 +38,14 @@
               <?php if ($stores) { ?>
               <?php foreach ($stores as $store) { ?>
               <tr>
-                <td class="text-center"><?php if ($store['selected']) { ?>
+                <td class="text-center"><?php if (in_array($store['store_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $store['store_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $store['store_id']; ?>" />
                   <?php } ?></td>
                 <td class="text-left"><?php echo $store['name']; ?></td>
                 <td class="text-left"><?php echo $store['url']; ?></td>
-                <td class="text-right"><?php foreach ($store['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $store['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

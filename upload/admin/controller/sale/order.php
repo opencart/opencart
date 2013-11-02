@@ -311,21 +311,6 @@ class ControllerSaleOrder extends Controller {
 		$results = $this->model_sale_order->getOrders($data);
 
     	foreach ($results as $result) {
-			$action = array();
-						
-			$action[] = array(
-				'text' => $this->language->get('text_view'),
-				'href' => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
-			);
-			
-			if (strtotime($result['date_added']) > strtotime('-' . (int)$this->config->get('config_order_edit') . ' day')) {
-				$action[] = array(
-					'icon' => 'pencil',
-					'text' => $this->language->get('text_edit'),
-					'href' => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
-				);
-			}
-			
 			$this->data['orders'][] = array(
 				'order_id'      => $result['order_id'],
 				'customer'      => $result['customer'],
@@ -333,8 +318,9 @@ class ControllerSaleOrder extends Controller {
 				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
-				'selected'      => isset($this->request->post['selected']) && in_array($result['order_id'], $this->request->post['selected']),
-				'action'        => $action
+				'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
+				'edit'          => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
+				'expired'       => strtotime($result['date_added']) < strtotime('-' . (int)$this->config->get('config_order_edit') . ' day')
 			);
 		}
 
@@ -354,8 +340,10 @@ class ControllerSaleOrder extends Controller {
 
 		$this->data['button_invoice'] = $this->language->get('button_invoice');
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 		$this->data['button_filter'] = $this->language->get('button_filter');
+		$this->data['button_view'] = $this->language->get('button_view');
 
 		$this->data['token'] = $this->session->data['token'];
 		
@@ -372,7 +360,13 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if (isset($this->request->get['filter_order_id'])) {

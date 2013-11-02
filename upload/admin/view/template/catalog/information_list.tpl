@@ -46,16 +46,14 @@
               <?php if ($informations) { ?>
               <?php foreach ($informations as $information) { ?>
               <tr>
-                <td class="text-center"><?php if ($information['selected']) { ?>
+                <td class="text-center"><?php if (in_array($information['information_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $information['information_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $information['information_id']; ?>" />
                   <?php } ?></td>
                 <td class="text-left"><?php echo $information['title']; ?></td>
                 <td class="text-right"><?php echo $information['sort_order']; ?></td>
-                <td class="text-right"><?php foreach ($information['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $information['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

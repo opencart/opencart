@@ -119,7 +119,7 @@
               <?php if ($customers) { ?>
               <?php foreach ($customers as $customer) { ?>
               <tr>
-                <td class="text-center"><?php if ($customer['selected']) { ?>
+                <td class="text-center"><?php if (in_array($customer['customer_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $customer['customer_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $customer['customer_id']; ?>" />
@@ -138,9 +138,7 @@
                     <option value="<?php echo $store['store_id']; ?>"><?php echo $store['name']; ?></option>
                     <?php } ?>
                   </select></td>
-                <td class="text-right"><?php foreach ($customer['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $customer['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

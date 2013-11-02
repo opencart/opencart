@@ -4,6 +4,14 @@ body {
 	color: #666;
 }
 
+
+h1, h2, h3, h4, h5, h6 {
+	color: #444;
+}
+#content {
+	min-height: 600px;
+}
+
 span.hidden-xs {
     display: inline !important;
 }
@@ -11,171 +19,48 @@ span.hidden-xs {
 	margin-bottom: 15px;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	color: #444;
-}
-
-input[class^="icon-"] {
-	background: 0;
-	padding: 0;
-	border: 0;
-	color: #09F;
-	font-size: 14px;
-}
-input[class^="icon-"]:hover {
-	color: #0066cc;
-}
-#content {
-	min-height: 600px;
-}
-
 .buttons {
 	margin: 1em 0;
 	overflow: auto;
 }
-
-/*
-
-
-.transition, .transition a, .transition input {
-	-webkit-transition: all 0.2s ease-out;
-	-moz-transition: all 0.2s ease-out;
-	-o-transition: all 0.2s ease-out;
-	transition: all 0.2s ease-out;
+#top {
+	background-color: #EEEEEE;
+	border-bottom: 1px solid #e2e2e2;
+	margin: 0 0 20px 0;	
 }
-.animated {
-	-webkit-animation-duration: 0.5s;
-	-moz-animation-duration: 0.5s;
-	-o-animation-duration: 0.5s;
-	animation-duration: 0.5s;
-	-webkit-animation-fill-mode: both;
-	-moz-animation-fill-mode: both;
-	-o-animation-fill-mode: both;
-	animation-fill-mode: both;
-}
- @-webkit-keyframes fadeIn {
- 0% {
-opacity: 0;
-}
- 100% {
-opacity: 1;
-}
-}
- @-moz-keyframes fadeIn {
- 0% {
-opacity: 0;
-}
- 100% {
-opacity: 1;
-}
-}
- @-o-keyframes fadeIn {
- 0% {
-opacity: 0;
-}
- 100% {
-opacity: 1;
-}
-}
- @keyframes fadeIn {
- 0% {
-opacity: 0;
-}
- 100% {
-opacity: 1;
-}
-}
-.fadeIn {
-	-webkit-animation-name: fadeIn;
-	-moz-animation-name: fadeIn;
-	-o-animation-name: fadeIn;
-	animation-name: fadeIn;
-}
-
-.table tbody + tbody {
-	border-top: none;
-}
-thead {
-	font-weight: bold;
-	background-color: #eee;
-}
-
-.well {
-	background-color: #eee;
-	border: 1px solid #ddd;
-}
-.well-nav {
-	margin-top: 20px;
-	padding: 10px 0;
-}
-
-
-.alert.alert-form {
-	margin: 10px 0 0 0;
-}
-
-
-.topbar .nav>li>a {
-	padding: 10px;
-}
-.navbar.navbar-static-top .container {
+#top .container {
 	padding: 0 20px;
 }
-.navbar form {
-	margin: 0;
-}
-.currency-dropdown a:hover {
-	cursor: pointer;
-}
-.navbar .nav > li > a {
+#top a, #top .btn-link {
 	color: #888;
+	text-shadow: 0 1px 0 #FFF;
 }
-.navbar .nav > li > a:hover {
-	color: #666;
-}
-.topbar a {
-	color: #888;
-}
-.topbar a:hover {
-	color: #666;
-}
-.topbar a:hover, .topbar a:focus {
+#top a:hover {
 	color: #333;
 	text-decoration: none;
 	background: none;
 }
-.topbar a strong {
+#top a strong {
 	font-size: 14px;
 }
-#language-choice {
-	position: relative;
-	top: -2px;
+#top-links {
+	padding-top: 7px;
 }
-
-
+#top-links a + a {
+	margin-left: 15px;
+}
 header {
 	padding: 20px 0 0 0;
 }
 
-
-#search {
-	width: 100%;
-}
 #search input, #search .btn {
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
 }
-#search input {
-	width: 80%;
-	height: 40px;
-	padding: 0 10px;
-}
-#search .btn {
-	width: 20%;
-	height: 40px;
-	line-height: 30px;
-}
+
+/*
+
 
 
 #cart {
@@ -260,15 +145,7 @@ header .navbar {
 	filter: none;
 	border: 1px solid #cccccc;
 }
-.topbar .navbar-inner {
-	background-image: none;
-	background-color: #eee;
-	border: 0;
-	border-bottom: 1px solid #e2e2e2;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	-o-box-shadow: none;
-}
+
 .navbar-inverse .navbar-inner {
 	background-color: #229ac8;
 	background-image: -moz-linear-gradient(top, #23a1d1, #1f90bb);
@@ -964,12 +841,6 @@ body {
 
 .navbar-static-top .nav>li>a {
 	padding: 10px 10px;
-}
-.topbar {
-	margin: 0 0 20px 0;
-}
-.topbar .navbar-inner {
-	padding: 0;
 }
 .logo {
 	margin: 0 0 20px 0;

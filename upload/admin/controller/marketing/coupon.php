@@ -172,14 +172,6 @@ class ControllerMarketingCoupon extends Controller {
 		$results = $this->model_marketing_coupon->getCoupons($data);
  
     	foreach ($results as $result) {
-			$action = array();
-						
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('marketing/coupon/update', 'token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url, 'SSL')
-			);
-						
 			$this->data['coupons'][] = array(
 				'coupon_id'  => $result['coupon_id'],
 				'name'       => $result['name'],
@@ -188,8 +180,7 @@ class ControllerMarketingCoupon extends Controller {
 				'date_start' => date($this->language->get('date_format_short'), strtotime($result['date_start'])),
 				'date_end'   => date($this->language->get('date_format_short'), strtotime($result['date_end'])),
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'selected'   => isset($this->request->post['selected']) && in_array($result['coupon_id'], $this->request->post['selected']),
-				'action'     => $action
+				'edit'       => $this->url->link('marketing/coupon/update', 'token=' . $this->session->data['token'] . '&coupon_id=' . $result['coupon_id'] . $url, 'SSL')
 			);
 		}
 									
@@ -207,6 +198,7 @@ class ControllerMarketingCoupon extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
@@ -222,7 +214,13 @@ class ControllerMarketingCoupon extends Controller {
 		} else {
 			$this->data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if ($order == 'ASC') {

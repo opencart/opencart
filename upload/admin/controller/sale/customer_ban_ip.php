@@ -172,21 +172,12 @@ class ControllerSaleCustomerBanIp extends Controller {
 		$results = $this->model_sale_customer_ban_ip->getCustomerBanIps($data);
  
     	foreach ($results as $result) {
-			$action = array();
-		
-			$action[] = array(
-				'icon' => 'pencil',
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('sale/customer_ban_ip/update', 'token=' . $this->session->data['token'] . '&customer_ban_ip_id=' . $result['customer_ban_ip_id'] . $url, 'SSL')
-			);
-			
 			$this->data['customer_ban_ips'][] = array(
 				'customer_ban_ip_id' => $result['customer_ban_ip_id'],
 				'ip'                 => $result['ip'],
 				'total'              => $result['total'],
 				'customer'           => $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL'),
-				'selected'           => isset($this->request->post['selected']) && in_array($result['customer_ban_ip_id'], $this->request->post['selected']),
-				'action'             => $action
+				'edit'               => $this->url->link('sale/customer_ban_ip/update', 'token=' . $this->session->data['token'] . '&customer_ban_ip_id=' . $result['customer_ban_ip_id'] . $url, 'SSL')
 			);
 		}	
 					
@@ -200,6 +191,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
 		$this->data['button_insert'] = $this->language->get('button_insert');
+		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');
 
 		if (isset($this->error['warning'])) {
@@ -216,6 +208,12 @@ class ControllerSaleCustomerBanIp extends Controller {
 			$this->data['success'] = '';
 		}
 		
+		if (isset($this->request->post['selected'])) {
+			$this->data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$this->data['selected'] = array();
+		}
+				
 		$url = '';
 			
 		if ($order == 'ASC') {

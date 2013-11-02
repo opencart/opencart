@@ -92,7 +92,7 @@
               <?php if ($orders) { ?>
               <?php foreach ($orders as $order) { ?>
               <tr>
-                <td class="text-center"><?php if ($order['selected']) { ?>
+                <td class="text-center"><?php if (in_array($order['order_id'], $selected)) { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
                   <?php } else { ?>
                   <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />
@@ -103,9 +103,12 @@
                 <td class="text-right"><?php echo $order['total']; ?></td>
                 <td class="text-left"><?php echo $order['date_added']; ?></td>
                 <td class="text-left"><?php echo $order['date_modified']; ?></td>
-                <td class="text-right"><?php foreach ($order['action'] as $action) { ?>
-                  <a href="<?php echo $action['href']; ?>" data-toggle="tooltip" title="<?php echo $action['text']; ?>" class="btn btn-primary"><i class="fa fa-<?php echo $action['icon']; ?> fa-large"></i></a>
-                  <?php } ?></td>
+                <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a> 
+                <?php if (!$order['expired']) { ?>
+                <a href="<?php echo $order['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+              	<?php } else { ?>
+                <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button></td>
+                <?php } ?>
               </tr>
               <?php } ?>
               <?php } else { ?>

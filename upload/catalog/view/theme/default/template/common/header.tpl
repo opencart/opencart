@@ -42,11 +42,11 @@
 <?php echo $google_analytics; ?>
 </head>
 <body>
-<nav>
+<nav id="top">
   <div class="container">
     <div class="pull-left"><?php echo $currency; ?></div>
     <div class="pull-left"><?php echo $language; ?></div>
-    <div class="pull-right"><a href="tel:<?php echo $telephone; ?>"><i class="fa fa-phone"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></a> <a href="<?php echo $account; ?>"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span></a> <a href="<?php echo $wishlist; ?>" id="wishlist-total"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a> <a href="<?php echo $shopping_cart; ?>"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a> <a href="<?php echo $checkout; ?>"><i class="fa fa-share-alt"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a> </div>
+    <div id="top-links" class="pull-right"><a href="tel:<?php echo $telephone; ?>"><i class="fa fa-phone"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $telephone; ?></span></a> <a href="<?php echo $account; ?>"><i class="fa fa-user"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_account; ?></span></a> <a href="<?php echo $wishlist; ?>" id="wishlist-total"><i class="fa fa-heart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_wishlist; ?></span></a> <a href="<?php echo $shopping_cart; ?>"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_shopping_cart; ?></span></a> <a href="<?php echo $checkout; ?>"><i class="fa fa-share"></i> <span class="hidden-xs hidden-sm hidden-md"><?php echo $text_checkout; ?></span></a></div>
   </div>
 </nav>
 <header>
@@ -61,12 +61,12 @@
           <?php } ?>
         </div>
       </div>
-      <div class="col-sm-5">
-        <div id="search" class="input-group">
+      <div id="search" class="col-sm-5">
+        <div class="input-group">
           <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" placeholder="<?php echo $text_search; ?>" class="form-control input-lg" />
           <span class="input-group-btn">
-          <button type="button" class="btn btn-default btn-lg"><i class="fa fa-search"></i></button>
-          </span> </div>
+          <button type="button" class="btn btn-lg"><i class="fa fa-search"></i></button>
+          </span></div>
       </div>
       <div class="col-sm-3"><?php echo $cart; ?></div>
     </div>

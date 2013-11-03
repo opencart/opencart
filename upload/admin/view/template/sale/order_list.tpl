@@ -27,7 +27,7 @@
     <div class="panel-body">
       <div class="well">
         <div class="row">
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <div class="form-group">
               <label class="control-label" for="input-order-id"><?php echo $entry_order_id; ?></label>
               <input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
@@ -37,7 +37,7 @@
               <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <div class="form-group">
               <label class="control-label" for="input-order-status"><?php echo $entry_order_status; ?></label>
               <select name="filter_order_status_id" id="input-order-status" class="form-control">
@@ -61,7 +61,7 @@
               <input type="text" name="filter_total" value="<?php echo $filter_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <div class="form-group">
               <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
               <input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" id="input-date-added" class="form-control" />
@@ -70,8 +70,6 @@
               <label class="control-label" for="input-date-modified"><?php echo $entry_date_modified; ?></label>
               <input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" id="input-date-modified" class="form-control" />
             </div>
-          </div>
-          <div class="col-sm-3">
             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
           </div>
         </div>

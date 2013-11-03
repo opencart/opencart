@@ -23,7 +23,28 @@
       <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
-      <form action="" method="post" enctype="multipart/form-data" id="form-marketing">
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
+              <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-code"><?php echo $entry_code; ?></label>
+              <input type="text" name="filter_code" value="<?php echo $filter_code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
+              <input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" />
+            </div>
+            <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+          </div>
+        </div>
+      </div>
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-marketing">
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover">
             <thead>
@@ -50,15 +71,6 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="filter">
-                <td></td>
-                <td><input type="text" name="filter_name" value="<?php echo $filter_name; ?>" class="form-control" /></td>
-                <td><input type="text" name="filter_code" value="<?php echo $filter_code; ?>" class="form-control" /></td>
-                <td>&nbsp;</td>
-                <td>&nbsp;</td>
-                <td><input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" class="form-control" /></td>
-                <td align="right"><button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button></td>
-              </tr>
               <?php if ($marketings) { ?>
               <?php foreach ($marketings as $marketing) { ?>
               <tr>

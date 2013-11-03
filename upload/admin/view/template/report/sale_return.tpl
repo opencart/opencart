@@ -12,7 +12,7 @@
     <div class="panel-body">
       <div class="well">
         <div class="row">
-          <div class="col-sm-5">
+          <div class="col-sm-6">
             <div class="form-group">
               <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
               <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
@@ -22,7 +22,7 @@
               <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
             </div>
           </div>
-          <div class="col-sm-5">
+          <div class="col-sm-6">
             <div class="form-group">
               <label class="control-label" for="input-group"><?php echo $entry_group; ?></label>
               <select name="filter_group" id="input-group" class="form-control">
@@ -48,8 +48,6 @@
                 <?php } ?>
               </select>
             </div>
-          </div>
-          <div class="col-sm-2">
             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
           </div>
         </div>

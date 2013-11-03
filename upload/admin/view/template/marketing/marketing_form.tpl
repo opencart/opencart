@@ -47,9 +47,9 @@
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-example"><?php echo $entry_example; ?></label>
           <div class="col-sm-10">
-            <input type="text" id="input-example1" class="form-control" />
+            <input type="text" placeholder="<?php echo $entry_example; ?>" id="input-example1" class="form-control" />
             <br />
-            <input type="text" id="input-example2" class="form-control" />
+            <input type="text" placeholder="<?php echo $entry_example; ?>" id="input-example2" class="form-control" />
             <span class="help-block"><?php echo $help_example; ?></span></div>
         </div>
       </form>

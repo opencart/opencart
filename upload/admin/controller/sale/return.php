@@ -374,17 +374,26 @@ class ControllerSaleReturn extends Controller {
 		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		$this->data['text_confirm'] = $this->language->get('text_confirm');
-		
 		$this->data['column_return_id'] = $this->language->get('column_return_id');
 		$this->data['column_order_id'] = $this->language->get('column_order_id');
 		$this->data['column_customer'] = $this->language->get('column_customer');
 		$this->data['column_product'] = $this->language->get('column_product');
 		$this->data['column_model'] = $this->language->get('column_model');
 		$this->data['column_status'] = $this->language->get('column_status');
+		
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
-		$this->data['column_action'] = $this->language->get('column_action');		
-		
+		$this->data['column_action'] = $this->language->get('column_action');
+				
+		$this->data['entry_return_id'] = $this->language->get('entry_return_id');
+		$this->data['entry_order_id'] = $this->language->get('entry_order_id');
+		$this->data['entry_customer'] = $this->language->get('entry_customer');
+		$this->data['entry_product'] = $this->language->get('entry_product');
+		$this->data['entry_model'] = $this->language->get('entry_model');
+		$this->data['entry_return_status'] = $this->language->get('entry_return_status');
+		$this->data['entry_date_added'] = $this->language->get('entry_date_added');
+		$this->data['entry_date_modified'] = $this->language->get('entry_date_modified');
+				
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');

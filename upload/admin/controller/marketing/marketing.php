@@ -268,6 +268,10 @@ class ControllerMarketingMarketing extends Controller {
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_action'] = $this->language->get('column_action');		
 		
+		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_code'] = $this->language->get('entry_code');
+		$this->data['entry_date_added'] = $this->language->get('entry_date_added');
+		
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_delete'] = $this->language->get('button_delete');

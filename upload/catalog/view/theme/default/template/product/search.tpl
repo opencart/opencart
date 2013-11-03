@@ -47,17 +47,17 @@
           </select>
         </div>
         <div class="col-sm-3">
-          <label class="checkbox" for="sub_category">
+          <label class="checkbox-inline">
             <?php if ($sub_category) { ?>
-            <input type="checkbox" name="sub_category" value="1" id="sub_category" checked="checked" />
+            <input type="checkbox" name="sub_category" value="1" checked="checked" />
             <?php } else { ?>
-            <input type="checkbox" name="sub_category" value="1" id="sub_category" />
+            <input type="checkbox" name="sub_category" value="1" />
             <?php } ?>
             <?php echo $text_sub_category; ?></label>
         </div>
       </div>
       <p>
-        <label class="checkbox" for="description">
+        <label class="checkbox-inline">
           <?php if ($description) { ?>
           <input type="checkbox" name="description" value="1" id="description" checked="checked" />
           <?php } else { ?>

@@ -201,22 +201,10 @@ class ControllerSaleCustomer extends Controller {
 		
 		$this->load->model('sale/customer');
 		
-		if (!$this->user->hasPermission('modify', 'sale/customer')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		} elseif (isset($this->request->post['selected'])) {
-			$approved = 0;
+		if (isset($this->request->get['customer_id']) && $this->validateApprove()) {
+			$this->model_sale_customer->approve($this->request->get['customer_id']);
 			
-			foreach ($this->request->post['selected'] as $customer_id) {
-				$customer_info = $this->model_sale_customer->getCustomer($customer_id);
-				
-				if ($customer_info && !$customer_info['approved']) {
-					$this->model_sale_customer->approve($customer_id);
-					
-					$approved++;
-				}
-			} 
-			
-			$this->session->data['success'] = sprintf($this->language->get('text_approved'), $approved);	
+			$this->session->data['success'] = $this->language->get('text_success');	
 			
 			$url = '';
 		
@@ -381,7 +369,6 @@ class ControllerSaleCustomer extends Controller {
 			'href' => $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
-		$this->data['approve'] = $this->url->link('sale/customer/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['insert'] = $this->url->link('sale/customer/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$this->data['delete'] = $this->url->link('sale/customer/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -412,10 +399,11 @@ class ControllerSaleCustomer extends Controller {
 				'email'          => $result['email'],
 				'customer_group' => $result['customer_group'],
 				'status'         => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
-				'approved'       => ($result['approved'] ? $this->language->get('text_yes') : $this->language->get('text_no')),
 				'ip'             => $result['ip'],
 				'date_added'     => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'           => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL')
+				'edit'           => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL'),
+				'approve'        => $this->url->link('sale/customer/approve', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'] . $url, 'SSL'),
+				'approved'       => $result['approved']
 			);
 		}	
 					
@@ -425,10 +413,10 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['text_disabled'] = $this->language->get('text_disabled');
 		$this->data['text_yes'] = $this->language->get('text_yes');
 		$this->data['text_no'] = $this->language->get('text_no');	
-		$this->data['text_select'] = $this->language->get('text_select');	
 		$this->data['text_default'] = $this->language->get('text_default');		
 		$this->data['text_no_results'] = $this->language->get('text_no_results');
 		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$this->data['text_login'] = $this->language->get('text_login');
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_email'] = $this->language->get('column_email');
@@ -437,8 +425,16 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['column_approved'] = $this->language->get('column_approved');
 		$this->data['column_ip'] = $this->language->get('column_ip');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_login'] = $this->language->get('column_login');
+		
 		$this->data['column_action'] = $this->language->get('column_action');		
+
+		$this->data['entry_name'] = $this->language->get('entry_name');
+		$this->data['entry_email'] = $this->language->get('entry_email');
+		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
+		$this->data['entry_status'] = $this->language->get('entry_status');
+		$this->data['entry_approved'] = $this->language->get('entry_approved');
+		$this->data['entry_ip'] = $this->language->get('entry_ip');
+		$this->data['entry_date_added'] = $this->language->get('entry_date_added');
 		
 		$this->data['button_approve'] = $this->language->get('button_approve');
 		$this->data['button_insert'] = $this->language->get('button_insert');
@@ -512,7 +508,6 @@ class ControllerSaleCustomer extends Controller {
 		$this->data['sort_email'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&sort=c.email' . $url, 'SSL');
 		$this->data['sort_customer_group'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&sort=customer_group' . $url, 'SSL');
 		$this->data['sort_status'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&sort=c.status' . $url, 'SSL');
-		$this->data['sort_approved'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&sort=c.approved' . $url, 'SSL');
 		$this->data['sort_ip'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&sort=c.ip' . $url, 'SSL');
 		$this->data['sort_date_added'] = $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&sort=c.date_added' . $url, 'SSL');
 		
@@ -1031,6 +1026,18 @@ class ControllerSaleCustomer extends Controller {
 		}  
   	} 
 	
+  	protected function validateApprove() {
+    	if (!$this->user->hasPermission('modify', 'sale/customer')) {
+      		$this->error['warning'] = $this->language->get('error_permission');
+    	}	
+	  	 
+		if (!$this->error) {
+	  		return true;
+		} else {
+	  		return false;
+		}  
+  	} 
+		
 	public function login() {
 		$json = array();
 		

@@ -337,7 +337,15 @@ class ControllerSaleOrder extends Controller {
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
 		$this->data['column_action'] = $this->language->get('column_action');
-
+		
+		$this->data['entry_return_id'] = $this->language->get('entry_return_id');
+		$this->data['entry_order_id'] = $this->language->get('entry_order_id');
+    	$this->data['entry_customer'] = $this->language->get('entry_customer');
+		$this->data['entry_order_status'] = $this->language->get('entry_order_status');
+		$this->data['entry_total'] = $this->language->get('entry_total');
+		$this->data['entry_date_added'] = $this->language->get('entry_date_added');
+		$this->data['entry_date_modified'] = $this->language->get('entry_date_modified');
+		
 		$this->data['button_invoice'] = $this->language->get('button_invoice');
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_edit'] = $this->language->get('button_edit');
@@ -2353,10 +2361,11 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$this->data['direction'] = $this->language->get('direction');
-		$this->data['language'] = $this->language->get('code');
+		$this->data['lang'] = $this->language->get('code');
 
 		$this->data['text_invoice'] = $this->language->get('text_invoice');
 
+		$this->data['text_order_detail'] = $this->language->get('text_order_detail');
 		$this->data['text_order_id'] = $this->language->get('text_order_id');
 		$this->data['text_invoice_no'] = $this->language->get('text_invoice_no');
 		$this->data['text_invoice_date'] = $this->language->get('text_invoice_date');

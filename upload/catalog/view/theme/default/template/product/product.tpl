@@ -14,9 +14,6 @@
     <?php $cols = 12; ?>
     <?php } ?>
     <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?> 
-      
-      <!-- Product image -->
-      
       <?php if ($thumb || $images) { ?>
       <ul class="thumbnails">
         <?php if ($thumb) { ?>
@@ -29,10 +26,6 @@
         <?php } ?>
       </ul>
       <?php } ?>
-      
-      <!-- Tabs --> 
-      
-      <!-- The Tabs -->
       <ul class="nav nav-tabs">
         <li class="active"><a href="#tab-description" data-toggle="tab"><?php echo $tab_description; ?></a></li>
         <?php if ($attribute_groups) { ?>
@@ -42,21 +35,15 @@
         <li><a href="#tab-reviews" data-toggle="tab"><?php echo $tab_review; ?></a></li>
         <?php } ?>
       </ul>
-      
-      <!-- Tab Content -->
-      <div class="tab-content"> 
-        
-        <!-- Tab - Description -->
+      <div class="tab-content">
         <div class="tab-pane active" id="tab-description"><?php echo $description; ?></div>
-        
-        <!-- Tab - Specification -->
         <?php if ($attribute_groups) { ?>
         <div class="tab-pane" id="tab-specification">
           <table class="table table-bordered">
             <?php foreach ($attribute_groups as $attribute_group) { ?>
             <thead>
               <tr>
-                <td colspan="2"><?php echo $attribute_group['name']; ?></td>
+                <td colspan="2"><strong><?php echo $attribute_group['name']; ?></strong></td>
               </tr>
             </thead>
             <tbody>
@@ -71,8 +58,6 @@
           </table>
         </div>
         <?php } ?>
-        
-        <!-- Tab - Reviews -->
         <?php if ($review_status) { ?>
         <div class="tab-pane" id="tab-reviews">
           <form class="form-horizontal">
@@ -120,17 +105,11 @@
         </div>
         <?php } ?>
       </div>
-      
-      <!-- Wishlist / Compare buttons -->
       <div class="btn-group">
         <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
         <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
       </div>
-      
-      <!-- Product Name -->
       <h1><?php echo $heading_title; ?></h1>
-      
-      <!-- Product Info -->
       <ul class="list-unstyled">
         <?php if ($manufacturer) { ?>
         <li><?php echo $text_manufacturer; ?> <a href="<?php echo $manufacturers; ?>"><?php echo $manufacturer; ?></a></li>
@@ -141,8 +120,6 @@
         <?php } ?>
         <li><?php echo $text_stock; ?> <?php echo $stock; ?></li>
       </ul>
-      
-      <!-- Price -->
       <?php if ($price) { ?>
       <ul class="list-unstyled">
         <?php if (!$special) { ?>
@@ -171,9 +148,7 @@
         <?php } ?>
       </ul>
       <?php } ?>
-      <div id="product"> 
-        <!-- Options -->
-        
+      <div id="product">
         <?php if ($options) { ?>
         <hr>
         <h3><?php echo $text_option; ?></h3>
@@ -296,8 +271,6 @@
         <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_minimum; ?></div>
         <?php } ?>
       </div>
-      
-      <!-- Review -->
       <?php if ($review_status) { ?>
       <div>
         <p><img src="catalog/view/theme/default/image/stars-<?php echo $rating; ?>.png" alt="<?php echo $reviews; ?>" /> <a onclick="$('a[href=\'#tab-reviews\']').trigger('click');"><?php echo $reviews; ?></a> <a class="review-button" onclick="$('a[href=\'#tab-reviews\']').trigger('click');"><?php echo $text_write; ?></a> </p>
@@ -310,8 +283,6 @@
         <!-- AddThis Button END --> 
       </div>
       <?php } ?>
-      
-      <!-- Related products -->
       <?php if ($products) { ?>
       <h3><?php echo $text_related; ?></h3>
       <div class="row">
@@ -350,7 +321,6 @@
         <?php } ?>
       </div>
       <?php } ?>
-      
       <?php if ($tags) { ?>
       <p><?php echo $text_tags; ?>
         <?php for ($i = 0; $i < count($tags); $i++) { ?>

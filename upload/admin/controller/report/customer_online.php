@@ -96,7 +96,10 @@ class ControllerReportCustomerOnline extends Controller {
 		$this->data['column_referer'] = $this->language->get('column_referer');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_action'] = $this->language->get('column_action');
-		
+	
+		$this->data['entry_ip'] = $this->language->get('entry_ip');
+		$this->data['entry_customer'] = $this->language->get('entry_customer');
+				
 		$this->data['button_edit'] = $this->language->get('button_edit');
 		$this->data['button_filter'] = $this->language->get('button_filter');
 				

@@ -22,7 +22,7 @@ final class Loader {
 				continue;
 			}
 			
-			$file = DIR_APPLICATION . 'controller/' .  $path . '.php';			
+			$file = DIR_APPLICATION . 'controller/' .  $path . '.php';
 			
 			if (is_file($file)) {
 				$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $path);

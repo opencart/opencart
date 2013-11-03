@@ -53,30 +53,24 @@
   <div class="container">
     <div class="row">
       <div class="col-sm-4">
-        <div class="logo">
+        <div id="logo">
           <?php if ($logo) { ?>
-          <a href="<?php echo $home; ?>" class="logo"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a>
+          <a href="<?php echo $home; ?>"><img src="<?php echo $logo; ?>" title="<?php echo $name; ?>" alt="<?php echo $name; ?>" /></a>
           <?php } else { ?>
-          <h1><a href="<?php echo $home; ?>" class="logo"><?php echo $name; ?></a></h1>
+          <h1><a href="<?php echo $home; ?>"><?php echo $name; ?></a></h1>
           <?php } ?>
         </div>
       </div>
-      <div id="search" class="col-sm-5">
-        <div class="input-group">
-          <input type="text" name="search" placeholder="<?php echo $text_search; ?>" value="<?php echo $search; ?>" placeholder="<?php echo $text_search; ?>" class="form-control input-lg" />
-          <span class="input-group-btn">
-          <button type="button" class="btn btn-lg"><i class="fa fa-search"></i></button>
-          </span></div>
-      </div>
+      <div class="col-sm-5"><?php echo $search; ?></div>
       <div class="col-sm-3"><?php echo $cart; ?></div>
     </div>
   </div>
 </header>
 <?php if ($categories) { ?>
 <div class="container">
-  <nav class="navbar navbar-inverse">
-    <div class="navbar-header"><span class="visible-xs"><?php echo $text_category; ?></span>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="fa fa-bar"></span><span class="fa fa-bar"></span><span class="fa fa-bar"></span></button>
+  <nav id="menu" class="navbar navbar-default">
+    <div class="navbar-header"><span id="category" class="visible-xs"><?php echo $text_category; ?></span>
+      <button type="button" class="btn btn-navbar navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="icon-bar"></span></button>
     </div>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
       <ul class="nav navbar-nav">

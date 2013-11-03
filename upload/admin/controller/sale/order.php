@@ -2361,10 +2361,11 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$this->data['direction'] = $this->language->get('direction');
-		$this->data['language'] = $this->language->get('code');
+		$this->data['lang'] = $this->language->get('code');
 
 		$this->data['text_invoice'] = $this->language->get('text_invoice');
 
+		$this->data['text_order_detail'] = $this->language->get('text_order_detail');
 		$this->data['text_order_id'] = $this->language->get('text_order_id');
 		$this->data['text_invoice_no'] = $this->language->get('text_invoice_no');
 		$this->data['text_invoice_date'] = $this->language->get('text_invoice_date');

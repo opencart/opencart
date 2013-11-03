@@ -71,7 +71,7 @@
     <div class="collapse navbar-collapse navbar-ex2-collapse">
       <ul class="nav navbar-nav">
         <li id="dashboard"><a href="<?php echo $home; ?>"><?php echo $text_dashboard; ?></a></li>
-        <li id="catalog" class="dropdown"><a data-toggle="dropdown"><?php echo $text_catalog; ?> <i class="fa fa-caret-down hidden-sm"></i></a>
+        <li id="catalog" class="dropdown"><a data-toggle="dropdown"><?php echo $text_catalog; ?> <span class="visible-xs"><i class="fa fa-caret-down"></i></span></a>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
             <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>

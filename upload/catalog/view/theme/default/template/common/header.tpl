@@ -78,16 +78,19 @@
         <?php if ($category['children']) { ?>
         <li class="dropdown"><a href="<?php echo $category['href']; ?>" class="dropdown-toggle" data-toggle="dropdown"><?php echo $category['name']; ?></a>
           <div class="dropdown-menu">
-            <?php for ($i = 0; $i < count($category['children']);) { ?>
-            <ul class="list-unstyled">
-              <?php $j = $i + ceil(count($category['children']) / $category['column']); ?>
-              <?php for (; $i < $j; $i++) { ?>
-              <?php if (isset($category['children'][$i])) { ?>
-              <li><a href="<?php echo $category['children'][$i]['href']; ?>"><?php echo $category['children'][$i]['name']; ?></a></li>
+            
+            <div class="dropdown-inner">
+              <?php foreach (array_chunk($category['children'], $category['column']) as $children) { ?>
+
+                <ul class="list-unstyled">
+                  <?php foreach ($children as $child) { ?>
+                  <li><a href="<?php echo $child['href']; ?>"><?php echo $child['name']; ?></a></li>
+                  <?php } ?>
+                </ul>
+
+              
               <?php } ?>
-              <?php } ?>
-            </ul>
-            <?php } ?>
+            </div>
             <a href="<?php echo $category['href']; ?>" class="see-all"><?php echo $text_all; ?> <?php echo $category['name']; ?></a></div>
         </li>
         <?php } else { ?>

@@ -9,6 +9,9 @@ html, body, label, input, textarea, select, td, .dropdown-menu a {
 h1, h4 {
 	margin-top: 0;
 }
+span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
+	display: inline !important;
+}
 @media (min-width: 768px) {
 	.container {
 		max-width: 95%;

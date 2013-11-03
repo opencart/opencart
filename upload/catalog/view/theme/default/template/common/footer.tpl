@@ -1,4 +1,4 @@
-<footer class="footer">
+<footer>
   <div class="container">
     <div class="row">
       <?php if ($informations) { ?>

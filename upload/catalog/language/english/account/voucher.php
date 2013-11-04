@@ -20,8 +20,8 @@ $_['entry_message']    = 'Message';
 $_['entry_amount']     = 'Amount';
 
 // Help
-$_['help_message']     = '(Optional)';
-$_['help_amount']      = '(Value must be between %s and %s)';
+$_['help_message']     = 'Optional';
+$_['help_amount']      = 'Value must be between %s and %s';
 
 // Error
 $_['error_to_name']    = 'Recipient\'s Name must be between 1 and 64 characters!';

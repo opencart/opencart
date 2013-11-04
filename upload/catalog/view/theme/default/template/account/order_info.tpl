@@ -81,7 +81,7 @@
               <td class="text-right"><?php echo $product['quantity']; ?></td>
               <td class="text-right"><?php echo $product['price']; ?></td>
               <td class="text-right"><?php echo $product['total']; ?></td>
-              <td class="text-right"><a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>" class="btn btn-default"><i class="fa fa-reply"></i></a></td>
+              <td class="text-right"><a href="<?php echo $product['return']; ?>" data-toggle="tooltip" title="<?php echo $button_return; ?>" class="btn btn-danger"><i class="fa fa-reply"></i></a></td>
             </tr>
             <?php } ?>
             <?php foreach ($vouchers as $voucher) { ?>

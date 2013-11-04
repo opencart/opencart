@@ -1,4 +1,5 @@
-<div id="cart" class="btn-group btn-block"><a class="btn btn-inverse btn-block btn-lg dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart"></i><span id="cart-total"><?php echo $text_items; ?></span></a>
+<div id="cart" class="btn-group btn-block">
+  <button type="button" data-toggle="dropdown" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total"><?php echo $text_items; ?></span></button>
   <div id="dropdown-menu" class="dropdown-menu pull-right">
     <div>
       <?php if ($products || $vouchers) { ?>

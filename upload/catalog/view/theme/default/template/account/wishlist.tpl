@@ -37,10 +37,8 @@
           <tr>
             <td class="text-center"><?php if ($product['thumb']) { ?>
               <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
-              <?php } else { ?>
-              <a href="<?php echo $product['href']; ?>"><img src="catalog/view/theme/default/image/placeholder.png" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" /></a>
               <?php } ?></td>
-            <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?> </a></td>
+            <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></td>
             <td class="text-left"><?php echo $product['model']; ?></td>
             <td class="text-right"><?php echo $product['stock']; ?></td>
             <td class="text-right"><?php if ($product['price']) { ?>
@@ -52,7 +50,7 @@
                 <?php } ?>
               </div>
               <?php } ?></td>
-            <td class="text-right"><a onclick="addToCart('<?php echo $product['product_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_cart; ?>" class="btn btn-default"><i class="fa fa-shopping-cart"></i></a> <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-default"><i class="fa fa-times"></i></a></td>
+            <td class="text-right"><button type="button" onclick="addToCart('<?php echo $product['product_id']; ?>');" data-toggle="tooltip" title="<?php echo $button_cart; ?>" class="btn btn-primary"><i class="fa fa-shopping-cart"></i></button> <a href="<?php echo $product['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-times"></i></a></td>
           </tr>
         </tbody>
         <?php } ?>
@@ -61,7 +59,7 @@
       <p><?php echo $text_empty; ?></p>
       <?php } ?>
       <div class="buttons clearfix">
-        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"> <?php echo $button_continue; ?></a></div>
+        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
       </div>
       <?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>

@@ -254,9 +254,10 @@ class ControllerExtensionModification extends Controller {
 				'version'         => $result['version'],
 				'status'          => $result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 				'date_added'      => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'link'            => $result['link'],
 				'enable'          => $this->url->link('extension/modification/enable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], 'SSL'),
 				'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], 'SSL'),
-				'enabled'         => $result['status']
+				'enabled'         => $result['status'],
 			);
 		}			
 		
@@ -276,6 +277,7 @@ class ControllerExtensionModification extends Controller {
 		$this->data['button_refresh'] = $this->language->get('button_refresh');
 		$this->data['button_clear'] = $this->language->get('button_clear');
 		$this->data['button_delete'] = $this->language->get('button_delete');
+		$this->data['button_link'] = $this->language->get('button_link');
 		$this->data['button_enable'] = $this->language->get('button_enable');
 		$this->data['button_disable'] = $this->language->get('button_disable');
 		

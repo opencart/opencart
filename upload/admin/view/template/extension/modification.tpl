@@ -11,7 +11,7 @@
   </div>
   <?php } ?>
   <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check"></i> <?php echo $success; ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
@@ -68,7 +68,12 @@
                 <td class="text-left"><?php echo $modification['author']; ?></td>
                 <td class="text-left"><?php echo $modification['status']; ?></td>
                 <td class="text-left"><?php echo $modification['date_added']; ?></td>
-                <td class="text-right"><?php if (!$modification['enabled']) { ?>
+                <td class="text-right"><?php if ($modification['link']) { ?>
+                  <a href="<?php echo $modification['link']; ?>" data-toggle="tooltip" title="<?php echo $button_link; ?>" class="btn btn-info" target="_blank"><i class="fa fa-link"></i></a>
+                  <?php } else { ?>
+                  <button type="button" class="btn btn-info" disabled="disabled"><i class="fa fa-link"></i></button>
+                  <?php } ?>
+                  <?php if (!$modification['enabled']) { ?>
                   <a href="<?php echo $modification['enable']; ?>" data-toggle="tooltip" title="<?php echo $button_enable; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
                   <?php } else { ?>
                   <a href="<?php echo $modification['disable']; ?>" data-toggle="tooltip" title="<?php echo $button_disable; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>

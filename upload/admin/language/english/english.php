@@ -85,6 +85,7 @@ $_['button_search']                 = 'Search';
 $_['button_view']                   = 'View';
 $_['button_install']                = 'Install';
 $_['button_uninstall']              = 'Uninstall';
+$_['button_link']                   = 'Link';
 
 // Tab
 $_['tab_address']                   = 'Address';

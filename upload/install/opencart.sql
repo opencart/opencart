@@ -1838,6 +1838,7 @@ CREATE TABLE `oc_modification` (
   `name` varchar(64) NOT NULL,
   `author` varchar(64) NOT NULL,
   `version` varchar(32) NOT NULL,
+  `link` varchar(255) NOT NULL,
   `code` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,

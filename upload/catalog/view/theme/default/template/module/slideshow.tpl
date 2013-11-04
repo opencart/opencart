@@ -1,4 +1,4 @@
-<div id="carousel<?php echo $module; ?>" class="carousel slide">
+<div id="carousel<?php echo $module; ?>" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <?php $i = 0; ?>
     <?php foreach ($banners as $banner) { ?>
@@ -10,7 +10,8 @@
     <?php foreach ($banners as $banner) { ?>
     <div class="item">
       <?php if ($banner['link']) { ?>
-      <a href="<?php echo $banner['link']; ?>"> <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" /> </a>
+      fgfd
+      <a href="<?php echo $banner['link']; ?>"><img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" /> </a>
       <?php } else { ?>
       <img src="<?php echo $banner['image']; ?>" alt="<?php echo $banner['title']; ?>" />
       <?php } ?>
@@ -22,5 +23,7 @@
   </div>
   <a class="carousel-control left" href="#carousel<?php echo $module; ?>" data-slide="prev">&lsaquo;</a> <a class="carousel-control right" href="#carousel<?php echo $module; ?>" data-slide="next">&rsaquo;</a></div>
 <script type="text/javascript"><!--
-$('#carousel<?php echo $module; ?>').carousel({'number': 0});
+$('#carousel<?php echo $module; ?>').carousel({
+	wrap: true
+});
 --></script>

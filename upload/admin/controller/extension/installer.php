@@ -399,16 +399,49 @@ class ControllerExtensionInstaller extends Controller {
 				try {
 					$dom = new DOMDocument('1.0', 'UTF-8');
 					$dom->loadXml($xml);
+					
+					$name = $dom->getElementsByTagName('name')->item(0);
+					
+					if ($name) {
+						$name = $name->nodeValue;
+					} else {
+						$name = '';
+					}
 
-					$data = array(
-						'name'       => $dom->getElementsByTagName('name')->item(0)->nodeValue,
-						'author'     => $dom->getElementsByTagName('author')->item(0)->nodeValue,
-						'version'    => $dom->getElementsByTagName('version')->item(0)->nodeValue,
+					$author = $dom->getElementsByTagName('author')->item(0);
+					
+					if ($author) {
+						$author = $author->nodeValue;
+					} else {
+						$author = '';
+					}
+					
+					$version = $dom->getElementsByTagName('version')->item(0);
+					
+					if ($version) {
+						$version = $version->nodeValue;
+					} else {
+						$version = '';
+					}
+					
+					$link = $dom->getElementsByTagName('link')->item(0);
+					
+					if ($link) {
+						$link = $link->nodeValue;
+					} else {
+						$link = '';
+					}
+															
+					$modification_data = array(
+						'name'       => $name,
+						'author'     => $author,
+						'version'    => $version,
+						'link'       => $link,
 						'code'       => $xml,
 						'status'     => 1
 					);
 				
-					$this->model_setting_modification->addModification($data);
+					$this->model_setting_modification->addModification($modification_data);
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}

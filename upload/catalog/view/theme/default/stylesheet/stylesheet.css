@@ -457,6 +457,22 @@ footer h5 {
 	text-shadow: 0 1px 0 #FFF;
 }
 
+.carousel-caption {
+	background: #000;
+	opacity: 0.5;
+}
+.carousel-caption h3 {
+	color: #FFFFFF;
+	text-shadow: 0 1px 0 #000000;	
+}
+.carousel-control .icon-prev:before {
+	content: '\f053';
+	font-family: FontAwesome; 
+}
+.carousel-control .icon-next:before {
+	content: '\f054';
+	font-family: FontAwesome;   
+}
 /*
 .category-info .image img {
 	float: left;

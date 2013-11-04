@@ -11,17 +11,15 @@ class ControllerModuleSlideshow extends Controller {
 		
 		$this->data['banners'] = array();
 		
-		if (isset($setting['banner_id'])) {
-			$results = $this->model_design_banner->getBanner($setting['banner_id']);
-			  
-			foreach ($results as $result) {
-				if (file_exists(DIR_IMAGE . $result['image'])) {
-					$this->data['banners'][] = array(
-						'title' => $result['title'],
-						'link'  => $result['link'],
-						'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
-					);
-				}
+		$results = $this->model_design_banner->getBanner($setting['banner_id']);
+		  
+		foreach ($results as $result) {
+			if (file_exists(DIR_IMAGE . $result['image'])) {
+				$this->data['banners'][] = array(
+					'title' => $result['title'],
+					'link'  => $result['link'],
+					'image' => $this->model_tool_image->resize($result['image'], $setting['width'], $setting['height'])
+				);
 			}
 		}
 		

@@ -160,7 +160,7 @@ $(document).delegate('#button-shipping', 'click', function() {
 	});
 });
 //--></script> 
-      <script type="text/javascript"><!--
+<script type="text/javascript"><!--
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=module/shipping/country&country_id=' + this.value,

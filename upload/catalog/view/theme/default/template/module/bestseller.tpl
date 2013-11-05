@@ -21,7 +21,15 @@
         </p>
         <?php } ?>
         <?php if ($product['rating']) { ?>
-        <div class="rating"><img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /> </div>
+        <div class="rating">
+          <?php for ($i = 1; $i <= 5; $i++) { ?>
+          <?php if ($product['rating'] < $i) { ?>
+          <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+          <?php } else { ?>
+          <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+          <?php } ?>
+          <?php } ?>
+        </div>
         <?php } ?>
       </div>
       <div class="button-group"><a title="<?php echo $button_cart; ?>" class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');" href="#"><span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="fa fa-shopping-cart visible-tablet"></i></span></a><a title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></a> <a title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></a>

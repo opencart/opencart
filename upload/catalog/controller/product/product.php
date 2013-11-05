@@ -382,7 +382,7 @@ class ControllerProductProduct extends Controller {
 			} else {
 				$this->data['customer_name'] = '';
 			}
-
+			
 			$this->data['reviews'] = sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']);
 			$this->data['rating'] = (int)$product_info['rating'];
 			$this->data['description'] = html_entity_decode($product_info['description'], ENT_QUOTES, 'UTF-8');
@@ -432,7 +432,6 @@ class ControllerProductProduct extends Controller {
 					'special' 	  => $special,
 					'tax'         => $tax,
 					'rating'      => $rating,
-					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 					'href'    	  => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}	
@@ -558,7 +557,6 @@ class ControllerProductProduct extends Controller {
 		
 		$this->load->model('catalog/review');
 
-		$this->data['text_on'] = $this->language->get('text_on');
 		$this->data['text_no_reviews'] = $this->language->get('text_no_reviews');
 
 		if (isset($this->request->get['page'])) {
@@ -578,7 +576,6 @@ class ControllerProductProduct extends Controller {
         		'author'     => $result['author'],
 				'text'       => $result['text'],
 				'rating'     => (int)$result['rating'],
-        		'reviews'    => sprintf($this->language->get('text_reviews'), (int)$review_total),
         		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
         	);
       	}			

@@ -118,12 +118,12 @@
               <div class="rating">
                 <?php for ($i = 1; $i <= 5; $i++) { ?>
                 <?php if ($product['rating'] < $i) { ?>
-                <span class="fa fa-stack" style="font-size: 10px; display: inline-block;"> <i class="fa fa-sign-blank fa-stack-base" style="color: #F7941D;"></i> <i class="fa fa-star fa-large" style="color: #FFFFFF;"></i> </span>
+                <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
                 <?php } else { ?>
-                <span class="fa fa-stack" style="font-size: 10px; display: inline-block;"> <i class="fa fa-sign-blank fa-stack-base" style="color: #D1D1D1;"></i> <i class="fa fa-star fa-large" style="color: #FFFFFF;"></i> </span>
+                <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
                 <?php } ?>
                 <?php } ?>
-                <img src="catalog/view/theme/default/image/stars-<?php echo $product['rating']; ?>.png" alt="<?php echo $product['reviews']; ?>" /> </div>
+              </div>
               <?php } ?>
             </div>
             <div class="button-group"><a class="add-to-cart" onclick="addToCart('<?php echo $product['product_id']; ?>');"> <span class="hidden-tablet"><?php echo $button_cart; ?></span><span><i class="fa fa-shopping-cart visible-tablet"></i></span> </a> <a data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></a> <a data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></a></div>

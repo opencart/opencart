@@ -37,15 +37,17 @@ $(document).ready(function() {
     });
 
 	// Navigation - Columns
-	$('.main-navbar .dropdown-menu').each(function(){
-	var menu = $('.main-navbar').offset();
-	var dropdown = $(this).parent().offset();
-	
-	var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('.main-navbar').outerWidth());
-	
-	if (i > 0) {
-	$(this).css('margin-left', '-' + (i + 5) + 'px');
-	}
+	$('#menu .dropdown-menu').each(function(){
+		/*
+		var menu = $('#menu').offset();
+		var dropdown = $(this).parent().offset();
+		
+		var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('.main-navbar').outerWidth());
+		
+		if (i > 0) {
+			$(this).css('margin-left', '-' + (i + 5) + 'px');
+		}
+		*/
 	});
 	
 	// every 3 product-thumbs gets put into .row div
@@ -68,16 +70,16 @@ $(document).ready(function() {
 	
 	// change product-grid to product-list
 	$('#list-view').click(function() {
-	$('.product-grid').removeClass('product-grid').addClass('product-list');
-	
-	$('.product-thumb').addClass('clearfix');
+		$('.product-grid').removeClass('product-grid').addClass('product-list');
+		
+		$('.product-thumb').addClass('clearfix');
 	});
 	
 	// change product-list to product-grid
 	$('#grid-view').click(function() {
-	$('.product-list').removeClass('product-list').addClass('product-grid');
-	
-	$('.product-thumb').removeClass('clearfix');
+		$('.product-list').removeClass('product-list').addClass('product-grid');
+		
+		$('.product-thumb').removeClass('clearfix');
 	});
 	
 	// tooltips on hover

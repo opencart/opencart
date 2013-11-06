@@ -22,7 +22,7 @@
         <?php } else { ?>
         <?php $cols = 8; ?>
         <?php } ?>
-        <div class="col-sm-<?php echo $cols; ?>">
+        <div class="col-md-<?php echo $cols; ?>">
           <?php if ($thumb || $images) { ?>
           <ul class="thumbnails">
             <?php if ($thumb) { ?>
@@ -122,7 +122,7 @@
         <?php } else { ?>
         <?php $cols = 4; ?>
         <?php } ?>
-        <div class="col-sm-<?php echo $cols; ?>">
+        <div class="col-md-<?php echo $cols; ?>">
           <div class="btn-group">
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
@@ -340,9 +340,9 @@
               <?php if ($product['rating']) { ?>
               <?php for ($i = 1; $i <= 5; $i++) { ?>
               <?php if ($product['rating'] < $i) { ?>
-              <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
+              <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-1x"></i></span>
               <?php } else { ?>
-              <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
+              <span class="fa fa-stack"><i class="fa fa-star fa-stack-1x"></i><i class="fa fa-star-o fa-stack-1x"></i></span>
               <?php } ?>
               <?php } ?>
               <?php } ?>

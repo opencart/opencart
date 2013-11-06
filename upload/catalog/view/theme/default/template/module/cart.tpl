@@ -1,8 +1,8 @@
 <div id="cart" class="btn-group btn-block">
   <button type="button" data-toggle="dropdown" class="btn btn-inverse btn-block btn-lg dropdown-toggle"><i class="fa fa-shopping-cart"></i> <span id="cart-total"><?php echo $text_items; ?></span></button>
-  <div id="dropdown-menu" class="dropdown-menu pull-right">
-    <div>
-      <?php if ($products || $vouchers) { ?>
+  <ul class="dropdown-menu pull-right">
+    <?php if ($products || $vouchers) { ?>
+    <li>
       <table class="table table-striped">
         <?php foreach ($products as $product) { ?>
         <tr>
@@ -31,26 +31,26 @@
         <?php } ?>
         <?php } ?>
       </table>
-      <div class="container">
-        <div class="row">
-          <div class="col-sm-7 col-sm-offset-5">
-            <table class="table table-bordered">
-              <?php foreach ($totals as $total) { ?>
-              <tr>
-                <td class="text-right"><strong><?php echo $total['title']; ?></strong></td>
-                <td class="text-right"><?php echo $total['text']; ?></td>
-              </tr>
-              <?php } ?>
-            </table>
-            <p class="text-right"><a href="<?php echo $cart; ?>"><strong><i class="fa fa-shopping-cart"></i> <?php echo $text_cart; ?></strong></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo $checkout; ?>"><strong><i class="fa fa-share"></i> <?php echo $text_checkout; ?></strong></a></p>
-          </div>
+    </li>
+    <li>
+      <div class="row">
+        <div class="col-sm-7 col-sm-offset-5">
+          <table class="table table-bordered">
+            <?php foreach ($totals as $total) { ?>
+            <tr>
+              <td class="text-right"><strong><?php echo $total['title']; ?></strong></td>
+              <td class="text-right"><?php echo $total['text']; ?></td>
+            </tr>
+            <?php } ?>
+          </table>
+          <p class="text-right"><a href="<?php echo $cart; ?>"><strong><i class="fa fa-shopping-cart"></i> <?php echo $text_cart; ?></strong></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo $checkout; ?>"><strong><i class="fa fa-share"></i> <?php echo $text_checkout; ?></strong></a></p>
         </div>
       </div>
-      <?php } else { ?>
-      <div class="container">
-        <p><?php echo $text_empty; ?></p>
-      </div>
-      <?php } ?>
-    </div>
-  </div>
+    </li>
+    <?php } else { ?>
+    <li class="text-center">
+      <?php echo $text_empty; ?>
+    </li>
+    <?php } ?>
+  </ul>
 </div>

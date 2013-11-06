@@ -33,24 +33,20 @@
       </table>
     </li>
     <li>
-      <div class="row">
-        <div class="col-sm-7 col-sm-offset-5">
-          <table class="table table-bordered">
-            <?php foreach ($totals as $total) { ?>
-            <tr>
-              <td class="text-right"><strong><?php echo $total['title']; ?></strong></td>
-              <td class="text-right"><?php echo $total['text']; ?></td>
-            </tr>
-            <?php } ?>
-          </table>
-          <p class="text-right"><a href="<?php echo $cart; ?>"><strong><i class="fa fa-shopping-cart"></i> <?php echo $text_cart; ?></strong></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo $checkout; ?>"><strong><i class="fa fa-share"></i> <?php echo $text_checkout; ?></strong></a></p>
-        </div>
+      <div>
+        <table class="table table-bordered">
+          <?php foreach ($totals as $total) { ?>
+          <tr>
+            <td class="text-right"><strong><?php echo $total['title']; ?></strong></td>
+            <td class="text-right"><?php echo $total['text']; ?></td>
+          </tr>
+          <?php } ?>
+        </table>
+        <p class="text-right"><a href="<?php echo $cart; ?>"><strong><i class="fa fa-shopping-cart"></i> <?php echo $text_cart; ?></strong></a>&nbsp;&nbsp;&nbsp;<a href="<?php echo $checkout; ?>"><strong><i class="fa fa-share"></i> <?php echo $text_checkout; ?></strong></a></p>
       </div>
     </li>
     <?php } else { ?>
-    <li class="text-center">
-      <?php echo $text_empty; ?>
-    </li>
+    <li><p class="text-center"><?php echo $text_empty; ?></p></li>
     <?php } ?>
   </ul>
 </div>

@@ -1,12 +1,12 @@
 <h3><?php echo $heading_title; ?></h3>
-<div class="featured-list layout-row-4">
+<div class="row">
   <?php foreach ($products as $product) { ?>
-  <div class="span3">
+  <div class="col-sm-3">
     <div class="product-thumb transition">
       <?php if ($product['thumb']) { ?>
-      <div class="image"> <a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" /> </a> </div>
+      <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" /></a></div>
       <?php } else { ?>
-      <div class="image"> <a href="<?php echo $product['href']; ?>"><img src="catalog/view/theme/default/image/placeholder.png" alt="<?php echo $product['name']; ?>" /></a></div>
+      <div class="image"><a href="<?php echo $product['href']; ?>"><img src="catalog/view/theme/default/image/placeholder.png" alt="<?php echo $product['name']; ?>" /></a></div>
       <?php } ?>
       <div class="caption">
         <h4><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a></h4>
@@ -16,7 +16,7 @@
           <?php if (!$product['special']) { ?>
           <?php echo $product['price']; ?>
           <?php } else { ?>
-          <span class="price-new"><?php echo $product['special']; ?></span><span class="price-old"><?php echo $product['price']; ?></span>
+          <span class="price-new"><?php echo $product['price']; ?></span> <span class="price-old"><?php echo $product['special']; ?></span>
           <?php } ?>
         </p>
         <?php } ?>

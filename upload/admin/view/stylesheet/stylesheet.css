@@ -208,19 +208,32 @@ footer a {
 	font-size: 12px;
 	padding: 10px;
 }
+
 .btn {
-	font-weight: normal;
-	font-size: 13px;
-	padding: 5px 12px;
-}
-.btn-sm, .btn-xs {
-  padding: 5px 10px;
-  font-size: 11px;
-  border-radius: 3px;
+	font-size: 12px;
 }
 .btn-xs {
-	padding: 1px 5px;
+	font-size: 9px;
 }
+.btn-sm {
+	font-size: 10.2px;
+}
+.btn-lg {
+	font-size: 15px;
+}
+.btn-group > .btn, .btn-group > .dropdown-menu, .btn-group > .popover {
+	font-size: 12px;
+}
+.btn-group > .btn-xs {
+	font-size: 9px;
+}
+.btn-group > .btn-sm {
+	font-size: 10.2px;
+}
+.btn-group > .btn-lg {
+	font-size: 15px;
+}
+
 .panel-heading {
 	padding: 8px 15px;
 }

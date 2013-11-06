@@ -38,16 +38,14 @@ $(document).ready(function() {
 
 	// Navigation - Columns
 	$('#menu .dropdown-menu').each(function(){
-		/*
 		var menu = $('#menu').offset();
 		var dropdown = $(this).parent().offset();
 		
-		var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('.main-navbar').outerWidth());
+		var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#menu').outerWidth());
 		
 		if (i > 0) {
 			$(this).css('margin-left', '-' + (i + 5) + 'px');
 		}
-		*/
 	});
 	
 	// every 3 product-thumbs gets put into .row div

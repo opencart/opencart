@@ -33,6 +33,9 @@ h6 {
 a {
 	color: #23a1d1;
 }
+a:hover {
+	text-decoration: none;
+}
 legend {
 	font-size: 18px;
 	padding: 7px 0px
@@ -65,7 +68,7 @@ div.required .control-label:before {
 	font-weight: bold;
 }
 /* Gradent to all drop down menus */
-.dropdown-menu li a:hover {
+.dropdown-menu li > a:hover {
 	text-decoration: none;
 	color: #ffffff;
 	background-color: #229ac8;
@@ -146,10 +149,16 @@ div.required .control-label:before {
 }
 #cart .dropdown-menu {
 	min-width: 100%;
-	padding: 20px 0;
 }
-#cart .dropdown-menu li:first-child table {
+#cart .dropdown-menu table {
+	margin-bottom: 10px;
+}
+#cart .dropdown-menu li > div {
 	min-width: 427px;
+	padding: 0 10px;
+}
+#cart .dropdown-menu li p {
+	margin: 20px 0;
 }
 /* menu */
 #menu {
@@ -164,9 +173,10 @@ div.required .control-label:before {
 	text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 	padding: 10px 15px 10px 15px;
 	min-height: 15px;
+	background-color: transparent;
 }
 #menu .nav > li > a:hover, #menu .nav > li.open > a {
-	background: none;
+	background-color: transparent;
 	box-shadow: inset 0 1000px rgba(0, 0, 0, 0.1);
 }
 #menu .dropdown-menu {
@@ -420,9 +430,6 @@ footer h5 {
 .btn-inverse:hover, .btn-inverse:active, .btn-inverse.active, .btn-inverse.disabled, .btn-inverse[disabled] {
 	background-color: #222222;
 	background-image: linear-gradient(to bottom, #333333, #111111);
-}
-#list-view, #grid-view {
-	font-size: 14px;
 }
 /* list group */
 .list-group a {

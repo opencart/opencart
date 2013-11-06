@@ -94,7 +94,6 @@ class ControllerProductCategory extends Controller {
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/category', 'path=' . $this->request->get['path']), 'canonical');
-			$this->document->addScript('catalog/view/javascript/jquery/jquery.cookie.js');
 			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
 			$this->data['heading_title'] = $category_info['name'];
@@ -240,7 +239,6 @@ class ControllerProductCategory extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
-					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 					'href'        => $this->url->link('product/product', 'path=' . $this->request->get['path'] . '&product_id=' . $result['product_id'] . $url)
 				);
 			}

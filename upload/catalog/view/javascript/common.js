@@ -18,7 +18,7 @@ $(document).ready(function() {
 	});	
 	
     /* Search */
-    $('header input[name=\'search\']').parent().find('button').on('click', function() {
+    $('#search input[name=\'search\']').parent().find('button').on('click', function() {
         url = $('base').attr('href') + 'index.php?route=product/search';
         
 		var search = $('header input[name=\'search\']').val();
@@ -30,18 +30,18 @@ $(document).ready(function() {
         location = url;
     });
 
-    $('header input[name=\'search\']').on('keydown', function(e) {
+    $('#search input[name=\'search\']').on('keydown', function(e) {
         if (e.keyCode == 13) {
             $('header input[name=\'search\']').parent().find('button').trigger('click');
         }
     });
 
 	// Navigation - Columns
-	$('.main-navbar .dropdown-menu').each(function(){
-		var menu = $('.main-navbar').offset();
+	$('#menu .dropdown-menu').each(function(){
+		var menu = $('#menu').offset();
 		var dropdown = $(this).parent().offset();
 		
-		var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('.main-navbar').outerWidth());
+		var i = (dropdown.left + $(this).outerWidth()) - (menu.left + $('#menu').outerWidth());
 		
 		if (i > 0) {
 			$(this).css('margin-left', '-' + (i + 5) + 'px');
@@ -50,20 +50,20 @@ $(document).ready(function() {
 	
 	// every 3 product-thumbs gets put into .row div
 	$('.layout-row-3').each(function(){
-		var divs = $(this).children();
-		
-		for (var i = 0; i < divs.length; i+=3) {
-			divs.slice(i, i+3).wrapAll('<div class="row"></div>');
-		}
+	var divs = $(this).children();
+	
+	for (var i = 0; i < divs.length; i+=3) {
+	divs.slice(i, i+3).wrapAll('<div class="row"></div>');
+	}
 	});
 	
 	// every 4 product-thumbs gets put into .row div
 	$('.layout-row-4').each(function(){
-		var divs = $(this).children();
-		
-		for (var i = 0; i < divs.length; i += 4) {
-			divs.slice(i, i+4).wrapAll("<div class='row'></div>");
-		}
+	var divs = $(this).children();
+	
+	for (var i = 0; i < divs.length; i += 4) {
+	divs.slice(i, i+4).wrapAll("<div class='row'></div>");
+	}
 	});
 	
 	// change product-grid to product-list

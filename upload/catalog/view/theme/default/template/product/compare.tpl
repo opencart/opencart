@@ -78,9 +78,9 @@
             <?php foreach ($products as $product) { ?>
             <td><?php for ($i = 1; $i <= 5; $i++) { ?>
               <?php if ($products[$product['product_id']]['rating'] < $i) { ?>
-              <i class="fa fa-star-empty" style="color: #999;"></i>
+              <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
               <?php } else { ?>
-              <span class="fa fa-stack"><i class="fa fa-star" style="color: #FC0;"></i><i class="fa fa-star-empty " style="color: #F90;"></i></span>
+              <span class="fa fa-stack"><i class="fa fa-star fa-stack-2x"></i><i class="fa fa-star-o fa-stack-2x"></i></span>
               <?php } ?>
               <?php } ?>
               <br />

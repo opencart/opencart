@@ -125,7 +125,6 @@ class ControllerProductManufacturer extends Controller {
 		if ($manufacturer_info) {
 			$this->document->setTitle($manufacturer_info['name']);
 			$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
-			$this->document->addScript('catalog/view/javascript/jquery/jquery.cookie.js');
 			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
 			$url = '';
@@ -227,7 +226,6 @@ class ControllerProductManufacturer extends Controller {
 					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $result['rating'],
-					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 					'href'        => $this->url->link('product/product', 'manufacturer_id=' . $result['manufacturer_id'] . '&product_id=' . $result['product_id'] . $url)
 				);
 			}

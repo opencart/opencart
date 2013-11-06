@@ -59,7 +59,6 @@ class ControllerModuleFeatured extends Controller {
 					'price'   	  => $price,
 					'special' 	  => $special,
 					'rating'      => $rating,
-					'reviews'     => sprintf($this->language->get('text_reviews'), (int)$product_info['reviews']),
 					'href'    	  => $this->url->link('product/product', 'product_id=' . $product_info['product_id'])
 				);
 			}

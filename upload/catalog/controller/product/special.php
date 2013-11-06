@@ -32,7 +32,6 @@ class ControllerProductSpecial extends Controller {
 		}
 				    	
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('catalog/view/javascript/jquery/jquery.cookie.js');
 		$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
 		$this->data['breadcrumbs'] = array();
@@ -139,7 +138,6 @@ class ControllerProductSpecial extends Controller {
 				'special'     => $special,
 				'tax'         => $tax,
 				'rating'      => $result['rating'],
-				'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 				'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'] . $url)
 			);
 		}

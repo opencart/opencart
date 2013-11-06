@@ -50,7 +50,6 @@ class ControllerModuleBestSeller extends Controller {
 				'price'   	  => $price,
 				'special' 	  => $special,
 				'rating'      => $rating,
-				'reviews'     => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 				'href'    	  => $this->url->link('product/product', 'product_id=' . $result['product_id']),
 			);
 		}

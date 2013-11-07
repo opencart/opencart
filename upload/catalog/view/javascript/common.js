@@ -12,7 +12,7 @@ $(document).ready(function() {
 	$('#language a').on('click', function(e) {
 		e.preventDefault();
 		
-		$('#language input[name=\'currency_code\']').attr('value', $(this).attr('href'));
+		$('#language input[name=\'language_code\']').attr('value', $(this).attr('href'));
 	
 		$('#language').submit();
 	});	
@@ -36,7 +36,7 @@ $(document).ready(function() {
         }
     });
 
-	// Navigation - Columns
+	// Menu
 	$('#menu .dropdown-menu').each(function(){
 		var menu = $('#menu').offset();
 		var dropdown = $(this).parent().offset();
@@ -46,24 +46,6 @@ $(document).ready(function() {
 		if (i > 0) {
 			$(this).css('margin-left', '-' + (i + 5) + 'px');
 		}
-	});
-	
-	// every 3 product-thumbs gets put into .row div
-	$('.layout-row-3').each(function(){
-	var divs = $(this).children();
-	
-	for (var i = 0; i < divs.length; i+=3) {
-	divs.slice(i, i+3).wrapAll('<div class="row"></div>');
-	}
-	});
-	
-	// every 4 product-thumbs gets put into .row div
-	$('.layout-row-4').each(function(){
-	var divs = $(this).children();
-	
-	for (var i = 0; i < divs.length; i += 4) {
-	divs.slice(i, i+4).wrapAll("<div class='row'></div>");
-	}
 	});
 	
 	// change product-grid to product-list

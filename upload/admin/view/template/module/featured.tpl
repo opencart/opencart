@@ -158,7 +158,7 @@ var module_row = <?php echo $module_row; ?>;
 function addModule() {	
 	html  = '<tr id="module-row' + module_row + '">';
 	html += '  <td class="text-left"><input type="text" name="featured_module[' + module_row + '][limit]" value="5" placeholder="<?php echo $entry_limit; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="text" name="featured_module[' + module_row + '][image_width]" value="80" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="featured_module[' + module_row + '][image_height]" value="80" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';	
+	html += '  <td class="text-left"><input type="text" name="featured_module[' + module_row + '][image_width]" value="200" placeholder="<?php echo $entry_width; ?>" class="form-control" /> <input type="text" name="featured_module[' + module_row + '][image_height]" value="200" placeholder="<?php echo $entry_height; ?>" class="form-control" /></td>';	
 	html += '  <td class="text-left"><select name="featured_module[' + module_row + '][layout_id]" class="form-control">';
 	<?php foreach ($layouts as $layout) { ?>
 	html += '    <option value="<?php echo $layout['layout_id']; ?>"><?php echo addslashes($layout['name']); ?></option>';

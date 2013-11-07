@@ -837,14 +837,12 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-icon"><?php echo $entry_icon; ?></label>
               <div class="col-sm-10">
-                <div class="image">
-                  <?php if ($icon) { ?>
-                  <a href="" id="thumb-icon" class="img-thumbnail img-edit"><img src="<?php echo $icon; ?>" alt="" title="" /></a>
-                  <?php } else { ?>
-                  <a href="" id="thumb-icon" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
-                  <?php } ?>
-                  <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="input-icon" />
-                </div>
+                <?php if ($icon) { ?>
+                <a href="" id="thumb-icon" class="img-thumbnail img-edit"><img src="<?php echo $icon; ?>" alt="" title="" /></a>
+                <?php } else { ?>
+                <a href="" id="thumb-icon" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+                <?php } ?>
+                <input type="hidden" name="config_icon" value="<?php echo $config_icon; ?>" id="input-icon" />
               </div>
             </div>
             <div class="form-group required">

@@ -5,8 +5,12 @@ class ControllerModuleLatest extends Controller {
 		
       	$this->data['heading_title'] = $this->language->get('heading_title');
 		
+		$this->data['text_tax'] = $this->language->get('text_tax');
+		
 		$this->data['button_cart'] = $this->language->get('button_cart');
-				
+		$this->data['button_wishlist'] = $this->language->get('button_wishlist');
+		$this->data['button_compare'] = $this->language->get('button_compare');
+						
 		$this->load->model('catalog/product');
 		
 		$this->load->model('tool/image');
@@ -26,7 +30,7 @@ class ControllerModuleLatest extends Controller {
 			if ($result['image']) {
 				$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
 			} else {
-				$image = false;
+				$image = $this->model_tool_image->resize('placeholder.png', $setting['image_width'], $setting['image_height']);
 			}
 						
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
@@ -41,6 +45,12 @@ class ControllerModuleLatest extends Controller {
 				$special = false;
 			}
 			
+			if ($this->config->get('config_tax')) {
+				$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
+			} else {
+				$tax = false;
+			}
+							
 			if ($this->config->get('config_review_status')) {
 				$rating = $result['rating'];
 			} else {
@@ -54,6 +64,7 @@ class ControllerModuleLatest extends Controller {
 				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
 				'price'   	 => $price,
 				'special' 	 => $special,
+				'tax'        => $tax,
 				'rating'     => $rating,
 				'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id']),
 			);

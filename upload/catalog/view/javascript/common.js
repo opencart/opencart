@@ -59,11 +59,11 @@ $(document).ready(function() {
 	
 	// every 4 product-thumbs gets put into .row div
 	$('.layout-row-4').each(function(){
-	var divs = $(this).children();
-	
-	for (var i = 0; i < divs.length; i += 4) {
-	divs.slice(i, i+4).wrapAll("<div class='row'></div>");
-	}
+		var divs = $(this).children();
+		
+		for (var i = 0; i < divs.length; i += 4) {
+			divs.slice(i, i+4).wrapAll('<div class="row"></div>');
+		}
 	});
 	
 	// change product-grid to product-list

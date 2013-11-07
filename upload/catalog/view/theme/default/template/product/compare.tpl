@@ -76,7 +76,7 @@
           <tr>
             <td><?php echo $text_rating; ?></td>
             <?php foreach ($products as $product) { ?>
-            <td><?php for ($i = 1; $i <= 5; $i++) { ?>
+            <td class="rating"><?php for ($i = 1; $i <= 5; $i++) { ?>
               <?php if ($products[$product['product_id']]['rating'] < $i) { ?>
               <span class="fa fa-stack"><i class="fa fa-star-o fa-stack-2x"></i></span>
               <?php } else { ?>

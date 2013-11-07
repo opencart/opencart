@@ -2,16 +2,16 @@
   <div class="panel-heading"><?php echo $heading_title; ?></div>
   <?php foreach ($filter_groups as $filter_group) { ?>
   <div class="list-group">
-    <a class="list-group-item"><i class="fa fa-plus-square-o" style="font-size: 14px;"></i> <?php echo $filter_group['name']; ?></a>
+    <a href="" class="list-group-item"><i class="fa fa-plus-square-o"></i> <?php echo $filter_group['name']; ?></a>
     
     <div id="filter-group<?php echo $filter_group['filter_group_id']; ?>">
       
       <?php foreach ($filter_group['filter'] as $filter) { ?>
       <div class="list-group-item">
         <?php if (in_array($filter['filter_id'], $filter_category)) { ?>
-        <label><input type="checkbox" value="<?php echo $filter['filter_id']; ?>" checked="checked" /><?php echo $filter['name']; ?></label>
+        <label class="checkbox-inline"><input type="checkbox" value="<?php echo $filter['filter_id']; ?>" checked="checked" /><?php echo $filter['name']; ?></label>
         <?php } else { ?>
-        <label><input type="checkbox" value="<?php echo $filter['filter_id']; ?>" /> <?php echo $filter['name']; ?></label>
+        <label class="checkbox-inline"><input type="checkbox" value="<?php echo $filter['filter_id']; ?>" /> <?php echo $filter['name']; ?></label>
         <?php } ?>
       </div>
       <?php } ?>

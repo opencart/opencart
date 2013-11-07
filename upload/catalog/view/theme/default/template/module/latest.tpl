@@ -1,7 +1,8 @@
 <h3><?php echo $heading_title; ?></h3>
+<?php foreach (array_chunk($products, 4) as $products) { ?>
 <div class="row">
   <?php foreach ($products as $product) { ?>
-  <div class="col-sm-3">
+  <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
     <div class="product-thumb transition">
       <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
       <div class="caption">
@@ -32,7 +33,7 @@
         <?php } ?>
       </div>
       <div class="button-group">
-        <button type="button" onclick="addToCart('<?php echo $product['product_id']; ?>');"><i class="fa fa-shopping-cart"></i> <span class="hidden-sm"><?php echo $button_cart; ?></span></button>
+        <button type="button" onclick="addToCart('<?php echo $product['product_id']; ?>');"><i class="fa fa-shopping-cart"></i> <span class="hidden-xs hidden-sm"><?php echo $button_cart; ?></span></button>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
       </div>
@@ -40,3 +41,4 @@
   </div>
   <?php } ?>
 </div>
+<?php } ?>

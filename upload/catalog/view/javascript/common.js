@@ -48,24 +48,6 @@ $(document).ready(function() {
 		}
 	});
 	
-	// every 3 product-thumbs gets put into .row div
-	$('.layout-row-3').each(function(){
-		var divs = $(this).children();
-		
-		for (var i = 0; i < divs.length; i+=3) {
-			divs.slice(i, i+3).wrapAll('<div class="row"></div>');
-		}
-	});
-	
-	// every 4 product-thumbs gets put into .row div
-	$('.layout-row-4').each(function(){
-		var divs = $(this).children();
-		
-		for (var i = 0; i < divs.length; i += 4) {
-			divs.slice(i, i+4).wrapAll('<div class="row"></div>');
-		}
-	});
-	
 	// change product-grid to product-list
 	$('#list-view').click(function() {
 		$('.product-grid').removeClass('product-grid').addClass('product-list');

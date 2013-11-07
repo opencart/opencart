@@ -11,6 +11,10 @@ h1, h2, h3, h4, h5, h6 {
 a {
 	color: #23a1d1;
 }
+/* default font size */
+.fa {
+	font-size: 14px;
+}
 /* Override the bootstrap defaults */
 h1 {
 	font-size: 33px;
@@ -59,6 +63,7 @@ select.form-control, textarea, input[type="text"], input[type="password"], input
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline !important;
 }
+
 .nav-tabs {
 	margin-bottom: 15px;
 }
@@ -98,9 +103,6 @@ div.required .control-label:before {
 }
 #top-links {
 	padding-top: 6px;
-}
-#top-links i {
-	font-size: 14px;
 }
 #top-links a + a {
 	margin-left: 15px;
@@ -459,13 +461,17 @@ footer h5 {
 }
 .product-thumb .image {
 	padding: 5px;
+	text-align: center;
 }
-.product-thumb .image img {
-	margin-left: auto;
-	margin-right: auto;
+.product-thumb .image a {
+	display: block;
 }
 .product-thumb .image a:hover {
 	opacity: 0.8;
+}
+.product-thumb .image img {
+	margin-left: auto;
+	margin-right: auto;	
 }
 .product-thumb .caption {
 	padding: 0 20px;
@@ -602,67 +608,19 @@ h2.price {
 	margin: 0;
 }
 */
-@media (max-width: 979px) {
-body {
-	padding: 0;
-}
-.container {
-	padding: 0 20px;
-}
-#menu .nav-collapse .nav > li > a, .navbar-inverse .nav-collapse .dropdown-menu a {
-	color: #fff;
-}
-.navbar .nav > li.dropdown:hover:after {
-	display: none;
-}
-.navbar .dropdown-menu ul {
-	display: block;
-}
-.navbar .dropdown-menu ul li a:hover {
-	background-color: rgba(, 0, 0, 0, 0.1);
-	background-image: none;
-}
-
-
+@media (max-width: 1200px) {
 
 
 .product-thumb .button-group button, .product-thumb .button-group button + button {
 	width: 33.33%;
 }
-.product-thumb span {
-	display: none;
-}
 }
 
-@media (max-width: 767px) {
-.navbar {
-	border-radius: 4px;
-}
-.product-thumb .button-group button, .product-thumb .button-group button + button {
-	width: 33.33%;
-}
-.product-thumb span {
-	display: none;
-}
-
-
-
-.product-filter .display {
-	display: none;
-}
-.product-filter .limit, .product-filter .sort {
-	width: 100%;
-	margin: 0;
-	float: none;
-	clear: both;
-}
-.product-filter .limit select, .product-filter .sort select {
-	width: 100%;
-	margin: 10px 0;
-}
-.image-additional .span1 {
-	width: 70px;
-	margin-right: 20px;
-	float: left;
-}
+@media (max-width: 768px) {
+	.navbar {
+		border-radius: 4px;
+	}
+	.product-thumb .button-group button, .product-thumb .button-group button + button {
+		width: 33.33%;
+	}
 }

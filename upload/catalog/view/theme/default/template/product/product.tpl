@@ -313,6 +313,7 @@
       </div>
       <?php if ($products) { ?>
       <h3><?php echo $text_related; ?></h3>
+      <?php foreach (array_chunk($products, ceil(count($products) / 4)) as $products) { ?>
       <div class="row">
         <?php foreach ($products as $product) { ?>
         <div class="col-sm-3">
@@ -346,7 +347,7 @@
               <?php } ?>
             </div>
             <div class="button-group">
-              <button type="button" onclick="addToCart('<?php echo $product['product_id']; ?>');"><span class="hidden-sm"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
+              <button type="button" onclick="addToCart('<?php echo $product['product_id']; ?>');"><span class="hidden-xs hidden-sm"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
               <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
               <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
             </div>
@@ -354,6 +355,7 @@
         </div>
         <?php } ?>
       </div>
+      <?php } ?>
       <?php } ?>
       <?php if ($tags) { ?>
       <p><?php echo $text_tags; ?>

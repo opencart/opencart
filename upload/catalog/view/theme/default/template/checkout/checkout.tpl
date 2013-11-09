@@ -81,6 +81,7 @@
     </div>
     <?php echo $content_bottom; ?></div>
   <?php echo $column_right; ?></div>
+</div>
 <script type="text/javascript"><!--
 $(document).on('change', 'input[name=\'account\']', function() {
 	if ($('#collapse-payment-address').parent().find('.panel-heading .panel-title > *').is('a')) {	

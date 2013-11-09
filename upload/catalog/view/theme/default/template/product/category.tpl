@@ -27,8 +27,8 @@
       <hr>
       <?php } ?>
       <?php if ($categories) { ?>
-      <?php if (count($categories) <= 5) { ?>
       <h3><?php echo $text_refine; ?></h3>
+      <?php if (count($categories) <= 5) { ?>
       <div class="row">
         <div class="col-sm-3">
           <ul>
@@ -91,8 +91,7 @@
         </div>
       </div>
       <br />
-      <?php foreach (array_chunk($products, 4) as $products) { ?>
-      <div class="row product-grid">
+      <div class="row product-layout">
         <?php foreach ($products as $product) { ?>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
           <div class="product-thumb transition">
@@ -133,7 +132,6 @@
         </div>
         <?php } ?>
       </div>
-      <?php } ?>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>

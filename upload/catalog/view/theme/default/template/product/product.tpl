@@ -15,14 +15,7 @@
     <?php } ?>
     <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
       <div class="row">
-        <?php if ($column_left && $column_right) { ?>
-        <?php $cols = 6; ?>
-        <?php } elseif ($column_left || $column_right) { ?>
-        <?php $cols = 6; ?>
-        <?php } else { ?>
-        <?php $cols = 8; ?>
-        <?php } ?>
-        <div class="col-md-<?php echo $cols; ?>">
+        <div class="col-md-">
           <?php if ($thumb || $images) { ?>
           <ul class="thumbnails">
             <?php if ($thumb) { ?>
@@ -115,13 +108,6 @@
             <?php } ?>
           </div>
         </div>
-        <?php if ($column_left && $column_right) { ?>
-        <?php $cols = 6; ?>
-        <?php } elseif ($column_left || $column_right) { ?>
-        <?php $cols = 6; ?>
-        <?php } else { ?>
-        <?php $cols = 4; ?>
-        <?php } ?>
         <div class="col-md-<?php echo $cols; ?>">
           <div class="btn-group">
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
@@ -313,10 +299,9 @@
       </div>
       <?php if ($products) { ?>
       <h3><?php echo $text_related; ?></h3>
-      <?php foreach (array_chunk($products, ceil(count($products) / 4)) as $products) { ?>
       <div class="row">
         <?php foreach ($products as $product) { ?>
-        <div class="col-sm-3">
+        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
           <div class="product-thumb transition">
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
             <div class="caption">
@@ -347,7 +332,7 @@
               <?php } ?>
             </div>
             <div class="button-group">
-              <button type="button" onclick="addToCart('<?php echo $product['product_id']; ?>');"><span class="hidden-xs hidden-sm"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
+              <button type="button" onclick="addToCart('<?php echo $product['product_id']; ?>');"><span class="hidden-xs hidden-sm hidden-md"><?php echo $button_cart; ?></span> <i class="fa fa-shopping-cart"></i></button>
               <button type="button" data-toggle="tooltip" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product['product_id']; ?>');"><i class="fa fa-heart"></i></button>
               <button type="button" data-toggle="tooltip" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product['product_id']; ?>');"><i class="fa fa-exchange"></i></button>
             </div>
@@ -355,7 +340,6 @@
         </div>
         <?php } ?>
       </div>
-      <?php } ?>
       <?php } ?>
       <?php if ($tags) { ?>
       <p><?php echo $text_tags; ?>

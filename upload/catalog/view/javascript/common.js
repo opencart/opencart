@@ -37,7 +37,7 @@ $(document).ready(function() {
     });
 
 	// Menu
-	$('#menu .dropdown-menu').each(function(){
+	$('#menu .dropdown-menu').each(function() {
 		var menu = $('#menu').offset();
 		var dropdown = $(this).parent().offset();
 		
@@ -48,18 +48,31 @@ $(document).ready(function() {
 		}
 	});
 	
-	// change product-grid to product-list
+	// Product List Layout
+	$('.product-layout').each(function() {
+        var length = $('#column-left, #column-right').length;
+
+		var div = $(this).children();
+        
+		for (i = 0; i < div.length; i++) {
+			if (length == 2) {
+				$(div[i]).attr('class', 'col-lg-6 col-md-6 col-sm-6 col-xs-12');
+			} else if (length == 1) {
+				$(div[i]).attr('class', 'col-lg-4 col-md-4 col-sm-6 col-xs-12');
+			} else {
+				$(div[i]).attr('class', 'col-lg-3 col-md-3 col-sm-6 col-xs-12');
+			}
+		}
+	});
+		
+	// Product-grid to product-list
 	$('#list-view').click(function() {
 		$('.product-grid').removeClass('product-grid').addClass('product-list');
-		
-		$('.product-thumb').addClass('clearfix');
 	});
 	
-	// change product-list to product-grid
+	// Product-list to product-grid
 	$('#grid-view').click(function() {
 		$('.product-list').removeClass('product-list').addClass('product-grid');
-		
-		$('.product-thumb').removeClass('clearfix');
 	});
 	
 	// tooltips on hover

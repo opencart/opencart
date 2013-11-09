@@ -242,6 +242,12 @@ div.required .control-label:before {
 	color: #ffffff;
 	background-color: #229ac8;
 }
+@media (max-width: 768px) {
+#menu .navbar {
+	border-radius: 4px;
+}
+}
+/* content */
 #content {
 	min-height: 600px;
 }
@@ -455,9 +461,7 @@ footer h5 {
 /* product list */
 .product-thumb {
 	margin-bottom: 20px;
-	position: relative;
 	border: 1px solid #ddd;
-	overflow: auto;
 }
 .product-thumb .image {
 	padding: 5px;
@@ -476,6 +480,7 @@ footer h5 {
 .product-thumb .caption {
 	padding: 0 20px;
 	min-height: 200px;
+
 }
 .product-thumb .rating {
 	padding-bottom: 10px;
@@ -493,6 +498,9 @@ footer h5 {
 }
 .rating .fa-star + .fa-star-o {
 	color: #E69500;
+}
+h2.price {
+	margin: 0;
 }
 .product-thumb .price {
 	color: #444;
@@ -513,11 +521,12 @@ footer h5 {
 .product-thumb .button-group {
 	border-top: 1px solid #ddd;
 	background-color: #eee;
+	overflow: auto;
 }
 .product-thumb .button-group button {
 	width: 60%;
 	border: none;
-	display: block;
+	display: inline-block;
 	float: left;
 	background-color: #eee;
 	color: #888;
@@ -536,6 +545,18 @@ footer h5 {
 	text-decoration: none;
 	cursor: pointer;
 }
+@media (max-width: 1200px) {
+.product-thumb .button-group button, .product-thumb .button-group button + button {
+	width: 33.33%;
+}
+}
+
+@media (max-width: 768px) {
+.product-thumb .button-group button, .product-thumb .button-group button + button {
+	width: 33.33%;
+}
+}
+
 
 
 
@@ -566,22 +587,6 @@ footer h5 {
 
 
 /*
-.category-info .image img {
-	float: left;
-}
-.product-filter {
-	padding: 20px 0;
-}
-.product-filter select {
-	margin: 0;
-}
-.product-filter .limit {
-	margin-left: 20px;
-	float: right;
-}
-.product-filter .sort {
-	float: right;
-}
 .image-additional a {
 	margin-bottom: 20px;
 	padding: 5px;
@@ -604,23 +609,5 @@ footer h5 {
 .thumbnail > img {
 	width: 100%;
 }
-h2.price {
-	margin: 0;
-}
+
 */
-@media (max-width: 1200px) {
-
-
-.product-thumb .button-group button, .product-thumb .button-group button + button {
-	width: 33.33%;
-}
-}
-
-@media (max-width: 768px) {
-	.navbar {
-		border-radius: 4px;
-	}
-	.product-thumb .button-group button, .product-thumb .button-group button + button {
-		width: 33.33%;
-	}
-}

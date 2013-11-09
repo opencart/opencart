@@ -7,7 +7,7 @@
     <?php $cols = 9; ?>
     <?php } else { ?>
     <?php $cols = 12; ?>
-    <?php } ?>    
+    <?php } ?>
     <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?><?php echo $content_bottom; ?></div>
     <?php echo $column_right; ?></div>
 </div>

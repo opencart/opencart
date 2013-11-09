@@ -1,4 +1,4 @@
-<div id="carousel<?php echo $module; ?>" class="carousel slide" data-ride="carousel">
+<div id="slideshow<?php echo $module; ?>" class="carousel slide" data-ride="carousel">
   <ol class="carousel-indicators">
     <?php $i = 0; ?>
     <?php if (count($banners) > 1) { ?>
@@ -22,14 +22,12 @@
     </div>
     <?php } ?>
   </div>
-  <?php if (count($banners) > 1) { ?>
-  <a class="left carousel-control" href="#carousel<?php echo $module; ?>" data-slide="prev"><i class="icon-prev"></i></a> <a class="right carousel-control" href="#carousel<?php echo $module; ?>" data-slide="next"><i class="icon-next"></i></a>
-  <?php } ?>
 </div>
 <script type="text/javascript"><!--
-$('#carousel<?php echo $module; ?> .carousel-indicators li:first, .carousel-inner .item:first').addClass('active');
+$('#slideshow<?php echo $module; ?> .carousel-indicators li:first, .carousel-inner .item:first').addClass('active');
 
-$('#carousel<?php echo $module; ?>').carousel({
+$('#slideshow<?php echo $module; ?>').carousel({
+	interval: 3000,
 	wrap: true
 });
 --></script>

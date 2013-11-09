@@ -232,7 +232,11 @@ div.required .control-label:before {
 	text-shadow: 0 1px 0 rgba(0, 0, 0, 0.2);
 }
 #menu .btn-navbar {
-	font-size: 12px;
+	font-size: 15px;
+	font-stretch: expanded;
+	color: #FFF;
+	padding: 2px 18px;
+	float: right;
 	background-color: #229ac8;
 	background-image: linear-gradient(to bottom, #23a1d1, #1f90bb);
 	background-repeat: repeat-x;
@@ -243,7 +247,7 @@ div.required .control-label:before {
 	background-color: #229ac8;
 }
 @media (max-width: 768px) {
-#menu .navbar {
+#menu {
 	border-radius: 4px;
 }
 }
@@ -480,7 +484,6 @@ footer h5 {
 .product-thumb .caption {
 	padding: 0 20px;
 	min-height: 200px;
-
 }
 .product-thumb .rating {
 	padding-bottom: 10px;
@@ -546,12 +549,19 @@ h2.price {
 	cursor: pointer;
 }
 @media (max-width: 1200px) {
+.product-thumb .caption {
+	min-height: 210px;
+	padding: 0 10px;
+}	
 .product-thumb .button-group button, .product-thumb .button-group button + button {
 	width: 33.33%;
 }
 }
 
 @media (max-width: 768px) {
+.product-thumb .caption {
+	min-height: 0;
+}		
 .product-thumb .button-group button, .product-thumb .button-group button + button {
 	width: 33.33%;
 }

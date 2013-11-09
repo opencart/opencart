@@ -48,20 +48,24 @@ $(document).ready(function() {
 		}
 	});
 	
-	// Product List Layout
+	// Product list bootstrap fixes
 	$('.product-layout').each(function() {
         var length = $('#column-left, #column-right').length;
-
-		var div = $(this).children();
-        
-		for (i = 0; i < div.length; i++) {
-			if (length == 2) {
-				$(div[i]).attr('class', 'col-lg-6 col-md-6 col-sm-6 col-xs-12');
-			} else if (length == 1) {
-				$(div[i]).attr('class', 'col-lg-4 col-md-4 col-sm-6 col-xs-12');
-			} else {
-				$(div[i]).attr('class', 'col-lg-3 col-md-3 col-sm-6 col-xs-12');
-			}
+			
+		if (length == 2) {
+			$(this).find('> div').attr('class', 'col-lg-6 col-md-6 col-sm-6 col-xs-12');
+			
+			$(this).find('> div:nth-child(2)').after('<div class="clearfix visible-md visible-sm"></div>');
+		} else if (length == 1) {
+			$(this).find('> div').attr('class', 'col-lg-4 col-md-4 col-sm-6 col-xs-12');
+			
+			$(this).find('> div:nth-child(2)').after('<div class="clearfix visible-sm"></div>');
+		} else {
+			$(this).find('> div').attr('class', 'col-lg-3 col-md-3 col-sm-6 col-xs-12');
+			
+			$(this).find('> div:nth-child(4)').after('<div class="clearfix visible-md"></div>');
+			
+			$(this).find('> div:nth-child(2)').after('<div class="clearfix visible-sm"></div>');
 		}
 	});
 		

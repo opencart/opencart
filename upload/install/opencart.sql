@@ -1059,7 +1059,6 @@ DROP TABLE IF EXISTS `oc_customer_field`;
 CREATE TABLE `oc_customer_field` (
   `customer_field_id` int(11) NOT NULL,
   `customer_id` int(11) NOT NULL,
-  `custom_field_id` int(11) NOT NULL,
   `custom_field_value_id` int(11) NOT NULL,
   `name` int(128) NOT NULL,
   `value` text NOT NULL,

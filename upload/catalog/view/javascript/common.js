@@ -49,26 +49,26 @@ $(document).ready(function() {
 	});
 	
 	// Product list bootstrap fixes
-	$('.product-layout').each(function() {
-        var length = $('#column-left, #column-right').length;
-			
-		if (length == 2) {
-			$(this).find('> div').attr('class', 'col-lg-6 col-md-6 col-sm-6 col-xs-12');
-			
-			$(this).find('> div:nth-child(2)').after('<div class="clearfix visible-md visible-sm"></div>');
-		} else if (length == 1) {
-			$(this).find('> div').attr('class', 'col-lg-4 col-md-4 col-sm-6 col-xs-12');
-			
-			$(this).find('> div:nth-child(2)').after('<div class="clearfix visible-sm"></div>');
-		} else {
-			$(this).find('> div').attr('class', 'col-lg-3 col-md-3 col-sm-6 col-xs-12');
-			
-			$(this).find('> div:nth-child(4)').after('<div class="clearfix visible-md"></div>');
-			
-			$(this).find('> div:nth-child(2)').after('<div class="clearfix visible-sm"></div>');
-		}
-	});
+	var length = $('#column-left, #column-right').length;
 		
+	if (length == 2) {
+		$('.product-layout > div').attr('class', 'col-lg-6 col-md-6 col-sm-6 col-xs-12');
+		
+		$('.product-layout > div:nth-of-type(2)').after('<div class="clearfix visible-md visible-sm"></div>');
+	} else if (length == 1) {
+		$('.product-layout > div').attr('class', 'col-lg-4 col-md-4 col-sm-6 col-xs-12');
+		
+		$('.product-layout > div:nth-of-type(3)').after('<div class="clearfix visible-md"></div>');
+	
+		$('.product-layout > div:nth-of-type(2)').after('<div class="clearfix visible-sm"></div>');
+	} else {
+		$('.product-layout > div').attr('class', 'col-lg-3 col-md-3 col-sm-6 col-xs-12');
+		
+		$('.product-layout > div:nth-of-type(4)').after('<div class="clearfix visible-md"></div>');
+		
+		$('.product-layout > div:nth-of-type(2)').after('<div class="clearfix visible-sm"></div>');
+	}
+
 	// Product-grid to product-list
 	$('#list-view').click(function() {
 		$('.product-grid').removeClass('product-grid').addClass('product-list');

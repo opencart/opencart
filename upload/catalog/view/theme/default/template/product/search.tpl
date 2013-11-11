@@ -106,7 +106,7 @@
         </div>
       </div>
       <br />
-      <div class="row">
+      <div class="row product-layout">
         <?php foreach ($products as $product) { ?>
         <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
           <div class="product-thumb transition">

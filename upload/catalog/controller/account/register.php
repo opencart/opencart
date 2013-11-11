@@ -310,21 +310,28 @@ class ControllerAccountRegister extends Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 		
-		$this->data['custom_fields'] = array();
-				
 		// If a post request then get a list of all fields that should have been posted for validation checking.
-		if (isset($this->request->post['customer_group_id'])) {
-			$custom_fields = $this->model_account_custom_field->getCustomFields('registration', $this->request->post['customer_group_id']);
-			
-			foreach ($custom_fields as $custom_field) {
-				$this->data['custom_fields'][] = array(
-					'custom_field_id' => $custom_field['custom_field_id'],
-					'type'            => $custom_field['type'],
-					'value'           => isset($this->request->post['custom_field'][$custom_field['custom_field_id']]) ? $this->request->post['custom_field'][$custom_field['custom_field_id']] : ''
-				);
-			}
-		}
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $this->config->get('config_customer_group_id'));
 		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['type'] == 'checkbox') {
+				$value = array();
+			} else {
+				$value = $custom_field['value'];
+			}
+			
+			$this->data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field['custom_field_value'],
+				'name'               => $custom_field['name'],
+				'type'               => $custom_field['type'],
+				'value'              => isset($this->request->post['custom_field'][$custom_field['custom_field_id']]) ? $this->request->post['custom_field'][$custom_field['custom_field_id']] : $value,
+				'required'           => $custom_field['required'],
+				'location'           => $custom_field['location'],
+				'sort_order'         => $custom_field['sort_order']
+			);
+		}
+				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/register.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/account/register.tpl';
 		} else {
@@ -417,7 +424,7 @@ class ControllerAccountRegister extends Controller {
 		// Custom Field Validation
 		$this->load->model('account/custom_field');
 		
-		$custom_fields = $this->model_account_custom_field->getCustomFields('registration', $customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
 		
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {

@@ -423,7 +423,7 @@ class ControllerExtensionInstaller extends Controller {
 					} else {
 						$version = '';
 					}
-					
+										
 					$link = $dom->getElementsByTagName('link')->item(0);
 					
 					if ($link) {

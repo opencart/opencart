@@ -433,8 +433,8 @@ class ControllerSaleCustomField extends Controller {
 		$this->data['locations'] = array();
 		
 		$this->data['locations'][] = array(
-			'text'  => $this->language->get('text_registration'),
-			'value' => 'registration'
+			'text'  => $this->language->get('text_register'),
+			'value' => 'register'
 		);
 		
 		$this->data['locations'][] = array(

@@ -6,7 +6,7 @@ final class Loader {
 		$this->registry = $registry;
 	}
 	
-	public function controller($route, $args = array()) {
+	public function controller($route) {
 		$path = '';
 		
 		$parts = explode('/', str_replace(array('../', '..\\', '..'), '', (string)$route));
@@ -38,7 +38,13 @@ final class Loader {
 		if (!$method) {
 			$method = 'index';
 		}
-					
+		
+		// function the arguments
+		$args = func_get_args();
+		
+		// Remove the route
+		array_shift($args);
+		
 		if (file_exists($file)) { 
 			include_once($file);
 			

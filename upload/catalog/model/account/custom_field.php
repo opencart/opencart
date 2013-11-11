@@ -25,7 +25,7 @@ class ModelAccountCustomField extends Model {
 				'name'               => $custom_field['name'],
 				'type'               => $custom_field['type'],
 				'value'              => $custom_field['value'],
-				'required'           => ($custom_field['required'] > 0 ? true : false),
+				'required'           => $custom_field['required'],
 				'location'           => $custom_field['location'],
 				'sort_order'         => $custom_field['sort_order']
 			);			

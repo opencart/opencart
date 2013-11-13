@@ -13,7 +13,7 @@ final class DBMySQLi {
 	}
 
 	public function query($sql) {
-		$result = $this->link->query($sql);
+		$query = $this->link->query($sql);
 
 		if( FALSE === $result ) {
 			trigger_error('Error: ' . $this->link->error  . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
@@ -21,19 +21,17 @@ final class DBMySQLi {
 		} else if( TRUE === $result ){
 			return TRUE;
 		} else {
-			$data = $result->fetch_all(MYSQLI_BOTH);
+			$data = $query->fetch_all(MYSQLI_BOTH);
 
-			$query = new stdClass();
-			$query->num_rows = $result->num_rows;
-			$query->rows = $data;
-			if( $result->num_rows > 0 ) {
-				$query->row = $data[0];
-			}
+			$result = new stdClass();
+			$result->num_rows = $result->num_rows;
+			$result->row = isset($data[0]) ? $data[0] : array();
+			$result->rows = $data;
 			
-			$result->close();
+			$query->close();
 			unset($data);
 
-			return $query;	
+			return $result;	
 		} 
 	}
 

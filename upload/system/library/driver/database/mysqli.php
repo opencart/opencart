@@ -17,7 +17,6 @@ final class DBMySQLi {
 
 		if( FALSE === $result ) {
 			trigger_error('Error: ' . $this->link->error  . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
-			exit();
 		} else if( TRUE === $result ){
 			return TRUE;
 		} else {

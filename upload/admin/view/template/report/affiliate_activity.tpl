@@ -24,17 +24,12 @@
           </div>
           <div class="col-sm-6">
             <div class="form-group">
-              <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-              <select name="filter_order_status_id" id="input-status" class="form-control">
-                <option value="0"><?php echo $text_all_status; ?></option>
-                <?php foreach ($order_statuses as $order_status) { ?>
-                <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                <?php } else { ?>
-                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                <?php } ?>
-                <?php } ?>
-              </select>
+              <label class="control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
+              <input type="text" name="filter_affiliate" value="<?php echo $filter_affiliate; ?>" id="input-affiliate" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+              <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" id="input-ip" class="form-control" />
             </div>
             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
           </div>
@@ -44,27 +39,25 @@
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $column_campaign; ?></td>
-              <td class="text-left"><?php echo $column_code; ?></td>
-              <td class="text-right"><?php echo $column_clicks; ?></td>
-              <td class="text-right"><?php echo $column_orders; ?></td>
-              <td class="text-right"><?php echo $column_total; ?></td>
+              <td class="text-left"><?php echo $column_affiliate; ?></td>
+              <td class="text-left"><?php echo $column_comment; ?></td>
+              <td class="text-left"><?php echo $column_ip; ?></td>
+              <td class="text-left"><?php echo $column_date_added; ?></td>
             </tr>
           </thead>
           <tbody>
-            <?php if ($marketings) { ?>
-            <?php foreach ($marketings as $marketing) { ?>
+            <?php if ($activities) { ?>
+            <?php foreach ($activities as $activity) { ?>
             <tr>
-              <td class="text-left"><?php echo $marketing['campaign']; ?></td>
-              <td class="text-left"><?php echo $marketing['code']; ?></td>
-              <td class="text-right"><?php echo $marketing['clicks']; ?></td>
-              <td class="text-right"><?php echo $marketing['orders']; ?></td>
-              <td class="text-right"><?php echo $marketing['total']; ?></td>
+              <td class="text-left"><?php echo $activity['affiliate']; ?></td>
+              <td class="text-left"><?php echo $activity['comment']; ?></td>
+              <td class="text-left"><?php echo $activity['ip']; ?></td>
+              <td class="text-left"><?php echo $activity['date_added']; ?></td>
             </tr>
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="text-center" colspan="5"><?php echo $text_no_results; ?></td>
+              <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>
@@ -79,7 +72,18 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-	url = 'index.php?route=report/marketing&token=<?php echo $token; ?>';
+	url = 'index.php?route=report/affiliate_activity&token=<?php echo $token; ?>';
+	
+	var filter_affiliate = $('input[name=\'filter_affiliate\']').val();
+	
+	if (filter_affiliate) {
+		url += '&filter_affiliate=' + encodeURIComponent(filter_affiliate);
+	}
+	var filter_ip = $('input[name=\'filter_ip\']').val();
+	
+	if (filter_ip) {
+		url += '&filter_ip=' + encodeURIComponent(filter_ip);
+	}
 	
 	var filter_date_start = $('input[name=\'filter_date_start\']').val();
 	
@@ -92,12 +96,6 @@ $('#button-filter').on('click', function() {
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
-	
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
-	
-	if (filter_order_status_id != 0) {
-		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
-	}	
 
 	location = url;
 });

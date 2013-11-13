@@ -1,9 +1,19 @@
 <?php
 class ModelAccountCustomField extends Model {
-	public function getCustomFields($location, $customer_group_id) {
+	public function getCustomFields($location, $customer_group_id = null) {
 		$custom_field_data = array();
 		
-		$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` cfcg LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfcg.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfcg.customer_group_id = '" . (int)$customer_group_id . "' AND cf.location = '" . $this->db->escape($location) . "' AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cf.sort_order ASC");
+		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` cfcg LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfcg.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id)"; 
+		
+		if ($customer_group_id) { 
+			$sql .= " WHERE cfcg.customer_group_id = '" . (int)$customer_group_id . "' AND"; 
+		} else {
+			$sql .= " WHERE ";
+		}
+		
+		$sql .= " cf.location = '" . $this->db->escape($location) . "' AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cf.sort_order ASC";
+		
+		$custom_field_query = $this->db->query($sql);
 		
 		foreach ($custom_field_query->rows as $custom_field) {
 			$custom_field_value_data = array();
@@ -25,7 +35,7 @@ class ModelAccountCustomField extends Model {
 				'name'               => $custom_field['name'],
 				'type'               => $custom_field['type'],
 				'value'              => $custom_field['value'],
-				'required'           => $custom_field['required'],
+				'required'           => $custom_field['required'] > 0 ? true : false,
 				'location'           => $custom_field['location'],
 				'sort_order'         => $custom_field['sort_order']
 			);			
@@ -33,11 +43,5 @@ class ModelAccountCustomField extends Model {
 		
 		return $custom_field_data;
 	}
-	
-	public function getCustomField($custom_field_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
-		
-		return $query->row;		
-	}	
 }
 ?>

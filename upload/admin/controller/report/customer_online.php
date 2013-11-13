@@ -80,7 +80,7 @@ class ControllerReportCustomerOnline extends Controller {
 				'customer'    => $customer,
 				'url'         => $result['url'],
 				'referer'     => $result['referer'],
-				'date_added'  => date('d/m/Y H:i:s', strtotime($result['date_added'])),
+				'date_added'  => date($this->language->get('datetime_format'), strtotime($result['date_added'])),
 				'edit'        => $this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=' . $result['customer_id'], 'SSL')
 			);
 		}	

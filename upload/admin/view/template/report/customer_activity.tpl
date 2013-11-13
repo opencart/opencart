@@ -36,11 +36,11 @@
         </div>
       </div>
       <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
+        <table class="table table-striped table-bordered">
           <thead>
             <tr>
               <td class="text-left"><?php echo $column_customer; ?></td>
-              <td class="text-left"><?php echo $column_action; ?></td>
+              <td class="text-left"><?php echo $column_comment; ?></td>
               <td class="text-left"><?php echo $column_ip; ?></td>
               <td class="text-left"><?php echo $column_date_added; ?></td>
             </tr>
@@ -50,7 +50,7 @@
             <?php foreach ($activities as $activity) { ?>
             <tr>
               <td class="text-left"><?php echo $activity['customer']; ?></td>
-              <td class="text-left"><?php echo $activity['action']; ?></td>
+              <td class="text-left"><?php echo $activity['comment']; ?></td>
               <td class="text-left"><?php echo $activity['ip']; ?></td>
               <td class="text-left"><?php echo $activity['date_added']; ?></td>
             </tr>

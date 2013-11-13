@@ -31,7 +31,12 @@ class ControllerAccountRegister extends Controller {
 			if ($this->config->get('config_tax_customer') == 'shipping') {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
-										  	  
+			
+			// Add to activity log
+			$this->load->model('account/activity');
+			
+			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
+				  	  
 	  		$this->redirect($this->url->link('account/success'));
     	}
 
@@ -307,11 +312,24 @@ class ControllerAccountRegister extends Controller {
 			$this->data['agree'] = false;
 		}
 		
+		// Customer Group
+		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			$customer_group_id = $this->request->post['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}	
+				
 		// Custom Fields
 		$this->load->model('account/custom_field');
 		
+		if (isset($this->request->post['custom_field'])) {
+			$custom_field_info = $this->request->post['custom_field'];
+		} else {
+			$custom_field_info = array();
+		}		
+		
 		// If a post request then get a list of all fields that should have been posted for validation checking.
-		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
 		
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['type'] == 'checkbox') {
@@ -325,9 +343,7 @@ class ControllerAccountRegister extends Controller {
 				'custom_field_value' => $custom_field['custom_field_value'],
 				'name'               => $custom_field['name'],
 				'type'               => $custom_field['type'],
-				'value'              => isset($this->request->post['custom_field'][$custom_field['custom_field_id']]) ? $this->request->post['custom_field'][$custom_field['custom_field_id']] : $value,
-				'required'           => $custom_field['required'],
-				'location'           => $custom_field['location'],
+				'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value,
 				'sort_order'         => $custom_field['sort_order']
 			);
 		}
@@ -465,16 +481,25 @@ class ControllerAccountRegister extends Controller {
 	}
 	
 	public function custom_field() {
-		$this->load->model('account/custom_field');
-
+		$sjon = array();
+		
 		// Customer Group
+		$this->load->model('account/custom_field');
+		
 		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->get['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
 
-		$json = $this->model_account_custom_field->getCustomFields('registration', $customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
+		
+		foreach ($custom_fields as $custom_field) {
+			$json[] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'required'        => $custom_field['required']
+			);
+		}
 
 		$this->response->setOutput(json_encode($json));
 	}	

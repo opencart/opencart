@@ -92,10 +92,10 @@
         </div>
         <div class="tab-pane" id="tab-activity">
           <div class="table-responsive">
-            <table class="table table-striped table-bordered table-hover">
+            <table class="table table-striped table-bordered">
               <thead>
                 <tr>
-                  <td class="text-left"><?php echo $column_action; ?></td>
+                  <td class="text-left"><?php echo $column_comment; ?></td>
                   <td class="text-left"><?php echo $column_date_added; ?></td>
                 </tr>
               </thead>
@@ -103,8 +103,8 @@
                 <?php if ($activities) { ?>
                 <?php foreach ($activities as $activity) { ?>
                 <tr>
-                  <td class="text-left"><?php echo $activity['action']; ?></td>
-                  <td class="text-left"><?php echo $activity['action']; ?></td>
+                  <td class="text-left"><?php echo $activity['comment']; ?></td>
+                  <td class="text-left"><?php echo $activity['date_added']; ?></td>
                 </tr>
                 <?php } ?>
                 <?php } else { ?>

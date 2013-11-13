@@ -11,6 +11,7 @@ $_['text_register_account']         = '<p>I am not currently an affiliate.</p><p
 $_['text_returning_affiliate']      = 'Affiliate Login';
 $_['text_i_am_returning_affiliate'] = 'I am a returning affiliate.';
 $_['text_forgotten']                = 'Forgotten Password';
+$_['text_activity']                 = '<a href="affiliate_id=%d">%s</a> has just logged in.';
 
 // Entry
 $_['entry_email']                   = 'Affiliate E-Mail';

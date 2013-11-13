@@ -1,9 +1,20 @@
 <?php
 class ControllerCheckoutSuccess extends Controller { 
-	public function index() { 	
+	public function index() { 
+		$this->language->load('checkout/success');
+	
 		if (isset($this->session->data['order_id'])) {
 			$this->cart->clear();
 
+			// Add to activity log
+			$this->load->model('account/activity');
+
+			if ($this->customer->isLogged()) {
+				$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_account'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName(), $return_id));
+			} else {
+				$this->model_account_activity->addActivity(0, sprintf($this->language->get('text_activity_guest'), $this->session->data['guest']['firstname'] . ' ' . $this->session->data['guest']['lastname'], $this->session->data['order_id']));
+			}	
+			
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 			unset($this->session->data['payment_method']);
@@ -16,8 +27,6 @@ class ControllerCheckoutSuccess extends Controller {
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
 		}	
-									   
-		$this->language->load('checkout/success');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		

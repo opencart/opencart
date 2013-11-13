@@ -17,7 +17,7 @@
     </div>
     <div class="panel-body">
       <div class="table-responsive">
-        <table class="table table-striped table-bordered table-hover">
+        <table class="table table-striped table-bordered">
           <thead>
             <tr>
               <td class="text-left"><?php echo $column_name; ?></td>

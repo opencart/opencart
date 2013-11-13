@@ -16,7 +16,7 @@ $_['text_month']        = 'Month';
 $_['text_year']         = 'Year';
 
 // Columns
-$_['column_action']     = 'Action';
+$_['column_comment']    = 'Comment';
 $_['column_date_added'] = 'Date Added';
 
 // Error

@@ -18,7 +18,7 @@ class ControllerCommonDashboard extends Controller {
 		$this->data['text_month'] = $this->language->get('text_month');
 		$this->data['text_year'] = $this->language->get('text_year');
 		
-		$this->data['column_action'] = $this->language->get('column_action');
+		$this->data['column_comment'] = $this->language->get('column_comment');
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		
 		$this->data['button_refresh'] = $this->language->get('button_refresh');
@@ -68,21 +68,14 @@ class ControllerCommonDashboard extends Controller {
 		
 		$this->data['marketing_total'] = $this->model_marketing_marketing->getTotalMarketings();
 		
-		$this->load->model('report/customer');
-		
 		$this->data['activities'] = array();
-	
-		$data = array(			
-			'start' => 0,
-			'limit' => 10
-		);
 				
-		$results = $this->model_report_customer->getCustomersActivity($data);
+		$results = $this->model_report_dashboard->getActivities();
     	
 		foreach ($results as $result) {
       		$this->data['activities'][] = array(
-				'action'     => $result['action'],
-				'date_added' => $result['date_added']
+				'comment'    => $result['comment'],
+				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
 		}			
 		

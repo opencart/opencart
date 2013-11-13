@@ -8,6 +8,7 @@ $_['text_edit']         = 'Edit Information';
 $_['text_your_details'] = 'Your Personal Details';
 $_['text_your_address'] = 'Your Address';
 $_['text_success']      = 'Success: Your account has been successfully updated.';
+$_['text_activity']     = '<a href="affiliate_id=%d">%s</a> has just just updated their account details.';
 
 // Entry
 $_['entry_firstname']   = 'First Name';

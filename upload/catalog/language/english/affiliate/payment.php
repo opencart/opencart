@@ -11,6 +11,7 @@ $_['text_cheque']               = 'Cheque';
 $_['text_paypal']               = 'PayPal';
 $_['text_bank']                 = 'Bank Transfer';
 $_['text_success']              = 'Success: Your account has been successfully updated.';
+$_['text_activity']             = '<a href="affiliate_id=%d">%s</a> has just just updated their payment details.';
 
 // Entry
 $_['entry_tax']                 = 'Tax ID';

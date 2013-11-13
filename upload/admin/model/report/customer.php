@@ -220,8 +220,8 @@ class ModelReportCustomer extends Model {
 		return $query->row['total'];
 	}	
 	
-	public function getCustomersActivity($data = array()) { 
-		$sql = "SELECT ca.activity_id, ca.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, ca.action, ca.ip, ca.date_added FROM " . DB_PREFIX . "customer_activity ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
+	public function getCustomerActivities($data = array()) { 
+		$sql = "SELECT ca.activity_id, ca.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, ca.comment, ca.ip, ca.date_added FROM " . DB_PREFIX . "customer_activity ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 
 		$implode = array();
 		
@@ -264,7 +264,7 @@ class ModelReportCustomer extends Model {
 		return $query->rows;
 	}
 
-	public function getTotalCustomersActivity($data = array()) {
+	public function getTotalCustomerActivities($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_activity` ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 		
 		$implode = array();

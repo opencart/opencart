@@ -34,7 +34,12 @@ class ControllerAccountAddress extends Controller {
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_account_address->addAddress($this->request->post);
 			
-      		$this->session->data['success'] = $this->language->get('text_insert');
+      		$this->session->data['success'] = $this->language->get('text_add');
+			
+			// Add to activity log
+			$this->load->model('account/activity');
+			
+			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_add'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
 
 	  		$this->redirect($this->url->link('account/address', '', 'SSL'));
     	} 
@@ -74,7 +79,12 @@ class ControllerAccountAddress extends Controller {
 				unset($this->session->data['payment_methods']);
 			}
 			
-			$this->session->data['success'] = $this->language->get('text_update');
+			$this->session->data['success'] = $this->language->get('text_edit');
+	  
+			// Add to activity log
+			$this->load->model('account/activity');
+			
+			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_edit'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
 	  
 	  		$this->redirect($this->url->link('account/address', '', 'SSL'));
     	} 
@@ -113,6 +123,11 @@ class ControllerAccountAddress extends Controller {
 			}
 			
 			$this->session->data['success'] = $this->language->get('text_delete');
+	  
+			// Add to activity log
+			$this->load->model('account/activity');
+			
+			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_delete'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
 	  
 	  		$this->redirect($this->url->link('account/address', '', 'SSL'));
     	}
@@ -415,30 +430,39 @@ class ControllerAccountAddress extends Controller {
 		}
 		
 		// Custom Fields
+		if (isset($this->request->post['custom_field'])) {
+			$custom_field_info = $this->request->post['custom_field'];		
+		} elseif (isset($customer_info)) {
+			$custom_field_info = unserialize($address_info['custom_field']);
+		} else {
+			$custom_field_info = array();
+		}
+		
 		$this->load->model('account/custom_field');
 		
 		$this->data['custom_fields'] = array();
 		
-		if (isset($this->request->post['custom_field']) || isset($customer_info)) {
-			if (isset($this->request->post['custom_field'])) {
-				$custom_field_info = $this->request->post['custom_field'];		
-			} elseif (isset($customer_info)) {
-				$custom_field_info = unserialize($address_info['custom_field']);
+		// If a post request then get a list of all fields that should have been posted for validation checking.
+		$custom_fields = $this->model_account_custom_field->getCustomFields('address', $this->customer->getGroupId());
+		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['type'] == 'checkbox') {
+				$value = array();
 			} else {
-				$custom_field_info = array();
+				$value = '';
 			}
-			
-			// If a post request then get a list of all fields that should have been posted for validation checking.
-			$custom_fields = $this->model_account_custom_field->getCustomFields('address', $this->customer->getGroupId());
-			
-			foreach ($custom_fields as $custom_field) {
-				$this->data['custom_fields'][] = array(
-					'custom_field_id' => $custom_field['custom_field_id'],
-					'type'            => $custom_field['type'],
-					'value'           => isset($custom_field_info[$custom_field['custom_field_id']]) ? $custom_field_info[$custom_field['custom_field_id']] : ''
-				);
-			}		
-		}		
+						
+			$this->data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field['custom_field_value'],
+				'name'               => $custom_field['name'],
+				'type'               => $custom_field['type'],
+				'value'              => isset($custom_field_info[$custom_field['custom_field_id']]) ? $custom_field_info[$custom_field['custom_field_id']] : $value,
+				'required'           => $custom_field['required'],
+				'location'           => $custom_field['location'],
+				'sort_order'         => $custom_field['sort_order']
+			);
+		}			
 		
     	$this->data['back'] = $this->url->link('account/address', '', 'SSL');
 		
@@ -551,13 +575,5 @@ class ControllerAccountAddress extends Controller {
 		
 		$this->response->setOutput(json_encode($json));
 	}
-	
-	public function custom_field() {
-		$this->load->model('account/custom_field');
-
-		$json = $this->model_account_custom_field->getCustomFields('address', $this->customer->getGroupId());
-
-		$this->response->setOutput(json_encode($json));
-	}	
 }
 ?>

@@ -7,6 +7,7 @@ $_['text_account']      = 'Account';
 $_['text_edit']         = 'Edit Information';
 $_['text_your_details'] = 'Your Personal Details';
 $_['text_success']      = 'Success: Your account has been successfully updated.';
+$_['text_activity']     = '<a href="customer_id=%d">%s</a> has just just updated their account details.';
 
 // Entry
 $_['entry_firstname']  = 'First Name';

@@ -346,5 +346,11 @@ class ModelReportDashboard extends Model {
 
 		return $marketing_data;
 	}
+	
+	public function getActivities() { 
+		$query = $this->db->query("SELECT ca.comment, aa.date_added FROM " . DB_PREFIX . "customer_activity ca, " . DB_PREFIX . "affiliate_activity aa ORDER BY aa.date_added DESC LIMIT 0,10");
+			
+		return $query->rows;
+	}
 }
 ?>

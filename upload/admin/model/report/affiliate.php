@@ -114,6 +114,80 @@ class ModelReportAffiliate extends Model {
 		$query = $this->db->query($sql);
 		
 		return $query->row['total'];
-	}	
+	}
+
+	public function getAffiliateActivities($data = array()) { 
+		$sql = "SELECT aa.activity_id, aa.affiliate_id, CONCAT(a.firstname, ' ', a.lastname) AS affiliate, aa.comment, aa.ip, aa.date_added FROM " . DB_PREFIX . "affiliate_activity aa LEFT JOIN " . DB_PREFIX . "affiliate a ON (aa.affiliate_id = a.affiliate_id)";
+
+		$implode = array();
+		
+		if (!empty($data['filter_affiliate'])) {
+			$implode[] = "CONCAT(a.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_affiliate']) . "'";
+		}	
+			
+		if (!empty($data['filter_ip'])) {
+			$implode[] = "aa.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+		}
+				
+		if (!empty($data['filter_date_start'])) {
+			$implode[] = "DATE(aa.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$implode[] = "DATE(aa.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}
+		
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+				
+		$sql .= " ORDER BY aa.date_added DESC";
+				
+		if (isset($data['start']) || isset($data['limit'])) {
+			if ($data['start'] < 0) {
+				$data['start'] = 0;
+			}			
+			
+			if ($data['limit'] < 1) {
+				$data['limit'] = 20;
+			}	
+			
+			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
+		}
+			
+		$query = $this->db->query($sql);
+	
+		return $query->rows;
+	}
+
+	public function getTotalAffiliateActivities($data = array()) {
+		$sql = "SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "affiliate_activity` aa LEFT JOIN " . DB_PREFIX . "affiliate a ON (aa.affiliate_id = a.affiliate_id)";
+		
+		$implode = array();
+		
+		if (!empty($data['filter_affiliate'])) {
+			$implode[] = "CONCAT(a.firstname, ' ', a.lastname) LIKE '" . $this->db->escape($data['filter_affiliate']) . "'";
+		}	
+		
+		if (!empty($data['filter_ip'])) {
+			$implode[] = "aa.ip LIKE '" . $this->db->escape($data['filter_ip']) . "'";
+		}
+				
+		if (!empty($data['filter_date_start'])) {
+			$implode[] = "DATE(aa.date_added) >= '" . $this->db->escape($data['filter_date_start']) . "'";
+		}
+
+		if (!empty($data['filter_date_end'])) {
+			$implode[] = "DATE(aa.date_added) <= '" . $this->db->escape($data['filter_date_end']) . "'";
+		}
+		
+		if ($implode) {
+			$sql .= " WHERE " . implode(" AND ", $implode);
+		}
+				
+		$query = $this->db->query($sql);
+
+		return $query->row['total'];
+	}			
 }
 ?>

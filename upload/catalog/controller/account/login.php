@@ -63,6 +63,11 @@ class ControllerAccountLogin extends Controller {
 			if ($this->config->get('config_tax_customer') == 'shipping') {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
+			
+			// Add to activity log
+			$this->load->model('account/activity');
+			
+			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
 							
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {

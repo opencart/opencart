@@ -19,6 +19,11 @@ class ControllerAccountPassword extends Controller {
 			$this->model_account_customer->editPassword($this->customer->getEmail(), $this->request->post['password']);
  
       		$this->session->data['success'] = $this->language->get('text_success');
+			
+			// Add to activity log
+			$this->load->model('account/activity');
+			
+			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
 	  
 	  		$this->redirect($this->url->link('account/account', '', 'SSL'));
     	}

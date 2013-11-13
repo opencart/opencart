@@ -94,18 +94,12 @@ class ControllerCheckoutRegister extends Controller {
 		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
 		
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['type'] == 'checkbox') {
-				$value = array();
-			} else {
-				$value = $custom_field['value'];
-			}
-			
 			$this->data['custom_fields'][] = array(
 				'custom_field_id'    => $custom_field['custom_field_id'],
 				'custom_field_value' => $custom_field['custom_field_value'],
 				'name'               => $custom_field['name'],
 				'type'               => $custom_field['type'],
-				'value'              => $value,
+				'value'              => $custom_field['value'],
 				'sort_order'         => $custom_field['sort_order']
 			);
 		}			

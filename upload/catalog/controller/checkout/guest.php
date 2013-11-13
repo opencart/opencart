@@ -141,17 +141,26 @@ class ControllerCheckoutGuest extends Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 		
+		if (isset($this->session->data['guest']['custom_field'])) {
+			$custom_field_info = $this->session->data['guest']['custom_field'];
+		} else {
+			$custom_field_info = array();
+		}	
+		
 		$this->data['custom_fields'] = array();
 				
 		// If a post request then get a list of all fields that should have been posted for validation checking.
 		if (isset($this->session->data['guest']['customer_group_id'])) {
-			$custom_fields = $this->model_account_custom_field->getCustomFields('registration', $this->session->data['guest']['customer_group_id']);
+			$custom_fields = $this->model_account_custom_field->getCustomFields('guest', $this->session->data['guest']['customer_group_id']);
 			
 			foreach ($custom_fields as $custom_field) {
 				$this->data['custom_fields'][] = array(
-					'custom_field_id' => $custom_field['custom_field_id'],
-					'type'            => $custom_field['type'],
-					'value'           => isset($this->session->data['guest']['custom_field'][$custom_field['custom_field_id']]) ? $this->session->data['guest']['custom_field'][$custom_field['custom_field_id']] : ''
+					'custom_field_id'    => $custom_field['custom_field_id'],
+					'custom_field_value' => $custom_field['custom_field_value'],
+					'name'               => $custom_field['name'],
+					'type'               => $custom_field['type'],
+					'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value,
+					'sort_order'         => $custom_field['sort_order']
 				);
 			}
 		}

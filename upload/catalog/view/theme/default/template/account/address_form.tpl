@@ -111,7 +111,7 @@
                 <option value=""><?php echo $text_select; ?></option>
                 <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                 <?php if ($custom_field_value['custom_field_value_id'] == $custom_field['value']) { ?>
-                <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
+                <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>" selected="selected"><?php echo $custom_field_value['name']; ?></option>
                 <?php } else { ?>
                 <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
                 <?php } ?>

@@ -15,30 +15,23 @@ final class DBMySQLi {
 	public function query($sql) {
 		$query = $this->link->query($sql);
 
-		if (!$this->link->errno){
-			if (isset($query->num_rows)) {
-				$data = array();
-
-				while ($row = $query->fetch_array()) {
-					$data[] = $row;
-				}
-				
-				$result = new stdClass();
-				$result->num_rows = $query->num_rows;
-				$result->row = isset($data[0]) ? $data[0] : array();
-				$result->rows = $data;
-				
-				unset($data);
-				
-				$query->close();
-				
-				return $result;
-			} else{
-				return true;
-			}
+		if( FALSE === $result ) {
+			trigger_error('Error: ' . $this->link->error  . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
+		} else if( TRUE === $result ){
+			return TRUE;
 		} else {
-			trigger_error('Error: ' . $this->link->error . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
-		}
+			$data = $query->fetch_all(MYSQLI_BOTH);
+
+			$result = new stdClass();
+			$result->num_rows = $result->num_rows;
+			$result->row = isset($data[0]) ? $data[0] : array();
+			$result->rows = $data;
+			
+			$query->close();
+			unset($data);
+
+			return $result;	
+		} 
 	}
 
 	public function escape($value) {

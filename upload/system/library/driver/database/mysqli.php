@@ -15,19 +15,20 @@ final class DBMySQLi {
 	public function query($sql) {
 		$query = $this->link->query($sql);
 
-		if( FALSE === $result ) {
+		if (FALSE === $query) {
 			trigger_error('Error: ' . $this->link->error  . '<br />Error No: ' . $this->link->errno . '<br />' . $sql);
-		} else if( TRUE === $result ){
+		} else if (TRUE === $query){
 			return TRUE;
 		} else {
 			$data = $query->fetch_all(MYSQLI_BOTH);
 
 			$result = new stdClass();
-			$result->num_rows = $result->num_rows;
+			$result->num_rows = $query->num_rows;
 			$result->row = isset($data[0]) ? $data[0] : array();
 			$result->rows = $data;
 			
 			$query->close();
+			
 			unset($data);
 
 			return $result;	

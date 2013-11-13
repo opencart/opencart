@@ -433,7 +433,7 @@ class ControllerAccountAddress extends Controller {
 		if (isset($this->request->post['custom_field'])) {
 			$custom_field_info = $this->request->post['custom_field'];		
 		} elseif (isset($customer_info)) {
-			$custom_field_info = unserialize($address_info['custom_field']);
+			$custom_field_info = $address_info['custom_field'];
 		} else {
 			$custom_field_info = array();
 		}
@@ -459,7 +459,6 @@ class ControllerAccountAddress extends Controller {
 				'type'               => $custom_field['type'],
 				'value'              => isset($custom_field_info[$custom_field['custom_field_id']]) ? $custom_field_info[$custom_field['custom_field_id']] : $value,
 				'required'           => $custom_field['required'],
-				'location'           => $custom_field['location'],
 				'sort_order'         => $custom_field['sort_order']
 			);
 		}			

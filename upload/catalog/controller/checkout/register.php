@@ -85,6 +85,30 @@ class ControllerCheckoutRegister extends Controller {
 		}
 		
 		$this->data['shipping_required'] = $this->cart->hasShipping();
+				
+		// Custom Fields
+		$this->load->model('account/custom_field');
+		
+		$this->data['custom_fields'] = array();
+		
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
+		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['type'] == 'checkbox') {
+				$value = array();
+			} else {
+				$value = $custom_field['value'];
+			}
+			
+			$this->data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field['custom_field_value'],
+				'name'               => $custom_field['name'],
+				'type'               => $custom_field['type'],
+				'value'              => $value,
+				'sort_order'         => $custom_field['sort_order']
+			);
+		}			
 			
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/register.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/checkout/register.tpl';
@@ -244,18 +268,27 @@ class ControllerCheckoutRegister extends Controller {
 	}
 	
 	public function custom_field() {
-		$this->load->model('account/custom_field');
-
+		$sjon = array();
+		
 		// Customer Group
+		$this->load->model('account/custom_field');
+		
 		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->get['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
 
-		$json = $this->model_account_custom_field->getCustomFields('registration', $customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
+		
+		foreach ($custom_fields as $custom_field) {
+			$json[] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'required'        => $custom_field['required']
+			);
+		}
 
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }
 ?>

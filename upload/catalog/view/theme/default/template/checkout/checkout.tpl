@@ -78,9 +78,8 @@
           </div>
         </div>
       </div>
-    </div>
-    <?php echo $content_bottom; ?></div>
-  <?php echo $column_right; ?></div>
+      <?php echo $content_bottom; ?></div>
+    <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
 $(document).on('change', 'input[name=\'account\']', function() {

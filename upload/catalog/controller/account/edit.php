@@ -147,7 +147,7 @@ class ControllerAccountEdit extends Controller {
 		if (isset($this->request->post['custom_field'])) {
 			$custom_field_info = $this->request->post['custom_field'];		
 		} elseif (!empty($customer_info)) {
-			$custom_field_info = unserialize($customer_info['custom_field']);
+			$custom_field_info = $customer_info['custom_field'];
 		} else {
 			$custom_field_info = array();
 		}		
@@ -171,7 +171,6 @@ class ControllerAccountEdit extends Controller {
 				'type'               => $custom_field['type'],
 				'value'              => isset($custom_field_info[$custom_field['custom_field_id']]) ? $custom_field_info[$custom_field['custom_field_id']] : $value,
 				'required'           => $custom_field['required'],
-				'location'           => $custom_field['location'],
 				'sort_order'         => $custom_field['sort_order']
 			);
 		}
@@ -234,13 +233,5 @@ class ControllerAccountEdit extends Controller {
 			return false;
 		}
 	}
-	
-	public function custom_field() {
-		$this->load->model('account/custom_field');
-
-		$json = $this->model_account_custom_field->getCustomFields('account', $this->customer->getGroupId());
-
-		$this->response->setOutput(json_encode($json));
-	}	
 }
 ?>

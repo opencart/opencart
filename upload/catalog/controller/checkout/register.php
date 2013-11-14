@@ -262,7 +262,7 @@ class ControllerCheckoutRegister extends Controller {
 	}
 	
 	public function custom_field() {
-		$sjon = array();
+		$json = array();
 		
 		// Customer Group
 		$this->load->model('account/custom_field');

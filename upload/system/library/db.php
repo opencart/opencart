@@ -3,13 +3,17 @@ class DB {
 	private $driver;
 
 	public function __construct($driver, $hostname, $username, $password, $database) {
-		if (file_exists(DIR_DATABASE . $driver . '.php')) {
-			require_once(DIR_DATABASE . $driver . '.php');
-		} else {
-			exit('Error: Could not load database file ' . $driver . '!');
-		}
+		$file = DIR_DATABASE . $driver . '.php';
 
-		$this->driver = new $driver($hostname, $username, $password, $database);
+		if (file_exists($file)) {
+			require_once($file);
+
+			$class = 'DB' . $driver;
+
+			$this->driver = new $class($hostname, $username, $password, $database);
+		} else {
+			exit('Error: Could not load database driver type ' . $driver . '!');
+		}
 	}
 
 	public function query($sql) {

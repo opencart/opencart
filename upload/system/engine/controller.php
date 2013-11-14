@@ -3,6 +3,7 @@ abstract class Controller {
 	protected $registry;	
 	protected $template;
 	protected $children = array();
+	protected $childrenWithArgs = array();
 	protected $data = array();
 	protected $output;
 
@@ -50,6 +51,9 @@ abstract class Controller {
 	protected function render() {
 		foreach ($this->children as $child) {
 			$this->data[basename($child)] = $this->getChild($child);
+		}
+		foreach ($this->childrenWithArgs as $child => $args) {
+			$this->data[basename($child)] = $this->getChild($child, $args);
 		}
 
 		if (file_exists(DIR_TEMPLATE . $this->template)) {

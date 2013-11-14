@@ -6,7 +6,7 @@ class ControllerStep3 extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install');
 			
-			$this->model_install->mysql($this->request->post);
+			$this->model_install->database($this->request->post);
 			
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
@@ -42,7 +42,7 @@ class ControllerStep3 extends Controller {
 			fwrite($file, $output);
 
 			fclose($file);
-	 
+
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
 			$output .= 'define(\'HTTP_SERVER\', \'' . HTTP_OPENCART . 'admin/\');' . "\n";

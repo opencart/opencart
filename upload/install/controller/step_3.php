@@ -141,7 +141,7 @@ class ControllerStep3 extends Controller {
 		if (isset($this->request->post['db_driver'])) {
 			$this->data['db_driver'] = $this->request->post['db_driver'];
 		} else {
-			$this->data['db_driver'] = 'dbmysqli';
+			$this->data['db_driver'] = 'mysqli';
 		}
 
 		if (isset($this->request->post['db_host'])) {

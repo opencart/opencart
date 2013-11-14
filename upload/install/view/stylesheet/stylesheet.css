@@ -60,7 +60,7 @@ fieldset table td {
 	padding: 5px;
 }
 select, input[type='text'], input[type='password'], textarea {
-	background: #FFFFFF url('../image/field.png') repeat-x;
+	background: #FFFFFF;
 	-webkit-border-radius: 5px 5px 5px 5px;
 	-moz-border-radius: 5px 5px 5px 5px;
 	-khtml-border-radius: 5px 5px 5px 5px;

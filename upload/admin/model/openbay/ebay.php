@@ -687,12 +687,6 @@ class ModelOpenbayEbay extends Model{
 		}
 	}
 
-	public function getStockCheck(){
-		$this->openbay->ebay->openbay_call_noresponse('item/getStockCheck/');
-		$this->openbay->ebay->log('Requesting stock report.');
-		$this->response->setOutput(json_encode(array('msg' => 'Report has been requested')));
-	}
-
 	public function editSave($data){
 		$this->openbay->ebay->log('editSave() - start..');
 

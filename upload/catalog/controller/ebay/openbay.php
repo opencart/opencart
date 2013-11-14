@@ -67,16 +67,6 @@ class ControllerEbayOpenbay extends Controller{
 					$this->response->setOutput(json_encode(array('msg' => 'ok')));
 				}
 
-				if($data['action'] == 'stockCheck'){
-					$this->openbay->ebay->log('Stock Check method called.');
-					if($this->config->get('openbaypro_stock_report') == 1){
-						$this->model_ebay_product->stockCheck($data['data'], $this->config->get('openbaypro_stock_report_summary'));
-					}else{
-						$this->openbay->ebay->log('User disabled stock reports.');
-					}
-					$this->response->setOutput(json_encode(array('msg' => 'ok')));
-				}
-
 				if($data['action'] == 'outputLog'){
 					$this->model_ebay_openbay->outputLog();
 				}

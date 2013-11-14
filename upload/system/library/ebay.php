@@ -302,62 +302,6 @@ final class Ebay {
 		return $data;
 	}
 
-	public function getLiveProducts() {
-		/**
-		* returns full array data about live items.
-		*/
-		$this->load->model('tool/image');
-
-		$has_option = '';
-		if ($this->openbay->addonLoad('openstock') == true) {
-			$this->load->model('openstock/openstock');
-			$has_option = '`p`.`has_option`, ';
-		}
-
-		$qry = $this->db->query("
-		SELECT
-			".$has_option."
-			`el`.`ebay_item_id`,
-			`p`.`product_id`,
-			`p`.`sku`,
-			`p`.`model`,
-			`p`.`quantity`,
-			`pd`.name
-		FROM `" . DB_PREFIX . "ebay_listing` `el`
-		LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
-		LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)
-		WHERE `el`.`status` = '1'
-		AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		$data = array();
-		if($qry->num_rows) {
-			foreach($qry->rows as $row) {
-				$data[$row['ebay_item_id']] = array(
-					'product_id'    => $row['product_id'],
-					'sku'           => $row['sku'],
-					'model'         => $row['model'],
-					'qty'           => $row['quantity'],
-					'name'          => $row['name']
-				);
-
-				$data[$row['ebay_item_id']]['options'] = 0;
-
-				if ((isset($row['has_option']) && $row['has_option'] == 1) && $this->openbay->addonLoad('openstock') == true) {
-					$data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
-				}
-
-				//get the allocated stock - items that have been bought but not assigned to an order
-				if($this->config->get('openbaypro_stock_allocate') == 0) {
-					$data[$row['ebay_item_id']]['allocated'] = $this->getAllocatedStock($row['product_id']);
-				}else{
-					$data[$row['ebay_item_id']]['allocated'] = 0;
-				}
-			}
-		}
-
-		return $data;
-	}
-
 	public function endItem($item_id) {
 		$this->log('endItem() - ID "'.$item_id);
 

@@ -62,7 +62,6 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->data['links_orderimport']        = $this->url->link('openbay/openbay/viewOrderImport', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['links_usage']              = $this->url->link('openbay/openbay/viewUsage', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['links_sync']               = $this->url->link('openbay/openbay/viewSync', 'token=' . $this->session->data['token'], 'SSL');
-		$this->data['links_stockreport']        = $this->url->link('openbay/openbay/viewStockReport', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['links_linkmaintenance']    = $this->url->link('openbay/openbay/viewItemLinkMaintenance', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['links_summary']            = $this->url->link('openbay/openbay/viewSellerSummary', 'token=' . $this->session->data['token'], 'SSL');
 		$this->data['links_profile']            = $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
@@ -677,52 +676,6 @@ class ControllerOpenbayOpenbay extends Controller {
 		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 	}
 
-	public function viewStockReport() {
-		$this->data = array_merge($this->data, $this->load->language('openbay/ebay_reportstock'));
-
-		$this->document->setTitle($this->language->get('lang_page_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
-		$this->document->addScript('view/javascript/openbay/faq.js');
-
-		$this->data['breadcrumbs'] = array();
-
-		$this->data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_home'),
-			'separator' => false
-		);
-
-		$this->data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
-			'separator' => ' :: '
-		);
-
-		$this->data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
-			'separator' => ' :: '
-		);
-
-		$this->data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/openbay/viewStockReport', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_heading'),
-			'separator' => ' :: '
-		);
-
-		$this->data['return']       = $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL');
-		$this->data['validation']   = $this->openbay->ebay->validate();
-		$this->data['token']        = $this->session->data['token'];
-
-		$this->template = 'openbay/ebay_stock_report.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-
-		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
-	}
-
 	public function viewOrderImport() {
 		$this->data = array_merge($this->data, $this->load->language('openbay/ebay_orders'));
 
@@ -963,12 +916,6 @@ class ControllerOpenbayOpenbay extends Controller {
 		} else {
 			return true;
 		}
-	}
-
-	public function getStockCheck() {
-		$this->openbay->ebay->log('Requesting stock report.');
-		$this->load->model('openbay/ebay');
-		$this->model_openbay_ebay->getStockCheck();
 	}
 
 	public function edit() {

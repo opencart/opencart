@@ -852,7 +852,7 @@ final class Ebay {
 					$this->load->model('openstock/openstock');
 
 					$variants           = $this->model_openstock_openstock->getProductOptionStocks($product_id);
-					$groups             = $this->model_catalog_product->getProductOptions($product_id);
+					$groups             = $this->openbay->getProductOptions($product_id);
 					$varData['groups']  = array();
 					$varData['related'] = array();
 

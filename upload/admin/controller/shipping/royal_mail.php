@@ -441,15 +441,12 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['royal_mail_sort_order'] = $this->request->post['royal_mail_sort_order'];
 		} else {
 			$data['royal_mail_sort_order'] = $this->config->get('royal_mail_sort_order');
-		}				
-
-		$this->template = 'shipping/royal_mail.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		}	
+					
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('shipping/royal_mail.tpl', $data));
 	}
 	
 	protected function validate() {

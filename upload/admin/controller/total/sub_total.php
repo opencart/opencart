@@ -66,14 +66,11 @@ class ControllerTotalSubTotal extends Controller {
 		} else {
 			$data['sub_total_sort_order'] = $this->config->get('sub_total_sort_order');
 		}
-
-		$this->template = 'total/sub_total.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('total/sub_total.tpl', $data));
 	}
 
 	protected function validate() {

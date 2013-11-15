@@ -78,14 +78,11 @@ class ControllerPaymentFreeCheckout extends Controller {
 		} else {
 			$data['free_checkout_sort_order'] = $this->config->get('free_checkout_sort_order');
 		}
-						
-		$this->template = 'payment/free_checkout.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-			
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+											
+		$this->response->setOutput($this->load->view('payment/free_checkout.tpl', $data));
 	}
 	
 	protected function validate() {

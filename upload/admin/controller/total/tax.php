@@ -66,14 +66,11 @@ class ControllerTotalTax extends Controller {
 		} else {
 			$data['tax_sort_order'] = $this->config->get('tax_sort_order');
 		}
-																				
-		$this->template = 'total/tax.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+																						
+		$this->response->setOutput($this->load->view('total/tax.tpl', $data));
 	}
 
 	protected function validate() {

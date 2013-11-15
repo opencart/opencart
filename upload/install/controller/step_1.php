@@ -5,15 +5,14 @@ class ControllerStep1 extends Controller {
 			$this->redirect($this->url->link('step_2'));
 		}	
 		
-		$this->data['action'] = $this->url->link('step_1');
+		$data = array();
 		
-		$this->template = 'step_1.tpl';
-		$this->children = array(
-			'header',
-			'footer'
-		);
+		$data['action'] = $this->url->link('step_1');
 		
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('header');
+		$data['footer'] = $this->load->controller('footer');
+		
+		$this->response->setOutput($this->load->view('step_1.tpl', $data));
 	}
 }
 ?>

@@ -66,14 +66,11 @@ class ControllerTotalCredit extends Controller {
 		} else {
 			$data['credit_sort_order'] = $this->config->get('credit_sort_order');
 		}
-																		
-		$this->template = 'total/credit.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('total/credit.tpl', $data));
 	}
 
 	protected function validate() {

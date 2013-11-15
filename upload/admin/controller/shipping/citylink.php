@@ -100,15 +100,12 @@ class ControllerShippingCitylink extends Controller {
 			$data['citylink_sort_order'] = $this->request->post['citylink_sort_order'];
 		} else {
 			$data['citylink_sort_order'] = $this->config->get('citylink_sort_order');
-		}				
-
-		$this->template = 'shipping/citylink.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		}	
+					
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('shipping/citylink.tpl', $data));
 	}
 	
 	protected function validate() {

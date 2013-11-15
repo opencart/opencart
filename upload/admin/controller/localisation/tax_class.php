@@ -247,14 +247,11 @@ class ControllerLocalisationTaxClass extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->template = 'localisation/tax_class_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer',
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/tax_class_list.tpl', $data));
 	}
 
 	protected function getForm() {
@@ -358,14 +355,11 @@ class ControllerLocalisationTaxClass extends Controller {
 		} else {
 			$data['tax_rules'] = array();
 		}
-
-		$this->template = 'localisation/tax_class_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer',
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view'localisation/tax_class_form.tpl'(, $data));
 	}
 
 	protected function validateForm() {

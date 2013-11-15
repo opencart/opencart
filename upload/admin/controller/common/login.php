@@ -21,7 +21,9 @@ class ControllerCommonLogin extends Controller {
 			}
 		}
 		
-    	$data['heading_title'] = $this->language->get('heading_title');
+		$data = array();
+    	
+		$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_login'] = $this->language->get('text_login');
 		$data['text_forgotten'] = $this->language->get('text_forgotten');
@@ -89,13 +91,10 @@ class ControllerCommonLogin extends Controller {
 			$data['forgotten'] = '';
 		}
 		
-		$this->template = 'common/login.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('common/login.tpl', $data));
   	}
 		
 	protected function validate() {

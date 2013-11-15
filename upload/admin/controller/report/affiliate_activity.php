@@ -146,14 +146,11 @@ class ControllerReportAffiliateActivity extends Controller {
 		$data['filter_ip'] = $filter_ip;	
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;				
-				
-		$this->template = 'report/affiliate_activity.tpl';
-		$this->children = array(
-			'common/header',	
-			'common/footer'	
-		);
 		
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('report/affiliate_activity.tpl', $data));
   	}
 }
 ?>

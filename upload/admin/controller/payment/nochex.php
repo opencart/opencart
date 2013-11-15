@@ -149,14 +149,11 @@ class ControllerPaymentNOCHEX extends Controller {
 		} else {
 			$data['nochex_sort_order'] = $this->config->get('nochex_sort_order');
 		}
-
-		$this->template = 'payment/nochex.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());		
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('payment/nochex.tpl', $data));		
 	}
 
 	protected function validate() {

@@ -103,14 +103,11 @@ class ControllerShippingWeight extends Controller {
 		} else {
 			$data['weight_sort_order'] = $this->config->get('weight_sort_order');
 		}	
-
-		$this->template = 'shipping/weight.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('shipping/weight.tpl', $data));
 	}
 		
 	protected function validate() {

@@ -89,13 +89,10 @@ class ControllerModuleSlideshow extends Controller {
 		
 		$data['banners'] = $this->model_design_banner->getBanners();
 		
-		$this->template = 'module/slideshow.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('module/slideshow.tpl', $data));
 	}
 	
 	protected function validate() {

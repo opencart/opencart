@@ -111,14 +111,11 @@ class ControllerPaymentCheque extends Controller {
 		} else {
 			$data['cheque_sort_order'] = $this->config->get('cheque_sort_order');
 		}
-
-		$this->template = 'payment/cheque.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('payment/cheque.tpl', $data));
 	}
 
 	protected function validate() {

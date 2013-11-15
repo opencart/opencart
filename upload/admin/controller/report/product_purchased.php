@@ -135,13 +135,10 @@ class ControllerReportProductPurchased extends Controller {
 		$data['filter_date_end'] = $filter_date_end;		
 		$data['filter_order_status_id'] = $filter_order_status_id;
 		
-		$this->template = 'report/product_purchased.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('report/product_purchased.tpl', $data));
 	}	
 }
 ?>

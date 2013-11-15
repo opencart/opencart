@@ -253,14 +253,11 @@ class ControllerLocalisationZone extends Controller {
 		
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->template = 'localisation/zone_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/zone_list.tpl', $data));
 	}
 
 	protected function getForm() {
@@ -362,14 +359,11 @@ class ControllerLocalisationZone extends Controller {
 		$this->load->model('localisation/country');
 		
 		$data['countries'] = $this->model_localisation_country->getCountries();
-
-		$this->template = 'localisation/zone_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/zone_form.tpl', $data));
 	}
 
 	protected function validateForm() {

@@ -73,14 +73,11 @@ class ControllerToolBackup extends Controller {
 		$data['backup'] = $this->url->link('tool/backup/backup', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['tables'] = $this->model_tool_backup->getTables();
-
-		$this->template = 'tool/backup.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('tool/backup.tpl', $data));
 	}
 	
 	public function backup() {

@@ -141,14 +141,11 @@ class ControllerPaymentTwoCheckout extends Controller {
 		} else {
 			$data['twocheckout_sort_order'] = $this->config->get('twocheckout_sort_order');
 		}
-
-		$this->template = 'payment/twocheckout.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('payment/twocheckout.tpl', $data));
 	}
 
 	protected function validate() {

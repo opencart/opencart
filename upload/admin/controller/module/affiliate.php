@@ -75,13 +75,10 @@ class ControllerModuleAffiliate extends Controller {
 		
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 		
-		$this->template = 'module/affiliate.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('module/affiliate.tpl', $data));
 	}
 	
 	protected function validate() {

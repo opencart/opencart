@@ -84,119 +84,118 @@ class ControllerStep3 extends Controller {
 			$this->redirect($this->url->link('step_4'));
 		}
 		
+		$data = array();
+		
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
 		if (isset($this->error['db_host'])) {
-			$this->data['error_db_host'] = $this->error['db_host'];
+			$data['error_db_host'] = $this->error['db_host'];
 		} else {
-			$this->data['error_db_host'] = '';
+			$data['error_db_host'] = '';
 		}
 		
 		if (isset($this->error['db_user'])) {
-			$this->data['error_db_user'] = $this->error['db_user'];
+			$data['error_db_user'] = $this->error['db_user'];
 		} else {
-			$this->data['error_db_user'] = '';
+			$data['error_db_user'] = '';
 		}
 		
 		if (isset($this->error['db_name'])) {
-			$this->data['error_db_name'] = $this->error['db_name'];
+			$data['error_db_name'] = $this->error['db_name'];
 		} else {
-			$this->data['error_db_name'] = '';
+			$data['error_db_name'] = '';
 		}
 		
 		if (isset($this->error['db_prefix'])) {
-			$this->data['error_db_prefix'] = $this->error['db_prefix'];
+			$data['error_db_prefix'] = $this->error['db_prefix'];
 		} else {
-			$this->data['error_db_prefix'] = '';
+			$data['error_db_prefix'] = '';
 		}
 		
 		if (isset($this->error['username'])) {
-			$this->data['error_username'] = $this->error['username'];
+			$data['error_username'] = $this->error['username'];
 		} else {
-			$this->data['error_username'] = '';
+			$data['error_username'] = '';
 		}
 		
 		if (isset($this->error['password'])) {
-			$this->data['error_password'] = $this->error['password'];
+			$data['error_password'] = $this->error['password'];
 		} else {
-			$this->data['error_password'] = '';
+			$data['error_password'] = '';
 		}		
 		
 		if (isset($this->error['email'])) {
-			$this->data['error_email'] = $this->error['email'];
+			$data['error_email'] = $this->error['email'];
 		} else {
-			$this->data['error_email'] = '';
+			$data['error_email'] = '';
 		}	
 		
-		$this->data['action'] = $this->url->link('step_3');
+		$data['action'] = $this->url->link('step_3');
 		
 		if (isset($this->request->post['db_driver'])) {
-			$this->data['db_driver'] = $this->request->post['db_driver'];
+			$data['db_driver'] = $this->request->post['db_driver'];
 		} else {
-			$this->data['db_driver'] = 'mysql';
+			$data['db_driver'] = 'mysql';
 		}
 		
 		if (isset($this->request->post['db_host'])) {
-			$this->data['db_host'] = $this->request->post['db_host'];
+			$data['db_host'] = $this->request->post['db_host'];
 		} else {
-			$this->data['db_host'] = 'localhost';
+			$data['db_host'] = 'localhost';
 		}
 		
 		if (isset($this->request->post['db_user'])) {
-			$this->data['db_user'] = html_entity_decode($this->request->post['db_user']);
+			$data['db_user'] = html_entity_decode($this->request->post['db_user']);
 		} else {
-			$this->data['db_user'] = '';
+			$data['db_user'] = '';
 		}
 		
 		if (isset($this->request->post['db_password'])) {
-			$this->data['db_password'] = html_entity_decode($this->request->post['db_password']);
+			$data['db_password'] = html_entity_decode($this->request->post['db_password']);
 		} else {
-			$this->data['db_password'] = '';
+			$data['db_password'] = '';
 		}
 
 		if (isset($this->request->post['db_name'])) {
-			$this->data['db_name'] = html_entity_decode($this->request->post['db_name']);
+			$data['db_name'] = html_entity_decode($this->request->post['db_name']);
 		} else {
-			$this->data['db_name'] = '';
+			$data['db_name'] = '';
 		}
 		
 		if (isset($this->request->post['db_prefix'])) {
-			$this->data['db_prefix'] = html_entity_decode($this->request->post['db_prefix']);
+			$data['db_prefix'] = html_entity_decode($this->request->post['db_prefix']);
 		} else {
-			$this->data['db_prefix'] = 'oc_';
+			$data['db_prefix'] = 'oc_';
 		}
 		
 		if (isset($this->request->post['username'])) {
-			$this->data['username'] = $this->request->post['username'];
+			$data['username'] = $this->request->post['username'];
 		} else {
-			$this->data['username'] = 'admin';
+			$data['username'] = 'admin';
 		}
 
 		if (isset($this->request->post['password'])) {
-			$this->data['password'] = $this->request->post['password'];
+			$data['password'] = $this->request->post['password'];
 		} else {
-			$this->data['password'] = '';
+			$data['password'] = '';
 		}
 		
 		if (isset($this->request->post['email'])) {
-			$this->data['email'] = $this->request->post['email'];
+			$data['email'] = $this->request->post['email'];
 		} else {
-			$this->data['email'] = '';
+			$data['email'] = '';
 		}
 		
-		$this->data['back'] = $this->url->link('step_2');
+		$data['back'] = $this->url->link('step_2');
 		
-		$this->template = 'step_3.tpl';
-		$this->children = array(
-			'header',
-			'footer'
-		);
+		$data['header'] = $this->load->controller('header');
+		$data['footer'] = $this->load->controller('footer');
 		
-		$this->response->setOutput($this->render());		
+		$this->response->setOutput($this->load->view('step_3.tpl', $data));		
 	}
 	
 	private function validate() {

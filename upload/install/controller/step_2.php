@@ -7,33 +7,32 @@ class ControllerStep2 extends Controller {
 			$this->redirect($this->url->link('step_3'));
 		}
 
+		$data = array();
+
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';	
+			$data['error_warning'] = '';	
 		}
 		
-		$this->data['action'] = $this->url->link('step_2');
+		$data['action'] = $this->url->link('step_2');
 
-		$this->data['config_catalog'] = DIR_OPENCART . 'config.php';
-		$this->data['config_admin'] = DIR_OPENCART . 'admin/config.php';
+		$data['config_catalog'] = DIR_OPENCART . 'config.php';
+		$data['config_admin'] = DIR_OPENCART . 'admin/config.php';
 		
-		$this->data['cache'] = DIR_SYSTEM . 'cache';
-		$this->data['logs'] = DIR_SYSTEM . 'logs';
-		$this->data['download'] = DIR_SYSTEM . 'download';
-		$this->data['image'] = DIR_OPENCART . 'image';
-		$this->data['image_cache'] = DIR_OPENCART . 'image/cache';
-		$this->data['image_data'] = DIR_OPENCART . 'image/catalog';
+		$data['cache'] = DIR_SYSTEM . 'cache';
+		$data['logs'] = DIR_SYSTEM . 'logs';
+		$data['download'] = DIR_SYSTEM . 'download';
+		$data['image'] = DIR_OPENCART . 'image';
+		$data['image_cache'] = DIR_OPENCART . 'image/cache';
+		$data['image_data'] = DIR_OPENCART . 'image/catalog';
 		
-		$this->data['back'] = $this->url->link('step_1');
+		$data['back'] = $this->url->link('step_1');
 		
-		$this->template = 'step_2.tpl';
-		$this->children = array(
-			'header',
-			'footer'
-		);		
+		$data['header'] = $this->load->controller('header');
+		$data['footer'] = $this->load->controller('footer');
 		
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('step_2.tpl', $data));
 	}
 	
 	private function validate() {

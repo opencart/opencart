@@ -578,13 +578,10 @@ class ControllerSaleCustomer extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		
-		$this->template = 'sale/customer_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('sale/customer_list.tpl', $data));
   	}
   
   	protected function getForm() {
@@ -913,15 +910,12 @@ class ControllerSaleCustomer extends Controller {
 					'ban_ip'     => $ban_ip_total
 				);
 			}
-		}		
-		
-		$this->template = 'sale/customer_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		}
 				
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+				
+		$this->response->setOutput($this->load->view('sale/customer_form.tpl', $data));
 	}
 			 
   	protected function validateForm() {
@@ -1091,14 +1085,11 @@ class ControllerSaleCustomer extends Controller {
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
 			);
-		
-			$this->template = 'error/not_found.tpl';
-			$this->children = array(
-				'common/header',
-				'common/footer'
-			);
-		
-			$this->response->setOutput($this->render());
+			
+			$data['header'] = $this->load->controller('common/header');
+			$data['footer'] = $this->load->controller('common/footer');
+				
+			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
 		}
 	}
 	
@@ -1155,9 +1146,7 @@ class ControllerSaleCustomer extends Controller {
 		
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($transaction_total - $this->config->get('config_admin_limit'))) ? $transaction_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $transaction_total, ceil($transaction_total / $this->config->get('config_admin_limit')));
 
-		$this->template = 'sale/customer_history.tpl';		
-		
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('sale/customer_history.tpl', $data));
 	}
 		
 	public function transaction() {
@@ -1218,9 +1207,7 @@ class ControllerSaleCustomer extends Controller {
 		
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($transaction_total - $this->config->get('config_admin_limit'))) ? $transaction_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $transaction_total, ceil($transaction_total / $this->config->get('config_admin_limit')));
 
-		$this->template = 'sale/customer_transaction.tpl';		
-		
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('sale/customer_transaction.tpl', $data));
 	}
 			
 	public function reward() {
@@ -1281,9 +1268,7 @@ class ControllerSaleCustomer extends Controller {
 		
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($reward_total - $this->config->get('config_admin_limit'))) ? $reward_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $reward_total, ceil($reward_total / $this->config->get('config_admin_limit')));
 
-		$this->template = 'sale/customer_reward.tpl';		
-		
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('sale/customer_reward.tpl', $data));
 	}
 	
 	public function addBanIP() {

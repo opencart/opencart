@@ -247,14 +247,11 @@ class ControllerLocalisationOrderStatus extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->template = 'localisation/order_status_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/order_status_list.tpl', $data));
   	}
   
   	protected function getForm() {
@@ -322,14 +319,11 @@ class ControllerLocalisationOrderStatus extends Controller {
 		} else {
 			$data['order_status'] = array();
 		}
-
-		$this->template = 'localisation/order_status_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());	
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/order_status_form.tpl', $data));	
   	}
   	
 	protected function validateForm() {

@@ -247,14 +247,11 @@ class ControllerDesignLayout extends Controller {
 		
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->template = 'design/layout_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('design/layout_list.tpl', $data));
 	}
 
 	protected function getForm() {
@@ -340,14 +337,11 @@ class ControllerDesignLayout extends Controller {
 		} else {
 			$data['layout_routes'] = array();
 		}	
-				
-		$this->template = 'design/layout_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+						
+		$this->response->setOutput($this->load->view('design/layout_form.tpl', $data));
 	}
 
 	protected function validateForm() {

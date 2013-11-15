@@ -90,14 +90,11 @@ class ControllerModuleCarousel extends Controller {
 		$this->load->model('design/banner');
 
 		$data['banners'] = $this->model_design_banner->getBanners();
-
-		$this->template = 'module/carousel.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('module/carousel.tpl', $data));
 	}
 
 	protected function validate() {

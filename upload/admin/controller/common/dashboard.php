@@ -77,15 +77,12 @@ class ControllerCommonDashboard extends Controller {
 				'comment'    => $result['comment'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
-		}			
-		
-		$this->template = 'common/dashboard.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		}	
 				
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+				
+		$this->response->setOutput($this->load->view('common/dashboard.tpl', $data));
   	}
 	
 	public function sale() {

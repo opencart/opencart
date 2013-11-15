@@ -82,13 +82,10 @@ class ControllerCommonReset extends Controller {
 				$data['confirm'] = '';
 			}
 			
-			$this->template = 'common/reset.tpl';
-			$this->children = array(
-				'common/header',
-				'common/footer'
-			);
-									
-			$this->response->setOutput($this->render());						
+			$data['header'] = $this->load->controller('common/header');
+			$data['footer'] = $this->load->controller('common/footer');
+			
+			$this->response->setOutput($this->load->view('common/reset.tpl', $data));						
 		} else {
 			$this->load->model('setting/setting');
 			

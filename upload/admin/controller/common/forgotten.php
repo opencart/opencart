@@ -88,14 +88,11 @@ class ControllerCommonForgotten extends Controller {
 		} else {
       		$data['email'] = '';
     	}
-				
-		$this->template = 'common/forgotten.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-								
-		$this->response->setOutput($this->render());		
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+						
+		$this->response->setOutput($this->load->view('common/forgotten.tpl', $data));		
 	}
 
 	protected function validate() {

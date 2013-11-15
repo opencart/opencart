@@ -94,14 +94,11 @@ class ControllerTotalLowOrderFee extends Controller {
 		} else {
 			$data['low_order_fee_sort_order'] = $this->config->get('low_order_fee_sort_order');
 		}
-
-		$this->template = 'total/low_order_fee.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('total/low_order_fee.tpl', $data));
 	}
 
 	protected function validate() {

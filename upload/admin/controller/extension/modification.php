@@ -344,13 +344,10 @@ class ControllerExtensionModification extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		
-		$this->template = 'extension/modification.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('extension/modification.tpl', $data));
 	}
 
   	protected function validate() {

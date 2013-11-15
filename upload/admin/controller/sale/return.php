@@ -546,14 +546,11 @@ class ControllerSaleReturn extends Controller {
 		
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->template = 'sale/return_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('sale/return_list.tpl', $data));
   	}
   
   	protected function getForm() {
@@ -854,14 +851,11 @@ class ControllerSaleReturn extends Controller {
 		$this->load->model('localisation/return_status');
 		
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
-						
-		$this->template = 'sale/return_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('sale/return_form.tpl', $data));
 	}
 	
 	public function info() {
@@ -1048,13 +1042,10 @@ class ControllerSaleReturn extends Controller {
 			
 			$data['return_status_id'] = $return_info['return_status_id'];
 		
-			$this->template = 'sale/return_info.tpl';
-			$this->children = array(
-				'common/header',
-				'common/footer'
-			);
-					
-			$this->response->setOutput($this->render());		
+			$data['header'] = $this->load->controller('common/header');
+			$data['footer'] = $this->load->controller('common/footer');
+				
+			$this->response->setOutput($this->load->view('sale/return_info.tpl', $data));		
 		} else {
 			$this->language->load('error/not_found');
 
@@ -1075,14 +1066,11 @@ class ControllerSaleReturn extends Controller {
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
 			);
-		
-			$this->template = 'error/not_found.tpl';
-			$this->children = array(
-				'common/header',
-				'common/footer'
-			);
-		
-			$this->response->setOutput($this->render());			
+			
+			$data['header'] = $this->load->controller('common/header');
+			$data['footer'] = $this->load->controller('common/footer');
+				
+			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));			
 		}
 	}
 		
@@ -1222,9 +1210,7 @@ class ControllerSaleReturn extends Controller {
 		
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($history_total - $this->config->get('config_admin_limit'))) ? $history_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $history_total, ceil($history_total / $this->config->get('config_admin_limit')));
 		
-		$this->template = 'sale/return_history.tpl';		
-		
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('sale/return_history.tpl', $data));
   	}		
 }
 ?>

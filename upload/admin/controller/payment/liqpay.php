@@ -139,14 +139,11 @@ class ControllerPaymentLiqPay extends Controller {
 		} else {
 			$data['liqpay_sort_order'] = $this->config->get('liqpay_sort_order');
 		}
-
-		$this->template = 'payment/liqpay.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('payment/liqpay.tpl', $data));
 	}
 
 	protected function validate() {

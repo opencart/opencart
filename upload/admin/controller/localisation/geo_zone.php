@@ -250,14 +250,11 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->template = 'localisation/geo_zone_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/geo_zone_list.tpl', $data));
 	}
 
 	protected function getForm() {
@@ -358,14 +355,10 @@ class ControllerLocalisationGeoZone extends Controller {
 		} else {
 			$data['zone_to_geo_zones'] = array();
 		}
-
-		$this->template = 'localisation/geo_zone_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('localisation/geo_zone_form.tpl', $data));
 	}
 	
 	protected function validateForm() {

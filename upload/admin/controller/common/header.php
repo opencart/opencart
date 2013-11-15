@@ -229,9 +229,7 @@ class ControllerCommonHeader extends Controller {
 			$data['profile_image'] = '';
 		}
 					
-		$this->template = 'common/header.tpl';
-		
-		$this->render();
+		return $this->load->view('common/header.tpl', $data);
 	}
 }
 ?>

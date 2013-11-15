@@ -247,14 +247,11 @@ class ControllerLocalisationReturnReason extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->template = 'localisation/return_reason_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/return_reason_list.tpl', $data));
   	}
   
   	protected function getForm() {
@@ -322,14 +319,11 @@ class ControllerLocalisationReturnReason extends Controller {
 		} else {
 			$data['return_reason'] = array();
 		}
-
-		$this->template = 'localisation/return_reason_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());	
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/return_reason_form.tpl', $data));	
   	}
   	
 	protected function validateForm() {

@@ -156,14 +156,11 @@ class ControllerPaymentAuthorizenetAim extends Controller {
 		} else {
 			$data['authorizenet_aim_sort_order'] = $this->config->get('authorizenet_aim_sort_order');
 		}
-
-		$this->template = 'payment/authorizenet_aim.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('payment/authorizenet_aim.tpl', $data));
 	}
 
 	protected function validate() {

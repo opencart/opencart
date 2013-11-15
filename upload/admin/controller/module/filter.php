@@ -74,14 +74,11 @@ class ControllerModulefilter extends Controller {
 		$this->load->model('design/layout');
 		
 		$data['layouts'] = $this->model_design_layout->getLayouts();
-
-		$this->template = 'module/filter.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('module/filter.tpl', $data));
 	}
 	
 	protected function validate() {

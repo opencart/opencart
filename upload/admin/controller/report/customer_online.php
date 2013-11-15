@@ -127,14 +127,11 @@ class ControllerReportCustomerOnline extends Controller {
 		
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_ip'] = $filter_ip;		
-				
-		$this->template = 'report/customer_online.tpl';
-		$this->children = array(
-			'common/header',	
-			'common/footer'	
-		);
 		
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+						
+		$this->response->setOutput($this->load->view('report/customer_online.tpl', $data));
   	}
 }
 ?>

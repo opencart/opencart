@@ -9,9 +9,7 @@ class ControllerCommonFooter extends Controller {
 			$data['text_footer'] .= '.r' . trim(file_get_contents(DIR_SYSTEM . 'config/svn/svn.ver'));
 		}
 		
-		$this->template = 'common/footer.tpl';
-	
-    	$this->render();
+    	return $this->load->view('common/footer.tpl', $data);
   	}
 }
 ?>

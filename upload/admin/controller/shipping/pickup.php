@@ -78,15 +78,12 @@ class ControllerShippingPickup extends Controller {
 			$data['pickup_sort_order'] = $this->request->post['pickup_sort_order'];
 		} else {
 			$data['pickup_sort_order'] = $this->config->get('pickup_sort_order');
-		}				
-		
-		$this->template = 'shipping/pickup.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		}	
+					
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('shipping/pickup.tpl', $data));
 	}
 	
 	protected function validate() {

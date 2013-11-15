@@ -11,31 +11,29 @@ class ControllerUpgrade extends Controller {
 			$this->redirect($this->url->link('upgrade/success'));
 		}		
 		
+		$data = array();
+		
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
-		$this->data['action'] = $this->url->link('upgrade');
+		$data['action'] = $this->url->link('upgrade');
 
-		$this->template = 'upgrade.tpl';
-		$this->children = array(
-			'header',
-			'footer'
-		);
+		$data['header'] = $this->load->controller('header');
+		$data['footer'] = $this->load->controller('footer');
 
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('upgrade.tpl', $data));
 	}
 
 	public function success() {
-		$this->template = 'success.tpl';
-		$this->children = array(
-			'header',
-			'footer'
-		);
+		$data = array();
+		
+		$data['header'] = $this->load->controller('header');
+		$data['footer'] = $this->load->controller('footer');
 
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('success.tpl', $data));
 	}
 
 	private function validate() {

@@ -175,14 +175,11 @@ class ControllerPaymentPPProUK extends Controller {
 		} else {
 			$data['pp_pro_uk_sort_order'] = $this->config->get('pp_pro_uk_sort_order');
 		}
-
-		$this->template = 'payment/pp_pro_uk.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+						
+		$this->response->setOutput($this->load->view('payment/pp_pro_uk.tpl', $data));
 	}
 
 	protected function validate() {

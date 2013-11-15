@@ -1,13 +1,12 @@
 <?php
 class ControllerStep4 extends Controller {
 	public function index() {
-		$this->template = 'step_4.tpl';
-		$this->children = array(
-			'header',
-			'footer'
-		);
+		$data = array();
+		
+		$data['header'] = $this->load->controller('header');
+		$data['footer'] = $this->load->controller('footer');
 
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('step_4.tpl', $data));
 	}
 }
 ?>

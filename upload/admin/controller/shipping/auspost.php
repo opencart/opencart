@@ -137,15 +137,12 @@ class ControllerShippingAusPost extends Controller {
 			$data['auspost_sort_order'] = $this->request->post['auspost_sort_order'];
 		} else {
 			$data['auspost_sort_order'] = $this->config->get('auspost_sort_order');
-		}                               
-		
-		$this->template = 'shipping/auspost.tpl';
-		$this->children = array(
-			'common/header',        
-			'common/footer' 
-		);
-		
-		$this->response->setOutput($this->render(TRUE), $this->config->get('config_compression'));
+		}  
+		                             
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+				
+		$this->response->setOutput($this->load->view('shipping/auspost.tpl', $data));
 	}
 	
 	protected function validate() {

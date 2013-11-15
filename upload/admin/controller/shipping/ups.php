@@ -776,13 +776,10 @@ class ControllerShippingUPS extends Controller {
 			$data['ups_debug'] = $this->config->get('ups_debug');
 		}
 		
-		$this->template = 'shipping/ups.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 		
- 		$this->response->setOutput($this->render());
+ 		$this->response->setOutput($this->load->view('shipping/ups.tpl', $data));
 	}
 	
 	protected function validate() {

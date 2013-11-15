@@ -134,14 +134,11 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		} else {
 			$data['perpetual_payments_sort_order'] = $this->config->get('perpetual_payments_sort_order');
 		}
-
-		$this->template = 'payment/perpetual_payments.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('payment/perpetual_payments.tpl', $data));
 	}
 
 	protected function validate() {

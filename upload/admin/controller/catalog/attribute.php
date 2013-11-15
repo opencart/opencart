@@ -257,9 +257,7 @@ class ControllerCatalogAttribute extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->template = 'catalog/attribute_list.tpl';
-				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('catalog/attribute_list.tpl', $data));
   	}
   
   	protected function getForm() {
@@ -354,13 +352,10 @@ class ControllerCatalogAttribute extends Controller {
 			$data['sort_order'] = '';
 		}
 		
-		$this->template = 'catalog/attribute_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());	
+		$this->response->setOutput($this->load->view('catalog/attribute_form.tpl', $data));	
   	}
   	
 	protected function validateForm() {

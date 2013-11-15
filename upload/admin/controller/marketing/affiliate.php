@@ -490,13 +490,10 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
-		$this->template = 'marketing/affiliate_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('marketing/affiliate_list.tpl', $data));
   	}
   
   	protected function getForm() {
@@ -902,14 +899,11 @@ class ControllerMarketingAffiliate extends Controller {
 		} else {
 			$data['confirm'] = '';
 		}
-
-		$this->template = 'marketing/affiliate_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('marketing/affiliate_form.tpl', $data));
 	}
 	
   	protected function validateForm() {
@@ -1096,10 +1090,8 @@ class ControllerMarketingAffiliate extends Controller {
 		$data['pagination'] = $pagination->render();
 		
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($transaction_total - $this->config->get('config_admin_limit'))) ? $transaction_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $transaction_total, ceil($transaction_total / $this->config->get('config_admin_limit')));
-
-		$this->template = 'marketing/affiliate_transaction.tpl';		
 		
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('marketing/affiliate_transaction.tpl', $data));
 	}
 		
 	public function autocomplete() {

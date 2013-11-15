@@ -144,14 +144,11 @@ class ControllerPaymentSagepay extends Controller {
 		} else {
 			$data['sagepay_sort_order'] = $this->config->get('sagepay_sort_order');
 		}
-
-		$this->template = 'payment/sagepay.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
 		
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('payment/sagepay.tpl', $data));
 	}
 
 	protected function validate() {

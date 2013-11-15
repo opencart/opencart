@@ -253,14 +253,11 @@ class ControllerLocalisationCountry extends Controller {
 		
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-
-		$this->template = 'localisation/country_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+	
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/country_list.tpl', $data));
 	}
 
 	protected function getForm() {
@@ -380,14 +377,11 @@ class ControllerLocalisationCountry extends Controller {
 		} else {
 			$data['status'] = '1';
 		}
-
-		$this->template = 'localisation/country_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('localisation/country_form.tpl', $data));
 	}
 
 	protected function validateForm() {

@@ -87,15 +87,12 @@ class ControllerShippingFree extends Controller {
 			$data['free_sort_order'] = $this->request->post['free_sort_order'];
 		} else {
 			$data['free_sort_order'] = $this->config->get('free_sort_order');
-		}				
-								
-		$this->template = 'shipping/free.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		}		
 				
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+										
+		$this->response->setOutput($this->load->view('shipping/free.tpl', $data));
 	}
 	
 	protected function validate() {

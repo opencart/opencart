@@ -138,14 +138,11 @@ class ControllerPaymentSagepayDirect extends Controller {
 		} else {
 			$data['sagepay_direct_sort_order'] = $this->config->get('sagepay_direct_sort_order');
 		}
-
-		$this->template = 'payment/sagepay_direct.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('payment/sagepay_direct.tpl', $data));
 	}
 
 	protected function validate() {

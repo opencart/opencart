@@ -198,13 +198,10 @@ class ControllerCatalogCategory extends Controller {
 		
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($category_total - $this->config->get('config_admin_limit'))) ? $category_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $category_total, $category_total, ceil($category_total / $this->config->get('config_admin_limit')));
 		
-		$this->template = 'catalog/category_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('catalog/category_list.tpl', $data));
 	}
 
 	protected function getForm() {
@@ -421,14 +418,11 @@ class ControllerCatalogCategory extends Controller {
 		$this->load->model('design/layout');
 		
 		$data['layouts'] = $this->model_design_layout->getLayouts();
-						
-		$this->template = 'catalog/category_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+								
+		$this->response->setOutput($this->load->view('catalog/category_form.tpl', $data));
 	}
 
 	protected function validateForm() {

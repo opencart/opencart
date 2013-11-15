@@ -66,14 +66,11 @@ class ControllerTotalReward extends Controller {
 		} else {
 			$data['reward_sort_order'] = $this->config->get('reward_sort_order');
 		}
-																		
-		$this->template = 'total/reward.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+																				
+		$this->response->setOutput($this->load->view('total/reward.tpl', $data));
 	}
 
 	protected function validate() {

@@ -157,13 +157,10 @@ class ControllerSettingStore extends Controller {
 			$data['selected'] = array();
 		}
 		
-		$this->template = 'setting/store_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('setting/store_list.tpl', $data));
 	}
 	 
 	public function getForm() { 
@@ -900,14 +897,11 @@ class ControllerSettingStore extends Controller {
 		} else {
 			$data['config_secure'] = '';
 		}
-
-		$this->template = 'setting/store_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('setting/store_form.tpl', $data));
 	}
 
 	protected function validateForm() {

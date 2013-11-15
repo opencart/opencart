@@ -61,15 +61,12 @@ class ControllerToolErrorLog extends Controller {
 			} else {
 				$data['log'] = file_get_contents($file, FILE_USE_INCLUDE_PATH, null);
 			}
-		}		
-
-		$this->template = 'tool/error_log.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		}	
+			
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('tool/error_log.tpl', $data));
 	}
 	
 	public function clear() {

@@ -251,13 +251,10 @@ class ControllerSaleCustomerBanIp extends Controller {
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 		
-		$this->template = 'sale/customer_ban_ip_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('sale/customer_ban_ip_list.tpl', $data));
   	}
   
   	protected function getForm() {
@@ -326,13 +323,10 @@ class ControllerSaleCustomerBanIp extends Controller {
       		$data['ip'] = '';
     	}
 		
-		$this->template = 'sale/customer_ban_ip_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->render());
+		$this->response->setOutput($this->load->view('sale/customer_ban_ip_form.tpl', $data));
 	}
 			 
   	protected function validateForm() {

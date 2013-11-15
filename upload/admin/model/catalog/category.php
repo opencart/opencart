@@ -172,8 +172,7 @@ class ModelCatalogCategory extends Model {
 		
 		$this->cache->delete('category');
 	} 
-	
-	// Function to repair any erroneous categories that are not in the category path table.
+
 	public function repairCategories($parent_id = 0) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "category WHERE parent_id = '" . (int)$parent_id . "'");
 		
@@ -259,7 +258,6 @@ class ModelCatalogCategory extends Model {
 
 		return $category_filter_data;
 	}
-
 	
 	public function getCategoryStores($category_id) {
 		$category_store_data = array();

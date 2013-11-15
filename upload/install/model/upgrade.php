@@ -80,7 +80,7 @@ class ModelUpgrade extends Model {
 			}
 			
 			if ($match) {
-				foreach($match[1] as $primary){
+				foreach($match[1] as $primary) {
 					$primary_data[] = $primary;
 				}
 			}
@@ -98,7 +98,7 @@ class ModelUpgrade extends Model {
 				$indexes[] = $match;
 			}
 			
-			foreach($indexes as $index){
+			foreach($indexes as $index) {
 				$key = '';
 				
 				foreach($index[1] as $field) {

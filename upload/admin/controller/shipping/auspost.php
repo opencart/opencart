@@ -150,7 +150,7 @@ class ControllerShippingAusPost extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!preg_match('/^[0-9]{4}$/', $this->request->post['auspost_postcode'])){
+		if (!preg_match('/^[0-9]{4}$/', $this->request->post['auspost_postcode'])) {
 			$this->error['postcode'] = $this->language->get('error_postcode');
 		}
 	

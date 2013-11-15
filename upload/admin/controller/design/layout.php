@@ -143,24 +143,24 @@ class ControllerDesignLayout extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
-		$this->data['insert'] = $this->url->link('design/layout/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('design/layout/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('design/layout/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('design/layout/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		 
-		$this->data['layouts'] = array();
+		$data['layouts'] = array();
 
-		$data = array(
+		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
@@ -169,46 +169,46 @@ class ControllerDesignLayout extends Controller {
 		
 		$layout_total = $this->model_design_layout->getTotalLayouts();
 		
-		$results = $this->model_design_layout->getLayouts($data);
+		$results = $this->model_design_layout->getLayouts($filter_data);
 		
 		foreach ($results as $result) {
-			$this->data['layouts'][] = array(
+			$data['layouts'][] = array(
 				'layout_id' => $result['layout_id'],
 				'name'      => $result['name'],
 				'edit'      => $this->url->link('design/layout/update', 'token=' . $this->session->data['token'] . '&layout_id=' . $result['layout_id'] . $url, 'SSL')
 			);
 		}
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_action'] = $this->language->get('column_action');	
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_action'] = $this->language->get('column_action');	
 
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_delete'] = $this->language->get('button_delete');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
 		 
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
 		if (isset($this->request->post['selected'])) {
-			$this->data['selected'] = (array)$this->request->post['selected'];
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['selected'] = array();
+			$data['selected'] = array();
 		}
 		
 		$url = '';
@@ -223,7 +223,7 @@ class ControllerDesignLayout extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
 		
 		$url = '';
 
@@ -241,12 +241,12 @@ class ControllerDesignLayout extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($layout_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($layout_total - $this->config->get('config_admin_limit'))) ? $layout_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $layout_total, ceil($layout_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($layout_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($layout_total - $this->config->get('config_admin_limit'))) ? $layout_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $layout_total, ceil($layout_total / $this->config->get('config_admin_limit')));
 		
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		$this->template = 'design/layout_list.tpl';
 		$this->children = array(
@@ -258,29 +258,29 @@ class ControllerDesignLayout extends Controller {
 	}
 
 	protected function getForm() {
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_default'] = $this->language->get('text_default');
+		$data['text_default'] = $this->language->get('text_default');
 				
-		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_store'] = $this->language->get('entry_store');
-		$this->data['entry_route'] = $this->language->get('entry_route');
+		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_store'] = $this->language->get('entry_store');
+		$data['entry_route'] = $this->language->get('entry_route');
 		
-		$this->data['button_save'] = $this->language->get('button_save');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_route_add'] = $this->language->get('button_route_add');
-		$this->data['button_remove'] = $this->language->get('button_remove');
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_route_add'] = $this->language->get('button_route_add');
+		$data['button_remove'] = $this->language->get('button_remove');
 
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
  		if (isset($this->error['name'])) {
-			$this->data['error_name'] = $this->error['name'];
+			$data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$data['error_name'] = '';
 		}
 				
 		$url = '';
@@ -297,48 +297,48 @@ class ControllerDesignLayout extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 							
 		if (!isset($this->request->get['layout_id'])) { 
-			$this->data['action'] = $this->url->link('design/layout/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('design/layout/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('design/layout/update', 'token=' . $this->session->data['token'] . '&layout_id=' . $this->request->get['layout_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('design/layout/update', 'token=' . $this->session->data['token'] . '&layout_id=' . $this->request->get['layout_id'] . $url, 'SSL');
 		}
 		
-		$this->data['cancel'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('design/layout', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
 		if (isset($this->request->get['layout_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$layout_info = $this->model_design_layout->getLayout($this->request->get['layout_id']);
 		}
 
 		if (isset($this->request->post['name'])) {
-			$this->data['name'] = $this->request->post['name'];
+			$data['name'] = $this->request->post['name'];
 		} elseif (!empty($layout_info)) {
-			$this->data['name'] = $layout_info['name'];
+			$data['name'] = $layout_info['name'];
 		} else {
-			$this->data['name'] = '';
+			$data['name'] = '';
 		}
 		
 		$this->load->model('setting/store');
 		
-		$this->data['stores'] = $this->model_setting_store->getStores();
+		$data['stores'] = $this->model_setting_store->getStores();
 		
 		if (isset($this->request->post['layout_route'])) {
-			$this->data['layout_routes'] = $this->request->post['layout_route'];
+			$data['layout_routes'] = $this->request->post['layout_route'];
 		} elseif (isset($this->request->get['layout_id'])) {
-			$this->data['layout_routes'] = $this->model_design_layout->getLayoutRoutes($this->request->get['layout_id']);
+			$data['layout_routes'] = $this->model_design_layout->getLayoutRoutes($this->request->get['layout_id']);
 		} else {
-			$this->data['layout_routes'] = array();
+			$data['layout_routes'] = array();
 		}	
 				
 		$this->template = 'design/layout_form.tpl';

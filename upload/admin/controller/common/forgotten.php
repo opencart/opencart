@@ -51,42 +51,42 @@ class ControllerCommonForgotten extends Controller {
 			$this->redirect($this->url->link('common/login', '', 'SSL'));
 		}
 
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard')
       	); 
 		
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_forgotten'),
 			'href' => $this->url->link('common/forgotten', '', 'SSL')
       	);
 		
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_your_email'] = $this->language->get('text_your_email');
-		$this->data['text_email'] = $this->language->get('text_email');
+		$data['text_your_email'] = $this->language->get('text_your_email');
+		$data['text_email'] = $this->language->get('text_email');
 
-		$this->data['entry_email'] = $this->language->get('entry_email');
+		$data['entry_email'] = $this->language->get('entry_email');
 
-		$this->data['button_reset'] = $this->language->get('button_reset');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_reset'] = $this->language->get('button_reset');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
-		$this->data['action'] = $this->url->link('common/forgotten', '', 'SSL');
+		$data['action'] = $this->url->link('common/forgotten', '', 'SSL');
  
-		$this->data['cancel'] = $this->url->link('common/login', '', 'SSL');
+		$data['cancel'] = $this->url->link('common/login', '', 'SSL');
     	
 		if (isset($this->request->post['email'])) {
-      		$this->data['email'] = $this->request->post['email'];
+      		$data['email'] = $this->request->post['email'];
 		} else {
-      		$this->data['email'] = '';
+      		$data['email'] = '';
     	}
 				
 		$this->template = 'common/forgotten.tpl';

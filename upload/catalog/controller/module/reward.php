@@ -1,6 +1,8 @@
 <?php
 class ControllerModuleReward extends Controller {
 	public function index() {
+		$data = array();
+		
 		$this->language->load('module/reward');
 					
 		$points = $this->customer->getRewardPoints();
@@ -13,29 +15,27 @@ class ControllerModuleReward extends Controller {
 			}
 		}
 					
-		$this->data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
+		$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
 		
-		$this->data['text_loading'] = $this->language->get('text_loading');
+		$data['text_loading'] = $this->language->get('text_loading');
 	
-		$this->data['entry_reward'] = sprintf($this->language->get('entry_reward'), $points_total);
+		$data['entry_reward'] = sprintf($this->language->get('entry_reward'), $points_total);
 		
-		$this->data['button_reward'] = $this->language->get('button_reward');
+		$data['button_reward'] = $this->language->get('button_reward');
 		
-		$this->data['status'] = ($points && $points_total && $this->config->get('reward_status'));
+		$data['status'] = ($points && $points_total && $this->config->get('reward_status'));
 		
 		if (isset($this->session->data['reward'])) {
-			$this->data['reward'] = $this->session->data['reward'];
+			$data['reward'] = $this->session->data['reward'];
 		} else {
-			$this->data['reward'] = '';
-		}
-		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/reward.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/reward.tpl';
-		} else {
-			$this->template = 'default/template/module/reward.tpl';
+			$data['reward'] = '';
 		}
 					
-		$this->response->setOutput($this->render());		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/reward.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/module/reward.tpl', $data);
+		} else {
+			return $this->load->view('default/template/module/reward.tpl', $data);
+		}		
 	}
 	
 	public function reward() {

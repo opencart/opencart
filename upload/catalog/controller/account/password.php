@@ -28,77 +28,73 @@ class ControllerAccountPassword extends Controller {
 	  		$this->redirect($this->url->link('account/account', '', 'SSL'));
     	}
 
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 		
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/password', '', 'SSL')
       	);
 			
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_password'] = $this->language->get('text_password');
+    	$data['text_password'] = $this->language->get('text_password');
 
-    	$this->data['entry_password'] = $this->language->get('entry_password');
-    	$this->data['entry_confirm'] = $this->language->get('entry_confirm');
+    	$data['entry_password'] = $this->language->get('entry_password');
+    	$data['entry_confirm'] = $this->language->get('entry_confirm');
 
-    	$this->data['button_continue'] = $this->language->get('button_continue');
-    	$this->data['button_back'] = $this->language->get('button_back');
+    	$data['button_continue'] = $this->language->get('button_continue');
+    	$data['button_back'] = $this->language->get('button_back');
     	
 		if (isset($this->error['password'])) { 
-			$this->data['error_password'] = $this->error['password'];
+			$data['error_password'] = $this->error['password'];
 		} else {
-			$this->data['error_password'] = '';
+			$data['error_password'] = '';
 		}
 
 		if (isset($this->error['confirm'])) { 
-			$this->data['error_confirm'] = $this->error['confirm'];
+			$data['error_confirm'] = $this->error['confirm'];
 		} else {
-			$this->data['error_confirm'] = '';
+			$data['error_confirm'] = '';
 		}
 	
-    	$this->data['action'] = $this->url->link('account/password', '', 'SSL');
+    	$data['action'] = $this->url->link('account/password', '', 'SSL');
 		
 		if (isset($this->request->post['password'])) {
-    		$this->data['password'] = $this->request->post['password'];
+    		$data['password'] = $this->request->post['password'];
 		} else {
-			$this->data['password'] = '';
+			$data['password'] = '';
 		}
 
 		if (isset($this->request->post['confirm'])) {
-    		$this->data['confirm'] = $this->request->post['confirm'];
+    		$data['confirm'] = $this->request->post['confirm'];
 		} else {
-			$this->data['confirm'] = '';
+			$data['confirm'] = '';
 		}
 
-    	$this->data['back'] = $this->url->link('account/account', '', 'SSL');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/password.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/account/password.tpl';
-		} else {
-			$this->template = 'default/template/account/password.tpl';
-		}
+    	$data['back'] = $this->url->link('account/account', '', 'SSL');
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'	
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 						
-		$this->response->setOutput($this->render());			
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/password.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/password.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/account/password.tpl', $data));
+		}		
   	}
   
   	protected function validate() {

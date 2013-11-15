@@ -1,22 +1,22 @@
 <?php
 class ControllerPaymentPayza extends Controller {
 	protected function index() {
-		$this->data['button_confirm'] = $this->language->get('button_confirm');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$this->load->model('checkout/order');
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
-		$this->data['action'] = 'https://secure.payza.com/checkout';
+		$data['action'] = 'https://secure.payza.com/checkout';
 
-		$this->data['ap_merchant'] = $this->config->get('payza_merchant');
-		$this->data['ap_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-		$this->data['ap_currency'] = $order_info['currency_code'];
-		$this->data['ap_purchasetype'] = 'Item';
-		$this->data['ap_itemname'] = $this->config->get('config_name') . ' - #' . $this->session->data['order_id'];
-		$this->data['ap_itemcode'] = $this->session->data['order_id'];
-		$this->data['ap_returnurl'] = $this->url->link('checkout/success');
-		$this->data['ap_cancelurl'] = $this->url->link('checkout/checkout', '', 'SSL');
+		$data['ap_merchant'] = $this->config->get('payza_merchant');
+		$data['ap_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+		$data['ap_currency'] = $order_info['currency_code'];
+		$data['ap_purchasetype'] = 'Item';
+		$data['ap_itemname'] = $this->config->get('config_name') . ' - #' . $this->session->data['order_id'];
+		$data['ap_itemcode'] = $this->session->data['order_id'];
+		$data['ap_returnurl'] = $this->url->link('checkout/success');
+		$data['ap_cancelurl'] = $this->url->link('checkout/checkout', '', 'SSL');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/payza.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/payza.tpl';
@@ -24,7 +24,11 @@ class ControllerPaymentPayza extends Controller {
 			$this->template = 'default/template/payment/payza.tpl';
 		}		
 		
-		$this->render();
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/payza.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/payza.tpl', $data);
+		} else {
+			return $this->load->view('default/template/payment/payza.tpl', $data);
+		}
 	}
 	
 	public function callback() {

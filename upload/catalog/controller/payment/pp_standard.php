@@ -3,16 +3,16 @@ class ControllerPaymentPPStandard extends Controller {
 	protected function index() {
 		$this->language->load('payment/pp_standard');
 		
-		$this->data['text_testmode'] = $this->language->get('text_testmode');		
+		$data['text_testmode'] = $this->language->get('text_testmode');		
     	
-		$this->data['button_confirm'] = $this->language->get('button_confirm');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
-		$this->data['testmode'] = $this->config->get('pp_standard_test');
+		$data['testmode'] = $this->config->get('pp_standard_test');
 		
 		if (!$this->config->get('pp_standard_test')) {
-    		$this->data['action'] = 'https://www.paypal.com/cgi-bin/webscr';
+    		$data['action'] = 'https://www.paypal.com/cgi-bin/webscr';
   		} else {
-			$this->data['action'] = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
+			$data['action'] = 'https://www.sandbox.paypal.com/cgi-bin/webscr';
 		}
 
 		$this->load->model('checkout/order');
@@ -20,10 +20,10 @@ class ControllerPaymentPPStandard extends Controller {
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		if ($order_info) {
-			$this->data['business'] = $this->config->get('pp_standard_email');
-			$this->data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');				
+			$data['business'] = $this->config->get('pp_standard_email');
+			$data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');				
 			
-			$this->data['products'] = array();
+			$data['products'] = array();
 			$subtotal = 0;
 
 			foreach ($this->cart->getProducts() as $product) {
@@ -47,7 +47,7 @@ class ControllerPaymentPPStandard extends Controller {
 				$price = $this->currency->format($product['price'], $order_info['currency_code'], false, false);
 				$subtotal += $price * $product['quantity'];
 
-				$this->data['products'][] = array(
+				$data['products'][] = array(
 					'name'     => $product['name'],
 					'model'    => $product['model'],
 					'price'    => $price,
@@ -57,12 +57,12 @@ class ControllerPaymentPPStandard extends Controller {
 				);
 			}	
 			
-			$this->data['discount_amount_cart'] = 0;
+			$data['discount_amount_cart'] = 0;
 
 			$total = $this->currency->format($order_info['total'], $order_info['currency_code'], false, false) - $subtotal;
 
 			if ($total > 0) {
-				$this->data['products'][] = array(
+				$data['products'][] = array(
 					'name'     => $this->language->get('text_total'),
 					'model'    => '',
 					'price'    => $total,
@@ -71,39 +71,37 @@ class ControllerPaymentPPStandard extends Controller {
 					'weight'   => 0
 				);	
 			} else {
-				$this->data['discount_amount_cart'] -= $total;
+				$data['discount_amount_cart'] -= $total;
 			}
 			
-			$this->data['currency_code'] = $order_info['currency_code'];
-			$this->data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');	
-			$this->data['last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');	
-			$this->data['address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');	
-			$this->data['address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');	
-			$this->data['city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');	
-			$this->data['zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');	
-			$this->data['country'] = $order_info['payment_iso_code_2'];
-			$this->data['email'] = $order_info['email'];
-			$this->data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-			$this->data['lc'] = $this->session->data['language'];
-			$this->data['return'] = $this->url->link('checkout/success');
-			$this->data['notify_url'] = $this->url->link('payment/pp_standard/callback', '', 'SSL');
-			$this->data['cancel_return'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$data['currency_code'] = $order_info['currency_code'];
+			$data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');	
+			$data['last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');	
+			$data['address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');	
+			$data['address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');	
+			$data['city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');	
+			$data['zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');	
+			$data['country'] = $order_info['payment_iso_code_2'];
+			$data['email'] = $order_info['email'];
+			$data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+			$data['lc'] = $this->session->data['language'];
+			$data['return'] = $this->url->link('checkout/success');
+			$data['notify_url'] = $this->url->link('payment/pp_standard/callback', '', 'SSL');
+			$data['cancel_return'] = $this->url->link('checkout/checkout', '', 'SSL');
 			
 			if (!$this->config->get('pp_standard_transaction')) {
-				$this->data['paymentaction'] = 'authorization';
+				$data['paymentaction'] = 'authorization';
 			} else {
-				$this->data['paymentaction'] = 'sale';
+				$data['paymentaction'] = 'sale';
 			}
 			
-			$this->data['custom'] = $this->session->data['order_id'];
-		
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/payment/pp_standard.tpl';
-			} else {
-				$this->template = 'default/template/payment/pp_standard.tpl';
-			}
+			$data['custom'] = $this->session->data['order_id'];
 	
-			$this->render();
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_standard.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/payment/pp_standard.tpl', $data);
+			} else {
+				return $this->load->view('default/template/payment/pp_standard.tpl', $data);
+			}	
 		}
 	}
 	

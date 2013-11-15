@@ -25,8 +25,8 @@
         <tr>
           <td>PHP Version:</td>
           <td><?php echo phpversion(); ?></td>
-          <td>5.0+</td>
-          <td align="center"><?php echo (phpversion() >= '5.0') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
+          <td>5.3+</td>
+          <td align="center"><?php echo (phpversion() >= '5.3') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
         </tr>
         <tr>
           <td>Register Globals:</td>

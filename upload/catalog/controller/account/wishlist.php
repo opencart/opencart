@@ -31,47 +31,47 @@ class ControllerAccountWishList extends Controller {
 						
 		$this->document->setTitle($this->language->get('heading_title'));	
       	
-		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(       	
+      	$data['breadcrumbs'][] = array(       	
         	'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 
-      	$this->data['breadcrumbs'][] = array(       	
+      	$data['breadcrumbs'][] = array(       	
         	'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/wishlist')
       	);
 								
-		$this->data['heading_title'] = $this->language->get('heading_title');	
+		$data['heading_title'] = $this->language->get('heading_title');	
 		
-		$this->data['text_empty'] = $this->language->get('text_empty');
+		$data['text_empty'] = $this->language->get('text_empty');
      	
-		$this->data['column_image'] = $this->language->get('column_image');
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_model'] = $this->language->get('column_model');
-		$this->data['column_stock'] = $this->language->get('column_stock');
-		$this->data['column_price'] = $this->language->get('column_price');
-		$this->data['column_action'] = $this->language->get('column_action');
+		$data['column_image'] = $this->language->get('column_image');
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_model'] = $this->language->get('column_model');
+		$data['column_stock'] = $this->language->get('column_stock');
+		$data['column_price'] = $this->language->get('column_price');
+		$data['column_action'] = $this->language->get('column_action');
 		
-		$this->data['button_continue'] = $this->language->get('button_continue');
-		$this->data['button_cart'] = $this->language->get('button_cart');
-		$this->data['button_remove'] = $this->language->get('button_remove');
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_cart'] = $this->language->get('button_cart');
+		$data['button_remove'] = $this->language->get('button_remove');
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 			
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 							
-		$this->data['products'] = array();
+		$data['products'] = array();
 	
 		foreach ($this->session->data['wishlist'] as $key => $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
@@ -103,7 +103,7 @@ class ControllerAccountWishList extends Controller {
 					$special = false;
 				}
 																			
-				$this->data['products'][] = array(
+				$data['products'][] = array(
 					'product_id' => $product_info['product_id'],
 					'thumb'      => $image,
 					'name'       => $product_info['name'],
@@ -119,24 +119,20 @@ class ControllerAccountWishList extends Controller {
 			}
 		}	
 
-		$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
+		$data['continue'] = $this->url->link('account/account', '', 'SSL');
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/wishlist.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/account/wishlist.tpl';
-		} else {
-			$this->template = 'default/template/account/wishlist.tpl';
-		}
-		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'	
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 							
-		$this->response->setOutput($this->render());		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/wishlist.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/wishlist.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/account/wishlist.tpl', $data));
+		}		
 	}
 	
 	public function add() {

@@ -1,6 +1,8 @@
 <?php 
 class ControllerModuleCart extends Controller {
 	public function index() {
+		$data = array();
+		
 		$this->language->load('module/cart');
 		
       	if (isset($this->request->get['remove'])) {
@@ -45,20 +47,20 @@ class ControllerModuleCart extends Controller {
 			array_multisort($sort_order, SORT_ASC, $total_data);			
 		}
 		
-		$this->data['totals'] = $total_data;
+		$data['totals'] = $total_data;
 		
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
-		$this->data['text_empty'] = $this->language->get('text_empty');
-		$this->data['text_cart'] = $this->language->get('text_cart');
-		$this->data['text_checkout'] = $this->language->get('text_checkout');
+		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+		$data['text_empty'] = $this->language->get('text_empty');
+		$data['text_cart'] = $this->language->get('text_cart');
+		$data['text_checkout'] = $this->language->get('text_checkout');
 		
-		$this->data['button_remove'] = $this->language->get('button_remove');
+		$data['button_remove'] = $this->language->get('button_remove');
 		
 		$this->load->model('tool/image');
 		
-		$this->data['products'] = array();
+		$data['products'] = array();
 			
 		foreach ($this->cart->getProducts() as $product) {
 			if ($product['image']) {
@@ -99,7 +101,7 @@ class ControllerModuleCart extends Controller {
 				$total = false;
 			}
 													
-			$this->data['products'][] = array(
+			$data['products'][] = array(
 				'key'      => $product['key'],
 				'thumb'    => $image,
 				'name'     => $product['name'],
@@ -113,11 +115,11 @@ class ControllerModuleCart extends Controller {
 		}
 		
 		// Gift Voucher
-		$this->data['vouchers'] = array();
+		$data['vouchers'] = array();
 		
 		if (!empty($this->session->data['vouchers'])) {
 			foreach ($this->session->data['vouchers'] as $key => $voucher) {
-				$this->data['vouchers'][] = array(
+				$data['vouchers'][] = array(
 					'key'         => $key,
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'])
@@ -125,16 +127,14 @@ class ControllerModuleCart extends Controller {
 			}
 		}
 					
-		$this->data['cart'] = $this->url->link('checkout/cart');
-		$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
-	
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/cart.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/cart.tpl';
-		} else {
-			$this->template = 'default/template/module/cart.tpl';
-		}
+		$data['cart'] = $this->url->link('checkout/cart');
+		$data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
 				
-		$this->response->setOutput($this->render());		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/cart.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/module/cart.tpl', $data);
+		} else {
+			return $this->load->view('default/template/module/cart.tpl', $data);
+		}		
 	}
 }
 ?>

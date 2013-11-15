@@ -7,38 +7,38 @@ class ControllerExtensionInstaller extends Controller {
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
-     	$this->data['heading_title'] = $this->language->get('heading_title');
+     	$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['entry_upload'] = $this->language->get('entry_upload');
-		$this->data['entry_overwrite'] = $this->language->get('entry_overwrite');
-		$this->data['entry_progress'] = $this->language->get('entry_progress');
+		$data['entry_upload'] = $this->language->get('entry_upload');
+		$data['entry_overwrite'] = $this->language->get('entry_overwrite');
+		$data['entry_progress'] = $this->language->get('entry_progress');
 
-		$this->data['help_upload'] = $this->language->get('help_upload');
+		$data['help_upload'] = $this->language->get('help_upload');
 
-		$this->data['button_upload'] = $this->language->get('button_upload');
-		$this->data['button_clear'] = $this->language->get('button_clear');
-		$this->data['button_continue'] = $this->language->get('button_continue');
+		$data['button_upload'] = $this->language->get('button_upload');
+		$data['button_clear'] = $this->language->get('button_clear');
+		$data['button_continue'] = $this->language->get('button_continue');
 		
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 		
 		$directories = glob(DIR_DOWNLOAD . 'temp-*', GLOB_ONLYDIR);
 		
 		if ($directories) {
-			$this->data['error_warning'] = $this->language->get('error_temporary');
+			$data['error_warning'] = $this->language->get('error_temporary');
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		$this->template = 'extension/installer.tpl';

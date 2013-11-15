@@ -8,48 +8,48 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 		if ($order_info) {      
 			$this->language->load('payment/klarna_invoice');
 			
-			$this->data['text_additional'] = $this->language->get('text_additional');
-			$this->data['text_payment_option'] = $this->language->get('text_payment_option');	
-			$this->data['text_wait'] = $this->language->get('text_wait');
-			$this->data['text_day'] = $this->language->get('text_day');	
-			$this->data['text_month'] = $this->language->get('text_month');	
-			$this->data['text_year'] = $this->language->get('text_year');	
-			$this->data['text_male'] = $this->language->get('text_male');	
-			$this->data['text_female'] = $this->language->get('text_female');		
+			$data['text_additional'] = $this->language->get('text_additional');
+			$data['text_payment_option'] = $this->language->get('text_payment_option');	
+			$data['text_wait'] = $this->language->get('text_wait');
+			$data['text_day'] = $this->language->get('text_day');	
+			$data['text_month'] = $this->language->get('text_month');	
+			$data['text_year'] = $this->language->get('text_year');	
+			$data['text_male'] = $this->language->get('text_male');	
+			$data['text_female'] = $this->language->get('text_female');		
 					
-			$this->data['entry_pno'] = $this->language->get('entry_pno');
-			$this->data['entry_dob'] = $this->language->get('entry_dob');	
-			$this->data['entry_gender'] = $this->language->get('entry_gender');	
-			$this->data['entry_street'] = $this->language->get('entry_street');	
-			$this->data['entry_house_no'] = $this->language->get('entry_house_no');	
-			$this->data['entry_house_ext'] = $this->language->get('entry_house_ext');
-			$this->data['entry_phone_no'] = $this->language->get('entry_phone_no');	
-			$this->data['entry_company'] = $this->language->get('entry_company');
+			$data['entry_pno'] = $this->language->get('entry_pno');
+			$data['entry_dob'] = $this->language->get('entry_dob');	
+			$data['entry_gender'] = $this->language->get('entry_gender');	
+			$data['entry_street'] = $this->language->get('entry_street');	
+			$data['entry_house_no'] = $this->language->get('entry_house_no');	
+			$data['entry_house_ext'] = $this->language->get('entry_house_ext');
+			$data['entry_phone_no'] = $this->language->get('entry_phone_no');	
+			$data['entry_company'] = $this->language->get('entry_company');
 			
-			$this->data['button_confirm'] = $this->language->get('button_confirm');		
+			$data['button_confirm'] = $this->language->get('button_confirm');		
 			
-			$this->data['days'] = array();
+			$data['days'] = array();
 			
 			for ($i = 1; $i <= 31; $i++) {
-				$this->data['days'][] = array(
+				$data['days'][] = array(
 					'text'  => sprintf('%02d', $i), 
 					'value' => $i
 				);
 			}
 					
-			$this->data['months'] = array();
+			$data['months'] = array();
 			
 			for ($i = 1; $i <= 12; $i++) {
-				$this->data['months'][] = array(
+				$data['months'][] = array(
 					'text'  => sprintf('%02d', $i), 
 					'value' => $i
 				);
 			}			
 				
-			$this->data['years'] = array();
+			$data['years'] = array();
 	
 			for ($i = date('Y'); $i >= 1900; $i--) {
-				$this->data['years'][] = array(
+				$data['years'][] = array(
 					'text'  => $i,
 					'value' => $i
 				);
@@ -109,9 +109,9 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 						
 			// Order must have identical shipping and billing address or have no shipping address at all
 			if ($this->cart->hasShipping() && !($order_info['payment_firstname'] == $order_info['shipping_firstname'] && $order_info['payment_lastname'] == $order_info['shipping_lastname'] && $order_info['payment_address_1'] == $order_info['shipping_address_1'] && $order_info['payment_address_2'] == $order_info['shipping_address_2'] && $order_info['payment_postcode'] == $order_info['shipping_postcode'] && $order_info['payment_city'] == $order_info['shipping_city'] && $order_info['payment_zone_id'] == $order_info['shipping_zone_id'] && $order_info['payment_zone_code'] == $order_info['shipping_zone_code'] && $order_info['payment_country_id'] == $order_info['shipping_country_id'] && $order_info['payment_country'] == $order_info['shipping_country'] && $order_info['payment_iso_code_3'] == $order_info['shipping_iso_code_3'])) {
-				$this->data['error_warning'] = $this->language->get('error_address_match');
+				$data['error_warning'] = $this->language->get('error_address_match');
 			} else {
-				$this->data['error_warning'] = '';
+				$data['error_warning'] = '';
 			}
 						
 			// The title stored in the DB gets truncated which causes order_info.tpl to not be displayed properly
@@ -119,45 +119,43 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 			
 			$klarna_invoice = $this->config->get('klarna_invoice');
 			
-			$this->data['merchant'] = $klarna_invoice[$order_info['payment_iso_code_3']]['merchant'];
-			$this->data['phone_number'] = $order_info['telephone'];
+			$data['merchant'] = $klarna_invoice[$order_info['payment_iso_code_3']]['merchant'];
+			$data['phone_number'] = $order_info['telephone'];
 						
 			if ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD') {
 				$address = $this->splitAddress($order_info['payment_address_1']);
 				
-				$this->data['street'] = $address[0];
-				$this->data['street_number'] = $address[1];
-				$this->data['street_extension'] = $address[2];
+				$data['street'] = $address[0];
+				$data['street_number'] = $address[1];
+				$data['street_extension'] = $address[2];
 				
 				if ($order_info['payment_iso_code_3'] == 'DEU') {
-					$this->data['street_number'] = trim($address[1] . ' ' . $address[2]);
+					$data['street_number'] = trim($address[1] . ' ' . $address[2]);
 				}
 			} else {
-				$this->data['street'] = '';
-				$this->data['street_number'] = '';
-				$this->data['street_extension'] = '';
+				$data['street'] = '';
+				$data['street_number'] = '';
+				$data['street_extension'] = '';
 			}
 
-			$this->data['company'] = $order_info['payment_company'];
-			$this->data['iso_code_2'] = $order_info['payment_iso_code_2'];
-			$this->data['iso_code_3'] = $order_info['payment_iso_code_3'];
+			$data['company'] = $order_info['payment_company'];
+			$data['iso_code_2'] = $order_info['payment_iso_code_2'];
+			$data['iso_code_3'] = $order_info['payment_iso_code_3'];
 			
 			// Get the invoice fee
 			$query = $this->db->query("SELECT `value` FROM `" . DB_PREFIX . "order_total` WHERE `order_id` = " . (int) $order_info['order_id'] . " AND `code` = 'klarna_fee'");
 			
 			if ($query->num_rows && !$query->row['value']) {
-				$this->data['klarna_fee'] = $query->row['value'];
+				$data['klarna_fee'] = $query->row['value'];
 			} else {
-				$this->data['klarna_fee'] = '';
+				$data['klarna_fee'] = '';
 			}
 	
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/klarna_invoice.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/payment/klarna_invoice.tpl';
+				return $this->load->view($this->config->get('config_template') . '/template/payment/klarna_invoice.tpl', $data);
 			} else {
-				$this->template = 'default/template/payment/klarna_invoice.tpl';
+				return $this->load->view('default/template/payment/klarna_invoice.tpl', $data);
 			}
-	
-			$this->render();
 		}
     }
 

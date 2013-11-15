@@ -1,61 +1,61 @@
 <?php
 class ControllerModuleShipping extends Controller {
 	public function index() {
+		$data = array();
+		
 		$this->language->load('module/shipping');
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_shipping'] = $this->language->get('text_shipping');
-		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
-		$this->data['text_select'] = $this->language->get('text_select');
-		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_loading'] = $this->language->get('text_loading');
+		$data['text_shipping'] = $this->language->get('text_shipping');
+		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
+		$data['text_select'] = $this->language->get('text_select');
+		$data['text_none'] = $this->language->get('text_none');
+		$data['text_loading'] = $this->language->get('text_loading');
 
-		$this->data['entry_country'] = $this->language->get('entry_country');
-		$this->data['entry_zone'] = $this->language->get('entry_zone');
-		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
+		$data['entry_country'] = $this->language->get('entry_country');
+		$data['entry_zone'] = $this->language->get('entry_zone');
+		$data['entry_postcode'] = $this->language->get('entry_postcode');
 	
-		$this->data['button_quote'] = $this->language->get('button_quote');
-		$this->data['button_shipping'] = $this->language->get('button_shipping');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');			
+		$data['button_quote'] = $this->language->get('button_quote');
+		$data['button_shipping'] = $this->language->get('button_shipping');
+		$data['button_cancel'] = $this->language->get('button_cancel');			
 
-		$this->data['status'] = $this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping();	
+		$data['status'] = $this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping();	
 							
 		if (isset($this->session->data['shipping_address']['country_id'])) {
-			$this->data['country_id'] = $this->session->data['shipping_address']['country_id'];			  	
+			$data['country_id'] = $this->session->data['shipping_address']['country_id'];			  	
 		} else {
-			$this->data['country_id'] = $this->config->get('config_country_id');
+			$data['country_id'] = $this->config->get('config_country_id');
 		}
 			
 		$this->load->model('localisation/country');
 		
-		$this->data['countries'] = $this->model_localisation_country->getCountries();
+		$data['countries'] = $this->model_localisation_country->getCountries();
 					
 		if (isset($this->session->data['shipping_address']['zone_id'])) {
-			$this->data['zone_id'] = $this->session->data['shipping_address']['zone_id'];			
+			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];			
 		} else {
-			$this->data['zone_id'] = '';
+			$data['zone_id'] = '';
 		}
 		
 		if (isset($this->session->data['shipping_address']['postcode'])) {
-			$this->data['postcode'] = $this->session->data['shipping_address']['postcode'];					
+			$data['postcode'] = $this->session->data['shipping_address']['postcode'];					
 		} else {
-			$this->data['postcode'] = '';
+			$data['postcode'] = '';
 		}
 		
 		if (isset($this->session->data['shipping_method'])) {
-			$this->data['shipping_method'] = $this->session->data['shipping_method']['code']; 
+			$data['shipping_method'] = $this->session->data['shipping_method']['code']; 
 		} else {
-			$this->data['shipping_method'] = '';
-		}
-		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/shipping.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/shipping.tpl';
-		} else {
-			$this->template = 'default/template/module/shipping.tpl';
+			$data['shipping_method'] = '';
 		}
 					
-		$this->response->setOutput($this->render());		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/shipping.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/module/shipping.tpl', $data);
+		} else {
+			return $this->load->view('default/template/module/shipping.tpl', $data);
+		}	
 	}	
 	
 	public function quote() {

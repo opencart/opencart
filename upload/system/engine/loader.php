@@ -9,6 +9,7 @@ final class Loader {
 	public function controller($route) {
 		$path = '';
 		
+		// Break apart the route
 		$parts = explode('/', str_replace(array('../', '..\\', '..'), '', (string)$route));
 		
 		foreach ($parts as $part) {
@@ -39,7 +40,7 @@ final class Loader {
 			$method = 'index';
 		}
 		
-		// function the arguments
+		// function arguments
 		$args = func_get_args();
 		
 		// Remove the route
@@ -52,7 +53,7 @@ final class Loader {
 					
 			if (is_callable(array($controller, $method))) {
 				return call_user_func_array(array($controller, $method), $args);
-			} else {				
+			} else {	
 				return false;
 			}
 		} else {
@@ -79,14 +80,8 @@ final class Loader {
 		$file = DIR_TEMPLATE . $template;
 		
 		if (file_exists($file)) {
-			foreach ($data as $key => $value) {
-				if (is_object($value)) {
-					${$key} = $value->index(); 
-				} else {
-					${$key} = $value;
-				}
-			}
-
+			extract($data);
+			
 			ob_start();
 
 			require($file);

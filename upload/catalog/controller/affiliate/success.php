@@ -5,47 +5,43 @@ class ControllerAffiliateSuccess extends Controller {
   
     	$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('affiliate/account', '', 'SSL')
       	);
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_success'),
 			'href' => $this->url->link('affiliate/success')
       	);
 
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
+		$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		
-    	$this->data['button_continue'] = $this->language->get('button_continue');
+    	$data['button_continue'] = $this->language->get('button_continue');
 		
-		$this->data['continue'] = $this->url->link('affiliate/account', '', 'SSL');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
-		} else {
-			$this->template = 'default/template/common/success.tpl';
-		}
+		$data['continue'] = $this->url->link('affiliate/account', '', 'SSL');
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'	
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 				
-		$this->response->setOutput($this->render());				
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
+		}					
   	}
 }
 ?>

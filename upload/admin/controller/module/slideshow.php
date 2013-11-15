@@ -17,77 +17,77 @@ class ControllerModuleSlideshow extends Controller {
 			$this->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 				
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_enabled'] = $this->language->get('text_enabled');
-		$this->data['text_disabled'] = $this->language->get('text_disabled');
-		$this->data['text_content_top'] = $this->language->get('text_content_top');
-		$this->data['text_content_bottom'] = $this->language->get('text_content_bottom');		
-		$this->data['text_column_left'] = $this->language->get('text_column_left');
-		$this->data['text_column_right'] = $this->language->get('text_column_right');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_content_top'] = $this->language->get('text_content_top');
+		$data['text_content_bottom'] = $this->language->get('text_content_bottom');		
+		$data['text_column_left'] = $this->language->get('text_column_left');
+		$data['text_column_right'] = $this->language->get('text_column_right');
 
-		$this->data['entry_banner'] = $this->language->get('entry_banner');
-		$this->data['entry_dimension'] = $this->language->get('entry_dimension');
-		$this->data['entry_width'] = $this->language->get('entry_width');
-		$this->data['entry_height'] = $this->language->get('entry_height');			
-		$this->data['entry_layout'] = $this->language->get('entry_layout');
-		$this->data['entry_position'] = $this->language->get('entry_position');
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		$data['entry_banner'] = $this->language->get('entry_banner');
+		$data['entry_dimension'] = $this->language->get('entry_dimension');
+		$data['entry_width'] = $this->language->get('entry_width');
+		$data['entry_height'] = $this->language->get('entry_height');			
+		$data['entry_layout'] = $this->language->get('entry_layout');
+		$data['entry_position'] = $this->language->get('entry_position');
+		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
-		$this->data['button_save'] = $this->language->get('button_save');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_module_add'] = $this->language->get('button_module_add');
-		$this->data['button_remove'] = $this->language->get('button_remove');
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_module_add'] = $this->language->get('button_module_add');
+		$data['button_remove'] = $this->language->get('button_remove');
 		
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->error['dimension'])) {
-			$this->data['error_dimension'] = $this->error['dimension'];
+			$data['error_dimension'] = $this->error['dimension'];
 		} else {
-			$this->data['error_dimension'] = array();
+			$data['error_dimension'] = array();
 		}
 		
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_module'),
 			'href' => $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('module/slideshow', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
-		$this->data['action'] = $this->url->link('module/slideshow', 'token=' . $this->session->data['token'], 'SSL');
+		$data['action'] = $this->url->link('module/slideshow', 'token=' . $this->session->data['token'], 'SSL');
 		
-		$this->data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL');
 		
-		$this->data['modules'] = array();
+		$data['modules'] = array();
 		
 		if (isset($this->request->post['slideshow_module'])) {
-			$this->data['modules'] = $this->request->post['slideshow_module'];
+			$data['modules'] = $this->request->post['slideshow_module'];
 		} elseif ($this->config->get('slideshow_module')) { 
-			$this->data['modules'] = $this->config->get('slideshow_module');
+			$data['modules'] = $this->config->get('slideshow_module');
 		}	
 						
 		$this->load->model('design/layout');
 		
-		$this->data['layouts'] = $this->model_design_layout->getLayouts();
+		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		$this->load->model('design/banner');
 		
-		$this->data['banners'] = $this->model_design_banner->getBanners();
+		$data['banners'] = $this->model_design_banner->getBanners();
 		
 		$this->template = 'module/slideshow.tpl';
 		$this->children = array(

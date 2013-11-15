@@ -1,53 +1,53 @@
 <?php
 class ControllerPaymentTwoCheckout extends Controller {
 	protected function index() {
-    	$this->data['button_confirm'] = $this->language->get('button_confirm');
+    	$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$this->load->model('checkout/order');
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
-		$this->data['action'] = 'https://www.2checkout.com/checkout/purchase';
+		$data['action'] = 'https://www.2checkout.com/checkout/purchase';
 
-		$this->data['sid'] = $this->config->get('twocheckout_account');
-		$this->data['currency_code'] = $order_info['currency_code'];
-		$this->data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-		$this->data['cart_order_id'] = $this->session->data['order_id'];
-		$this->data['card_holder_name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
-		$this->data['street_address'] = $order_info['payment_address_1'];
-		$this->data['city'] = $order_info['payment_city'];
+		$data['sid'] = $this->config->get('twocheckout_account');
+		$data['currency_code'] = $order_info['currency_code'];
+		$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+		$data['cart_order_id'] = $this->session->data['order_id'];
+		$data['card_holder_name'] = $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'];
+		$data['street_address'] = $order_info['payment_address_1'];
+		$data['city'] = $order_info['payment_city'];
 		
 		if ($order_info['payment_iso_code_2'] == 'US' || $order_info['payment_iso_code_2'] == 'CA') {
-			$this->data['state'] = $order_info['payment_zone'];
+			$data['state'] = $order_info['payment_zone'];
 		} else {
-			$this->data['state'] = 'XX';
+			$data['state'] = 'XX';
 		}
 		
-		$this->data['zip'] = $order_info['payment_postcode'];
-		$this->data['country'] = $order_info['payment_country'];
-		$this->data['email'] = $order_info['email'];
-		$this->data['phone'] = $order_info['telephone'];
+		$data['zip'] = $order_info['payment_postcode'];
+		$data['country'] = $order_info['payment_country'];
+		$data['email'] = $order_info['email'];
+		$data['phone'] = $order_info['telephone'];
 		
 		if ($this->cart->hasShipping()) {
-			$this->data['ship_street_address'] = $order_info['shipping_address_1'];
-			$this->data['ship_city'] = $order_info['shipping_city'];
-			$this->data['ship_state'] = $order_info['shipping_zone'];
-			$this->data['ship_zip'] = $order_info['shipping_postcode'];
-			$this->data['ship_country'] = $order_info['shipping_country'];
+			$data['ship_street_address'] = $order_info['shipping_address_1'];
+			$data['ship_city'] = $order_info['shipping_city'];
+			$data['ship_state'] = $order_info['shipping_zone'];
+			$data['ship_zip'] = $order_info['shipping_postcode'];
+			$data['ship_country'] = $order_info['shipping_country'];
 		} else {
-			$this->data['ship_street_address'] = $order_info['payment_address_1'];
-			$this->data['ship_city'] = $order_info['payment_city'];
-			$this->data['ship_state'] = $order_info['payment_zone'];
-			$this->data['ship_zip'] = $order_info['payment_postcode'];
-			$this->data['ship_country'] = $order_info['payment_country'];			
+			$data['ship_street_address'] = $order_info['payment_address_1'];
+			$data['ship_city'] = $order_info['payment_city'];
+			$data['ship_state'] = $order_info['payment_zone'];
+			$data['ship_zip'] = $order_info['payment_postcode'];
+			$data['ship_country'] = $order_info['payment_country'];			
 		}
 		
-		$this->data['products'] = array();
+		$data['products'] = array();
 		
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {
-			$this->data['products'][] = array(
+			$data['products'][] = array(
 				'product_id'  => $product['product_id'],
 				'name'        => $product['name'],
 				'description' => $product['name'],
@@ -57,28 +57,26 @@ class ControllerPaymentTwoCheckout extends Controller {
 		}
 
 		if ($this->config->get('twocheckout_test')) {
-			$this->data['demo'] = 'Y';
+			$data['demo'] = 'Y';
 		} else {
-			$this->data['demo'] = '';
+			$data['demo'] = '';
 		}
 
 		if ($this->config->get('twocheckout_display')) {
-			$this->data['display'] = 'Y';
+			$data['display'] = 'Y';
 		} else {
-			$this->data['display'] = '';
+			$data['display'] = '';
 		}
 		
-		$this->data['lang'] = $this->session->data['language'];
+		$data['lang'] = $this->session->data['language'];
 
-		$this->data['return_url'] = $this->url->link('payment/twocheckout/callback', '', 'SSL');
+		$data['return_url'] = $this->url->link('payment/twocheckout/callback', '', 'SSL');
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/twocheckout.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/twocheckout.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/payment/twocheckout.tpl', $data);
 		} else {
-			$this->template = 'default/template/payment/twocheckout.tpl';
-		}	
-		
-		$this->render();
+			return $this->load->view('default/template/payment/twocheckout.tpl', $data);
+		}
 	}
 	
 	public function callback() {

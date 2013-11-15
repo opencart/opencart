@@ -305,25 +305,25 @@ class ControllerMarketingAffiliate extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
-		$this->data['approve'] = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['insert'] = $this->url->link('marketing/affiliate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('marketing/affiliate/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['approve'] = $this->url->link('marketing/affiliate/approve', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('marketing/affiliate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('marketing/affiliate/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		$this->data['affiliates'] = array();
+		$data['affiliates'] = array();
 
-		$data = array(
+		$filter_data = array(
 			'filter_name'       => $filter_name, 
 			'filter_email'      => $filter_email, 
 			'filter_status'     => $filter_status, 
@@ -335,12 +335,12 @@ class ControllerMarketingAffiliate extends Controller {
 			'limit'             => $this->config->get('config_admin_limit')
 		);
 		
-		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($data);
+		$affiliate_total = $this->model_marketing_affiliate->getTotalAffiliates($filter_data);
 	
-		$results = $this->model_marketing_affiliate->getAffiliates($data);
+		$results = $this->model_marketing_affiliate->getAffiliates($filter_data);
  
     	foreach ($results as $result) {
-			$this->data['affiliates'][] = array(
+			$data['affiliates'][] = array(
 				'affiliate_id' => $result['affiliate_id'],
 				'name'         => $result['name'],
 				'email'        => $result['email'],
@@ -353,55 +353,55 @@ class ControllerMarketingAffiliate extends Controller {
 			);
 		}	
 					
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_enabled'] = $this->language->get('text_enabled');
-		$this->data['text_disabled'] = $this->language->get('text_disabled');
-		$this->data['text_yes'] = $this->language->get('text_yes');
-		$this->data['text_no'] = $this->language->get('text_no');		
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
-		$this->data['text_none'] = $this->language->get('text_none');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_yes'] = $this->language->get('text_yes');
+		$data['text_no'] = $this->language->get('text_no');		
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_none'] = $this->language->get('text_none');
 
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_email'] = $this->language->get('column_email');
-		$this->data['column_balance'] = $this->language->get('column_balance');
-		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_action'] = $this->language->get('column_action');		
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_email'] = $this->language->get('column_email');
+		$data['column_balance'] = $this->language->get('column_balance');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_action'] = $this->language->get('column_action');		
 		
-		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_email'] = $this->language->get('entry_email');
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_approved'] = $this->language->get('entry_approved');
-		$this->data['entry_date_added'] = $this->language->get('entry_date_added');
+		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_email'] = $this->language->get('entry_email');
+		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_approved'] = $this->language->get('entry_approved');
+		$data['entry_date_added'] = $this->language->get('entry_date_added');
 				
-		$this->data['button_approve'] = $this->language->get('button_approve');
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_delete'] = $this->language->get('button_delete');
-		$this->data['button_filter'] = $this->language->get('button_filter');
+		$data['button_approve'] = $this->language->get('button_approve');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_filter'] = $this->language->get('button_filter');
 
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
 		if (isset($this->request->post['selected'])) {
-			$this->data['selected'] = (array)$this->request->post['selected'];
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['selected'] = array();
+			$data['selected'] = array();
 		}
 				
 		$url = '';
@@ -436,10 +436,10 @@ class ControllerMarketingAffiliate extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
-		$this->data['sort_email'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&sort=a.email' . $url, 'SSL');
-		$this->data['sort_status'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&sort=a.status' . $url, 'SSL');
-		$this->data['sort_date_added'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&sort=a.date_added' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
+		$data['sort_email'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&sort=a.email' . $url, 'SSL');
+		$data['sort_status'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&sort=a.status' . $url, 'SSL');
+		$data['sort_date_added'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . '&sort=a.date_added' . $url, 'SSL');
 		
 		$url = '';
 
@@ -477,18 +477,18 @@ class ControllerMarketingAffiliate extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($affiliate_total - $this->config->get('config_admin_limit'))) ? $affiliate_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $affiliate_total, ceil($affiliate_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($affiliate_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($affiliate_total - $this->config->get('config_admin_limit'))) ? $affiliate_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $affiliate_total, ceil($affiliate_total / $this->config->get('config_admin_limit')));
 
-		$this->data['filter_name'] = $filter_name;
-		$this->data['filter_email'] = $filter_email;
-		$this->data['filter_status'] = $filter_status;
-		$this->data['filter_approved'] = $filter_approved;
-		$this->data['filter_date_added'] = $filter_date_added;
+		$data['filter_name'] = $filter_name;
+		$data['filter_email'] = $filter_email;
+		$data['filter_status'] = $filter_status;
+		$data['filter_approved'] = $filter_approved;
+		$data['filter_date_added'] = $filter_date_added;
 		
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		$this->template = 'marketing/affiliate_list.tpl';
 		$this->children = array(
@@ -500,133 +500,133 @@ class ControllerMarketingAffiliate extends Controller {
   	}
   
   	protected function getForm() {
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
  
-    	$this->data['text_enabled'] = $this->language->get('text_enabled');
-    	$this->data['text_disabled'] = $this->language->get('text_disabled');
-		$this->data['text_select'] = $this->language->get('text_select');
-		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_cheque'] = $this->language->get('text_cheque');
-		$this->data['text_paypal'] = $this->language->get('text_paypal');
-		$this->data['text_bank'] = $this->language->get('text_bank');
+    	$data['text_enabled'] = $this->language->get('text_enabled');
+    	$data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_select'] = $this->language->get('text_select');
+		$data['text_none'] = $this->language->get('text_none');
+		$data['text_cheque'] = $this->language->get('text_cheque');
+		$data['text_paypal'] = $this->language->get('text_paypal');
+		$data['text_bank'] = $this->language->get('text_bank');
 				
-    	$this->data['entry_firstname'] = $this->language->get('entry_firstname');
-    	$this->data['entry_lastname'] = $this->language->get('entry_lastname');
-    	$this->data['entry_email'] = $this->language->get('entry_email');
-    	$this->data['entry_telephone'] = $this->language->get('entry_telephone');
-    	$this->data['entry_fax'] = $this->language->get('entry_fax');
-    	$this->data['entry_company'] = $this->language->get('entry_company');
-		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
-		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
-		$this->data['entry_city'] = $this->language->get('entry_city');
-		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
-		$this->data['entry_country'] = $this->language->get('entry_country');
-		$this->data['entry_zone'] = $this->language->get('entry_zone');
-		$this->data['entry_code'] = $this->language->get('entry_code');
-		$this->data['entry_commission'] = $this->language->get('entry_commission');
-		$this->data['entry_tax'] = $this->language->get('entry_tax');
-		$this->data['entry_payment'] = $this->language->get('entry_payment');
-		$this->data['entry_cheque'] = $this->language->get('entry_cheque');
-		$this->data['entry_paypal'] = $this->language->get('entry_paypal');
-		$this->data['entry_bank_name'] = $this->language->get('entry_bank_name');
-		$this->data['entry_bank_branch_number'] = $this->language->get('entry_bank_branch_number');
-		$this->data['entry_bank_swift_code'] = $this->language->get('entry_bank_swift_code');
-		$this->data['entry_bank_account_name'] = $this->language->get('entry_bank_account_name');
-		$this->data['entry_bank_account_number'] = $this->language->get('entry_bank_account_number');
-		$this->data['entry_password'] = $this->language->get('entry_password');
-    	$this->data['entry_confirm'] = $this->language->get('entry_confirm');
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_amount'] = $this->language->get('entry_amount');
- 		$this->data['entry_description'] = $this->language->get('entry_description');
+    	$data['entry_firstname'] = $this->language->get('entry_firstname');
+    	$data['entry_lastname'] = $this->language->get('entry_lastname');
+    	$data['entry_email'] = $this->language->get('entry_email');
+    	$data['entry_telephone'] = $this->language->get('entry_telephone');
+    	$data['entry_fax'] = $this->language->get('entry_fax');
+    	$data['entry_company'] = $this->language->get('entry_company');
+		$data['entry_address_1'] = $this->language->get('entry_address_1');
+		$data['entry_address_2'] = $this->language->get('entry_address_2');
+		$data['entry_city'] = $this->language->get('entry_city');
+		$data['entry_postcode'] = $this->language->get('entry_postcode');
+		$data['entry_country'] = $this->language->get('entry_country');
+		$data['entry_zone'] = $this->language->get('entry_zone');
+		$data['entry_code'] = $this->language->get('entry_code');
+		$data['entry_commission'] = $this->language->get('entry_commission');
+		$data['entry_tax'] = $this->language->get('entry_tax');
+		$data['entry_payment'] = $this->language->get('entry_payment');
+		$data['entry_cheque'] = $this->language->get('entry_cheque');
+		$data['entry_paypal'] = $this->language->get('entry_paypal');
+		$data['entry_bank_name'] = $this->language->get('entry_bank_name');
+		$data['entry_bank_branch_number'] = $this->language->get('entry_bank_branch_number');
+		$data['entry_bank_swift_code'] = $this->language->get('entry_bank_swift_code');
+		$data['entry_bank_account_name'] = $this->language->get('entry_bank_account_name');
+		$data['entry_bank_account_number'] = $this->language->get('entry_bank_account_number');
+		$data['entry_password'] = $this->language->get('entry_password');
+    	$data['entry_confirm'] = $this->language->get('entry_confirm');
+		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_amount'] = $this->language->get('entry_amount');
+ 		$data['entry_description'] = $this->language->get('entry_description');
   		
-		$this->data['help_code'] = $this->language->get('help_code');
-		$this->data['help_commission'] = $this->language->get('help_commission');
+		$data['help_code'] = $this->language->get('help_code');
+		$data['help_commission'] = $this->language->get('help_commission');
 
-		$this->data['button_save'] = $this->language->get('button_save');
-    	$this->data['button_cancel'] = $this->language->get('button_cancel');
-    	$this->data['button_transaction_add'] = $this->language->get('button_transaction_add');
-    	$this->data['button_remove'] = $this->language->get('button_remove');
+		$data['button_save'] = $this->language->get('button_save');
+    	$data['button_cancel'] = $this->language->get('button_cancel');
+    	$data['button_transaction_add'] = $this->language->get('button_transaction_add');
+    	$data['button_remove'] = $this->language->get('button_remove');
 	
-		$this->data['tab_general'] = $this->language->get('tab_general');
-		$this->data['tab_payment'] = $this->language->get('tab_payment');
-		$this->data['tab_transaction'] = $this->language->get('tab_transaction');
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_payment'] = $this->language->get('tab_payment');
+		$data['tab_transaction'] = $this->language->get('tab_transaction');
 
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
  		if (isset($this->error['firstname'])) {
-			$this->data['error_firstname'] = $this->error['firstname'];
+			$data['error_firstname'] = $this->error['firstname'];
 		} else {
-			$this->data['error_firstname'] = '';
+			$data['error_firstname'] = '';
 		}
 
  		if (isset($this->error['lastname'])) {
-			$this->data['error_lastname'] = $this->error['lastname'];
+			$data['error_lastname'] = $this->error['lastname'];
 		} else {
-			$this->data['error_lastname'] = '';
+			$data['error_lastname'] = '';
 		}
 		
  		if (isset($this->error['email'])) {
-			$this->data['error_email'] = $this->error['email'];
+			$data['error_email'] = $this->error['email'];
 		} else {
-			$this->data['error_email'] = '';
+			$data['error_email'] = '';
 		}
 		
  		if (isset($this->error['telephone'])) {
-			$this->data['error_telephone'] = $this->error['telephone'];
+			$data['error_telephone'] = $this->error['telephone'];
 		} else {
-			$this->data['error_telephone'] = '';
+			$data['error_telephone'] = '';
 		}
 		
  		if (isset($this->error['password'])) {
-			$this->data['error_password'] = $this->error['password'];
+			$data['error_password'] = $this->error['password'];
 		} else {
-			$this->data['error_password'] = '';
+			$data['error_password'] = '';
 		}
 		
  		if (isset($this->error['confirm'])) {
-			$this->data['error_confirm'] = $this->error['confirm'];
+			$data['error_confirm'] = $this->error['confirm'];
 		} else {
-			$this->data['error_confirm'] = '';
+			$data['error_confirm'] = '';
 		}
 		
 		if (isset($this->error['address_1'])) {
-			$this->data['error_address_1'] = $this->error['address_1'];
+			$data['error_address_1'] = $this->error['address_1'];
 		} else {
-			$this->data['error_address_1'] = '';
+			$data['error_address_1'] = '';
 		}
 		
 		if (isset($this->error['city'])) {
-			$this->data['error_city'] = $this->error['city'];
+			$data['error_city'] = $this->error['city'];
 		} else {
-			$this->data['error_city'] = '';
+			$data['error_city'] = '';
 		}
 		
 		if (isset($this->error['postcode'])) {
-			$this->data['error_postcode'] = $this->error['postcode'];
+			$data['error_postcode'] = $this->error['postcode'];
 		} else {
-			$this->data['error_postcode'] = '';
+			$data['error_postcode'] = '';
 		}
 		
 		if (isset($this->error['country'])) {
-			$this->data['error_country'] = $this->error['country'];
+			$data['error_country'] = $this->error['country'];
 		} else {
-			$this->data['error_country'] = '';
+			$data['error_country'] = '';
 		}
 		
 		if (isset($this->error['zone'])) {
-			$this->data['error_zone'] = $this->error['zone'];
+			$data['error_zone'] = $this->error['zone'];
 		} else {
-			$this->data['error_zone'] = '';
+			$data['error_zone'] = '';
 		}
 
 		if (isset($this->error['code'])) {
-			$this->data['error_code'] = $this->error['code'];
+			$data['error_code'] = $this->error['code'];
 		} else {
-			$this->data['error_code'] = '';
+			$data['error_code'] = '';
 		}
 						
 		$url = '';
@@ -663,244 +663,244 @@ class ControllerMarketingAffiliate extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 
 		if (!isset($this->request->get['affiliate_id'])) {
-			$this->data['action'] = $this->url->link('marketing/affiliate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/affiliate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $this->request->get['affiliate_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $this->request->get['affiliate_id'] . $url, 'SSL');
 		}
 		  
-    	$this->data['cancel'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL');
+    	$data['cancel'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
     	if (isset($this->request->get['affiliate_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$affiliate_info = $this->model_marketing_affiliate->getAffiliate($this->request->get['affiliate_id']);
     	}
 
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->request->get['affiliate_id'])) {
-			$this->data['affiliate_id'] = $this->request->get['affiliate_id'];
+			$data['affiliate_id'] = $this->request->get['affiliate_id'];
 		} else {
-			$this->data['affiliate_id'] = 0;
+			$data['affiliate_id'] = 0;
 		}
 					
     	if (isset($this->request->post['firstname'])) {
-      		$this->data['firstname'] = $this->request->post['firstname'];
+      		$data['firstname'] = $this->request->post['firstname'];
 		} elseif (!empty($affiliate_info)) { 
-			$this->data['firstname'] = $affiliate_info['firstname'];
+			$data['firstname'] = $affiliate_info['firstname'];
 		} else {
-      		$this->data['firstname'] = '';
+      		$data['firstname'] = '';
     	}
 
     	if (isset($this->request->post['lastname'])) {
-      		$this->data['lastname'] = $this->request->post['lastname'];
+      		$data['lastname'] = $this->request->post['lastname'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['lastname'] = $affiliate_info['lastname'];
+			$data['lastname'] = $affiliate_info['lastname'];
 		} else {
-      		$this->data['lastname'] = '';
+      		$data['lastname'] = '';
     	}
 
     	if (isset($this->request->post['email'])) {
-      		$this->data['email'] = $this->request->post['email'];
+      		$data['email'] = $this->request->post['email'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['email'] = $affiliate_info['email'];
+			$data['email'] = $affiliate_info['email'];
 		} else {
-      		$this->data['email'] = '';
+      		$data['email'] = '';
     	}
 
     	if (isset($this->request->post['telephone'])) {
-      		$this->data['telephone'] = $this->request->post['telephone'];
+      		$data['telephone'] = $this->request->post['telephone'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['telephone'] = $affiliate_info['telephone'];
+			$data['telephone'] = $affiliate_info['telephone'];
 		} else {
-      		$this->data['telephone'] = '';
+      		$data['telephone'] = '';
     	}
 
     	if (isset($this->request->post['fax'])) {
-      		$this->data['fax'] = $this->request->post['fax'];
+      		$data['fax'] = $this->request->post['fax'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['fax'] = $affiliate_info['fax'];
+			$data['fax'] = $affiliate_info['fax'];
 		} else {
-      		$this->data['fax'] = '';
+      		$data['fax'] = '';
     	}
 
     	if (isset($this->request->post['company'])) {
-      		$this->data['company'] = $this->request->post['company'];
+      		$data['company'] = $this->request->post['company'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['company'] = $affiliate_info['company'];
+			$data['company'] = $affiliate_info['company'];
 		} else {
-      		$this->data['company'] = '';
+      		$data['company'] = '';
     	}
 		
     	if (isset($this->request->post['address_1'])) {
-      		$this->data['address_1'] = $this->request->post['address_1'];
+      		$data['address_1'] = $this->request->post['address_1'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['address_1'] = $affiliate_info['address_1'];
+			$data['address_1'] = $affiliate_info['address_1'];
 		} else {
-      		$this->data['address_1'] = '';
+      		$data['address_1'] = '';
     	}
 				
     	if (isset($this->request->post['address_2'])) {
-      		$this->data['address_2'] = $this->request->post['address_2'];
+      		$data['address_2'] = $this->request->post['address_2'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['address_2'] = $affiliate_info['address_2'];
+			$data['address_2'] = $affiliate_info['address_2'];
 		} else {
-      		$this->data['address_2'] = '';
+      		$data['address_2'] = '';
     	}
 
     	if (isset($this->request->post['city'])) {
-      		$this->data['city'] = $this->request->post['city'];
+      		$data['city'] = $this->request->post['city'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['city'] = $affiliate_info['city'];
+			$data['city'] = $affiliate_info['city'];
 		} else {
-      		$this->data['city'] = '';
+      		$data['city'] = '';
     	}
 
     	if (isset($this->request->post['postcode'])) {
-      		$this->data['postcode'] = $this->request->post['postcode'];
+      		$data['postcode'] = $this->request->post['postcode'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['postcode'] = $affiliate_info['postcode'];
+			$data['postcode'] = $affiliate_info['postcode'];
 		} else {
-      		$this->data['postcode'] = '';
+      		$data['postcode'] = '';
     	}
     	
 		if (isset($this->request->post['country_id'])) {
-      		$this->data['country_id'] = $this->request->post['country_id'];
+      		$data['country_id'] = $this->request->post['country_id'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['country_id'] = $affiliate_info['country_id'];
+			$data['country_id'] = $affiliate_info['country_id'];
 		} else {
-      		$this->data['country_id'] = '';
+      		$data['country_id'] = '';
     	}
 		
 		$this->load->model('localisation/country');
 		
-		$this->data['countries'] = $this->model_localisation_country->getCountries();
+		$data['countries'] = $this->model_localisation_country->getCountries();
 				
 		if (isset($this->request->post['zone_id'])) {
-      		$this->data['zone_id'] = $this->request->post['zone_id'];
+      		$data['zone_id'] = $this->request->post['zone_id'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['zone_id'] = $affiliate_info['zone_id'];
+			$data['zone_id'] = $affiliate_info['zone_id'];
 		} else {
-      		$this->data['zone_id'] = '';
+      		$data['zone_id'] = '';
     	}
 
 		if (isset($this->request->post['code'])) {
-      		$this->data['code'] = $this->request->post['code'];
+      		$data['code'] = $this->request->post['code'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['code'] = $affiliate_info['code'];
+			$data['code'] = $affiliate_info['code'];
 		} else {
-      		$this->data['code'] = uniqid();
+      		$data['code'] = uniqid();
     	}
 		
 		if (isset($this->request->post['commission'])) {
-      		$this->data['commission'] = $this->request->post['commission'];
+      		$data['commission'] = $this->request->post['commission'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['commission'] = $affiliate_info['commission'];
+			$data['commission'] = $affiliate_info['commission'];
 		} else {
-      		$this->data['commission'] = $this->config->get('config_commission');
+      		$data['commission'] = $this->config->get('config_commission');
     	}
 		
 		if (isset($this->request->post['tax'])) {
-      		$this->data['tax'] = $this->request->post['tax'];
+      		$data['tax'] = $this->request->post['tax'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['tax'] = $affiliate_info['tax'];
+			$data['tax'] = $affiliate_info['tax'];
 		} else {
-      		$this->data['tax'] = '';
+      		$data['tax'] = '';
     	}		
 
 		if (isset($this->request->post['payment'])) {
-      		$this->data['payment'] = $this->request->post['payment'];
+      		$data['payment'] = $this->request->post['payment'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['payment'] = $affiliate_info['payment'];
+			$data['payment'] = $affiliate_info['payment'];
 		} else {
-      		$this->data['payment'] = 'cheque';
+      		$data['payment'] = 'cheque';
     	}	
 
 		if (isset($this->request->post['cheque'])) {
-      		$this->data['cheque'] = $this->request->post['cheque'];
+      		$data['cheque'] = $this->request->post['cheque'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['cheque'] = $affiliate_info['cheque'];
+			$data['cheque'] = $affiliate_info['cheque'];
 		} else {
-      		$this->data['cheque'] = '';
+      		$data['cheque'] = '';
     	}	
 
 		if (isset($this->request->post['paypal'])) {
-      		$this->data['paypal'] = $this->request->post['paypal'];
+      		$data['paypal'] = $this->request->post['paypal'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['paypal'] = $affiliate_info['paypal'];
+			$data['paypal'] = $affiliate_info['paypal'];
 		} else {
-      		$this->data['paypal'] = '';
+      		$data['paypal'] = '';
     	}	
 
 		if (isset($this->request->post['bank_name'])) {
-      		$this->data['bank_name'] = $this->request->post['bank_name'];
+      		$data['bank_name'] = $this->request->post['bank_name'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['bank_name'] = $affiliate_info['bank_name'];
+			$data['bank_name'] = $affiliate_info['bank_name'];
 		} else {
-      		$this->data['bank_name'] = '';
+      		$data['bank_name'] = '';
     	}	
 
 		if (isset($this->request->post['bank_branch_number'])) {
-      		$this->data['bank_branch_number'] = $this->request->post['bank_branch_number'];
+      		$data['bank_branch_number'] = $this->request->post['bank_branch_number'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['bank_branch_number'] = $affiliate_info['bank_branch_number'];
+			$data['bank_branch_number'] = $affiliate_info['bank_branch_number'];
 		} else {
-      		$this->data['bank_branch_number'] = '';
+      		$data['bank_branch_number'] = '';
     	}
 
 		if (isset($this->request->post['bank_swift_code'])) {
-      		$this->data['bank_swift_code'] = $this->request->post['bank_swift_code'];
+      		$data['bank_swift_code'] = $this->request->post['bank_swift_code'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['bank_swift_code'] = $affiliate_info['bank_swift_code'];
+			$data['bank_swift_code'] = $affiliate_info['bank_swift_code'];
 		} else {
-      		$this->data['bank_swift_code'] = '';
+      		$data['bank_swift_code'] = '';
     	}
 
 		if (isset($this->request->post['bank_account_name'])) {
-      		$this->data['bank_account_name'] = $this->request->post['bank_account_name'];
+      		$data['bank_account_name'] = $this->request->post['bank_account_name'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['bank_account_name'] = $affiliate_info['bank_account_name'];
+			$data['bank_account_name'] = $affiliate_info['bank_account_name'];
 		} else {
-      		$this->data['bank_account_name'] = '';
+      		$data['bank_account_name'] = '';
     	}
 
 		if (isset($this->request->post['bank_account_number'])) {
-      		$this->data['bank_account_number'] = $this->request->post['bank_account_number'];
+      		$data['bank_account_number'] = $this->request->post['bank_account_number'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['bank_account_number'] = $affiliate_info['bank_account_number'];
+			$data['bank_account_number'] = $affiliate_info['bank_account_number'];
 		} else {
-      		$this->data['bank_account_number'] = '';
+      		$data['bank_account_number'] = '';
     	}
 																												
     	if (isset($this->request->post['status'])) {
-      		$this->data['status'] = $this->request->post['status'];
+      		$data['status'] = $this->request->post['status'];
     	} elseif (!empty($affiliate_info)) { 
-			$this->data['status'] = $affiliate_info['status'];
+			$data['status'] = $affiliate_info['status'];
 		} else {
-      		$this->data['status'] = 1;
+      		$data['status'] = 1;
     	}
 
     	if (isset($this->request->post['password'])) { 
-			$this->data['password'] = $this->request->post['password'];
+			$data['password'] = $this->request->post['password'];
 		} else {
-			$this->data['password'] = '';
+			$data['password'] = '';
 		}
 		
 		if (isset($this->request->post['confirm'])) { 
-    		$this->data['confirm'] = $this->request->post['confirm'];
+    		$data['confirm'] = $this->request->post['confirm'];
 		} else {
-			$this->data['confirm'] = '';
+			$data['confirm'] = '';
 		}
 
 		$this->template = 'marketing/affiliate_form.tpl';
@@ -1047,23 +1047,23 @@ class ControllerMarketingAffiliate extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'marketing/affiliate')) { 
 			$this->model_marketing_affiliate->addTransaction($this->request->get['affiliate_id'], $this->request->post['description'], $this->request->post['amount']);
 				
-			$this->data['success'] = $this->language->get('text_success');
+			$data['success'] = $this->language->get('text_success');
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && !$this->user->hasPermission('modify', 'marketing/affiliate')) {
-			$this->data['error_warning'] = $this->language->get('error_permission');
+			$data['error_warning'] = $this->language->get('error_permission');
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_balance'] = $this->language->get('text_balance');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_balance'] = $this->language->get('text_balance');
 		
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_description'] = $this->language->get('column_description');
-		$this->data['column_amount'] = $this->language->get('column_amount');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_description'] = $this->language->get('column_description');
+		$data['column_amount'] = $this->language->get('column_amount');
 		
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -1071,19 +1071,19 @@ class ControllerMarketingAffiliate extends Controller {
 			$page = 1;
 		}  
 		
-		$this->data['transactions'] = array();
+		$data['transactions'] = array();
 			
 		$results = $this->model_marketing_affiliate->getTransactions($this->request->get['affiliate_id'], ($page - 1) * 10, 10);
       		
 		foreach ($results as $result) {
-        	$this->data['transactions'][] = array(
+        	$data['transactions'][] = array(
 				'amount'      => $this->currency->format($result['amount'], $this->config->get('config_currency')),
 				'description' => $result['description'],
         		'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added']))
         	);
       	}			
 		
-		$this->data['balance'] = $this->currency->format($this->model_marketing_affiliate->getTransactionTotal($this->request->get['affiliate_id']), $this->config->get('config_currency'));
+		$data['balance'] = $this->currency->format($this->model_marketing_affiliate->getTransactionTotal($this->request->get['affiliate_id']), $this->config->get('config_currency'));
 		
 		$transaction_total = $this->model_marketing_affiliate->getTotalTransactions($this->request->get['affiliate_id']);
 			
@@ -1093,9 +1093,9 @@ class ControllerMarketingAffiliate extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('marketing/affiliate/transaction', 'token=' . $this->session->data['token'] . '&affiliate_id=' . $this->request->get['affiliate_id'] . '&page={page}', 'SSL');
 			
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($transaction_total - $this->config->get('config_admin_limit'))) ? $transaction_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $transaction_total, ceil($transaction_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($transaction_total - $this->config->get('config_admin_limit'))) ? $transaction_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $transaction_total, ceil($transaction_total / $this->config->get('config_admin_limit')));
 
 		$this->template = 'marketing/affiliate_transaction.tpl';		
 		
@@ -1121,14 +1121,14 @@ class ControllerMarketingAffiliate extends Controller {
 			
 			$this->load->model('marketing/affiliate');
 			
-			$data = array(
+			$filter_data = array(
 				'filter_name'  => $filter_name,
 				'filter_email' => $filter_email,
 				'start'        => 0,
 				'limit'        => 5
 			);
 		
-			$results = $this->model_marketing_affiliate->getAffiliates($data);
+			$results = $this->model_marketing_affiliate->getAffiliates($filter_data);
 			
 			foreach ($results as $result) {
 				$affiliate_data[] = array(

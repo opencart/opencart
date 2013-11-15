@@ -28,29 +28,25 @@ class ControllerCommonMaintenance extends Controller {
         
         $this->document->setTitle($this->language->get('heading_title'));
         
-        $this->data['heading_title'] = $this->language->get('heading_title');
+        $data['heading_title'] = $this->language->get('heading_title');
                 
-        $this->data['breadcrumbs'] = array();
+        $data['breadcrumbs'] = array();
 
-        $this->data['breadcrumbs'][] = array(
+        $data['breadcrumbs'][] = array(
             'text' => $this->language->get('text_maintenance'),
 			'href' => $this->url->link('common/maintenance')
         ); 
         
-        $this->data['message'] = $this->language->get('text_message');
+        $data['message'] = $this->language->get('text_message');
       
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/maintenance.tpl')) {
-            $this->template = $this->config->get('config_template') . '/template/common/maintenance.tpl';
-        } else {
-            $this->template = 'default/template/common/maintenance.tpl';
-        }
-		
-		$this->children = array(
-			'common/footer',
-			'common/header'
-		);
-		
-		$this->response->setOutput($this->render());
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/maintenance.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/common/maintenance.tpl', $data));
+		}
     }
 }
 ?>

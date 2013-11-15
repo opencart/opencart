@@ -37,14 +37,14 @@ class ControllerReportCustomerOnline extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 						
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
        		'text' => $this->language->get('text_home')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'href' => $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url, 'SSL'),
        		'text' => $this->language->get('heading_title')
    		);
@@ -52,18 +52,18 @@ class ControllerReportCustomerOnline extends Controller {
 		$this->load->model('report/customer');
     	$this->load->model('sale/customer');
 		
-		$this->data['customers'] = array();
+		$data['customers'] = array();
 
-		$data = array(
+		$filter_data = array(
 			'filter_ip'       => $filter_ip, 
 			'filter_customer' => $filter_customer, 
 			'start'           => ($page - 1) * 20,
 			'limit'           => 20
 		);
 		
-		$customer_total = $this->model_report_customer->getTotalCustomersOnline($data);
+		$customer_total = $this->model_report_customer->getTotalCustomersOnline($filter_data);
 		
-		$results = $this->model_report_customer->getCustomersOnline($data);
+		$results = $this->model_report_customer->getCustomersOnline($filter_data);
     	
 		foreach ($results as $result) {
 			$customer_info = $this->model_sale_customer->getCustomer($result['customer_id']);
@@ -74,7 +74,7 @@ class ControllerReportCustomerOnline extends Controller {
 				$customer = $this->language->get('text_guest');
 			}
 								
-      		$this->data['customers'][] = array(
+      		$data['customers'][] = array(
 				'customer_id' => $result['customer_id'],
 				'ip'          => $result['ip'],
 				'customer'    => $customer,
@@ -85,25 +85,25 @@ class ControllerReportCustomerOnline extends Controller {
 			);
 		}	
 		
- 		$this->data['heading_title'] = $this->language->get('heading_title');
+ 		$data['heading_title'] = $this->language->get('heading_title');
 		 
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		
-		$this->data['column_ip'] = $this->language->get('column_ip');
-		$this->data['column_customer'] = $this->language->get('column_customer');
-		$this->data['column_url'] = $this->language->get('column_url');
-		$this->data['column_referer'] = $this->language->get('column_referer');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_action'] = $this->language->get('column_action');
+		$data['column_ip'] = $this->language->get('column_ip');
+		$data['column_customer'] = $this->language->get('column_customer');
+		$data['column_url'] = $this->language->get('column_url');
+		$data['column_referer'] = $this->language->get('column_referer');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_action'] = $this->language->get('column_action');
 	
-		$this->data['entry_ip'] = $this->language->get('entry_ip');
-		$this->data['entry_customer'] = $this->language->get('entry_customer');
+		$data['entry_ip'] = $this->language->get('entry_ip');
+		$data['entry_customer'] = $this->language->get('entry_customer');
 				
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_filter'] = $this->language->get('button_filter');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_filter'] = $this->language->get('button_filter');
 				
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 		
 		$url = '';
 		
@@ -121,12 +121,12 @@ class ControllerReportCustomerOnline extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('report/customer_online', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 	
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($customer_total - $this->config->get('config_admin_limit'))) ? $customer_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $customer_total, ceil($customer_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($customer_total - $this->config->get('config_admin_limit'))) ? $customer_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $customer_total, ceil($customer_total / $this->config->get('config_admin_limit')));
 		
-		$this->data['filter_customer'] = $filter_customer;
-		$this->data['filter_ip'] = $filter_ip;		
+		$data['filter_customer'] = $filter_customer;
+		$data['filter_ip'] = $filter_ip;		
 				
 		$this->template = 'report/customer_online.tpl';
 		$this->children = array(

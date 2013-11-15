@@ -1,6 +1,8 @@
 <?php  
 class ControllerProductCompare extends Controller {
 	public function index() { 
+		$data = array();
+		
 		$this->language->load('product/compare');
 		
 		$this->load->model('catalog/product');
@@ -25,50 +27,50 @@ class ControllerProductCompare extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-		$this->data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
 		);
 				
-		$this->data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('product/compare')
 		);	
 				
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_product'] = $this->language->get('text_product');
-		$this->data['text_name'] = $this->language->get('text_name');
-		$this->data['text_image'] = $this->language->get('text_image');
-		$this->data['text_price'] = $this->language->get('text_price');
-		$this->data['text_model'] = $this->language->get('text_model');
-		$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
-		$this->data['text_availability'] = $this->language->get('text_availability');
-		$this->data['text_rating'] = $this->language->get('text_rating');
-		$this->data['text_summary'] = $this->language->get('text_summary');
-		$this->data['text_weight'] = $this->language->get('text_weight');
-		$this->data['text_dimension'] = $this->language->get('text_dimension');
-		$this->data['text_empty'] = $this->language->get('text_empty');
+		$data['text_product'] = $this->language->get('text_product');
+		$data['text_name'] = $this->language->get('text_name');
+		$data['text_image'] = $this->language->get('text_image');
+		$data['text_price'] = $this->language->get('text_price');
+		$data['text_model'] = $this->language->get('text_model');
+		$data['text_manufacturer'] = $this->language->get('text_manufacturer');
+		$data['text_availability'] = $this->language->get('text_availability');
+		$data['text_rating'] = $this->language->get('text_rating');
+		$data['text_summary'] = $this->language->get('text_summary');
+		$data['text_weight'] = $this->language->get('text_weight');
+		$data['text_dimension'] = $this->language->get('text_dimension');
+		$data['text_empty'] = $this->language->get('text_empty');
 		
-		$this->data['button_continue'] = $this->language->get('button_continue');
-		$this->data['button_cart'] = $this->language->get('button_cart');
-		$this->data['button_remove'] = $this->language->get('button_remove');
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_cart'] = $this->language->get('button_cart');
+		$data['button_remove'] = $this->language->get('button_remove');
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 			
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
-		$this->data['review_status'] = $this->config->get('config_review_status');
+		$data['review_status'] = $this->config->get('config_review_status');
 		
-		$this->data['products'] = array();
+		$data['products'] = array();
 		
-		$this->data['attribute_groups'] = array();
+		$data['attribute_groups'] = array();
 
 		foreach ($this->session->data['compare'] as $key => $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
@@ -110,7 +112,7 @@ class ControllerProductCompare extends Controller {
 					}
 				}
 															
-				$this->data['products'][$product_id] = array(
+				$data['products'][$product_id] = array(
 					'product_id'   => $product_info['product_id'],
 					'name'         => $product_info['name'],
 					'thumb'        => $image,
@@ -132,10 +134,10 @@ class ControllerProductCompare extends Controller {
 				);
 				
 				foreach ($attribute_groups as $attribute_group) {
-					$this->data['attribute_groups'][$attribute_group['attribute_group_id']]['name'] = $attribute_group['name'];
+					$data['attribute_groups'][$attribute_group['attribute_group_id']]['name'] = $attribute_group['name'];
 					
 					foreach ($attribute_group['attribute'] as $attribute) {
-						$this->data['attribute_groups'][$attribute_group['attribute_group_id']]['attribute'][$attribute['attribute_id']]['name'] = $attribute['name'];
+						$data['attribute_groups'][$attribute_group['attribute_group_id']]['attribute'][$attribute['attribute_id']]['name'] = $attribute['name'];
 					}
 				}
 			} else {
@@ -143,24 +145,20 @@ class ControllerProductCompare extends Controller {
 			}
 		}
 		
-		$this->data['continue'] = $this->url->link('common/home');
-		
+		$data['continue'] = $this->url->link('common/home');
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/compare.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/product/compare.tpl';
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/compare.tpl', $data));
 		} else {
-			$this->template = 'default/template/product/compare.tpl';
+			$this->response->setOutput($this->load->view('default/template/product/compare.tpl', $data));
 		}
-		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'
-		);
-		
-		$this->response->setOutput($this->render());
   	}
 	
 	public function add() {

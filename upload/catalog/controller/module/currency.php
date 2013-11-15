@@ -1,6 +1,8 @@
 <?php  
 class ControllerModuleCurrency extends Controller {
-	protected function index() {
+	public function index() {
+		$data = array();
+		
 		if (isset($this->request->post['currency_code'])) {
       		$this->currency->set($this->request->post['currency_code']);
 			
@@ -16,7 +18,7 @@ class ControllerModuleCurrency extends Controller {
 		
 		$this->language->load('module/currency');
 		
-    	$this->data['text_currency'] = $this->language->get('text_currency');
+    	$data['text_currency'] = $this->language->get('text_currency');
 
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$connection = 'SSL';
@@ -24,19 +26,19 @@ class ControllerModuleCurrency extends Controller {
 			$connection = 'NONSSL';
 		}
 		
-		$this->data['action'] = $this->url->link('module/currency', '', $connection);
+		$data['action'] = $this->url->link('module/currency', '', $connection);
 		
-		$this->data['currency_code'] = $this->currency->getCode(); 
+		$data['currency_code'] = $this->currency->getCode(); 
 		
 		$this->load->model('localisation/currency');
 		 
-		 $this->data['currencies'] = array();
+		 $data['currencies'] = array();
 		 
 		$results = $this->model_localisation_currency->getCurrencies();	
 		
 		foreach ($results as $result) {
 			if ($result['status']) {
-   				$this->data['currencies'][] = array(
+   				$data['currencies'][] = array(
 					'title'        => $result['title'],
 					'code'         => $result['code'],
 					'symbol_left'  => $result['symbol_left'],
@@ -46,32 +48,30 @@ class ControllerModuleCurrency extends Controller {
 		}
 		
 		if (!isset($this->request->get['route'])) {
-			$this->data['redirect'] = $this->url->link('common/home');
+			$data['redirect'] = $this->url->link('common/home');
 		} else {
-			$data = $this->request->get;
+			$url_data = $this->request->get;
 			
-			unset($data['_route_']);
+			unset($url_data['_route_']);
 			
-			$route = $data['route'];
+			$route = $url_data['route'];
 			
-			unset($data['route']);
+			unset($url_data['route']);
 			
 			$url = '';
 			
-			if ($data) {
-				$url = '&' . urldecode(http_build_query($data, '', '&'));
+			if ($url_data) {
+				$url = '&' . urldecode(http_build_query($url_data, '', '&'));
 			}	
 						
-			$this->data['redirect'] = $this->url->link($route, $url, $connection);
+			$data['redirect'] = $this->url->link($route, $url, $connection);
 		}	
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/currency.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/currency.tpl';
-		} else {
-			$this->template = 'default/template/module/currency.tpl';
-		}
 		
-		$this->render();
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/currency.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/module/currency.tpl', $data);
+		} else {
+			return $this->load->view('default/template/module/currency.tpl', $data);
+		}
 	}
 }
 ?>

@@ -21,46 +21,46 @@ class ControllerCommonLogin extends Controller {
 			}
 		}
 		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_login'] = $this->language->get('text_login');
-		$this->data['text_forgotten'] = $this->language->get('text_forgotten');
+		$data['text_login'] = $this->language->get('text_login');
+		$data['text_forgotten'] = $this->language->get('text_forgotten');
 		
-		$this->data['entry_username'] = $this->language->get('entry_username');
-    	$this->data['entry_password'] = $this->language->get('entry_password');
+		$data['entry_username'] = $this->language->get('entry_username');
+    	$data['entry_password'] = $this->language->get('entry_password');
 
-    	$this->data['button_login'] = $this->language->get('button_login');
+    	$data['button_login'] = $this->language->get('button_login');
 		
 		if ((isset($this->session->data['token']) && !isset($this->request->get['token'])) || ((isset($this->request->get['token']) && (isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token']))))) {
 			$this->error['warning'] = $this->language->get('error_token');
 		}
 		
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-    		$this->data['success'] = $this->session->data['success'];
+    		$data['success'] = $this->session->data['success'];
     
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 				
-    	$this->data['action'] = $this->url->link('common/login', '', 'SSL');
+    	$data['action'] = $this->url->link('common/login', '', 'SSL');
 
 		if (isset($this->request->post['username'])) {
-			$this->data['username'] = $this->request->post['username'];
+			$data['username'] = $this->request->post['username'];
 		} else {
-			$this->data['username'] = '';
+			$data['username'] = '';
 		}
 		
 		if (isset($this->request->post['password'])) {
-			$this->data['password'] = $this->request->post['password'];
+			$data['password'] = $this->request->post['password'];
 		} else {
-			$this->data['password'] = '';
+			$data['password'] = '';
 		}
 
 		if (isset($this->request->get['route'])) {
@@ -78,15 +78,15 @@ class ControllerCommonLogin extends Controller {
 				$url .= http_build_query($this->request->get);
 			}
 			
-			$this->data['redirect'] = $this->url->link($route, $url, 'SSL');
+			$data['redirect'] = $this->url->link($route, $url, 'SSL');
 		} else {
-			$this->data['redirect'] = '';	
+			$data['redirect'] = '';	
 		}
 		
 		if ($this->config->get('config_password')) {
-			$this->data['forgotten'] = $this->url->link('common/forgotten', '', 'SSL');
+			$data['forgotten'] = $this->url->link('common/forgotten', '', 'SSL');
 		} else {
-			$this->data['forgotten'] = '';
+			$data['forgotten'] = '';
 		}
 		
 		$this->template = 'common/login.tpl';

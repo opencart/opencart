@@ -213,24 +213,24 @@ class ControllerMarketingMarketing extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
-		$this->data['insert'] = $this->url->link('marketing/marketing/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('marketing/marketing/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('marketing/marketing/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('marketing/marketing/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
-		$this->data['marketings'] = array();
+		$data['marketings'] = array();
 
-		$data = array(
+		$filter_data = array(
 			'filter_name'       => $filter_name, 
 			'filter_code'       => $filter_code, 
 			'filter_date_added' => $filter_date_added,
@@ -240,12 +240,12 @@ class ControllerMarketingMarketing extends Controller {
 			'limit'             => $this->config->get('config_admin_limit')
 		);
 		
-		$marketing_total = $this->model_marketing_marketing->getTotalMarketings($data);
+		$marketing_total = $this->model_marketing_marketing->getTotalMarketings($filter_data);
 	
-		$results = $this->model_marketing_marketing->getMarketings($data);
+		$results = $this->model_marketing_marketing->getMarketings($filter_data);
  
     	foreach ($results as $result) {
-			$this->data['marketings'][] = array(
+			$data['marketings'][] = array(
 				'marketing_id' => $result['marketing_id'],
 				'name'         => $result['name'],
 				'code'         => $result['code'],
@@ -256,47 +256,47 @@ class ControllerMarketingMarketing extends Controller {
 			);
 		}	
 					
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_code'] = $this->language->get('column_code');
-		$this->data['column_clicks'] = $this->language->get('column_clicks');
-		$this->data['column_orders'] = $this->language->get('column_orders');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_action'] = $this->language->get('column_action');		
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_code'] = $this->language->get('column_code');
+		$data['column_clicks'] = $this->language->get('column_clicks');
+		$data['column_orders'] = $this->language->get('column_orders');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_action'] = $this->language->get('column_action');		
 		
-		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_code'] = $this->language->get('entry_code');
-		$this->data['entry_date_added'] = $this->language->get('entry_date_added');
+		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_code'] = $this->language->get('entry_code');
+		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_delete'] = $this->language->get('button_delete');
-		$this->data['button_filter'] = $this->language->get('button_filter');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_filter'] = $this->language->get('button_filter');
 
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
 		if (isset($this->request->post['selected'])) {
-			$this->data['selected'] = (array)$this->request->post['selected'];
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['selected'] = array();
+			$data['selected'] = array();
 		}
 				
 		$url = '';
@@ -323,9 +323,9 @@ class ControllerMarketingMarketing extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.name' . $url, 'SSL');
-		$this->data['sort_code'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.code' . $url, 'SSL');
-		$this->data['sort_date_added'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.date_added' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.name' . $url, 'SSL');
+		$data['sort_code'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.code' . $url, 'SSL');
+		$data['sort_date_added'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . '&sort=m.date_added' . $url, 'SSL');
 		
 		$url = '';
 
@@ -355,16 +355,16 @@ class ControllerMarketingMarketing extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($marketing_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($marketing_total - $this->config->get('config_admin_limit'))) ? $marketing_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $marketing_total, ceil($marketing_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($marketing_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($marketing_total - $this->config->get('config_admin_limit'))) ? $marketing_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $marketing_total, ceil($marketing_total / $this->config->get('config_admin_limit')));
 
-		$this->data['filter_name'] = $filter_name;
-		$this->data['filter_code'] = $filter_code;
-		$this->data['filter_date_added'] = $filter_date_added;
+		$data['filter_name'] = $filter_name;
+		$data['filter_code'] = $filter_code;
+		$data['filter_date_added'] = $filter_date_added;
 		
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		$this->template = 'marketing/marketing_list.tpl';
 		$this->children = array(
@@ -376,35 +376,35 @@ class ControllerMarketingMarketing extends Controller {
   	}
   
   	protected function getForm() {
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
  				
-    	$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_description'] = $this->language->get('entry_description');
-		$this->data['entry_code'] = $this->language->get('entry_code');
-  		$this->data['entry_example'] = $this->language->get('entry_example');
+    	$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_description'] = $this->language->get('entry_description');
+		$data['entry_code'] = $this->language->get('entry_code');
+  		$data['entry_example'] = $this->language->get('entry_example');
 		
-		$this->data['help_code'] = $this->language->get('help_code');
-		$this->data['help_example'] = $this->language->get('help_example');
+		$data['help_code'] = $this->language->get('help_code');
+		$data['help_example'] = $this->language->get('help_example');
 
-		$this->data['button_save'] = $this->language->get('button_save');
-    	$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_save'] = $this->language->get('button_save');
+    	$data['button_cancel'] = $this->language->get('button_cancel');
 	
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
  		if (isset($this->error['name'])) {
-			$this->data['error_name'] = $this->error['name'];
+			$data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$data['error_name'] = '';
 		}
 
 		if (isset($this->error['code'])) {
-			$this->data['error_code'] = $this->error['code'];
+			$data['error_code'] = $this->error['code'];
 		} else {
-			$this->data['error_code'] = '';
+			$data['error_code'] = '';
 		}
 						
 		$url = '';
@@ -433,56 +433,56 @@ class ControllerMarketingMarketing extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 
 		if (!isset($this->request->get['marketing_id'])) {
-			$this->data['action'] = $this->url->link('marketing/marketing/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/marketing/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('marketing/marketing/update', 'token=' . $this->session->data['token'] . '&marketing_id=' . $this->request->get['marketing_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/marketing/update', 'token=' . $this->session->data['token'] . '&marketing_id=' . $this->request->get['marketing_id'] . $url, 'SSL');
 		}
 		  
-    	$this->data['cancel'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, 'SSL');
+    	$data['cancel'] = $this->url->link('marketing/marketing', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
     	if (isset($this->request->get['marketing_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$marketing_info = $this->model_marketing_marketing->getMarketing($this->request->get['marketing_id']);
     	}
 
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
     	
-		$this->data['store'] = HTTP_CATALOG;
+		$data['store'] = HTTP_CATALOG;
 		
 		if (isset($this->request->post['name'])) {
-      		$this->data['name'] = $this->request->post['name'];
+      		$data['name'] = $this->request->post['name'];
     	} elseif (!empty($marketing_info)) { 
-			$this->data['name'] = $marketing_info['name'];
+			$data['name'] = $marketing_info['name'];
 		} else {
-      		$this->data['name'] = '';
+      		$data['name'] = '';
     	}
 				
     	if (isset($this->request->post['description'])) {
-      		$this->data['description'] = $this->request->post['description'];
+      		$data['description'] = $this->request->post['description'];
 		} elseif (!empty($marketing_info)) { 
-			$this->data['description'] = $marketing_info['description'];
+			$data['description'] = $marketing_info['description'];
 		} else {
-      		$this->data['description'] = '';
+      		$data['description'] = '';
     	}
 									
     	if (isset($this->request->post['code'])) {
-      		$this->data['code'] = $this->request->post['code'];
+      		$data['code'] = $this->request->post['code'];
 		} elseif (!empty($marketing_info)) { 
-			$this->data['code'] = $marketing_info['code'];
+			$data['code'] = $marketing_info['code'];
 		} else {
-      		$this->data['code'] = uniqid();
+      		$data['code'] = uniqid();
     	}
 		
 		$this->template = 'marketing/marketing_form.tpl';

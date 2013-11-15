@@ -32,54 +32,54 @@ class ControllerCommonReset extends Controller {
 				$this->redirect($this->url->link('common/login', '', 'SSL'));
 			}
 			
-			$this->data['breadcrumbs'] = array();
+			$data['breadcrumbs'] = array();
 	
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
 				'href' => $this->url->link('common/dashboard')
 			); 
 			
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_reset'),
 				'href' => $this->url->link('common/reset', '', 'SSL')
 			);
 			
-			$this->data['heading_title'] = $this->language->get('heading_title');
+			$data['heading_title'] = $this->language->get('heading_title');
 	
-			$this->data['text_password'] = $this->language->get('text_password');
+			$data['text_password'] = $this->language->get('text_password');
 	
-			$this->data['entry_password'] = $this->language->get('entry_password');
-			$this->data['entry_confirm'] = $this->language->get('entry_confirm');
+			$data['entry_password'] = $this->language->get('entry_password');
+			$data['entry_confirm'] = $this->language->get('entry_confirm');
 	
-			$this->data['button_save'] = $this->language->get('button_save');
-			$this->data['button_cancel'] = $this->language->get('button_cancel');
+			$data['button_save'] = $this->language->get('button_save');
+			$data['button_cancel'] = $this->language->get('button_cancel');
 	
 			if (isset($this->error['password'])) { 
-				$this->data['error_password'] = $this->error['password'];
+				$data['error_password'] = $this->error['password'];
 			} else {
-				$this->data['error_password'] = '';
+				$data['error_password'] = '';
 			}
 	
 			if (isset($this->error['confirm'])) { 
-				$this->data['error_confirm'] = $this->error['confirm'];
+				$data['error_confirm'] = $this->error['confirm'];
 			} else {
-				$this->data['error_confirm'] = '';
+				$data['error_confirm'] = '';
 			}
 			
-			$this->data['action'] = $this->url->link('common/reset', 'code=' . $code, 'SSL');
+			$data['action'] = $this->url->link('common/reset', 'code=' . $code, 'SSL');
 	 
-			$this->data['cancel'] = $this->url->link('common/login', '', 'SSL');
+			$data['cancel'] = $this->url->link('common/login', '', 'SSL');
 			
 			if (isset($this->request->post['password'])) {
-				$this->data['password'] = $this->request->post['password'];
+				$data['password'] = $this->request->post['password'];
 			} else {
-				$this->data['password'] = '';
+				$data['password'] = '';
 			}
 	
 			if (isset($this->request->post['confirm'])) {
-				$this->data['confirm'] = $this->request->post['confirm'];
+				$data['confirm'] = $this->request->post['confirm'];
 			} else {
-				$this->data['confirm'] = '';
+				$data['confirm'] = '';
 			}
 			
 			$this->template = 'common/reset.tpl';

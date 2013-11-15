@@ -1,30 +1,32 @@
 <?php
 class ControllerModuleLatest extends Controller {
-	protected function index($setting) {
+	public function index($setting) {
+		$data = array();
+		
 		$this->language->load('module/latest');
 		
-      	$this->data['heading_title'] = $this->language->get('heading_title');
+      	$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_tax'] = $this->language->get('text_tax');
+		$data['text_tax'] = $this->language->get('text_tax');
 		
-		$this->data['button_cart'] = $this->language->get('button_cart');
-		$this->data['button_wishlist'] = $this->language->get('button_wishlist');
-		$this->data['button_compare'] = $this->language->get('button_compare');
+		$data['button_cart'] = $this->language->get('button_cart');
+		$data['button_wishlist'] = $this->language->get('button_wishlist');
+		$data['button_compare'] = $this->language->get('button_compare');
 						
 		$this->load->model('catalog/product');
 		
 		$this->load->model('tool/image');
 		
-		$this->data['products'] = array();
+		$data['products'] = array();
 		
-		$data = array(
+		$filter_data = array(
 			'sort'  => 'p.date_added',
 			'order' => 'DESC',
 			'start' => 0,
 			'limit' => $setting['limit']
 		);
 
-		$results = $this->model_catalog_product->getProducts($data);
+		$results = $this->model_catalog_product->getProducts($filter_data);
 
 		foreach ($results as $result) {
 			if ($result['image']) {
@@ -57,7 +59,7 @@ class ControllerModuleLatest extends Controller {
 				$rating = false;
 			}
 			
-			$this->data['products'][] = array(
+			$data['products'][] = array(
 				'product_id' => $result['product_id'],
 				'thumb'   	 => $image,
 				'name'    	 => $result['name'],
@@ -71,12 +73,10 @@ class ControllerModuleLatest extends Controller {
 		}
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/latest.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/latest.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/module/latest.tpl', $data);
 		} else {
-			$this->template = 'default/template/module/latest.tpl';
+			return $this->load->view('default/template/module/latest.tpl', $data);
 		}
-
-		$this->render();
 	}
 }
 ?>

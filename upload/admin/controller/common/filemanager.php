@@ -22,7 +22,7 @@ class ControllerCommonFileManager extends Controller {
 			$page = 1;
 		}
 		
-		$this->data['images'] = array();
+		$data['images'] = array();
 		
 		$this->load->model('tool/image');
 		
@@ -53,7 +53,7 @@ class ControllerCommonFileManager extends Controller {
 					$url .= '&ckeditor=' . $this->request->get['ckeditor'];
 				}	
 						
-				$this->data['images'][] = array(
+				$data['images'][] = array(
 					'thumb' => '',
 					'name'  => implode(' ', $name),
 					'type'  => 'directory',
@@ -68,7 +68,7 @@ class ControllerCommonFileManager extends Controller {
 					$server = HTTP_CATALOG;
 				}
 						
-				$this->data['images'][] = array(
+				$data['images'][] = array(
 					'thumb' => $this->model_tool_image->resize(utf8_substr($image, utf8_strlen(DIR_IMAGE)), 100, 100),
 					'name'  => implode(' ', $name),
 					'type'  => 'image',
@@ -78,55 +78,55 @@ class ControllerCommonFileManager extends Controller {
 			}
 		}
 		
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		
-		$this->data['entry_search'] = $this->language->get('entry_search');
-		$this->data['entry_folder'] = $this->language->get('entry_folder');
+		$data['entry_search'] = $this->language->get('entry_search');
+		$data['entry_folder'] = $this->language->get('entry_folder');
 		
-		$this->data['button_parent'] = $this->language->get('button_parent');
-		$this->data['button_upload'] = $this->language->get('button_upload');
-		$this->data['button_folder'] = $this->language->get('button_folder');
-		$this->data['button_delete'] = $this->language->get('button_delete');
-		$this->data['button_search'] = $this->language->get('button_search');
+		$data['button_parent'] = $this->language->get('button_parent');
+		$data['button_upload'] = $this->language->get('button_upload');
+		$data['button_folder'] = $this->language->get('button_folder');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_search'] = $this->language->get('button_search');
 				
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 		
 		if (isset($this->request->get['directory'])) {
-			$this->data['directory'] = $this->request->get['directory'];
+			$data['directory'] = $this->request->get['directory'];
 		} else {
-			$this->data['directory'] = '';
+			$data['directory'] = '';
 		}
 				
 		if (isset($this->request->get['filter_name'])) {
-			$this->data['filter_name'] = $this->request->get['filter_name'];
+			$data['filter_name'] = $this->request->get['filter_name'];
 		} else {
-			$this->data['filter_name'] = '';
+			$data['filter_name'] = '';
 		}
 		
 		// Return the target ID for the file manager to set the value 		
 		if (isset($this->request->get['target'])) {
-			$this->data['target'] = $this->request->get['target'];
+			$data['target'] = $this->request->get['target'];
 		} else {
-			$this->data['target'] = '';
+			$data['target'] = '';
 		}
 		
 		// Return the thumbnail for the file manager to show a thumbnail
 		if (isset($this->request->get['thumb'])) {
-			$this->data['thumb'] = $this->request->get['thumb'];
+			$data['thumb'] = $this->request->get['thumb'];
 		} else {
-			$this->data['thumb'] = '';
+			$data['thumb'] = '';
 		}
 		
 		if (isset($this->request->get['ckeditor'])) {
-			$this->data['ckeditor'] = $this->request->get['ckeditor'];
+			$data['ckeditor'] = $this->request->get['ckeditor'];
 		} else {
-			$this->data['ckeditor'] = '';
+			$data['ckeditor'] = '';
 		}
 		
-		$this->data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 						
 		$url = '';
 		
@@ -150,7 +150,7 @@ class ControllerCommonFileManager extends Controller {
 			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
 		}	
 									
-		$this->data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
 		$url = '';
 		
@@ -180,7 +180,7 @@ class ControllerCommonFileManager extends Controller {
 		$pagination->limit = 16;
 		$pagination->url = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 		
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
 		$this->template = 'common/filemanager.tpl';
 		

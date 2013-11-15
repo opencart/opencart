@@ -1,21 +1,23 @@
 <?php
 class ControllerModuleFeatured extends Controller {
-	protected function index($setting) {
+	public function index($setting) {
+		$data = array();
+		
 		$this->language->load('module/featured'); 
 
-      	$this->data['heading_title'] = $this->language->get('heading_title');
+      	$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_tax'] = $this->language->get('text_tax');
+		$data['text_tax'] = $this->language->get('text_tax');
 		
-		$this->data['button_cart'] = $this->language->get('button_cart');
-		$this->data['button_wishlist'] = $this->language->get('button_wishlist');
-		$this->data['button_compare'] = $this->language->get('button_compare');
+		$data['button_cart'] = $this->language->get('button_cart');
+		$data['button_wishlist'] = $this->language->get('button_wishlist');
+		$data['button_compare'] = $this->language->get('button_compare');
 		
 		$this->load->model('catalog/product'); 
 		
 		$this->load->model('tool/image');
 
-		$this->data['products'] = array();
+		$data['products'] = array();
 
 		$products = explode(',', $this->config->get('featured_product'));		
 
@@ -59,7 +61,7 @@ class ControllerModuleFeatured extends Controller {
 					$rating = false;
 				}
 					
-				$this->data['products'][] = array(
+				$data['products'][] = array(
 					'product_id'  => $product_info['product_id'],
 					'thumb'   	  => $image,
 					'name'    	  => $product_info['name'],
@@ -74,12 +76,10 @@ class ControllerModuleFeatured extends Controller {
 		}
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/featured.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/featured.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/module/featured.tpl', $data);
 		} else {
-			$this->template = 'default/template/module/featured.tpl';
-		}
-
-		$this->render();
+			return $this->load->view('default/template/module/featured.tpl', $data);
+		}	
 	}
 }
 ?>

@@ -26,70 +26,70 @@ class ControllerInformationContact extends Controller {
 	  		$this->redirect($this->url->link('information/contact/success'));
     	}
 
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	);
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('information/contact')
       	);	
 			
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_location'] = $this->language->get('text_location');
-		$this->data['text_contact'] = $this->language->get('text_contact');
-		$this->data['text_address'] = $this->language->get('text_address');
-    	$this->data['text_telephone'] = $this->language->get('text_telephone');
-    	$this->data['text_fax'] = $this->language->get('text_fax');
-        $this->data['text_open'] = $this->language->get('text_open');
-		$this->data['text_comment'] = $this->language->get('text_comment');
+    	$data['text_location'] = $this->language->get('text_location');
+		$data['text_contact'] = $this->language->get('text_contact');
+		$data['text_address'] = $this->language->get('text_address');
+    	$data['text_telephone'] = $this->language->get('text_telephone');
+    	$data['text_fax'] = $this->language->get('text_fax');
+        $data['text_open'] = $this->language->get('text_open');
+		$data['text_comment'] = $this->language->get('text_comment');
 
-    	$this->data['entry_name'] = $this->language->get('entry_name');
-    	$this->data['entry_email'] = $this->language->get('entry_email');
-    	$this->data['entry_enquiry'] = $this->language->get('entry_enquiry');
-		$this->data['entry_captcha'] = $this->language->get('entry_captcha');
+    	$data['entry_name'] = $this->language->get('entry_name');
+    	$data['entry_email'] = $this->language->get('entry_email');
+    	$data['entry_enquiry'] = $this->language->get('entry_enquiry');
+		$data['entry_captcha'] = $this->language->get('entry_captcha');
 
-		$this->data['button_map'] = $this->language->get('button_map');
+		$data['button_map'] = $this->language->get('button_map');
 
 		if (isset($this->error['name'])) {
-    		$this->data['error_name'] = $this->error['name'];
+    		$data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$data['error_name'] = '';
 		}
 		
 		if (isset($this->error['email'])) {
-			$this->data['error_email'] = $this->error['email'];
+			$data['error_email'] = $this->error['email'];
 		} else {
-			$this->data['error_email'] = '';
+			$data['error_email'] = '';
 		}		
 		
 		if (isset($this->error['enquiry'])) {
-			$this->data['error_enquiry'] = $this->error['enquiry'];
+			$data['error_enquiry'] = $this->error['enquiry'];
 		} else {
-			$this->data['error_enquiry'] = '';
+			$data['error_enquiry'] = '';
 		}		
 		
  		if (isset($this->error['captcha'])) {
-			$this->data['error_captcha'] = $this->error['captcha'];
+			$data['error_captcha'] = $this->error['captcha'];
 		} else {
-			$this->data['error_captcha'] = '';
+			$data['error_captcha'] = '';
 		}	
 
-    	$this->data['button_continue'] = $this->language->get('button_continue');
+    	$data['button_continue'] = $this->language->get('button_continue');
     
-		$this->data['action'] = $this->url->link('information/contact');
+		$data['action'] = $this->url->link('information/contact');
 		
-        $this->data['locations'] = array();
+        $data['locations'] = array();
 		
 		$this->load->model('localisation/location');
 		
 		$this->load->model('tool/image');
 		
-		$this->data['location_id'] = $this->config->get('config_location_id');
+		$data['location_id'] = $this->config->get('config_location_id');
         
 		$location_info = $this->model_localisation_location->getLocation($this->config->get('config_location_id'));
 		
@@ -132,7 +132,7 @@ class ControllerInformationContact extends Controller {
 				$image = false;
 			}
 							
-			$this->data['locations'][] = array(
+			$data['locations'][] = array(
 				'location_id' => $location_info['location_id'],
 				'name'        => $location_info['name'],
 				'address'     => str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format)))),
@@ -187,7 +187,7 @@ class ControllerInformationContact extends Controller {
 					$image = false;
 				}
 								
-				$this->data['locations'][] = array(
+				$data['locations'][] = array(
 					'location_id' => $result['location_id'],
 					'name'        => $result['name'],
 					'address'     => str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format)))),
@@ -202,45 +202,41 @@ class ControllerInformationContact extends Controller {
         }
 		
 		if (isset($this->request->post['name'])) {
-			$this->data['name'] = $this->request->post['name'];
+			$data['name'] = $this->request->post['name'];
 		} else {
-			$this->data['name'] = $this->customer->getFirstName();
+			$data['name'] = $this->customer->getFirstName();
 		}
 
 		if (isset($this->request->post['email'])) {
-			$this->data['email'] = $this->request->post['email'];
+			$data['email'] = $this->request->post['email'];
 		} else {
-			$this->data['email'] = $this->customer->getEmail();
+			$data['email'] = $this->customer->getEmail();
 		}
 		
 		if (isset($this->request->post['enquiry'])) {
-			$this->data['enquiry'] = $this->request->post['enquiry'];
+			$data['enquiry'] = $this->request->post['enquiry'];
 		} else {
-			$this->data['enquiry'] = '';
+			$data['enquiry'] = '';
 		}
 		
 		if (isset($this->request->post['captcha'])) {
-			$this->data['captcha'] = $this->request->post['captcha'];
+			$data['captcha'] = $this->request->post['captcha'];
 		} else {
-			$this->data['captcha'] = '';
+			$data['captcha'] = '';
 		}		
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/contact.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/information/contact.tpl';
-		} else {
-			$this->template = 'default/template/information/contact.tpl';
-		}
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 				
- 		$this->response->setOutput($this->render());		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/information/contact.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/information/contact.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/information/contact.tpl', $data));
+		}		
   	}
 
   	public function success() {
@@ -248,42 +244,38 @@ class ControllerInformationContact extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	);
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('information/contact')
       	);	
 		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_message'] = $this->language->get('text_success');
+    	$data['text_message'] = $this->language->get('text_success');
 
-    	$this->data['button_continue'] = $this->language->get('button_continue');
+    	$data['button_continue'] = $this->language->get('button_continue');
 
-    	$this->data['continue'] = $this->url->link('common/home');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/common/success.tpl';
-		} else {
-			$this->template = 'default/template/common/success.tpl';
-		}
+    	$data['continue'] = $this->url->link('common/home');
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 				
- 		$this->response->setOutput($this->render()); 
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
+		}
 	}
 	
   	protected function validate() {

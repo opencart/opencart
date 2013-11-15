@@ -1,6 +1,8 @@
 <?php 
 class ControllerAccountAccount extends Controller { 
 	public function index() {
+		$data = array();
+		
 		if (!$this->customer->isLogged()) {
 	  		$this->session->data['redirect'] = $this->url->link('account/account', '', 'SSL');
 	  
@@ -11,74 +13,70 @@ class ControllerAccountAccount extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(       	
+      	$data['breadcrumbs'][] = array(       	
         	'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 		
 		if (isset($this->session->data['success'])) {
-    		$this->data['success'] = $this->session->data['success'];
+    		$data['success'] = $this->session->data['success'];
 			
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_my_account'] = $this->language->get('text_my_account');
-		$this->data['text_my_orders'] = $this->language->get('text_my_orders');
-		$this->data['text_my_newsletter'] = $this->language->get('text_my_newsletter');
-    	$this->data['text_edit'] = $this->language->get('text_edit');
-    	$this->data['text_password'] = $this->language->get('text_password');
-    	$this->data['text_address'] = $this->language->get('text_address');
-		$this->data['text_wishlist'] = $this->language->get('text_wishlist');
-    	$this->data['text_order'] = $this->language->get('text_order');
-    	$this->data['text_download'] = $this->language->get('text_download');
-		$this->data['text_reward'] = $this->language->get('text_reward');
-		$this->data['text_return'] = $this->language->get('text_return');
-		$this->data['text_transaction'] = $this->language->get('text_transaction');
-		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
+    	$data['text_my_account'] = $this->language->get('text_my_account');
+		$data['text_my_orders'] = $this->language->get('text_my_orders');
+		$data['text_my_newsletter'] = $this->language->get('text_my_newsletter');
+    	$data['text_edit'] = $this->language->get('text_edit');
+    	$data['text_password'] = $this->language->get('text_password');
+    	$data['text_address'] = $this->language->get('text_address');
+		$data['text_wishlist'] = $this->language->get('text_wishlist');
+    	$data['text_order'] = $this->language->get('text_order');
+    	$data['text_download'] = $this->language->get('text_download');
+		$data['text_reward'] = $this->language->get('text_reward');
+		$data['text_return'] = $this->language->get('text_return');
+		$data['text_transaction'] = $this->language->get('text_transaction');
+		$data['text_newsletter'] = $this->language->get('text_newsletter');
 
-    	$this->data['edit'] = $this->url->link('account/edit', '', 'SSL');
-    	$this->data['password'] = $this->url->link('account/password', '', 'SSL');
-		$this->data['address'] = $this->url->link('account/address', '', 'SSL');
-		$this->data['wishlist'] = $this->url->link('account/wishlist');
-    	$this->data['order'] = $this->url->link('account/order', '', 'SSL');
-    	$this->data['download'] = $this->url->link('account/download', '', 'SSL');
-		$this->data['return'] = $this->url->link('account/return', '', 'SSL');
-		$this->data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
-		$this->data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
+    	$data['edit'] = $this->url->link('account/edit', '', 'SSL');
+    	$data['password'] = $this->url->link('account/password', '', 'SSL');
+		$data['address'] = $this->url->link('account/address', '', 'SSL');
+		$data['wishlist'] = $this->url->link('account/wishlist');
+    	$data['order'] = $this->url->link('account/order', '', 'SSL');
+    	$data['download'] = $this->url->link('account/download', '', 'SSL');
+		$data['return'] = $this->url->link('account/return', '', 'SSL');
+		$data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
+		$data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
 		
 		if ($this->config->get('reward_status')) {
-			$this->data['reward'] = $this->url->link('account/reward', '', 'SSL');
+			$data['reward'] = $this->url->link('account/reward', '', 'SSL');
 		} else {
-			$this->data['reward'] = '';
-		}
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/account/account.tpl';
-		} else {
-			$this->template = 'default/template/account/account.tpl';
+			$data['reward'] = '';
 		}
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'		
-		);
-						
-		$this->response->setOutput($this->render());
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/account.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/account.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/account/account.tpl', $data));
+		}
   	}
 }
 ?>

@@ -143,24 +143,24 @@ class ControllerMarketingCoupon extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 							
-		$this->data['insert'] = $this->url->link('marketing/coupon/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('marketing/coupon/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('marketing/coupon/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('marketing/coupon/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
-		$this->data['coupons'] = array();
+		$data['coupons'] = array();
 
-		$data = array(
+		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
@@ -169,10 +169,10 @@ class ControllerMarketingCoupon extends Controller {
 		
 		$coupon_total = $this->model_marketing_coupon->getTotalCoupons();
 	
-		$results = $this->model_marketing_coupon->getCoupons($data);
+		$results = $this->model_marketing_coupon->getCoupons($filter_data);
  
     	foreach ($results as $result) {
-			$this->data['coupons'][] = array(
+			$data['coupons'][] = array(
 				'coupon_id'  => $result['coupon_id'],
 				'name'       => $result['name'],
 				'code'       => $result['code'],
@@ -184,41 +184,41 @@ class ControllerMarketingCoupon extends Controller {
 			);
 		}
 									
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_code'] = $this->language->get('column_code');
-		$this->data['column_discount'] = $this->language->get('column_discount');
-		$this->data['column_date_start'] = $this->language->get('column_date_start');
-		$this->data['column_date_end'] = $this->language->get('column_date_end');
-		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_action'] = $this->language->get('column_action');		
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_code'] = $this->language->get('column_code');
+		$data['column_discount'] = $this->language->get('column_discount');
+		$data['column_date_start'] = $this->language->get('column_date_start');
+		$data['column_date_end'] = $this->language->get('column_date_end');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_action'] = $this->language->get('column_action');		
 		
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_delete'] = $this->language->get('button_delete');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
 		if (isset($this->request->post['selected'])) {
-			$this->data['selected'] = (array)$this->request->post['selected'];
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['selected'] = array();
+			$data['selected'] = array();
 		}
 		
 		$url = '';
@@ -233,12 +233,12 @@ class ControllerMarketingCoupon extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=name' . $url);
-		$this->data['sort_code'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=code' . $url);
-		$this->data['sort_discount'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=discount' . $url);
-		$this->data['sort_date_start'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=date_start' . $url);
-		$this->data['sort_date_end'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=date_end' . $url);
-		$this->data['sort_status'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=status' . $url);
+		$data['sort_name'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=name' . $url);
+		$data['sort_code'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=code' . $url);
+		$data['sort_discount'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=discount' . $url);
+		$data['sort_date_start'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=date_start' . $url);
+		$data['sort_date_end'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=date_end' . $url);
+		$data['sort_status'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . '&sort=status' . $url);
 				
 		$url = '';
 
@@ -256,12 +256,12 @@ class ControllerMarketingCoupon extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url . '&page={page}');
 			
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($coupon_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($coupon_total - $this->config->get('config_admin_limit'))) ? $coupon_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $coupon_total, ceil($coupon_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($coupon_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($coupon_total - $this->config->get('config_admin_limit'))) ? $coupon_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $coupon_total, ceil($coupon_total / $this->config->get('config_admin_limit')));
 
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 		
 		$this->template = 'marketing/coupon_list.tpl';
 		$this->children = array(
@@ -273,82 +273,82 @@ class ControllerMarketingCoupon extends Controller {
   	}
 
   	protected function getForm() {
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_enabled'] = $this->language->get('text_enabled');
-    	$this->data['text_disabled'] = $this->language->get('text_disabled');
-    	$this->data['text_yes'] = $this->language->get('text_yes');
-    	$this->data['text_no'] = $this->language->get('text_no');
-    	$this->data['text_percent'] = $this->language->get('text_percent');
-    	$this->data['text_amount'] = $this->language->get('text_amount');
+    	$data['text_enabled'] = $this->language->get('text_enabled');
+    	$data['text_disabled'] = $this->language->get('text_disabled');
+    	$data['text_yes'] = $this->language->get('text_yes');
+    	$data['text_no'] = $this->language->get('text_no');
+    	$data['text_percent'] = $this->language->get('text_percent');
+    	$data['text_amount'] = $this->language->get('text_amount');
 				
-		$this->data['entry_name'] = $this->language->get('entry_name');
-    	$this->data['entry_description'] = $this->language->get('entry_description');
-    	$this->data['entry_code'] = $this->language->get('entry_code');
-		$this->data['entry_discount'] = $this->language->get('entry_discount');
-		$this->data['entry_logged'] = $this->language->get('entry_logged');
-		$this->data['entry_shipping'] = $this->language->get('entry_shipping');
-		$this->data['entry_type'] = $this->language->get('entry_type');
-		$this->data['entry_total'] = $this->language->get('entry_total');
-		$this->data['entry_category'] = $this->language->get('entry_category');
-		$this->data['entry_product'] = $this->language->get('entry_product');
-    	$this->data['entry_date_start'] = $this->language->get('entry_date_start');
-    	$this->data['entry_date_end'] = $this->language->get('entry_date_end');
-    	$this->data['entry_uses_total'] = $this->language->get('entry_uses_total');
-		$this->data['entry_uses_customer'] = $this->language->get('entry_uses_customer');
-		$this->data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_name'] = $this->language->get('entry_name');
+    	$data['entry_description'] = $this->language->get('entry_description');
+    	$data['entry_code'] = $this->language->get('entry_code');
+		$data['entry_discount'] = $this->language->get('entry_discount');
+		$data['entry_logged'] = $this->language->get('entry_logged');
+		$data['entry_shipping'] = $this->language->get('entry_shipping');
+		$data['entry_type'] = $this->language->get('entry_type');
+		$data['entry_total'] = $this->language->get('entry_total');
+		$data['entry_category'] = $this->language->get('entry_category');
+		$data['entry_product'] = $this->language->get('entry_product');
+    	$data['entry_date_start'] = $this->language->get('entry_date_start');
+    	$data['entry_date_end'] = $this->language->get('entry_date_end');
+    	$data['entry_uses_total'] = $this->language->get('entry_uses_total');
+		$data['entry_uses_customer'] = $this->language->get('entry_uses_customer');
+		$data['entry_status'] = $this->language->get('entry_status');
 
-		$this->data['help_code'] = $this->language->get('help_code');
-		$this->data['help_type'] = $this->language->get('help_type');
-		$this->data['help_logged'] = $this->language->get('help_logged');
-		$this->data['help_total'] = $this->language->get('help_total');
-		$this->data['help_category'] = $this->language->get('help_category');
-		$this->data['help_product'] = $this->language->get('help_product');
-		$this->data['help_uses_total'] = $this->language->get('help_uses_total');
-		$this->data['help_uses_customer'] = $this->language->get('help_uses_customer');
+		$data['help_code'] = $this->language->get('help_code');
+		$data['help_type'] = $this->language->get('help_type');
+		$data['help_logged'] = $this->language->get('help_logged');
+		$data['help_total'] = $this->language->get('help_total');
+		$data['help_category'] = $this->language->get('help_category');
+		$data['help_product'] = $this->language->get('help_product');
+		$data['help_uses_total'] = $this->language->get('help_uses_total');
+		$data['help_uses_customer'] = $this->language->get('help_uses_customer');
 		
-    	$this->data['button_save'] = $this->language->get('button_save');
-    	$this->data['button_cancel'] = $this->language->get('button_cancel');
+    	$data['button_save'] = $this->language->get('button_save');
+    	$data['button_cancel'] = $this->language->get('button_cancel');
 
-		$this->data['tab_general'] = $this->language->get('tab_general');
-		$this->data['tab_history'] = $this->language->get('tab_history');
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_history'] = $this->language->get('tab_history');
 
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 	
 		if (isset($this->request->get['coupon_id'])) {
-			$this->data['coupon_id'] = $this->request->get['coupon_id'];
+			$data['coupon_id'] = $this->request->get['coupon_id'];
 		} else {
-			$this->data['coupon_id'] = 0;
+			$data['coupon_id'] = 0;
 		}
 				
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 	 	
 		if (isset($this->error['name'])) {
-			$this->data['error_name'] = $this->error['name'];
+			$data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$data['error_name'] = '';
 		}
 		
 		if (isset($this->error['code'])) {
-			$this->data['error_code'] = $this->error['code'];
+			$data['error_code'] = $this->error['code'];
 		} else {
-			$this->data['error_code'] = '';
+			$data['error_code'] = '';
 		}		
 		
 		if (isset($this->error['date_start'])) {
-			$this->data['error_date_start'] = $this->error['date_start'];
+			$data['error_date_start'] = $this->error['date_start'];
 		} else {
-			$this->data['error_date_start'] = '';
+			$data['error_date_start'] = '';
 		}	
 		
 		if (isset($this->error['date_end'])) {
-			$this->data['error_date_end'] = $this->error['date_end'];
+			$data['error_date_end'] = $this->error['date_end'];
 		} else {
-			$this->data['error_date_end'] = '';
+			$data['error_date_end'] = '';
 		}	
 
 		$url = '';
@@ -365,84 +365,84 @@ class ControllerMarketingCoupon extends Controller {
 			$url .= '&order=' . $this->request->get['order'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 									
 		if (!isset($this->request->get['coupon_id'])) {
-			$this->data['action'] = $this->url->link('marketing/coupon/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/coupon/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('marketing/coupon/update', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('marketing/coupon/update', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . $url, 'SSL');
 		}
 		
-		$this->data['cancel'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('marketing/coupon', 'token=' . $this->session->data['token'] . $url, 'SSL');
   		
 		if (isset($this->request->get['coupon_id']) && (!$this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$coupon_info = $this->model_marketing_coupon->getCoupon($this->request->get['coupon_id']);
     	}
 		
     	if (isset($this->request->post['name'])) {
-      		$this->data['name'] = $this->request->post['name'];
+      		$data['name'] = $this->request->post['name'];
     	} elseif (!empty($coupon_info)) {
-			$this->data['name'] = $coupon_info['name'];
+			$data['name'] = $coupon_info['name'];
 		} else {
-      		$this->data['name'] = '';
+      		$data['name'] = '';
     	}
 		
     	if (isset($this->request->post['code'])) {
-      		$this->data['code'] = $this->request->post['code'];
+      		$data['code'] = $this->request->post['code'];
     	} elseif (!empty($coupon_info)) {
-			$this->data['code'] = $coupon_info['code'];
+			$data['code'] = $coupon_info['code'];
 		} else {
-      		$this->data['code'] = '';
+      		$data['code'] = '';
     	}
 		
     	if (isset($this->request->post['type'])) {
-      		$this->data['type'] = $this->request->post['type'];
+      		$data['type'] = $this->request->post['type'];
     	} elseif (!empty($coupon_info)) {
-			$this->data['type'] = $coupon_info['type'];
+			$data['type'] = $coupon_info['type'];
 		} else {
-      		$this->data['type'] = '';
+      		$data['type'] = '';
     	}
 		
     	if (isset($this->request->post['discount'])) {
-      		$this->data['discount'] = $this->request->post['discount'];
+      		$data['discount'] = $this->request->post['discount'];
     	} elseif (!empty($coupon_info)) {
-			$this->data['discount'] = $coupon_info['discount'];
+			$data['discount'] = $coupon_info['discount'];
 		} else {
-      		$this->data['discount'] = '';
+      		$data['discount'] = '';
     	}
 
     	if (isset($this->request->post['logged'])) {
-      		$this->data['logged'] = $this->request->post['logged'];
+      		$data['logged'] = $this->request->post['logged'];
     	} elseif (!empty($coupon_info)) {
-			$this->data['logged'] = $coupon_info['logged'];
+			$data['logged'] = $coupon_info['logged'];
 		} else {
-      		$this->data['logged'] = '';
+      		$data['logged'] = '';
     	}
 		
     	if (isset($this->request->post['shipping'])) {
-      		$this->data['shipping'] = $this->request->post['shipping'];
+      		$data['shipping'] = $this->request->post['shipping'];
     	} elseif (!empty($coupon_info)) {
-			$this->data['shipping'] = $coupon_info['shipping'];
+			$data['shipping'] = $coupon_info['shipping'];
 		} else {
-      		$this->data['shipping'] = '';
+      		$data['shipping'] = '';
     	}
 
     	if (isset($this->request->post['total'])) {
-      		$this->data['total'] = $this->request->post['total'];
+      		$data['total'] = $this->request->post['total'];
     	} elseif (!empty($coupon_info)) {
-			$this->data['total'] = $coupon_info['total'];
+			$data['total'] = $coupon_info['total'];
 		} else {
-      		$this->data['total'] = '';
+      		$data['total'] = '';
     	}
 		
 		if (isset($this->request->post['coupon_product'])) {
@@ -455,13 +455,13 @@ class ControllerMarketingCoupon extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		$this->data['coupon_product'] = array();
+		$data['coupon_product'] = array();
 		
 		foreach ($products as $product_id) {
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 			
 			if ($product_info) {
-				$this->data['coupon_product'][] = array(
+				$data['coupon_product'][] = array(
 					'product_id' => $product_info['product_id'],
 					'name'       => $product_info['name']
 				);
@@ -478,13 +478,13 @@ class ControllerMarketingCoupon extends Controller {
 	
 		$this->load->model('catalog/category');
 	
-		$this->data['coupon_category'] = array();
+		$data['coupon_category'] = array();
 		
 		foreach ($categories as $category_id) {
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 			
 			if ($category_info) {
-				$this->data['coupon_category'][] = array(
+				$data['coupon_category'][] = array(
 					'category_id' => $category_info['category_id'],
 					'name'        => ($category_info['path'] ? $category_info['path'] . ' &gt; ' : '') . $category_info['name']
 				);
@@ -492,43 +492,43 @@ class ControllerMarketingCoupon extends Controller {
 		}
 					
 		if (isset($this->request->post['date_start'])) {
-       		$this->data['date_start'] = $this->request->post['date_start'];
+       		$data['date_start'] = $this->request->post['date_start'];
 		} elseif (!empty($coupon_info)) {
-			$this->data['date_start'] = date('Y-m-d', strtotime($coupon_info['date_start']));
+			$data['date_start'] = date('Y-m-d', strtotime($coupon_info['date_start']));
 		} else {
-			$this->data['date_start'] = date('Y-m-d', time());
+			$data['date_start'] = date('Y-m-d', time());
 		}
 
 		if (isset($this->request->post['date_end'])) {
-       		$this->data['date_end'] = $this->request->post['date_end'];
+       		$data['date_end'] = $this->request->post['date_end'];
 		} elseif (!empty($coupon_info)) {
-			$this->data['date_end'] = date('Y-m-d', strtotime($coupon_info['date_end']));
+			$data['date_end'] = date('Y-m-d', strtotime($coupon_info['date_end']));
 		} else {
-			$this->data['date_end'] = date('Y-m-d', time());
+			$data['date_end'] = date('Y-m-d', time());
 		}
 
     	if (isset($this->request->post['uses_total'])) {
-      		$this->data['uses_total'] = $this->request->post['uses_total'];
+      		$data['uses_total'] = $this->request->post['uses_total'];
 		} elseif (!empty($coupon_info)) {
-			$this->data['uses_total'] = $coupon_info['uses_total'];
+			$data['uses_total'] = $coupon_info['uses_total'];
     	} else {
-      		$this->data['uses_total'] = 1;
+      		$data['uses_total'] = 1;
     	}
   
     	if (isset($this->request->post['uses_customer'])) {
-      		$this->data['uses_customer'] = $this->request->post['uses_customer'];
+      		$data['uses_customer'] = $this->request->post['uses_customer'];
     	} elseif (!empty($coupon_info)) {
-			$this->data['uses_customer'] = $coupon_info['uses_customer'];
+			$data['uses_customer'] = $coupon_info['uses_customer'];
 		} else {
-      		$this->data['uses_customer'] = 1;
+      		$data['uses_customer'] = 1;
     	}
  
     	if (isset($this->request->post['status'])) { 
-      		$this->data['status'] = $this->request->post['status'];
+      		$data['status'] = $this->request->post['status'];
     	} elseif (!empty($coupon_info)) {
-			$this->data['status'] = $coupon_info['status'];
+			$data['status'] = $coupon_info['status'];
 		} else {
-      		$this->data['status'] = 1;
+      		$data['status'] = 1;
     	}
 		
 		$this->template = 'marketing/coupon_form.tpl';
@@ -587,12 +587,12 @@ class ControllerMarketingCoupon extends Controller {
 		
 		$this->load->model('marketing/coupon');
 				
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_no_results'] = $this->language->get('text_no_results');
 		
-		$this->data['column_order_id'] = $this->language->get('column_order_id');
-		$this->data['column_customer'] = $this->language->get('column_customer');
-		$this->data['column_amount'] = $this->language->get('column_amount');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_order_id'] = $this->language->get('column_order_id');
+		$data['column_customer'] = $this->language->get('column_customer');
+		$data['column_amount'] = $this->language->get('column_amount');
+		$data['column_date_added'] = $this->language->get('column_date_added');
 
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -600,12 +600,12 @@ class ControllerMarketingCoupon extends Controller {
 			$page = 1;
 		}  
 		
-		$this->data['histories'] = array();
+		$data['histories'] = array();
 			
 		$results = $this->model_marketing_coupon->getCouponHistories($this->request->get['coupon_id'], ($page - 1) * 10, 10);
       		
 		foreach ($results as $result) {
-        	$this->data['histories'][] = array(
+        	$data['histories'][] = array(
 				'order_id'   => $result['order_id'],
 				'customer'   => $result['customer'],
 				'amount'     => $result['amount'],
@@ -621,9 +621,9 @@ class ControllerMarketingCoupon extends Controller {
 		$pagination->limit = 10; 
 		$pagination->url = $this->url->link('marketing/coupon/history', 'token=' . $this->session->data['token'] . '&coupon_id=' . $this->request->get['coupon_id'] . '&page={page}', 'SSL');
 			
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($history_total - $this->config->get('config_admin_limit'))) ? $history_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $history_total, ceil($history_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($history_total - $this->config->get('config_admin_limit'))) ? $history_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $history_total, ceil($history_total / $this->config->get('config_admin_limit')));
 		
 		$this->template = 'marketing/coupon_history.tpl';		
 		

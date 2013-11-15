@@ -39,43 +39,41 @@ class ControllerCheckoutShippingMethod extends Controller {
 			$this->session->data['shipping_methods'] = $quote_data;
 		}
 					
-		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
-		$this->data['text_comments'] = $this->language->get('text_comments');
-		$this->data['text_loading'] = $this->language->get('text_loading');
+		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
+		$data['text_comments'] = $this->language->get('text_comments');
+		$data['text_loading'] = $this->language->get('text_loading');
 	
-		$this->data['button_continue'] = $this->language->get('button_continue');
+		$data['button_continue'] = $this->language->get('button_continue');
 		
 		if (empty($this->session->data['shipping_methods'])) {
-			$this->data['error_warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact'));
+			$data['error_warning'] = sprintf($this->language->get('error_no_shipping'), $this->url->link('information/contact'));
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}	
 					
 		if (isset($this->session->data['shipping_methods'])) {
-			$this->data['shipping_methods'] = $this->session->data['shipping_methods']; 
+			$data['shipping_methods'] = $this->session->data['shipping_methods']; 
 		} else {
-			$this->data['shipping_methods'] = array();
+			$data['shipping_methods'] = array();
 		}
 		
 		if (isset($this->session->data['shipping_method']['code'])) {
-			$this->data['code'] = $this->session->data['shipping_method']['code'];
+			$data['code'] = $this->session->data['shipping_method']['code'];
 		} else {
-			$this->data['code'] = '';
+			$data['code'] = '';
 		}
 		
 		if (isset($this->session->data['comment'])) {
-			$this->data['comment'] = $this->session->data['comment'];
+			$data['comment'] = $this->session->data['comment'];
 		} else {
-			$this->data['comment'] = '';
-		}
-			
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/shipping_method.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/checkout/shipping_method.tpl';
-		} else {
-			$this->template = 'default/template/checkout/shipping_method.tpl';
+			$data['comment'] = '';
 		}
 		
-		$this->response->setOutput($this->render());
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/shipping_method.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/shipping_method.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/checkout/shipping_method.tpl', $data));
+		}
   	}
 	
 	public function save() {

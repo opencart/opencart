@@ -143,24 +143,24 @@ class ControllerLocalisationCurrency extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
-		$this->data['insert'] = $this->url->link('localisation/currency/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('localisation/currency/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('localisation/currency/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('localisation/currency/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
-		$this->data['currencies'] = array();
+		$data['currencies'] = array();
 
-		$data = array(
+		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
@@ -169,10 +169,10 @@ class ControllerLocalisationCurrency extends Controller {
 		
 		$currency_total = $this->model_localisation_currency->getTotalCurrencies();
 
-		$results = $this->model_localisation_currency->getCurrencies($data);
+		$results = $this->model_localisation_currency->getCurrencies($filter_data);
 
 		foreach ($results as $result) {
-			$this->data['currencies'][] = array(
+			$data['currencies'][] = array(
 				'currency_id'   => $result['currency_id'],
 				'title'         => $result['title'] . (($result['code'] == $this->config->get('config_currency')) ? $this->language->get('text_default') : null),
 				'code'          => $result['code'],
@@ -182,39 +182,39 @@ class ControllerLocalisationCurrency extends Controller {
 			);
 		}	
 	
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$this->data['column_title'] = $this->language->get('column_title');
-    	$this->data['column_code'] = $this->language->get('column_code');
-		$this->data['column_value'] = $this->language->get('column_value');
-		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
-		$this->data['column_action'] = $this->language->get('column_action');
+		$data['column_title'] = $this->language->get('column_title');
+    	$data['column_code'] = $this->language->get('column_code');
+		$data['column_value'] = $this->language->get('column_value');
+		$data['column_date_modified'] = $this->language->get('column_date_modified');
+		$data['column_action'] = $this->language->get('column_action');
 
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_delete'] = $this->language->get('button_delete');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
 
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
 		if (isset($this->request->post['selected'])) {
-			$this->data['selected'] = (array)$this->request->post['selected'];
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['selected'] = array();
+			$data['selected'] = array();
 		}
 		
 		$url = '';
@@ -229,10 +229,10 @@ class ControllerLocalisationCurrency extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_title'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . '&sort=title' . $url, 'SSL');
-		$this->data['sort_code'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . '&sort=code' . $url, 'SSL');
-		$this->data['sort_value'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . '&sort=value' . $url, 'SSL');
-		$this->data['sort_date_modified'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . '&sort=date_modified' . $url, 'SSL');
+		$data['sort_title'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . '&sort=title' . $url, 'SSL');
+		$data['sort_code'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . '&sort=code' . $url, 'SSL');
+		$data['sort_value'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . '&sort=value' . $url, 'SSL');
+		$data['sort_date_modified'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . '&sort=date_modified' . $url, 'SSL');
 		
 		$url = '';
 
@@ -250,12 +250,12 @@ class ControllerLocalisationCurrency extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($currency_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($currency_total - $this->config->get('config_admin_limit'))) ? $currency_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $currency_total, ceil($currency_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($currency_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($currency_total - $this->config->get('config_admin_limit'))) ? $currency_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $currency_total, ceil($currency_total / $this->config->get('config_admin_limit')));
 		
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		$this->template = 'localisation/currency_list.tpl';
 		$this->children = array(
@@ -267,43 +267,43 @@ class ControllerLocalisationCurrency extends Controller {
 	}
 
 	protected function getForm() {
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
     	
-		$this->data['text_enabled'] = $this->language->get('text_enabled');
-    	$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+    	$data['text_disabled'] = $this->language->get('text_disabled');
 		
-		$this->data['entry_title'] = $this->language->get('entry_title');
-		$this->data['entry_code'] = $this->language->get('entry_code');
-		$this->data['entry_value'] = $this->language->get('entry_value');
-		$this->data['entry_symbol_left'] = $this->language->get('entry_symbol_left');
-		$this->data['entry_symbol_right'] = $this->language->get('entry_symbol_right');
-		$this->data['entry_decimal_place'] = $this->language->get('entry_decimal_place');
-		$this->data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_title'] = $this->language->get('entry_title');
+		$data['entry_code'] = $this->language->get('entry_code');
+		$data['entry_value'] = $this->language->get('entry_value');
+		$data['entry_symbol_left'] = $this->language->get('entry_symbol_left');
+		$data['entry_symbol_right'] = $this->language->get('entry_symbol_right');
+		$data['entry_decimal_place'] = $this->language->get('entry_decimal_place');
+		$data['entry_status'] = $this->language->get('entry_status');
 
-		$this->data['help_code'] = $this->language->get('help_code');
-		$this->data['help_value'] = $this->language->get('help_value');
+		$data['help_code'] = $this->language->get('help_code');
+		$data['help_value'] = $this->language->get('help_value');
 
-		$this->data['button_save'] = $this->language->get('button_save');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 
-		$this->data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_general'] = $this->language->get('tab_general');
 
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
  		if (isset($this->error['title'])) {
-			$this->data['error_title'] = $this->error['title'];
+			$data['error_title'] = $this->error['title'];
 		} else {
-			$this->data['error_title'] = '';
+			$data['error_title'] = '';
 		}
 		
  		if (isset($this->error['code'])) {
-			$this->data['error_code'] = $this->error['code'];
+			$data['error_code'] = $this->error['code'];
 		} else {
-			$this->data['error_code'] = '';
+			$data['error_code'] = '';
 		}
 		
 		$url = '';
@@ -320,84 +320,84 @@ class ControllerLocalisationCurrency extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['currency_id'])) {
-			$this->data['action'] = $this->url->link('localisation/currency/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/currency/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('localisation/currency/update', 'token=' . $this->session->data['token'] . '&currency_id=' . $this->request->get['currency_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/currency/update', 'token=' . $this->session->data['token'] . '&currency_id=' . $this->request->get['currency_id'] . $url, 'SSL');
 		}
 				
-		$this->data['cancel'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('localisation/currency', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['currency_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$currency_info = $this->model_localisation_currency->getCurrency($this->request->get['currency_id']);
 		}
 
 		if (isset($this->request->post['title'])) {
-			$this->data['title'] = $this->request->post['title'];
+			$data['title'] = $this->request->post['title'];
 		} elseif (!empty($currency_info)) {
-			$this->data['title'] = $currency_info['title'];
+			$data['title'] = $currency_info['title'];
 		} else {
-			$this->data['title'] = '';
+			$data['title'] = '';
 		}
 
 		if (isset($this->request->post['code'])) {
-			$this->data['code'] = $this->request->post['code'];
+			$data['code'] = $this->request->post['code'];
 		} elseif (!empty($currency_info)) {
-			$this->data['code'] = $currency_info['code'];
+			$data['code'] = $currency_info['code'];
 		} else {
-			$this->data['code'] = '';
+			$data['code'] = '';
 		}
 
 		if (isset($this->request->post['symbol_left'])) {
-			$this->data['symbol_left'] = $this->request->post['symbol_left'];
+			$data['symbol_left'] = $this->request->post['symbol_left'];
 		} elseif (!empty($currency_info)) {
-			$this->data['symbol_left'] = $currency_info['symbol_left'];
+			$data['symbol_left'] = $currency_info['symbol_left'];
 		} else {
-			$this->data['symbol_left'] = '';
+			$data['symbol_left'] = '';
 		}
 
 		if (isset($this->request->post['symbol_right'])) {
-			$this->data['symbol_right'] = $this->request->post['symbol_right'];
+			$data['symbol_right'] = $this->request->post['symbol_right'];
 		} elseif (!empty($currency_info)) {
-			$this->data['symbol_right'] = $currency_info['symbol_right'];
+			$data['symbol_right'] = $currency_info['symbol_right'];
 		} else {
-			$this->data['symbol_right'] = '';
+			$data['symbol_right'] = '';
 		}
 
 		if (isset($this->request->post['decimal_place'])) {
-			$this->data['decimal_place'] = $this->request->post['decimal_place'];
+			$data['decimal_place'] = $this->request->post['decimal_place'];
 		} elseif (!empty($currency_info)) {
-			$this->data['decimal_place'] = $currency_info['decimal_place'];
+			$data['decimal_place'] = $currency_info['decimal_place'];
 		} else {
-			$this->data['decimal_place'] = '';
+			$data['decimal_place'] = '';
 		}
 
 		if (isset($this->request->post['value'])) {
-			$this->data['value'] = $this->request->post['value'];
+			$data['value'] = $this->request->post['value'];
 		} elseif (!empty($currency_info)) {
-			$this->data['value'] = $currency_info['value'];
+			$data['value'] = $currency_info['value'];
 		} else {
-			$this->data['value'] = '';
+			$data['value'] = '';
 		}
 
     	if (isset($this->request->post['status'])) {
-      		$this->data['status'] = $this->request->post['status'];
+      		$data['status'] = $this->request->post['status'];
     	} elseif (!empty($currency_info)) {
-			$this->data['status'] = $currency_info['status'];
+			$data['status'] = $currency_info['status'];
 		} else {
-      		$this->data['status'] = '';
+      		$data['status'] = '';
     	}
 
 		$this->template = 'localisation/currency_form.tpl';

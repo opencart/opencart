@@ -5,34 +5,34 @@ class ControllerPaymentMoneybookers extends Controller {
 		
 		$this->language->load('payment/moneybookers');
 		
-    	$this->data['button_confirm'] = $this->language->get('button_confirm');
+    	$data['button_confirm'] = $this->language->get('button_confirm');
         
-		$this->data['action'] = 'https://www.moneybookers.com/app/payment.pl?p=OpenCart';
+		$data['action'] = 'https://www.moneybookers.com/app/payment.pl?p=OpenCart';
 
-		$this->data['pay_to_email'] = $this->config->get('moneybookers_email');
-		$this->data['platform'] = '31974336';
-		$this->data['description'] = $this->config->get('config_name');
-		$this->data['transaction_id'] = $this->session->data['order_id'];
-        $this->data['return_url'] = $this->url->link('checkout/success');
-		$this->data['cancel_url'] = $this->url->link('checkout/checkout', '', 'SSL');
-		$this->data['status_url'] = $this->url->link('payment/moneybookers/callback');
-		$this->data['language'] = $this->session->data['language'];		
-		$this->data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
+		$data['pay_to_email'] = $this->config->get('moneybookers_email');
+		$data['platform'] = '31974336';
+		$data['description'] = $this->config->get('config_name');
+		$data['transaction_id'] = $this->session->data['order_id'];
+        $data['return_url'] = $this->url->link('checkout/success');
+		$data['cancel_url'] = $this->url->link('checkout/checkout', '', 'SSL');
+		$data['status_url'] = $this->url->link('payment/moneybookers/callback');
+		$data['language'] = $this->session->data['language'];		
+		$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 		
         $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 			
-		$this->data['pay_from_email'] = $order_info['email'];
-		$this->data['firstname'] = $order_info['payment_firstname'];
-        $this->data['lastname'] = $order_info['payment_lastname'];
-        $this->data['address'] = $order_info['payment_address_1'];
-        $this->data['address2'] = $order_info['payment_address_2'];
-        $this->data['phone_number'] = $order_info['telephone'];
-		$this->data['postal_code'] = $order_info['payment_postcode'];
-        $this->data['city'] = $order_info['payment_city'];
-        $this->data['state'] = $order_info['payment_zone'];
-		$this->data['country'] = $order_info['payment_iso_code_3'];
-		$this->data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-        $this->data['currency'] = $order_info['currency_code'];
+		$data['pay_from_email'] = $order_info['email'];
+		$data['firstname'] = $order_info['payment_firstname'];
+        $data['lastname'] = $order_info['payment_lastname'];
+        $data['address'] = $order_info['payment_address_1'];
+        $data['address2'] = $order_info['payment_address_2'];
+        $data['phone_number'] = $order_info['telephone'];
+		$data['postal_code'] = $order_info['payment_postcode'];
+        $data['city'] = $order_info['payment_city'];
+        $data['state'] = $order_info['payment_zone'];
+		$data['country'] = $order_info['payment_iso_code_3'];
+		$data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+        $data['currency'] = $order_info['currency_code'];
 		
 		$products = '';
 		
@@ -40,17 +40,15 @@ class ControllerPaymentMoneybookers extends Controller {
     		$products .= $product['quantity'] . ' x ' . $product['name'] . ', ';
     	}		
 		
-		$this->data['detail1_text'] = $products;
+		$data['detail1_text'] = $products;
 		
-		$this->data['order_id'] = $this->session->data['order_id'];
+		$data['order_id'] = $this->session->data['order_id'];
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/moneybookers.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/moneybookers.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/payment/moneybookers.tpl', $data);
 		} else {
-			$this->template = 'default/template/payment/moneybookers.tpl';
-		}	
-		
-		$this->render();
+			return $this->load->view('default/template/payment/moneybookers.tpl', $data);
+		}
 	}
 	
 	public function callback() {

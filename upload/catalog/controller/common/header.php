@@ -1,7 +1,9 @@
 <?php   
 class ControllerCommonHeader extends Controller {
-	protected function index() {
-		$this->data['title'] = $this->document->getTitle();
+	public function index() {
+		$data = array();
+		
+		$data['title'] = $this->document->getTitle();
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$server = $this->config->get('config_ssl');
@@ -9,48 +11,48 @@ class ControllerCommonHeader extends Controller {
 			$server = $this->config->get('config_url');
 		}
 
-		$this->data['base'] = $server;
-		$this->data['description'] = $this->document->getDescription();
-		$this->data['keywords'] = $this->document->getKeywords();
-		$this->data['links'] = $this->document->getLinks();	 
-		$this->data['styles'] = $this->document->getStyles();
-		$this->data['scripts'] = $this->document->getScripts();
-		$this->data['lang'] = $this->language->get('code');
-		$this->data['direction'] = $this->language->get('direction');
-		$this->data['google_analytics'] = html_entity_decode($this->config->get('config_google_analytics'), ENT_QUOTES, 'UTF-8');
-		$this->data['name'] = $this->config->get('config_name');
+		$data['base'] = $server;
+		$data['description'] = $this->document->getDescription();
+		$data['keywords'] = $this->document->getKeywords();
+		$data['links'] = $this->document->getLinks();	 
+		$data['styles'] = $this->document->getStyles();
+		$data['scripts'] = $this->document->getScripts();
+		$data['lang'] = $this->language->get('code');
+		$data['direction'] = $this->language->get('direction');
+		$data['google_analytics'] = html_entity_decode($this->config->get('config_google_analytics'), ENT_QUOTES, 'UTF-8');
+		$data['name'] = $this->config->get('config_name');
 		
 		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon'))) {
-			$this->data['icon'] = $server . 'image/' . $this->config->get('config_icon');
+			$data['icon'] = $server . 'image/' . $this->config->get('config_icon');
 		} else {
-			$this->data['icon'] = '';
+			$data['icon'] = '';
 		}
 		
 		if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo'))) {
-			$this->data['logo'] = $server . 'image/' . $this->config->get('config_logo');
+			$data['logo'] = $server . 'image/' . $this->config->get('config_logo');
 		} else {
-			$this->data['logo'] = '';
+			$data['logo'] = '';
 		}		
 		
 		$this->language->load('common/header');
 		
-		$this->data['text_home'] = $this->language->get('text_home');
-		$this->data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
-		$this->data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
-		$this->data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
-		$this->data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
-		$this->data['text_account'] = $this->language->get('text_account');
-    	$this->data['text_checkout'] = $this->language->get('text_checkout');
-		$this->data['text_category'] = $this->language->get('text_category');
-		$this->data['text_all'] = $this->language->get('text_all');
+		$data['text_home'] = $this->language->get('text_home');
+		$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
+		$data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
+		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
+		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
+		$data['text_account'] = $this->language->get('text_account');
+    	$data['text_checkout'] = $this->language->get('text_checkout');
+		$data['text_category'] = $this->language->get('text_category');
+		$data['text_all'] = $this->language->get('text_all');
 				
-		$this->data['home'] = $this->url->link('common/home');
-		$this->data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
-		$this->data['logged'] = $this->customer->isLogged();
-		$this->data['account'] = $this->url->link('account/account', '', 'SSL');
-		$this->data['shopping_cart'] = $this->url->link('checkout/cart');
-		$this->data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
-		$this->data['telephone'] = $this->config->get('config_telephone');
+		$data['home'] = $this->url->link('common/home');
+		$data['wishlist'] = $this->url->link('account/wishlist', '', 'SSL');
+		$data['logged'] = $this->customer->isLogged();
+		$data['account'] = $this->url->link('account/account', '', 'SSL');
+		$data['shopping_cart'] = $this->url->link('checkout/cart');
+		$data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
+		$data['telephone'] = $this->config->get('config_telephone');
 		
 		// Daniel's robot detector
 		$status = true;
@@ -72,7 +74,7 @@ class ControllerCommonHeader extends Controller {
 		
 		$this->load->model('catalog/product');
 		
-		$this->data['categories'] = array();
+		$data['categories'] = array();
 					
 		$categories = $this->model_catalog_category->getCategories(0);
 		
@@ -84,19 +86,19 @@ class ControllerCommonHeader extends Controller {
 				$children = $this->model_catalog_category->getCategories($category['category_id']);
 				
 				foreach ($children as $child) {
-					$data = array(
+					$filter_data = array(
 						'filter_category_id'  => $child['category_id'],
 						'filter_sub_category' => true
 					);
 					
 					$children_data[] = array(
-						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($data) . ')' : ''),
+						'name'  => $child['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : ''),
 						'href'  => $this->url->link('product/category', 'path=' . $category['category_id'] . '_' . $child['category_id'])
 					);						
 				}
 				
 				// Level 1
-				$this->data['categories'][] = array(
+				$data['categories'][] = array(
 					'name'     => $category['name'],
 					'children' => $children_data,
 					'column'   => $category['column'] ? $category['column'] : 1,
@@ -105,20 +107,16 @@ class ControllerCommonHeader extends Controller {
 			}
 		}
 		
-		$this->children = array(
-			'module/language',
-			'module/currency',
-			'module/search',
-			'module/cart'
-		);
-				
+		$data['language'] = $this->load->controller('module/language');
+		$data['currency'] = $this->load->controller('module/currency');
+		$data['search'] = $this->load->controller('module/search');
+		$data['cart'] = $this->load->controller('module/cart');
+						
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/common/header.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/common/header.tpl', $data);
 		} else {
-			$this->template = 'default/template/common/header.tpl';
+			return $this->load->view('default/template/common/header.tpl', $data);
 		}
-		
-    	$this->render();
 	} 	
 }
 ?>

@@ -1,6 +1,6 @@
 <?php  
 class ControllerCommonContentBottom extends Controller {
-	protected function index() {
+	public function index() {
 		$this->load->model('design/layout');
 		$this->load->model('catalog/category');
 		$this->load->model('catalog/product');
@@ -66,23 +66,21 @@ class ControllerCommonContentBottom extends Controller {
 		
 		array_multisort($sort_order, SORT_ASC, $module_data);
 		
-		$this->data['modules'] = array();
+		$data['modules'] = array();
 		
 		foreach ($module_data as $module) {
-			$module = $this->getChild('module/' . $module['code'], $module['setting']);
+			$module = $this->load->controller('module/' . $module['code'], $module['setting']);
 			
 			if ($module) {
-				$this->data['modules'][] = $module;
+				$data['modules'][] = $module;
 			}
 		}
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/content_bottom.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/common/content_bottom.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/common/content_bottom.tpl', $data);
 		} else {
-			$this->template = 'default/template/common/content_bottom.tpl';
+			return $this->load->view('default/template/common/content_bottom.tpl', $data);
 		}
-								
-		$this->render();
 	}
 }
 ?>

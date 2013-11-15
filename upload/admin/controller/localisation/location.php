@@ -144,24 +144,24 @@ class ControllerLocalisationLocation extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['breadcrumbs'] =   array();
+		$data['breadcrumbs'] =   array();
 		
-		$this->data['breadcrumbs'][] =   array(
+		$data['breadcrumbs'][] =   array(
 			'text' =>  $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
-		$this->data['breadcrumbs'][] =   array(
+		$data['breadcrumbs'][] =   array(
 			'text' =>  $this->language->get('heading_title'),
 			'href' =>  $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
-		$this->data['insert'] = $this->url->link('localisation/location/insert',  'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('localisation/location/delete',  'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('localisation/location/insert',  'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('localisation/location/delete',  'token=' . $this->session->data['token'] . $url, 'SSL');
 		
-		$this->data['location'] = array();
+		$data['location'] = array();
 		
-		$data = array(
+		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
@@ -170,10 +170,10 @@ class ControllerLocalisationLocation extends Controller {
 		     
 		$location_total = $this->model_localisation_location->getTotalLocations();
 		
-		$results = $this->model_localisation_location->getLocations($data); //  retrieve db information for locations from function in Model
+		$results = $this->model_localisation_location->getLocations($filter_data);
 		
 		foreach($results as $result) {
-			$this->data['location'][] =   array(
+			$data['location'][] =   array(
 				'location_id' => $result['location_id'],
 				'name'        => $result['name'],
 				'address_1'   => $result['address_1'], 
@@ -183,39 +183,39 @@ class ControllerLocalisationLocation extends Controller {
 			);
 		}
 		
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_address_1'] = $this->language->get('column_address_1');
-		$this->data['column_zone'] = $this->language->get('column_zone');
-		$this->data['column_country'] = $this->language->get('column_country');
-		$this->data['column_action'] = $this->language->get('column_action');
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_address_1'] = $this->language->get('column_address_1');
+		$data['column_zone'] = $this->language->get('column_zone');
+		$data['column_country'] = $this->language->get('column_country');
+		$data['column_action'] = $this->language->get('column_action');
 		
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_delete'] = $this->language->get('button_delete');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
 		
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
 		if (isset($this->request->post['selected'])) {
-			$this->data['selected'] = (array)$this->request->post['selected'];
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['selected'] = array();
+			$data['selected'] = array();
 		}
 		
 		$url = '';
@@ -230,10 +230,10 @@ class ControllerLocalisationLocation extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=l.name' . $url, 'SSL');
-		$this->data['sort_address_1'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=l.address_1' . $url, 'SSL');
-		$this->data['sort_zone'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=z.name' . $url, 'SSL');
-		$this->data['sort_country'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=c.name' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=l.name' . $url, 'SSL');
+		$data['sort_address_1'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=l.address_1' . $url, 'SSL');
+		$data['sort_zone'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=z.name' . $url, 'SSL');
+		$data['sort_country'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . '&sort=c.name' . $url, 'SSL');
 		
 		$url = '';
 
@@ -251,12 +251,12 @@ class ControllerLocalisationLocation extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 		
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($location_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($location_total - $this->config->get('config_admin_limit'))) ? $location_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $location_total, ceil($location_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($location_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($location_total - $this->config->get('config_admin_limit'))) ? $location_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $location_total, ceil($location_total / $this->config->get('config_admin_limit')));
 		
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 		
 		$this->template = 'localisation/location_list.tpl';   
 		$this->children = array(
@@ -268,81 +268,81 @@ class ControllerLocalisationLocation extends Controller {
 	}
 	
 	protected function getForm() {
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_select'] = $this->language->get('text_select');
-		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_default'] = $this->language->get('text_default');
-		$this->data['text_geocode'] = $this->language->get('text_geocode'); 
+		$data['text_select'] = $this->language->get('text_select');
+		$data['text_none'] = $this->language->get('text_none');
+		$data['text_default'] = $this->language->get('text_default');
+		$data['text_geocode'] = $this->language->get('text_geocode'); 
 		
-		$this->data['entry_name'] = $this->language->get('entry_name');		
-		$this->data['entry_telephone'] = $this->language->get('entry_telephone');
-		$this->data['entry_fax'] = $this->language->get('entry_fax');
-		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
-		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
-		$this->data['entry_city'] = $this->language->get('entry_city');
-		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
-		$this->data['entry_country'] = $this->language->get('entry_country');
-		$this->data['entry_zone'] = $this->language->get('entry_zone');
-		$this->data['entry_image'] = $this->language->get('entry_image');
-		$this->data['entry_geocode'] = $this->language->get('entry_geocode');
-		$this->data['entry_open'] = $this->language->get('entry_open');        
-		$this->data['entry_comment'] = $this->language->get('entry_comment');
+		$data['entry_name'] = $this->language->get('entry_name');		
+		$data['entry_telephone'] = $this->language->get('entry_telephone');
+		$data['entry_fax'] = $this->language->get('entry_fax');
+		$data['entry_address_1'] = $this->language->get('entry_address_1');
+		$data['entry_address_2'] = $this->language->get('entry_address_2');
+		$data['entry_city'] = $this->language->get('entry_city');
+		$data['entry_postcode'] = $this->language->get('entry_postcode');
+		$data['entry_country'] = $this->language->get('entry_country');
+		$data['entry_zone'] = $this->language->get('entry_zone');
+		$data['entry_image'] = $this->language->get('entry_image');
+		$data['entry_geocode'] = $this->language->get('entry_geocode');
+		$data['entry_open'] = $this->language->get('entry_open');        
+		$data['entry_comment'] = $this->language->get('entry_comment');
 	
-		$this->data['help_geocode'] = $this->language->get('help_geocode');
-		$this->data['help_open'] = $this->language->get('help_open');
-		$this->data['help_comment'] = $this->language->get('help_comment');
+		$data['help_geocode'] = $this->language->get('help_geocode');
+		$data['help_open'] = $this->language->get('help_open');
+		$data['help_comment'] = $this->language->get('help_comment');
 		
-		$this->data['button_save'] = $this->language->get('button_save');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');        
-		$this->data['button_geocode'] = $this->language->get('button_geocode');
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');        
+		$data['button_geocode'] = $this->language->get('button_geocode');
 				
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->error['name'])) {
-			$this->data['error_name'] = $this->error['name'];
+			$data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$data['error_name'] = '';
 		}
 		
 		if (isset($this->error['telephone'])) {
-			$this->data['error_telephone'] = $this->error['telephone'];
+			$data['error_telephone'] = $this->error['telephone'];
 		} else {
-			$this->data['error_telephone'] = '';
+			$data['error_telephone'] = '';
 		}
 				
 		if (isset($this->error['address_1'])) {
-			$this->data['error_address_1'] = $this->error['address_1'];
+			$data['error_address_1'] = $this->error['address_1'];
 		} else {
-			$this->data['error_address_1'] = '';
+			$data['error_address_1'] = '';
 		}
 		
 		if (isset($this->error['city'])) {
-			$this->data['error_city'] = $this->error['city'];
+			$data['error_city'] = $this->error['city'];
 		} else {
-			$this->data['error_city'] = '';
+			$data['error_city'] = '';
 		}   
 		
 		if (isset($this->error['postcode'])) {
-			$this->data['error_postcode'] = $this->error['postcode'];
+			$data['error_postcode'] = $this->error['postcode'];
 		} else {
-			$this->data['error_postcode'] = '';
+			$data['error_postcode'] = '';
 		}   
 		
 		if (isset($this->error['country'])) {
-			$this->data['error_country'] = $this->error['country'];
+			$data['error_country'] = $this->error['country'];
 		} else {
-			$this->data['error_country'] = '';
+			$data['error_country'] = '';
 		}
 		
 		if (isset($this->error['zone'])) {
-			$this->data['error_zone'] = $this->error['zone'];
+			$data['error_zone'] = $this->error['zone'];
 		} else {
-			$this->data['error_zone'] = '';
+			$data['error_zone'] = '';
 		}
 		                
 		$url = '';
@@ -359,150 +359,150 @@ class ControllerLocalisationLocation extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 		
-		$this->data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
-		$this->data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 		
 		if (!isset($this->request->get['location_id'])) {
-			$this->data['action'] = $this->url->link('localisation/location/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/location/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('localisation/location/update', 'token=' . $this->session->data['token'] .  '&location_id=' . $this->request->get['location_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/location/update', 'token=' . $this->session->data['token'] .  '&location_id=' . $this->request->get['location_id'] . $url, 'SSL');
 		}
 		
-		$this->data['cancel'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('localisation/location', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
 		if (isset($this->request->get['location_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$location_info = $this->model_localisation_location->getLocation($this->request->get['location_id']);
 		}
 		
-		$this->data['token'] = $this->session->data['token'];  
+		$data['token'] = $this->session->data['token'];  
 
 		$this->load->model('setting/store');
 		
 		if (isset($this->request->post['name'])) {
-			$this->data['name'] = $this->request->post['name'];
+			$data['name'] = $this->request->post['name'];
 		} elseif (!empty($location_info)) {
-			$this->data['name'] = $location_info['name'];
+			$data['name'] = $location_info['name'];
 		} else {
-			$this->data['name'] =   '';
+			$data['name'] =   '';
 		}
 		
 		if (isset($this->request->post['telephone'])) {
-			$this->data['telephone'] = $this->request->post['telephone'];
+			$data['telephone'] = $this->request->post['telephone'];
 		} elseif (!empty($location_info)) {
-			$this->data['telephone'] = $location_info['telephone'];
+			$data['telephone'] = $location_info['telephone'];
 		} else {
-			$this->data['telephone'] = '';
+			$data['telephone'] = '';
 		}
 		
 		if (isset($this->request->post['fax'])) {
-			$this->data['fax'] = $this->request->post['fax'];
+			$data['fax'] = $this->request->post['fax'];
 		} elseif (!empty($location_info)) {
-			$this->data['fax'] = $location_info['fax'];
+			$data['fax'] = $location_info['fax'];
 		} else {
-			$this->data['fax'] = '';
+			$data['fax'] = '';
 		}
 				
 		if (isset($this->request->post['address_1'])) {
-			$this->data['address_1'] = $this->request->post['address_1'];
+			$data['address_1'] = $this->request->post['address_1'];
 		} elseif (!empty($location_info)) {
-			$this->data['address_1'] = $location_info['address_1'];
+			$data['address_1'] = $location_info['address_1'];
 		} else {
-			$this->data['address_1'] = '';
+			$data['address_1'] = '';
 		}
 		
 		if (isset($this->request->post['address_2'])) {
-			$this->data['address_2'] = $this->request->post['address_2'];
+			$data['address_2'] = $this->request->post['address_2'];
 		} elseif (!empty($location_info)) {
-			$this->data['address_2'] = $location_info['address_2'];
+			$data['address_2'] = $location_info['address_2'];
 		} else {
-			$this->data['address_2'] = '';
+			$data['address_2'] = '';
 		}
 		
 		if (isset($this->request->post['city'])) {
-			$this->data['city'] = $this->request->post['city'];
+			$data['city'] = $this->request->post['city'];
 		} elseif (!empty($location_info)) {
-			$this->data['city'] = $location_info['city'];
+			$data['city'] = $location_info['city'];
 		} else {
-			$this->data['city'] = '';
+			$data['city'] = '';
 		}
 		
 		if (isset($this->request->post['postcode'])) {
-			$this->data['postcode'] = $this->request->post['postcode'];
+			$data['postcode'] = $this->request->post['postcode'];
 		} elseif (!empty($location_info)) {
-			$this->data['postcode'] = $location_info['postcode'];
+			$data['postcode'] = $location_info['postcode'];
 		} else {
-			$this->data['postcode'] = '';
+			$data['postcode'] = '';
 		}
 		
 		if (isset($this->request->post['country_id'])) {
-      		$this->data['country_id'] = $this->request->post['country_id'];
+      		$data['country_id'] = $this->request->post['country_id'];
     	} elseif (!empty($location_info)) { 
-			$this->data['country_id'] = $location_info['country_id'];
+			$data['country_id'] = $location_info['country_id'];
 		} else {
-      		$this->data['country_id'] = '';
+      		$data['country_id'] = '';
     	}
 		
 		$this->load->model('localisation/country');
 		
-		$this->data['countries'] = $this->model_localisation_country->getCountries();
+		$data['countries'] = $this->model_localisation_country->getCountries();
 				
 		if (isset($this->request->post['zone_id'])) {
-      		$this->data['zone_id'] = $this->request->post['zone_id'];
+      		$data['zone_id'] = $this->request->post['zone_id'];
     	} elseif (!empty($location_info)) { 
-			$this->data['zone_id'] = $location_info['zone_id'];
+			$data['zone_id'] = $location_info['zone_id'];
 		} else {
-      		$this->data['zone_id'] = '';
+      		$data['zone_id'] = '';
     	}
 				
 		if (isset($this->request->post['geocode'])) {
-			$this->data['geocode'] = $this->request->post['geocode'];
+			$data['geocode'] = $this->request->post['geocode'];
 		} elseif (!empty($location_info)) {
-			$this->data['geocode'] = $location_info['geocode'];
+			$data['geocode'] = $location_info['geocode'];
 		} else {
-			$this->data['geocode'] = '';
+			$data['geocode'] = '';
 		}
 						
 		if (isset($this->request->post['image'])) {
-			$this->data['image'] = $this->request->post['image'];
+			$data['image'] = $this->request->post['image'];
 		} elseif (!empty($location_info)) {
-			$this->data['image'] = $location_info['image'];
+			$data['image'] = $location_info['image'];
 		} else {
-			$this->data['image'] = '';
+			$data['image'] = '';
 		}
 		
 		$this->load->model('tool/image');
 
 		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
-			$this->data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
 		} elseif (!empty($location_info) && $location_info['image'] && is_file(DIR_IMAGE . $location_info['image'])) {
-			$this->data['thumb'] = $this->model_tool_image->resize($location_info['image'], 100, 100);
+			$data['thumb'] = $this->model_tool_image->resize($location_info['image'], 100, 100);
 		} else {
-			$this->data['thumb'] = '';
+			$data['thumb'] = '';
 		}
 				
 		if (isset($this->request->post['open'])) {
-			$this->data['open'] = $this->request->post['open'];
+			$data['open'] = $this->request->post['open'];
 		} elseif (!empty($location_info)) {
-			$this->data['open'] = $location_info['open'];        
+			$data['open'] = $location_info['open'];        
 		} else {
-			$this->data['open'] = '';
+			$data['open'] = '';
 		}
 		
 		if (isset($this->request->post['comment'])) {
-			$this->data['comment'] = $this->request->post['comment'];
+			$data['comment'] = $this->request->post['comment'];
 		} elseif (!empty($location_info)) {
-			$this->data['comment'] = $location_info['comment'];
+			$data['comment'] = $location_info['comment'];
 		} else {
-			$this->data['comment'] = '';
+			$data['comment'] = '';
 		}
 		
 		$this->template = 'localisation/location_form.tpl';

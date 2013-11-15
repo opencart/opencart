@@ -1,7 +1,9 @@
 <?php  
 class ControllerModuleLanguage extends Controller {
-	protected function index() {
-    	if (isset($this->request->post['language_code'])) {
+	public function index() {
+    	$data = array();
+		
+		if (isset($this->request->post['language_code'])) {
 			$this->session->data['language'] = $this->request->post['language_code'];
 		
 			if (isset($this->request->post['redirect'])) {
@@ -13,7 +15,7 @@ class ControllerModuleLanguage extends Controller {
 		
 		$this->language->load('module/language');
 		
-		$this->data['text_language'] = $this->language->get('text_language');
+		$data['text_language'] = $this->language->get('text_language');
 		
 		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
 			$connection = 'SSL';
@@ -21,19 +23,19 @@ class ControllerModuleLanguage extends Controller {
 			$connection = 'NONSSL';
 		}
 			
-		$this->data['action'] = $this->url->link('module/language', '', $connection);
+		$data['action'] = $this->url->link('module/language', '', $connection);
 
-		$this->data['language_code'] = $this->session->data['language'];
+		$data['language_code'] = $this->session->data['language'];
 		
 		$this->load->model('localisation/language');
 		
-		$this->data['languages'] = array();
+		$data['languages'] = array();
 		
 		$results = $this->model_localisation_language->getLanguages();
 		
 		foreach ($results as $result) {
 			if ($result['status']) {
-				$this->data['languages'][] = array(
+				$data['languages'][] = array(
 					'name'  => $result['name'],
 					'code'  => $result['code'],
 					'image' => $result['image']
@@ -42,32 +44,30 @@ class ControllerModuleLanguage extends Controller {
 		}
 
 		if (!isset($this->request->get['route'])) {
-			$this->data['redirect'] = $this->url->link('common/home');
+			$data['redirect'] = $this->url->link('common/home');
 		} else {
-			$data = $this->request->get;
+			$url_data = $this->request->get;
 			
-			unset($data['_route_']);
+			unset($url_data['_route_']);
 			
-			$route = $data['route'];
+			$route = $url_data['route'];
 			
-			unset($data['route']);
+			unset($url_data['route']);
 			
 			$url = '';
 			
-			if ($data) {
-				$url = '&' . urldecode(http_build_query($data, '', '&'));
+			if ($url_data) {
+				$url = '&' . urldecode(http_build_query($url_data, '', '&'));
 			}	
 					
-			$this->data['redirect'] = $this->url->link($route, $url, $connection);
+			$data['redirect'] = $this->url->link($route, $url, $connection);
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/language.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/language.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/module/language.tpl', $data);
 		} else {
-			$this->template = 'default/template/module/language.tpl';
+			return $this->load->view('default/template/module/language.tpl', $data);
 		}
-		
-		$this->render();
 	}
 }
 ?>

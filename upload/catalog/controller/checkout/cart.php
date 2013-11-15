@@ -39,70 +39,70 @@ class ControllerCheckoutCart extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 			
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'href' => $this->url->link('common/home'),
         	'text' => $this->language->get('text_home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'href' => $this->url->link('checkout/cart'),
         	'text' => $this->language->get('heading_title')
       	);
 			
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
-      		$this->data['heading_title'] = $this->language->get('heading_title');
+      		$data['heading_title'] = $this->language->get('heading_title');
 			
-			$this->data['text_next'] = $this->language->get('text_next');
-			$this->data['text_next_choice'] = $this->language->get('text_next_choice');
+			$data['text_next'] = $this->language->get('text_next');
+			$data['text_next_choice'] = $this->language->get('text_next_choice');
 			
-			$this->data['column_image'] = $this->language->get('column_image');
-      		$this->data['column_name'] = $this->language->get('column_name');
-      		$this->data['column_model'] = $this->language->get('column_model');
-      		$this->data['column_quantity'] = $this->language->get('column_quantity');
-			$this->data['column_price'] = $this->language->get('column_price');
-      		$this->data['column_total'] = $this->language->get('column_total');
+			$data['column_image'] = $this->language->get('column_image');
+      		$data['column_name'] = $this->language->get('column_name');
+      		$data['column_model'] = $this->language->get('column_model');
+      		$data['column_quantity'] = $this->language->get('column_quantity');
+			$data['column_price'] = $this->language->get('column_price');
+      		$data['column_total'] = $this->language->get('column_total');
 			
-			$this->data['button_update'] = $this->language->get('button_update');
-			$this->data['button_remove'] = $this->language->get('button_remove');
+			$data['button_update'] = $this->language->get('button_update');
+			$data['button_remove'] = $this->language->get('button_remove');
 			
-      		$this->data['button_shopping'] = $this->language->get('button_shopping');
-      		$this->data['button_checkout'] = $this->language->get('button_checkout');
+      		$data['button_shopping'] = $this->language->get('button_shopping');
+      		$data['button_checkout'] = $this->language->get('button_checkout');
 			
 			if (isset($this->error['warning'])) {
-				$this->data['error_warning'] = $this->error['warning'];
+				$data['error_warning'] = $this->error['warning'];
 			} elseif (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-      			$this->data['error_warning'] = $this->language->get('error_stock');		
+      			$data['error_warning'] = $this->language->get('error_stock');		
 			} else {
-				$this->data['error_warning'] = '';
+				$data['error_warning'] = '';
 			}
 			
 			if ($this->config->get('config_customer_price') && !$this->customer->isLogged()) {
-				$this->data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login'), $this->url->link('account/register'));
+				$data['attention'] = sprintf($this->language->get('text_login'), $this->url->link('account/login'), $this->url->link('account/register'));
 			} else {
-				$this->data['attention'] = '';
+				$data['attention'] = '';
 			}
 						
 			if (isset($this->session->data['success'])) {
-				$this->data['success'] = $this->session->data['success'];
+				$data['success'] = $this->session->data['success'];
 			
 				unset($this->session->data['success']);
 			} else {
-				$this->data['success'] = '';
+				$data['success'] = '';
 			}
 			
-			$this->data['action'] = $this->url->link('checkout/cart');   
+			$data['action'] = $this->url->link('checkout/cart');   
 						
 			if ($this->config->get('config_cart_weight')) {
-				$this->data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
+				$data['weight'] = $this->weight->format($this->cart->getWeight(), $this->config->get('config_weight_class_id'), $this->language->get('decimal_point'), $this->language->get('thousand_point'));
 			} else {
-				$this->data['weight'] = '';
+				$data['weight'] = '';
 			}
 						 
 			$this->load->model('tool/image');
 			
-      		$this->data['products'] = array();
+      		$data['products'] = array();
 			
 			$products = $this->cart->getProducts();
 
@@ -116,7 +116,7 @@ class ControllerCheckoutCart extends Controller {
 				}			
 				
 				if ($product['minimum'] > $product_total) {
-					$this->data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+					$data['error_warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 				}				
 					
 				if ($product['image']) {
@@ -156,7 +156,7 @@ class ControllerCheckoutCart extends Controller {
 					$total = false;
 				}
 				
-        		$this->data['products'][] = array(
+        		$data['products'][] = array(
           			'key'      => $product['key'],
           			'thumb'    => $image,
 					'name'     => $product['name'],
@@ -173,7 +173,7 @@ class ControllerCheckoutCart extends Controller {
       		}
 			
 			// Gift Voucher
-			$this->data['vouchers'] = array();
+			$data['vouchers'] = array();
 		
 			if (!isset($this->session->data['vouchers'])) {
 				$vouchers = $this->session->data['vouchers'] = array();
@@ -182,7 +182,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 
 			foreach ($vouchers as $key => $voucher) {
-				$this->data['vouchers'][] = array(
+				$data['vouchers'][] = array(
 					'key'         => $key,
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount']),
@@ -226,59 +226,51 @@ class ControllerCheckoutCart extends Controller {
 				array_multisort($sort_order, SORT_ASC, $total_data);				
 			}
 			
-			$this->data['totals'] = $total_data;
+			$data['totals'] = $total_data;
 						
-			$this->data['continue'] = $this->url->link('common/home');
+			$data['continue'] = $this->url->link('common/home');
 						
-			$this->data['checkout'] = $this->url->link('checkout/checkout');
+			$data['checkout'] = $this->url->link('checkout/checkout');
 
+			$data['header'] = $this->load->controller('common/header');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['column_right'] = $this->load->controller('common/column_right');
+			$data['content_top'] = $this->load->controller('common/content_top');
+			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			$data['coupon'] = $this->load->controller('module/coupon');
+			$data['voucher'] = $this->load->controller('module/voucher');
+			$data['reward'] = $this->load->controller('module/reward');
+			$data['shipping'] = $this->load->controller('module/shipping');
+						
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/cart.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/checkout/cart.tpl';
+				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/cart.tpl', $data));
 			} else {
-				$this->template = 'default/template/checkout/cart.tpl';
-			}
-			
-			$this->children = array(
-				'common/column_left',
-				'common/column_right',
-				'common/content_bottom',
-				'common/content_top',
-				'common/footer',
-				'common/header',
-				'module/coupon',
-				'module/voucher',
-				'module/reward',
-				'module/shipping'
-			);
-						
-			$this->response->setOutput($this->render());					
+				$this->response->setOutput($this->load->view('default/template/checkout/cart.tpl', $data));
+			}					
     	} else {
-      		$this->data['heading_title'] = $this->language->get('heading_title');
+      		$data['heading_title'] = $this->language->get('heading_title');
 
-      		$this->data['text_error'] = $this->language->get('text_empty');
+      		$data['text_error'] = $this->language->get('text_empty');
 
-      		$this->data['button_continue'] = $this->language->get('button_continue');
+      		$data['button_continue'] = $this->language->get('button_continue');
 			
-      		$this->data['continue'] = $this->url->link('common/home');
+      		$data['continue'] = $this->url->link('common/home');
 
 			unset($this->session->data['success']);
-
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
-			} else {
-				$this->template = 'default/template/error/not_found.tpl';
-			}
 			
-			$this->children = array(
-				'common/column_left',
-				'common/column_right',
-				'common/content_top',
-				'common/content_bottom',
-				'common/footer',
-				'common/header'	
-			);
+			$data['header'] = $this->load->controller('common/header');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['column_right'] = $this->load->controller('common/column_right');
+			$data['content_top'] = $this->load->controller('common/content_top');
+			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 					
-			$this->response->setOutput($this->render());			
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
+			} else {
+				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
+			}			
     	}
   	}
 								

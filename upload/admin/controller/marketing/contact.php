@@ -7,56 +7,56 @@ class ControllerMarketingContact extends Controller {
  
 		$this->document->setTitle($this->language->get('heading_title'));
 		
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_default'] = $this->language->get('text_default');
-		$this->data['text_newsletter'] = $this->language->get('text_newsletter');
-		$this->data['text_customer_all'] = $this->language->get('text_customer_all');	
-		$this->data['text_customer'] = $this->language->get('text_customer');	
-		$this->data['text_customer_group'] = $this->language->get('text_customer_group');
-		$this->data['text_affiliate_all'] = $this->language->get('text_affiliate_all');	
-		$this->data['text_affiliate'] = $this->language->get('text_affiliate');	
-		$this->data['text_product'] = $this->language->get('text_product');	
+		$data['text_default'] = $this->language->get('text_default');
+		$data['text_newsletter'] = $this->language->get('text_newsletter');
+		$data['text_customer_all'] = $this->language->get('text_customer_all');	
+		$data['text_customer'] = $this->language->get('text_customer');	
+		$data['text_customer_group'] = $this->language->get('text_customer_group');
+		$data['text_affiliate_all'] = $this->language->get('text_affiliate_all');	
+		$data['text_affiliate'] = $this->language->get('text_affiliate');	
+		$data['text_product'] = $this->language->get('text_product');	
 		
-		$this->data['entry_store'] = $this->language->get('entry_store');
-		$this->data['entry_to'] = $this->language->get('entry_to');
-		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$this->data['entry_customer'] = $this->language->get('entry_customer');
-		$this->data['entry_affiliate'] = $this->language->get('entry_affiliate');
-		$this->data['entry_product'] = $this->language->get('entry_product');
-		$this->data['entry_subject'] = $this->language->get('entry_subject');
-		$this->data['entry_message'] = $this->language->get('entry_message');
+		$data['entry_store'] = $this->language->get('entry_store');
+		$data['entry_to'] = $this->language->get('entry_to');
+		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
+		$data['entry_customer'] = $this->language->get('entry_customer');
+		$data['entry_affiliate'] = $this->language->get('entry_affiliate');
+		$data['entry_product'] = $this->language->get('entry_product');
+		$data['entry_subject'] = $this->language->get('entry_subject');
+		$data['entry_message'] = $this->language->get('entry_message');
 		
-		$this->data['help_customer'] = $this->language->get('help_customer');
-		$this->data['help_affiliate'] = $this->language->get('help_affiliate');
-		$this->data['help_product'] = $this->language->get('help_product');
+		$data['help_customer'] = $this->language->get('help_customer');
+		$data['help_affiliate'] = $this->language->get('help_affiliate');
+		$data['help_product'] = $this->language->get('help_product');
 		
-		$this->data['button_send'] = $this->language->get('button_send');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_send'] = $this->language->get('button_send');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 		
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL')
    		);
 				
-    	$this->data['cancel'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL');
+    	$data['cancel'] = $this->url->link('marketing/contact', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$this->load->model('setting/store');
 		
-		$this->data['stores'] = $this->model_setting_store->getStores();
+		$data['stores'] = $this->model_setting_store->getStores();
 		
 		$this->load->model('sale/customer_group');
 				
-		$this->data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups(0);
+		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups(0);
 				
 		$this->template = 'marketing/contact.tpl';
 		$this->children = array(

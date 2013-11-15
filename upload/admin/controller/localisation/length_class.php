@@ -143,24 +143,24 @@ class ControllerLocalisationLengthClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
-		$this->data['insert'] = $this->url->link('localisation/length_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('localisation/length_class/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('localisation/length_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('localisation/length_class/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		 
-		$this->data['length_classes'] = array();
+		$data['length_classes'] = array();
 		
-		$data = array(
+		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
@@ -169,10 +169,10 @@ class ControllerLocalisationLengthClass extends Controller {
 		
 		$length_class_total = $this->model_localisation_length_class->getTotalLengthClasses();
 		
-		$results = $this->model_localisation_length_class->getLengthClasses($data);
+		$results = $this->model_localisation_length_class->getLengthClasses($filter_data);
 		
 		foreach ($results as $result) {
-			$this->data['length_classes'][] = array(
+			$data['length_classes'][] = array(
 				'length_class_id' => $result['length_class_id'],
 				'title'           => $result['title'] . (($result['length_class_id'] == $this->config->get('config_length_class_id')) ? $this->language->get('text_default') : null),
 				'unit'            => $result['unit'],
@@ -181,38 +181,38 @@ class ControllerLocalisationLengthClass extends Controller {
 			);
 		}
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		
-		$this->data['column_title'] = $this->language->get('column_title');
-		$this->data['column_unit'] = $this->language->get('column_unit');
-		$this->data['column_value'] = $this->language->get('column_value');
-		$this->data['column_action'] = $this->language->get('column_action');	
+		$data['column_title'] = $this->language->get('column_title');
+		$data['column_unit'] = $this->language->get('column_unit');
+		$data['column_value'] = $this->language->get('column_value');
+		$data['column_action'] = $this->language->get('column_action');	
 
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_delete'] = $this->language->get('button_delete');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
 		if (isset($this->request->post['selected'])) {
-			$this->data['selected'] = (array)$this->request->post['selected'];
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['selected'] = array();
+			$data['selected'] = array();
 		}
 		
 		$url = '';
@@ -227,9 +227,9 @@ class ControllerLocalisationLengthClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_title'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . '&sort=title' . $url, 'SSL');
-		$this->data['sort_unit'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . '&sort=unit' . $url, 'SSL');
-		$this->data['sort_value'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . '&sort=value' . $url, 'SSL');
+		$data['sort_title'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . '&sort=title' . $url, 'SSL');
+		$data['sort_unit'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . '&sort=unit' . $url, 'SSL');
+		$data['sort_value'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . '&sort=value' . $url, 'SSL');
 		
 		$url = '';
 
@@ -247,12 +247,12 @@ class ControllerLocalisationLengthClass extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($length_class_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($length_class_total - $this->config->get('config_admin_limit'))) ? $length_class_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $length_class_total, ceil($length_class_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($length_class_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($length_class_total - $this->config->get('config_admin_limit'))) ? $length_class_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $length_class_total, ceil($length_class_total / $this->config->get('config_admin_limit')));
 		
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		$this->template = 'localisation/length_class_list.tpl';
 		$this->children = array(
@@ -264,33 +264,33 @@ class ControllerLocalisationLengthClass extends Controller {
 	}
 
 	protected function getForm() {
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['entry_title'] = $this->language->get('entry_title');
-		$this->data['entry_unit'] = $this->language->get('entry_unit');
-		$this->data['entry_value'] = $this->language->get('entry_value');
+		$data['entry_title'] = $this->language->get('entry_title');
+		$data['entry_unit'] = $this->language->get('entry_unit');
+		$data['entry_value'] = $this->language->get('entry_value');
 
-		$this->data['help_value'] = $this->language->get('help_value');
+		$data['help_value'] = $this->language->get('help_value');
 
-		$this->data['button_save'] = $this->language->get('button_save');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
  		if (isset($this->error['title'])) {
-			$this->data['error_title'] = $this->error['title'];
+			$data['error_title'] = $this->error['title'];
 		} else {
-			$this->data['error_title'] = array();
+			$data['error_title'] = array();
 		}
 
  		if (isset($this->error['unit'])) {
-			$this->data['error_unit'] = $this->error['unit'];
+			$data['error_unit'] = $this->error['unit'];
 		} else {
-			$this->data['error_unit'] = array();
+			$data['error_unit'] = array();
 		}
 		
 		$url = '';
@@ -307,25 +307,25 @@ class ControllerLocalisationLengthClass extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['length_class_id'])) {
-			$this->data['action'] = $this->url->link('localisation/length_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/length_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('localisation/length_class/update', 'token=' . $this->session->data['token'] . '&length_class_id=' . $this->request->get['length_class_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/length_class/update', 'token=' . $this->session->data['token'] . '&length_class_id=' . $this->request->get['length_class_id'] . $url, 'SSL');
 		}
 
-		$this->data['cancel'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['length_class_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$length_class_info = $this->model_localisation_length_class->getLengthClass($this->request->get['length_class_id']);
@@ -333,22 +333,22 @@ class ControllerLocalisationLengthClass extends Controller {
 		
 		$this->load->model('localisation/language');
 		
-		$this->data['languages'] = $this->model_localisation_language->getLanguages();
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 		
 		if (isset($this->request->post['length_class_description'])) {
-			$this->data['length_class_description'] = $this->request->post['length_class_description'];
+			$data['length_class_description'] = $this->request->post['length_class_description'];
 		} elseif (isset($this->request->get['length_class_id'])) {
-			$this->data['length_class_description'] = $this->model_localisation_length_class->getLengthClassDescriptions($this->request->get['length_class_id']);
+			$data['length_class_description'] = $this->model_localisation_length_class->getLengthClassDescriptions($this->request->get['length_class_id']);
 		} else {
-			$this->data['length_class_description'] = array();
+			$data['length_class_description'] = array();
 		}	
 		
 		if (isset($this->request->post['value'])) {
-			$this->data['value'] = $this->request->post['value'];
+			$data['value'] = $this->request->post['value'];
 		} elseif (!empty($length_class_info)) {
-			$this->data['value'] = $length_class_info['value'];
+			$data['value'] = $length_class_info['value'];
 		} else {
-			$this->data['value'] = '';
+			$data['value'] = '';
 		}			
 
 		$this->template = 'localisation/length_class_form.tpl';

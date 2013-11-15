@@ -217,25 +217,25 @@ class ControllerExtensionModification extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
-		$this->data['refresh'] = $this->url->link('extension/modification/refresh', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, 'SSL');				
-		$this->data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['refresh'] = $this->url->link('extension/modification/refresh', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, 'SSL');				
+		$data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
 
-		$this->data['modifications'] = array();
+		$data['modifications'] = array();
 
-		$data = array(
+		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
@@ -244,10 +244,10 @@ class ControllerExtensionModification extends Controller {
 		
 		$modification_total = $this->model_setting_modification->getTotalModifications();
 	
-		$results = $this->model_setting_modification->getModifications($data);
+		$results = $this->model_setting_modification->getModifications($filter_data);
  
     	foreach ($results as $result) {
-			$this->data['modifications'][] = array(
+			$data['modifications'][] = array(
 				'modification_id' => $result['modification_id'],
 				'name'            => $result['name'],
 				'author'          => $result['author'],
@@ -261,46 +261,46 @@ class ControllerExtensionModification extends Controller {
 			);
 		}			
 		
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
-		$this->data['text_refresh'] = $this->language->get('text_refresh');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_refresh'] = $this->language->get('text_refresh');
 
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_author'] = $this->language->get('column_author');
-		$this->data['column_version'] = $this->language->get('column_version');
-		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_action'] = $this->language->get('column_action');
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_author'] = $this->language->get('column_author');
+		$data['column_version'] = $this->language->get('column_version');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_action'] = $this->language->get('column_action');
 		
-		$this->data['button_refresh'] = $this->language->get('button_refresh');
-		$this->data['button_clear'] = $this->language->get('button_clear');
-		$this->data['button_delete'] = $this->language->get('button_delete');
-		$this->data['button_link'] = $this->language->get('button_link');
-		$this->data['button_enable'] = $this->language->get('button_enable');
-		$this->data['button_disable'] = $this->language->get('button_disable');
+		$data['button_refresh'] = $this->language->get('button_refresh');
+		$data['button_clear'] = $this->language->get('button_clear');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_link'] = $this->language->get('button_link');
+		$data['button_enable'] = $this->language->get('button_enable');
+		$data['button_disable'] = $this->language->get('button_disable');
 		
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 				
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 				
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
 		if (isset($this->request->post['selected'])) {
-			$this->data['selected'] = (array)$this->request->post['selected'];
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['selected'] = array();
+			$data['selected'] = array();
 		}
 				
 		$url = '';
@@ -315,11 +315,11 @@ class ControllerExtensionModification extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
-		$this->data['sort_author'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
-		$this->data['sort_version'] = $this->url->link('extension/version', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
-		$this->data['sort_status'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
-		$this->data['sort_date_added'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=name' . $url, 'SSL');
+		$data['sort_author'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
+		$data['sort_version'] = $this->url->link('extension/version', 'token=' . $this->session->data['token'] . '&sort=author' . $url, 'SSL');
+		$data['sort_status'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
+		$data['sort_date_added'] = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
 		
 		$url = '';
 
@@ -337,12 +337,12 @@ class ControllerExtensionModification extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($modification_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($modification_total - $this->config->get('config_admin_limit'))) ? $modification_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $modification_total, ceil($modification_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($modification_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($modification_total - $this->config->get('config_admin_limit'))) ? $modification_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $modification_total, ceil($modification_total / $this->config->get('config_admin_limit')));
 
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 		
 		$this->template = 'extension/modification.tpl';
 		$this->children = array(

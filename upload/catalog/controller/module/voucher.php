@@ -1,31 +1,31 @@
 <?php
 class ControllerModuleVoucher extends Controller {
 	public function index() {
+		$data = array();
+		
 		$this->language->load('module/voucher');
 		
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_loading'] = $this->language->get('text_loading');
+		$data['text_loading'] = $this->language->get('text_loading');
 		
-		$this->data['entry_voucher'] = $this->language->get('entry_voucher');
+		$data['entry_voucher'] = $this->language->get('entry_voucher');
 		
-		$this->data['button_voucher'] = $this->language->get('button_voucher');
+		$data['button_voucher'] = $this->language->get('button_voucher');
 		
-		$this->data['status'] = $this->config->get('voucher_status');
+		$data['status'] = $this->config->get('voucher_status');
 		
 		if (isset($this->session->data['voucher'])) {
-			$this->data['voucher'] = $this->session->data['voucher'];
+			$data['voucher'] = $this->session->data['voucher'];
 		} else {
-			$this->data['voucher'] = '';
+			$data['voucher'] = '';
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/voucher.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/voucher.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/module/voucher.tpl', $data);
 		} else {
-			$this->template = 'default/template/module/voucher.tpl';
+			return $this->load->view('default/template/module/voucher.tpl', $data);
 		}
-					
-		$this->response->setOutput($this->render());		
 	}
 	
 	public function voucher() {

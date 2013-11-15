@@ -1,12 +1,12 @@
 <?php
 class ControllerPaymentPPExpress extends Controller {
 	protected function index() {
-    	$this->data['button_confirm'] = $this->language->get('button_confirm');
+    	$data['button_confirm'] = $this->language->get('button_confirm');
 
 		if (!$this->config->get('pp_express_test')) {
-    		$this->data['action'] = 'https://www.pp_express.com/cgi-bin/webscr';
+    		$data['action'] = 'https://www.pp_express.com/cgi-bin/webscr';
   		} else {
-			$this->data['action'] = 'https://www.sandbox.pp_express.com/cgi-bin/webscr';
+			$data['action'] = 'https://www.sandbox.pp_express.com/cgi-bin/webscr';
 		}		
 		
 		$this->load->model('checkout/order');
@@ -20,12 +20,10 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_express.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/pp_express.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_express.tpl', $data);
 		} else {
-			$this->template = 'default/template/payment/pp_express.tpl';
-		}	
-
-		$this->render();		
+			return $this->load->view('default/template/payment/pp_express.tpl', $data);
+		}			
 	}
 }
 ?>

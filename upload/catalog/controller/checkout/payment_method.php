@@ -60,34 +60,34 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			
 		}			
 		
-		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
-		$this->data['text_comments'] = $this->language->get('text_comments');
-		$this->data['text_loading'] = $this->language->get('text_loading');
+		$data['text_payment_method'] = $this->language->get('text_payment_method');
+		$data['text_comments'] = $this->language->get('text_comments');
+		$data['text_loading'] = $this->language->get('text_loading');
 
-		$this->data['button_continue'] = $this->language->get('button_continue');
+		$data['button_continue'] = $this->language->get('button_continue');
    
 		if (empty($this->session->data['payment_methods'])) {
-			$this->data['error_warning'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact'));
+			$data['error_warning'] = sprintf($this->language->get('error_no_payment'), $this->url->link('information/contact'));
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}	
 
 		if (isset($this->session->data['payment_methods'])) {
-			$this->data['payment_methods'] = $this->session->data['payment_methods']; 
+			$data['payment_methods'] = $this->session->data['payment_methods']; 
 		} else {
-			$this->data['payment_methods'] = array();
+			$data['payment_methods'] = array();
 		}
 	  
 		if (isset($this->session->data['payment_method']['code'])) {
-			$this->data['code'] = $this->session->data['payment_method']['code'];
+			$data['code'] = $this->session->data['payment_method']['code'];
 		} else {
-			$this->data['code'] = '';
+			$data['code'] = '';
 		}
 		
 		if (isset($this->session->data['comment'])) {
-			$this->data['comment'] = $this->session->data['comment'];
+			$data['comment'] = $this->session->data['comment'];
 		} else {
-			$this->data['comment'] = '';
+			$data['comment'] = '';
 		}
 		
 		if ($this->config->get('config_checkout_id')) {
@@ -96,27 +96,25 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
 			
 			if ($information_info) {
-				$this->data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/info', 'information_id=' . $this->config->get('config_checkout_id'), 'SSL'), $information_info['title'], $information_info['title']);
+				$data['text_agree'] = sprintf($this->language->get('text_agree'), $this->url->link('information/information/info', 'information_id=' . $this->config->get('config_checkout_id'), 'SSL'), $information_info['title'], $information_info['title']);
 			} else {
-				$this->data['text_agree'] = '';
+				$data['text_agree'] = '';
 			}
 		} else {
-			$this->data['text_agree'] = '';
+			$data['text_agree'] = '';
 		}
 		
 		if (isset($this->session->data['agree'])) { 
-			$this->data['agree'] = $this->session->data['agree'];
+			$data['agree'] = $this->session->data['agree'];
 		} else {
-			$this->data['agree'] = '';
+			$data['agree'] = '';
 		}
 			
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/payment_method.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/checkout/payment_method.tpl';
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/payment_method.tpl', $data));
 		} else {
-			$this->template = 'default/template/checkout/payment_method.tpl';
+			$this->response->setOutput($this->load->view('default/template/checkout/payment_method.tpl', $data));
 		}
-		
-		$this->response->setOutput($this->render());
   	}
 	
 	public function save() {

@@ -27,59 +27,55 @@ class ControllerCheckoutCheckout extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title')); 
 		
-		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_cart'),
 			'href' => $this->url->link('checkout/cart')
       	);
 		
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('checkout/checkout', '', 'SSL')
       	);
 					
-	    $this->data['heading_title'] = $this->language->get('heading_title');
+	    $data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_checkout_option'] = $this->language->get('text_checkout_option');
-		$this->data['text_checkout_account'] = $this->language->get('text_checkout_account');
-		$this->data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
-		$this->data['text_checkout_shipping_address'] = $this->language->get('text_checkout_shipping_address');
-		$this->data['text_checkout_shipping_method'] = $this->language->get('text_checkout_shipping_method');
-		$this->data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');		
-		$this->data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
+		$data['text_checkout_option'] = $this->language->get('text_checkout_option');
+		$data['text_checkout_account'] = $this->language->get('text_checkout_account');
+		$data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
+		$data['text_checkout_shipping_address'] = $this->language->get('text_checkout_shipping_address');
+		$data['text_checkout_shipping_method'] = $this->language->get('text_checkout_shipping_method');
+		$data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');		
+		$data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
 		
-		$this->data['logged'] = $this->customer->isLogged();
+		$data['logged'] = $this->customer->isLogged();
 		
 		if (isset($this->session->data['account'])) {
-			$this->data['account'] = $this->session->data['account'];
+			$data['account'] = $this->session->data['account'];
 		} else {
-			$this->data['account'] = '';
+			$data['account'] = '';
 		}
 		
-		$this->data['shipping_required'] = $this->cart->hasShipping();	
+		$data['shipping_required'] = $this->cart->hasShipping();	
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/checkout.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/checkout/checkout.tpl';
-		} else {
-			$this->template = 'default/template/checkout/checkout.tpl';
-		}
-		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'	
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 				
-		$this->response->setOutput($this->render());
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/checkout.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/checkout.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/checkout/checkout.tpl', $data));
+		}	
   	}
 	
 	public function country() {

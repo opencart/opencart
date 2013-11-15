@@ -1,34 +1,34 @@
 <?php  
 class ControllerModuleInformation extends Controller {
-	protected function index() {
+	public function index() {
+		$data = array();
+		
 		$this->language->load('module/information');
 		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
     	
-		$this->data['text_contact'] = $this->language->get('text_contact');
-    	$this->data['text_sitemap'] = $this->language->get('text_sitemap');
+		$data['text_contact'] = $this->language->get('text_contact');
+    	$data['text_sitemap'] = $this->language->get('text_sitemap');
 		
 		$this->load->model('catalog/information');
 		
-		$this->data['informations'] = array();
+		$data['informations'] = array();
 
 		foreach ($this->model_catalog_information->getInformations() as $result) {
-      		$this->data['informations'][] = array(
+      		$data['informations'][] = array(
         		'title' => $result['title'],
 	    		'href'  => $this->url->link('information/information', 'information_id=' . $result['information_id'])
       		);
     	}
 
-		$this->data['contact'] = $this->url->link('information/contact');
-    	$this->data['sitemap'] = $this->url->link('information/sitemap');
+		$data['contact'] = $this->url->link('information/contact');
+    	$data['sitemap'] = $this->url->link('information/sitemap');
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/information.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/module/information.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/module/information.tpl', $data);
 		} else {
-			$this->template = 'default/template/module/information.tpl';
+			return $this->load->view('default/template/module/information.tpl', $data);
 		}
-		
-		$this->render();
 	}
 }
 ?>

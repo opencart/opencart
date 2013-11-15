@@ -37,35 +37,35 @@ class ControllerReportCustomerReward extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 						
-		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('report/customer_reward', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);		
 		
 		$this->load->model('report/customer');
 		
-		$this->data['customers'] = array();
+		$data['customers'] = array();
 		
-		$data = array(
+		$filter_data = array(
 			'filter_date_start'	=> $filter_date_start, 
 			'filter_date_end'	=> $filter_date_end, 
 			'start'             => ($page - 1) * $this->config->get('config_admin_limit'),
 			'limit'             => $this->config->get('config_admin_limit')
 		);
 				
-		$customer_total = $this->model_report_customer->getTotalRewardPoints($data); 
+		$customer_total = $this->model_report_customer->getTotalRewardPoints($filter_data); 
 		
-		$results = $this->model_report_customer->getRewardPoints($data);
+		$results = $this->model_report_customer->getRewardPoints($filter_data);
 		
 		foreach ($results as $result) {
-			$this->data['customers'][] = array(
+			$data['customers'][] = array(
 				'customer'       => $result['customer'],
 				'email'          => $result['email'],
 				'customer_group' => $result['customer_group'],
@@ -77,27 +77,27 @@ class ControllerReportCustomerReward extends Controller {
 			);
 		}
 				 
- 		$this->data['heading_title'] = $this->language->get('heading_title');
+ 		$data['heading_title'] = $this->language->get('heading_title');
 		 
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		
-		$this->data['column_customer'] = $this->language->get('column_customer');
-		$this->data['column_email'] = $this->language->get('column_email');
-		$this->data['column_customer_group'] = $this->language->get('column_customer_group');
-		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_points'] = $this->language->get('column_points');
-		$this->data['column_orders'] = $this->language->get('column_orders');
-		$this->data['column_total'] = $this->language->get('column_total');
-		$this->data['column_action'] = $this->language->get('column_action');
+		$data['column_customer'] = $this->language->get('column_customer');
+		$data['column_email'] = $this->language->get('column_email');
+		$data['column_customer_group'] = $this->language->get('column_customer_group');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_points'] = $this->language->get('column_points');
+		$data['column_orders'] = $this->language->get('column_orders');
+		$data['column_total'] = $this->language->get('column_total');
+		$data['column_action'] = $this->language->get('column_action');
 		
-		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
-		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
+		$data['entry_date_start'] = $this->language->get('entry_date_start');
+		$data['entry_date_end'] = $this->language->get('entry_date_end');
 
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_filter'] = $this->language->get('button_filter');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_filter'] = $this->language->get('button_filter');
 		
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 		
 		$url = '';
 						
@@ -115,12 +115,12 @@ class ControllerReportCustomerReward extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('report/customer_reward', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($customer_total - $this->config->get('config_admin_limit'))) ? $customer_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $customer_total, ceil($customer_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($customer_total - $this->config->get('config_admin_limit'))) ? $customer_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $customer_total, ceil($customer_total / $this->config->get('config_admin_limit')));
 		
-		$this->data['filter_date_start'] = $filter_date_start;
-		$this->data['filter_date_end'] = $filter_date_end;		
+		$data['filter_date_start'] = $filter_date_start;
+		$data['filter_date_end'] = $filter_date_end;		
 				 
 		$this->template = 'report/customer_reward.tpl';
 		$this->children = array(

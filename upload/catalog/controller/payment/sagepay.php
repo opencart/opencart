@@ -3,14 +3,14 @@ class ControllerPaymentSagepay extends Controller {
 	protected function index() {
 		$this->language->load('payment/sagepay');
 		
-		$this->data['button_confirm'] = $this->language->get('button_confirm');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 		
 		if ($this->config->get('sagepay_test') == 'live') {
-    		$this->data['action'] = 'https://live.sagepay.com/gateway/service/vspform-register.vsp';
+    		$data['action'] = 'https://live.sagepay.com/gateway/service/vspform-register.vsp';
 		} elseif ($this->config->get('sagepay_test') == 'test') {
-			$this->data['action'] = 'https://test.sagepay.com/gateway/service/vspform-register.vsp';		
+			$data['action'] = 'https://test.sagepay.com/gateway/service/vspform-register.vsp';		
 		} elseif ($this->config->get('sagepay_test') == 'sim') {
-    		$this->data['action'] = 'https://test.sagepay.com/simulator/vspformgateway.asp';
+    		$data['action'] = 'https://test.sagepay.com/simulator/vspformgateway.asp';
   		} 
 		
 		$vendor = $this->config->get('sagepay_vendor');
@@ -99,8 +99,8 @@ class ControllerPaymentSagepay extends Controller {
 		
  		$data['Apply3DSecure'] = '0';
 		
-		$this->data['transaction'] = $this->config->get('sagepay_transaction');
-		$this->data['vendor'] = $vendor;
+		$data['transaction'] = $this->config->get('sagepay_transaction');
+		$data['vendor'] = $vendor;
 		
 		$crypt_data = array();
    
@@ -108,7 +108,7 @@ class ControllerPaymentSagepay extends Controller {
    			$crypt_data[] = $key . '=' . $value;
 		}
 
-		$this->data['crypt'] = base64_encode($this->simpleXor(utf8_decode(implode('&', $crypt_data)), $password));
+		$data['crypt'] = base64_encode($this->simpleXor(utf8_decode(implode('&', $crypt_data)), $password));
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/sagepay.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/payment/sagepay.tpl';
@@ -116,7 +116,11 @@ class ControllerPaymentSagepay extends Controller {
 			$this->template = 'default/template/payment/sagepay.tpl';
 		}	
 		
-		$this->render();		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/sagepay.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/sagepay.tpl', $data);
+		} else {
+			return $this->load->view('default/template/payment/sagepay.tpl', $data);
+		}		
 	}
 	
 	public function success() {

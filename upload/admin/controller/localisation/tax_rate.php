@@ -143,24 +143,24 @@ class ControllerLocalisationTaxRate extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);		
 		
-		$this->data['insert'] = $this->url->link('localisation/tax_rate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('localisation/tax_rate/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');		
+		$data['insert'] = $this->url->link('localisation/tax_rate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('localisation/tax_rate/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');		
 		
-		$this->data['tax_rates'] = array();
+		$data['tax_rates'] = array();
 		
-		$data = array(
+		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
 			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
@@ -169,10 +169,10 @@ class ControllerLocalisationTaxRate extends Controller {
 		
 		$tax_rate_total = $this->model_localisation_tax_rate->getTotalTaxRates();
 
-		$results = $this->model_localisation_tax_rate->getTaxRates($data);
+		$results = $this->model_localisation_tax_rate->getTaxRates($filter_data);
 
 		foreach ($results as $result) {
-			$this->data['tax_rates'][] = array(
+			$data['tax_rates'][] = array(
 				'tax_rate_id'   => $result['tax_rate_id'],
 				'name'          => $result['name'],
 				'rate'          => $result['rate'],
@@ -184,41 +184,41 @@ class ControllerLocalisationTaxRate extends Controller {
 			);
 		}
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 	
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_rate'] = $this->language->get('column_rate');
-		$this->data['column_type'] = $this->language->get('column_type');
-		$this->data['column_geo_zone'] = $this->language->get('column_geo_zone');
-		$this->data['column_date_added'] = $this->language->get('column_date_added');
-		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
-		$this->data['column_action'] = $this->language->get('column_action');	
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_rate'] = $this->language->get('column_rate');
+		$data['column_type'] = $this->language->get('column_type');
+		$data['column_geo_zone'] = $this->language->get('column_geo_zone');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_date_modified'] = $this->language->get('column_date_modified');
+		$data['column_action'] = $this->language->get('column_action');	
 
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_edit'] = $this->language->get('button_edit');
-		$this->data['button_delete'] = $this->language->get('button_delete');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
 		if (isset($this->request->post['selected'])) {
-			$this->data['selected'] = (array)$this->request->post['selected'];
+			$data['selected'] = (array)$this->request->post['selected'];
 		} else {
-			$this->data['selected'] = array();
+			$data['selected'] = array();
 		}
 				
 		$url = '';
@@ -233,12 +233,12 @@ class ControllerLocalisationTaxRate extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		 
-		$this->data['sort_name'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.name' . $url, 'SSL');
-		$this->data['sort_rate'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.rate' . $url, 'SSL');
-		$this->data['sort_type'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.type' . $url, 'SSL');
-		$this->data['sort_geo_zone'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=gz.name' . $url, 'SSL');
-		$this->data['sort_date_added'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.date_added' . $url, 'SSL');
-		$this->data['sort_date_modified'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.date_modified' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.name' . $url, 'SSL');
+		$data['sort_rate'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.rate' . $url, 'SSL');
+		$data['sort_type'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.type' . $url, 'SSL');
+		$data['sort_geo_zone'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=gz.name' . $url, 'SSL');
+		$data['sort_date_added'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.date_added' . $url, 'SSL');
+		$data['sort_date_modified'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . '&sort=tr.date_modified' . $url, 'SSL');
 		
 		$url = '';
 
@@ -256,12 +256,12 @@ class ControllerLocalisationTaxRate extends Controller {
 		$pagination->limit = $this->config->get('config_admin_limit');
 		$pagination->url = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 	
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($tax_rate_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($tax_rate_total - $this->config->get('config_admin_limit'))) ? $tax_rate_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $tax_rate_total, ceil($tax_rate_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($tax_rate_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($tax_rate_total - $this->config->get('config_admin_limit'))) ? $tax_rate_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $tax_rate_total, ceil($tax_rate_total / $this->config->get('config_admin_limit')));
 
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
+		$data['sort'] = $sort;
+		$data['order'] = $order;
 
 		$this->template = 'localisation/tax_rate_list.tpl';
 		$this->children = array(
@@ -273,36 +273,36 @@ class ControllerLocalisationTaxRate extends Controller {
 	}
 
 	protected function getForm() {
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_percent'] = $this->language->get('text_percent');	
-		$this->data['text_amount'] = $this->language->get('text_amount');	
+		$data['text_percent'] = $this->language->get('text_percent');	
+		$data['text_amount'] = $this->language->get('text_amount');	
 				
-		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_rate'] = $this->language->get('entry_rate');
-		$this->data['entry_type'] = $this->language->get('entry_type');		
-		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$this->data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
+		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_rate'] = $this->language->get('entry_rate');
+		$data['entry_type'] = $this->language->get('entry_type');		
+		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
+		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		
-		$this->data['button_save'] = $this->language->get('button_save');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
  		if (isset($this->error['name'])) {
-			$this->data['error_name'] = $this->error['name'];
+			$data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = '';
+			$data['error_name'] = '';
 		}
 
  		if (isset($this->error['rate'])) {
-			$this->data['error_rate'] = $this->error['rate'];
+			$data['error_rate'] = $this->error['rate'];
 		} else {
-			$this->data['error_rate'] = '';
+			$data['error_rate'] = '';
 		}
 				
 		$url = '';
@@ -319,77 +319,77 @@ class ControllerLocalisationTaxRate extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['tax_rate_id'])) {
-			$this->data['action'] = $this->url->link('localisation/tax_rate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/tax_rate/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('localisation/tax_rate/update', 'token=' . $this->session->data['token'] . '&tax_rate_id=' . $this->request->get['tax_rate_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('localisation/tax_rate/update', 'token=' . $this->session->data['token'] . '&tax_rate_id=' . $this->request->get['tax_rate_id'] . $url, 'SSL');
 		}
 		
-		$this->data['cancel'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['tax_rate_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$tax_rate_info = $this->model_localisation_tax_rate->getTaxRate($this->request->get['tax_rate_id']);
 		}
 
 		if (isset($this->request->post['name'])) {
-			$this->data['name'] = $this->request->post['name'];
+			$data['name'] = $this->request->post['name'];
 		} elseif (!empty($tax_rate_info)) {
-			$this->data['name'] = $tax_rate_info['name'];
+			$data['name'] = $tax_rate_info['name'];
 		} else {
-			$this->data['name'] = '';
+			$data['name'] = '';
 		}
 		
 		if (isset($this->request->post['rate'])) {
-			$this->data['rate'] = $this->request->post['rate'];
+			$data['rate'] = $this->request->post['rate'];
 		} elseif (!empty($tax_rate_info)) {
-			$this->data['rate'] = $tax_rate_info['rate'];
+			$data['rate'] = $tax_rate_info['rate'];
 		} else {
-			$this->data['rate'] = '';
+			$data['rate'] = '';
 		}
 		
 		if (isset($this->request->post['type'])) {
-			$this->data['type'] = $this->request->post['type'];
+			$data['type'] = $this->request->post['type'];
 		} elseif (!empty($tax_rate_info)) {
-			$this->data['type'] = $tax_rate_info['type'];
+			$data['type'] = $tax_rate_info['type'];
 		} else {
-			$this->data['type'] = '';
+			$data['type'] = '';
 		}
 		
 		if (isset($this->request->post['tax_rate_customer_group'])) {
-			$this->data['tax_rate_customer_group'] = $this->request->post['tax_rate_customer_group'];
+			$data['tax_rate_customer_group'] = $this->request->post['tax_rate_customer_group'];
 		} elseif (isset($this->request->get['tax_rate_id'])) {
-			$this->data['tax_rate_customer_group'] = $this->model_localisation_tax_rate->getTaxRateCustomerGroups($this->request->get['tax_rate_id']);
+			$data['tax_rate_customer_group'] = $this->model_localisation_tax_rate->getTaxRateCustomerGroups($this->request->get['tax_rate_id']);
 		} else {
-			$this->data['tax_rate_customer_group'] = array();
+			$data['tax_rate_customer_group'] = array();
 		}	
 		
 		$this->load->model('sale/customer_group');
 		
-		$this->data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 						
 		if (isset($this->request->post['geo_zone_id'])) {
-			$this->data['geo_zone_id'] = $this->request->post['geo_zone_id'];
+			$data['geo_zone_id'] = $this->request->post['geo_zone_id'];
 		} elseif (!empty($tax_rate_info)) {
-			$this->data['geo_zone_id'] = $tax_rate_info['geo_zone_id'];
+			$data['geo_zone_id'] = $tax_rate_info['geo_zone_id'];
 		} else {
-			$this->data['geo_zone_id'] = '';
+			$data['geo_zone_id'] = '';
 		}
 				
 		$this->load->model('localisation/geo_zone');
 		
-		$this->data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
+		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
 				
 		$this->template = 'localisation/tax_rate_form.tpl';
 		$this->children = array(

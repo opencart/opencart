@@ -311,15 +311,15 @@ class ControllerCheckoutConfirm extends Controller {
 						
 			$this->load->model('checkout/order');
 			
-			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($data);
+			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($filter_data);
 			
-			$this->data['column_name'] = $this->language->get('column_name');
-			$this->data['column_model'] = $this->language->get('column_model');
-			$this->data['column_quantity'] = $this->language->get('column_quantity');
-			$this->data['column_price'] = $this->language->get('column_price');
-			$this->data['column_total'] = $this->language->get('column_total');
+			$data['column_name'] = $this->language->get('column_name');
+			$data['column_model'] = $this->language->get('column_model');
+			$data['column_quantity'] = $this->language->get('column_quantity');
+			$data['column_price'] = $this->language->get('column_price');
+			$data['column_total'] = $this->language->get('column_total');
 	
-			$this->data['products'] = array();
+			$data['products'] = array();
 	
 			foreach ($this->cart->getProducts() as $product) {
 				$option_data = array();
@@ -339,7 +339,7 @@ class ControllerCheckoutConfirm extends Controller {
 					);
 				}  
 	 
-				$this->data['products'][] = array(
+				$data['products'][] = array(
 					'product_id' => $product['product_id'],
 					'name'       => $product['name'],
 					'model'      => $product['model'],
@@ -353,31 +353,29 @@ class ControllerCheckoutConfirm extends Controller {
 			} 
 			
 			// Gift Voucher
-			$this->data['vouchers'] = array();
+			$data['vouchers'] = array();
 			
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
-					$this->data['vouchers'][] = array(
+					$data['vouchers'][] = array(
 						'description' => $voucher['description'],
 						'amount'      => $this->currency->format($voucher['amount'])
 					);
 				}
 			}  
 						
-			$this->data['totals'] = $total_data;
+			$data['totals'] = $total_data;
 	
-			$this->data['payment'] = $this->getChild('payment/' . $this->session->data['payment_method']['code']);
+			$data['payment'] = $this->getChild('payment/' . $this->session->data['payment_method']['code']);
 		} else {
-			$this->data['redirect'] = $redirect;
+			$data['redirect'] = $redirect;
 		}			
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/confirm.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/checkout/confirm.tpl';
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/confirm.tpl', $data));
 		} else {
-			$this->template = 'default/template/checkout/confirm.tpl';
-		}
-		
-		$this->response->setOutput($this->render());	
+			$this->response->setOutput($this->load->view('default/template/checkout/confirm.tpl', $data));
+		}	
   	}
 }
 ?>

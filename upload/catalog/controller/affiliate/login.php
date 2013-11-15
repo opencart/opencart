@@ -27,94 +27,90 @@ class ControllerAffiliateLogin extends Controller {
 			} 
 		}
 		
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	);
  
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('affiliate/account', '', 'SSL')
       	);
 		
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_login'),
 			'href' => $this->url->link('affiliate/login', '', 'SSL')
       	);
 				
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'), $this->config->get('config_name'), $this->config->get('config_commission') . '%');
-		$this->data['text_new_affiliate'] = $this->language->get('text_new_affiliate');
-		$this->data['text_register_account'] = $this->language->get('text_register_account'); 	
-		$this->data['text_returning_affiliate'] = $this->language->get('text_returning_affiliate');
-		$this->data['text_i_am_returning_affiliate'] = $this->language->get('text_i_am_returning_affiliate');
-    	$this->data['text_forgotten'] = $this->language->get('text_forgotten');
+		$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'), $this->config->get('config_name'), $this->config->get('config_commission') . '%');
+		$data['text_new_affiliate'] = $this->language->get('text_new_affiliate');
+		$data['text_register_account'] = $this->language->get('text_register_account'); 	
+		$data['text_returning_affiliate'] = $this->language->get('text_returning_affiliate');
+		$data['text_i_am_returning_affiliate'] = $this->language->get('text_i_am_returning_affiliate');
+    	$data['text_forgotten'] = $this->language->get('text_forgotten');
 
-    	$this->data['entry_email'] = $this->language->get('entry_email');
-    	$this->data['entry_password'] = $this->language->get('entry_password');
+    	$data['entry_email'] = $this->language->get('entry_email');
+    	$data['entry_password'] = $this->language->get('entry_password');
 
-    	$this->data['button_continue'] = $this->language->get('button_continue');
-		$this->data['button_login'] = $this->language->get('button_login');
+    	$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_login'] = $this->language->get('button_login');
 
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
-		$this->data['action'] = $this->url->link('affiliate/login', '', 'SSL');
-		$this->data['register'] = $this->url->link('affiliate/register', '', 'SSL');
-		$this->data['forgotten'] = $this->url->link('affiliate/forgotten', '', 'SSL');
+		$data['action'] = $this->url->link('affiliate/login', '', 'SSL');
+		$data['register'] = $this->url->link('affiliate/register', '', 'SSL');
+		$data['forgotten'] = $this->url->link('affiliate/forgotten', '', 'SSL');
     	
 		if (isset($this->request->post['redirect'])) {
-			$this->data['redirect'] = $this->request->post['redirect'];
+			$data['redirect'] = $this->request->post['redirect'];
 		} elseif (isset($this->session->data['redirect'])) {
-      		$this->data['redirect'] = $this->session->data['redirect'];
+      		$data['redirect'] = $this->session->data['redirect'];
 	  		
 			unset($this->session->data['redirect']);		  	
     	} else {
-			$this->data['redirect'] = '';
+			$data['redirect'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
-    		$this->data['success'] = $this->session->data['success'];
+    		$data['success'] = $this->session->data['success'];
     
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 
 		if (isset($this->request->post['email'])) {
-			$this->data['email'] = $this->request->post['email'];
+			$data['email'] = $this->request->post['email'];
 		} else {
-			$this->data['email'] = '';
+			$data['email'] = '';
 		}
 
 		if (isset($this->request->post['password'])) {
-			$this->data['password'] = $this->request->post['password'];
+			$data['password'] = $this->request->post['password'];
 		} else {
-			$this->data['password'] = '';
-		}
-				
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/login.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/affiliate/login.tpl';
-		} else {
-			$this->template = 'default/template/affiliate/login.tpl';
+			$data['password'] = '';
 		}
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'	
-		);
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 						
-		$this->response->setOutput($this->render());
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/login.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/login.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/affiliate/login.tpl', $data));
+		}
   	}
   
   	protected function validate() {

@@ -3,7 +3,7 @@ class ControllerCheckoutCart extends Controller {
 	private $error = array();
 	
 	public function index() {
-		$this->language->load('checkout/cart');
+		$this->load->language('checkout/cart');
 
 		// Update
 		if (!empty($this->request->post['quantity'])) {
@@ -275,7 +275,7 @@ class ControllerCheckoutCart extends Controller {
   	}
 								
 	public function add() {
-		$this->language->load('checkout/cart');
+		$this->load->language('checkout/cart');
 		
 		$json = array();
 		

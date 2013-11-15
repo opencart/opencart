@@ -21,7 +21,7 @@ class ModelAccountCustomer extends Model {
 
       	$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
 		
-		$this->language->load('mail/customer');
+		$this->load->language('mail/customer');
 		
 		$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 		

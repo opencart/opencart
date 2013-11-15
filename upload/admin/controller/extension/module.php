@@ -3,7 +3,7 @@ class ControllerExtensionModule extends Controller {
 	private $error = array();
 	
   	public function index() {
-		$this->language->load('extension/module');
+		$this->load->language('extension/module');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerExtensionModule extends Controller {
   	}
 	
 	public function install() {
-		$this->language->load('extension/module');
+		$this->load->language('extension/module');
     	
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -36,7 +36,7 @@ class ControllerExtensionModule extends Controller {
 	}
 	
 	public function uninstall() {
-		$this->language->load('extension/module');
+		$this->load->language('extension/module');
     	
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -116,7 +116,7 @@ class ControllerExtensionModule extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 				
-				$this->language->load('module/' . $extension);
+				$this->load->language('module/' . $extension);
 												
 				$data['extensions'][] = array(
 					'name'      => $this->language->get('heading_title'),

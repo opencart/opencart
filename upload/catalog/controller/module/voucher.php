@@ -3,7 +3,7 @@ class ControllerModuleVoucher extends Controller {
 	public function index() {
 		$data = array();
 		
-		$this->language->load('module/voucher');
+		$this->load->language('module/voucher');
 		
 		$data['heading_title'] = $this->language->get('heading_title');
 		
@@ -29,7 +29,7 @@ class ControllerModuleVoucher extends Controller {
 	}
 	
 	public function voucher() {
-		$this->language->load('module/voucher');
+		$this->load->language('module/voucher');
 		
 		$json = array();
 				

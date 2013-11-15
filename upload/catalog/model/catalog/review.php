@@ -6,7 +6,7 @@ class ModelCatalogReview extends Model {
 		// Send to main admin email if new account email is enabled
 		if ($this->config->get('config_review_mail')) {
 
-			$this->language->load('mail/review');
+			$this->load->language('mail/review');
 			$this->load->model('catalog/product');
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 			

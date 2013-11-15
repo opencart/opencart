@@ -9,7 +9,7 @@ class ControllerAccountAccount extends Controller {
 	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
     	} 
 	
-		$this->language->load('account/account');
+		$this->load->language('account/account');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

@@ -3,7 +3,7 @@ class ControllerSaleCustomerBanIp extends Controller {
 	private $error = array();
   
   	public function index() {
-		$this->language->load('sale/customer_ban_ip');
+		$this->load->language('sale/customer_ban_ip');
 		 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerSaleCustomerBanIp extends Controller {
   	}
   
   	public function insert() {
-		$this->language->load('sale/customer_ban_ip');
+		$this->load->language('sale/customer_ban_ip');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -45,7 +45,7 @@ class ControllerSaleCustomerBanIp extends Controller {
   	} 
    
   	public function update() {
-		$this->language->load('sale/customer_ban_ip');
+		$this->load->language('sale/customer_ban_ip');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerSaleCustomerBanIp extends Controller {
   	}   
 
   	public function delete() {
-		$this->language->load('sale/customer_ban_ip');
+		$this->load->language('sale/customer_ban_ip');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		

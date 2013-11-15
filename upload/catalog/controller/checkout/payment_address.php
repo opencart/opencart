@@ -1,7 +1,7 @@
 <?php 
 class ControllerCheckoutPaymentAddress extends Controller {
 	public function index() {
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 		
 		$data['text_address_existing'] = $this->language->get('text_address_existing');
 		$data['text_address_new'] = $this->language->get('text_address_new');
@@ -80,7 +80,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
   	}
 	
 	public function save() {
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 		
 		$json = array();
 		

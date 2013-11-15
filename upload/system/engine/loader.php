@@ -5,7 +5,7 @@ final class Loader {
 	public function __construct($registry) {
 		$this->registry = $registry;
 	}
-	
+		
 	public function controller($route) {
 		$path = '';
 		
@@ -125,7 +125,7 @@ final class Loader {
 		if (file_exists($file)) {
 			include_once($file);
 
-			$this->registry->set($type, new $class($type, $hostname, $username, $password, $database));
+			$this->registry->set('db_' . $type, new $class($type, $hostname, $username, $password, $database));
 		} else {
 			trigger_error('Error: Could not load database ' . $file . '!');
 			exit();
@@ -133,11 +133,11 @@ final class Loader {
 	}
 
 	public function config($config) {
-		$this->config->load($config);
+		$this->registry->get('config')->load($config);
 	}
 
 	public function language($language) {
-		return $this->language->load($language);
+		return $this->registry->get('language')->load($language);
 	}
 } 
 ?>

@@ -5,7 +5,7 @@ class ControllerProductProduct extends Controller {
 	public function index() { 
 		$data = array();
 	
-		$this->language->load('product/product');
+		$this->load->language('product/product');
 	
 		$data['breadcrumbs'] = array();
 
@@ -547,7 +547,7 @@ class ControllerProductProduct extends Controller {
   	}
 	
 	public function review() {
-    	$this->language->load('product/product');
+    	$this->load->language('product/product');
 		
 		$this->load->model('catalog/review');
 
@@ -592,7 +592,7 @@ class ControllerProductProduct extends Controller {
 	}
 	
 	public function write() {
-		$this->language->load('product/product');
+		$this->load->language('product/product');
 		
 		$json = array();
 		
@@ -660,7 +660,7 @@ class ControllerProductProduct extends Controller {
 	}
 	
 	public function upload() {
-		$this->language->load('product/product');
+		$this->load->language('product/product');
 		
 		$json = array();
 		

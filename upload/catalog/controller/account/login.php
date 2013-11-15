@@ -46,7 +46,7 @@ class ControllerAccountLogin extends Controller {
       		$this->redirect($this->url->link('account/account', '', 'SSL'));
     	}
 	
-    	$this->language->load('account/login');
+    	$this->load->language('account/login');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 								

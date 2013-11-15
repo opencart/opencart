@@ -3,7 +3,7 @@ class ControllerSaleCustomer extends Controller {
 	private $error = array();
   
   	public function index() {
-		$this->language->load('sale/customer');
+		$this->load->language('sale/customer');
 		 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerSaleCustomer extends Controller {
   	}
   
   	public function insert() {
-		$this->language->load('sale/customer');
+		$this->load->language('sale/customer');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -73,7 +73,7 @@ class ControllerSaleCustomer extends Controller {
   	} 
    
   	public function update() {
-		$this->language->load('sale/customer');
+		$this->load->language('sale/customer');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -133,7 +133,7 @@ class ControllerSaleCustomer extends Controller {
   	}   
 
   	public function delete() {
-		$this->language->load('sale/customer');
+		$this->load->language('sale/customer');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -195,7 +195,7 @@ class ControllerSaleCustomer extends Controller {
   	}  
 	
 	public function approve() {
-		$this->language->load('sale/customer');
+		$this->load->language('sale/customer');
     	
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -1066,7 +1066,7 @@ class ControllerSaleCustomer extends Controller {
 				$this->redirect(HTTP_CATALOG . 'index.php?route=account/login&token=' . $token);
 			}
 		} else {
-			$this->language->load('error/not_found');
+			$this->load->language('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1094,7 +1094,7 @@ class ControllerSaleCustomer extends Controller {
 	}
 	
 	public function history() {
-    	$this->language->load('sale/customer');
+    	$this->load->language('sale/customer');
 		
 		$this->load->model('sale/customer');
 		
@@ -1150,7 +1150,7 @@ class ControllerSaleCustomer extends Controller {
 	}
 		
 	public function transaction() {
-    	$this->language->load('sale/customer');
+    	$this->load->language('sale/customer');
 		
 		$this->load->model('sale/customer');
 		
@@ -1211,7 +1211,7 @@ class ControllerSaleCustomer extends Controller {
 	}
 			
 	public function reward() {
-    	$this->language->load('sale/customer');
+    	$this->load->language('sale/customer');
 		
 		$this->load->model('sale/customer');
 
@@ -1272,7 +1272,7 @@ class ControllerSaleCustomer extends Controller {
 	}
 	
 	public function addBanIP() {
-		$this->language->load('sale/customer');
+		$this->load->language('sale/customer');
 		
 		$json = array();
 
@@ -1292,7 +1292,7 @@ class ControllerSaleCustomer extends Controller {
 	}
 	
 	public function removeBanIP() {
-		$this->language->load('sale/customer');
+		$this->load->language('sale/customer');
 		
 		$json = array();
 

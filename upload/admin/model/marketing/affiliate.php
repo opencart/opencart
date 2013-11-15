@@ -106,7 +106,7 @@ class ModelMarketingAffiliate extends Model {
 		if ($affiliate_info) {
 			$this->db->query("UPDATE " . DB_PREFIX . "affiliate SET approved = '1' WHERE affiliate_id = '" . (int)$affiliate_id . "'");
 			
-			$this->language->load('mail/affiliate');
+			$this->load->language('mail/affiliate');
 	
 			$message  = sprintf($this->language->get('text_approve_welcome'), $this->config->get('config_name')) . "\n\n";
 			$message .= $this->language->get('text_approve_login') . "\n";
@@ -195,7 +195,7 @@ class ModelMarketingAffiliate extends Model {
 		if ($affiliate_info) { 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "affiliate_transaction SET affiliate_id = '" . (int)$affiliate_id . "', order_id = '" . (float)$order_id . "', description = '" . $this->db->escape($description) . "', amount = '" . (float)$amount . "', date_added = NOW()");
 		
-			$this->language->load('mail/affiliate');
+			$this->load->language('mail/affiliate');
 							
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
 			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($affiliate_id), $this->config->get('config_currency')));

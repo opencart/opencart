@@ -3,7 +3,7 @@ class ControllerModuleReward extends Controller {
 	public function index() {
 		$data = array();
 		
-		$this->language->load('module/reward');
+		$this->load->language('module/reward');
 					
 		$points = $this->customer->getRewardPoints();
 		
@@ -39,7 +39,7 @@ class ControllerModuleReward extends Controller {
 	}
 	
 	public function reward() {
-		$this->language->load('voucher/reward');
+		$this->load->language('voucher/reward');
 		
 		$json = array();
 		

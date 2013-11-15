@@ -86,7 +86,7 @@ class ControllerCheckoutConfirm extends Controller {
 	
 			array_multisort($sort_order, SORT_ASC, $total_data);
 	
-			$this->language->load('checkout/checkout');
+			$this->load->language('checkout/checkout');
 			
 			$data = array();
 			

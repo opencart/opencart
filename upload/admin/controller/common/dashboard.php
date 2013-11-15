@@ -1,7 +1,7 @@
 <?php   
 class ControllerCommonDashboard extends Controller {   
 	public function index() {
-    	$this->language->load('common/dashboard');
+    	$this->load->language('common/dashboard');
 	 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -86,7 +86,7 @@ class ControllerCommonDashboard extends Controller {
   	}
 	
 	public function sale() {
-		$this->language->load('common/dashboard');
+		$this->load->language('common/dashboard');
 		
 		$json = array();
 		
@@ -187,7 +187,7 @@ class ControllerCommonDashboard extends Controller {
 	}
 	
 	public function marketing() {
-		$this->language->load('common/dashboard');
+		$this->load->language('common/dashboard');
 		
 		$json = array();
 		
@@ -268,7 +268,7 @@ class ControllerCommonDashboard extends Controller {
 	}
 	
 	public function online() {
-		$this->language->load('common/dashboard');
+		$this->load->language('common/dashboard');
 		
 		$json = array();
 		

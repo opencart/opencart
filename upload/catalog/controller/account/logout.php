@@ -22,7 +22,7 @@ class ControllerAccountLogout extends Controller {
       		$this->redirect($this->url->link('account/logout', '', 'SSL'));
     	}
  
-    	$this->language->load('account/logout');
+    	$this->load->language('account/logout');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
       	

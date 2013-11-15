@@ -16,7 +16,7 @@ class ControllerModuleCurrency extends Controller {
 			}
    		}
 		
-		$this->language->load('module/currency');
+		$this->load->language('module/currency');
 		
     	$data['text_currency'] = $this->language->get('text_currency');
 

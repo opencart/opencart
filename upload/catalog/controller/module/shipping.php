@@ -3,7 +3,7 @@ class ControllerModuleShipping extends Controller {
 	public function index() {
 		$data = array();
 		
-		$this->language->load('module/shipping');
+		$this->load->language('module/shipping');
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		
@@ -59,7 +59,7 @@ class ControllerModuleShipping extends Controller {
 	}	
 	
 	public function quote() {
-		$this->language->load('module/shipping');
+		$this->load->language('module/shipping');
 		
 		$json = array();	
 		
@@ -176,7 +176,7 @@ class ControllerModuleShipping extends Controller {
 	}
 	
 	public function shipping() {
-		$this->language->load('module/shipping');
+		$this->load->language('module/shipping');
 		
 		$json = array();	
 		

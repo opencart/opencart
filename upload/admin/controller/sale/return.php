@@ -3,7 +3,7 @@ class ControllerSaleReturn extends Controller {
 	private $error = array();
    
   	public function index() {
-		$this->language->load('sale/return');
+		$this->load->language('sale/return');
 		 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerSaleReturn extends Controller {
   	}
   
   	public function insert() {
-		$this->language->load('sale/return');
+		$this->load->language('sale/return');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -77,7 +77,7 @@ class ControllerSaleReturn extends Controller {
   	} 
    
   	public function update() {
-		$this->language->load('sale/return');
+		$this->load->language('sale/return');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -141,7 +141,7 @@ class ControllerSaleReturn extends Controller {
   	}   
 
   	public function delete() {
-		$this->language->load('sale/return');
+		$this->load->language('sale/return');
 
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -870,7 +870,7 @@ class ControllerSaleReturn extends Controller {
 		$return_info = $this->model_sale_return->getReturn($return_id);
 		
 		if ($return_info) {
-			$this->language->load('sale/return');
+			$this->load->language('sale/return');
 		
 			$this->document->setTitle($this->language->get('heading_title'));
 			
@@ -1047,7 +1047,7 @@ class ControllerSaleReturn extends Controller {
 				
 			$this->response->setOutput($this->load->view('sale/return_info.tpl', $data));		
 		} else {
-			$this->language->load('error/not_found');
+			$this->load->language('error/not_found');
 
 			$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1131,7 +1131,7 @@ class ControllerSaleReturn extends Controller {
   	} 
 	
 	public function action() {
-		$this->language->load('sale/return');
+		$this->load->language('sale/return');
 		
 		$json = array();
 		
@@ -1153,7 +1153,7 @@ class ControllerSaleReturn extends Controller {
 	}
 		
 	public function history() {
-    	$this->language->load('sale/return');
+    	$this->load->language('sale/return');
 
 		$data['error'] = '';
 		$data['success'] = '';

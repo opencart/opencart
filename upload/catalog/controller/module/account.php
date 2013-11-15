@@ -3,7 +3,7 @@ class ControllerModuleAccount extends Controller {
 	public function index() {
 		$data = array();
 		
-		$this->language->load('module/account');
+		$this->load->language('module/account');
 		
     	$data['heading_title'] = $this->language->get('heading_title');
     	

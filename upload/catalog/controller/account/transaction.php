@@ -7,7 +7,7 @@ class ControllerAccountTransaction extends Controller {
 	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
     	}		
 		
-		$this->language->load('account/transaction');
+		$this->load->language('account/transaction');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

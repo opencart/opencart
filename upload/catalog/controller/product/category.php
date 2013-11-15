@@ -3,7 +3,7 @@ class ControllerProductCategory extends Controller {
 	public function index() {
 		$data = array();
 		
-		$this->language->load('product/category');
+		$this->load->language('product/category');
 
 		$this->load->model('catalog/category');
 

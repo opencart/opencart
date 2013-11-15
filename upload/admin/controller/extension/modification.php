@@ -3,7 +3,7 @@ class ControllerExtensionModification extends Controller {
 	private $error = array();
    
   	public function index() {
-		$this->language->load('extension/modification');
+		$this->load->language('extension/modification');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerExtensionModification extends Controller {
   	}
 
   	public function delete() {
-		$this->language->load('extension/modification');
+		$this->load->language('extension/modification');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -47,7 +47,7 @@ class ControllerExtensionModification extends Controller {
   	}
 	
   	public function refresh() {
-		$this->language->load('extension/modification');
+		$this->load->language('extension/modification');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -89,7 +89,7 @@ class ControllerExtensionModification extends Controller {
   	}	
 	
   	public function clear() {
-		$this->language->load('extension/modification');
+		$this->load->language('extension/modification');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -121,7 +121,7 @@ class ControllerExtensionModification extends Controller {
   	}	
 	
   	public function enable() {
-		$this->language->load('extension/modification');
+		$this->load->language('extension/modification');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -153,7 +153,7 @@ class ControllerExtensionModification extends Controller {
   	}
 	
   	public function disable() {
-		$this->language->load('extension/modification');
+		$this->load->language('extension/modification');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		

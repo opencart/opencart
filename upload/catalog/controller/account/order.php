@@ -9,7 +9,7 @@ class ControllerAccountOrder extends Controller {
 	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
     	}
 		
-		$this->language->load('account/order');
+		$this->load->language('account/order');
 		
 		$this->load->model('account/order');
  		
@@ -140,7 +140,7 @@ class ControllerAccountOrder extends Controller {
 	}
 	
 	public function info() { 
-		$this->language->load('account/order');
+		$this->load->language('account/order');
 		
 		if (isset($this->request->get['order_id'])) {
 			$order_id = $this->request->get['order_id'];

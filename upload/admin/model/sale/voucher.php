@@ -133,7 +133,7 @@ class ModelSaleVoucher extends Model {
 			
 			// If voucher does not belong to an order				
 			}  else {
-				$this->language->load('mail/voucher');
+				$this->load->language('mail/voucher');
 				
 				$template = new Template();		
 				

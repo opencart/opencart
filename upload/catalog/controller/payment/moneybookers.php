@@ -3,7 +3,7 @@ class ControllerPaymentMoneybookers extends Controller {
 	protected function index() {
 		$this->load->model('checkout/order');
 		
-		$this->language->load('payment/moneybookers');
+		$this->load->language('payment/moneybookers');
 		
     	$data['button_confirm'] = $this->language->get('button_confirm');
         

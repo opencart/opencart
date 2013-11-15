@@ -13,7 +13,7 @@ class ControllerModuleLanguage extends Controller {
 			}
     	}		
 		
-		$this->language->load('module/language');
+		$this->load->language('module/language');
 		
 		$data['text_language'] = $this->language->get('text_language');
 		

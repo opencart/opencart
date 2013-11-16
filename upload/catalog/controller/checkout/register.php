@@ -1,14 +1,8 @@
 <?php 
 class ControllerCheckoutRegister extends Controller {
-<<<<<<< HEAD
   	public function index() {
 		$this->load->language('checkout/checkout');
 		
-=======
-	public function index() {
-		$this->language->load('checkout/checkout');
-
->>>>>>> 611eb64a3c370e67b173f0cda42ca1689f2b0d04
 		$data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
 		$data['text_your_details'] = $this->language->get('text_your_details');
 		$data['text_your_address'] = $this->language->get('text_your_address');
@@ -118,13 +112,8 @@ class ControllerCheckoutRegister extends Controller {
 	}
 
 	public function save() {
-<<<<<<< HEAD
-		$this->load->language('checkout/checkout');
-		
-=======
 		$this->language->load('checkout/checkout');
 
->>>>>>> 611eb64a3c370e67b173f0cda42ca1689f2b0d04
 		$json = array();
 
 		// Validate if customer is already logged out.

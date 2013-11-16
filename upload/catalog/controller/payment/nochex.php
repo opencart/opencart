@@ -3,13 +3,8 @@
 // Nochex via APC maybe only avaiable to "Merchant" account holders only - site docs a bit vague on this point
 class ControllerPaymentNochex extends Controller {
 	protected function index() {
-<<<<<<< HEAD
-		$this->load->language('payment/nochex');
-		
-=======
 		$this->language->load('payment/nochex');
 
->>>>>>> 611eb64a3c370e67b173f0cda42ca1689f2b0d04
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$this->load->model('checkout/order');
@@ -78,13 +73,8 @@ class ControllerPaymentNochex extends Controller {
 	}
 
 	public function callback() {
-<<<<<<< HEAD
-		$this->load->language('payment/nochex');
-		
-=======
 		$this->language->load('payment/nochex');
 
->>>>>>> 611eb64a3c370e67b173f0cda42ca1689f2b0d04
 		if (isset($this->request->get['method']) && $this->request->get['method'] == 'decline') {
 			$this->session->data['error'] = $this->language->get('error_declined');
 

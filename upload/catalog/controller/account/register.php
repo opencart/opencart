@@ -9,11 +9,6 @@ class ControllerAccountRegister extends Controller {
 
 		$this->language->load('account/register');
 
-<<<<<<< HEAD
-    	$this->load->language('account/register');
-		
-=======
->>>>>>> 611eb64a3c370e67b173f0cda42ca1689f2b0d04
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('account/customer');

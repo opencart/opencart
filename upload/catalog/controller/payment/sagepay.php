@@ -1,13 +1,8 @@
 <?php
 class ControllerPaymentSagepay extends Controller {
 	protected function index() {
-<<<<<<< HEAD
-		$this->load->language('payment/sagepay');
-		
-=======
 		$this->language->load('payment/sagepay');
 
->>>>>>> 611eb64a3c370e67b173f0cda42ca1689f2b0d04
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		if ($this->config->get('sagepay_test') == 'live') {

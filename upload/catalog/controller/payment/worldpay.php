@@ -40,13 +40,8 @@ class ControllerPaymentWorldPay extends Controller {
 	}
 
 	public function callback() {
-<<<<<<< HEAD
-		$this->load->language('payment/worldpay');
-	
-=======
 		$this->language->load('payment/worldpay');
 
->>>>>>> 611eb64a3c370e67b173f0cda42ca1689f2b0d04
 		$data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 
 		if (!isset($this->request->server['HTTPS']) || ($this->request->server['HTTPS'] != 'on')) {

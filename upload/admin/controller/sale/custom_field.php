@@ -322,7 +322,8 @@ class ControllerSaleCustomField extends Controller {
 		$data['text_date'] = $this->language->get('text_date');
 		$data['text_datetime'] = $this->language->get('text_datetime');
 		$data['text_time'] = $this->language->get('text_time');
-		
+		$data['text_account'] = $this->language->get('text_account');
+		$data['text_address'] = $this->language->get('text_address');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		
@@ -331,6 +332,7 @@ class ControllerSaleCustomField extends Controller {
 		$data['entry_value'] = $this->language->get('entry_value');
 		$data['entry_custom_value'] = $this->language->get('entry_custom_value');
 		$data['entry_location'] = $this->language->get('entry_location');
+		$data['entry_form'] = $this->language->get('entry_location');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_required'] = $this->language->get('entry_required');
 		$data['entry_status'] = $this->language->get('entry_status');
@@ -427,33 +429,40 @@ class ControllerSaleCustomField extends Controller {
 			$data['value'] = '';
 		}
 		
-		$data['locations'] = array();
+		$data['accounts'] = array();
 		
-		$data['locations'][] = array(
+		$data['accounts'][] = array(
 			'text'  => $this->language->get('text_register'),
 			'value' => 'register'
 		);
 		
-		$data['locations'][] = array(
+		$data['accounts'][] = array(
 			'text'  => $this->language->get('text_account'),
 			'value' => 'account'
 		);
+				
+		$data['addresses'] = array();
 		
-		$data['locations'][] = array(
+		$data['addresses'][] = array(
+			'text'  => $this->language->get('text_register'),
+			'value' => 'register'
+		);
+		
+		$data['addresses'][] = array(
 			'text'  => $this->language->get('text_address'),
 			'value' => 'address'
 		);
-
-		$data['locations'][] = array(
+		
+		$data['addresses'][] = array(
 			'text'  => $this->language->get('text_payment_address'),
 			'value' => 'payment_address'
 		);
 		
-		$data['locations'][] = array(
+		$data['addresses'][] = array(
 			'text'  => $this->language->get('text_shipping_address'),
 			'value' => 'shipping_address'
 		);
-								
+										
 		if (isset($this->request->post['location'])) {
 			$data['custom_field_location'] = $this->request->post['location'];
 		} elseif (!empty($custom_field_info)) {

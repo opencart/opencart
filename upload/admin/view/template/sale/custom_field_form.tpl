@@ -99,21 +99,55 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
+          <div class="col-sm-10">
+            <select name="location" id="input-location" class="form-control">
+              <?php if ($status == account) { ?>
+              <option value="account" selected="selected"><?php echo $text_account; ?></option>
+              <?php } else { ?>
+              <option value="account"><?php echo $text_account; ?></option>
+              <?php } ?>
+              <?php if ($status == 'address') { ?>
+              <option value="address"><?php echo $text_address; ?></option>
+              <?php } else { ?>
+              <option value="address" selected="selected"><?php echo $text_address; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_location; ?></label>
           <div class="col-sm-10">
-             <?php foreach ($locations as $location) { ?>
-             <div class="checkbox">
-              <label>
-                <?php if (in_array($location['value'], $custom_field_location)) { ?>
-                <input type="checkbox" name="location[]" value="<?php echo $location['value']; ?>" checked="checked" />
-                <?php echo $location['text']; ?>
-                <?php } else { ?>
-                <input type="checkbox" name="location[]" value="<?php echo $location['value']; ?>" />
-                <?php echo $location['text']; ?>
-                <?php } ?>
-              </label>
-            </div>      
-            <?php } ?>
+            <div id="account">
+              <?php foreach ($accounts as $account) { ?>
+              <div class="checkbox">
+                <label>
+                  <?php if (in_array($account['value'], $custom_field_location)) { ?>
+                  <input type="checkbox" name="account[]" value="<?php echo $account['value']; ?>" checked="checked" />
+                  <?php echo $account['text']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="account[]" value="<?php echo $account['value']; ?>" />
+                  <?php echo $account['text']; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <?php } ?>
+            </div>
+            <div id="address">
+              <?php foreach ($addresses as $address) { ?>
+              <div class="checkbox">
+                <label>
+                  <?php if (in_array($address['value'], $custom_field_location)) { ?>
+                  <input type="checkbox" name="address[]" value="<?php echo $address['value']; ?>" checked="checked" />
+                  <?php echo $address['text']; ?>
+                  <?php } else { ?>
+                  <input type="checkbox" name="address[]" value="<?php echo $address['value']; ?>" />
+                  <?php echo $address['text']; ?>
+                  <?php } ?>
+                </label>
+              </div>
+              <?php } ?>
+            </div>
           </div>
         </div>
         <div class="form-group">
@@ -238,14 +272,15 @@ $('select[name=\'type\']').on('change', function() {
 $('select[name=\'type\']').trigger('change');
 
 $('input[name^=\'location\']').on('change', function() {
+	$('#account, #address').hide();
 	
 	if (this.value == 'account') {
-		//$('#custom-field-value').show();
-		//$('#display-value').hide();
+		$('#account').show();
 	}
 	
-	
-	
+	if (this.value == 'account') {
+		$('#address').show();
+	}	
 });
 
 var custom_field_value_row = <?php echo $custom_field_value_row; ?>;

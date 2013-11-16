@@ -634,7 +634,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
                 break;
             case 'DEU':
             case 'NLD':
-                $amount = 6.95;
+                $amount = 5.00;
                 break;
 
             default:

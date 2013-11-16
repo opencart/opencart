@@ -113,4 +113,3 @@ class ControllerAffiliatePassword extends Controller {
 		}
   	}
 }
-?>

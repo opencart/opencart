@@ -159,4 +159,3 @@ class ControllerAffiliatePayment extends Controller {
 		}		
 	}
 }
-?>

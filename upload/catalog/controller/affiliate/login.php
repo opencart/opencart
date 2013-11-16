@@ -131,4 +131,3 @@ class ControllerAffiliateLogin extends Controller {
     	}  	
   	}
 }
-?>

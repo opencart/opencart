@@ -70,4 +70,3 @@ class ControllerModuleLanguage extends Controller {
 		}
 	}
 }
-?>

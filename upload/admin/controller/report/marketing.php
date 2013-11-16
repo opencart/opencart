@@ -152,4 +152,3 @@ class ControllerReportMarketing extends Controller {
 		$this->response->setOutput($this->load->view('report/marketing.tpl', $data));
 	}
 }
-?>

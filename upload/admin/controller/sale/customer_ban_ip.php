@@ -357,4 +357,3 @@ class ControllerSaleCustomerBanIp extends Controller {
 		}  
   	} 
 }
-?>

@@ -1213,4 +1213,3 @@ class ControllerSaleReturn extends Controller {
 		$this->response->setOutput($this->load->view('sale/return_history.tpl', $data));
   	}		
 }
-?>

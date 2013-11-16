@@ -230,4 +230,3 @@ class ControllerAccountEdit extends Controller {
 		}
 	}
 }
-?>

@@ -85,4 +85,3 @@ class ControllerTotalCoupon extends Controller {
 		}	
 	}
 }
-?>

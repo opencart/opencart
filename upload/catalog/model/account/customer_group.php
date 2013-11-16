@@ -12,4 +12,3 @@ class ModelAccountCustomerGroup extends Model {
 		return $query->rows;
 	}
 }
-?>

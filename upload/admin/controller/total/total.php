@@ -85,4 +85,3 @@ class ControllerTotalTotal extends Controller {
 		}	
 	}
 }
-?>

@@ -28,4 +28,3 @@ class ModelPaymentPPExpress extends Model {
     	return $method_data;
   	}
 }
-?>

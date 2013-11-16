@@ -210,4 +210,3 @@ class ControllerPaymentPPProUK extends Controller {
 		}	
 	}
 }
-?>

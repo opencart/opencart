@@ -14,4 +14,3 @@ class ControllerHeader extends Controller {
 		return $this->load->view('header.tpl', $data);	
 	}
 }
-?>

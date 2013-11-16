@@ -113,4 +113,3 @@ class ControllerTotalLowOrderFee extends Controller {
 		}	
 	}
 }
-?>

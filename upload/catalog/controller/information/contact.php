@@ -336,4 +336,3 @@ class ControllerInformationContact extends Controller {
 		imagedestroy($image);
 	}
 }
-?>

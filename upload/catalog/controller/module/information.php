@@ -31,4 +31,3 @@ class ControllerModuleInformation extends Controller {
 		}
 	}
 }
-?>

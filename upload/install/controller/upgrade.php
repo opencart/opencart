@@ -56,4 +56,3 @@ class ControllerUpgrade extends Controller {
     	}
 	}
 }
-?>

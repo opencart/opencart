@@ -152,4 +152,3 @@ class ControllerPaymentBankTransfer extends Controller {
 		}	
 	}
 }
-?>

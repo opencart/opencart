@@ -85,4 +85,3 @@ class ControllerTotalCredit extends Controller {
 		}	
 	}
 }
-?>

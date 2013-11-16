@@ -102,4 +102,3 @@ class ControllerModuleWelcome extends Controller {
 		}	
 	}
 }
-?>

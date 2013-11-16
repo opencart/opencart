@@ -6,4 +6,3 @@ class ModelCheckoutMarketing extends Model {
 		return $query->row;
 	}
 }
-?>

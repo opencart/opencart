@@ -117,4 +117,3 @@ class ControllerPaymentPaymate extends Controller {
 		}		
 	}
 }
-?>

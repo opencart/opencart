@@ -37,4 +37,3 @@ class ControllerModuleAffiliate extends Controller {
 		}
 	}
 }
-?>

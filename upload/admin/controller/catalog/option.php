@@ -544,4 +544,3 @@ class ControllerCatalogOption extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 }
-?>

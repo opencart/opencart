@@ -250,4 +250,3 @@ class ControllerAccountVoucher extends Controller {
     	}				
 	}
 }
-?>

@@ -35,4 +35,3 @@ class ModelToolImage extends Model {
 		}	
 	}
 }
-?>

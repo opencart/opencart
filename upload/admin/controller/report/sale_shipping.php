@@ -182,4 +182,3 @@ class ControllerReportSaleShipping extends Controller {
 		$this->response->setOutput($this->load->view('report/sale_shipping.tpl', $data));
 	}
 }
-?>

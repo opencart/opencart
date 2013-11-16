@@ -28,4 +28,3 @@ class ModelPaymentPerpetualPayments extends Model {
     	return $method_data;
   	}
 }
-?>

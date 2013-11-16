@@ -126,4 +126,3 @@ class ControllerReportAffiliate extends Controller {
 		$this->response->setOutput($this->load->view('report/affiliate.tpl', $data));
 	}
 }
-?>

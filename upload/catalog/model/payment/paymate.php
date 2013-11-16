@@ -40,4 +40,3 @@ class ModelPaymentPayMate extends Model {
     	return $method_data;
   	}
 }
-?>

@@ -404,4 +404,3 @@ class ControllerLocalisationTaxClass extends Controller {
 		}
 	}	
 }
-?>

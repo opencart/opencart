@@ -461,4 +461,3 @@ class ControllerShippingRoyalMail extends Controller {
 		}	
 	}
 }
-?>

@@ -528,4 +528,3 @@ class ModelSaleCustomer extends Model {
 		return $query->row['total'];
 	}	
 }
-?>

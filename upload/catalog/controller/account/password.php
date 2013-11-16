@@ -113,4 +113,3 @@ class ControllerAccountPassword extends Controller {
 		}
   	}
 }
-?>

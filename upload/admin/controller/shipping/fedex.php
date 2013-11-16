@@ -392,4 +392,3 @@ class ControllerShippingFedex extends Controller {
 		}	
 	}
 }
-?>

@@ -34,4 +34,3 @@ class ControllerModuleCarousel extends Controller {
 		}
 	}
 }
-?>

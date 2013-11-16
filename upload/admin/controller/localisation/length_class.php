@@ -402,4 +402,3 @@ class ControllerLocalisationLengthClass extends Controller {
 		}
 	}	
 }
-?>

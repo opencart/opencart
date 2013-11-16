@@ -79,4 +79,3 @@ class ControllerModuleLatest extends Controller {
 		}
 	}
 }
-?>

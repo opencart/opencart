@@ -21,4 +21,3 @@ class ControllerModuleSearch extends Controller {
 		}
 	}
 }
-?>

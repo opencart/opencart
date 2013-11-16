@@ -381,4 +381,3 @@ class ControllerLocalisationOrderStatus extends Controller {
 		}
   	}	  
 }
-?>

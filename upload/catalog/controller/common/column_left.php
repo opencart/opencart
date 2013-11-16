@@ -83,4 +83,3 @@ class ControllerCommonColumnLeft extends Controller {
 		}
 	}
 }
-?>

@@ -113,4 +113,3 @@ final class DBmPDO {
 		$this->pdo = null;
 	}
 }
-?>

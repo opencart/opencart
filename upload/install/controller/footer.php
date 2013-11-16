@@ -4,4 +4,3 @@ class ControllerFooter extends Controller {
 		return $this->load->view('footer.tpl', $data);	
 	}
 }
-?>

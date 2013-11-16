@@ -28,4 +28,3 @@ class ModelPaymentPayza extends Model {
     	return $method_data;
   	}
 }
-?>

@@ -141,4 +141,3 @@ class ControllerReportProductPurchased extends Controller {
 		$this->response->setOutput($this->load->view('report/product_purchased.tpl', $data));
 	}	
 }
-?>

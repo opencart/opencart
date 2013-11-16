@@ -622,4 +622,3 @@ class ControllerMarketingCoupon extends Controller {
 		$this->response->setOutput($this->load->view('marketing/coupon_history.tpl', $data));
   	}		
 }
-?>

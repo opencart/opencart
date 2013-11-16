@@ -100,4 +100,3 @@ class ModelAffiliateAffiliate extends Model {
 		return $query->row['total'];
 	}
 }
-?>

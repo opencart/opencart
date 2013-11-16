@@ -65,4 +65,3 @@ class ControllerAccountLogout extends Controller {
 		}	
   	}
 }
-?>

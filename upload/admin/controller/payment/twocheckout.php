@@ -168,4 +168,3 @@ class ControllerPaymentTwoCheckout extends Controller {
 		}	
 	}
 }
-?>

@@ -28,4 +28,3 @@ class ModelPaymentLiqPay extends Model {
 		return $method_data;
 	}
 }
-?>

@@ -85,4 +85,3 @@ class ControllerTotalVoucher extends Controller {
 		}	
 	}
 }
-?>

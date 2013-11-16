@@ -111,4 +111,3 @@ class ControllerAffiliateForgotten extends Controller {
 		}
 	}
 }
-?>

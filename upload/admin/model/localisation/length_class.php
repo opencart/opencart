@@ -116,4 +116,3 @@ class ModelLocalisationLengthClass extends Model {
 		return $query->row['total'];
 	}		
 }
-?>

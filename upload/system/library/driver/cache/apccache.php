@@ -19,4 +19,3 @@ class Cacheapc{
 		apc_delete(CACHE_PREFIX . $key);        
 	}
 }
-?>

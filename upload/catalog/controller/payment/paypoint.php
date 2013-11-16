@@ -176,4 +176,3 @@ class ControllerPaymentPaypoint extends Controller {
 		}
 	}
 }
-?>

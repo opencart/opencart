@@ -187,4 +187,3 @@ class ControllerPaymentPPPro extends Controller {
 		}	
 	}
 }
-?>

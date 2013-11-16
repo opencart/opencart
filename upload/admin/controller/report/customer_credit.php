@@ -124,4 +124,3 @@ class ControllerReportCustomerCredit extends Controller {
 		$this->response->setOutput($this->load->view('report/customer_credit.tpl', $data));
 	}
 }
-?>

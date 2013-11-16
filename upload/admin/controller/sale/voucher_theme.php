@@ -399,4 +399,3 @@ class ControllerSaleVoucherTheme extends Controller {
 		}
   	}	  
 }
-?>

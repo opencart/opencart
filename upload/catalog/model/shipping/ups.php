@@ -287,4 +287,3 @@ class ModelShippingUps extends Model {
 		return $method_data;
 	}
 }
-?>

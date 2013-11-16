@@ -153,4 +153,3 @@ class ControllerReportCustomerActivity extends Controller {
 		$this->response->setOutput($this->load->view('report/customer_activity.tpl', $data));
   	}
 }
-?>

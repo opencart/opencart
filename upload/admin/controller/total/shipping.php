@@ -92,4 +92,3 @@ class ControllerTotalShipping extends Controller {
 		}	
 	}
 }
-?>

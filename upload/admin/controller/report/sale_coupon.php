@@ -122,4 +122,3 @@ class ControllerReportSaleCoupon extends Controller {
 		$this->response->setOutput($this->load->view('report/sale_coupon.tpl', $data));
 	}
 }
-?>

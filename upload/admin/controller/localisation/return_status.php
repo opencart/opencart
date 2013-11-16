@@ -376,4 +376,3 @@ class ControllerLocalisationReturnStatus extends Controller {
 		}
   	}	  
 }
-?>

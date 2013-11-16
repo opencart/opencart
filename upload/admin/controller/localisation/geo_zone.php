@@ -423,4 +423,3 @@ class ControllerLocalisationGeoZone extends Controller {
 		$this->response->setOutput($output);
 	} 		
 }
-?>

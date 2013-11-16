@@ -150,4 +150,3 @@ class ControllerExtensionTotal extends Controller {
 		}
   	}		
 }
-?>

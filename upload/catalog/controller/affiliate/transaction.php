@@ -96,4 +96,3 @@ class ControllerAffiliateTransaction extends Controller {
 		}		
 	} 		
 }
-?>

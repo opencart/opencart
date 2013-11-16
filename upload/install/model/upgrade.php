@@ -378,4 +378,3 @@ class ModelUpgrade extends Model {
 		}
 	}
 }
-?>

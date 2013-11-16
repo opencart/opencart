@@ -353,4 +353,3 @@ class ModelReportDashboard extends Model {
 		return $query->rows;
 	}
 }
-?>

@@ -134,4 +134,3 @@ class ControllerReportCustomerOnline extends Controller {
 		$this->response->setOutput($this->load->view('report/customer_online.tpl', $data));
 	}
 }
-?>

@@ -79,4 +79,3 @@ class ControllerModuleSpecial extends Controller {
 		}
 	}
 }
-?>

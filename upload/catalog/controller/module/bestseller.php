@@ -72,4 +72,3 @@ class ControllerModuleBestSeller extends Controller {
 		}
 	}
 }
-?>

@@ -116,4 +116,3 @@ class ControllerShippingFlat extends Controller {
 		}	
 	}
 }
-?>

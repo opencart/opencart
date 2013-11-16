@@ -128,4 +128,3 @@ class ControllerReportCustomerReward extends Controller {
 		$this->response->setOutput($this->load->view('report/customer_reward.tpl', $data));
 	}
 }
-?>

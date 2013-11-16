@@ -22,4 +22,3 @@ class ModelCatalogInformation extends Model {
 		}
 	}	
 }
-?>

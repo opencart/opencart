@@ -460,4 +460,3 @@ class ControllerLocalisationCurrency extends Controller {
 		}
 	}	
 }
-?>

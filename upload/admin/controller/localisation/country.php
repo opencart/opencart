@@ -454,4 +454,3 @@ class ControllerLocalisationCountry extends Controller {
 		}
 	}
 }
-?>

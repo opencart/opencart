@@ -274,4 +274,3 @@ class ControllerProductSpecial extends Controller {
 		}		
   	}
 }
-?>

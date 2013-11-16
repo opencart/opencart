@@ -366,4 +366,3 @@ class ControllerLocalisationReturnReason extends Controller {
 		}
 	}
 }
-?>

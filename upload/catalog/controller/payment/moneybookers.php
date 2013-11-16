@@ -108,4 +108,3 @@ class ControllerPaymentMoneybookers extends Controller {
 		}
 	}
 }
-?>

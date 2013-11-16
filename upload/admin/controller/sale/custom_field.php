@@ -584,4 +584,3 @@ class ControllerSaleCustomField extends Controller {
 		}
 	}	
 }
-?>

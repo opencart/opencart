@@ -28,4 +28,3 @@ class ModelPaymentWorldPay extends Model {
     	return $method_data;
   	}
 }
-?>

@@ -28,4 +28,3 @@ class ModelPaymentAuthorizeNetAim extends Model {
     	return $method_data;
   	}
 }
-?>

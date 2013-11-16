@@ -15,4 +15,3 @@ class ControllerStep1 extends Controller {
 		$this->response->setOutput($this->load->view('step_1.tpl', $data));
 	}
 }
-?>

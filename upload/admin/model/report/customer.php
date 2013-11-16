@@ -294,4 +294,3 @@ class ModelReportCustomer extends Model {
 		return $query->row['total'];
 	}	
 }
-?>

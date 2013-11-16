@@ -210,4 +210,3 @@ class ModelPaymentKlarnaAccount extends Model {
         return $amount;
     }
 }
-?>

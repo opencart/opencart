@@ -28,4 +28,3 @@ class ModelPaymentSagePayUS extends Model {
     	return $method_data;
   	}
 }
-?>

@@ -237,4 +237,3 @@ class ModelSaleReturn extends Model {
 		return $query->row['total'];
 	}			
 }
-?>

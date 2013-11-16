@@ -34,4 +34,3 @@ class ModelLocalisationCurrency extends Model {
 		return $currency_data;	
 	}	
 }
-?>

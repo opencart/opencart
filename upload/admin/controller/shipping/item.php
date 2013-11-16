@@ -116,4 +116,3 @@ class ControllerShippingItem extends Controller {
 		}	
 	}
 }
-?>

@@ -407,4 +407,3 @@ class ControllerDesignLayout extends Controller {
 		}
 	}
 }
-?>

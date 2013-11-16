@@ -38,4 +38,3 @@ class ModelShippingPickup extends Model {
 		return $method_data;
 	}
 }
-?>

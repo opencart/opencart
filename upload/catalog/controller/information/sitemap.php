@@ -107,4 +107,3 @@ class ControllerInformationSitemap extends Controller {
 		}		
 	}
 }
-?>

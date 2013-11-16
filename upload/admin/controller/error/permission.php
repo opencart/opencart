@@ -57,4 +57,3 @@ class ControllerErrorPermission extends Controller {
 		}
 	}	
 }
-?>

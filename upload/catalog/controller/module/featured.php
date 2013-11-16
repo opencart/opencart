@@ -82,4 +82,3 @@ class ControllerModuleFeatured extends Controller {
 		}	
 	}
 }
-?>

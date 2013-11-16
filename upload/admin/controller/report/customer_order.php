@@ -150,4 +150,3 @@ class ControllerReportCustomerOrder extends Controller {
 		$this->response->setOutput($this->load->view('report/customer_order.tpl', $data));
 	}
 }
-?>

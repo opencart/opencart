@@ -10,4 +10,3 @@ class ModelToolOnline extends Model {
 		}
 	}
 }
-?>

@@ -429,4 +429,3 @@ class ControllerLocalisationZone extends Controller {
 		}
 	}
 }
-?>

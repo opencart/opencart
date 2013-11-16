@@ -9,4 +9,3 @@ class ControllerStep4 extends Controller {
 		$this->response->setOutput($this->load->view('step_4.tpl', $data));
 	}
 }
-?>

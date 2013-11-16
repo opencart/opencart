@@ -455,4 +455,3 @@ class ControllerProductSearch extends Controller {
 		}
   	}
 }
-?>

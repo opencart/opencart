@@ -79,4 +79,3 @@ class ControllerAccountAccount extends Controller {
 		}
   	}
 }
-?>

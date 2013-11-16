@@ -155,4 +155,3 @@ class ControllerPaymentPayza extends Controller {
 		}	
 	}
 }
-?>

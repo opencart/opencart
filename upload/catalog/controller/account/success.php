@@ -56,4 +56,3 @@ class ControllerAccountSuccess extends Controller {
 		}				
   	}
 }
-?>

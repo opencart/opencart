@@ -62,4 +62,3 @@ class ControllerAffiliateAccount extends Controller {
 		}		
   	}
 }
-?>

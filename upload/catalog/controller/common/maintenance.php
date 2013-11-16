@@ -49,4 +49,3 @@ class ControllerCommonMaintenance extends Controller {
 		}
     }
 }
-?>

@@ -6,4 +6,3 @@ class ModelSettingExtension extends Model {
 		return $query->rows;
 	}
 }
-?>

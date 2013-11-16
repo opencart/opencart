@@ -83,4 +83,3 @@ class ControllerCommonContentBottom extends Controller {
 		}
 	}
 }
-?>

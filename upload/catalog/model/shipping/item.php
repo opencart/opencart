@@ -44,4 +44,3 @@ class ModelShippingItem extends Model {
 		return $method_data;
 	}
 }
-?>

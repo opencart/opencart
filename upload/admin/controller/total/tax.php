@@ -85,4 +85,3 @@ class ControllerTotalTax extends Controller {
 		}	
 	}
 }
-?>

@@ -63,4 +63,3 @@ class ModelLocalisationLocation extends Model {
 		return $query->row['total'];
 	}
 }
-?>

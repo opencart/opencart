@@ -412,4 +412,3 @@ class ControllerUserUserPermission extends Controller {
 		}
 	}
 }
-?>

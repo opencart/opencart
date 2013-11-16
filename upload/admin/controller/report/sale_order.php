@@ -184,4 +184,3 @@ class ControllerReportSaleOrder extends Controller {
 		$this->response->setOutput($this->load->view('report/sale_order.tpl', $data));
 	}
 }
-?>

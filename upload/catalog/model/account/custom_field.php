@@ -44,4 +44,3 @@ class ModelAccountCustomField extends Model {
 		return $custom_field_data;
 	}
 }
-?>

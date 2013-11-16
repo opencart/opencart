@@ -179,4 +179,3 @@ class ControllerReportSaleReturn extends Controller {
 		$this->response->setOutput($this->load->view('report/sale_return.tpl', $data));
 	}
 }
-?>

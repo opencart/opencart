@@ -176,4 +176,3 @@ class ControllerPaymentNOCHEX extends Controller {
 		}	
 	}
 }
-?>

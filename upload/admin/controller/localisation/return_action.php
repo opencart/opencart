@@ -366,4 +366,3 @@ class ControllerLocalisationReturnAction extends Controller {
 		}
   	}	  
 }
-?>

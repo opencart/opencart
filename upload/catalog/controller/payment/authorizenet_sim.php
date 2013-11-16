@@ -225,4 +225,3 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		}			
 	}
 }
-?>

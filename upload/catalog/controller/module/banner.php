@@ -31,4 +31,3 @@ class ControllerModuleBanner extends Controller {
 		}
 	}
 }
-?>

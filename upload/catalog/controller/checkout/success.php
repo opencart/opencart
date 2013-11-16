@@ -78,4 +78,3 @@ class ControllerCheckoutSuccess extends Controller {
 		}
   	}
 }
-?>

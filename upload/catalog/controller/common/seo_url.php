@@ -118,4 +118,3 @@ class ControllerCommonSeoUrl extends Controller {
 		}
 	}	
 }
-?>

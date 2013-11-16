@@ -168,4 +168,3 @@ class ControllerPaymentWorldPay extends Controller {
 		}	
 	}
 }
-?>

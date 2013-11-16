@@ -34,4 +34,3 @@ class ControllerModuleSlideshow extends Controller {
 		}
 	}
 }
-?>

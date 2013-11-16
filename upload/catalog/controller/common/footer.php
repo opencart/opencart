@@ -79,4 +79,3 @@ class ControllerCommonFooter extends Controller {
 		}
 	}
 }
-?>

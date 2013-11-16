@@ -128,4 +128,3 @@ class ControllerPaymentNochex extends Controller {
 		$this->redirect($this->url->link('checkout/success', '', 'SSL'));
 	}
 }
-?>

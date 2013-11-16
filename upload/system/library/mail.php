@@ -98,14 +98,14 @@ class Mail {
 		if (!$this->html) {
 			$message  = '--' . $boundary . $this->newline;
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . $this->newline;
-			$message .= 'Content-Transfer-Encoding: 8bit' . $this->newline;
+			$message .= 'Content-Transfer-Encoding: 8bit' . $this->newline . $this->newline;
 			$message .= $this->text . $this->newline;
 		} else {
 			$message  = '--' . $boundary . $this->newline;
 			$message .= 'Content-Type: multipart/alternative; boundary="' . $boundary . '_alt"' . $this->newline . $this->newline;
 			$message .= '--' . $boundary . '_alt' . $this->newline;
 			$message .= 'Content-Type: text/plain; charset="utf-8"' . $this->newline;
-			$message .= 'Content-Transfer-Encoding: 8bit' . $this->newline;
+			$message .= 'Content-Transfer-Encoding: 8bit' . $this->newline . $this->newline;
 
 			if ($this->text) {
 				$message .= $this->text . $this->newline;
@@ -115,7 +115,7 @@ class Mail {
 
 			$message .= '--' . $boundary . '_alt' . $this->newline;
 			$message .= 'Content-Type: text/html; charset="utf-8"' . $this->newline;
-			$message .= 'Content-Transfer-Encoding: 8bit' . $this->newline;
+			$message .= 'Content-Transfer-Encoding: 8bit' . $this->newline . $this->newline;
 			$message .= $this->html . $this->newline;
 			$message .= '--' . $boundary . '_alt--' . $this->newline;
 		}

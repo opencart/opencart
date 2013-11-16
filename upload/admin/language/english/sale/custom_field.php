@@ -33,6 +33,7 @@ $_['entry_name']            = 'Custom Field Name';
 $_['entry_type']            = 'Type';
 $_['entry_value']           = 'Value';
 $_['entry_custom_value']    = 'Custom Field Value Name';
+$_['entry_storage']         = 'Storage';
 $_['entry_location']        = 'Location';
 $_['entry_customer_group']  = 'Customer Group';
 $_['entry_required']        = 'Required';

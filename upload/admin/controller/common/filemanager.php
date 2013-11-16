@@ -87,6 +87,7 @@ class ControllerCommonFileManager extends Controller {
 		$data['entry_folder'] = $this->language->get('entry_folder');
 		
 		$data['button_parent'] = $this->language->get('button_parent');
+		$data['button_refresh'] = $this->language->get('button_refresh');
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_folder'] = $this->language->get('button_folder');
 		$data['button_delete'] = $this->language->get('button_delete');
@@ -106,7 +107,7 @@ class ControllerCommonFileManager extends Controller {
 			$data['filter_name'] = '';
 		}
 		
-		// Return the target ID for the file manager to set the value 		
+		// Return the target ID for the file manager to set the value                 
 		if (isset($this->request->get['target'])) {
 			$data['target'] = $this->request->get['target'];
 		} else {
@@ -125,9 +126,8 @@ class ControllerCommonFileManager extends Controller {
 		} else {
 			$data['ckeditor'] = '';
 		}
-		
-		$data['delete'] = $this->url->link('catalog/category/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 						
+		// Parent						
 		$url = '';
 		
 		if (isset($this->request->get['directory'])) {
@@ -152,6 +152,27 @@ class ControllerCommonFileManager extends Controller {
 									
 		$data['parent'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		
+		// Refresh
+		$url = '';
+		
+		if (isset($this->request->get['directory'])) {
+			$url .= '&directory=' . substr($this->request->get['directory'], 0, $pos);
+		}
+			
+		if (isset($this->request->get['target'])) {
+			$url .= '&target=' . $this->request->get['target'];
+		}
+		
+		if (isset($this->request->get['thumb'])) {
+			$url .= '&thumb=' . $this->request->get['thumb'];
+		}
+			
+		if (isset($this->request->get['ckeditor'])) {
+			$url .= '&ckeditor=' . $this->request->get['ckeditor'];
+		}	
+									
+		$data['refresh'] = $this->url->link('common/filemanager', 'token=' . $this->session->data['token'] . $url, 'SSL');
+				
 		$url = '';
 		
 		if (isset($this->request->get['directory'])) {

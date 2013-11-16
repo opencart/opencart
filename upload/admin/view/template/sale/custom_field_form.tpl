@@ -99,18 +99,18 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
+          <label class="col-sm-2 control-label" for="input-storage"><?php echo $entry_storage; ?></label>
           <div class="col-sm-10">
-            <select name="location" id="input-location" class="form-control">
+            <select name="storage" id="input-storage" class="form-control">
               <?php if ($status == account) { ?>
               <option value="account" selected="selected"><?php echo $text_account; ?></option>
               <?php } else { ?>
               <option value="account"><?php echo $text_account; ?></option>
               <?php } ?>
               <?php if ($status == 'address') { ?>
-              <option value="address"><?php echo $text_address; ?></option>
-              <?php } else { ?>
               <option value="address" selected="selected"><?php echo $text_address; ?></option>
+              <?php } else { ?>
+              <option value="address"><?php echo $text_address; ?></option>
               <?php } ?>
             </select>
           </div>
@@ -271,17 +271,23 @@ $('select[name=\'type\']').on('change', function() {
 
 $('select[name=\'type\']').trigger('change');
 
-$('input[name^=\'location\']').on('change', function() {
+$('select[name=\'storage\']').on('change', function() {
 	$('#account, #address').hide();
-	
+
 	if (this.value == 'account') {
 		$('#account').show();
+		
+		$('#address input[name^=\'location\']').prop('checked', false);
 	}
 	
-	if (this.value == 'account') {
+	if (this.value == 'address') {
 		$('#address').show();
+		
+		$('#account input[name^=\'location\']').prop('checked', false);
 	}	
 });
+
+$('select[name=\'storage\']').trigger('change');
 
 var custom_field_value_row = <?php echo $custom_field_value_row; ?>;
 

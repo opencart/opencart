@@ -6,8 +6,8 @@
     </div>
     <div class="modal-body">
       <div class="row">
-        <div class="col-sm-5"><a href="<?php echo $parent; ?>" title="<?php echo $button_parent; ?>" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a>
-          <button type="button" title="<?php echo $button_upload; ?>" id="button-upload" class="btn btn-primary" onhover="alert('hi');"><i class="fa fa-upload"></i></button>
+        <div class="col-sm-5"><a href="<?php echo $parent; ?>" title="<?php echo $button_parent; ?>" id="button-parent" class="btn btn-default"><i class="fa fa-level-up"></i></a> <a href="<?php echo $refresh; ?>" title="<?php echo $button_refresh; ?>" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i></a>
+          <button type="button" title="<?php echo $button_upload; ?>" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i></button>
           <button type="button" title="<?php echo $button_folder; ?>" id="button-folder" class="btn btn-default"><i class="fa fa-folder"></i></button>
           <button type="button" title="<?php echo $button_delete; ?>" id="button-delete" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>
         </div>
@@ -26,19 +26,19 @@
         <div class="col-sm-3 text-center">
           <?php if ($image['type'] == 'directory') { ?>
           <div style="width: 100px; height: 80px; padding-top: 20px; text-align: center;"><a href="<?php echo $image['href']; ?>" class="directory" style="vertical-align: middle;"><i class="fa fa-folder fa-5x"></i></a></div>
-          <p>
-            <label class="checkbox-inline">
+          <div class="checkbox">
+            <label>
               <input type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" />
               <?php echo $image['name']; ?></label>
-          </p>
+          </div>
           <?php } ?>
           <?php if ($image['type'] == 'image') { ?>
           <a href="<?php echo $image['href']; ?>" class="thumbnail"><img src="<?php echo $image['thumb']; ?>" alt="<?php echo $image['name']; ?>" title="<?php echo $image['name']; ?>" /></a>
-          <p>
-            <label class="checkbox-inline">
+          <div class="checkbox">
+            <label>
               <input type="checkbox" name="path[]" value="<?php echo $image['path']; ?>" />
               <?php echo $image['name']; ?></label>
-          </p>
+          </div>
           <?php } ?>
         </div>
         <?php } ?>
@@ -52,7 +52,7 @@
 <script type="text/javascript"><!--
 $('a.thumbnail').on('click', function(e) {
 	e.preventDefault();
-	
+
 	<?php if ($thumb) { ?>
 	$('#<?php echo $thumb; ?>').html('<img src="' + $(this).find('img').attr('src') + '" alt="" title="" />');
 	<?php } ?>
@@ -64,8 +64,6 @@ $('a.thumbnail').on('click', function(e) {
 	<?php if ($ckeditor) { ?>
 	CKEDITOR.instances['<?php echo $ckeditor; ?>'].insertHtml('<img src="' + $(this).attr('href') + '" alt="" title="" />');
 	<?php } ?>
-	
-	//$('#modal-image').modal('hide');
 });
 
 $('a.directory').on('click', function(e) {
@@ -86,8 +84,34 @@ $('#button-parent').on('click', function(e) {
 	$('#modal-image').load($(this).attr('href'));
 });
 
+$('#button-refresh').on('click', function(e) {
+	e.preventDefault();
+	
+	$('#modal-image').load($(this).attr('href'));
+});
+
 $('#button-search').on('click', function() {
-	$('#modal-image').load('index.php?route=common/filemanager&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>&filter_name=' + encodeURIComponent($('input[name=\'search\']').val()));
+	var url = 'index.php?route=common/filemanager&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>';
+		
+	var filter_name = $('input[name=\'search\']').val();
+	
+	if (filter_name) {
+		url += '&filter_name=' + encodeURIComponent(filter_name);
+	}
+							
+	<?php if ($thumb) { ?>
+	url += '&thumb=' + '<?php echo $thumb; ?>';
+	<?php } ?>
+	
+	<?php if ($target) { ?>
+	url += '&target=' + '<?php echo $target; ?>';
+	<?php } ?>
+	
+	<?php if ($ckeditor) { ?>
+	url += '&ckeditor=' + '<?php echo $ckeditor; ?>';
+	<?php } ?>
+			
+	$('#modal-image').load(url);
 });
 //--></script> 
 <script type="text/javascript"><!--
@@ -123,7 +147,7 @@ $('#button-upload').on('click', function() {
 				if (json['success']) {
 					alert(json['success']);
 					
-					$('#modal-image').load('index.php?route=common/filemanager&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>');
+					$('#button-refresh').trigger('click');
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -170,8 +194,8 @@ $('#button-folder').on('shown.bs.popover', function() {
 				
 				if (json['success']) {
 					alert(json['success']);
-					
-					$('#modal-image').load('index.php?route=common/filemanager&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>');
+										
+					$('#button-refresh').trigger('click');
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {
@@ -204,7 +228,7 @@ $('#modal-image #button-delete').on('click', function(e) {
 				if (json['success']) {
 					alert(json['success']);
 					
-					$('#modal-image').load('index.php?route=common/filemanager&token=<?php echo $token; ?>&directory=<?php echo $directory; ?>');
+					$('#button-refresh').trigger('click');
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {

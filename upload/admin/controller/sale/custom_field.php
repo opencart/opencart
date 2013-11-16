@@ -331,6 +331,7 @@ class ControllerSaleCustomField extends Controller {
 		$data['entry_type'] = $this->language->get('entry_type');
 		$data['entry_value'] = $this->language->get('entry_value');
 		$data['entry_custom_value'] = $this->language->get('entry_custom_value');
+		$data['entry_storage'] = $this->language->get('entry_storage');
 		$data['entry_location'] = $this->language->get('entry_location');
 		$data['entry_form'] = $this->language->get('entry_location');
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');

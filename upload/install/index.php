@@ -76,4 +76,3 @@ $controller->dispatch($action, new Action('not_found'));
 
 // Output
 $response->output();
-?>

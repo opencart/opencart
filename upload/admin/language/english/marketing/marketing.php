@@ -28,4 +28,3 @@ $_['help_example']      = 'So the system can track refferals you neeed to add th
 $_['error_permission']  = 'Warning: You do not have permission to modify marketing tracking!';
 $_['error_name']        = 'Campaign must be between 1 and 32 characters!';
 $_['error_code']        = 'Tracking Code required!';
-?>

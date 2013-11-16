@@ -13,4 +13,3 @@ $_['column_name']       = 'Name';
 $_['column_size']       = 'Size';
 $_['column_remaining']  = 'Remaining';
 $_['column_date_added'] = 'Date Added';
-?>

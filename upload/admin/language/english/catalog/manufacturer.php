@@ -28,4 +28,3 @@ $_['help_keyword']      = 'Do not use spaces instead replace spaces with - and m
 $_['error_permission']   = 'Warning: You do not have permission to modify manufacturers!';
 $_['error_name']         = 'Manufacturer Name must be between 3 and 64 characters!';
 $_['error_product']      = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s products!';
-?>

@@ -66,4 +66,3 @@ $_['error_model']        = 'Product Model must be greater than 3 and less than 6
 $_['error_reason']       = 'You must select at a return product reason!';
 $_['error_captcha']      = 'Verification code does not match the image!';
 $_['error_agree']        = 'Warning: You must agree to the %s!';
-?>

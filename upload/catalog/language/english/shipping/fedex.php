@@ -24,4 +24,3 @@ $_['text_international_priority_freight']      = 'International Priority Freight
 $_['text_priority_overnight']                  = 'Priority Overnight';
 $_['text_smart_post']                          = 'Smart Post';
 $_['text_standard_overnight']                  = 'Standard Overnight';
-?>

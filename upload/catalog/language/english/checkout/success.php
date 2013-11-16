@@ -10,4 +10,3 @@ $_['text_checkout']        = 'Checkout';
 $_['text_success']         = 'Success';
 $_['text_activity_accout'] = '<a href="customer_id=%d">%s</a> has just created a <a href="order_id=">new order</a>.';
 $_['text_activity_guest']  = '%s has just created a <a href="order_id=">new order</a>.';
-?>

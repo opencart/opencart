@@ -16,4 +16,3 @@ $_['column_action']     = 'Action';
 // Entry
 $_['entry_ip']          = 'IP';
 $_['entry_customer']    = 'Customer';
-?>

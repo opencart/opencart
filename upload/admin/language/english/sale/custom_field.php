@@ -45,4 +45,3 @@ $_['error_permission']      = 'Warning: You do not have permission to modify cus
 $_['error_name']            = 'Customer Field Name must be between 1 and 128 characters!';
 $_['error_type']            = 'Warning: Custom Field Values required!';
 $_['error_custom_value']    = 'Custom Value Name must be between 1 and 128 characters!';
-?>

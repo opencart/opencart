@@ -20,4 +20,3 @@ $_['text_compare']      = 'Product Compare (%s)';
 $_['text_success']      = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">product comparison</a>!';
 $_['text_remove']       = 'Success: You have modified your product comparison!';
 $_['text_empty']        = 'You have not chosen any products to compare.';
-?>

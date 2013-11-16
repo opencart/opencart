@@ -32,4 +32,3 @@ $_['error_code']           = 'Currency Code must contain 3 characters!';
 $_['error_default']        = 'Warning: This currency cannot be deleted as it is currently assigned as the default store currency!';
 $_['error_store']          = 'Warning: This currency cannot be deleted as it is currently assigned to %s stores!';
 $_['error_order']          = 'Warning: This currency cannot be deleted as it is currently assigned to %s orders!';
-?>

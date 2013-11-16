@@ -13,4 +13,3 @@ $_['entry_affiliate']   = 'Affiliate';
 $_['entry_ip']          = 'IP';
 $_['entry_date_start']  = 'Date Start';
 $_['entry_date_end']    = 'Date End';
-?>

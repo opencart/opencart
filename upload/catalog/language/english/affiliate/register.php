@@ -14,7 +14,7 @@ $_['text_your_password']        = 'Your Password';
 $_['text_cheque']               = 'Cheque';
 $_['text_paypal']               = 'PayPal';
 $_['text_bank']                 = 'Bank Transfer';
-$_['text_agree']                = 'I have read and agree to the <a href="%s" alt="%s" class="agree"><b>%s</b></a>';
+$_['text_agree']                = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
 $_['text_activity']             = '<a href="affiliate_id=%d">%s</a> has just registered for a new account.';
 
 // Entry

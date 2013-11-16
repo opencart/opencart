@@ -112,7 +112,7 @@ class ControllerCheckoutRegister extends Controller {
 	}
 
 	public function save() {
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 
 		$json = array();
 

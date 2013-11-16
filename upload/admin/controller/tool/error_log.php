@@ -72,7 +72,7 @@ class ControllerToolErrorLog extends Controller {
 	}
 
 	public function clear() {
-		$this->language->load('tool/error_log');
+		$this->load->language('tool/error_log');
 
 		$file = DIR_LOGS . $this->config->get('config_error_filename');
 

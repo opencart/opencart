@@ -44,7 +44,7 @@ class ControllerPaymentWorldPay extends Controller {
 
 		$data['title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 
-		if (!isset($this->request->server['HTTPS']) || ($this->request->server['HTTPS'] != 'on')) {
+		if (!$this->request->server['HTTPS']) {
 			$data['base'] = $this->config->get('config_url');
 		} else {
 			$data['base'] = $this->config->get('config_ssl');

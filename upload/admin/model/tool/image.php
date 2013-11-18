@@ -28,7 +28,7 @@ class ModelToolImage extends Model {
 			$image->save(DIR_IMAGE . $new_image);
 		}
 	
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+		if ($this->request->server['HTTPS']) {
 			return HTTPS_CATALOG . 'image/' . $new_image;
 		} else {
 			return HTTP_CATALOG . 'image/' . $new_image;

@@ -1027,7 +1027,7 @@ class ControllerSettingStore extends Controller {
 	}
 	
 	public function template() {
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+		if ($this->request->server['HTTPS']) {
 			$server = HTTPS_CATALOG;
 		} else {
 			$server = HTTP_CATALOG;

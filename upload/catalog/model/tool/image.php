@@ -34,7 +34,7 @@ class ModelToolImage extends Model {
 			}
 		}
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+		if ($this->request->server['HTTPS']) {
 			return $this->config->get('config_ssl') . 'image/' . $new_image;
 		} else {
 			return $this->config->get('config_url') . 'image/' . $new_image;

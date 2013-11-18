@@ -29,7 +29,7 @@ class ControllerErrorNotFound extends Controller {
 				$url = '&' . urldecode(http_build_query($url_data, '', '&'));
 			}	
 			
-			if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			if ($this->request->server['HTTPS']) {
 				$connection = 'SSL';
 			} else {
 				$connection = 'NONSSL';

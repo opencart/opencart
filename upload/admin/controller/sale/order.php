@@ -760,7 +760,7 @@ class ControllerSaleOrder extends Controller {
 		
 		$data['stores'] = $this->model_setting_store->getStores();
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+		if ($this->request->server['HTTPS']) {
 			$data['store_url'] = HTTPS_CATALOG;
 		} else {
 			$data['store_url'] = HTTP_CATALOG;

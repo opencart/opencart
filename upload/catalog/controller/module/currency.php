@@ -20,7 +20,7 @@ class ControllerModuleCurrency extends Controller {
 		
     	$data['text_currency'] = $this->language->get('text_currency');
 
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+		if ($this->request->server['HTTPS']) {
 			$connection = 'SSL';
 		} else {
 			$connection = 'NONSSL';

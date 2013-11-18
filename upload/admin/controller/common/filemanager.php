@@ -62,7 +62,7 @@ class ControllerCommonFileManager extends Controller {
 				);				
 			} elseif (is_file($image)) {
 				// Find which protocol to use to pass the full image link back
-				if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+				if ($this->request->server['HTTPS']) {
 					$server = HTTPS_CATALOG;
 				} else {
 					$server = HTTP_CATALOG;

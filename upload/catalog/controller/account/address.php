@@ -39,9 +39,9 @@ class ControllerAccountAddress extends Controller {
 			// Add to activity log
 			$this->load->model('account/activity');
 			
-			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_add'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
-
-	  		$this->redirect($this->url->link('account/address', '', 'SSL'));
+			$this->model_account_activity->addActivity('account_address_add', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
+	  		
+			$this->redirect($this->url->link('account/address', '', 'SSL'));
     	} 
 	  	
 		$this->getForm();
@@ -84,7 +84,7 @@ class ControllerAccountAddress extends Controller {
 			// Add to activity log
 			$this->load->model('account/activity');
 			
-			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_edit'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
+			$this->model_account_activity->addActivity('account_address_edit', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
 	  
 	  		$this->redirect($this->url->link('account/address', '', 'SSL'));
     	} 
@@ -127,7 +127,7 @@ class ControllerAccountAddress extends Controller {
 			// Add to activity log
 			$this->load->model('account/activity');
 			
-			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_delete'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
+			$this->model_account_activity->addActivity('account_address_delete', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
 	  
 	  		$this->redirect($this->url->link('account/address', '', 'SSL'));
     	}

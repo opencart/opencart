@@ -285,9 +285,9 @@ class ControllerAccountReturn extends Controller {
 			$this->load->model('account/activity');
 
 			if ($this->customer->isLogged()) {
-				$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_account'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName(), $return_id));
+				$this->model_account_activity->addActivity('account_return_account', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName(), $return_id);
 			} else {
-				$this->model_account_activity->addActivity(0, sprintf($this->language->get('text_activity_guest'), $this->request->post['firstname'] . ' ' . $this->request->post['lastname'], $return_id));
+				$this->model_account_activity->addActivity('account_return_guest', $this->request->post['firstname'] . ' ' . $this->request->post['lastname'], $return_id);
 			}
 			
 			$this->redirect($this->url->link('account/return/success', '', 'SSL'));

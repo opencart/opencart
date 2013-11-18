@@ -294,7 +294,7 @@ $('input[name=\'filter\']').autocomplete({
 	}	
 });
 
-$('#category-filter').delegate('.fa-minus-sign', 'click', function() {
+$('#category-filter').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script> 

@@ -129,7 +129,7 @@ $('input[name=\'customers\']').autocomplete({
 	}	
 });
 
-$('#customer').delegate('.fa-minus-sign', 'click', function() {
+$('#customer').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -158,7 +158,7 @@ $('input[name=\'affiliates\']').autocomplete({
 	}	
 });
 
-$('#affiliate').delegate('.fa-minus-sign', 'click', function() {
+$('#affiliate').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -187,7 +187,7 @@ $('input[name=\'products\']').autocomplete({
 	}	
 });
 
-$('#product').delegate('.fa-minus-sign', 'click', function() {
+$('#product').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 

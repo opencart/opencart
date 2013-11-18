@@ -1,14 +1,10 @@
 <?php
 class ModelAccountActivity extends Model {
-	public function addActivity($customer_id, $message) {
-		$language = new Language();
-		
-		$this->load->language('activity');
-		
+	public function addActivity($message) {
 		$args = func_get_args();
+
+		$args = array_shift($args);
 		
-		$args = array_slice($args, 2);
-		
-		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_activity SET customer_id = '" . (int)$customer_id . "', comment = '" . $this->db->escape(sprintf($this->language->get('text_' . $message), $args)) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', date_added = NOW()");
+		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_activity SET customer_id = '" . (int)$this->customer->getId() . "', comment = '" . $this->db->escape($message) . "', data = '" . $this->db->escape(serialize($args)) . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', date_added = NOW()");
 	}	
 }

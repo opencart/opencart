@@ -19,8 +19,6 @@ $_['text_comment']          = 'Return Comments';
 $_['text_history']          = 'Return History';
 $_['text_empty']            = 'You have not made any previous returns!';
 $_['text_agree']            = 'I have read and agree to the <a href="%s" class="agree"><b>%s</b></a>';
-$_['text_activity_account'] = '<a href="customer_id=%d">%s</a> has just submitted a product return.';
-$_['text_activity_guest']   = '%s %s has just submitted a product return.';
 
 // Column
 $_['column_return_id']      = 'Return ID';

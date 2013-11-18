@@ -23,8 +23,8 @@ class ControllerAccountEdit extends Controller {
 			// Add to activity log
 			$this->load->model('account/activity');
 			
-			$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName()));
-
+			$this->model_account_activity->addActivity('account_edit', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
+			
 			$this->redirect($this->url->link('account/account', '', 'SSL'));
 		}
 

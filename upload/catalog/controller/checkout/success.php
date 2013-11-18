@@ -12,7 +12,7 @@ class ControllerCheckoutSuccess extends Controller {
 			if ($this->customer->isLogged()) {
 				$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_account'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName(), $return_id));
 			} else {
-				$this->model_account_activity->addActivity(0, sprintf($this->language->get('text_activity_guest'), $this->session->data['guest']['firstname'] . ' ' . $this->session->data['guest']['lastname'], $this->session->data['order_id']));
+				$this->model_account_activity->addActivity(sprintf($this->language->get('text_activity_guest'), $this->session->data['guest']['firstname'] . ' ' . $this->session->data['guest']['lastname'], $this->session->data['order_id']));
 			}	
 			
 			unset($this->session->data['shipping_method']);

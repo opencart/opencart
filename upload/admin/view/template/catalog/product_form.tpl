@@ -321,10 +321,7 @@
                 <span class="help-block"><?php echo $help_category; ?></span>
                 <div id="product-category" class="well well-sm">
                   <?php foreach ($product_categories as $product_category) { ?>
-                  <div id="product-category<?php echo $product_category['category_id']; ?>">
-                    <p>
-                      <button type="button" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i></button>
-                      &nbsp;&nbsp;<?php echo $product_category['name']; ?></p>
+                  <div id="product-category<?php echo $product_category['category_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_category['name']; ?>
                     <input type="hidden" name="product_category[]" value="<?php echo $product_category['category_id']; ?>" />
                   </div>
                   <?php } ?>
@@ -900,7 +897,7 @@ $('input[name=\'category\']').autocomplete({
 	}
 });
 
-$('#product-category').delegate('.fa-minus-sign', 'click', function() {
+$('#product-category').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -929,7 +926,7 @@ $('input[name=\'filter\']').autocomplete({
 	}	
 });
 
-$('#product-filter').delegate('.fa-minus-sign', 'click', function() {
+$('#product-filter').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -958,7 +955,7 @@ $('input[name=\'download\']').autocomplete({
 	}	
 });
 
-$('#product-download').delegate('.fa-minus-sign', 'click', function() {
+$('#product-download').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -987,7 +984,7 @@ $('input[name=\'related\']').autocomplete({
 	}	
 });
 
-$('#product-related').delegate('.fa-minus-sign', 'click', function() {
+$('#product-related').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script> 

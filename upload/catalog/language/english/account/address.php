@@ -9,9 +9,6 @@ $_['text_edit_address']    = 'Edit Address';
 $_['text_add']             = 'Your address has been successfully inserted';
 $_['text_edit']            = 'Your address has been successfully updated';
 $_['text_delete']          = 'Your address has been successfully deleted';
-$_['text_activity_add']    = '<a href="customer_id=%d">%s %s</a> has just just added a new address.';
-$_['text_activity_edit']   = '<a href="customer_id=%d">%s %s</a> has just just updated their address.';
-$_['text_activity_delete'] = '<a href="customer_id=%d">%s %s</a> has just just deleted one of their address.';
 $_['text_empty']           = 'You have no addresses in your account.';
 
 // Entry

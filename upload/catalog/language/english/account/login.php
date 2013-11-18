@@ -11,7 +11,6 @@ $_['text_register_account']        = 'By creating an account you will be able to
 $_['text_returning_customer']      = 'Returning Customer';
 $_['text_i_am_returning_customer'] = 'I am a returning customer';
 $_['text_forgotten']               = 'Forgotten Password';
-$_['text_activity']                = '<a href="customer_id=%d">%s</a> has just logged in.';
 
 // Entry
 $_['entry_email']                  = 'E-Mail Address';

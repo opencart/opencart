@@ -304,7 +304,7 @@
           </div>
           <div class="tab-pane" id="tab-product">
             <div class="table-responsive">
-              <table class="table table-striped table-bordered table-hover">
+              <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <td></td>
@@ -389,7 +389,7 @@
           </div>
           <div class="tab-pane" id="tab-voucher">
             <div class="table-responsive">
-              <table class="table table-striped table-bordered table-hover">
+              <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <td></td>
@@ -488,7 +488,7 @@
           </div>
           <div class="tab-pane" id="tab-total">
             <div class="table-responsive">
-              <table class="table table-striped table-bordered table-hover">
+              <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <td class="text-left"><?php echo $column_product; ?></td>

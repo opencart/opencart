@@ -223,7 +223,7 @@ $('input[name=\'product\']').autocomplete({
 	}
 });
 
-$('#coupon-product').delegate('.fa-minus-sign', 'click', function() {
+$('#coupon-product').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 
@@ -252,7 +252,7 @@ $('input[name=\'category\']').autocomplete({
 	}	
 });
 
-$('#coupon-category').delegate('.fa-minus-sign', 'click', function() {
+$('#coupon-category').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 });
 //--></script>

@@ -257,7 +257,7 @@ class ControllerLocalisationLanguage extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$this->response->setOutput($this->load->view'localisation/language_list.tpl'(, $data));
+		$this->response->setOutput($this->load->view('localisation/language_list.tpl', $data));
 	}
 
 	protected function getForm() {

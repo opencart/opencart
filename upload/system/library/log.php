@@ -9,7 +9,7 @@ class Log {
 	public function write($message) {
 		$file = DIR_LOGS . $this->filename;
 
-		$handle = fopen($file, 'a+'); 
+		$handle = fopen($file, 'a'); 
 
 		fwrite($handle, date('Y-m-d G:i:s') . ' - ' . $message . "\n");
 

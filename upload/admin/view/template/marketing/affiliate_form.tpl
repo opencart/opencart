@@ -18,7 +18,7 @@
       <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" fid="form-affiliate" class="form-horizontal">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-affiliate" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>

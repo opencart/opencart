@@ -1,5 +1,5 @@
 <?php
-class CacheMemCache {
+class CacheMem {
 	private $expire;
 	private $cache;
 

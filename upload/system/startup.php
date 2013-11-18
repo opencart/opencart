@@ -3,8 +3,8 @@
 error_reporting(E_ALL);
 
 // Check Version
-if (version_compare(phpversion(), '5.1.0', '<') == true) {
-	exit('PHP5.1+ Required');
+if (version_compare(phpversion(), '5.3.0', '<') == true) {
+	exit('PHP5.3+ Required');
 }
 
 // Register Globals
@@ -73,6 +73,18 @@ if (!isset($_SERVER['REQUEST_URI'])) {
 
 if (!isset($_SERVER['HTTP_HOST'])) {
 	$_SERVER['HTTP_HOST'] = getenv('HTTP_HOST');
+}
+
+if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) {
+	$_SERVER['HTTPS'] = true;
+}
+
+if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https') {
+	$_SERVER['HTTPS'] = true;
+}
+
+if (!isset($_SERVER['HTTPS'])) {
+	$_SERVER['HTTPS'] = false;
 }
 
 // Engine

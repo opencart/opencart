@@ -2,8 +2,8 @@
 class ControllerCommonHeader extends Controller {
 	public function index() {
 		$data['title'] = $this->document->getTitle(); 
-		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+			
+		if ($this->request->server['HTTPS']) {
 			$data['base'] = HTTPS_SERVER;
 		} else {
 			$data['base'] = HTTP_SERVER;

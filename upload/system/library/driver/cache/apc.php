@@ -1,5 +1,5 @@
 <?php
-class Cacheapc{
+class CacheAPC {
 	private $expire;
 	private $cache;
 	

@@ -108,7 +108,8 @@ $('#button-confirm').on('click', function() {
 		url: 'index.php?route=payment/klarna_account/send',
 		type: 'post',
 		data: $('#payment input[type=\'text\'], #payment input[type=\'checkbox\']:checked, #payment input[type=\'radio\']:checked, #payment select'),
-		dataType: 'json',		
+		dataType: 'json',
+		cache: false,		
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},

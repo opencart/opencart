@@ -48,7 +48,8 @@ $('#button-confirm').on('click', function() {
 		url: 'index.php?route=payment/authorizenet_aim/send',
 		type: 'post',
 		data: $('#payment :input'),
-		dataType: 'json',		
+		dataType: 'json',
+		cache: false,		
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},

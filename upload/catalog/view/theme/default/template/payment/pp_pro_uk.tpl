@@ -68,7 +68,8 @@ $('#button-confirm').bind('click', function() {
 		url: 'index.php?route=payment/pp_pro_uk/send',
 		type: 'post',
 		data: $('#payment :input'),
-		dataType: 'json',		
+		dataType: 'json',	
+		cache: false,	
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},

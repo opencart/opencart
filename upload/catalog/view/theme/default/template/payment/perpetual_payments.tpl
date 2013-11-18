@@ -57,6 +57,7 @@ $('#button-confirm').bind('click', function() {
 		type: 'post',
 		data: $('#payment :input'),
 		dataType: 'json',		
+		cache: false,
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},

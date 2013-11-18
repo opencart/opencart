@@ -80,7 +80,8 @@ $('#button-confirm').bind('click', function() {
 		url: 'index.php?route=payment/sagepay_direct/send',
 		type: 'post',
 		data: $('#payment :input'),
-		dataType: 'json',		
+		dataType: 'json',	
+		cache: false,	
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},

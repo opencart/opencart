@@ -48,7 +48,8 @@ $('#button-confirm').bind('click', function() {
 		url: 'index.php?route=payment/web_payment_software/send',
 		type: 'post',
 		data: $('#payment :input'),
-		dataType: 'json',		
+		dataType: 'json',
+		cache: false,		
 		beforeSend: function() {
 			$('#button-confirm').button('loading');
 		},

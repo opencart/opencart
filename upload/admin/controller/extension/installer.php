@@ -254,7 +254,7 @@ class ControllerExtensionInstaller extends Controller {
     	}
 		
 		$directory = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/upload/';
-		
+		//echo $directory;
 		if (!is_dir($directory)) {
 			$json['error'] = $this->language->get('error_directory');
 		}

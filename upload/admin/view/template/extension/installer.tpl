@@ -63,7 +63,7 @@ $('#button-upload').on('click', function() {
 		// Reset everything
 		$('.alert').remove();
 		$('#progress-bar').css('width', '0%');
-		$('#progress-bar').removeClass('progress-bar-danger, progress-bar-success');		
+		$('#progress-bar').removeClass('progress-bar-danger progress-bar-success');		
 		$('#progress-text').html('');
 	
 		$.ajax({

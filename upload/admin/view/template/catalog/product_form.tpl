@@ -333,21 +333,15 @@
               <div class="col-sm-5">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
                 <span class="help-block"><?php echo $help_filter; ?></span>
-
-              </div>
-            </div>
- <div class="form-group">
- <div class="col-sm-5 col-">
- 
-                 <div id="product-filter" class="well well-sm">
+                <div id="product-filter" class="well well-sm">
                   <?php foreach ($product_filters as $product_filter) { ?>
                   <div id="product-filter<?php echo $product_filter['filter_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_filter['name']; ?>
                     <input type="hidden" name="product_filter[]" value="<?php echo $product_filter['filter_id']; ?>" />
                   </div>
                   <?php } ?>
                 </div>
- </div>
- </div>           
+              </div>
+            </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_store; ?></label>
               <div class="col-sm-10">

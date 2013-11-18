@@ -17,6 +17,4 @@ abstract class Controller {
 	protected function forward($route, $args = array()) {
 		return new Action($route, $args);
 	}
-
-
 }

@@ -8,16 +8,16 @@ class ControllerCommonLogin extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if ($this->user->isLogged() && isset($this->request->get['token']) && ($this->request->get['token'] == $this->session->data['token'])) {
-			$this->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) { 
 			$this->session->data['token'] = md5(mt_rand());
 		
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], HTTP_SERVER) === 0 || strpos($this->request->post['redirect'], HTTPS_SERVER) === 0 )) {
-				$this->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
+				$this->response->redirect($this->request->post['redirect'] . '&token=' . $this->session->data['token']);
 			} else {
-				$this->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'));
+				$this->response->redirect($this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'));
 			}
 		}
 		

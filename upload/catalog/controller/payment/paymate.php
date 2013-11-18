@@ -113,7 +113,7 @@ class ControllerPaymentPaymate extends Controller {
 		} else {
 			$this->model_checkout_order->confirm($order_id, $this->config->get('paymate_order_status_id'));
 			
-			$this->redirect($this->url->link('checkout/success'));			
+			$this->response->redirect($this->url->link('checkout/success'));			
 		}		
 	}
 }

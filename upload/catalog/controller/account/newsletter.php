@@ -4,7 +4,7 @@ class ControllerAccountNewsletter extends Controller {
 		if (!$this->customer->isLogged()) {
 	  		$this->session->data['redirect'] = $this->url->link('account/newsletter', '', 'SSL');
 	  
-	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	} 
 		
 		$this->load->language('account/newsletter');
@@ -18,7 +18,7 @@ class ControllerAccountNewsletter extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->link('account/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 		}
 
       	$data['breadcrumbs'] = array();

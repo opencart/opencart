@@ -27,7 +27,7 @@ class ControllerExtensionPayment extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 		
 		$this->getList();
@@ -49,7 +49,7 @@ class ControllerExtensionPayment extends Controller {
 				
 			$this->session->data['success'] = $this->language->get('text_success');
 				
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	
 		}		
 		
 		$this->getList();	

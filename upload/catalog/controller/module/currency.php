@@ -10,9 +10,9 @@ class ControllerModuleCurrency extends Controller {
 			unset($this->session->data['shipping_methods']);
 			
 			if (isset($this->request->post['redirect'])) {
-				$this->redirect($this->request->post['redirect']);
+				$this->response->redirect($this->request->post['redirect']);
 			} else {
-				$this->redirect($this->url->link('common/home'));
+				$this->response->redirect($this->url->link('common/home'));
 			}
    		}
 		

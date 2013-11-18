@@ -179,7 +179,7 @@ class ControllerPaymentSagepay extends Controller {
 					$this->model_checkout_order->update($this->request->get['order_id'], $this->config->get('config_order_status_id'), $message, false);
 				}
 
-				$this->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success'));
 			}
 		}
 	}	 

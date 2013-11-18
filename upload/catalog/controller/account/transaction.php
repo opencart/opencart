@@ -4,7 +4,7 @@ class ControllerAccountTransaction extends Controller {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/transaction', '', 'SSL');
 			
-	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	}		
 		
 		$this->load->language('account/transaction');

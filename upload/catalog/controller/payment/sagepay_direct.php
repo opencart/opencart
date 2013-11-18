@@ -344,14 +344,14 @@ class ControllerPaymentSagepayDirect extends Controller {
 				
 				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_direct_order_status_id'), $message, false);	
 				
-				$this->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success'));
 			} else {
 				$this->session->data['error'] = $data['StatusDetail'];
 
-				$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+				$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 			}
 		} else {
-			$this->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
 		}
 	}
 }

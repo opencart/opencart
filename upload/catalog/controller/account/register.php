@@ -4,7 +4,7 @@ class ControllerAccountRegister extends Controller {
 
 	public function index() {
 		if ($this->customer->isLogged()) {
-			$this->redirect($this->url->link('account/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 		}
 
 		$this->load->language('account/register');
@@ -37,7 +37,7 @@ class ControllerAccountRegister extends Controller {
 
 			$this->model_account_activity->addActivity('account_register', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
 
-			$this->redirect($this->url->link('account/success'));
+			$this->response->redirect($this->url->link('account/success'));
 		}
 
 		$data['breadcrumbs'] = array();

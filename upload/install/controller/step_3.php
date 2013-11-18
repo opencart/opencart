@@ -77,7 +77,7 @@ class ControllerStep3 extends Controller {
 
 			fclose($file);
 
-			$this->redirect($this->url->link('step_4'));
+			$this->response->redirect($this->url->link('step_4'));
 		}
 
 		$data = array();

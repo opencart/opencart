@@ -6,7 +6,7 @@ class ControllerAccountPassword extends Controller {
     	if (!$this->customer->isLogged()) {
       		$this->session->data['redirect'] = $this->url->link('account/password', '', 'SSL');
 
-      		$this->redirect($this->url->link('account/login', '', 'SSL'));
+      		$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	}
 
 		$this->load->language('account/password');
@@ -25,7 +25,7 @@ class ControllerAccountPassword extends Controller {
 			
 			$this->model_account_activity->addActivity('account_password', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
 	  
-	  		$this->redirect($this->url->link('account/account', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('account/account', '', 'SSL'));
     	}
 
       	$data['breadcrumbs'] = array();

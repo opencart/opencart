@@ -6,7 +6,7 @@ class ControllerAccountReturn extends Controller {
     	if (!$this->customer->isLogged()) {
       		$this->session->data['redirect'] = $this->url->link('account/return', '', 'SSL');
 
-	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	}
  
     	$this->load->language('account/return');
@@ -112,7 +112,7 @@ class ControllerAccountReturn extends Controller {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/return/info', 'return_id=' . $return_id, 'SSL');
 			
-			$this->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	}
 		
 		$this->load->model('account/return');
@@ -290,7 +290,7 @@ class ControllerAccountReturn extends Controller {
 				$this->model_account_activity->addActivity('account_return_guest', $this->request->post['firstname'] . ' ' . $this->request->post['lastname'], $return_id);
 			}
 			
-			$this->redirect($this->url->link('account/return/success', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/return/success', '', 'SSL'));
     	} 
 							
 		$this->document->setTitle($this->language->get('heading_title'));

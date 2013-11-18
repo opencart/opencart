@@ -4,7 +4,7 @@ class ControllerAffiliateForgotten extends Controller {
 
 	public function index() {
 		if ($this->affiliate->isLogged()) {
-			$this->redirect($this->url->link('affiliate/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
 		}
 
 		$this->load->language('affiliate/forgotten');
@@ -43,7 +43,7 @@ class ControllerAffiliateForgotten extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
 		}
 
       	$data['breadcrumbs'] = array();

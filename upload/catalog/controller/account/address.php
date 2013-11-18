@@ -6,7 +6,7 @@ class ControllerAccountAddress extends Controller {
     	if (!$this->customer->isLogged()) {
 	  		$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
 
-	  		$this->redirect($this->url->link('account/login', '', 'SSL')); 
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL')); 
     	}
 	
     	$this->load->language('account/address');
@@ -22,7 +22,7 @@ class ControllerAccountAddress extends Controller {
     	if (!$this->customer->isLogged()) {
 	  		$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
 
-	  		$this->redirect($this->url->link('account/login', '', 'SSL')); 
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL')); 
     	} 
 
     	$this->load->language('account/address');
@@ -41,7 +41,7 @@ class ControllerAccountAddress extends Controller {
 			
 			$this->model_account_activity->addActivity('account_address_add', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
 	  		
-			$this->redirect($this->url->link('account/address', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/address', '', 'SSL'));
     	} 
 	  	
 		$this->getForm();
@@ -51,7 +51,7 @@ class ControllerAccountAddress extends Controller {
     	if (!$this->customer->isLogged()) {
 	  		$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
 
-	  		$this->redirect($this->url->link('account/login', '', 'SSL')); 
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL')); 
     	} 
 		
     	$this->load->language('account/address');
@@ -86,7 +86,7 @@ class ControllerAccountAddress extends Controller {
 			
 			$this->model_account_activity->addActivity('account_address_edit', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
 	  
-	  		$this->redirect($this->url->link('account/address', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('account/address', '', 'SSL'));
     	} 
 	  	
 		$this->getForm();
@@ -96,7 +96,7 @@ class ControllerAccountAddress extends Controller {
     	if (!$this->customer->isLogged()) {
 	  		$this->session->data['redirect'] = $this->url->link('account/address', '', 'SSL');
 
-	  		$this->redirect($this->url->link('account/login', '', 'SSL')); 
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL')); 
     	} 
 			
     	$this->load->language('account/address');
@@ -129,7 +129,7 @@ class ControllerAccountAddress extends Controller {
 			
 			$this->model_account_activity->addActivity('account_address_delete', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
 	  
-	  		$this->redirect($this->url->link('account/address', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('account/address', '', 'SSL'));
     	}
 	
 		$this->getList();	

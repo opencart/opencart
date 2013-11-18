@@ -22,7 +22,7 @@ class ControllerProductCompare extends Controller {
 		
 			$this->session->data['success'] = $this->language->get('text_remove');
 		
-			$this->redirect($this->url->link('product/compare'));
+			$this->response->redirect($this->url->link('product/compare'));
 		}
 		
 		$this->document->setTitle($this->language->get('heading_title'));

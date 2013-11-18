@@ -17,7 +17,7 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['payment_methods']); 
 			unset($this->session->data['reward']);
 			
-			$this->redirect($this->url->link('checkout/cart'));  			
+			$this->response->redirect($this->url->link('checkout/cart'));  			
 		}
        	
 		// Remove
@@ -34,7 +34,7 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['payment_methods']); 
 			unset($this->session->data['reward']);  
 								
-			$this->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 		
 		$this->document->setTitle($this->language->get('heading_title'));

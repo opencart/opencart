@@ -23,7 +23,7 @@ class ControllerInformationContact extends Controller {
 	  		$mail->setText(strip_tags($this->request->post['enquiry']));
       		$mail->send();
 
-	  		$this->redirect($this->url->link('information/contact/success'));
+	  		$this->response->redirect($this->url->link('information/contact/success'));
     	}
 
       	$data['breadcrumbs'] = array();

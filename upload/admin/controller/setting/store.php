@@ -28,7 +28,7 @@ class ControllerSettingStore extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'));
     	}
 	
     	$this->getForm();
@@ -50,7 +50,7 @@ class ControllerSettingStore extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL'));
+			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'] . '&store_id=' . $this->request->get['store_id'], 'SSL'));
 		}
 
     	$this->getForm();
@@ -74,7 +74,7 @@ class ControllerSettingStore extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
     	$this->getList();

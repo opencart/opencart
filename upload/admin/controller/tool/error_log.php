@@ -82,6 +82,6 @@ class ControllerToolErrorLog extends Controller {
 
 		$this->session->data['success'] = $this->language->get('text_success');
 
-		$this->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'));		
+		$this->response->redirect($this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL'));		
 	}
 }

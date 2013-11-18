@@ -29,7 +29,7 @@ class ControllerExtensionShipping extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 		
 		$this->getList();
@@ -51,7 +51,7 @@ class ControllerExtensionShipping extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 				
-			$this->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 		
 		$this->getList();

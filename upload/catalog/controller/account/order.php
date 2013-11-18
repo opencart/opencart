@@ -6,7 +6,7 @@ class ControllerAccountOrder extends Controller {
     	if (!$this->customer->isLogged()) {
       		$this->session->data['redirect'] = $this->url->link('account/order', '', 'SSL');
 
-	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	}
 		
 		$this->load->language('account/order');
@@ -41,7 +41,7 @@ class ControllerAccountOrder extends Controller {
 					$this->cart->add($order_product['product_id'], $order_product['quantity'], $option_data);
 				}
 									
-				$this->redirect($this->url->link('checkout/cart'));
+				$this->response->redirect($this->url->link('checkout/cart'));
 			}
 		}
 
@@ -151,7 +151,7 @@ class ControllerAccountOrder extends Controller {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL');
 			
-			$this->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	}
 						
 		$this->load->model('account/order');

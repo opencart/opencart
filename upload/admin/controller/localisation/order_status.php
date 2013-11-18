@@ -38,7 +38,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 						
-      		$this->redirect($this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+      		$this->response->redirect($this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 	
     	$this->getForm();
@@ -70,7 +70,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     	}
 	
     	$this->getForm();
@@ -104,7 +104,7 @@ class ControllerLocalisationOrderStatus extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('localisation/order_status', 'token=' . $this->session->data['token'] . $url, 'SSL'));
    		}
 	
     	$this->getList();

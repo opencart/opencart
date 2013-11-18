@@ -4,11 +4,11 @@ class ControllerCommonForgotten extends Controller {
 
 	public function index() {
 		if ($this->user->isLogged()) {
-			$this->redirect($this->url->link('common/dashboard', '', 'SSL'));
+			$this->response->redirect($this->url->link('common/dashboard', '', 'SSL'));
 		}
 		
 		if (!$this->config->get('config_password')) {
-			$this->redirect($this->url->link('common/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('common/login', '', 'SSL'));
 		}
 		
 		$this->load->language('common/forgotten');
@@ -48,7 +48,7 @@ class ControllerCommonForgotten extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->link('common/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('common/login', '', 'SSL'));
 		}
 
       	$data['breadcrumbs'] = array();

@@ -8,7 +8,7 @@ class ControllerUpgrade extends Controller {
 
 			$this->model_upgrade->mysql();
 			
-			$this->redirect($this->url->link('upgrade/success'));
+			$this->response->redirect($this->url->link('upgrade/success'));
 		}		
 		
 		$data = array();

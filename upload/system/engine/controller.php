@@ -18,9 +18,5 @@ abstract class Controller {
 		return new Action($route, $args);
 	}
 
-	protected function redirect($url, $status = 302) {
-		header('Status: ' . $status);
-		header('Location: ' . str_replace(array('&amp;', "\n", "\r"), array('&', '', ''), $url));
-		exit();
-	}
+
 }

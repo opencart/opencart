@@ -66,7 +66,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
     	
     	$this->getForm();
@@ -126,7 +126,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
     
     	$this->getForm();
@@ -188,7 +188,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));
     	}
     
     	$this->getList();
@@ -248,7 +248,7 @@ class ControllerSaleCustomer extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}	
 	
-			$this->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));			
+			$this->response->redirect($this->url->link('sale/customer', 'token=' . $this->session->data['token'] . $url, 'SSL'));			
 		}
 		
 		$this->getList();
@@ -1061,9 +1061,9 @@ class ControllerSaleCustomer extends Controller {
 			$store_info = $this->model_setting_store->getStore($store_id);
 			
 			if ($store_info) {
-				$this->redirect($store_info['url'] . 'index.php?route=account/login&token=' . $token);
+				$this->response->redirect($store_info['url'] . 'index.php?route=account/login&token=' . $token);
 			} else { 
-				$this->redirect(HTTP_CATALOG . 'index.php?route=account/login&token=' . $token);
+				$this->response->redirect(HTTP_CATALOG . 'index.php?route=account/login&token=' . $token);
 			}
 		} else {
 			$this->load->language('error/not_found');

@@ -19,7 +19,7 @@ class ControllerAccountLogout extends Controller {
 			unset($this->session->data['voucher']);
 			unset($this->session->data['vouchers']);
 			
-      		$this->redirect($this->url->link('account/logout', '', 'SSL'));
+      		$this->response->redirect($this->url->link('account/logout', '', 'SSL'));
     	}
  
     	$this->load->language('account/logout');

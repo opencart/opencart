@@ -7,9 +7,9 @@ class ControllerModuleLanguage extends Controller {
 			$this->session->data['language'] = $this->request->post['language_code'];
 		
 			if (isset($this->request->post['redirect'])) {
-				$this->redirect($this->request->post['redirect']);
+				$this->response->redirect($this->request->post['redirect']);
 			} else {
-				$this->redirect($this->url->link('common/home'));
+				$this->response->redirect($this->url->link('common/home'));
 			}
     	}		
 		

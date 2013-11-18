@@ -97,7 +97,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 				$this->model_checkout_order->confirm($this->request->post['cart_order_id'], $this->config->get('config_order_status_id'));// Ugh. Some one've faked the sum. What should we do? Probably drop a mail to the shop owner?				
 			}
 			
-			// We can't use $this->redirect() here, because of 2CO behavior. It fetches this page
+			// We can't use $this->response->redirect() here, because of 2CO behavior. It fetches this page
 			// on behalf of the user and thus user (and his browser) see this as located at 2checkout.com
 			// domain. So user's cookies are not here and he will see empty basket and probably other
 			// weird things.

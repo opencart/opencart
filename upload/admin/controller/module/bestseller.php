@@ -16,7 +16,7 @@ class ControllerModuleBestSeller extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 						
-			$this->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 				
 		$data['heading_title'] = $this->language->get('heading_title');

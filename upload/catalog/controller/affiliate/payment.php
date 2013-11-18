@@ -6,7 +6,7 @@ class ControllerAffiliatePayment extends Controller {
 		if (!$this->affiliate->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('affiliate/payment', '', 'SSL');
 
-			$this->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
 		}
 
 		$this->load->language('affiliate/payment');
@@ -25,7 +25,7 @@ class ControllerAffiliatePayment extends Controller {
 			
 			$this->model_affiliate_activity->addActivity($this->affiliate->getId(), sprintf($this->language->get('text_activity'), $this->affiliate->getId(), $this->affiliate->getFirstName(), $this->affiliate->getLastName()));
 
-			$this->redirect($this->url->link('affiliate/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
 		}
 
       	$data['breadcrumbs'] = array();

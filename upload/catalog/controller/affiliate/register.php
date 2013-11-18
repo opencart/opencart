@@ -4,7 +4,7 @@ class ControllerAffiliateRegister extends Controller {
 	      
   	public function index() {
 		if ($this->affiliate->isLogged()) {
-	  		$this->redirect($this->url->link('affiliate/account', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
     	}
 
     	$this->load->language('affiliate/register');
@@ -25,7 +25,7 @@ class ControllerAffiliateRegister extends Controller {
 			
 			$this->model_affiliate_activity->addActivity($this->affiliate->getId(), sprintf($this->language->get('text_activity'), $this->affiliate->getId(), $this->affiliate->getFirstName(), $this->affiliate->getLastName()));
 
-	  		$this->redirect($this->url->link('affiliate/success'));
+	  		$this->response->redirect($this->url->link('affiliate/success'));
     	} 
 
       	$data['breadcrumbs'] = array();

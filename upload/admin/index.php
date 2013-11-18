@@ -108,7 +108,7 @@ $response->addHeader('Content-Type: text/html; charset=utf-8');
 $registry->set('response', $response); 
 
 // Cache
-$cache = new Cache();
+$cache = new Cache('file');
 $registry->set('cache', $cache); 
 
 // Session

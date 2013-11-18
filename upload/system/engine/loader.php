@@ -62,18 +62,20 @@ final class Loader {
 		}
 	}
 		
-	public function model($model) {
+	public function model($model, $new_instance = false) {
 		$file = DIR_APPLICATION . 'model/' . $model . '.php';
 		$class = 'Model' . preg_replace('/[^a-zA-Z0-9]/', '', $model);
-				
-		if (file_exists($file)) { 
-			include_once($file);
-
-			$this->registry->set('model_' . str_replace('/', '_', $model), new $class($this->registry));
-		} else {
-			trigger_error('Error: Could not load model ' . $file . '!');
-			exit();
-		}
+        $key = 'model_' . str_replace('/', '_', $model);
+        
+        if (!$this->registry->has($key) || $new_instance) {
+        	if (file_exists($file)) { 
+    			include_once($file);
+    			$this->registry->set($key, new $class($this->registry));
+    		} else {
+    			trigger_error('Error: Could not load model ' . $file . '!');
+    			exit();
+    		}
+        }
 	}
 	
 	public function view($template, $data = array()) {

@@ -10,7 +10,7 @@ class Cache {
 			
 			$class = 'Cache'. $driver;
 			
-			$this->cache=new $class($expire);		
+			$this->cache = new $class($expire);		
 		} else {
 			exit('Error: Could not load cache driver ' . $driver . ' cache!');
 		}
@@ -28,4 +28,3 @@ class Cache {
 		return $this->cache->delete($key);
 	}
 }
-?>

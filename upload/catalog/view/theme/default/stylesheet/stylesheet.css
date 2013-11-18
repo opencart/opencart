@@ -246,10 +246,19 @@ div.required .control-label:before {
 	color: #ffffff;
 	background-color: #229ac8;
 }
-@media (max-width: 768px) {
-#menu {
-	border-radius: 4px;
+#menu .navbar-collapse {
+	overflow: visible !important;
 }
+@media (max-width: 767px) {
+	#menu {
+		border-radius: 4px;
+	}
+	#menu div.dropdown-inner > ul.list-unstyled {
+		display: block;
+	}
+	#menu div.dropdown-menu {
+		margin-left: 0 !important;
+	}
 }
 /* content */
 #content {
@@ -558,7 +567,7 @@ h2.price {
 }
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
 .product-thumb .caption {
 	min-height: 0;
 }		

@@ -1,10 +1,10 @@
 <?php
-class Cacheapc{
+class Cacheapc {
 	private $expire;
 	private $cache;
 	
 	public function __construct($expire) {
-		$this->expire=$expire;                
+		$this->expire = $expire;                
 	}
 	
 	public function get($key) {

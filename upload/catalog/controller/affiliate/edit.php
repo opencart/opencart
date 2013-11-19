@@ -23,7 +23,12 @@ class ControllerAffiliateEdit extends Controller {
 			// Add to activity log
 			$this->load->model('affiliate/activity');
 			
-			$this->model_affiliate_activity->addActivity($this->affiliate->getId(), sprintf($this->language->get('text_activity'), $this->affiliate->getId(), $this->affiliate->getFirstName(), $this->affiliate->getLastName()));
+			$activity_data = array(
+				'affiliate_id' => $this->affiliate->getId(),
+				'name'         => $this->affiliate->getFirstName() . ' ' . $this->affiliate->getLastName()
+			);
+						
+			$this->model_affiliate_activity->addActivity('edit', $activity_data);
 
 			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
 		}

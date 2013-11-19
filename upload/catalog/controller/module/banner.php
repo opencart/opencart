@@ -3,8 +3,6 @@ class ControllerModuleBanner extends Controller {
 	public function index($setting) {
 		static $module = 0;
 		
-		$data = array();
-		
 		$this->load->model('design/banner');
 		$this->load->model('tool/image');
 		

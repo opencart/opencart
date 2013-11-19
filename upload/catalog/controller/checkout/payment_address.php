@@ -186,6 +186,13 @@ class ControllerCheckoutPaymentAddress extends Controller {
 															
 					unset($this->session->data['payment_method']);	
 					unset($this->session->data['payment_methods']);
+					
+					$activity_data = array(
+						'customer_id' => $this->customer->getId(),
+						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+					);
+					
+					$this->model_account_activity->addActivity('address_add', $activity_data);					
 				}		
 			}		
 		}

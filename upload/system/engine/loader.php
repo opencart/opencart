@@ -122,19 +122,6 @@ final class Loader {
 			exit();
 		}
 	}
-	
-	public function database($type, $hostname, $username, $password, $database) {
-		$file = DIR_SYSTEM . 'library/' . $driver . '.php';
-
-		if (file_exists($file)) {
-			include_once($file);
-
-			$this->registry->set('db_' . $type, new $class($type, $hostname, $username, $password, $database));
-		} else {
-			trigger_error('Error: Could not load database ' . $file . '!');
-			exit();
-		}
-	}
 
 	public function config($config) {
 		$this->registry->get('config')->load($config);

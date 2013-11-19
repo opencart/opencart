@@ -1,8 +1,6 @@
 <?php  
 class ControllerModuleSearch extends Controller {
 	public function index() {
-		$data = array();
-		
 		$this->load->language('module/search');
 		
 		$data['text_search'] = $this->language->get('text_search');

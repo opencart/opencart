@@ -1,8 +1,6 @@
 <?php
 class ControllerModuleBestSeller extends Controller {
 	public function index($setting) {
-		$data = array();
-		
 		$this->load->language('module/bestseller');
 		
       	$data['heading_title'] = $this->language->get('heading_title');

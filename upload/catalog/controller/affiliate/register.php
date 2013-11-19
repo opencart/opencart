@@ -10,8 +10,6 @@ class ControllerAffiliateRegister extends Controller {
     	$this->load->language('affiliate/register');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
 					
 		$this->load->model('affiliate/affiliate');
 		
@@ -23,7 +21,12 @@ class ControllerAffiliateRegister extends Controller {
 			// Add to activity log
 			$this->load->model('affiliate/activity');
 			
-			$this->model_affiliate_activity->addActivity($this->affiliate->getId(), sprintf($this->language->get('text_activity'), $this->affiliate->getId(), $this->affiliate->getFirstName(), $this->affiliate->getLastName()));
+			$activity_data = array(
+				'affiliate_id' => $this->affiliate->getId(),
+				'name'         => $this->affiliate->getFirstName() . ' ' . $this->affiliate->getLastName()
+			);
+						
+			$this->model_affiliate_activity->addActivity('register', $activity_data);
 
 	  		$this->response->redirect($this->url->link('affiliate/success'));
     	} 

@@ -1,8 +1,6 @@
 <?php  
 class ControllerModuleGoogleTalk extends Controller {
-	public function index() {
-		$data = array();
-		
+	public function index() {		
 		$this->load->language('module/google_talk');
 
       	$data['heading_title'] = $this->language->get('heading_title');

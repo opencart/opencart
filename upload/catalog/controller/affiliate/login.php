@@ -17,7 +17,12 @@ class ControllerAffiliateLogin extends Controller {
 			// Add to activity log
 			$this->load->model('affiliate/activity');
 			
-			$this->model_affiliate_activity->addActivity($this->affiliate->getId(), sprintf($this->language->get('text_activity'), $this->affiliate->getId(), $this->affiliate->getFirstName(), $this->affiliate->getLastName()));
+			$activity_data = array(
+				'affiliate_id' => $this->affiliate->getId(),
+				'name'         => $this->affiliate->getFirstName() . ' ' . $this->affiliate->getLastName()
+			);
+						
+			$this->model_affiliate_activity->addActivity('login', $activity_data);
 			
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {

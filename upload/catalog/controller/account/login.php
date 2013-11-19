@@ -67,7 +67,12 @@ class ControllerAccountLogin extends Controller {
 			// Add to activity log
 			$this->load->model('account/activity');
 			
-			$this->model_account_activity->addActivity('account_login', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
+			$activity_data = array(
+				'customer_id' => $this->customer->getId(),
+				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+			);
+			
+			$this->model_account_activity->addActivity('login', $activity_data);
 							
 			// Added strpos check to pass McAfee PCI compliance test (http://forum.opencart.com/viewtopic.php?f=10&t=12043&p=151494#p151295)
 			if (isset($this->request->post['redirect']) && (strpos($this->request->post['redirect'], $this->config->get('config_url')) !== false || strpos($this->request->post['redirect'], $this->config->get('config_ssl')) !== false)) {

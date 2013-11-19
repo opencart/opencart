@@ -114,84 +114,84 @@ class ControllerPaymentSagepayDirect extends Controller {
 		
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 		
-        $data = array();
+        $payment_data = array();
 		
-		$data['VPSProtocol'] = '2.23';
-        $data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
-        $data['Vendor'] = $this->config->get('sagepay_direct_vendor');
-		$data['VendorTxCode'] = $this->session->data['order_id'];
-		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false);
-		$data['Currency'] = $this->currency->getCode();
-		$data['Description'] = substr($this->config->get('config_name'), 0, 100);
-		$data['CardHolder'] = $this->request->post['cc_owner'];
-		$data['CardNumber'] = $this->request->post['cc_number'];
-		$data['ExpiryDate'] = $this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year'], 2);
-		$data['CardType'] = $this->request->post['cc_type'];
-		$data['TxType'] = $this->config->get('sagepay_direct_transaction');
-		$data['StartDate'] = $this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year'], 2);
-		$data['IssueNumber'] = $this->request->post['cc_issue'];
-		$data['CV2'] = $this->request->post['cc_cvv2'];
+		$payment_data['VPSProtocol'] = '2.23';
+        $payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
+        $payment_data['Vendor'] = $this->config->get('sagepay_direct_vendor');
+		$payment_data['VendorTxCode'] = $this->session->data['order_id'];
+		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], 1.00000, false);
+		$payment_data['Currency'] = $this->currency->getCode();
+		$payment_data['Description'] = substr($this->config->get('config_name'), 0, 100);
+		$payment_data['CardHolder'] = $this->request->post['cc_owner'];
+		$payment_data['CardNumber'] = $this->request->post['cc_number'];
+		$payment_data['ExpiryDate'] = $this->request->post['cc_expire_date_month'] . substr($this->request->post['cc_expire_date_year'], 2);
+		$payment_data['CardType'] = $this->request->post['cc_type'];
+		$payment_data['TxType'] = $this->config->get('sagepay_direct_transaction');
+		$payment_data['StartDate'] = $this->request->post['cc_start_date_month'] . substr($this->request->post['cc_start_date_year'], 2);
+		$payment_data['IssueNumber'] = $this->request->post['cc_issue'];
+		$payment_data['CV2'] = $this->request->post['cc_cvv2'];
 		
-		$data['BillingSurname'] = substr($order_info['payment_lastname'], 0, 20);
-		$data['BillingFirstnames'] = substr($order_info['payment_firstname'], 0, 20);
-		$data['BillingAddress1'] = substr($order_info['payment_address_1'], 0, 100);
+		$payment_data['BillingSurname'] = substr($order_info['payment_lastname'], 0, 20);
+		$payment_data['BillingFirstnames'] = substr($order_info['payment_firstname'], 0, 20);
+		$payment_data['BillingAddress1'] = substr($order_info['payment_address_1'], 0, 100);
 		
 		if ($order_info['payment_address_2']) {
-        	$data['BillingAddress2'] = $order_info['payment_address_2'];
+        	$payment_data['BillingAddress2'] = $order_info['payment_address_2'];
 		}
 		
-		$data['BillingCity'] = substr($order_info['payment_city'], 0, 40);
-		$data['BillingPostCode'] = substr($order_info['payment_postcode'], 0, 10);
-		$data['BillingCountry'] = $order_info['payment_iso_code_2'];
+		$payment_data['BillingCity'] = substr($order_info['payment_city'], 0, 40);
+		$payment_data['BillingPostCode'] = substr($order_info['payment_postcode'], 0, 10);
+		$payment_data['BillingCountry'] = $order_info['payment_iso_code_2'];
 
 		if ($order_info['payment_iso_code_2'] == 'US') {
-			$data['BillingState'] = $order_info['payment_zone_code'];
+			$payment_data['BillingState'] = $order_info['payment_zone_code'];
 		}
 		
-		$data['BillingPhone'] = substr($order_info['telephone'], 0, 20);
+		$payment_data['BillingPhone'] = substr($order_info['telephone'], 0, 20);
 		
 		if ($this->cart->hasShipping()) {
-			$data['DeliverySurname'] = substr($order_info['shipping_lastname'], 0, 20);
-			$data['DeliveryFirstnames'] = substr($order_info['shipping_firstname'], 0, 20);
-			$data['DeliveryAddress1'] = substr($order_info['shipping_address_1'], 0, 100);
+			$payment_data['DeliverySurname'] = substr($order_info['shipping_lastname'], 0, 20);
+			$payment_data['DeliveryFirstnames'] = substr($order_info['shipping_firstname'], 0, 20);
+			$payment_data['DeliveryAddress1'] = substr($order_info['shipping_address_1'], 0, 100);
 			
 			if ($order_info['shipping_address_2']) {
-        		$data['DeliveryAddress2'] = $order_info['shipping_address_2'];
+        		$payment_data['DeliveryAddress2'] = $order_info['shipping_address_2'];
 			}		
 			
-			$data['DeliveryCity'] = substr($order_info['shipping_city'], 0, 40);
-			$data['DeliveryPostCode'] = substr($order_info['shipping_postcode'], 0, 10);
-			$data['DeliveryCountry'] = $order_info['shipping_iso_code_2'];
+			$payment_data['DeliveryCity'] = substr($order_info['shipping_city'], 0, 40);
+			$payment_data['DeliveryPostCode'] = substr($order_info['shipping_postcode'], 0, 10);
+			$payment_data['DeliveryCountry'] = $order_info['shipping_iso_code_2'];
 			
 			if ($order_info['shipping_iso_code_2'] == 'US') {
-				$data['DeliveryState'] = $order_info['shipping_zone_code'];
+				$payment_data['DeliveryState'] = $order_info['shipping_zone_code'];
 			}
 			
-			$data['CustomerName'] = substr($order_info['firstname'] . ' ' . $order_info['lastname'], 0, 100);
-			$data['DeliveryPhone'] = substr($order_info['telephone'], 0, 20);
+			$payment_data['CustomerName'] = substr($order_info['firstname'] . ' ' . $order_info['lastname'], 0, 100);
+			$payment_data['DeliveryPhone'] = substr($order_info['telephone'], 0, 20);
 		} else {
-			$data['DeliveryFirstnames'] = $order_info['payment_firstname'];
-        	$data['DeliverySurname'] = $order_info['payment_lastname'];
-        	$data['DeliveryAddress1'] = $order_info['payment_address_1'];
+			$payment_data['DeliveryFirstnames'] = $order_info['payment_firstname'];
+        	$payment_data['DeliverySurname'] = $order_info['payment_lastname'];
+        	$payment_data['DeliveryAddress1'] = $order_info['payment_address_1'];
 		
 			if ($order_info['payment_address_2']) {
-        		$data['DeliveryAddress2'] = $order_info['payment_address_2'];
+        		$payment_data['DeliveryAddress2'] = $order_info['payment_address_2'];
 			}
 		
-        	$data['DeliveryCity'] = $order_info['payment_city'];
-        	$data['DeliveryPostCode'] = $order_info['payment_postcode'];
-        	$data['DeliveryCountry'] = $order_info['payment_iso_code_2'];
+        	$payment_data['DeliveryCity'] = $order_info['payment_city'];
+        	$payment_data['DeliveryPostCode'] = $order_info['payment_postcode'];
+        	$payment_data['DeliveryCountry'] = $order_info['payment_iso_code_2'];
 		
 			if ($order_info['payment_iso_code_2'] == 'US') {
-				$data['DeliveryState'] = $order_info['payment_zone_code'];
+				$payment_data['DeliveryState'] = $order_info['payment_zone_code'];
 			}
 		
-			$data['DeliveryPhone'] = $order_info['telephone'];			
+			$payment_data['DeliveryPhone'] = $order_info['telephone'];			
 		}		
 		
-		$data['CustomerEMail'] = substr($order_info['email'], 0, 255);
-		$data['Apply3DSecure'] = '0';
-		$data['ClientIPAddress'] = $this->request->server['REMOTE_ADDR'];
+		$payment_data['CustomerEMail'] = substr($order_info['email'], 0, 255);
+		$payment_data['Apply3DSecure'] = '0';
+		$payment_data['ClientIPAddress'] = $this->request->server['REMOTE_ADDR'];
 		
 		$curl = curl_init($url);
 
@@ -202,7 +202,7 @@ class ControllerPaymentSagepayDirect extends Controller {
 		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
 		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
 		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($data));
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($payment_data));
  
 		$response = curl_exec($curl);
   		

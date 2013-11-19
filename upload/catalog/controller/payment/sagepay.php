@@ -20,91 +20,91 @@ class ControllerPaymentSagepay extends Controller {
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		$data = array();
+		$payment_data = array();
 
-		$data['VendorTxCode'] = $this->session->data['order_id'];
-		$data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
-		$data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-		$data['Currency'] = $order_info['currency_code'];
-		$data['Description'] = sprintf($this->language->get('text_description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
-		$data['SuccessURL'] = str_replace('&amp;', '&', $this->url->link('payment/sagepay/success', 'order_id=' . $this->session->data['order_id']));
-		$data['FailureURL'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', '', 'SSL'));
+		$payment_data['VendorTxCode'] = $this->session->data['order_id'];
+		$payment_data['ReferrerID'] = 'E511AF91-E4A0-42DE-80B0-09C981A3FB61';
+		$payment_data['Amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
+		$payment_data['Currency'] = $order_info['currency_code'];
+		$payment_data['Description'] = sprintf($this->language->get('text_description'), date($this->language->get('date_format_short')), $this->session->data['order_id']);
+		$payment_data['SuccessURL'] = str_replace('&amp;', '&', $this->url->link('payment/sagepay/success', 'order_id=' . $this->session->data['order_id']));
+		$payment_data['FailureURL'] = str_replace('&amp;', '&', $this->url->link('checkout/checkout', '', 'SSL'));
 
-		$data['CustomerName'] = html_entity_decode($order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
-		$data['SendEMail'] = '1';
-		$data['CustomerEMail'] = $order_info['email'];
-		$data['VendorEMail'] = $this->config->get('config_email');  
+		$payment_data['CustomerName'] = html_entity_decode($order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+		$payment_data['SendEMail'] = '1';
+		$payment_data['CustomerEMail'] = $order_info['email'];
+		$payment_data['VendorEMail'] = $this->config->get('config_email');  
 
-		$data['BillingFirstnames'] = $order_info['payment_firstname'];
-		$data['BillingSurname'] = $order_info['payment_lastname'];
-		$data['BillingAddress1'] = $order_info['payment_address_1'];
+		$payment_data['BillingFirstnames'] = $order_info['payment_firstname'];
+		$payment_data['BillingSurname'] = $order_info['payment_lastname'];
+		$payment_data['BillingAddress1'] = $order_info['payment_address_1'];
 
 		if ($order_info['payment_address_2']) {
-			$data['BillingAddress2'] = $order_info['payment_address_2'];
+			$payment_data['BillingAddress2'] = $order_info['payment_address_2'];
 		}
 
-		$data['BillingCity'] = $order_info['payment_city'];
-		$data['BillingPostCode'] = $order_info['payment_postcode'];
-		$data['BillingCountry'] = $order_info['payment_iso_code_2'];
+		$payment_data['BillingCity'] = $order_info['payment_city'];
+		$payment_data['BillingPostCode'] = $order_info['payment_postcode'];
+		$payment_data['BillingCountry'] = $order_info['payment_iso_code_2'];
 
 		if ($order_info['payment_iso_code_2'] == 'US') {
-			$data['BillingState'] = $order_info['payment_zone_code'];
+			$payment_data['BillingState'] = $order_info['payment_zone_code'];
 		}
 
-		$data['BillingPhone'] = $order_info['telephone'];
+		$payment_data['BillingPhone'] = $order_info['telephone'];
 
 		if ($this->cart->hasShipping()) {
-			$data['DeliveryFirstnames'] = $order_info['shipping_firstname'];
-			$data['DeliverySurname'] = $order_info['shipping_lastname'];
-			$data['DeliveryAddress1'] = $order_info['shipping_address_1'];
+			$payment_data['DeliveryFirstnames'] = $order_info['shipping_firstname'];
+			$payment_data['DeliverySurname'] = $order_info['shipping_lastname'];
+			$payment_data['DeliveryAddress1'] = $order_info['shipping_address_1'];
 
 			if ($order_info['shipping_address_2']) {
-				$data['DeliveryAddress2'] = $order_info['shipping_address_2'];
+				$payment_data['DeliveryAddress2'] = $order_info['shipping_address_2'];
 			}
 
-			$data['DeliveryCity'] = $order_info['shipping_city'];
-			$data['DeliveryPostCode'] = $order_info['shipping_postcode'];
-			$data['DeliveryCountry'] = $order_info['shipping_iso_code_2'];
+			$payment_data['DeliveryCity'] = $order_info['shipping_city'];
+			$payment_data['DeliveryPostCode'] = $order_info['shipping_postcode'];
+			$payment_data['DeliveryCountry'] = $order_info['shipping_iso_code_2'];
 
 			if ($order_info['shipping_iso_code_2'] == 'US') {
-				$data['DeliveryState'] = $order_info['shipping_zone_code'];
+				$payment_data['DeliveryState'] = $order_info['shipping_zone_code'];
 			}
 
-			$data['DeliveryPhone'] = $order_info['telephone'];
+			$payment_data['DeliveryPhone'] = $order_info['telephone'];
 		} else {
-			$data['DeliveryFirstnames'] = $order_info['payment_firstname'];
-			$data['DeliverySurname'] = $order_info['payment_lastname'];
-			$data['DeliveryAddress1'] = $order_info['payment_address_1'];
+			$payment_data['DeliveryFirstnames'] = $order_info['payment_firstname'];
+			$payment_data['DeliverySurname'] = $order_info['payment_lastname'];
+			$payment_data['DeliveryAddress1'] = $order_info['payment_address_1'];
 
 			if ($order_info['payment_address_2']) {
-				$data['DeliveryAddress2'] = $order_info['payment_address_2'];
+				$payment_data['DeliveryAddress2'] = $order_info['payment_address_2'];
 			}
 
-			$data['DeliveryCity'] = $order_info['payment_city'];
-			$data['DeliveryPostCode'] = $order_info['payment_postcode'];
-			$data['DeliveryCountry'] = $order_info['payment_iso_code_2'];
+			$payment_data['DeliveryCity'] = $order_info['payment_city'];
+			$payment_data['DeliveryPostCode'] = $order_info['payment_postcode'];
+			$payment_data['DeliveryCountry'] = $order_info['payment_iso_code_2'];
 
 			if ($order_info['payment_iso_code_2'] == 'US') {
-				$data['DeliveryState'] = $order_info['payment_zone_code'];
+				$payment_data['DeliveryState'] = $order_info['payment_zone_code'];
 			}
 
-			$data['DeliveryPhone'] = $order_info['telephone'];			
+			$payment_data['DeliveryPhone'] = $order_info['telephone'];			
 		}
 
-		$data['AllowGiftAid'] = '0';
+		$payment_data['AllowGiftAid'] = '0';
 
 		if (!$this->config->get('sagepay_transaction')) {
-			$data['ApplyAVSCV2'] = '0';
+			$payment_data['ApplyAVSCV2'] = '0';
 		}
 
-		$data['Apply3DSecure'] = '0';
+		$payment_data['Apply3DSecure'] = '0';
 
 		$data['transaction'] = $this->config->get('sagepay_transaction');
 		$data['vendor'] = $vendor;
 
 		$crypt_data = array();
 
-		foreach($data as $key => $value) {
+		foreach($payment_data as $key => $value) {
 			$crypt_data[] = $key . '=' . $value;
 		}
 

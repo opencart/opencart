@@ -1,8 +1,6 @@
 <?php
 class ControllerModuleLatest extends Controller {
 	public function index($setting) {
-		$data = array();
-		
 		$this->load->language('module/latest');
 		
       	$data['heading_title'] = $this->language->get('heading_title');

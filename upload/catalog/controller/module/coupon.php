@@ -1,8 +1,6 @@
 <?php
 class ControllerModuleCoupon extends Controller {
 	public function index() {
-		$data = array();
-		
 		$this->load->language('module/coupon');
 		
 		$data['heading_title'] = $this->language->get('heading_title');

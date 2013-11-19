@@ -42,6 +42,20 @@ class ControllerAccountForgotten extends Controller {
 			$mail->send();
 			
 			$this->session->data['success'] = $this->language->get('text_success');
+			
+			// Add to activity log
+			$customer_info = $this->model_account_customer->getCustomerByEmail($this->request->post['email']);
+
+			if ($customer_info) {
+				$this->load->model('account/activity');
+				
+				$activity_data = array(
+					'customer_id' => $customer_info['customer_id'],
+					'name'        => $customer_info['firstname'] . ' ' . $customer_info['lastname']
+				);
+							
+				$this->model_account_activity->addActivity('forgotten', $activity_data);
+			}
 
 			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
 		}

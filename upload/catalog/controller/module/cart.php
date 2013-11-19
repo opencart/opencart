@@ -1,8 +1,6 @@
 <?php 
 class ControllerModuleCart extends Controller {
 	public function index() {
-		$data = array();
-		
 		$this->load->language('module/cart');
 		
       	if (isset($this->request->get['remove'])) {

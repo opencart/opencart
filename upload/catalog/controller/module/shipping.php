@@ -1,8 +1,6 @@
 <?php
 class ControllerModuleShipping extends Controller {
 	public function index() {
-		$data = array();
-		
 		$this->load->language('module/shipping');
 
 		$data['heading_title'] = $this->language->get('heading_title');

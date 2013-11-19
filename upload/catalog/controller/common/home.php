@@ -4,8 +4,6 @@ class ControllerCommonHome extends Controller {
 		$this->document->setTitle($this->config->get('config_title'));
 		$this->document->setDescription($this->config->get('config_meta_description'));
 
-		$data = array();
-		
 		$data['heading_title'] = $this->config->get('config_title');
 				
 		$data['header'] = $this->load->controller('common/header');

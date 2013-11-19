@@ -10,9 +10,20 @@ class ControllerCheckoutSuccess extends Controller {
 			$this->load->model('account/activity');
 
 			if ($this->customer->isLogged()) {
-				$this->model_account_activity->addActivity($this->customer->getId(), sprintf($this->language->get('text_activity_account'), $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName(), $return_id));
+				$activity_data = array(
+					'order_id'    => $this->session->data['order_id'],
+					'customer_id' => $this->customer->getId(),
+					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+				);
+			
+				$this->model_account_activity->addActivity('account_order', $activity_data);
 			} else {
-				$this->model_account_activity->addActivity(sprintf($this->language->get('text_activity_guest'), $this->session->data['guest']['firstname'] . ' ' . $this->session->data['guest']['lastname'], $this->session->data['order_id']));
+				$activity_data = array(
+					'order_id' => $this->session->data['order_id'],
+					'name'     => $this->session->data['guest']['firstname'] . ' ' . $this->session->data['guest']['lastname']
+				);
+				
+				$this->model_account_activity->addActivity('guest_order', $activity_data);
 			}	
 			
 			unset($this->session->data['shipping_method']);

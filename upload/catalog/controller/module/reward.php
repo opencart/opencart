@@ -1,8 +1,6 @@
 <?php
 class ControllerModuleReward extends Controller {
 	public function index() {
-		$data = array();
-		
 		$this->load->language('module/reward');
 					
 		$points = $this->customer->getRewardPoints();

@@ -1,8 +1,6 @@
 <?php   
 class ControllerModuleStore extends Controller {
 	public function index() {
-		$data = array();
-		
 		$status = true;
 		
 		if ($this->config->get('store_admin')) {

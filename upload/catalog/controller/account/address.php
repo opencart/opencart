@@ -39,7 +39,12 @@ class ControllerAccountAddress extends Controller {
 			// Add to activity log
 			$this->load->model('account/activity');
 			
-			$this->model_account_activity->addActivity('account_address_add', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
+			$activity_data = array(
+				'customer_id' => $this->customer->getId(),
+				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+			);
+						
+			$this->model_account_activity->addActivity('address_add',$activity_data);
 	  		
 			$this->response->redirect($this->url->link('account/address', '', 'SSL'));
     	} 
@@ -84,7 +89,12 @@ class ControllerAccountAddress extends Controller {
 			// Add to activity log
 			$this->load->model('account/activity');
 			
-			$this->model_account_activity->addActivity('account_address_edit', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
+			$activity_data = array(
+				'customer_id' => $this->customer->getId(),
+				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+			);
+						
+			$this->model_account_activity->addActivity('address_edit', $activity_data);
 	  
 	  		$this->response->redirect($this->url->link('account/address', '', 'SSL'));
     	} 
@@ -127,7 +137,12 @@ class ControllerAccountAddress extends Controller {
 			// Add to activity log
 			$this->load->model('account/activity');
 			
-			$this->model_account_activity->addActivity('account_address_delete', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName());
+			$activity_data = array(
+				'customer_id' => $this->customer->getId(),
+				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+			);
+						
+			$this->model_account_activity->addActivity('address_delete', $activity_data);
 	  
 	  		$this->response->redirect($this->url->link('account/address', '', 'SSL'));
     	}
@@ -136,8 +151,6 @@ class ControllerAccountAddress extends Controller {
   	}
 
   	protected function getList() {
-		$data = array();
-		
       	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
@@ -240,8 +253,6 @@ class ControllerAccountAddress extends Controller {
   	}
 
   	protected function getForm() {
-		$data = array();
-		
       	$data['breadcrumbs'] = array();
 
       	$data['breadcrumbs'][] = array(

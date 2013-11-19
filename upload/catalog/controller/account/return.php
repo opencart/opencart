@@ -285,19 +285,27 @@ class ControllerAccountReturn extends Controller {
 			$this->load->model('account/activity');
 
 			if ($this->customer->isLogged()) {
-				$this->model_account_activity->addActivity('account_return_account', $this->customer->getId(), $this->customer->getFirstName(), $this->customer->getLastName(), $return_id);
+				$activity_data = array(
+					'return_id'   => $return_id,
+					'customer_id' => $this->customer->getId(),
+					'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+				);
+							
+				$this->model_account_activity->addActivity('return_account', $activity_data);
 			} else {
-				$this->model_account_activity->addActivity('account_return_guest', $this->request->post['firstname'] . ' ' . $this->request->post['lastname'], $return_id);
+				$activity_data = array(
+					'return_id'   => $return_id,
+					'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
+				);
+								
+				$this->model_account_activity->addActivity('return_guest', $activity_data);
 			}
 			
 			$this->response->redirect($this->url->link('account/return/success', '', 'SSL'));
     	} 
 							
 		$this->document->setTitle($this->language->get('heading_title'));
-		
-		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
-	  		
+			  		
       	$data['breadcrumbs'] = array();
 
       	$data['breadcrumbs'][] = array(

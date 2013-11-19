@@ -96,7 +96,8 @@ DROP TABLE IF EXISTS `oc_affiliate_activity`;
 CREATE TABLE `oc_affiliate_activity` (
   `activity_id` int(11) NOT NULL AUTO_INCREMENT,
   `affiliate_id` int(11) NOT NULL,
-  `comment` text NOT NULL,
+  `key` text NOT NULL,
+  `data` text NOT NULL,
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`activity_id`)
@@ -1058,7 +1059,8 @@ DROP TABLE IF EXISTS `oc_customer_activity`;
 CREATE TABLE `oc_customer_activity` (
   `activity_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `comment` text NOT NULL,
+  `key` text NOT NULL,
+  `data` text NOT NULL,
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
   PRIMARY KEY (`activity_id`)
@@ -1066,28 +1068,6 @@ CREATE TABLE `oc_customer_activity` (
 
 --
 -- Dumping data for table `oc_customer_activity`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_customer_field`
---
-
-DROP TABLE IF EXISTS `oc_customer_field`;
-CREATE TABLE `oc_customer_field` (
-  `customer_field_id` int(11) NOT NULL,
-  `customer_id` int(11) NOT NULL,
-  `custom_field_id` int(11) NOT NULL,
-  `custom_field_value_id` int(11) NOT NULL,
-  `name` int(128) NOT NULL,
-  `value` text NOT NULL,
-  `sort_order` int(3) NOT NULL,
-  PRIMARY KEY (`customer_field_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_customer_field`
 --
 
 -- --------------------------------------------------------
@@ -2153,28 +2133,6 @@ CREATE TABLE `oc_order_fraud` (
   `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `order_field`
---
-
-DROP TABLE IF EXISTS `oc_order_field`;
-CREATE TABLE `oc_order_field` (
-  `order_field_id` int(11) NOT NULL,
-  `order_id` int(11) NOT NULL,
-  `custom_field_id` int(11) NOT NULL,
-  `custom_field_value_id` int(11) NOT NULL,
-  `name` int(128) NOT NULL,
-  `value` text NOT NULL,
-  `sort_order` int(3) NOT NULL,
-  PRIMARY KEY (`order_field_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_order_field`
---
 
 -- --------------------------------------------------------
 

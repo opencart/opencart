@@ -1,8 +1,6 @@
 <?php   
 class ControllerCommonHeader extends Controller {
 	public function index() {
-		$data = array();
-		
 		$data['title'] = $this->document->getTitle();
 		
 		if ($this->request->server['HTTPS']) {

@@ -212,8 +212,6 @@ class ModelOpenbayOpenbay extends Model {
 					$this->model_openbay_amazon_patch->runPatch(false);
 					$this->load->model('openbay/amazonus_patch');
 					$this->model_openbay_amazonus_patch->runPatch(false);
-					$this->load->model('openbay/play_patch');
-					$this->model_openbay_play_patch->runPatch(false);
 
 					/**
 					 * File remove operation (clean up old files)
@@ -489,10 +487,6 @@ class ModelOpenbayOpenbay extends Model {
 			);
 		}
 
-		if ($data['filter_market_name'] == 'play') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "play_product_insert` `play` ON (`p`.`product_id` = `play`.`product_id`)";
-		}
-
 		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_category'])) {
@@ -520,14 +514,6 @@ class ModelOpenbayOpenbay extends Model {
 				$sql .= " AND apl.id IS NULL";
 			} else {
 				$sql .= " AND FIND_IN_SET('" . $this->db->escape($amazon_status[$data['filter_market_id']]) . "', ap.`status`) != 0";
-			}
-		}
-
-		if ($data['filter_market_name'] == 'play') {
-			if ($data['filter_market_id'] == 0) {
-				$sql .= " AND play.play_product_insert_id IS NULL";
-			} else {
-				$sql .= " AND play.status = '" . (int)$data['filter_market_id'] . "'";
 			}
 		}
 
@@ -621,10 +607,6 @@ class ModelOpenbayOpenbay extends Model {
 			);
 		}
 
-		if ($data['filter_market_name'] == 'play') {
-			$sql .= " LEFT JOIN `" . DB_PREFIX . "play_product_insert` `play` ON (`p`.`product_id` = `play`.`product_id`)";
-		}
-
 		$sql .= " WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 
 		if (!empty($data['filter_category'])) {
@@ -664,14 +646,6 @@ class ModelOpenbayOpenbay extends Model {
 				$sql .= " AND apl.id IS NULL";
 			} else {
 				$sql .= " AND FIND_IN_SET('" . $this->db->escape($amazonus_status[$data['filter_market_id']]) . "', ap.`status`) != 0";
-			}
-		}
-
-		if ($data['filter_market_name'] == 'play') {
-			if ($data['filter_market_id'] == 0) {
-				$sql .= " AND play.play_product_insert_id IS NULL";
-			} else {
-				$sql .= " AND play.status = '" . (int)$data['filter_market_id'] . "'";
 			}
 		}
 

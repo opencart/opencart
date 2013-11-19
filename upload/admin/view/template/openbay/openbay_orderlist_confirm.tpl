@@ -47,9 +47,8 @@
                     <td class="left"><?php echo $order['date_added']; ?></td>
                     <td class="left">
 <?php
-                      if($order['channel'] == 'eBay'){
-                        //shipping info
-                        if($this->request->post['change_order_status_id'] == $this->config->get('EBAY_DEF_SHIPPED_ID')){
+                      if($order['channel'] == 'eBay') {
+                        if($this->request->post['change_order_status_id'] == $this->config->get('EBAY_DEF_SHIPPED_ID')) {
 ?>
                             <p>
                                 <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>
@@ -64,9 +63,9 @@
                         }
                       }
 
-                      if($order['channel'] == 'Amazon'){
+                      if($order['channel'] == 'Amazon') {
                         //shipping info
-                        if($this->request->post['change_order_status_id'] == $this->config->get('openbay_amazon_order_status_shipped')){
+                        if($this->request->post['change_order_status_id'] == $this->config->get('openbay_amazon_order_status_shipped')) {
 ?>
                         <p>
                             <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>
@@ -89,9 +88,8 @@
                         }
                       }
                       
-                      if($order['channel'] == 'Amazonus'){
-                        //shipping info
-                        if($this->request->post['change_order_status_id'] == $this->config->get('openbay_amazonus_order_status_shipped')){
+                      if($order['channel'] == 'Amazonus') {
+                        if($this->request->post['change_order_status_id'] == $this->config->get('openbay_amazonus_order_status_shipped')) {
 ?>
                         <p>
                             <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>
@@ -110,43 +108,6 @@
                             <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_tracking; ?>:</span>
                             <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="">
                         </p>
-<?php
-                        }
-                      }
-                      
-                      
-
-                      if($order['channel'] == 'Play'){
-                        //shipping info
-                        if($this->request->post['change_order_status_id'] == $this->config->get('obp_play_shipped_id')){
-?>
-                        <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>
-                            <select name="carrier[<?php echo $order['order_id']; ?>]">
-                                <?php foreach($market_options['play']['carriers'] as $id => $carrier){ ?>
-                                    <option value="<?php echo $id; ?>"><?php echo $carrier; ?></option>
-                                <?php } ?>
-                            </select>
-                        </p>
-
-                        <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_tracking; ?>:</span>
-                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="none" class="play_tracking_no">
-
-<?php
-                        }
-
-                        //refund info
-                        if($this->request->post['change_order_status_id'] == $this->config->get('obp_play_refunded_id')){
-?>
-                        <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_refund_reason; ?>:</span>
-                            <select name="refund_reason[<?php echo $order['order_id']; ?>]">
-                                <?php foreach($refund_reason as $id => $reason){ ?>
-                                    <option value="<?php echo $id; ?>" ><?php echo $reason; ?></option>
-                                <?php } ?>
-                            </select>
-
-                        <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_refund_message; ?>:</span>
-                            <input type="text" name="refund_message[<?php echo $order['order_id']; ?>]" value="" class="play_refund_reason">
 <?php
                         }
                       }
@@ -170,7 +131,7 @@
   </div>
 </div>
 
-<script>
+<script type="text/javascript"><!--
     function notifyAll(){
         var valChecked = $('#notify_all').prop('checked');
 
@@ -184,26 +145,8 @@
     function validate(){
         var element_id;
         var error = false;
-        var errorPlayRefund = false;
-        var errorPlayTracking = false;
         var errorAmazonCarrier = false;
         var errorAmazonusCarrier = false;
-
-        $.each($('.play_refund_reason'), function(k,v){
-            if($(this).val() == ''){
-                error = true;
-                errorPlayRefund = true;
-                $(this).css('border-color','#FF0000');
-            }
-        });
-
-        $.each($('.play_tracking_no'), function(k,v){
-            if($(this).val() == ''){
-                error = true;
-                errorPlayTracking = true;
-                $(this).css('border-color','#FF0000');
-            }
-        });
 
         $.each($('.amazon_carrier'), function(k,v){
             if($(this).val() == 'other'){
@@ -229,14 +172,6 @@
             }
         });
 
-        if(errorPlayRefund == true){
-            alert('<?php echo $lang_e_ajax_1; ?>');
-        }
-
-        if(errorPlayTracking == true){
-            alert('<?php echo $lang_e_ajax_2; ?>');
-        }
-
         if(errorAmazonCarrier == true){
             alert('<?php echo $lang_e_ajax_3; ?>');
         }
@@ -251,6 +186,6 @@
             return false;
         }
     }
-</script>
+//--></script>
 
 <?php echo $footer; ?>

@@ -6,7 +6,6 @@ final class Openbay {
 	public function __construct($registry) {
 		$this->registry = $registry;
 		$this->ebay = new Ebay($registry);
-		$this->play = new Play($registry);
 		$this->amazon = new Amazon($registry);
 		$this->amazonus = new Amazonus($registry);
 	}
@@ -38,11 +37,6 @@ final class Openbay {
 			$this->amazonus->orderNew($orderId);
 		}
 
-		// Play.com Module
-		if ($this->config->get('play_status') == 1) {
-			$this->play->orderNew($orderId);
-		}
-
 		/**
 		 * If a 3rd party module needs to be notified about a new order
 		 * so it can update the stock then they should add a method to their
@@ -72,11 +66,6 @@ final class Openbay {
 		if ($this->config->get('amazonus_status') == 1) {
 			$this->amazonus->productUpdateListen($productId, $data);
 		}
-
-		// Play.com Module
-		if ($this->config->get('play_status') == 1) {
-			$this->play->productUpdateListen($productId, $data);
-		}
 	}
 
 	public function putStockUpdateBulk($productIdArray, $endInactive = false) {
@@ -101,11 +90,6 @@ final class Openbay {
 		// Amazon US Module
 		if ($this->config->get('amazonus_status') == 1) {
 			$this->amazonus->putStockUpdateBulk($productIdArray, $endInactive);
-		}
-
-		// Play.com Module
-		if ($this->config->get('play_status') == 1) {
-			$this->play->putStockUpdateBulk($productIdArray, $endInactive);
 		}
 	}
 
@@ -306,11 +290,6 @@ final class Openbay {
 		if ($this->config->get('amazonus_status') == 1) {
 			$this->amazonus->deleteProduct($product_id);
 		}
-
-		// Play.com Module
-		if ($this->config->get('play_status') == 1) {
-			$this->play->deleteProduct($product_id);
-		}
 	}
 
 	public function deleteOrder($order_id) {
@@ -330,11 +309,6 @@ final class Openbay {
 		// Amazon US Module
 		if ($this->config->get('amazonus_status') == 1) {
 			$this->amazonus->deleteOrder($order_id);
-		}
-
-		// Play.com Module
-		if ($this->config->get('play_status') == 1) {
-			$this->play->deleteOrder($order_id);
 		}
 	}
 

@@ -233,7 +233,7 @@ class ModelEbayOrder extends Model{
 				$message .= $language->get('text_update_footer');
 
 				$message .= "\n\n";
-				$message .= 'eBay, Amazon and Play.com order management - http://www.openbaypro.com/';
+				$message .= 'eBay and Amazon order management - http://www.openbaypro.com/';
 
 				$mail = new Mail();
 				$mail->protocol = $this->config->get('config_mail_protocol');
@@ -323,7 +323,7 @@ class ModelEbayOrder extends Model{
 				if($this->config->get('openbaypro_email_brand_disable') == 1) {
 					$template->data['text_powered'] = '';
 				}else{
-					$template->data['text_powered'] = '<a href="http://www.openbaypro.com/">OpenBay Pro - eBay, Amazon and Play.com order management for OpenCart</a>.';
+					$template->data['text_powered'] = '<a href="http://www.openbaypro.com/">OpenBay Pro - eBay and Amazon order management for OpenCart</a>.';
 				}
 
 				$template->data['logo'] = HTTPS_SERVER .'image/' . $this->config->get('config_logo');

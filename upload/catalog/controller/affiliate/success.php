@@ -24,8 +24,12 @@ class ControllerAffiliateSuccess extends Controller {
 
     	$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
-		
+		if (!$this->config('config_affiliate_approval')) {
+    		$data['text_message'] = sprintf($this->language->get('text_message'), $this->config->get('config_name'), $this->url->link('information/contact'));
+		} else {
+			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
+		}
+				
     	$data['button_continue'] = $this->language->get('button_continue');
 		
 		$data['continue'] = $this->url->link('affiliate/account', '', 'SSL');

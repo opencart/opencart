@@ -3125,7 +3125,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (99, 0, 'config', 'config_tax_customer', 'shipping', 0),
 (100, 0, 'config', 'config_tax_default', 'shipping', 0),
 (101, 0, 'config', 'config_limit_admin', '20', 0),
-(102, 0, 'config', 'config_limit_catalog', '15', 0),
+(102, 0, 'config', 'config_product_limit', '15', 0),
 (103, 0, 'free_checkout', 'free_checkout_status', '1', 0),
 (104, 0, 'free_checkout', 'free_checkout_order_status_id', '1', 0),
 (105, 0, 'config', 'config_weight_class_id', '1', 0),

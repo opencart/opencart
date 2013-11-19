@@ -14,7 +14,7 @@ class ControllerAffiliateRegister extends Controller {
 		$this->load->model('affiliate/affiliate');
 		
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_affiliate_affiliate->addAffiliate($this->request->post);
+			$affiliate_id = $this->model_affiliate_affiliate->addAffiliate($this->request->post);
 
 			$this->affiliate->login($this->request->post['email'], $this->request->post['password']);
 
@@ -22,8 +22,8 @@ class ControllerAffiliateRegister extends Controller {
 			$this->load->model('affiliate/activity');
 			
 			$activity_data = array(
-				'affiliate_id' => $this->affiliate->getId(),
-				'name'         => $this->affiliate->getFirstName() . ' ' . $this->affiliate->getLastName()
+				'affiliate_id' => $affiliate_id,
+				'name'         => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
 			);
 						
 			$this->model_affiliate_activity->addActivity('register', $activity_data);

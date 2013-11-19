@@ -311,12 +311,12 @@
                   <span class="help-block"><?php echo $help_product_count; ?></span></div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_limit_catalog; ?></label>
+                <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_product_limit; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_limit_catalog" value="<?php echo $config_limit_catalog; ?>" placeholder="<?php echo $entry_limit_catalog; ?>" id="input-catalog-limit" class="form-control" />
-                  <span class="help-block"><?php echo $help_limit_catalog; ?></span>
-                  <?php if ($error_limit_catalog) { ?>
-                  <div class="text-danger"><?php echo $error_limit_catalog; ?></div>
+                  <input type="text" name="config_product_limit" value="<?php echo $config_product_limit; ?>" placeholder="<?php echo $entry_product_limit; ?>" id="input-catalog-limit" class="form-control" />
+                  <span class="help-block"><?php echo $help_product_limit; ?></span>
+                  <?php if ($error_product_limit) { ?>
+                  <div class="text-danger"><?php echo $error_product_limit; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -410,6 +410,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
+                   <span class="help-block"><?php echo $help_review_mail; ?></span>
                 </div>
               </div>
             </fieldset>
@@ -837,27 +838,27 @@
             <fieldset>
               <legend><?php echo $text_affiliate; ?></legend>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_affiliate_approve; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_affiliate_approval; ?></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
-                    <?php if ($config_affiliate_approve) { ?>
-                    <input type="radio" name="config_affiliate_approve" value="1" checked="checked" />
+                    <?php if ($config_affiliate_approval) { ?>
+                    <input type="radio" name="config_affiliate_approval" value="1" checked="checked" />
                     <?php echo $text_yes; ?>
                     <?php } else { ?>
-                    <input type="radio" name="config_affiliate_approve" value="1" />
+                    <input type="radio" name="config_affiliate_approval" value="1" />
                     <?php echo $text_yes; ?>
                     <?php } ?>
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$config_affiliate_approve) { ?>
-                    <input type="radio" name="config_affiliate_approve" value="0" checked="checked" />
+                    <?php if (!$config_affiliate_approval) { ?>
+                    <input type="radio" name="config_affiliate_approval" value="0" checked="checked" />
                     <?php echo $text_no; ?>
                     <?php } else { ?>
-                    <input type="radio" name="config_affiliate_approve" value="0" />
+                    <input type="radio" name="config_affiliate_approval" value="0" />
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <span class="help-block"><?php echo $help_affiliate_approve; ?></span></div>
+                  <span class="help-block"><?php echo $help_affiliate_approval; ?></span></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_affiliate_auto; ?></label>
@@ -901,8 +902,32 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $help_affiliate; ?></span> </div>
+                  <span class="help-block"><?php echo $help_affiliate; ?></span></div>
               </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_affiliate_mail; ?></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($config_affiliate_mail) { ?>
+                    <input type="radio" name="config_affiliate_mail" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_affiliate_mail" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if (!$config_affiliate_mail) { ?>
+                    <input type="radio" name="config_affiliate_mail" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_affiliate_mail" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_affiliate_mail; ?></span>
+                </div>
+              </div>              
             </fieldset>
             <fieldset>
               <legend><?php echo $text_return; ?></legend>

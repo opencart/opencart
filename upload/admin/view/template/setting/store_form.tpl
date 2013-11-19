@@ -203,12 +203,12 @@
             <fieldset>
               <legend><?php echo $text_items; ?></legend>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_limit_catalog; ?></label>
+                <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_product_limit; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_limit_catalog" value="<?php echo $config_limit_catalog; ?>" placeholder="<?php echo $entry_limit_catalog; ?>" id="input-catalog-limit" class="form-control" />
-                  <span class="help-block"><?php echo $help_limit_catalog; ?></span>
-                  <?php if ($error_limit_catalog) { ?>
-                  <div class="text-danger"><?php echo $error_limit_catalog; ?></div>
+                  <input type="text" name="config_product_limit" value="<?php echo $config_product_limit; ?>" placeholder="<?php echo $entry_product_limit; ?>" id="input-catalog-limit" class="form-control" />
+                  <span class="help-block"><?php echo $help_product_limit; ?></span>
+                  <?php if ($error_product_limit) { ?>
+                  <div class="text-danger"><?php echo $error_product_limit; ?></div>
                   <?php } ?>
                 </div>
               </div>

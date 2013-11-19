@@ -30,7 +30,7 @@ class ControllerProductSpecial extends Controller {
 		if (isset($this->request->get['limit'])) {
 			$limit = $this->request->get['limit'];
 		} else {
-			$limit = $this->config->get('config_limit_catalog');
+			$limit = $this->config->get('config_product_limit');
 		}
 				    	
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -220,7 +220,7 @@ class ControllerProductSpecial extends Controller {
 									
 		$data['limits'] = array();
 
-		$limits = array_unique(array($this->config->get('config_limit_catalog'), 25, 50, 75, 100));
+		$limits = array_unique(array($this->config->get('config_product_limit'), 25, 50, 75, 100));
 		
 		sort($limits);
 

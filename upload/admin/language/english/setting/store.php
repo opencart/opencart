@@ -34,7 +34,7 @@ $_['entry_country']                    = 'Country';
 $_['entry_zone']                       = 'Region / State';
 $_['entry_language']                   = 'Language';
 $_['entry_currency']                   = 'Currency';
-$_['entry_limit_catalog'] 	           = 'Default Items Per Page (Catalog)';
+$_['entry_product_limit'] 	           = 'Default Items Per Page (Catalog)';
 $_['entry_product_description_length'] = 'List Description Limit (Catalog';
 $_['entry_tax']                        = 'Display Prices With Tax';
 $_['entry_tax_default']                = 'Use Store Tax Address';
@@ -68,7 +68,7 @@ $_['entry_secure']                     = 'Use SSL';
 // Help
 $_['help_url']                         = 'Include the full URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
 $_['help_ssl']                         = 'SSL URL to your store. Make sure to add \'/\' at the end. Example: http://www.yourdomain.com/path/<br /><br />Don\'t use directories to create a new store. You should always point another domain or sub domain to your hosting.';
-$_['help_limit_catalog'] 	           = 'Determines how many catalog items are shown per page (products, categories, etc)';
+$_['help_product_limit'] 	           = 'Determines how many catalog items are shown per page (products, categories, etc)';
 $_['help_product_description_length']  = 'In the list view, short description character limit (categories, special etc)';
 $_['help_tax_default']                 = 'Use the store address to calculate taxes if no one is logged in. You can choose to use the store address for the customers shipping or payment address.';
 $_['help_tax_customer']                = 'Use the customers default address when they login to calculate taxes. You can choose to use the default address for the customers shipping or payment address.';

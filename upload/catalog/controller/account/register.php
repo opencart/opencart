@@ -14,7 +14,7 @@ class ControllerAccountRegister extends Controller {
 		$this->load->model('account/customer');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_account_customer->addCustomer($this->request->post);
+			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 
 			$this->customer->login($this->request->post['email'], $this->request->post['password']);
 
@@ -36,8 +36,8 @@ class ControllerAccountRegister extends Controller {
 			$this->load->model('account/activity');
 			
 			$activity_data = array(
-				'customer_id' => $this->customer->getId(),
-				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+				'customer_id' => $customer_id,
+				'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
 			);
 			
 			$this->model_account_activity->addActivity('register', $activity_data);
@@ -387,7 +387,6 @@ class ControllerAccountRegister extends Controller {
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
-
 
 		if ((utf8_strlen($this->request->post['address_1']) < 3) || (utf8_strlen($this->request->post['address_1']) > 128)) {
 			$this->error['address_1'] = $this->language->get('error_address_1');

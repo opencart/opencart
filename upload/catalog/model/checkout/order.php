@@ -224,9 +224,17 @@ class ModelCheckoutOrder extends Model {
 				$this->db->query("UPDATE " . DB_PREFIX . "order_voucher SET voucher_id = '" . (int)$voucher_id . "' WHERE order_voucher_id = '" . (int)$order_voucher['order_voucher_id'] . "'");
 			}			
 			
-			// Send out any gift voucher mails
+			// If order status hits complete
 			if ($this->config->get('config_complete_status_id') == $order_status_id) {
+				// Send out any gift voucher mails
 				$this->model_checkout_voucher->confirm($order_id);
+				
+				// Add commission if sale is linked to affiliate referral.
+				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
+					$this->load->model('affiliate/affiliate');
+					
+					$this->model_affiliate_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_info['commission'], $order_id);
+				}
 			}
 					
 			// Order Totals			
@@ -618,6 +626,13 @@ class ModelCheckoutOrder extends Model {
 				$this->load->model('checkout/voucher');
 	
 				$this->model_checkout_voucher->confirm($order_id);
+				
+				// Add commission if sale is linked to affiliate referral.
+				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
+					$this->load->model('affiliate/affiliate');
+					
+					$this->model_affiliate_affiliate->addTransaction($order_info['affiliate_id'], $order_info['commission'], $order_id);
+				}				
 			}	
 	
 			if ($notify) {

@@ -233,7 +233,7 @@ class ModelCheckoutOrder extends Model {
 				if ($order_info['affiliate_id'] && $this->config->get('config_affiliate_auto')) {
 					$this->load->model('affiliate/affiliate');
 					
-					$this->model_affiliate_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_info['commission'], $order_id);
+					$this->model_affiliate_affiliate->addTransaction($order_info['affiliate_id'], $order_info['commission'], $order_id);
 				}
 			}
 					

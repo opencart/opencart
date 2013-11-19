@@ -137,5 +137,11 @@ class ModelAffiliateAffiliate extends Model {
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 		}
+	}
+			
+	public function getTransactionTotal($affiliate_id) {
+		$query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "affiliate_transaction WHERE affiliate_id = '" . (int)$affiliate_id . "'");
+	
+		return $query->row['total'];
 	}	
 }

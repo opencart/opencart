@@ -8,7 +8,7 @@
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
+  </div> 
   <?php } ?>
   <?php if ($success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
@@ -124,11 +124,11 @@
           </div>
           <div class="tab-pane" id="tab-store">
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-title"><?php echo $entry_title; ?></label>
+              <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_title" value="<?php echo $config_title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" class="form-control" />
-                <?php if ($error_title) { ?>
-                <div class="text-danger"><?php echo $error_title; ?></div>
+                <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
+                <?php if ($error_meta_title) { ?>
+                <div class="text-danger"><?php echo $error_meta_title; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -253,7 +253,7 @@
                   <?php echo $text_no; ?>
                   <?php } ?>
                 </label>
-                <span class="help-block"><?php echo $help_currency_auto; ?></span> </div>
+                <span class="help-block"><?php echo $help_currency_auto; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-length-class"><?php echo $entry_length_class; ?></label>
@@ -286,39 +286,6 @@
           </div>
           <div class="tab-pane" id="tab-option">
             <fieldset>
-              <legend><?php echo $text_items; ?></legend>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_catalog_limit; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" id="input-catalog-limit" class="form-control" />
-                  <span class="help-block"><?php echo $help_catalog_limit; ?></span>
-                  <?php if ($error_catalog_limit) { ?>
-                  <div class="text-danger"><?php echo $error_catalog_limit; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-list-description-limit"><?php echo $entry_list_description_limit; ?> </label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" id="input-list-description-limit" class="form-control" />
-                  <span class="help-block"><?php echo $help_list_description_limit; ?></span>
-                  <?php if ($error_list_description_limit) { ?>
-                  <div class="text-danger"><?php echo $error_list_description_limit; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-              <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-admin-limit"><?php echo $entry_admin_limit; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_admin_limit" value="<?php echo $config_admin_limit; ?>" placeholder="<?php echo $entry_admin_limit; ?>" id="input-admin-limit" class="form-control" />
-                  <span class="help-block"><?php echo $help_admin_limit; ?></span>
-                  <?php if ($error_admin_limit) { ?>
-                  <div class="text-danger"><?php echo $error_admin_limit; ?></div>
-                  <?php } ?>
-                </div>
-              </div>
-            </fieldset>
-            <fieldset>
               <legend><?php echo $text_product; ?></legend>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_product_count; ?></label>
@@ -343,6 +310,39 @@
                   </label>
                   <span class="help-block"><?php echo $help_product_count; ?></span></div>
               </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_limit_catalog; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_limit_catalog" value="<?php echo $config_limit_catalog; ?>" placeholder="<?php echo $entry_limit_catalog; ?>" id="input-catalog-limit" class="form-control" />
+                  <span class="help-block"><?php echo $help_limit_catalog; ?></span>
+                  <?php if ($error_limit_catalog) { ?>
+                  <div class="text-danger"><?php echo $error_limit_catalog; ?></div>
+                  <?php } ?>
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-list-description-limit"><?php echo $entry_product_description_length; ?> </label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_product_description_length" value="<?php echo $config_product_description_length; ?>" placeholder="<?php echo $entry_product_description_length; ?>" id="input-list-description-limit" class="form-control" />
+                  <span class="help-block"><?php echo $help_product_description_length; ?></span>
+                  <?php if ($error_product_description_length) { ?>
+                  <div class="text-danger"><?php echo $error_product_description_length; ?></div>
+                  <?php } ?>
+                </div>
+              </div>
+              <div class="form-group required">
+                <label class="col-sm-2 control-label" for="input-admin-limit"><?php echo $entry_limit_admin; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_limit_admin" value="<?php echo $config_limit_admin; ?>" placeholder="<?php echo $entry_limit_admin; ?>" id="input-admin-limit" class="form-control" />
+                  <span class="help-block"><?php echo $help_limit_admin; ?></span>
+                  <?php if ($error_limit_admin) { ?>
+                  <div class="text-danger"><?php echo $error_limit_admin; ?></div>
+                  <?php } ?>
+                </div>
+              </div>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_review; ?></legend>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_review; ?></label>
                 <div class="col-sm-10">
@@ -367,27 +367,50 @@
                   <span class="help-block"><?php echo $help_review; ?></span></div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_guest_review; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_review_guest; ?></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
-                    <?php if ($config_guest_review) { ?>
-                    <input type="radio" name="config_guest_review" value="1" checked="checked" />
+                    <?php if ($config_review_guest) { ?>
+                    <input type="radio" name="config_review_guest" value="1" checked="checked" />
                     <?php echo $text_yes; ?>
                     <?php } else { ?>
-                    <input type="radio" name="config_guest_review" value="1" />
+                    <input type="radio" name="config_review_guest" value="1" />
                     <?php echo $text_yes; ?>
                     <?php } ?>
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$config_guest_review) { ?>
-                    <input type="radio" name="config_guest_review" value="0" checked="checked" />
+                    <?php if (!$config_review_guest) { ?>
+                    <input type="radio" name="config_review_guest" value="0" checked="checked" />
                     <?php echo $text_no; ?>
                     <?php } else { ?>
-                    <input type="radio" name="config_guest_review" value="0" />
+                    <input type="radio" name="config_review_guest" value="0" />
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <span class="help-block"><?php echo $help_guest_review; ?></span> </div>
+                  <span class="help-block"><?php echo $help_review_guest; ?></span> </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_review_mail; ?></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($config_review_mail) { ?>
+                    <input type="radio" name="config_review_mail" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_review_mail" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if (!$config_review_mail) { ?>
+                    <input type="radio" name="config_review_mail" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_review_mail" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                </div>
               </div>
             </fieldset>
             <fieldset>
@@ -574,6 +597,29 @@
                   </select>
                   <span class="help-block"><?php echo $help_account; ?></span> </div>
               </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_account_mail; ?></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($config_account_mail) { ?>
+                    <input type="radio" name="config_account_mail" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_account_mail" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if (!$config_account_mail) { ?>
+                    <input type="radio" name="config_account_mail" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_account_mail" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_account_mail; ?></span> </div>
+              </div>
             </fieldset>
             <fieldset>
               <legend><?php echo $text_checkout; ?></legend>
@@ -601,27 +647,27 @@
                   <span class="help-block"><?php echo $help_cart_weight; ?></span> </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_guest_checkout; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_checkout_guest; ?></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
-                    <?php if ($config_guest_checkout) { ?>
-                    <input type="radio" name="config_guest_checkout" value="1" checked="checked" />
+                    <?php if ($config_checkout_guest) { ?>
+                    <input type="radio" name="config_checkout_guest" value="1" checked="checked" />
                     <?php echo $text_yes; ?>
                     <?php } else { ?>
-                    <input type="radio" name="config_guest_checkout" value="1" />
+                    <input type="radio" name="config_checkout_guest" value="1" />
                     <?php echo $text_yes; ?>
                     <?php } ?>
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$config_guest_checkout) { ?>
-                    <input type="radio" name="config_guest_checkout" value="0" checked="checked" />
+                    <?php if (!$config_checkout_guest) { ?>
+                    <input type="radio" name="config_checkout_guest" value="0" checked="checked" />
                     <?php echo $text_no; ?>
                     <?php } else { ?>
-                    <input type="radio" name="config_guest_checkout" value="0" />
+                    <input type="radio" name="config_checkout_guest" value="0" />
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <span class="help-block"><?php echo $help_guest_checkout; ?></span> </div>
+                  <span class="help-block"><?php echo $help_checkout_guest; ?></span> </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-checkout"><?php echo $entry_checkout; ?></label>
@@ -677,6 +723,29 @@
                     <?php } ?>
                   </select>
                   <span class="help-block"><?php echo $help_complete_status; ?></span> </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_order_mail; ?></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($config_order_mail) { ?>
+                    <input type="radio" name="config_order_mail" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_order_mail" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if (!$config_order_mail) { ?>
+                    <input type="radio" name="config_order_mail" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_order_mail" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_order_mail; ?></span> </div>
               </div>
             </fieldset>
             <fieldset>
@@ -768,6 +837,58 @@
             <fieldset>
               <legend><?php echo $text_affiliate; ?></legend>
               <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_affiliate_approve; ?></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($config_affiliate_approve) { ?>
+                    <input type="radio" name="config_affiliate_approve" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_affiliate_approve" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if (!$config_affiliate_approve) { ?>
+                    <input type="radio" name="config_affiliate_approve" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_affiliate_approve" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_affiliate_approve; ?></span></div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_affiliate_auto; ?></label>
+                <div class="col-sm-10">
+                  <label class="radio-inline">
+                    <?php if ($config_stock_checkout) { ?>
+                    <input type="radio" name="config_affiliate_auto" value="1" checked="checked" />
+                    <?php echo $text_yes; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_affiliate_auto" value="1" />
+                    <?php echo $text_yes; ?>
+                    <?php } ?>
+                  </label>
+                  <label class="radio-inline">
+                    <?php if (!$config_stock_checkout) { ?>
+                    <input type="radio" name="config_affiliate_auto" value="0" checked="checked" />
+                    <?php echo $text_no; ?>
+                    <?php } else { ?>
+                    <input type="radio" name="config_affiliate_auto" value="0" />
+                    <?php echo $text_no; ?>
+                    <?php } ?>
+                  </label>
+                  <span class="help-block"><?php echo $help_affiliate_auto; ?></span></div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="input-affiliate-commission"><?php echo $entry_affiliate_commission; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="config_affiliate_commission" value="<?php echo $config_affiliate_commission; ?>" placeholder="<?php echo $entry_affiliate_commission; ?>" id="input-affiliate-commission" class="form-control" />
+                  <span class="help-block"><?php echo $help_affiliate_commission; ?></span> </div>
+              </div>
+              <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
                 <div class="col-sm-10">
                   <select name="config_affiliate_id" id="input-affiliate" class="form-control">
@@ -781,12 +902,6 @@
                     <?php } ?>
                   </select>
                   <span class="help-block"><?php echo $help_affiliate; ?></span> </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-commission"><?php echo $entry_commission; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_commission" value="<?php echo $config_commission; ?>" placeholder="<?php echo $entry_commission; ?>" id="input-commission" class="form-control" />
-                  <span class="help-block"><?php echo $help_commission; ?></span> </div>
               </div>
             </fieldset>
             <fieldset>
@@ -1128,79 +1243,10 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_alert_mail; ?></label>
+              <label class="col-sm-2 control-label" for="input-alert-email"><?php echo $entry_mail_alert; ?></label>
               <div class="col-sm-10">
-                <label class="radio-inline">
-                  <?php if ($config_alert_mail) { ?>
-                  <input type="radio" name="config_alert_mail" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_alert_mail" value="1" />
-                  <?php echo $text_yes; ?>
-                  <?php } ?>
-                </label>
-                <label class="radio-inline">
-                  <?php if (!$config_alert_mail) { ?>
-                  <input type="radio" name="config_alert_mail" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_alert_mail" value="0" />
-                  <?php echo $text_no; ?>
-                  <?php } ?>
-                </label>
-                <span class="help-block"><?php echo $help_alert_mail; ?></span> </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_account_mail; ?></label>
-              <div class="col-sm-10">
-                <label class="radio-inline">
-                  <?php if ($config_account_mail) { ?>
-                  <input type="radio" name="config_account_mail" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_account_mail" value="1" />
-                  <?php echo $text_yes; ?>
-                  <?php } ?>
-                </label>
-                <label class="radio-inline">
-                  <?php if (!$config_account_mail) { ?>
-                  <input type="radio" name="config_account_mail" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_account_mail" value="0" />
-                  <?php echo $text_no; ?>
-                  <?php } ?>
-                </label>
-                <span class="help-block"><?php echo $help_account_mail; ?></span> </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_review_mail; ?></label>
-              <div class="col-sm-10">
-                <label class="radio-inline">
-                  <?php if ($config_review_mail) { ?>
-                  <input type="radio" name="config_review_mail" value="1" checked="checked" />
-                  <?php echo $text_yes; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_review_mail" value="1" />
-                  <?php echo $text_yes; ?>
-                  <?php } ?>
-                </label>
-                <label class="radio-inline">
-                  <?php if (!$config_review_mail) { ?>
-                  <input type="radio" name="config_review_mail" value="0" checked="checked" />
-                  <?php echo $text_no; ?>
-                  <?php } else { ?>
-                  <input type="radio" name="config_review_mail" value="0" />
-                  <?php echo $text_no; ?>
-                  <?php } ?>
-                </label>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-alert-email"><?php echo $entry_alert_emails; ?></label>
-              <div class="col-sm-10">
-                <textarea name="config_alert_emails" rows="5" placeholder="<?php echo $entry_alert_emails; ?>" id="input-alert-email" class="form-control"><?php echo $config_alert_emails; ?></textarea>
-                <span class="help-block"><?php echo $help_alert_emails; ?></span> </div>
+                <textarea name="config_mail_alert" rows="5" placeholder="<?php echo $entry_mail_alert; ?>" id="input-alert-email" class="form-control"><?php echo $config_mail_alert; ?></textarea>
+                <span class="help-block"><?php echo $help_mail_alert; ?></span> </div>
             </div>
           </div>
           <div class="tab-pane" id="tab-fraud">

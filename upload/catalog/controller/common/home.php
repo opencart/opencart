@@ -1,11 +1,9 @@
 <?php  
 class ControllerCommonHome extends Controller {
 	public function index() {
-		$this->document->setTitle($this->config->get('config_title'));
+		$this->document->setTitle($this->config->get('config_meta_title'));
 		$this->document->setDescription($this->config->get('config_meta_description'));
 
-		$data['heading_title'] = $this->config->get('config_title');
-				
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['column_left'] = $this->load->controller('common/column_left');

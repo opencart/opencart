@@ -186,7 +186,7 @@ class ControllerSettingStore extends Controller {
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
 		$data['entry_fax'] = $this->language->get('entry_fax');				
-		$data['entry_title'] = $this->language->get('entry_title');
+		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
 		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_template'] = $this->language->get('entry_template');
@@ -194,8 +194,8 @@ class ControllerSettingStore extends Controller {
 		$data['entry_zone'] = $this->language->get('entry_zone');
 		$data['entry_language'] = $this->language->get('entry_language');
 		$data['entry_currency'] = $this->language->get('entry_currency');
-		$data['entry_catalog_limit'] = $this->language->get('entry_catalog_limit');
-		$data['entry_list_description_limit'] = $this->language->get('entry_list_description_limit');
+		$data['entry_limit_catalog'] = $this->language->get('entry_limit_catalog');
+		$data['entry_product_description_length'] = $this->language->get('entry_product_description_length');
 		$data['entry_tax'] = $this->language->get('entry_tax');
 		$data['entry_tax_default'] = $this->language->get('entry_tax_default');
 		$data['entry_tax_customer'] = $this->language->get('entry_tax_customer');		
@@ -204,7 +204,7 @@ class ControllerSettingStore extends Controller {
 		$data['entry_customer_price'] = $this->language->get('entry_customer_price');
 		$data['entry_account'] = $this->language->get('entry_account');
 		$data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
-		$data['entry_guest_checkout'] = $this->language->get('entry_guest_checkout');
+		$data['entry_checkout_guest'] = $this->language->get('entry_checkout_guest');
 		$data['entry_checkout'] = $this->language->get('entry_checkout');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_stock_display'] = $this->language->get('entry_stock_display');
@@ -228,15 +228,15 @@ class ControllerSettingStore extends Controller {
 		
 		$data['help_url'] = $this->language->get('help_url');
 		$data['help_ssl'] = $this->language->get('help_ssl');
-		$data['help_catalog_limit'] = $this->language->get('help_catalog_limit');
-		$data['help_list_description_limit'] = $this->language->get('help_list_description_limit');
+		$data['help_limit_catalog'] = $this->language->get('help_limit_catalog');
+		$data['help_product_description_length'] = $this->language->get('help_product_description_length');
 		$data['help_tax_default'] = $this->language->get('help_tax_default');
 		$data['help_tax_customer'] = $this->language->get('help_tax_customer');
 		$data['help_customer_group'] = $this->language->get('help_customer_group');
 		$data['help_customer_group_display'] = $this->language->get('help_customer_group_display');
 		$data['help_customer_price'] = $this->language->get('help_customer_price');
 		$data['help_account'] = $this->language->get('help_account');
-		$data['help_guest_checkout'] = $this->language->get('help_guest_checkout');
+		$data['help_checkout_guest'] = $this->language->get('help_checkout_guest');
 		$data['help_checkout'] = $this->language->get('help_checkout');
 		$data['help_order_status'] = $this->language->get('help_order_status');
 		$data['help_stock_display'] = $this->language->get('help_stock_display');
@@ -296,10 +296,10 @@ class ControllerSettingStore extends Controller {
 			$data['error_telephone'] = '';
 		}
 
- 		if (isset($this->error['title'])) {
-			$data['error_title'] = $this->error['title'];
+ 		if (isset($this->error['meta_title'])) {
+			$data['error_meta_title'] = $this->error['meta_title'];
 		} else {
-			$data['error_title'] = '';
+			$data['error_meta_title'] = '';
 		}
 		
   		if (isset($this->error['customer_group_display'])) {
@@ -368,16 +368,16 @@ class ControllerSettingStore extends Controller {
 			$data['error_image_location'] = '';
 		}
 				
-		if (isset($this->error['catalog_limit'])) {
-			$data['error_catalog_limit'] = $this->error['catalog_limit'];
+		if (isset($this->error['limit_catalog'])) {
+			$data['error_limit_catalog'] = $this->error['limit_catalog'];
 		} else {
-			$data['error_catalog_limit'] = '';
+			$data['error_limit_catalog'] = '';
 		}
 		
-		if (isset($this->error['list_description_limit'])) {
-			$data['error_list_description_limit'] = $this->error['list_description_limit'];
+		if (isset($this->error['product_description_length'])) {
+			$data['error_product_description_length'] = $this->error['product_description_length'];
 		} else {
-			$data['error_list_description_limit'] = '';
+			$data['error_product_description_length'] = '';
 		}
 		
   		$data['breadcrumbs'] = array();
@@ -480,12 +480,12 @@ class ControllerSettingStore extends Controller {
 			$data['config_fax'] = '';
 		}
 		
-		if (isset($this->request->post['config_title'])) {
-			$data['config_title'] = $this->request->post['config_title'];
-		} elseif (isset($store_info['config_title'])) {
-			$data['config_title'] = $store_info['config_title'];
+		if (isset($this->request->post['config_meta_title'])) {
+			$data['config_meta_title'] = $this->request->post['config_meta_title'];
+		} elseif (isset($store_info['config_meta_title'])) {
+			$data['config_meta_title'] = $store_info['config_meta_title'];
 		} else {
-			$data['config_title'] = '';
+			$data['config_meta_title'] = '';
 		}
 		
 		if (isset($this->request->post['config_meta_description'])) {
@@ -568,20 +568,20 @@ class ControllerSettingStore extends Controller {
 		
 		$data['currencies'] = $this->model_localisation_currency->getCurrencies();
 		
-		if (isset($this->request->post['config_catalog_limit'])) {
-			$data['config_catalog_limit'] = $this->request->post['config_catalog_limit'];
-		} elseif (isset($store_info['config_catalog_limit'])) {
-			$data['config_catalog_limit'] = $store_info['config_catalog_limit'];	
+		if (isset($this->request->post['config_limit_catalog'])) {
+			$data['config_limit_catalog'] = $this->request->post['config_limit_catalog'];
+		} elseif (isset($store_info['config_limit_catalog'])) {
+			$data['config_limit_catalog'] = $store_info['config_limit_catalog'];	
 		} else {
-			$data['config_catalog_limit'] = '15';
+			$data['config_limit_catalog'] = '15';
 		}	
 		
-		if (isset($this->request->post['config_list_description_limit'])) {
-			$data['config_list_description_limit'] = $this->request->post['config_list_description_limit'];
-		} elseif (isset($store_info['config_list_description_limit'])) {
-			$data['config_list_description_limit'] = $store_info['config_list_description_limit'];	
+		if (isset($this->request->post['config_product_description_length'])) {
+			$data['config_product_description_length'] = $this->request->post['config_product_description_length'];
+		} elseif (isset($store_info['config_product_description_length'])) {
+			$data['config_product_description_length'] = $store_info['config_product_description_length'];	
 		} else {
-			$data['config_list_description_limit'] = '100';
+			$data['config_product_description_length'] = '100';
 		}		
 		
 		if (isset($this->request->post['config_tax'])) {
@@ -656,12 +656,12 @@ class ControllerSettingStore extends Controller {
 			$data['config_cart_weight'] = '';
 		}
 				
-		if (isset($this->request->post['config_guest_checkout'])) {
-			$data['config_guest_checkout'] = $this->request->post['config_guest_checkout'];
-		} elseif (isset($store_info['config_guest_checkout'])) {
-			$data['config_guest_checkout'] = $store_info['config_guest_checkout'];		
+		if (isset($this->request->post['config_checkout_guest'])) {
+			$data['config_checkout_guest'] = $this->request->post['config_checkout_guest'];
+		} elseif (isset($store_info['config_checkout_guest'])) {
+			$data['config_checkout_guest'] = $store_info['config_checkout_guest'];		
 		} else {
-			$data['config_guest_checkout'] = '';
+			$data['config_checkout_guest'] = '';
 		}
 		
 		if (isset($this->request->post['config_checkout_id'])) {
@@ -933,8 +933,8 @@ class ControllerSettingStore extends Controller {
       		$this->error['telephone'] = $this->language->get('error_telephone');
     	}
 		
-		if (!$this->request->post['config_title']) {
-			$this->error['title'] = $this->language->get('error_title');
+		if (!$this->request->post['config_meta_title']) {
+			$this->error['meta_title'] = $this->language->get('error_meta_title');
 		}	
 		
 		if (!empty($this->request->post['config_customer_group_display']) && !in_array($this->request->post['config_customer_group_id'], $this->request->post['config_customer_group_display'])) {
@@ -981,12 +981,12 @@ class ControllerSettingStore extends Controller {
 			$this->error['image_location'] = $this->language->get('error_image_location');
 		}		
 				
-		if (!$this->request->post['config_catalog_limit']) {
-			$this->error['catalog_limit'] = $this->language->get('error_limit');
+		if (!$this->request->post['config_limit_catalog']) {
+			$this->error['limit_catalog'] = $this->language->get('error_limit');
 		}
 		
-		if (!$this->request->post['config_list_description_limit']) {
-			$this->error['list_description_limit'] = $this->language->get('error_limit');
+		if (!$this->request->post['config_product_description_length']) {
+			$this->error['product_description_length'] = $this->language->get('error_limit');
 		}
 		
 		if ($this->error && !isset($this->error['warning'])) {

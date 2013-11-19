@@ -30,7 +30,7 @@ class ControllerProductSpecial extends Controller {
 		if (isset($this->request->get['limit'])) {
 			$limit = $this->request->get['limit'];
 		} else {
-			$limit = $this->config->get('config_catalog_limit');
+			$limit = $this->config->get('config_limit_catalog');
 		}
 				    	
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -135,7 +135,7 @@ class ControllerProductSpecial extends Controller {
 				'product_id'  => $result['product_id'],
 				'thumb'       => $image,
 				'name'        => $result['name'],
-				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
+				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
 				'price'       => $price,
 				'special'     => $special,
 				'tax'         => $tax,
@@ -220,7 +220,7 @@ class ControllerProductSpecial extends Controller {
 									
 		$data['limits'] = array();
 
-		$limits = array_unique(array($this->config->get('config_catalog_limit'), 25, 50, 75, 100));
+		$limits = array_unique(array($this->config->get('config_limit_catalog'), 25, 50, 75, 100));
 		
 		sort($limits);
 

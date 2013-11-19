@@ -51,7 +51,7 @@ class ControllerAffiliateLogin extends Controller {
 				
     	$data['heading_title'] = $this->language->get('heading_title');
 		
-		$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'), $this->config->get('config_name'), $this->config->get('config_commission') . '%');
+		$data['text_description'] = sprintf($this->language->get('text_description'), $this->config->get('config_name'), $this->config->get('config_name'), $this->config->get('config_affiliate_commission') . '%');
 		$data['text_new_affiliate'] = $this->language->get('text_new_affiliate');
 		$data['text_register_account'] = $this->language->get('text_register_account'); 	
 		$data['text_returning_affiliate'] = $this->language->get('text_returning_affiliate');

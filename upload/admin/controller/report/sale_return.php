@@ -78,8 +78,8 @@ class ControllerReportSaleReturn extends Controller {
 			'filter_date_end'	      => $filter_date_end, 
 			'filter_group'            => $filter_group,
 			'filter_return_status_id' => $filter_return_status_id,
-			'start'                   => ($page - 1) * $this->config->get('config_admin_limit'),
-			'limit'                   => $this->config->get('config_admin_limit')
+			'start'                   => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'                   => $this->config->get('config_limit_admin')
 		);
 		
 		$return_total = $this->model_report_return->getTotalReturns($filter_data);
@@ -161,12 +161,12 @@ class ControllerReportSaleReturn extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $return_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_admin_limit');
+		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->url = $this->url->link('report/sale_return', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 			
 		$data['pagination'] = $pagination->render();
 		
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($return_total - $this->config->get('config_admin_limit'))) ? $return_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $return_total, ceil($return_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($return_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($return_total - $this->config->get('config_limit_admin'))) ? $return_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $return_total, ceil($return_total / $this->config->get('config_limit_admin')));
 		
 		$data['filter_date_start'] = $filter_date_start;
 		$data['filter_date_end'] = $filter_date_end;		

@@ -373,10 +373,10 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$data['review_status'] = $this->config->get('config_review_status');
-			if ($this->config->get('config_guest_review') || $this->customer->isLogged()) {
-				$data['guest_review'] = true;
+			if ($this->config->get('config_review_guest') || $this->customer->isLogged()) {
+				$data['review_guest'] = true;
 			} else {
-				$data['guest_review'] = false;
+				$data['review_guest'] = false;
 			}
 			
 			if ($this->customer->isLogged()) {
@@ -429,7 +429,7 @@ class ControllerProductProduct extends Controller {
 					'product_id'  => $result['product_id'],
 					'thumb'   	  => $image,
 					'name'    	  => $result['name'],
-					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_list_description_limit')) . '..',
+					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
 					'price'   	  => $price,
 					'special' 	  => $special,
 					'tax'         => $tax,

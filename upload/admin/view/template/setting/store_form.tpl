@@ -104,11 +104,11 @@
           </div>
           <div class="tab-pane" id="tab-store">
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-title"><?php echo $entry_title; ?></label>
+              <label class="col-sm-2 control-label" for="input-meta-title"><?php echo $entry_meta_title; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_title" value="<?php echo $config_title; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title" class="form-control" />
-                <?php if ($error_title) { ?>
-                <div class="text-danger"><?php echo $error_title; ?></div>
+                <input type="text" name="config_meta_title" value="<?php echo $config_meta_title; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title" class="form-control" />
+                <?php if ($error_meta_title) { ?>
+                <div class="text-danger"><?php echo $error_meta_title; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -203,22 +203,22 @@
             <fieldset>
               <legend><?php echo $text_items; ?></legend>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_catalog_limit; ?></label>
+                <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_limit_catalog; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_catalog_limit" value="<?php echo $config_catalog_limit; ?>" placeholder="<?php echo $entry_catalog_limit; ?>" id="input-catalog-limit" class="form-control" />
-                  <span class="help-block"><?php echo $help_catalog_limit; ?></span>
-                  <?php if ($error_catalog_limit) { ?>
-                  <div class="text-danger"><?php echo $error_catalog_limit; ?></div>
+                  <input type="text" name="config_limit_catalog" value="<?php echo $config_limit_catalog; ?>" placeholder="<?php echo $entry_limit_catalog; ?>" id="input-catalog-limit" class="form-control" />
+                  <span class="help-block"><?php echo $help_limit_catalog; ?></span>
+                  <?php if ($error_limit_catalog) { ?>
+                  <div class="text-danger"><?php echo $error_limit_catalog; ?></div>
                   <?php } ?>
                 </div>
               </div>
               <div class="form-group required">
-                <label class="col-sm-2 control-label" for="input-list-description-limit"><?php echo $entry_list_description_limit; ?></label>
+                <label class="col-sm-2 control-label" for="input-list-description-limit"><?php echo $entry_product_description_length; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_list_description_limit" value="<?php echo $config_list_description_limit; ?>" placeholder="<?php echo $entry_list_description_limit; ?>" id="input-list-description-limit" class="form-control" />
-                  <span class="help-block"><?php echo $help_list_description_limit; ?></span>
-                  <?php if ($error_list_description_limit) { ?>
-                  <div class="text-danger"><?php echo $error_list_description_limit; ?></div>
+                  <input type="text" name="config_product_description_length" value="<?php echo $config_product_description_length; ?>" placeholder="<?php echo $entry_product_description_length; ?>" id="input-list-description-limit" class="form-control" />
+                  <span class="help-block"><?php echo $help_product_description_length; ?></span>
+                  <?php if ($error_product_description_length) { ?>
+                  <div class="text-danger"><?php echo $error_product_description_length; ?></div>
                   <?php } ?>
                 </div>
               </div>
@@ -388,27 +388,27 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_guest_checkout; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $entry_checkout_guest; ?></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
-                    <?php if ($config_guest_checkout) { ?>
-                    <input type="radio" name="config_guest_checkout" value="1" checked="checked" />
+                    <?php if ($config_checkout_guest) { ?>
+                    <input type="radio" name="config_checkout_guest" value="1" checked="checked" />
                     <?php echo $text_yes; ?>
                     <?php } else { ?>
-                    <input type="radio" name="config_guest_checkout" value="1" />
+                    <input type="radio" name="config_checkout_guest" value="1" />
                     <?php echo $text_yes; ?>
                     <?php } ?>
                   </label>
                   <label class="radio-inline">
-                    <?php if (!$config_guest_checkout) { ?>
-                    <input type="radio" name="config_guest_checkout" value="0" checked="checked" />
+                    <?php if (!$config_checkout_guest) { ?>
+                    <input type="radio" name="config_checkout_guest" value="0" checked="checked" />
                     <?php echo $text_no; ?>
                     <?php } else { ?>
-                    <input type="radio" name="config_guest_checkout" value="0" />
+                    <input type="radio" name="config_checkout_guest" value="0" />
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <span class="help-block"><?php echo $help_guest_checkout; ?></span> </div>
+                  <span class="help-block"><?php echo $help_checkout_guest; ?></span> </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-checkout"><?php echo $entry_checkout; ?></label>

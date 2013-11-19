@@ -11,7 +11,7 @@
         <?php } ?>
         <?php echo $text_register; ?></label>
     </div>
-    <?php if ($guest_checkout) { ?>
+    <?php if ($checkout_guest) { ?>
     <div class="radio">
       <label>
         <?php if ($account == 'guest') { ?>

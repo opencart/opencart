@@ -151,7 +151,7 @@ class ControllerCheckoutGuest extends Controller {
 				
 		// If a post request then get a list of all fields that should have been posted for validation checking.
 		if (isset($this->session->data['guest']['customer_group_id'])) {
-			$custom_fields = $this->model_account_custom_field->getCustomFields('guest', $this->session->data['guest']['customer_group_id']);
+			$custom_fields = $this->model_account_custom_field->getCustomFields('register');
 			
 			foreach ($custom_fields as $custom_field) {
 				$data['custom_fields'][] = array(
@@ -351,6 +351,8 @@ class ControllerCheckoutGuest extends Controller {
 	}
 	
 	public function custom_field() {
+		$json = array();
+		
 		$this->load->model('account/custom_field');
 
 		// Customer Group
@@ -359,8 +361,15 @@ class ControllerCheckoutGuest extends Controller {
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
+		
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
 
-		$json = $this->model_account_custom_field->getCustomFields('registration', $customer_group_id);
+		foreach ($custom_fields as $custom_field) {
+			$json[] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'required'        => $custom_field['required']
+			);
+		}
 
 		$this->response->setOutput(json_encode($json));
 	}	

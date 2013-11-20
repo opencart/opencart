@@ -104,11 +104,6 @@
             <thead>
               <tr>
                 <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                <td class="text-left"><?php if ($sort == 'name') { ?>
-                  <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
-                  <?php } ?></td>
                 <td class="text-left"><?php if ($sort == 'c.email') { ?>
                   <a href="<?php echo $sort_email; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_email; ?></a>
                   <?php } else { ?>

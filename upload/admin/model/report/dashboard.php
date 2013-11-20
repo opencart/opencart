@@ -348,7 +348,7 @@ class ModelReportDashboard extends Model {
 	}
 	
 	public function getActivities() { 
-		$query = $this->db->query("SELECT DISTINCT ca.key, ca.data, aa.date_added FROM " . DB_PREFIX . "customer_activity ca, " . DB_PREFIX . "affiliate_activity aa ORDER BY aa.date_added DESC LIMIT 0,10");
+		$query = $this->db->query("(SELECT CONCAT('customer_', ca.key) AS `key`, ca.data, ca.date_added FROM `" . DB_PREFIX . "customer_activity` ca ORDER BY ca.date_added DESC) UNION (SELECT CONCAT('affiliate_', aa.key) AS `key`, aa.data, aa.date_added FROM `" . DB_PREFIX . "affiliate_activity` aa ORDER BY aa.date_added DESC) LIMIT 0,10");
 			
 		return $query->rows;
 	}

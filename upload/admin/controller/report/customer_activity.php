@@ -89,9 +89,18 @@ class ControllerReportCustomerActivity extends Controller {
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));
 			
+			$find = array(
+				'customer_id=',
+				'order_id='
+			);
+			
+			$replace = array(
+				$this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
+				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', 'SSL')
+			);
+						
       		$data['activities'][] = array(
-				'customer'   => $result['customer'],
-				'comment'    => $comment,
+				'comment'    => str_replace($find, $replace, $comment),
 				'ip'         => $result['ip'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
@@ -102,7 +111,6 @@ class ControllerReportCustomerActivity extends Controller {
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 		
-		$data['column_customer'] = $this->language->get('column_customer');
 		$data['column_comment'] = $this->language->get('column_comment');
 		$data['column_ip'] = $this->language->get('column_ip');
 		$data['column_date_added'] = $this->language->get('column_date_added');

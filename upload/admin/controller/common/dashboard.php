@@ -71,12 +71,24 @@ class ControllerCommonDashboard extends Controller {
 		$data['activities'] = array();
 				
 		$results = $this->model_report_dashboard->getActivities();
-    	
+		
 		foreach ($results as $result) {
-			$coment = vsprintf($this->language->get('text_' . $result['key']), unserialize($data));
+			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));
 			
+			$find = array(
+				'customer_id=',
+				'order_id=',
+				'affiliate_id='
+			);
+			
+			$replace = array(
+				$this->url->link('sale/customer/update', 'token=' . $this->session->data['token'] . '&customer_id=', 'SSL'),
+				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', 'SSL'),
+				$this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL')
+			);
+						
       		$data['activities'][] = array(
-				'comment'    => $coment,
+				'comment'    => str_replace($find, $replace, $comment),
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
 		}	

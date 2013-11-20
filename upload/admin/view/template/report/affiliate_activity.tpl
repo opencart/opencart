@@ -39,7 +39,6 @@
         <table class="table table-striped table-bordered">
           <thead>
             <tr>
-              <td class="text-left"><?php echo $column_affiliate; ?></td>
               <td class="text-left"><?php echo $column_comment; ?></td>
               <td class="text-left"><?php echo $column_ip; ?></td>
               <td class="text-left"><?php echo $column_date_added; ?></td>
@@ -49,7 +48,6 @@
             <?php if ($activities) { ?>
             <?php foreach ($activities as $activity) { ?>
             <tr>
-              <td class="text-left"><?php echo $activity['affiliate']; ?></td>
               <td class="text-left"><?php echo $activity['comment']; ?></td>
               <td class="text-left"><?php echo $activity['ip']; ?></td>
               <td class="text-left"><?php echo $activity['date_added']; ?></td>

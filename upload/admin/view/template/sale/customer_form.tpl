@@ -355,7 +355,7 @@ $('select[name=\'customer_group_id\']').on('change', function() {
 <script type="text/javascript"><!--
 var address_row = <?php echo $address_row; ?>;
 
-function addAddress() {	
+function addAddress() {
 	html  = '<div class="tab-pane" id="tab-address' + address_row + '">';
 	html += '  <input type="hidden" name="address[' + address_row + '][address_id]" value="" />';
 
@@ -406,7 +406,7 @@ function addAddress() {
 
 	html += '  <div class="form-group required">';
 	html += '    <label class="col-sm-2 control-label" for="input-zone' + address_row + '"><?php echo $entry_zone; ?></label>';
-	html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '" class="form-control"><option value="false"><?php echo $this->language->get('text_none'); ?></option></select></div>';
+	html += '    <div class="col-sm-10"><select name="address[' + address_row + '][zone_id]" id="input-zone' + address_row + '" class="form-control"><option value=""><?php echo $text_none; ?></option></select></div>';
 	html += '  </div>'; 
 
 	html += '  <div class="form-group">';
@@ -416,7 +416,7 @@ function addAddress() {
 								
     html += '</div>';
 	
-	$('.tab-content:first-child').prepend(html);
+	$('#tab-general .tab-content').prepend(html);
 	
 	$('select[name=\'address[' + address_row + '][country_id]\']').trigger('change');	
 	

@@ -56,6 +56,7 @@ class ControllerAccountEdit extends Controller {
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_your_details'] = $this->language->get('text_your_details');
+		$data['text_select'] = $this->language->get('text_select');
 
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
@@ -65,6 +66,7 @@ class ControllerAccountEdit extends Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
+		$data['button_upload'] = $this->language->get('button_upload');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -152,7 +154,7 @@ class ControllerAccountEdit extends Controller {
 		if (isset($this->request->post['custom_field'])) {
 			$custom_field_info = $this->request->post['custom_field'];		
 		} elseif (!empty($customer_info)) {
-			$custom_field_info = $customer_info['custom_field'];
+			$custom_field_info = unserialize($customer_info['custom_field']);
 		} else {
 			$custom_field_info = array();
 		}		

@@ -317,13 +317,6 @@ class ControllerAccountRegister extends Controller {
 			$data['agree'] = false;
 		}
 
-		// Customer Group
-		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->post['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}	
-
 		// Custom Fields
 		$this->load->model('account/custom_field');
 
@@ -482,10 +475,10 @@ class ControllerAccountRegister extends Controller {
 
 	public function custom_field() {
 		$json = array();
-
-		// Customer Group
+		
 		$this->load->model('account/custom_field');
 
+		// Customer Group
 		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->get['customer_group_id'];
 		} else {

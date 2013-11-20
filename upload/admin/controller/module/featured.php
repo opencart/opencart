@@ -120,7 +120,7 @@ class ControllerModuleFeatured extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$this->response->setOutput($this->load->view'module/featured.tpl'(, $data));
+		$this->response->setOutput($this->load->view('module/featured.tpl', $data));
 	}
 	
 	protected function validate() {

@@ -4,7 +4,7 @@ final class Encryption {
 	private $iv;
 	
 	public function __construct($key) {
-        $this->key = hash('sha256', $key, true);
+		$this->key = hash('sha256', $key, true);
 		$this->iv = mcrypt_create_iv(32, MCRYPT_RAND);
 	}
 	

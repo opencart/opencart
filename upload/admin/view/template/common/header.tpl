@@ -89,7 +89,7 @@ $(document).ready(function(){
           <li><a href="<?php echo $payment; ?>"><?php echo $text_payment; ?></a></li>
           <li><a href="<?php echo $total; ?>"><?php echo $text_total; ?></a></li>
           <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
-          <?php if ($openbay_show_menu) { ?>
+          <?php if ($openbay_show_menu == 1) { ?>
             <li><a class="parent"><?php echo $text_openbay_extension; ?></a>
                 <ul>
                     <li><a href="<?php echo $openbay_link_extension; ?>"><?php echo $text_openbay_dashboard; ?></a></li>
@@ -120,15 +120,6 @@ $(document).ready(function(){
                         <ul>
                             <li><a href="<?php echo $openbay_link_amazonus_settings; ?>"><?php echo $text_openbay_settings; ?></a></li>
                             <li><a href="<?php echo $openbay_link_amazonus_links; ?>"><?php echo $text_openbay_links; ?></a></li>
-                        </ul>
-                    </li>
-                    <?php } ?>
-
-                    <?php if($openbay_markets['play'] == 1){ ?>
-                    <li><a class="parent" href="<?php echo $openbay_link_play; ?>"><?php echo $text_openbay_play; ?></a>
-                        <ul>
-                            <li><a href="<?php echo $openbay_link_play_settings; ?>"><?php echo $text_openbay_settings; ?></a></li>
-                            <li><a href="<?php echo $openbay_link_play_report_price; ?>"><?php echo $text_openbay_report_price; ?></a></li>
                         </ul>
                     </li>
                     <?php } ?>

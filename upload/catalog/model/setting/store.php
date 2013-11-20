@@ -10,7 +10,7 @@ class ModelSettingStore extends Model {
 		
 			$this->cache->set('store', $store_data);
 		}
-	 
+
 		return $store_data;
 	}	
 }

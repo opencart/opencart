@@ -61,39 +61,31 @@
 
                         <select name="filter_marketplace">
                             <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>>All</option>
-                            <?php if($marketplace_statuses['ebay']) : ?>
-                            <option value="ebay_active" <?php echo ($filter_marketplace == 'ebay_active' ? ' selected' : ''); ?>>eBay active</option>
-                            <option value="ebay_inactive" <?php echo ($filter_marketplace == 'ebay_inactive' ? ' selected' : ''); ?>>eBay not active</option>
-                            <?php endif; ?>
-                            <?php if($marketplace_statuses['amazon']) : ?>
-                            <option value="amazon_saved" <?php echo ($filter_marketplace == 'amazon_saved' ? ' selected' : ''); ?>>Amazon EU saved</option>
-                            <option value="amazon_uploaded" <?php echo ($filter_marketplace == 'amazon_uploaded' ? ' selected' : ''); ?>>Amazon EU processing</option>
-                            <option value="amazon_ok" <?php echo ($filter_marketplace == 'amazon_ok' ? ' selected' : ''); ?>>Amazon EU active</option>
-                            <option value="amazon_error" <?php echo ($filter_marketplace == 'amazon_error' ? ' selected' : ''); ?>>Amazon EU failed</option>
-                            <option value="amazon_unlisted" <?php echo ($filter_marketplace == 'amazon_unlisted' ? ' selected' : ''); ?>>Amazon EU not listed</option>
-                            <option value="amazon_linked" <?php echo ($filter_marketplace == 'amazon_linked' ? ' selected' : ''); ?>>Amazon EU linked</option>
-                            <option value="amazon_not_linked" <?php echo ($filter_marketplace == 'amazon_not_linked' ? ' selected' : ''); ?>>Amazon EU not linked</option>
-                            <?php endif; ?>
-                            <?php if($marketplace_statuses['amazonus']) : ?>
-                            <option value="amazonus_saved" <?php echo ($filter_marketplace == 'amazonus_saved' ? ' selected' : ''); ?>>Amazon US saved</option>
-                            <option value="amazonus_uploaded" <?php echo ($filter_marketplace == 'amazonus_uploaded' ? ' selected' : ''); ?>>Amazon US processing</option>
-                            <option value="amazonus_ok" <?php echo ($filter_marketplace == 'amazonus_ok' ? ' selected' : ''); ?>>Amazon US active</option>
-                            <option value="amazonus_error" <?php echo ($filter_marketplace == 'amazonus_error' ? ' selected' : ''); ?>>Amazon US failed</option>
-                            <option value="amazonus_unlisted" <?php echo ($filter_marketplace == 'amazonus_unlisted' ? ' selected' : ''); ?>>Amazon US not listed</option>
-                            <option value="amazonus_linked" <?php echo ($filter_marketplace == 'amazonus_linked' ? ' selected' : ''); ?>>Amazon US linked</option>
-                            <option value="amazonus_not_linked" <?php echo ($filter_marketplace == 'amazonus_not_linked' ? ' selected' : ''); ?>>Amazon US not linked</option>
-                            <?php endif; ?>
-                            <?php if($marketplace_statuses['play']) : ?>
-                            <option value="play_active" <?php echo ($filter_marketplace == 'play_active' ? ' selected' : ''); ?>>Play.com active</option>
-                            <option value="play_pending" <?php echo ($filter_marketplace == 'play_pending' ? ' selected' : ''); ?>>Play.com pending new</option>
-                            <option value="play_processing" <?php echo ($filter_marketplace == 'play_processing' ? ' selected' : ''); ?>>Play.com processing</option>
-                            <option value="play_updating" <?php echo ($filter_marketplace == 'play_updating' ? ' selected' : ''); ?>>Play.com pending edit</option>
-                            <option value="play_stock_updating" <?php echo ($filter_marketplace == 'play_stock_updating' ? ' selected' : ''); ?>>Play.com stock updating</option>
-                            <option value="play_errors" <?php echo ($filter_marketplace == 'play_errors' ? ' selected' : ''); ?>>Play.com errors</option>
-                            <option value="play_failures" <?php echo ($filter_marketplace == 'play_failures' ? ' selected' : ''); ?>>Play.com failures</option>
-                            <option value="play_inactive" <?php echo ($filter_marketplace == 'play_inactive' ? ' selected' : ''); ?>>Play.com not active</option>
-                            <option value="play_pending_delete" <?php echo ($filter_marketplace == 'play_pending_delete' ? ' selected' : ''); ?>>Play.com pending delete</option>
-                            <?php endif; ?>
+
+                            <?php if($marketplace_statuses['ebay']) { ?>
+                                <option value="ebay_active" <?php echo ($filter_marketplace == 'ebay_active' ? ' selected' : ''); ?>>eBay active</option>
+                                <option value="ebay_inactive" <?php echo ($filter_marketplace == 'ebay_inactive' ? ' selected' : ''); ?>>eBay not active</option>
+                            <?php } ?>
+
+                            <?php if($marketplace_statuses['amazon']) { ?>
+                                <option value="amazon_saved" <?php echo ($filter_marketplace == 'amazon_saved' ? ' selected' : ''); ?>>Amazon EU saved</option>
+                                <option value="amazon_uploaded" <?php echo ($filter_marketplace == 'amazon_uploaded' ? ' selected' : ''); ?>>Amazon EU processing</option>
+                                <option value="amazon_ok" <?php echo ($filter_marketplace == 'amazon_ok' ? ' selected' : ''); ?>>Amazon EU active</option>
+                                <option value="amazon_error" <?php echo ($filter_marketplace == 'amazon_error' ? ' selected' : ''); ?>>Amazon EU failed</option>
+                                <option value="amazon_unlisted" <?php echo ($filter_marketplace == 'amazon_unlisted' ? ' selected' : ''); ?>>Amazon EU not listed</option>
+                                <option value="amazon_linked" <?php echo ($filter_marketplace == 'amazon_linked' ? ' selected' : ''); ?>>Amazon EU linked</option>
+                                <option value="amazon_not_linked" <?php echo ($filter_marketplace == 'amazon_not_linked' ? ' selected' : ''); ?>>Amazon EU not linked</option>
+                            <?php } ?>
+
+                            <?php if($marketplace_statuses['amazonus']) { ?>
+                                <option value="amazonus_saved" <?php echo ($filter_marketplace == 'amazonus_saved' ? ' selected' : ''); ?>>Amazon US saved</option>
+                                <option value="amazonus_uploaded" <?php echo ($filter_marketplace == 'amazonus_uploaded' ? ' selected' : ''); ?>>Amazon US processing</option>
+                                <option value="amazonus_ok" <?php echo ($filter_marketplace == 'amazonus_ok' ? ' selected' : ''); ?>>Amazon US active</option>
+                                <option value="amazonus_error" <?php echo ($filter_marketplace == 'amazonus_error' ? ' selected' : ''); ?>>Amazon US failed</option>
+                                <option value="amazonus_unlisted" <?php echo ($filter_marketplace == 'amazonus_unlisted' ? ' selected' : ''); ?>>Amazon US not listed</option>
+                                <option value="amazonus_linked" <?php echo ($filter_marketplace == 'amazonus_linked' ? ' selected' : ''); ?>>Amazon US linked</option>
+                                <option value="amazonus_not_linked" <?php echo ($filter_marketplace == 'amazonus_not_linked' ? ' selected' : ''); ?>>Amazon US not linked</option>
+                            <?php } ?>
                         </select>
 
                     </td>

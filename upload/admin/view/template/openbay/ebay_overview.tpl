@@ -36,10 +36,6 @@
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon3.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_links; ?></h3>
                     </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_stockreport; ?>'">
-                        <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon8.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_stock_report; ?></h3>
-                    </div>
                     <div class="openbayPod" onclick="location='<?php echo $links_itemimport; ?>'">
                         <img src="<?php echo HTTPS_SERVER; ?>view/image/openbay/openbay_icon5.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_item_import; ?></h3>

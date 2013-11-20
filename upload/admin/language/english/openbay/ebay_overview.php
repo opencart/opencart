@@ -6,7 +6,6 @@ $_['lang_heading_settings']         = 'Settings';
 $_['lang_heading_sync']             = 'Syncronise';
 $_['lang_heading_account']          = 'My Account';
 $_['lang_heading_links']            = 'Item links';
-$_['lang_heading_stock_report']     = 'Stock report';
 $_['lang_heading_item_import']      = 'Import items';
 $_['lang_heading_order_import']     = 'Import orders';
 $_['lang_heading_adds']             = 'Installed add-ons';

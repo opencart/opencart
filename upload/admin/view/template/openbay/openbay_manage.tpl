@@ -34,6 +34,7 @@
                                 <?php echo $txt_obp_version; ?>
                             </td>
                             <input type="hidden" name="openbay_version" value="<?php echo $openbay_version;?>" id="openbay_version" />
+                            <input type="hidden" name="openbaymanager_show_menu" value="<?php echo $openbaymanager_show_menu;?>" />
                         </tr>
                         <tr>
                             <td><label for="openbay_ftp_username"><?php echo $field_ftp_user; ?></label></td>

@@ -691,12 +691,17 @@
                 beforeSend: function(){ addCount(); },
                 success: function(data) {
                     if(data.ack != 'Failure'){
-                        var prevHtml = "previewListing('"+data.preview+"')";
+
                         var msgHtml = '';
                         var feeTot = '';
                         var currencyCode = '';
 
-                        $('#p_row_buttons_'+data.i).prepend('<a class="button p_row_buttons_prev" onclick="'+prevHtml+'"><?php echo $lang_preview; ?></a>');
+                        if(document.location.protocol == 'https:') {
+                            $('#p_row_buttons_'+data.i).prepend('<a class="button p_row_buttons_prev" target="_BLANK" href="'+data.preview+'"><?php echo $lang_preview; ?></a>');
+                        } else {
+                            var prevHtml = "previewListing('"+data.preview+"')";
+                            $('#p_row_buttons_'+data.i).prepend('<a class="button p_row_buttons_prev" onclick="'+prevHtml+'"><?php echo $lang_preview; ?></a>');
+                        }
 
                         if(data.errors){
                             $.each(data.errors, function(k,v){

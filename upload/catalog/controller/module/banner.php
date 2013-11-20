@@ -11,7 +11,7 @@ class ControllerModuleBanner extends Controller {
 		$this->data['banners'] = array();
 		
 		$results = $this->model_design_banner->getBanner($setting['banner_id']);
-		  
+
 		foreach ($results as $result) {
 			if (file_exists(DIR_IMAGE . $result['image'])) {
 				$this->data['banners'][] = array(

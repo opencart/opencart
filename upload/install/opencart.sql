@@ -96,7 +96,7 @@ DROP TABLE IF EXISTS `oc_affiliate_activity`;
 CREATE TABLE `oc_affiliate_activity` (
   `activity_id` int(11) NOT NULL AUTO_INCREMENT,
   `affiliate_id` int(11) NOT NULL,
-  `key` text NOT NULL,
+  `key` varchar(64) NOT NULL,
   `data` text NOT NULL,
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,
@@ -1059,7 +1059,7 @@ DROP TABLE IF EXISTS `oc_customer_activity`;
 CREATE TABLE `oc_customer_activity` (
   `activity_id` int(11) NOT NULL AUTO_INCREMENT,
   `customer_id` int(11) NOT NULL,
-  `key` text NOT NULL,
+  `key` varchar(64) NOT NULL,
   `data` text NOT NULL,
   `ip` varchar(40) NOT NULL,
   `date_added` datetime NOT NULL,

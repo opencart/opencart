@@ -221,7 +221,7 @@ class ModelReportCustomer extends Model {
 	}	
 	
 	public function getCustomerActivities($data = array()) { 
-		$sql = "SELECT ca.activity_id, ca.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, ca.comment, ca.ip, ca.date_added FROM " . DB_PREFIX . "customer_activity ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
+		$sql = "SELECT ca.activity_id, ca.customer_id, CONCAT(c.firstname, ' ', c.lastname) AS customer, ca.key, ca.data, ca.ip, ca.date_added FROM " . DB_PREFIX . "customer_activity ca LEFT JOIN " . DB_PREFIX . "customer c ON (ca.customer_id = c.customer_id)";
 
 		$implode = array();
 		

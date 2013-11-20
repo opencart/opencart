@@ -210,5 +210,5 @@ class ModelAccountCustomer extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ban_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
 		
 		return $query->num_rows;
-	}	
+	}
 }

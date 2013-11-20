@@ -87,9 +87,11 @@ class ControllerReportCustomerActivity extends Controller {
 		$results = $this->model_report_customer->getCustomerActivities($filter_data);
     	
 		foreach ($results as $result) {
+			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));
+			
       		$data['activities'][] = array(
 				'customer'   => $result['customer'],
-				'comment'    => $result['comment'],
+				'comment'    => $comment,
 				'ip'         => $result['ip'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);

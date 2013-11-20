@@ -125,12 +125,12 @@ class ControllerAccountOrder extends Controller {
 
 		$data['continue'] = $this->url->link('account/account', '', 'SSL');
 		
-		$data['header'] = $this->load->controller('common/header');
-		$data['footer'] = $this->load->controller('common/footer');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 						
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/order_list.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/order_list.tpl', $data));
@@ -359,12 +359,12 @@ class ControllerAccountOrder extends Controller {
 
       		$data['continue'] = $this->url->link('account/order', '', 'SSL');
 			
-			$data['header'] = $this->load->controller('common/header');
-			$data['footer'] = $this->load->controller('common/footer');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');;
 								
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/order_info.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/order_info.tpl', $data));
@@ -404,13 +404,13 @@ class ControllerAccountOrder extends Controller {
 												
       		$data['continue'] = $this->url->link('account/order', '', 'SSL');
 			 			
-			$data['header'] = $this->load->controller('common/header');
-			$data['footer'] = $this->load->controller('common/footer');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
-								
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');								
+			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
 			} else {

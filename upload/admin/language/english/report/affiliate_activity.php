@@ -2,6 +2,14 @@
 // Heading
 $_['heading_title']     = 'Affiliate Activity Report';
 
+// Text
+$_['text_edit']      = '<a href="affiliate_id=%d">%s</a> has just just updated their account details.';
+$_['text_fogotten']  = '<a href="affiliate_id=%d">%s</a> has requested a new password.';
+$_['text_login']     = '<a href="affiliate_id=%d">%s</a> has just logged in.';
+$_['text_password']  = '<a href="affiliate_id=%d">%s</a> has just just updated their account password.';
+$_['text_payment']   = '<a href="affiliate_id=%d">%s</a> has just just updated their payment details.';
+$_['text_register']  = '<a href="affiliate_id=%d">%s</a> has just registered for a new account.';
+
 // Column
 $_['column_affiliate']  = 'Affiliate';
 $_['column_comment']    = 'Comment';

@@ -48,12 +48,12 @@ class ControllerAffiliateAccount extends Controller {
 		$data['tracking'] = $this->url->link('affiliate/tracking', '', 'SSL');
     	$data['transaction'] = $this->url->link('affiliate/transaction', '', 'SSL');
 		
-		$data['header'] = $this->load->controller('common/header');
-		$data['footer'] = $this->load->controller('common/footer');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/account.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/account.tpl', $data));

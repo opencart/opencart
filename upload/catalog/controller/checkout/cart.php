@@ -232,17 +232,17 @@ class ControllerCheckoutCart extends Controller {
 						
 			$data['checkout'] = $this->url->link('checkout/checkout');
 
-			$data['header'] = $this->load->controller('common/header');
-			$data['footer'] = $this->load->controller('common/footer');
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['coupon'] = $this->load->controller('module/coupon');
 			$data['voucher'] = $this->load->controller('module/voucher');
 			$data['reward'] = $this->load->controller('module/reward');
 			$data['shipping'] = $this->load->controller('module/shipping');
-						
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['column_right'] = $this->load->controller('common/column_right');
+			$data['content_top'] = $this->load->controller('common/content_top');
+			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');
+								
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/cart.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/cart.tpl', $data));
 			} else {
@@ -259,12 +259,12 @@ class ControllerCheckoutCart extends Controller {
 
 			unset($this->session->data['success']);
 			
-			$data['header'] = $this->load->controller('common/header');
-			$data['footer'] = $this->load->controller('common/footer');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');
 			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');
 					
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));

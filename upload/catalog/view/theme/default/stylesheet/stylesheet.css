@@ -630,3 +630,14 @@ h2.price {
 }
 
 */
+
+.flexslider .slides img {
+	width: inherit;
+}
+.slides li {
+	text-align: center;
+}
+.slides li img {
+
+	text-align: center;
+}

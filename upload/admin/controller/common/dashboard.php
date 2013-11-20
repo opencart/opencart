@@ -73,8 +73,10 @@ class ControllerCommonDashboard extends Controller {
 		$results = $this->model_report_dashboard->getActivities();
     	
 		foreach ($results as $result) {
+			$coment = vsprintf($this->language->get('text_' . $result['key']), unserialize($data));
+			
       		$data['activities'][] = array(
-				'comment'    => $result['comment'],
+				'comment'    => $coment,
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
 		}	

@@ -26,11 +26,11 @@
           <?php if ($thumb || $images) { ?>
           <ul class="thumbnails">
             <?php if ($thumb) { ?>
-            <li><a class="thumbnail" href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>"> <img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" id="image" /> </a> </li>
+            <li><a class="thumbnail" href="<?php echo $popup; ?>" title="<?php echo $heading_title; ?>"><img src="<?php echo $thumb; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></li>
             <?php } ?>
             <?php if ($images) { ?>
             <?php foreach ($images as $image) { ?>
-            <li class="image-additional"> <a class="thumbnail" href="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>"> <img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /> </a> </li>
+            <li class="image-additional"><a class="thumbnail" href="<?php echo $image['popup']; ?>" title="<?php echo $heading_title; ?>"> <img src="<?php echo $image['thumb']; ?>" title="<?php echo $heading_title; ?>" alt="<?php echo $heading_title; ?>" /></a></li>
             <?php } ?>
             <?php } ?>
           </ul>
@@ -115,7 +115,14 @@
             <?php } ?>
           </div>
         </div>
-        <div class="col-md-<?php echo $cols; ?>">
+        <?php if ($column_left && $column_right) { ?>
+        <?php $class = 'col-sm-6'; ?>
+        <?php } elseif ($column_left || $column_right) { ?>
+        <?php $class = 'col-sm-6'; ?>
+        <?php } else { ?>
+        <?php $class = 'col-sm-4'; ?>
+        <?php } ?>
+        <div class="<?php echo $class; ?>">
           <div class="btn-group">
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_wishlist; ?>" onclick="addToWishList('<?php echo $product_id; ?>');"><i class="fa fa-heart"></i></button>
             <button type="button" data-toggle="tooltip" class="btn btn-default" title="<?php echo $button_compare; ?>" onclick="addToCompare('<?php echo $product_id; ?>');"><i class="fa fa-exchange"></i></button>
@@ -158,16 +165,8 @@
             <?php } ?>
             <?php } ?>
           </ul>
-        
-        <?php if ($column_left && $column_right) { ?>
-        <?php $class = 'col-sm-3'; ?>
-        <?php } elseif ($column_left || $column_right) { ?>
-        <?php $class = 'col-sm-3'; ?>
-        <?php } else { ?>
-        <?php $class = 'col-sm-4'; ?>
-        <?php } ?>         
-         <?php } ?>
-          <div id="product" class="<?php echo $class; ?>">
+          <?php } ?>
+          <div id="product">
             <?php if ($options) { ?>
             <hr>
             <h3><?php echo $text_option; ?></h3>

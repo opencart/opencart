@@ -604,8 +604,19 @@ h2.price {
 	border: 1px solid #DDD;
 }
 
-
-/*
+.thumbnails {
+	overflow: auto;
+	clear: both;
+}
+.thumbnails > li {
+	margin-left: 20px;
+}
+.thumbnails {
+	margin-left: -20px;
+}
+.thumbnails > img {
+	width: 100%;
+}
 .image-additional a {
 	margin-bottom: 20px;
 	padding: 5px;
@@ -619,17 +630,9 @@ h2.price {
 	float: left;
 	margin-left: 20px;
 }
-.thumbnails>li {
-	margin-left: 20px;
-}
-.thumbnails {
-	margin-left: -20px;
-}
-.thumbnail > img {
-	width: 100%;
-}
 
-*/
+
+
 
 .flexslider .slides img {
 	width: inherit;
@@ -638,6 +641,5 @@ h2.price {
 	text-align: center;
 }
 .slides li img {
-
 	text-align: center;
 }

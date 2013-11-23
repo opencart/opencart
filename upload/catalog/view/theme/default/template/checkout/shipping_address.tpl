@@ -204,7 +204,6 @@ $('input[name=\'shipping_address\']').on('change', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('#input-shipping-country').on('change', function() {
-	if (this.value == '') return;
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
 		dataType: 'json',

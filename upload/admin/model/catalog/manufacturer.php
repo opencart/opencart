@@ -113,12 +113,6 @@ class ModelCatalogManufacturer extends Model {
 		return $manufacturer_store_data;
 	}
 
-	public function getTotalManufacturersByImageId($image_id) {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manufacturer WHERE image_id = '" . (int)$image_id . "'");
-
-		return $query->row['total'];
-	}
-
 	public function getTotalManufacturers() {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "manufacturer");
 

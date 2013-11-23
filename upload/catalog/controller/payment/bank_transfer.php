@@ -1,6 +1,6 @@
 <?php
 class ControllerPaymentBankTransfer extends Controller {
-	protected function index() {
+	public function index() {
 		$this->load->language('payment/bank_transfer');
 		
 		$data['text_instruction'] = $this->language->get('text_instruction');

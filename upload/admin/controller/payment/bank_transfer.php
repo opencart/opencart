@@ -140,7 +140,7 @@ class ControllerPaymentBankTransfer extends Controller {
 		$languages = $this->model_localisation_language->getLanguages();
 		
 		foreach ($languages as $language) {
-			if (!$this->request->post['bank_transfer_bank_' . $language['language_id']]) {
+			if (empty($this->request->post['bank_transfer_bank_' . $language['language_id']])) {
 				$this->error['bank_' .  $language['language_id']] = $this->language->get('error_bank');
 			}
 		}

@@ -91,7 +91,7 @@
         </div>
       </div>
       <br />
-      <div class="row product-layout">
+      <div class="row">
         <?php $i = 0; ?>
         <?php foreach ($products as $product) { ?>
         <?php if ($column_left && $column_right) { ?>

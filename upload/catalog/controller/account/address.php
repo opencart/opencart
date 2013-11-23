@@ -303,6 +303,7 @@ class ControllerAccountAddress extends Controller {
 
     	$data['button_continue'] = $this->language->get('button_continue');
     	$data['button_back'] = $this->language->get('button_back');
+		$data['button_upload'] = $this->language->get('button_upload');
 
 		if (isset($this->error['firstname'])) {
     		$data['error_firstname'] = $this->error['firstname'];

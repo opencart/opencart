@@ -1,6 +1,6 @@
 <?php
 class ControllerPaymentPerpetualPayments extends Controller {
-	protected function index() {
+	public function index() {
     	$this->load->language('payment/perpetual_payments');
 		
 		$data['text_credit_card'] = $this->language->get('text_credit_card');

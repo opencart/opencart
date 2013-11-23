@@ -1,6 +1,6 @@
 <?php
 class ControllerPaymentCheque extends Controller {
-	protected function index() {
+	public function index() {
 		$this->load->language('payment/cheque');
 		
 		$data['text_instruction'] = $this->language->get('text_instruction');

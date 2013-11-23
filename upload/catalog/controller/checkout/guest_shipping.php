@@ -18,6 +18,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 		$data['entry_zone'] = $this->language->get('entry_zone');
 	
 		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_upload'] = $this->language->get('button_upload');
 					
 		if (isset($this->session->data['shipping_address']['firstname'])) {
 			$data['firstname'] = $this->session->data['shipping_address']['firstname'];

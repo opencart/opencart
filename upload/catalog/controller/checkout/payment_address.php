@@ -20,6 +20,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		$data['entry_zone'] = $this->language->get('entry_zone');
 	
 		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_upload'] = $this->language->get('button_upload');
 
 		if (isset($this->session->data['payment_address']['address_id'])) {
 			$data['address_id'] = $this->session->data['payment_address']['address_id'];

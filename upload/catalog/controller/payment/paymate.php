@@ -1,6 +1,6 @@
 <?php 
 class ControllerPaymentPaymate extends Controller {
-	protected function index() {
+	public function index() {
     	$data['button_confirm'] = $this->language->get('button_confirm');
 
 		if (!$this->config->get('paymate_test')) {

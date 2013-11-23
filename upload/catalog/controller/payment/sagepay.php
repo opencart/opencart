@@ -1,6 +1,6 @@
 <?php
 class ControllerPaymentSagepay extends Controller {
-	protected function index() {
+	public function index() {
 		$this->load->language('payment/sagepay');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');

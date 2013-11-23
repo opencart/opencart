@@ -15,7 +15,14 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <div class="row">
-        <div class="col-md-">
+        <?php if ($column_left && $column_right) { ?>
+        <?php $class = 'col-sm-6'; ?>
+        <?php } elseif ($column_left || $column_right) { ?>
+        <?php $class = 'col-sm-6'; ?>
+        <?php } else { ?>
+        <?php $class = 'col-sm-8'; ?>
+        <?php } ?>
+        <div class="<?php echo $class; ?>">
           <?php if ($thumb || $images) { ?>
           <ul class="thumbnails">
             <?php if ($thumb) { ?>
@@ -151,8 +158,16 @@
             <?php } ?>
             <?php } ?>
           </ul>
-          <?php } ?>
-          <div id="product">
+        
+        <?php if ($column_left && $column_right) { ?>
+        <?php $class = 'col-sm-3'; ?>
+        <?php } elseif ($column_left || $column_right) { ?>
+        <?php $class = 'col-sm-3'; ?>
+        <?php } else { ?>
+        <?php $class = 'col-sm-4'; ?>
+        <?php } ?>         
+         <?php } ?>
+          <div id="product" class="<?php echo $class; ?>">
             <?php if ($options) { ?>
             <hr>
             <h3><?php echo $text_option; ?></h3>
@@ -299,9 +314,17 @@
       </div>
       <?php if ($products) { ?>
       <h3><?php echo $text_related; ?></h3>
-      <div class="row product-layout">
+      <div class="row">
+        <?php $i = 0; ?>
         <?php foreach ($products as $product) { ?>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <?php if ($column_left && $column_right) { ?>
+        <?php $class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'; ?>
+        <?php } elseif ($column_left || $column_right) { ?>
+        <?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12'; ?>
+        <?php } else { ?>
+        <?php $class = 'col-lg-3 col-md-3 col-sm-6 col-xs-12'; ?>
+        <?php } ?>
+        <div class="<?php echo $class; ?>">
           <div class="product-thumb transition">
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
             <div class="caption">
@@ -338,6 +361,14 @@
             </div>
           </div>
         </div>
+        <?php if (($column_left && $column_right) && ($i % 2 == 0)) { ?>
+        <div class="clearfix visible-md visible-sm"></div>
+        <?php } elseif (($column_left || $column_right) && ($i % 3 == 0)) { ?>
+        <div class="clearfix visible-md"></div>
+        <?php } elseif ($i % 4 == 0) { ?>
+        <div class="clearfix visible-md"></div>
+        <?php } ?>
+        <?php $i++; ?>
         <?php } ?>
       </div>
       <?php } ?>

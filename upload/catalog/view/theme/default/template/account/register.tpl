@@ -469,13 +469,13 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$(node).parent().find('input[name^=\'option\']').after('<div class="text-danger">' + json['error'] + '</div>');
+					$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
 							
 				if (json['success']) {
 					alert(json['success']);
 					
-					$(node).parent().find('input[name^=\'option\']').attr('value', json['file']);
+					$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['file']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {

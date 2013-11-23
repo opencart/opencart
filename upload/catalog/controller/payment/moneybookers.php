@@ -1,6 +1,6 @@
 <?php
 class ControllerPaymentMoneybookers extends Controller {
-	protected function index() {
+	public function index() {
 		$this->load->model('checkout/order');
 		
 		$this->load->language('payment/moneybookers');

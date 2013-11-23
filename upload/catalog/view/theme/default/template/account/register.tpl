@@ -384,9 +384,9 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 				}
 			}
 			
-			$('.custom-field').each(function(element) {
-				$('.form-group:eq(' + custom_field['sort_order'] + ')').after(html);
-			});
+			//$('.custom-field').each(function(element) {
+				//$('.form-group:eq(' + custom_field['sort_order'] + ')').after(html);
+			//});
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -441,7 +441,7 @@ $('select[name=\'country_id\']').on('change', function() {
 $('select[name=\'country_id\']').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
-$('button[id^=\'button-upload\']').on('click', function() {
+$('button[id^=\'button-custom-field\']').on('click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();

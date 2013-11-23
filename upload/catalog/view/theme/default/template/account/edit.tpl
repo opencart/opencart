@@ -214,7 +214,7 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
-$('button[id^=\'button-upload\']').on('click', function() {
+$('button[id^=\'button-custom-field\']').on('click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();

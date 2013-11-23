@@ -247,7 +247,7 @@ $('#input-shipping-country').on('change', function() {
 $('#input-shipping-country').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
-$('#collapse-shipping-address button[id^=\'button-upload\']').on('click', function() {
+$('#collapse-shipping-address button[id^=\'button-custom-field\']').on('click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();

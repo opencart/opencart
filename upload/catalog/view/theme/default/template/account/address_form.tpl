@@ -317,7 +317,7 @@ $('select[name=\'country_id\']').on('change', function() {
 $('select[name=\'country_id\']').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
-$('button[id^=\'button-upload\']').on('click', function() {
+$('button[id^=\'button-custom-field\']').on('click', function() {
 	var node = this;
 	
 	$('#form-upload').remove();

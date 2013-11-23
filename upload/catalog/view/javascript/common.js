@@ -47,7 +47,7 @@ $(document).ready(function() {
 			$(this).css('margin-left', '-' + (i + 5) + 'px');
 		}
 	});
-	
+	/*
 	// Product list bootstrap fixes
 	var length = $('#column-left, #column-right').length;
 		
@@ -64,7 +64,7 @@ $(document).ready(function() {
 		
 		$('.product-layout > div:nth-child(4n+4)').after('<div class="clearfix visible-md"></div>');
 	}
-
+	*/
 	// Product-grid to product-list
 	$('#list-view').click(function() {
 		$('.product-grid').removeClass('product-grid').addClass('product-list');

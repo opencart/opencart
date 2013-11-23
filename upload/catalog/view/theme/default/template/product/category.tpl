@@ -7,13 +7,13 @@
   </ul>
   <div class="row"><?php echo $column_left; ?>
     <?php if ($column_left && $column_right) { ?>
-    <?php $cols = 6; ?>
+    <?php $class = 'col-sm-6'; ?>
     <?php } elseif ($column_left || $column_right) { ?>
-    <?php $cols = 9; ?>
+    <?php $class = 'col-sm-9'; ?>
     <?php } else { ?>
-    <?php $cols = 12; ?>
+    <?php $class = 'col-sm-12'; ?>
     <?php } ?>
-    <div id="content" class="col-sm-<?php echo $cols; ?>"><?php echo $content_top; ?>
+    <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h2><?php echo $heading_title; ?></h2>
       <?php if ($thumb || $description) { ?>
       <div class="row">
@@ -92,8 +92,16 @@
       </div>
       <br />
       <div class="row product-layout">
+        <?php $i = 0; ?>
         <?php foreach ($products as $product) { ?>
-        <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
+        <?php if ($column_left && $column_right) { ?>
+        <?php $class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'; ?>
+        <?php } elseif ($column_left || $column_right) { ?>
+        <?php $class = 'col-lg-4 col-md-4 col-sm-6 col-xs-12'; ?>
+        <?php } else { ?>
+        <?php $class = 'col-lg-3 col-md-3 col-sm-6 col-xs-12'; ?>
+        <?php } ?>
+        <div class="<?php echo $class; ?>">
           <div class="product-thumb transition">
             <div class="image"><a href="<?php echo $product['href']; ?>"><img src="<?php echo $product['thumb']; ?>" alt="<?php echo $product['name']; ?>" title="<?php echo $product['name']; ?>" class="img-responsive" /></a></div>
             <div class="caption">
@@ -130,6 +138,14 @@
             </div>
           </div>
         </div>
+        <?php if (($column_left && $column_right) && ($i % 2 == 0)) { ?>
+        <div class="clearfix visible-md visible-sm"></div>
+        <?php } elseif (($column_left || $column_right) && ($i % 3 == 0)) { ?>
+        <div class="clearfix visible-md"></div>
+        <?php } elseif ($i % 4 == 0) { ?>
+        <div class="clearfix visible-md"></div>
+        <?php } ?>
+        <?php $i++; ?>
         <?php } ?>
       </div>
       <div class="row">

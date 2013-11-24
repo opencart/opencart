@@ -27,7 +27,7 @@ class ControllerCommonForgotten extends Controller {
 			$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 			
 			$message  = sprintf($this->language->get('text_greeting'), $this->config->get('config_name')) . "\n\n";
-			$message .= sprintf($this->language->get('text_change'), $this->config->get('config_name')) . "\n\n";
+			$message .= $this->language->get('text_change') . "\n\n";
 			$message .= $this->url->link('common/reset', 'code=' . $code, 'SSL') . "\n\n";
 			$message .= sprintf($this->language->get('text_ip'), $this->request->server['REMOTE_ADDR']) . "\n\n";
 

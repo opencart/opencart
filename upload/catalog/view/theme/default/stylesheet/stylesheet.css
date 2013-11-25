@@ -610,6 +610,7 @@ h2.price {
 }
 .thumbnails > li {
 	margin-left: 20px;
+	list-style:none;
 }
 .thumbnails {
 	margin-left: -20px;

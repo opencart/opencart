@@ -13,11 +13,27 @@ class ModelTotalKlarnaFee extends Model {
 			$address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);
 		} elseif (isset($this->session->data['guest']['payment'])) {
 			$address = $this->session->data['guest']['payment'];
-		}
-        
+        } elseif (isset($this->request->post['payment_country_id'])) {
+
+            $this->load->model('localisation/country');
+            $country_info = $this->model_localisation_country->getCountry($this->request->post['payment_country_id']);
+
+            if ($country_info) {
+                $address = array('iso_code_3' => $country_info['iso_code_3']);
+            }
+        }
+
+        $code = false;
+
+        if (isset($this->request->post['payment_code'])) {
+            $code = $this->request->post['payment_code'];
+        } elseif (isset($this->session->data['payment_method']['code'])) {
+            $code = $this->session->data['payment_method']['code'];
+        }
+
 		if (!isset($address)) {
 			$status = false;
-		} elseif (!isset($this->session->data['payment_method']['code']) || $this->session->data['payment_method']['code'] != 'klarna_invoice') {
+		} elseif ($code != 'klarna_invoice') {
 			$status = false;
 		} elseif (!isset($klarna_fee[$address['iso_code_3']])) {
 			$status = false;

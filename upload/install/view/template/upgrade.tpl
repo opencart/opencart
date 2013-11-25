@@ -23,10 +23,10 @@
     </ol>
     </fieldset>
     <div class="buttons">
-	  <div class="right">
+      <div class="right">
         <input type="submit" value="Continue" class="button" />
       </div>
-	</div>
+    </div>
   </form>
 </div>
 <?php echo $footer; ?> 

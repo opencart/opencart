@@ -452,7 +452,7 @@ class ModelCatalogProduct extends Model {
 		if ($query->num_rows) {
 			return $query->row['layout_id'];
 		} else {
-			return  $this->config->get('config_layout_product');
+			return  $this->config->get('config_layout_id');
 		}
 	}
 

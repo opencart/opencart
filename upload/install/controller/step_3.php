@@ -6,7 +6,7 @@ class ControllerStep3 extends Controller {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install');
 
-			$this->model_install->mysql($this->request->post);
+			$this->model_install->database($this->request->post);
 
 			$output  = '<?php' . "\n";
 			$output .= '// HTTP' . "\n";
@@ -88,6 +88,12 @@ class ControllerStep3 extends Controller {
 			$this->data['error_warning'] = '';
 		}
 
+		if (isset($this->error['db_driver'])) {
+			$this->data['error_db_driver'] = $this->error['db_driver'];
+		} else {
+			$this->data['error_db_driver'] = '';
+		}
+
 		if (isset($this->error['db_host'])) {
 			$this->data['error_db_host'] = $this->error['db_host'];
 		} else {
@@ -122,20 +128,20 @@ class ControllerStep3 extends Controller {
 			$this->data['error_password'] = $this->error['password'];
 		} else {
 			$this->data['error_password'] = '';
-		}		
+		}
 
 		if (isset($this->error['email'])) {
 			$this->data['error_email'] = $this->error['email'];
 		} else {
 			$this->data['error_email'] = '';
-		}	
+		}
 
 		$this->data['action'] = $this->url->link('step_3');
 
 		if (isset($this->request->post['db_driver'])) {
 			$this->data['db_driver'] = $this->request->post['db_driver'];
 		} else {
-			$this->data['db_driver'] = 'mysql';
+			$this->data['db_driver'] = 'mysqli';
 		}
 
 		if (isset($this->request->post['db_host'])) {
@@ -215,14 +221,32 @@ class ControllerStep3 extends Controller {
 		}
 
 		if ($this->request->post['db_driver'] == 'mysql') {
-			if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
-				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
-			} else {
-				if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
-					$this->error['warning'] = 'Error: Database does not exist!';
-				}
+			if(function_exists('mysql_connect')) {
+				if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
+					$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+				} else {
+					if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
+						$this->error['warning'] = 'Error: Database does not exist!';
+					}
 
-				mysql_close($connection);
+					mysql_close($connection);
+				}
+			} else {
+				$this->error['db_driver'] = 'MySQL is not supported on your server! Try using MySQLi';
+			}
+		}
+
+		if ($this->request->post['db_driver'] == 'mysqli') {
+			if(function_exists('mysqli_connect')) {
+				$connection = new mysqli($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'], $this->request->post['db_name']);
+
+				if (mysqli_connect_error()) {
+					$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+				} else {
+					$connection->close();
+				}
+			} else {
+				$this->error['db_driver'] = 'MySQLi is not supported on your server! Try using MySQL';
 			}
 		}
 

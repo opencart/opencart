@@ -19,8 +19,13 @@
         <tr>
           <td>Database Driver:</td>
           <td><select name="db_driver">
+              <option value="mysqli">MySQLi</option>
               <option value="mysql">MySQL</option>
-            </select></td>
+            </select>
+            <br />
+            <?php if ($error_db_driver) { ?>
+            <span class="required"><?php echo $error_db_driver; ?></span>
+            <?php } ?></td>
         </tr>
         <tr>
           <td><span class="required">*</span> Database Host:</td>

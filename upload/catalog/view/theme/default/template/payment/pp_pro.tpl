@@ -3,11 +3,13 @@
   <table class="form">
     <tr>
       <td><?php echo $entry_cc_type; ?></td>
-      <td><select name="cc_type">
+      <td>
+        <select name="cc_type">
           <?php foreach ($cards as $card) { ?>
-          <option value="<?php echo $card['value']; ?>"><?php echo $card['text']; ?></option>
+            <option value="<?php echo $card['value']; ?>"><?php echo $card['text']; ?></option>
           <?php } ?>
-        </select></td>
+        </select>
+      </td>
     </tr>
     <tr>
       <td><?php echo $entry_cc_number; ?></td>
@@ -15,32 +17,36 @@
     </tr>
     <tr>
       <td><?php echo $entry_cc_start_date; ?></td>
-      <td><select name="cc_start_date_month">
+      <td>
+        <select name="cc_start_date_month">
           <?php foreach ($months as $month) { ?>
-          <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+            <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
           <?php } ?>
         </select>
         /
         <select name="cc_start_date_year">
           <?php foreach ($year_valid as $year) { ?>
-          <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+            <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
           <?php } ?>
         </select>
-        <?php echo $text_start_date; ?></td>
+        <?php echo $text_start_date; ?>
+      </td>
     </tr>
     <tr>
       <td><?php echo $entry_cc_expire_date; ?></td>
-      <td><select name="cc_expire_date_month">
+      <td>
+        <select name="cc_expire_date_month">
           <?php foreach ($months as $month) { ?>
-          <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
+            <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
           <?php } ?>
         </select>
         /
         <select name="cc_expire_date_year">
           <?php foreach ($year_expire as $year) { ?>
-          <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
+            <option value="<?php echo $year['value']; ?>"><?php echo $year['text']; ?></option>
           <?php } ?>
-        </select></td>
+        </select>
+      </td>
     </tr>
     <tr>
       <td><?php echo $entry_cc_cvv2; ?></td>
@@ -77,7 +83,7 @@ $('#button-confirm').bind('click', function() {
 			if (json['error']) {
 				alert(json['error']);
 			}
-			
+
 			if (json['success']) {
 				location = json['success'];
 			}

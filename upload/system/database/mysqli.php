@@ -1,15 +1,15 @@
 <?php
-final class MySQLi {
+final class DBMySQLi {
 	private $link;
 
 	public function __construct($hostname, $username, $password, $database) {
 		$this->link = new mysqli($hostname, $username, $password, $database);
 
-		if ($this->link->connect_error) {
-			throw new ErrorException('Error: Could not make a database link (' . $this->link->connect_errno . ') ' . $this->link->connect_error);
+		if (mysqli_connect_error()) {
+			throw new ErrorException('Error: Could not make a database link (' . mysqli_connect_errno() . ') ' . mysqli_connect_error());
 		}
 
-		$this->link->set_charset("utf-8");
+		$this->link->set_charset("utf8");
 	}
 
 	public function query($sql) {

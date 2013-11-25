@@ -582,7 +582,6 @@ class ControllerCatalogProduct extends Controller {
 		$this->data['entry_required'] = $this->language->get('entry_required');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$this->data['entry_date_start'] = $this->language->get('entry_date_start');
 		$this->data['entry_date_end'] = $this->language->get('entry_date_end');
 		$this->data['entry_priority'] = $this->language->get('entry_priority');

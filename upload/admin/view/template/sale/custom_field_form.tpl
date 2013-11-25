@@ -123,10 +123,10 @@
               <div class="checkbox">
                 <label>
                   <?php if (in_array($account['value'], $custom_field_location)) { ?>
-                  <input type="checkbox" name="account[]" value="<?php echo $account['value']; ?>" checked="checked" />
+                  <input type="checkbox" name="location[]" value="<?php echo $account['value']; ?>" checked="checked" />
                   <?php echo $account['text']; ?>
                   <?php } else { ?>
-                  <input type="checkbox" name="account[]" value="<?php echo $account['value']; ?>" />
+                  <input type="checkbox" name="location[]" value="<?php echo $account['value']; ?>" />
                   <?php echo $account['text']; ?>
                   <?php } ?>
                 </label>

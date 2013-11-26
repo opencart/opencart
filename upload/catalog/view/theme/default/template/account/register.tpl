@@ -366,7 +366,7 @@
 <script type="text/javascript"><!--
 $('input[name=\'customer_group_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=account/register/custom_field&customer_group_id=' + this.value,
+		url: 'index.php?route=account/account/custom_field&customer_group_id=' + this.value,
 		dataType: 'json',	
 		success: function(json) {
 			$('.custom-field').hide();
@@ -399,7 +399,7 @@ $('input[name=\'customer_group_id\']:checked').trigger('change');
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=account/register/country&country_id=' + this.value,
+		url: 'index.php?route=account/account/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
@@ -452,7 +452,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=account/register/upload',
+			url: 'index.php?route=account/account/upload',
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),

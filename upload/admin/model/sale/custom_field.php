@@ -1,7 +1,7 @@
 <?php
 class ModelSaleCustomField extends Model {
 	public function addCustomField($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', location = '" . $this->db->escape(implode(',', $data['location'])) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', storage = '" . $this->db->escape($data['storage']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "'");
 		
 		$custom_field_id = $this->db->getLastId();
 		
@@ -9,10 +9,10 @@ class ModelSaleCustomField extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_description SET custom_field_id = '" . (int)$custom_field_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 		
-		if (isset($data['custom_field_customer_group'])) {
-			foreach ($data['custom_field_customer_group'] as $custom_field_customer_group) {
-				if (isset($custom_field_customer_group['customer_group_id'])) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_customer_group SET custom_field_id = '" . (int)$custom_field_id . "', customer_group_id = '" . (int)$custom_field_customer_group['customer_group_id'] . "', required = '" . (int)(!empty($custom_field_customer_group['required']) ? $custom_field_customer_group['required'] : 0) . "'");
+		if (isset($data['custom_field_location'])) {
+			foreach ($data['custom_field_location'] as $location => $custom_field_location) {
+				foreach ($custom_field_location['customer_group'] as $customer_group_id) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_location SET custom_field_id = '" . (int)$custom_field_id . "', location = '" . $this->db->escape($location) . "', customer_group_id = '" . (int)$customer_group_id . "', required = '" . (in_array($customer_group_id, $custom_field_location['required']) ? $customer_group_id : 0) . "'");
 				}
 			}
 		}
@@ -31,7 +31,7 @@ class ModelSaleCustomField extends Model {
 	}
 	
 	public function editCustomField($custom_field_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', location = '" . $this->db->escape(implode(',', $data['location'])) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE custom_field_id = '" . (int)$custom_field_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "custom_field` SET type = '" . $this->db->escape($data['type']) . "', value = '" . $this->db->escape($data['value']) . "', storage = '" . $this->db->escape($data['storage']) . "', status = '" . (int)$data['status'] . "', sort_order = '" . (int)$data['sort_order'] . "' WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
 		$this->db->query("DELETE FROM " . DB_PREFIX . "custom_field_description WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
@@ -39,12 +39,12 @@ class ModelSaleCustomField extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_description SET custom_field_id = '" . (int)$custom_field_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
 		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "custom_field_customer_group WHERE custom_field_id = '" . (int)$custom_field_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "custom_field_location WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 
-		if (isset($data['custom_field_customer_group'])) {
-			foreach ($data['custom_field_customer_group'] as $custom_field_customer_group) {
-				if (isset($custom_field_customer_group['customer_group_id'])) {
-					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_customer_group SET custom_field_id = '" . (int)$custom_field_id . "', customer_group_id = '" . (int)$custom_field_customer_group['customer_group_id'] . "', required = '" . (int)(!empty($custom_field_customer_group['required']) ? $custom_field_customer_group['required'] : 0) . "'");
+		if (isset($data['custom_field_location'])) {
+			foreach ($data['custom_field_location'] as $location => $custom_field_location) {
+				foreach ($custom_field_location['customer_group'] as $customer_group_id) {
+					$this->db->query("INSERT INTO " . DB_PREFIX . "custom_field_location SET custom_field_id = '" . (int)$custom_field_id . "', location = '" . $this->db->escape($location) . "', customer_group_id = '" . (int)$customer_group_id . "', required = '" . (in_array($customer_group_id, $custom_field_location['required']) ? $customer_group_id : 0) . "'");
 				}
 			}
 		}
@@ -72,7 +72,7 @@ class ModelSaleCustomField extends Model {
 	public function deleteCustomField($custom_field_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_description` WHERE custom_field_id = '" . (int)$custom_field_id . "'");	
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_location` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "custom_field_value_description` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
 	}
@@ -137,12 +137,6 @@ class ModelSaleCustomField extends Model {
 		
 		return $custom_field_data;
 	}
-	
-	public function getCustomFieldCustomerGroups($custom_field_id) {
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
-		
-		return $query->rows;
-	}
 
 	public function getCustomFieldValueDescriptions($custom_field_id) {
 		$custom_field_value_data = array();
@@ -167,7 +161,20 @@ class ModelSaleCustomField extends Model {
 		
 		return $custom_field_value_data;
 	}
-
+	
+	public function getCustomFieldLocations($custom_field_id) {
+		$custom_field_location_data = array();
+		
+		$custom_field_location_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_location` WHERE custom_field_id = '" . (int)$custom_field_id . "'");
+		
+		foreach ($custom_field_location_query->rows as $custom_field_location) {
+			$custom_field_location_data[$custom_field_location['location']]['customer_group'][] = $custom_field_location['customer_group_id'];
+			$custom_field_location_data[$custom_field_location['location']]['required'][] = $custom_field_location['required'];
+		}
+					
+		return $custom_field_location_data;
+	}
+	
 	public function getTotalCustomFields() {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "custom_field`"); 
 		

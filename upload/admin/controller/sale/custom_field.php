@@ -207,19 +207,11 @@ class ControllerSaleCustomField extends Controller {
 					break;																	
 			}
 			
-			$location_data = array();
-			
-			$locations = explode(',', $result['location']);
-			
-			foreach ($locations as $location) {
-				$location_data[] = $this->language->get('text_' . $location);
-			}
-			
 			$data['custom_fields'][] = array(
 				'custom_field_id' => $result['custom_field_id'],
 				'name'            => $result['name'],
 				'type'            => $type,
-				'location'        => implode(', ', $location_data),
+				'storage'         => $this->language->get('text_' . $result['storage']),
 				'status'          => $result['status'],
 				'sort_order'      => $result['sort_order'],
 				'edit'            => $this->url->link('sale/custom_field/update', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $result['custom_field_id'] . $url, 'SSL')
@@ -430,76 +422,14 @@ class ControllerSaleCustomField extends Controller {
 			$data['value'] = '';
 		}
 		
-		$data['accounts'] = array();
-		
-		$data['accounts'][] = array(
-			'text'  => $this->language->get('text_register'),
-			'value' => 'register'
-		);
-		
-		$data['accounts'][] = array(
-			'text'  => $this->language->get('text_account'),
-			'value' => 'account'
-		);
-				
-		$data['addresses'] = array();
-		
-		$data['addresses'][] = array(
-			'text'  => $this->language->get('text_register'),
-			'value' => 'register'
-		);
-		
-		$data['addresses'][] = array(
-			'text'  => $this->language->get('text_address'),
-			'value' => 'address'
-		);
-		
-		$data['addresses'][] = array(
-			'text'  => $this->language->get('text_payment_address'),
-			'value' => 'payment_address'
-		);
-		
-		$data['addresses'][] = array(
-			'text'  => $this->language->get('text_shipping_address'),
-			'value' => 'shipping_address'
-		);
-										
-		if (isset($this->request->post['location'])) {
-			$data['custom_field_location'] = $this->request->post['location'];
+		if (isset($this->request->post['storage'])) {
+			$data['storage'] = $this->request->post['storage'];
 		} elseif (!empty($custom_field_info)) {
-			$data['custom_field_location'] = explode(',', $custom_field_info['location']);
+			$data['storage'] = $custom_field_info['storage'];
 		} else {
-			$data['custom_field_location'] = array();
-		}		
+			$data['storage'] = '';
+		}
 				
-		if (isset($this->request->post['custom_field_customer_group'])) {
-			$custom_field_customer_groups = $this->request->post['custom_field_customer_group'];
-		} elseif (isset($this->request->get['custom_field_id'])) {
-			$custom_field_customer_groups = $this->model_sale_custom_field->getCustomFieldCustomerGroups($this->request->get['custom_field_id']);
-		} else {
-			$custom_field_customer_groups = array();
-		}
-		
-		$data['custom_field_customer_group'] = array();
-		
-		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
-			if (isset($custom_field_customer_group['customer_group_id'])) {
-				$data['custom_field_customer_group'][] = $custom_field_customer_group['customer_group_id'];
-			}
-		}
-		
-		$data['custom_field_required'] = array();
-		
-		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
-			if (isset($custom_field_customer_group['required'])) {
-				$data['custom_field_required'][] = $custom_field_customer_group['required'];
-			}
-		}
-		
-		$this->load->model('sale/customer_group');
-		
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();	
-			
 		if (isset($this->request->post['status'])) {
 			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($custom_field_info)) {
@@ -533,6 +463,50 @@ class ControllerSaleCustomField extends Controller {
 				'sort_order'                     => $custom_field_value['sort_order']
 			);
 		}
+		
+		// Locations
+		if (isset($this->request->post['custom_field_location'])) {
+			$custom_field_location = $this->request->post['custom_field_location'];
+		} elseif (isset($this->request->get['custom_field_id'])) {
+			$custom_field_location = $this->model_sale_custom_field->getCustomFieldLocations($this->request->get['custom_field_id']);
+		} else {
+			$custom_field_location = array();
+		}
+		
+		$locations = array(
+			'register',
+			'edit',
+			'address',
+			'payment_address',
+			'shipping_address'
+		);
+		
+		$data['locations'] = array();
+		
+		foreach ($locations as $location) {
+			if (isset($custom_field_location[$location]['customer_group'])) {
+				$customer_group = $custom_field_location[$location]['customer_group'];
+			} else {
+				$customer_group = array();
+			}
+			
+			if (isset($custom_field_location[$location]['required'])) {
+				$required = $custom_field_location[$location]['required'];
+			} else {
+				$required = array();
+			}
+						
+			$data['locations'][] = array(
+				'text'           => $this->language->get('text_' . $location),
+				'value'          => $location,
+				'customer_group' => $customer_group,
+				'required'       => $required
+			);			
+		}
+		
+		$this->load->model('sale/customer_group');
+		
+		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');

@@ -225,7 +225,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=account/edit/upload',
+			url: 'index.php?route=account/account/upload',
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),

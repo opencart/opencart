@@ -59,7 +59,7 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $custom_field['name']; ?></td>
                 <td class="text-left"><?php echo $custom_field['type']; ?></td>
-                <td class="text-left"><?php echo $custom_field['location']; ?></td>
+                <td class="text-left"><?php echo $custom_field['storage']; ?></td>
                 <td class="text-right"><?php echo $custom_field['sort_order']; ?></td>
                 <td class="text-right"><a href="<?php echo $custom_field['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>

@@ -318,13 +318,15 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		// Custom Fields
-		$this->load->model('account/custom_field');
-
 		if (isset($this->request->post['custom_field'])) {
 			$custom_field_info = $this->request->post['custom_field'];
 		} else {
 			$custom_field_info = array();
-		}		
+		}	
+		
+		$this->load->model('account/custom_field');
+
+		$data['custom_fields'] = array();
 
 		// If a post request then get a list of all fields that should have been posted for validation checking.
 		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
@@ -447,53 +449,4 @@ class ControllerAccountRegister extends Controller {
 			return false;
 		}
 	}
-
-	public function country() {
-		$json = array();
-
-		$this->load->model('localisation/country');
-
-		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
-
-		if ($country_info) {
-			$this->load->model('localisation/zone');
-
-			$json = array(
-				'country_id'        => $country_info['country_id'],
-				'name'              => $country_info['name'],
-				'iso_code_2'        => $country_info['iso_code_2'],
-				'iso_code_3'        => $country_info['iso_code_3'],
-				'address_format'    => $country_info['address_format'],
-				'postcode_required' => $country_info['postcode_required'],
-				'zone'              => $this->model_localisation_zone->getZonesByCountryId($this->request->get['country_id']),
-				'status'            => $country_info['status']		
-			);
-		}
-
-		$this->response->setOutput(json_encode($json));
-	}
-
-	public function custom_field() {
-		$json = array();
-		
-		$this->load->model('account/custom_field');
-
-		// Customer Group
-		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->get['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
-
-		foreach ($custom_fields as $custom_field) {
-			$json[] = array(
-				'custom_field_id' => $custom_field['custom_field_id'],
-				'required'        => $custom_field['required']
-			);
-		}
-
-		$this->response->setOutput(json_encode($json));
-	}	
 }

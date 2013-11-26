@@ -275,11 +275,11 @@
 <script type="text/javascript"><!--
 $('select[name=\'country_id\']').on('change', function() {
 	$.ajax({
-		url: 'index.php?route=account/address/country&country_id=' + this.value,
+		url: 'index.php?route=account/account/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
-		},		
+		},
 		complete: function() {
 			$('.fa-spinner').remove();
 		},			
@@ -328,7 +328,7 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
-			url: 'index.php?route=account/address/upload',
+			url: 'index.php?route=account/account/upload',
 			type: 'post',		
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),

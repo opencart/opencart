@@ -161,8 +161,10 @@ class ControllerAccountEdit extends Controller {
 		
 		$this->load->model('account/custom_field');
 		
+		$data['custom_fields'] = array();
+		
 		// If a post request then get a list of all fields that should have been posted for validation checking.
-		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $this->customer->getGroupId());
+		$custom_fields = $this->model_account_custom_field->getCustomFields('account', $this->customer->getGroupId());
 		
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['type'] == 'checkbox') {

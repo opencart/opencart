@@ -122,9 +122,9 @@ class ControllerPaymentPPProPF extends Controller {
 		$request .= '&BUTTONSOURCE=' . urlencode('OpenCart_Cart_PFP');
 
 		if (!$this->config->get('pp_pro_pf_test')) {
-			$curl = curl_init('https://payflowpro.verisign.com/transaction');
+			$curl = curl_init('https://payflowpro.paypal.com');
 		} else {
-			$curl = curl_init('https://pilot-payflowpro.verisign.com/transaction');
+			$curl = curl_init('https://pilot-payflowpro.paypal.com');
 		}
 
 		curl_setopt($curl, CURLOPT_PORT, 443);

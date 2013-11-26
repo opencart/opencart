@@ -55,7 +55,7 @@
                   <?php } ?></td>
                 <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
                   <?php if (!$product['stock']) { ?>
-                  <span class="stock">***</span>
+                  <span class="text-danger">***</span>
                   <?php } ?>
                   <?php if ($product['option']) { ?>
                   <?php foreach ($product['option'] as $option) { ?>

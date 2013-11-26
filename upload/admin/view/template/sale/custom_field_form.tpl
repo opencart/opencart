@@ -116,44 +116,38 @@
           </div>
         </div>
         <?php foreach ($locations as $location) { ?>
-        <div class="form-group">
+        <div id="<?php echo $location['value']; ?>" class="form-group">
           <label class="col-sm-2 control-label"><?php echo $location['text']; ?></label>
-          <div class="col-sm-10"><?php echo $entry_customer_group; ?>
-            <ul>
-              <?php foreach ($customer_groups as $customer_group) { ?>
-              <li>
-                <div class="checkbox">
-                  <label>
-                    <?php if (in_array($customer_group['customer_group_id'], $location['customer_group'])) { ?>
-                    <input type="checkbox" name="custom_field_location[<?php echo $location['value']; ?>][customer_group][]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                    <?php echo $customer_group['name']; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="custom_field_location[<?php echo $location['value']; ?>][customer_group][]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                    <?php echo $customer_group['name']; ?>
-                    <?php } ?>
-                  </label>
-                </div>
-              </li>
-              <?php } ?>
-            </ul>
-            <?php echo $entry_required; ?>
-            <ul>
-              <?php foreach ($customer_groups as $customer_group) { ?>
-              <li>
-                <div class="checkbox">
-                  <label>
-                    <?php if (in_array($customer_group['customer_group_id'], $location['required'])) { ?>
-                    <input type="checkbox" name="custom_field_location[<?php echo $location['value']; ?>][required][]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
-                    <?php echo $customer_group['name']; ?>
-                    <?php } else { ?>
-                    <input type="checkbox" name="custom_field_location[<?php echo $location['value']; ?>][required][]" value="<?php echo $customer_group['customer_group_id']; ?>" />
-                    <?php echo $customer_group['name']; ?>
-                    <?php } ?>
-                  </label>
-                </div>
-              </li>
-              <?php } ?>
-            </ul>
+          <div class="col-sm-10">
+            <p><strong><?php echo $entry_customer_group; ?></strong></p>
+            <?php foreach ($customer_groups as $customer_group) { ?>
+            <div class="checkbox">
+              <label>
+                <?php if (in_array($customer_group['customer_group_id'], $location['customer_group'])) { ?>
+                <input type="checkbox" name="custom_field_location[<?php echo $location['value']; ?>][customer_group][]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+                <?php echo $customer_group['name']; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="custom_field_location[<?php echo $location['value']; ?>][customer_group][]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+                <?php echo $customer_group['name']; ?>
+                <?php } ?>
+              </label>
+            </div>
+            <?php } ?>
+            <br />
+            <p><strong><?php echo $entry_required; ?></strong></p>
+            <?php foreach ($customer_groups as $customer_group) { ?>
+            <div class="checkbox">
+              <label>
+                <?php if (in_array($customer_group['customer_group_id'], $location['required'])) { ?>
+                <input type="checkbox" name="custom_field_location[<?php echo $location['value']; ?>][required][]" value="<?php echo $customer_group['customer_group_id']; ?>" checked="checked" />
+                <?php echo $customer_group['name']; ?>
+                <?php } else { ?>
+                <input type="checkbox" name="custom_field_location[<?php echo $location['value']; ?>][required][]" value="<?php echo $customer_group['customer_group_id']; ?>" />
+                <?php echo $customer_group['name']; ?>
+                <?php } ?>
+              </label>
+            </div>
+            <?php } ?>
           </div>
         </div>
         <?php } ?>
@@ -239,19 +233,19 @@ $('select[name=\'type\']').on('change', function() {
 $('select[name=\'type\']').trigger('change');
 
 $('select[name=\'storage\']').on('change', function() {
-	$('#account, #address').hide();
-
 	if (this.value == 'account') {
 		$('#account').show();
 		
-		$('#address input[name^=\'location\']').prop('checked', false);
-	}
-	
-	if (this.value == 'address') {
-		$('#address').show();
+		$('#address, #shipping_address, #payment_address').hide();
 		
-		$('#account input[name^=\'location\']').prop('checked', false);
-	}	
+		$('input[name*=\'address\']').prop('checked', false);
+	} else {
+		$('#address, #shipping_address, #payment_address').show();
+		
+		$('#account').hide();
+		
+		$('input[name*=\'account\']').prop('checked', false);
+	}
 });
 
 $('select[name=\'storage\']').trigger('change');

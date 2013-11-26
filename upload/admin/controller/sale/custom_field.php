@@ -475,7 +475,7 @@ class ControllerSaleCustomField extends Controller {
 		
 		$locations = array(
 			'register',
-			'edit',
+			'account',
 			'address',
 			'payment_address',
 			'shipping_address'

@@ -3,7 +3,7 @@ class ModelAccountCustomField extends Model {
 	public function getCustomFields($location, $customer_group_id = '') {
 		$custom_field_data = array();
 		
-		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_location` cfl LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfl.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cf.location = '" . $this->db->escape($location) . "'"; 
+		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_location` cfl LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfl.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfl.location = '" . $this->db->escape($location) . "'"; 
 		
 		if ($customer_group_id) { 
 			$sql .= " AND cfl.customer_group_id = '" . (int)$customer_group_id . "'";
@@ -33,10 +33,10 @@ class ModelAccountCustomField extends Model {
 				'name'               => $custom_field['name'],
 				'type'               => $custom_field['type'],
 				'value'              => $custom_field['value'],
+				'storage'            => $custom_field['storage'],
 				'required'           => $custom_field['required'] > 0 ? true : false,
-				'location'           => $custom_field['location'],
 				'sort_order'         => $custom_field['sort_order']
-			);			
+			);
 		}
 		
 		return $custom_field_data;

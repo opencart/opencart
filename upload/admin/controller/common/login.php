@@ -129,7 +129,7 @@ class ControllerCommonLogin extends Controller {
 		);	
 		
 		if (!$this->user->isLogged() && !in_array($route, $ignore)) {
-			return $this->forward('common/login');
+			return new Action('common/login');
 		}
 		
 		if (isset($this->request->get['route'])) {
@@ -151,11 +151,11 @@ class ControllerCommonLogin extends Controller {
 			$ignore = array_merge($ignore, $config_ignore);
 						
 			if (!in_array($route, $ignore) && (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token']))) {
-				return $this->forward('common/login');
+				return new Action('common/login');
 			}
 		} else {
 			if (!isset($this->request->get['token']) || !isset($this->session->data['token']) || ($this->request->get['token'] != $this->session->data['token'])) {
-				return $this->forward('common/login');
+				return new Action('common/login');
 			}
 		}
 	}	

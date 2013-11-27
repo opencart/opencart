@@ -52,7 +52,7 @@ class ControllerErrorPermission extends Controller {
 			);			
 						
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-				return $this->forward('error/permission');
+				return new Action('error/permission');
 			}
 		}
 	}	

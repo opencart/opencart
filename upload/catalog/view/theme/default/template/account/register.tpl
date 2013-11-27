@@ -203,7 +203,7 @@
         </fieldset>
         <?php foreach ($custom_fields as $custom_field) { ?>
         <?php if ($custom_field['type'] == 'select') { ?>
-        <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
+        <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field sort-<?php echo $custom_field['sort_order']; ?>">
           <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
           <div class="col-sm-10">
             <select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
@@ -384,9 +384,11 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 				}
 			}
 			
-			//$('.custom-field').each(function(element) {
-				//$('.form-group:eq(' + custom_field['sort_order'] + ')').after(html);
-			//});
+			$('.custom-field').each(function(element) {
+				sort_order = $(element).after(html);
+				
+				$(this).appendTo('.form-group:eq(' + sort_order + ')');
+			});
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

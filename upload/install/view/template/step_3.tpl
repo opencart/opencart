@@ -50,7 +50,7 @@
         </tr>
         <tr>
           <td>Password:</td>
-          <td><input type="text" name="db_password" value="<?php echo $db_password; ?>" /></td>
+          <td><input type="password" name="db_password" value="<?php echo $db_password; ?>" /></td>
         </tr>
         <tr>
           <td><span class="required">*</span> Database Name:</td>
@@ -83,7 +83,7 @@
         </tr>
         <tr>
           <td><span class="required">*</span> Password:</td>
-          <td><input type="text" name="password" value="<?php echo $password; ?>" />
+          <td><input type="password" name="password" value="<?php echo $password; ?>" />
             <br />
             <?php if ($error_password) { ?>
             <span class="required"><?php echo $error_password; ?></span>

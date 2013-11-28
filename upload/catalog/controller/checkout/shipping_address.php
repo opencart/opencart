@@ -3,11 +3,12 @@ class ControllerCheckoutShippingAddress extends Controller {
 	public function index() {
 		$this->load->language('checkout/checkout');
 		
+		$data['text_address_existing'] = $this->language->get('text_address_existing');
+		$data['text_address_new'] = $this->language->get('text_address_new');		
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
 		$data['text_loading'] = $this->language->get('text_loading');
 
-		$data['entry_address'] = $this->language->get('entry_address');
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
 		$data['entry_company'] = $this->language->get('entry_company');

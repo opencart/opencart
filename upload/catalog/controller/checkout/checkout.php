@@ -78,22 +78,6 @@ class ControllerCheckoutCheckout extends Controller {
 		}	
   	}
 	
-	public function address() {
-		$json = array();
-		
-		if (!empty($this->request->get['address_id'])) {
-			$this->load->model('account/address');
-			
-			$adress_info = $this->model_account_address->getAddress($this->request->get['address_id']);
-			
-			if ($adress_info) {
-				$json = $adress_info;
-			}
-		}
-
-		$this->response->setOutput(json_encode($json));		
-	}
-		
 	public function country() {
 		$json = array();
 		

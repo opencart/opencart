@@ -18,6 +18,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
+        <button type="submit" form="form-order" formaction="<?php echo $picklist; ?>" formtarget="_blank" class="btn btn-info"><i class="fa fa-truck"></i> <?php echo $button_picklist; ?></button>
         <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" class="btn btn-info"><i class="fa fa-print"></i> <?php echo $button_invoice; ?></button>
         <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i> <?php echo $button_insert; ?></a>
         <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-order').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>

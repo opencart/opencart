@@ -50,6 +50,7 @@ $_['button_repair']                 = 'Repair';
 $_['button_upload']                 = 'Upload';
 $_['button_submit']                 = 'Submit';
 $_['button_invoice']                = 'Print Invoice';
+$_['button_picklist']               = 'Print Picklist';
 $_['button_address_add']            = 'Add Address';
 $_['button_attribute_add']          = 'Add Attribute';
 $_['button_banner_add']             = 'Add Banner';

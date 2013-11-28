@@ -26,12 +26,12 @@
             <strong><?php echo $order['store_name']; ?></strong><br />
             <?php echo $order['store_address']; ?>
             </address>
-            <?php echo $text_telephone; ?> <?php echo $order['store_telephone']; ?><br />
+            <b><?php echo $text_telephone; ?></b> <?php echo $order['store_telephone']; ?><br />
             <?php if ($order['store_fax']) { ?>
-            <?php echo $text_fax; ?> <?php echo $order['store_fax']; ?><br />
+            <b><?php echo $text_fax; ?></b> <?php echo $order['store_fax']; ?><br />
             <?php } ?>
-            <?php echo $order['store_email']; ?><br />
-            <a href="<?php echo $order['store_url']; ?>"><?php echo $order['store_url']; ?></a></td>
+            <b><?php echo $text_email; ?></b> <?php echo $order['store_email']; ?><br />
+            <b><?php echo $text_website; ?></b> <a href="<?php echo $order['store_url']; ?>"><?php echo $order['store_url']; ?></a></td>
           <td style="width: 50%;"><b><?php echo $text_date_added; ?></b> <?php echo $order['date_added']; ?><br />
             <?php if ($order['invoice_no']) { ?>
             <b><?php echo $text_invoice_no; ?></b> <?php echo $order['invoice_no']; ?><br />
@@ -55,9 +55,7 @@
         <tr>
           <td><address>
             <?php echo $order['payment_address']; ?>
-            </address>
-            <?php echo $order['email']; ?><br/>
-            <?php echo $order['telephone']; ?></td>
+            </address></td>
           <td><address>
             <?php echo $order['shipping_address']; ?>
             </address></td>

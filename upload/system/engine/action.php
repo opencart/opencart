@@ -1,9 +1,9 @@
 <?php
 final class Action {
-	protected $file;
-	protected $class;
-	protected $method;
-	protected $args = array();
+	private $file;
+	private $class;
+	private $method;
+	private $args = array();
 
 	public function __construct($route, $args = array()) {
 		$path = '';

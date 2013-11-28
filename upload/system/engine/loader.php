@@ -1,6 +1,6 @@
 <?php
 final class Loader {
-	protected $registry;
+	private $registry;
 
 	public function __construct($registry) {
 		$this->registry = $registry;

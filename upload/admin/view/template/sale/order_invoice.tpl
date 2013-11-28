@@ -13,7 +13,7 @@
 <div class="container">
   <?php foreach ($orders as $order) { ?>
   <div style="page-break-after: always;">
-    <h1><?php echo $text_invoice; ?></h1>
+    <h1><?php echo $text_invoice; ?> #<?php echo $order['order_id']; ?></h1>
     <table class="table table-striped table-bordered">
       <thead>
         <tr>

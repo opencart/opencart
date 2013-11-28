@@ -441,9 +441,9 @@ function country(element, index, zone_id) {
 			},			
 			success: function(json) {
 				if (json['postcode_required'] == '1') {
-					$('#input-postcode' + index).parent().addClass('required');
+					$('input[name=\'address[' + index + '][postcode]').parent().addClass('required');
 				} else {
-					$('#input-postcode' + index).parent().parent().removeClass('required');
+					$('input[name=\'address[' + index + '][postcode]').parent().parent().removeClass('required');
 				}
 				
 				html = '<option value=""><?php echo $text_select; ?></option>';

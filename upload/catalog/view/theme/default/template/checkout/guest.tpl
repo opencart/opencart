@@ -244,21 +244,21 @@ $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', fu
 $('#collapse-payment-address input[name=\'customer_group_id\']:checked').trigger('change');
 //--></script> 
 <script type="text/javascript"><!--
-$('#input-payment-country').on('change', function() {
+$('#collapse-payment-address select[name=\'country_id\']').on('change', function() {
     $.ajax({
         url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
         dataType: 'json',
         beforeSend: function() {
-			$('#input-payment-country').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('#collapse-payment-address select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
         },
         complete: function() {
             $('.fa-spinner').remove();
         },          
         success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#input-payment-postcode').parent().parent().addClass('required');
+				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
-				$('#input-payment-postcode').parent().parent().removeClass('required');
+				$('#collapse-payment-address input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
             
             html = '<option value=""><?php echo $text_select; ?></option>';
@@ -277,7 +277,7 @@ $('#input-payment-country').on('change', function() {
                 html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
             }
             
-            $('#input-payment-zone').html(html);
+            $('#collapse-payment-address select[name=\'zone_id\']').html(html);
         },
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -285,7 +285,7 @@ $('#input-payment-country').on('change', function() {
     });
 });
 
-$('#input-payment-country').trigger('change');
+$('#collapse-payment-address select[name=\'country_id\']').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-payment-address button[id^=\'button-custom-field\']').on('click', function() {

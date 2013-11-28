@@ -182,21 +182,21 @@
   </div>
 </form>
 <script type="text/javascript"><!--
-$('#input-shipping-country').on('change', function() {
+$('#collapse-shipping-address select[name=\'country_id\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=checkout/checkout/country&country_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('#input-shipping-country').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('#collapse-shipping-address select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spinner').remove();
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#input-shipping-postcode').parent().parent().addClass('required');
+				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().addClass('required');
 			} else {
-				$('#input-shipping-postcode').parent().parent().removeClass('required');
+				$('#collapse-shipping-address input[name=\'postcode\']').parent().parent().removeClass('required');
 			}
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -215,7 +215,7 @@ $('#input-shipping-country').on('change', function() {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
 			
-			$('#input-shipping-zone').html(html);
+			$('#collapse-shipping-address select[name=\'zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -223,7 +223,7 @@ $('#input-shipping-country').on('change', function() {
 	});
 });
 
-$('#input-shipping-country').trigger('change');
+$('#collapse-shipping-address select[name=\'country_id\']').trigger('change');
 //--></script>
 <script type="text/javascript"><!--
 $('#collapse-shipping-address button[id^=\'button-upload\']').on('click', function() {

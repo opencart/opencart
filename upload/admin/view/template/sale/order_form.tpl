@@ -709,6 +709,38 @@ $('input[name=\'affiliate\']').autocomplete({
 	}	
 });
 
+$('select[name=\'payment_address\']').on('change', function() {
+	$.ajax({
+		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('select[name=\'payment_address\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+		},
+		complete: function() {
+			$('.fa-spinner').remove();
+		},		
+		success: function(json) {
+			if (json != '') {	
+				$('input[name=\'payment_firstname\']').attr('value', json['firstname']);
+				$('input[name=\'payment_lastname\']').attr('value', json['lastname']);
+				$('input[name=\'payment_company\']').attr('value', json['company']);
+				$('input[name=\'payment_address_1\']').attr('value', json['address_1']);
+				$('input[name=\'payment_address_2\']').attr('value', json['address_2']);
+				$('input[name=\'payment_city\']').attr('value', json['city']);
+				$('input[name=\'payment_postcode\']').attr('value', json['postcode']);
+				$('select[name=\'payment_country_id\']').prop('value', json['country_id']);
+				
+				payment_zone_id = json['zone_id'];
+				
+				$('select[name=\'payment_country_id\']').trigger('change');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+});
+
 var payment_zone_id = '<?php echo $payment_zone_id; ?>';
 
 $('select[name=\'payment_country_id\']').on('change', function() {
@@ -723,9 +755,9 @@ $('select[name=\'payment_country_id\']').on('change', function() {
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#input-payment-postcode').parent().parent().addClass('required');
+				$('input[name=\'payment_postcode\']').parent().parent().addClass('required');
 			} else {
-				$('#input-payment-postcode').parent().parent().removeClass('required');
+				$('input[name=\'payment_postcode\']').parent().parent().removeClass('required');
 			}
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -754,31 +786,34 @@ $('select[name=\'payment_country_id\']').on('change', function() {
 
 $('select[name=\'payment_country_id\']').trigger('change');
 
-$('select[name=\'payment_address\']').on('change', function() {
+$('select[name=\'shipping_address\']').on('change', function() {
 	$.ajax({
 		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
 		dataType: 'json',
 		beforeSend: function() {
-			$('select[name=\'payment_address\']').after(' <i class="fa fa-spinner fa-spin"></i>');
+			$('select[name=\'shipping_address\']').after(' <i class="fa fa-spinner fa-spin"></i>');
 		},
 		complete: function() {
 			$('.fa-spinner').remove();
 		},		
 		success: function(json) {
 			if (json != '') {	
-				$('input[name=\'payment_firstname\']').attr('value', json['firstname']);
-				$('input[name=\'payment_lastname\']').attr('value', json['lastname']);
-				$('input[name=\'payment_company\']').attr('value', json['company']);
-				$('input[name=\'payment_address_1\']').attr('value', json['address_1']);
-				$('input[name=\'payment_address_2\']').attr('value', json['address_2']);
-				$('input[name=\'payment_city\']').attr('value', json['city']);
-				$('input[name=\'payment_postcode\']').attr('value', json['postcode']);
-				$('select[name=\'payment_country_id\']').prop('value', json['country_id']);
+				$('input[name=\'shipping_firstname\']').attr('value', json['firstname']);
+				$('input[name=\'shipping_lastname\']').attr('value', json['lastname']);
+				$('input[name=\'shipping_company\']').attr('value', json['company']);
+				$('input[name=\'shipping_address_1\']').attr('value', json['address_1']);
+				$('input[name=\'shipping_address_2\']').attr('value', json['address_2']);
+				$('input[name=\'shipping_city\']').attr('value', json['city']);
+				$('input[name=\'shipping_postcode\']').attr('value', json['postcode']);
+				$('select[name=\'shipping_country_id\']').prop('value', json['country_id']);
 				
-				payment_zone_id = json['zone_id'];
+				shipping_zone_id = json['zone_id'];
 				
-				$('select[name=\'payment_country_id\']').trigger('change');
+				$('select[name=\'shipping_country_id\']').trigger('change');
 			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});	
 });
@@ -797,9 +832,9 @@ $('select[name=\'shipping_country_id\']').on('change', function() {
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('#input-shipping-postcode').parent().parent().addClass('required');
+				$('input[name=\'shipping_postcode\']').parent().parent().addClass('required');
 			} else {
-				$('#input-shipping-postcode').parent().parent().removeClass('required');
+				$('input[name=\'shipping_postcode\']').parent().parent().removeClass('required');
 			}
 			
 			html = '<option value=""><?php echo $text_select; ?></option>';
@@ -827,35 +862,6 @@ $('select[name=\'shipping_country_id\']').on('change', function() {
 });
 
 $('select[name=\'shipping_country_id\']').trigger('change');
-
-$('select[name=\'shipping_address\']').on('change', function() {
-	$.ajax({
-		url: 'index.php?route=sale/customer/address&token=<?php echo $token; ?>&address_id=' + this.value,
-		dataType: 'json',
-		beforeSend: function() {
-			$('select[name=\'shipping_address\']').after(' <i class="fa fa-spinner fa-spin"></i>');
-		},
-		complete: function() {
-			$('.fa-spinner').remove();
-		},		
-		success: function(json) {
-			if (json != '') {	
-				$('input[name=\'shipping_firstname\']').attr('value', json['firstname']);
-				$('input[name=\'shipping_lastname\']').attr('value', json['lastname']);
-				$('input[name=\'shipping_company\']').attr('value', json['company']);
-				$('input[name=\'shipping_address_1\']').attr('value', json['address_1']);
-				$('input[name=\'shipping_address_2\']').attr('value', json['address_2']);
-				$('input[name=\'shipping_city\']').attr('value', json['city']);
-				$('input[name=\'shipping_postcode\']').attr('value', json['postcode']);
-				$('select[name=\'shipping_country_id\']').prop('value', json['country_id']);
-				
-				shipping_zone_id = json['zone_id'];
-				
-				$('select[name=\'shipping_country_id\']').trigger('change');
-			}
-		}
-	});	
-});
 //--></script> 
 <script type="text/javascript"><!--
 $('input[name=\'product\']').autocomplete({

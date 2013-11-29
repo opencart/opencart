@@ -7,6 +7,9 @@
 /upload/system/cache/*
 !/upload/system/cache/index.html
 
+# System Config File
+!system/library/config.php
+
 # Image File
 !/upload/image/no_image.jpg
 

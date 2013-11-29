@@ -316,6 +316,7 @@
       <div class="row">
         <?php $i = 0; ?>
         <?php foreach ($products as $product) { ?>
+        
         <?php if ($column_left && $column_right) { ?>
         <?php $class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'; ?>
         <?php } elseif ($column_left || $column_right) { ?>
@@ -368,6 +369,8 @@
         <div class="clearfix visible-md"></div>
         <?php } ?>
         <?php $i++; ?>
+        
+        
         <?php } ?>
       </div>
       <?php } ?>

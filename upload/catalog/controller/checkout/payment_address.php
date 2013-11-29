@@ -53,7 +53,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		
 		$data['custom_fields'] = array();
 		
-		$custom_fields = $this->model_account_custom_field->getCustomFields('payment_address', $this->customer->getGroupId());
+		$custom_fields = $this->model_account_custom_field->getCustomFields('payment_address', $this->config->get('config_customer_group_id'));
 		
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['type'] == 'checkbox') {

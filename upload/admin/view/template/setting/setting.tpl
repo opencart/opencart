@@ -1217,7 +1217,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-mail-protocol"><?php echo $entry_mail_protocol; ?></label>
               <div class="col-sm-10">
-                <select name="config_mail_protocol" id="input-mail-protocol" class="form-control">
+                <select name="config_mail[protocol]" id="input-mail-protocol" class="form-control">
                   <?php if ($config_mail_protocol == 'mail') { ?>
                   <option value="mail" selected="selected"><?php echo $text_mail; ?></option>
                   <?php } else { ?>

@@ -1034,7 +1034,13 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_ftp_status'] = $this->config->get('config_ftp_status');
 		}
-												
+		
+		if (isset($this->request->post['config_mail'])) {
+			$config_mail = $this->request->post['config_mail'];
+		} else {
+			$config_mail = $this->config->get('config_mail');
+		}
+														
 		if (isset($this->request->post['config_mail_protocol'])) {
 			$data['config_mail_protocol'] = $this->request->post['config_mail_protocol'];
 		} else {

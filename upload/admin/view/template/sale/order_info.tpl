@@ -63,12 +63,6 @@
               <td><?php echo $customer_group; ?></td>
             </tr>
             <?php } ?>
-            <?php if ($customer_group) { ?>
-            <tr>
-              <td><?php echo $text_customer_group; ?></td>
-              <td><?php echo $customer_group; ?></td>
-            </tr>
-            <?php } ?>
             <tr>
               <td><?php echo $text_email; ?></td>
                <td><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></td>
@@ -328,27 +322,6 @@
               <?php } ?>
             </tbody>
           </table>
-          <?php if ($downloads) { ?>
-          <h3><?php echo $text_download; ?></h3>
-          <table class="table table-striped table-bordered">
-            <thead>
-              <tr>
-                <td class="text-left"><b><?php echo $column_download; ?></b></td>
-                <td class="text-left"><b><?php echo $column_filename; ?></b></td>
-                <td class="text-right"><b><?php echo $column_remaining; ?></b></td>
-              </tr>
-            </thead>
-            <tbody>
-              <?php foreach ($downloads as $download) { ?>
-              <tr>
-                <td class="text-left"><?php echo $download['name']; ?></td>
-                <td class="text-left"><?php echo $download['filename']; ?></td>
-                <td class="text-right"><?php echo $download['remaining']; ?></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
-          <?php } ?>
         </div>
         <div class="tab-pane " id="tab-history">
           <div id="history"></div>

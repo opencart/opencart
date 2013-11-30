@@ -1,8 +1,6 @@
 <?php
 class ControllerHeader extends Controller {
 	public function index() {
-		$data = array();
-		
 		$data['title'] = $this->document->getTitle();
 		$data['description'] = $this->document->getDescription();
 		$data['links'] = $this->document->getLinks();

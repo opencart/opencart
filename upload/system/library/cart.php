@@ -201,8 +201,7 @@ class Cart {
 							'download_id' => $download['download_id'],
 							'name'        => $download['name'],
 							'filename'    => $download['filename'],
-							'mask'        => $download['mask'],
-							'remaining'   => $download['remaining']
+							'mask'        => $download['mask']
 						);
 					}
 

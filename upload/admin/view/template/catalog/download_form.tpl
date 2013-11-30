@@ -56,24 +56,6 @@
             <?php } ?>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-remaining"><?php echo $entry_remaining; ?></label>
-          <div class="col-sm-10">
-            <input type="text" name="remaining" value="<?php echo $remaining; ?>" id="input-remaining" class="form-control" />
-          </div>
-        </div>
-        <?php if ($download_id) { ?>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-update"><?php echo $entry_update; ?></label>
-          <div class="col-sm-10">
-            <?php if ($update) { ?>
-            <input type="checkbox" name="update" value="1" checked="checked" id="input-update" />
-            <?php } else { ?>
-            <input type="checkbox" name="update" value="1" id="input-update" />
-            <?php } ?>
-            <span class="help-block"><?php echo $help_update; ?></span></div>
-        </div>
-        <?php } ?>
       </form>
     </div>
   </div>

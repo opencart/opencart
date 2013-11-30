@@ -41,7 +41,7 @@ class ControllerCatalogDownload extends Controller {
 			$this->response->redirect($this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
-		$this->getList();
+		$this->getForm();
 	}
 
 	public function update() {
@@ -175,7 +175,7 @@ class ControllerCatalogDownload extends Controller {
 			$data['downloads'][] = array(
 				'download_id' => $result['download_id'],
 				'name'        => $result['name'],
-				'remaining'   => $result['remaining'],
+				'date_added'  => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'        => $this->url->link('catalog/download/update', 'token=' . $this->session->data['token'] . '&download_id=' . $result['download_id'] . $url, 'SSL')
 			);
 		}
@@ -186,7 +186,7 @@ class ControllerCatalogDownload extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
-		$data['column_remaining'] = $this->language->get('column_remaining');
+		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
@@ -226,7 +226,7 @@ class ControllerCatalogDownload extends Controller {
 		}
 
 		$data['sort_name'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . '&sort=dd.name' . $url, 'SSL');
-		$data['sort_remaining'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . '&sort=d.remaining' . $url, 'SSL');
+		$data['sort_date_added'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . '&sort=d.date_added' . $url, 'SSL');
 
 		$url = '';
 
@@ -263,12 +263,9 @@ class ControllerCatalogDownload extends Controller {
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_filename'] = $this->language->get('entry_filename');
 		$data['entry_mask'] = $this->language->get('entry_mask');
-		$data['entry_remaining'] = $this->language->get('entry_remaining');
-		$data['entry_update'] = $this->language->get('entry_update');
 
 		$data['help_filename'] = $this->language->get('help_filename');
 		$data['help_mask'] = $this->language->get('help_mask');
-		$data['help_update'] = $this->language->get('help_update');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -370,20 +367,6 @@ class ControllerCatalogDownload extends Controller {
 			$data['mask'] = $download_info['mask'];
 		} else {
 			$data['mask'] = '';
-		}
-
-		if (isset($this->request->post['remaining'])) {
-			$data['remaining'] = $this->request->post['remaining'];
-		} elseif (!empty($download_info)) {
-			$data['remaining'] = $download_info['remaining'];
-		} else {
-			$data['remaining'] = 1;
-		}
-
-		if (isset($this->request->post['update'])) {
-			$data['update'] = $this->request->post['update'];
-		} else {
-			$data['update'] = false;
 		}
 
 		$data['header'] = $this->load->controller('common/header');

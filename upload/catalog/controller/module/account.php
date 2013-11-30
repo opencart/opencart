@@ -16,6 +16,7 @@ class ControllerModuleAccount extends Controller {
 		$data['text_wishlist'] = $this->language->get('text_wishlist');
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_download'] = $this->language->get('text_download');
+		$data['text_reward'] = $this->language->get('text_reward');
 		$data['text_return'] = $this->language->get('text_return');
 		$data['text_transaction'] = $this->language->get('text_transaction');
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
@@ -32,6 +33,7 @@ class ControllerModuleAccount extends Controller {
 		$data['wishlist'] = $this->url->link('account/wishlist');
 		$data['order'] = $this->url->link('account/order', '', 'SSL');
 		$data['download'] = $this->url->link('account/download', '', 'SSL');
+		$data['reward'] = $this->url->link('account/reward', '', 'SSL');
 		$data['return'] = $this->url->link('account/return', '', 'SSL');
 		$data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
 		$data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');

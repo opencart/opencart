@@ -7,8 +7,6 @@ class ControllerStep2 extends Controller {
 			$this->response->redirect($this->url->link('step_3'));
 		}
 
-		$data = array();
-
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {

@@ -378,9 +378,7 @@
                 <span class="help-block"><?php echo $help_download; ?></span>
                 <div id="product-download" class="well well-sm">
                   <?php foreach ($product_downloads as $product_download) { ?>
-                  <div id="product-download<?php echo $product_download['download_id']; ?>">
-                    <button type="button" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button>
-                    <?php echo $product_download['name']; ?>
+                  <div id="product-download<?php echo $product_download['download_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product_download['name']; ?>
                     <input type="hidden" name="product_download[]" value="<?php echo $product_download['download_id']; ?>" />
                   </div>
                   <?php } ?>

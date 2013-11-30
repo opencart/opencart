@@ -13,10 +13,6 @@ class ModelCheckoutOrder extends Model {
 			foreach ($product['option'] as $option) {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "order_option SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', product_option_id = '" . (int)$option['product_option_id'] . "', product_option_value_id = '" . (int)$option['product_option_value_id'] . "', name = '" . $this->db->escape($option['name']) . "', `value` = '" . $this->db->escape($option['value']) . "', `type` = '" . $this->db->escape($option['type']) . "'");
 			}
-				
-			foreach ($product['download'] as $download) {
-				$this->db->query("INSERT INTO " . DB_PREFIX . "order_download SET order_id = '" . (int)$order_id . "', order_product_id = '" . (int)$order_product_id . "', name = '" . $this->db->escape($download['name']) . "', filename = '" . $this->db->escape($download['filename']) . "', mask = '" . $this->db->escape($download['mask']) . "', remaining = '" . (int)($download['remaining'] * $product['quantity']) . "'");
-			}	
 		}
 		
 		foreach ($data['vouchers'] as $voucher) {
@@ -196,7 +192,9 @@ class ModelCheckoutOrder extends Model {
 
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_history SET order_id = '" . (int)$order_id . "', order_status_id = '" . (int)$order_status_id . "', notify = '1', comment = '" . $this->db->escape(($comment && $notify) ? $comment : '') . "', date_added = NOW()");
 
-			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+			$download_status = false;
+			
+			$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product LEFT JOIN " . DB_PREFIX . "product ON WHERE order_id = '" . (int)$order_id . "'");
 			
 			foreach ($order_product_query->rows as $order_product) {
 				$this->db->query("UPDATE " . DB_PREFIX . "product SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_id = '" . (int)$order_product['product_id'] . "' AND subtract = '1'");
@@ -206,12 +204,16 @@ class ModelCheckoutOrder extends Model {
 				foreach ($order_option_query->rows as $option) {
 					$this->db->query("UPDATE " . DB_PREFIX . "product_option_value SET quantity = (quantity - " . (int)$order_product['quantity'] . ") WHERE product_option_value_id = '" . (int)$option['product_option_value_id'] . "' AND subtract = '1'");
 				}
+				
+				// Check if there are any linked downloads
+				$product_download_query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "product_to_download` WHERE product_id = '" . (int)$order_product['product_id'] . "'");
+				
+				if ($product_download_query->row['total']) {
+					$download_status = true;	
+				}
 			}
 			
 			$this->cache->delete('product');
-			
-			// Downloads
-			$order_download_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_download WHERE order_id = '" . (int)$order_id . "'");
 			
 			// Gift Voucher
 			$this->load->model('checkout/voucher');
@@ -296,7 +298,7 @@ class ModelCheckoutOrder extends Model {
 			$data['customer_id'] = $order_info['customer_id'];
 			$data['link'] = $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id;
 			
-			if ($order_download_query->num_rows) {
+			if ($download_status) {
 				$data['download'] = $order_info['store_url'] . 'index.php?route=account/download';
 			} else {
 				$data['download'] = '';
@@ -476,7 +478,7 @@ class ModelCheckoutOrder extends Model {
 				$text .= $order_info['store_url'] . 'index.php?route=account/order/info&order_id=' . $order_id . "\n\n";
 			}
 		
-			if ($order_download_query->num_rows) {
+			if ($download_status) {
 				$text .= $language->get('text_new_download') . "\n";
 				$text .= $order_info['store_url'] . 'index.php?route=account/download' . "\n\n";
 			}

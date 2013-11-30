@@ -328,6 +328,8 @@ class ModelShippingUsps extends Model {
 				// strip reg, trade and ** out, updated 9-11-2013
 				$result = str_replace('&amp;lt;sup&amp;gt;&amp;#174;&amp;lt;/sup&amp;gt;', '', $result);
 				$result = str_replace('&amp;lt;sup&amp;gt;&amp;#8482;&amp;lt;/sup&amp;gt;', '', $result);
+				$result = str_replace('&amp;lt;sup&amp;gt;&amp;#174;&amp;lt;/sup&amp;gt;', '', $result);
+ 				
 				$result = str_replace('**', '', $result);
 				$result = str_replace("\r\n", '', $result);
 				$result = str_replace('\"', '"', $result);

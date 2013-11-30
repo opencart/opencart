@@ -88,7 +88,6 @@
               <td><?php echo $total; ?>
                 <?php if ($customer && $credit) { ?>
                 <?php if (!$credit_total) { ?>
-                <span id="credit"><b>[</b> <a id="credit-add"><?php echo $button_credit_add; ?></a> <b>]</b></span>
                 <button id="button-credit-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_credit_add; ?></button>
                 <?php } else { ?>
                 <button id="button-credit-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_credit_remove; ?></button>

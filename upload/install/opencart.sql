@@ -2059,27 +2059,10 @@ CREATE TABLE `oc_order` (
 -- Dumping data for table `oc_order`
 --
 
-
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_order_download`
---
-
-DROP TABLE IF EXISTS `oc_order_download`;
-CREATE TABLE `oc_order_download` (
-  `order_download_id` int(11) NOT NULL AUTO_INCREMENT,
-  `order_id` int(11) NOT NULL,
-  `order_product_id` int(11) NOT NULL,
-  `name` varchar(64) NOT NULL,
-  `filename` varchar(128) NOT NULL,
-  `mask` varchar(128) NOT NULL,
-  `remaining` int(3) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`order_download_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_order_download`
+-- Dumping data for table `oc_order_fraud`
 --
 
 DROP TABLE IF EXISTS `oc_order_fraud`;

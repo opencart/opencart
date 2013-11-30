@@ -193,7 +193,7 @@ class ControllerModuleShipping extends Controller {
 			
 			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 			
-			$this->session->data['success'] = $this->language->get('text_shipping');
+			$this->session->data['success'] = $this->language->get('text_success');
 			
 			$json['redirect'] = $this->url->link('checkout/cart');
 		}

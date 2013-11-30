@@ -16,7 +16,13 @@ class Mail {
 	public $newline = "\n";
 	public $verp = false;
 	public $parameter = '';
-
+	
+	public function __construct($config = array()) {
+		foreach ($config as $key => $value) {
+			$this->$key = $value;
+		}
+	}
+	
 	public function setTo($to) {
 		$this->to = html_entity_decode($to, ENT_QUOTES, 'UTF-8');
 	}

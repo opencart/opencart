@@ -44,7 +44,7 @@ class ControllerModuleVoucher extends Controller {
 		if ($voucher_info) {	
 			$this->session->data['voucher'] = $this->request->post['voucher'];
 				
-			$this->session->data['success'] = $this->language->get('text_voucher');
+			$this->session->data['success'] = $this->language->get('text_success');
 				
 			$json['redirect'] = $this->url->link('checkout/cart');			
 		} else {

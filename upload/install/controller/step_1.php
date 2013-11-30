@@ -5,8 +5,6 @@ class ControllerStep1 extends Controller {
 			$this->response->redirect($this->url->link('step_2'));
 		}	
 		
-		$data = array();
-		
 		$data['action'] = $this->url->link('step_1');
 		
 		$data['header'] = $this->load->controller('header');

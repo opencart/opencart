@@ -262,7 +262,11 @@ class ControllerCheckoutGuest extends Controller {
 			$this->session->data['guest']['telephone'] = $this->request->post['telephone'];
 			$this->session->data['guest']['fax'] = $this->request->post['fax'];
 			
-			$this->session->data['guest']['custom_field'] = $this->request->post['custom_field'];
+			if (isset($this->request->post['custom_field'])){
+				$this->session->data['guest']['custom_field'] = $this->request->post['custom_field'];
+			} else {
+				$this->session->data['guest']['custom_field'] = array();
+			}
 			
 			$this->session->data['payment_address']['firstname'] = $this->request->post['firstname'];
 			$this->session->data['payment_address']['lastname'] = $this->request->post['lastname'];				

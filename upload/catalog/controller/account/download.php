@@ -37,7 +37,6 @@ class ControllerAccountDownload extends Controller {
 		$data['column_order_id'] = $this->language->get('column_order_id');
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_size'] = $this->language->get('column_size');
-		$data['column_remaining'] = $this->language->get('column_remaining');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		
 		$data['button_download'] = $this->language->get('button_download');
@@ -82,9 +81,8 @@ class ControllerAccountDownload extends Controller {
 					'order_id'   => $result['order_id'],
 					'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 					'name'       => $result['name'],
-					'remaining'  => $result['remaining'],
 					'size'       => round(substr($size, 0, strpos($size, '.') + 4), 2) . $suffix[$i],
-					'href'       => $this->url->link('account/download/download', 'order_download_id=' . $result['order_download_id'], 'SSL')
+					'href'       => $this->url->link('account/download/download', 'download_id=' . $result['download_id'], 'SSL')
 				);
 			}
 		}
@@ -124,13 +122,13 @@ class ControllerAccountDownload extends Controller {
 
 		$this->load->model('account/download');
 		
-		if (isset($this->request->get['order_download_id'])) {
-			$order_download_id = $this->request->get['order_download_id'];
+		if (isset($this->request->get['download_id'])) {
+			$download_id = $this->request->get['download_id'];
 		} else {
-			$order_download_id = 0;
+			$download_id = 0;
 		}
 		
-		$download_info = $this->model_account_download->getDownload($order_download_id);
+		$download_info = $this->model_account_download->getDownload($download_id);
 		
 		if ($download_info) {
 			$file = DIR_DOWNLOAD . $download_info['filename'];
@@ -149,9 +147,7 @@ class ControllerAccountDownload extends Controller {
 					
 					readfile($file, 'rb');
 					
-					$this->model_account_download->updateRemaining($this->request->get['order_download_id']);
-					
-					exit;
+					exit();
 				} else {
 					exit('Error: Could not find file ' . $file . '!');
 				}

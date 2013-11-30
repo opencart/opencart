@@ -326,6 +326,9 @@ footer h5 {
 	-o-transform: rotate(-45deg);
 	transform: rotate(-45deg);
 }
+.pagination {
+	margin: 0;
+}
 /* buttons */
 .buttons {
 	margin: 1em 0;

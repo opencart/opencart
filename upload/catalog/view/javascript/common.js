@@ -47,24 +47,7 @@ $(document).ready(function() {
 			$(this).css('margin-left', '-' + (i + 5) + 'px');
 		}
 	});
-	/*
-	// Product list bootstrap fixes
-	var length = $('#column-left, #column-right').length;
-		
-	if (length == 2) {
-		$('.product-layout > div').attr('class', 'col-lg-6 col-md-6 col-sm-12 col-xs-12');
-		
-		$('.product-layout > div:nth-child(2n+2)').after('<div class="clearfix visible-md visible-sm"></div>');
-	} else if (length == 1) {
-		$('.product-layout > div').attr('class', 'col-lg-4 col-md-4 col-sm-6 col-xs-12');
-		
-		$('.product-layout > div:nth-child(3n+3)').after('<div class="clearfix visible-md"></div>');
-	} else {
-		$('.product-layout > div').attr('class', 'col-lg-3 col-md-3 col-sm-6 col-xs-12');
-		
-		$('.product-layout > div:nth-child(4n+4)').after('<div class="clearfix visible-md"></div>');
-	}
-	*/
+
 	// Product-grid to product-list
 	$('#list-view').click(function() {
 		$('.product-grid').removeClass('product-grid').addClass('product-list');

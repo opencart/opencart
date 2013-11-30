@@ -1082,14 +1082,6 @@ class ControllerSaleOrder extends Controller {
 			} else {
 				$order_option = array();
 			}
-
-			if (isset($order_product['order_download'])) {
-				$order_download = $order_product['order_download'];
-			} elseif (isset($this->request->get['order_id'])) {
-				$order_download = $this->model_sale_order->getOrderDownloads($this->request->get['order_id'], $order_product['order_product_id']);
-			} else {
-				$order_download = array();
-			}
 							
 			$data['order_products'][] = array(
 				'order_product_id' => $order_product['order_product_id'],
@@ -1097,7 +1089,6 @@ class ControllerSaleOrder extends Controller {
 				'name'             => $order_product['name'],
 				'model'            => $order_product['model'],
 				'option'           => $order_option,
-				'download'         => $order_download,
 				'quantity'         => $order_product['quantity'],
 				'price'            => $order_product['price'],
 				'total'            => $order_product['total'],
@@ -1344,7 +1335,6 @@ class ControllerSaleOrder extends Controller {
 			$data['text_country'] = $this->language->get('text_country');
 			$data['text_shipping_method'] = $this->language->get('text_shipping_method');
 			$data['text_payment_method'] = $this->language->get('text_payment_method');	
-			$data['text_download'] = $this->language->get('text_download');
 			$data['text_country_match'] = $this->language->get('text_country_match');
 			$data['text_country_code'] = $this->language->get('text_country_code');
 			$data['text_high_risk_country'] = $this->language->get('text_high_risk_country');
@@ -1452,9 +1442,6 @@ class ControllerSaleOrder extends Controller {
 			$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_price'] = $this->language->get('column_price');
 			$data['column_total'] = $this->language->get('column_total');
-			$data['column_download'] = $this->language->get('column_download');
-			$data['column_filename'] = $this->language->get('column_filename');
-			$data['column_remaining'] = $this->language->get('column_remaining');
 						
 			$data['entry_order_status'] = $this->language->get('entry_order_status');
 			$data['entry_notify'] = $this->language->get('entry_notify');
@@ -1689,20 +1676,6 @@ class ControllerSaleOrder extends Controller {
 		
 			$data['totals'] = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
 
-			$data['downloads'] = array();
-
-			foreach ($products as $product) {
-				$results = $this->model_sale_order->getOrderDownloads($this->request->get['order_id'], $product['order_product_id']);
-	
-				foreach ($results as $result) {
-					$data['downloads'][] = array(
-						'name'      => $result['name'],
-						'filename'  => $result['mask'],
-						'remaining' => $result['remaining']
-					);
-				}
-			}
-			
 			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 			$data['order_status_id'] = $order_info['order_status_id'];

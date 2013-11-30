@@ -1,7 +1,7 @@
 <?php
 class ModelCatalogDownload extends Model {
 	public function addDownload($data) {
-      	$this->db->query("INSERT INTO " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "', remaining = '" . (int)$data['remaining'] . "', date_added = NOW()");
+      	$this->db->query("INSERT INTO " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "', date_added = NOW()");
 
       	$download_id = $this->db->getLastId(); 
 
@@ -11,15 +11,7 @@ class ModelCatalogDownload extends Model {
 	}
 	
 	public function editDownload($download_id, $data) {
-		if (!empty($data['update'])) {
-			$download_info = $this->getDownload($download_id);
-        	
-			if ($download_info) {
-      			$this->db->query("UPDATE " . DB_PREFIX . "order_download SET `filename` = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "', remaining = '" . (int)$data['remaining'] . "' WHERE `filename` = '" . $this->db->escape($download_info['filename']) . "'");
-			}
-		}		
-		
-        $this->db->query("UPDATE " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "', remaining = '" . (int)$data['remaining'] . "' WHERE download_id = '" . (int)$download_id . "'");
+        $this->db->query("UPDATE " . DB_PREFIX . "download SET filename = '" . $this->db->escape($data['filename']) . "', mask = '" . $this->db->escape($data['mask']) . "' WHERE download_id = '" . (int)$download_id . "'");
 
       	$this->db->query("DELETE FROM " . DB_PREFIX . "download_description WHERE download_id = '" . (int)$download_id . "'");
 
@@ -48,7 +40,7 @@ class ModelCatalogDownload extends Model {
 		
 		$sort_data = array(
 			'dd.name',
-			'd.remaining'
+			'd.date_added'
 		);
 	
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {

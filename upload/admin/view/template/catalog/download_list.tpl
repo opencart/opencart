@@ -34,10 +34,10 @@
                   <?php } else { ?>
                   <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                   <?php } ?></td>
-                <td class="text-right"><?php if ($sort == 'd.remaining') { ?>
-                  <a href="<?php echo $sort_remaining; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_remaining; ?></a>
+                <td class="text-right"><?php if ($sort == 'd.date_added') { ?>
+                  <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
                   <?php } else { ?>
-                  <a href="<?php echo $sort_remaining; ?>"><?php echo $column_remaining; ?></a>
+                  <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
                   <?php } ?></td>
                 <td class="text-right"><?php echo $column_action; ?></td>
               </tr>
@@ -52,7 +52,7 @@
                   <input type="checkbox" name="selected[]" value="<?php echo $download['download_id']; ?>" />
                   <?php } ?></td>
                 <td class="text-left"><?php echo $download['name']; ?></td>
-                <td class="text-right"><?php echo $download['remaining']; ?></td>
+                <td class="text-right"><?php echo $download['date_added']; ?></td>
                 <td class="text-right"><a href="<?php echo $download['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>

@@ -37,7 +37,7 @@ class ControllerModuleReward extends Controller {
 	}
 	
 	public function reward() {
-		$this->load->language('voucher/reward');
+		$this->load->language('module/reward');
 		
 		$json = array();
 		
@@ -66,7 +66,7 @@ class ControllerModuleReward extends Controller {
 		if (!$json) {
 			$this->session->data['reward'] = abs($this->request->post['reward']);
 				
-			$this->session->data['success'] = $this->language->get('text_reward');
+			$this->session->data['success'] = $this->language->get('text_success');
 				
 			$json['redirect'] = $this->url->link('checkout/cart');		
 		}

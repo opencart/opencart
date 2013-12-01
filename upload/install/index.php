@@ -38,6 +38,11 @@ $response = new Response();
 $response->addHeader('Content-Type: text/html; charset=UTF-8');
 $registry->set('response', $response);
 
+// Language
+$language = new Language();
+$language->load('english');	
+$registry->set('language', $language); 
+
 // Document
 $document = new Document();
 $registry->set('document', $document);

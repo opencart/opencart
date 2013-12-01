@@ -1,4 +1,4 @@
-html {
+/*html {
 	overflow: -moz-scrollbars-vertical;
 	margin: 0;
 	padding: 0;
@@ -209,7 +209,7 @@ input.button {
 	margin-left: auto;
 	margin-right: auto;
 }
-/* Terms */
+
 .terms {
 	background: #FFFFFF;
 	border: 1px solid #DBDBDB;
@@ -246,3 +246,4 @@ input.button {
 	margin: 0px 5px;
 	line-height: 28px;
 }
+*/

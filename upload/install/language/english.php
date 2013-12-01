@@ -1,48 +1,63 @@
 <?php
+// Heading
+$_['heading_step_1']        = 'Step 1 - License';
+$_['heading_step_2']        = 'Step 2 - Pre-Installation';
+$_['heading_step_3']        = 'Step 3 - Configuration';
+$_['heading_step_4']        = 'Step 4 - Finished!';
+
 // Text
-$_['text_step_1']        = 'Step 1 - License';
-$_['text_step_2']        = 'Step 2 - Pre-Installation';
-$_['text_step_3']        = 'Step 3 - Configuration';
-$_['text_step_4']        = 'Step 4 - Finished!';
+$_['text_license']           = 'License';
+$_['text_installation']      = 'Pre-Installation';
+$_['text_configuration']     = 'Configuration';
+$_['text_finished']          = 'Finished';
+$_['text_install_php']       = '1. Please configure your PHP settings to match requirements listed below.';
+$_['text_install_extension'] = '2. Please make sure the PHP extensions listed below are installed.';
+$_['text_install_file']      = '3. Please make sure you have set the correct permissions on the files list below.';
+$_['text_install_directory'] = '4. Please make sure you have set the correct permissions on the directories list below.';
 
-$_['text_license']       = 'License';
-$_['text_installation']  = 'Pre-Installation';
-$_['text_configuration'] = 'Configuration';
-$_['text_finished']      = 'Finished';
-
-$_['text_php']           = '1. Please configure your PHP settings to match requirements listed below.';
-$_['text_extension']     = '2. Please make sure the PHP extensions listed below are installed.';
-$_['text_file']          = '3. Please make sure you have set the correct permissions on the files list below.';
-$_['text_directory']     = '4. Please make sure you have set the correct permissions on the directories list below.';
-
-
-$_['text_version']       = 'PHP Version:';
-$_['text_global']        = 'Register Globals:';
-$_['text_magic']         = 'Magic Quotes GPC:';
-$_['text_upload']        = 'File Uploads';
-$_['text_session']       = 'Session Auto Start';
-
-$_['text_mysql']         = 'MySQL';
-$_['text_gd']            = 'GD';
-$_['text_curl']          = 'cURL';
-$_['text_mcrypt']        = 'mCrypt';
-$_['text_zip']           = 'ZIP';
+$_['text_db_connection']     = '1. Please enter your database connection details.';
+$_['text_db_administration'] = '2. Please enter a username and password for the administration.';
 
 
 
-$_['column_file']        = 'Files';
-$_['column_directory']   = 'Directories';
-$_['column_status']      = 'Status';
-
-$_['text_on']            = 'On';
-$_['text_off']           = 'Off';
 
 
+$_['text_setting']           = 'PHP Settings';
+$_['text_current']           = 'Current Settings';
+$_['text_required']          = 'Required Settings';
+$_['text_extension']         = 'Extension Settings';
+$_['text_file']              = 'Files';
+$_['text_directory']         = 'Directories';
+$_['text_status']            = 'Status';
+$_['text_version']           = 'PHP Version';
+$_['text_global']            = 'Register Globals';
+$_['text_magic']             = 'Magic Quotes GPC';
+$_['text_upload']            = 'File Uploads';
+$_['text_session']           = 'Session Auto Start';
+$_['text_mysql']             = 'MySQL';
+$_['text_gd']                = 'GD';
+$_['text_curl']              = 'cURL';
+$_['text_mcrypt']            = 'mCrypt';
+$_['text_zip']               = 'ZIP';
+$_['text_on']                = 'On';
+$_['text_off']               = 'Off';
+$_['text_writable']          = 'Writable';
+$_['text_unwritable']        = 'Unwritable';
+$_['text_missing']           = 'Missing';
+
+
+
+$_['text_project']       = 'Project Homepage';
+$_['text_documentation'] = 'Documentation';
+$_['text_support']       = 'Support Forums';
+$_['text_footer']        = 'Copyright © 2012 OpenCart - All rights reserved';
 
 
 // Buttons
 $_['button_continue']   = 'Continue';
 $_['button_back']       = 'Back';
+
+
 
 $_['text_terms'] = '<h3>GNU GENERAL PUBLIC LICENSE</h3>
         <p>Version 3, 29 June 2007</p>

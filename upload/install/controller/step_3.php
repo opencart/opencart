@@ -79,8 +79,28 @@ class ControllerStep3 extends Controller {
 
 			$this->response->redirect($this->url->link('step_4'));
 		}
+		
+		$data['heading_step_3'] = $this->language->get('heading_step_3');
+		
+		$data['text_license'] = $this->language->get('text_license');
+		$data['text_installation'] = $this->language->get('text_installation');
+		$data['text_configuration'] = $this->language->get('text_configuration');
+		$data['text_finished'] = $this->language->get('text_finished');	
+		$data['text_db_connection'] = $this->language->get('text_db_connection');	
+		$data['text_db_administration'] = $this->language->get('text_db_administration');
 
-		$data = array();
+		$data['entry_db_driver'] = $this->language->get('text_db_driver');
+		$data['entry_db_host'] = $this->language->get('text_db_host');
+		$data['entry_db_username'] = $this->language->get('text_db_username');
+		$data['entry_db_password'] = $this->language->get('text_db_password');
+		$data['entry_db_database'] = $this->language->get('text_db_database');
+		$data['entry_db_prefix'] = $this->language->get('text_db_prefix');
+		$data['entry_username'] = $this->language->get('text_username');
+		$data['entry_password'] = $this->language->get('text_password');
+		$data['entry_email'] = $this->language->get('text_email');
+		
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_back'] = $this->language->get('button_back');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -188,8 +208,8 @@ class ControllerStep3 extends Controller {
 
 		$data['back'] = $this->url->link('step_2');
 
-		$data['header'] = $this->load->controller('header');
 		$data['footer'] = $this->load->controller('footer');
+		$data['header'] = $this->load->controller('header');
 
 		$this->response->setOutput($this->load->view('step_3.tpl', $data));		
 	}

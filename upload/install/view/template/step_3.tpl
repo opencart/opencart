@@ -9,29 +9,25 @@
   <div class="row">
     <div class="col-sm-9">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-        <p>1. Please enter your database connection details.</p>
+        <p><?php echo $text_db_connection; ?></p>
         <fieldset>
-        
-        
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-db-driver"><?php echo $entry_db_driver; ?></label>
             <div class="col-sm-10">
               <select name="db_driver">
-                  <?php if (extension_loaded('mysqli')) { ?>
-                  <option value="mysqli">MySQLi</option>
-                  <?php } ?>
-                  <?php if (extension_loaded('mysql')) { ?>
-                  <option value="mysql">MySQL</option>
-                  <?php } ?>
-                  <?php if (extension_loaded('pdo')) { ?>
-                  <option value="mpdo">PDO</option>
-                  <?php } ?>
-                </select>
+                <?php if (extension_loaded('mysqli')) { ?>
+                <option value="mysqli">MySQLi</option>
+                <?php } ?>
+                <?php if (extension_loaded('mysql')) { ?>
+                <option value="mysql">MySQL</option>
+                <?php } ?>
+                <?php if (extension_loaded('pdo')) { ?>
+                <option value="mpdo">PDO</option>
+                <?php } ?>
+              </select>
             </div>
-          </div>        
-        
-        
-          <table class="form">
+          </div>
+          <table class="table">
             <tr>
               <td>Database Driver:</td>
               <td><select name="db_driver">
@@ -84,9 +80,9 @@
             </tr>
           </table>
         </fieldset>
-        <p>2. Please enter a username and password for the administration.</p>
+        <p><?php echo $text_db_administration; ?></p>
         <fieldset>
-          <table class="form">
+          <table class="table">
             <tr>
               <td><span class="required">*</span> Username:</td>
               <td><input type="text" name="username" value="<?php echo $username; ?>" />

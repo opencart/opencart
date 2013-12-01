@@ -3,7 +3,7 @@ class Language {
 	private $directory;
 	private $data = array();
 
-	public function __construct($directory) {
+	public function __construct($directory = '') {
 		$this->directory = $directory;
 	}
 

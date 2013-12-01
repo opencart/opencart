@@ -9,148 +9,264 @@
   <div class="row">
     <div class="col-sm-9">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-        <p>1. Please configure your PHP settings to match requirements listed below.</p>
+        <p><?php echo $text_install_php; ?></p>
         <fieldset>
           <table class="table">
-            <tr>
-              <th width="35%" align="left"><b>PHP Settings</b></th>
-              <th width="25%" align="left"><b>Current Settings</b></th>
-              <th width="25%" align="left"><b>Required Settings</b></th>
-              <th width="15%" align="center"><b>Status</b></th>
-            </tr>
-            <tr>
-              <td>PHP Version:</td>
-              <td><?php echo phpversion(); ?></td>
-              <td>5.3+</td>
-              <td align="center"><?php echo (phpversion() >= '5.3') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
-            <tr>
-              <td>Register Globals:</td>
-              <td><?php echo (ini_get('register_globals')) ? 'On' : 'Off'; ?></td>
-              <td>Off</td>
-              <td align="center"><?php echo (!ini_get('register_globals')) ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
-            <tr>
-              <td>Magic Quotes GPC:</td>
-              <td><?php echo (ini_get('magic_quotes_gpc')) ? 'On' : 'Off'; ?></td>
-              <td>Off</td>
-              <td align="center"><?php echo (!ini_get('magic_quotes_gpc')) ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
-            <tr>
-              <td>File Uploads:</td>
-              <td><?php echo (ini_get('file_uploads')) ? 'On' : 'Off'; ?></td>
-              <td>On</td>
-              <td align="center"><?php echo (ini_get('file_uploads')) ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
-            <tr>
-              <td>Session Auto Start:</td>
-              <td><?php echo (ini_get('session_auto_start')) ? 'On' : 'Off'; ?></td>
-              <td>Off</td>
-              <td align="center"><?php echo (!ini_get('session_auto_start')) ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
+            <thead>
+              <tr>
+                <td width="35%"><b><?php echo $text_setting; ?></b></td>
+                <td width="25%"><b><?php echo $text_current; ?></b></td>
+                <td width="25%"><b><?php echo $text_required; ?></b></td>
+                <td width="15%" class="text-center"><b><?php echo $text_status; ?></b></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><?php echo $text_version; ?></td>
+                <td><?php echo phpversion(); ?></td>
+                <td>5.3+</td>
+                <td class="text-center"><?php if (phpversion() >= '5.3') { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_global; ?></td>
+                <td><?php if (ini_get('register_globals')) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?></td>
+                <td><?php echo $text_off; ?></td>
+                <td class="text-center"><?php if (!ini_get('register_globals')) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_magic; ?></td>
+                <td><?php if (ini_get('magic_quotes_gpc')) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?></td>
+                <td><?php echo $text_off; ?></td>
+                <td class="text-center"><?php if (!ini_get('magic_quotes_gpc')) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_upload; ?></td>
+                <td><?php if (ini_get('file_uploads')) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?></td>
+                <td><?php echo $text_on; ?></td>
+                <td class="text-center"><?php if (ini_get('file_uploads')) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_session; ?></td>
+                <td><?php if (ini_get('session_auto_start')) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?></td>
+                <td><?php echo $text_off; ?></td>
+                <td class="text-center"><?php if (!ini_get('session_auto_start')) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+            </tbody>
           </table>
         </fieldset>
-        <p>2. Please make sure the PHP extensions listed below are installed.</p>
+        <p><?php echo $text_install_extension; ?></p>
         <fieldset>
-          <table>
-            <tr>
-              <th width="35%" align="left"><b>Extension</b></th>
-              <th width="25%" align="left"><b>Current Settings</b></th>
-              <th width="25%" align="left"><b>Required Settings</b></th>
-              <th width="15%" align="center"><b>Status</b></th>
-            </tr>
-            <tr>
-              <td>MySQL:</td>
-              <td><?php echo extension_loaded('mysql') ? 'On' : 'Off'; ?></td>
-              <td>On</td>
-              <td align="center"><?php echo extension_loaded('mysql') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
-            <tr>
-              <td>GD:</td>
-              <td><?php echo extension_loaded('gd') ? 'On' : 'Off'; ?></td>
-              <td>On</td>
-              <td align="center"><?php echo extension_loaded('gd') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
-            <tr>
-              <td>cURL:</td>
-              <td><?php echo extension_loaded('curl') ? 'On' : 'Off'; ?></td>
-              <td>On</td>
-              <td align="center"><?php echo extension_loaded('curl') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
-            <tr>
-              <td>mCrypt:</td>
-              <td><?php echo function_exists('mcrypt_encrypt') ? 'On' : 'Off'; ?></td>
-              <td>On</td>
-              <td align="center"><?php echo function_exists('mcrypt_encrypt') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
-            <tr>
-              <td>ZIP:</td>
-              <td><?php echo extension_loaded('zlib') ? 'On' : 'Off'; ?></td>
-              <td>On</td>
-              <td align="center"><?php echo extension_loaded('zlib') ? '<img src="view/image/good.png" alt="Good" />' : '<img src="view/image/bad.png" alt="Bad" />'; ?></td>
-            </tr>
+          <table class="table">
+            <thead>
+              <tr>
+                <td width="35%"><b><?php echo $text_extension; ?></b></td>
+                <td width="25%"><b><?php echo $text_current; ?></b></td>
+                <td width="25%"><b><?php echo $text_required; ?></b></td>
+                <td width="15%" class="text-center"><b><?php echo $text_status; ?></b></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><?php echo $text_mysql; ?></td>
+                <td><?php if (extension_loaded('mysql')) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?></td>
+                <td><?php echo $text_on; ?></td>
+                <td class="text-center"><?php if (extension_loaded('mysql')) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_gd; ?></td>
+                <td><?php if (extension_loaded('gd')) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?></td>
+                <td><?php echo $text_on; ?></td>
+                <td class="text-center"><?php if (extension_loaded('gd')) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_curl; ?></td>
+                <td><?php if (extension_loaded('curl')) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?></td>
+                <td><?php echo $text_on; ?></td>
+                <td class="text-center"><?php if (extension_loaded('curl')) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_mcrypt; ?></td>
+                <td><?php if (function_exists('mcrypt_encrypt')) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?></td>
+                <td><?php echo $text_on; ?></td>
+                <td class="text-center"><?php if (function_exists('mcrypt_encrypt')) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $text_zip; ?></td>
+                <td><?php if (extension_loaded('zlib')) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?></td>
+                <td><?php echo $text_on; ?></td>
+                <td class="text-center"><?php if (extension_loaded('zlib')) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?></td>
+              </tr>
+            </tbody>
           </table>
         </fieldset>
-        <p>3. Please make sure you have set the correct permissions on the files list below.</p>
+        <p><?php echo $text_install_file; ?></p>
         <fieldset>
-          <table>
-            <tr>
-              <th align="left"><b>Files</b></th>
-              <th align="left"><b>Status</b></th>
-            </tr>
-            <tr>
-              <td><?php echo $config_catalog; ?></td>
-              <td><?php if (!file_exists($config_catalog)) { ?>
-                <span class="bad">Missing</span>
-                <?php } elseif (!is_writable($config_catalog)) { ?>
-                <span class="bad">Unwritable</span>
-                <?php } else { ?>
-                <span class="good">Writable</span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $config_admin; ?></td>
-              <td><?php if (!file_exists($config_admin)) { ?>
-                <span class="bad">Missing</span>
-                <?php } elseif (!is_writable($config_admin)) { ?>
-                <span class="bad">Unwritable</span>
-                <?php } else { ?>
-                <span class="good">Writable</span>
-                <?php } ?></td>
-            </tr>
+          <table class="table">
+            <thead>
+              <tr>
+                <td><b><?php echo $text_file; ?></b></td>
+                <td><b><?php echo $text_status; ?></b></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><?php echo $config_catalog; ?></td>
+                <td><?php if (!file_exists($config_catalog)) { ?>
+                  <span class="text-danger"><?php echo $text_missing; ?></span>
+                  <?php } elseif (!is_writable($config_catalog)) { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $config_admin; ?></td>
+                <td><?php if (!file_exists($config_admin)) { ?>
+                  <span class="text-danger"><?php echo $text_missing; ?></span>
+                  <?php } elseif (!is_writable($config_admin)) { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } ?></td>
+              </tr>
+            </tbody>
           </table>
         </fieldset>
-        <p>4. Please make sure you have set the correct permissions on the directories list below.</p>
+        <p><?php echo $text_install_directory; ?></p>
         <fieldset>
-          <table>
-            <tr>
-              <th align="left"><b>Directories</b></th>
-              <th align="left"><b>Status</b></th>
-            </tr>
-            <tr>
-              <td><?php echo $cache . '/'; ?></td>
-              <td><?php echo is_writable($cache) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $logs . '/'; ?></td>
-              <td><?php echo is_writable($logs) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $download . '/'; ?></td>
-              <td><?php echo is_writable($download) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $image . '/'; ?></td>
-              <td><?php echo is_writable($image) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $image_cache . '/'; ?></td>
-              <td><?php echo is_writable($image_cache) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $image_data . '/'; ?></td>
-              <td><?php echo is_writable($image_data) ? '<span class="good">Writable</span>' : '<span class="bad">Unwritable</span>'; ?></td>
-            </tr>
+          <table class="table">
+            <thead>
+              <tr>
+                <td align="left"><b><?php echo $text_directory; ?></b></td>
+                <td align="left"><b><?php echo $text_status; ?></b></td>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><?php echo $cache . '/'; ?></td>
+                <td><?php if (is_writable($cache)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $logs . '/'; ?></td>
+                <td><?php if (is_writable($logs)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $download . '/'; ?></td>
+                <td><?php if (is_writable($download)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $image . '/'; ?></td>
+                <td><?php if (is_writable($image)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $image_cache . '/'; ?></td>
+                <td><?php if (is_writable($image_cache)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?></td>
+              </tr>
+              <tr>
+                <td><?php echo $image_data . '/'; ?></td>
+                <td><?php if (is_writable($image_data)) { ?>
+                  <span class="text-success"><?php echo $text_writable; ?></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><?php echo $text_unwritable; ?></span>
+                  <?php } ?></td>
+              </tr>
+            </tbody>
           </table>
         </fieldset>
         <div class="buttons">

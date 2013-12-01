@@ -2,10 +2,11 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title>OpenCart - Installation</title>
+<title></title>
 <base href="<?php echo $base; ?>" />
-<link href="catalog/view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
-<script src="catalog/view/javascript/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
+<script src="view/javascript/bootstrap/js/bootstrap.js" type="text/javascript"></script>
+<link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
 <link rel="stylesheet" type="text/css" href="view/stylesheet/stylesheet.css" />
 <script type="text/javascript" src="view/javascript/cufon/cufon-yui.js"></script>
 <script type="text/javascript" src="view/javascript/cufon/Verdana_400.font.js"></script>

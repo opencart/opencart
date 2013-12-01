@@ -7,6 +7,43 @@ class ControllerStep2 extends Controller {
 			$this->response->redirect($this->url->link('step_3'));
 		}
 
+		$data['heading_step_2'] = $this->language->get('heading_step_2');
+
+		$data['text_license'] = $this->language->get('text_license');
+		$data['text_installation'] = $this->language->get('text_installation');
+		$data['text_configuration'] = $this->language->get('text_configuration');
+		$data['text_finished'] = $this->language->get('text_finished');	
+		$data['text_install_php'] = $this->language->get('text_install_php');
+		$data['text_install_extension'] = $this->language->get('text_install_extension');
+		$data['text_install_file'] = $this->language->get('text_install_file');
+		$data['text_install_directory'] = $this->language->get('text_install_directory');
+		$data['text_setting'] = $this->language->get('text_setting');
+		$data['text_current'] = $this->language->get('text_current');
+		$data['text_required'] = $this->language->get('text_required');
+		$data['text_extension'] = $this->language->get('text_extension');
+		$data['text_file'] = $this->language->get('text_file');
+		$data['text_directory'] = $this->language->get('text_directory');
+		$data['text_status'] = $this->language->get('text_status');
+		$data['text_on'] = $this->language->get('text_on');
+		$data['text_off'] = $this->language->get('text_off');
+		$data['text_missing'] = $this->language->get('text_missing');
+		$data['text_writable'] = $this->language->get('text_writable');
+		$data['text_unwritable'] = $this->language->get('text_unwritable');
+		$data['text_version'] = $this->language->get('text_version');
+		$data['text_global'] = $this->language->get('text_global');
+		$data['text_magic'] = $this->language->get('text_magic');
+		$data['text_upload'] = $this->language->get('text_upload');
+		$data['text_session'] = $this->language->get('text_session');
+		$data['text_global'] = $this->language->get('text_global');
+		$data['text_mysql'] = $this->language->get('text_mysql');
+		$data['text_gd'] = $this->language->get('text_gd');
+		$data['text_curl'] = $this->language->get('text_curl');
+		$data['text_mcrypt'] = $this->language->get('text_mcrypt');
+		$data['text_zip'] = $this->language->get('text_zip');
+
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_back'] = $this->language->get('button_back');
+
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
@@ -27,8 +64,8 @@ class ControllerStep2 extends Controller {
 		
 		$data['back'] = $this->url->link('step_1');
 		
-		$data['header'] = $this->load->controller('header');
 		$data['footer'] = $this->load->controller('footer');
+		$data['header'] = $this->load->controller('header');
 		
 		$this->response->setOutput($this->load->view('step_2.tpl', $data));
 	}

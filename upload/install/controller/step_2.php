@@ -52,6 +52,18 @@ class ControllerStep2 extends Controller {
 		
 		$data['action'] = $this->url->link('step_2');
 
+		$data['php_version'] = phpversion();
+		$data['register_globals'] = ini_get('register_globals');
+		$data['magic_quotes_gpc'] = ini_get('magic_quotes_gpc');
+		$data['file_uploads'] = ini_get('file_uploads');
+		$data['session_auto_start'] = ini_get('session_auto_start');
+		
+		$data['mysql'] = extension_loaded('mysql');
+		$data['gd'] = extension_loaded('gd');
+		$data['curl'] = extension_loaded('curl');
+		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
+		$data['zlib'] = extension_loaded('zlib');
+
 		$data['config_catalog'] = DIR_OPENCART . 'config.php';
 		$data['config_admin'] = DIR_OPENCART . 'admin/config.php';
 		

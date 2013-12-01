@@ -8,106 +8,100 @@
   <?php } ?>
   <div class="row">
     <div class="col-sm-9">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <p><?php echo $text_db_connection; ?></p>
         <fieldset>
-          <div class="form-group required">
+          <div class="form-group">
             <label class="col-sm-2 control-label" for="input-db-driver"><?php echo $entry_db_driver; ?></label>
             <div class="col-sm-10">
-              <select name="db_driver">
-                <?php if (extension_loaded('mysqli')) { ?>
-                <option value="mysqli">MySQLi</option>
+              <select name="db_driver" id="input-db-driver" class="form-control">
+                
+                <?php if ($mysqli) { ?>
+                <option value="mysqli"><?php echo $text_mysqli; ?></option>
                 <?php } ?>
-                <?php if (extension_loaded('mysql')) { ?>
-                <option value="mysql">MySQL</option>
+                
+                <?php if ($mysql) { ?>
+                <option value="mysql"><?php echo $text_mysql; ?></option>
                 <?php } ?>
-                <?php if (extension_loaded('pdo')) { ?>
-                <option value="mpdo">PDO</option>
+                
+                <?php if ($pdo) { ?>
+                <option value="mpdo"><?php echo $text_mpdo; ?></option>
                 <?php } ?>
+                
+                
+                
               </select>
             </div>
           </div>
-          <table class="table">
-            <tr>
-              <td>Database Driver:</td>
-              <td><select name="db_driver">
-                  <?php if (extension_loaded('mysqli')) { ?>
-                  <option value="mysqli">MySQLi</option>
-                  <?php } ?>
-                  <?php if (extension_loaded('mysql')) { ?>
-                  <option value="mysql">MySQL</option>
-                  <?php } ?>
-                  <?php if (extension_loaded('pdo')) { ?>
-                  <option value="mpdo">PDO</option>
-                  <?php } ?>
-                </select></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> Database Host:</td>
-              <td><input type="text" name="db_host" value="<?php echo $db_host; ?>" />
-                <br />
-                <?php if ($error_db_host) { ?>
-                <span class="required"><?php echo $error_db_host; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> User:</td>
-              <td><input type="text" name="db_user" value="<?php echo $db_user; ?>" />
-                <br />
-                <?php if ($error_db_user) { ?>
-                <span class="required"><?php echo $error_db_user; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td>Password:</td>
-              <td><input type="text" name="db_password" value="<?php echo $db_password; ?>" /></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> Database Name:</td>
-              <td><input type="text" name="db_name" value="<?php echo $db_name; ?>" />
-                <br />
-                <?php if ($error_db_name) { ?>
-                <span class="required"><?php echo $error_db_name; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td>Database Prefix:</td>
-              <td><input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" />
-                <br />
-                <?php if ($error_db_prefix) { ?>
-                <span class="required"><?php echo $error_db_prefix; ?></span>
-                <?php } ?></td>
-            </tr>
-          </table>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-db-hostname"><?php echo $entry_db_hostname; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="db_hostname" value="<?php echo $db_hostname; ?>" id="input-db-hostname" class="form-control" />
+              <?php if ($error_db_hostname) { ?>
+              <div class="text-danger"><?php echo $error_db_hostname; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-db-username"><?php echo $entry_db_username; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="db_username" value="<?php echo $db_username; ?>" id="input-db-username" class="form-control" />
+              <?php if ($error_db_username) { ?>
+              <div class="text-danger"><?php echo $error_db_username; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-db-password"><?php echo $entry_db_password; ?></label>
+            <div class="col-sm-10">
+              <input type="password" name="db_password" value="<?php echo $db_password; ?>" id="input-db-password" class="form-control" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-db-database"><?php echo $entry_db_database; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="db_database" value="<?php echo $db_database; ?>" id="input-db-database" class="form-control" />
+              <?php if ($error_db_database) { ?>
+              <div class="text-danger"><?php echo $error_db_database; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="input-db-prefix"><?php echo $entry_db_prefix; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="db_prefix" value="<?php echo $db_prefix; ?>" id="input-db-prefix" class="form-control" />
+            </div>
+          </div>
         </fieldset>
         <p><?php echo $text_db_administration; ?></p>
         <fieldset>
-          <table class="table">
-            <tr>
-              <td><span class="required">*</span> Username:</td>
-              <td><input type="text" name="username" value="<?php echo $username; ?>" />
-                <br />
-                <?php if ($error_username) { ?>
-                <span class="required"><?php echo $error_username; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> Password:</td>
-              <td><input type="text" name="password" value="<?php echo $password; ?>" />
-                <br />
-                <?php if ($error_password) { ?>
-                <span class="required"><?php echo $error_password; ?></span>
-                <?php } ?></td>
-            </tr>
-            <tr>
-              <td><span class="required">*</span> E-Mail:</td>
-              <td><input type="text" name="email" value="<?php echo $email; ?>" />
-                <br />
-                <?php if ($error_email) { ?>
-                <span class="required"><?php echo $error_email; ?></span>
-                <?php } ?></td>
-            </tr>
-          </table>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-username"><?php echo $entry_username; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="username" value="<?php echo $username; ?>" id="input-username" class="form-control" />
+              <?php if ($error_username) { ?>
+              <div class="text-danger"><?php echo $error_username; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="password" value="<?php echo $password; ?>" id="input-password" class="form-control" />
+              <?php if ($error_password) { ?>
+              <div class="text-danger"><?php echo $error_password; ?></div>
+              <?php } ?>
+            </div>
+          </div>
+          <div class="form-group required">
+            <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
+            <div class="col-sm-10">
+              <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />
+              <?php if ($error_email) { ?>
+              <div class="text-danger"><?php echo $error_email; ?></div>
+              <?php } ?>
+            </div>
+          </div>
         </fieldset>
         <div class="buttons">
           <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>

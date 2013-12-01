@@ -23,9 +23,9 @@
             <tbody>
               <tr>
                 <td><?php echo $text_version; ?></td>
-                <td><?php echo phpversion(); ?></td>
+                <td><?php echo $php_version; ?></td>
                 <td>5.3+</td>
-                <td class="text-center"><?php if (phpversion() >= '5.3') { ?>
+                <td class="text-center"><?php if ($php_version >= '5.3') { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -33,13 +33,13 @@
               </tr>
               <tr>
                 <td><?php echo $text_global; ?></td>
-                <td><?php if (ini_get('register_globals')) { ?>
+                <td><?php if ($register_globals) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?></td>
                 <td><?php echo $text_off; ?></td>
-                <td class="text-center"><?php if (!ini_get('register_globals')) { ?>
+                <td class="text-center"><?php if (!$register_globals) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -47,13 +47,13 @@
               </tr>
               <tr>
                 <td><?php echo $text_magic; ?></td>
-                <td><?php if (ini_get('magic_quotes_gpc')) { ?>
+                <td><?php if ($magic_quotes_gpc) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?></td>
                 <td><?php echo $text_off; ?></td>
-                <td class="text-center"><?php if (!ini_get('magic_quotes_gpc')) { ?>
+                <td class="text-center"><?php if (!$magic_quotes_gpc) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -61,13 +61,13 @@
               </tr>
               <tr>
                 <td><?php echo $text_upload; ?></td>
-                <td><?php if (ini_get('file_uploads')) { ?>
+                <td><?php if ($file_uploads) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
-                <td class="text-center"><?php if (ini_get('file_uploads')) { ?>
+                <td class="text-center"><?php if ($file_uploads) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -75,13 +75,13 @@
               </tr>
               <tr>
                 <td><?php echo $text_session; ?></td>
-                <td><?php if (ini_get('session_auto_start')) { ?>
+                <td><?php if ($session_auto_start) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?></td>
                 <td><?php echo $text_off; ?></td>
-                <td class="text-center"><?php if (!ini_get('session_auto_start')) { ?>
+                <td class="text-center"><?php if (!$session_auto_start) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -104,13 +104,13 @@
             <tbody>
               <tr>
                 <td><?php echo $text_mysql; ?></td>
-                <td><?php if (extension_loaded('mysql')) { ?>
+                <td><?php if ($mysql) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
-                <td class="text-center"><?php if (extension_loaded('mysql')) { ?>
+                <td class="text-center"><?php if ($mysql) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -118,13 +118,13 @@
               </tr>
               <tr>
                 <td><?php echo $text_gd; ?></td>
-                <td><?php if (extension_loaded('gd')) { ?>
+                <td><?php if ($gd) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
-                <td class="text-center"><?php if (extension_loaded('gd')) { ?>
+                <td class="text-center"><?php if ($gd) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -132,13 +132,13 @@
               </tr>
               <tr>
                 <td><?php echo $text_curl; ?></td>
-                <td><?php if (extension_loaded('curl')) { ?>
+                <td><?php if ($curl) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
-                <td class="text-center"><?php if (extension_loaded('curl')) { ?>
+                <td class="text-center"><?php if ($curl) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -146,13 +146,13 @@
               </tr>
               <tr>
                 <td><?php echo $text_mcrypt; ?></td>
-                <td><?php if (function_exists('mcrypt_encrypt')) { ?>
+                <td><?php if ($mcrypt_encrypt) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
-                <td class="text-center"><?php if (function_exists('mcrypt_encrypt')) { ?>
+                <td class="text-center"><?php if ($mcrypt_encrypt) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -160,13 +160,13 @@
               </tr>
               <tr>
                 <td><?php echo $text_zip; ?></td>
-                <td><?php if (extension_loaded('zlib')) { ?>
+                <td><?php if ($zlib) { ?>
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
                   <?php } ?></td>
                 <td><?php echo $text_on; ?></td>
-                <td class="text-center"><?php if (extension_loaded('zlib')) { ?>
+                <td class="text-center"><?php if ($zlib) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>

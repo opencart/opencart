@@ -1,9 +1,9 @@
 <?php
 // Heading
-$_['heading_step_1']        = 'Step 1 - License';
-$_['heading_step_2']        = 'Step 2 - Pre-Installation';
-$_['heading_step_3']        = 'Step 3 - Configuration';
-$_['heading_step_4']        = 'Step 4 - Finished!';
+$_['heading_step_1']         = 'Step 1 - License';
+$_['heading_step_2']         = 'Step 2 - Pre-Installation';
+$_['heading_step_3']         = 'Step 3 - Configuration';
+$_['heading_step_4']         = 'Step 4 - Finished!';
 
 // Text
 $_['text_license']           = 'License';
@@ -14,14 +14,8 @@ $_['text_install_php']       = '1. Please configure your PHP settings to match r
 $_['text_install_extension'] = '2. Please make sure the PHP extensions listed below are installed.';
 $_['text_install_file']      = '3. Please make sure you have set the correct permissions on the files list below.';
 $_['text_install_directory'] = '4. Please make sure you have set the correct permissions on the directories list below.';
-
 $_['text_db_connection']     = '1. Please enter your database connection details.';
 $_['text_db_administration'] = '2. Please enter a username and password for the administration.';
-
-
-
-
-
 $_['text_setting']           = 'PHP Settings';
 $_['text_current']           = 'Current Settings';
 $_['text_required']          = 'Required Settings';
@@ -34,7 +28,9 @@ $_['text_global']            = 'Register Globals';
 $_['text_magic']             = 'Magic Quotes GPC';
 $_['text_upload']            = 'File Uploads';
 $_['text_session']           = 'Session Auto Start';
+$_['text_mysqli']            = 'MySQLi';
 $_['text_mysql']             = 'MySQL';
+$_['text_mpdo']              = 'mPDO';
 $_['text_gd']                = 'GD';
 $_['text_curl']              = 'cURL';
 $_['text_mcrypt']            = 'mCrypt';
@@ -44,18 +40,30 @@ $_['text_off']               = 'Off';
 $_['text_writable']          = 'Writable';
 $_['text_unwritable']        = 'Unwritable';
 $_['text_missing']           = 'Missing';
+$_['text_project']           = 'Project Homepage';
+$_['text_documentation']     = 'Documentation';
+$_['text_support']           = 'Support Forums';
+$_['text_footer']            = 'Copyright © 2012 OpenCart - All rights reserved';
 
-
-
-$_['text_project']       = 'Project Homepage';
-$_['text_documentation'] = 'Documentation';
-$_['text_support']       = 'Support Forums';
-$_['text_footer']        = 'Copyright © 2012 OpenCart - All rights reserved';
-
+// Entry
+$_['entry_db_driver']        = 'DB Driver';
+$_['entry_db_hostname']      = 'Hostname';
+$_['entry_db_username']      = 'Username';
+$_['entry_db_password']      = 'Password';
+$_['entry_db_database']      = 'Database';
+$_['entry_db_prefix']        = 'Prefix';
+$_['entry_username']         = 'Username';
+$_['entry_password']         = 'Password';
+$_['entry_email']            = 'E-Mail';
 
 // Buttons
-$_['button_continue']   = 'Continue';
-$_['button_back']       = 'Back';
+$_['button_continue']        = 'Continue';
+$_['button_back']            = 'Back';
+
+
+// Error
+
+
 
 
 

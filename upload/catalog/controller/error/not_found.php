@@ -1,5 +1,5 @@
 <?php   
-class controllererrornotfound extends controller {
+class ControllerErrorNotFound extends Controller {
 	public function index() {		
 		$this->language->load('error/not_found');
 
@@ -47,11 +47,11 @@ class controllererrornotfound extends controller {
 
 		$this->data['button_continue'] = $this->language->get('button_continue');
 
-		$this->response->addheader($this->request->server['server_protocol'] . '/1.1 404 not found');
+		$this->response->addheader($this->request->server['SERVER_PROTOCOL'] . '/1.1 404 not found');
 
 		$this->data['continue'] = $this->url->link('common/home');
 
-		if (file_exists(dir_template . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 			$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
 		} else {
 			$this->template = 'default/template/error/not_found.tpl';

@@ -1110,12 +1110,25 @@ class ControllerSaleOrder extends Controller {
 		$data['voucher_themes'] = $this->model_sale_voucher_theme->getVoucherThemes();
 						
 		if (isset($this->request->post['order_total'])) {
-      		$data['order_totals'] = $this->request->post['order_total'];
+      		$order_totals = $this->request->post['order_total'];
     	} elseif (isset($this->request->get['order_id'])) { 
-			$data['order_totals'] = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
+			$order_totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
 		} else {
-      		$data['order_totals'] = array();
+      		$order_totals = array();
     	}	
+		
+		$data['order_totals'] = array();	
+		
+		foreach ($order_totals as $order_total) {
+			$data['order_totals'][] = array(
+				'order_total_id' => $order_total['order_total_id'],
+				'code'           => $order_total['code'],
+				'title'          => $order_total['title'],
+				'text'           => $this->currency->format($order_total['value'], $order_info['currency_code'], $order_info['currency_value']),
+				'value'          => $order_total['value'],
+				'sort_order'     => $order_total['sort_order']
+			);
+		}
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
@@ -1673,8 +1686,15 @@ class ControllerSaleOrder extends Controller {
 					'href'        => $this->url->link('sale/voucher/update', 'token=' . $this->session->data['token'] . '&voucher_id=' . $voucher['voucher_id'], 'SSL')
 				);
 			}
-		
-			$data['totals'] = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
+			
+			$totals = $this->model_sale_order->getOrderTotals($this->request->get['order_id']);
+			
+			foreach ($totals as $total) {
+				$data['totals'][] = array(
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+				);				
+			}
 
 			$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
@@ -2492,8 +2512,17 @@ class ControllerSaleOrder extends Controller {
 					);
 				}
 					
-				$total_data = $this->model_sale_order->getOrderTotals($order_id);
-
+				$total_data = array();
+			
+				$totals = $this->model_sale_order->getOrderTotals($order_id);
+				
+				foreach ($totals as $total) {
+					$total_data[] = array(
+						'title' => $total['title'],
+						'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+					);				
+				}
+			
 				$data['orders'][] = array(
 					'order_id'	         => $order_id,
 					'invoice_no'         => $invoice_no,

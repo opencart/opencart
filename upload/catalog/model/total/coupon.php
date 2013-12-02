@@ -78,7 +78,6 @@ class ModelTotalCoupon extends Model {
 				$total_data[] = array(
 					'code'       => 'coupon',
         			'title'      => sprintf($this->language->get('text_coupon'), $this->session->data['coupon']),
-	    			'text'       => $this->currency->format(-$discount_total),
         			'value'      => -$discount_total,
 					'sort_order' => $this->config->get('coupon_sort_order')
       			);

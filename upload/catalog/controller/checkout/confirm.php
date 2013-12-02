@@ -365,7 +365,14 @@ class ControllerCheckoutConfirm extends Controller {
 				}
 			}  
 						
-			$data['totals'] = $total_data;
+			$data['totals'] = array();
+	
+			foreach ($total_data as $total) {
+				$data['totals'][] = array(
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value']),
+				);				
+			}
 	
 			$data['payment'] = $this->load->controller('payment/' . $this->session->data['payment_method']['code']);
 		} else {

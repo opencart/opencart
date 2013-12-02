@@ -17,7 +17,6 @@ class ModelTotalCredit extends Model {
 					$total_data[] = array(
 						'code'       => 'credit',
 						'title'      => $this->language->get('text_credit'),
-						'text'       => $this->currency->format(-$credit),
 						'value'      => -$credit,
 						'sort_order' => $this->config->get('credit_sort_order')
 					);

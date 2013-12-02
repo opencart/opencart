@@ -20,7 +20,7 @@ class ModelCheckoutOrder extends Model {
 		}
 			
 		foreach ($data['totals'] as $total) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($total['code']) . "', title = '" . $this->db->escape($total['title']) . "', text = '" . $this->db->escape($total['text']) . "', `value` = '" . (float)$total['value'] . "', sort_order = '" . (int)$total['sort_order'] . "'");
+			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($total['code']) . "', title = '" . $this->db->escape($total['title']) . "', `value` = '" . (float)$total['value'] . "', sort_order = '" . (int)$total['sort_order'] . "'");
 		}	
 
 		return $order_id;
@@ -427,8 +427,13 @@ class ModelCheckoutOrder extends Model {
 				);
 			}
 	
-			$data['totals'] = $order_total_query->rows;
-			
+			foreach ($order_total_query->rows as $total) {
+				$data['totals'][] = array(
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+				);				
+			}
+						
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/order.tpl')) {
 				$html = $this->load->view($this->config->get('config_template') . '/template/mail/order.tpl', $data);
 			} else {
@@ -468,7 +473,7 @@ class ModelCheckoutOrder extends Model {
 			$text .= $language->get('text_new_order_total') . "\n";
 			
 			foreach ($order_total_query->rows as $total) {
-				$text .= $total['title'] . ': ' . html_entity_decode($total['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
+				$text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 			}			
 			
 			$text .= "\n";
@@ -541,11 +546,11 @@ class ModelCheckoutOrder extends Model {
 				$text .= "\n";
 
 				$text .= $language->get('text_new_order_total') . "\n";
-				
+					
 				foreach ($order_total_query->rows as $total) {
-					$text .= $total['title'] . ': ' . html_entity_decode($total['text'], ENT_NOQUOTES, 'UTF-8') . "\n";
-				}			
-				
+					$text .= $total['title'] . ': ' . html_entity_decode($this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
+				}	
+							
 				$text .= "\n";
 				
 				if ($order_info['comment']) {

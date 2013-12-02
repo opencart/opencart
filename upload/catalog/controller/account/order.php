@@ -296,6 +296,7 @@ class ControllerAccountOrder extends Controller {
 
 			$data['shipping_method'] = $order_info['shipping_method'];
 			
+			// Products
 			$data['products'] = array();
 			
 			$products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
@@ -341,10 +342,21 @@ class ControllerAccountOrder extends Controller {
 				);
 			}
 			
-      		$data['totals'] = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
-			
+			// Totals
+			$data['totals'] = array();
+	
+			$totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
+	
+			foreach ($totals as $total) {
+				$data['totals'][] = array(
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+				);				
+			}
+						
 			$data['comment'] = nl2br($order_info['comment']);
 			
+			// History
 			$data['histories'] = array();
 
 			$results = $this->model_account_order->getOrderHistories($this->request->get['order_id']);

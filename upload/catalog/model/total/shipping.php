@@ -5,7 +5,6 @@ class ModelTotalShipping extends Model {
 			$total_data[] = array( 
 				'code'       => 'shipping',
         		'title'      => $this->session->data['shipping_method']['title'],
-        		'text'       => $this->currency->format($this->session->data['shipping_method']['cost']),
         		'value'      => $this->session->data['shipping_method']['cost'],
 				'sort_order' => $this->config->get('shipping_sort_order')
 			);

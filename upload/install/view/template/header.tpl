@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<title></title>
+<title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
 <script type="text/javascript" src="view/javascript/jquery/jquery-2.0.3.min.js"></script>
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />

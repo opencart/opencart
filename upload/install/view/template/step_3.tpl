@@ -15,21 +15,27 @@
             <label class="col-sm-2 control-label" for="input-db-driver"><?php echo $entry_db_driver; ?></label>
             <div class="col-sm-10">
               <select name="db_driver" id="input-db-driver" class="form-control">
-                
                 <?php if ($mysqli) { ?>
+                <?php if ($db_driver == 'mysqli') { ?>
+                <option value="mysqli" selected="selected"><?php echo $text_mysqli; ?></option>
+                <?php } else { ?>
                 <option value="mysqli"><?php echo $text_mysqli; ?></option>
                 <?php } ?>
-                
+                <?php } ?>
                 <?php if ($mysql) { ?>
+                <?php if ($db_driver == 'mysql') { ?>
+                <option value="mysql" selected="selected"><?php echo $text_mysql; ?></option>
+                <?php } else { ?>
                 <option value="mysql"><?php echo $text_mysql; ?></option>
                 <?php } ?>
-                
+                <?php } ?>
                 <?php if ($pdo) { ?>
+                <?php if ($db_driver == 'mpdo') { ?>
+                <option value="mpdo" selected="selected"><?php echo $text_mpdo; ?></option>
+                <?php } else { ?>
                 <option value="mpdo"><?php echo $text_mpdo; ?></option>
                 <?php } ?>
-                
-                
-                
+                <?php } ?>
               </select>
             </div>
           </div>

@@ -8,7 +8,7 @@ class ControllerHeader extends Controller {
 		$data['scripts'] = $this->document->getScripts();		
 		
 		$data['base'] = HTTP_SERVER;
-				
+		
 		return $this->load->view('header.tpl', $data);	
 	}
 }

@@ -6,9 +6,9 @@
     <div class="col-sm-9">
       <p><?php echo $text_congratulation; ?></p>
       <div class="row">
-        <div class="col-sm-6"><a href="../"><img src="view/image/screenshot_1.png" alt="" class="img-thumbnail" /></a><br />
+        <div class="col-sm-6"><a href="../"><img src="view/image/screenshot-1.png" alt="" class="img-thumbnail" /></a><br />
           <a href="../"><?php echo $text_shop; ?></a></div>
-        <div class="col-sm-6"><a href="../admin/"><img src="view/image/screenshot_2.png" alt="" class="img-thumbnail" /></a><br />
+        <div class="col-sm-6"><a href="../admin/"><img src="view/image/screenshot-2.png" alt="" class="img-thumbnail" /></a><br />
           <a href="../admin/"><?php echo $text_login; ?></a></div>
       </div>
     </div>

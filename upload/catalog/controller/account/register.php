@@ -318,17 +318,16 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		// Custom Fields
+		$this->load->model('account/custom_field');
+		
 		if (isset($this->request->post['custom_field'])) {
 			$custom_field_info = $this->request->post['custom_field'];
 		} else {
 			$custom_field_info = array();
 		}	
-		
-		$this->load->model('account/custom_field');
 
 		$data['custom_fields'] = array();
 
-		// If a post request then get a list of all fields that should have been posted for validation checking.
 		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
 
 		foreach ($custom_fields as $custom_field) {

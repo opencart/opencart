@@ -80,6 +80,8 @@ class ControllerStep3 extends Controller {
 			$this->response->redirect($this->url->link('step_4'));
 		}
 		
+		$this->document->setTitle($this->language->get('heading_step_3'));
+		
 		$data['heading_step_3'] = $this->language->get('heading_step_3');
 		
 		$data['text_license'] = $this->language->get('text_license');

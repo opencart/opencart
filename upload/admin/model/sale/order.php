@@ -111,7 +111,7 @@ class ModelSaleOrder extends Model {
 		$total = 0;
 		
 		if (isset($data['order_total'])) {		
-      		foreach ($data['order_total'] as $order_total) {	
+      		foreach ($data['order_total'] as $order_total) {
       			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($order_total['code']) . "', title = '" . $this->db->escape($order_total['title']) . "', text = '" . $this->db->escape($order_total['text']) . "', `value` = '" . (float)$order_total['value'] . "', sort_order = '" . (int)$order_total['sort_order'] . "'");
 			}
 			

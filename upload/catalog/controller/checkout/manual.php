@@ -157,10 +157,9 @@ class ControllerCheckoutManual extends Controller {
 				
 				foreach ($product['download'] as $download) {
 					$download_data[] = array(
-						'name'      => $download['name'],
-						'filename'  => $download['filename'],
-						'mask'      => $download['mask'],
-						'remaining' => $download['remaining']
+						'name'     => $download['name'],
+						'filename' => $download['filename'],
+						'mask'     => $download['mask']
 					);
 				}
 								
@@ -440,8 +439,8 @@ class ControllerCheckoutManual extends Controller {
 				}
 			}
 
-			// Totals
-			$json['order_total'] = array();					
+			// Get the total to decide which payment methods to show.
+			$total_data = array();						
 			$total = 0;
 			$taxes = $this->cart->getTaxes();
 			
@@ -459,17 +458,9 @@ class ControllerCheckoutManual extends Controller {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('total/' . $result['code']);
 		
-					$this->{'model_total_' . $result['code']}->getTotal($json['order_total'], $total, $taxes);
+					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
 				}	
-			}
-			
-			$sort_order = array(); 
-		  
-			foreach ($json['order_total'] as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $json['order_total']);				
+			}				
 		
 			// Payment
 			if ($this->request->post['payment_country_id'] == '') {
@@ -557,7 +548,38 @@ class ControllerCheckoutManual extends Controller {
 					}
 				}
 			}
+	
+			// Order Totals to be returned
+			$json['order_total'] = array();					
+			$total = 0;
+			$taxes = $this->cart->getTaxes();
 			
+			$sort_order = array(); 
+			
+			$results = $this->model_setting_extension->getExtensions('total');
+			
+			foreach ($results as $key => $value) {
+				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+			}
+			
+			array_multisort($sort_order, SORT_ASC, $results);
+			
+			foreach ($results as $result) {
+				if ($this->config->get($result['code'] . '_status')) {
+					$this->load->model('total/' . $result['code']);
+		
+					$this->{'model_total_' . $result['code']}->getTotal($json['order_total'], $total, $taxes);
+				}	
+			}
+			
+			$sort_order = array(); 
+		  
+			foreach ($json['order_total'] as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+
+			array_multisort($sort_order, SORT_ASC, $json['order_total']);	
+						
 			if (!isset($json['error'])) { 
 				$json['success'] = $this->language->get('text_success');
 			} else {

@@ -2,17 +2,17 @@
 class Cache { 
 	private $cache;
 	
-	public function __construct($driver, $expire = 3600){
-		$file = dirname(__FILE__) . '/driver/cache/' . $driver . '.php';
+	public function __construct($engine, $expire = 3600){
+		$file = dirname(__FILE__) . '/engine/cache/' . $engine . '.php';
 		
 		if (file_exists($file)) {
 			require_once($file);        
 			
-			$class = 'Cache'. $driver;
+			$class = 'Cache'. $engine;
 			
 			$this->cache = new $class($expire);		
 		} else {
-			exit('Error: Could not load cache driver ' . $driver . ' cache!');
+			exit('Error: Could not load cache driver ' . $engine . ' cache!');
 		}
 	}
 	

@@ -393,7 +393,7 @@ $('#button-cart').on('click', function() {
     $.ajax({
         url: 'index.php?route=checkout/cart/add',
         type: 'post',
-        data: $('#product input[type=\'text\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
+        data: $('#product input[type=\'text\'], #product input[type=\'date\'], #product input[type=\'datetime-local\'], #product input[type=\'time\'], #product input[type=\'hidden\'], #product input[type=\'radio\']:checked, #product input[type=\'checkbox\']:checked, #product select, #product textarea'),
         dataType: 'json',
         beforeSend: function() {
         	$('#button-cart').button('loading');

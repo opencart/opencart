@@ -149,20 +149,23 @@ class ControllerCheckoutGuest extends Controller {
 		
 		$data['custom_fields'] = array();
 				
-		// If a post request then get a list of all fields that should have been posted for validation checking.
-		if (isset($this->session->data['guest']['customer_group_id'])) {
-			$custom_fields = $this->model_account_custom_field->getCustomFields('register');
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
+		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['type'] == 'checkbox') {
+				$value = array();
+			} else {
+				$value = $custom_field['value'];
+			}			
 			
-			foreach ($custom_fields as $custom_field) {
-				$data['custom_fields'][] = array(
-					'custom_field_id'    => $custom_field['custom_field_id'],
-					'custom_field_value' => $custom_field['custom_field_value'],
-					'name'               => $custom_field['name'],
-					'type'               => $custom_field['type'],
-					'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value,
-					'sort_order'         => $custom_field['sort_order']
-				);
-			}
+			$data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field['custom_field_value'],
+				'name'               => $custom_field['name'],
+				'type'               => $custom_field['type'],
+				'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value,
+				'sort_order'         => $custom_field['sort_order']
+			);
 		}
 				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/guest.tpl')) {
@@ -243,7 +246,7 @@ class ControllerCheckoutGuest extends Controller {
 			// Custom Field Validation
 			$this->load->model('account/custom_field');
 			
-			$custom_fields = $this->model_account_custom_field->getCustomFields('registration', $customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
 			
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {

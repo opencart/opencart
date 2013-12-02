@@ -595,28 +595,36 @@ class ModelOpenbayEbay extends Model{
 		$originalId = $categoryId;
 		$stop       = false;
 		$i          = 0; //fallback to stop infinate loop
+		$err 		= false;
 
 		while($stop == false && $i < 10){
 			$cat = $this->getCategoryStructure($categoryId);
 
-			$breadcrumb[] = $cat['CategoryName'];
+			if(!empty($cat)) {
+				$breadcrumb[] = $cat['CategoryName'];
 
-			if($cat['CategoryParentID'] == $categoryId){
+				if($cat['CategoryParentID'] == $categoryId){
+					$stop = true;
+				}else{
+					$categoryId = $cat['CategoryParentID'];
+				}
+
+				$i++;
+			} else {
 				$stop = true;
-			}else{
-				$categoryId = $cat['CategoryParentID'];
+				$err = true;
 			}
-
-			$i++;
 		}
 
-		$res = $this->db->query("SELECT `used` FROM `" . DB_PREFIX . "ebay_category_history` WHERE `CategoryID` = '".$originalId."' LIMIT 1");
+		if($err == false) {
+			$res = $this->db->query("SELECT `used` FROM `" . DB_PREFIX . "ebay_category_history` WHERE `CategoryID` = '".$originalId."' LIMIT 1");
 
-		if($res->num_rows){
-			$new = $res->row['used'] + 1;
-			$this->db->query("UPDATE `" . DB_PREFIX . "ebay_category_history` SET `used` = '".$new."' WHERE `CategoryID` = '".$originalId."' LIMIT 1");
-		}else{
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_category_history` SET `CategoryID` = '".$originalId."', `breadcrumb` = '".  $this->db->escape(implode(' > ', array_reverse($breadcrumb)))."', `used` = '1'");
+			if($res->num_rows){
+				$new = $res->row['used'] + 1;
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_category_history` SET `used` = '".$new."' WHERE `CategoryID` = '".$originalId."' LIMIT 1");
+			}else{
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_category_history` SET `CategoryID` = '".$originalId."', `breadcrumb` = '".  $this->db->escape(implode(' > ', array_reverse($breadcrumb)))."', `used` = '1'");
+			}
 		}
 	}
 

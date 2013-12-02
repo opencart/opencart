@@ -1276,7 +1276,9 @@ final class Ebay {
 		if ($this->lasterror === false) {
 			if (isset($response['urls']['ViewItemURL'])) {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE  `key` = 'openbaypro_ebay_itm_link' LIMIT 1");
+
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$response['urls']['ViewItemURL']) . "', `key` = 'openbaypro_ebay_itm_link', `group` = 'openbay'");
+
 				$this->log('Updated eBay item link');
 			} else {
 				$this->log('Item link URL not set!');
@@ -1288,12 +1290,7 @@ final class Ebay {
 				$this->log('Emptied ebay_payment_method table');
 
 				foreach ($response['payment_options'] as $child) {
-					$this->db->query("
-						INSERT INTO `" . DB_PREFIX . "ebay_payment_method`
-						SET
-							`ebay_name`         = '" . $this->db->escape((string)$child['PaymentOption']) . "',
-							`local_name`        = '" . $this->db->escape((string)$child['Description']) . "'
-					");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_payment_method` SET `ebay_name` = '" . $this->db->escape((string)$child['PaymentOption']) . "', `local_name` = '" . $this->db->escape((string)$child['Description']) . "'");
 				}
 
 				$this->log('Populated ebay_payment_method table');

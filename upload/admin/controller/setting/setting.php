@@ -820,7 +820,7 @@ class ControllerSettingSetting extends Controller {
 		}
 		
 		if (isset($this->request->post['config_affiliate_mail'])) {
-			$data['config_affiliate_approval'] = $this->request->post['config_affiliate_mail'];
+			$data['config_affiliate_mail'] = $this->request->post['config_affiliate_mail'];
 		} elseif ($this->config->has('config_affiliate_mail')) {
 			$data['config_affiliate_mail'] = $this->config->get('config_affiliate_mail');		
 		} else {

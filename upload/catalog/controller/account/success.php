@@ -29,7 +29,7 @@ class ControllerAccountSuccess extends Controller {
 		$customer_group = $this->model_account_customer_group->getCustomerGroup($this->config->get('config_customer_group_id'));
 
 		if ($customer_group && !$customer_group['approval']) {
-    		$data['text_message'] = sprintf($this->language->get('text_message'), $this->url->link('information/contact'));
+    		$data['text_message'] = sprintf($this->language->get('text_message'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		}

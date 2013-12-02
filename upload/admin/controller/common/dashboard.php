@@ -73,7 +73,10 @@ class ControllerCommonDashboard extends Controller {
 		$results = $this->model_report_dashboard->getActivities();
 		
 		foreach ($results as $result) {
-			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));
+			
+			$unserialize = unserialize($result['data']);
+			
+			$comment = vsprintf($this->language->get('text_' . $result['key']), array($unserialize['name'],$unserialize['order_id']));
 			
 			$find = array(
 				'customer_id=',

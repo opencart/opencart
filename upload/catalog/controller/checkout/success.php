@@ -23,7 +23,7 @@ class ControllerCheckoutSuccess extends Controller {
 					'name'     => $this->session->data['guest']['firstname'] . ' ' . $this->session->data['guest']['lastname']
 				);
 				
-				$this->model_account_activity->addActivity('guest_order', $activity_data);
+				$this->model_account_activity->addActivity('order_guest', $activity_data);
 			}	
 			
 			unset($this->session->data['shipping_method']);

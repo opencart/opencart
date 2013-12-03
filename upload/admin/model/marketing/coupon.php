@@ -146,5 +146,9 @@ class ModelMarketingCoupon extends Model {
 	  	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "coupon_history WHERE coupon_id = '" . (int)$coupon_id . "'");
 
 		return $query->row['total'];
-	}			
+	}
+	
+	public function deleteCouponHistoryByOrderId($order_id) {
+	  	$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE order_id = '" . (int)$order_id . "'");
+	}						
 }

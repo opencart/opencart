@@ -15,21 +15,24 @@ legend {
 	font-size: 18px;
 	padding: 7px 0px
 }
+/*
 label, input, button, select, textarea {
 	font-size: 12px;
 	font-weight: normal;
+	height: 32px;
 }
 select.form-control, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
 	font-size: 12px;
-	height: 31px;
 }
 .input-group input, .input-group select, .input-group .dropdown-menu, .input-group .popover {
 	font-size: 12px;
 }
+
 .input-group .input-group-addon {
 	font-size: 12px;
 	height: 30px;
 }
+*/
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline !important;
 }
@@ -229,7 +232,7 @@ footer a {
 	font-size: 12px;
 	padding: 10px;
 }
-
+/*
 .btn {
 	font-size: 12px;
 }
@@ -254,7 +257,7 @@ footer a {
 .btn-group > .btn-lg {
 	font-size: 15px;
 }
-
+*/
 .panel-heading {
 	padding: 8px 15px;
 }

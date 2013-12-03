@@ -570,19 +570,40 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-coupon"><?php echo $entry_coupon; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="coupon" value="" id="input-coupon" class="form-control" />
+                  
+                  <div class="input-group">
+                    <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
+                    <span class="input-group-btn" data-toggle="tooltip" title="<?php echo $button_coupon_remove; ?>">
+                    <button id="button-coupon-remove" class="btn btn-danger" type="button"><i class="fa fa-times-circle"></i></button>
+                    </span>
+                  </div>
+                
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-voucher"><?php echo $entry_voucher; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="voucher" value="" id="input-voucher" class="form-control" />
+                  
+                  <div class="input-group">
+                    <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" class="form-control" />
+                    <span class="input-group-btn" data-toggle="tooltip" title="<?php echo $button_voucher_remove; ?>">
+                    <button id="button-voucher-remove" class="btn btn-danger" type="button"><i class="fa fa-times-circle"></i></button>
+                    </span>
+                  </div>
+                
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-reward"><?php echo $entry_reward; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="reward" value="" id="input-reward" class="form-control" />
+                  
+                  <div class="input-group">
+                    <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" class="form-control" />
+                    <span class="input-group-btn" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>">
+                    <button id="button-reward-remove" class="btn btn-danger" type="button"><i class="fa fa-times-circle"></i></button>
+                    </span>                 
+                  </div>
+                  
                 </div>
               </div>
               <div class="form-group">
@@ -1100,6 +1121,87 @@ $('select[name=\'shipping\']').on('change', function() {
 	}
 	
 	$('input[name=\'shipping_code\']').attr('value', this.value);
+});
+
+$('#button-coupon-remove').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=marketing/coupon/removecouponhistory&token=<?php echo $token; ?>&order_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-coupon-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-coupon-remove').prop('disabled', true);				
+		},
+		complete: function() {
+			$('#button-coupon-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
+			$('#button-coupon-remove').prop('disabled', false);
+		},		
+		success: function(json) {
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+});
+
+$('#button-voucher-remove').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/voucher/clear&token=<?php echo $token; ?>&order_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-voucher-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-voucher-remove').prop('disabled', true);				
+		},
+		complete: function() {
+			$('#button-voucher-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
+			$('#button-voucher-remove').prop('disabled', false);
+		},		
+		success: function(json) {
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+});
+
+$('#button-reward-remove').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=customer/reward/clear&token=<?php echo $token; ?>&order_id=' + this.value,
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-reward-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-reward-remove').prop('disabled', true);				
+		},
+		complete: function() {
+			$('#button-reward-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
+			$('#button-reward-remove').prop('disabled', false);
+		},		
+		success: function(json) {
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+			}
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
 });
 //--></script> 
 <script type="text/javascript"><!--

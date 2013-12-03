@@ -542,7 +542,10 @@ class ControllerSaleOrder extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_product_add'] = $this->language->get('button_product_add');
+		$data['button_coupon_remove'] = $this->language->get('button_coupon_remove');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
+		$data['button_voucher_remove'] = $this->language->get('button_voucher_remove');
+		$data['button_reward_remove'] = $this->language->get('button_reward_remove');
 		$data['button_total'] = $this->language->get('button_total');
 		$data['button_upload'] = $this->language->get('button_upload');
 
@@ -1117,6 +1120,10 @@ class ControllerSaleOrder extends Controller {
       		$order_totals = array();
     	}	
 		
+		$data['coupon'] = '';
+		$data['voucher'] = '';
+		$data['reward'] = '';
+		
 		$data['order_totals'] = array();	
 		
 		foreach ($order_totals as $order_total) {
@@ -1128,6 +1135,24 @@ class ControllerSaleOrder extends Controller {
 				'value'          => $order_total['value'],
 				'sort_order'     => $order_total['sort_order']
 			);
+			
+			// If coupon, voucher or reward points
+			$start = strpos($order_total['title'], '(') + 1;
+			$end = strrpos($order_total['title'], ')');			
+			
+			if ($start && $end) {
+				if ($order_total['code'] == 'coupon') {
+					$data['coupon'] = substr($order_total['title'], $start, $end - $start);
+				}
+							
+				if ($order_total['code'] == 'voucher' && $start && $end) {
+					$data['voucher'] = substr($order_total['title'], $start, $end - $start);
+				}		
+				
+				if ($order_total['code'] == 'reward') {
+					$data['reward'] = substr($order_total['title'], $start, $end - $start);
+				}
+			}
 		}
 		
 		$data['header'] = $this->load->controller('common/header');

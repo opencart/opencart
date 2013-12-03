@@ -85,11 +85,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-filter"><?php echo $entry_filter; ?></label>
               <div class="col-sm-10">
-                <div class="input-group">
-                  <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
-                  <span class="input-group-btn">
-                  <button class="btn btn-info" type="button"><i class="fa fa-question-circle fa-large"></i></button>
-                  </span> </div>
+                <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
                 <span class="help-block"><?php echo $help_filter; ?></span>
                 <div id="category-filter" class="well well-sm">
                   <?php foreach ($category_filters as $category_filter) { ?>
@@ -132,11 +128,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-keyword"><?php echo $entry_keyword; ?></label>
               <div class="col-sm-10">
-                <div class="input-group">
-                  <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
-                  <span class="input-group-btn">
-                  <button class="btn btn-info" type="button"><i class="fa fa-question-circle fa-large"></i></button>
-                  </span></div>
+                <input type="text" name="keyword" value="<?php echo $keyword; ?>" placeholder="<?php echo $entry_keyword; ?>" id="input-keyword" class="form-control" />
                 <span class="help-block"><?php echo $help_keyword; ?></span></div>
             </div>
             <div class="form-group">

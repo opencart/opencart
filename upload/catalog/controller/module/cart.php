@@ -45,7 +45,14 @@ class ControllerModuleCart extends Controller {
 			array_multisort($sort_order, SORT_ASC, $total_data);			
 		}
 		
-		$data['totals'] = $total_data;
+		$data['totals'] = array();
+
+		foreach ($total_data as $result) {
+			$data['totals'][] = array(
+				'title' => $result['title'],
+				'text'  => $this->currency->format($result['value']),
+			);				
+		}
 		
 		$data['heading_title'] = $this->language->get('heading_title');
 		

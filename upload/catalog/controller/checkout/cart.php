@@ -193,7 +193,7 @@ class ControllerCheckoutCart extends Controller {
 			// Totals
 			$this->load->model('setting/extension');
 			
-			$totals = array();					
+			$total_data = array();					
 			$total = 0;
 			$taxes = $this->cart->getTaxes();
 			
@@ -213,23 +213,23 @@ class ControllerCheckoutCart extends Controller {
 					if ($this->config->get($result['code'] . '_status')) {
 						$this->load->model('total/' . $result['code']);
 			
-						$this->{'model_total_' . $result['code']}->getTotal($totals, $total, $taxes);
+						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
 					}
 				}
 				
 				$sort_order = array(); 
 			  
-				foreach ($totals as $key => $value) {
+				foreach ($total_data as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 	
-				array_multisort($sort_order, SORT_ASC, $totals);				
+				array_multisort($sort_order, SORT_ASC, $total_data);				
 			}
 			
 			
 			$data['totals'] = array();
 	
-			foreach ($totals as $total) {
+			foreach ($total_data as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value']),

@@ -1125,17 +1125,19 @@ $('select[name=\'shipping\']').on('change', function() {
 
 $('#button-coupon-remove').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=marketing/coupon/removecouponhistory&token=<?php echo $token; ?>&order_id=' + this.value,
+		url: 'index.php?route=marketing/coupon/removecouponhistory&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-coupon-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-coupon-remove').prop('disabled', true);				
 		},
 		complete: function() {
-			$('#button-coupon-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
+			$('#button-coupon-remove i').replaceWith('<i class="fa fa-times-circle"></i>');
 			$('#button-coupon-remove').prop('disabled', false);
 		},		
 		success: function(json) {
+			$('.alert').remove();
+			
 			if (json['error']) {
 				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
@@ -1152,17 +1154,19 @@ $('#button-coupon-remove').on('click', function() {
 
 $('#button-voucher-remove').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=sale/voucher/clear&token=<?php echo $token; ?>&order_id=' + this.value,
+		url: 'index.php?route=sale/voucher/removevoucherhistory&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-voucher-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-voucher-remove').prop('disabled', true);				
 		},
 		complete: function() {
-			$('#button-voucher-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
+			$('#button-voucher-remove i').replaceWith('<i class="fa fa-times-circle"></i>');
 			$('#button-voucher-remove').prop('disabled', false);
 		},		
 		success: function(json) {
+			$('.alert').remove();
+			
 			if (json['error']) {
 				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}
@@ -1179,17 +1183,19 @@ $('#button-voucher-remove').on('click', function() {
 
 $('#button-reward-remove').on('click', function() {
 	$.ajax({
-		url: 'index.php?route=customer/reward/clear&token=<?php echo $token; ?>&order_id=' + this.value,
+		url: 'index.php?route=sale/customer/reward/removerewardhistory&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-reward-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-reward-remove').prop('disabled', true);				
 		},
 		complete: function() {
-			$('#button-reward-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
+			$('#button-reward-remove i').replaceWith('<i class="fa fa-times-circle"></i>');
 			$('#button-reward-remove').prop('disabled', false);
 		},		
 		success: function(json) {
+			$('.alert').remove();
+			
 			if (json['error']) {
 				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
 			}

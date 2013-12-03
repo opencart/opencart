@@ -207,5 +207,9 @@ class ModelSaleVoucher extends Model {
 	  	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher_history WHERE voucher_id = '" . (int)$voucher_id . "'");
 
 		return $query->row['total'];
+	}	
+	
+	public function deleteVoucherHistoryByOrderId($order_id) {
+	  	$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_history WHERE order_id = '" . (int)$order_id . "'");
 	}			
 }

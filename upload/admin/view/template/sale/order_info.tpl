@@ -7,7 +7,7 @@
   </ul>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="fa fa-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <div class="pull-right"><button type="button" id="button-restock" data-toggle="tooltip" title="<?php echo $help_restock; ?>" class="btn btn-warning"><i class="fa fa-reply"></i> <?php echo $button_restock; ?></button> <a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="fa fa-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
       <h1 class="panel-title"><i class="fa fa-info-circle"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
@@ -683,6 +683,32 @@ $(document).delegate('#button-invoice', 'click', function() {
 			
 			if (json['invoice_no']) {
 				$('#button-invoice').replaceWith(json['invoice_no']);
+			}
+		}
+	});
+});
+
+$(document).delegate('#button-restock', 'click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/order/restock&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		dataType: 'json',
+		beforeSend: function() {
+			$('#button-restock i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-restock').prop('disabled', true);			
+		},
+		complete: function() {
+			$('#button-restock i').replaceWith('<i class="fa fa-cog"></i>');
+			$('#button-restock').prop('disabled', false);
+		},
+		success: function(json) {
+			$('.alert').remove();
+						
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 			}
 		}
 	});

@@ -181,7 +181,7 @@ class ControllerSaleOrder extends Controller {
 
     	$this->getList();
   	}
-
+	
   	protected function getList() {
 		if (isset($this->request->get['filter_order_id'])) {
 			$filter_order_id = $this->request->get['filter_order_id'];
@@ -1424,7 +1424,8 @@ class ControllerSaleOrder extends Controller {
 			$data['text_queries_remaining'] = $this->language->get('text_queries_remaining');
 			$data['text_maxmind_id'] = $this->language->get('text_maxmind_id');
 			$data['text_error'] = $this->language->get('text_error');
-
+			
+			$data['help_restock'] = $this->language->get('help_restock');
 			$data['help_country_match'] = $this->language->get('help_country_match');
 			$data['help_country_code'] = $this->language->get('help_country_code');
 			$data['help_high_risk_country'] = $this->language->get('help_high_risk_country');
@@ -1487,6 +1488,7 @@ class ControllerSaleOrder extends Controller {
 			$data['entry_comment'] = $this->language->get('entry_comment');
 			
 			$data['button_invoice'] = $this->language->get('button_invoice');
+			$data['button_restock'] = $this->language->get('button_restock');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 			$data['button_generate'] = $this->language->get('button_generate');
 			$data['button_reward_add'] = $this->language->get('button_reward_add');
@@ -1963,9 +1965,15 @@ class ControllerSaleOrder extends Controller {
      	if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$json['error'] = $this->language->get('error_permission'); 
 		} elseif (isset($this->request->get['order_id'])) {
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}			
+			
 			$this->load->model('sale/order');
 			
-			$invoice_no = $this->model_sale_order->createInvoiceNo($this->request->get['order_id']);
+			$invoice_no = $this->model_sale_order->createInvoiceNo($order_id);
 			
 			if ($invoice_no) {
 				$json['invoice_no'] = $invoice_no;
@@ -1984,26 +1992,28 @@ class ControllerSaleOrder extends Controller {
     	
      	if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['order_id'])) {
+    	} else {
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}
+						
 			$this->load->model('sale/order');
 						
-			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
+			$order_info = $this->model_sale_order->getOrder($order_id);
 			
 			if ($order_info && $order_info['customer_id'] && ($order_info['reward'] > 0)) {
 				$this->load->model('sale/customer');
 
-				$reward_total = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($this->request->get['order_id']);
+				$reward_total = $this->model_sale_customer->getTotalCustomerRewardsByOrderId($order_id);
 				
 				if (!$reward_total) {
-					$this->model_sale_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $this->request->get['order_id'], $order_info['reward'], $this->request->get['order_id']);
-					
-					$json['success'] = $this->language->get('text_reward_added');
-				} else {
-					$json['error'] = $this->language->get('error_action'); 
+					$this->model_sale_customer->addReward($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['reward'], $order_id);
 				}
-			} else {
-				$json['error'] = $this->language->get('error_action');
 			}
+			
+			$json['success'] = $this->language->get('text_reward_added');
 		}
 		
 		$this->response->setOutput(json_encode($json));
@@ -2016,20 +2026,24 @@ class ControllerSaleOrder extends Controller {
     	
      	if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['order_id'])) {
+    	} else {
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}
+						
 			$this->load->model('sale/order');
 			
-			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
+			$order_info = $this->model_sale_order->getOrder($order_id);
 			
-			if ($order_info && $order_info['customer_id']) {
+			if ($order_info) {
 				$this->load->model('sale/customer');
 
-				$this->model_sale_customer->deleteReward($this->request->get['order_id']);
-				
-				$json['success'] = $this->language->get('text_reward_removed');
-			} else {
-				$json['error'] = $this->language->get('error_action');
+				$this->model_sale_customer->deleteReward($order_id);
 			}
+			
+			$json['success'] = $this->language->get('text_reward_removed');
 		}
 		
 		$this->response->setOutput(json_encode($json));
@@ -2042,26 +2056,28 @@ class ControllerSaleOrder extends Controller {
     	
      	if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['order_id'])) {
+    	} else {
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}
+						
 			$this->load->model('sale/order');
 			
-			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
+			$order_info = $this->model_sale_order->getOrder($order_id);
 			
-			if ($order_info && $order_info['affiliate_id']) {
+			if ($order_info) {
 				$this->load->model('marketing/affiliate');
 				
-				$affiliate_total = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($this->request->get['order_id']);
+				$affiliate_total = $this->model_marketing_affiliate->getTotalTransactionsByOrderId($order_id);
 				
 				if (!$affiliate_total) {
-					$this->model_marketing_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $this->request->get['order_id'], $order_info['commission'], $this->request->get['order_id']);
-					
-					$json['success'] = $this->language->get('text_commission_added');
-				} else {
-					$json['error'] = $this->language->get('error_action'); 
-				}
-			} else {
-				$json['error'] = $this->language->get('error_action');
+					$this->model_marketing_affiliate->addTransaction($order_info['affiliate_id'], $this->language->get('text_order_id') . ' #' . $order_id, $order_info['commission'], $order_id);
+				} 
 			}
+			
+			$json['success'] = $this->language->get('text_commission_added');
 		}
 		
 		$this->response->setOutput(json_encode($json));
@@ -2074,19 +2090,51 @@ class ControllerSaleOrder extends Controller {
     	
      	if (!$this->user->hasPermission('modify', 'sale/order')) {
       		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['order_id'])) {
+    	} else {
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
+			} else {
+				$order_id = 0;
+			}
+			
 			$this->load->model('sale/order');
+						
+			$order_info = $this->model_sale_order->getOrder($order_id);
 			
-			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
-			
-			if ($order_info && $order_info['affiliate_id']) {
+			if ($order_info) {
 				$this->load->model('marketing/affiliate');
 
-				$this->model_marketing_affiliate->deleteTransaction($this->request->get['order_id']);
-				
-				$json['success'] = $this->language->get('text_commission_removed');
+				$this->model_marketing_affiliate->deleteTransaction($order_id);
+			}
+			
+			$json['success'] = $this->language->get('text_commission_removed');
+		}
+		
+		$this->response->setOutput(json_encode($json));
+  	}
+	
+  	public function restock() {
+		$this->load->language('sale/order');
+		
+		$json = array();
+     	
+		if (!$this->user->hasPermission('modify', 'sale/order')) {
+      		$json['error'] = $this->language->get('error_permission');
+		} else {	
+			if (isset($this->request->get['order_id'])) {
+				$order_id = $this->request->get['order_id'];
 			} else {
-				$json['error'] = $this->language->get('error_action');
+				$order_id = 0;
+			}
+			
+			$this->load->model('sale/order');
+			
+			$order_info = $this->model_sale_order->getOrder($order_id);
+			
+			if ($order_info) {
+				$this->model_sale_order->restock($this->request->get['order_id']);
+				
+				$json['success'] = $this->language->get('text_restock');
 			}
 		}
 		

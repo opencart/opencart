@@ -62,6 +62,7 @@ $_['text_reward_added']                       = 'Success: Reward points added!';
 $_['text_reward_removed']                     = 'Success: Reward points removed!';
 $_['text_commission_added']                   = 'Success: Commission added!';
 $_['text_commission_removed']                 = 'Success: Commission removed!';
+$_['text_restock']                            = 'Success: Products have been restocked!';
 $_['text_upload']                             = 'Your file was successfully uploaded!';
 $_['text_country_match']                      = 'Country Match:';
 $_['text_country_code']                       = 'Country Code:';
@@ -174,6 +175,7 @@ $_['entry_date_added']                        = 'Date Added';
 $_['entry_date_modified']                     = 'Date Modified';
 
 // Help
+$_['help_restock']                            = 'Only use restock when you plan to void an order but not delete it. Deleting an order will automatically restock products. You should also leave a note in the order history let others know if you have already restocked the items.';
 $_['help_country_match']                      = 'Whether country of IP address matches billing address country (mismatch = higher risk).';
 $_['help_country_code']                       = 'Country Code of the IP address.';
 $_['help_high_risk_country']                  = 'Whether IP address or billing address country is in Ghana, Nigeria, or Vietnam.';

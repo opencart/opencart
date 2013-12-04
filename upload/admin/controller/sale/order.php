@@ -548,6 +548,7 @@ class ControllerSaleOrder extends Controller {
 		$data['button_reward_remove'] = $this->language->get('button_reward_remove');
 		$data['button_total'] = $this->language->get('button_total');
 		$data['button_upload'] = $this->language->get('button_upload');
+		$data['button_remove'] = $this->language->get('button_remove');
 
 		$data['tab_order'] = $this->language->get('tab_order');
 		$data['tab_customer'] = $this->language->get('tab_customer');
@@ -1492,8 +1493,6 @@ class ControllerSaleOrder extends Controller {
 			$data['button_reward_remove'] = $this->language->get('button_reward_remove');
 			$data['button_commission_add'] = $this->language->get('button_commission_add');
 			$data['button_commission_remove'] = $this->language->get('button_commission_remove');
-			$data['button_credit_add'] = $this->language->get('button_credit_add');
-			$data['button_credit_remove'] = $this->language->get('button_credit_remove');
 			$data['button_history_add'] = $this->language->get('button_history_add');
 		
 			$data['tab_order'] = $this->language->get('tab_order');
@@ -1595,15 +1594,7 @@ class ControllerSaleOrder extends Controller {
 			$data['payment_method'] = $order_info['payment_method'];
 			$data['total'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value']);
 			
-			if ($order_info['total'] < 0) {
-				$data['credit'] = $order_info['total'];
-			} else {
-				$data['credit'] = 0;
-			}
-			
 			$this->load->model('sale/customer');
-						
-			$data['credit_total'] = $this->model_sale_customer->getTotalTransactionsByOrderId($this->request->get['order_id']); 
 			
 			$data['reward'] = $order_info['reward'];
 						
@@ -1983,62 +1974,6 @@ class ControllerSaleOrder extends Controller {
 			}
 		}
 
-		$this->response->setOutput(json_encode($json));
-  	}
-
-	public function addCredit() {
-		$this->load->language('sale/order');
-		
-		$json = array();
-    	
-     	if (!$this->user->hasPermission('modify', 'sale/order')) {
-      		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['order_id'])) {
-			$this->load->model('sale/order');
-			
-			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
-			
-			if ($order_info && $order_info['customer_id']) {
-				$this->load->model('sale/customer');
-				
-				$credit_total = $this->model_sale_customer->getTotalTransactionsByOrderId($this->request->get['order_id']);
-				
-				if (!$credit_total) {
-					$this->model_sale_customer->addTransaction($order_info['customer_id'], $this->language->get('text_order_id') . ' #' . $this->request->get['order_id'], $order_info['total'], $this->request->get['order_id']);
-					
-					$json['success'] = $this->language->get('text_credit_added');
-				} else {
-					$json['error'] = $this->language->get('error_action');
-				}
-			}
-		}
-		
-		$this->response->setOutput(json_encode($json));
-  	}
-	
-	public function removeCredit() {
-		$this->load->language('sale/order');
-		
-		$json = array();
-    	
-     	if (!$this->user->hasPermission('modify', 'sale/order')) {
-      		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['order_id'])) {
-			$this->load->model('sale/order');
-			
-			$order_info = $this->model_sale_order->getOrder($this->request->get['order_id']);
-			
-			if ($order_info && $order_info['customer_id']) {
-				$this->load->model('sale/customer');
-				
-				$this->model_sale_customer->deleteTransaction($this->request->get['order_id']);
-					
-				$json['success'] = $this->language->get('text_credit_removed');
-			} else {
-				$json['error'] = $this->language->get('error_action');
-			}
-		}
-		
 		$this->response->setOutput(json_encode($json));
   	}
 				

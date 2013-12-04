@@ -79,14 +79,7 @@
             <?php } ?>
             <tr>
               <td><?php echo $text_total; ?></td>
-              <td><?php echo $total; ?>
-                <?php if ($customer && $credit) { ?>
-                <?php if (!$credit_total) { ?>
-                <button id="button-credit-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_credit_add; ?></button>
-                <?php } else { ?>
-                <button id="button-credit-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_credit_remove; ?></button>
-                <?php } ?>
-                <?php } ?></td>
+              <td><?php echo $total; ?></td>
             </tr>
             <?php if ($customer && $reward) { ?>
             <tr>
@@ -690,66 +683,6 @@ $(document).delegate('#button-invoice', 'click', function() {
 			
 			if (json['invoice_no']) {
 				$('#button-invoice').replaceWith(json['invoice_no']);
-			}
-		}
-	});
-});
-
-$(document).delegate('#button-credit-add', 'click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/order/addcredit&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-credit-add i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-credit-add').prop('disabled', true);			
-		},
-		complete: function() {
-			$('#button-credit-add i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-credit-add').prop('disabled', false);
-		},			
-		success: function(json) {
-			$('.alert').remove();
-			
-			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-			}
-			
-			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-				
-				$('.alert-success').fadeIn('slow');
-				
-				$('#button-credit-add').replaceWith('<button id="button-credit-remove" class="btn btn-danger btn-xs"><i class="fa fa-minus-circle"></i> <?php echo $button_credit_remove; ?></button>');
-			}
-		}
-	});
-});
-
-$(document).delegate('#button-credit-remove', 'click', function() {
-	$.ajax({
-		url: 'index.php?route=sale/order/removecredit&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
-		type: 'post',
-		dataType: 'json',
-		beforeSend: function() {
-			$('#button-credit-remove i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-credit-remove').prop('disabled', true);			
-		},
-		complete: function() {
-			$('#button-credit-remove i').replaceWith('<i class="fa fa-minus-circle"></i>');
-			$('#button-credit-remove').prop('disabled', false);
-		},			
-		success: function(json) {
-			$('.alert').remove();
-						
-			if (json['error']) {
-				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
-			}
-			
-			if (json['success']) {
-                $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-				
-				$('#button-credit-remove').replaceWith('<button id="button-credit-add" class="btn btn-success btn-xs"><i class="fa fa-plus-circle"></i> <?php echo $button_credit_add; ?></button>');
 			}
 		}
 	});

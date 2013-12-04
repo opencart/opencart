@@ -439,6 +439,7 @@ class ControllerCheckoutManual extends Controller {
 				}
 			}
 			
+			// Set payment code (required by some order totals)
 			if (isset($this->request->post['payment_code'])) {
 				$this->session->data['payment_method']['code'] = $this->request->post['payment_code'];
 			} else {

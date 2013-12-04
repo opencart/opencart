@@ -14,7 +14,6 @@ class ModelPaymentPPExpress extends Model {
     }
 
     public function call($data) {
-
         if ($this->config->get('pp_express_test') == 1) {
             $api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
         } else {
@@ -49,7 +48,7 @@ class ModelPaymentPPExpress extends Model {
 
         curl_setopt_array($ch, $defaults);
 
-        if( ! $result = curl_exec($ch)) {
+        if(!$result = curl_exec($ch)) {
             $this->log(array('error' => curl_error($ch), 'errno' => curl_errno($ch)), 'cURL failed');
         }
         

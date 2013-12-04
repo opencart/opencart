@@ -697,7 +697,7 @@ $(document).delegate('#button-restock', 'click', function() {
 			$('#button-restock').prop('disabled', true);			
 		},
 		complete: function() {
-			$('#button-restock i').replaceWith('<i class="fa fa-cog"></i>');
+			$('#button-restock i').replaceWith('<i class="fa fa-reply"></i>');
 			$('#button-restock').prop('disabled', false);
 		},
 		success: function(json) {

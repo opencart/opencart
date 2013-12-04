@@ -38,7 +38,7 @@
 <?php } ?>
 <?php echo $google_analytics; ?>
 </head>
-<body>
+<body class="<?php echo $class; ?>">
 <nav id="top">
   <div class="container">
     <div class="pull-left"><?php echo $currency; ?></div>

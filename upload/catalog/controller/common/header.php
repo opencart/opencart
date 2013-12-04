@@ -109,6 +109,23 @@ class ControllerCommonHeader extends Controller {
 		$data['currency'] = $this->load->controller('module/currency');
 		$data['search'] = $this->load->controller('module/search');
 		$data['cart'] = $this->load->controller('module/cart');
+		
+		// For page specific css
+		if (isset($this->request->get['route'])) {
+			if (isset($this->request->get['product_id'])) {
+				$class = '-' . $this->request->get['product_id'];
+			} elseif (isset($this->request->get['path'])) {
+				$class = '-' . $this->request->get['path'];
+			} elseif (isset($this->request->get['manufacturer_id'])) {
+				$class = '-' . $this->request->get['manufacturer_id'];
+			} else {
+				$class = '';
+			}
+			
+			$data['class'] = str_replace('/', '-', $this->request->get['route']) . $class;
+		} else {
+			$data['class'] = 'common-home';
+		}
 						
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/common/header.tpl', $data);

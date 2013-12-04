@@ -257,12 +257,14 @@ class ControllerPaymentPPProIframe extends Controller {
     
     public function install() {
         $this->load->model('payment/pp_pro_iframe');
-        $this->model_payment_pp_pro_iframe->install();
+        
+		$this->model_payment_pp_pro_iframe->install();
     }
 
     public function uninstall() {
         $this->load->model('payment/pp_pro_iframe');
-        $this->model_payment_pp_pro_iframe->uninstall();
+        
+		$this->model_payment_pp_pro_iframe->uninstall();
     }
     
     public function refund() {

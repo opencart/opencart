@@ -1,5 +1,5 @@
-<div class="form-horizontal">
-  <fieldset id="payment">
+<form id="payment" class="form-horizontal">
+  <fieldset>
     <legend><?php echo $text_credit_card; ?></legend>
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-cc-owner"><?php echo $entry_cc_owner; ?></label>
@@ -36,7 +36,7 @@
       </div>
     </div>
   </fieldset>
-</div>
+</form>
 <div class="buttons">
   <div class="pull-right">
     <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" class="btn btn-primary" />

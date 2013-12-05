@@ -1,9 +1,12 @@
 <?php if ($error_warning) { ?>
 <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?></div>
 <?php } ?>
-<div style="margin-bottom: 10px;"><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/invoice/<?php echo $iso_code_2; ?>_invoice_badge_std_blue.png?width=150&eid=<?php echo $merchant ?>" /></div>
+<p><img src="https://cdn.klarna.com/public/images/<?php echo $iso_code_2; ?>/badges/v1/invoice/<?php echo $iso_code_2; ?>_invoice_badge_std_blue.png?width=150&eid=<?php echo $merchant ?>" /></p>
 <div id="payment">
-  <div style="margin-bottom: 3px;"><b><?php echo $text_additional; ?></b></div>
+  <p><b><?php echo $text_additional; ?></b><p>
+  
+  
+  <fieldset>
   <div class="content">
     <table class="form">
       <?php if (!$company) { ?>

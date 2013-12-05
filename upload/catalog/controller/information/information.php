@@ -81,7 +81,7 @@ class ControllerInformationInformation extends Controller {
     	}
   	}
 	
-	public function info() {
+	public function agree() {
 		$this->load->model('catalog/information');
 		
 		if (isset($this->request->get['information_id'])) {

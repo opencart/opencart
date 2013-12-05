@@ -41,6 +41,7 @@ class ControllerInformationContact extends Controller {
     	$data['heading_title'] = $this->language->get('heading_title');
 
     	$data['text_location'] = $this->language->get('text_location');
+		$data['text_store'] = $this->language->get('text_store');
 		$data['text_contact'] = $this->language->get('text_contact');
 		$data['text_address'] = $this->language->get('text_address');
     	$data['text_telephone'] = $this->language->get('text_telephone');
@@ -83,74 +84,27 @@ class ControllerInformationContact extends Controller {
     
 		$data['action'] = $this->url->link('information/contact');
 		
+		$data['image'] = $this->config->get('config_image');
+		$data['store'] = $this->config->get('config_name');
+    	$data['address'] = nl2br($this->config->get('config_address'));
+    	$data['geocode'] = $this->config->get('config_geocode');
+		$data['telephone'] = $this->config->get('config_telephone');
+    	$data['fax'] = $this->config->get('config_fax');
+		$data['open'] = $this->config->get('config_open');
+		$data['comment'] = $this->config->get('config_comment');
+			
         $data['locations'] = array();
 		
 		$this->load->model('localisation/location');
 		
 		$this->load->model('tool/image');
-		
-		$data['location_id'] = $this->config->get('config_location_id');
-        
-		$location_info = $this->model_localisation_location->getLocation($this->config->get('config_location_id'));
-		
-		if ($location_info) {
-			if ($location_info['address_format']) {
-				$format = $location_info['address_format'];
-			} else {
-				$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-			}			
+       
+	    foreach((array)$this->config->get('config_locartion') as $location_id) {
+			$location_info = $this->model_localisation_location->getLocation($location_id);
 			
-			$find = array(
-				'{firstname}',
-				'{lastname}',
-				'{company}',
-				'{address_1}',
-				'{address_2}',
-				'{city}',
-				'{postcode}',
-				'{zone}',
-				'{zone_code}',
-				'{country}'
-			);
-	
-			$replace = array(
-				'firstname' => '',
-				'lastname'  => '',		
-				'company'   => '',				
-				'address_1' => $location_info['address_1'],
-				'address_2' => $location_info['address_2'],
-				'city'      => $location_info['city'],
-				'postcode'  => $location_info['postcode'],
-				'zone'      => $location_info['zone'],
-				'zone_code' => $location_info['zone_code'],
-				'country'   => $location_info['country']  
-			);				
-			
-			if ($location_info['image']) {
-				$image = $this->model_tool_image->resize($location_info['image'], $this->config->get('config_image_location_width'), $this->config->get('config_image_location_height'));
-			} else {
-				$image = false;
-			}
-							
-			$data['locations'][] = array(
-				'location_id' => $location_info['location_id'],
-				'name'        => $location_info['name'],
-				'address'     => str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format)))),
-				'geocode'     => $location_info['geocode'],
-				'telephone'   => $location_info['telephone'],
-				'fax'         => $location_info['fax'],
-				'image'       => $image,  
-				'open'        => $location_info['open'],   
-				'comment'     => $location_info['comment']   
-			);		
-		}
-		
-		$results = $this->model_localisation_location->getLocations();
-		
-        foreach($results as $result) {
-			if ($this->config->get('config_location_id') != $result['location_id'] && in_array($result['location_id'], (array)$this->config->get('config_location'))) {
-				if ($result['address_format']) {
-					$format = $result['address_format'];
+			if ($location_info) {
+				if ($location_info['address_format']) {
+					$format = $location_info['address_format'];
 				} else {
 					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 				}
@@ -172,31 +126,31 @@ class ControllerInformationContact extends Controller {
 					'firstname' => '',
 					'lastname'  => '',		
 					'company'   => '',				
-					'address_1' => $result['address_1'],
-					'address_2' => $result['address_2'],
-					'city'      => $result['city'],
-					'postcode'  => $result['postcode'],
-					'zone'      => $result['zone'],
-					'zone_code' => $result['zone_code'],
-					'country'   => $result['country']  
+					'address_1' => $location_info['address_1'],
+					'address_2' => $location_info['address_2'],
+					'city'      => $location_info['city'],
+					'postcode'  => $location_info['postcode'],
+					'zone'      => $location_info['zone'],
+					'zone_code' => $location_info['zone_code'],
+					'country'   => $location_info['country']  
 				);				
 
 				if ($result['image']) {
-					$image = $this->model_tool_image->resize($result['image'], $this->config->get('config_image_location_width'), $this->config->get('config_image_location_height'));
+					$image = $this->model_tool_image->resize($location_info['image'], $this->config->get('config_image_location_width'), $this->config->get('config_image_location_height'));
 				} else {
 					$image = false;
 				}
 								
 				$data['locations'][] = array(
-					'location_id' => $result['location_id'],
-					'name'        => $result['name'],
+					'location_id' => $location_info['location_id'],
+					'name'        => $location_info['name'],
 					'address'     => str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format)))),
-					'geocode'     => $result['geocode'],
-					'telephone'   => $result['telephone'],
-					'fax'         => $result['fax'],
+					'geocode'     => $location_info['geocode'],
+					'telephone'   => $location_info['telephone'],
+					'fax'         => $location_info['fax'],
 					'image'       => $image,  
-					'open'        => $result['open'],   
-					'comment'     => $result['comment']   
+					'open'        => $location_info['open'],   
+					'comment'     => $location_info['comment']   
 				);
 			}
         }

@@ -179,13 +179,18 @@ class ControllerSettingStore extends Controller {
 		$data['text_payment'] = $this->language->get('text_payment');	
 				
 		$data['entry_url'] = $this->language->get('entry_url');
-		$data['entry_ssl'] = $this->language->get('entry_ssl');	
+		$data['entry_ssl'] = $this->language->get('entry_ssl');		
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_owner'] = $this->language->get('entry_owner');
 		$data['entry_address'] = $this->language->get('entry_address');
+		$data['entry_geocode'] = $this->language->get('entry_geocode');
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
-		$data['entry_fax'] = $this->language->get('entry_fax');				
+		$data['entry_fax'] = $this->language->get('entry_fax');		
+		$data['entry_image'] = $this->language->get('entry_image');
+		$data['entry_open'] = $this->language->get('entry_open');        
+		$data['entry_comment'] = $this->language->get('entry_comment');
+		$data['entry_location'] = $this->language->get('entry_location');		
 		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
 		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$data['entry_layout'] = $this->language->get('entry_layout');
@@ -228,6 +233,11 @@ class ControllerSettingStore extends Controller {
 		
 		$data['help_url'] = $this->language->get('help_url');
 		$data['help_ssl'] = $this->language->get('help_ssl');
+		$data['help_geocode'] = $this->language->get('help_geocode');
+		$data['help_open'] = $this->language->get('help_open');
+		$data['help_comment'] = $this->language->get('help_comment');		
+		$data['help_location'] = $this->language->get('help_location');
+		$data['help_currency'] = $this->language->get('help_currency');			
 		$data['help_product_limit'] = $this->language->get('help_product_limit');
 		$data['help_product_description_length'] = $this->language->get('help_product_description_length');
 		$data['help_tax_default'] = $this->language->get('help_tax_default');
@@ -456,6 +466,14 @@ class ControllerSettingStore extends Controller {
 			$data['config_address'] = '';
 		}
 		
+		if (isset($this->request->post['config_geocode'])) {
+			$data['config_geocode'] = $this->request->post['config_geocode'];
+		} elseif (isset($store_info['config_geocode'])) {
+			$data['config_geocode'] = $store_info['config_geocode'];		
+		} else {
+			$data['config_geocode'] = '';
+		}
+				
 		if (isset($this->request->post['config_email'])) {
 			$data['config_email'] = $this->request->post['config_email'];
 		} elseif (isset($store_info['config_email'])) {
@@ -480,6 +498,52 @@ class ControllerSettingStore extends Controller {
 			$data['config_fax'] = '';
 		}
 		
+		if (isset($this->request->post['image'])) {
+			$data['image'] = $this->request->post['image'];
+		} elseif (!empty($store_info)) {
+			$data['image'] = $store_info['image'];
+		} else {
+			$data['image'] = '';
+		}
+		
+		$this->load->model('tool/image');
+
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+		} elseif (!empty($store_info) && $store_info['image'] && is_file(DIR_IMAGE . $store_info['image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($store_info['image'], 100, 100);
+		} else {
+			$data['thumb'] = '';
+		}
+				
+		if (isset($this->request->post['open'])) {
+			$data['open'] = $this->request->post['open'];
+		} elseif (!empty($store_info)) {
+			$data['open'] = $store_info['open'];        
+		} else {
+			$data['open'] = '';
+		}
+		
+		if (isset($this->request->post['comment'])) {
+			$data['comment'] = $this->request->post['comment'];
+		} elseif (!empty($store_info)) {
+			$data['comment'] = $store_info['comment'];
+		} else {
+			$data['comment'] = '';
+		}		
+		
+		$this->load->model('localisation/location');
+		
+		$data['locations'] = $this->model_localisation_location->getLocations();
+		
+		if (isset($this->request->post['config_location'])) {
+			$data['config_location'] = $this->request->post['config_location'];
+		} elseif ($this->config->get('config_location')) {
+			$data['config_location'] = $this->config->get('config_location');
+		} else {
+			$data['config_location'] = array();			
+		}
+				
 		if (isset($this->request->post['config_meta_title'])) {
 			$data['config_meta_title'] = $this->request->post['config_meta_title'];
 		} elseif (isset($store_info['config_meta_title'])) {
@@ -700,8 +764,6 @@ class ControllerSettingStore extends Controller {
 			$data['config_stock_checkout'] = '';
 		}
 				
-		$this->load->model('tool/image');
-
 		if (isset($this->request->post['config_logo'])) {
 			$data['config_logo'] = $this->request->post['config_logo'];
 		} elseif (isset($store_info['config_logo'])) {

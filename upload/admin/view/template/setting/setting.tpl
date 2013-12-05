@@ -8,7 +8,7 @@
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div> 
+  </div>
   <?php } ?>
   <?php if ($success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
@@ -58,11 +58,17 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-address"><?php echo $entry_address; ?></label>
               <div class="col-sm-10">
-                <textarea name="config_address" rows="5" id="input-address" class="form-control"><?php echo $config_address; ?></textarea>
+                <textarea name="config_address" placeholder="<?php echo $entry_address; ?>" rows="5" id="input-address" class="form-control"><?php echo $config_address; ?></textarea>
                 <?php if ($error_address) { ?>
                 <div class="text-danger"><?php echo $error_address; ?></div>
                 <?php } ?>
               </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-geocode"><?php echo $entry_geocode; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="config_geocode" value="<?php echo $config_geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
+                <span class="help-block"><?php echo $help_geocode; ?></span></div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
@@ -89,22 +95,30 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
+              <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
               <div class="col-sm-10">
-                <select name="config_location_id" id="input-location" class="form-control">
-                  <option value=""><?php echo $text_none; ?></option>
-                  <?php foreach ($locations as $location) { ?>
-                  <?php if ($location['location_id'] == $config_location_id) { ?>
-                  <option value="<?php echo $location['location_id']; ?>" selected="selected"><?php echo $location['name']; ?></option>
-                  <?php } else { ?>
-                  <option value="<?php echo $location['location_id']; ?>"><?php echo $location['name']; ?></option>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_location; ?></span></div>
+                <?php if ($thumb) { ?>
+                <a href="" id="thumb-image" class="img-thumbnail img-edit"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
+                <?php } else { ?>
+                <a href="" id="thumb-image" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+                <?php } ?>
+                <input type="hidden" name="config_image" value="<?php echo $config_image; ?>" id="input-image" />
+              </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_locations; ?></label>
+              <label class="col-sm-2 control-label" for="input-open"><?php echo $entry_open; ?></label>
+              <div class="col-sm-10">
+                <textarea name="config_open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $config_open; ?></textarea>
+                <span class="help-block"><?php echo $help_open; ?></span></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+              <div class="col-sm-10">
+                <textarea name="config_comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $config_comment; ?></textarea>
+                <span class="help-block"><?php echo $help_comment; ?></span></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_location; ?></label>
               <div class="col-sm-10">
                 <?php foreach ($locations as $location) { ?>
                 <div class="checkbox">
@@ -119,7 +133,7 @@
                   </label>
                 </div>
                 <?php } ?>
-                <span class="help-block"><?php echo $help_locations; ?></span></div>
+                <span class="help-block"><?php echo $help_location; ?></span></div>
             </div>
           </div>
           <div class="tab-pane" id="tab-store">
@@ -230,7 +244,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <span class="help-block"><?php echo $help_currency; ?></span> </div>
+                <span class="help-block"><?php echo $help_currency; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_currency_auto; ?></label>
@@ -410,8 +424,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                   <span class="help-block"><?php echo $help_review_mail; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_review_mail; ?></span> </div>
               </div>
             </fieldset>
             <fieldset>
@@ -925,9 +938,8 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <span class="help-block"><?php echo $help_affiliate_mail; ?></span>
-                </div>
-              </div>              
+                  <span class="help-block"><?php echo $help_affiliate_mail; ?></span> </div>
+              </div>
             </fieldset>
             <fieldset>
               <legend><?php echo $text_return; ?></legend>

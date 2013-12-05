@@ -29,27 +29,17 @@
             <thead>
               <tr>
                 <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                <td class="text-left"><?php if ($sort == 'l.name') { ?>
+                <td class="text-left"><?php if ($sort == 'name') { ?>
                   <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
                   <?php } else { ?>
                   <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                   <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'l.address_1') { ?>
-                  <a href="<?php echo $sort_address_1; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_address_1; ?></a>
+                <td class="text-left"><?php if ($sort == 'address_1') { ?>
+                  <a href="<?php echo $sort_address; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_address; ?></a>
                   <?php } else { ?>
-                  <a href="<?php echo $sort_address_1; ?>"><?php echo $column_address_1; ?></a>
+                  <a href="<?php echo $sort_address; ?>"><?php echo $column_address; ?></a>
                   <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'z.name') { ?>
-                  <a href="<?php echo $sort_zone; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_zone; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_zone; ?>"><?php echo $column_zone; ?></a>
-                  <?php } ?></td>
-                <td class="text-left"><?php if ($sort == 'c.name') { ?>
-                  <a href="<?php echo $sort_country; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_country; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_country; ?>"><?php echo $column_country; ?></a>
-                  <?php } ?></td>
-                <td class="text-right"><?php echo $column_action; ?></td>
+                  <td class="text-right"><?php echo $column_action; ?></td>
               </tr>
             </thead>
             <tbody>
@@ -62,10 +52,8 @@
                   <input type="checkbox" name="selected[]" value="<?php echo $locations['location_id']; ?>" />
                   <?php } ?></td>
                 <td class="text-left"><?php echo $locations['name']; ?></td>
-                <td class="text-left"><?php echo $locations['address_1']; ?></td>
-                <td class="text-left"><?php echo $locations['zone']; ?></td>
-                <td class="text-left"><?php echo $locations['country']; ?></td>
-                <td class="text-right"><a href="<?php echo $locations['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                <td class="text-left"><?php echo $locations['address']; ?></td>
+                 <td class="text-right"><a href="<?php echo $locations['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

@@ -46,11 +46,14 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_owner'] = $this->language->get('entry_owner');
 		$data['entry_address'] = $this->language->get('entry_address');
+		$data['entry_geocode'] = $this->language->get('entry_geocode');
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
 		$data['entry_fax'] = $this->language->get('entry_fax');	
+		$data['entry_image'] = $this->language->get('entry_image');
+		$data['entry_open'] = $this->language->get('entry_open');        
+		$data['entry_comment'] = $this->language->get('entry_comment');
 		$data['entry_location'] = $this->language->get('entry_location');
-		$data['entry_locations'] = $this->language->get('entry_locations');
 		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
 		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
 		$data['entry_layout'] = $this->language->get('entry_layout');
@@ -148,8 +151,10 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_error_filename'] = $this->language->get('entry_error_filename');
 		$data['entry_google_analytics'] = $this->language->get('entry_google_analytics');
 		
+		$data['help_geocode'] = $this->language->get('help_geocode');
+		$data['help_open'] = $this->language->get('help_open');
+		$data['help_comment'] = $this->language->get('help_comment');
 		$data['help_location'] = $this->language->get('help_location');
-		$data['help_locations'] = $this->language->get('help_locations');
 		$data['help_currency'] = $this->language->get('help_currency');
 		$data['help_currency_auto'] = $this->language->get('help_currency_auto');
 		$data['help_product_limit'] = $this->language->get('help_product_limit');
@@ -453,6 +458,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_address'] = $this->config->get('config_address');
 		}
 		
+		if (isset($this->request->post['config_geocode'])) {
+			$data['config_geocode'] = $this->request->post['config_geocode'];
+		} else {
+			$data['config_geocode'] = $this->config->get('config_email');
+		}
+				
 		if (isset($this->request->post['config_email'])) {
 			$data['config_email'] = $this->request->post['config_email'];
 		} else {
@@ -471,15 +482,37 @@ class ControllerSettingSetting extends Controller {
 			$data['config_fax'] = $this->config->get('config_fax');
 		}	
 		
+		if (isset($this->request->post['config_image'])) {
+			$data['config_image'] = $this->request->post['config_image'];
+		} else {
+			$data['config_image'] = $this->config->get('config_image');
+		}
+		
+		$this->load->model('tool/image');
+
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+		} elseif (!empty($location_info) && $location_info['image'] && is_file(DIR_IMAGE . $location_info['image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($location_info['image'], 100, 100);
+		} else {
+			$data['thumb'] = '';
+		}
+				
+		if (isset($this->request->post['config_open'])) {
+			$data['config_open'] = $this->request->post['config_open'];
+		} else {
+			$data['config_open'] = $this->config->get('config_open');
+		}
+		
+		if (isset($this->request->post['config_comment'])) {
+			$data['config_comment'] = $this->request->post['config_comment'];
+		} else {
+			$data['config_comment'] = $this->config->get('config_comment');
+		}
+		
 		$this->load->model('localisation/location');
 		
 		$data['locations'] = $this->model_localisation_location->getLocations();
-		
-		if (isset($this->request->post['config_location_id'])) {
-			$data['config_location_id'] = $this->request->post['config_location_id'];
-		} else {
-			$data['config_location_id'] = $this->config->get('config_location_id');
-		}
 		
 		if (isset($this->request->post['config_location'])) {
 			$data['config_location'] = $this->request->post['config_location'];
@@ -849,8 +882,6 @@ class ControllerSettingSetting extends Controller {
 		
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();	
 			
-		$this->load->model('tool/image');
-
 		if (isset($this->request->post['config_logo'])) {
 			$data['config_logo'] = $this->request->post['config_logo'];
 		} else {

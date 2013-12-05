@@ -77,6 +77,12 @@
                 <?php } ?>
               </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-geocode"><?php echo $entry_geocode; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="config_geocode" value="<?php echo $config_geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
+                <span class="help-block"><?php echo $help_geocode; ?></span></div>
+            </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
               <div class="col-sm-10">
@@ -100,6 +106,47 @@
               <div class="col-sm-10">
                 <input type="text" name="config_fax" value="<?php echo $config_fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
               </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
+              <div class="col-sm-10">
+                <?php if ($thumb) { ?>
+                <a href="" id="thumb-image" class="img-thumbnail img-edit"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
+                <?php } else { ?>
+                <a href="" id="thumb-image" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
+                <?php } ?>
+                <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-open"><?php echo $entry_open; ?></label>
+              <div class="col-sm-10">
+                <textarea name="open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $open; ?></textarea>
+                <span class="help-block"><?php echo $help_open; ?></span></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+              <div class="col-sm-10">
+                <textarea name="comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
+                <span class="help-block"><?php echo $help_comment; ?></span></div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $entry_location; ?></label>
+              <div class="col-sm-10">
+                <?php foreach ($locations as $location) { ?>
+                <div class="checkbox">
+                  <label>
+                    <?php if (in_array($location['location_id'], $config_location)) { ?>
+                    <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" checked="checked" />
+                    <?php echo $location['name']; ?>
+                    <?php } else { ?>
+                    <input type="checkbox" name="config_location[]" value="<?php echo $location['location_id']; ?>" />
+                    <?php echo $location['name']; ?>
+                    <?php } ?>
+                  </label>
+                </div>
+                <?php } ?>
+                <span class="help-block"><?php echo $help_location; ?></span></div>
             </div>
           </div>
           <div class="tab-pane" id="tab-store">
@@ -196,7 +243,7 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-              </div>
+                <span class="help-block"><?php echo $help_currency; ?></span></div>
             </div>
           </div>
           <div class="tab-pane" id="tab-option">

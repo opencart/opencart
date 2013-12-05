@@ -27,6 +27,11 @@ class ControllerCheckoutCheckout extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title')); 
 		
+		// Required by klarna
+		if ($this->config->get('klarna_account') || $this->config->get('klarna_invoice')) {
+			$this->document->addScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js');
+		}
+		
 		$data['breadcrumbs'] = array();
 
       	$data['breadcrumbs'][] = array(

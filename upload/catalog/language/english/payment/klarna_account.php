@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_title']           = 'Klarna Account';
-$_['text_pay_month']       = 'Klarna Account - Pay from %s/month <span id="klarna_account_toc_link"></span><script text="javascript">$.getScript(\'http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js\', function(){ var terms = new Klarna.Terms.Account({ el: \'klarna_account_toc_link\', eid: \'%s\',   country: \'%s\'});})</script>';
+$_['text_pay_month']       = 'Klarna Account - Pay from %s/month <span id="klarna_account_toc"><span><script type="text/javascript">var terms = new Klarna.Terms.Account({el: \'klarna_account_toc\', eid: \'%s\', country: \'%s\'});</script>';
 $_['text_information']     = 'Klarna Account Information';
 $_['text_additional']      = 'Klarna Account requires some additional information before they can proccess your order.';
 $_['text_wait']            = 'Please wait!';
@@ -13,7 +13,7 @@ $_['text_day']             = 'Day';
 $_['text_payment_option']  = 'Payment options';
 $_['text_single_payment']  = 'Single Payment';
 $_['text_monthly_payment'] = '%s - %s per month';
-$_['text_comment']         = "Klarna's Invoice ID: %s\n%s/%s: %.4f";
+$_['text_comment']         = 'Klarna\'s Invoice ID: %s\n%s/%s: %.4f';
 
 // Entry
 $_['entry_gender']         = 'Gender';

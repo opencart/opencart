@@ -856,7 +856,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
 	public function removeItemLink() {
 		$this->load->language('openbay/openbay');
-		$this->openbay->ebay->removeItemId($this->request->get['ebay_id']);
+		$this->openbay->ebay->removeItemByProductId($this->request->get['product_id']);
 		$this->response->setOutput(json_encode(array('error' => false, 'msg' => $this->language->get('item_link_removed'))));
 	}
 

@@ -498,27 +498,25 @@ class ControllerSettingStore extends Controller {
 			$data['config_fax'] = '';
 		}
 		
-		if (isset($this->request->post['image'])) {
-			$data['image'] = $this->request->post['image'];
-		} elseif (!empty($store_info)) {
-			$data['image'] = $store_info['image'];
+		if (isset($this->request->post['config_image'])) {
+			$data['image'] = $this->request->post['config_image'];
+		} elseif (isset($store_info['config_image'])) {
+			$data['image'] = $store_info['config_image'];
 		} else {
 			$data['image'] = '';
 		}
 		
 		$this->load->model('tool/image');
-
-		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($store_info) && $store_info['image'] && is_file(DIR_IMAGE . $store_info['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($store_info['image'], 100, 100);
+		
+		if (isset($store_info['config_image']) && file_exists(DIR_IMAGE . $store_info['config_image']) && is_file(DIR_IMAGE . $store_info['config_image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($store_info['config_image'], 100, 100);		
 		} else {
 			$data['thumb'] = '';
 		}
 				
 		if (isset($this->request->post['open'])) {
 			$data['open'] = $this->request->post['open'];
-		} elseif (!empty($store_info)) {
+		} elseif (isset($store_info['config_open'])) {
 			$data['open'] = $store_info['open'];        
 		} else {
 			$data['open'] = '';
@@ -526,7 +524,7 @@ class ControllerSettingStore extends Controller {
 		
 		if (isset($this->request->post['comment'])) {
 			$data['comment'] = $this->request->post['comment'];
-		} elseif (!empty($store_info)) {
+		} elseif (isset($store_info['config_comment'])) {
 			$data['comment'] = $store_info['comment'];
 		} else {
 			$data['comment'] = '';

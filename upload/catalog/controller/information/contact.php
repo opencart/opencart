@@ -84,7 +84,14 @@ class ControllerInformationContact extends Controller {
     
 		$data['action'] = $this->url->link('information/contact');
 		
-		$data['image'] = $this->config->get('config_image');
+		$this->load->model('tool/image');
+		
+		if ($this->config->get('config_image')) {
+			$data['image'] = $this->model_tool_image->resize($this->config->get('config_image'), $this->config->get('config_image_location_width'), $this->config->get('config_image_location_height'));
+		} else {
+			$data['image'] = false;
+		}		
+		
 		$data['store'] = $this->config->get('config_name');
     	$data['address'] = nl2br($this->config->get('config_address'));
     	$data['geocode'] = $this->config->get('config_geocode');
@@ -96,46 +103,12 @@ class ControllerInformationContact extends Controller {
         $data['locations'] = array();
 		
 		$this->load->model('localisation/location');
-		
-		$this->load->model('tool/image');
        
-	    foreach((array)$this->config->get('config_locartion') as $location_id) {
+	    foreach((array)$this->config->get('config_location') as $location_id) {
 			$location_info = $this->model_localisation_location->getLocation($location_id);
 			
 			if ($location_info) {
-				if ($location_info['address_format']) {
-					$format = $location_info['address_format'];
-				} else {
-					$format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
-				}
-							
-				$find = array(
-					'{firstname}',
-					'{lastname}',
-					'{company}',
-					'{address_1}',
-					'{address_2}',
-					'{city}',
-					'{postcode}',
-					'{zone}',
-					'{zone_code}',
-					'{country}'
-				);
-		
-				$replace = array(
-					'firstname' => '',
-					'lastname'  => '',		
-					'company'   => '',				
-					'address_1' => $location_info['address_1'],
-					'address_2' => $location_info['address_2'],
-					'city'      => $location_info['city'],
-					'postcode'  => $location_info['postcode'],
-					'zone'      => $location_info['zone'],
-					'zone_code' => $location_info['zone_code'],
-					'country'   => $location_info['country']  
-				);				
-
-				if ($result['image']) {
+				if ($location_info['image']) {
 					$image = $this->model_tool_image->resize($location_info['image'], $this->config->get('config_image_location_width'), $this->config->get('config_image_location_height'));
 				} else {
 					$image = false;
@@ -144,7 +117,7 @@ class ControllerInformationContact extends Controller {
 				$data['locations'][] = array(
 					'location_id' => $location_info['location_id'],
 					'name'        => $location_info['name'],
-					'address'     => str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format)))),
+					'address'     => nl2br($location_info['address']),
 					'geocode'     => $location_info['geocode'],
 					'telephone'   => $location_info['telephone'],
 					'fax'         => $location_info['fax'],

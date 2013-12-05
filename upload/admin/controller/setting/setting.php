@@ -461,7 +461,7 @@ class ControllerSettingSetting extends Controller {
 		if (isset($this->request->post['config_geocode'])) {
 			$data['config_geocode'] = $this->request->post['config_geocode'];
 		} else {
-			$data['config_geocode'] = $this->config->get('config_email');
+			$data['config_geocode'] = $this->config->get('config_geocode');
 		}
 				
 		if (isset($this->request->post['config_email'])) {
@@ -490,10 +490,8 @@ class ControllerSettingSetting extends Controller {
 		
 		$this->load->model('tool/image');
 
-		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
-		} elseif (!empty($location_info) && $location_info['image'] && is_file(DIR_IMAGE . $location_info['image'])) {
-			$data['thumb'] = $this->model_tool_image->resize($location_info['image'], 100, 100);
+		if ($this->config->get('config_image') && file_exists(DIR_IMAGE . $this->config->get('config_image')) && is_file(DIR_IMAGE . $this->config->get('config_image'))) {
+			$data['thumb'] = $this->model_tool_image->resize($this->config->get('config_image'), 100, 100);		
 		} else {
 			$data['thumb'] = '';
 		}

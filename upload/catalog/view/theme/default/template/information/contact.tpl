@@ -60,7 +60,7 @@
           <div class="panel-heading">
             <h4 class="panel-title"><a href="#collapse-location<?php echo $location['location_id']; ?>" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $location['name']; ?> <i class="fa fa-caret-down"></i></a></h4>
           </div>
-          <div class="panel-collapse collapse<?php echo ($location['location_id'] == $location_id ? ' in' : ''); ?>" id="collapse-location<?php echo $location['location_id']; ?>">
+          <div class="panel-collapse collapse" id="collapse-location<?php echo $location['location_id']; ?>">
             <div class="panel-body">
               <div class="row">
                 <?php if ($location['image']) { ?>

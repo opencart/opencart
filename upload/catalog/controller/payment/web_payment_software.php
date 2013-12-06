@@ -4,7 +4,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 		$this->load->language('payment/web_payment_software');
 		
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_wait'] = $this->language->get('text_wait');
+		$data['text_loading'] = $this->language->get('text_loading');
 		
 		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
 		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
@@ -140,7 +140,7 @@ class ControllerPaymentWebPaymentSoftware extends Controller {
 			
 			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('web_payment_software_order_status_id'), $message, false);				
 			
-			$json['success'] = $this->url->link('checkout/success', '', 'SSL');
+			$json['redirect'] = $this->url->link('checkout/success', '', 'SSL');
 		} else {
 			$json['error'] = (string)$xml->response_text;
 		}

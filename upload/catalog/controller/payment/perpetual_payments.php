@@ -3,16 +3,17 @@ class ControllerPaymentPerpetualPayments extends Controller {
 	public function index() {
     	$this->load->language('payment/perpetual_payments');
 		
-		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_start_date'] = $this->language->get('text_start_date');
-		$data['text_issue'] = $this->language->get('text_issue');
-		$data['text_wait'] = $this->language->get('text_wait');
+		$data['text_credit_card'] = $this->language->get('text_credit_card');		
+		$data['text_loading'] = $this->language->get('text_loading');
 		
 		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
 		$data['entry_cc_start_date'] = $this->language->get('entry_cc_start_date');
 		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
 		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
 		$data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
+		
+		$data['help_start_date'] = $this->language->get('help_start_date');		
+		$data['help_issue'] = $this->language->get('help_issue');
 		
 		$data['button_confirm'] = $this->language->get('button_confirm');
 	
@@ -122,7 +123,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 				
 				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('perpetual_payments_order_status_id'), $message, false);
 					
-				$json['success'] = $this->url->link('checkout/success');
+				$json['redirect'] = $this->url->link('checkout/success');
 			} else {
 				$json['error'] = end($data);
 			}

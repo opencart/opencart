@@ -4,7 +4,7 @@ class ControllerPaymentSagepayUS extends Controller {
     	$this->load->language('payment/sagepay_us');
 		
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
-		$data['text_wait'] = $this->language->get('text_wait');
+		$data['text_loading'] = $this->language->get('text_loading');
 		
 		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
 		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
@@ -90,7 +90,7 @@ class ControllerPaymentSagepayUS extends Controller {
 			
 			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('sagepay_us_order_status_id'), $message, false);
 
-			$json['success'] = $this->url->link('checkout/success');
+			$json['redirect'] = $this->url->link('checkout/success');
 		} else {
 			$json['error'] = substr($response, 8, 32);
 		}

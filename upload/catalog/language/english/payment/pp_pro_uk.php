@@ -2,8 +2,6 @@
 // Text
 $_['text_title']           = 'Credit or Debit Card (Processed securely by PayPal)';
 $_['text_credit_card']     = 'Credit Card Details';
-$_['text_start_date']      = '(if available)';
-$_['text_issue']           = '(for Maestro and Solo cards only)';
 
 // Entry
 $_['entry_cc_owner']       = 'Card Owner';
@@ -13,6 +11,10 @@ $_['entry_cc_start_date']  = 'Card Valid From Date';
 $_['entry_cc_expire_date'] = 'Card Expiry Date';
 $_['entry_cc_cvv2']        = 'Card Security Code (CVV2)';
 $_['entry_cc_issue']       = 'Card Issue Number';
+
+// Help
+$_['help_start_date']      = '(if available)';
+$_['help_issue']           = '(for Maestro and Solo cards only)';
 
 // Error
 $_['error_required']       = 'Warning: All payment information fields are required.';

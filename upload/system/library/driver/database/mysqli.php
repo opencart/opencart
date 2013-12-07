@@ -17,7 +17,11 @@ final class DBMySQLi {
 
 		if (!$this->link->errno) {
 			if (isset($query->num_rows)) {
-				$data = $query->fetch_all(MYSQLI_BOTH);
+				$data = array();
+
+				while ($row = $query->fetch_array()) {
+					$data[] = $row;
+				}
 
 				$result = new stdClass();
 				$result->num_rows = $query->num_rows;

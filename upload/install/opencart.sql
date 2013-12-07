@@ -5379,39 +5379,6 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (1816, 116, 'XE', 'Xekong', 1),
 (1817, 116, 'XI', 'Xiangkhoang', 1),
 (1818, 116, 'XN', 'Xaisomboun', 1),
-(1819, 117, 'AIZ', 'Aizkraukles Rajons', 1),
-(1820, 117, 'ALU', 'Aluksnes Rajons', 1),
-(1821, 117, 'BAL', 'Balvu Rajons', 1),
-(1822, 117, 'BAU', 'Bauskas Rajons', 1),
-(1823, 117, 'CES', 'Cesu Rajons', 1),
-(1824, 117, 'DGR', 'Daugavpils Rajons', 1),
-(1825, 117, 'DOB', 'Dobeles Rajons', 1),
-(1826, 117, 'GUL', 'Gulbenes Rajons', 1),
-(1827, 117, 'JEK', 'Jekabpils Rajons', 1),
-(1828, 117, 'JGR', 'Jelgavas Rajons', 1),
-(1829, 117, 'KRA', 'Kraslavas Rajons', 1),
-(1830, 117, 'KUL', 'Kuldigas Rajons', 1),
-(1831, 117, 'LPR', 'Liepajas Rajons', 1),
-(1832, 117, 'LIM', 'Limbazu Rajons', 1),
-(1833, 117, 'LUD', 'Ludzas Rajons', 1),
-(1834, 117, 'MAD', 'Madonas Rajons', 1),
-(1835, 117, 'OGR', 'Ogres Rajons', 1),
-(1836, 117, 'PRE', 'Preilu Rajons', 1),
-(1837, 117, 'RZR', 'Rezeknes Rajons', 1),
-(1838, 117, 'RGR', 'Rigas Rajons', 1),
-(1839, 117, 'SAL', 'Saldus Rajons', 1),
-(1840, 117, 'TAL', 'Talsu Rajons', 1),
-(1841, 117, 'TUK', 'Tukuma Rajons', 1),
-(1842, 117, 'VLK', 'Valkas Rajons', 1),
-(1843, 117, 'VLM', 'Valmieras Rajons', 1),
-(1844, 117, 'VSR', 'Ventspils Rajons', 1),
-(1845, 117, 'DGV', 'Daugavpils', 1),
-(1846, 117, 'JGV', 'Jelgava', 1),
-(1847, 117, 'JUR', 'Jurmala', 1),
-(1848, 117, 'LPK', 'Liepaja', 1),
-(1849, 117, 'RZK', 'Rezekne', 1),
-(1850, 117, 'RGA', 'Riga', 1),
-(1851, 117, 'VSL', 'Ventspils', 1),
 (1852, 119, 'BE', 'Berea', 1),
 (1853, 119, 'BB', 'Butha-Buthe', 1),
 (1854, 119, 'LE', 'Leribe', 1),
@@ -7573,197 +7540,194 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (4031, 248, 'BW', 'Western Bahr el-Ghazal', 1),
 (4032, 248, 'EW', 'Western Equatoria', 1),
 (4033, 222, 'GGY', 'Guernsey', 1),
-(4034, 222, 'JEY', 'Jersey', 1);
+(4034, 222, 'JEY', 'Jersey', 1),
 
-DELETE FROM `zone` WHERE `country_id`='117';
-
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0661405', 'Ainaži, Salacgrīvas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0320201', 'Aizkraukle, Aizkraukles novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0320200', 'Aizkraukles novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0640605', 'Aizpute, Aizputes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0640600', 'Aizputes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0560805', 'Aknīste, Aknīstes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0560800', 'Aknīstes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0661007', 'Aloja, Alojas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0661000', 'Alojas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0624200', 'Alsungas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0360201', 'Alūksne, Alūksnes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0360200', 'Alūksnes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0424701', 'Amatas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0360805', 'Ape, Apes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0360800', 'Apes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0460805', 'Auce, Auces novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0460800', 'Auces novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0804400', 'Ādažu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0804900', 'Babītes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0800605', 'Baldone, Baldones novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0800600', 'Baldones novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0800807', 'Baloži, Ķekavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0384400', 'Baltinavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0380201', 'Balvi, Balvu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0380200', 'Balvu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0400201', 'Bauska, Bauskas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0400200', 'Bauskas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0964700', 'Beverīnas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0840605', 'Brocēni, Brocēnu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0840601', 'Brocēnu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0967101', 'Burtnieku novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0805200', 'Carnikavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0700807', 'Cesvaine, Cesvaines novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0700800', 'Cesvaines novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0420201', 'Cēsis, Cēsu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0420200', 'Cēsu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0684901', 'Ciblas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0601009', 'Dagda, Dagdas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0601000', 'Dagdas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0050000', 'Daugavpils', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0440200', 'Daugavpils novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0460201', 'Dobele, Dobeles novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0460200', 'Dobeles novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0885100', 'Dundagas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0640807', 'Durbe, Durbes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0640801', 'Durbes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0905100', 'Engures novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0705500', 'Ērgļu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0806000', 'Garkalnes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0641009', 'Grobiņa, Grobiņas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0641000', 'Grobiņas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0500201', 'Gulbene, Gulbenes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0500200', 'Gulbenes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0406400', 'Iecavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0740605', 'Ikšķile, Ikšķiles novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0740600', 'Ikšķiles novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0440807', 'Ilūkste, Ilūkstes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0440801', 'Ilūkstes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801800', 'Inčukalna novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0321007', 'Jaunjelgava, Jaunjelgavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0321000', 'Jaunjelgavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0425700', 'Jaunpiebalgas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0905700', 'Jaunpils novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0090000', 'Jelgava', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0540200', 'Jelgavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0110000', 'Jēkabpils', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0560200', 'Jēkabpils novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0130000', 'Jūrmala', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0540211', 'Kalnciems, Jelgavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0901211', 'Kandava, Kandavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0901201', 'Kandavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0681009', 'Kārsava, Kārsavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0681000', 'Kārsavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0960200', 'Kocēnu novads (bij. Valmieras)', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0326100', 'Kokneses novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0600201', 'Krāslava, Krāslavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0600202', 'Krāslavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0806900', 'Krimuldas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0566900', 'Krustpils novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0620201', 'Kuldīga, Kuldīgas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0620200', 'Kuldīgas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0741001', 'Ķeguma novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0741009', 'Ķegums, Ķeguma novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0800800', 'Ķekavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0741413', 'Lielvārde, Lielvārdes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0741401', 'Lielvārdes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0170000', 'Liepāja', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0660201', 'Limbaži, Limbažu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0660200', 'Limbažu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0421211', 'Līgatne, Līgatnes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0421200', 'Līgatnes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0761211', 'Līvāni, Līvānu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0761201', 'Līvānu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0701413', 'Lubāna, Lubānas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0701400', 'Lubānas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0680201', 'Ludza, Ludzas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0680200', 'Ludzas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0700201', 'Madona, Madonas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0700200', 'Madonas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0961011', 'Mazsalaca, Mazsalacas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0961000', 'Mazsalacas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0807400', 'Mālpils novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0807600', 'Mārupes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0887600', 'Mērsraga novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0967300', 'Naukšēnu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0327100', 'Neretas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0647900', 'Nīcas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0740201', 'Ogre, Ogres novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0740202', 'Ogres novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801009', 'Olaine, Olaines novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801000', 'Olaines novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0546701', 'Ozolnieku novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0427500', 'Pārgaujas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0641413', 'Pāvilosta, Pāvilostas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0641401', 'Pāvilostas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0980213', 'Piltene, Ventspils novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0321413', 'Pļaviņas, Pļaviņu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0321400', 'Pļaviņu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0760201', 'Preiļi, Preiļu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0760202', 'Preiļu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0641615', 'Priekule, Priekules novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0641600', 'Priekules novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0427300', 'Priekuļu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0427700', 'Raunas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0210000', 'Rēzekne', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0780200', 'Rēzeknes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0766300', 'Riebiņu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0010000', 'Rīga', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0888300', 'Rojas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0808400', 'Ropažu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0648500', 'Rucavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0387500', 'Rugāju novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0407700', 'Rundāles novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0961615', 'Rūjiena, Rūjienas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0961600', 'Rūjienas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0880213', 'Sabile, Talsu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0661415', 'Salacgrīva, Salacgrīvas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0661400', 'Salacgrīvas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0568700', 'Salas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801200', 'Salaspils novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801211', 'Salaspils, Salaspils novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0840200', 'Saldus novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0840201', 'Saldus, Saldus novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801413', 'Saulkrasti, Saulkrastu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801400', 'Saulkrastu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0941813', 'Seda, Strenču novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0809200', 'Sējas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801615', 'Sigulda, Siguldas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801601', 'Siguldas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0328200', 'Skrīveru novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0621209', 'Skrunda, Skrundas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0621200', 'Skrundas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0941615', 'Smiltene, Smiltenes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0941600', 'Smiltenes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0661017', 'Staicele, Alojas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0880215', 'Stende, Talsu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0809600', 'Stopiņu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0941817', 'Strenči, Strenču novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0941800', 'Strenču novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0440815', 'Subate, Ilūkstes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0880201', 'Talsi, Talsu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0880200', 'Talsu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0468900', 'Tērvetes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0900200', 'Tukuma novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0900201', 'Tukums, Tukuma novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0649300', 'Vaiņodes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0880217', 'Valdemārpils, Talsu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0940201', 'Valka, Valkas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0940200', 'Valkas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0250000', 'Valmiera', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0801817', 'Vangaži, Inčukalna novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0701817', 'Varakļāni, Varakļānu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0701800', 'Varakļānu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0769101', 'Vārkavas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0429300', 'Vecpiebalgas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0409500', 'Vecumnieku novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0270000', 'Ventspils', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0980200', 'Ventspils novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0561815', 'Viesīte, Viesītes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0561800', 'Viesītes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0381615', 'Viļaka, Viļakas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0381600', 'Viļakas novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0781817', 'Viļāni, Viļānu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0781800', 'Viļānu novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0681817', 'Zilupe, Zilupes novads', '1');
-INSERT INTO `zone` (`country_id`, `code`, `name`, `status`) VALUES ('117', '0681801', 'Zilupes novads', '1');
-
+(4035, 117,  '0661405', 'Ainaži, Salacgrīvas novads', 1),
+(4036, 117,  '0320201', 'Aizkraukle, Aizkraukles novads', 1),
+(4037, 117,  '0320200', 'Aizkraukles novads', 1),
+(4038, 117,  '0640605', 'Aizpute, Aizputes novads', 1),
+(4039, 117,  '0640600', 'Aizputes novads', 1),
+(4040, 117,  '0560805', 'Aknīste, Aknīstes novads', 1),
+(4041, 117,  '0560800', 'Aknīstes novads', 1),
+(4042, 117,  '0661007', 'Aloja, Alojas novads', 1),
+(4043, 117,  '0661000', 'Alojas novads', 1),
+(4044, 117,  '0624200', 'Alsungas novads', 1),
+(4045, 117,  '0360201', 'Alūksne, Alūksnes novads', 1),
+(4046, 117,  '0360200', 'Alūksnes novads', 1),
+(4047, 117,  '0424701', 'Amatas novads', 1),
+(4048, 117,  '0360805', 'Ape, Apes novads', 1),
+(4049, 117,  '0360800', 'Apes novads', 1),
+(4050, 117,  '0460805', 'Auce, Auces novads', 1),
+(4051, 117,  '0460800', 'Auces novads', 1),
+(4052, 117,  '0804400', 'Ādažu novads', 1),
+(4053, 117,  '0804900', 'Babītes novads', 1),
+(4054, 117,  '0800605', 'Baldone, Baldones novads', 1),
+(4055, 117,  '0800600', 'Baldones novads', 1),
+(4056, 117,  '0800807', 'Baloži, Ķekavas novads', 1),
+(4057, 117,  '0384400', 'Baltinavas novads', 1),
+(4058, 117,  '0380201', 'Balvi, Balvu novads', 1),
+(4059, 117,  '0380200', 'Balvu novads', 1),
+(4060, 117,  '0400201', 'Bauska, Bauskas novads', 1),
+(4061, 117,  '0400200', 'Bauskas novads', 1),
+(4062, 117,  '0964700', 'Beverīnas novads', 1),
+(4063, 117,  '0840605', 'Brocēni, Brocēnu novads', 1),
+(4064, 117,  '0840601', 'Brocēnu novads', 1),
+(4065, 117,  '0967101', 'Burtnieku novads', 1),
+(4066, 117,  '0805200', 'Carnikavas novads', 1),
+(4067, 117,  '0700807', 'Cesvaine, Cesvaines novads', 1),
+(4068, 117,  '0700800', 'Cesvaines novads', 1),
+(4069, 117,  '0420201', 'Cēsis, Cēsu novads', 1),
+(4070, 117,  '0420200', 'Cēsu novads', 1),
+(4071, 117,  '0684901', 'Ciblas novads', 1),
+(4072, 117,  '0601009', 'Dagda, Dagdas novads', 1),
+(4073, 117,  '0601000', 'Dagdas novads', 1),
+(4074, 117,  '0050000', 'Daugavpils', 1),
+(4075, 117,  '0440200', 'Daugavpils novads', 1),
+(4076, 117,  '0460201', 'Dobele, Dobeles novads', 1),
+(4077, 117,  '0460200', 'Dobeles novads', 1),
+(4078, 117,  '0885100', 'Dundagas novads', 1),
+(4079, 117,  '0640807', 'Durbe, Durbes novads', 1),
+(4080, 117,  '0640801', 'Durbes novads', 1),
+(4081, 117,  '0905100', 'Engures novads', 1),
+(4082, 117,  '0705500', 'Ērgļu novads', 1),
+(4083, 117,  '0806000', 'Garkalnes novads', 1),
+(4084, 117,  '0641009', 'Grobiņa, Grobiņas novads', 1),
+(4085, 117,  '0641000', 'Grobiņas novads', 1),
+(4086, 117,  '0500201', 'Gulbene, Gulbenes novads', 1),
+(4087, 117,  '0500200', 'Gulbenes novads', 1),
+(4088, 117,  '0406400', 'Iecavas novads', 1),
+(4089, 117,  '0740605', 'Ikšķile, Ikšķiles novads', 1),
+(4090, 117,  '0740600', 'Ikšķiles novads', 1),
+(4091, 117,  '0440807', 'Ilūkste, Ilūkstes novads', 1),
+(4092, 117,  '0440801', 'Ilūkstes novads', 1),
+(4093, 117,  '0801800', 'Inčukalna novads', 1),
+(4094, 117,  '0321007', 'Jaunjelgava, Jaunjelgavas novads', 1),
+(4095, 117,  '0321000', 'Jaunjelgavas novads', 1),
+(4096, 117,  '0425700', 'Jaunpiebalgas novads', 1),
+(4097, 117,  '0905700', 'Jaunpils novads', 1),
+(4098, 117,  '0090000', 'Jelgava', 1),
+(4099, 117,  '0540200', 'Jelgavas novads', 1),
+(4100, 117,  '0110000', 'Jēkabpils', 1),
+(4101, 117,  '0560200', 'Jēkabpils novads', 1),
+(4102, 117,  '0130000', 'Jūrmala', 1),
+(4103, 117,  '0540211', 'Kalnciems, Jelgavas novads', 1),
+(4104, 117,  '0901211', 'Kandava, Kandavas novads', 1),
+(4105, 117,  '0901201', 'Kandavas novads', 1),
+(4106, 117,  '0681009', 'Kārsava, Kārsavas novads', 1),
+(4107, 117,  '0681000', 'Kārsavas novads', 1),
+(4108, 117,  '0960200', 'Kocēnu novads (bij. Valmieras)', 1),
+(4109, 117,  '0326100', 'Kokneses novads', 1),
+(4110, 117,  '0600201', 'Krāslava, Krāslavas novads', 1),
+(4111, 117,  '0600202', 'Krāslavas novads', 1),
+(4112, 117,  '0806900', 'Krimuldas novads', 1),
+(4113, 117,  '0566900', 'Krustpils novads', 1),
+(4114, 117,  '0620201', 'Kuldīga, Kuldīgas novads', 1),
+(4115, 117,  '0620200', 'Kuldīgas novads', 1),
+(4116, 117,  '0741001', 'Ķeguma novads', 1),
+(4117, 117,  '0741009', 'Ķegums, Ķeguma novads', 1),
+(4118, 117,  '0800800', 'Ķekavas novads', 1),
+(4119, 117,  '0741413', 'Lielvārde, Lielvārdes novads', 1),
+(4120, 117,  '0741401', 'Lielvārdes novads', 1),
+(4121, 117,  '0170000', 'Liepāja', 1),
+(4122, 117,  '0660201', 'Limbaži, Limbažu novads', 1),
+(4123, 117,  '0660200', 'Limbažu novads', 1),
+(4124, 117,  '0421211', 'Līgatne, Līgatnes novads', 1),
+(4125, 117,  '0421200', 'Līgatnes novads', 1),
+(4126, 117,  '0761211', 'Līvāni, Līvānu novads', 1),
+(4127, 117,  '0761201', 'Līvānu novads', 1),
+(4128, 117,  '0701413', 'Lubāna, Lubānas novads', 1),
+(4129, 117,  '0701400', 'Lubānas novads', 1),
+(4130, 117,  '0680201', 'Ludza, Ludzas novads', 1),
+(4131, 117,  '0680200', 'Ludzas novads', 1),
+(4132, 117,  '0700201', 'Madona, Madonas novads', 1),
+(4133, 117,  '0700200', 'Madonas novads', 1),
+(4134, 117,  '0961011', 'Mazsalaca, Mazsalacas novads', 1),
+(4135, 117,  '0961000', 'Mazsalacas novads', 1),
+(4136, 117,  '0807400', 'Mālpils novads', 1),
+(4137, 117,  '0807600', 'Mārupes novads', 1),
+(4138, 117,  '0887600', 'Mērsraga novads', 1),
+(4139, 117,  '0967300', 'Naukšēnu novads', 1),
+(4140, 117,  '0327100', 'Neretas novads', 1),
+(4141, 117,  '0647900', 'Nīcas novads', 1),
+(4142, 117,  '0740201', 'Ogre, Ogres novads', 1),
+(4143, 117,  '0740202', 'Ogres novads', 1),
+(4144, 117,  '0801009', 'Olaine, Olaines novads', 1),
+(4145, 117,  '0801000', 'Olaines novads', 1),
+(4146, 117,  '0546701', 'Ozolnieku novads', 1),
+(4147, 117,  '0427500', 'Pārgaujas novads', 1),
+(4148, 117,  '0641413', 'Pāvilosta, Pāvilostas novads', 1),
+(4149, 117,  '0641401', 'Pāvilostas novads', 1),
+(4150, 117,  '0980213', 'Piltene, Ventspils novads', 1),
+(4151, 117,  '0321413', 'Pļaviņas, Pļaviņu novads', 1),
+(4152, 117,  '0321400', 'Pļaviņu novads', 1),
+(4153, 117,  '0760201', 'Preiļi, Preiļu novads', 1),
+(4154, 117,  '0760202', 'Preiļu novads', 1),
+(4155, 117,  '0641615', 'Priekule, Priekules novads', 1),
+(4156, 117,  '0641600', 'Priekules novads', 1),
+(4157, 117,  '0427300', 'Priekuļu novads', 1),
+(4158, 117,  '0427700', 'Raunas novads', 1),
+(4159, 117,  '0210000', 'Rēzekne', 1),
+(4160, 117,  '0780200', 'Rēzeknes novads', 1),
+(4161, 117,  '0766300', 'Riebiņu novads', 1),
+(4162, 117,  '0010000', 'Rīga', 1),
+(4163, 117,  '0888300', 'Rojas novads', 1),
+(4164, 117,  '0808400', 'Ropažu novads', 1),
+(4165, 117,  '0648500', 'Rucavas novads', 1),
+(4166, 117,  '0387500', 'Rugāju novads', 1),
+(4167, 117,  '0407700', 'Rundāles novads', 1),
+(4168, 117,  '0961615', 'Rūjiena, Rūjienas novads', 1),
+(4169, 117,  '0961600', 'Rūjienas novads', 1),
+(4170, 117,  '0880213', 'Sabile, Talsu novads', 1),
+(4171, 117,  '0661415', 'Salacgrīva, Salacgrīvas novads', 1),
+(4172, 117,  '0661400', 'Salacgrīvas novads', 1),
+(4173, 117,  '0568700', 'Salas novads', 1),
+(4174, 117,  '0801200', 'Salaspils novads', 1),
+(4175, 117,  '0801211', 'Salaspils, Salaspils novads', 1),
+(4176, 117,  '0840200', 'Saldus novads', 1),
+(4177, 117,  '0840201', 'Saldus, Saldus novads', 1),
+(4178, 117,  '0801413', 'Saulkrasti, Saulkrastu novads', 1),
+(4179, 117,  '0801400', 'Saulkrastu novads', 1),
+(4180, 117,  '0941813', 'Seda, Strenču novads', 1),
+(4181, 117,  '0809200', 'Sējas novads', 1),
+(4182, 117,  '0801615', 'Sigulda, Siguldas novads', 1),
+(4183, 117,  '0801601', 'Siguldas novads', 1),
+(4184, 117,  '0328200', 'Skrīveru novads', 1),
+(4185, 117,  '0621209', 'Skrunda, Skrundas novads', 1),
+(4186, 117,  '0621200', 'Skrundas novads', 1),
+(4187, 117,  '0941615', 'Smiltene, Smiltenes novads', 1),
+(4188, 117,  '0941600', 'Smiltenes novads', 1),
+(4189, 117,  '0661017', 'Staicele, Alojas novads', 1),
+(4190, 117,  '0880215', 'Stende, Talsu novads', 1),
+(4191, 117,  '0809600', 'Stopiņu novads', 1),
+(4192, 117,  '0941817', 'Strenči, Strenču novads', 1),
+(4193, 117,  '0941800', 'Strenču novads', 1),
+(4194, 117,  '0440815', 'Subate, Ilūkstes novads', 1),
+(4195, 117,  '0880201', 'Talsi, Talsu novads', 1),
+(4196, 117,  '0880200', 'Talsu novads', 1),
+(4197, 117,  '0468900', 'Tērvetes novads', 1),
+(4198, 117,  '0900200', 'Tukuma novads', 1),
+(4199, 117,  '0900201', 'Tukums, Tukuma novads', 1),
+(4200, 117,  '0649300', 'Vaiņodes novads', 1),
+(4201, 117,  '0880217', 'Valdemārpils, Talsu novads', 1),
+(4202, 117,  '0940201', 'Valka, Valkas novads', 1),
+(4203, 117,  '0940200', 'Valkas novads', 1),
+(4204, 117,  '0250000', 'Valmiera', 1),
+(4205, 117,  '0801817', 'Vangaži, Inčukalna novads', 1),
+(4206, 117,  '0701817', 'Varakļāni, Varakļānu novads', 1),
+(4207, 117,  '0701800', 'Varakļānu novads', 1),
+(4208, 117,  '0769101', 'Vārkavas novads', 1),
+(4209, 117,  '0429300', 'Vecpiebalgas novads', 1),
+(4210, 117,  '0409500', 'Vecumnieku novads', 1),
+(4211, 117,  '0270000', 'Ventspils', 1),
+(4212, 117,  '0980200', 'Ventspils novads', 1),
+(4213, 117,  '0561815', 'Viesīte, Viesītes novads', 1),
+(4214, 117,  '0561800', 'Viesītes novads', 1),
+(4215, 117,  '0381615', 'Viļaka, Viļakas novads', 1),
+(4216, 117,  '0381600', 'Viļakas novads', 1),
+(4217, 117,  '0781817', 'Viļāni, Viļānu novads', 1),
+(4218, 117,  '0781800', 'Viļānu novads', 1),
+(4219, 117,  '0681817', 'Zilupe, Zilupes novads', 1),
+(4220, 117,  '0681801', 'Zilupes novads', 1);
 
 -- --------------------------------------------------------
 

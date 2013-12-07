@@ -4,7 +4,7 @@ class ControllerCommonDashboard extends Controller {
     	$this->load->language('common/dashboard');
 	 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+  		
     	$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->user->getUsername());
@@ -39,6 +39,11 @@ class ControllerCommonDashboard extends Controller {
 
    		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+   		);
+
+   		$data['breadcrumbs'][] = array(
+       		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 

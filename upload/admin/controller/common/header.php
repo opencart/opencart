@@ -191,11 +191,12 @@ class ControllerCommonHeader extends Controller {
 			$data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
 						
 			// Get total number of stores online
-			$data['store_name'] = $this->config->get('config_name');
-
-			$data['store'] = HTTP_CATALOG;
-
 			$data['stores'] = array();
+
+			$data['stores'][] = array(
+				'name' => $this->config->get('config_name'),
+				'href' => HTTP_CATALOG
+			);			
 			
 			$this->load->model('setting/store');
 			
@@ -216,17 +217,16 @@ class ControllerCommonHeader extends Controller {
 		$user_info = $this->model_user_user->getUser($this->user->getId());
 
 		if ($user_info) {
-			$data['profile_name'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
-			$data['profile_group'] = $user_info['user_group'];
+			$data['username'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
 
 			if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
-				$data['profile_image'] = $this->model_tool_image->resize($user_info['image'], 23, 23);
+				$data['image'] = $this->model_tool_image->resize($user_info['image'], 24, 24);
 			} else {
-				$data['profile_image'] = '';
+				$data['image'] = '';
 			}
 		} else {
-			$data['profile_name'] = '';
-			$data['profile_image'] = '';
+			$data['username'] = '';
+			$data['image'] = '';
 		}
 					
 		return $this->load->view('common/header.tpl', $data);

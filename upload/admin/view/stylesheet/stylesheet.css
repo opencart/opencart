@@ -5,9 +5,8 @@ html, body {
 	font-weight: 400;
 	color: #000000;
 	font-size: 12px;
-	line-height: 20px;	
+	line-height: 20px;
 }
-
 h1, h4 {
 	margin-top: 0;
 }
@@ -36,97 +35,51 @@ select.form-control, textarea, input[type="text"], input[type="password"], input
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline !important;
 }
-@media (min-width: 768px) {
-	.container {
-		max-width: 95%;
-	}
+.container {
+	min-width: 95%;
 }
 #header {
-	min-height: 49px;
-	margin-bottom: 0px;
-	background-color: #2D2D2E;
-	background-repeat: no-repeat, repeat;
-	background-size: auto, 5px 5px;
-	background-position: center, center;
-	background-image: linear-gradient(90deg, transparent, transparent 20%, rgba(255, 255, 255, 0.1) 50%, transparent 80%), linear-gradient(-135deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 50%, transparent 60%, transparent 100%);
-	-moz-box-shadow: inset 0 0 8px 0px #000000;
-	-webkit-box-shadow: inset 0 0 8px 0px #000000;
-	box-shadow: inset 0 0 8px 0px #000000;	
-	border-bottom: 4px solid #2FC5F0;
+	min-height: 40px;
+	margin-bottom: 20px;
+	background-color: #242424;
+	background-repeat: repeat-x;
+	background-image: linear-gradient(0deg, #242424, #333333);
+	border-bottom: 1px solid #000000;
+	box-shadow: 0px 2px #5D5D5D;
 }
 #header > .container .navbar-brand {
-	padding-top: 8px;
-	padding-bottom: 0px;
+	padding: 8px 15px;
+	line-height: 20px;
 }
 #header > .container .navbar-nav > li > a {
-	padding: 10px 10px 9px 10px;
-	line-height: 12px;
-	font-size: 12px;
-	color: #FFFFFF;
-	text-shadow: 1px 1px 1px #000000;
+	text-shadow: 1px 1px #000000;
+	padding: 10px 15px 10px 15px;
+	line-height: 20px;
+	color: #999999;
 	cursor: pointer;
 	white-space: nowrap;
 }
-#header > .container .navbar-nav > li.open > a {
-	opacity: 0.5;
+#header > .container .navbar-nav + .navbar-nav > li > a {
+	padding: 7px 15px;
+	line-height: 26px;
+	border-left: 1px solid #434546;
 }
-#header > .container .navbar-nav > li > a > i {
-	float: right;
-	display: block;
-	margin-top: 6px;
-	margin-left: 7px;
+#header > .container .navbar-nav + .navbar-nav > li > a i.fa-lg {
+	font-size: 18px;
 }
 #header > .container .navbar-nav > li > a > img {
-	float: left;
-	border: 1px solid #000000;
 	background: #FFF;
-	padding: 1px;
-	margin-right: 7px;
+	border-radius: 7px;
 }
-
-#user-menu .dropdown-menu {
-	z-index: 2;
+#header > .container .navbar-nav > li > a .fa-caret-down {
+	margin-left: 3px;
 }
-/* menu */
-#menu {
-	z-index: 1;
-	min-height: 30px;
-	margin-bottom: 15px;
-	background-color: #FFFFFF;
-	background-repeat: repeat-x;
-	background-position: top;
-	background-image: linear-gradient(0deg, #FFFFFF 1px, #F3F3F3 1px, #FFFFFF);
-	-webkit-box-shadow: 0px 0px 4px 0px #CCCCCC;
-	-moz-box-shadow: 0px 0px 4px 0px #CCCCCC;
-	box-shadow: 0px 0px 4px 0px #CCCCCC;
-	border-bottom: 1px solid #CCCCCC;
-}
-#menu .navbar-nav, #menu .navbar-collapse {
-	padding: 0;
-}
-#menu .icon-bar {
-	color: #000;
-	border: 1px solid #000;
-}
-#menu li.active {
-	color: #000000;
-}
-#menu .navbar-nav > li > a {
-	color: #444444;
-	cursor: pointer;
-	padding: 5px 20px 5px 20px;
-	text-shadow: 1px 1px 1px #FFFFFF;
-}
-#menu .navbar-nav > li + li {
-	background-repeat: no-repeat;
-	background-size: 1px 100%;
-	background-position: top;
-	background-position: left;
-	background-image: linear-gradient(0deg, #CCCCCC, #FFFFFF);
+#header > .container .navbar-nav > li > a .label {
+	text-shadow: none;
 }
 /* drop down submen */
 .dropdown-menu a {
-	cursor: pointer;	
+	cursor: pointer;
 }
 .dropdown-submenu {
 	position: relative;
@@ -191,9 +144,9 @@ footer a {
 }
 .breadcrumb {
 	border: 1px solid #E5E5E5;
-	background: #FFFFFF;
+	background: #F4F4F4;
 	padding: 0px 15px;
-	margin-bottom: 15px;
+	margin-bottom: 20px;
 }
 .breadcrumb li:first-child a {
 	font-size: 20px;
@@ -260,12 +213,15 @@ footer a {
 */
 .panel-heading {
 	padding: 8px 15px;
+	overflow: auto;
+}
+.panel-default > .panel-heading {
+	background: #FFFFFF;	
 }
 .panel-title {
-	font-size: 19px;	
+	font-size: 19px;
 	line-height: 30px;
-	color: #666666;
-	text-shadow: 1px 1px 1px #FFFFFF;
+	color: #333333;
 }
 .nav-tabs {
 	margin-bottom: 15px;
@@ -283,7 +239,7 @@ input.form-control, select.form-control {
 	height: 30px;
 }
 .table {
-	border-radius: 7px;	
+	border-radius: 7px;
 }
 .table thead td {
 	font-weight: bold;
@@ -308,7 +264,7 @@ input.form-control, select.form-control {
 	color: #FFFFFF;
 	background-color: #EEEEEE;
 	text-align: center;
-	vertical-align: middle;	
+	vertical-align: middle;
 	width: 100px;
 	height: 100px;
 	padding-top: 20px;

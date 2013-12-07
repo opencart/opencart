@@ -1066,55 +1066,33 @@ class ControllerSettingSetting extends Controller {
 		
 		if (isset($this->request->post['config_mail'])) {
 			$config_mail = $this->request->post['config_mail'];
-		} else {
+		
+			$data['config_mail_protocol'] = $config_mail['protocol'];
+			$data['config_mail_parameter'] = $config_mail['parameter'];
+			$data['config_smtp_host'] = $config_mail['smtp_hostname'];
+			$data['config_smtp_username'] = $config_mail['smtp_username'];
+			$data['config_smtp_password'] = $config_mail['smtp_password'];
+			$data['config_smtp_port'] = $config_mail['smtp_port'];
+			$data['config_smtp_timeout'] = $config_mail['smtp_timeout'];		
+		} elseif ($this->config->get('config_mail')) {
 			$config_mail = $this->config->get('config_mail');
-		}
-														
-		if (isset($this->request->post['config_mail_protocol'])) {
-			$data['config_mail_protocol'] = $this->request->post['config_mail_protocol'];
+			
+			$data['config_mail_protocol'] = $config_mail['protocol'];
+			$data['config_mail_parameter'] = $config_mail['parameter'];
+			$data['config_smtp_host'] = $config_mail['smtp_hostname'];
+			$data['config_smtp_username'] = $config_mail['smtp_username'];
+			$data['config_smtp_password'] = $config_mail['smtp_password'];
+			$data['config_smtp_port'] = $config_mail['smtp_port'];
+			$data['config_smtp_timeout'] = $config_mail['smtp_timeout'];			
 		} else {
-			$data['config_mail_protocol'] = $this->config->get('config_mail_protocol');
-		}
-		
-		if (isset($this->request->post['config_mail_parameter'])) {
-			$data['config_mail_parameter'] = $this->request->post['config_mail_parameter'];
-		} else {
-			$data['config_mail_parameter'] = $this->config->get('config_mail_parameter');
-		}
-				
-		if (isset($this->request->post['config_smtp_host'])) {
-			$data['config_smtp_host'] = $this->request->post['config_smtp_host'];
-		} else {
-			$data['config_smtp_host'] = $this->config->get('config_smtp_host');
-		}		
-
-		if (isset($this->request->post['config_smtp_username'])) {
-			$data['config_smtp_username'] = $this->request->post['config_smtp_username'];
-		} else {
-			$data['config_smtp_username'] = $this->config->get('config_smtp_username');
-		}	
-		
-		if (isset($this->request->post['config_smtp_password'])) {
-			$data['config_smtp_password'] = $this->request->post['config_smtp_password'];
-		} else {
-			$data['config_smtp_password'] = $this->config->get('config_smtp_password');
-		}	
-		
-		if (isset($this->request->post['config_smtp_port'])) {
-			$data['config_smtp_port'] = $this->request->post['config_smtp_port'];
-		} elseif ($this->config->get('config_smtp_port')) {
-			$data['config_smtp_port'] = $this->config->get('config_smtp_port');
-		} else {
+			$data['config_mail_protocol'] = '';
+			$data['config_mail_parameter'] = '';
+			$data['config_smtp_host'] = '';
+			$data['config_smtp_username'] = '';
+			$data['config_smtp_password'] = '';
 			$data['config_smtp_port'] = 25;
-		}	
-		
-		if (isset($this->request->post['config_smtp_timeout'])) {
-			$data['config_smtp_timeout'] = $this->request->post['config_smtp_timeout'];
-		} elseif ($this->config->get('config_smtp_timeout')) {
-			$data['config_smtp_timeout'] = $this->config->get('config_smtp_timeout');
-		} else {
 			$data['config_smtp_timeout'] = 5;	
-		}	
+		} 	
 
 		if (isset($this->request->post['config_mail_alert'])) {
 			$data['config_mail_alert'] = $this->request->post['config_mail_alert'];

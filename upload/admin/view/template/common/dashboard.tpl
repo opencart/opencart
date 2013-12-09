@@ -87,10 +87,10 @@
       </div>
       <div class="panel-body">
         <div class="row">
-          <div class="col-xs-4">
-            <div id="chart-sale" class="chart" style="width: 100%; height: 250px;"></div>
+          <div class="col-xs-5">
+            <div id="chart-sale" class="chart" style="width: 100%; height: 175px;"></div>
           </div>
-          <div class="col-xs-8">
+          <div class="col-xs-7">
             <div id="chart-marketing" style="width: 100%; height: 100px;"></div>
             <div class="text-right">
               <button type="button" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i> <?php echo $button_refresh; ?></button>
@@ -103,7 +103,7 @@
   </div>
 </div>
 <div class="row">
-  <div class="col-xs-4">
+  <div class="col-xs-5">
     <div class="panel panel-default">
       <div class="panel-heading">
         <h1 class="panel-title"><i class="fa fa-eye"></i> <?php echo $heading_title; ?></h1>
@@ -136,12 +136,13 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-8"></div>
+  <div class="col-xs-7"></div>
 </div>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
 <script type="text/javascript"><!--
-$('input[name=\'sale\']').on('change', function() {
+$('input[name=\'range\']').on('change', function() {
+	// Sales
 	$.ajax({
 		type: 'get',
 		url: 'index.php?route=common/dashboard/sale&token=<?php echo $token; ?>&range=' + this.value,
@@ -190,11 +191,8 @@ $('input[name=\'sale\']').on('change', function() {
 			});
 		}
 	});
-});
 
-$('.active input[name=\'sale\']').trigger('change');
-
-$('input[name=\'marketing\']').on('change', function() {
+	// Marketing
 	$.ajax({
 		type: 'get',
 		url: 'index.php?route=common/dashboard/marketing&token=<?php echo $token; ?>&range=' + this.value,
@@ -243,6 +241,8 @@ $('input[name=\'marketing\']').on('change', function() {
 		}
 	});
 });
+
+$('.active input[name=\'range\']').trigger('change');
 
 $('#button-refresh').on('click', function() {
 	$.ajax({

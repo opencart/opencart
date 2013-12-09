@@ -367,7 +367,7 @@ class ControllerDesignBanner extends Controller {
 		$data['banner_images'] = array();
 		
 		foreach ($banner_images as $banner_image) {
-			if ($banner_image['image'] && file_exists(DIR_IMAGE . $banner_image['image'])) {
+			if (is_file(DIR_IMAGE . $banner_image['image'])) {
 				$image = $banner_image['image'];
 			} else {
 				$image = '';

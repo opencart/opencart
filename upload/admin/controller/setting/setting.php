@@ -117,7 +117,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_image_location'] = $this->language->get('entry_image_location');	
 		$data['entry_width'] = $this->language->get('entry_width');
 		$data['entry_height'] = $this->language->get('entry_height');	
-		$data['entry_ftp_host'] = $this->language->get('entry_ftp_host');
+		$data['entry_ftp_hostname'] = $this->language->get('entry_ftp_hostname');
 		$data['entry_ftp_port'] = $this->language->get('entry_ftp_port');
 		$data['entry_ftp_username'] = $this->language->get('entry_ftp_username');
 		$data['entry_ftp_password'] = $this->language->get('entry_ftp_password');
@@ -125,7 +125,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_ftp_status'] = $this->language->get('entry_ftp_status');
 		$data['entry_mail_protocol'] = $this->language->get('entry_mail_protocol');
 		$data['entry_mail_parameter'] = $this->language->get('entry_mail_parameter');
-		$data['entry_smtp_host'] = $this->language->get('entry_smtp_host');
+		$data['entry_smtp_hostname'] = $this->language->get('entry_smtp_hostname');
 		$data['entry_smtp_username'] = $this->language->get('entry_smtp_username');
 		$data['entry_smtp_password'] = $this->language->get('entry_smtp_password');
 		$data['entry_smtp_port'] = $this->language->get('entry_smtp_port');
@@ -300,10 +300,10 @@ class ControllerSettingSetting extends Controller {
 			$data['error_voucher_max'] = '';
 		}
 		
- 		if (isset($this->error['ftp_host'])) {
-			$data['error_ftp_host'] = $this->error['ftp_host'];
+ 		if (isset($this->error['ftp_hostname'])) {
+			$data['error_ftp_hostname'] = $this->error['ftp_hostname'];
 		} else {
-			$data['error_ftp_host'] = '';
+			$data['error_ftp_hostname'] = '';
 		}
 		
  		if (isset($this->error['ftp_port'])) {
@@ -489,8 +489,10 @@ class ControllerSettingSetting extends Controller {
 		}
 		
 		$this->load->model('tool/image');
-
-		if ($this->config->get('config_image') && file_exists(DIR_IMAGE . $this->config->get('config_image')) && is_file(DIR_IMAGE . $this->config->get('config_image'))) {
+		
+		if (isset($this->request->post['config_image']) && is_file(DIR_IMAGE . $this->request->post['config_image'])) {
+			$data['thumb'] = $this->request->post['config_image'];
+		} elseif ($this->config->get('config_image') && is_file(DIR_IMAGE . $this->config->get('config_image'))) {
 			$data['thumb'] = $this->model_tool_image->resize($this->config->get('config_image'), 100, 100);		
 		} else {
 			$data['thumb'] = '';
@@ -886,7 +888,9 @@ class ControllerSettingSetting extends Controller {
 			$data['config_logo'] = $this->config->get('config_logo');			
 		}
 
-		if ($this->config->get('config_logo') && file_exists(DIR_IMAGE . $this->config->get('config_logo')) && is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
+		if (isset($this->request->post['config_logo']) && is_file(DIR_IMAGE . $this->request->post['config_logo'])) {
+			$data['logo'] = $this->model_tool_image->resize($this->request->post['config_logo'], 100, 100);
+		} elseif ($this->config->get('config_logo') && is_file(DIR_IMAGE . $this->config->get('config_logo'))) {
 			$data['logo'] = $this->model_tool_image->resize($this->config->get('config_logo'), 100, 100);		
 		} else {
 			$data['logo'] = '';
@@ -898,7 +902,9 @@ class ControllerSettingSetting extends Controller {
 			$data['config_icon'] = $this->config->get('config_icon');			
 		}
 		
-		if ($this->config->get('config_icon') && file_exists(DIR_IMAGE . $this->config->get('config_icon')) && is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
+		if (isset($this->request->post['config_icon']) && is_file(DIR_IMAGE . $this->request->post['config_icon'])) {
+			$data['icon'] = $this->model_tool_image->resize($this->request->post['config_logo'], 100, 100);
+		} elseif ($this->config->get('config_icon') && is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$data['icon'] = $this->model_tool_image->resize($this->config->get('config_icon'), 100, 100);		
 		} else {
 			$data['icon'] = '';
@@ -1024,12 +1030,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_image_location_height'] = $this->config->get('config_image_location_height');
 		}
 						
-		if (isset($this->request->post['config_ftp_host'])) {
-			$data['config_ftp_host'] = $this->request->post['config_ftp_host'];
-		} elseif ($this->config->get('config_ftp_host')) {
-			$data['config_ftp_host'] = $this->config->get('config_ftp_host');		
+		if (isset($this->request->post['config_ftp_hostname'])) {
+			$data['config_ftp_hostname'] = $this->request->post['config_ftp_hostname'];
+		} elseif ($this->config->get('config_ftp_hostname')) {
+			$data['config_ftp_hostname'] = $this->config->get('config_ftp_hostname');		
 		} else {
-			$data['config_ftp_host'] = str_replace('www.', '', $this->request->server['HTTP_HOST']);
+			$data['config_ftp_hostname'] = str_replace('www.', '', $this->request->server['HTTP_HOST']);
 		}
 		
 		if (isset($this->request->post['config_ftp_port'])) {
@@ -1069,7 +1075,7 @@ class ControllerSettingSetting extends Controller {
 		
 			$data['config_mail_protocol'] = $config_mail['protocol'];
 			$data['config_mail_parameter'] = $config_mail['parameter'];
-			$data['config_smtp_host'] = $config_mail['smtp_hostname'];
+			$data['config_smtp_hostname'] = $config_mail['smtp_hostname'];
 			$data['config_smtp_username'] = $config_mail['smtp_username'];
 			$data['config_smtp_password'] = $config_mail['smtp_password'];
 			$data['config_smtp_port'] = $config_mail['smtp_port'];
@@ -1079,7 +1085,7 @@ class ControllerSettingSetting extends Controller {
 			
 			$data['config_mail_protocol'] = $config_mail['protocol'];
 			$data['config_mail_parameter'] = $config_mail['parameter'];
-			$data['config_smtp_host'] = $config_mail['smtp_hostname'];
+			$data['config_smtp_hostname'] = $config_mail['smtp_hostname'];
 			$data['config_smtp_username'] = $config_mail['smtp_username'];
 			$data['config_smtp_password'] = $config_mail['smtp_password'];
 			$data['config_smtp_port'] = $config_mail['smtp_port'];
@@ -1087,7 +1093,7 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_mail_protocol'] = '';
 			$data['config_mail_parameter'] = '';
-			$data['config_smtp_host'] = '';
+			$data['config_smtp_hostname'] = '';
 			$data['config_smtp_username'] = '';
 			$data['config_smtp_password'] = '';
 			$data['config_smtp_port'] = 25;
@@ -1304,8 +1310,8 @@ class ControllerSettingSetting extends Controller {
 		}		
 		
 		if ($this->request->post['config_ftp_status']) {
-			if (!$this->request->post['config_ftp_host']) {
-				$this->error['ftp_host'] = $this->language->get('error_ftp_host');
+			if (!$this->request->post['config_ftp_hostname']) {
+				$this->error['ftp_hostname'] = $this->language->get('error_ftp_hostname');
 			}
 			
 			if (!$this->request->post['config_ftp_port']) {
@@ -1359,7 +1365,7 @@ class ControllerSettingSetting extends Controller {
 			$server = HTTP_CATALOG;
 		}
 		
-		if (file_exists(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
+		if (is_file(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
 			$this->response->setOutput($server . 'image/templates/' . basename($this->request->get['template']) . '.png');
 		} else {
 			$this->response->setOutput($server . 'image/no_image.jpg');

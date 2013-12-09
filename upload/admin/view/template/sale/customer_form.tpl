@@ -15,7 +15,7 @@
       <div class="pull-right">
         <button type="submit" form="form-customer" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-customer" class="form-horizontal">
@@ -325,9 +325,9 @@
                     <td class="text-right"><a href="<?php echo $ip['filter_ip']; ?>" target="_blank"><?php echo $ip['total']; ?></a></td>
                     <td class="text-left"><?php echo $ip['date_added']; ?></td>
                     <td class="text-right"><?php if ($ip['ban_ip']) { ?>
-                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-default btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo $text_remove_ban_ip; ?></button>
+                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-danger btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo $text_remove_ban_ip; ?></button>
                       <?php } else { ?>
-                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-danger btn-xs button-ban-add"><i class="fa fa-plus-circle"></i> <?php echo $text_add_ban_ip; ?></button>
+                      <button type="button" value="<?php echo $ip['ip']; ?>" class="btn btn-success btn-xs button-ban-add"><i class="fa fa-plus-circle"></i> <?php echo $text_add_ban_ip; ?></button>
                       <?php } ?></td>
                   </tr>
                   <?php } ?>
@@ -600,7 +600,7 @@ $('body').delegate('.button-ban-add', 'click', function() {
 			if (json['success']) {
 				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
                 
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-default btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo $text_remove_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-danger btn-xs button-ban-remove"><i class="fa fa-minus-circle"></i> <?php echo $text_remove_ban_ip; ?></button>');
 			}
 		}
 	});	
@@ -630,7 +630,7 @@ $('body').delegate('.button-ban-remove', 'click', function() {
 			if (json['success']) {
 				 $('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
 				
-				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-danger btn-xs button-ban-add"><i class="fa fa-plus-circle"></i> <?php echo $text_add_ban_ip; ?></button>');
+				$(element).replaceWith('<button type="button" value="' + element.value + '" class="btn btn-success btn-xs button-ban-add"><i class="fa fa-plus-circle"></i> <?php echo $text_add_ban_ip; ?></button>');
 			}
 		}
 	});	

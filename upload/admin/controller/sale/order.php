@@ -1146,7 +1146,7 @@ class ControllerSaleOrder extends Controller {
 					$data['coupon'] = substr($order_total['title'], $start, $end - $start);
 				}
 							
-				if ($order_total['code'] == 'voucher' && $start && $end) {
+				if ($order_total['code'] == 'voucher') {
 					$data['voucher'] = substr($order_total['title'], $start, $end - $start);
 				}		
 				
@@ -2218,7 +2218,7 @@ class ControllerSaleOrder extends Controller {
 			$mask = basename(utf8_substr($option_info['value'], 0, utf8_strrpos($option_info['value'], '.')));
 
 			if (!headers_sent()) {
-				if (file_exists($file)) {
+				if (is_file($file)) {
 					header('Content-Type: application/octet-stream');
 					header('Content-Description: File Transfer');
 					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');

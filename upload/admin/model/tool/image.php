@@ -18,14 +18,20 @@ class ModelToolImage extends Model {
 			foreach ($directories as $directory) {
 				$path = $path . '/' . $directory;
 				
-				if (!file_exists(DIR_IMAGE . $path)) {
+				if (!is_dir(DIR_IMAGE . $path)) {
 					@mkdir(DIR_IMAGE . $path, 0777);
-				}		
+				}
 			}
 			
-			$image = new Image(DIR_IMAGE . $old_image);
-			$image->resize($width, $height);
-			$image->save(DIR_IMAGE . $new_image);
+			list($width_orig, $height_orig) = getimagesize(DIR_IMAGE . $old_image);
+
+			if ($width_orig != $width || $height_orig != $height) {			
+				$image = new Image(DIR_IMAGE . $old_image);
+				$image->resize($width, $height);
+				$image->save(DIR_IMAGE . $new_image);
+			} else {
+				copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);
+			}
 		}
 	
 		if ($this->request->server['HTTPS']) {

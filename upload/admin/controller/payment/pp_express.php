@@ -260,12 +260,10 @@ class ControllerPaymentPPExpress extends Controller {
 
         $this->load->model('tool/image');
 
-        $logo = $this->config->get('pp_express_logo');
-
-        if (isset($this->request->post['pp_express_logo']) && file_exists(DIR_IMAGE . $this->request->post['pp_express_logo'])) {
+        if (isset($this->request->post['pp_express_logo']) && is_file(DIR_IMAGE . $this->request->post['pp_express_logo'])) {
             $this->data['thumb'] = $this->model_tool_image->resize($this->request->post['pp_express_logo'], 750, 90);
-        }elseif(($logo != '') && file_exists(DIR_IMAGE . $logo)) {
-            $this->data['thumb'] = $this->model_tool_image->resize($logo, 750, 90);
+        }elseif(is_file(DIR_IMAGE . $this->config->get('pp_express_logo'))) {
+            $this->data['thumb'] = $this->model_tool_image->resize($this->config->get('pp_express_logo'), 750, 90);
         } else {
             $this->data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 750, 90);
         }

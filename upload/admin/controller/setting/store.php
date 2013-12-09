@@ -508,7 +508,9 @@ class ControllerSettingStore extends Controller {
 		
 		$this->load->model('tool/image');
 		
-		if (isset($store_info['config_image']) && file_exists(DIR_IMAGE . $store_info['config_image']) && is_file(DIR_IMAGE . $store_info['config_image'])) {
+		if (isset($this->request->post['config_image']) && is_file(DIR_IMAGE . $this->request->post['config_image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($this->request->post['config_image'], 100, 100);
+		} elseif (isset($store_info['config_image']) && is_file(DIR_IMAGE . $store_info['config_image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($store_info['config_image'], 100, 100);		
 		} else {
 			$data['thumb'] = '';
@@ -770,7 +772,9 @@ class ControllerSettingStore extends Controller {
 			$data['config_logo'] = '';
 		}
 
-		if (isset($store_info['config_logo']) && file_exists(DIR_IMAGE . $store_info['config_logo']) && is_file(DIR_IMAGE . $store_info['config_logo'])) {
+		if (isset($this->request->post['config_logo']) && is_file(DIR_IMAGE . $this->request->post['config_logo'])) {
+			$data['logo'] = $this->model_tool_image->resize($this->request->post['config_logo'], 100, 100);	
+		} elseif (isset($store_info['config_logo']) && is_file(DIR_IMAGE . $store_info['config_logo'])) {
 			$data['logo'] = $this->model_tool_image->resize($store_info['config_logo'], 100, 100);		
 		} else {
 			$data['logo'] = '';
@@ -784,7 +788,9 @@ class ControllerSettingStore extends Controller {
 			$data['config_icon'] = '';
 		}
 		
-		if (isset($store_info['config_icon']) && file_exists(DIR_IMAGE . $store_info['config_icon']) && is_file(DIR_IMAGE . $store_info['config_icon'])) {
+		if (isset($this->request->post['config_icon']) && is_file(DIR_IMAGE . $this->request->post['config_icon'])) {
+			$data['icon'] = $this->model_tool_image->resize($this->request->post['config_icon'], 100, 100);	
+		} elseif (isset($store_info['config_icon']) && is_file(DIR_IMAGE . $store_info['config_icon'])) {
 			$data['icon'] = $this->model_tool_image->resize($store_info['config_icon'], 100, 100);
 		} else {
 			$data['icon'] = '';
@@ -1093,7 +1099,7 @@ class ControllerSettingStore extends Controller {
 			$server = HTTP_CATALOG;
 		}		
 		
-		if (file_exists(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
+		if (is_file(DIR_IMAGE . 'templates/' . basename($this->request->get['template']) . '.png')) {
 			$this->response->setOutput($server . 'image/templates/' . basename($this->request->get['template']) . '.png');
 		} else {
 			$this->response->setOutput($server . 'image/no_image.jpg');

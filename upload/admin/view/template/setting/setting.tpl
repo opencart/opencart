@@ -20,7 +20,7 @@
       <div class="pull-right">
         <button type="submit" form="form-setting" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-setting" class="form-horizontal">
@@ -1160,11 +1160,11 @@
           </div>
           <div class="tab-pane" id="tab-ftp">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-ftp-host"><?php echo $entry_ftp_host; ?></label>
+              <label class="col-sm-2 control-label" for="input-ftp-host"><?php echo $entry_ftp_hostname; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_ftp_host" value="<?php echo $config_ftp_host; ?>" placeholder="<?php echo $entry_ftp_host; ?>" id="input-ftp-host" class="form-control" />
-                <?php if ($error_ftp_host) { ?>
-                <div class="text-danger"><?php echo $error_ftp_host; ?></div>
+                <input type="text" name="config_ftp_hostname" value="<?php echo $config_ftp_hostname; ?>" placeholder="<?php echo $entry_ftp_hostname; ?>" id="input-ftp-host" class="form-control" />
+                <?php if ($error_ftp_hostname) { ?>
+                <div class="text-danger"><?php echo $error_ftp_hostname; ?></div>
                 <?php } ?>
               </div>
             </div>

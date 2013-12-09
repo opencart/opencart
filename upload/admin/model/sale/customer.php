@@ -355,19 +355,15 @@ class ModelSaleCustomer extends Model {
 
 			$this->load->language('mail/customer');
 			
-			if ($customer_info['store_id']) {
-				$this->load->model('setting/store');
-		
-				$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
-				
-				if ($store_info) {
-					$store_name = $store_info['name'];
-				} else {
-					$store_name = $this->config->get('config_name');
-				}	
+			$this->load->model('setting/store');
+	
+			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
+			
+			if ($store_info) {
+				$store_name = $store_info['name'];
 			} else {
 				$store_name = $this->config->get('config_name');
-			}
+			}	
 						
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
 			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id)));
@@ -435,8 +431,10 @@ class ModelSaleCustomer extends Model {
 					$store_name = $order_info['store_name'];
 				} else {
 					$store_name = $this->config->get('config_name');
-				}	
+				}
 			} else {
+				
+				
 				$store_name = $this->config->get('config_name');
 			}		
 				
@@ -454,7 +452,7 @@ class ModelSaleCustomer extends Model {
 	}
 
 	public function deleteReward($order_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "' AND points > 0");
 	}
 	
 	public function getRewards($customer_id, $start = 0, $limit = 10) {

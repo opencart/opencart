@@ -1,8 +1,5 @@
 <?php
 final class Tax {
-	private $shipping_address;
-	private $payment_address;
-	private $store_address;
 	private $tax_rates = array();
 
 	public function __construct($registry) {

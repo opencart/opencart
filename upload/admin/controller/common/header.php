@@ -219,7 +219,7 @@ class ControllerCommonHeader extends Controller {
 		if ($user_info) {
 			$data['username'] = $user_info['firstname'] . ' ' . $user_info['lastname'];
 
-			if (!empty($user_info) && $user_info['image'] && is_file(DIR_IMAGE . $user_info['image'])) {
+			if (is_file(DIR_IMAGE . $user_info['image'])) {
 				$data['image'] = $this->model_tool_image->resize($user_info['image'], 24, 24);
 			} else {
 				$data['image'] = '';

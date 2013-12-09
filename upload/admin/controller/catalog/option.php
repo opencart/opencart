@@ -483,7 +483,7 @@ class ControllerCatalogOption extends Controller {
 					$option_values = $this->model_catalog_option->getOptionValues($option['option_id']);
 					
 					foreach ($option_values as $option_value) {
-						if ($option_value['image'] && file_exists(DIR_IMAGE . $option_value['image'])) {
+						if (is_file(DIR_IMAGE . $option_value['image'])) {
 							$image = $this->model_tool_image->resize($option_value['image'], 50, 50);
 						} else {
 							$image = '';

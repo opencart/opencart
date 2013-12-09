@@ -121,6 +121,8 @@ class ModelSaleOrder extends Model {
 				if ($start && $end) {
 					if ($order_total['code'] == 'coupon') {
 						$data['coupon'] = substr($order_total['title'], $start, $end - $start);
+						
+						$this->db->query("INSERT");
 					}
 								
 					if ($order_total['code'] == 'voucher' && $start && $end) {
@@ -249,6 +251,11 @@ class ModelSaleOrder extends Model {
 			}
 		}
 		
+		// Remove used coupons, vouchers and reward points history
+		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE order_id = '" . (int)$order_id  . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_history WHERE order_id = '" . (int)$order_id  . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "cutomer_reward WHERE order_id = '" . (int)$order_id  . "' and points < 0");
+
 		// Get the total
 		$total = 0;
 				
@@ -257,8 +264,35 @@ class ModelSaleOrder extends Model {
 		if (isset($data['order_total'])) {		
       		foreach ($data['order_total'] as $order_total) {	
       			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_total_id = '" . (int)$order_total['order_total_id'] . "', order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($order_total['code']) . "', title = '" . $this->db->escape($order_total['title']) . "', `value` = '" . (float)$order_total['value'] . "', sort_order = '" . (int)$order_total['sort_order'] . "'");
+			
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(') + 1;
+				$end = strrpos($order_total['title'], ')');			
+				
+				if ($start && $end) {
+					if ($order_total['code'] == 'coupon') {
+						$this->load->model('marketing/coupon');
+						
+						$this->model_marketing_coupon->redeem(substr($order_total['title'], $start, $end - $start), $order_id, $data['customer_id'], $order_total['value']);
+					}
+								
+					if ($order_total['code'] == 'voucher') {
+						$this->load->model('sale/voucher');
+						
+						$this->model_sale_voucher->redeem(substr($order_total['title'], $start, $end - $start), $order_id, $data['customer_id'], $order_total['value']);
+					}		
+					
+					if ($order_total['code'] == 'reward') {
+						$this->load->model('marketing/coupon');
+						
+						$data['reward'] = substr($order_total['title'], $start, $end - $start);
+						
+						$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET order_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', points = '" . (float)$order_total['value'] . "', date_added = NOW()");
+					}
+				}			
 			}
 			
+			// Calculate the total
 			$total += $order_total['value'];
 		}
 		
@@ -297,6 +331,8 @@ class ModelSaleOrder extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE order_id = '" . (int)$order_id  . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_history WHERE order_id = '" . (int)$order_id  . "'");		
 	}
 
 	public function restock($order_id) {

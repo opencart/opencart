@@ -5,7 +5,6 @@ html, body {
 	font-weight: 400;
 	color: #000000;
 	font-size: 12px;
-	line-height: 20px;
 }
 h1, h4 {
 	margin-top: 0;
@@ -23,12 +22,12 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header {
 	min-height: 40px;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 	background-color: #242424;
 	background-repeat: repeat-x;
 	background-image: linear-gradient(0deg, #242424, #333333);
 	border-bottom: 1px solid #000000;
-	box-shadow: 0px 2px #5D5D5D;
+	box-shadow: 0px 2px #33C6F0;
 }
 #header > .container .navbar-brand {
 	padding: 8px 15px;
@@ -41,12 +40,19 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #999999;
 	cursor: pointer;
 	white-space: nowrap;
+	border-left: 1px solid #434546;
+}
+#header > .container .navbar-nav > li + li > a {
+	border-right: 1px solid #000000;	
+}
+#header > .container .navbar-nav > li > a:hover {
+	color: #FFF;
 }
 #header > .container .navbar-nav + .navbar-nav > li > a {
 	padding: 7px 15px;
 	line-height: 26px;
-	border-left: 1px solid #434546;
 }
+
 #header > .container .navbar-nav + .navbar-nav > li > a i.fa-lg {
 	font-size: 18px;
 }
@@ -129,7 +135,7 @@ footer a {
 	border: 1px solid #E5E5E5;
 	background: #F4F4F4;
 	padding: 0px 15px;
-	margin-bottom: 20px;
+	margin-bottom: 15px;
 }
 .breadcrumb li:first-child a {
 	font-size: 20px;
@@ -174,12 +180,14 @@ footer a {
 	overflow: auto;
 }
 .panel-default > .panel-heading {
-	background: #FFFFFF;	
+	
 }
 .panel-title {
+	font-weight: bold;
 	font-size: 19px;
 	line-height: 30px;
-	color: #333333;
+	color: #666;
+	text-shadow: 1px 1px #FFFFFF;
 }
 .nav-tabs {
 	margin-bottom: 15px;

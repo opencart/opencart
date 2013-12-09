@@ -1,133 +1,156 @@
 <?php echo $header; ?>
 <div id="content" class="container">
-<ul class="breadcrumb">
-  <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <?php if ($error_install) { ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_install; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } else { ?>
   <?php } ?>
-</ul>
-<?php if ($error_install) { ?>
-<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_install; ?>
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-</div>
-<?php } else { ?>
-<?php } ?>
-<div class="alert alert-info"><i class="fa fa-thumbs-o-up"></i> <?php echo $text_welcome; ?>
-  <button type="button" class="close" data-dismiss="alert">&times;</button>
-</div>
-<div class="row">
-  <div class="col-sm-3">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-4"><span class="text-muted"><i class="fa fa-shopping-cart fa-4x"></i></span></div>
-          <div class="col-xs-8">
-            <div class="label label-success pull-right">+23%</div>
-            <div class="lead text-success"><?php echo $order_total; ?></div>
-            <br />
-            <?php echo $text_order; ?></div>
-        </div>
-      </div>
-    </div>
+  <div class="alert alert-info"><i class="fa fa-thumbs-o-up"></i> <?php echo $text_welcome; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <div class="col-sm-3">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-4"><span class="text-muted"><i class="fa fa-user fa-4x"></i></span></div>
-          <div class="col-xs-8"><?php echo $customer_total; ?><br />
-            <?php echo $text_customer; ?></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-4"><span class="text-muted"><i class="fa fa-credit-card fa-4x"></i></span></div>
-          <div class="col-xs-8"><?php echo $text_sale; ?><br />
-            <?php echo $sale_total; ?></div>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="col-sm-3">
-    <div class="panel panel-default">
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-4"><span class="text-muted"><i class="fa fa-bar-chart-o fa-4x"></i></span></div>
-          <div class="col-xs-8"><?php echo $marketing_total; ?><br />
-            <?php echo $text_marketing; ?></div>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
-<div class="row">
-  <div class="col-xs-12">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <div class="pull-right">
-          <div class="btn-group" data-toggle="buttons">
-            <label class="btn btn-default active">
-              <input type="radio" name="range" value="day" />
-              <?php echo $text_day; ?></label>
-            <label class="btn btn-default">
-              <input type="radio" name="range" value="week" />
-              <?php echo $text_week; ?></label>
-            <label class="btn btn-default">
-              <input type="radio" name="range" value="month" />
-              <?php echo $text_month; ?></label>
-            <label class="btn btn-default">
-              <input type="radio" name="srange" value="year" />
-              <?php echo $text_year; ?></label>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-shopping-cart fa-4x"></i></span></div>
+            <div class="col-xs-8"> <span class="lead text-success"><?php echo $order_total; ?></span>
+              <div class="label label-success">+23%</div>
+              <br />
+              <?php echo $text_order; ?></div>
           </div>
         </div>
-        <h1 class="panel-title"><i class="fa fa-eye"></i> <?php echo $heading_title; ?></h1>
       </div>
-      <div class="panel-body">
-        <div class="row">
-          <div class="col-xs-5">
-            <div id="chart-sale" class="chart" style="width: 100%; height: 175px;"></div>
+    </div>
+    <div class="col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-user fa-4x"></i></span></div>
+            <div class="col-xs-8"><?php echo $customer_total; ?><br />
+              <?php echo $text_customer; ?></div>
           </div>
-          <div class="col-xs-7">
-            <div id="chart-marketing" style="width: 100%; height: 100px;"></div>
-            <div class="text-right">
-              <button type="button" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i> <?php echo $button_refresh; ?></button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-credit-card fa-4x"></i></span></div>
+            <div class="col-xs-8"><?php echo $text_sale; ?><br />
+              <?php echo $sale_total; ?></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-bar-chart-o fa-4x"></i></span></div>
+            <div class="col-xs-8"><?php echo $marketing_total; ?><br />
+              <?php echo $text_marketing; ?></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="pull-right">
+            <div class="btn-group" data-toggle="buttons">
+              <label class="btn btn-default active">
+                <input type="radio" name="range" value="day" />
+                <?php echo $text_day; ?></label>
+              <label class="btn btn-default">
+                <input type="radio" name="range" value="week" />
+                <?php echo $text_week; ?></label>
+              <label class="btn btn-default">
+                <input type="radio" name="range" value="month" />
+                <?php echo $text_month; ?></label>
+              <label class="btn btn-default">
+                <input type="radio" name="srange" value="year" />
+                <?php echo $text_year; ?></label>
             </div>
-            <div id="chart-online" class="chart" style="width: 100%; height: 100px;"></div>
+          </div>
+          <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_analytics; ?></h1>
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-sm-5">
+              <p class="text-primary">Sales Analytics</p>
+              <div id="chart-sale" class="chart" style="width: 100%; height: 175px;"></div>
+            </div>
+            <div class="col-sm-7">
+              <p class="text-primary">Marketing Analytics</p><strong></strong>
+              <div id="chart-marketing" style="width: 100%; height: 100px;"></div>
+              
+              <div id="chart-online" class="chart" style="width: 100%; height: 100px;"></div>
+            </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<div class="row">
-  <div class="col-xs-5">
-    <div class="panel panel-default">
-      <div class="panel-heading">
-        <h1 class="panel-title"><i class="fa fa-eye"></i> <?php echo $heading_title; ?></h1>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title"><i class="fa fa-calendar-o"></i> <?php echo $text_activity; ?></h1>
+        </div>
+        <ul class="list-group">
+          <?php if ($activities) { ?>
+          <?php foreach ($activities as $activity) { ?>
+          <li class="list-group-item"> <?php echo $activity['comment']; ?><br />
+            <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
+          <?php } ?>
+          <?php } else { ?>
+          <li class="list-group-item text-center"><?php echo $text_no_results; ?></li>
+          <?php } ?>
+        </ul>
       </div>
-      <div class="panel-body">
-        <div class="table-responsive">
-          <table class="table table-striped table-bordered">
+    </div>
+    <div class="col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $heading_title; ?></h1>
+        </div>
+        <div class="panel-body">
+          <table class="table table-hover">
             <thead>
               <tr>
-                <td class="text-left"><?php echo $column_comment; ?></td>
-                <td class="text-left"><?php echo $column_date_added; ?></td>
+                <td class="text-right"><?php echo $column_order_id; ?></td>
+                <td><?php echo $column_customer; ?></td>
+                <td><?php echo $column_status; ?></td>
+                <td><?php echo $column_date_added; ?></td>
+                <td class="text-right"><?php echo $column_total; ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
               </tr>
             </thead>
             <tbody>
-              <?php if ($activities) { ?>
-              <?php foreach ($activities as $activity) { ?>
+              <?php if ($orders) { ?>
+              <?php foreach ($orders as $order) { ?>
               <tr>
-                <td class="text-left"><?php echo $activity['comment']; ?></td>
-                <td class="text-left"><?php echo $activity['date_added']; ?></td>
+                <td class="text-right"><?php echo $order['order_id']; ?></td>
+                <td><?php echo $order['customer']; ?></td>
+                <td><?php echo $order['status']; ?></td>
+                <td><?php echo $order['date_added']; ?></td>
+                <td class="text-right"><?php echo $order['total']; ?></td>
+                <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>
               <tr>
-                <td colspan="2" class="text-center"><?php echo $text_no_results; ?></td>
+                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
               </tr>
               <?php } ?>
             </tbody>
@@ -136,7 +159,6 @@
       </div>
     </div>
   </div>
-  <div class="col-xs-7"></div>
 </div>
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 

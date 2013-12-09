@@ -25,8 +25,6 @@ class ModelSaleOrder extends Model {
 		
 		$this->load->model('localisation/country');
 		
-		$this->load->model('localisation/zone');
-		
 		$country_info = $this->model_localisation_country->getCountry($data['shipping_country_id']);
 		
 		if ($country_info) {
@@ -36,6 +34,8 @@ class ModelSaleOrder extends Model {
 			$shipping_country = '';	
 			$shipping_address_format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 		}	
+		
+		$this->load->model('localisation/zone');
 		
 		$zone_info = $this->model_localisation_zone->getZone($data['shipping_zone_id']);
 		
@@ -160,8 +160,6 @@ class ModelSaleOrder extends Model {
 	public function editOrder($order_id, $data) {
 		$this->load->model('localisation/country');
 		
-		$this->load->model('localisation/zone');
-		
 		$country_info = $this->model_localisation_country->getCountry($data['shipping_country_id']);
 		
 		if ($country_info) {
@@ -171,6 +169,8 @@ class ModelSaleOrder extends Model {
 			$shipping_country = '';	
 			$shipping_address_format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 		}	
+		
+		$this->load->model('localisation/zone');
 		
 		$zone_info = $this->model_localisation_zone->getZone($data['shipping_zone_id']);
 		
@@ -251,9 +251,21 @@ class ModelSaleOrder extends Model {
 			}
 		}
 		
-		// Remove used coupons, vouchers and reward points history
+		// Remove used coupons
+		$this->load->model('marketing/coupon');
+		
+		$this->model_marketing_coupon->deleteHistory($order_id);
+		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE order_id = '" . (int)$order_id  . "'");
-		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_history WHERE order_id = '" . (int)$order_id  . "'");
+		
+		// Remove used vouchers
+		$this->load->model('sale/voucher');
+		
+		$this->model_sale_voucher->deleteHistory($order_id);
+		
+		// Remove used reward points
+		$this->load->model('sale/customer');
+		
 		$this->db->query("DELETE FROM " . DB_PREFIX . "cutomer_reward WHERE order_id = '" . (int)$order_id  . "' and points < 0");
 
 		// Get the total
@@ -271,23 +283,25 @@ class ModelSaleOrder extends Model {
 				
 				if ($start && $end) {
 					if ($order_total['code'] == 'coupon') {
-						$this->load->model('marketing/coupon');
+						$coupon_info = $this->model_marketing_coupon->getCouponByCode(substr($order_total['title'], $start, $end - $start));
 						
-						$this->model_marketing_coupon->redeem(substr($order_total['title'], $start, $end - $start), $order_id, $data['customer_id'], $order_total['value']);
+						if ($coupon_info) {
+							$this->model_marketing_coupon->redeem($coupon_info['coupon_id'], $order_id, $data['customer_id'], $order_total['value']);
+						}
 					}
 								
 					if ($order_total['code'] == 'voucher') {
-						$this->load->model('sale/voucher');
+						$voucher_info = $this->model_sale_voucher->getVoucherByCode(substr($order_total['title'], $start, $end - $start));
 						
-						$this->model_sale_voucher->redeem(substr($order_total['title'], $start, $end - $start), $order_id, $data['customer_id'], $order_total['value']);
+						if ($voucher_info) {
+							$this->model_marketing_voucher->redeem($voucher_info['voucher_id'], $order_id, $data['customer_id'], $order_total['value']);
+						}
 					}		
 					
 					if ($order_total['code'] == 'reward') {
 						$this->load->model('marketing/coupon');
 						
-						$data['reward'] = substr($order_total['title'], $start, $end - $start);
-						
-						$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET order_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', points = '" . (float)$order_total['value'] . "', date_added = NOW()");
+						$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET order_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', points = '" . (int)-substr($order_total['title'], $start, $end - $start) . "', date_added = NOW()");
 					}
 				}			
 			}

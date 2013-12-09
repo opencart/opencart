@@ -44,6 +44,8 @@ $(document).ready(function() {
 });
 
 // Image Manager
+
+
 $(document).delegate('.img-edit', 'click', function(e) {
 	e.preventDefault();
 	

@@ -8,7 +8,16 @@ class ControllerCommonDashboard extends Controller {
     	$data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->user->getUsername());
-		$data['text_no_results'] = $this->language->get('text_no_results');
+		
+		
+		$data['text_new_order'] = $this->language->get('text_new_order');
+		$data['text_new_customer'] = $this->language->get('text_new_customer');		
+		
+		$data['text_analytics'] = $this->language->get('text_analytics');
+		$data['text_activity'] = $this->language->get('text_activity');
+		
+		
+		
 		$data['text_sale'] = $this->language->get('text_sale');
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_customer'] = $this->language->get('text_customer');
@@ -17,16 +26,17 @@ class ControllerCommonDashboard extends Controller {
 		$data['text_week'] = $this->language->get('text_week');
 		$data['text_month'] = $this->language->get('text_month');
 		$data['text_year'] = $this->language->get('text_year');
+		$data['text_no_results'] = $this->language->get('text_no_results');
 		
-		$data['column_comment'] = $this->language->get('column_comment');
+		
+		$data['column_order_id'] = $this->language->get('column_order_id');
+    	$data['column_customer'] = $this->language->get('column_customer');
+		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_total'] = $this->language->get('column_total');
+		$data['column_action'] = $this->language->get('column_action');
 		
-		$data['button_refresh'] = $this->language->get('button_refresh');
-		
-		$data['tab_sale'] = $this->language->get('tab_sale');
-		$data['tab_marketing'] = $this->language->get('tab_marketing');
-		$data['tab_online'] = $this->language->get('tab_online');
-		$data['tab_activity'] = $this->language->get('tab_activity');
+		$data['button_view'] = $this->language->get('button_view');
 		
 		// Check install directory exists
  		if (is_dir(dirname(DIR_APPLICATION) . '/install')) {
@@ -97,7 +107,30 @@ class ControllerCommonDashboard extends Controller {
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
 		}	
+		
+		// Last 5 Orders
+		$data['orders'] = array();
+		
+		$filter_data = array(
+			'sort'  => 'o.date_added',
+			'order' => 'DESC',
+			'start' => 0,
+			'limit' => 5 
+		);
 				
+		$results = $this->model_sale_order->getOrders($filter_data);
+
+    	foreach ($results as $result) {
+			$data['orders'][] = array(
+				'order_id'   => $result['order_id'],
+				'customer'   => $result['customer'],
+				'status'     => $result['status'],
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'total'      => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
+				'view'       => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'], 'SSL'),
+			);
+		}
+						
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 				

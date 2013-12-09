@@ -5,14 +5,19 @@ $_['heading_title']                = 'Dashboard';
 // Text
 $_['text_welcome']                 = 'Welcome back <strong>%s</strong>!';
 
-$_['text_new_order']               = 'Orders';
+$_['text_new_order']               = 'New Orders';
 $_['text_new_customer']            = 'New Customers';
+$_['text_new_sale']                = 'New Sales';
+$_['text_order']                   = 'Orders';
+
 
 
 $_['text_analytics']               = 'Analytics';
-$_['text_sales']                   = 'Analytics';
-$_['text_analytic_online']         = 'Analytics';
 
+$_['text_sales']                   = 'Analytics';
+
+$_['text_activity']                = 'Recent Activity';
+$_['text_last_orders']             = 'Last 5 Orders';
 
 $_['text_sale']                    = 'Sales';
 $_['text_order']                   = 'Orders';
@@ -22,12 +27,12 @@ $_['text_marketing']               = 'Marketing';
 $_['text_click']                   = 'Clicks';
 
 $_['text_online']                  = 'People Online';
+
+
 $_['text_day']                     = 'Today';
 $_['text_week']                    = 'Week';
 $_['text_month']                   = 'Month';
 $_['text_year']                    = 'Year';
-
-// Text
 $_['text_customer_address_add']    = '<a href="customer_id=%d">%s</a> added a new address.';
 $_['text_customer_address_edit']   = '<a href="customer_id=%d">%s</a> updated their address.';
 $_['text_customer_address_delete'] = '<a href="customer_id=%d">%s</a> deleted one of their address.';
@@ -47,10 +52,13 @@ $_['text_affiliate_password']      = '<a href="affiliate_id=%d">%s</a> updated t
 $_['text_affiliate_payment']       = '<a href="affiliate_id=%d">%s</a> updated their payment details.';
 $_['text_affiliate_register']      = '<a href="affiliate_id=%d">%s</a> registered for a new account.';
 
-
-// Columns
-$_['column_comment']               = 'Comment';
+// Column
+$_['column_order_id']              = 'Order ID';
+$_['column_customer']              = 'Customer';
+$_['column_status']                = 'Status';
+$_['column_total']                 = 'Total';
 $_['column_date_added']            = 'Date Added';
+$_['column_action']                = 'Action';
 
 // Error
 $_['error_install']                = 'Warning: Install folder still exists and should be deleted for security reasons!';

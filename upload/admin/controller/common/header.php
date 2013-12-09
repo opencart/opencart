@@ -69,7 +69,6 @@ class ControllerCommonHeader extends Controller {
 		$data['text_opencart'] = $this->language->get('text_opencart');
 		$data['text_payment'] = $this->language->get('text_payment');
 		$data['text_product'] = $this->language->get('text_product');
-		$data['text_profile'] = $this->language->get('text_profile'); 
 		$data['text_reports'] = $this->language->get('text_reports');
 		$data['text_report_sale_order'] = $this->language->get('text_report_sale_order');
 		$data['text_report_sale_tax'] = $this->language->get('text_report_sale_tax');
@@ -110,7 +109,9 @@ class ControllerCommonHeader extends Controller {
 		$data['text_weight_class'] = $this->language->get('text_weight_class');
 		$data['text_length_class'] = $this->language->get('text_length_class');
 		$data['text_zone'] = $this->language->get('text_zone');
+		$data['text_profile'] = $this->language->get('text_profile');
 		$data['text_recurring_profile'] = $this->language->get('text_recurring_profile');
+		$data['text_product_profile'] = $this->language->get('text_product_profile');
 		
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token'])) {
 			$data['logged'] = false;
@@ -190,6 +191,7 @@ class ControllerCommonHeader extends Controller {
 			$data['weight_class'] = $this->url->link('localisation/weight_class', 'token=' . $this->session->data['token'], 'SSL');
 			$data['length_class'] = $this->url->link('localisation/length_class', 'token=' . $this->session->data['token'], 'SSL');
 			$data['zone'] = $this->url->link('localisation/zone', 'token=' . $this->session->data['token'], 'SSL');
+			$data['product_profile'] = $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL');
 			$data['recurring_profile'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'], 'SSL');
 						
 			// Get total number of stores online

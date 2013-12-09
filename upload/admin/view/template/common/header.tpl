@@ -76,7 +76,7 @@
             <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
             <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
             <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
-            <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
+            <li><a href="<?php echo $product_profile; ?>"><?php echo $text_product_profile; ?></a></li>
             <li class="dropdown-submenu"><a><?php echo $text_attribute; ?></a>
               <ul class="dropdown-menu">
                 <li><a href="<?php echo $attribute; ?>"><?php echo $text_attribute; ?></a></li>

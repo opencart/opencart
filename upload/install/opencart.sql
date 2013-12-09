@@ -15,6 +15,84 @@
 
 -- --------------------------------------------------------
 
+CREATE TABLE `oc_product_profile` (
+  `product_id` int(11) NOT NULL,
+  `profile_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`profile_id`,`customer_group_id`)
+) ENGINE=MyISAM COLLATE=utf8_general_ci;
+
+CREATE TABLE `oc_profile` (
+  `profile_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `price` decimal(10,4) NOT NULL,
+  `frequency` enum('day','week','semi_month','month','year') NOT NULL,
+  `duration` int(10) unsigned NOT NULL,
+  `cycle` int(10) unsigned NOT NULL,
+  `trial_status` tinyint(4) NOT NULL,
+  `trial_price` decimal(10,4) NOT NULL,
+  `trial_frequency` enum('day','week','semi_month','month','year') NOT NULL,
+  `trial_duration` int(10) unsigned NOT NULL,
+  `trial_cycle` int(10) unsigned NOT NULL,
+  PRIMARY KEY (`profile_id`)
+) ENGINE=MyISAM COLLATE=utf8_general_ci;
+
+
+CREATE TABLE `oc_profile_description` (
+  `profile_id` int(11) NOT NULL,
+  `language_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  PRIMARY KEY (`profile_id`,`language_id`)
+) ENGINE=MyISAM COLLATE=utf8_general_ci;
+
+--
+-- Table structure for table `oc_order_recurring`
+--
+
+DROP TABLE IF EXISTS `oc_order_recurring`;
+CREATE TABLE `oc_order_recurring` (
+  `order_recurring_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `product_id` int(11) NOT NULL,
+  `product_name` varchar(255) NOT NULL,
+  `product_quantity` int(11) NOT NULL,
+  `profile_id` int(11) NOT NULL,
+  `profile_name` varchar(255) NOT NULL,
+  `profile_description` varchar(255) NOT NULL,
+  `recurring_frequency` varchar(25) NOT NULL,
+  `recurring_cycle` smallint(6) NOT NULL,
+  `recurring_duration` smallint(6) NOT NULL,
+  `recurring_price` decimal(10,4) NOT NULL,
+  `trial` tinyint(1) NOT NULL,
+  `trial_frequency` varchar(25) NOT NULL,
+  `trial_cycle` smallint(6) NOT NULL,
+  `trial_duration` smallint(6) NOT NULL,
+  `trial_price` decimal(10,4) NOT NULL,
+  `profile_reference` varchar(255) NOT NULL,
+  PRIMARY KEY (`order_recurring_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_order_recurring_transaction`
+--
+
+DROP TABLE IF EXISTS `oc_order_recurring_transaction`;
+CREATE TABLE `oc_order_recurring_transaction` (
+  `order_recurring_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_recurring_id` int(11) NOT NULL,
+  `created` datetime NOT NULL,
+  `amount` decimal(10,4) NOT NULL,
+  `type` varchar(255) NOT NULL,
+  PRIMARY KEY (`order_recurring_transaction_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
 --
 -- Table structure for table `oc_address`
 --

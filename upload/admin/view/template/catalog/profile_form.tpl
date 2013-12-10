@@ -13,49 +13,69 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-profile" class="btn btn-primary">
-          <i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?>
-        </a>
-      </div>
+        <button type="submit" form="form-profile" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
       <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-profile" class="form-horizontal">
-        <div class="form-group required">
-          <label class="col-sm-2 control-label" for="profile_description[<?php echo $language['language_id']; ?>][name]"><?php echo $entry_name ?></label>
-
-          <div class="col-sm-10">
-            <input type="text" name="profile_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($profile_description[$language['language_id']]) ? $profile_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="profile_description[<?php echo $language['language_id']; ?>][name]" class="form-control"/>
-            <?php if (isset($error_name[$language['language_id']])) { ?>
-            <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
-            <?php } ?>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-
-          <div class="col-sm-10">
-            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control"/>
-          </div>
-        </div>
-        <span class="help-block"><?php echo $text_recurring_help ?></span>
-
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
-
-          <div class="col-sm-10">
-            <select name="status" id="input-status" class="form-control">
-              <?php if ($status) { ?>
-              <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-              <option value="0"><?php echo $text_disabled; ?></option>
-              <?php } else { ?>
-              <option value="1"><?php echo $text_enabled; ?></option>
-              <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
+          <li><a href="#tab-profile" data-toggle="tab"><?php echo $tab_profile; ?></a></li>
+          <li><a href="#tab-trial" data-toggle="tab"><?php echo $tab_trial; ?></a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-general">
+            <ul class="nav nav-tabs" id="language">
+              <?php foreach ($languages as $language) { ?>
+                <li><a href="#language<?php echo $language['language_id']; ?>" data-toggle="tab"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /> <?php echo $language['name']; ?></a></li>
               <?php } ?>
-            </select>
+            </ul>
+
+              <div class="tab-content">
+                <?php foreach ($languages as $language) { ?>
+                  <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
+
+                    <div class="form-group required">
+                      <label class="col-sm-2 control-label" for="profile_description[<?php echo $language['language_id']; ?>][name]"><?php echo $entry_name ?></label>
+                      <div class="col-sm-10">
+                        <input type="text" name="profile_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($profile_description[$language['language_id']]) ? $profile_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="profile_description[<?php echo $language['language_id']; ?>][name]" class="form-control"/>
+                        <?php if (isset($error_name[$language['language_id']])) { ?>
+                        <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+                        <?php } ?>
+                      </div>
+                    </div>
+                  </div>
+                <?php } ?>
+              </div>
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+
+              <div class="col-sm-10">
+                <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control"/>
+              </div>
+            </div>
+
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+
+              <div class="col-sm-10">
+                <select name="status" id="input-status" class="form-control">
+                  <?php if ($status) { ?>
+                  <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+                  <option value="0"><?php echo $text_disabled; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_enabled; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
           </div>
-        </div>
+          <div class="tab-pane" id="tab-profile">
+            <span class="help-block"><?php echo $text_recurring_help ?></span>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-price"><?php echo $entry_price; ?></label>
 
@@ -90,6 +110,8 @@
             </select>
           </div>
         </div>
+            </div>
+          <div class="tab-pane" id="tab-trial">
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-trial-status"><?php echo $entry_trial_status; ?></label>
 
@@ -139,9 +161,13 @@
             </select>
           </div>
         </div>
+            </div>
 
       </form>
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#language a:first').tab('show');
+//--></script>
 <?php echo $footer; ?>

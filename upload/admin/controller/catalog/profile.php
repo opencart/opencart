@@ -328,6 +328,10 @@ class ControllerCatalogProfile extends Controller {
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
 
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_profile'] = $this->language->get('tab_profile');
+		$data['tab_trial'] = $this->language->get('tab_trial');
+
 		$data['profiles'] = array();
 
 		$filter_data = array(
@@ -373,6 +377,10 @@ class ControllerCatalogProfile extends Controller {
 		} else {
 			$data['success'] = '';
 		}
+
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
 		$pagination = new Pagination();
 		$pagination->total = $profile_total;

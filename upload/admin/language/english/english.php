@@ -127,6 +127,8 @@ $_['tab_sale']                      = 'Sales';
 $_['tab_marketing']                 = 'Marketing';
 $_['tab_online']                    = 'People Online';
 $_['tab_activity']                  = 'Recent Activity';
+$_['tab_profile']                  	= 'Profile';
+$_['tab_trial']                  	= 'Trial Period';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

@@ -243,7 +243,7 @@ class ControllerCatalogProfile extends Controller {
 				$this->model_catalog_profile->deleteProfile($profile_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			$this->session->data['success'] = $this->language->get('text_removed');
 
 			$this->response->redirect($this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -263,7 +263,7 @@ class ControllerCatalogProfile extends Controller {
 				$this->model_catalog_profile->copyProfile($profile_id);
 			}
 
-			$this->session->data['success'] = $this->language->get('text_success');
+			$this->session->data['success'] = $this->language->get('text_copied');
 
 			$this->response->redirect($this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL'));
 		}

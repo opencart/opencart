@@ -55,95 +55,89 @@
               <label class="control-label" for="input-date-created"><?php echo $entry_date_created; ?></label>
               <input type="date" name="filter_created" value="<?php echo $filter_created; ?>" id="input-date-created" class="form-control" />
             </div>
-
           </div>
-          <div class="pull-right">
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $text_filter ?></button>
           </div>
         </div>
       </div>
-
       <form action="" method="post" enctype="multipart/form-data" id="form">
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover">
             <thead>
             <tr>
               <td width="10" class="text-left">
-                <?php if ($sort == 'or.order_recurring_id'): ?>
-                <a href="<?php echo $sort_order_recurring ?>" class="<?php echo strtolower($order) ?>"><?php echo $entry_order_recurring; ?></a>
-                <?php else: ?>
-                <a href="<?php echo $sort_order_recurring ?>"><?php echo $entry_order_recurring; ?></a>
-                <?php endif;  ?>
+                <?php if ($sort == 'or.order_recurring_id') { ?>
+                <a href="<?php echo $sort_order_recurring; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_order_recurring; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_order_recurring; ?>"><?php echo $entry_order_recurring; ?></a>
+                <?php }  ?>
               </td>
               <td width="80" class="text-center">
-                <?php if ($sort == 'or.order_id'): ?>
-                <a href="<?php echo $sort_order ?>" class="<?php echo strtolower($order) ?>"><?php echo $entry_order_id; ?></a>
-                <?php else: ?>
-                <a href="<?php echo $sort_order ?>"><?php echo $entry_order_id; ?></a>
-                <?php endif;  ?>
+                <?php if ($sort == 'or.order_id') { ?>
+                <a href="<?php echo $sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_order_id; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_order; ?>"><?php echo $entry_order_id; ?></a>
+                <?php }  ?>
               </td>
               <td class="text-left">
-                <?php if ($sort == 'or.profile_reference'): ?>
-                <a href="<?php echo $sort_payment_reference ?>" class="<?php echo strtolower($order) ?>"><?php echo $entry_payment_reference; ?></a>
-                <?php else: ?>
-                <a href="<?php echo $sort_payment_reference ?>"><?php echo $entry_payment_reference; ?></a>
-                <?php endif;  ?>
+                <?php if ($sort == 'or.profile_reference') { ?>
+                <a href="<?php echo $sort_payment_reference; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_payment_reference; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_payment_reference; ?>"><?php echo $entry_payment_reference; ?></a>
+                <?php }  ?>
               </td>
               <td class="text-left">
-                <?php if ($sort == 'customer'): ?>
-                <a href="<?php echo $sort_customer ?>" class="<?php echo strtolower($order) ?>"><?php echo $entry_customer ?></a>
-                <?php else: ?>
-                <a href="<?php echo $sort_customer ?>"><?php echo $entry_customer ?></a>
-                <?php endif;  ?>
+                <?php if ($sort == 'customer') { ?>
+                <a href="<?php echo $sort_customer; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_customer ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_customer; ?>"><?php echo $entry_customer ?></a>
+                <?php }  ?>
               <td class="text-left">
-                <?php if ($sort == 'or.created'): ?>
-                <a href="<?php echo $sort_created ?>" class="<?php echo strtolower($order) ?>"><?php echo $entry_date_created ?></a>
-                <?php else: ?>
-                <a href="<?php echo $sort_created ?>"><?php echo $entry_date_created ?></a>
-                <?php endif;  ?>
+                <?php if ($sort == 'or.created') { ?>
+                <a href="<?php echo $sort_created; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_date_created ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_created; ?>"><?php echo $entry_date_created ?></a>
+                <?php }  ?>
               </td>
               <td class="text-left">
-                <?php if ($sort == 'or.status'): ?>
-                <a href="<?php echo $sort_status ?>" class="<?php echo strtolower($order) ?>"><?php echo $entry_status; ?></a>
-                <?php else: ?>
-                <a href="<?php echo $sort_status ?>"><?php echo $entry_status; ?></a>
-                <?php endif;  ?>
+                <?php if ($sort == 'or.status') { ?>
+                <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $entry_status; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_status; ?>"><?php echo $entry_status; ?></a>
+                <?php }  ?>
               </td>
-              <td class="right"><?php echo $entry_action; ?></td>
+              <td class="text-right"><?php echo $entry_action; ?></td>
             </tr>
             </thead>
             <tbody>
             <?php if ($profiles) { ?>
-            <?php foreach ($profiles as $profile) { ?>
-            <tr>
-              <td class="text-left"><?php echo $profile['order_recurring_id'] ?></td>
-              <td class="text-center"><a href="<?php echo $profile['order_link'] ?>"><?php echo $profile['order_id'] ?></a></td>
-              <td class="text-left"><?php echo $profile['profile_reference'] ?></td>
-              <td class="text-left"><?php echo $profile['customer'] ?></td>
-              <td class="text-left"><?php echo $profile['date_created'] ?></td>
-              <td class="text-left"><?php echo $profile['status'] ?></td>
-              <td class="text-right">
-                <?php foreach ($profile['action'] as $action): ?>
-                [<a href="<?php echo $action['href'] ?>"><?php echo $action['text'] ?></a>]
-                <?php endforeach; ?>
-              </td>
-            </tr>
-            <?php } ?>
+              <?php foreach ($profiles as $profile) { ?>
+                <tr>
+                  <td class="text-left"><?php echo $profile['order_recurring_id'] ?></td>
+                  <td class="text-center"><a href="<?php echo $profile['order_link']; ?>" data-toggle="tooltip" title="<?php echo $text_view; ?> <?php echo $profile['order_id'] ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+                  <td class="text-left"><?php echo $profile['profile_reference'] ?></td>
+                  <td class="text-left"><?php echo $profile['customer'] ?></td>
+                  <td class="text-left"><?php echo $profile['date_created'] ?></td>
+                  <td class="text-left"><?php echo $profile['status'] ?></td>
+                  <td class="text-right"><a href="<?php echo $profile['view']; ?>" data-toggle="tooltip" title="<?php echo $text_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+                </tr>
+              <?php } ?>
             <?php } else { ?>
-            <tr>
-              <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
-            </tr>
+              <tr>
+                <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+              </tr>
             <?php } ?>
             </tbody>
           </table>
         </div>
       </form>
-      <div class="pagination"><?php echo $pagination; ?></div>
-    </div>
-
-    <div class="row">
-      <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-      <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+      <div class="row">
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+      </div>
     </div>
   </div>
 </div>
@@ -151,39 +145,39 @@
 $('#button-filter').on('click', function() {
   url = 'index.php?route=sale/recurring&token=<?php echo $token; ?>';
 
-  var filter_order_recurring_id = $('input[name=\'filter_order_recurring_id\']').attr('value');
+  var filter_order_recurring_id = $('input[name=\'filter_order_recurring_id\']').val();
 
   if (filter_order_recurring_id) {
     url += '&filter_order_recurring_id=' + encodeURIComponent(filter_order_recurring_id);
   }
 
-  var filter_order_id = $('input[name=\'filter_order_id\']').attr('value');
+  var filter_order_id = $('input[name=\'filter_order_id\']').val();
 
   if (filter_order_id) {
     url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
   }
 
-  var filter_payment_reference = $('input[name=\'filter_payment_reference\']').attr('value');
+  var filter_payment_reference = $('input[name=\'filter_payment_reference\']').val();
 
   if (filter_payment_reference) {
     url += '&filter_payment_reference=' + encodeURIComponent(filter_payment_reference);
   }
 
-  var filter_customer = $('input[name=\'filter_customer\']').attr('value');
+  var filter_customer = $('input[name=\'filter_customer\']').val();
 
   if (filter_customer) {
     url += '&filter_customer=' + encodeURIComponent(filter_customer);
   }
 
-  var filter_created = $('input[name=\'filter_created\']').attr('value');
+  var filter_created = $('input[name=\'filter_created\']').val();
 
   if (filter_created != '') {
     url += '&filter_created=' + encodeURIComponent(filter_created);
   }
 
-  var filter_status = $('select[name=\'filter_status\']').attr('value');
+  var filter_status = $('select[name=\'filter_status\']').val();
 
-  if (filter_status != '0') {
+  if (filter_status != 0) {
     url += '&filter_status=' + encodeURIComponent(filter_status);
   }
 

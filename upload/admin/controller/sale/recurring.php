@@ -137,25 +137,17 @@ class ControllerSaleRecurring extends Controller {
 		$data['profiles'] = array();
 
 		foreach ($results as $result) {
-			$action = array();
-
-			$action[] = array(
-				'text' => $this->language->get('text_view'),
-				'href' => $this->url->link('sale/recurring/info', 'token=' . $this->session->data['token'] . '&order_recurring_id=' . $result['order_recurring_id'] . $url, 'SSL')
-			);
-
 			$date_created = date($this->language->get('date_format_short'), strtotime($result['created']));
-			$order_link = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'], 'SSL');
 
 			$data['profiles'][] = array(
 				'order_recurring_id' => $result['order_recurring_id'],
 				'order_id'           => $result['order_id'],
-				'order_link'         => $order_link,
+				'order_link'         => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'], 'SSL'),
 				'profile_reference'  => $result['profile_reference'],
 				'customer'           => $result['customer'],
 				'status'             => $result['status'],
 				'date_created'       => $date_created,
-				'action'             => $action
+				'view'               => $this->url->link('sale/recurring/info', 'token=' . $this->session->data['token'] . '&order_recurring_id=' . $result['order_recurring_id'] . $url, 'SSL')
 			);
 		}
 
@@ -163,6 +155,7 @@ class ControllerSaleRecurring extends Controller {
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_filter'] = $this->language->get('text_filter');
+		$data['text_view'] = $this->language->get('text_view');
 
 		$data['entry_order_id'] = $this->language->get('entry_order_id');
 		$data['entry_order_recurring'] = $this->language->get('entry_order_recurring');
@@ -290,6 +283,8 @@ class ControllerSaleRecurring extends Controller {
 		$pagination->url = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . '&page={page}' . $url, 'SSL');
 
 		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($profiles_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($profiles_total - $this->config->get('config_limit_admin'))) ? $profiles_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $profiles_total, ceil($profiles_total / $this->config->get('config_limit_admin')));
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;

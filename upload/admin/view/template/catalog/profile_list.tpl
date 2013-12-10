@@ -1,55 +1,68 @@
 <?php echo $header; ?>
-<div id="content">
-  <div class="breadcrumb">
+<div id="content" class="container">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
-  <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?><?php if ($success) { ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
-  <?php if ($success) { ?>
-  <div class="success"><?php echo $success; ?></div>
-  <?php } ?>
-  <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/product.png" alt="" /> <?php echo $heading_title; ?></h1>
-      <div class="buttons"><a href="<?php echo $insert; ?>" class="button"><?php echo $button_insert; ?></a><a onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();" class="button"><?php echo $button_copy; ?></a><a onclick="$('form').submit();" class="button"><?php echo $button_delete; ?></a></div>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i> <?php echo $button_insert; ?>
+        </a>
+        <button type="submit" class="btn btn-default" onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();">
+          <i class="fa fa-copy"></i> <?php echo $button_copy; ?></button>
+        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-product').submit() : false;">
+          <i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
+    <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="list">
-          <thead>
-            <tr>        
-                <td class="center" width="1"><input type="checkbox" onclick="$('input[name*=\'profile_ids\']').attr('checked', this.checked)" /></td>
-                <td class="left"><?php echo $column_name ?></td>
-                <td class="left"><?php echo $column_sort_order ?></td>
-                <td class="right"><?php echo $column_action ?></td>
+        <div class="table-responsive">
+          <table class="table table-striped table-bordered table-hover">
+            <thead>
+            <tr>
+              <td class="text-center" width="1"><input type="checkbox" onclick="$('input[name*=\'profile_ids\']').attr('checked', this.checked)"/></td>
+              <td class="text-left"><?php echo $column_name ?></td>
+              <td class="text-left"><?php echo $column_sort_order ?></td>
+              <td class="text-right"><?php echo $column_action ?></td>
             </tr>
-          </thead>
-          <tbody>
+            </thead>
+            <tbody>
             <?php if ($profiles) { ?>
-                <?php foreach ($profiles as $profile) { ?>
-                <tr>
-                    <td class="center"><input type="checkbox" name="profile_ids[]" value="<?php echo $profile['profile_id'] ?>" /></td>
-                    <td class="left"><?php echo $profile['name'] ?></td>
-                    <td class="left"><?php echo $profile['sort_order'] ?></td>
-                    <td class="right">
-                        <?php foreach ($profile['action'] as $action): ?>
-                        [<a href="<?php echo $action['href'] ?>"><?php echo $action['name'] ?></a>]
-                        <?php endforeach;?>
-                    </td>
-                </tr>
-                <?php } ?>
+              <?php foreach ($profiles as $profile) { ?>
+              <tr>
+                <td class="text-center"><input type="checkbox" name="profile_ids[]" value="<?php echo $profile['profile_id'] ?>"/></td>
+                <td class="text-left"><?php echo $profile['name'] ?></td>
+                <td class="text-left"><?php echo $profile['sort_order'] ?></td>
+                <td class="text-right">
+                  <?php foreach ($profile['action'] as $action): ?>[<a href="<?php echo $action['href'] ?>"><?php echo $action['name'] ?></a>]<?php endforeach;?>
+                </td>
+              </tr>
+              <?php } ?>
             <?php } else { ?>
-                <tr>
-                  <td class="center" colspan="4"><?php echo $text_no_results; ?></td>
-                </tr>
+              <tr>
+                <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+              </tr>
             <?php } ?>
-          </tbody>
-        </table>
+            </tbody>
+          </table>
+        </div>
       </form>
-      <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="row">
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+      </div>
     </div>
   </div>
 </div>

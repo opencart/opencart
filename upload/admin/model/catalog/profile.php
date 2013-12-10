@@ -74,4 +74,12 @@ class ModelCatalogProfile extends Model {
 
 		$this->addProfile($data);
 	}
+
+	public function getTotalProfiles() {
+		$sql = "SELECT COUNT(DISTINCT p.profile_id) AS total FROM " . DB_PREFIX . "profile p";
+
+		$query = $this->db->query($sql);
+
+		return $query->row['total'];
+	}
 }

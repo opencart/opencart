@@ -28,9 +28,9 @@ $_['text_transaction_outstanding_failed'] = 'Outstanding payment failed';
 $_['text_transaction_expired'] = 'Expired';
 
 // Entry
-$_['entry_cancel_payment'] = 'Cancel Payment:';
-$_['entry_order_recurring'] = 'ID:';
-$_['entry_order_id'] = 'Order ID:';
+$_['entry_cancel_payment'] = 'Cancel Payment';
+$_['entry_order_recurring'] = 'ID';
+$_['entry_order_id'] = 'Order ID';
 $_['entry_payment_reference'] = 'Payment Reference';
 $_['entry_customer'] = 'Customer';
 $_['entry_date_created'] = 'Date Created';
@@ -39,11 +39,11 @@ $_['entry_type'] = 'Type';
 $_['entry_action'] = 'Action';
 $_['entry_email'] = 'Email';
 $_['entry_profile_description'] = "Profile's description";
-$_['entry_product'] = "Product:";
-$_['entry_quantity'] = "Quantity:";
-$_['entry_amount'] = "Amount:";
-$_['entry_profile'] = "Profile:";
-$_['entry_payment_type'] = "Payment method:";
+$_['entry_product'] = "Product";
+$_['entry_quantity'] = "Quantity";
+$_['entry_amount'] = "Amount";
+$_['entry_profile'] = "Profile";
+$_['entry_payment_type'] = "Payment method";
 
 // Error / Success
 $_['error_not_cancelled'] = 'Error: %s';

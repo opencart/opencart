@@ -6,7 +6,7 @@ html, body {
 	color: #000000;
 	font-size: 12px;
 }
-h1, h4 {
+h1, h2, h3, h4, h5, h6 {
 	margin-top: 0;
 }
 legend {
@@ -40,10 +40,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #999999;
 	cursor: pointer;
 	white-space: nowrap;
-	border-left: 1px solid #434546;
-}
-#header > .container .navbar-nav > li + li > a {
-	border-right: 1px solid #000000;	
 }
 #header > .container .navbar-nav > li > a:hover {
 	color: #FFF;
@@ -51,6 +47,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #header > .container .navbar-nav + .navbar-nav > li > a {
 	padding: 7px 15px;
 	line-height: 26px;
+	border-left: 1px solid #434546;
 }
 
 #header > .container .navbar-nav + .navbar-nav > li > a i.fa-lg {
@@ -142,11 +139,12 @@ footer a {
 }
 .breadcrumb li a {
 	float: left;
-	padding: 5px 0px;
+	padding: 6px 0px;
 	line-height: 20px;
 	color: #464646;
 	font-size: 12px;
 	font-weight: bold;
+	text-shadow: 1px 1px #FFFFFF;
 }
 .breadcrumb li a:hover {
 	text-decoration: none;
@@ -162,8 +160,8 @@ footer a {
 	top: 4px;
 	content: '';
 	display: inline-block;
-	width: 22px;
-	height: 23px;
+	width: 24px;
+	height: 24px;
 	border-top: 1px solid #E5E5E5;
 	border-right: 1px solid #E5E5E5;
 	transform: rotate(45deg);

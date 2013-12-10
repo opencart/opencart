@@ -372,11 +372,7 @@ class ControllerSaleVoucherTheme extends Controller {
 			$this->error['image'] = $this->language->get('error_image');
 		}
 		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}
 
   	protected function validateDelete() {
@@ -394,10 +390,6 @@ class ControllerSaleVoucherTheme extends Controller {
 			}  
 	  	}
 		
-		if (!$this->error) { 
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}	  
 }

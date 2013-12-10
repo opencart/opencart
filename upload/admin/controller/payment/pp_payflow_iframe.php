@@ -564,11 +564,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			$this->error['partner'] = $this->language->get('error_partner');
 		}
         
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}	
+		return !$this->error;
 	}
 }
 ?>

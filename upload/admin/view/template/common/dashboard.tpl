@@ -20,10 +20,9 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-4"><span class="text-muted"><i class="fa fa-shopping-cart fa-4x"></i></span></div>
-            <div class="col-xs-8"> <span class="lead text-success"><?php echo $order_total; ?></span>
-              <div class="label label-success">+23%</div>
-              <br />
-              <?php echo $text_order; ?></div>
+            <div class="col-xs-5"><span class="label label-success pull-right">+23%</span>
+              <h3 class="text-success"><?php echo $order_total; ?></h3>
+              <?php echo $text_new_order; ?></div>
           </div>
         </div>
       </div>
@@ -33,8 +32,9 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-4"><span class="text-muted"><i class="fa fa-user fa-4x"></i></span></div>
-            <div class="col-xs-8"><?php echo $customer_total; ?><br />
-              <?php echo $text_customer; ?></div>
+            <div class="col-xs-8">
+              <h3 class="text-success"><?php echo $customer_total; ?></h3>
+              <?php echo $text_new_customer; ?></div>
           </div>
         </div>
       </div>
@@ -44,8 +44,9 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-4"><span class="text-muted"><i class="fa fa-credit-card fa-4x"></i></span></div>
-            <div class="col-xs-8"><?php echo $text_sale; ?><br />
-              <?php echo $sale_total; ?></div>
+            <div class="col-xs-8">
+              <h3 class="text-success"><?php echo $sale_total; ?></h3>
+              <?php echo $text_sale; ?></div>
           </div>
         </div>
       </div>
@@ -55,7 +56,8 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-4"><span class="text-muted"><i class="fa fa-bar-chart-o fa-4x"></i></span></div>
-            <div class="col-xs-8"><?php echo $marketing_total; ?><br />
+            <div class="col-xs-8">
+              <h3 class="text-success"><?php echo $marketing_total; ?></h3>
               <?php echo $text_marketing; ?></div>
           </div>
         </div>
@@ -86,15 +88,16 @@
         </div>
         <div class="panel-body">
           <div class="row">
-            <div class="col-sm-5">
-              <p class="text-primary">Sales Analytics</p>
+            <div class="col-sm-6">
+              <h5 class="text-primary">Sales Analytics</h5>
               <div id="chart-sale" class="chart" style="width: 100%; height: 175px;"></div>
             </div>
-            <div class="col-sm-7">
-              <p class="text-primary">Marketing Analytics</p><strong></strong>
-              <div id="chart-marketing" style="width: 100%; height: 100px;"></div>
-              
-              <div id="chart-online" class="chart" style="width: 100%; height: 100px;"></div>
+            <div class="col-sm-6">
+              <h5 class="text-primary">Marketing Analytics</h5>
+              <div id="chart-marketing" style="width: 100%; height: 175px;"></div>
+              <!--
+              <div id="chart-online" class="chart" style="width: 100%; height: 175px;"></div>
+              //--> 
             </div>
           </div>
         </div>
@@ -122,7 +125,7 @@
     <div class="col-sm-8">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $heading_title; ?></h1>
+          <h1 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_last_order; ?></h1>
         </div>
         <div class="panel-body">
           <table class="table table-hover">

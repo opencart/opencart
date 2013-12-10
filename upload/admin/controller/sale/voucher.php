@@ -509,11 +509,7 @@ class ControllerSaleVoucher extends Controller {
       		$this->error['amount'] = $this->language->get('error_amount');
     	}
 
-    	if (!$this->error) {
-      		return true;
-    	} else {
-      		return false;
-    	}
+		return !$this->error;
   	}
 
   	protected function validateDelete() {
@@ -533,11 +529,7 @@ class ControllerSaleVoucher extends Controller {
 			}
 		}
 		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}	
 	
 	public function history() {

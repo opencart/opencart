@@ -72,6 +72,7 @@ $_['button_total']                  = 'Update Totals';
 $_['button_approve']                = 'Approve';
 $_['button_reset']                  = 'Reset';
 $_['button_generate']               = 'Generate';
+$_['button_coupon_add']             = 'Add Coupon';
 $_['button_coupon_remove']          = 'Remove Coupon';
 $_['button_voucher_add']            = 'Add Voucher';
 $_['button_voucher_remove']         = 'Remove Voucher';

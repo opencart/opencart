@@ -301,11 +301,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 			}
 		}
 
-        if (!$this->error) {
-            return true;
-        } else {
-            return false;
-        }
+		return !$this->error;
     }
 	
     private function parseResponse($node, $document) {

@@ -147,10 +147,6 @@ class ControllerPaymentPayPoint extends Controller {
 			$this->error['merchant'] = $this->language->get('error_merchant');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

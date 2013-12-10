@@ -148,10 +148,6 @@ class ControllerPaymentPayza extends Controller {
 			$this->error['security'] = $this->language->get('error_security');
 		}
 		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}	
+		return !$this->error;
 	}
 }

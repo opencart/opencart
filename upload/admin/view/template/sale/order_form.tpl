@@ -573,9 +573,23 @@
                   
                   <div class="input-group">
                     <input type="text" name="coupon" value="<?php echo $coupon; ?>" id="input-coupon" class="form-control" />
-                    <span class="input-group-btn" data-toggle="tooltip" title="<?php echo $button_coupon_remove; ?>">
-                    <button id="button-coupon-remove" class="btn btn-danger" type="button"><i class="fa fa-times-circle"></i></button>
+                    
+                    <span class="input-group-btn">
+                    
+                    <?php if ($order_id) { ?>
+                    
+                    <?php if (!$coupon_total) { ?>
+                    <button type="button" id="button-coupon-add" data-toggle="tooltip" title="<?php echo $button_coupon_add; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
+                    <?php } else { ?>
+                    <button type="button" id="button-coupon-remove" data-toggle="tooltip" title="<?php echo $button_coupon_remove; ?>" class="btn btn-danger"><i class="fa fa-times-circle"></i></button>
+                    <?php } ?>
+                    
+                    <?php } else { ?>
+                    <button type="button" id="button-coupon-add" class="btn btn-success" disabled="disabled"><i class="fa fa-plus-circle"></i></button>
+                    <?php } ?>
+                    
                     </span>
+                  
                   </div>
                 
                 </div>
@@ -586,8 +600,20 @@
                   
                   <div class="input-group">
                     <input type="text" name="voucher" value="<?php echo $voucher; ?>" id="input-voucher" class="form-control" />
-                    <span class="input-group-btn" data-toggle="tooltip" title="<?php echo $button_voucher_remove; ?>">
-                    <button id="button-voucher-remove" class="btn btn-danger" type="button"><i class="fa fa-times-circle"></i></button>
+                    <span class="input-group-btn">
+                   
+                    <?php if ($order_id) { ?>
+                    
+                    <?php if (!$voucher_total) { ?>
+                    <button type="button" id="button-voucher-add" data-toggle="tooltip" title="<?php echo $button_voucher_add; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></button>
+                    <?php } else { ?>
+                    <button type="button" id="button-voucher-remove" data-toggle="tooltip" title="<?php echo $button_voucher_remove; ?>" class="btn btn-danger"><i class="fa fa-times-circle"></i></button>
+                    <?php } ?>
+                    
+                    <?php } else { ?>
+                    <button type="button" id="button-voucher-add" class="btn btn-success" disabled="disabled"><i class="fa fa-plus-circle"></i></button>
+                    <?php } ?>
+                    
                     </span>
                   </div>
                 
@@ -599,8 +625,19 @@
                   
                   <div class="input-group">
                     <input type="text" name="reward" value="<?php echo $reward; ?>" id="input-reward" class="form-control" />
-                    <span class="input-group-btn" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>">
-                    <button id="button-reward-remove" class="btn btn-danger" type="button"><i class="fa fa-times-circle"></i></button>
+                    <span class="input-group-btn">
+                    
+                    <?php if ($order_id) { ?>
+                    
+                    <?php if (!$reward_total) { ?>
+                    <button type="button" id="button-reward-add" data-toggle="tooltip" title="<?php echo $button_reward_add; ?>" class="btn btn-success"><i class="fa fa-times-circle"></i></button>
+                    <?php } else { ?>
+                    <button type="button" id="button-reward-remove" data-toggle="tooltip" title="<?php echo $button_reward_remove; ?>" class="btn btn-danger"><i class="fa fa-times-circle"></i></button>
+                    <?php } ?>
+                    
+                    <?php } else { ?>
+                    <button type="button" id="button-reward-add" class="btn btn-success" disabled="disabled"><i class="fa fa-times-circle"></i></button>
+                    <?php } ?>
                     </span>                 
                   </div>
                   

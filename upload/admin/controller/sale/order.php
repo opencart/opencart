@@ -542,9 +542,11 @@ class ControllerSaleOrder extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_product_add'] = $this->language->get('button_product_add');
+		$data['button_coupon_add'] = $this->language->get('button_coupon_add');
 		$data['button_coupon_remove'] = $this->language->get('button_coupon_remove');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
 		$data['button_voucher_remove'] = $this->language->get('button_voucher_remove');
+		$data['button_reward_add'] = $this->language->get('button_reward_add');
 		$data['button_reward_remove'] = $this->language->get('button_reward_remove');
 		$data['button_total'] = $this->language->get('button_total');
 		$data['button_upload'] = $this->language->get('button_upload');
@@ -1155,7 +1157,33 @@ class ControllerSaleOrder extends Controller {
 				}
 			}
 		}
+
+		if (isset($this->request->get['order_id'])) {
+			$this->load->model('marketing/coupon');
+			
+			$data['coupon_total'] = $this->model_marketing_coupon->getTotalCouponHistoriesByOrderId($this->request->get['order_id']);
+		} else {
+			$data['coupon_total'] = 0;
+		}
 		
+		if (isset($this->request->get['order_id'])) {
+			$this->load->model('sale/voucher');
+			
+			$data['voucher_total'] = $this->model_sale_voucher->getTotalVoucherHistoriesByOrderId($this->request->get['order_id']);
+		} else {
+			$data['voucher_total'] = 0;
+		}
+		
+		if (isset($this->request->get['order_id'])) {
+			$this->load->model('sale/customer');
+			
+			$data['reward_total'] = $this->model_sale_customer->getTotalReawardsByOrderId($this->request->get['order_id']);
+		} else {
+			$data['reward_total'] = 0;
+		}
+						
+		$this->load->model('sale/customer');
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 				
@@ -1278,11 +1306,7 @@ class ControllerSaleOrder extends Controller {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
 		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+	  	return !$this->error;
   	}    
 	
    	protected function validateDelete() {
@@ -1290,11 +1314,7 @@ class ControllerSaleOrder extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
     	}
 
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}
 	
 	public function country() {

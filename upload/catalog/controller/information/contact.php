@@ -215,11 +215,7 @@ class ControllerInformationContact extends Controller {
       		$this->error['captcha'] = $this->language->get('error_captcha');
     	}
 		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}  	  
+		return !$this->error;  	  
   	}
 
 	public function captcha() {

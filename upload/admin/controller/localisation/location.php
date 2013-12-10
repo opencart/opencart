@@ -445,11 +445,7 @@ class ControllerLocalisationLocation extends Controller {
       		$this->error['telephone'] = $this->language->get('error_telephone');
     	}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 	
   	protected function validateDelete() {
@@ -457,10 +453,6 @@ class ControllerLocalisationLocation extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}	
 	  	 
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}  
+		return !$this->error;  
   	}
 }

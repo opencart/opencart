@@ -282,10 +282,6 @@ class ControllerStep3 extends Controller {
 			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'admin/config.php!';
 		}	
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

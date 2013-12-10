@@ -369,11 +369,7 @@ class ControllerLocalisationWeightClass extends Controller {
 			}
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	protected function validateDelete() {
@@ -394,11 +390,7 @@ class ControllerLocalisationWeightClass extends Controller {
 				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
 			}
 		}
-
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		
+		return !$this->error;
 	}	
 }

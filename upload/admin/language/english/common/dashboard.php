@@ -17,7 +17,7 @@ $_['text_analytics']               = 'Analytics';
 $_['text_sales']                   = 'Analytics';
 
 $_['text_activity']                = 'Recent Activity';
-$_['text_last_orders']             = 'Last 5 Orders';
+$_['text_last_order']              = 'Last 5 Orders';
 
 $_['text_sale']                    = 'Sales';
 $_['text_order']                   = 'Orders';

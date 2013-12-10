@@ -15,7 +15,7 @@ class ControllerCommonDashboard extends Controller {
 		
 		$data['text_analytics'] = $this->language->get('text_analytics');
 		$data['text_activity'] = $this->language->get('text_activity');
-		
+		$data['text_last_order'] = $this->language->get('text_last_order');
 		
 		
 		$data['text_sale'] = $this->language->get('text_sale');

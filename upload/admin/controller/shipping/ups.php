@@ -823,10 +823,6 @@ class ControllerShippingUPS extends Controller {
 			$this->error['dimension'] = $this->language->get('error_dimension');
 		}
 		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}	
+		return !$this->error;
 	}
 }

@@ -107,6 +107,11 @@ class ModelSaleOrder extends Model {
 			}
 		}
 
+		// Coupons, vouchers, reward points
+		$this->load->model('marketing/coupon');
+		$this->load->model('sale/voucher');
+		$this->load->model('sale/customer');
+		
 		// Get the total
 		$total = 0;
 		
@@ -120,13 +125,19 @@ class ModelSaleOrder extends Model {
 				
 				if ($start && $end) {
 					if ($order_total['code'] == 'coupon') {
-						$data['coupon'] = substr($order_total['title'], $start, $end - $start);
+						$coupon_info = $this->model_marketing_coupon->getCouponByCode(substr($order_total['title'], $start, $end - $start));
 						
-						$this->db->query("INSERT");
+						if ($coupon_info) {
+							$this->model_marketing_coupon->redeem($coupon_info['coupon_id'], $order_id, $data['customer_id'], $order_total['value']);
+						}
 					}
 								
-					if ($order_total['code'] == 'voucher' && $start && $end) {
-						$data['voucher'] = substr($order_total['title'], $start, $end - $start);
+					if ($order_total['code'] == 'voucher') {
+						$voucher_info = $this->model_sale_voucher->getVoucherByCode(substr($order_total['title'], $start, $end - $start));
+						
+						if ($voucher_info) {
+							$this->model_marketing_voucher->redeem($voucher_info['voucher_id'], $order_id, $data['customer_id'], $order_total['value']);
+						}
 					}		
 					
 					if ($order_total['code'] == 'reward') {
@@ -301,7 +312,7 @@ class ModelSaleOrder extends Model {
 					if ($order_total['code'] == 'reward') {
 						$this->load->model('marketing/coupon');
 						
-						$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET order_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', points = '" . (int)-substr($order_total['title'], $start, $end - $start) . "', date_added = NOW()");
+						//$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET order_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', points = '" . (int)-substr($order_total['title'], $start, $end - $start) . "', date_added = NOW()");
 					}
 				}			
 			}

@@ -45,6 +45,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_debug'] = $this->language->get('entry_debug');
 		$data['entry_method'] = $this->language->get('entry_method');
 		$data['entry_total'] = $this->language->get('entry_total');
+		$data['entry_total_help'] = $this->language->get('entry_total_help');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');

@@ -22,7 +22,7 @@
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-api-details" data-toggle="tab"><?php echo $tab_api_details; ?></a></li>
           <li><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
-          <li><a href="#tab-status" data-toggle="tab"><?php echo $tab_status; ?></a></li>
+          <li><a href="#tab-status" data-toggle="tab"><?php echo $tab_order_status; ?></a></li>
           <li><a href="#tab-customise" data-toggle="tab"><?php echo $tab_customise; ?></a></li>
         </ul>
         <div class="tab-api-details">
@@ -105,6 +105,7 @@
             <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
             <div class="col-sm-10">
               <input type="text" name="pp_express_total" value="<?php echo $pp_express_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
+              <span class="help-block"><?php echo $entry_total_help; ?></span>
             </div>
           </div>
           <div class="form-group">

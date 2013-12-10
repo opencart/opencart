@@ -17,12 +17,9 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i> <?php echo $button_insert; ?>
-        </a>
-        <button type="submit" class="btn btn-default" onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();">
-          <i class="fa fa-copy"></i> <?php echo $button_copy; ?></button>
-        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-profile-list').submit() : false;">
-          <i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
+        <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i> <?php echo $button_insert; ?></a>
+        <button type="submit" form="form-profile-list" formaction="<?php echo $copy; ?>" class="btn btn-default"><i class="fa fa-copy"></i> <?php echo $button_copy; ?></button>
+        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-profile-list').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
       </div>
       <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>
     </div>

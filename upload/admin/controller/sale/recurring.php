@@ -110,16 +110,14 @@ class ControllerSaleRecurring extends Controller {
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-			'separator' => ' :: '
 		);
 
-		$data = array(
+		$filter_data = array(
 			'filter_order_recurring_id' => $filter_order_recurring_id,
 			'filter_order_id' => $filter_order_id,
 			'filter_payment_reference' => $filter_payment_reference,
@@ -132,9 +130,9 @@ class ControllerSaleRecurring extends Controller {
 			'limit' => $this->config->get('config_admin_limit'),
 		);
 
-		$profiles_total = $this->model_sale_recurring->getTotalProfiles($data);
+		$profiles_total = $this->model_sale_recurring->getTotalProfiles($filter_data);
 
-		$results = $this->model_sale_recurring->getProfiles($data);
+		$results = $this->model_sale_recurring->getProfiles($filter_data);
 
 		$data['profiles'] = array();
 
@@ -366,14 +364,12 @@ class ControllerSaleRecurring extends Controller {
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-				'separator' => false
+				'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
 			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-				'separator' => ' :: '
+				'href' => $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL')
 			);
 
 			if (isset($this->error['warning'])) {

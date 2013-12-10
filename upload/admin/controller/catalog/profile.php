@@ -54,13 +54,11 @@ class ControllerCatalogProfile extends Controller {
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
 		);
 
 		if (!isset($this->request->get['profile_id'])) {
@@ -272,7 +270,6 @@ class ControllerCatalogProfile extends Controller {
 	}
 
 	protected function getList() {
-
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -310,13 +307,11 @@ class ControllerCatalogProfile extends Controller {
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => ' :: '
 		);
 
 		$data['heading_title'] = $this->language->get('heading_title');

@@ -21,13 +21,13 @@
         </a>
         <button type="submit" class="btn btn-default" onclick="$('#form').attr('action', '<?php echo $copy; ?>'); $('#form').submit();">
           <i class="fa fa-copy"></i> <?php echo $button_copy; ?></button>
-        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-product').submit() : false;">
+        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-profile-list').submit() : false;">
           <i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
       </div>
       <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
-      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form">
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-profile-list">
         <div class="table-responsive">
           <table class="table table-striped table-bordered table-hover">
             <thead>

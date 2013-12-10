@@ -324,6 +324,7 @@ class ControllerCatalogProfile extends Controller {
 		$data['button_copy'] = $this->language->get('button_copy');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');

@@ -9,6 +9,7 @@ $_['button_delete'] = 'Delete';
 $_['button_remove'] = 'Remove';
 
 // Text
+$_['text_confirm'] = 'Are you cure you want to delete?';
 $_['text_no_results'] = 'No Results';
 $_['text_remove'] = 'Remove';
 $_['text_edit'] = 'Edit';
@@ -20,7 +21,7 @@ $_['text_week'] = 'Week';
 $_['text_semi_month'] = 'Semi Month';
 $_['text_month'] = 'Month';
 $_['text_year'] = 'Year';
-$_['text_recurring_help']    = 'Recurring amounts are calculated by the frequency and cycles. <br />For example if you use a frequency of "week" and a cycle of "2", then the user will be billed every 2 weeks. <br />The duration is the number of times the user will make a payment, set this to 0 if you want payments until they are cancelled.';
+$_['text_recurring_help'] = 'Recurring amounts are calculated by the frequency and cycles. <br />For example if you use a frequency of "week" and a cycle of "2", then the user will be billed every 2 weeks. <br />The duration is the number of times the user will make a payment, set this to 0 if you want payments until they are cancelled.';
 
 // Entry
 $_['entry_name'] = 'Name:';

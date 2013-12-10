@@ -20,8 +20,12 @@
         <div class="panel-body">
           <div class="row">
             <div class="col-xs-4"><span class="text-muted"><i class="fa fa-shopping-cart fa-4x"></i></span></div>
-            <div class="col-xs-5"><span class="label label-success pull-right">+23%</span>
-              <h3 class="text-success"><?php echo $order_total; ?></h3>
+            <div class="col-xs-8"><span class="text-success"><?php echo $order_total; ?></span>
+              <?php if ($order_percentage > 0) { ?>
+              <span class="label label-success">+<?php echo $order_percentage; ?>%</span><br />
+              <?php } else { ?>
+              <span class="label label-danger"><?php echo $order_percentage; ?>%</span><br />
+              <?php } ?>
               <?php echo $text_new_order; ?></div>
           </div>
         </div>
@@ -34,6 +38,11 @@
             <div class="col-xs-4"><span class="text-muted"><i class="fa fa-user fa-4x"></i></span></div>
             <div class="col-xs-8">
               <h3 class="text-success"><?php echo $customer_total; ?></h3>
+              <?php if ($customer_percentage > 0) { ?>
+              <span class="label label-success">+<?php echo $customer_percentage; ?>%</span><br />
+              <?php } else { ?>
+              <span class="label label-danger"><?php echo $customer_percentage; ?>%</span><br />
+              <?php } ?>
               <?php echo $text_new_customer; ?></div>
           </div>
         </div>
@@ -46,7 +55,7 @@
             <div class="col-xs-4"><span class="text-muted"><i class="fa fa-credit-card fa-4x"></i></span></div>
             <div class="col-xs-8">
               <h3 class="text-success"><?php echo $sale_total; ?></h3>
-              <?php echo $text_sale; ?></div>
+              <?php echo $text_total_sale; ?></div>
           </div>
         </div>
       </div>
@@ -65,7 +74,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-12">
+    <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="pull-right">
@@ -80,26 +89,24 @@
                 <input type="radio" name="range" value="month" />
                 <?php echo $text_month; ?></label>
               <label class="btn btn-default">
-                <input type="radio" name="srange" value="year" />
+                <input type="radio" name="range" value="year" />
                 <?php echo $text_year; ?></label>
             </div>
           </div>
           <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_analytics; ?></h1>
         </div>
         <div class="panel-body">
-          <div class="row">
-            <div class="col-sm-6">
-              <h5 class="text-primary">Sales Analytics</h5>
-              <div id="chart-sale" class="chart" style="width: 100%; height: 175px;"></div>
-            </div>
-            <div class="col-sm-6">
-              <h5 class="text-primary">Marketing Analytics</h5>
-              <div id="chart-marketing" style="width: 100%; height: 175px;"></div>
-              <!--
-              <div id="chart-online" class="chart" style="width: 100%; height: 175px;"></div>
-              //--> 
-            </div>
-          </div>
+          <div id="chart-sale" class="chart" style="width: 100%; height: 175px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_online; ?></h1>
+        </div>
+        <div class="panel-body">
+          <div id="chart-online" class="chart" style="width: 100%; height: 175px;"></div>
         </div>
       </div>
     </div>
@@ -214,62 +221,16 @@ $('input[name=\'range\']').on('change', function() {
 					$('#chart-sale').css('cursor', 'auto');
 				}
 			});
-		}
-	});
-
-	// Marketing
-	$.ajax({
-		type: 'get',
-		url: 'index.php?route=common/dashboard/marketing&token=<?php echo $token; ?>&range=' + this.value,
-		dataType: 'json',
-		success: function(json) {
-			var option = {	
-				shadowSize: 0,
-				bars: { 
-					show: true,
-					fill: true,
-					lineWidth: 1,
-					barColor: '#000000'
-				},
-				grid: {
-					backgroundColor: '#FFFFFF',
-					hoverable: true
-				},
-				points: {
-					show: false		
-				},
-				xaxis: {
-            		ticks: json['xaxis']
-				}
-			}		
-			
-			$.plot('#chart-marketing', [json['click'], json['order']], option);
-					
-			$('#chart-marketing').bind('plothover', function(event, pos, item) {
-				$('.tooltip').remove();
-			  
-				if (item) {
-					$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
-					
-					$('#tooltip').css({
-						position: 'absolute',
-						left: item.pageX - ($('#tooltip').outerWidth() / 2),
-						top: item.pageY - $('#tooltip').outerHeight(),
-						pointer: 'cusror'
-					}).fadeIn('slow');	
-					
-					$('#chart-marketing').css('cursor', 'pointer');		
-				} else {
-					$('#chart-marketing').css('cursor', 'auto');
-				}
-			});
-		}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
 });
 
 $('.active input[name=\'range\']').trigger('change');
 
-$('#button-refresh').on('click', function() {
+function online() {
 	$.ajax({
 		type: 'get',
 		url: 'index.php?route=common/dashboard/online&token=<?php echo $token; ?>',
@@ -316,8 +277,15 @@ $('#button-refresh').on('click', function() {
 					$('#chart-online').css('cursor', 'auto');
 				}
 			});
-		}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
-});
+	
+	setTimeout(online, 5000);
+}
+
+online();
 //--></script> 
 <?php echo $footer; ?>

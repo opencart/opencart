@@ -4,31 +4,15 @@ $_['heading_title']                = 'Dashboard';
 
 // Text
 $_['text_welcome']                 = 'Welcome back <strong>%s</strong>!';
-
 $_['text_new_order']               = 'New Orders';
 $_['text_new_customer']            = 'New Customers';
-$_['text_new_sale']                = 'New Sales';
-$_['text_order']                   = 'Orders';
-
-
-
-$_['text_analytics']               = 'Analytics';
-
-$_['text_sales']                   = 'Analytics';
-
+$_['text_total_sale']              = 'Total Sales';
+$_['text_analytics']               = 'Sales Analytics';
+$_['text_online']                  = 'People Online';
 $_['text_activity']                = 'Recent Activity';
 $_['text_last_order']              = 'Last 5 Orders';
-
-$_['text_sale']                    = 'Sales';
 $_['text_order']                   = 'Orders';
-$_['text_customer']                = 'New Customers';
-$_['text_marketing']               = 'Marketing';
-
-$_['text_click']                   = 'Clicks';
-
-$_['text_online']                  = 'People Online';
-
-
+$_['text_customer']                = 'Customers';
 $_['text_day']                     = 'Today';
 $_['text_week']                    = 'Week';
 $_['text_month']                   = 'Month';

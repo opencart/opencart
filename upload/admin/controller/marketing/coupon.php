@@ -612,41 +612,5 @@ class ControllerMarketingCoupon extends Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($history_total - $this->config->get('config_limit_admin'))) ? $history_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $history_total, ceil($history_total / $this->config->get('config_limit_admin')));
 		
 		$this->response->setOutput($this->load->view('marketing/coupon_history.tpl', $data));
-  	}
-	
-	public function addCouponHistory() {
-		$this->load->language('marketing/coupon');
-		
-		$json = array();
-    	
-     	if (!$this->user->hasPermission('modify', 'marketing/coupon')) {
-      		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['order_id'])) {
-			$this->load->model('marketing/coupon');
-			
-			$this->model_marketing_coupon->deleteCouponHistoryByOrderId($this->request->get['order_id']);
-				
-			$json['success'] = $this->language->get('text_success');
-		}
-		
-		$this->response->setOutput(json_encode($json));
-  	}	
-		
-	public function removeCouponHistory() {
-		$this->load->language('marketing/coupon');
-		
-		$json = array();
-    	
-     	if (!$this->user->hasPermission('modify', 'marketing/coupon')) {
-      		$json['error'] = $this->language->get('error_permission'); 
-    	} elseif (isset($this->request->get['order_id'])) {
-			$this->load->model('marketing/coupon');
-			
-			$this->model_marketing_coupon->deleteCouponHistoryByOrderId($this->request->get['order_id']);
-				
-			$json['success'] = $this->language->get('text_success');
-		}
-		
-		$this->response->setOutput(json_encode($json));
-  	}			
+  	}		
 }

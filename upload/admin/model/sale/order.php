@@ -267,8 +267,6 @@ class ModelSaleOrder extends Model {
 		
 		$this->model_marketing_coupon->deleteHistory($order_id);
 		
-		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE order_id = '" . (int)$order_id  . "'");
-		
 		// Remove used vouchers
 		$this->load->model('sale/voucher');
 		

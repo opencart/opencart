@@ -27,7 +27,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background-repeat: repeat-x;
 	background-image: linear-gradient(0deg, #242424, #333333);
 	border-bottom: 1px solid #000000;
-	box-shadow: 0px 2px #33C6F0;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
 #header > .container .navbar-brand {
 	padding: 8px 15px;
@@ -42,6 +42,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	white-space: nowrap;
 }
 #header > .container .navbar-nav > li > a:hover {
+	color: #FFF;
+}
+#header > .container .navbar-nav > li.active > a {
 	color: #FFF;
 }
 #header > .container .navbar-nav + .navbar-nav > li > a {
@@ -174,7 +177,7 @@ footer a {
 }
 
 .panel-heading {
-	padding: 8px 15px;
+	padding: 5px 13px;
 	overflow: auto;
 }
 .panel-default > .panel-heading {
@@ -231,8 +234,15 @@ input.form-control, select.form-control {
 .table {
 	border-radius: 7px;
 }
+.table thead td:first-child {
+	border-radius: 7px 0 0 0;
+}
+.table thead {
+	border-bottom: none;	
+}
 .table thead td {
 	font-weight: bold;
+	border-bottom: none;
 }
 .table a:hover {
 	text-decoration: none;

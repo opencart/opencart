@@ -47,8 +47,6 @@ class ControllerCatalogProfile extends Controller {
 	}
 
 	protected function getForm() {
-		$this->load->model('localisation/language');
-
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['breadcrumbs'] = array();
@@ -79,10 +77,6 @@ class ControllerCatalogProfile extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		$data['languages'] = $this->model_localisation_language->getLanguages();
-
-		$data['sort_order'] = '0';
-
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
@@ -98,9 +92,12 @@ class ControllerCatalogProfile extends Controller {
 		$data['entry_trial_cycle'] = $this->language->get('entry_trial_cycle');
 		$data['entry_trial_frequency'] = $this->language->get('entry_trial_frequency');
 
-		$data['button_add_profile'] = $this->language->get('button_add_profile');
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
+
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_profile'] = $this->language->get('tab_profile');
+		$data['tab_trial'] = $this->language->get('tab_trial');
 
 		$data['text_recurring_help'] = $this->language->get('text_recurring_help');
 
@@ -220,6 +217,10 @@ class ControllerCatalogProfile extends Controller {
 			$data['error_name'] = array();
 		}
 
+		$this->load->model('localisation/language');
+
+		$data['languages'] = $this->model_localisation_language->getLanguages();
+
 		$this->load->model('design/layout');
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
@@ -327,10 +328,6 @@ class ControllerCatalogProfile extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
 		$data['column_action'] = $this->language->get('column_action');
-
-		$data['tab_general'] = $this->language->get('tab_general');
-		$data['tab_profile'] = $this->language->get('tab_profile');
-		$data['tab_trial'] = $this->language->get('tab_trial');
 
 		$data['profiles'] = array();
 

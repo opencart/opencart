@@ -14,31 +14,31 @@ class ControllerCatalogProfile extends Controller {
 
 	protected function getList() {
 
-		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-		$this->data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => false
 		);
 
-		$this->data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL'),       		
 			'separator' => ' :: '
 		);
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_copy'] = $this->language->get('button_copy');
-		$this->data['button_delete'] = $this->language->get('button_delete');
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		$data['heading_title'] = $this->language->get('heading_title');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_copy'] = $this->language->get('button_copy');
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['text_no_results'] = $this->language->get('text_no_results');
 
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
-		$this->data['column_action'] = $this->language->get('column_action');
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_sort_order'] = $this->language->get('column_sort_order');
+		$data['column_action'] = $this->language->get('column_action');
 
-		$this->data['profiles'] = array();
+		$data['profiles'] = array();
 
 		$profiles = $this->model_catalog_profile->getProfiles();
 
@@ -50,7 +50,7 @@ class ControllerCatalogProfile extends Controller {
 				'name' => $this->language->get('text_edit'),
 			);
 
-			$this->data['profiles'][] = array(
+			$data['profiles'][] = array(
 				'profile_id' => $profile['profile_id'],
 				'name' => $profile['name'],
 				'sort_order' => $profile['sort_order'],
@@ -58,33 +58,34 @@ class ControllerCatalogProfile extends Controller {
 			);
 		}
 
-		$this->data['insert'] = $this->url->link('catalog/profile/insert', 'token=' . $this->session->data['token'], 'SSL');
-		$this->data['copy'] = $this->url->link('catalog/profile/copy', 'token=' . $this->session->data['token'], 'SSL');
-		$this->data['delete'] = $this->url->link('catalog/profile/delete', 'token=' . $this->session->data['token'], 'SSL');
+		$data['insert'] = $this->url->link('catalog/profile/insert', 'token=' . $this->session->data['token'], 'SSL');
+		$data['copy'] = $this->url->link('catalog/profile/copy', 'token=' . $this->session->data['token'], 'SSL');
+		$data['delete'] = $this->url->link('catalog/profile/delete', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 
-		$this->data['pagination'] = '';
+		$data['pagination'] = '';
 
-		$this->template = 'catalog/profile_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$this->load->model('design/layout');
 
-		$this->response->setOutput($this->render());
+		$data['layouts'] = $this->model_design_layout->getLayouts();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('catalog/profile_list.tpl', $data));
 	}
 
 	public function insert() {
@@ -124,62 +125,62 @@ class ControllerCatalogProfile extends Controller {
 	protected function getForm() {
 		$this->load->model('localisation/language');
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-		$this->data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => false
 		);
 
-		$this->data['breadcrumbs'][] = array(
+		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => ' :: '
 		);
 
 		if (!isset($this->request->get['profile_id'])) {
-			$this->data['action'] = $this->url->link('catalog/profile/insert', 'token=' . $this->session->data['token'], 'SSL');
+			$data['action'] = $this->url->link('catalog/profile/insert', 'token=' . $this->session->data['token'], 'SSL');
 		} else {
-			$this->data['action'] = $this->url->link('catalog/profile/update', 'token=' . $this->session->data['token'] . '&profile_id=' . $this->request->get['profile_id'], 'SSL');
+			$data['action'] = $this->url->link('catalog/profile/update', 'token=' . $this->session->data['token'] . '&profile_id=' . $this->request->get['profile_id'], 'SSL');
 		}
 
-		$this->data['cancel'] = $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL');
 
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_save'] = $this->language->get('button_save');
-		$this->data['button_remove'] = $this->language->get('button_remove');
+		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_remove'] = $this->language->get('button_remove');
 
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 
-		$this->data['languages'] = $this->model_localisation_language->getLanguages();
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 
-		$this->data['sort_order'] = '0';
+		$data['sort_order'] = '0';
 
-		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
-		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_price'] = $this->language->get('entry_price');
-		$this->data['entry_duration'] = $this->language->get('entry_duration');
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_cycle'] = $this->language->get('entry_cycle');
-		$this->data['entry_frequency'] = $this->language->get('entry_frequency');
-		$this->data['entry_trial_price'] = $this->language->get('entry_trial_price');
-		$this->data['entry_trial_duration'] = $this->language->get('entry_trial_duration');
-		$this->data['entry_trial_status'] = $this->language->get('entry_trial_status');
-		$this->data['entry_trial_cycle'] = $this->language->get('entry_trial_cycle');
-		$this->data['entry_trial_frequency'] = $this->language->get('entry_trial_frequency');
+		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_price'] = $this->language->get('entry_price');
+		$data['entry_duration'] = $this->language->get('entry_duration');
+		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_cycle'] = $this->language->get('entry_cycle');
+		$data['entry_frequency'] = $this->language->get('entry_frequency');
+		$data['entry_trial_price'] = $this->language->get('entry_trial_price');
+		$data['entry_trial_duration'] = $this->language->get('entry_trial_duration');
+		$data['entry_trial_status'] = $this->language->get('entry_trial_status');
+		$data['entry_trial_cycle'] = $this->language->get('entry_trial_cycle');
+		$data['entry_trial_frequency'] = $this->language->get('entry_trial_frequency');
 
-		$this->data['button_add_profile'] = $this->language->get('button_add_profile');
-		$this->data['text_enabled'] = $this->language->get('text_enabled');
-		$this->data['text_disabled'] = $this->language->get('text_disabled');
+		$data['button_add_profile'] = $this->language->get('button_add_profile');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
 
-		$this->data['text_recurring_help'] = $this->language->get('text_recurring_help');
+		$data['text_recurring_help'] = $this->language->get('text_recurring_help');
 
-		$this->data['frequencies'] = $this->model_catalog_profile->getFrequencies();
+		$data['frequencies'] = $this->model_catalog_profile->getFrequencies();
 
 		if (isset($this->request->get['profile_id'])) {
 			$profile = $this->model_catalog_profile->getProfile($this->request->get['profile_id']);
@@ -188,120 +189,121 @@ class ControllerCatalogProfile extends Controller {
 		}
 
 		if (isset($this->request->post['profile_description'])) {
-			$this->data['profile_description'] = $this->request->post['profile_description'];
+			$data['profile_description'] = $this->request->post['profile_description'];
 		} elseif (!empty($profile)) {
-			$this->data['profile_description'] = $this->model_catalog_profile->getProfileDescription($profile['profile_id']);
+			$data['profile_description'] = $this->model_catalog_profile->getProfileDescription($profile['profile_id']);
 		} else {
-			$this->data['profile_description'] = array();
+			$data['profile_description'] = array();
 		}
 
 		if (isset($this->request->post['sort_order'])) {
-			$this->data['sort_order'] = $this->request->post['sort_order'];
+			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($profile)) {
-			$this->data['sort_order'] = $profile['sort_order'];
+			$data['sort_order'] = $profile['sort_order'];
 		} else {
-			$this->data['sort_order'] = 0;
+			$data['sort_order'] = 0;
 		}
 
 		if (isset($this->request->post['status'])) {
-			$this->data['status'] = $this->request->post['status'];
+			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($profile)) {
-			$this->data['status'] = $profile['status'];
+			$data['status'] = $profile['status'];
 		} else {
-			$this->data['status'] = 0;
+			$data['status'] = 0;
 		}
 
 		if (isset($this->request->post['price'])) {
-			$this->data['price'] = $this->request->post['price'];
+			$data['price'] = $this->request->post['price'];
 		} elseif (!empty($profile)) {
-			$this->data['price'] = $profile['price'];
+			$data['price'] = $profile['price'];
 		} else {
-			$this->data['price'] = 0;
+			$data['price'] = 0;
 		}
 
 		if (isset($this->request->post['frequency'])) {
-			$this->data['frequency'] = $this->request->post['frequency'];
+			$data['frequency'] = $this->request->post['frequency'];
 		} elseif (!empty($profile)) {
-			$this->data['frequency'] = $profile['frequency'];
+			$data['frequency'] = $profile['frequency'];
 		} else {
-			$this->data['frequency'] = '';
+			$data['frequency'] = '';
 		}
 
 		if (isset($this->request->post['duration'])) {
-			$this->data['duration'] = $this->request->post['duration'];
+			$data['duration'] = $this->request->post['duration'];
 		} elseif (!empty($profile)) {
-			$this->data['duration'] = $profile['duration'];
+			$data['duration'] = $profile['duration'];
 		} else {
-			$this->data['duration'] = 0;
+			$data['duration'] = 0;
 		}
 
 		if (isset($this->request->post['cycle'])) {
-			$this->data['cycle'] = $this->request->post['cycle'];
+			$data['cycle'] = $this->request->post['cycle'];
 		} elseif (!empty($profile)) {
-			$this->data['cycle'] = $profile['cycle'];
+			$data['cycle'] = $profile['cycle'];
 		} else {
-			$this->data['cycle'] = 1;
+			$data['cycle'] = 1;
 		}
 
 		if (isset($this->request->post['trial_status'])) {
-			$this->data['trial_status'] = $this->request->post['trial_status'];
+			$data['trial_status'] = $this->request->post['trial_status'];
 		} elseif (!empty($profile)) {
-			$this->data['trial_status'] = $profile['trial_status'];
+			$data['trial_status'] = $profile['trial_status'];
 		} else {
-			$this->data['trial_status'] = 0;
+			$data['trial_status'] = 0;
 		}
 
 		if (isset($this->request->post['trial_price'])) {
-			$this->data['trial_price'] = $this->request->post['trial_price'];
+			$data['trial_price'] = $this->request->post['trial_price'];
 		} elseif (!empty($profile)) {
-			$this->data['trial_price'] = $profile['trial_price'];
+			$data['trial_price'] = $profile['trial_price'];
 		} else {
-			$this->data['trial_price'] = 0.00;
+			$data['trial_price'] = 0.00;
 		}
 
 		if (isset($this->request->post['trial_frequency'])) {
-			$this->data['trial_frequency'] = $this->request->post['trial_frequency'];
+			$data['trial_frequency'] = $this->request->post['trial_frequency'];
 		} elseif (!empty($profile)) {
-			$this->data['trial_frequency'] = $profile['trial_frequency'];
+			$data['trial_frequency'] = $profile['trial_frequency'];
 		} else {
-			$this->data['trial_frequency'] = '';
+			$data['trial_frequency'] = '';
 		}
 
 		if (isset($this->request->post['trial_duration'])) {
-			$this->data['trial_duration'] = $this->request->post['trial_duration'];
+			$data['trial_duration'] = $this->request->post['trial_duration'];
 		} elseif (!empty($profile)) {
-			$this->data['trial_duration'] = $profile['trial_duration'];
+			$data['trial_duration'] = $profile['trial_duration'];
 		} else {
-			$this->data['trial_duration'] = '0';
+			$data['trial_duration'] = '0';
 		}
 
 		if (isset($this->request->post['trial_cycle'])) {
-			$this->data['trial_cycle'] = $this->request->post['trial_cycle'];
+			$data['trial_cycle'] = $this->request->post['trial_cycle'];
 		} elseif (!empty($profile)) {
-			$this->data['trial_cycle'] = $profile['trial_cycle'];
+			$data['trial_cycle'] = $profile['trial_cycle'];
 		} else {
-			$this->data['trial_cycle'] = '1';
+			$data['trial_cycle'] = '1';
 		}
 
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 
 		if (isset($this->error['name'])) {
-			$this->data['error_name'] = $this->error['name'];
+			$data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = array();
+			$data['error_name'] = array();
 		}
 
-		$this->template = 'catalog/profile_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
+		$this->load->model('design/layout');
 
-		$this->response->setOutput($this->render());
+		$data['layouts'] = $this->model_design_layout->getLayouts();
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('catalog/profile_form.tpl', $data));
 	}
 
 	public function delete() {

@@ -11,7 +11,8 @@ $_['text_sale']                         = 'Sale';
 $_['text_clear']                        = 'Clear';
 $_['text_browse']                       = 'Browse';
 $_['text_image_manager']                = 'Image manager';
-$_['text_ipn']                          = 'IPN url<span class="help">Required for subscriptions</span>';
+$_['text_ipn']                          = 'IPN url';
+$_['text_ipn_help']                     = 'Required for subscriptions';
 
 // Entry
 $_['entry_username']                    = 'API Username:';
@@ -26,7 +27,8 @@ $_['entry_icon_sort_order']             = 'Icon Sort Order:';
 $_['entry_debug']                       = 'Debug logging:';
 $_['entry_total']                       = 'Total';
 $_['entry_total_help']                  = 'The checkout total the order must reach before this payment method becomes active';
-$_['entry_currency']                    = 'Default currency<span class="help">Used for transaction searches</span>';
+$_['entry_currency']                    = 'Default currency';
+$_['entry_currency_help']               = 'Used for transaction searches';
 $_['entry_profile_cancellation']        = 'Allow customers to cancel profiles';
 
 
@@ -43,12 +45,14 @@ $_['entry_reversed_status']			    = 'Reversed Status:';
 $_['entry_voided_status']		        = 'Voided Status:';
 
 // Customise area
-$_['entry_display_checkout']            = 'Display quick checkout icon:';
-$_['entry_allow_notes']                 = 'Allow notes:';
-$_['entry_logo']                        = 'Logo<span class="help">Max 750px(w) x 90px(h)<br />You should only use a logo if you have SSL set up.</span>';
-$_['entry_border_colour']               = 'Header border colour:<span class="help">6 character HTML colour code</span>';
-$_['entry_header_colour']               = 'Header background colour:<span class="help">6 character HTML colour code</span>';
-$_['entry_page_colour']                 = 'Page background colour:<span class="help">6 character HTML colour code</span>';
+$_['entry_display_checkout']            = 'Display quick checkout icon';
+$_['entry_allow_notes']                 = 'Allow notes';
+$_['entry_logo']                        = 'Logo';
+$_['entry_logo_help']                   = 'Max 750px(w) x 90px(h)<br />You should only use a logo if you have SSL set up.';
+$_['entry_colour_help']          		= '6 character HTML colour code';
+$_['entry_border_colour']               = 'Header border colour';
+$_['entry_header_colour']               = 'Header background colour';
+$_['entry_page_colour']                 = 'Page background colour';
 
 // Error
 $_['error_permission']                  = 'Warning: You do not have permission to modify payment PayPal Express Checkout!';

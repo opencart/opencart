@@ -61,6 +61,7 @@ class ControllerPaymentPPExpress extends Controller {
         $data['entry_reversed_status'] = $this->language->get('entry_reversed_status');
         $data['entry_voided_status'] = $this->language->get('entry_voided_status');
         $data['entry_currency'] = $this->language->get('entry_currency');
+        $data['entry_currency_help'] = $this->language->get('entry_currency_help');
         $data['entry_profile_cancellation'] = $this->language->get('entry_profile_cancellation');
 
         $data['tab_general'] = $this->language->get('tab_general');
@@ -71,9 +72,11 @@ class ControllerPaymentPPExpress extends Controller {
         $data['entry_display_checkout'] = $this->language->get('entry_display_checkout');
         $data['entry_allow_notes'] = $this->language->get('entry_allow_notes');
         $data['entry_logo'] = $this->language->get('entry_logo');
+        $data['entry_logo_help'] = $this->language->get('entry_logo_help');
         $data['entry_border_colour'] = $this->language->get('entry_border_colour');
         $data['entry_header_colour'] = $this->language->get('entry_header_colour');
         $data['entry_page_colour'] = $this->language->get('entry_page_colour');
+        $data['entry_colour_help'] = $this->language->get('entry_colour_help');
 
         $data['help_encryption'] = $this->language->get('help_encryption');
 
@@ -81,6 +84,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
         $data['text_ipn'] = $this->language->get('text_ipn');
+        $data['text_ipn_help'] = $this->language->get('text_ipn_help');
 		$data['text_ipn_url'] = HTTPS_CATALOG.'index.php?route=payment/pp_express/ipn';
 
 		$data['breadcrumbs'] = array();

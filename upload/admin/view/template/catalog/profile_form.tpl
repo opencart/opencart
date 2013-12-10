@@ -87,7 +87,7 @@
           <label class="col-sm-2 control-label" for="input-duration"><?php echo $entry_duration; ?></label>
 
           <div class="col-sm-10">
-            <input type="text" name="price" value="<?php echo $duration; ?>" placeholder="<?php echo $entry_duration; ?>" id="input-duration" class="form-control"/>
+            <input type="text" name="duration" value="<?php echo $duration; ?>" placeholder="<?php echo $entry_duration; ?>" id="input-duration" class="form-control"/>
           </div>
         </div>
         <div class="form-group">

@@ -14,7 +14,7 @@ final class Front {
 
  	public function dispatch($action, $error) {
 		$this->error = $error;
-			
+
 		foreach ($this->pre_action as $pre_action) {
 			$result = $this->execute($pre_action);
 					
@@ -31,24 +31,16 @@ final class Front {
   	}
     
 	private function execute($action) {
-		if (file_exists($action->getFile())) {
-			require_once($action->getFile());
-			
-			$class = $action->getClass();
-
-			$controller = new $class($this->registry);
-			
-			if (is_callable(array($controller, $action->getMethod()))) {
-				$action = call_user_func_array(array($controller, $action->getMethod()), $action->getArgs());
-			} else {
-				$action = $this->error;
-			
-				$this->error = '';
-			}
-		} else {
+		$result = $action->execute($this->registry);
+		
+		if (is_object($result)) {
+			$action = $result;
+		} elseif ($result === false) {
 			$action = $this->error;
-			
-			$this->error = '';
+		
+			$this->error = '';	
+		} else {
+			$action = false;
 		}
 		
 		return $action;

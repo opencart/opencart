@@ -178,7 +178,12 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" /> <i class="fa fa-caret-down"></i></a>
+        <li class="dropdown">
+          <?php if ($image) { ?>
+          <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" /> <i class="fa fa-caret-down"></i></a>
+          <?php } else { ?>
+          <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i> <i class="fa fa-caret-down"></i></a>
+          <?php } ?>
           <ul class="dropdown-menu">
             <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
             <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>

@@ -387,7 +387,7 @@ class ControllerCheckoutManual extends Controller {
 			}
 			
 			// Coupon
-			$query = $this->db->query("SELECT * FROM coupon_history WHERE coupon_id = '" . . "'");
+			$query = $this->db->query("SELECT * FROM coupon_history WHERE coupon_id = '" . (int)$order_id . "'");
 			
 			
 			

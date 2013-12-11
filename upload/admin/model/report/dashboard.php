@@ -1,15 +1,12 @@
 <?php
 class ModelReportDashboard extends Model {
+	// Sales
 	public function getTotalSales($data = array()) {
 		$sql = "SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'";
 		
-		if (!empty($data['filter_date_start'])) {
+		if (!empty($data['filter_date_added'])) {
 			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
 		}
-		
-		if (!empty($data['filter_date_end'])) {
-			$sql .= " AND DATE(date_modified) = DATE('" . $this->db->escape($data['filter_date_modified']) . "')";
-		}		
 		
       	$query = $this->db->query($sql);
 

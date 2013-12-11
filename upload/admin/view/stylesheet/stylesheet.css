@@ -24,22 +24,23 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 
 #header {
-	min-height: 40px;
+	min-height: 45px;
 	margin-bottom: 15px;
 }
 #header .navbar-brand {
-	padding: 8px 15px;
+	padding: 10px 15px;
 	line-height: 20px;
 }
 #header .navbar-nav > li > a {
-	padding: 10px 15px;
+	padding: 12px 15px;
 	line-height: 20px;
 	text-shadow: 1px 1px #000000;
 	cursor: pointer;
+	
 }
 #header .navbar-nav + .navbar-nav > li > a {
 	padding: 7px 15px;
-	line-height: 26px;
+	line-height: 30px;
 	border-left: 1px solid #434546;
 }
 #header .navbar-nav > li > a i.fa-lg {
@@ -56,6 +57,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	text-shadow: none;
 }
 /* drop down submen */
+.dropdown-menu {
+	font-size: 12px;
+}
 .dropdown-menu a {
 	cursor: pointer;
 }
@@ -164,19 +168,12 @@ footer a {
 	font-size: 12px;
 	padding: 10px;
 }
-
 .panel-heading {
-	padding: 5px 13px;
+	padding: 8px 15px;
 	overflow: auto;
 }
-.panel-default > .panel-heading {
-	
-}
 .panel-title {
-	font-weight: bold;
-	font-size: 19px;
 	line-height: 30px;
-	color: #666;
 	text-shadow: 1px 1px #FFFFFF;
 }
 .nav-tabs {
@@ -219,12 +216,13 @@ input.form-control, select.form-control {
 	font-size: 15px;
 }
 
-
 .table {
 	border-radius: 7px;
+	border-collapse: collapse;
+	border-spacing: 0;
 }
-.table thead td:first-child {
-	border-radius: 7px 0 0 0;
+.table td:first-child {
+	border-radius: 10px 0 0 0;
 }
 .table thead {
 	border-bottom: none;	
@@ -233,16 +231,13 @@ input.form-control, select.form-control {
 	font-weight: bold;
 	border-bottom: none;
 }
-.table a:hover {
-	text-decoration: none;
-}
 .table a.asc:after {
-	content: "  \f0d7";
+	content: " \f0d7";
 	font-family: FontAwesome;
 	font-size: 14px;
 }
 .table a.desc:after {
-	content: "  \f0d8";
+	content: " \f0d8";
 	font-family: FontAwesome;
 	font-size: 14px;
 }

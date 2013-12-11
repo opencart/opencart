@@ -13,57 +13,46 @@ legend {
 	font-size: 18px;
 	padding: 7px 0px
 }
-
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline !important;
 }
-.container {
-	min-width: 95%;
+
+@media (min-width: 1200px) {
+	.container {
+		min-width: 95%;
+	}
 }
+
 #header {
 	min-height: 40px;
 	margin-bottom: 15px;
-	background-color: #242424;
-	background-repeat: repeat-x;
-	background-image: linear-gradient(0deg, #242424, #333333);
-	border-bottom: 1px solid #000000;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
 }
-#header > .container .navbar-brand {
+#header .navbar-brand {
 	padding: 8px 15px;
 	line-height: 20px;
 }
-#header > .container .navbar-nav > li > a {
-	text-shadow: 1px 1px #000000;
-	padding: 10px 15px 10px 15px;
+#header .navbar-nav > li > a {
+	padding: 10px 15px;
 	line-height: 20px;
-	color: #999999;
+	text-shadow: 1px 1px #000000;
 	cursor: pointer;
-	white-space: nowrap;
 }
-#header > .container .navbar-nav > li > a:hover {
-	color: #FFF;
-}
-#header > .container .navbar-nav > li.active > a {
-	color: #FFF;
-}
-#header > .container .navbar-nav + .navbar-nav > li > a {
+#header .navbar-nav + .navbar-nav > li > a {
 	padding: 7px 15px;
 	line-height: 26px;
 	border-left: 1px solid #434546;
 }
-
-#header > .container .navbar-nav + .navbar-nav > li > a i.fa-lg {
+#header .navbar-nav > li > a i.fa-lg {
 	font-size: 18px;
 }
-#header > .container .navbar-nav > li > a > img {
+#header .navbar-nav > li > a > img {
 	background: #FFF;
 	border-radius: 7px;
 }
-#header > .container .navbar-nav > li > a .fa-caret-down {
+#header .navbar-nav > li > a .fa-caret-down {
 	margin-left: 3px;
 }
-#header > .container .navbar-nav > li > a .label {
+#header .navbar-nav > li > a .label {
 	text-shadow: none;
 }
 /* drop down submen */

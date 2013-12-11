@@ -93,12 +93,10 @@ class ControllerCommonDashboard extends Controller {
 			$data['customer_percentage'] = round(($difference / $today) * 100);
 		} else {
 			$data['customer_percentage'] = 0;
-		}		
+		}
 		
-		// Marketing
-		$this->load->model('marketing/marketing');
-		
-		$data['marketing_total'] = $this->model_marketing_marketing->getTotalMarketings();
+		// Customers Online
+		$data['online_total'] = $this->model_report_dashboard->getTotalCustomersOnline();
 		
 		$data['activities'] = array();
 				
@@ -263,7 +261,7 @@ class ControllerCommonDashboard extends Controller {
 		$json['online'] = array();
 		$json['xaxis'] = array();
 		
-		$results = $this->model_report_dashboard->getTotalCustomersOnline();
+		$results = $this->model_report_dashboard->getTotalCustomersOnlineByHour();
 		
 		foreach ($results as $result) {
 			$json['online']['data'][] = array($result['time'], $result['total']);

@@ -66,8 +66,18 @@
           <div class="row">
             <div class="col-xs-4"><span class="text-muted"><i class="fa fa-bar-chart-o fa-4x"></i></span></div>
             <div class="col-xs-8">
-              <h3 class="text-success"><?php echo $marketing_total; ?></h3>
-              <?php echo $text_marketing; ?></div>
+              <?php if ($online_total > 30) { ?>
+              <h3 class="text-success"><?php echo $online_total; ?></h3>
+              <?php } elseif ($online_total > 20) { ?>
+              <h3 class="text-info"><?php echo $online_total; ?></h3>
+              <?php } elseif ($online_total > 10) { ?>
+              <h3 class="text-text-warning"><?php echo $online_total; ?></h3>   
+              <?php } else { ?>
+              <h3 class="text-danger"><?php echo $online_total; ?></h3>
+              <?php } ?>
+              
+              
+              <?php echo $text_online; ?></div>
           </div>
         </div>
       </div>
@@ -103,7 +113,7 @@
     <div class="col-sm-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_online; ?></h1>
+          <h1 class="panel-title"><i class="fa fa-user"></i> <?php echo $text_online; ?></h1>
         </div>
         <div class="panel-body">
           <div id="chart-online" class="chart" style="width: 100%; height: 175px;"></div>

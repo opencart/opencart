@@ -16,35 +16,18 @@ class ModelReportDashboard extends Model {
 		return $query->row['total'];
 	}
 	
-	public function getTotalSalesByMonth() {
-		$order_data = array();
-		
-		for ($i = 1; $i <= date('t'); $i++) {
-			$date = date('Y') . '-' . date('m') . '-' . $i;
-			
-			$order_data[date('j', strtotime($date))] = array(
-				'day'   => date('d', strtotime($date)),
-				'total' => 0
-			);
-		}		
-		
-		$query = $this->db->query("SELECT SUM(total) AS total, date_added FROM `" . DB_PREFIX . "order` WHERE order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND DATE(date_added) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(date_added)");
-			
-		foreach ($query->rows as $result) {
-			$order_data[date('j', strtotime($result['date_added']))] = array(
-				'day'   => date('d', strtotime($result['date_added'])),
-				'total' => $result['total']
-			);		
-		}
-		
-		return $order_data;
-	}
-		
+	// Customers Online			
 	public function getTotalCustomersOnline() {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM `" . DB_PREFIX . "customer_online`");
+		
+		return $query->row['total'];
+	}
+	
+	public function getTotalCustomersOnlineByHour() {
 		$online_data = array();
 				
 		for ($i = strtotime('-1 hour'); $i < time(); $i = ($i + 60)) {
-			$time = (round($i / 60) * 60);
+			$time = (round($i / 60) * 60); 
 			
 			$online_data[$time] = array(
 				'time'  => $time,

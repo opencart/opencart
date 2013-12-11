@@ -181,7 +181,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_service; ?></label>
           <div class="col-sm-10">
-            <div id="service" class="well well-sm">
+            <div id="service" class="well well-sm" style="height: 150px; overflow: auto;">
               <div id="US">
                 <div class="checkbox">
                   <label>

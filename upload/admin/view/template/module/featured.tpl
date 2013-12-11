@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="product" value="" placeholder="<?php echo $entry_product; ?>" id="input-product" class="form-control" />
             <span class="help-block"><?php echo $help_product; ?></span>
-            <div id="featured-product" class="well well-sm">
+            <div id="featured-product" class="well well-sm" style="height: 150px; overflow: auto;">
               <?php foreach ($products as $product) { ?>
               <div id="featured-product<?php echo $product['product_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $product['name']; ?>
                 <input type="hidden" value="<?php echo $product['product_id']; ?>" />

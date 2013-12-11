@@ -36,7 +36,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_backup; ?></label>
           <div class="col-sm-10">
-            <div class="well well-sm">
+            <div class="well well-sm" style="height: 150px; overflow: auto;">
               <?php foreach ($tables as $table) { ?>
               <div class="checkbox">
                 <label>

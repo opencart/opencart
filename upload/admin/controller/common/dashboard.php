@@ -64,9 +64,9 @@ class ControllerCommonDashboard extends Controller {
 		
 		$data['order_total'] = $this->model_sale_order->getTotalOrders();
 		
-		$today = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d')));
+		$today = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
 
-		$yesterday = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+		$yesterday = $this->model_sale_order->getTotalOrders(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
 		
 		$difference = $today - $yesterday;
 		
@@ -83,9 +83,9 @@ class ControllerCommonDashboard extends Controller {
 		
 		$data['customer_total'] = $customer_total;
 		
-		$today = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d')));
+		$today = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
 
-		$yesterday = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+		$yesterday = $this->model_sale_customer->getTotalCustomers(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
 
 		$difference = $today - $yesterday;
 		

@@ -91,7 +91,7 @@
           </div>
         </div>
         <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-cycle"><?php echo $entry_duration; ?></label>
+          <label class="col-sm-2 control-label" for="input-cycle"><?php echo $entry_cycle; ?></label>
 
           <div class="col-sm-10">
             <input type="text" name="cycle" value="<?php echo $cycle; ?>" placeholder="<?php echo $entry_cycle; ?>" id="input-cycle" class="form-control"/>

@@ -628,7 +628,7 @@
               </div>
             </div>
           </div>
-          <div class="tab-pane"  id="tab-profile">
+          <div class="tab-pane" id="tab-profile">
           <div class="table-responsive">
             <table class="table table-striped table-bordered table-hover">
               <thead>
@@ -666,7 +666,7 @@
                       <?php } ?>
                     </select>
                   </td>
-                  <td class="text-left"><button type="button" onclick="$('#profile-row<?php echo $profileCount ?>').remove()" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_remove ?></button></td>
+                  <td class="text-left"><button type="button" onclick="$('#profile-row<?php echo $profileCount ?>').remove()" class="btn btn-danger"><i class="fa fa-trash-o"></i> <?php echo $button_remove ?></button></td>
                 </tr>
 
               <?php } ?>
@@ -678,6 +678,7 @@
                 </tr>
               </tfoot>
             </table>
+          </div>
           </div>
           <div class="tab-pane" id="tab-discount">
             <div class="table-responsive">
@@ -1305,7 +1306,37 @@ function addImage() {
 	
 	image_row++;
 }
-//--></script> 
+//--></script>
+<script type="text/javascript"><!--
+var profileCount = <?php echo $profileCount ?>;
+
+function addProfile() {
+  profileCount++;
+
+  var html = '';
+  html += '<tr id="profile-row' + profileCount + '">';
+  html += '  <td class="left">';
+  html += '    <select name="product_profiles[' + profileCount + '][profile_id]" class="form-control">>';
+  <?php foreach ($profiles as $profile) { ?>
+    html += '      <option value="<?php echo $profile['profile_id']; ?>"><?php echo $profile['name']; ?></option>';
+  <?php } ?>
+  html += '    </select>';
+  html += '  </td>';
+  html += '  <td class="left">';
+  html += '    <select name="product_profiles[' + profileCount + '][customer_group_id]" class="form-control">>';
+  <?php foreach ($customer_groups as $customer_group) { ?>
+    html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
+  <?php } ?>
+  html += '    <select>';
+  html += '  </td>';
+  html += '  <td class="left">';
+  html += '    <a onclick="$(\'#profile-row' + profileCount + '\').remove()" class="btn btn-danger"><i class="fa fa-trash-o"></i> <?php echo $button_remove; ?></a>';
+  html += '  </td>';
+  html += '</tr>';
+
+  $('#tab-profile table tbody').append(html);
+}
+//--></script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
 $('#option a:first').tab('show');

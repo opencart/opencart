@@ -46,6 +46,7 @@ class ControllerAccountAccount extends Controller {
 		$data['text_return'] = $this->language->get('text_return');
 		$data['text_transaction'] = $this->language->get('text_transaction');
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
+		$data['text_recurring'] = $this->language->get('text_recurring');
 
     	$data['edit'] = $this->url->link('account/edit', '', 'SSL');
     	$data['password'] = $this->url->link('account/password', '', 'SSL');
@@ -56,6 +57,7 @@ class ControllerAccountAccount extends Controller {
 		$data['return'] = $this->url->link('account/return', '', 'SSL');
 		$data['transaction'] = $this->url->link('account/transaction', '', 'SSL');
 		$data['newsletter'] = $this->url->link('account/newsletter', '', 'SSL');
+		$data['recurring'] = $this->url->link('account/recurring', '', 'SSL');
 		
 		if ($this->config->get('reward_status')) {
 			$data['reward'] = $this->url->link('account/reward', '', 'SSL');

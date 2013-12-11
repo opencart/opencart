@@ -853,7 +853,7 @@ class ControllerCatalogProduct extends Controller {
 
 		$this->load->model('catalog/profile');
 
-		$this->data['profiles'] = $this->model_catalog_profile->getProfiles();
+		$data['profiles'] = $this->model_catalog_profile->getProfiles();
 
 		if (isset($this->request->post['product_profiles'])) {
 			$data['product_profiles'] = $this->request->post['product_profiles'];

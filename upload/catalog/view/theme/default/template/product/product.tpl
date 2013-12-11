@@ -165,6 +165,9 @@
             <?php } ?>
             <?php } ?>
           </ul>
+
+
+
           <?php } ?>
           <div id="product">
             <?php if ($options) { ?>
@@ -279,6 +282,19 @@
             <?php } ?>
             <?php } ?>
             <?php } ?>
+            <?php if ($profiles) { ?>
+              <hr>
+              <h3><?php echo $text_payment_profile ?></h3>
+              <div class="form-group required">
+                <select name="profile_id" class="form-control">
+                  <option value=""><?php echo $text_select; ?></option>
+                  <?php foreach ($profiles as $profile) { ?>
+                  <option value="<?php echo $profile['profile_id'] ?>"><?php echo $profile['name'] ?></option>
+                  <?php } ?>
+                </select>
+                <div class="help-block" id="profile-description"></div>
+              </div>
+            <?php } ?>
             <div class="form-group">
               <label class="control-label" for="input-quantity"><?php echo $entry_qty; ?></label>
               <input type="text" name="quantity" value="<?php echo $minimum; ?>" size="2" id="input-quantity" class="form-control" />
@@ -389,6 +405,26 @@
     <?php echo $column_right; ?></div>
 </div>
 <script type="text/javascript"><!--
+$('select[name="profile_id"], input[name="quantity"]').change(function(){
+  $.ajax({
+    url: 'index.php?route=product/product/getRecurringDescription',
+    type: 'post',
+    data: $('input[name="product_id"], input[name="quantity"], select[name="profile_id"]'),
+    dataType: 'json',
+    beforeSend: function() {
+      $('#profile-description').html('');
+    },
+    success: function(json) {
+      $('.alert, .text-danger').remove();
+
+      if (json['success']) {
+        $('#profile-description').html(json['success']);
+      }
+    }
+  });
+});
+//--></script>
+<script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
     $.ajax({
         url: 'index.php?route=checkout/cart/add',
@@ -410,6 +446,10 @@ $('#button-cart').on('click', function() {
                         $('#input-option' + i).after('<div class="text-danger">' + json['error']['option'][i] + '</div>');
                     }
                 }
+
+              if (json['error']['profile']) {
+                $('select[name="profile_id"]').after('<span class="text-danger">' + json['error']['profile'] + '</span>');
+              }
             } 
             
             if (json['success']) {

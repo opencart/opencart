@@ -353,11 +353,7 @@ class ControllerDesignLayout extends Controller {
 			$this->error['name'] = $this->language->get('error_name');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	protected function validateDelete() {
@@ -400,10 +396,6 @@ class ControllerDesignLayout extends Controller {
 			}
 		}
 	
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

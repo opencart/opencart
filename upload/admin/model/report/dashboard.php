@@ -1,7 +1,17 @@
 <?php
 class ModelReportDashboard extends Model {
-	public function getTotalSales() {
-      	$query = $this->db->query("SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'");
+	public function getTotalSales($data = array()) {
+		$sql = "SELECT SUM(total) AS total FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0'";
+		
+		if (!empty($data['filter_date_start'])) {
+			$sql .= " AND DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+		}
+		
+		if (!empty($data['filter_date_end'])) {
+			$sql .= " AND DATE(date_modified) = DATE('" . $this->db->escape($data['filter_date_modified']) . "')";
+		}		
+		
+      	$query = $this->db->query($sql);
 
 		return $query->row['total'];
 	}
@@ -243,112 +253,9 @@ class ModelReportDashboard extends Model {
 
 		return $customer_data;
 	}
-	
-	// Marketing
-	public function getTotalMarketingsByDay() {
-		$marketing_data = array();
 		
-		for ($i = 0; $i < 24; $i++) {
-			$marketing_data[$i] = array(
-				'hour'  => $i,
-				'click' => 0,
-				'order' => 0
-			);
-		}		
-		 
-		$query = $this->db->query("SELECT SUM(m.clicks) AS click, (SELECT COUNT(o.order_id) FROM `" . DB_PREFIX . "order` o WHERE o.order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND o.marketing_id = m.marketing_id AND DATE(o.date_added) = DATE(m.date_added) AND HOUR(o.date_added) = HOUR(m.date_added)) AS `order`, HOUR(m.date_added) AS hour FROM `" . DB_PREFIX . "marketing` m WHERE DATE(m.date_added) = DATE(NOW()) GROUP BY HOUR(m.date_added) ORDER BY m.date_added ASC");
-
-		foreach ($query->rows as $result) {
-			$marketing_data[$result['hour']] = array(
-				'hour'  => $result['hour'],
-				'click' => $result['click'],
-				'order' => $result['order']
-			);
-		}
-		
-		return $marketing_data;			
-	}
-		
-	public function getTotalMarketingsByWeek() {
-		$marketing_data = array();
-		
-		$date_start = strtotime('-' . date('w') . ' days'); 
-		
-		for ($i = 0; $i < 7; $i++) {
-			$date = date('Y-m-d', $date_start + ($i * 86400));
-			
-			$marketing_data[date('w', strtotime($date))] = array(
-				'day'   => date('D', strtotime($date)),
-				'click' => 0,
-				'order' => 0
-			);
-		}	
-
-		$query = $this->db->query("SELECT SUM(m.clicks) AS click, (SELECT COUNT(o.order_id) FROM `" . DB_PREFIX . "order` o WHERE o.order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND o.marketing_id = m.marketing_id AND DATE(o.date_added) = DATE(m.date_added)) AS `order`, m.date_added FROM `" . DB_PREFIX . "marketing` m WHERE DATE(m.date_added) >= DATE('" . $this->db->escape(date('Y-m-d', $date_start)) . "') GROUP BY DAYNAME(m.date_added)");
-
-		foreach ($query->rows as $result) {
-			$marketing_data[date('w', strtotime($result['date_added']))] = array(
-				'day'   => date('D', strtotime($result['date_added'])),
-				'click' => $result['click'],
-				'order' => $result['order']
-			);		
-		}
-
-		return $marketing_data;
-	}	
-	
-	public function getTotalMarketingsByMonth() {
-		$marketing_data = array();
-		
-		for ($i = 1; $i <= date('t'); $i++) {
-			$date = date('Y') . '-' . date('m') . '-' . $i;
-			
-			$marketing_data[date('j', strtotime($date))] = array(
-				'day'   => date('d', strtotime($date)),
-				'click' => 0,
-				'order' => 0
-			);
-		}		
-		
-		$query = $this->db->query("SELECT SUM(m.clicks) AS click, (SELECT COUNT(o.order_id) FROM `" . DB_PREFIX . "order` o WHERE o.order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND o.marketing_id = m.marketing_id AND DATE(o.date_added) = DATE(m.date_added)) AS `order`, m.date_added FROM `" . DB_PREFIX . "marketing` m WHERE DATE(m.date_added) >= '" . $this->db->escape(date('Y') . '-' . date('m') . '-1') . "' GROUP BY DATE(m.date_added)");
-			
-		foreach ($query->rows as $result) {
-			$marketing_data[date('j', strtotime($result['date_added']))] = array(
-				'day'   => date('d', strtotime($result['date_added'])),
-				'click' => $result['click'],
-				'order' => $result['order']
-			);		
-		}
-		
-		return $marketing_data;
-	}
-	
-	public function getTotalMarketingsByYear() {
-		$marketing_data = array();
-		
-		for ($i = 1; $i <= 12; $i++) {
-			$marketing_data[$i] = array(
-				'month' => date('M', mktime(0, 0, 0, $i)),
-				'click' => 0,
-				'order' => 0
-			);
-		}		
-
-		$query = $this->db->query("SELECT SUM(m.clicks) AS click, (SELECT COUNT(o.order_id) FROM `" . DB_PREFIX . "order` o WHERE o.order_status_id = '" . (int)$this->config->get('config_complete_status_id') . "' AND o.marketing_id = m.marketing_id AND MONTH(o.date_added) = MONTH(m.date_added) AND YEAR(o.date_added) = YEAR(m.date_added)) AS `order`, m.date_added FROM `" . DB_PREFIX . "marketing` m WHERE YEAR(date_added) = YEAR(NOW()) GROUP BY MONTH(date_added)");
-			
-		foreach ($query->rows as $result) {
-			$marketing_data[date('n', strtotime($result['date_added']))] = array(
-				'month' => date('M', strtotime($result['date_added'])),
-				'click' => $result['click'],
-				'order' => $result['order']
-			);		
-		}
-
-		return $marketing_data;
-	}
-	
 	public function getActivities() { 
-		$query = $this->db->query("SELECT a.key, a.data, a.date_added FROM ((SELECT CONCAT('customer_', ca.key) AS `key`, ca.data, ca.date_added FROM `" . DB_PREFIX . "customer_activity` ca) UNION (SELECT CONCAT('affiliate_', aa.key) AS `key`, aa.data, aa.date_added FROM `" . DB_PREFIX . "affiliate_activity` aa)) a ORDER BY a.date_added DESC LIMIT 0,10");
+		$query = $this->db->query("SELECT a.key, a.data, a.date_added FROM ((SELECT CONCAT('customer_', ca.key) AS `key`, ca.data, ca.date_added FROM `" . DB_PREFIX . "customer_activity` ca) UNION (SELECT CONCAT('affiliate_', aa.key) AS `key`, aa.data, aa.date_added FROM `" . DB_PREFIX . "affiliate_activity` aa)) a ORDER BY a.date_added DESC LIMIT 0,5");
 			
 		return $query->rows;
 	}

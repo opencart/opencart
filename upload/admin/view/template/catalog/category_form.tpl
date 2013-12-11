@@ -15,7 +15,7 @@
       <div class="pull-right">
         <button type="submit" form="form-category" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-category" class="form-horizontal">
@@ -87,7 +87,7 @@
               <div class="col-sm-10">
                 <input type="text" name="filter" value="" placeholder="<?php echo $entry_filter; ?>" id="input-filter" class="form-control" />
                 <span class="help-block"><?php echo $help_filter; ?></span>
-                <div id="category-filter" class="well well-sm">
+                <div id="category-filter" class="well well-sm" style="height: 150px; overflow: auto;">
                   <?php foreach ($category_filters as $category_filter) { ?>
                   <div id="category-filter<?php echo $category_filter['filter_id']; ?>"><i class="fa fa-minus-circle"></i> <?php echo $category_filter['name']; ?>
                     <input type="hidden" name="category_filter[]" value="<?php echo $category_filter['filter_id']; ?>" />
@@ -158,7 +158,7 @@
               <label class="col-sm-2 control-label" for="input-column"><?php echo $entry_column; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="column" value="<?php echo $column; ?>" placeholder="<?php echo $entry_column; ?>" id="input-column" class="form-control" />
-                <span class="help-block"><?php echo $help_column; ?></span> </div>
+                <span class="help-block"><?php echo $help_column; ?></span></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>

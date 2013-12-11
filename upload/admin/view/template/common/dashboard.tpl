@@ -1,120 +1,170 @@
 <?php echo $header; ?>
 <div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
   <?php if ($error_install) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_install; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } else { ?>
-  <?php } ?> 
+  <?php } ?>
   <div class="alert alert-info"><i class="fa fa-thumbs-o-up"></i> <?php echo $text_welcome; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-eye"></i> <?php echo $heading_title; ?></h1>
-    </div>
-    <div class="panel-body">
-      <div class="row">
-        <div class="col-sm-3">
-          <div class="well well-sm text-center">
-            <h2><?php echo $sale_total; ?></h2>
-            <p class="lead text-muted"><?php echo $text_sale; ?></p>
+  <div class="row">
+    <div class="col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-shopping-cart fa-4x"></i></span></div>
+            <div class="col-xs-8"><span class="text-success"><?php echo $order_total; ?></span>
+              <?php if ($order_percentage > 0) { ?>
+              <span class="label label-success">+<?php echo $order_percentage; ?>%</span><br />
+              <?php } else { ?>
+              <span class="label label-danger"><?php echo $order_percentage; ?>%</span><br />
+              <?php } ?>
+              <?php echo $text_new_order; ?></div>
           </div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well well-sm text-center">
-            <h2><?php echo $order_total; ?></h2>
-            <p class="lead text-muted"><?php echo $text_order; ?></p></div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well well-sm text-center">
-            <h2><?php echo $customer_total; ?></h2>
-            <p class="lead text-muted"><?php echo $text_customer; ?></p></div>
-        </div>
-        <div class="col-sm-3">
-          <div class="well well-sm text-center">
-            <h2><?php echo $marketing_total; ?></h2>
-            <p class="lead text-muted"><?php echo $text_marketing; ?></p></div>
         </div>
       </div>
-      <br />
-      <ul class="nav nav-tabs">
-        <li class="active"><a href="#tab-sale" data-toggle="tab"><?php echo $tab_sale; ?></a></li>
-        <li><a href="#tab-marketing" data-toggle="tab"><?php echo $tab_marketing; ?></a></li>
-        <li><a href="#tab-online" data-toggle="tab"><?php echo $tab_online; ?></a></li>
-        <li><a href="#tab-activity" data-toggle="tab"><?php echo $tab_activity; ?></a></li>
-        <li></li>
-      </ul>
-      <div class="tab-content">
-        <div class="tab-pane active" id="tab-sale">
-          <div class="text-right">
+    </div>
+    <div class="col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-user fa-4x"></i></span></div>
+            <div class="col-xs-8">
+              <h3 class="text-success"><?php echo $customer_total; ?></h3>
+              <?php if ($customer_percentage > 0) { ?>
+              <span class="label label-success">+<?php echo $customer_percentage; ?>%</span><br />
+              <?php } else { ?>
+              <span class="label label-danger"><?php echo $customer_percentage; ?>%</span><br />
+              <?php } ?>
+              <?php echo $text_new_customer; ?></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-credit-card fa-4x"></i></span></div>
+            <div class="col-xs-8">
+              <h3 class="text-success"><?php echo $sale_total; ?></h3>
+              <?php echo $text_total_sale; ?></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-3">
+      <div class="panel panel-default">
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-bar-chart-o fa-4x"></i></span></div>
+            <div class="col-xs-8">
+              <h3 class="text-success"><?php echo $marketing_total; ?></h3>
+              <?php echo $text_marketing; ?></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <div class="pull-right">
             <div class="btn-group" data-toggle="buttons">
               <label class="btn btn-default active">
-                <input type="radio" name="sale" value="day" />
+                <input type="radio" name="range" value="day" />
                 <?php echo $text_day; ?></label>
               <label class="btn btn-default">
-                <input type="radio" name="sale" value="week" />
+                <input type="radio" name="range" value="week" />
                 <?php echo $text_week; ?></label>
               <label class="btn btn-default">
-                <input type="radio" name="sale" value="month" />
+                <input type="radio" name="range" value="month" />
                 <?php echo $text_month; ?></label>
               <label class="btn btn-default">
-                <input type="radio" name="sale" value="year" />
+                <input type="radio" name="range" value="year" />
                 <?php echo $text_year; ?></label>
             </div>
           </div>
-          <div id="chart-sale" class="chart" style="width: 100%; height: 250px;"></div>
+          <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_analytics; ?></h1>
         </div>
-        <div class="tab-pane" id="tab-marketing">
-          <div class="text-right">
-            <div class="btn-group" data-toggle="buttons">
-              <label class="btn btn-default active">
-                <input type="radio" name="marketing" value="day" />
-                <?php echo $text_day; ?></label>
-              <label class="btn btn-default">
-                <input type="radio" name="marketing" value="week" />
-                <?php echo $text_week; ?></label>
-              <label class="btn btn-default">
-                <input type="radio" name="marketing" value="month" />
-                <?php echo $text_month; ?></label>
-              <label class="btn btn-default">
-                <input type="radio" name="marketing" value="year" />
-                <?php echo $text_year; ?></label>
-            </div>
-          </div>
-          <div id="chart-marketing" style="width: 100%; height: 250px;"></div>
+        <div class="panel-body">
+          <div id="chart-sale" class="chart" style="width: 100%; height: 175px;"></div>
         </div>
-        <div class="tab-pane" id="tab-online">
-          <div class="text-right">
-            <button type="button" id="button-refresh" class="btn btn-default"><i class="fa fa-refresh"></i> <?php echo $button_refresh; ?></button>
-          </div>
-          <div id="chart-online" class="chart" style="width: 100%; height: 250px;"></div>
+      </div>
+    </div>
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_online; ?></h1>
         </div>
-        <div class="tab-pane" id="tab-activity">
-          <div class="table-responsive">
-            <table class="table table-striped table-bordered">
-              <thead>
-                <tr>
-                  <td class="text-left"><?php echo $column_comment; ?></td>
-                  <td class="text-left"><?php echo $column_date_added; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php if ($activities) { ?>
-                <?php foreach ($activities as $activity) { ?>
-                <tr>
-                  <td class="text-left"><?php echo $activity['comment']; ?></td>
-                  <td class="text-left"><?php echo $activity['date_added']; ?></td>
-                </tr>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td colspan="2" class="text-center"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
-          </div>
+        <div class="panel-body">
+          <div id="chart-online" class="chart" style="width: 100%; height: 175px;"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title"><i class="fa fa-calendar-o"></i> <?php echo $text_activity; ?></h1>
+        </div>
+        <ul class="list-group">
+          <?php if ($activities) { ?>
+          <?php foreach ($activities as $activity) { ?>
+          <li class="list-group-item"> <?php echo $activity['comment']; ?><br />
+            <small class="text-muted"><i class="fa fa-clock-o"></i> <?php echo $activity['date_added']; ?></small></li>
+          <?php } ?>
+          <?php } else { ?>
+          <li class="list-group-item text-center"><?php echo $text_no_results; ?></li>
+          <?php } ?>
+        </ul>
+      </div>
+    </div>
+    <div class="col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h1 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_last_order; ?></h1>
+        </div>
+        <div class="panel-body">
+          <table class="table table-hover">
+            <thead>
+              <tr>
+                <td class="text-right"><?php echo $column_order_id; ?></td>
+                <td><?php echo $column_customer; ?></td>
+                <td><?php echo $column_status; ?></td>
+                <td><?php echo $column_date_added; ?></td>
+                <td class="text-right"><?php echo $column_total; ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if ($orders) { ?>
+              <?php foreach ($orders as $order) { ?>
+              <tr>
+                <td class="text-right"><?php echo $order['order_id']; ?></td>
+                <td><?php echo $order['customer']; ?></td>
+                <td><?php echo $order['status']; ?></td>
+                <td><?php echo $order['date_added']; ?></td>
+                <td class="text-right"><?php echo $order['total']; ?></td>
+                <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
         </div>
       </div>
     </div>
@@ -123,7 +173,8 @@
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
 <script type="text/javascript"><!--
-$('input[name=\'sale\']').on('change', function() {
+$('input[name=\'range\']').on('change', function() {
+	// Sales
 	$.ajax({
 		type: 'get',
 		url: 'index.php?route=common/dashboard/sale&token=<?php echo $token; ?>&range=' + this.value,
@@ -170,63 +221,16 @@ $('input[name=\'sale\']').on('change', function() {
 					$('#chart-sale').css('cursor', 'auto');
 				}
 			});
-		}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
 });
 
-$('.active input[name=\'sale\']').trigger('change');
+$('.active input[name=\'range\']').trigger('change');
 
-$('input[name=\'marketing\']').on('change', function() {
-	$.ajax({
-		type: 'get',
-		url: 'index.php?route=common/dashboard/marketing&token=<?php echo $token; ?>&range=' + this.value,
-		dataType: 'json',
-		success: function(json) {
-			var option = {	
-				shadowSize: 0,
-				bars: { 
-					show: true,
-					fill: true,
-					lineWidth: 1,
-					barColor: '#000000'
-				},
-				grid: {
-					backgroundColor: '#FFFFFF',
-					hoverable: true
-				},
-				points: {
-					show: false		
-				},
-				xaxis: {
-            		ticks: json['xaxis']
-				}
-			}		
-			
-			$.plot('#chart-marketing', [json['click'], json['order']], option);
-					
-			$('#chart-marketing').bind('plothover', function(event, pos, item) {
-				$('.tooltip').remove();
-			  
-				if (item) {
-					$('<div id="tooltip" class="tooltip top in"><div class="tooltip-arrow"></div><div class="tooltip-inner">' + item.datapoint[1].toFixed(2) + '</div></div>').prependTo('body');
-					
-					$('#tooltip').css({
-						position: 'absolute',
-						left: item.pageX - ($('#tooltip').outerWidth() / 2),
-						top: item.pageY - $('#tooltip').outerHeight(),
-						pointer: 'cusror'
-					}).fadeIn('slow');	
-					
-					$('#chart-marketing').css('cursor', 'pointer');		
-				} else {
-					$('#chart-marketing').css('cursor', 'auto');
-				}
-			});
-		}
-	});
-});
-
-$('#button-refresh').on('click', function() {
+function online() {
 	$.ajax({
 		type: 'get',
 		url: 'index.php?route=common/dashboard/online&token=<?php echo $token; ?>',
@@ -273,22 +277,15 @@ $('#button-refresh').on('click', function() {
 					$('#chart-online').css('cursor', 'auto');
 				}
 			});
-		}
+		},
+        error: function(xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
 	});
-});
-
-$('a[data-toggle=\'tab\']').on('shown.bs.tab', function(e) {
-	if ($(this).attr('href') == '#tab-sale') {
-		$('.active input[name=\'sale\']').trigger('change');
-	}
-		
-	if ($(this).attr('href') == '#tab-marketing') {
-		$('.active input[name=\'marketing\']').trigger('change');
-	}
 	
-	if ($(this).attr('href') == '#tab-online') {
-		$('#button-refresh').trigger('click');
-	}	
-});
+	setTimeout(online, 5000);
+}
+
+online();
 //--></script> 
 <?php echo $footer; ?>

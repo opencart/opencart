@@ -154,10 +154,6 @@ class ControllerPaymentPerpetualPayments extends Controller {
 			$this->error['auth_pass'] = $this->language->get('error_auth_pass');
 		}
 		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}	
+		return !$this->error;
 	}
 }

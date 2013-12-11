@@ -542,10 +542,6 @@ class ControllerShippingUsps extends Controller {
 			$this->error['dimension'] = $this->language->get('error_length');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

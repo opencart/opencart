@@ -8,14 +8,7 @@ class ControllerInformationContact extends Controller {
     	$this->document->setTitle($this->language->get('heading_title'));  
 	 
     	if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->hostname = $this->config->get('config_smtp_host');
-			$mail->username = $this->config->get('config_smtp_username');
-			$mail->password = $this->config->get('config_smtp_password');
-			$mail->port = $this->config->get('config_smtp_port');
-			$mail->timeout = $this->config->get('config_smtp_timeout');				
+			$mail = new Mail($this->config->get('config_mail'));		
 			$mail->setTo($this->config->get('config_email'));
 	  		$mail->setFrom($this->request->post['email']);
 	  		$mail->setSender($this->request->post['name']);
@@ -222,11 +215,7 @@ class ControllerInformationContact extends Controller {
       		$this->error['captcha'] = $this->language->get('error_captcha');
     	}
 		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}  	  
+		return !$this->error;  	  
   	}
 
 	public function captcha() {

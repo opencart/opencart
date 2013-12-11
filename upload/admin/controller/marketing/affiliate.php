@@ -977,11 +977,7 @@ class ControllerMarketingAffiliate extends Controller {
       		$this->error['code'] = $this->language->get('error_code');
     	}
 					
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}    
 
   	protected function validateDelete() {
@@ -989,11 +985,7 @@ class ControllerMarketingAffiliate extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}	
 	  	 
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}  
+		return !$this->error;  
   	} 
 	
   	protected function validateApprove() {
@@ -1001,11 +993,7 @@ class ControllerMarketingAffiliate extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}	
 	  	 
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}  
+		return !$this->error;  
   	} 
 	
 	public function country() {

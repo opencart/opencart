@@ -25,8 +25,6 @@ class ModelSaleOrder extends Model {
 		
 		$this->load->model('localisation/country');
 		
-		$this->load->model('localisation/zone');
-		
 		$country_info = $this->model_localisation_country->getCountry($data['shipping_country_id']);
 		
 		if ($country_info) {
@@ -36,6 +34,8 @@ class ModelSaleOrder extends Model {
 			$shipping_country = '';	
 			$shipping_address_format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 		}	
+		
+		$this->load->model('localisation/zone');
 		
 		$zone_info = $this->model_localisation_zone->getZone($data['shipping_zone_id']);
 		
@@ -107,6 +107,11 @@ class ModelSaleOrder extends Model {
 			}
 		}
 
+		// Coupons, vouchers, reward points
+		$this->load->model('marketing/coupon');
+		$this->load->model('sale/voucher');
+		$this->load->model('sale/customer');
+		
 		// Get the total
 		$total = 0;
 		
@@ -120,11 +125,19 @@ class ModelSaleOrder extends Model {
 				
 				if ($start && $end) {
 					if ($order_total['code'] == 'coupon') {
-						$data['coupon'] = substr($order_total['title'], $start, $end - $start);
+						$coupon_info = $this->model_marketing_coupon->getCouponByCode(substr($order_total['title'], $start, $end - $start));
+						
+						if ($coupon_info) {
+							$this->model_marketing_coupon->redeem($coupon_info['coupon_id'], $order_id, $data['customer_id'], $order_total['value']);
+						}
 					}
 								
-					if ($order_total['code'] == 'voucher' && $start && $end) {
-						$data['voucher'] = substr($order_total['title'], $start, $end - $start);
+					if ($order_total['code'] == 'voucher') {
+						$voucher_info = $this->model_sale_voucher->getVoucherByCode(substr($order_total['title'], $start, $end - $start));
+						
+						if ($voucher_info) {
+							$this->model_marketing_voucher->redeem($voucher_info['voucher_id'], $order_id, $data['customer_id'], $order_total['value']);
+						}
 					}		
 					
 					if ($order_total['code'] == 'reward') {
@@ -158,8 +171,6 @@ class ModelSaleOrder extends Model {
 	public function editOrder($order_id, $data) {
 		$this->load->model('localisation/country');
 		
-		$this->load->model('localisation/zone');
-		
 		$country_info = $this->model_localisation_country->getCountry($data['shipping_country_id']);
 		
 		if ($country_info) {
@@ -169,6 +180,8 @@ class ModelSaleOrder extends Model {
 			$shipping_country = '';	
 			$shipping_address_format = '{firstname} {lastname}' . "\n" . '{company}' . "\n" . '{address_1}' . "\n" . '{address_2}' . "\n" . '{city} {postcode}' . "\n" . '{zone}' . "\n" . '{country}';
 		}	
+		
+		$this->load->model('localisation/zone');
 		
 		$zone_info = $this->model_localisation_zone->getZone($data['shipping_zone_id']);
 		
@@ -249,6 +262,21 @@ class ModelSaleOrder extends Model {
 			}
 		}
 		
+		// Remove used coupons
+		$this->load->model('marketing/coupon');
+		
+		$this->model_marketing_coupon->deleteHistory($order_id);
+		
+		// Remove used vouchers
+		$this->load->model('sale/voucher');
+		
+		$this->model_sale_voucher->deleteHistory($order_id);
+		
+		// Remove used reward points
+		$this->load->model('sale/customer');
+		
+		$this->db->query("DELETE FROM " . DB_PREFIX . "cutomer_reward WHERE order_id = '" . (int)$order_id  . "' and points < 0");
+
 		// Get the total
 		$total = 0;
 				
@@ -257,8 +285,37 @@ class ModelSaleOrder extends Model {
 		if (isset($data['order_total'])) {		
       		foreach ($data['order_total'] as $order_total) {	
       			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_total_id = '" . (int)$order_total['order_total_id'] . "', order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($order_total['code']) . "', title = '" . $this->db->escape($order_total['title']) . "', `value` = '" . (float)$order_total['value'] . "', sort_order = '" . (int)$order_total['sort_order'] . "'");
+			
+				// If coupon, voucher or reward points
+				$start = strpos($order_total['title'], '(') + 1;
+				$end = strrpos($order_total['title'], ')');			
+				
+				if ($start && $end) {
+					if ($order_total['code'] == 'coupon') {
+						$coupon_info = $this->model_marketing_coupon->getCouponByCode(substr($order_total['title'], $start, $end - $start));
+						
+						if ($coupon_info) {
+							$this->model_marketing_coupon->redeem($coupon_info['coupon_id'], $order_id, $data['customer_id'], $order_total['value']);
+						}
+					}
+								
+					if ($order_total['code'] == 'voucher') {
+						$voucher_info = $this->model_sale_voucher->getVoucherByCode(substr($order_total['title'], $start, $end - $start));
+						
+						if ($voucher_info) {
+							$this->model_marketing_voucher->redeem($voucher_info['voucher_id'], $order_id, $data['customer_id'], $order_total['value']);
+						}
+					}		
+					
+					if ($order_total['code'] == 'reward') {
+						$this->load->model('marketing/coupon');
+						
+						//$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET order_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', points = '" . (int)-substr($order_total['title'], $start, $end - $start) . "', date_added = NOW()");
+					}
+				}			
 			}
 			
+			// Calculate the total
 			$total += $order_total['value'];
 		}
 		
@@ -297,6 +354,8 @@ class ModelSaleOrder extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "'");
 		$this->db->query("DELETE FROM " . DB_PREFIX . "affiliate_transaction WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "coupon_history WHERE order_id = '" . (int)$order_id  . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_history WHERE order_id = '" . (int)$order_id  . "'");		
 	}
 
 	public function restock($order_id) {
@@ -696,14 +755,7 @@ class ModelSaleOrder extends Model {
 
 			$message .= $language->get('text_footer');
 
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->hostname = $this->config->get('config_smtp_host');
-			$mail->username = $this->config->get('config_smtp_username');
-			$mail->password = $this->config->get('config_smtp_password');
-			$mail->port = $this->config->get('config_smtp_port');
-			$mail->timeout = $this->config->get('config_smtp_timeout');
+			$mail = new Mail($this->config->get('config_mail'));
 			$mail->setTo($order_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($order_info['store_name']);

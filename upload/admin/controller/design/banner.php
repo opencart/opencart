@@ -367,7 +367,7 @@ class ControllerDesignBanner extends Controller {
 		$data['banner_images'] = array();
 		
 		foreach ($banner_images as $banner_image) {
-			if ($banner_image['image'] && file_exists(DIR_IMAGE . $banner_image['image'])) {
+			if (is_file(DIR_IMAGE . $banner_image['image'])) {
 				$image = $banner_image['image'];
 			} else {
 				$image = '';
@@ -407,11 +407,7 @@ class ControllerDesignBanner extends Controller {
 			}	
 		}
 		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	protected function validateDelete() {
@@ -419,10 +415,6 @@ class ControllerDesignBanner extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 	
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

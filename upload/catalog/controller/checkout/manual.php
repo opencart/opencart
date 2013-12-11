@@ -387,6 +387,10 @@ class ControllerCheckoutManual extends Controller {
 			}
 			
 			// Coupon
+			$query = $this->db->query("SELECT * FROM coupon_history WHERE coupon_id = '" . . "'");
+			
+			
+			
 			if (!empty($this->request->post['coupon'])) {
 				$this->load->model('checkout/coupon');
 			

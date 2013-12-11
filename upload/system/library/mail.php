@@ -8,11 +8,11 @@ class Mail {
 	protected $html;
 	protected $attachments = array();
 	public $protocol = 'mail';
-	public $hostname;
-	public $username;
-	public $password;
-	public $port = 25;
-	public $timeout = 5;
+	public $smtp_hostname;
+	public $smtp_username;
+	public $smtp_password;
+	public $smtp_port = 25;
+	public $smtp_timeout = 5;
 	public $newline = "\n";
 	public $verp = false;
 	public $parameter = '';

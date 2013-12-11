@@ -171,14 +171,7 @@ class ModelSaleCustomer extends Model {
 			$message .= $this->language->get('text_approve_thanks') . "\n";
 			$message .= $store_name;
 	
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->hostname = $this->config->get('config_smtp_host');
-			$mail->username = $this->config->get('config_smtp_username');
-			$mail->password = $this->config->get('config_smtp_password');
-			$mail->port = $this->config->get('config_smtp_port');
-			$mail->timeout = $this->config->get('config_smtp_timeout');							
+			$mail = new Mail($this->config->get('config_mail'));					
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
@@ -362,31 +355,20 @@ class ModelSaleCustomer extends Model {
 
 			$this->load->language('mail/customer');
 			
-			if ($customer_info['store_id']) {
-				$this->load->model('setting/store');
-		
-				$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
-				
-				if ($store_info) {
-					$store_name = $store_info['name'];
-				} else {
-					$store_name = $this->config->get('config_name');
-				}	
+			$this->load->model('setting/store');
+	
+			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
+			
+			if ($store_info) {
+				$store_name = $store_info['name'];
 			} else {
 				$store_name = $this->config->get('config_name');
-			}
+			}	
 						
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
 			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id)));
 								
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->hostname = $this->config->get('config_smtp_host');
-			$mail->username = $this->config->get('config_smtp_username');
-			$mail->password = $this->config->get('config_smtp_password');
-			$mail->port = $this->config->get('config_smtp_port');
-			$mail->timeout = $this->config->get('config_smtp_timeout');
+			$mail = new Mail($this->config->get('config_mail'));
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
@@ -449,22 +431,17 @@ class ModelSaleCustomer extends Model {
 					$store_name = $order_info['store_name'];
 				} else {
 					$store_name = $this->config->get('config_name');
-				}	
+				}
 			} else {
+				
+				
 				$store_name = $this->config->get('config_name');
 			}		
 				
 			$message  = sprintf($this->language->get('text_reward_received'), $points) . "\n\n";
 			$message .= sprintf($this->language->get('text_reward_total'), $this->getRewardTotal($customer_id));
 				
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->hostname = $this->config->get('config_smtp_host');
-			$mail->username = $this->config->get('config_smtp_username');
-			$mail->password = $this->config->get('config_smtp_password');
-			$mail->port = $this->config->get('config_smtp_port');
-			$mail->timeout = $this->config->get('config_smtp_timeout');
+			$mail = new Mail($this->config->get('config_mail'));
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
@@ -475,7 +452,7 @@ class ModelSaleCustomer extends Model {
 	}
 
 	public function deleteReward($order_id) {
-		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "'");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "' AND points > 0");
 	}
 	
 	public function getRewards($customer_id, $start = 0, $limit = 10) {

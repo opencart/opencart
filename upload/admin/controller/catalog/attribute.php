@@ -369,11 +369,7 @@ class ControllerCatalogAttribute extends Controller {
       		}
     	}
 		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}
 
   	protected function validateDelete() {
@@ -391,11 +387,7 @@ class ControllerCatalogAttribute extends Controller {
 			}
 	  	}
 		
-		if (!$this->error) { 
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}
 	
 	public function autocomplete() {

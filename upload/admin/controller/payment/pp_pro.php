@@ -183,11 +183,7 @@ class ControllerPaymentPPPro extends Controller {
 			$this->error['signature'] = $this->language->get('error_signature');
 		}
 		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}	
+		return !$this->error;	
 	}
 }
 ?>

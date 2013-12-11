@@ -15,7 +15,7 @@
       <div class="pull-right">
         <button type="submit" form="form-user-group" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-user-group" class="form-horizontal">
@@ -31,7 +31,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_access; ?></label>
           <div class="col-sm-10">
-            <div class="well well-sm">
+            <div class="well well-sm" style="height: 150px; overflow: auto;">
               <?php foreach ($permissions as $permission) { ?>
               <div class="checkbox">
                 <label>
@@ -51,7 +51,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label"><?php echo $entry_modify; ?></label>
           <div class="col-sm-10">
-            <div class="well well-sm">
+            <div class="well well-sm" style="height: 150px; overflow: auto;">
               <?php foreach ($permissions as $permission) { ?>
               <div class="checkbox">
                 <label>

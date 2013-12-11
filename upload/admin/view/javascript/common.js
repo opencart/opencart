@@ -36,7 +36,7 @@ $(document).ready(function() {
 			url += '/' + part[1];
 		}
 		
-		$('#menu a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
+		$('#header a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 	
 	// tooltips on hover
@@ -44,6 +44,8 @@ $(document).ready(function() {
 });
 
 // Image Manager
+
+
 $(document).delegate('.img-edit', 'click', function(e) {
 	e.preventDefault();
 	

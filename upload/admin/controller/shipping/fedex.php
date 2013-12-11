@@ -385,10 +385,6 @@ class ControllerShippingFedex extends Controller {
 			$this->error['postcode'] = $this->language->get('error_postcode');
 		}
 				
-		if (!$this->error) {
-			return TRUE;
-		} else {
-			return FALSE;
-		}	
+		return !$this->error;
 	}
 }

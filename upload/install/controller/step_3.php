@@ -241,10 +241,10 @@ class ControllerStep3 extends Controller {
 		}
 
 		if ($this->request->post['db_driver'] == 'mysql') {
-			if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
+			if (!$connection = @mysql_connect($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'])) {
 				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
 			} else {
-				if (!@mysql_select_db($this->request->post['db_name'], $connection)) {
+				if (!@mysql_select_db($this->request->post['db_database'], $connection)) {
 					$this->error['warning'] = 'Error: Database does not exist!';
 				}
 
@@ -282,10 +282,6 @@ class ControllerStep3 extends Controller {
 			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'admin/config.php!';
 		}	
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }

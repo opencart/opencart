@@ -542,10 +542,7 @@ class ControllerSaleOrder extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_product_add'] = $this->language->get('button_product_add');
-		$data['button_coupon_remove'] = $this->language->get('button_coupon_remove');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
-		$data['button_voucher_remove'] = $this->language->get('button_voucher_remove');
-		$data['button_reward_remove'] = $this->language->get('button_reward_remove');
 		$data['button_total'] = $this->language->get('button_total');
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
@@ -1146,7 +1143,7 @@ class ControllerSaleOrder extends Controller {
 					$data['coupon'] = substr($order_total['title'], $start, $end - $start);
 				}
 							
-				if ($order_total['code'] == 'voucher' && $start && $end) {
+				if ($order_total['code'] == 'voucher') {
 					$data['voucher'] = substr($order_total['title'], $start, $end - $start);
 				}		
 				
@@ -1155,7 +1152,7 @@ class ControllerSaleOrder extends Controller {
 				}
 			}
 		}
-		
+				
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 				
@@ -1278,11 +1275,7 @@ class ControllerSaleOrder extends Controller {
 			$this->error['warning'] = $this->language->get('error_warning');
 		}
 		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+	  	return !$this->error;
   	}    
 	
    	protected function validateDelete() {
@@ -1290,11 +1283,7 @@ class ControllerSaleOrder extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
     	}
 
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}
 	
 	public function country() {
@@ -1984,7 +1973,7 @@ class ControllerSaleOrder extends Controller {
 
 		$this->response->setOutput(json_encode($json));
   	}
-				
+					
 	public function addReward() {
 		$this->load->language('sale/order');
 		
@@ -2218,7 +2207,7 @@ class ControllerSaleOrder extends Controller {
 			$mask = basename(utf8_substr($option_info['value'], 0, utf8_strrpos($option_info['value'], '.')));
 
 			if (!headers_sent()) {
-				if (file_exists($file)) {
+				if (is_file($file)) {
 					header('Content-Type: application/octet-stream');
 					header('Content-Description: File Transfer');
 					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');

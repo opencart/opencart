@@ -343,7 +343,9 @@ class ControllerSaleVoucherTheme extends Controller {
 
 		$this->load->model('tool/image');
 
-		if (isset($voucher_theme_info) && $voucher_theme_info['image'] && file_exists(DIR_IMAGE . $voucher_theme_info['image'])) {
+		if (isset($this->request->post['image']) && is_file(DIR_IMAGE . $this->request->post['image'])) {
+			$data['thumb'] = $this->model_tool_image->resize($this->request->post['image'], 100, 100);
+		} elseif (!empty($voucher_theme_info) && is_file(DIR_IMAGE . $voucher_theme_info['image'])) {
 			$data['thumb'] = $this->model_tool_image->resize($voucher_theme_info['image'], 100, 100);
 		} else {
 			$data['thumb'] = '';
@@ -370,11 +372,7 @@ class ControllerSaleVoucherTheme extends Controller {
 			$this->error['image'] = $this->language->get('error_image');
 		}
 		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}
 
   	protected function validateDelete() {
@@ -392,10 +390,6 @@ class ControllerSaleVoucherTheme extends Controller {
 			}  
 	  	}
 		
-		if (!$this->error) { 
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}	  
 }

@@ -21,7 +21,7 @@ class ControllerPaymentPPExpress extends Controller {
 	public function express() {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
 			$this->log->write('No product redirect');
-			$this->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
 		if($this->customer->isLogged()) {
@@ -43,7 +43,7 @@ class ControllerPaymentPPExpress extends Controller {
 				 * Send them to the normal checkout flow.
 				 */
 				unset($this->session->data['guest']);
-				$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+				$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 			}
 		}
 
@@ -102,7 +102,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->log->write(serialize($result));
 			}
 
-			$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+			$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 		}
 
 		$this->session->data['paypal']['token'] = $result['TOKEN'];
@@ -340,7 +340,7 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 		}
 
-		$this->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
+		$this->response->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
 	}
 
 	public function expressConfirm() {
@@ -355,7 +355,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_coupon');
 
-			$this->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
 		}
 
 		// Voucher
@@ -364,7 +364,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_voucher');
 
-			$this->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
 		}
 
 		// Reward
@@ -373,7 +373,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_reward');
 
-			$this->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
 		}
 
 		$this->document->setTitle($this->language->get('express_text_title'));
@@ -1211,10 +1211,10 @@ class ControllerPaymentPPExpress extends Controller {
 					}
 				}
 
-				$this->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success'));
 
 				if(isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) { //- handle german redirect here
-					$this->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token='.$this->session->data['paypal']['token']);
+					$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token='.$this->session->data['paypal']['token']);
 				}
 			} else {
 				if ($result['L_ERRORCODE0'] == '10486') {
@@ -1223,7 +1223,7 @@ class ControllerPaymentPPExpress extends Controller {
 						if ($this->session->data['paypal_redirect_count'] == 2) {
 							$this->session->data['paypal_redirect_count'] = 0;
 							$this->session->data['error'] = $this->language->get('error_too_many_failures');
-							$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+							$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 						} else {
 							$this->session->data['paypal_redirect_count']++;
 						}
@@ -1232,23 +1232,23 @@ class ControllerPaymentPPExpress extends Controller {
 					}
 
 					if ($this->config->get('pp_express_test') == 1) {
-						$this->redirect('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
+						$this->response->redirect('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
 					} else {
-						$this->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
+						$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
 					}
 				}
 
 				$this->session->data['error'] = $result['L_LONGMESSAGE0'];
-				$this->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
+				$this->response->redirect($this->url->link('payment/pp_express/expressConfirm', '', 'SSL'));
 			}
 		} else {
-			$this->redirect($redirect);
+			$this->response->redirect($redirect);
 		}
 	}
 
 	public function checkout() {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$this->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
 		$this->load->model('payment/pp_express');
@@ -1296,7 +1296,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$this->log->write(serialize($result));
 			}
 
-			$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+			$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 		}
 
 		$this->session->data['paypal']['token'] = $result['TOKEN'];
@@ -1473,9 +1473,9 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 
 			if(isset($result['REDIRECTREQUIRED']) && $result['REDIRECTREQUIRED'] == true) { //- handle german redirect here
-				$this->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token='.$this->session->data['paypal']['token']);
+				$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_complete-express-checkout&token='.$this->session->data['paypal']['token']);
 			} else {
-				$this->redirect($this->url->link('checkout/success'));
+				$this->response->redirect($this->url->link('checkout/success'));
 			}
 		} else {
 
@@ -1485,7 +1485,7 @@ class ControllerPaymentPPExpress extends Controller {
 					if ($this->session->data['paypal_redirect_count'] == 2) {
 						$this->session->data['paypal_redirect_count'] = 0;
 						$this->session->data['error'] = $this->language->get('error_too_many_failures');
-						$this->redirect($this->url->link('checkout/checkout', '', 'SSL'));
+						$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 					} else {
 						$this->session->data['paypal_redirect_count']++;
 					}
@@ -1494,9 +1494,9 @@ class ControllerPaymentPPExpress extends Controller {
 				}
 
 				if ($this->config->get('pp_express_test') == 1) {
-					$this->redirect('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
+					$this->response->redirect('https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
 				} else {
-					$this->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
+					$this->response->redirect('https://www.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=' . $this->session->data['paypal']['token']);
 				}
 			}
 
@@ -1806,7 +1806,7 @@ class ControllerPaymentPPExpress extends Controller {
 	public function shipping() {
 		$this->shippingValidate($this->request->post['shipping_method']);
 
-		$this->redirect($this->url->link('payment/pp_express/expressConfirm'));
+		$this->response->redirect($this->url->link('payment/pp_express/expressConfirm'));
 	}
 
 	protected function shippingValidate($code) {
@@ -1855,7 +1855,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->session->data['error'] = $this->language->get('error_not_found');
 		}
 
-		$this->redirect($this->url->link('account/recurring/info', 'recurring_id=' . $this->request->get['recurring_id'], 'SSL'));
+		$this->response->redirect($this->url->link('account/recurring/info', 'recurring_id=' . $this->request->get['recurring_id'], 'SSL'));
 	}
 
 	protected function validateCoupon() {

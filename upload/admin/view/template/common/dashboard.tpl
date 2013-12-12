@@ -22,15 +22,10 @@
             <div class="col-xs-3"><span class="text-muted"><i class="fa fa-shopping-cart fa-4x"></i></span></div>
             <div class="col-xs-9">
               <?php if ($order_percentage > 0) { ?>
-              <?php $class = 'label-success'; ?>
+              <span class="label label-success pull-right">+<?php echo $order_percentage; ?>%</span>
               <?php } else { ?>
-              <?php $class = 'label-danger'; ?>
+              <span class="label label-danger pull-right"><?php echo $order_percentage; ?>%</span>
               <?php } ?>
-              
-              <span class="label <?php echo $class; ?> pull-right">+<?php echo $order_percentage; ?>%</span>
-             
-              <span class="label <?php echo $class; ?> pull-right"><?php echo $order_percentage; ?>%</span>
-              
               <h3 class="text-success"><?php echo $order_total; ?></h3>
               <?php echo $text_new_order; ?> </div>
           </div>
@@ -60,20 +55,13 @@
           <div class="row">
             <div class="col-xs-3"><span class="text-muted"><i class="fa fa-credit-card fa-4x"></i></span></div>
             <div class="col-xs-9">
-            
               <?php if ($sale_percentage > 0) { ?>
               <?php $class = 'label-success'; ?>
               <?php } else { ?>
               <?php $class = 'label-danger'; ?>
               <?php } ?>
-              
               <span class="label <?php echo $class; ?> pull-right"><?php echo $sale_percentage; ?>%</span>
-
-           
               <h3 class="text-success"><?php echo $sale_total; ?></h3>
-              
-              
-              
               <?php echo $text_total_sale; ?></div>
           </div>
         </div>

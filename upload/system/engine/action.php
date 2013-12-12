@@ -38,7 +38,7 @@ final class Action {
 		}
 			
 		$method = array_shift($parts);
-				
+							
 		if ($method) {
 			$this->method = $method;
 		} else {
@@ -47,7 +47,12 @@ final class Action {
 	}
 
 	public function execute($registry) {
-		if (is_file($this->file)) { 
+		// Stop any magical methods being called  
+		if (substr($this->method, 0, 2) == '__') {
+			return false;
+		}
+		
+		if (is_file($this->file)) {
 			include_once($this->file);
 			
 			$class = $this->class;

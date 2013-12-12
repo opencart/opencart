@@ -1,48 +1,59 @@
-<?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+<?php echo $header; ?>
+<div class="container">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
-  <h1><?php echo $heading_title; ?></h1>
-  <?php if ($profiles) { ?>
-
-    <table class="list">
-        <thead>
-        <tr>
-            <td class="left"><?php echo $column_profile_id; ?></td>
-            <td class="left"><?php echo $column_created; ?></td>
-            <td class="left"><?php echo $column_status; ?></td>
-            <td class="left"><?php echo $column_product; ?></td>
-            <td class="right"><?php echo $column_action; ?></td>
-        </tr>
-        </thead>
-        <tbody>
-        <?php if ($profiles) { ?>
-        <?php foreach ($profiles as $profile) { ?>
-        <tr>
-            <td class="left">#<?php echo $profile['id']; ?></td>
-            <td class="left"><?php echo $profile['created']; ?></td>
-            <td class="left"><?php echo $status_types[$profile['status']]; ?></td>
-            <td class="left"><?php echo $profile['name']; ?></td>
-            <td class="right"><a href="<?php echo $profile['href']; ?>"><img src="catalog/view/theme/default/image/info.png" alt="<?php echo $button_view; ?>" title="<?php echo $button_view; ?>" /></a></td>
-        </tr>
-        <?php } ?>
-        <?php } else { ?>
-        <tr>
+  </ul>
+  <div class="row"><?php echo $column_left; ?>
+    <?php if ($column_left && $column_right) { ?>
+    <?php $class = 'col-sm-6'; ?>
+    <?php } elseif ($column_left || $column_right) { ?>
+    <?php $class = 'col-sm-9'; ?>
+    <?php } else { ?>
+    <?php $class = 'col-sm-12'; ?>
+    <?php } ?>
+    <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
+      <h1><?php echo $heading_title; ?></h1>
+      <?php if ($profiles) { ?>
+      <div class="table-responsive">
+        <table class="table table-bordered table-hover">
+          <thead>
+            <tr>
+              <td class="text-left"><?php echo $column_profile_id; ?></td>
+              <td class="text-left"><?php echo $column_created; ?></td>
+              <td class="text-left"><?php echo $column_status; ?></td>
+              <td class="text-left"><?php echo $column_product; ?></td>
+              <td class="text-right"><?php echo $column_action; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+          <?php if ($profiles) { ?>
+            <?php foreach ($profiles as $profile) { ?>
+            <tr>
+              <td class="text-left">#<?php echo $profile['id']; ?></td>
+              <td class="text-left"><?php echo $profile['created']; ?></td>
+              <td class="text-left"><?php echo $status_types[$profile['status']]; ?></td>
+              <td class="text-left"><?php echo $profile['name']; ?></td>
+              <td class="text-right"><a href="<?php echo $profile['href']; ?>"><img src="catalog/view/theme/default/image/info.png" alt="<?php echo $button_view; ?>" title="<?php echo $button_view; ?>" /></a></td>
+            </tr>
+            <?php } ?>
+          <?php } else { ?>
+          <tr>
             <td class="center" colspan="5"><?php echo $text_empty; ?></td>
-        </tr>
-        <?php } ?>
-        </tbody>
-    </table>
+          </tr>
+          <?php } ?>
+          </tbody>
+        </table>
 
-  <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="text-right"><?php echo $pagination; ?></div>
   <?php } else { ?>
-  <div class="content"><?php echo $text_empty; ?></div>
+      <p><?php echo $text_empty; ?></p>
   <?php } ?>
-  <div class="buttons">
-    <div class="right"><a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a></div>
-  </div>
-  <?php echo $content_bottom; ?></div>
+      <div class="buttons clearfix">
+        <div class="pull-right"><a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a></div>
+      </div>
+      <?php echo $content_bottom; ?></div>
+    <?php echo $column_right; ?></div>
+</div>
 <?php echo $footer; ?>

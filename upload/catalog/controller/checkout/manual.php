@@ -1,7 +1,7 @@
 <?php 
 class ControllerCheckoutManual extends Controller {
 	public function index() {
-		$this->language->load('checkout/manual');
+		$this->load->language('checkout/manual');
 		
 		$json = array();
 			
@@ -157,10 +157,9 @@ class ControllerCheckoutManual extends Controller {
 				
 				foreach ($product['download'] as $download) {
 					$download_data[] = array(
-						'name'      => $download['name'],
-						'filename'  => $download['filename'],
-						'mask'      => $download['mask'],
-						'remaining' => $download['remaining']
+						'name'     => $download['name'],
+						'filename' => $download['filename'],
+						'mask'     => $download['mask']
 					);
 				}
 								
@@ -285,7 +284,7 @@ class ControllerCheckoutManual extends Controller {
 				
 				$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
 				
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2) || (utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
 					$json['error']['shipping']['postcode'] = $this->language->get('error_postcode');
 				}
 		
@@ -301,7 +300,7 @@ class ControllerCheckoutManual extends Controller {
 				
 				$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
 				
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2) || (utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
 					$json['error']['shipping']['postcode'] = $this->language->get('error_postcode');
 				}
 
@@ -388,6 +387,10 @@ class ControllerCheckoutManual extends Controller {
 			}
 			
 			// Coupon
+			$query = $this->db->query("SELECT * FROM coupon_history WHERE coupon_id = '" . (int)$order_id . "'");
+			
+			
+			
 			if (!empty($this->request->post['coupon'])) {
 				$this->load->model('checkout/coupon');
 			
@@ -439,7 +442,14 @@ class ControllerCheckoutManual extends Controller {
 					}
 				}
 			}
-
+			
+			// Set payment code (required by some order totals)
+			if (isset($this->request->post['payment_code'])) {
+				$this->session->data['payment_method']['code'] = $this->request->post['payment_code'];
+			} else {
+				$this->session->data['payment_method']['code'] = '';
+			}
+ 
 			// Totals
 			$json['order_total'] = array();					
 			$total = 0;
@@ -583,4 +593,3 @@ class ControllerCheckoutManual extends Controller {
 		$this->response->setOutput(json_encode($json));	
 	}
 }
-?>

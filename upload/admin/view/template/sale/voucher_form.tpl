@@ -1,80 +1,85 @@
 <?php echo $header; ?>
-<div id="content">
+<div id="content" class="container">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
   <?php if ($error_warning) { ?>
-  <div class="alert alert-error"><i class="icon-exclamation-sign"></i> <?php echo $error_warning; ?> <button type="button" class="close" data-dismiss="alert">&times;</button></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
-  <div class="box">
-    <div class="box-heading">
-      <h1><i class="icon-edit"></i> <?php echo $heading_title; ?></h1>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <?php if ($voucher_id) { ?>
+        <button type="button" id="button-send" class="btn btn-default"><i class="fa fa-envelope"></i> <?php echo $button_send; ?></button>
+        <?php } ?>
+        <button type="submit" form="form-voucher" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="box-content">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <div class="buttons"><button type="submit" class="btn"><i class="icon-ok"></i> <?php echo $button_save; ?></button> <a href="<?php echo $cancel; ?>" class="btn"><i class="icon-remove"></i> <?php echo $button_cancel; ?></a></div>
+    <div class="panel-body">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-voucher" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <?php if ($voucher_id) { ?>
-          <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_voucher_history; ?></a></li>
+          <li><a href="#tab-history" data-toggle="tab"><?php echo $tab_history; ?></a></li>
           <?php } ?>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
-            <div class="control-group">
-              <label class="control-label" for="input-code"><span class="required">*</span> <?php echo $entry_code; ?></label>
-              <div class="controls">
-                <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" />
-                
-                <a data-toggle="tooltip" title="<?php echo $help_code; ?>"><i class="icon-info-sign"></i></a>
-                
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
+                <span class="help-block"><?php echo $help_code; ?></span>
                 <?php if ($error_code) { ?>
-                <span class="error"><?php echo $error_code; ?></span>
+                <div class="text-danger"><?php echo $error_code; ?></div>
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-from-name"><span class="required">*</span> <?php echo $entry_from_name; ?></label>
-              <div class="controls">
-                <input type="text" name="from_name" value="<?php echo $from_name; ?>" placeholder="<?php echo $entry_from_name; ?>" id="input-from-name" />
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-from-name"><?php echo $entry_from_name; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="from_name" value="<?php echo $from_name; ?>" placeholder="<?php echo $entry_from_name; ?>" id="input-from-name" class="form-control" />
                 <?php if ($error_from_name) { ?>
-                <span class="error"><?php echo $error_from_name; ?></span>
+                <div class="text-danger"><?php echo $error_from_name; ?></div>
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-from-email"><span class="required">*</span> <?php echo $entry_from_email; ?></label>
-              <div class="controls">
-                <input type="text" name="from_email" value="<?php echo $from_email; ?>" placeholder="<?php echo $entry_from_email; ?>" id="input-from-email" />
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="from_email" value="<?php echo $from_email; ?>" placeholder="<?php echo $entry_from_email; ?>" id="input-from-email" class="form-control" />
                 <?php if ($error_from_email) { ?>
-                <span class="error"><?php echo $error_from_email; ?></span>
+                <div class="text-danger"><?php echo $error_from_email; ?></div>
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-to-name"><span class="required">*</span> <?php echo $entry_to_name; ?></label>
-              <div class="controls">
-                <input type="text" name="to_name" value="<?php echo $to_name; ?>" placeholder="<?php echo $entry_to_name; ?>" id="input-to-name" />
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-to-name"><?php echo $entry_to_name; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="to_name" value="<?php echo $to_name; ?>" placeholder="<?php echo $entry_to_name; ?>" id="input-to-name" class="form-control" />
                 <?php if ($error_to_name) { ?>
-                <span class="error"><?php echo $error_to_name; ?></span>
+                <div class="text-danger"><?php echo $error_to_name; ?></div>
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-to-email"><span class="required">*</span> <?php echo $entry_to_email; ?></label>
-              <div class="controls">
-                <input type="text" name="to_email" value="<?php echo $to_email; ?>" placeholder="<?php echo $entry_to_email; ?>" id="input-to-email" />
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="to_email" value="<?php echo $to_email; ?>" placeholder="<?php echo $entry_to_email; ?>" id="input-to-email" class="form-control" />
                 <?php if ($error_to_email) { ?>
-                <span class="error"><?php echo $error_to_email; ?></span>
+                <div class="text-danger"><?php echo $error_to_email; ?></div>
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-theme"><?php echo $entry_theme; ?></label>
-              <div class="controls">
-                <select name="voucher_theme_id" id="input-theme">
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-theme"><?php echo $entry_theme; ?></label>
+              <div class="col-sm-10">
+                <select name="voucher_theme_id" id="input-theme" class="form-control">
                   <?php foreach ($voucher_themes as $voucher_theme) { ?>
                   <?php if ($voucher_theme['voucher_theme_id'] == $voucher_theme_id) { ?>
                   <option value="<?php echo $voucher_theme['voucher_theme_id']; ?>" selected="selected"><?php echo $voucher_theme['name']; ?></option>
@@ -85,25 +90,25 @@
                 </select>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-message"><span class="required">*</span> <?php echo $entry_message; ?></label>
-              <div class="controls">
-                <textarea name="message" cols="40" rows="5" placeholder="<?php echo $entry_message; ?>" id="input-message"><?php echo $message; ?></textarea>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="input-message"><?php echo $entry_message; ?></label>
+              <div class="col-sm-10">
+                <textarea name="message" rows="5" placeholder="<?php echo $entry_message; ?>" id="input-message" class="form-control"><?php echo $message; ?></textarea>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-amount"><?php echo $entry_amount; ?></label>
-              <div class="controls">
-                <input type="text" name="amount" value="<?php echo $amount; ?>" placeholder="<?php echo $entry_amount; ?>" id="input-amount" />
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="amount" value="<?php echo $amount; ?>" placeholder="<?php echo $entry_amount; ?>" id="input-amount" class="form-control" />
                 <?php if ($error_amount) { ?>
-                <span class="error"><?php echo $error_amount; ?></span>
+                <div class="text-danger"><?php echo $error_amount; ?></div>
                 <?php } ?>
               </div>
             </div>
-            <div class="control-group">
-              <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-              <div class="controls">
-                <select name="status" id="input-status">
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
+              <div class="col-sm-10">
+                <select name="status" id="input-status" class="form-control">
                   <?php if ($status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -127,10 +132,42 @@
 </div>
 <?php if ($voucher_id) { ?>
 <script type="text/javascript"><!--
-$('#history .pagination a').on('click', function() {
+$('#button-send').on('click', function() {
+	$.ajax({
+		url: 'index.php?route=sale/voucher/send&token=<?php echo $token; ?>',
+		type: 'post',
+		dataType: 'json',
+		data: 'voucher_id=<?php echo $voucher_id; ?>',
+		beforeSend: function() {
+			$('#button-send i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-send').prop('disabled', true);
+		},	
+		complete: function() {
+			$('#button-send i').replaceWith('<i class="fa fa-envelope"></i>');
+			$('#button-send').prop('disabled', false);
+		},
+		success: function(json) {
+			$('.alert').remove();
+			
+			if (json['error']) {
+				$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
+			}
+			
+			if (json['success']) {
+				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i>  ' + json['success'] + '</div>');
+			}		
+		},
+		error: function(xhr, ajaxOptions, thrownError) {
+			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+		}
+	});	
+})
+//--></script> 
+<script type="text/javascript"><!--
+$('#history').delegate('.pagination a', 'click', function(e) {
+	e.preventDefault();
+
 	$('#history').load(this.href);
-	
-	return false;
 });			
 
 $('#history').load('index.php?route=sale/voucher/history&token=<?php echo $token; ?>&voucher_id=<?php echo $voucher_id; ?>');

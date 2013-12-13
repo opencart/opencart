@@ -5,7 +5,6 @@ $_['heading_title']      = 'Manufacturer';
 // Text
 $_['text_success']       = 'Success: You have modified manufacturers!';
 $_['text_default']       = 'Default';
-$_['text_image_manager'] = 'Image Manager';
 $_['text_percent']       = 'Percentage';
 $_['text_amount']        = 'Fixed Amount';
 
@@ -29,4 +28,3 @@ $_['help_keyword']      = 'Do not use spaces instead replace spaces with - and m
 $_['error_permission']   = 'Warning: You do not have permission to modify manufacturers!';
 $_['error_name']         = 'Manufacturer Name must be between 3 and 64 characters!';
 $_['error_product']      = 'Warning: This manufacturer cannot be deleted as it is currently assigned to %s products!';
-?>

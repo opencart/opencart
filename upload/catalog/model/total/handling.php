@@ -2,12 +2,11 @@
 class ModelTotalHandling extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		if (($this->cart->getSubTotal() < $this->config->get('handling_total')) && ($this->cart->getSubTotal() > 0)) {
-			$this->language->load('total/handling');
+			$this->load->language('total/handling');
 		 	
 			$total_data[] = array( 
 				'code'       => 'handling',
         		'title'      => $this->language->get('text_handling'),
-        		'text'       => $this->currency->format($this->config->get('handling_fee')),
         		'value'      => $this->config->get('handling_fee'),
 				'sort_order' => $this->config->get('handling_sort_order')
 			);
@@ -28,4 +27,3 @@ class ModelTotalHandling extends Model {
 		}
 	}
 }
-?>

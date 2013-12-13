@@ -4,10 +4,10 @@ class ControllerAccountNewsletter extends Controller {
 		if (!$this->customer->isLogged()) {
 	  		$this->session->data['redirect'] = $this->url->link('account/newsletter', '', 'SSL');
 	  
-	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	} 
 		
-		$this->language->load('account/newsletter');
+		$this->load->language('account/newsletter');
     	
 		$this->document->setTitle($this->language->get('heading_title'));
 				
@@ -18,58 +18,53 @@ class ControllerAccountNewsletter extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->link('account/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 		}
 
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', '', 'SSL')
       	);
 		
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_newsletter'),
 			'href' => $this->url->link('account/newsletter', '', 'SSL')
       	);
 		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 
-    	$this->data['text_yes'] = $this->language->get('text_yes');
-		$this->data['text_no'] = $this->language->get('text_no');
+    	$data['text_yes'] = $this->language->get('text_yes');
+		$data['text_no'] = $this->language->get('text_no');
 		
-		$this->data['entry_newsletter'] = $this->language->get('entry_newsletter');
+		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
 		
-		$this->data['button_continue'] = $this->language->get('button_continue');
-		$this->data['button_back'] = $this->language->get('button_back');
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_back'] = $this->language->get('button_back');
 
-    	$this->data['action'] = $this->url->link('account/newsletter', '', 'SSL');
+    	$data['action'] = $this->url->link('account/newsletter', '', 'SSL');
 		
-		$this->data['newsletter'] = $this->customer->getNewsletter();
+		$data['newsletter'] = $this->customer->getNewsletter();
 		
-		$this->data['back'] = $this->url->link('account/account', '', 'SSL');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/newsletter.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/account/newsletter.tpl';
-		} else {
-			$this->template = 'default/template/account/newsletter.tpl';
-		}
+		$data['back'] = $this->url->link('account/account', '', 'SSL');
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'	
-		);
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 						
-		$this->response->setOutput($this->render());			
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/newsletter.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/newsletter.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/account/newsletter.tpl', $data));
+		}			
   	}
 }
-?>

@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.dialog.add("cellProperties",function(f){var g=f.lang.table,c=g.cell,d=f.lang.common,h=CKEDITOR.dialog.validate,j=/^(\d+(?:\.\d+)?)(px|%)$/,e={type:"html",html:"&nbsp;"},k="rtl"==f.lang.dir,i=f.plugins.colordialog;return{title:c.title,minWidth:CKEDITOR.env.ie&&CKEDITOR.env.quirks?450:410,minHeight:CKEDITOR.env.ie&&(CKEDITOR.env.ie7Compat||CKEDITOR.env.quirks)?230:220,contents:[{id:"info",label:c.title,accessKey:"I",elements:[{type:"hbox",widths:["40%","5%","40%"],children:[{type:"vbox",padding:0,
 children:[{type:"hbox",widths:["70%","30%"],children:[{type:"text",id:"width",width:"100px",label:d.width,validate:h.number(c.invalidWidth),onLoad:function(){var a=this.getDialog().getContentElement("info","widthType").getElement(),b=this.getInputElement(),c=b.getAttribute("aria-labelledby");b.setAttribute("aria-labelledby",[c,a.$.id].join(" "))},setup:function(a){var b=parseInt(a.getAttribute("width"),10),a=parseInt(a.getStyle("width"),10);!isNaN(b)&&this.setValue(b);!isNaN(a)&&this.setValue(a)},

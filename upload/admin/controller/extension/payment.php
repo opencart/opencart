@@ -3,7 +3,7 @@ class ControllerExtensionPayment extends Controller {
 	private $error = array();
 	
   	public function index() {
-		$this->language->load('extension/payment');
+		$this->load->language('extension/payment');
 	
     	$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerExtensionPayment extends Controller {
   	}
 	
 	public function install() {
-		$this->language->load('extension/payment');
+		$this->load->language('extension/payment');
 		
 		$this->load->model('setting/extension');
 		
@@ -27,14 +27,14 @@ class ControllerExtensionPayment extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 		
 		$this->getList();
 	}
 	
 	public function uninstall() {
-		$this->language->load('extension/payment');
+		$this->load->language('extension/payment');
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -49,47 +49,51 @@ class ControllerExtensionPayment extends Controller {
 				
 			$this->session->data['success'] = $this->language->get('text_success');
 				
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	
 		}		
 		
 		$this->getList();	
 	}
 		
 	public function getList() {
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
-		$this->data['column_action'] = $this->language->get('column_action');
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_sort_order'] = $this->language->get('column_sort_order');
+		$data['column_action'] = $this->language->get('column_action');
+		
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_install'] = $this->language->get('button_install');
+		$data['button_uninstall'] = $this->language->get('button_uninstall');
  		
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 
 		$this->load->model('setting/extension');
@@ -104,7 +108,7 @@ class ControllerExtensionPayment extends Controller {
 			}
 		}
 		
-		$this->data['extensions'] = array();
+		$data['extensions'] = array();
 						
 		$files = glob(DIR_APPLICATION . 'controller/payment/*.php');
 		
@@ -112,26 +116,7 @@ class ControllerExtensionPayment extends Controller {
 			foreach ($files as $file) {
 				$extension = basename($file, '.php');
 				
-				$this->language->load('payment/' . $extension);
-	
-				$action = array();
-				
-				if (!in_array($extension, $extensions)) {
-					$action[] = array(
-						'text' => $this->language->get('text_install'),
-						'href' => $this->url->link('extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				} else {
-					$action[] = array(
-						'text' => $this->language->get('text_edit'),
-						'href' => $this->url->link('payment/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL')
-					);
-								
-					$action[] = array(
-						'text' => $this->language->get('text_uninstall'),
-						'href' => $this->url->link('extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-					);
-				}
+				$this->load->language('payment/' . $extension);
 				
 				$text_link = $this->language->get('text_' . $extension);
 				
@@ -141,23 +126,23 @@ class ControllerExtensionPayment extends Controller {
 					$link = '';
 				}
 				
-				$this->data['extensions'][] = array(
+				$data['extensions'][] = array(
 					'name'       => $this->language->get('heading_title'),
 					'link'       => $link,
 					'status'     => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
 					'sort_order' => $this->config->get($extension . '_sort_order'),
-					'action'     => $action
+					'edit'      => $this->url->link('payment/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL'),
+					'install'   => $this->url->link('extension/payment/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'uninstall' => $this->url->link('extension/payment/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+					'installed' => in_array($extension, $extensions)
 				);
 			}
 		}
-
-		$this->template = 'extension/payment.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('extension/payment.tpl', $data));
 	}
 	
 	protected function validate() {
@@ -165,11 +150,6 @@ class ControllerExtensionPayment extends Controller {
       		$this->error['warning'] = $this->language->get('error_permission');
     	}
 		
-		if (!$this->error) {
-	  		return true;
-		} else {
-	  		return false;
-		}
+		return !$this->error;
   	}	
 }
-?>

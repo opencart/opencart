@@ -16,4 +16,3 @@ $_['entry_ip']         = 'IP';
 // Error
 $_['error_permission'] = 'Warning: You do not have permission to modify customer ban IP!';
 $_['error_ip']         = 'IP must be between 1 and 40 characters!';
-?>

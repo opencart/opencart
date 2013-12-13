@@ -6,7 +6,7 @@ class ModelCatalogReview extends Model {
 		// Send to main admin email if new account email is enabled
 		if ($this->config->get('config_review_mail')) {
 
-			$this->language->load('mail/review');
+			$this->load->language('mail/review');
 			$this->load->model('catalog/product');
 			$product_info = $this->model_catalog_product->getProduct($product_id);
 			
@@ -19,23 +19,16 @@ class ModelCatalogReview extends Model {
 			$message .= $this->language->get('text_review') . "\n";
 			$message .= $this->db->escape(strip_tags($data['text'])) . "\n\n";
 
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->hostname = $this->config->get('config_smtp_host');
-			$mail->username = $this->config->get('config_smtp_username');
-			$mail->password = $this->config->get('config_smtp_password');
-			$mail->port = $this->config->get('config_smtp_port');
-			$mail->timeout = $this->config->get('config_smtp_timeout');	
+			$mail = new Mail($this->config->get('config_mail'));
 			$mail->setTo(array($this->config->get('config_email')));
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_name'));
-			$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+			$mail->setSubject($subject);
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
 
 			// Send to additional alert emails
-			$emails = explode(',', $this->config->get('config_alert_emails'));
+			$emails = explode(',', $this->config->get('config_mail_alert'));
 			
 			foreach ($emails as $email) {
 				if ($email && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
@@ -66,4 +59,3 @@ class ModelCatalogReview extends Model {
 		return $query->row['total'];
 	}
 }
-?>

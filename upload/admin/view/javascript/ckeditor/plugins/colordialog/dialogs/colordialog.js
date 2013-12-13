@@ -1,6 +1,6 @@
 ﻿/*
  Copyright (c) 2003-2013, CKSource - Frederico Knabben. All rights reserved.
- For licensing, see LICENSE.html or http://ckeditor.com/license
+ For licensing, see LICENSE.md or http://ckeditor.com/license
 */
 CKEDITOR.dialog.add("colordialog",function(t){function n(){f.getById(o).removeStyle("background-color");p.getContentElement("picker","selectedColor").setValue("");j&&j.removeAttribute("aria-selected");j=null}function u(a){var a=a.data.getTarget(),b;if("td"==a.getName()&&(b=a.getChild(0).getHtml()))j=a,j.setAttribute("aria-selected",!0),p.getContentElement("picker","selectedColor").setValue(b)}function y(a){for(var a=a.replace(/^#/,""),b=0,c=[];2>=b;b++)c[b]=parseInt(a.substr(2*b,2),16);return"#"+
 (165<=0.2126*c[0]+0.7152*c[1]+0.0722*c[2]?"000":"fff")}function v(a){!a.name&&(a=new CKEDITOR.event(a));var b=!/mouse/.test(a.name),c=a.data.getTarget(),e;if("td"==c.getName()&&(e=c.getChild(0).getHtml()))q(a),b?g=c:w=c,b&&(c.setStyle("border-color",y(e)),c.setStyle("border-style","dotted")),f.getById(k).setStyle("background-color",e),f.getById(l).setHtml(e)}function q(a){if(a=!/mouse/.test(a.name)&&g){var b=a.getChild(0).getHtml();a.setStyle("border-color",b);a.setStyle("border-style","solid")}!g&&

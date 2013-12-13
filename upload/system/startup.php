@@ -3,8 +3,8 @@
 error_reporting(E_ALL);
 
 // Check Version
-if (version_compare(phpversion(), '5.1.0', '<') == true) {
-	exit('PHP5.1+ Required');
+if (version_compare(phpversion(), '5.3.0', '<') == true) {
+	exit('PHP5.3+ Required');
 }
 
 // Register Globals
@@ -75,6 +75,15 @@ if (!isset($_SERVER['HTTP_HOST'])) {
 	$_SERVER['HTTP_HOST'] = getenv('HTTP_HOST');
 }
 
+// Check if SSL
+if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS'] == '1'))) {
+	$_SERVER['HTTPS'] = true;
+} elseif (!empty($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https' || !empty($_SERVER['HTTP_X_FORWARDED_SSL']) && $_SERVER['HTTP_X_FORWARDED_SSL'] == 'on') {
+	$_SERVER['HTTPS'] = true;
+} else {
+	$_SERVER['HTTPS'] = false;
+}
+
 // Engine
 require_once(DIR_SYSTEM . 'engine/action.php'); 
 require_once(DIR_SYSTEM . 'engine/controller.php');
@@ -83,22 +92,21 @@ require_once(DIR_SYSTEM . 'engine/loader.php');
 require_once(DIR_SYSTEM . 'engine/model.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
 
-// Library
-require_once(DIR_SYSTEM . 'library/cache.php');
-require_once(DIR_SYSTEM . 'library/url.php');
-require_once(DIR_SYSTEM . 'library/config.php');
-require_once(DIR_SYSTEM . 'library/db.php');
-require_once(DIR_SYSTEM . 'library/document.php');
-require_once(DIR_SYSTEM . 'library/encryption.php');
-require_once(DIR_SYSTEM . 'library/image.php');
-require_once(DIR_SYSTEM . 'library/language.php');
-require_once(DIR_SYSTEM . 'library/log.php');
-require_once(DIR_SYSTEM . 'library/mail.php');
-require_once(DIR_SYSTEM . 'library/pagination.php');
-require_once(DIR_SYSTEM . 'library/request.php');
-require_once(DIR_SYSTEM . 'library/response.php');
-require_once(DIR_SYSTEM . 'library/session.php');
-require_once(DIR_SYSTEM . 'library/template.php');
+// Autoloader
+function __autoload($class) {
+	if (substr($class, 0, 10) == 'Controller' || substr($class, 0, 5) == 'Model') {
+		$file = DIR_APPLICATION . str_replace('\\', '/', strtolower($class)) . '.php';
+	} else {
+		$file = DIR_SYSTEM . 'library/' . strtolower($class) . '.php';
+	}
+	
+	if (file_exists($file)) {
+		include($file);
+	} else {
+		trigger_error('Error: Could not load class ' . $class . '.php!');
+		exit();
+	}
+}
 
 // Helper
 require_once(DIR_SYSTEM . 'helper/json.php'); 

@@ -3,13 +3,13 @@ class ControllerToolBackup extends Controller {
 	private $error = array();
 	
 	public function index() {		
-		$this->language->load('tool/backup');
+		$this->load->language('tool/backup');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('tool/backup');
 				
-		if ($this->request->server['REQUEST_METHOD'] == 'POST' && $this->user->hasPermission('modify', 'tool/backup')) {
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->user->hasPermission('modify', 'tool/backup')) {
 			if (is_uploaded_file($this->request->files['import']['tmp_name'])) {
 				$content = file_get_contents($this->request->files['import']['tmp_name']);
 			} else {
@@ -21,75 +21,72 @@ class ControllerToolBackup extends Controller {
 				
 				$this->session->data['success'] = $this->language->get('text_success');
 				
-				$this->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));
+				$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));
 			} else {
 				$this->error['warning'] = $this->language->get('error_empty');
 			}
 		}
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_select_all'] = $this->language->get('text_select_all');
-		$this->data['text_unselect_all'] = $this->language->get('text_unselect_all');
+		$data['text_select_all'] = $this->language->get('text_select_all');
+		$data['text_unselect_all'] = $this->language->get('text_unselect_all');
 		
-		$this->data['entry_restore'] = $this->language->get('entry_restore');
-		$this->data['entry_backup'] = $this->language->get('entry_backup');
+		$data['entry_restore'] = $this->language->get('entry_restore');
+		$data['entry_backup'] = $this->language->get('entry_backup');
 		 
-		$this->data['button_backup'] = $this->language->get('button_backup');
-		$this->data['button_restore'] = $this->language->get('button_restore');
+		$data['button_backup'] = $this->language->get('button_backup');
+		$data['button_restore'] = $this->language->get('button_restore');
 		
 		if (isset($this->session->data['error'])) {
-    		$this->data['error_warning'] = $this->session->data['error'];
+    		$data['error_warning'] = $this->session->data['error'];
     
 			unset($this->session->data['error']);
  		} elseif (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
 		
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL')
    		);
 		
-		$this->data['restore'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');
+		$data['restore'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');
 
-		$this->data['backup'] = $this->url->link('tool/backup/backup', 'token=' . $this->session->data['token'], 'SSL');
+		$data['backup'] = $this->url->link('tool/backup/backup', 'token=' . $this->session->data['token'], 'SSL');
 
-		$this->data['tables'] = $this->model_tool_backup->getTables();
-
-		$this->template = 'tool/backup.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		$data['tables'] = $this->model_tool_backup->getTables();
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('tool/backup.tpl', $data));
 	}
 	
 	public function backup() {
-		$this->language->load('tool/backup');
+		$this->load->language('tool/backup');
 		
 		if (!isset($this->request->post['backup'])) {
 			$this->session->data['error'] = $this->language->get('error_backup');
 			
-			$this->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));
 		} elseif ($this->user->hasPermission('modify', 'tool/backup')) {
 			$this->response->addheader('Pragma: public');
 			$this->response->addheader('Expires: 0');
@@ -104,8 +101,7 @@ class ControllerToolBackup extends Controller {
 		} else {
 			$this->session->data['error'] = $this->language->get('error_permission');
 			
-			$this->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));			
+			$this->response->redirect($this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL'));			
 		}
 	}
 }
-?>

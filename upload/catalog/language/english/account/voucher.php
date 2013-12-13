@@ -11,17 +11,17 @@ $_['text_message']     = '<p>Thank you for purchasing a gift certificate! Once y
 $_['text_for']         = '%s Gift Certificate for %s';
 
 // Entry
-$_['entry_to_name']    = 'Recipient\'s Name:';
-$_['entry_to_email']   = 'Recipient\'s Email:';
-$_['entry_from_name']  = 'Your Name:';
-$_['entry_from_email'] = 'Your Email:';
-$_['entry_theme']      = 'Gift Certificate Theme:';
-$_['entry_message']    = 'Message:';
-$_['entry_amount']     = 'Amount:';
+$_['entry_to_name']    = 'Recipient\'s Name';
+$_['entry_to_email']   = 'Recipient\'s Email';
+$_['entry_from_name']  = 'Your Name';
+$_['entry_from_email'] = 'Your Email';
+$_['entry_theme']      = 'Gift Certificate Theme';
+$_['entry_message']    = 'Message';
+$_['entry_amount']     = 'Amount';
 
 // Help
-$_['help_message']     = '(Optional)';
-$_['help_amount']      = '(Value must be between %s and %s)';
+$_['help_message']     = 'Optional';
+$_['help_amount']      = 'Value must be between %s and %s';
 
 // Error
 $_['error_to_name']    = 'Recipient\'s Name must be between 1 and 64 characters!';
@@ -30,4 +30,3 @@ $_['error_email']      = 'E-Mail Address does not appear to be valid!';
 $_['error_theme']      = 'You must select a theme!';
 $_['error_amount']     = 'Amount must be between %s and %s!';
 $_['error_agree']      = 'Warning: You must agree that the gift certificates are non-refundable!';
-?>

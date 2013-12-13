@@ -3,7 +3,7 @@ class Pagination {
 	public $total = 0;
 	public $page = 1;
 	public $limit = 20;
-	public $num_links = 10;
+	public $num_links = 8;
 	public $url = '';
 	public $text_first = '|&lt;';
 	public $text_last = '&gt;|';
@@ -28,7 +28,7 @@ class Pagination {
 		$num_links = $this->num_links;
 		$num_pages = ceil($total / $limit);
 
-		$output = '<ul>';
+		$output = '<ul class="pagination">';
 
 		if ($page > 1) {			
 			$output .= '<li><a href="' . str_replace('{page}', 1, $this->url) . '">' . $this->text_first . '</a></li>';
@@ -70,7 +70,10 @@ class Pagination {
 		
 		$output .= '</ul>';
 		
-		return $output;
+		if ($num_pages > 1) {
+			return $output;
+		} else {
+			return '';	
+		}
 	}
 }
-?>

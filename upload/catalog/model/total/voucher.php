@@ -2,7 +2,7 @@
 class ModelTotalVoucher extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		if (isset($this->session->data['voucher'])) {
-			$this->language->load('total/voucher');
+			$this->load->language('total/voucher');
 			
 			$this->load->model('checkout/voucher');
 			 
@@ -18,7 +18,6 @@ class ModelTotalVoucher extends Model {
 				$total_data[] = array(
 					'code'       => 'voucher',
         			'title'      => sprintf($this->language->get('text_voucher'), $this->session->data['voucher']),
-	    			'text'       => $this->currency->format(-$amount),
         			'value'      => -$amount,
 					'sort_order' => $this->config->get('voucher_sort_order')
       			);
@@ -47,4 +46,3 @@ class ModelTotalVoucher extends Model {
 		}						
 	}	
 }
-?>

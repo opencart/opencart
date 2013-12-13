@@ -20,4 +20,3 @@ class ModelLocalisationZone extends Model {
 		return $zone_data;
 	}
 }
-?>

@@ -10,7 +10,7 @@ class ControllerCommonSeoUrl extends Controller {
 		if (isset($this->request->get['_route_'])) {
 			$parts = explode('/', $this->request->get['_route_']);
 			
-			if (strlen(end($parts)) == 0) array_pop($parts); // remove any empty arrays from trailing /
+			if (utf8_strlen(end($parts)) == 0) array_pop($parts); // remove any empty arrays from trailing /
 			
 			foreach ($parts as $part) {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($part) . "'");
@@ -38,11 +38,13 @@ class ControllerCommonSeoUrl extends Controller {
 						$this->request->get['information_id'] = $url[1];
 					}	
 				} else {
-					$this->request->get['route'] = 'error/not_found';	
+					$this->request->get['route'] = 'error/not_found';
+					
+					break;
 				}
 			}
 			
-			if(!isset($this->request->get['route'])){
+			if (!isset($this->request->get['route'])) {
 				if (isset($this->request->get['product_id'])) {
 					$this->request->get['route'] = 'product/product';
 				} elseif (isset($this->request->get['path'])) {
@@ -55,7 +57,7 @@ class ControllerCommonSeoUrl extends Controller {
 			}
 			
 			if (isset($this->request->get['route'])) {
-				return $this->forward($this->request->get['route']);
+				return new Action($this->request->get['route']);
 			}
 		}
 	}
@@ -87,10 +89,16 @@ class ControllerCommonSeoUrl extends Controller {
 				
 						if ($query->num_rows) {
 							$url .= '/' . $query->row['keyword'];
-						}							
+						 } else {
+							$url = '';
+							
+							break;
+						}  							
 					}
 					
 					unset($data[$key]);
+				} elseif ($key == 'route' && $value == 'common/home') {
+					$url = '/';
 				}
 			}
 		}
@@ -116,4 +124,3 @@ class ControllerCommonSeoUrl extends Controller {
 		}
 	}	
 }
-?>

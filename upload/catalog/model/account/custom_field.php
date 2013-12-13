@@ -1,9 +1,17 @@
 <?php
 class ModelAccountCustomField extends Model {
-	public function getCustomFields($location, $customer_group_id) {
+	public function getCustomFields($location, $customer_group_id = '') {
 		$custom_field_data = array();
 		
-		$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field_customer_group` cfcg LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfcg.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfcg.customer_group_id = '" . (int)$customer_group_id . "' AND cf.location = '" . $this->db->escape($location) . "' AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cf.sort_order ASC");
+		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_location` cfl LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfl.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfl.location = '" . $this->db->escape($location) . "'"; 
+		
+		if ($customer_group_id) { 
+			$sql .= " AND cfl.customer_group_id = '" . (int)$customer_group_id . "'";
+		}
+		
+		$sql .= " AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cf.sort_order ASC";
+		
+		$custom_field_query = $this->db->query($sql);
 		
 		foreach ($custom_field_query->rows as $custom_field) {
 			$custom_field_value_data = array();
@@ -25,13 +33,12 @@ class ModelAccountCustomField extends Model {
 				'name'               => $custom_field['name'],
 				'type'               => $custom_field['type'],
 				'value'              => $custom_field['value'],
-				'required'           => $custom_field['required'],
-				'location'           => $custom_field['location'],
-				'position'           => $custom_field['position']
-			);			
+				'storage'            => $custom_field['storage'],
+				'required'           => $custom_field['required'] > 0 ? true : false,
+				'sort_order'         => $custom_field['sort_order']
+			);
 		}
 		
 		return $custom_field_data;
 	}
 }
-?>

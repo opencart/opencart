@@ -20,4 +20,3 @@ class ModelLocalisationCountry extends Model {
 		return $country_data;
 	}
 }
-?>

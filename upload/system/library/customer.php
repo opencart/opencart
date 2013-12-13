@@ -145,7 +145,7 @@ class Customer {
 		return $this->newsletter;
 	}
 
-	public function getCustomerGroupId() {
+	public function getGroupId() {
 		return $this->customer_group_id;
 	}
 
@@ -165,4 +165,3 @@ class Customer {
 		return $query->row['total'];
 	}
 }
-?>

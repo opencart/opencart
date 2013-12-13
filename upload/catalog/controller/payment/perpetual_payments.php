@@ -1,25 +1,26 @@
 <?php
 class ControllerPaymentPerpetualPayments extends Controller {
-	protected function index() {
-    	$this->language->load('payment/perpetual_payments');
+	public function index() {
+    	$this->load->language('payment/perpetual_payments');
 		
-		$this->data['text_credit_card'] = $this->language->get('text_credit_card');
-		$this->data['text_start_date'] = $this->language->get('text_start_date');
-		$this->data['text_issue'] = $this->language->get('text_issue');
-		$this->data['text_wait'] = $this->language->get('text_wait');
+		$data['text_credit_card'] = $this->language->get('text_credit_card');		
+		$data['text_loading'] = $this->language->get('text_loading');
 		
-		$this->data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$this->data['entry_cc_start_date'] = $this->language->get('entry_cc_start_date');
-		$this->data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
-		$this->data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
-		$this->data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
+		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
+		$data['entry_cc_start_date'] = $this->language->get('entry_cc_start_date');
+		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
+		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
+		$data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
 		
-		$this->data['button_confirm'] = $this->language->get('button_confirm');
+		$data['help_start_date'] = $this->language->get('help_start_date');		
+		$data['help_issue'] = $this->language->get('help_issue');
+		
+		$data['button_confirm'] = $this->language->get('button_confirm');
 	
-		$this->data['months'] = array();
+		$data['months'] = array();
 		
 		for ($i = 1; $i <= 12; $i++) {
-			$this->data['months'][] = array(
+			$data['months'][] = array(
 				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)), 
 				'value' => sprintf('%02d', $i)
 			);
@@ -27,35 +28,33 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		
 		$today = getdate();
 		
-		$this->data['year_valid'] = array();
+		$data['year_valid'] = array();
 		
 		for ($i = $today['year'] - 10; $i < $today['year'] + 1; $i++) {	
-			$this->data['year_valid'][] = array(
+			$data['year_valid'][] = array(
 				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)), 
 				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
 			);
 		}
 
-		$this->data['year_expire'] = array();
+		$data['year_expire'] = array();
 
 		for ($i = $today['year']; $i < $today['year'] + 11; $i++) {
-			$this->data['year_expire'][] = array(
+			$data['year_expire'][] = array(
 				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
 				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)) 
 			);
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/perpetual_payments.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/perpetual_payments.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/payment/perpetual_payments.tpl', $data);
 		} else {
-			$this->template = 'default/template/payment/perpetual_payments.tpl';
+			return $this->load->view('default/template/payment/perpetual_payments.tpl', $data);
 		}	
-			
-		$this->render();		
 	}
 
 	public function send() {
-		$this->language->load('payment/perpetual_payments');
+		$this->load->language('payment/perpetual_payments');
 		
 		$this->load->model('checkout/order');
 		
@@ -124,7 +123,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 				
 				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('perpetual_payments_order_status_id'), $message, false);
 					
-				$json['success'] = $this->url->link('checkout/success');
+				$json['redirect'] = $this->url->link('checkout/success');
 			} else {
 				$json['error'] = end($data);
 			}
@@ -133,4 +132,3 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 }
-?>

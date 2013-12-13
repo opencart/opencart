@@ -1,7 +1,7 @@
 <?php
 class ModelInstall extends Model {
-	public function mysql($data) {
-		$db = new DB('mysql', $data['db_host'], $data['db_user'], $data['db_password'], $data['db_name']);
+	public function database($data) {
+		$db = new DB($data['db_driver'], $data['db_hostname'], $data['db_username'], $data['db_password'], $data['db_database']);
 				
 		$file = DIR_APPLICATION . 'opencart.sql';
 		
@@ -51,4 +51,3 @@ class ModelInstall extends Model {
 		}		
 	}	
 }
-?>

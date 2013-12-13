@@ -71,9 +71,9 @@ $.plot($("#placeholder"), data, options);
 
 Here, data is an array of data series and options is an object with
 settings if you want to customize the plot. Take a look at the
-examples for some ideas of what to put in or look at the reference
-in the file `API.txt`. Here's a quick example that'll draw a line from
-(0, 0) to (1, 1):
+examples for some ideas of what to put in or look at the 
+[API reference](API.md). Here's a quick example that'll draw a line 
+from (0, 0) to (1, 1):
 
 ```js
 $.plot($("#placeholder"), [ [[0, 0], [1, 1]] ], { yaxis: { max: 1 } });

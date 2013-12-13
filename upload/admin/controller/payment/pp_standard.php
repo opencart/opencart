@@ -3,7 +3,7 @@ class ControllerPaymentPPStandard extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('payment/pp_standard');
+		$this->load->language('payment/pp_standard');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -46,9 +46,6 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
-		$this->data['help_debug'] = $this->language->get('help_debug');
-		$this->data['help_total'] = $this->language->get('help_total');
-
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -67,18 +64,21 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+       		'text'      => $this->language->get('text_home'),
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),      		
+      		'separator' => false
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+       		'text'      => $this->language->get('text_payment'),
+			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => ' :: '
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/pp_standard', 'token=' . $this->session->data['token'], 'SSL')
+       		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('payment/pp_standard', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => ' :: '
    		);
 
 		$this->data['action'] = $this->url->link('payment/pp_standard', 'token=' . $this->session->data['token'], 'SSL');
@@ -210,7 +210,7 @@ class ControllerPaymentPPStandard extends Controller {
 		$this->response->setOutput($this->render());
 	}
 
-	protected function validate() {
+	private function validate() {
 		if (!$this->user->hasPermission('modify', 'payment/pp_standard')) {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
@@ -219,11 +219,7 @@ class ControllerPaymentPPStandard extends Controller {
 			$this->error['email'] = $this->language->get('error_email');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }
 ?>

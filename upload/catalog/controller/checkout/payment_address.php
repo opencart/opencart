@@ -1,65 +1,87 @@
 <?php 
 class ControllerCheckoutPaymentAddress extends Controller {
 	public function index() {
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 		
-		$this->data['text_address_existing'] = $this->language->get('text_address_existing');
-		$this->data['text_address_new'] = $this->language->get('text_address_new');
-		$this->data['text_select'] = $this->language->get('text_select');
-		$this->data['text_none'] = $this->language->get('text_none');
-		$this->data['text_modify'] = $this->language->get('text_modify');
-
-		$this->data['entry_firstname'] = $this->language->get('entry_firstname');
-		$this->data['entry_lastname'] = $this->language->get('entry_lastname');
-		$this->data['entry_company'] = $this->language->get('entry_company');
-		$this->data['entry_address_1'] = $this->language->get('entry_address_1');
-		$this->data['entry_address_2'] = $this->language->get('entry_address_2');
-		$this->data['entry_postcode'] = $this->language->get('entry_postcode');
-		$this->data['entry_city'] = $this->language->get('entry_city');
-		$this->data['entry_country'] = $this->language->get('entry_country');
-		$this->data['entry_zone'] = $this->language->get('entry_zone');
+		$data['text_address_existing'] = $this->language->get('text_address_existing');
+		$data['text_address_new'] = $this->language->get('text_address_new');		
+		$data['text_select'] = $this->language->get('text_select');
+		$data['text_none'] = $this->language->get('text_none');
+		$data['text_loading'] = $this->language->get('text_loading');
+		
+		$data['entry_firstname'] = $this->language->get('entry_firstname');
+		$data['entry_lastname'] = $this->language->get('entry_lastname');
+		$data['entry_company'] = $this->language->get('entry_company');
+		$data['entry_address_1'] = $this->language->get('entry_address_1');
+		$data['entry_address_2'] = $this->language->get('entry_address_2');
+		$data['entry_postcode'] = $this->language->get('entry_postcode');
+		$data['entry_city'] = $this->language->get('entry_city');
+		$data['entry_country'] = $this->language->get('entry_country');
+		$data['entry_zone'] = $this->language->get('entry_zone');
 	
-		$this->data['button_continue'] = $this->language->get('button_continue');
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_upload'] = $this->language->get('button_upload');
 
 		if (isset($this->session->data['payment_address']['address_id'])) {
-			$this->data['address_id'] = $this->session->data['payment_address']['address_id'];
+			$data['address_id'] = $this->session->data['payment_address']['address_id'];
 		} else {
-			$this->data['address_id'] = $this->customer->getAddressId();
+			$data['address_id'] = $this->customer->getAddressId();
 		}
 		
 		$this->load->model('account/address');
 		
-		$this->data['addresses'] = $this->model_account_address->getAddresses();
+		$data['addresses'] = $this->model_account_address->getAddresses();
 												
 		if (isset($this->session->data['payment_address']['country_id'])) {
-			$this->data['country_id'] = $this->session->data['payment_address']['country_id'];		
+			$data['country_id'] = $this->session->data['payment_address']['country_id'];		
 		} else {
-			$this->data['country_id'] = $this->config->get('config_country_id');
+			$data['country_id'] = $this->config->get('config_country_id');
 		}
 				
 		if (isset($this->session->data['payment_address']['zone_id'])) {
-			$this->data['zone_id'] = $this->session->data['payment_address']['zone_id'];		
+			$data['zone_id'] = $this->session->data['payment_address']['zone_id'];		
 		} else {
-			$this->data['zone_id'] = '';
+			$data['zone_id'] = '';
 		}
 		
 		$this->load->model('localisation/country');
 		
-		$this->data['countries'] = $this->model_localisation_country->getCountries();
-	
-		$this->data['shipping_required'] = $this->cart->hasShipping();
-	
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/payment_address.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/checkout/payment_address.tpl';
-		} else {
-			$this->template = 'default/template/checkout/payment_address.tpl';
+		$data['countries'] = $this->model_localisation_country->getCountries();
+		
+		// Custom Fields
+		$this->load->model('account/custom_field');
+		
+		$data['custom_fields'] = array();
+		
+		$custom_fields = $this->model_account_custom_field->getCustomFields('payment_address', $this->config->get('config_customer_group_id'));
+		
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['type'] == 'checkbox') {
+				$value = array();
+			} else {
+				$value = '';
+			}
+						
+			$data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field['custom_field_value'],
+				'name'               => $custom_field['name'],
+				'type'               => $custom_field['type'],
+				'value'              => $value,
+				'required'           => $custom_field['required'],
+				'sort_order'         => $custom_field['sort_order']
+			);
 		}
 	
-		$this->response->setOutput($this->render());			
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/payment_address.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/payment_address.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/checkout/payment_address.tpl', $data));
+		}			
   	}
 	
 	public function save() {
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 		
 		$json = array();
 		
@@ -132,7 +154,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 				
 				$country_info = $this->model_localisation_country->getCountry($this->request->post['country_id']);
 				
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2) || (utf8_strlen($this->request->post['postcode']) > 10)) {
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['postcode']) < 2 || utf8_strlen($this->request->post['postcode']) > 10)) {
 					$json['error']['postcode'] = $this->language->get('error_postcode');
 				}
 				
@@ -144,6 +166,17 @@ class ControllerCheckoutPaymentAddress extends Controller {
 					$json['error']['zone'] = $this->language->get('error_zone');
 				}
 				
+				// Custom Field Validation
+				$this->load->model('account/custom_field');
+				
+				$custom_fields = $this->model_account_custom_field->getCustomFields('payment_address', $this->config->get('config_customer_group_id'));
+				
+				foreach ($custom_fields as $custom_field) {
+					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					}
+				}
+							
 				if (!$json) {
 					// Default Payment Address
 					$this->load->model('account/address');
@@ -154,6 +187,13 @@ class ControllerCheckoutPaymentAddress extends Controller {
 															
 					unset($this->session->data['payment_method']);	
 					unset($this->session->data['payment_methods']);
+					
+					$activity_data = array(
+						'customer_id' => $this->customer->getId(),
+						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
+					);
+					
+					$this->model_account_activity->addActivity('address_add', $activity_data);					
 				}		
 			}		
 		}
@@ -161,4 +201,3 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 }
-?>

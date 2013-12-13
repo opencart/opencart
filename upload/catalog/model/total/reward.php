@@ -2,7 +2,7 @@
 class ModelTotalReward extends Model {
 	public function getTotal(&$total_data, &$total, &$taxes) {
 		if (isset($this->session->data['reward'])) {
-			$this->language->load('total/reward');
+			$this->load->language('total/reward');
 			
 			$points = $this->customer->getRewardPoints();
 			
@@ -42,7 +42,6 @@ class ModelTotalReward extends Model {
 				$total_data[] = array(
 					'code'       => 'reward',
         			'title'      => sprintf($this->language->get('text_reward'), $this->session->data['reward']),
-	    			'text'       => $this->currency->format(-$discount_total),
         			'value'      => -$discount_total,
 					'sort_order' => $this->config->get('reward_sort_order')
       			);
@@ -53,7 +52,7 @@ class ModelTotalReward extends Model {
 	}
 	
 	public function confirm($order_info, $order_total) {
-		$this->language->load('total/reward');
+		$this->load->language('total/reward');
 		
 		$points = 0;
 		
@@ -69,4 +68,3 @@ class ModelTotalReward extends Model {
 		}
 	}		
 }
-?>

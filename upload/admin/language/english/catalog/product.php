@@ -7,7 +7,6 @@ $_['text_success']           = 'Success: You have modified products!';
 $_['text_plus']              = '+';
 $_['text_minus']             = '-';
 $_['text_default']           = 'Default';
-$_['text_image_manager']     = 'Image Manager';
 $_['text_option']            = 'Option';
 $_['text_option_value']      = 'Option Value';
 $_['text_percent']           = 'Percentage';
@@ -24,10 +23,10 @@ $_['column_action']          = 'Action';
 
 // Entry
 $_['entry_name']             = 'Product Name';
+$_['entry_description']      = 'Description';
+$_['entry_meta_title'] 	     = 'Meta Tag Title';
 $_['entry_meta_keyword'] 	 = 'Meta Tag Keywords';
 $_['entry_meta_description'] = 'Meta Tag Description';
-$_['entry_description']      = 'Description';
-$_['entry_store']            = 'Stores';
 $_['entry_keyword']          = 'SEO Keyword';
 $_['entry_model']            = 'Model';
 $_['entry_sku']              = 'SKU';
@@ -39,6 +38,7 @@ $_['entry_mpn']              = 'MPN';
 $_['entry_location']         = 'Location';
 $_['entry_shipping']         = 'Requires Shipping'; 
 $_['entry_manufacturer']     = 'Manufacturer';
+$_['entry_store']            = 'Stores';
 $_['entry_date_available']   = 'Date Available';
 $_['entry_quantity']         = 'Quantity';
 $_['entry_minimum']          = 'Minimum Quantity';
@@ -98,5 +98,5 @@ $_['help_tag']          	 = 'comma separated';
 $_['error_warning']          = 'Warning: Please check the form carefully for errors!';
 $_['error_permission']       = 'Warning: You do not have permission to modify products!';
 $_['error_name']             = 'Product Name must be greater than 3 and less than 255 characters!';
+$_['error_meta_title']       = 'Meta Title must be greater than 3 and less than 255 characters!';
 $_['error_model']            = 'Product Model must be greater than 3 and less than 64 characters!';
-?>

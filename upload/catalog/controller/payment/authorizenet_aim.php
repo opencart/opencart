@@ -1,22 +1,22 @@
 <?php
 class ControllerPaymentAuthorizeNetAim extends Controller {
-	protected function index() {
-		$this->language->load('payment/authorizenet_aim');
+	public function index() {
+		$this->load->language('payment/authorizenet_aim');
 		
-		$this->data['text_credit_card'] = $this->language->get('text_credit_card');
-		$this->data['text_wait'] = $this->language->get('text_wait');
+		$data['text_credit_card'] = $this->language->get('text_credit_card');
+		$data['text_wait'] = $this->language->get('text_wait');
 		
-		$this->data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
-		$this->data['entry_cc_number'] = $this->language->get('entry_cc_number');
-		$this->data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
-		$this->data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
+		$data['entry_cc_owner'] = $this->language->get('entry_cc_owner');
+		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
+		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
+		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
 		
-		$this->data['button_confirm'] = $this->language->get('button_confirm');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 		
-		$this->data['months'] = array();
+		$data['months'] = array();
 		
 		for ($i = 1; $i <= 12; $i++) {
-			$this->data['months'][] = array(
+			$data['months'][] = array(
 				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)), 
 				'value' => sprintf('%02d', $i)
 			);
@@ -24,22 +24,20 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		
 		$today = getdate();
 
-		$this->data['year_expire'] = array();
+		$data['year_expire'] = array();
 
 		for ($i = $today['year']; $i < $today['year'] + 11; $i++) {
-			$this->data['year_expire'][] = array(
+			$data['year_expire'][] = array(
 				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
 				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)) 
 			);
 		}
 		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_aim.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/authorizenet_aim.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_aim.tpl', $data);
 		} else {
-			$this->template = 'default/template/payment/authorizenet_aim.tpl';
+			return $this->load->view('default/template/payment/authorizenet_aim.tpl', $data);
 		}	
-		
-		$this->render();		
 	}
 	
 	public function send() {
@@ -61,7 +59,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$data['x_tran_key'] = $this->config->get('authorizenet_aim_key');
 		$data['x_version'] = '3.1';
 		$data['x_delim_data'] = 'true';
-		$data['x_delim_char'] = ',';
+		$data['x_delim_char'] = '|';
 		$data['x_encap_char'] = '"';
 		$data['x_relay_response'] = 'false';
 		$data['x_first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
@@ -136,7 +134,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 			
 			$response_info = array();
 			
-			$results = explode(',', $response);
+			$results = explode('|', $response);
 			
 			foreach ($results as $result) {
 				$response_info[$i] = trim($result, '"');
@@ -173,7 +171,7 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 					$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('authorizenet_aim_order_status_id'), $message, false);
 				}					
 				
-				$json['success'] = $this->url->link('checkout/success', '', 'SSL');
+				$json['redirect'] = $this->url->link('checkout/success', '', 'SSL');
 			} else {
 				$json['error'] = $response_info[4];
 			}
@@ -188,4 +186,3 @@ class ControllerPaymentAuthorizeNetAim extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 }
-?>

@@ -27,4 +27,3 @@ $_['help_product']        = '(Autocomplete)';
 // Error 
 $_['error_permission']    = 'Warning: You do not have permission to modify module featured!';
 $_['error_image']         = 'Image width &amp; height dimensions required!';
-?>

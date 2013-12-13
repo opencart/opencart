@@ -86,7 +86,7 @@ class ModelCheckoutVoucher extends Model {
 				$template->data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher['code']);
 				$template->data['text_footer'] = $language->get('text_footer');
 				
-				if (file_exists(DIR_IMAGE . $voucher['image'])) {
+				if (is_file(DIR_IMAGE . $voucher['image'])) {
 					$template->data['image'] = $this->config->get('config_url') . 'image/' . $voucher['image'];
 				} else {
 					$template->data['image'] = '';
@@ -102,18 +102,11 @@ class ModelCheckoutVoucher extends Model {
 					$html = $template->fetch('default/template/mail/voucher.tpl');
 				}
 					
-				$mail = new Mail(); 
-				$mail->protocol = $this->config->get('config_mail_protocol');
-				$mail->parameter = $this->config->get('config_mail_parameter');
-				$mail->hostname = $this->config->get('config_smtp_host');
-				$mail->username = $this->config->get('config_smtp_username');
-				$mail->password = $this->config->get('config_smtp_password');
-				$mail->port = $this->config->get('config_smtp_port');
-				$mail->timeout = $this->config->get('config_smtp_timeout');			
+				$mail = new Mail($this->config->get('config_mail')); 		
 				$mail->setTo($voucher['to_email']);
 				$mail->setFrom($this->config->get('config_email'));
 				$mail->setSender($order_info['store_name']);
-				$mail->setSubject(html_entity_decode(sprintf($language->get('text_subject'), $voucher['from_name']), ENT_QUOTES, 'UTF-8'));
+				$mail->setSubject(sprintf($language->get('text_subject'), $voucher['from_name']));
 				$mail->setHtml($html);				
 				$mail->send();		
 			}
@@ -124,4 +117,3 @@ class ModelCheckoutVoucher extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET voucher_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', amount = '" . (float)$amount . "', date_added = NOW()");
 	}
 }
-?>

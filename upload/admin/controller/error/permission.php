@@ -1,33 +1,30 @@
 <?php    
 class ControllerErrorPermission extends Controller {    
 	public function index() { 
-    	$this->language->load('error/permission');
+    	$this->load->language('error/permission');
   
     	$this->document->setTitle($this->language->get('heading_title'));
 		
-    	$this->data['heading_title'] = $this->language->get('heading_title');
+    	$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_permission'] = $this->language->get('text_permission');
+		$data['text_permission'] = $this->language->get('text_permission');
 													
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('error/permission', 'token=' . $this->session->data['token'], 'SSL')
    		);
-
-		$this->template = 'error/permission.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('error/permission.tpl', $data));
   	}
 	
 	public function check() {
@@ -45,7 +42,7 @@ class ControllerErrorPermission extends Controller {
 			}
 			
 			$ignore = array(
-				'common/home',
+				'common/dashboard',
 				'common/login',
 				'common/logout',
 				'common/forgotten',
@@ -55,9 +52,8 @@ class ControllerErrorPermission extends Controller {
 			);			
 						
 			if (!in_array($route, $ignore) && !$this->user->hasPermission('access', $route)) {
-				return $this->forward('error/permission');
+				return new Action('error/permission');
 			}
 		}
 	}	
 }
-?>

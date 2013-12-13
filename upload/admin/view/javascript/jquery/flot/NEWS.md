@@ -1,3 +1,50 @@
+## Flot 0.8.1 ##
+
+### Bug fixes ###
+
+ - Fixed a regression in the time plugin, introduced in 0.8, that caused dates
+   to align to the minute rather than to the highest appropriate unit. This
+   caused many x-axes in 0.8 to have different ticks than they did in 0.7.
+   (reported by Tom Sheppard, patch by Daniel Shapiro, issue #1017, pull
+   request #1023)
+
+ - Fixed a regression in text rendering, introduced in 0.8, that caused axis
+   labels with the same text as another label on the same axis to disappear.
+   More generally, it's again possible to have the same text in two locations.
+   (issue #1032)
+
+ - Fixed a regression in text rendering, introduced in 0.8, where axis labels
+   were no longer assigned an explicit width, and their text could not wrap.
+   (reported by sabregreen, issue #1019)
+
+ - Fixed a regression in the pie plugin, introduced in 0.8, that prevented it
+   from accepting data in the format '[[x, y]]'.
+   (patch by Nicolas Morel, pull request #1024)
+
+ - The 'zero' series option and 'autoscale' format option are no longer
+   ignored when the series contains a null value.
+   (reported by Daniel Shapiro, issue #1033)
+
+ - Avoid triggering the time-mode plugin exception when there are zero series.
+   (reported by Daniel Rothig, patch by Mark Raymond, issue #1016)
+
+ - When a custom color palette has fewer colors than the default palette, Flot
+   no longer fills out the colors with the remainder of the default.
+   (patch by goorpy, issue #1031, pull request #1034)
+
+ - Fixed missing update for bar highlights after a zoom or other redraw.
+   (reported by Paolo Valleri, issue #1030)
+
+ - Fixed compatibility with jQuery versions earlier than 1.7.
+   (patch by Lee Willis, issue #1027, pull request #1027)
+
+ - The mouse wheel no longer scrolls the page when using the navigate plugin.
+   (patch by vird, pull request #1020)
+
+ - Fixed missing semicolons in the core library.
+   (reported by Michal Zglinski)
+
+
 ## Flot 0.8.0 ##
 
 ### API changes ###

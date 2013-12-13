@@ -67,7 +67,7 @@ class Image {
 
 		if ($default == 'w') {
 			$scale = $scale_w;
-		} elseif ($default == 'h'){
+		} elseif ($default == 'h') {
 			$scale = $scale_h;
 		} else {
 			$scale = min($scale_w, $scale_h);
@@ -192,4 +192,3 @@ class Image {
 		return array($r, $g, $b);
 	}
 }
-?>

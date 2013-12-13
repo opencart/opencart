@@ -3,7 +3,7 @@ class ControllerSaleCustomField extends Controller {
 	private $error = array();  
  
 	public function index() {
-		$this->language->load('sale/custom_field');
+		$this->load->language('sale/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -13,7 +13,7 @@ class ControllerSaleCustomField extends Controller {
 	}
 
 	public function insert() {
-		$this->language->load('sale/custom_field');
+		$this->load->language('sale/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -38,14 +38,14 @@ class ControllerSaleCustomField extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getForm();
 	}
 
 	public function update() {
-		$this->language->load('sale/custom_field');
+		$this->load->language('sale/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
@@ -70,14 +70,14 @@ class ControllerSaleCustomField extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getForm();
 	}
 
 	public function delete() {
-		$this->language->load('sale/custom_field');
+		$this->load->language('sale/custom_field');
 
 		$this->document->setTitle($this->language->get('heading_title'));
  		
@@ -104,7 +104,7 @@ class ControllerSaleCustomField extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 			
-			$this->redirect($this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getList();
@@ -143,42 +143,35 @@ class ControllerSaleCustomField extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
-		$this->data['insert'] = $this->url->link('sale/custom_field/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('sale/custom_field/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['insert'] = $this->url->link('sale/custom_field/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('sale/custom_field/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		 
-		$this->data['custom_fields'] = array();
+		$data['custom_fields'] = array();
 		
-		$data = array(
+		$filter_data = array(
 			'sort'  => $sort,
 			'order' => $order,
-			'start' => ($page - 1) * $this->config->get('config_admin_limit'),
-			'limit' => $this->config->get('config_admin_limit')
+			'start' => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit' => $this->config->get('config_limit_admin')
 		);
 		
 		$custom_field_total = $this->model_sale_custom_field->getTotalCustomFields();
 		
-		$results = $this->model_sale_custom_field->getCustomFields($data);
+		$results = $this->model_sale_custom_field->getCustomFields($filter_data);
 		
 		foreach ($results as $result) {
-			$action = array();
-			
-			$action[] = array(
-				'text' => $this->language->get('text_edit'),
-				'href' => $this->url->link('sale/custom_field/update', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $result['custom_field_id'] . $url, 'SSL')
-			);
-			
 			$type = '';
 			
 			switch ($result['type']) {
@@ -214,63 +207,53 @@ class ControllerSaleCustomField extends Controller {
 					break;																	
 			}
 			
-			$location = '';
-			
-			switch ($result['location']) {
-				case 'customer':
-					$location = $this->language->get('text_customer');
-					break;
-				case 'address':
-					$location = $this->language->get('text_address');
-					break;
-				case 'payment_address':
-					$location = $this->language->get('text_payment_address');
-					break;
-				case 'shipping_address':
-					$location = $this->language->get('text_shipping_address');
-					break;										
-			}			
-		
-			$this->data['custom_fields'][] = array(
+			$data['custom_fields'][] = array(
 				'custom_field_id' => $result['custom_field_id'],
 				'name'            => $result['name'],
 				'type'            => $type,
-				'location'        => $location,
+				'storage'         => $this->language->get('text_' . $result['storage']),
 				'status'          => $result['status'],
 				'sort_order'      => $result['sort_order'],
-				'selected'        => isset($this->request->post['selected']) && in_array($result['custom_field_id'], $this->request->post['selected']),
-				'action'          => $action
+				'edit'            => $this->url->link('sale/custom_field/update', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $result['custom_field_id'] . $url, 'SSL')
 			);
 		}
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 		
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_type'] = $this->language->get('column_type');
-		$this->data['column_location'] = $this->language->get('column_location');
-		$this->data['column_status'] = $this->language->get('column_status');
-		$this->data['column_sort_order'] = $this->language->get('column_sort_order');
-		$this->data['column_action'] = $this->language->get('column_action');	
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_type'] = $this->language->get('column_type');
+		$data['column_location'] = $this->language->get('column_location');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_sort_order'] = $this->language->get('column_sort_order');
+		$data['column_action'] = $this->language->get('column_action');	
 
-		$this->data['button_insert'] = $this->language->get('button_insert');
-		$this->data['button_delete'] = $this->language->get('button_delete');
+		$data['button_insert'] = $this->language->get('button_insert');
+		$data['button_edit'] = $this->language->get('button_edit');
+		$data['button_delete'] = $this->language->get('button_delete');
  
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
 		if (isset($this->session->data['success'])) {
-			$this->data['success'] = $this->session->data['success'];
+			$data['success'] = $this->session->data['success'];
 		
 			unset($this->session->data['success']);
 		} else {
-			$this->data['success'] = '';
+			$data['success'] = '';
 		}
-
+		
+		if (isset($this->request->post['selected'])) {
+			$data['selected'] = (array)$this->request->post['selected'];
+		} else {
+			$data['selected'] = array();
+		}
+		
 		$url = '';
 
 		if ($order == 'ASC') {
@@ -283,11 +266,10 @@ class ControllerSaleCustomField extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-		$this->data['sort_name'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cfd.name' . $url, 'SSL');
-		$this->data['sort_type'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.type' . $url, 'SSL');
-		$this->data['sort_location'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.name' . $url, 'SSL');
-		$this->data['sort_status'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.status' . $url, 'SSL');
-		$this->data['sort_sort_order'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.sort_order' . $url, 'SSL');
+		$data['sort_name'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cfd.name' . $url, 'SSL');
+		$data['sort_type'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.type' . $url, 'SSL');
+		$data['sort_status'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.status' . $url, 'SSL');
+		$data['sort_sort_order'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . '&sort=cf.sort_order' . $url, 'SSL');
 		
 		$url = '';
 
@@ -302,95 +284,74 @@ class ControllerSaleCustomField extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $custom_field_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_admin_limit');
+		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->url = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($custom_field_total) ? (($page - 1) * $this->config->get('config_admin_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_admin_limit')) > ($custom_field_total - $this->config->get('config_admin_limit'))) ? $custom_field_total : ((($page - 1) * $this->config->get('config_admin_limit')) + $this->config->get('config_admin_limit')), $custom_field_total, ceil($custom_field_total / $this->config->get('config_admin_limit')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($custom_field_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($custom_field_total - $this->config->get('config_limit_admin'))) ? $custom_field_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $custom_field_total, ceil($custom_field_total / $this->config->get('config_limit_admin')));
 		
-		$this->data['sort'] = $sort;
-		$this->data['order'] = $order;
-
-		$this->template = 'sale/custom_field_list.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
-		);
-				
-		$this->response->setOutput($this->render());
+		$data['sort'] = $sort;
+		$data['order'] = $order;
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('sale/custom_field_list.tpl', $data));
 	}
 
 	protected function getForm() {
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_choose'] = $this->language->get('text_choose');
-		$this->data['text_select'] = $this->language->get('text_select');
-		$this->data['text_radio'] = $this->language->get('text_radio');
-		$this->data['text_checkbox'] = $this->language->get('text_checkbox');
-		$this->data['text_input'] = $this->language->get('text_input');
-		$this->data['text_text'] = $this->language->get('text_text');
-		$this->data['text_textarea'] = $this->language->get('text_textarea');
-		$this->data['text_file'] = $this->language->get('text_file');
-		$this->data['text_date'] = $this->language->get('text_date');
-		$this->data['text_datetime'] = $this->language->get('text_datetime');
-		$this->data['text_time'] = $this->language->get('text_time');
-		$this->data['text_customer'] = $this->language->get('text_customer');
-		$this->data['text_address'] = $this->language->get('text_address');
-		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
-		$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
+		$data['text_choose'] = $this->language->get('text_choose');
+		$data['text_select'] = $this->language->get('text_select');
+		$data['text_radio'] = $this->language->get('text_radio');
+		$data['text_checkbox'] = $this->language->get('text_checkbox');
+		$data['text_input'] = $this->language->get('text_input');
+		$data['text_text'] = $this->language->get('text_text');
+		$data['text_textarea'] = $this->language->get('text_textarea');
+		$data['text_file'] = $this->language->get('text_file');
+		$data['text_date'] = $this->language->get('text_date');
+		$data['text_datetime'] = $this->language->get('text_datetime');
+		$data['text_time'] = $this->language->get('text_time');
+		$data['text_account'] = $this->language->get('text_account');
+		$data['text_address'] = $this->language->get('text_address');
+		$data['text_enabled'] = $this->language->get('text_enabled');
+		$data['text_disabled'] = $this->language->get('text_disabled');
 		
-		$this->data['text_enabled'] = $this->language->get('text_enabled');
-		$this->data['text_disabled'] = $this->language->get('text_disabled');
-		$this->data['text_begining'] = $this->language->get('text_begining');
-		$this->data['text_firstname'] = $this->language->get('text_firstname');
-		$this->data['text_lastname'] = $this->language->get('text_lastname');
-		$this->data['text_email'] = $this->language->get('text_email');
-		$this->data['text_telephone'] = $this->language->get('text_telephone');
-		$this->data['text_fax'] = $this->language->get('text_fax');
-		$this->data['text_company'] = $this->language->get('text_company');
-		$this->data['text_customer_group'] = $this->language->get('text_customer_group');
-		$this->data['text_address_1'] = $this->language->get('text_address_1');
-		$this->data['text_address_2'] = $this->language->get('text_address_2');
-		$this->data['text_city'] = $this->language->get('text_city');
-		$this->data['text_postcode'] = $this->language->get('text_postcode');
-		$this->data['text_country'] = $this->language->get('text_country');
-		$this->data['text_zone'] = $this->language->get('text_zone');	
-		
-		$this->data['entry_name'] = $this->language->get('entry_name');
-		$this->data['entry_type'] = $this->language->get('entry_type');
-		$this->data['entry_value'] = $this->language->get('entry_value');
-		$this->data['entry_custom_value'] = $this->language->get('entry_custom_value');
-		$this->data['entry_customer_group'] = $this->language->get('entry_customer_group');
-		$this->data['entry_required'] = $this->language->get('entry_required');
-		$this->data['entry_location'] = $this->language->get('entry_location');
-		$this->data['entry_position'] = $this->language->get('entry_position');
-		$this->data['entry_status'] = $this->language->get('entry_status');
-		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
+		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_type'] = $this->language->get('entry_type');
+		$data['entry_value'] = $this->language->get('entry_value');
+		$data['entry_custom_value'] = $this->language->get('entry_custom_value');
+		$data['entry_storage'] = $this->language->get('entry_storage');
+		$data['entry_location'] = $this->language->get('entry_location');
+		$data['entry_form'] = $this->language->get('entry_location');
+		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
+		$data['entry_required'] = $this->language->get('entry_required');
+		$data['entry_status'] = $this->language->get('entry_status');
+		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
-		$this->data['help_position'] = $this->language->get('help_position');
-
-		$this->data['button_save'] = $this->language->get('button_save');
-		$this->data['button_cancel'] = $this->language->get('button_cancel');
-		$this->data['button_add_custom_field_value'] = $this->language->get('button_add_custom_field_value');
-		$this->data['button_remove'] = $this->language->get('button_remove');
+		$data['button_save'] = $this->language->get('button_save');
+		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_custom_field_value_add'] = $this->language->get('button_custom_field_value_add');
+		$data['button_remove'] = $this->language->get('button_remove');
 
  		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
  		if (isset($this->error['name'])) {
-			$this->data['error_name'] = $this->error['name'];
+			$data['error_name'] = $this->error['name'];
 		} else {
-			$this->data['error_name'] = array();
+			$data['error_name'] = array();
 		}	
 				
  		if (isset($this->error['custom_field_value'])) {
-			$this->data['error_custom_field_value'] = $this->error['custom_field_value'];
+			$data['error_custom_field_value'] = $this->error['custom_field_value'];
 		} else {
-			$this->data['error_custom_field_value'] = array();
+			$data['error_custom_field_value'] = array();
 		}	
 
 		$url = '';
@@ -407,118 +368,82 @@ class ControllerSaleCustomField extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$this->data['breadcrumbs'] = array();
+  		$data['breadcrumbs'] = array();
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
-   		$this->data['breadcrumbs'][] = array(
+   		$data['breadcrumbs'][] = array(
        		'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL')
    		);
 		
 		if (!isset($this->request->get['custom_field_id'])) {
-			$this->data['action'] = $this->url->link('sale/custom_field/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['action'] = $this->url->link('sale/custom_field/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else { 
-			$this->data['action'] = $this->url->link('sale/custom_field/update', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $this->request->get['custom_field_id'] . $url, 'SSL');
+			$data['action'] = $this->url->link('sale/custom_field/update', 'token=' . $this->session->data['token'] . '&custom_field_id=' . $this->request->get['custom_field_id'] . $url, 'SSL');
 		}
 
-		$this->data['cancel'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['custom_field_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
       		$custom_field_info = $this->model_sale_custom_field->getCustomField($this->request->get['custom_field_id']);
     	}
 		
-		$this->data['token'] = $this->session->data['token'];
+		$data['token'] = $this->session->data['token'];
 		
 		$this->load->model('localisation/language');
 		
-		$this->data['languages'] = $this->model_localisation_language->getLanguages();
+		$data['languages'] = $this->model_localisation_language->getLanguages();
 		
 		if (isset($this->request->post['custom_field_description'])) {
-			$this->data['custom_field_description'] = $this->request->post['custom_field_description'];
+			$data['custom_field_description'] = $this->request->post['custom_field_description'];
 		} elseif (isset($this->request->get['custom_field_id'])) {
-			$this->data['custom_field_description'] = $this->model_sale_custom_field->getCustomFieldDescriptions($this->request->get['custom_field_id']);
+			$data['custom_field_description'] = $this->model_sale_custom_field->getCustomFieldDescriptions($this->request->get['custom_field_id']);
 		} else {
-			$this->data['custom_field_description'] = array();
+			$data['custom_field_description'] = array();
 		}	
 						
 		if (isset($this->request->post['type'])) {
-			$this->data['type'] = $this->request->post['type'];
+			$data['type'] = $this->request->post['type'];
 		} elseif (!empty($custom_field_info)) {
-			$this->data['type'] = $custom_field_info['type'];
+			$data['type'] = $custom_field_info['type'];
 		} else {
-			$this->data['type'] = '';
+			$data['type'] = '';
 		}
 		
 		if (isset($this->request->post['value'])) {
-			$this->data['value'] = $this->request->post['value'];
+			$data['value'] = $this->request->post['value'];
 		} elseif (!empty($custom_field_info)) {
-			$this->data['value'] = $custom_field_info['value'];
+			$data['value'] = $custom_field_info['value'];
 		} else {
-			$this->data['value'] = '';
+			$data['value'] = '';
+		}
+		
+		if (isset($this->request->post['storage'])) {
+			$data['storage'] = $this->request->post['storage'];
+		} elseif (!empty($custom_field_info)) {
+			$data['storage'] = $custom_field_info['storage'];
+		} else {
+			$data['storage'] = '';
 		}
 				
-		if (isset($this->request->post['custom_field_customer_group'])) {
-			$custom_field_customer_groups = $this->request->post['custom_field_customer_group'];
-		} elseif (isset($this->request->get['custom_field_id'])) {
-			$custom_field_customer_groups = $this->model_sale_custom_field->getCustomFieldCustomerGroups($this->request->get['custom_field_id']);
-		} else {
-			$custom_field_customer_groups = array();
-		}
-		
-		$this->data['custom_field_customer_group'] = array();
-		
-		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
-			if (isset($custom_field_customer_group['customer_group_id'])) {
-				$this->data['custom_field_customer_group'][] = $custom_field_customer_group['customer_group_id'];
-			}
-		}
-		
-		$this->data['custom_field_required'] = array();
-		
-		foreach ($custom_field_customer_groups as $custom_field_customer_group) {
-			if (isset($custom_field_customer_group['required'])) {
-				$this->data['custom_field_required'][] = $custom_field_customer_group['required'];
-			}
-		}
-		
-		$this->load->model('sale/customer_group');
-		
-		$this->data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();	
-								
-		if (isset($this->request->post['location'])) {
-			$this->data['location'] = $this->request->post['location'];
-		} elseif (!empty($custom_field_info)) {
-			$this->data['location'] = $custom_field_info['location'];
-		} else {
-			$this->data['location'] = '';
-		}
-		
-		if (isset($this->request->post['position'])) {
-			$this->data['position'] = $this->request->post['position'];
-		} elseif (!empty($custom_field_info)) {
-			$this->data['position'] = $custom_field_info['position'];
-		} else {
-			$this->data['position'] = '';
-		}
-			
 		if (isset($this->request->post['status'])) {
-			$this->data['status'] = $this->request->post['status'];
+			$data['status'] = $this->request->post['status'];
 		} elseif (!empty($custom_field_info)) {
-			$this->data['status'] = $custom_field_info['status'];
+			$data['status'] = $custom_field_info['status'];
 		} else {
-			$this->data['status'] = '';
+			$data['status'] = '';
 		}
 					
 		if (isset($this->request->post['sort_order'])) {
-			$this->data['sort_order'] = $this->request->post['sort_order'];
+			$data['sort_order'] = $this->request->post['sort_order'];
 		} elseif (!empty($custom_field_info)) {
-			$this->data['sort_order'] = $custom_field_info['sort_order'];
+			$data['sort_order'] = $custom_field_info['sort_order'];
 		} else {
-			$this->data['sort_order'] = '';
+			$data['sort_order'] = '';
 		}
 		
 		if (isset($this->request->post['custom_field_value'])) {
@@ -529,23 +454,64 @@ class ControllerSaleCustomField extends Controller {
 			$custom_field_values = array();
 		}
 		
-		$this->data['custom_field_values'] = array();
+		$data['custom_field_values'] = array();
 		 
 		foreach ($custom_field_values as $custom_field_value) {
-			$this->data['custom_field_values'][] = array(
+			$data['custom_field_values'][] = array(
 				'custom_field_value_id'          => $custom_field_value['custom_field_value_id'],
 				'custom_field_value_description' => $custom_field_value['custom_field_value_description'],
 				'sort_order'                     => $custom_field_value['sort_order']
 			);
 		}
-
-		$this->template = 'sale/custom_field_form.tpl';
-		$this->children = array(
-			'common/header',
-			'common/footer'
+		
+		// Locations
+		if (isset($this->request->post['custom_field_location'])) {
+			$custom_field_location = $this->request->post['custom_field_location'];
+		} elseif (isset($this->request->get['custom_field_id'])) {
+			$custom_field_location = $this->model_sale_custom_field->getCustomFieldLocations($this->request->get['custom_field_id']);
+		} else {
+			$custom_field_location = array();
+		}
+		
+		$locations = array(
+			'register',
+			'account',
+			'address',
+			'payment_address',
+			'shipping_address'
 		);
-				
-		$this->response->setOutput($this->render());
+		
+		$data['locations'] = array();
+		
+		foreach ($locations as $location) {
+			if (isset($custom_field_location[$location]['customer_group'])) {
+				$customer_group = $custom_field_location[$location]['customer_group'];
+			} else {
+				$customer_group = array();
+			}
+			
+			if (isset($custom_field_location[$location]['required'])) {
+				$required = $custom_field_location[$location]['required'];
+			} else {
+				$required = array();
+			}
+						
+			$data['locations'][] = array(
+				'text'           => $this->language->get('text_' . $location),
+				'value'          => $location,
+				'customer_group' => $customer_group,
+				'required'       => $required
+			);			
+		}
+		
+		$this->load->model('sale/customer_group');
+		
+		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+		
+		$data['header'] = $this->load->controller('common/header');
+		$data['footer'] = $this->load->controller('common/footer');
+		
+		$this->response->setOutput($this->load->view('sale/custom_field_form.tpl', $data));
 	}
 
 	protected function validateForm() {
@@ -573,11 +539,7 @@ class ControllerSaleCustomField extends Controller {
 			}	
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 
 	protected function validateDelete() {
@@ -585,11 +547,6 @@ class ControllerSaleCustomField extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}	
 }
-?>

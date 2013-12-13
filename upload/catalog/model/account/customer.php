@@ -14,14 +14,14 @@ class ModelAccountCustomer extends Model {
       	$this->db->query("INSERT INTO " . DB_PREFIX . "customer SET store_id = '" . (int)$this->config->get('config_store_id') . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($data['password'])))) . "', newsletter = '" . (isset($data['newsletter']) ? (int)$data['newsletter'] : 0) . "', customer_group_id = '" . (int)$customer_group_id . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "', status = '1', approved = '" . (int)!$customer_group_info['approval'] . "', date_added = NOW()");
       	
 		$customer_id = $this->db->getLastId();
-			
+				
       	$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int)$customer_id . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', city = '" . $this->db->escape($data['city']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', country_id = '" . (int)$data['country_id'] . "', zone_id = '" . (int)$data['zone_id'] . "'");
 		
 		$address_id = $this->db->getLastId();
 
       	$this->db->query("UPDATE " . DB_PREFIX . "customer SET address_id = '" . (int)$address_id . "' WHERE customer_id = '" . (int)$customer_id . "'");
 		
-		$this->language->load('mail/customer');
+		$this->load->language('mail/customer');
 		
 		$subject = sprintf($this->language->get('text_subject'), $this->config->get('config_name'));
 		
@@ -38,18 +38,11 @@ class ModelAccountCustomer extends Model {
 		$message .= $this->language->get('text_thanks') . "\n";
 		$message .= $this->config->get('config_name');
 		
-		$mail = new Mail();
-		$mail->protocol = $this->config->get('config_mail_protocol');
-		$mail->parameter = $this->config->get('config_mail_parameter');
-		$mail->hostname = $this->config->get('config_smtp_host');
-		$mail->username = $this->config->get('config_smtp_username');
-		$mail->password = $this->config->get('config_smtp_password');
-		$mail->port = $this->config->get('config_smtp_port');
-		$mail->timeout = $this->config->get('config_smtp_timeout');				
+		$mail = new Mail($this->config->get('config_mail'));			
 		$mail->setTo($data['email']);
 		$mail->setFrom($this->config->get('config_email'));
 		$mail->setSender($this->config->get('config_name'));
-		$mail->setSubject(html_entity_decode($subject, ENT_QUOTES, 'UTF-8'));
+		$mail->setSubject($subject);
 		$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 		$mail->send();
 		
@@ -74,15 +67,17 @@ class ModelAccountCustomer extends Model {
 			$mail->send();
 			
 			// Send to additional alert emails if new account email is enabled
-			$emails = explode(',', $this->config->get('config_alert_emails'));
+			$emails = explode(',', $this->config->get('config_mail_alert'));
 			
 			foreach ($emails as $email) {
-				if (strlen($email) > 0 && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
+				if (utf8_strlen($email) > 0 && preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $email)) {
 					$mail->setTo($email);
 					$mail->send();
 				}
 			}
 		}
+		
+		return $customer_id;
 	}
 	
 	public function editCustomer($data) {
@@ -208,6 +203,5 @@ class ModelAccountCustomer extends Model {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "customer_ban_ip` WHERE ip = '" . $this->db->escape($ip) . "'");
 		
 		return $query->num_rows;
-	}	
+	}
 }
-?>

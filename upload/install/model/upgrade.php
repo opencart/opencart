@@ -51,20 +51,20 @@ class ModelUpgrade extends Model {
 		foreach ($statements as $sql) {
 			// Get all fields		
 			$field_data = array();
-			
-			preg_match_all('#`(\w[\w\d]*)`\s+((tinyint|smallint|mediumint|bigint|int|tinytext|text|mediumtext|longtext|tinyblob|blob|mediumblob|longblob|varchar|char|datetime|date|float|double|decimal|timestamp|time|year|enum|set|binary|varbinary)(\((\d+)(,\s*(\d+))?\))?){1}\s*(collate (\w+)\s*)?(unsigned\s*)?((NOT\s*NULL\s*)|(NULL\s*))?(auto_increment\s*)?(default \'([^\']*)\'\s*)?#i', $sql, $match);
+
+			preg_match_all('#`(\w[\w\d]*)`\s+((tinyint|smallint|mediumint|bigint|int|tinytext|text|mediumtext|longtext|tinyblob|blob|mediumblob|longblob|varchar|char|datetime|date|float|double|decimal|timestamp|time|year|enum|set|binary|varbinary)(\((.*)\))?){1}\s*(collate (\w+)\s*)?(unsigned\s*)?((NOT\s*NULL\s*)|(NULL\s*))?(auto_increment\s*)?(default \'([^\']*)\'\s*)?#i', $sql, $match);
 
 			foreach(array_keys($match[0]) as $key) {
 				$field_data[] = array(
 					'name'          => trim($match[1][$key]),
 					'type'          => strtoupper(trim($match[3][$key])),
 					'size'          => str_replace(array('(', ')'), '', trim($match[4][$key])),
-					'sizeext'       => trim($match[8][$key]),
-					'collation'     => trim($match[9][$key]),
-					'unsigned'      => trim($match[10][$key]),
-					'notnull'       => trim($match[11][$key]),
-					'autoincrement' => trim($match[14][$key]),
-					'default'       => trim($match[16][$key]),
+					'sizeext'       => trim($match[6][$key]),
+					'collation'     => trim($match[7][$key]),
+					'unsigned'      => trim($match[8][$key]),
+					'notnull'       => trim($match[9][$key]),
+					'autoincrement' => trim($match[12][$key]),
+					'default'       => trim($match[14][$key]),
 				);
 			}
 						
@@ -80,7 +80,7 @@ class ModelUpgrade extends Model {
 			}
 			
 			if ($match) {
-				foreach($match[1] as $primary){
+				foreach($match[1] as $primary) {
 					$primary_data[] = $primary;
 				}
 			}
@@ -98,7 +98,7 @@ class ModelUpgrade extends Model {
 				$indexes[] = $match;
 			}
 			
-			foreach($indexes as $index){
+			foreach($indexes as $index) {
 				$key = '';
 				
 				foreach($index[1] as $field) {
@@ -184,7 +184,7 @@ class ModelUpgrade extends Model {
 						if ($field['collation']) {
 							$sql .= " " . $field['collation'];
 						}
-						 
+
 						if ($field['notnull']) {
 							$sql .= " " . $field['notnull'];
 						}
@@ -378,4 +378,3 @@ class ModelUpgrade extends Model {
 		}
 	}
 }
-?>

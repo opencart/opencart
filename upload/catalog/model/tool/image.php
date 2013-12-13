@@ -10,7 +10,7 @@ class ModelToolImage extends Model {
 		$old_image = $filename;
 		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height .'.' . $extension;
 		
-		if (!file_exists(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
+		if (!is_file(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
 			$path = '';
 			
 			$directories = explode('/', dirname(str_replace('../', '', $new_image)));
@@ -18,7 +18,7 @@ class ModelToolImage extends Model {
 			foreach ($directories as $directory) {
 				$path = $path . '/' . $directory;
 				
-				if (!file_exists(DIR_IMAGE . $path)) {
+				if (!is_dir(DIR_IMAGE . $path)) {
 					@mkdir(DIR_IMAGE . $path, 0777);
 				}		
 			}
@@ -34,11 +34,10 @@ class ModelToolImage extends Model {
 			}
 		}
 		
-		if (isset($this->request->server['HTTPS']) && (($this->request->server['HTTPS'] == 'on') || ($this->request->server['HTTPS'] == '1'))) {
+		if ($this->request->server['HTTPS']) {
 			return $this->config->get('config_ssl') . 'image/' . $new_image;
 		} else {
 			return $this->config->get('config_url') . 'image/' . $new_image;
 		}	
 	}
 }
-?>

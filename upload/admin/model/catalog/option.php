@@ -48,6 +48,7 @@ class ModelCatalogOption extends Model {
 					$this->db->query("INSERT INTO " . DB_PREFIX . "option_value_description SET option_value_id = '" . (int)$option_value_id . "', language_id = '" . (int)$language_id . "', option_id = '" . (int)$option_id . "', name = '" . $this->db->escape($option_value_description['name']) . "'");
 				}
 			}
+			
 		}
 	}
 	
@@ -127,7 +128,7 @@ class ModelCatalogOption extends Model {
 	public function getOptionValues($option_id) {
 		$option_value_data = array();
 		
-		$option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value ov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE ov.option_id = '" . (int)$option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.sort_order ASC");
+		$option_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "option_value ov LEFT JOIN " . DB_PREFIX . "option_value_description ovd ON (ov.option_value_id = ovd.option_value_id) WHERE ov.option_id = '" . (int)$option_id . "' AND ovd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY ov.sort_order, ovd.name");
 				
 		foreach ($option_value_query->rows as $option_value) {
 			$option_value_data[] = array(
@@ -172,4 +173,3 @@ class ModelCatalogOption extends Model {
 		return $query->row['total'];
 	}		
 }
-?>

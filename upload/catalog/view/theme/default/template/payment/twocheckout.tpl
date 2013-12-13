@@ -29,13 +29,9 @@
   <?php } ?>
   <input type="hidden" name="lang" value="<?php echo $lang; ?>" />
   <input type="hidden" name="return_url" value="<?php echo $return_url; ?>" />
-  <input type="hidden" name="currency_code" value="<?php echo $currency_code; ?>" />
   <div class="buttons">
-    <div class="right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn" />
+    <div class="pull-right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
     </div>
   </div>
 </form>
-<?php if ($display) { ?>
-<script type="text/javascript" src="https://www.2checkout.com/static/checkout/javascript/direct.min.js"></script>
-<?php } ?>

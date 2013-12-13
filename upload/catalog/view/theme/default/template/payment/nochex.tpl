@@ -25,8 +25,8 @@
   <input type="hidden" name="email_address" value="<?php echo $email_address; ?>" />
   <input type="hidden" name="hide_billing_details" value="true" />
   <div class="buttons">
-    <div class="right">
-      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn" />
+    <div class="pull-right">
+      <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />
     </div>
   </div>
 </form>

@@ -6,10 +6,10 @@ class ControllerAccountOrder extends Controller {
     	if (!$this->customer->isLogged()) {
       		$this->session->data['redirect'] = $this->url->link('account/order', '', 'SSL');
 
-	  		$this->redirect($this->url->link('account/login', '', 'SSL'));
+	  		$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	}
 		
-		$this->language->load('account/order');
+		$this->load->language('account/order');
 		
 		$this->load->model('account/order');
  		
@@ -41,20 +41,20 @@ class ControllerAccountOrder extends Controller {
 					$this->cart->add($order_product['product_id'], $order_product['quantity'], $option_data);
 				}
 									
-				$this->redirect($this->url->link('checkout/cart'));
+				$this->response->redirect($this->url->link('checkout/cart'));
 			}
 		}
 
     	$this->document->setTitle($this->language->get('heading_title'));
 
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', '', 'SSL')
       	);
@@ -65,24 +65,25 @@ class ControllerAccountOrder extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 				
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('account/order', $url, 'SSL')
       	);
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_order_id'] = $this->language->get('text_order_id');
-		$this->data['text_status'] = $this->language->get('text_status');
-		$this->data['text_date_added'] = $this->language->get('text_date_added');
-		$this->data['text_customer'] = $this->language->get('text_customer');
-		$this->data['text_products'] = $this->language->get('text_products');
-		$this->data['text_total'] = $this->language->get('text_total');
-		$this->data['text_empty'] = $this->language->get('text_empty');
+		$data['text_empty'] = $this->language->get('text_empty');
+		
+		$data['column_order_id'] = $this->language->get('column_order_id');
+		$data['column_status'] = $this->language->get('column_status');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_customer'] = $this->language->get('column_customer');
+		$data['column_product'] = $this->language->get('column_product');
+		$data['column_total'] = $this->language->get('column_total');
 
-		$this->data['button_view'] = $this->language->get('button_view');
-		$this->data['button_reorder'] = $this->language->get('button_reorder');
-		$this->data['button_continue'] = $this->language->get('button_continue');
+		$data['button_view'] = $this->language->get('button_view');
+		$data['button_reorder'] = $this->language->get('button_reorder');
+		$data['button_continue'] = $this->language->get('button_continue');
 		
 		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
@@ -90,7 +91,7 @@ class ControllerAccountOrder extends Controller {
 			$page = 1;
 		}
 		
-		$this->data['orders'] = array();
+		$data['orders'] = array();
 		
 		$order_total = $this->model_account_order->getTotalOrders();
 		
@@ -100,7 +101,7 @@ class ControllerAccountOrder extends Controller {
 			$product_total = $this->model_account_order->getTotalOrderProductsByOrderId($result['order_id']);
 			$voucher_total = $this->model_account_order->getTotalOrderVouchersByOrderId($result['order_id']);
 
-			$this->data['orders'][] = array(
+			$data['orders'][] = array(
 				'order_id'   => $result['order_id'],
 				'name'       => $result['firstname'] . ' ' . $result['lastname'],
 				'status'     => $result['status'],
@@ -118,32 +119,28 @@ class ControllerAccountOrder extends Controller {
 		$pagination->limit = 10;
 		$pagination->url = $this->url->link('account/order', 'page={page}', 'SSL');
 		
-		$this->data['pagination'] = $pagination->render();
+		$data['pagination'] = $pagination->render();
 		
-		$this->data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($order_total - 10)) ? $order_total : ((($page - 1) * 10) + 10), $order_total, ceil($order_total / 10));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($order_total - 10)) ? $order_total : ((($page - 1) * 10) + 10), $order_total, ceil($order_total / 10));
 
-		$this->data['continue'] = $this->url->link('account/account', '', 'SSL');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/order_list.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/account/order_list.tpl';
-		} else {
-			$this->template = 'default/template/account/order_list.tpl';
-		}
+		$data['continue'] = $this->url->link('account/account', '', 'SSL');
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'	
-		);
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 						
-		$this->response->setOutput($this->render());				
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/order_list.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/order_list.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/account/order_list.tpl', $data));
+		}					
 	}
 	
 	public function info() { 
-		$this->language->load('account/order');
+		$this->load->language('account/order');
 		
 		if (isset($this->request->get['order_id'])) {
 			$order_id = $this->request->get['order_id'];
@@ -154,7 +151,7 @@ class ControllerAccountOrder extends Controller {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL');
 			
-			$this->redirect($this->url->link('account/login', '', 'SSL'));
+			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
     	}
 						
 		$this->load->model('account/order');
@@ -164,14 +161,14 @@ class ControllerAccountOrder extends Controller {
 		if ($order_info) {
 			$this->document->setTitle($this->language->get('text_order'));
 			
-			$this->data['breadcrumbs'] = array();
+			$data['breadcrumbs'] = array();
 		
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
 				'href' => $this->url->link('common/home')
 			); 
 		
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
 				'href' => $this->url->link('account/account', '', 'SSL')     	
 			);
@@ -182,50 +179,50 @@ class ControllerAccountOrder extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 						
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('account/order', $url, 'SSL')
 			);
 			
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_order'),
 				'href' => $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, 'SSL')
 			);
 					
-      		$this->data['heading_title'] = $this->language->get('text_order');
+      		$data['heading_title'] = $this->language->get('text_order');
 			
-			$this->data['text_order_detail'] = $this->language->get('text_order_detail');
-			$this->data['text_invoice_no'] = $this->language->get('text_invoice_no');
-    		$this->data['text_order_id'] = $this->language->get('text_order_id');
-			$this->data['text_date_added'] = $this->language->get('text_date_added');
-      		$this->data['text_shipping_method'] = $this->language->get('text_shipping_method');
-			$this->data['text_shipping_address'] = $this->language->get('text_shipping_address');
-      		$this->data['text_payment_method'] = $this->language->get('text_payment_method');
-      		$this->data['text_payment_address'] = $this->language->get('text_payment_address');
-      		$this->data['text_history'] = $this->language->get('text_history');
-			$this->data['text_comment'] = $this->language->get('text_comment');
+			$data['text_order_detail'] = $this->language->get('text_order_detail');
+			$data['text_invoice_no'] = $this->language->get('text_invoice_no');
+    		$data['text_order_id'] = $this->language->get('text_order_id');
+			$data['text_date_added'] = $this->language->get('text_date_added');
+      		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
+			$data['text_shipping_address'] = $this->language->get('text_shipping_address');
+      		$data['text_payment_method'] = $this->language->get('text_payment_method');
+      		$data['text_payment_address'] = $this->language->get('text_payment_address');
+      		$data['text_history'] = $this->language->get('text_history');
+			$data['text_comment'] = $this->language->get('text_comment');
 
-      		$this->data['column_name'] = $this->language->get('column_name');
-      		$this->data['column_model'] = $this->language->get('column_model');
-      		$this->data['column_quantity'] = $this->language->get('column_quantity');
-      		$this->data['column_price'] = $this->language->get('column_price');
-      		$this->data['column_total'] = $this->language->get('column_total');
-			$this->data['column_action'] = $this->language->get('column_action');
-			$this->data['column_date_added'] = $this->language->get('column_date_added');
-      		$this->data['column_status'] = $this->language->get('column_status');
-      		$this->data['column_comment'] = $this->language->get('column_comment');
+      		$data['column_name'] = $this->language->get('column_name');
+      		$data['column_model'] = $this->language->get('column_model');
+      		$data['column_quantity'] = $this->language->get('column_quantity');
+      		$data['column_price'] = $this->language->get('column_price');
+      		$data['column_total'] = $this->language->get('column_total');
+			$data['column_action'] = $this->language->get('column_action');
+			$data['column_date_added'] = $this->language->get('column_date_added');
+      		$data['column_status'] = $this->language->get('column_status');
+      		$data['column_comment'] = $this->language->get('column_comment');
 			
-			$this->data['button_return'] = $this->language->get('button_return');
-      		$this->data['button_continue'] = $this->language->get('button_continue');
+			$data['button_return'] = $this->language->get('button_return');
+      		$data['button_continue'] = $this->language->get('button_continue');
 		
 			if ($order_info['invoice_no']) {
-				$this->data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
+				$data['invoice_no'] = $order_info['invoice_prefix'] . $order_info['invoice_no'];
 			} else {
-				$this->data['invoice_no'] = '';
+				$data['invoice_no'] = '';
 			}
 			
-			$this->data['order_id'] = $this->request->get['order_id'];
-			$this->data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
+			$data['order_id'] = $this->request->get['order_id'];
+			$data['date_added'] = date($this->language->get('date_format_short'), strtotime($order_info['date_added']));
 			
 			if ($order_info['payment_address_format']) {
       			$format = $order_info['payment_address_format'];
@@ -259,9 +256,9 @@ class ControllerAccountOrder extends Controller {
       			'country'   => $order_info['payment_country']  
 			);
 			
-			$this->data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+			$data['payment_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
-      		$this->data['payment_method'] = $order_info['payment_method'];
+      		$data['payment_method'] = $order_info['payment_method'];
 			
 			if ($order_info['shipping_address_format']) {
       			$format = $order_info['shipping_address_format'];
@@ -295,11 +292,12 @@ class ControllerAccountOrder extends Controller {
       			'country'   => $order_info['shipping_country']  
 			);
 
-			$this->data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
+			$data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
-			$this->data['shipping_method'] = $order_info['shipping_method'];
+			$data['shipping_method'] = $order_info['shipping_method'];
 			
-			$this->data['products'] = array();
+			// Products
+			$data['products'] = array();
 			
 			$products = $this->model_account_order->getOrderProducts($this->request->get['order_id']);
 
@@ -321,7 +319,7 @@ class ControllerAccountOrder extends Controller {
 					);					
         		}
 
-        		$this->data['products'][] = array(
+        		$data['products'][] = array(
           			'name'     => $product['name'],
           			'model'    => $product['model'],
           			'option'   => $option_data,
@@ -333,101 +331,103 @@ class ControllerAccountOrder extends Controller {
       		}
 
 			// Voucher
-			$this->data['vouchers'] = array();
+			$data['vouchers'] = array();
 			
 			$vouchers = $this->model_account_order->getOrderVouchers($this->request->get['order_id']);
 			
 			foreach ($vouchers as $voucher) {
-				$this->data['vouchers'][] = array(
+				$data['vouchers'][] = array(
 					'description' => $voucher['description'],
 					'amount'      => $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value'])
 				);
 			}
 			
-      		$this->data['totals'] = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
+			// Totals
+			$data['totals'] = array();
+	
+			$totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
+	
+			foreach ($totals as $total) {
+				$data['totals'][] = array(
+					'title' => $total['title'],
+					'text'  => $this->currency->format($total['value'], $order_info['currency_code'], $order_info['currency_value']),
+				);				
+			}
+						
+			$data['comment'] = nl2br($order_info['comment']);
 			
-			$this->data['comment'] = nl2br($order_info['comment']);
-			
-			$this->data['histories'] = array();
+			// History
+			$data['histories'] = array();
 
 			$results = $this->model_account_order->getOrderHistories($this->request->get['order_id']);
 
       		foreach ($results as $result) {
-        		$this->data['histories'][] = array(
+        		$data['histories'][] = array(
           			'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
           			'status'     => $result['status'],
           			'comment'    => nl2br($result['comment'])
         		);
       		}
 
-      		$this->data['continue'] = $this->url->link('account/order', '', 'SSL');
-		
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/order_info.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/account/order_info.tpl';
-			} else {
-				$this->template = 'default/template/account/order_info.tpl';
-			}
+      		$data['continue'] = $this->url->link('account/order', '', 'SSL');
 			
-			$this->children = array(
-				'common/column_left',
-				'common/column_right',
-				'common/content_top',
-				'common/content_bottom',
-				'common/footer',
-				'common/header'	
-			);
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['column_right'] = $this->load->controller('common/column_right');
+			$data['content_top'] = $this->load->controller('common/content_top');
+			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');;
 								
-			$this->response->setOutput($this->render());		
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/order_info.tpl')) {
+				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/order_info.tpl', $data));
+			} else {
+				$this->response->setOutput($this->load->view('default/template/account/order_info.tpl', $data));
+			}		
     	} else {
 			$this->document->setTitle($this->language->get('text_order'));
 			
-      		$this->data['heading_title'] = $this->language->get('text_order');
+      		$data['heading_title'] = $this->language->get('text_order');
 
-      		$this->data['text_error'] = $this->language->get('text_error');
+      		$data['text_error'] = $this->language->get('text_error');
 
-      		$this->data['button_continue'] = $this->language->get('button_continue');
+      		$data['button_continue'] = $this->language->get('button_continue');
 			
-			$this->data['breadcrumbs'] = array();
+			$data['breadcrumbs'] = array();
 
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
 				'href' => $this->url->link('common/home')
 			);
 			
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_account'),
 				'href' => $this->url->link('account/account', '', 'SSL')
 			);
 
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link('account/order', '', 'SSL')
 			);
 			
-			$this->data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_order'),
 				'href' => $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL')
 			);
 												
-      		$this->data['continue'] = $this->url->link('account/order', '', 'SSL');
+      		$data['continue'] = $this->url->link('account/order', '', 'SSL');
 			 			
-			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
-				$this->template = $this->config->get('config_template') . '/template/error/not_found.tpl';
-			} else {
-				$this->template = 'default/template/error/not_found.tpl';
-			}
+			$data['column_left'] = $this->load->controller('common/column_left');
+			$data['column_right'] = $this->load->controller('common/column_right');
+			$data['content_top'] = $this->load->controller('common/content_top');
+			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			$data['footer'] = $this->load->controller('common/footer');
+			$data['header'] = $this->load->controller('common/header');								
 			
-			$this->children = array(
-				'common/column_left',
-				'common/column_right',
-				'common/content_top',
-				'common/content_bottom',
-				'common/footer',
-				'common/header'	
-			);
-								
-			$this->response->setOutput($this->render());				
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
+				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));
+			} else {
+				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
+			}				
     	}
   	}
 }
-?>

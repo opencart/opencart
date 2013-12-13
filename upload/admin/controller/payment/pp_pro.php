@@ -38,9 +38,6 @@ class ControllerPaymentPPPro extends Controller {
 		$this->data['entry_status'] = $this->language->get('entry_status');
 		$this->data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
-		$this->data['help_test'] = $this->language->get('help_test');
-		$this->data['help_total'] = $this->language->get('help_total');
-		
 		$this->data['button_save'] = $this->language->get('button_save');
 		$this->data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -71,18 +68,21 @@ class ControllerPaymentPPPro extends Controller {
 		$this->data['breadcrumbs'] = array();
 
    		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+       		'text'      => $this->language->get('text_home'),
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => false
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+       		'text'      => $this->language->get('text_payment'),
+			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => ' :: '
    		);
 
    		$this->data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/pp_pro', 'token=' . $this->session->data['token'], 'SSL')
+       		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('payment/pp_pro', 'token=' . $this->session->data['token'], 'SSL'),
+      		'separator' => ' :: '
    		);
 				
 		$this->data['action'] = $this->url->link('payment/pp_pro', 'token=' . $this->session->data['token'], 'SSL');
@@ -183,11 +183,7 @@ class ControllerPaymentPPPro extends Controller {
 			$this->error['signature'] = $this->language->get('error_signature');
 		}
 		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}	
+		return !$this->error;	
 	}
 }
 ?>

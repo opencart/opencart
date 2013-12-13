@@ -113,4 +113,3 @@ $_['error_city']                   = 'Origin City!';
 $_['error_state']                  = 'Origin State/Province Required!';
 $_['error_country']                = 'Origin Country Required!';
 $_['error_dimension']              = 'Average Dimensions Required!';
-?>

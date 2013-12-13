@@ -4,6 +4,7 @@ $_['heading_title']                    = 'OpenCart';
 
 // Text
 $_['text_affiliate']                   = 'Affiliates';
+$_['text_affiliate_activity']          = 'Affiliate Activity';
 $_['text_attribute']                   = 'Attributes';
 $_['text_attribute_group']             = 'Attribute Groups';
 $_['text_backup']                      = 'Backup / Restore';
@@ -36,6 +37,7 @@ $_['text_localisation']                = 'Localisation';
 $_['text_location']                    = 'Store Location';
 $_['text_logout']                      = 'Logout';
 $_['text_contact']                     = 'Mail';
+$_['text_marketing']                   = 'Marketing';
 $_['text_modification']                = 'Modifications';
 $_['text_manufacturer']                = 'Manufacturers';
 $_['text_module']                      = 'Modules';
@@ -54,6 +56,7 @@ $_['text_report_sale_return']          = 'Returns';
 $_['text_report_sale_coupon']          = 'Coupons';
 $_['text_report_product_viewed']       = 'Viewed';
 $_['text_report_product_purchased']    = 'Purchased';
+$_['text_report_customer_activity']    = 'Customer Activity';
 $_['text_report_customer_online']      = 'Customers Online';
 $_['text_report_customer_order']       = 'Orders';
 $_['text_report_customer_reward']      = 'Reward Points';
@@ -68,6 +71,7 @@ $_['text_sale']                        = 'Sales';
 $_['text_shipping']                    = 'Shipping';
 $_['text_setting']                     = 'Settings';
 $_['text_stock_status']                = 'Stock Statuses';
+$_['text_store']                       = 'Stores';
 $_['text_support']                     = 'Support Forum';
 $_['text_system']                      = 'System';
 $_['text_tax']                         = 'Taxes';
@@ -83,4 +87,3 @@ $_['text_voucher_theme']               = 'Voucher Themes';
 $_['text_weight_class']                = 'Weight Classes';
 $_['text_length_class']                = 'Length Classes';
 $_['text_zone']                        = 'Zones';
-?>

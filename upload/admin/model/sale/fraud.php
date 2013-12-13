@@ -6,4 +6,3 @@ class ModelSaleFraud extends Model {
 		return $query->row;
 	}
 }
-?>

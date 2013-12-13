@@ -4,41 +4,89 @@ class ControllerStep2 extends Controller {
 	
 	public function index() {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->redirect($this->url->link('step_3'));
+			$this->response->redirect($this->url->link('step_3'));
 		}
+
+		$this->document->setTitle($this->language->get('heading_step_2'));
+
+		$data['heading_step_2'] = $this->language->get('heading_step_2');
+
+		$data['text_license'] = $this->language->get('text_license');
+		$data['text_installation'] = $this->language->get('text_installation');
+		$data['text_configuration'] = $this->language->get('text_configuration');
+		$data['text_finished'] = $this->language->get('text_finished');	
+		$data['text_install_php'] = $this->language->get('text_install_php');
+		$data['text_install_extension'] = $this->language->get('text_install_extension');
+		$data['text_install_file'] = $this->language->get('text_install_file');
+		$data['text_install_directory'] = $this->language->get('text_install_directory');
+		$data['text_setting'] = $this->language->get('text_setting');
+		$data['text_current'] = $this->language->get('text_current');
+		$data['text_required'] = $this->language->get('text_required');
+		$data['text_extension'] = $this->language->get('text_extension');
+		$data['text_file'] = $this->language->get('text_file');
+		$data['text_directory'] = $this->language->get('text_directory');
+		$data['text_status'] = $this->language->get('text_status');
+		$data['text_on'] = $this->language->get('text_on');
+		$data['text_off'] = $this->language->get('text_off');
+		$data['text_missing'] = $this->language->get('text_missing');
+		$data['text_writable'] = $this->language->get('text_writable');
+		$data['text_unwritable'] = $this->language->get('text_unwritable');
+		$data['text_version'] = $this->language->get('text_version');
+		$data['text_global'] = $this->language->get('text_global');
+		$data['text_magic'] = $this->language->get('text_magic');
+		$data['text_upload'] = $this->language->get('text_upload');
+		$data['text_session'] = $this->language->get('text_session');
+		$data['text_global'] = $this->language->get('text_global');
+		$data['text_mysql'] = $this->language->get('text_mysql');
+		$data['text_gd'] = $this->language->get('text_gd');
+		$data['text_curl'] = $this->language->get('text_curl');
+		$data['text_mcrypt'] = $this->language->get('text_mcrypt');
+		$data['text_zip'] = $this->language->get('text_zip');
+
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_back'] = $this->language->get('button_back');
 
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';	
+			$data['error_warning'] = '';	
 		}
 		
-		$this->data['action'] = $this->url->link('step_2');
+		$data['action'] = $this->url->link('step_2');
 
-		$this->data['config_catalog'] = DIR_OPENCART . 'config.php';
-		$this->data['config_admin'] = DIR_OPENCART . 'admin/config.php';
+		$data['php_version'] = phpversion();
+		$data['register_globals'] = ini_get('register_globals');
+		$data['magic_quotes_gpc'] = ini_get('magic_quotes_gpc');
+		$data['file_uploads'] = ini_get('file_uploads');
+		$data['session_auto_start'] = ini_get('session_auto_start');
 		
-		$this->data['cache'] = DIR_SYSTEM . 'cache';
-		$this->data['logs'] = DIR_SYSTEM . 'logs';
-		$this->data['download'] = DIR_SYSTEM . 'download';
-		$this->data['image'] = DIR_OPENCART . 'image';
-		$this->data['image_cache'] = DIR_OPENCART . 'image/cache';
-		$this->data['image_data'] = DIR_OPENCART . 'image/data';
+		$data['mysql'] = extension_loaded('mysql');
+		$data['gd'] = extension_loaded('gd');
+		$data['curl'] = extension_loaded('curl');
+		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
+		$data['zlib'] = extension_loaded('zlib');
+
+		$data['config_catalog'] = DIR_OPENCART . 'config.php';
+		$data['config_admin'] = DIR_OPENCART . 'admin/config.php';
 		
-		$this->data['back'] = $this->url->link('step_1');
+		$data['cache'] = DIR_SYSTEM . 'cache';
+		$data['logs'] = DIR_SYSTEM . 'logs';
+		$data['download'] = DIR_SYSTEM . 'download';
+		$data['image'] = DIR_OPENCART . 'image';
+		$data['image_cache'] = DIR_OPENCART . 'image/cache';
+		$data['image_data'] = DIR_OPENCART . 'image/catalog';
 		
-		$this->template = 'step_2.tpl';
-		$this->children = array(
-			'header',
-			'footer'
-		);		
+		$data['back'] = $this->url->link('step_1');
 		
-		$this->response->setOutput($this->render());
+		$data['footer'] = $this->load->controller('footer');
+		$data['header'] = $this->load->controller('header');
+		
+		$this->response->setOutput($this->load->view('step_2.tpl', $data));
 	}
 	
 	private function validate() {
-		if (phpversion() < '5.0') {
-			$this->error['warning'] = 'Warning: You need to use PHP5 or above for OpenCart to work!';
+		if (phpversion() < '5.3') {
+			$this->error['warning'] = 'Warning: You need to use PHP5.3 or above for OpenCart to work!';
 		}
 
 		if (!ini_get('file_uploads')) {
@@ -97,8 +145,8 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: Image cache directory needs to be writable for OpenCart to work!';
 		}
 		
-		if (!is_writable(DIR_OPENCART . 'image/data')) {
-			$this->error['warning'] = 'Warning: Image data directory needs to be writable for OpenCart to work!';
+		if (!is_writable(DIR_OPENCART . 'image/catalog')) {
+			$this->error['warning'] = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
 		}
 		
 		if (!is_writable(DIR_SYSTEM . 'download')) {
@@ -112,4 +160,3 @@ class ControllerStep2 extends Controller {
     	}
 	}
 }
-?>

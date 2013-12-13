@@ -3,7 +3,7 @@ class ControllerCheckoutCheckout extends Controller {
 	public function index() {
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	  		$this->redirect($this->url->link('checkout/cart'));
+	  		$this->response->redirect($this->url->link('checkout/cart'));
     	}	
 		
 		// Validate minimum quantity requirments.			
@@ -19,63 +19,68 @@ class ControllerCheckoutCheckout extends Controller {
 			}		
 			
 			if ($product['minimum'] > $product_total) {
-				$this->redirect($this->url->link('checkout/cart'));
+				$this->response->redirect($this->url->link('checkout/cart'));
 			}				
 		}
 				
-		$this->language->load('checkout/checkout');
+		$this->load->language('checkout/checkout');
 		
 		$this->document->setTitle($this->language->get('heading_title')); 
 		
-		$this->document->addScript('catalog/view/javascript/jquery/colorbox/jquery.colorbox-min.js');
-		$this->document->addStyle('catalog/view/javascript/jquery/colorbox/colorbox.css');
-					
-		$this->data['breadcrumbs'] = array();
+		// Required by klarna
+		if ($this->config->get('klarna_account') || $this->config->get('klarna_invoice')) {
+			$this->document->addScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js');
+		}
+		
+		$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_cart'),
 			'href' => $this->url->link('checkout/cart')
       	);
 		
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('checkout/checkout', '', 'SSL')
       	);
 					
-	    $this->data['heading_title'] = $this->language->get('heading_title');
+	    $data['heading_title'] = $this->language->get('heading_title');
 		
-		$this->data['text_checkout_option'] = $this->language->get('text_checkout_option');
-		$this->data['text_checkout_account'] = $this->language->get('text_checkout_account');
-		$this->data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
-		$this->data['text_checkout_shipping_address'] = $this->language->get('text_checkout_shipping_address');
-		$this->data['text_checkout_shipping_method'] = $this->language->get('text_checkout_shipping_method');
-		$this->data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');		
-		$this->data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
+		$data['text_checkout_option'] = $this->language->get('text_checkout_option');
+		$data['text_checkout_account'] = $this->language->get('text_checkout_account');
+		$data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
+		$data['text_checkout_shipping_address'] = $this->language->get('text_checkout_shipping_address');
+		$data['text_checkout_shipping_method'] = $this->language->get('text_checkout_shipping_method');
+		$data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');		
+		$data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
 		
-		$this->data['logged'] = $this->customer->isLogged();
-		$this->data['shipping_required'] = $this->cart->hasShipping();	
+		$data['logged'] = $this->customer->isLogged();
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/checkout.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/checkout/checkout.tpl';
+		if (isset($this->session->data['account'])) {
+			$data['account'] = $this->session->data['account'];
 		} else {
-			$this->template = 'default/template/checkout/checkout.tpl';
+			$data['account'] = '';
 		}
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'	
-		);
+		$data['shipping_required'] = $this->cart->hasShipping();	
+		
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 				
-		$this->response->setOutput($this->render());
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/checkout.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/checkout.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/checkout/checkout.tpl', $data));
+		}	
   	}
 	
 	public function country() {
@@ -102,5 +107,28 @@ class ControllerCheckoutCheckout extends Controller {
 		
 		$this->response->setOutput(json_encode($json));
 	}
+	
+	public function custom_field() {
+		$json = array();
+		
+		$this->load->model('account/custom_field');
+
+		// Customer Group
+		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			$customer_group_id = $this->request->get['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+		
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
+
+		foreach ($custom_fields as $custom_field) {
+			$json[] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'required'        => $custom_field['required']
+			);
+		}
+
+		$this->response->setOutput(json_encode($json));
+	}	
 }
-?>

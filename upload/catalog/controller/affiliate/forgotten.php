@@ -4,17 +4,17 @@ class ControllerAffiliateForgotten extends Controller {
 
 	public function index() {
 		if ($this->affiliate->isLogged()) {
-			$this->redirect($this->url->link('affiliate/account', '', 'SSL'));
+			$this->response->redirect($this->url->link('affiliate/account', '', 'SSL'));
 		}
 
-		$this->language->load('affiliate/forgotten');
+		$this->load->language('affiliate/forgotten');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		
 		$this->load->model('affiliate/affiliate');
 		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->language->load('mail/forgotten');
+			$this->load->language('mail/forgotten');
 			
 			$password = substr(md5(mt_rand()), 0, 10);
 			
@@ -26,14 +26,7 @@ class ControllerAffiliateForgotten extends Controller {
 			$message .= $this->language->get('text_password') . "\n\n";
 			$message .= $password;
 
-			$mail = new Mail();
-			$mail->protocol = $this->config->get('config_mail_protocol');
-			$mail->parameter = $this->config->get('config_mail_parameter');
-			$mail->hostname = $this->config->get('config_smtp_host');
-			$mail->username = $this->config->get('config_smtp_username');
-			$mail->password = $this->config->get('config_smtp_password');
-			$mail->port = $this->config->get('config_smtp_port');
-			$mail->timeout = $this->config->get('config_smtp_timeout');				
+			$mail = new Mail($this->config->get('config_mail'));		
 			$mail->setTo($this->request->post['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_name'));
@@ -42,63 +35,73 @@ class ControllerAffiliateForgotten extends Controller {
 			$mail->send();
 			
 			$this->session->data['success'] = $this->language->get('text_success');
+			
+			// Add to activity log
+			$affiliate_info = $this->model_account_affiliate->getAffiliateByEmail($this->request->post['email']);
 
-			$this->redirect($this->url->link('affiliate/login', '', 'SSL'));
+			if ($affiliate_info) {
+				$this->load->model('affiliate/activity');
+				
+				$activity_data = array(
+					'affiliate_id' => $affiliate_info['affiliate_id'],
+					'name'         => $affiliate_info['firstname'] . ' ' . $affiliate_info['lastname']
+				);
+							
+				$this->model_affiliate_activity->addActivity('forgotten', $activity_data);
+			}
+			
+			$this->response->redirect($this->url->link('affiliate/login', '', 'SSL'));
 		}
 
-      	$this->data['breadcrumbs'] = array();
+      	$data['breadcrumbs'] = array();
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
       	); 
 
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('affiliate/account', '', 'SSL')
       	);
 		
-      	$this->data['breadcrumbs'][] = array(
+      	$data['breadcrumbs'][] = array(
         	'text' => $this->language->get('text_forgotten'),
 			'href' => $this->url->link('affiliate/forgotten', '', 'SSL')
       	);
 		
-		$this->data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
-		$this->data['text_your_email'] = $this->language->get('text_your_email');
-		$this->data['text_email'] = $this->language->get('text_email');
+		$data['text_your_email'] = $this->language->get('text_your_email');
+		$data['text_email'] = $this->language->get('text_email');
 
-		$this->data['entry_email'] = $this->language->get('entry_email');
+		$data['entry_email'] = $this->language->get('entry_email');
 
-		$this->data['button_continue'] = $this->language->get('button_continue');
-		$this->data['button_back'] = $this->language->get('button_back');
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_back'] = $this->language->get('button_back');
 
 		if (isset($this->error['warning'])) {
-			$this->data['error_warning'] = $this->error['warning'];
+			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$this->data['error_warning'] = '';
+			$data['error_warning'] = '';
 		}
 		
-		$this->data['action'] = $this->url->link('affiliate/forgotten', '', 'SSL');
+		$data['action'] = $this->url->link('affiliate/forgotten', '', 'SSL');
  
-		$this->data['back'] = $this->url->link('affiliate/login', '', 'SSL');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/forgotten.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/affiliate/forgotten.tpl';
-		} else {
-			$this->template = 'default/template/affiliate/forgotten.tpl';
-		}
+		$data['back'] = $this->url->link('affiliate/login', '', 'SSL');
 		
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'	
-		);
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
 						
-		$this->response->setOutput($this->render());		
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/affiliate/forgotten.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/forgotten.tpl', $data));
+		} else {
+			$this->response->setOutput($this->load->view('default/template/affiliate/forgotten.tpl', $data));
+		}		
 	}
 
 	protected function validate() {
@@ -108,11 +111,6 @@ class ControllerAffiliateForgotten extends Controller {
 			$this->error['warning'] = $this->language->get('error_email');
 		}
 
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}
+		return !$this->error;
 	}
 }
-?>

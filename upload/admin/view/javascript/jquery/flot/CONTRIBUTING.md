@@ -32,7 +32,11 @@ To make merging as easy as possible, please keep these rules in mind:
 
  2. Format your code according to the style guidelines below.
 
- 3. Rebase against master, if necessary, before submitting your pull request.
+ 3. Submit new features or architectural changes to the <version>-work branch
+    for the next major release.  Submit bug fixes to the master branch.
+
+ 4. Rebase, if necessary, before submitting your pull request, to reduce the
+    work we need to do to merge it.
 
 ### Flot Style Guidelines ###
 

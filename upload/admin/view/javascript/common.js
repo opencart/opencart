@@ -26,7 +26,7 @@ $(document).ready(function() {
 	route = getURLVar('route');
 	
 	if (!route) {
-		$('#dashboard').addClass('active');
+		$('#menu #dashboard').addClass('active');
 	} else {
 		part = route.split('/');
 		
@@ -36,60 +36,65 @@ $(document).ready(function() {
 			url += '/' + part[1];
 		}
 		
-		$('a[href*=\'' + url + '\']').parents('li[id]').addClass('selected');
+		$('#header a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 	
-	$('[data-toggle=\'tooltip\']').tooltip({
-		'placement': 'top',
-		'animation': false,
-		'html': true
-	});
+	// tooltips on hover
+	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 });
 
-$('.ajax').on('submit', function(event) {
-	event.preventDefault();
+// Image Manager
+
+
+$(document).delegate('.img-edit', 'click', function(e) {
+	e.preventDefault();
 	
-	$.ajax({
-		url: $(this).attr('action'),
-		type: $(this).attr('method'),
-		data: $(this).serialize(),
-		dataType: 'json',
-		cache: false,
-		contentType: false,
-		processData: false,		
-		beforeSend: function() {
-			$('#button-option').prop('disabled', true);
-		},	
-		complete: function() {
-			$('#button-option').prop('disabled', false);
-		},		
-		success: function(json) {
-			$('.alert, .error .help-block').remove();
-			$('.error').removeClass('error');
-						
-			if (json['error']) {
-				if (json['error']['warning']) {
-					$('.box').before('<div class="alert alert-error">' + json['error']['warning'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-				}
-				
-				for (i in json['error']) {
-					$('#input-' + i).parent().parent().addClass('error');
-				
-					$('#input-' + i).after('<span class="help-block">' + json['error'][i] + '</span>');
-				}				
-			}
-						
-			if (json['success']) {
-				$('.box').before('<div class="alert alert-success">' + json['success'] + ' <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-			}
-		},
-		error: function(xhr, ajaxOptions, thrownError) {
-			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+	var element = this;
+	 
+	$(element).popover({
+		html: true,
+		placement: 'right',
+		trigger: 'click',
+		content: function() {
+			return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-default"><i class="fa fa-trash-o"></i></button>';
 		}
 	});
+	
+	$(element).popover('show');
+	
+	$('#button-image').on('click', function() {
+		$('#modal-image').remove();
+		
+		$.ajax({
+			url: 'index.php?route=common/filemanager&token=' + getURLVar('token') + '&target=' + $(element).parent().find('input').attr('id') + '&thumb=' + $(element).attr('id'),
+			dataType: 'html',	
+			beforeSend: function() {
+				$('#button-image i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+				$('#button-image').prop('disabled', true);
+			},
+			complete: function() {
+				$('#button-image i').replaceWith('<i class="fa fa-upload"></i>');
+				$('#button-image').prop('disabled', false);
+			},				
+			success: function(html) {
+				$('body').append('<div id="modal-image" class="modal">' + html + '</div>');
+				
+				$('#modal-image').modal('show');
+			}
+		});
+		
+		$(element).popover('hide');
+	});
+	
+	$('#button-clear').on('click', function() {	
+		$(element).html('<i class="fa fa-camera fa-5x"></i>');
+		$(element).parent().find('input').attr('value', '');
+		
+		$(element).popover('hide');
+	});	
 });
 
-// Added my own autocomplete method for jquery since bootstraps is pretty much useless	
+// Autocomplete */	
 (function($) {
 	function Autocomplete(element, options) {
 		this.element = element;
@@ -184,7 +189,7 @@ $('.ajax').on('submit', function(event) {
 				}
 				
 				for (i in category) {
-					html += '<li class="disabled"><a href="#"><b>' + category[i]['name'] + '</b></a></li>';
+					html += '<li class="dropdown-header">' + category[i]['name'] + '</li>';
 					
 					for (j = 0; j < category[i]['item'].length; j++) {
 						html += '<li data-value="' + category[i]['item'][j]['value'] + '"><a href="#">&nbsp;&nbsp;&nbsp;' + category[i]['item'][j]['label'] + '</a></li>';
@@ -199,7 +204,6 @@ $('.ajax').on('submit', function(event) {
 			}
 			
 			$(this.element).siblings('ul.dropdown-menu').html(html);
-
 		}
 	};
 

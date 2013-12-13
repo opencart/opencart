@@ -40,21 +40,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 7px 15px 5px 15px;
 	line-height: 20px;
 }
-
-
-/*
 #header .navbar-nav > li + li {
 	background-repeat: no-repeat;
 	background-size: 2px 18px;
 	background-position: left;
-	background-image: linear-gradient(90deg, #000000, 100%);
-}
-*/
-#header .navbar-nav > li {
-	background-repeat: no-repeat;
-	background-size: 2px 18px;
-	background-position: right;
-	background-image: linear-gradient(90deg, #505050, 100%);
+	background-image: linear-gradient(90deg, #000000 1px, #505050 1px);
 }
 
 #header .navbar-nav > li > a {

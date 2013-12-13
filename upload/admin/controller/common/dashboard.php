@@ -63,7 +63,7 @@ class ControllerCommonDashboard extends Controller {
 		
 		$difference = $today - $yesterday;
 		
-		if ($difference) {
+		if ($difference && $today) {
 			$data['order_percentage'] = round(($difference / $today) * 100);
 		} else {
 			$data['order_percentage'] = 0;
@@ -82,7 +82,7 @@ class ControllerCommonDashboard extends Controller {
 
 		$difference = $today - $yesterday;
 		
-		if ($difference) {
+		if ($difference && $today) {
 			$data['customer_percentage'] = round(($difference / $today) * 100);
 		} else {
 			$data['customer_percentage'] = 0;
@@ -99,7 +99,7 @@ class ControllerCommonDashboard extends Controller {
 
 		$difference = $today - $yesterday;
 		
-		if ($difference) {
+		if ($difference && $today) {
 			$data['sale_percentage'] = round(($difference / $today) * 100);
 		} else {
 			$data['sale_percentage'] = 0;

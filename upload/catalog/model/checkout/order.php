@@ -428,6 +428,7 @@ class ModelCheckoutOrder extends Model {
 				);
 			}
 	
+			// Order Totals
 			foreach ($order_total_query->rows as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],

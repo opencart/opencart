@@ -2,7 +2,6 @@
 $_['heading_title'] = 'Recurring payments';
 $_['button_continue'] = 'Continue';
 $_['button_view'] = 'View';
-$_['button_cancel_profile'] = 'Cancel payments';
 $_['text_empty'] = 'No recurring payment profiles found';
 $_['text_product'] = 'Product: ';
 $_['text_order'] = 'Order: ';
@@ -12,7 +11,6 @@ $_['text_action'] = 'Action';
 $_['text_recurring'] = 'Recurring payment';
 $_['text_transactions'] = 'Transactions';
 $_['button_return'] = 'Return';
-$_['text_confirm_cancel'] = 'Are you sure you want to cancel the profile?';
 $_['text_empty_transactions'] = 'No transactions for this profile';
 
 $_['column_created'] = 'Created';

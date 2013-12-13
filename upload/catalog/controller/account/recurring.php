@@ -138,25 +138,6 @@ class ControllerAccountRecurring extends Controller {
 
 		$profile = $this->model_account_recurring->getProfile($this->request->get['recurring_id']);
 
-		$profile['transactions'] = $this->model_account_recurring->getProfileTransactions($this->request->get['recurring_id']);
-
-		$profile['created'] = date($this->language->get('date_format_short'), strtotime($profile['created']));
-		$profile['product_link'] = $this->url->link('product/product', 'product_id='.$profile['product_id'], 'SSL');
-		$profile['order_link'] = $this->url->link('account/order/info', 'order_id='.$profile['order_id'], 'SSL');
-
-		if($profile['status'] == 1 || $profile['status'] == 2){
-			/**
-			 * If the payment profiles payment type has a cancel action then link to that. If not then hide the button.
-			 */
-			if(!empty($profile['payment_code']) && $this->load->controller('payment/' . $profile['payment_code'] . '/recurringCancel', '') != false && $this->config->get($profile['payment_code'] . '_profile_cancel_status')){
-				$data['cancel_link'] = $this->url->link('payment/'.$profile['payment_code'].'/recurringCancel', 'recurring_id='.$this->request->get['recurring_id'], 'SSL');
-			}else{
-				$data['cancel_link'] = '';
-			}
-		}else{
-			$data['cancel_link'] = '';
-		}
-
 		$data['status_types'] = array(
 			1 => $this->language->get('text_status_inactive'),
 			2 => $this->language->get('text_status_active'),
@@ -180,6 +161,14 @@ class ControllerAccountRecurring extends Controller {
 		);
 
 		if ($profile) {
+			$profile['transactions'] = $this->model_account_recurring->getProfileTransactions($this->request->get['recurring_id']);
+
+			$profile['created'] = date($this->language->get('date_format_short'), strtotime($profile['created']));
+			$profile['product_link'] = $this->url->link('product/product', 'product_id='.$profile['product_id'], 'SSL');
+			$profile['order_link'] = $this->url->link('account/order/info', 'order_id='.$profile['order_id'], 'SSL');
+
+			$data['action_buttons'] = $this->load->controller('payment/' . $profile['payment_code'].'/getActions', '');
+
 			$this->document->setTitle($this->language->get('text_recurring'));
 
 			$data['breadcrumbs'] = array();
@@ -231,8 +220,6 @@ class ControllerAccountRecurring extends Controller {
 
 			$data['button_return'] = $this->language->get('button_return');
 			$data['button_continue'] = $this->language->get('button_continue');
-			$data['button_cancel_profile'] = $this->language->get('button_cancel_profile');
-			$data['text_confirm_cancel'] = $this->language->get('text_confirm_cancel');
 			$data['continue'] = $this->url->link('account/recurring', '', 'SSL');
 			$data['profile'] = $profile;
 

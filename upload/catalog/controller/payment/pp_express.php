@@ -350,7 +350,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->load->model('tool/image');
 
 		// Coupon
-		if (isset($this->request->post['coupon']) && $this->validateCoupon()) { 
+		if (isset($this->request->post['coupon']) && $this->validateCoupon()) {
 			$this->session->data['coupon'] = $this->request->post['coupon'];
 
 			$this->session->data['success'] = $this->language->get('text_coupon');
@@ -1927,5 +1927,18 @@ class ControllerPaymentPPExpress extends Controller {
 			$this->session->data['error_warning'] = $error;
 			return false;
 		}
+	}
+
+	public function getActions() {
+		$this->language->load('payment/pp_express');
+
+		$links = array();
+
+		$links[] = array(
+			'text' => $this->language->get('button_cancel_profile'),
+			'link' => $this->url->link('payment/pp_express/recurringCancel', 'recurring_id='.$this->request->get['recurring_id'], 'SSL')
+		);
+
+		return $links;
 	}
 }

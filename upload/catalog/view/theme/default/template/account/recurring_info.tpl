@@ -77,8 +77,10 @@
       </table>
       <div class="buttons clearfix">
         <div class="pull-right">
-          <?php if($cancel_link){ ?>
-          <a href="<?php echo $cancel_link; ?>" class="btn btn-warning" onclick="return confirmCancel();"><?php echo $button_cancel_profile; ?></a><?php } ?>
+          <?php foreach ($action_buttons as $button) { ?>
+            <a href="<?php echo $button['link']; ?>" class="btn btn-warning"><?php echo $button['text']; ?></a>
+          <?php } ?>
+
           <a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>
         </div>
       </div>
@@ -86,9 +88,3 @@
     <?php echo $column_right; ?></div>
 </div>
 <?php echo $footer; ?>
-<script type="text/javascript"><!--
-function confirmCancel() {
-  var confirmed = confirm("<?php echo $text_confirm_cancel; ?>");
-  return confirmed;
-}
-//--></script>

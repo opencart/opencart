@@ -8,6 +8,9 @@ $_['text_trial']                    = '%s every %s %s for %s payments then ';
 $_['text_recurring']                = '%s every %s %s';
 $_['text_length']                   = ' for %s payments';
 
+// Buttons
+$_['button_cancel_profile'] 		= 'Cancel payments';
+
 // Standard checkout error page
 $_['error_heading_title']           = 'There was an error';
 $_['error_too_many_failures']       = 'Your payment has failed too many times';

@@ -28,4 +28,3 @@ class ModelPaymentPPProPF extends Model {
 		return $method_data;
 	}
 }
-?>

@@ -96,4 +96,3 @@ class ModelAccountRecurring extends Model {
 		return $query->row['total'];
 	}
 }
-?>

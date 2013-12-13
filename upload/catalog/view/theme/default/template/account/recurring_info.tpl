@@ -1,100 +1,94 @@
 <?php echo $header; ?>
-
-<?php if ($success) { ?>
-<div class="success"><?php echo $success; ?></div>
-<?php } ?>
-<?php if ($error) { ?>
-<div class="warning"><?php echo $error; ?></div>
-<?php } ?>
-
-<?php echo $column_left; ?><?php echo $column_right; ?>
-<div id="content"><?php echo $content_top; ?>
-  <div class="breadcrumb">
+<div class="container">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
-  <h1><?php echo $heading_title; ?></h1>
-  <table class="list">
-    <thead>
-      <tr>
-        <td class="left" colspan="2"><?php echo $text_recurring_detail; ?></td>
-      </tr>
-    </thead>
-    <tbody>
-    <tr>
-        <td class="left" style="width: 50%;">
-            <p style="margin:5px;"><b><?php echo $text_recurring_id; ?></b> #<?php echo $profile['order_recurring_id']; ?></p>
-            <p style="margin:5px;"><b><?php echo $text_date_added; ?></b> <?php echo $profile['created']; ?></p>
-            <p style="margin:5px;"><b><?php echo $text_status; ?></b> <?php echo $status_types[$profile['status']]; ?></p>
-            <p style="margin:5px;"><b><?php echo $text_payment_method; ?></b> <?php echo $profile['payment_method']; ?></p>
-        </td>
-        <td class="left" style="width: 50%; vertical-align: top;">
-            <p style="margin:5px;"><b><?php echo $text_product; ?></b> <a href="<?php echo $profile['product_link']; ?>"><?php echo $profile['product_name']; ?></a></p>
-            <p style="margin:5px;"><b><?php echo $text_quantity; ?></b> <?php echo $profile['product_quantity']; ?></p>
-            <p style="margin:5px;"><b><?php echo $text_order; ?></b> <a href="<?php echo $profile['order_link']; ?>">#<?php echo $profile['order_id']; ?></a></p>
-        </td>
-    </tr>
-    </tbody>
-  </table>
-    <table class="list">
+  </ul>
+  <div class="row"><?php echo $column_left; ?>
+    <?php if ($column_left && $column_right) { ?>
+    <?php $class = 'col-sm-6'; ?>
+    <?php } elseif ($column_left || $column_right) { ?>
+    <?php $class = 'col-sm-9'; ?>
+    <?php } else { ?>
+    <?php $class = 'col-sm-12'; ?>
+    <?php } ?>
+    <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?><h2><?php echo $heading_title; ?></h2>
+      <table class="table table-bordered table-hover">
         <thead>
-            <tr>
-                <td class="left"><?php echo $text_recurring_description; ?></td>
-                <td class="left"><?php echo $text_ref; ?></td>
-            </tr>
+        <tr>
+          <td class="text-left" colspan="2"><?php echo $text_recurring_detail; ?></td>
+        </tr>
         </thead>
         <tbody>
-            <tr>
-                <td class="left" style="width: 50%;"><p style="margin:5px;"><?php echo $profile['profile_description']; ?></p></td>
-                <td class="left" style="width: 50%;"><p style="margin:5px;"><?php echo $profile['profile_reference']; ?></p></td>
-            </tr>
+        <tr>
+          <td class="text-left" style="width: 50%;">
+            <p><b><?php echo $text_recurring_id; ?></b> #<?php echo $profile['order_recurring_id']; ?></p>
+            <p><b><?php echo $text_date_added; ?></b> <?php echo $profile['created']; ?></p>
+            <p><b><?php echo $text_status; ?></b> <?php echo $status_types[$profile['status']]; ?></p>
+            <p><b><?php echo $text_payment_method; ?></b> <?php echo $profile['payment_method']; ?></p>
+          </td>
+          <td class="left" style="width: 50%; vertical-align: top;">
+            <p><b><?php echo $text_product; ?></b><a href="<?php echo $profile['product_link']; ?>"><?php echo $profile['product_name']; ?></a></p>
+            <p><b><?php echo $text_quantity; ?></b> <?php echo $profile['product_quantity']; ?></p>
+            <p><b><?php echo $text_order; ?></b><a href="<?php echo $profile['order_link']; ?>">#<?php echo $profile['order_id']; ?></a></p>
+          </td>
+        </tr>
         </tbody>
-  </table>
-  <h2><?php echo $text_transactions; ?></h2>
-  <table class="list">
-    <thead>
-      <tr>
-        <td class="left"><?php echo $column_created; ?></td>
-        <td class="center"><?php echo $column_type; ?></td>
-        <td class="right"><?php echo $column_amount; ?></td>
-      </tr>
-    </thead>
-    <tbody>
-      <?php
-
-      if(!empty($profile['transactions'])){
-      foreach ($profile['transactions'] as $transaction) {
-
-      ?>
-      <tr>
-        <td class="left"><?php echo $transaction['created']; ?></td>
-        <td class="center"><?php echo $transaction_types[$transaction['type']]; ?></td>
-        <td class="right"><?php echo $transaction['amount']; ?></td>
-      </tr>
-      <?php } }else{ ?>
-
-      <tr>
-          <td colspan="3" class="center"><?php echo $text_empty_transactions; ?></td>
-      </tr>
-
-    <?php } ?>
-    </tbody>
-  </table>
-
-  <div class="buttons">
-    <div class="right">
-        <?php if($cancel_link){ ?>
-            <a href="<?php echo $cancel_link; ?>" class="button" onclick="return confirmCancel();"><?php echo $button_cancel_profile; ?></a>
+      </table>
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <td class="text-left"><?php echo $text_recurring_description; ?></td>
+          <td class="text-left"><?php echo $text_ref; ?></td>
+        </tr>
+        </thead>
+        <tbody>
+        <tr>
+          <td class="text-left" style="width: 50%;">
+            <p style="margin:5px;"><?php echo $profile['profile_description']; ?></p></td>
+          <td class="text-left" style="width: 50%;">
+            <p style="margin:5px;"><?php echo $profile['profile_reference']; ?></p></td>
+        </tr>
+        </tbody>
+      </table>
+      <h2><?php echo $text_transactions; ?></h2>
+      <table class="table table-bordered table-hover">
+        <thead>
+        <tr>
+          <td class="text-left"><?php echo $column_created; ?></td>
+          <td class="text-center"><?php echo $column_type; ?></td>
+          <td class="text-right"><?php echo $column_amount; ?></td>
+        </tr>
+        </thead>
+        <tbody>
+        <?php if (!empty($profile['transactions'])) { ?><?php foreach ($profile['transactions'] as $transaction) { ?>
+        <tr>
+          <td class="text-left"><?php echo $transaction['created']; ?></td>
+          <td class="text-center"><?php echo $transaction_types[$transaction['type']]; ?></td>
+          <td class="text-right"><?php echo $transaction['amount']; ?></td>
+        </tr>
+        <?php } ?><?php }else{ ?>
+        <tr>
+          <td colspan="3" class="text-center"><?php echo $text_empty_transactions; ?></td>
+        </tr>
         <?php } ?>
-        <a href="<?php echo $continue; ?>" class="button"><?php echo $button_continue; ?></a>
-    </div>
-  </div>
-  <?php echo $content_bottom; ?></div>
+        </tbody>
+      </table>
+      <div class="buttons clearfix">
+        <div class="pull-right">
+          <?php if($cancel_link){ ?>
+          <a href="<?php echo $cancel_link; ?>" class="btn btn-warning" onclick="return confirmCancel();"><?php echo $button_cancel_profile; ?></a><?php } ?>
+          <a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>
+        </div>
+      </div>
+      <?php echo $content_bottom; ?></div>
+    <?php echo $column_right; ?></div>
+</div>
 <?php echo $footer; ?>
 <script type="text/javascript"><!--
-    function confirmCancel(){
-        var confirmed = confirm("<?php echo $text_confirm_cancel; ?>");
-        return confirmed;
-    }
+function confirmCancel() {
+  var confirmed = confirm("<?php echo $text_confirm_cancel; ?>");
+  return confirmed;
+}
 //--></script>

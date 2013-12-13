@@ -302,4 +302,3 @@ class ControllerPaymentPPProIframe extends Controller {
 		}
 	}
 }
-?>

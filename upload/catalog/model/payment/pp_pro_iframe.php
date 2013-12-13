@@ -45,4 +45,3 @@ class ModelPaymentPPProIframe extends Model {
 		}
 	}
 }
-?>

@@ -28,4 +28,3 @@ class ModelPaymentPPProUK extends Model {
 		return $method_data;
 	}
 }
-?>

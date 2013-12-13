@@ -355,4 +355,3 @@ class ModelPaymentPPExpress extends Model {
 		return true;
 	}
 }
-?>

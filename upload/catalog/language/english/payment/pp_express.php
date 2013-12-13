@@ -19,4 +19,3 @@ $_['express_button_confirm']        = 'Confirm';
 $_['express_button_login']          = 'Continue to PayPal';
 $_['express_button_shipping']       = 'Update shipping';
 $_['express_entry_coupon']          = 'Enter your coupon here:';
-?>

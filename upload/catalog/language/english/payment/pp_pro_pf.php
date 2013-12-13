@@ -22,4 +22,3 @@ $_['error_config']         = 'Warning: Payment module configuration error. Pleas
 $_['error_address']        = 'Warning: A match of the Payment Address City, State, and Postal Code failed. Please try again.';
 $_['error_declined']       = 'Warning: This transaction has been declined. Please try again.';
 $_['error_invalid']        = 'Warning: The provided credit card information is invalid. Please try again.';
-?>

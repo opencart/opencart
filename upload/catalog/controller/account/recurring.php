@@ -253,4 +253,3 @@ class ControllerAccountRecurring extends Controller {
 		}
 	}
 }
-?>

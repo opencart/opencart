@@ -97,4 +97,3 @@ $_['error_missing_data'] = 'Missing data';
 $_['error_missing_order'] = 'Could not find the order';
 $_['error_general'] = 'There was an error';
 $_['error_capture_amt'] = 'Enter an amount to capture';
-?>

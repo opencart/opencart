@@ -1165,4 +1165,3 @@ class ControllerPaymentPPExpress extends Controller {
         $this->response->redirect($this->url->link('sale/recurring/info', 'order_recurring_id=' . $this->request->get['order_recurring_id'].'&token='.$this->request->get['token'], 'SSL'));
     }
 }
-?>

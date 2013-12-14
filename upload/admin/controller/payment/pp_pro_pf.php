@@ -205,4 +205,3 @@ class ControllerPaymentPPProPF extends Controller {
 		return !$this->error;
 	}
 }
-?>

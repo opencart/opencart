@@ -259,4 +259,3 @@ class ModelPaymentPPProIframe extends Model {
 		return $arr;
 	}
 }
-?>

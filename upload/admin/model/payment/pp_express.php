@@ -285,4 +285,3 @@ class ModelPaymentPPExpress extends Model {
 		return $this->call($data);
 	}
 }
-?>

@@ -222,4 +222,3 @@ class ControllerPaymentPPStandard extends Controller {
 		return !$this->error;
 	}
 }
-?>

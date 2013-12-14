@@ -168,4 +168,3 @@ $_['error_transaction_missing'] = 'Could not find the transaction';
 $_['error_missing_data'] = 'Missing data';
 $_['error_general'] = 'There was an error';
 $_['error_capture_amt'] = 'Enter an amount to capture';
-?>

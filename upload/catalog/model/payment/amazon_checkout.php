@@ -55,4 +55,3 @@ class ModelPaymentAmazonCheckout extends Model {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` (`store_id`, `group`, `key`, `value`, `serialized`) VALUES (0, 'amazon_checkout', 'amazon_checkout_last_cron_job_run', NOW(), 0)");
 	}
 }
-?>

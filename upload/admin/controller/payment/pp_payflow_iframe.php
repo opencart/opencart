@@ -567,4 +567,3 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		return !$this->error;
 	}
 }
-?>

@@ -86,5 +86,4 @@ final class Loader {
 	public function language($language) {
 		return $this->registry->get('language')->load($language);
 	}
-} 
-?>
+}

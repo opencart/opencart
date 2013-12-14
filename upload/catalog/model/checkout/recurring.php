@@ -17,4 +17,3 @@ class ModelCheckoutRecurring extends Model {
 		}
 	}
 }
-?>

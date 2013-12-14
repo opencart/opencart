@@ -23,5 +23,4 @@ $_['help_total']         = 'The checkout total the order must reach before this 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment Perpetual Payments!';
 $_['error_auth_id']      = 'Authorization ID Required!'; 
-$_['error_auth_pass']    = 'Authorization Password Required!'; 
-?>
+$_['error_auth_pass']    = 'Authorization Password Required!';

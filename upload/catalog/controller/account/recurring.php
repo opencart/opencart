@@ -167,8 +167,6 @@ class ControllerAccountRecurring extends Controller {
 			$profile['product_link'] = $this->url->link('product/product', 'product_id='.$profile['product_id'], 'SSL');
 			$profile['order_link'] = $this->url->link('account/order/info', 'order_id='.$profile['order_id'], 'SSL');
 
-			$data['action_buttons'] = $this->load->controller('payment/' . $profile['payment_code'].'/getActions', '');
-
 			$this->document->setTitle($this->language->get('text_recurring'));
 
 			$data['breadcrumbs'] = array();
@@ -218,11 +216,9 @@ class ControllerAccountRecurring extends Controller {
 			$data['text_transactions'] = $this->language->get('text_transactions');
 			$data['text_recurring_description'] = $this->language->get('text_recurring_description');
 
-			$data['button_return'] = $this->language->get('button_return');
-			$data['button_continue'] = $this->language->get('button_continue');
-			$data['continue'] = $this->url->link('account/recurring', '', 'SSL');
 			$data['profile'] = $profile;
 
+			$data['buttons'] = $this->load->controller('payment/' . $profile['payment_code'].'/recurringActions');
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
 			$data['content_top'] = $this->load->controller('common/content_top');

@@ -75,16 +75,10 @@
         <?php } ?>
         </tbody>
       </table>
-      <div class="buttons clearfix">
-        <div class="pull-right">
-          <?php foreach ($action_buttons as $button) { ?>
-            <a href="<?php echo $button['link']; ?>" class="btn btn-warning"><?php echo $button['text']; ?></a>
-          <?php } ?>
-
-          <a href="<?php echo $continue; ?>" class="btn btn-primary"><?php echo $button_continue; ?></a>
-        </div>
-      </div>
-      <?php echo $content_bottom; ?></div>
-    <?php echo $column_right; ?></div>
+      <?php echo $buttons; ?>
+      <?php echo $content_bottom; ?>
+    </div>
+    <?php echo $column_right; ?>
+  </div>
 </div>
 <?php echo $footer; ?>

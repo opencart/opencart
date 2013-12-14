@@ -1929,16 +1929,29 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 	}
 
-	public function getActions() {
+	public function recurringButtons() {
 		$this->language->load('payment/pp_express');
 
-		$links = array();
+		$profile = $this->model_account_recurring->getProfile($this->request->get['recurring_id']);
 
-		$links[] = array(
-			'text' => $this->language->get('button_cancel_profile'),
-			'link' => $this->url->link('payment/pp_express/recurringCancel', 'recurring_id='.$this->request->get['recurring_id'], 'SSL')
+		$data['buttons'] = array();
+
+		if ($profile['status'] == 2 || $profile['status'] == 3) {
+			$data['buttons'][] = array(
+				'text' => $this->language->get('button_cancel_profile'),
+				'link' => $this->url->link('payment/pp_express/recurringCancel', 'recurring_id='.$this->request->get['recurring_id'], 'SSL')
+			);
+		}
+
+		$data['buttons'][] = array(
+			'text' => $this->language->get('button_continue'),
+			'link' => $this->url->link('account/recurring', '', 'SSL')
 		);
 
-		return $links;
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/buttons.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/common/buttons.tpl', $data);
+		} else {
+			return $this->load->view('default/template/common/buttons.tpl', $data);
+		}
 	}
 }

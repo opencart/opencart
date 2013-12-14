@@ -8,6 +8,7 @@ final class Action {
 	public function __construct($route, $args = array()) {
 		$path = '';
 		
+		// Break apart the route
 		$parts = explode('/', str_replace('../', '', (string)$route));
 		
 		foreach ($parts as $part) { 
@@ -37,27 +38,34 @@ final class Action {
 		}
 			
 		$method = array_shift($parts);
-				
+							
 		if ($method) {
 			$this->method = $method;
 		} else {
 			$this->method = 'index';
 		}
 	}
-	
-	public function getFile() {
-		return $this->file;
-	}
-	
-	public function getClass() {
-		return $this->class;
-	}
-	
-	public function getMethod() {
-		return $this->method;
-	}
-	
-	public function getArgs() {
-		return $this->args;
+
+	public function execute($registry) {
+		// Stop any magical methods being called  
+		if (substr($this->method, 0, 2) == '__') {
+			return false;
+		}
+		
+		if (is_file($this->file)) {
+			include_once($this->file);
+			
+			$class = $this->class;
+			
+			$controller = new $class($registry);
+					
+			if (is_callable(array($controller, $this->method))) {
+				return call_user_func_array(array($controller, $this->method), $this->args);
+			} else {	
+				return false;
+			}
+		} else {	
+			return false;
+		}	
 	}
 }

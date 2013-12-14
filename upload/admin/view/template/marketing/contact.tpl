@@ -54,15 +54,14 @@
           <div class="col-sm-10">
             <input type="text" name="customers" value="" placeholder="<?php echo $entry_customer; ?>" id="input-customer" class="form-control" />
             <span class="help-block"><?php echo $help_customer; ?></span>
-            <br />
             <div id="customer" class="well well-sm" style="height: 150px; overflow: auto;"></div>
           </div>
         </div>
         <div class="form-group to" id="to-affiliate">
-          <label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?> <span class="help-block"><?php echo $help_affiliate; ?></span></label>
+          <label class="col-sm-2 control-label" for="input-affiliate"><?php echo $entry_affiliate; ?></label>
           <div class="col-sm-10">
             <input type="text" name="affiliates" value="" placeholder="<?php echo $entry_affiliate; ?>" id="input-affiliate" class="form-control" />
-            <br />
+            <span class="help-block"><?php echo $help_affiliate; ?></span>
             <div id="affiliate" class="well well-sm" style="height: 150px; overflow: auto;"></div>
           </div>
         </div>

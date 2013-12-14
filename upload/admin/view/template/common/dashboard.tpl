@@ -15,66 +15,81 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <div class="row">
-    <div class="col-sm-3">
+    <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-shopping-cart fa-4x"></i></span></div>
-            <div class="col-xs-8"><span class="text-success"><?php echo $order_total; ?></span>
+            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-shopping-cart fa-4x"></i></span></div>
+            <div class="col-xs-9">
               <?php if ($order_percentage > 0) { ?>
-              <span class="label label-success">+<?php echo $order_percentage; ?>%</span><br />
+              <span class="label label-success pull-right">+<?php echo $order_percentage; ?>%</span>
               <?php } else { ?>
-              <span class="label label-danger"><?php echo $order_percentage; ?>%</span><br />
+              <span class="label label-danger pull-right"><?php echo $order_percentage; ?>%</span>
               <?php } ?>
+              <h3 class="text-success"><?php echo $order_total; ?></h3>
               <?php echo $text_new_order; ?></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-user fa-4x"></i></span></div>
-            <div class="col-xs-8">
-              <h3 class="text-success"><?php echo $customer_total; ?></h3>
+            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-user fa-4x"></i></span></div>
+            <div class="col-xs-9">
               <?php if ($customer_percentage > 0) { ?>
-              <span class="label label-success">+<?php echo $customer_percentage; ?>%</span><br />
+              <span class="label label-success pull-right">+<?php echo $customer_percentage; ?>%</span>
               <?php } else { ?>
-              <span class="label label-danger"><?php echo $customer_percentage; ?>%</span><br />
+              <span class="label label-danger pull-right"><?php echo $customer_percentage; ?>%</span>
               <?php } ?>
+              <h3 class="text-success"><?php echo $customer_total; ?></h3>
               <?php echo $text_new_customer; ?></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-credit-card fa-4x"></i></span></div>
-            <div class="col-xs-8">
+            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-credit-card fa-4x"></i></span></div>
+            <div class="col-xs-9">
+              <?php if ($sale_percentage > 0) { ?>
+              <?php $class = 'label-success'; ?>
+              <?php } else { ?>
+              <?php $class = 'label-danger'; ?>
+              <?php } ?>
+              <span class="label <?php echo $class; ?> pull-right"><?php echo $sale_percentage; ?>%</span>
               <h3 class="text-success"><?php echo $sale_total; ?></h3>
               <?php echo $text_total_sale; ?></div>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-sm-3">
+    <div class="col-md-3">
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <div class="col-xs-4"><span class="text-muted"><i class="fa fa-bar-chart-o fa-4x"></i></span></div>
-            <div class="col-xs-8">
-              <h3 class="text-success"><?php echo $marketing_total; ?></h3>
-              <?php echo $text_marketing; ?></div>
+            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-eye fa-4x"></i></span></div>
+            <div class="col-xs-9">
+              <?php if ($online_total > 30) { ?>
+              <h3 class="text-success"><?php echo $online_total; ?></h3>
+              <?php } elseif ($online_total > 20) { ?>
+              <h3 class="text-info"><?php echo $online_total; ?></h3>
+              <?php } elseif ($online_total > 10) { ?>
+              <h3 class="text-text-warning"><?php echo $online_total; ?></h3>
+              <?php } else { ?>
+              <h3 class="text-danger"><?php echo $online_total; ?></h3>
+              <?php } ?>
+              <?php echo $text_online; ?></div>
           </div>
         </div>
       </div>
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-6">
+    <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
           <div class="pull-right">
@@ -100,10 +115,10 @@
         </div>
       </div>
     </div>
-    <div class="col-sm-6">
+    <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_online; ?></h1>
+          <h1 class="panel-title"><i class="fa fa-eye"></i> <?php echo $text_online; ?></h1>
         </div>
         <div class="panel-body">
           <div id="chart-online" class="chart" style="width: 100%; height: 175px;"></div>
@@ -112,7 +127,7 @@
     </div>
   </div>
   <div class="row">
-    <div class="col-sm-4">
+    <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h1 class="panel-title"><i class="fa fa-calendar-o"></i> <?php echo $text_activity; ?></h1>
@@ -129,43 +144,41 @@
         </ul>
       </div>
     </div>
-    <div class="col-sm-8">
+    <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading">
           <h1 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_last_order; ?></h1>
         </div>
-        <div class="panel-body">
-          <table class="table table-hover">
-            <thead>
-              <tr>
-                <td class="text-right"><?php echo $column_order_id; ?></td>
-                <td><?php echo $column_customer; ?></td>
-                <td><?php echo $column_status; ?></td>
-                <td><?php echo $column_date_added; ?></td>
-                <td class="text-right"><?php echo $column_total; ?></td>
-                <td class="text-right"><?php echo $column_action; ?></td>
-              </tr>
-            </thead>
-            <tbody>
-              <?php if ($orders) { ?>
-              <?php foreach ($orders as $order) { ?>
-              <tr>
-                <td class="text-right"><?php echo $order['order_id']; ?></td>
-                <td><?php echo $order['customer']; ?></td>
-                <td><?php echo $order['status']; ?></td>
-                <td><?php echo $order['date_added']; ?></td>
-                <td class="text-right"><?php echo $order['total']; ?></td>
-                <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
-              </tr>
-              <?php } ?>
-              <?php } else { ?>
-              <tr>
-                <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
-        </div>
+        <table class="table">
+          <thead>
+            <tr>
+              <td class="text-right"><?php echo $column_order_id; ?></td>
+              <td><?php echo $column_customer; ?></td>
+              <td><?php echo $column_status; ?></td>
+              <td><?php echo $column_date_added; ?></td>
+              <td class="text-right"><?php echo $column_total; ?></td>
+              <td class="text-right"><?php echo $column_action; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($orders) { ?>
+            <?php foreach ($orders as $order) { ?>
+            <tr>
+              <td class="text-right"><?php echo $order['order_id']; ?></td>
+              <td><?php echo $order['customer']; ?></td>
+              <td><?php echo $order['status']; ?></td>
+              <td><?php echo $order['date_added']; ?></td>
+              <td class="text-right"><?php echo $order['total']; ?></td>
+              <td class="text-right"><a href="<?php echo $order['view']; ?>" data-toggle="tooltip" title="<?php echo $button_view; ?>" class="btn btn-info"><i class="fa fa-eye"></i></a></td>
+            </tr>
+            <?php } ?>
+            <?php } else { ?>
+            <tr>
+              <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+            </tr>
+            <?php } ?>
+          </tbody>
+        </table>
       </div>
     </div>
   </div>

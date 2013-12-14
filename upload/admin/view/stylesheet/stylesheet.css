@@ -9,64 +9,105 @@ html, body {
 h1, h2, h3, h4, h5, h6 {
 	margin-top: 0;
 }
-legend {
-	font-size: 18px;
-	padding: 7px 0px
-}
-
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
-	display: inline !important;
+	display: inline;
 }
-.container {
-	min-width: 95%;
-}
-#header {
-	min-height: 40px;
-	margin-bottom: 15px;
-	background-color: #242424;
-	background-repeat: repeat-x;
-	background-image: linear-gradient(0deg, #242424, #333333);
-	border-bottom: 1px solid #000000;
-	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
-}
-#header > .container .navbar-brand {
-	padding: 8px 15px;
-	line-height: 20px;
-}
-#header > .container .navbar-nav > li > a {
-	text-shadow: 1px 1px #000000;
-	padding: 10px 15px 10px 15px;
-	line-height: 20px;
-	color: #999999;
-	cursor: pointer;
-	white-space: nowrap;
-}
-#header > .container .navbar-nav > li > a:hover {
-	color: #FFF;
-}
-#header > .container .navbar-nav > li.active > a {
-	color: #FFF;
-}
-#header > .container .navbar-nav + .navbar-nav > li > a {
-	padding: 7px 15px;
-	line-height: 26px;
-	border-left: 1px solid #434546;
+@media (min-width: 1200px) {
+	span.hidden-xs {
+		display: inline;
+	}
 }
 
-#header > .container .navbar-nav + .navbar-nav > li > a i.fa-lg {
-	font-size: 18px;
+@media (min-width: 1200px) {
+	.container {
+		min-width: 95%;
+	}
 }
-#header > .container .navbar-nav > li > a > img {
-	background: #FFF;
+
+#header {
+	min-height: 45px;
+	margin-bottom: 0px;
+	background-color: #2D2D2E;
+	background-repeat: no-repeat, repeat;
+	background-size: auto, 5px 5px;
+	background-position: center, center;
+	background-image: linear-gradient(90deg, transparent, transparent 20%, rgba(255, 255, 255, 0.1) 50%, transparent 80%), linear-gradient(-135deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 50%, transparent 60%, transparent 100%);
+	box-shadow: inset 0 0 8px 0px #000000;        
+	border-bottom: 3px solid #2FC5F0;
+}
+
+#header .navbar-brand {
+	padding: 7px 15px 5px 15px;
+	line-height: 20px;
+}
+#header .navbar-nav > li + li {
+	background-repeat: no-repeat;
+	background-size: 2px 18px;
+	background-position: left;
+	background-image: linear-gradient(90deg, #000000 1px, #505050 1px);
+}
+
+#header .navbar-nav > li > a {
+	padding: 6px 12px;
+	line-height: 29px;
+	text-shadow: 1px 1px #000000;
+	cursor: pointer;
+	border-right: none;
+}
+#header .navbar-nav > li > a i.fa-lg {
+	font-size: 20px;
+}
+#header .navbar-nav > li > a > img {
 	border-radius: 7px;
 }
-#header > .container .navbar-nav > li > a .fa-caret-down {
+#header .navbar-nav > li > a .fa-angle-down {
 	margin-left: 3px;
 }
-#header > .container .navbar-nav > li > a .label {
+#header .navbar-nav > li > a .label {
 	text-shadow: none;
 }
+
+
+/* menu */
+#menu {
+	z-index: 1;
+	min-height: 30px;
+	margin-bottom: 15px;
+	background-color: #FFFFFF;
+	background-repeat: repeat-x;
+	background-position: top;
+	background-image: linear-gradient(0deg, #FFFFFF 1px, #F3F3F3 1px, #FFFFFF);
+	-webkit-box-shadow: 0px 0px 4px 0px #CCCCCC;
+	-moz-box-shadow: 0px 0px 4px 0px #CCCCCC;
+	box-shadow: 0px 0px 4px 0px #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+}
+#menu .navbar-nav, #menu .navbar-collapse {
+	padding: 0;
+}
+#menu .icon-bar {
+	color: #000;
+	border: 1px solid #000;
+}
+#menu li.active {
+	color: #000000;
+}
+#menu .navbar-nav > li > a {
+	color: #444444;
+	cursor: pointer;
+	padding: 5px 20px 5px 20px;
+	text-shadow: 1px 1px 1px #FFFFFF;
+}
+#menu .navbar-nav > li + li {
+	background-repeat: no-repeat;
+	background-size: 1px 100%;
+	background-position: top left;
+	background-image: linear-gradient(0deg, #CCCCCC, #FFFFFF);
+}
 /* drop down submen */
+.dropdown-menu {
+	font-size: 12px;
+}
 .dropdown-menu a {
 	cursor: pointer;
 }
@@ -168,26 +209,17 @@ footer a {
 	border-top: 1px solid #E5E5E5;
 	border-right: 1px solid #E5E5E5;
 	transform: rotate(45deg);
-	-ms-transform: rotate(45deg);
-	-webkit-transform: rotate(45deg);
 }
 .alert {
 	font-size: 12px;
 	padding: 10px;
 }
-
 .panel-heading {
-	padding: 5px 13px;
+	padding: 8px 15px;
 	overflow: auto;
 }
-.panel-default > .panel-heading {
-	
-}
 .panel-title {
-	font-weight: bold;
-	font-size: 19px;
 	line-height: 30px;
-	color: #666;
 	text-shadow: 1px 1px #FFFFFF;
 }
 .nav-tabs {
@@ -230,36 +262,28 @@ input.form-control, select.form-control {
 	font-size: 15px;
 }
 
-
 .table {
-	border-radius: 7px;
+
 }
-.table thead td:first-child {
-	border-radius: 7px 0 0 0;
-}
-.table thead {
-	border-bottom: none;	
-}
+
 .table thead td {
 	font-weight: bold;
 	border-bottom: none;
 }
-.table a:hover {
-	text-decoration: none;
-}
 .table a.asc:after {
-	content: "  \f0d7";
+	content: " \f0d7";
 	font-family: FontAwesome;
 	font-size: 14px;
 }
 .table a.desc:after {
-	content: "  \f0d8";
+	content: " \f0d8";
 	font-family: FontAwesome;
 	font-size: 14px;
 }
 .pagination {
 	margin: 0;
 }
+
 .img-thumbnail i {
 	color: #FFFFFF;
 	background-color: #EEEEEE;

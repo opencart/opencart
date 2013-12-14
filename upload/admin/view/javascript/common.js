@@ -36,7 +36,7 @@ $(document).ready(function() {
 			url += '/' + part[1];
 		}
 		
-		$('#header a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
+		$('#menu a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 	
 	// tooltips on hover

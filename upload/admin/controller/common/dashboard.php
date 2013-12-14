@@ -52,13 +52,6 @@ class ControllerCommonDashboard extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 		
-		$this->load->model('report/dashboard');
-		
-		// Total Sales
-		$sale_total = $this->model_report_dashboard->getTotalSales();
-		
-		$data['sale_total'] = $this->currency->format($sale_total, $this->config->get('config_currency'));
-		
 		// Total Orders
 		$this->load->model('sale/order');
 		
@@ -70,7 +63,7 @@ class ControllerCommonDashboard extends Controller {
 		
 		$difference = $today - $yesterday;
 		
-		if ($difference) {
+		if ($difference && $today) {
 			$data['order_percentage'] = round(($difference / $today) * 100);
 		} else {
 			$data['order_percentage'] = 0;
@@ -89,16 +82,31 @@ class ControllerCommonDashboard extends Controller {
 
 		$difference = $today - $yesterday;
 		
-		if ($difference) {
+		if ($difference && $today) {
 			$data['customer_percentage'] = round(($difference / $today) * 100);
 		} else {
 			$data['customer_percentage'] = 0;
-		}		
+		}
 		
-		// Marketing
-		$this->load->model('marketing/marketing');
+		$this->load->model('report/dashboard');
 		
-		$data['marketing_total'] = $this->model_marketing_marketing->getTotalMarketings();
+		// Total Sales
+		$data['sale_total'] = $this->currency->format($this->model_report_dashboard->getTotalSales(), $this->config->get('config_currency'));
+
+		$today = $this->model_report_dashboard->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-1 day'))));
+
+		$yesterday = $this->model_report_dashboard->getTotalSales(array('filter_date_added' => date('Y-m-d', strtotime('-2 day'))));
+
+		$difference = $today - $yesterday;
+		
+		if ($difference && $today) {
+			$data['sale_percentage'] = round(($difference / $today) * 100);
+		} else {
+			$data['sale_percentage'] = 0;
+		}
+				
+		// Customers Online
+		$data['online_total'] = $this->model_report_dashboard->getTotalCustomersOnline();
 		
 		$data['activities'] = array();
 				
@@ -263,7 +271,7 @@ class ControllerCommonDashboard extends Controller {
 		$json['online'] = array();
 		$json['xaxis'] = array();
 		
-		$results = $this->model_report_dashboard->getTotalCustomersOnline();
+		$results = $this->model_report_dashboard->getTotalCustomersOnlineByHour();
 		
 		foreach ($results as $result) {
 			$json['online']['data'][] = array($result['time'], $result['total']);

@@ -7,59 +7,15 @@ final class Loader {
 	}
 		
 	public function controller($route) {
-		$path = '';
-		
-		// Break apart the route
-		$parts = explode('/', str_replace(array('../', '..\\', '..'), '', (string)$route));
-		
-		foreach ($parts as $part) {
-			$path .= $part;
-			
-			if (is_dir(DIR_APPLICATION . 'controller/' . $path)) {
-				$path .= '/';
-				
-				array_shift($parts);
-				
-				continue;
-			}
-			
-			$file = DIR_APPLICATION . 'controller/' .  $path . '.php';
-			
-			if (is_file($file)) {
-				$class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $path);
-
-				array_shift($parts);
-				
-				break;
-			}
-		}
-			
-		$method = array_shift($parts);
-				
-		if (!$method) {
-			$method = 'index';
-		}
-		
 		// function arguments
 		$args = func_get_args();
 		
 		// Remove the route
-		array_shift($args);
+		array_shift($args);	
+				
+		$action = new Action($route, $args); 
 		
-		if (file_exists($file)) { 
-			include_once($file);
-			
-			$controller = new $class($this->registry);
-					
-			if (is_callable(array($controller, $method))) {
-				return call_user_func_array(array($controller, $method), $args);
-			} else {	
-				return false;
-			}
-		} else {
-			trigger_error('Error: Could not load controller ' . $file . '!');
-			exit();
-		}
+		return $action->execute($this->registry);
 	}
 		
 	public function model($model) {

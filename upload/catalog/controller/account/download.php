@@ -6,28 +6,28 @@ class ControllerAccountDownload extends Controller {
 
 			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
 		}
-        
+
 		$this->load->language('account/download');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-      	$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
-      	); 
+		);
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_account'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('account/account', '', 'SSL')
-      	);
-		
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_downloads'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_downloads'),
 			'href' => $this->url->link('account/download', '', 'SSL')
-      	);
-				
+		);
+
 		$this->load->model('account/download');
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -38,7 +38,7 @@ class ControllerAccountDownload extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_size'] = $this->language->get('column_size');
 		$data['column_date_added'] = $this->language->get('column_date_added');
-		
+
 		$data['button_download'] = $this->language->get('button_download');
 		$data['button_continue'] = $this->language->get('button_continue');
 
@@ -49,11 +49,11 @@ class ControllerAccountDownload extends Controller {
 		}			
 
 		$data['downloads'] = array();
-		
+
 		$download_total = $this->model_account_download->getTotalDownloads();
-		
+
 		$results = $this->model_account_download->getDownloads(($page - 1) * $this->config->get('config_product_limit'), $this->config->get('config_product_limit'));
-		
+
 		foreach ($results as $result) {
 			if (file_exists(DIR_DOWNLOAD . $result['filename'])) {
 				$size = filesize(DIR_DOWNLOAD . $result['filename']);
@@ -86,26 +86,26 @@ class ControllerAccountDownload extends Controller {
 				);
 			}
 		}
-	
+
 		$pagination = new Pagination();
 		$pagination->total = $download_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_product_limit');
 		$pagination->url = $this->url->link('account/download', 'page={page}', 'SSL');
-		
+
 		$data['pagination'] = $pagination->render();
-		
+
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($download_total) ? (($page - 1) * $this->config->get('config_product_limit')) + 1 : 0, ((($page - 1) * $this->config->get('config_product_limit')) > ($download_total - $this->config->get('config_product_limit'))) ? $download_total : ((($page - 1) * $this->config->get('config_product_limit')) + $this->config->get('config_product_limit')), $download_total, ceil($download_total / $this->config->get('config_product_limit')));
-		
+
 		$data['continue'] = $this->url->link('account/account', '', 'SSL');
-						
+
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/download.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/download.tpl', $data));
 		} else {
@@ -121,15 +121,15 @@ class ControllerAccountDownload extends Controller {
 		}
 
 		$this->load->model('account/download');
-		
+
 		if (isset($this->request->get['download_id'])) {
 			$download_id = $this->request->get['download_id'];
 		} else {
 			$download_id = 0;
 		}
-		
+
 		$download_info = $this->model_account_download->getDownload($download_id);
-		
+
 		if ($download_info) {
 			$file = DIR_DOWNLOAD . $download_info['filename'];
 			$mask = basename($download_info['mask']);
@@ -142,11 +142,11 @@ class ControllerAccountDownload extends Controller {
 					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 					header('Pragma: public');
 					header('Content-Length: ' . filesize($file));
-					
+
 					if (ob_get_level()) ob_end_clean();
-					
+
 					readfile($file, 'rb');
-					
+
 					exit();
 				} else {
 					exit('Error: Could not find file ' . $file . '!');

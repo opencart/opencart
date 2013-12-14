@@ -7,3 +7,4 @@ $_['text_success']  = 'Success: You have successfully cleared your error log!';
 
 // Error
 $_['error_warning'] = 'Warning: Your error log file %s is %s!';
+$_['error_modify']	= 'Warning: You do not have permission to clear error log!';

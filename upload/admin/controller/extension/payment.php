@@ -27,6 +27,15 @@ class ControllerExtensionPayment extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
+			require_once(DIR_APPLICATION . 'controller/payment/' . $this->request->get['extension'] . '.php');
+
+			$class = 'ControllerPayment' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+
+			if (method_exists($class, 'install')) {
+				$class->install();
+			}
+			
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
@@ -47,6 +56,15 @@ class ControllerExtensionPayment extends Controller {
 
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
+			require_once(DIR_APPLICATION . 'controller/payment/' . $this->request->get['extension'] . '.php');
+
+			$class = 'ControllerPayment' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+
+			if (method_exists($class, 'uninstall')) {
+				$class->uninstall();
+			}
+				
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	

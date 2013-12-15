@@ -9,6 +9,14 @@ class ControllerCommonHeader extends Controller {
 			$server = $this->config->get('config_url');
 		}
 
+		if (isset($this->session->data['error']) && !empty($this->session->data['error'])) {
+			$data['error'] = $this->session->data['error'];
+
+			unset($this->session->data['error']);
+		} else {
+			$data['error'] = '';
+		}
+
 		$data['base'] = $server;
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();
@@ -51,8 +59,7 @@ class ControllerCommonHeader extends Controller {
 		$data['shopping_cart'] = $this->url->link('checkout/cart');
 		$data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
 		$data['telephone'] = $this->config->get('config_telephone');
-		
-		// Daniel's robot detector
+
 		$status = true;
 		
 		if (isset($this->request->server['HTTP_USER_AGENT'])) {

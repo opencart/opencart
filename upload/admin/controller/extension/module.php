@@ -29,6 +29,15 @@ class ControllerExtensionModule extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
+			require_once(DIR_APPLICATION . 'controller/module/' . $this->request->get['extension'] . '.php');
+
+			$class = 'ControllerModule' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+
+			if (method_exists($class, 'install')) {
+				$class->install();
+			}
+						
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
@@ -51,6 +60,15 @@ class ControllerExtensionModule extends Controller {
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
+			require_once(DIR_APPLICATION . 'controller/module/' . $this->request->get['extension'] . '.php');
+
+			$class = 'ControllerModule' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+
+			if (method_exists($class, 'uninstall')) {
+				$class->uninstall();
+			}
+				
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));	
 		}
 

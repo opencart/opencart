@@ -87,6 +87,7 @@ $_['button_install']                = 'Install';
 $_['button_uninstall']              = 'Uninstall';
 $_['button_link']                   = 'Link';
 $_['button_restock']                = 'Restock';
+$_['button_add_profile']            = 'Add Profile';
 
 // Tab
 $_['tab_address']                   = 'Address';
@@ -105,6 +106,7 @@ $_['tab_links']                     = 'Links';
 $_['tab_log']                       = 'Log';
 $_['tab_image']                     = 'Image';
 $_['tab_option']                    = 'Option';
+$_['tab_profile']                   = 'Profile';
 $_['tab_server']                    = 'Server';
 $_['tab_store']                     = 'Store';
 $_['tab_special']                   = 'Special';
@@ -124,6 +126,8 @@ $_['tab_sale']                      = 'Sales';
 $_['tab_marketing']                 = 'Marketing';
 $_['tab_online']                    = 'People Online';
 $_['tab_activity']                  = 'Recent Activity';
+$_['tab_profile']                  	= 'Profile';
+$_['tab_trial']                  	= 'Trial Period';
 
 // Error
 $_['error_exception']               = 'Error Code(%s): %s in %s on line %s';

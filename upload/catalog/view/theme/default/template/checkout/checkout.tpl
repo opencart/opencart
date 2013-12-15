@@ -100,6 +100,9 @@ $(document).on('change', 'input[name=\'account\']', function() {
 
 <?php if (!$logged) { ?> 
 $(document).ready(function() {
+  <?php if(isset($quickconfirm)) { ?>
+    quickConfirm();
+  <?php }else{ ?>
     $.ajax({
         url: 'index.php?route=checkout/login',
         dataType: 'html',
@@ -113,10 +116,14 @@ $(document).ready(function() {
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
-    }); 
+    });
+  <?php } ?>
 });     
 <?php } else { ?>
 $(document).ready(function() {
+  <?php if(isset($quickconfirm)) { ?>
+    quickConfirm();
+  <?php }else{ ?>
     $.ajax({
         url: 'index.php?route=checkout/payment_address',
         dataType: 'html',
@@ -130,7 +137,8 @@ $(document).ready(function() {
         error: function(xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
-    }); 
+    });
+  <?php } ?>
 });
 <?php } ?>
 

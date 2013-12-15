@@ -29,6 +29,16 @@ $_['text_address_existing']          = 'I want to use an existing address';
 $_['text_shipping_method']           = 'Please select the preferred shipping method to use on this order.';
 $_['text_payment_method']            = 'Please select the preferred payment method to use on this order.';
 $_['text_comments']                  = 'Add Comments About Your Order';
+$_['text_recurring_item']            = 'Recurring item';
+$_['text_payment_profile']           = 'Payment Profile';
+$_['text_trial_description']         = '%s every %d %s(s) for %d payment(s) then';
+$_['text_payment_description']       = '%s every %d %s(s) for %d payment(s)';
+$_['text_payment_until_canceled_description'] = '%s every %d %s(s) until canceled';
+$_['text_day']                       = 'day';
+$_['text_week']                      = 'week';
+$_['text_semi_month']                = 'half-month';
+$_['text_month']                     = 'month';
+$_['text_year']                      = 'year';
 
 // Column
 $_['column_name']                    = 'Product Name';

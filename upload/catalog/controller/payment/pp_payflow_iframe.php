@@ -74,53 +74,45 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			'SECURETOKEN' => $secure_token,
 		);
 
-		$this->data['iframe_url'] = $payflow_url . '?' . http_build_query($iframe_params, '', "&");
-		$this->data['checkout_method'] = $this->config->get('pp_payflow_iframe_checkout_method');
-		$this->data['button_confirm'] = $this->language->get('button_confirm');
+		$data['iframe_url'] = $payflow_url . '?' . http_build_query($iframe_params, '', "&");
+		$data['checkout_method'] = $this->config->get('pp_payflow_iframe_checkout_method');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/pp_payflow_iframe.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_payflow_iframe.tpl', $data);
 		} else {
-			$this->template = 'default/template/payment/pp_payflow_iframe.tpl';
+			return $this->load->view('default/template/payment/pp_payflow_iframe.tpl', $data);
 		}
-
-		$this->render();
 	}
 
 	public function pp_return() {
-		$this->data['checkout_success'] = $this->url->link('checkout/success');
+		$data['checkout_success'] = $this->url->link('checkout/success');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_return.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_return.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_return.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_return.tpl', $data));
 		} else {
-			$this->template = 'default/template/payment/pp_payflow_iframe_return.tpl';
+			$this->response->setOutput($this->load->view('default/template/checkout/pp_payflow_iframe_return.tpl', $data));
 		}
-
-		$this->response->setOutput($this->render());
 	}
 
 	public function pp_cancel() {
-		$this->data['url'] = $this->url->link('checkout/checkout');
+		$data['url'] = $this->url->link('checkout/checkout');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_cancel.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_cancel.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_cancel.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_cancel.tpl', $data));
 		} else {
-			$this->template = 'default/template/payment/pp_payflow_iframe_cancel.tpl';
+			$this->response->setOutput($this->load->view('default/template/checkout/pp_payflow_iframe_cancel.tpl', $data));
 		}
-
-		$this->response->setOutput($this->render());
 	}
 
 	public function pp_error() {
-		$this->data['url'] = $this->url->link('checkout/checkout');
+		$data['url'] = $this->url->link('checkout/checkout');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_error.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_error.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_error.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_error.tpl', $data));
 		} else {
-			$this->template = 'default/template/payment/pp_payflow_iframe_error.tpl';
+			$this->response->setOutput($this->load->view('default/template/checkout/pp_payflow_iframe_error.tpl', $data));
 		}
-
-		$this->response->setOutput($this->render());
 	}
 
 	public function pp_post() {

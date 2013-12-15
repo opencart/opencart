@@ -796,9 +796,6 @@ class ControllerPaymentPPExpress extends Controller {
 				$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], 'SSL');
 				$data['resend_link'] = $this->url->link('payment/pp_express/resend', 'token=' . $this->session->data['token'], 'SSL');
 
-				$data['header'] = $this->load->controller('common/header');
-				$data['footer'] = $this->load->controller('common/footer');
-
 				$this->response->setOutput($this->load->view('payment/pp_express_order.tpl', $data));
 			}
 		}

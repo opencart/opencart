@@ -30,40 +30,36 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$this->response->redirect($this->url->link('common/home'));
 		}
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
-		$this->data['heading_address'] = $this->language->get('heading_address');
-		$this->data['text_back'] = $this->language->get('text_back');
-		$this->data['text_cart'] = $this->language->get('text_cart');
-		$this->data['text_continue'] = $this->language->get('text_continue');
-		$this->data['error_shipping'] = $this->language->get('error_shipping');
-		$this->data['error_shipping_address'] = $this->language->get('error_shipping_address');
-		$this->data['error_shipping_methods'] = $this->language->get('error_shipping_methods');
-		$this->data['error_no_shipping_methods'] = $this->language->get('error_no_shipping_methods');
+		$data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_address'] = $this->language->get('heading_address');
+		$data['text_back'] = $this->language->get('text_back');
+		$data['text_cart'] = $this->language->get('text_cart');
+		$data['text_continue'] = $this->language->get('text_continue');
+		$data['error_shipping'] = $this->language->get('error_shipping');
+		$data['error_shipping_address'] = $this->language->get('error_shipping_address');
+		$data['error_shipping_methods'] = $this->language->get('error_shipping_methods');
+		$data['error_no_shipping_methods'] = $this->language->get('error_no_shipping_methods');
 
-		$this->data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
-		$this->data['amazon_payment'] = $this->url->link('payment/amazon_checkout/payment', '', 'SSL');
-		$this->data['shipping_quotes'] = $this->url->link('payment/amazon_checkout/shipping_quotes', '', 'SSL');
-		$this->data['payment_method'] = $this->url->link('payment/amazon_checkout/payment_method', '', 'SSL');
+		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
+		$data['amazon_payment'] = $this->url->link('payment/amazon_checkout/payment', '', 'SSL');
+		$data['shipping_quotes'] = $this->url->link('payment/amazon_checkout/shipping_quotes', '', 'SSL');
+		$data['payment_method'] = $this->url->link('payment/amazon_checkout/payment_method', '', 'SSL');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_checkout_address.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/amazon_checkout_address.tpl';
+		$data['cart'] = $this->url->link('checkout/cart');
+		$data['text_cart'] = $this->language->get('text_cart');
+
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/amazon_checkout_address.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/amazon_checkout_address.tpl', $data));
 		} else {
-			$this->template = 'default/template/payment/amazon_checkout_address.tpl';
+			$this->response->setOutput($this->load->view('default/template/account/amazon_checkout_address.tpl', $data));
 		}
-
-		$this->data['cart'] = $this->url->link('checkout/cart');
-		$this->data['text_cart'] = $this->language->get('text_cart');
-
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'
-		);
-
-		$this->response->setOutput($this->render(true));
 	}
 
 	public function payment_method() {
@@ -85,35 +81,31 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$this->language->load('payment/amazon_checkout');
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
-		$this->data['heading_payment'] = $this->language->get('heading_payment');
-		$this->data['text_back'] = $this->language->get('text_back');
-		$this->data['text_continue'] = $this->language->get('text_continue');
-		$this->data['error_payment_method'] = $this->language->get('error_payment_method');
+		$data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_payment'] = $this->language->get('heading_payment');
+		$data['text_back'] = $this->language->get('text_back');
+		$data['text_continue'] = $this->language->get('text_continue');
+		$data['error_payment_method'] = $this->language->get('error_payment_method');
 
-		$this->data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
-		$this->data['confirm_order'] = $this->url->link('payment/amazon_checkout/confirm', '', 'SSL');
+		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
+		$data['confirm_order'] = $this->url->link('payment/amazon_checkout/confirm', '', 'SSL');
 
-		$this->data['continue'] = $this->url->link('payment/amazon_checkout/confirm', '', 'SSL');
-		$this->data['back'] = $this->url->link('payment/amazon_checkout/address', '', 'SSL');
-		$this->data['text_back'] = $this->language->get('text_back');
+		$data['continue'] = $this->url->link('payment/amazon_checkout/confirm', '', 'SSL');
+		$data['back'] = $this->url->link('payment/amazon_checkout/address', '', 'SSL');
+		$data['text_back'] = $this->language->get('text_back');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_checkout_payment.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/amazon_checkout_payment.tpl';
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/amazon_checkout_payment.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/amazon_checkout_payment.tpl', $data));
 		} else {
-			$this->template = 'default/template/payment/amazon_checkout_payment.tpl';
+			$this->response->setOutput($this->load->view('default/template/account/amazon_checkout_payment.tpl', $data));
 		}
-
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'
-		);
-
-		$this->response->setOutput($this->render(true));
 	}
 
 	public function confirm() {
@@ -143,13 +135,13 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
-		$this->data['heading_confirm'] = $this->language->get('heading_confirm');
-		$this->data['column_name'] = $this->language->get('column_name');
-		$this->data['column_model'] = $this->language->get('column_model');
-		$this->data['column_quantity'] = $this->language->get('column_quantity');
-		$this->data['column_price'] = $this->language->get('column_price');
-		$this->data['column_total'] = $this->language->get('column_total');
-		$this->data['text_confirm'] = $this->language->get('text_confirm');
+		$data['heading_confirm'] = $this->language->get('heading_confirm');
+		$data['column_name'] = $this->language->get('column_name');
+		$data['column_model'] = $this->language->get('column_model');
+		$data['column_quantity'] = $this->language->get('column_quantity');
+		$data['column_price'] = $this->language->get('column_price');
+		$data['column_total'] = $this->language->get('column_total');
+		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		// Validate minimum quantity requirments.
 		$products = $this->cart->getProducts();
@@ -443,8 +435,8 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$this->model_payment_amazon_checkout->setOrderShipping($this->session->data['cba']['order_id'], $data['cba_free_shipping']);
 
-		$this->data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
-		$this->data['process_order'] = $this->url->link('payment/amazon_checkout/process_order', '', 'SSL');
+		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
+		$data['process_order'] = $this->url->link('payment/amazon_checkout/process_order', '', 'SSL');
 
 		foreach ($this->cart->getProducts() as $product) {
 			$option_data = array();
@@ -469,7 +461,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				);
 			}
 
-			$this->data['products'][] = array(
+			$data['products'][] = array(
 				'product_id' => $product['product_id'],
 				'name' => $product['name'],
 				'model' => $product['model'],
@@ -480,29 +472,25 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			);
 		}
 
-		$this->data['vouchers'] = array();
+		$data['vouchers'] = array();
 
-		$this->data['totals'] = $total_data;
+		$data['totals'] = $total_data;
 
-		$this->data['back'] = $this->url->link('payment/amazon_checkout/payment_method', '', 'SSL');
-		$this->data['text_back'] = $this->language->get('text_back');
+		$data['back'] = $this->url->link('payment/amazon_checkout/payment_method', '', 'SSL');
+		$data['text_back'] = $this->language->get('text_back');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_checkout_confirm.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/amazon_checkout_confirm.tpl';
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/amazon_checkout_confirm.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/amazon_checkout_confirm.tpl', $data));
 		} else {
-			$this->template = 'default/template/payment/amazon_checkout_confirm.tpl';
+			$this->response->setOutput($this->load->view('default/template/account/amazon_checkout_confirm.tpl', $data));
 		}
-
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'
-		);
-
-		$this->response->setOutput($this->render(true));
 	}
 
 	public function process_order() {
@@ -643,11 +631,11 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$this->document->addScript($amazon_payment_js);
 
-		$this->data = array_merge($this->language->load('payment/amazon_checkout'), $this->data);
+		$data = array_merge($this->language->load('payment/amazon_checkout'), $data);
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->data['amazon_order_id'] = $this->request->get['amazon_order_id'];
-		$this->data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
+		$data['amazon_order_id'] = $this->request->get['amazon_order_id'];
+		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
 
 		$this->cart->clear();
 		unset($this->session->data['cba']);
@@ -663,22 +651,18 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		unset($this->session->data['voucher']);
 		unset($this->session->data['vouchers']);
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_checkout_success.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/amazon_checkout_success.tpl';
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/amazon_checkout_success.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/amazon_checkout_success.tpl', $data));
 		} else {
-			$this->template = 'default/template/payment/amazon_checkout_success.tpl';
+			$this->response->setOutput($this->load->view('default/template/account/amazon_checkout_success.tpl', $data));
 		}
-
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'
-		);
-
-		$this->response->setOutput($this->render(true));
 	}
 
 	public function failure() {
@@ -686,26 +670,21 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->data['heading_title'] = $this->language->get('heading_title');
-		$this->data['text_payment_failed'] = $this->language->get('text_payment_failed');
+		$data['heading_title'] = $this->language->get('heading_title');
+		$data['text_payment_failed'] = $this->language->get('text_payment_failed');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/amazon_checkout_failure.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/amazon_checkout_failure.tpl';
+		$data['column_left'] = $this->load->controller('common/column_left');
+		$data['column_right'] = $this->load->controller('common/column_right');
+		$data['content_top'] = $this->load->controller('common/content_top');
+		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+		$data['footer'] = $this->load->controller('common/footer');
+		$data['header'] = $this->load->controller('common/header');
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/account/amazon_checkout_failure.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/amazon_checkout_failure.tpl', $data));
 		} else {
-			$this->template = 'default/template/payment/amazon_checkout_failure.tpl';
+			$this->response->setOutput($this->load->view('default/template/account/amazon_checkout_failure.tpl', $data));
 		}
-
-		$this->children = array(
-			'common/column_left',
-			'common/column_right',
-			'common/content_top',
-			'common/content_bottom',
-			'common/footer',
-			'common/header'
-		);
-
-
-		$this->response->setOutput($this->render(true));
 	}
 
 	public function shipping_quotes() {

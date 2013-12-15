@@ -12,28 +12,26 @@ class ControllerPaymentPPProIframe extends Controller {
 			$hosted_button_id = $this->constructButtonData($order_info);
 
 			if ($this->config->get('pp_pro_iframe_test')) {
-				$this->data['url'] = 'https://securepayments.sandbox.paypal.com/cgi-bin/webscr';
+				$data['url'] = 'https://securepayments.sandbox.paypal.com/cgi-bin/webscr';
 			} else {
-				$this->data['url'] = 'https://securepayments.paypal.com/cgi-bin/webscr';
+				$data['url'] = 'https://securepayments.paypal.com/cgi-bin/webscr';
 			}
 
 			if ($hosted_button_id) {
-				$this->data['code'] = $hosted_button_id;
-				$this->data['error_connection'] = '';
+				$data['code'] = $hosted_button_id;
+				$data['error_connection'] = '';
 			} else {
-				$this->data['error_connection'] = $this->language->get('error_connection');
+				$data['error_connection'] = $this->language->get('error_connection');
 			}
 		}
 
-		$this->data['checkout_method'] = $this->config->get('pp_pro_iframe_checkout_method');
+		$data['checkout_method'] = $this->config->get('pp_pro_iframe_checkout_method');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro_iframe.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/pp_pro_iframe.tpl';
+			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_pro_iframe.tpl', $data);
 		} else {
-			$this->template = 'default/template/payment/pp_pro_iframe.tpl';
+			return $this->load->view('default/template/payment/pp_pro_iframe.tpl', $data);
 		}
-
-		$this->render();
 	}
 
 	public function create() {
@@ -41,39 +39,37 @@ class ControllerPaymentPPProIframe extends Controller {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/pp_pro_iframe');
 
-		$this->data['text_secure_connection'] = $this->language->get('text_secure_connection');
+		$data['text_secure_connection'] = $this->language->get('text_secure_connection');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$hosted_button_id = $this->constructButtonData($order_info);
 
 		if ($hosted_button_id) {
-			$this->data['code'] = $hosted_button_id;
+			$data['code'] = $hosted_button_id;
 
 			if ($this->config->get('pp_pro_iframe_test')) {
-				$this->data['url'] = 'https://securepayments.sandbox.paypal.com/cgi-bin/webscr';
+				$data['url'] = 'https://securepayments.sandbox.paypal.com/cgi-bin/webscr';
 			} else {
-				$this->data['url'] = 'https://securepayments.paypal.com/cgi-bin/webscr';
+				$data['url'] = 'https://securepayments.paypal.com/cgi-bin/webscr';
 			}
 
-			$this->data['error_connection'] = '';
+			$data['error_connection'] = '';
 		} else {
-			$this->data['error_connection'] = $this->language->get('error_connection');
+			$data['error_connection'] = $this->language->get('error_connection');
 		}
 
 		if (file_exists(DIR_APPLICATION . 'view/theme/' . $this->config->get('config_template') . '/stylesheet/stylesheet.css')) {
-			$this->data['stylesheet'] = '/catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/stylesheet.css';
+			$data['stylesheet'] = '/catalog/view/theme/' . $this->config->get('config_template') . '/stylesheet/stylesheet.css';
 		} else {
-			$this->data['stylesheet'] = '/catalog/view/theme/default/stylesheet/stylesheet.css';
+			$data['stylesheet'] = '/catalog/view/theme/default/stylesheet/stylesheet.css';
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro_iframe_body.tpl')) {
-			$this->template = $this->config->get('config_template') . '/template/payment/pp_pro_iframe_body.tpl';
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_pro_iframe_body.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_pro_iframe_body.tpl', $data));
 		} else {
-			$this->template = 'default/template/payment/pp_pro_iframe_body.tpl';
+			$this->response->setOutput($this->load->view('default/template/checkout/pp_pro_iframe_body.tpl', $data));
 		}
-
-		$this->response->setOutput($this->render());
 	}
 
 	public function notify() {

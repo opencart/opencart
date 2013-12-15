@@ -11,12 +11,12 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		// CBA supports up to 50 distinct products
 		if (count($this->cart->getProducts()) > 50) {
-			$this->redirect($this->url->link('common/home'));
+			$this->response->redirect($this->url->link('common/home'));
 		}
 
 		// CBA does not allow to process orders with a total of 0.00
 		if (count($this->cart->getTotal()) == 0) {
-			$this->redirect($this->url->link('common/home'));
+			$this->response->redirect($this->url->link('common/home'));
 		}
 
 		$this->load->model('account/address');
@@ -27,7 +27,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		if (isset($this->request->get['contract_id'])) {
 			$this->session->data['cba']['contract_id'] = $this->request->get['contract_id'];
 		} elseif (!isset($this->session->data['cba']['contract_id']) || empty($this->session->data['cba']['contract_id'])) {
-			$this->redirect($this->url->link('common/home'));
+			$this->response->redirect($this->url->link('common/home'));
 		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
@@ -80,7 +80,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		if (isset($this->session->data['cba'])) {
 			$contract_id = $this->session->data['cba']['contract_id'];
 		} else {
-			$this->redirect($this->url->link('common/home'));
+			$this->response->redirect($this->url->link('common/home'));
 		}
 
 		$this->language->load('payment/amazon_checkout');
@@ -135,12 +135,12 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (!isset($this->session->data['cba']) || !isset($this->session->data['cba']['shipping_method'])) {
-			$this->redirect($this->url->link('common/home'));
+			$this->response->redirect($this->url->link('common/home'));
 		}
 
 		// Validate cart has products and has stock.
 		if (!empty($this->session->data['vouchers']) || !$this->cart->hasProducts() || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$this->redirect($this->url->link('checkout/cart'));
+			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
 		$this->data['heading_confirm'] = $this->language->get('heading_confirm');
@@ -164,7 +164,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$this->redirect($this->url->link('checkout/cart'));
+				$this->response->redirect($this->url->link('checkout/cart'));
 			}
 		}
 
@@ -523,7 +523,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->language->load('payment/amazon_checkout');
 
 		if (!isset($this->session->data['cba']['order_id'])) {
-			$this->redirect($this->url->link('common/home'));
+			$this->response->redirect($this->url->link('common/home'));
 		}
 
 		if (isset($this->session->data['coupon'])) {
@@ -593,7 +593,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$cba->setMode($this->config->get('amazon_checkout_mode'));
 
 		if ($cba->setPurchaseItems($parameters_items) !== true) {
-			$this->redirect($this->url->link('payment/amazon_checkout/failure', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/amazon_checkout/failure', '', 'SSL'));
 		}
 
 		$order_discount = $order['total'] - $total;
@@ -614,7 +614,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 
 		if (!$cba->setContractCharges($parameters_charges)) {
-			$this->redirect($this->url->link('payment/amazon_checkout/failure', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/amazon_checkout/failure', '', 'SSL'));
 		}
 
 		$complete_parameters = array();
@@ -627,11 +627,11 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		if ($amazon_order_ids) {
 			$this->model_payment_amazon_checkout->addAmazonOrderId($order['order_id'], $amazon_order_ids[0]);
 		} else {
-			$this->redirect($this->url->link('payment/amazon_checkout/failure', '', 'SSL'));
+			$this->response->redirect($this->url->link('payment/amazon_checkout/failure', '', 'SSL'));
 		}
 
 		$this->model_checkout_order->confirm($order['order_id'], $this->config->get('amazon_checkout_order_default_status'));
-		$this->redirect($this->url->link('payment/amazon_checkout/success', 'amazon_order_id=' . $amazon_order_ids[0], 'SSL'));
+		$this->response->redirect($this->url->link('payment/amazon_checkout/success', 'amazon_order_id=' . $amazon_order_ids[0], 'SSL'));
 	}
 
 	public function success() {
@@ -717,7 +717,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->language->load('payment/amazon_checkout');
 
 		if (!isset($this->session->data['cba'])) {
-			$this->redirect($this->url->link('common/home'));
+			$this->response->redirect($this->url->link('common/home'));
 		}
 
 		$contract_id = $this->session->data['cba']['contract_id'];
@@ -853,7 +853,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$shipping_method = explode('.', $this->request->post['shipping_method']);
 
 			if (!isset($shipping_method[0]) || !isset($shipping_method[1]) || !isset($this->session->data['cba']['shipping_methods'][$shipping_method[0]]['quote'][$shipping_method[1]]) ) {
-				$this->redirect($this->url->link('common/home'));
+				$this->response->redirect($this->url->link('common/home'));
 			}
 
 			$this->session->data['cba']['shipping_method'] = $this->session->data['cba']['shipping_methods'][$shipping_method[0]]['quote'][$shipping_method[1]];

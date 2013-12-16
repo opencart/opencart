@@ -15,6 +15,7 @@ $_['text_transactions'] = 'Transactions';
 $_['text_return'] = 'Return';
 $_['text_cancel'] = 'Cancel';
 $_['text_filter'] = 'Filter';
+$_['text_view'] = 'View';
 $_['text_cancel_confirm'] = "Profile's cancelation cannot be undone! Are you sure want to do this?";
 $_['text_transaction_created'] = 'Created';
 $_['text_transaction_payment'] = 'Payment';

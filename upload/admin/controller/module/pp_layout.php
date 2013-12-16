@@ -32,7 +32,7 @@ class ControllerModulePPLayout extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-		$data['button_add_module'] = $this->language->get('button_add_module');
+		$data['button_module_add'] = $this->language->get('button_module_add');
 		$data['button_remove'] = $this->language->get('button_remove');
 
 		if (isset($this->error['warning'])) {
@@ -78,7 +78,7 @@ class ControllerModulePPLayout extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('payment/pp_layout.tpl', $data));
+		$this->response->setOutput($this->load->view('module/pp_layout.tpl', $data));
 	}
 
 	protected function validate() {

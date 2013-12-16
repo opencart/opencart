@@ -1167,7 +1167,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$this->load->model('sale/recurring');
 
-		$profile = $this->model_sale_recurring->getProfile($this->request->get['recurring_id']);
+		$profile = $this->model_sale_recurring->getProfile($this->request->get['order_recurring_id']);
 
 		$data['buttons'] = array();
 

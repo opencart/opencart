@@ -303,17 +303,14 @@ class ControllerSaleRecurring extends Controller {
 		$this->load->model('sale/recurring');
 		$this->load->model('sale/order');
 		$this->load->model('catalog/product');
+
 		$this->language->load('sale/recurring');
 
-		if (isset($this->request->get['order_recurring_id'])) {
-			$order_recurring_id = $this->request->get['order_recurring_id'];
-		} else {
-			$order_recurring_id = 0;
-		}
-
-		$order_recurring = $this->model_sale_recurring->getProfile($order_recurring_id);
+		$order_recurring = $this->model_sale_recurring->getProfile($this->request->get['order_recurring_id']);
 
 		if ($order_recurring) {
+			$order = $this->model_sale_order->getOrder($order_recurring['order_id']);
+
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			$url = '';
@@ -380,8 +377,6 @@ class ControllerSaleRecurring extends Controller {
 				$data['success'] = '';
 			}
 
-			$order = $this->model_sale_order->getOrder($order_recurring['order_id']);
-
 			$data['heading_title'] = $this->language->get('heading_title');
 			$data['entry_order_id'] = $this->language->get('entry_order_id');
 			$data['entry_order_recurring'] = $this->language->get('entry_order_recurring');
@@ -403,19 +398,22 @@ class ControllerSaleRecurring extends Controller {
 			$data['text_return'] = $this->language->get('text_return');
 			$data['text_cancel_confirm'] = $this->language->get('text_cancel_confirm');
 
-			$data['return'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL');
-
-			$data['transactions'] = $this->model_sale_recurring->getProfileTransactions($order_recurring['order_recurring_id']);
-
 			$data['order_recurring_id'] = $order_recurring['order_recurring_id'];
-			$data['order_id'] = $order['order_id'];
-			$data['order_href'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'], 'SSL');
-			$data['customer'] = $order['customer'];
-
-			$data['token'] = $this->request->get['token'];
-
 			$data['product'] = $order_recurring['product_name'];
 			$data['quantity'] = $order_recurring['product_quantity'];
+			$data['status'] = $order_recurring['status'];
+			$data['profile_reference'] = $order_recurring['profile_reference'];
+			$data['profile_description'] = $order_recurring['profile_description'];
+			$data['profile_name'] = $order_recurring['profile_name'];
+
+			$data['order_id'] = $order['order_id'];
+			$data['order_href'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $order['order_id'], 'SSL');
+
+			$data['customer'] = $order['customer'];
+			$data['email'] = $order['email'];
+			$data['payment_method'] = $order['payment_method'];
+			$data['date_created'] = date($this->language->get('date_format_short'), strtotime($order['date_added']));
+
 			$data['options'] = array();
 
 			if ($order['customer_id']) {
@@ -423,14 +421,6 @@ class ControllerSaleRecurring extends Controller {
 			} else {
 				$data['customer_href'] = '';
 			}
-
-			$data['email'] = $order['email'];
-			$data['status'] = $order_recurring['status'];
-			$data['date_created'] = date($this->language->get('date_format_short'), strtotime($order['date_added']));
-			$data['profile_reference'] = $order_recurring['profile_reference'];
-			$data['profile_description'] = $order_recurring['profile_description'];
-			$data['profile_name'] = $order_recurring['profile_name'];
-			$data['payment_method'] = $order['payment_method'];
 
 			if ($order_recurring['profile_id'] != '0') {
 				$data['profile'] = $this->url->link('catalog/profile/update', 'token=' . $this->session->data['token'] . '&profile_id=' . $order_recurring['profile_id'], 'SSL');
@@ -449,7 +439,9 @@ class ControllerSaleRecurring extends Controller {
 				);
 			}
 
-			$this->load->model('design/layout');
+			$data['return'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'] . $url, 'SSL');
+
+			$data['token'] = $this->request->get['token'];
 
 			$data['buttons'] = $this->load->controller('payment/' . $order_recurring['payment_code'].'/recurringButtons');
 			$data['header'] = $this->load->controller('common/header');
@@ -457,7 +449,7 @@ class ControllerSaleRecurring extends Controller {
 
 			$this->response->setOutput($this->load->view('sale/recurring_info.tpl', $data));
 		} else {
-			return $this->forward('error/not_found');
+			return $this->response->forward('error/not_found');
 		}
 	}
 }

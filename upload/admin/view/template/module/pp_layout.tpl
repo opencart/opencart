@@ -80,7 +80,7 @@
                 </select>
               </td>
               <td class="text-right"><input placeholder="<?php echo $entry_sort_order; ?>" type="text" name="pp_layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" class="form-control" /></td>
-              <td class="text-left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="button"><?php echo $button_remove; ?></a></td>
+              <td class="text-left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></a></td>
             </tr>
           </tbody>
           <?php $module_row++; ?>

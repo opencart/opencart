@@ -1,5 +1,4 @@
 <?php if ($status) { ?>
-
 <div class="panel panel-default">
   <div class="panel-heading">
     <h4 class="panel-title"><a href="#collapse-voucher" data-toggle="collapse" data-parent="#accordion" class="accordion-toggle"><?php echo $heading_title; ?> <i class="fa fa-caret-down"></i></a></h4>
@@ -11,13 +10,13 @@
         <input type="text" name="voucher" value="<?php echo $voucher; ?>" placeholder="<?php echo $entry_voucher; ?>" id="input-voucher" class="form-control" />
         <span class="input-group-btn">
         <input type="submit" value="<?php echo $button_voucher; ?>" id="button-voucher" data-loading-text="<?php echo $text_loading; ?>"  class="btn btn-primary" />
-        </span> </div>
+        </span></div>
       <script type="text/javascript"><!--
 $('#button-voucher').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=module/voucher/voucher',
 		type: 'post',
-		data: 'voucher=' + encodeURIComponent($('input[name=\'voucher\']').val()),
+		data: 'voucher=' + encodeURIComponent($('input[name=\'voucher\']').val()) + '&redirect=<?php echo $redirect; ?>',
 		dataType: 'json',    
 		beforeSend: function() {
 			$('#button-voucher').button('loading');

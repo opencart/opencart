@@ -378,6 +378,18 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$this->document->setTitle($this->language->get('express_text_title'));
 
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home'),
+			'text' => $this->language->get('text_home')
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('payment/pp_express/expressConfirm'),
+			'text' => $this->language->get('express_text_title')
+		);
+
 		$points = $this->customer->getRewardPoints();
 
 		$points_total = 0;
@@ -724,6 +736,8 @@ class ControllerPaymentPPExpress extends Controller {
 		}
 
 		$data['coupon'] = $this->load->controller('module/coupon');
+		$data['voucher'] = $this->load->controller('module/voucher');
+		$data['reward'] = $this->load->controller('module/reward');
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
 		$data['content_top'] = $this->load->controller('common/content_top');

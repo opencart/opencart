@@ -386,6 +386,11 @@ class ControllerPaymentPPExpress extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('payment/pp_express/express'),
+			'text' => $this->language->get('text_title')
+		);
+
+		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('payment/pp_express/expressConfirm'),
 			'text' => $this->language->get('express_text_title')
 		);
@@ -400,21 +405,7 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 		}
 
-
-		$data['text_title'] = $this->language->get('express_text_title');
-		$data['text_next'] = $this->language->get('text_next');
-		$data['text_next_choice'] = $this->language->get('text_next_choice');
-		$data['text_use_voucher'] = $this->language->get('text_use_voucher');
-		$data['text_use_coupon'] = $this->language->get('text_use_coupon');
-		$data['text_use_reward'] = sprintf($this->language->get('text_use_reward'), $points);
-
-		$data['button_coupon'] = $this->language->get('button_coupon');
-		$data['button_voucher'] = $this->language->get('button_voucher');
-		$data['button_reward'] = $this->language->get('button_reward');
 		$data['button_shipping'] = $this->language->get('express_button_shipping');
-		$data['entry_coupon'] = $this->language->get('express_entry_coupon');
-		$data['entry_voucher'] = $this->language->get('entry_voucher');
-		$data['entry_reward'] = sprintf($this->language->get('entry_reward'), $points_total);
 		$data['button_confirm'] = $this->language->get('express_button_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
@@ -434,36 +425,6 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['next'] = $this->request->post['next'];
 		} else {
 			$data['next'] = '';
-		}
-
-		$data['coupon_status'] = $this->config->get('coupon_status');
-
-		if (isset($this->request->post['coupon'])) {
-			$data['coupon'] = $this->request->post['coupon'];
-		} elseif (isset($this->session->data['coupon'])) {
-			$data['coupon'] = $this->session->data['coupon'];
-		} else {
-			$data['coupon'] = '';
-		}
-
-		$data['voucher_status'] = $this->config->get('voucher_status');
-
-		if (isset($this->request->post['voucher'])) {
-			$data['voucher'] = $this->request->post['voucher'];
-		} elseif (isset($this->session->data['voucher'])) {
-			$data['voucher'] = $this->session->data['voucher'];
-		} else {
-			$data['voucher'] = '';
-		}
-
-		$data['reward_status'] = ($points && $points_total && $this->config->get('reward_status'));
-
-		if (isset($this->request->post['reward'])) {
-			$data['reward'] = $this->request->post['reward'];
-		} elseif (isset($this->session->data['reward'])) {
-			$data['reward'] = $this->session->data['reward'];
-		} else {
-			$data['reward'] = '';
 		}
 
 		$data['action'] = $this->url->link('payment/pp_express/expressConfirm', '', 'SSL');
@@ -635,9 +596,7 @@ class ControllerPaymentPPExpress extends Controller {
 			$data['has_shipping'] = false;
 		}
 
-		/**
-		 * Product totals
-		 */
+		// Totals
 		$this->load->model('setting/extension');
 
 		$total_data = array();
@@ -662,18 +621,25 @@ class ControllerPaymentPPExpress extends Controller {
 
 					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
 				}
-
-				$sort_order = array();
-
-				foreach ($total_data as $key => $value) {
-					$sort_order[$key] = $value['sort_order'];
-				}
-
-				array_multisort($sort_order, SORT_ASC, $total_data);
 			}
+
+			$sort_order = array();
+
+			foreach ($total_data as $key => $value) {
+				$sort_order[$key] = $value['sort_order'];
+			}
+
+			array_multisort($sort_order, SORT_ASC, $total_data);
 		}
 
-		$data['totals'] = $total_data;
+		$data['totals'] = array();
+
+		foreach ($total_data as $total) {
+			$data['totals'][] = array(
+				'title' => $total['title'],
+				'text'  => $this->currency->format($total['value']),
+			);
+		}
 
 		/**
 		 * Payment methods

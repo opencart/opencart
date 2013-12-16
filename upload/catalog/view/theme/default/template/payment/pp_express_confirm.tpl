@@ -33,8 +33,6 @@
       <h1><?php echo $heading_title; ?></h1>
 
       <?php if ($coupon || $voucher || $reward || $shipping) { ?>
-      <h2><?php echo $text_next; ?></h2>
-      <p><?php echo $text_next_choice; ?></p>
       <div class="panel-group" id="accordion"><?php echo $coupon; ?><?php echo $voucher; ?><?php echo $reward; ?></div>
       <?php } ?>
     
@@ -70,7 +68,6 @@
         <?php } ?>
       <?php } ?>
 
-
       <div class="table-responsive">
     <table class="table table-bordered">
       <thead>
@@ -84,53 +81,51 @@
       </thead>
       <tbody>
       <?php foreach ($products as $product) { ?>
-        <?php if ($product['recurring']): ?>
-          <tr>
-            <td colspan="5" style="border:none;">
-              <image src="catalog/view/theme/default/image/reorder.png" alt="" title="" style="float:left;" /><span style="float:left;line-height:18px; margin-left:10px;">
-              <strong><?php echo $text_recurring_item ?></strong>
-              <?php echo $product['profile_description'] ?>
-            </td>
-          </tr>
-        <?php endif; ?>
-      <tr>
-        <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
-          <?php foreach ($product['option'] as $option) { ?>
-          <br />
-          <small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
-          <?php } ?>
-          <?php if ($product['recurring']): ?>
-          <br />
-          <small> - <?php echo $text_payment_profile ?>: <?php echo $product['profile_name'] ?></small>
-          <?php endif; ?>
-        </td>
-        <td class="text-left"><?php echo $product['model']; ?></td>
-        <td class="text-center"><?php echo $product['quantity']; ?></td>
-        <td class="text-right"><?php echo $product['price']; ?></td>
-        <td class="text-right"><?php echo $product['total']; ?></td>
-      </tr>
+        <tr>
+          <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
+            <?php foreach ($product['option'] as $option) { ?>
+            <br />
+            <small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+            <?php } ?>
+
+            <?php if($product['recurring']) { ?>
+            <br />
+            <span class="label label-info"><?php echo $text_recurring_item; ?></span>
+            <small><?php echo $product['profile_description']; ?></small>
+            <?php } ?>
+
+          </td>
+          <td class="text-left"><?php echo $product['model']; ?></td>
+          <td class="text-center"><?php echo $product['quantity']; ?></td>
+          <td class="text-right"><?php echo $product['price']; ?></td>
+          <td class="text-right"><?php echo $product['total']; ?></td>
+        </tr>
       <?php } ?>
       <?php foreach ($vouchers as $voucher) { ?>
-      <tr>
-        <td class="text-left"><?php echo $voucher['description']; ?></td>
-        <td class="text-left"></td>
-        <td class="text-center">1</td>
-        <td class="text-right"><?php echo $voucher['amount']; ?></td>
-        <td class="text-right"><?php echo $voucher['amount']; ?></td>
-      </tr>
+        <tr>
+          <td class="text-left"><?php echo $voucher['description']; ?></td>
+          <td class="text-left"></td>
+          <td class="text-center">1</td>
+          <td class="text-right"><?php echo $voucher['amount']; ?></td>
+          <td class="text-right"><?php echo $voucher['amount']; ?></td>
+        </tr>
       <?php } ?>
       </tbody>
-      <tfoot>
-      <?php foreach ($totals as $total) { ?>
-      <tr>
-        <td colspan="4" class="text-right"><b><?php echo $total['title']; ?>:</b></td>
-        <td class="text-right"><?php echo $total['text']; ?></td>
-      </tr>
-      <?php } ?>
-      </tfoot>
     </table>
   </div>
-
+      <br />
+      <div class="row">
+        <div class="col-sm-4 col-sm-offset-8">
+          <table class="table table-bordered">
+            <?php foreach ($totals as $total) { ?>
+            <tr>
+              <td class="text-right"><strong><?php echo $total['title']; ?>:</strong></td>
+              <td class="text-right"><?php echo $total['text']; ?></td>
+            </tr>
+            <?php } ?>
+          </table>
+        </div>
+      </div>
       <div class="buttons">
         <div class="pull-right"><a href="<?php echo $action_confirm; ?>" class="btn btn-primary"><?php echo $button_confirm; ?></a></div>
       </div>

@@ -1171,13 +1171,13 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['buttons'] = array();
 
-		if ($profile['status'] == 2 || $profile['status'] == 3) {
+		if ($profile['status_id'] == 2 || $profile['status_id'] == 3) {
 			$data['buttons'][] = array(
 				'text' => $this->language->get('button_cancel_profile'),
-				'link' => $this->url->link('payment/pp_express/recurringCancel', 'order_recurring_id='.$this->request->get['order_recurring_id'], 'SSL')
+				'link' => $this->url->link('payment/pp_express/recurringCancel', 'order_recurring_id='.$this->request->get['order_recurring_id'].'&token='.$this->request->get['token'], 'SSL')
 			);
 		}
 
-		return $this->response->setOutput($this->load->view('common/buttons.tpl', $data));
+		return $this->load->view('common/buttons.tpl', $data);
 	}
 }

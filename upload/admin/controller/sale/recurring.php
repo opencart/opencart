@@ -443,7 +443,7 @@ class ControllerSaleRecurring extends Controller {
 
 			$data['token'] = $this->request->get['token'];
 
-			$data['buttons'] = $this->load->controller('payment/' . $order_recurring['payment_code'].'/recurringButtons');
+			$data['buttons'] = $this->load->controller('payment/' . $order['payment_code'] . '/recurringButtons');
 			$data['header'] = $this->load->controller('common/header');
 			$data['footer'] = $this->load->controller('common/footer');
 

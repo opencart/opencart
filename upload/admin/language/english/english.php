@@ -31,6 +31,7 @@ $_['button_insert']                 = 'Add New';
 $_['button_delete']                 = 'Delete';
 $_['button_save']                   = 'Save';
 $_['button_cancel']                 = 'Cancel';
+$_['button_cancel_profile']         = 'Cancel profile';
 $_['button_continue']               = 'Continue';
 $_['button_clear']                  = 'Clear';
 $_['button_close']                  = 'Close';

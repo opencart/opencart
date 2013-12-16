@@ -14,7 +14,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -37,6 +37,8 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$data['help_callback'] = $this->language->get('help_callback');
+		$data['help_total'] = $this->language->get('help_total');
+		$data['help_md5'] = $this->language->get('help_md5');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');

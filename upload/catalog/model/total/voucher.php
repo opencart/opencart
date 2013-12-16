@@ -44,5 +44,9 @@ class ModelTotalVoucher extends Model {
 		if ($voucher_info) {
 			$this->model_checkout_voucher->redeem($voucher_info['voucher_id'], $order_info['order_id'], $order_total['value']);	
 		}						
-	}	
+	}
+	
+	public function clear($order_id) {
+		
+	}		
 }

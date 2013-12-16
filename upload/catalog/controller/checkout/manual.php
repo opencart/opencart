@@ -48,7 +48,23 @@ class ControllerCheckoutManual extends Controller {
 				// Customer Group
 				$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
 			}
+
+			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
 	
+			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
+	
+			if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
+				$json['error']['email'] = $this->language->get('error_email');
+			}
+			
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
+			}
+			
 			// Product
 			$this->load->model('catalog/product');
 			
@@ -280,7 +296,23 @@ class ControllerCheckoutManual extends Controller {
 			$json['shipping_method'] = array();
 			
 			if ($this->cart->hasShipping()) {
-				// Shipping address		
+				// Shipping address
+				if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
+					$json['error']['shipping']['firstname'] = $this->language->get('error_firstname');
+				}
+		
+				if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['shipping_lastname']) > 32)) {
+					$json['error']['shipping']['lastname'] = $this->language->get('error_lastname');
+				}
+				
+				if ((utf8_strlen($this->request->post['shipping_address_1']) < 3) || (utf8_strlen($this->request->post['shipping_address_1']) > 128)) {
+					$json['error']['shipping']['address_1'] = $this->language->get('error_address_1');
+				}
+		
+				if ((utf8_strlen($this->request->post['shipping_city']) < 3) || (utf8_strlen($this->request->post['shipping_city']) > 128)) {
+					$json['error']['shipping']['city'] = $this->language->get('error_city');
+				}
+				
 				$this->load->model('localisation/country');
 				
 				$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
@@ -395,11 +427,9 @@ class ControllerCheckoutManual extends Controller {
 				$order_totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
 				
 				foreach ($order_totals as $order_total) {
-					
-					
 					$this->load->model('total/' . $order_total['code']);
 					
-					if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
+					if (method_exists($this->{'model_total_' . $order_total['code']}, 'clear')) {
 						$this->{'model_total_' . $order_total['code']}->clear($this->request->get['order_id']);
 					}
 				}			
@@ -457,8 +487,26 @@ class ControllerCheckoutManual extends Controller {
 					}
 				}
 			}
+			
+			
 			 		
 			// Payment address
+			if ((utf8_strlen($this->request->post['payment_firstname']) < 1) || (utf8_strlen($this->request->post['payment_firstname']) > 32)) {
+				$json['error']['payment']['firstname'] = $this->language->get('error_firstname');
+			}
+	
+			if ((utf8_strlen($this->request->post['payment_lastname']) < 1) || (utf8_strlen($this->request->post['payment_lastname']) > 32)) {
+				$json['error']['payment']['lastname'] = $this->language->get('error_lastname');
+			}
+	
+			if ((utf8_strlen($this->request->post['payment_address_1']) < 3) || (utf8_strlen($this->request->post['payment_address_1']) > 128)) {
+				$json['error']['payment']['address_1'] = $this->language->get('error_address_1');
+			}
+	
+			if ((utf8_strlen($this->request->post['payment_city']) < 3) || (utf8_strlen($this->request->post['payment_city']) > 128)) {
+				$json['error']['payment']['city'] = $this->language->get('error_city');
+			}
+			
 			if ($this->request->post['payment_country_id'] == '') {
 				$json['error']['payment']['country'] = $this->language->get('error_country');
 			}

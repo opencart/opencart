@@ -9,8 +9,8 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->load->model('catalog/download');
 
-    	$this->getList();
-  	}
+		$this->getList();
+	}
 
 	public function insert() {
 		$this->load->language('catalog/download');

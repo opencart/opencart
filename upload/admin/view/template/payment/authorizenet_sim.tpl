@@ -22,7 +22,7 @@
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-merchant"><?php echo $entry_merchant; ?></label>
           <div class="col-sm-10">
-            <input type="text" name="authorizenet_merchant" value="<?php echo $authorizenet_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
+            <input type="text" name="authorizenet_sim_merchant" value="<?php echo $authorizenet_sim_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
             <?php if ($error_merchant) { ?>
             <div class="text-danger"><?php echo $error_merchant; ?></div>
             <?php } ?>
@@ -31,10 +31,16 @@
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-key"><?php echo $entry_key; ?></label>
           <div class="col-sm-10">
-            <input type="text" name="authorizenet_key" value="<?php echo $authorizenet_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
+            <input type="text" name="authorizenet_key" value="<?php echo $authorizenet_sim_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
             <?php if ($error_key) { ?>
             <div class="text-danger"><?php echo $error_key; ?></div>
             <?php } ?>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-callback"><?php echo $entry_callback; ?></label>
+          <div class="col-sm-10">
+            <textarea rows="5" readonly="readonly" id="input-callback" class="form-control"><?php echo $callback; ?></textarea>
           </div>
         </div>
         <div class="form-group">

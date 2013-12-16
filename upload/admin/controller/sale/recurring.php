@@ -314,7 +314,6 @@ class ControllerSaleRecurring extends Controller {
 		$order_recurring = $this->model_sale_recurring->getProfile($order_recurring_id);
 
 		if ($order_recurring) {
-
 			$this->document->setTitle($this->language->get('heading_title'));
 
 			$url = '';
@@ -433,16 +432,6 @@ class ControllerSaleRecurring extends Controller {
 			$data['profile_name'] = $order_recurring['profile_name'];
 			$data['payment_method'] = $order['payment_method'];
 
-			if($order_recurring['status_id'] == 1 || $order_recurring['status_id'] == 2){
-				if(!empty($order['payment_code']) && $this->hasAction('payment/' . $order['payment_code'] . '/recurringCancel') == true){
-					$data['cancel_link'] = $this->url->link('payment/'.$order['payment_code'].'/recurringCancel', 'order_recurring_id='.$this->request->get['order_recurring_id'].'&token='.$this->request->get['token'], 'SSL');
-				}else{
-					$data['cancel_link'] = '';
-				}
-			}else{
-				$data['cancel_link'] = '';
-			}
-
 			if ($order_recurring['profile_id'] != '0') {
 				$data['profile'] = $this->url->link('catalog/profile/update', 'token=' . $this->session->data['token'] . '&profile_id=' . $order_recurring['profile_id'], 'SSL');
 			} else {
@@ -462,8 +451,7 @@ class ControllerSaleRecurring extends Controller {
 
 			$this->load->model('design/layout');
 
-			$data['layouts'] = $this->model_design_layout->getLayouts();
-
+			$data['buttons'] = $this->load->controller('payment/' . $order_recurring['payment_code'].'/recurringButtons');
 			$data['header'] = $this->load->controller('common/header');
 			$data['footer'] = $this->load->controller('common/footer');
 

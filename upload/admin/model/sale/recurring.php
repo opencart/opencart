@@ -119,10 +119,10 @@ class ModelSaleRecurring extends Model {
 		return $profiles;
 	}
 
-	public function getProfile($order_recurringId) {
+	public function getProfile($order_recurring_id) {
 		$profile = array();
 
-		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurringId)->row;
+		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_recurring WHERE order_recurring_id = " . (int)$order_recurring_id)->row;
 
 		if ($result) {
 

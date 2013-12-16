@@ -78,14 +78,10 @@
                     <td><?php echo $entry_quantity ?></td>
                     <td><?php echo $quantity ?></td>
                 </tr>
-
-                <?php if($cancel_link){ ?>
-                <tr>
-                    <td><?php echo $entry_cancel_payment ?></td>
-                    <td><a id="cancel-profile" href="<?php echo $cancel_link; ?>" class="button"><?php echo $text_cancel ?></a></td>
-                </tr>
-                <?php } ?>
             </table>
+
+            <?php echo $buttons; ?>
+
             <h2><?php echo $text_transactions ?></h2>
             <table class="list">
                 <thead>

@@ -1,7 +1,7 @@
 <?php
-class ControllerPaymentPPProPF extends Controller {
+class ControllerPaymentPPPayflow extends Controller {
 	protected function index() {
-		$this->language->load('payment/pp_pro_pf');
+		$this->language->load('payment/pp_payflow');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_start_date'] = $this->language->get('text_start_date');
@@ -75,30 +75,30 @@ class ControllerPaymentPPProPF extends Controller {
 			);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro_pf.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_pro_pf.tpl', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/pp_payflow.tpl', $data);
 		} else {
-			return $this->load->view('default/template/payment/pp_pro_pf.tpl', $data);
+			return $this->load->view('default/template/payment/pp_payflow.tpl', $data);
 		}	
 	}
 
 	public function send() {
-		$this->language->load('payment/pp_pro_pf');
+		$this->language->load('payment/pp_payflow');
 
 		$this->load->model('checkout/order');
 
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
-		if (!$this->config->get('pp_pro_pf_transaction')) {
+		if (!$this->config->get('pp_payflow_transaction')) {
 			$payment_type = 'A';	
 		} else {
 			$payment_type = 'S';
 		}
 
-		$request  = 'USER=' . urlencode($this->config->get('pp_pro_pf_user'));
-		$request .= '&VENDOR=' . urlencode($this->config->get('pp_pro_pf_vendor'));
-		$request .= '&PARTNER=' . urlencode($this->config->get('pp_pro_pf_partner'));
-		$request .= '&PWD=' . urlencode($this->config->get('pp_pro_pf_password'));
+		$request  = 'USER=' . urlencode($this->config->get('pp_payflow_user'));
+		$request .= '&VENDOR=' . urlencode($this->config->get('pp_payflow_vendor'));
+		$request .= '&PARTNER=' . urlencode($this->config->get('pp_payflow_partner'));
+		$request .= '&PWD=' . urlencode($this->config->get('pp_payflow_password'));
 		$request .= '&TENDER=C';
 		$request .= '&TRXTYPE=' . $payment_type;
 		$request .= '&AMT=' . $this->currency->format($order_info['total'], $order_info['currency_code'], false, false);
@@ -119,7 +119,7 @@ class ControllerPaymentPPProPF extends Controller {
 		$request .= '&CARDISSUE=' . urlencode($this->request->post['cc_issue']);
 		$request .= '&BUTTONSOURCE=' . urlencode('OpenCart_Cart_PFP');
 
-		if (!$this->config->get('pp_pro_pf_test')) {
+		if (!$this->config->get('pp_payflow_test')) {
 			$curl = curl_init('https://payflowpro.paypal.com');
 		} else {
 			$curl = curl_init('https://pilot-payflowpro.paypal.com');
@@ -166,7 +166,7 @@ class ControllerPaymentPPProPF extends Controller {
 				$message .= 'TRANSACTIONID: ' . $response_info['TRANSACTIONID'] . "\n";
 			}
 
-			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_pro_pf_order_status_id'), $message, false);
+			$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('pp_payflow_order_status_id'), $message, false);
 
 			$json['success'] = $this->url->link('checkout/success'); 
 		} else {

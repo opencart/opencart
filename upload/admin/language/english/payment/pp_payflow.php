@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']      = 'PayPal Payments Pro Payflow Edition';
+$_['heading_title']      = 'PayPal Payflow Pro';
 
 // Text 
 $_['text_payment']       = 'Payment';

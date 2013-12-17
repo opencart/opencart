@@ -15,67 +15,13 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		 * merchant will also receive an email explaining the problem.
 		 */
 
-		/** Payment Page ID from the Administration Console
-		 *  Varies by merchant
-		 *	Maximum length 20, the Payment Page ID from the Administration Console. Case-sensitive.
-		 */
 		$data['x_login'] = $this->config->get('authorizenet_sim_merchant');
-  
-		/** 
-		 * 
-		 * Chosen by merchant 	Can be a random number. Used in "x_fp_hash" 
-		 * calculation in order to make it unique but not used otherwise. 
-		 * Returned with Relay Response / Silent Post / Receipt Link. 
-		 * No length restriction
-		 * 
-		 * @var unknown_type
-		 */
 		$data['x_fp_sequence'] = $this->session->data['order_id'];
-
-		/** 
-		 * 
-		 * Time in seconds since January 1, 1970. UTC, Coordinated Universal Time
-		 * Requests expire after 15 minutes / 900 seconds.
-		 * 
-		 * @var Time in seconds since January 1, 1970. UTC
-		 */
 		$data['x_fp_timestamp'] = time();
-		
-		/** 
-		 * 
-		 * Positive number
-		 * Total dollar amount to be charged inclusive of freight and tax; Maximum Length 15
-		 * 
-		 * @var Positive number
-		 */
 		$data['x_amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);	
-
-		/** 
-		 * 
-		 * HMAC-MD5  hash from the merchant's transaction key and 
-		 * concatenation of the values for "x_login", "x_fp_sequence", 
-		 * "x_fp_timestamp", "x_amount", and (if given) "x_currency_code" 
-		 * � all separated by the  "^" character. Note that if 
-		 * "x_currency_code" is not present, then a "^" character is still 
-		 * added. The transaction key is generated within the payment page 
-		 * configuration section of the Administration console tab, 
-		 * "Keys".
-		 * @var String
-		 */
 		$data['x_fp_hash'] = null; // calculated later, once all fields are populated		
-
-		/** 
-		 * 
-		 * PAYMENT_FORM Case-sensitive
-		 * 
-		 * Required in order to stay compatible with the Authorize.Net 
-		 * protocol. 
-		 * 
-		 * @var String
-		 */
 		$data['x_show_form'] = 'PAYMENT_FORM';
 		
-		/* 6.2 Transaction and Display Fields */
 		$mode = $this->config->get('authorizenet_sim_test');
 		if ($mode == '0') {
 			$data['x_test_request'] = 'false';
@@ -85,8 +31,6 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['x_type'] = 'AUTH_CAPTURE';
 		$data['x_currency_code'] = $this->currency->getCode();
 		
-		/* 6.3 Order and Customer Detail Fields */
-
 		/* Order Information Fields */
 		$data['x_invoice_num'] = $this->session->data['order_id'];
 		$data['x_description'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
@@ -122,36 +66,20 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		// calculate this after all our fields are generated
 		$data['x_fp_hash'] = $this->calculateFpHash($data['x_login'], $data['x_fp_sequence'], $data['x_fp_timestamp'], $data['x_amount'], $data['x_currency_code']);
 		
-		//if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl')) {
-		//	return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl', $data);
-		//} else {
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl', $data);
+		} else {
 			return $this->load->view('default/template/payment/authorizenet_sim.tpl', $data);
-		//
-		//return $this->load->view('default/template/payment/klarna_invoice.tpl', $data);
+		}
 	}
 	
-	/** Calculates the x_fp_hash value for transaction
-	 * 
-	 * HMAC-MD5 keyed by the merchant's transaction key and 
-	 * concatenation of the values for "x_login", "x_fp_sequence", 
-	 * "x_fp_timestamp", "x_amount", and (if given) "x_currency_code" 
-	 * all separated by the  "^" character. Note that if 
-	 * "x_currency_code" is not present, then a "^" character is still 
-	 * added. 
-	 * 
-	 * The transaction key is generated within the payment page 
-	 * configuration section of the Administration console tab
-	 * 
-	 * @return String
-	 */
-	public function calculateFpHash($a,$b,$c,$d,$e) {
+	public function calculateFpHash($login, $fp_sequence, $timestamp, $amount, $currency) {
 		$this->load->library('hash'); 
 		$hash = new Hash();
 
 		$key  = $this->config->get('authorizenet_sim_key');
 		
-		//$code = $data['x_login'] . "^" . $data['x_fp_sequence'] . "^" . $data['x_fp_timestamp'] . "^" . $data['x_amount'] . "^" . $data['x_currency_code'];
-		$code = $a . "^" . $b . "^" . $c . "^" . $d . "^" . $e;
+		$code = $login . "^" . $fp_sequence . "^" . $timestamp . "^" . $amount . "^" . $currency;
 							
 		$fp_hash = $hash->hmac_md5($code, $key);
 	

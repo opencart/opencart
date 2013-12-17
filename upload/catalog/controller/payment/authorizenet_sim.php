@@ -1,6 +1,6 @@
 <?php
 class ControllerPaymentAuthorizeNetSim extends Controller {
-	protected function index() {
+	public function index() {
 		$this->load->language('payment/authorizenet_sim');
 		
     	$data['button_confirm'] = $this->language->get('button_confirm');
@@ -120,13 +120,14 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['x_relay_response'] = 'true';
 					
 		// calculate this after all our fields are generated
-		$data['x_fp_hash'] = $this->calculateFpHash();
+		$data['x_fp_hash'] = $this->calculateFpHash($data['x_login'], $data['x_fp_sequence'], $data['x_fp_timestamp'], $data['x_amount'], $data['x_currency_code']);
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl', $data);
-		} else {
+		//if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl')) {
+		//	return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl', $data);
+		//} else {
 			return $this->load->view('default/template/payment/authorizenet_sim.tpl', $data);
-		}
+		//
+		//return $this->load->view('default/template/payment/klarna_invoice.tpl', $data);
 	}
 	
 	/** Calculates the x_fp_hash value for transaction
@@ -143,20 +144,21 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 	 * 
 	 * @return String
 	 */
-	protected function calculateFpHash() {
+	public function calculateFpHash($a,$b,$c,$d,$e) {
 		$this->load->library('hash'); 
 		$hash = new Hash();
 
 		$key  = $this->config->get('authorizenet_sim_key');
 		
-		$code = $data['x_login'] . "^" . $data['x_fp_sequence'] . "^" . $data['x_fp_timestamp'] . "^" . $data['x_amount'] . "^" . $data['x_currency_code'];
+		//$code = $data['x_login'] . "^" . $data['x_fp_sequence'] . "^" . $data['x_fp_timestamp'] . "^" . $data['x_amount'] . "^" . $data['x_currency_code'];
+		$code = $a . "^" . $b . "^" . $c . "^" . $d . "^" . $e;
 							
 		$fp_hash = $hash->hmac_md5($code, $key);
 	
 		return $fp_hash;
 	}
 
-	protected function calculateResponseHash() {
+	public function calculateResponseHash() {
 		$this->load->library('hash'); 
 		$hash = new Hash();
 		

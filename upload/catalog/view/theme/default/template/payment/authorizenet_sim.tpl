@@ -1,11 +1,11 @@
-<form action="https://test.authorize.net/gateway/transact.dll" method="post">
+<form METHOD="POST" ACTION="https://secure.authorize.net/gateway/transact.dll">
   <input type="hidden" name="x_login" value="<?php echo $x_login; ?>" />
   <input type="hidden" name="x_fp_sequence" value="<?php echo $x_fp_sequence; ?>" />
   <input type="hidden" name="x_fp_timestamp" value="<?php echo $x_fp_timestamp; ?>" />
   <input type="hidden" name="x_amount" value="<?php echo $x_amount; ?>" />
   <input type="hidden" name="x_fp_hash" value="<?php echo $x_fp_hash; ?>" />
   <input type="hidden" name="x_show_form" value="<?php echo $x_show_form; ?>" />
-  <?php if ($x_test_request) { ?>
+  <?php if ($x_test_request == "true") { ?>
   <input type="hidden" name="x_test_request" value="<?php echo $x_test_request; ?>" />
   <?php } ?>
   <input type="hidden" name="x_type" value="<?php echo $x_type; ?>" />

@@ -9,10 +9,10 @@ $_['text_success']       = 'Success: You have modified Authorize.Net (SIM) accou
 // Entry
 $_['entry_merchant']     = 'Merchant ID';
 $_['entry_key']          = 'Transaction Key';
-$_['entry_callback']     = 'Relay Response URL';
-$_['entry_md5']          = 'MD5 Hash Value';
+$_['entry_callback']     = 'Relay Response URL:';
+$_['entry_md5']          = 'MD5 Hash Value:';
 $_['entry_test']         = 'Test Mode';
-$_['entry_total']        = 'Total';
+$_['entry_total']        = 'Total:';
 $_['entry_order_status'] = 'Order Status';
 $_['entry_geo_zone']     = 'Geo Zone';
 $_['entry_status']       = 'Status'; 
@@ -24,6 +24,6 @@ $_['help_md5']           = 'The MD5 Hash feature enables you to authenticate tha
 $_['help_total']         = 'The checkout total the order must reach before this payment method becomes active.';
 
 // Error 
-$_['error_permission']   = 'Warning: You do not have permission to modify payment Authorize.Net (SIM)!';
+$_['error_permission']   = 'Warning: You do not have permission to modify payment Authorize.Net (AIM)!';
 $_['error_merchant']     = 'Merchant ID Required!';
 $_['error_key']          = 'Transaction Key Required!';

@@ -14,7 +14,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 			
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -37,8 +37,8 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 		
 		$data['help_callback'] = $this->language->get('help_callback');
-		$data['help_md5'] = $this->language->get('help_md5');
 		$data['help_total'] = $this->language->get('help_total');
+		$data['help_md5'] = $this->language->get('help_md5');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
@@ -61,23 +61,23 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 			$data['error_key'] = $this->error['key'];
 		} else {
 			$data['error_key'] = '';
-		}
+		}		
 
   		$data['breadcrumbs'] = array();
 
    		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
+       		'text'      => $this->language->get('text_home'),
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_payment'),
-			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
+       		'text'      => $this->language->get('text_payment'),
+			'href'      => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
    		);
 
    		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('payment/authorizenet_sim', 'token=' . $this->session->data['token'], 'SSL')
+       		'text'      => $this->language->get('heading_title'),
+			'href'      => $this->url->link('payment/authorizenet_sim', 'token=' . $this->session->data['token'], 'SSL')
    		);
 				
 		$data['action'] = $this->url->link('payment/authorizenet_sim', 'token=' . $this->session->data['token'], 'SSL');
@@ -109,7 +109,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		} else {
 			$data['authorizenet_sim_md5'] = $this->config->get('authorizenet_sim_md5');
 		}
-				
+		
 		if (isset($this->request->post['authorizenet_sim_total'])) {
 			$data['authorizenet_sim_total'] = $this->request->post['authorizenet_sim_total'];
 		} else {
@@ -151,7 +151,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 				
-		$this->response->setOutput($this->load->view('payment/authorizenet_sim.tpl', $data));				
+ 		$this->response->setOutput($this->load->view('payment/authorizenet_sim.tpl', $data));
 	}
 
 	protected function validate() {
@@ -167,10 +167,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 		
-		if (!$this->error) {
-			return true;
-		} else {
-			return false;
-		}	
+		return !$this->error;	
 	}
 }
+?>

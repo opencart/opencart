@@ -1,11 +1,10 @@
 <?php
 class ControllerPaymentPPPro extends Controller {
-	protected function index() {
+	public function index() {
 		$this->language->load('payment/pp_pro');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_start_date'] = $this->language->get('text_start_date');
-		$data['text_issue'] = $this->language->get('text_issue');
 		$data['text_wait'] = $this->language->get('text_wait');
 
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
@@ -14,6 +13,9 @@ class ControllerPaymentPPPro extends Controller {
 		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
 		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
 		$data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
+
+		$data['help_start_date'] = $this->language->get('help_start_date');
+		$data['help_issue'] = $this->language->get('help_issue');
 
 		$data['button_confirm'] = $this->language->get('button_confirm');
 
@@ -125,6 +127,7 @@ class ControllerPaymentPPPro extends Controller {
 		$request .= '&ZIP=' . urlencode($order_info['payment_postcode']);
 		$request .= '&COUNTRYCODE=' . urlencode($order_info['payment_iso_code_2']);
 		$request .= '&CURRENCYCODE=' . urlencode($order_info['currency_code']);
+		$request .= '&BUTTONSOURCE=' . urlencode('OpenCart_Cart_WPP');
 
 		if ($this->cart->hasShipping()) {
 			$request .= '&SHIPTONAME=' . urlencode($order_info['shipping_firstname'] . ' ' . $order_info['shipping_lastname']);

@@ -1,9 +1,10 @@
 <?php
 class ControllerPaymentAuthorizeNetSim extends Controller {
 	protected function index() {
-    	$this->data['button_confirm'] = $this->language->get('button_confirm');
+		$this->load->language('payment/authorizenet_sim');
 		
-		$this->data['action'] = $this->config->get('authorizenet_sim_url');
+    	$data['button_confirm'] = $this->language->get('button_confirm');
+		$data['action'] = $this->config->get('authorizenet_sim_url');
 		
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
@@ -121,13 +122,12 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		// calculate this after all our fields are generated
 		$data['x_fp_hash'] = $this->calculateFpHash();
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . 'template/payment/authorizenet_sim.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl'));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim.tpl', $data);
 		} else {
-			$this->response->setOutput($this->load->view('default/template/product/product.tpl', $data));
+			return $this->load->view('default/template/payment/authorizenet_sim.tpl', $data);
 		}
 	}
-	
 	
 	/** Calculates the x_fp_hash value for transaction
 	 * 
@@ -150,7 +150,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$key  = $this->config->get('authorizenet_sim_key');
 		
 		$code = $data['x_login'] . "^" . $data['x_fp_sequence'] . "^" . $data['x_fp_timestamp'] . "^" . $data['x_amount'] . "^" . $data['x_currency_code'];
-					
+							
 		$fp_hash = $hash->hmac_md5($code, $key);
 	
 		return $fp_hash;
@@ -185,7 +185,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 		$data['back'] = $this->url->link('checkout/checkout');
 		
 		if (isset($data['md5'])) {
-			if ($data['response_hash'] == ($data['md5_hash'])) {
+			if ($data['response_hash'] == $data['md5_hash']) {
 				$order_id = $data['order_id'];
 				$this->load->model('checkout/order');
 				$order_info = $this->model_checkout_order->getOrder($order_id);
@@ -216,16 +216,14 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 				}
 		}
 		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim_callback.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim_callback.tpl'));
-		} else {
-			$this->response->setOutput($this->load->view('default/template/payment/authorizenet_sim_callback.tpl'));
-		}
-			
 		$data['header'] = $this->load->controller('common/header');
 		$data['footer'] = $this->load->controller('common/footer');
 		
-		$this->response->setOutput($this->load->view('payment/authorizenet_sim_callback.tpl'));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/authorizenet_sim_callback.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/payment/authorizenet_sim_callback.tpl', $data);
+		} else {
+			return $this->load->view('default/template/payment/authorizenet_sim_callback.tpl', $data);
+		}
 	}
 }
 ?>

@@ -38,29 +38,3 @@
     </div>
   </div>
 </form>
-<script type="text/javascript"><!--
-$('#button-confirm').on('click', function() {
-	$.ajax({
-		type: 'get',
-		url: 'index.php?route=payment/authorizenet_sim',
-		cache: false,
-		beforeSend: function() {
-			$('#button-confirm').button('loading');		
-		},
-		complete: function() {
-			$('#button-confirm').button('reset');
-		},		
-		success: function(json) {
-			$('.alert').remove();
-				
-			if (json['error']) {
-				$('#payment').before('<div class="alert alert-danger">' + json['error'] + '</div>');
-			}
-
-			if (json['redirect']) {
-				location = json['redirect'];
-			}
-		}
-	});
-});
-//--></script> 

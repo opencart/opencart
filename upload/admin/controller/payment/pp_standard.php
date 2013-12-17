@@ -29,9 +29,12 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_test'] = $this->language->get('entry_test');
+		$data['entry_test_help'] = $this->language->get('entry_test_help');
 		$data['entry_transaction'] = $this->language->get('entry_transaction');
 		$data['entry_debug'] = $this->language->get('entry_debug');
-		$data['entry_total'] = $this->language->get('entry_total');	
+		$data['entry_debug_help'] = $this->language->get('entry_debug_help');
+		$data['entry_total'] = $this->language->get('entry_total');
+		$data['entry_total_help'] = $this->language->get('entry_total_help');
 		$data['entry_canceled_reversal_status'] = $this->language->get('entry_canceled_reversal_status');
 		$data['entry_completed_status'] = $this->language->get('entry_completed_status');
 		$data['entry_denied_status'] = $this->language->get('entry_denied_status');
@@ -48,6 +51,9 @@ class ControllerPaymentPPStandard extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+
+		$data['tab_general'] = $this->language->get('tab_general');
+		$data['tab_status'] = $this->language->get('tab_status');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

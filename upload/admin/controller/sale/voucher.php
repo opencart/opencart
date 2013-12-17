@@ -604,53 +604,7 @@ class ControllerSaleVoucher extends Controller {
 
 			$json['success'] = $this->language->get('text_sent');
 		}	
-<<<<<<< .mine
 		
-
-=======
-
-
->>>>>>> .theirs
 		$this->response->setOutput(json_encode($json));			
-<<<<<<< .mine
   	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-=======
-	}
-
-	public function removeVoucherHistory() {
-		$this->load->language('sale/voucher');
-
-		$json = array();
-
-		if (!$this->user->hasPermission('modify', 'sale/voucher')) {
-			$json['error'] = $this->language->get('error_permission');
-		} elseif (isset($this->request->get['order_id'])) {
-			$this->load->model('sale/voucher');
-
-			$this->model_sale_voucher->deleteVoucherHistoryByOrderId($this->request->get['order_id']);
-
-			$json['success'] = $this->language->get('text_success');
-		}
-
-		$this->response->setOutput(json_encode($json));
-	}
->>>>>>> .theirs
 }

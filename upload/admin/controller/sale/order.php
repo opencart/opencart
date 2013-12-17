@@ -18,78 +18,21 @@ class ControllerSaleOrder extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
-<<<<<<< HEAD
 		
     	$this->getForm();
   	}
-	
-  	public function update() {
-=======
-
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_sale_order->addOrder($this->request->post);
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_order_status_id'])) {
-				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
-			}
-
-			if (isset($this->request->get['filter_total'])) {
-				$url .= '&filter_total=' . $this->request->get['filter_total'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['filter_date_modified'])) {
-				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-		}
-
-		$this->getForm();
-	}
 
 	public function update() {
->>>>>>> af581297069b9e1a8cbc6c872c17c39c6f71f413
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
-<<<<<<< HEAD
     			
     	$this->getForm();
   	}
 	
   	public function delete() {
-=======
-
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_sale_order->editOrder($this->request->get['order_id'], $this->request->post);
 
@@ -137,65 +80,6 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$this->getForm();
-	}
-
-	public function delete() {
->>>>>>> af581297069b9e1a8cbc6c872c17c39c6f71f413
-		$this->load->language('sale/order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/order');
-
-		if (isset($this->request->post['selected']) && ($this->validateDelete())) {
-			foreach ($this->request->post['selected'] as $order_id) {
-				$this->model_sale_order->deleteOrder($order_id);
-			}
-
-			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_order_status_id'])) {
-				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
-			}
-
-			if (isset($this->request->get['filter_total'])) {
-				$url .= '&filter_total=' . $this->request->get['filter_total'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['filter_date_modified'])) {
-				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-		}
-
-		$this->getList();
 	}
 
 	protected function getList() {
@@ -1173,14 +1057,8 @@ class ControllerSaleOrder extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
-<<<<<<< HEAD
   	}
 	
-   	protected function validateDelete() {
-    	if (!$this->user->hasPermission('modify', 'sale/order')) {
-=======
-	}
-
 	protected function validateForm() {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
 			$this->error['warning'] = $this->language->get('error_permission');
@@ -1302,7 +1180,6 @@ class ControllerSaleOrder extends Controller {
 
 	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
->>>>>>> af581297069b9e1a8cbc6c872c17c39c6f71f413
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

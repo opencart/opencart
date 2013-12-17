@@ -179,10 +179,6 @@ class ModelSaleVoucher extends Model {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_history SET voucher_id = '" . (int)$voucher_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
 	}	
 		
-	public function deleteVoucherHistoryByOrderId($order_id) {
-	  	$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_history WHERE order_id = '" . (int)$order_id . "'");
-	}	
-		
 	public function getVoucherHistories($voucher_id, $start = 0, $limit = 10) {
 		if ($start < 0) {
 			$start = 0;
@@ -202,10 +198,4 @@ class ModelSaleVoucher extends Model {
 
 		return $query->row['total'];
 	}
-	
-	public function getTotalVoucherHistoriesByOrderId($order_id) {
-	  	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "voucher_history WHERE order_id = '" . (int)$order_id . "'");
-
-		return $query->row['total'];
-	}			
 }

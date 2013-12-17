@@ -422,22 +422,16 @@ class ModelSaleCustomer extends Model {
 
 			$this->load->language('mail/customer');
 			
-			if ($order_id) {
-				$this->load->model('sale/order');
-		
-				$order_info = $this->model_sale_order->getOrder($order_id);
-				
-				if ($order_info) {
-					$store_name = $order_info['store_name'];
-				} else {
-					$store_name = $this->config->get('config_name');
-				}
+			$this->load->model('setting/store');
+	
+			$store_info = $this->model_setting_store->getStore($customer_info['store_id']);
+			
+			if ($store_info) {
+				$store_name = $store_info['name'];
 			} else {
-				
-				
 				$store_name = $this->config->get('config_name');
-			}		
-				
+			}
+							
 			$message  = sprintf($this->language->get('text_reward_received'), $points) . "\n\n";
 			$message .= sprintf($this->language->get('text_reward_total'), $this->getRewardTotal($customer_id));
 				

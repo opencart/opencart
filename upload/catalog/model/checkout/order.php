@@ -25,6 +25,11 @@ class ModelCheckoutOrder extends Model {
 
 		return $order_id;
 	}
+	
+	
+	public function editOrder($order_id, $data) {
+	
+	}
 
 	public function getOrder($order_id) {
 		$order_query = $this->db->query("SELECT *, (SELECT os.name FROM `" . DB_PREFIX . "order_status` os WHERE os.order_status_id = o.order_status_id AND os.language_id = o.language_id) AS order_status FROM `" . DB_PREFIX . "order` o WHERE o.order_id = '" . (int)$order_id . "'");

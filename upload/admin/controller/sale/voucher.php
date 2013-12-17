@@ -604,9 +604,35 @@ class ControllerSaleVoucher extends Controller {
 
 			$json['success'] = $this->language->get('text_sent');
 		}	
+<<<<<<< .mine
+		
+
+=======
 
 
+>>>>>>> .theirs
 		$this->response->setOutput(json_encode($json));			
+<<<<<<< .mine
+  	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+=======
 	}
 
 	public function removeVoucherHistory() {
@@ -626,4 +652,5 @@ class ControllerSaleVoucher extends Controller {
 
 		$this->response->setOutput(json_encode($json));
 	}
+>>>>>>> .theirs
 }

@@ -18,6 +18,13 @@ class ControllerSaleOrder extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
+<<<<<<< HEAD
+		
+    	$this->getForm();
+  	}
+	
+  	public function update() {
+=======
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_sale_order->addOrder($this->request->post);
@@ -69,11 +76,19 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function update() {
+>>>>>>> af581297069b9e1a8cbc6c872c17c39c6f71f413
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
+<<<<<<< HEAD
+    			
+    	$this->getForm();
+  	}
+	
+  	public function delete() {
+=======
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
 			$this->model_sale_order->editOrder($this->request->get['order_id'], $this->request->post);
@@ -125,6 +140,7 @@ class ControllerSaleOrder extends Controller {
 	}
 
 	public function delete() {
+>>>>>>> af581297069b9e1a8cbc6c872c17c39c6f71f413
 		$this->load->language('sale/order');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -1157,6 +1173,12 @@ class ControllerSaleOrder extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
+<<<<<<< HEAD
+  	}
+	
+   	protected function validateDelete() {
+    	if (!$this->user->hasPermission('modify', 'sale/order')) {
+=======
 	}
 
 	protected function validateForm() {
@@ -1280,6 +1302,7 @@ class ControllerSaleOrder extends Controller {
 
 	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
+>>>>>>> af581297069b9e1a8cbc6c872c17c39c6f71f413
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 

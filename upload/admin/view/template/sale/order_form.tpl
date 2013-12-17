@@ -1173,17 +1173,9 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				}	
 			
 				// Payment Address
-				if (json['error']['payment']) {	
-					if (json['error']['payment']['country']) {
-						$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['payment']['country'] + '</div>');
-					}	
-					
-					if (json['error']['payment']['zone']) {
-						$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['payment']['zone'] + '</div>');
-					}
-					
-					if (json['error']['payment']['postcode']) {
-						$('input[name=\'payment_postcode\']').after('<div class="text-danger">' + json['error']['payment']['postcode'] + '</div>');
+				if (json['error']['payment']) {
+					for (i in json['error']['payment']) {
+						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['payment'][i] + '</div>');
 					}
 				}
 			

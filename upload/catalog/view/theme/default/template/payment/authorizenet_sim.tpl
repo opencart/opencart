@@ -1,4 +1,3 @@
-<!--<form action="<?php echo $action; ?>" method="post">-->
 <FORM METHOD=POST ACTION="https://test.authorize.net/gateway/transact.dll">
   <input type="hidden" name="x_login" value="<?php echo $x_login; ?>" />
   <input type="hidden" name="x_fp_sequence" value="<?php echo $x_fp_sequence; ?>" />
@@ -39,3 +38,29 @@
     </div>
   </div>
 </form>
+<script type="text/javascript"><!--
+$('#button-confirm').on('click', function() {
+	$.ajax({
+		type: 'get',
+		url: 'index.php?route=payment/authorizenet_sim',
+		cache: false,
+		beforeSend: function() {
+			$('#button-confirm').button('loading');		
+		},
+		complete: function() {
+			$('#button-confirm').button('reset');
+		},		
+		success: function(json) {
+			$('.alert').remove();
+				
+			if (json['error']) {
+				$('#payment').before('<div class="alert alert-danger">' + json['error'] + '</div>');
+			}
+
+			if (json['redirect']) {
+				location = json['redirect'];
+			}
+		}
+	});
+});
+//--></script> 

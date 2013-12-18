@@ -51,11 +51,21 @@ $(document).ready(function() {
 	// Product-grid to product-list
 	$('#list-view').click(function() {
 		$('.product-grid').removeClass('product-grid').addClass('product-list');
+		$('.product-list').removeClass('col-lg-4 col-md-4 col-sm-6 col-xs-12');
+		$('.product-list').addClass('col-sm-12');
+		$('.product-list .product-thumb').addClass('row');
+		$('.product-list .image').addClass('col-sm-2');
+		$('.product-list .caption').addClass('col-sm-7');
 	});
 	
 	// Product-list to product-grid
 	$('#grid-view').click(function() {
 		$('.product-list').removeClass('product-list').addClass('product-grid');
+		$('.product-grid').removeClass('col-sm-12');
+		$('.product-grid .product-thumb').removeClass('row');
+		$('.product-grid').addClass('col-lg-4 col-md-4 col-sm-6 col-xs-12');
+		$('.product-grid .image').removeClass('col-sm-2');
+		$('.product-grid .caption').removeClass('col-sm-7');
 	});
 	
 	// tooltips on hover

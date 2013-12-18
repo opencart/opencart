@@ -579,10 +579,6 @@ h2.price {
 }
 }
 
-
-
-
-
 .product-list .col-sm-3 {
 	float: none;
 	width: auto;
@@ -592,18 +588,12 @@ h2.price {
 }
 .product-list .product-thumb .image {
 	padding: 0 2%;
-	float: left;
-	width: 26%;
 }
 .product-list .product-thumb .caption {
 	padding: 0;
-	float: left;
-	width: 70%;
+        min-height: 0px;
 }
 .product-list .product-thumb .button-group {
-	float: left;
-	width: 70%;
-	width: 250px;
 	border: 1px solid #DDD;
 }
 

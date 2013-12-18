@@ -477,11 +477,18 @@ footer h5 {
 /* product list */
 .product-thumb {
 	margin-bottom: 20px;
+
+}
+
+.product-thumb > .row {
+    margin-left: 0;
+    margin-right: 0;
 	border: 1px solid #ddd;
 }
 .product-thumb .image {
-	padding: 5px;
 	text-align: center;
+	border: 1px solid #000;
+	display: block;
 }
 .product-thumb .image a {
 	display: block;
@@ -495,7 +502,7 @@ footer h5 {
 }
 .product-thumb .caption {
 	padding: 0 20px;
-	min-height: 200px;
+	min-height: 100px;
 }
 .product-thumb .rating {
 	padding-bottom: 10px;
@@ -581,31 +588,6 @@ h2.price {
 
 
 
-
-
-.product-list .col-sm-3 {
-	float: none;
-	width: auto;
-}
-.product-list .product-thumb {
-	padding-bottom: 20px;
-}
-.product-list .product-thumb .image {
-	padding: 0 2%;
-	float: left;
-	width: 26%;
-}
-.product-list .product-thumb .caption {
-	padding: 0;
-	float: left;
-	width: 70%;
-}
-.product-list .product-thumb .button-group {
-	float: left;
-	width: 70%;
-	width: 250px;
-	border: 1px solid #DDD;
-}
 
 .thumbnails {
 	overflow: auto;

@@ -130,11 +130,13 @@ $_['tab_order_status'] = 'Order Status';
 $_['tab_checkout_customisation'] = 'Checkout Customisation';
 
 // Entry
-$_['entry_user'] = 'API User:<br /><span class="help">API username (this is not usually your PayPal email, it is created for you when you request API access)</span>';
-$_['entry_password'] = 'API Password:<br /><span class="help">API password (NOT your PayPal password)</span>';
-$_['entry_sig'] = 'API Signature:<br /><span class="help">API signature key</span>';
-$_['entry_test'] = 'Test Mode:<br /><span class="help">Use the live or testing (sandbox) gateway server to process transactions? Test may fail in Internet Explorer</span>';
-$_['entry_total'] = 'Total:<br /><span class="help">The checkout total the order must reach before this payment method becomes active.</span>';
+$_['entry_username'] = 'API Username';
+$_['entry_password'] = 'API Password';
+$_['entry_signature'] = 'API Signature';
+$_['entry_test'] = 'Test Mode';
+$_['entry_test_help'] = 'Use the live or testing (sandbox) gateway server to process transactions? Test may fail in Internet Explorer';
+$_['entry_total'] = 'Total';
+$_['entry_total_help'] = 'The checkout total the order must reach before this payment method becomes active';
 $_['entry_order_status'] = 'Order Status:';
 $_['entry_geo_zone'] = 'Geo Zone:';
 $_['entry_status'] = 'Status:';

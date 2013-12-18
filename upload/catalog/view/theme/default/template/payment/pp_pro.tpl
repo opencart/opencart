@@ -70,7 +70,6 @@
     <input type="button" value="<?php echo $button_confirm; ?>" id="button-confirm" data-loading-text="<?php echo $text_loading; ?>" class="btn btn-primary" />
   </div>
 </div>
-
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
   $.ajax({
@@ -80,7 +79,7 @@ $('#button-confirm').bind('click', function() {
     dataType: 'json',
     beforeSend: function() {
       $('#button-confirm').attr('disabled', true);
-      $('#payment').before('<div class="attention"><img src="catalog/view/theme/default/image/loading.gif" alt="" /> <?php echo $text_wait; ?></div>');
+      $('#payment').before('<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
     },
     complete: function() {
       $('#button-confirm').attr('disabled', false);
@@ -97,4 +96,4 @@ $('#button-confirm').bind('click', function() {
     }
   });
 });
-//--></script> 
+//--></script>

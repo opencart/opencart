@@ -95,6 +95,31 @@
     </div>
   </div>
   <div class="form-group">
+    <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
+    <div class="col-sm-10">
+      <select name="pp_express_currency" id="input-currency" class="form-control">
+        <?php foreach($currency_codes as $code){ ?>
+        <option <?php if($code == $pp_express_currency){ echo 'selected'; } ?>><?php echo $code; ?></option>
+        <?php } ?>
+      </select>
+      <span class="help-block"><?php echo $entry_currency_help; ?></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="input-profile-cancel"><?php echo $entry_profile_cancellation; ?></label>
+    <div class="col-sm-10">
+      <select name="pp_express_profile_cancel_status" id="input-profile-cancel" class="form-control">
+        <?php if ($pp_express_profile_cancel_status) { ?>
+        <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
+        <option value="0"><?php echo $text_disabled; ?></option>
+        <?php } else { ?>
+        <option value="1"><?php echo $text_enabled; ?></option>
+        <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
+        <?php } ?>
+      </select>
+    </div>
+  </div>
+  <div class="form-group">
     <label class="col-sm-2 control-label" for="input-method"><?php echo $entry_method; ?></label>
     <div class="col-sm-10">
       <select name="pp_express_method" id="input-method" class="form-control">
@@ -108,6 +133,12 @@
     <div class="col-sm-10">
       <input type="text" name="pp_express_total" value="<?php echo $pp_express_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
       <span class="help-block"><?php echo $entry_total_help; ?></span>
+    </div>
+  </div>
+  <div class="form-group">
+    <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
+    <div class="col-sm-10">
+      <input type="text" name="pp_express_sort_order" value="<?php echo $pp_express_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
     </div>
   </div>
   <div class="form-group">
@@ -126,41 +157,10 @@
     </div>
   </div>
   <div class="form-group">
-    <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
-    <div class="col-sm-10">
-      <select name="pp_express_currency" id="input-currency" class="form-control">
-        <?php foreach($currency_codes as $code){ ?>
-        <option <?php if($code == $pp_express_currency){ echo 'selected'; } ?>><?php echo $code; ?></option>
-        <?php } ?>
-      </select>
-      <span class="help-block"><?php echo $entry_currency_help; ?></span>
-    </div>
-  </div>
-  <div class="form-group">
     <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
     <div class="col-sm-10">
       <select name="pp_express_status" id="input-status" class="form-control">
         <?php if ($pp_express_status) { ?>
-        <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
-        <option value="0"><?php echo $text_disabled; ?></option>
-        <?php } else { ?>
-        <option value="1"><?php echo $text_enabled; ?></option>
-        <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
-        <?php } ?>
-      </select>
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
-    <div class="col-sm-10">
-      <input type="text" name="pp_express_sort_order" value="<?php echo $pp_express_sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
-    </div>
-  </div>
-  <div class="form-group">
-    <label class="col-sm-2 control-label" for="input-profile-cancel"><?php echo $entry_profile_cancellation; ?></label>
-    <div class="col-sm-10">
-      <select name="pp_express_profile_cancel_status" id="input-profile-cancel" class="form-control">
-        <?php if ($pp_express_profile_cancel_status) { ?>
         <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
         <option value="0"><?php echo $text_disabled; ?></option>
         <?php } else { ?>

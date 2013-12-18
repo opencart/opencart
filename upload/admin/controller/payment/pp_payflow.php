@@ -15,6 +15,8 @@ class ControllerPaymentPPPayflow extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {
+			$data['error'] = @$this->error;
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -28,49 +30,25 @@ class ControllerPaymentPPPayflow extends Controller {
 		$data['text_sale'] = $this->language->get('text_sale');
 
 		$data['entry_vendor'] = $this->language->get('entry_vendor');
+		$data['entry_vendor_help'] = $this->language->get('entry_vendor_help');
 		$data['entry_user'] = $this->language->get('entry_user');
+		$data['entry_user_help'] = $this->language->get('entry_user_help');
 		$data['entry_password'] = $this->language->get('entry_password');
+		$data['entry_password_help'] = $this->language->get('entry_password_help');
 		$data['entry_partner'] = $this->language->get('entry_partner');
+		$data['entry_partner_help'] = $this->language->get('entry_partner_help');
 		$data['entry_test'] = $this->language->get('entry_test');
+		$data['entry_test_help'] = $this->language->get('entry_test_help');
 		$data['entry_transaction'] = $this->language->get('entry_transaction');
 		$data['entry_total'] = $this->language->get('entry_total');	
-		$data['entry_order_status'] = $this->language->get('entry_order_status');		
+		$data['entry_total_help'] = $this->language->get('entry_total_help');
+		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['vendor'])) {
-			$data['error_vendor'] = $this->error['vendor'];
-		} else {
-			$data['error_vendor'] = '';
-		}
-
-		if (isset($this->error['user'])) {
-			$data['error_user'] = $this->error['user'];
-		} else {
-			$data['error_user'] = '';
-		}
-
-		if (isset($this->error['password'])) {
-			$data['error_password'] = $this->error['password'];
-		} else {
-			$data['error_password'] = '';
-		}
-
-		if (isset($this->error['partner'])) {
-			$data['error_partner'] = $this->error['partner'];
-		} else {
-			$data['error_partner'] = '';
-		}
 
 		$data['breadcrumbs'] = array();
 

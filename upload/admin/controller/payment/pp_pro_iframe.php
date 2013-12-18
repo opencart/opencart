@@ -15,6 +15,8 @@ class ControllerPaymentPPProIframe extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+		} else {
+			$data['error'] = @$this->error;
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -29,11 +31,13 @@ class ControllerPaymentPPProIframe extends Controller {
 		$data['text_iframe'] = $this->language->get('text_iframe');
 		$data['text_redirect'] = $this->language->get('text_redirect');
 
-		$data['entry_sig'] = $this->language->get('entry_sig');
-		$data['entry_user'] = $this->language->get('entry_user');
+		$data['entry_username'] = $this->language->get('entry_username');
 		$data['entry_password'] = $this->language->get('entry_password');
+		$data['entry_signature'] = $this->language->get('entry_signature');
 		$data['entry_test'] = $this->language->get('entry_test');
+		$data['entry_test_help'] = $this->language->get('entry_test_help');
 		$data['entry_total'] = $this->language->get('entry_total');
+		$data['entry_total_help'] = $this->language->get('entry_total_help');
 		$data['entry_geo_zone'] = $this->language->get('entry_geo_zone');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_sort_order'] = $this->language->get('entry_sort_order');
@@ -67,24 +71,6 @@ class ControllerPaymentPPProIframe extends Controller {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['sig'])) {
-			$data['error_sig'] = $this->error['sig'];
-		} else {
-			$data['error_sig'] = '';
-		}
-
-		if (isset($this->error['user'])) {
-			$data['error_user'] = $this->error['user'];
-		} else {
-			$data['error_user'] = '';
-		}
-
-		if (isset($this->error['password'])) {
-			$data['error_password'] = $this->error['password'];
-		} else {
-			$data['error_password'] = '';
 		}
 
 		$data['breadcrumbs'] = array();

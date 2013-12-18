@@ -15,34 +15,33 @@ $_['text_ipn']                          = 'IPN url';
 $_['text_ipn_help']                     = 'Required for subscriptions';
 
 // Entry
-$_['entry_username']                    = 'API Username:';
-$_['entry_password']                    = 'API Password:';
-$_['entry_signature']                   = 'API Signature:';
-$_['entry_test']                        = 'Test (Sandbox) Mode:';
-$_['entry_method']                      = 'Transaction Method:';
-$_['entry_geo_zone']                    = 'Geo Zone:';
-$_['entry_status']                      = 'Status:';
-$_['entry_sort_order']                  = 'Sort Order:';
-$_['entry_icon_sort_order']             = 'Icon Sort Order:';
-$_['entry_debug']                       = 'Debug logging:';
+$_['entry_username']                    = 'API Username';
+$_['entry_password']                    = 'API Password';
+$_['entry_signature']                   = 'API Signature';
+$_['entry_test']                        = 'Test (Sandbox) Mode';
+$_['entry_method']                      = 'Transaction Method';
+$_['entry_geo_zone']                    = 'Geo Zone';
+$_['entry_status']                      = 'Status';
+$_['entry_sort_order']                  = 'Sort Order';
+$_['entry_icon_sort_order']             = 'Icon Sort Order';
+$_['entry_debug']                       = 'Debug logging';
 $_['entry_total']                       = 'Total';
 $_['entry_total_help']                  = 'The checkout total the order must reach before this payment method becomes active';
 $_['entry_currency']                    = 'Default currency';
 $_['entry_currency_help']               = 'Used for transaction searches';
 $_['entry_profile_cancellation']        = 'Allow customers to cancel profiles';
 
-
 // Order Status
-$_['entry_canceled_reversal_status']    = 'Canceled Reversal Status:';
-$_['entry_completed_status']            = 'Completed Status:';
-$_['entry_denied_status']			    = 'Denied Status:';
-$_['entry_expired_status']			    = 'Expired Status:';
-$_['entry_failed_status']			    = 'Failed Status:';
-$_['entry_pending_status']			    = 'Pending Status:';
-$_['entry_processed_status']		    = 'Processed Status:';
-$_['entry_refunded_status']			    = 'Refunded Status:';
-$_['entry_reversed_status']			    = 'Reversed Status:';
-$_['entry_voided_status']		        = 'Voided Status:';
+$_['entry_canceled_reversal_status']    = 'Canceled Reversal Status';
+$_['entry_completed_status']            = 'Completed Status';
+$_['entry_denied_status']			    = 'Denied Status';
+$_['entry_expired_status']			    = 'Expired Status';
+$_['entry_failed_status']			    = 'Failed Status';
+$_['entry_pending_status']			    = 'Pending Status';
+$_['entry_processed_status']		    = 'Processed Status';
+$_['entry_refunded_status']			    = 'Refunded Status';
+$_['entry_reversed_status']			    = 'Reversed Status';
+$_['entry_voided_status']		        = 'Voided Status';
 
 // Customise area
 $_['entry_display_checkout']            = 'Display quick checkout icon';

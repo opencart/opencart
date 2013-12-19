@@ -781,22 +781,20 @@ class ControllerPaymentPPExpress extends Controller {
 				$data['paypal_order']['refunded'] = $refunded;
 				$data['paypal_order']['remaining'] = number_format($data['paypal_order']['total'] - $captured, 2);
 
-				if ($paypal_order) {
-					$captured = number_format($this->model_payment_pp_express->totalCaptured($paypal_order['paypal_order_id']), 2);
-					$refunded = number_format($this->model_payment_pp_express->totalRefundedOrder($paypal_order['paypal_order_id']), 2);
+				$captured = number_format($this->model_payment_pp_express->totalCaptured($paypal_order['paypal_order_id']), 2);
+				$refunded = number_format($this->model_payment_pp_express->totalRefundedOrder($paypal_order['paypal_order_id']), 2);
 
-					$data['paypal_order'] = $paypal_order;
+				$data['paypal_order'] = $paypal_order;
 
-					$data['paypal_order']['captured'] = $captured;
-					$data['paypal_order']['refunded'] = $refunded;
-					$data['paypal_order']['remaining'] = number_format($paypal_order['total'] - $captured, 2);
-				}
+				$data['paypal_order']['captured'] = $captured;
+				$data['paypal_order']['refunded'] = $refunded;
+				$data['paypal_order']['remaining'] = number_format($paypal_order['total'] - $captured, 2);
 
 				$data['refund_link'] = $this->url->link('payment/pp_express/refund', 'token=' . $this->session->data['token'], 'SSL');
 				$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], 'SSL');
 				$data['resend_link'] = $this->url->link('payment/pp_express/resend', 'token=' . $this->session->data['token'], 'SSL');
 
-				$this->response->setOutput($this->load->view('payment/pp_express_order.tpl', $data));
+				return $this->load->view('payment/pp_express_order.tpl', $data);
 			}
 		}
 	}

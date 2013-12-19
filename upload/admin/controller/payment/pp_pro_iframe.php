@@ -803,7 +803,6 @@ class ControllerPaymentPPProIframe extends Controller {
 			$data['token'] = $this->session->data['token'];
 
 			$data['order_id'] = $this->request->get['order_id'];
-			$data['order_id'] = $this->request->get['order_id'];
 
 			$captured = number_format($this->model_payment_pp_pro_iframe->totalCaptured($data['paypal_order']['paypal_iframe_order_id']), 2);
 			$refunded = number_format($this->model_payment_pp_pro_iframe->totalRefundedOrder($data['paypal_order']['paypal_iframe_order_id']), 2);
@@ -818,35 +817,33 @@ class ControllerPaymentPPProIframe extends Controller {
 			$data['refund_link'] = $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'], 'SSL');
 			$data['resend_link'] = $this->url->link('payment/pp_pro_iframe/resend', 'token=' . $this->session->data['token'], 'SSL');
 
-			if ($paypal_order) {
-				$captured = number_format($this->model_payment_pp_pro_iframe->totalCaptured($paypal_order['paypal_iframe_order_id']), 2);
-				$refunded = number_format($this->model_payment_pp_pro_iframe->totalRefundedOrder($paypal_order['paypal_iframe_order_id']), 2);
+			$captured = number_format($this->model_payment_pp_pro_iframe->totalCaptured($paypal_order['paypal_iframe_order_id']), 2);
+			$refunded = number_format($this->model_payment_pp_pro_iframe->totalRefundedOrder($paypal_order['paypal_iframe_order_id']), 2);
 
-				$data['paypal_order'] = $paypal_order;
+			$data['paypal_order'] = $paypal_order;
 
-				$data['paypal_order']['captured'] = $captured;
-				$data['paypal_order']['refunded'] = $refunded;
-				$data['paypal_order']['remaining'] = number_format($paypal_order['total'] - $captured, 2);
+			$data['paypal_order']['captured'] = $captured;
+			$data['paypal_order']['refunded'] = $refunded;
+			$data['paypal_order']['remaining'] = number_format($paypal_order['total'] - $captured, 2);
 
-				foreach ($paypal_order['transactions'] as $transaction) {
-					$data['transactions'][] = array(
-						'paypal_iframe_order_transaction_id' => $transaction['paypal_iframe_order_transaction_id'],
-						'transaction_id' => $transaction['transaction_id'],
-						'amount' => $transaction['amount'],
-						'created' => $transaction['created'],
-						'payment_type' => $transaction['payment_type'],
-						'payment_status' => $transaction['payment_status'],
-						'pending_reason' => $transaction['pending_reason'],
-						'view' => $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . '&order_id=' . $this->request->get['order_id'], 'SSL'),
-						'refund' => $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . "&order_id=" . $this->request->get['order_id'], 'SSL'),
-						'resend' => $this->url->link('payment/pp_pro_iframe/resend', 'token=' . $this->session->data['token'] . "&paypal_iframe_order_transaction_id=" . $transaction['paypal_iframe_order_transaction_id'], 'SSL'),
-					);
-				}
+			foreach ($paypal_order['transactions'] as $transaction) {
+				$data['transactions'][] = array(
+					'paypal_iframe_order_transaction_id' => $transaction['paypal_iframe_order_transaction_id'],
+					'transaction_id' => $transaction['transaction_id'],
+					'amount' => $transaction['amount'],
+					'created' => $transaction['created'],
+					'payment_type' => $transaction['payment_type'],
+					'payment_status' => $transaction['payment_status'],
+					'pending_reason' => $transaction['pending_reason'],
+					'view' => $this->url->link('payment/pp_pro_iframe/viewTransaction', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . '&order_id=' . $this->request->get['order_id'], 'SSL'),
+					'refund' => $this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'] . "&transaction_id=" . $transaction['transaction_id'] . "&order_id=" . $this->request->get['order_id'], 'SSL'),
+					'resend' => $this->url->link('payment/pp_pro_iframe/resend', 'token=' . $this->session->data['token'] . "&paypal_iframe_order_transaction_id=" . $transaction['paypal_iframe_order_transaction_id'], 'SSL'),
+				);
 			}
 
 			$data['reauthorise_link'] = $this->url->link('payment/pp_pro_iframe/reauthorise', 'token=' . $this->session->data['token'], 'SSL');
 
-			$this->response->setOutput($this->load->view('payment/pp_pro_iframe_order.tpl', $data));
+			return $this->load->view('payment/pp_pro_iframe_order.tpl', $data);
 		}
 	}
 

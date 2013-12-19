@@ -92,7 +92,7 @@ class ControllerPaymentPPProIframe extends Controller {
 				$request .= '&' . $key . '=' . urlencode(html_entity_decode($value, ENT_QUOTES, 'UTF-8'));
 			}
 
-			if (!$this->config->get('pp_pro_iframe_test')) {
+			if (!$this->config->get('pp_pro_iframe')) {
 				$curl = curl_init('https://www.paypal.com/cgi-bin/webscr');
 			} else {
 				$curl = curl_init('https://www.sandbox.paypal.com/cgi-bin/webscr');
@@ -108,10 +108,10 @@ class ControllerPaymentPPProIframe extends Controller {
 			$response = curl_exec($curl);
 
 			if (curl_errno($curl)) {
-				$this->model_payment_pp_pro_iframe->log('pp_pro_iframe_test :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
+				$this->model_payment_pp_pro_iframe->log('pp_pro_iframe :: CURL failed ' . curl_error($curl) . '(' . curl_errno($curl) . ')');
 			} else {
-				$this->model_payment_pp_pro_iframe->log('pp_pro_iframe_test :: IPN REQUEST: ' . $request);
-				$this->model_payment_pp_pro_iframe->log('pp_pro_iframe_test :: IPN RESPONSE: ' . $response);
+				$this->model_payment_pp_pro_iframe->log('pp_pro_iframe :: IPN REQUEST: ' . $request);
+				$this->model_payment_pp_pro_iframe->log('pp_pro_iframe :: IPN RESPONSE: ' . $response);
 
 				if ((strcmp($response, 'VERIFIED') == 0 || strcmp($response, 'UNVERIFIED') == 0) && isset($this->request->post['payment_status'])) {
 					$order_status_id = $this->config->get('pp_pro_iframe_canceled_reversal_status_id');

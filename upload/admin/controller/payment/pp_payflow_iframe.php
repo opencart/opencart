@@ -507,8 +507,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 				);
 			}
 
-			$this->template = 'payment/pp_payflow_iframe_order.tpl';
-			$this->response->setOutput($this->render());
+			return $this->load->view('payment/pp_payflow_iframe_order.tpl', $data);
 		}
 	}
 

@@ -86,7 +86,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 	}
 
 	public function pp_return() {
-		$data['checkout_success'] = $this->url->link('checkout/success');
+		$data['url'] = $this->url->link('checkout/success');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_return.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_return.tpl', $data));
@@ -98,20 +98,20 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 	public function pp_cancel() {
 		$data['url'] = $this->url->link('checkout/checkout');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_cancel.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_cancel.tpl', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_return.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_return.tpl', $data));
 		} else {
-			$this->response->setOutput($this->load->view('default/template/checkout/pp_payflow_iframe_cancel.tpl', $data));
+			$this->response->setOutput($this->load->view('default/template/checkout/pp_payflow_iframe_return.tpl', $data));
 		}
 	}
 
 	public function pp_error() {
 		$data['url'] = $this->url->link('checkout/checkout');
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_error.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_error.tpl', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_return.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_payflow_iframe_return.tpl', $data));
 		} else {
-			$this->response->setOutput($this->load->view('default/template/checkout/pp_payflow_iframe_error.tpl', $data));
+			$this->response->setOutput($this->load->view('default/template/checkout/pp_payflow_iframe_return.tpl', $data));
 		}
 	}
 

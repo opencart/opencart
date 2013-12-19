@@ -65,10 +65,10 @@ class ControllerPaymentPPProIframe extends Controller {
 			$data['stylesheet'] = '/catalog/view/theme/default/stylesheet/stylesheet.css';
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/pp_pro_iframe_body.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/pp_pro_iframe_body.tpl', $data));
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_pro_iframe_body.tpl')) {
+			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/pp_pro_iframe_body.tpl', $data));
 		} else {
-			$this->response->setOutput($this->load->view('default/template/checkout/pp_pro_iframe_body.tpl', $data));
+			$this->response->setOutput($this->load->view('default/template/payment/pp_pro_iframe_body.tpl', $data));
 		}
 	}
 

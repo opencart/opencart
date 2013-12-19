@@ -499,11 +499,7 @@ footer h5 {
 @media (min-width: 767px) {
 .product-list .product-thumb .image {
 	float: left;
-	padding: 20px;
-	border-right: 1px solid #ddd;
-}
-.product-list .product-thumb .image + div {
-	border-left: 1px solid #ddd;
+	padding: 15px;
 }
 }
 .product-thumb h4 {
@@ -573,6 +569,17 @@ h2.price {
 	border-top: 1px solid #ddd;
 	background-color: #eee;
 	overflow: auto;
+}
+.product-list .product-thumb .button-group {
+	border-left: 1px solid #ddd;
+}
+.product-list .product-thumb .button-group {
+	border-left: 1px solid #ddd;
+}
+@media (max-width: 768px) {
+.product-list .product-thumb .button-group {
+	border-left: none;
+}
 }
 .product-thumb .button-group button {
 	width: 60%;

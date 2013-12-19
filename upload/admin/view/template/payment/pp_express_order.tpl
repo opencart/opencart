@@ -40,15 +40,15 @@
     <td>
       <table class="table table-striped table-bordered" id="paypal_transactions">
         <thead>
-        <tr>
-          <td class="text-left"><strong><?php echo $column_trans_id; ?></strong></td>
-          <td class="text-left"><strong><?php echo $column_amount; ?></strong></td>
-          <td class="text-left"><strong><?php echo $column_type; ?></strong></td>
-          <td class="text-left"><strong><?php echo $column_status; ?></strong></td>
-          <td class="text-left"><strong><?php echo $column_pend_reason; ?></strong></td>
-          <td class="text-left"><strong><?php echo $column_created; ?></strong></td>
-          <td class="text-left"><strong><?php echo $column_action; ?></strong></td>
-        </tr>
+          <tr>
+            <td class="text-left"><strong><?php echo $column_trans_id; ?></strong></td>
+            <td class="text-left"><strong><?php echo $column_amount; ?></strong></td>
+            <td class="text-left"><strong><?php echo $column_type; ?></strong></td>
+            <td class="text-left"><strong><?php echo $column_status; ?></strong></td>
+            <td class="text-left"><strong><?php echo $column_pend_reason; ?></strong></td>
+            <td class="text-left"><strong><?php echo $column_created; ?></strong></td>
+            <td class="text-left"><strong><?php echo $column_action; ?></strong></td>
+          </tr>
         </thead>
         <tbody>
           <?php foreach($paypal_order['transactions'] as $transaction) { ?>

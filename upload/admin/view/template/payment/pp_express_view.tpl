@@ -1,26 +1,25 @@
 <?php echo $header; ?>
-<div id="content">
-
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-        <?php } ?>
+<div id="content" class="container">
+<ul class="breadcrumb">
+  <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+  <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+  <?php } ?>
+</ul>
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <div class="pull-right">
+      <a href="<?php echo $cancel; ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a>
     </div>
-
-    <div class="box">
-        <div class="heading">
-            <h1><img src="view/image/payment.png" alt=""/> <?php echo $heading_title; ?></h1>
-        </div>
-
-        <div class="content">
-            <table class="form">
+    <h1 class="panel-title"><?php echo $heading_title; ?></h1>
+  </div>
+  <div class="panel-body">
+    <table class="table table-striped table-bordered">
             <?php if(!empty($lines)) { ?>
             <tr>
                 <td><?php echo $text_product_lines; ?></td>
                 <td>
-                    <table class="list">
+                    <table class="table table-striped table-bordered">
                         <?php $i = 0;  foreach($lines as  $k => $v){
-
                             if($i == 0) { ?>
                                 <thead>
                                     <tr>
@@ -529,12 +528,8 @@
                     <td><?php echo $transaction['PERIOD']; ?></td>
                 </tr>
                 <?php } ?>
-
             </table>
-
-        </div>
-    </div>
+  </div>
 </div>
-
-
+</div>
 <?php echo $footer; ?>

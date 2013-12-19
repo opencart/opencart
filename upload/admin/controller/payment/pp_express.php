@@ -82,6 +82,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_search'] = $this->language->get('button_search');
 
 		$data['text_ipn'] = $this->language->get('text_ipn');
 		$data['text_ipn_help'] = $this->language->get('text_ipn_help');
@@ -107,6 +108,7 @@ class ControllerPaymentPPExpress extends Controller {
 		//button actions
 		$data['action'] = $this->url->link('payment/pp_express', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+		$data['search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->post['pp_express_username'])) {
 			$data['pp_express_username'] = $this->request->post['pp_express_username'];

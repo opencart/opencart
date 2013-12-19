@@ -14,7 +14,7 @@
 <div class="panel-heading">
   <div class="pull-right">
     <button type="submit" form="form-ppexpress" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-    <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+    <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a>
     <a href="<?php echo $search; ?>" class="btn btn-info"><i class="fa fa-search"></i> <?php echo $button_search; ?></a></div>
   <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
 </div>

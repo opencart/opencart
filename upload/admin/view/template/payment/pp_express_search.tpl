@@ -16,7 +16,7 @@
     <div class="panel-body">
       <form id="form" class="form-horizontal">
                   <div id="search_input">
-                      <table class="form">
+                      <table class="table table-striped table-bordered">
                           <tr>
                               <td><?php echo $entry_date; ?></td>
                               <td>
@@ -103,7 +103,7 @@
 
                       <h3><?php echo $text_buyer_info; ?></h3>
 
-                      <table class="form">
+                      <table class="table table-striped table-bordered">
                           <tr>
                               <td><?php echo $text_name; ?></td>
                               <td>
@@ -120,9 +120,9 @@
       </form>
 
       <div id="search_box" style="display:none;">
-          <div id="searching"><i class="fa fa-cog fa-spin"></i> <?php echo $text_searching; ?></div>
-          <div id="error" class="warning" style="display:none;"></div>
-          <table id="search_results" style="display:none;" class="list" ></table>
+        <div id="searching"><i class="fa fa-cog fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
+        <div id="error" class="warning" style="display:none;"></div>
+        <table id="search_results" style="display:none;" class="table table-striped table-bordered" ></table>
       </div>
     </div>
   </div>

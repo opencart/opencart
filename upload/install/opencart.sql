@@ -3295,6 +3295,7 @@ CREATE TABLE `oc_url_alias` (
   `query` varchar(255) NOT NULL,
   `keyword` varchar(255) NOT NULL,
   PRIMARY KEY (`url_alias_id`)
+  UNIQUE KEY `unq_alias` (`keyword`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --

@@ -108,8 +108,18 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 						
-		if (isset($data['keyword'])) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+						
+		/**
+		*		@author Rafael Querino <rafaelqm@gmail.com>				
+		*		It checks if the keyword of url_alias no exists.
+		* 		@TODO Show a message to user that he tried to insert a duplicated keyword
+		*/
+		if ($data['keyword']) {
+			$query = $this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'product_id=" . (int)$product_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
+			if (!$query->num_rows) {
+				// Only if there no one record, then It will be write.
+				$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+			}
 		}
 						
 		$this->cache->delete('product');
@@ -249,10 +259,22 @@ class ModelCatalogProduct extends Model {
 			}
 		}
 						
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id. "'");
-		
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+						
+		/**
+		*		@author Rafael Querino <rafaelqm@gmail.com>				
+		*		It checks if the keyword of url_alias no exists.
+		* 		@TODO Show a message to user that he tried to insert a duplicated keyword
+		*/
+		if (!$data['keyword'] || $data['keyword'] == '') {
+			$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id. "'");
+		}else{
+			$query = $this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'product_id=" . (int)$product_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
+			if (!$query->num_rows) {
+				// Only if there no one record, then It will be write.
+				$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=" . (int)$product_id. "'");
+
+				$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+			}
 		}
 						
 		$this->cache->delete('product');

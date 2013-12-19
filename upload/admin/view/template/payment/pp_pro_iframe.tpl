@@ -99,7 +99,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-checkout-method"><?php echo $entry_checkout_method ?></label>
               <div class="col-sm-10">
-                <select name="pp_pro_iframe_transaction_method" id="input-checkout-method" class="form-control">
+                <select name="pp_pro_iframe_checkout_method" id="input-checkout-method" class="form-control">
                   <?php if ($pp_pro_iframe_checkout_method == 'iframe') { ?>
                   <option value="iframe" selected="selected"><?php echo $text_iframe ?></option>
                   <option value="redirect"><?php echo $text_redirect ?></option>

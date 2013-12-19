@@ -6,6 +6,7 @@ class ControllerPaymentPPPro extends Controller {
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_start_date'] = $this->language->get('text_start_date');
 		$data['text_wait'] = $this->language->get('text_wait');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_cc_type'] = $this->language->get('entry_cc_type');
 		$data['entry_cc_number'] = $this->language->get('entry_cc_number');

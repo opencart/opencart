@@ -17,7 +17,7 @@
         <input type="text" name="cc_number" value="" placeholder="<?php echo $entry_cc_number; ?>" id="input-cc-number" class="form-control" />
       </div>
     </div>
-    <div class="form-group required">
+    <div class="form-group">
       <label class="col-sm-2 control-label" for="input-cc-start-date"><?php echo $entry_cc_start_date; ?></label>
       <div class="col-sm-3">
         <select name="cc_start_date_month" id="input-cc-start-date" class="form-control">

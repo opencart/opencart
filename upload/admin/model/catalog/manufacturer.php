@@ -15,9 +15,18 @@ class ModelCatalogManufacturer extends Model {
 			}
 		}
 
-		if (isset($data['keyword'])) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manufacturer_id=" . (int)$manufacturer_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
+		/**
+		*		@author Rafael Querino <rafaelqm@gmail.com>				
+		*		It checks if the keyword of url_alias no exists.
+		*/
+		if ($data['keyword']) {
+			$query = $this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'manufacturer_id=" . (int)$category_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
+			
+			if (!$query->num_rows) {
+				// Only if there no one record, then It will be write.
+				$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manufacturer_id=" . (int)$manufacturer_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+			}
+		}	
 
 		$this->cache->delete('manufacturer');
 	}

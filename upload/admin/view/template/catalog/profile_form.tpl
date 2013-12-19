@@ -32,23 +32,22 @@
               <?php } ?>
             </ul>
 
-              <div class="tab-content">
-                <?php foreach ($languages as $language) { ?>
-                  <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
+            <div class="tab-content">
+              <?php foreach ($languages as $language) { ?>
+                <div class="tab-pane" id="language<?php echo $language['language_id']; ?>">
 
-                    <div class="form-group required">
-                      <label class="col-sm-2 control-label" for="profile_description[<?php echo $language['language_id']; ?>][name]"><?php echo $entry_name ?></label>
-                      <div class="col-sm-10">
-                        <input type="text" name="profile_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($profile_description[$language['language_id']]) ? $profile_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="profile_description[<?php echo $language['language_id']; ?>][name]" class="form-control"/>
-                        <?php if (isset($error_name[$language['language_id']])) { ?>
-                        <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
-                        <?php } ?>
-                      </div>
+                  <div class="form-group required">
+                    <label class="col-sm-2 control-label" for="profile_description[<?php echo $language['language_id']; ?>][name]"><?php echo $entry_name ?></label>
+                    <div class="col-sm-10">
+                      <input type="text" name="profile_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($profile_description[$language['language_id']]) ? $profile_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="profile_description[<?php echo $language['language_id']; ?>][name]" class="form-control"/>
+                      <?php if (isset($error_name[$language['language_id']])) { ?>
+                      <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+                      <?php } ?>
                     </div>
                   </div>
-                <?php } ?>
-              </div>
-
+                </div>
+              <?php } ?>
+            </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
 
@@ -56,8 +55,6 @@
                 <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control"/>
               </div>
             </div>
-
-
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-status"><?php echo $entry_status; ?></label>
 
@@ -76,93 +73,93 @@
           </div>
           <div class="tab-pane" id="tab-profile">
             <span class="help-block"><?php echo $text_recurring_help ?></span>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-price"><?php echo $entry_price; ?></label>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-price"><?php echo $entry_price; ?></label>
 
-          <div class="col-sm-10">
-            <input type="text" name="price" value="<?php echo $price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-duration"><?php echo $entry_duration; ?></label>
-
-          <div class="col-sm-10">
-            <input type="text" name="duration" value="<?php echo $duration; ?>" placeholder="<?php echo $entry_duration; ?>" id="input-duration" class="form-control"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-cycle"><?php echo $entry_cycle; ?></label>
-
-          <div class="col-sm-10">
-            <input type="text" name="cycle" value="<?php echo $cycle; ?>" placeholder="<?php echo $entry_cycle; ?>" id="input-cycle" class="form-control"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-frequency"><?php echo $entry_frequency; ?></label>
-
-          <div class="col-sm-10">
-            <select name="frequency" id="input-frequency" class="form-control">
-              <?php foreach ($frequencies as $key => $title) { ?><?php if ($frequency == $key) { ?>
-              <option value="<?php echo $key ?>" selected="selected"><?php echo $title ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $key ?>"><?php echo $title ?></option>
-              <?php } ?><?php } ?>
-            </select>
-          </div>
-        </div>
+              <div class="col-sm-10">
+                <input type="text" name="price" value="<?php echo $price; ?>" placeholder="<?php echo $entry_price; ?>" id="input-price" class="form-control"/>
+              </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-duration"><?php echo $entry_duration; ?></label>
+
+              <div class="col-sm-10">
+                <input type="text" name="duration" value="<?php echo $duration; ?>" placeholder="<?php echo $entry_duration; ?>" id="input-duration" class="form-control"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-cycle"><?php echo $entry_cycle; ?></label>
+
+              <div class="col-sm-10">
+                <input type="text" name="cycle" value="<?php echo $cycle; ?>" placeholder="<?php echo $entry_cycle; ?>" id="input-cycle" class="form-control"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-frequency"><?php echo $entry_frequency; ?></label>
+
+              <div class="col-sm-10">
+                <select name="frequency" id="input-frequency" class="form-control">
+                  <?php foreach ($frequencies as $key => $title) { ?><?php if ($frequency == $key) { ?>
+                  <option value="<?php echo $key ?>" selected="selected"><?php echo $title ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $key ?>"><?php echo $title ?></option>
+                  <?php } ?><?php } ?>
+                </select>
+              </div>
+            </div>
+          </div>
           <div class="tab-pane" id="tab-trial">
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-trial-status"><?php echo $entry_trial_status; ?></label>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-trial-status"><?php echo $entry_trial_status; ?></label>
 
-          <div class="col-sm-10">
-            <select name="trial_status" id="input-trial-status" class="form-control">
-              <?php if ($trial_status) { ?>
-              <option value="0"><?php echo $text_disabled ?></option>
-              <option value="1" selected="selected"><?php echo $text_enabled ?></option>
-              <?php } else { ?>
-              <option value="0" selected="selected"><?php echo $text_disabled ?></option>
-              <option value="1"><?php echo $text_enabled ?></option>
-              <?php } ?>
-            </select>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-trial-price"><?php echo $entry_trial_price; ?></label>
-
-          <div class="col-sm-10">
-            <input type="text" name="trial_price" value="<?php echo $trial_price; ?>" placeholder="<?php echo $entry_trial_price; ?>" id="input-trial-price" class="form-control"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-trial-duration"><?php echo $entry_trial_duration; ?></label>
-
-          <div class="col-sm-10">
-            <input type="text" name="trial_duration" value="<?php echo $trial_duration; ?>" placeholder="<?php echo $entry_trial_duration; ?>" id="input-trial-duration" class="form-control"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-trial-cycle"><?php echo $entry_trial_cycle; ?></label>
-
-          <div class="col-sm-10">
-            <input type="text" name="trial_cycle" value="<?php echo $trial_cycle; ?>" placeholder="<?php echo $entry_trial_cycle; ?>" id="input-trial-cycle" class="form-control"/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-trial-frequency"><?php echo $entry_trial_frequency; ?></label>
-
-          <div class="col-sm-10">
-            <select name="trial_frequency" id="input-trial-frequency" class="form-control">
-              <?php foreach ($frequencies as $key => $title) { ?><?php if ($frequency == $key) { ?>
-              <option value="<?php echo $key ?>" selected="selected"><?php echo $title ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $key ?>"><?php echo $title ?></option>
-              <?php } ?><?php } ?>
-            </select>
-          </div>
-        </div>
+              <div class="col-sm-10">
+                <select name="trial_status" id="input-trial-status" class="form-control">
+                  <?php if ($trial_status) { ?>
+                  <option value="0"><?php echo $text_disabled ?></option>
+                  <option value="1" selected="selected"><?php echo $text_enabled ?></option>
+                  <?php } else { ?>
+                  <option value="0" selected="selected"><?php echo $text_disabled ?></option>
+                  <option value="1"><?php echo $text_enabled ?></option>
+                  <?php } ?>
+                </select>
+              </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-trial-price"><?php echo $entry_trial_price; ?></label>
 
+              <div class="col-sm-10">
+                <input type="text" name="trial_price" value="<?php echo $trial_price; ?>" placeholder="<?php echo $entry_trial_price; ?>" id="input-trial-price" class="form-control"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-trial-duration"><?php echo $entry_trial_duration; ?></label>
+
+              <div class="col-sm-10">
+                <input type="text" name="trial_duration" value="<?php echo $trial_duration; ?>" placeholder="<?php echo $entry_trial_duration; ?>" id="input-trial-duration" class="form-control"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-trial-cycle"><?php echo $entry_trial_cycle; ?></label>
+
+              <div class="col-sm-10">
+                <input type="text" name="trial_cycle" value="<?php echo $trial_cycle; ?>" placeholder="<?php echo $entry_trial_cycle; ?>" id="input-trial-cycle" class="form-control"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-trial-frequency"><?php echo $entry_trial_frequency; ?></label>
+
+              <div class="col-sm-10">
+                <select name="trial_frequency" id="input-trial-frequency" class="form-control">
+                  <?php foreach ($frequencies as $key => $title) { ?><?php if ($frequency == $key) { ?>
+                  <option value="<?php echo $key ?>" selected="selected"><?php echo $title ?></option>
+                  <?php } else { ?>
+                  <option value="<?php echo $key ?>"><?php echo $title ?></option>
+                  <?php } ?><?php } ?>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <h2><?php echo $text_payment_info; ?></h2>
-<table class="form">
+<table class="table table-striped table-bordered">
     <tr>
         <td><?php echo $text_capture_status; ?>: </td>
         <td id="capture_status"><?php echo $paypal_order['capture_status']; ?></td>
@@ -9,7 +9,7 @@
         <td>
             <?php echo $paypal_order['total']; ?>
             <?php if($paypal_order['capture_status'] != 'Complete'){ ?>&nbsp;&nbsp;
-                <a onclick="doVoid();" class="button paypal_capture" id="button-void"><?php echo $button_void; ?></a>
+                <a onclick="doVoid();" id="button-void" class="button paypal_capture btn btn-primary"><?php echo $button_void; ?></a>
                 <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="img_loading_void" style="display:none;" />
             <?php } ?>
         </td>
@@ -30,7 +30,7 @@
             <p><input type="checkbox" name="paypal_capture_complete" id="paypal_capture_complete" value="1" /> <?php echo $text_complete_capture; ?></p>
             <p>
                 <input type="text" size="10" id="paypal_capture_amount" value="<?php echo $paypal_order['remaining']; ?>" />
-                <a class="button" onclick="capture();" id="button-capture"><?php echo $button_capture; ?></a>
+                <a class="btn btn-primary" onclick="capture();" id="button-capture"><?php echo $button_capture; ?></a>
                 <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="img_loading_capture" style="display:none;" />
             </p>
         </td>
@@ -39,13 +39,13 @@
     <?php if($paypal_order['capture_status'] != 'Complete'){ ?>
     <tr>
         <td><?php echo $text_reauthorise ?></td>
-        <td><a id="button-reauthorise" onclick="reauthorise()" class="button"><?php echo $button_reauthorise ?></a></td>
+        <td><a id="button-reauthorise" onclick="reauthorise()" class="btn btn-primary"><?php echo $button_reauthorise ?></a></td>
     </tr>
     <?php } ?>
     <tr>
         <td><?php echo $text_transactions; ?>: </td>
         <td>
-            <table class="list" id="paypal_transactions">
+            <table class="table table-striped table-bordered" id="paypal_transactions">
                 <thead>
                     <tr>
                         <td class="left"><strong><?php echo $column_trans_id; ?></strong></td>

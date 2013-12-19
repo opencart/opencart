@@ -1,6 +1,6 @@
 <?php
 class ControllerPaymentPPPayflowIframe extends Controller {
-	protected function index() {
+	public function index() {
 		$this->load->model('checkout/order');
 		$this->load->model('payment/pp_payflow_iframe');
 		$this->load->model('localisation/country');

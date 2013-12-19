@@ -1,6 +1,6 @@
 <?php
 class ControllerPaymentPPPayflow extends Controller {
-	protected function index() {
+	public function index() {
 		$this->language->load('payment/pp_payflow');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');

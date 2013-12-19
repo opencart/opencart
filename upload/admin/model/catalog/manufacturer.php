@@ -37,11 +37,23 @@ class ModelCatalogManufacturer extends Model {
 			}
 		}
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id. "'");
+		/**
+		*		@author Rafael Querino <rafaelqm@gmail.com>				
+		*		It checks if the keyword of url_alias no exists.
+		* 		@TODO Show a error message to user, that he tried to put a duplicated value.
+		*/
+		if (!$data['keyword'] || $data['keyword'] == '') {
+			$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id. "'");
+		}else{
+			$query = $this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'manufacturer_id=" . (int)$category_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
+			
+			if (!$query->num_rows) {
+				// Only if there no one record, then It will be write.
+				$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id. "'");
 
-		if ($data['keyword']) {
-			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manufacturer_id=" . (int)$manufacturer_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
-		}
+				$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'manufacturer_id=" . (int)$manufacturer_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
+			}
+		}	
 
 		$this->cache->delete('manufacturer');
 	}

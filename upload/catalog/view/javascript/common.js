@@ -50,26 +50,30 @@ $(document).ready(function() {
 
 	// Product-grid to product-list
 	$('#list-view').click(function() {
+		$('#content .product-list > .clearfix').remove();
+		
 		$('#content .product-grid').attr('class', 'product-list col-xs-12');
 	});
 	
 	// Product-list to product-grid
 	$('#grid-view').click(function() {
+		$('#content .product-list > .clearfix, #content .product-grid > .clearfix').remove();
+		
 		// What a shame bootstrap did not take into account dynamically loaded columns
 		cols = $('#column-right, #column-left').length;
 	
 		if (cols == 2) {
 			$('#content .product-list').attr('class', 'product-grid col-lg-6 col-md-6 col-sm-12 col-xs-12');
 			
-			//$('#content .product-grid > .clearfix').attr('class', 'clearfix visible-md visible-sm');
+			$('#content .product-grid:nth-child(2)').after('<div class="clearfix visible-md visible-sm"></div>');
 		} else if (cols == 1) {
 			$('#content .product-list').attr('class', 'product-grid col-lg-4 col-md-4 col-sm-6 col-xs-12');
 			
-			//$('#content .product-grid > .clearfix').attr('class', 'clearfix visible-md');
+			$('#content .product-grid:nth-child(3)').after('<div class="clearfix visible-lg"></div>');
 		} else {
 			$('#content .product-list').attr('class', 'product-grid col-lg-3 col-md-3 col-sm-6 col-xs-12');
 			
-			//$('#content .product-grid > .clearfix').attr('class', 'clearfix visible-md');
+			$('#content .product-grid:nth-child(4)').after('<div class="clearfix"></div>');
 		}
 	});
 	

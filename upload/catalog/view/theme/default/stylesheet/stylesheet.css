@@ -496,19 +496,22 @@ footer h5 {
 .product-grid .product-thumb .image {
 	float: none;
 }
-.product-thumb .image + div {
-	
-}
 @media (min-width: 767px) {
 .product-list .product-thumb .image {
 	float: left;
 	padding: 20px;
 	border-right: 1px solid #ddd;
 }
+.product-list .product-thumb .image + div {
+	border-left: 1px solid #ddd;
+}
+}
+.product-thumb h4 {
+	font-weight: bold;
 }
 .product-thumb .caption {
 	padding: 0 20px;
-	min-height: 100px;
+	min-height: 180px;
 }
 .product-list .product-thumb .caption {
 	margin-left: 230px;
@@ -520,11 +523,13 @@ footer h5 {
 }	
 }
 @media (max-width: 767px) {
+.product-list .product-thumb .caption {
+	min-height: 0;
+	margin-left: 0;
+	padding: 0 10px;
+}
 .product-grid .product-thumb .caption {
 	min-height: 0;
-}
-.product-list .product-thumb .caption {
-	margin-left: 0;
 }
 }
 

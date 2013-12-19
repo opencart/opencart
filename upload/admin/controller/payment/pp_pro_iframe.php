@@ -338,7 +338,8 @@ class ControllerPaymentPPProIframe extends Controller {
 			$this->load->language('payment/pp_pro_iframe');
 
 			if ($this->request->post['refund_full'] == 0 && $this->request->post['amount'] == 0) {
-				$this->session->data['error'] = $this->language->get('error_partial_amt');
+				$this->session->data['error'] = $this->language->get('error_capture_amt');
+				$this->response->redirect($this->url->link('payment/pp_pro_iframe/refund', 'token=' . $this->session->data['token'] . '&transaction_id=' . $this->request->post['transaction_id'], 'SSL'));
 			} else {
 				$order_id = $this->model_payment_pp_pro_iframe->getOrderId($this->request->post['transaction_id']);
 				$paypal_order = $this->model_payment_pp_pro_iframe->getOrder($order_id);

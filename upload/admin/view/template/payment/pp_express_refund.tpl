@@ -1,56 +1,67 @@
 <?php echo $header; ?>
-<div id="content">
-
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-        <?php } ?>
+<div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <?php if ($error != '') { ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+  <?php if ($attention != '') { ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $cancel; ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a>
+      </div>
+      <h1 class="panel-title"><?php echo $heading_title; ?></h1>
     </div>
+    <div class="panel-body">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+        <input type="hidden" name="amount_original" value="<?php echo $amount_original; ?>"/>
+        <input type="hidden" name="currency_code" value="<?php echo $currency_code; ?>"/>
 
-    <?php if ($error != '') { ?>
-    <div class="warning"><?php echo $error; ?></div>
-    <?php } ?>
-
-    <?php if ($attention != '') { ?>
-    <div class="attention"><?php echo $attention; ?></div>
-    <?php } ?>
-
-    <div class="box">
-
-        <div class="heading">
-            <h1><img src="view/image/payment.png" alt=""/> <?php echo $heading_title; ?></h1>
-            <div class="buttons"><a href="<?php echo $cancel; ?>" class="button"><?php echo $btn_cancel; ?></a></div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-transaction-id"><?php echo $entry_transaction_id; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="transaction_id" value="<?php echo $transaction_id; ?>" placeholder="<?php echo $entry_transaction_id; ?>" id="input-transaction-id" class="form-control"/>
+          </div>
         </div>
 
-        <div class="content">
-            <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-                <table class="form">
-                    <input type="hidden" name="amount_original" value="<?php echo $amount_original; ?>"/>
-                    <input type="hidden" name="currency_code" value="<?php echo $currency_code; ?>"/>
-                    <tr>
-                        <td><?php echo $entry_transaction_id; ?>:</td>
-                        <td><input type="text" name="transaction_id" value="<?php echo $transaction_id; ?>" /></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $entry_full_refund; ?>:</td>
-                        <td>
-                            <input type="hidden" name="refund_full" value="0"/>
-                            <input type="checkbox" name="refund_full" id="refund_full" value="1" <?php echo ($refund_available == '' ? 'checked="checked"' : ''); ?> onchange="refundAmount();"/>
-                        </td>
-                    </tr>
-                    <tr <?php echo ($refund_available == '' ? 'style="display:none;"' : ''); ?> id="partial_amount_row">
-                        <td><?php echo $entry_amount; ?>:</td>
-                        <td><input type="text" name="amount" value="<?php echo ($refund_available != '' ? $refund_available : ''); ?>" /></td>
-                    </tr>
-                    <tr>
-                        <td><?php echo $entry_message; ?>:</td>
-                        <td><textarea name="refund_message" id="paypal_refund_message" cols="40" rows="5"></textarea></td>
-                    </tr>
-                </table>
-                <a style="float:right;" onclick="$('#form').submit();" class="button"><?php echo $btn_refund; ?></a>
-            </form>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_full_refund; ?></label>
+          <div class="col-sm-10">
+            <input type="hidden" name="refund_full" value="0"/>
+            <input type="checkbox" name="refund_full" id="refund_full" value="1" <?php echo ($refund_available == '' ? 'checked="checked"' : ''); ?> onchange="refundAmount();"/>
+          </div>
         </div>
+
+        <div class="form-group" <?php echo ($refund_available == '' ? 'style="display:none;" ' : ''); ?>id="partial_amount_row">
+          <label class="col-sm-2 control-label"><?php echo $entry_amount; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="amount" value="<?php echo ($refund_available != '' ? $refund_available : ''); ?>" placeholder="<?php echo $entry_amount; ?>" class="form-control"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_message; ?></label>
+          <div class="col-sm-10">
+            <textarea name="refund_message" id="paypal_refund_message" cols="40" rows="5"></textarea>
+          </div>
+        </div>
+
+        <div class="pull-right">
+          <a onclick="$('#form').submit();" class="btn btn-primary"><?php echo $button_refund; ?></a>
+        </div>
+      </form>
     </div>
+  </div>
 </div>
 <?php echo $footer; ?>
 <script type="text/javascript"><!--

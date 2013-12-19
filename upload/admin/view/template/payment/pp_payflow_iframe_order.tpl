@@ -83,7 +83,7 @@ function doVoid(){
             url: 'index.php?route=payment/pp_payflow_iframe/void&token=<?php echo $token; ?>',
             
             beforeSend: function(){
-                $('#button-void').after('<img src="view/image/loading.gif" class="loading" />');
+                $('#button-void').after('<span class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
                 $('#button-void').hide();
             },
             
@@ -126,11 +126,11 @@ function capture(){
     $.ajax({
         type:'POST',
         dataType: 'json',
-        data: {'order_id': <?php echo $order_id; ?>, 'amount' : amount, 'complete' : complete },
+        data: {'order_id':<?php echo $order_id; ?>, 'amount':amount, 'complete':complete },
         url: 'index.php?route=payment/pp_payflow_iframe/capture&token=<?php echo $token; ?>',
         
         beforeSend: function(){
-            $('#button-capture').after('<img src="view/image/loading.gif" class="loading" />');
+            $('#button-capture').after('<span class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
             $('#button-capture').hide();
         },
         

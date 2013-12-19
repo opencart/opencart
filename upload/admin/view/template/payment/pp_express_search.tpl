@@ -124,7 +124,7 @@
             </form>
 
             <div id="search_box" style="display:none;">
-                <div id="searching"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" /> <?php echo $text_searching; ?></div>
+                <div id="searching"><i class="fa fa-cog fa-spin"></i> <?php echo $text_searching; ?></div>
                 <div id="error" class="warning" style="display:none;"></div>
                 <table id="search_results" style="display:none;" class="list" ></table>
             </div>

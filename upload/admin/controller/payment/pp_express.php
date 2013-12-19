@@ -578,12 +578,12 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
-		$data['btn_cancel'] = $this->language->get('btn_cancel');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['entry_transaction_id'] = $this->language->get('entry_transaction_id');
 		$data['entry_full_refund'] = $this->language->get('entry_full_refund');
 		$data['entry_amount'] = $this->language->get('entry_amount');
 		$data['entry_message'] = $this->language->get('entry_message');
-		$data['btn_refund'] = $this->language->get('btn_refund');
+		$data['button_refund'] = $this->language->get('button_refund');
 
 		$data['breadcrumbs'] = array();
 

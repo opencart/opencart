@@ -20,7 +20,7 @@ class ModelCatalogManufacturer extends Model {
 		*		It checks if the keyword of url_alias no exists.
 		*/
 		if ($data['keyword']) {
-			$query = $this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'manufacturer_id=" . (int)$category_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
+			$query = $this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'manufacturer_id=" . (int)$manufacturer_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
 			
 			if (!$query->num_rows) {
 				// Only if there no one record, then It will be write.
@@ -54,7 +54,7 @@ class ModelCatalogManufacturer extends Model {
 		if (!$data['keyword'] || $data['keyword'] == '') {
 			$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'manufacturer_id=" . (int)$manufacturer_id. "'");
 		}else{
-			$query = $this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'manufacturer_id=" . (int)$category_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
+			$query = $this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'manufacturer_id=" . (int)$manufacturer_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
 			
 			if (!$query->num_rows) {
 				// Only if there no one record, then It will be write.

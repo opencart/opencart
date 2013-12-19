@@ -151,7 +151,7 @@ class ModelCatalogCategory extends Model {
 		if (!$data['keyword'] || $data['keyword'] == '') {
 			$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id. "'");
 		}else{
-			$this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'category_id=" . (int)$category_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
+			$query = $this->db->query("SELECT 1 FROM " . DB_PREFIX . "url_alias WHERE query != 'category_id=" . (int)$category_id. "' AND keyword = '" . $this->db->escape($data['keyword']) . "'");
 			if (!$query->num_rows) {
 				// Only if there no one record, then It will be write.
 				$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id. "'");

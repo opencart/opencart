@@ -147,6 +147,7 @@ class ModelCatalogCategory extends Model {
 		/**
 		*		@author Rafael Querino <rafaelqm@gmail.com>				
 		*		It checks if the keyword of url_alias no exists.
+		* 		@TODO Show a message to user that he tried to insert a duplicated keyword
 		*/
 		if (!$data['keyword'] || $data['keyword'] == '') {
 			$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id. "'");

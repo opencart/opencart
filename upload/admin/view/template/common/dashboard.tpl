@@ -108,7 +108,7 @@
                 <?php echo $text_year; ?></label>
             </div>
           </div>
-          <h1 class="panel-title"><i class="fa fa-bar-chart-o"></i> <?php echo $text_analytics; ?></h1>
+          <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_analytics; ?></h1>
         </div>
         <div class="panel-body">
           <div id="chart-sale" class="chart" style="width: 100%; height: 175px;"></div>
@@ -118,7 +118,7 @@
     <div class="col-md-6">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title"><i class="fa fa-eye"></i> <?php echo $text_online; ?></h1>
+          <h1 class="panel-title"><i class="fa fa-eye fa-lg"></i> <?php echo $text_online; ?></h1>
         </div>
         <div class="panel-body">
           <div id="chart-online" class="chart" style="width: 100%; height: 175px;"></div>
@@ -130,7 +130,7 @@
     <div class="col-md-4">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title"><i class="fa fa-calendar-o"></i> <?php echo $text_activity; ?></h1>
+          <h1 class="panel-title"><i class="fa fa-calendar-o fa-lg"></i> <?php echo $text_activity; ?></h1>
         </div>
         <ul class="list-group">
           <?php if ($activities) { ?>
@@ -147,7 +147,7 @@
     <div class="col-md-8">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title"><i class="fa fa-shopping-cart"></i> <?php echo $text_last_order; ?></h1>
+          <h1 class="panel-title"><i class="fa fa-shopping-cart fa-lg"></i> <?php echo $text_last_order; ?></h1>
         </div>
         <table class="table">
           <thead>

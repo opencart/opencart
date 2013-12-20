@@ -44,13 +44,12 @@ legend {
 	font-size: 18px;
 	padding: 7px 0px
 }
-label, input, button, select, textarea {
+label {
 	font-size: 12px;
 	font-weight: normal;
 }
-select.form-control, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+select.form-control, textarea.form-control, input[type="text"].form-control, input[type="password"].form-control, input[type="datetime"].form-control, input[type="datetime-local"].form-control, input[type="date"].form-control, input[type="month"].form-control, input[type="time"].form-control, input[type="week"].form-control, input[type="number"].form-control, input[type="email"].form-control, input[type="url"].form-control, input[type="search"].form-control, input[type="tel"].form-control, input[type="color"].form-control {
 	font-size: 12px;
-	height: 31px;
 }
 .input-group input, .input-group select, .input-group .dropdown-menu, .input-group .popover {
 	font-size: 12px;

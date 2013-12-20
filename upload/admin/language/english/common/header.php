@@ -3,6 +3,7 @@
 $_['heading_title']                    = 'OpenCart';
 
 // Text
+$_['text_logged']                      = 'You are logged in as <strong>%s</strong>';
 $_['text_affiliate']                   = 'Affiliates';
 $_['text_affiliate_activity']          = 'Affiliate Activity';
 $_['text_attribute']                   = 'Attributes';

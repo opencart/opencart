@@ -1,8 +1,6 @@
 <?php 
 class ControllerProductSpecial extends Controller { 	
 	public function index() { 
-		$data = array();
-		
     	$this->load->language('product/special');
 		
 		$this->load->model('catalog/product');

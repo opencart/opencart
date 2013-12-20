@@ -7,7 +7,7 @@
   </ul>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-repeat"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-repeat fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">

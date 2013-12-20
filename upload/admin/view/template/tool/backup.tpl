@@ -21,7 +21,7 @@
         <button type="submit" form="form-backup" class="btn btn-default"><i class="fa fa-download"></i> <?php echo $button_backup; ?></button>
         <button type="submit" form="form-restore" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_restore; ?></button>
       </div>
-      <h1 class="panel-title"><i class="fa fa-exchange"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-exchange fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-restore" class="form-horizontal">

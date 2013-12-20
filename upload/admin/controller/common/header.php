@@ -112,12 +112,12 @@ class ControllerCommonHeader extends Controller {
 		$data['text_zone'] = $this->language->get('text_zone');
 		
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token'])) {
-			$data['logged'] = false;
+			$data['logged'] = '';
 			
 			$data['home'] = $this->url->link('common/dashboard', '', 'SSL');
 		} else {
-			$data['logged'] = $this->user->isLogged();
-			
+			$data['logged'] = sprintf($this->language->get('text_logged'), $this->user->getUserName());
+
 			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
 			$data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL');
 			$data['attribute'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], 'SSL');

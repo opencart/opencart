@@ -5,7 +5,7 @@
     <div class="col-sm-offset-4 col-sm-4">
       <div class="panel panel-default">
         <div class="panel-heading">
-          <h1 class="panel-title"><i class="fa fa-lock fa-large"></i> <?php echo $text_login; ?></h1>
+          <h1 class="panel-title"><i class="fa fa-lock fa-lg"></i> <?php echo $text_login; ?></h1>
         </div>
         <div class="panel-body">
           <?php if ($success) { ?>

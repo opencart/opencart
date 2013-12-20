@@ -867,7 +867,7 @@ final class Ebay {
 						foreach($grp['product_option_value'] as $grp_node) {
 							$t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
 
-							$varData['related'][$grp_node['product_option_value_id']] = $grp['product_option_value_id'];
+							$varData['related'][$grp_node['product_option_value_id']] = $grp['name'];
 						}
 						$varData['groups'][] = array('name' => $grp['name'], 'child' => $t_tmp);
 					}

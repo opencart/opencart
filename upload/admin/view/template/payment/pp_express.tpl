@@ -31,7 +31,7 @@
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="entry-username"><?php echo $entry_username; ?></label>
     <div class="col-sm-10">
-      <input type="text" name="pp_express_username" value="<?php echo $pp_express_username; ?>" placeholder="<?php echo $entry_username; ?>" id="entry-username" class="form-control"/>
+      <input type="text" name="pp_express_username" value="<?php echo $pp_express_username; ?>" placeholder="<?php echo $entry_username; ?>" id="entry-username" class="form-control" />
       <?php if (isset($error['username'])) { ?>
       <div class="text-danger"><?php echo $error['username']; ?></div>
       <?php } ?>
@@ -40,7 +40,7 @@
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="entry-password"><?php echo $entry_password; ?></label>
     <div class="col-sm-10">
-      <input type="text" name="pp_express_password" value="<?php echo $pp_express_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control"/>
+      <input type="text" name="pp_express_password" value="<?php echo $pp_express_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control" />
       <?php if (isset($error['password'])) { ?>
       <div class="text-danger"><?php echo $error['password']; ?></div>
       <?php } ?>
@@ -49,7 +49,7 @@
   <div class="form-group required">
     <label class="col-sm-2 control-label" for="entry-signature"><?php echo $entry_signature; ?></label>
     <div class="col-sm-10">
-      <input type="text" name="pp_express_signature" value="<?php echo $pp_express_signature; ?>" placeholder="<?php echo $entry_signature; ?>" id="entry-signature" class="form-control"/>
+      <input type="text" name="pp_express_signature" value="<?php echo $pp_express_signature; ?>" placeholder="<?php echo $entry_signature; ?>" id="entry-signature" class="form-control" />
       <?php if (isset($error['signature'])) { ?>
       <div class="text-danger"><?php echo $error['signature']; ?></div>
       <?php } ?>

@@ -802,7 +802,6 @@ class ControllerPaymentPPExpress extends Controller {
 	}
 
 	public function search() {
-
 		$this->load->language('payment/pp_express_search');
 		$this->load->model('payment/pp_express');
 
@@ -836,6 +835,9 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['entry_suffix'] = $this->language->get('entry_suffix');
 		$data['text_searching'] = $this->language->get('text_searching');
 		$data['text_view'] = $this->language->get('text_view');
+		$data['text_format'] = $this->language->get('text_format');
+		$data['text_date_search'] = $this->language->get('text_date_search');
+		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['entry_status_all'] = $this->language->get('entry_status_all');
 		$data['entry_status_pending'] = $this->language->get('entry_status_pending');
@@ -898,6 +900,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 		$data['date_start'] = date("Y-m-d", strtotime('-30 days'));
+		$data['date_end'] = date("Y-m-d");
 		$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
@@ -985,10 +988,9 @@ class ControllerPaymentPPExpress extends Controller {
 
 			$result = $this->model_payment_pp_express->call($call_data);
 
-			if($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
+			if($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning' && $result['ACK'] != 'Warning') {
 				$response['error'] = false;
 				$response['result'] = $this->formatRows($result);
-				$this->response->setOutput(json_encode($response));
 			} else {
 				$response['error'] = true;
 				$response['error_msg'] = $result['L_LONGMESSAGE0'];

@@ -14,125 +14,160 @@
       <h1 class="panel-title"><?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
-      <form id="form" class="form-horizontal">
-                  <div id="search_input">
-                      <table class="table table-striped table-bordered">
-                          <tr>
-                              <td><?php echo $entry_date; ?></td>
-                              <td>
-                                  <input type="text" id="date_start" name="date_start" value="<?php echo $date_start; ?>" size="12" class="date" placeholder="<?php echo $entry_date_start; ?>" />
-                                  &nbsp;&nbsp;<?php echo $entry_date_to; ?>&nbsp;&nbsp;<input type="text" name="date_end" size="12" class="date" placeholder="<?php echo $entry_date_end; ?>" />
-                              </td>
-                          </tr>
-                          <tr>
-                              <td><?php echo $entry_transaction; ?></td>
-                              <td>
-                                  <?php echo $entry_transaction_type; ?>:
-                                  <select name="transaction_class">
-                                      <option value="All"><?php echo $entry_trans_all;?></option>
-                                      <option value="Sent"><?php echo $entry_trans_sent;?></option>
-                                      <option value="Received"><?php echo $entry_trans_received;?></option>
-                                      <option value="MassPay"><?php echo $entry_trans_masspay;?></option>
-                                      <option value="MoneyRequest"><?php echo $entry_trans_money_req;?></option>
-                                      <option value="FundsAdded"><?php echo $entry_trans_funds_add;?></option>
-                                      <option value="FundsWithdrawn"><?php echo $entry_trans_funds_with;?></option>
-                                      <option value="Referral"><?php echo $entry_trans_referral;?></option>
-                                      <option value="Fee"><?php echo $entry_trans_fee;?></option>
-                                      <option value="Subscription"><?php echo $entry_trans_subscription;?></option>
-                                      <option value="Dividend"><?php echo $entry_trans_dividend;?></option>
-                                      <option value="Billpay"><?php echo $entry_trans_billpay;?></option>
-                                      <option value="Refund"><?php echo $entry_trans_refund;?></option>
-                                      <option value="CurrencyConversions"><?php echo $entry_trans_conv;?></option>
-                                      <option value="BalanceTransfer"><?php echo $entry_trans_bal_trans;?></option>
-                                      <option value="Reversal"><?php echo $entry_trans_reversal;?></option>
-                                      <option value="Shipping"><?php echo $entry_trans_shipping;?></option>
-                                      <option value="BalanceAffecting"><?php echo $entry_trans_bal_affect;?></option>
-                                      <option value="ECheck"><?php echo $entry_trans_echeque;?></option>
-                                  </select>
-                                  &nbsp;&nbsp;
-                                  <?php echo $entry_transaction_status; ?>:
-                                  <select name="status">
-                                      <option value=""><?php echo $entry_status_all; ?></option>
-                                      <option value="Pending"><?php echo $entry_status_pending; ?></option>
-                                      <option value="Processing"><?php echo $entry_status_processing; ?></option>
-                                      <option value="Success"><?php echo $entry_status_success; ?></option>
-                                      <option value="Denied"><?php echo $entry_status_denied; ?></option>
-                                      <option value="Reversed"><?php echo $entry_status_reversed; ?></option>
-                                  </select>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td><?php echo $entry_email; ?></td>
-                              <td>
-                                  <input maxlength="127" type="text" name="buyer_email" value="" placeholder="<?php echo $entry_email_buyer; ?>" />&nbsp;&nbsp;
-                                  <input maxlength="127" type="text" name="merchant_email" value="" placeholder="<?php echo $entry_email_merchant; ?>" />
-                              </td>
-                          </tr>
-                          <tr>
-                              <td><?php echo $entry_receipt; ?></td>
-                              <td><input type="text" name="receipt_id" value="" maxlength="100" /></td>
-                          </tr>
-                          <tr>
-                              <td><?php echo $entry_transaction_id; ?></td>
-                              <td><input type="text" name="transaction_id" value="" maxlength="19" /></td>
-                          </tr>
-                          <tr>
-                              <td><?php echo $entry_invoice_no; ?></td>
-                              <td><input type="text" name="invoice_number" value="" maxlength="127" /></td>
-                          </tr>
-                          <tr>
-                              <td><?php echo $entry_auction; ?></td>
-                              <td><input type="text" name="auction_item_number" value="" /></td>
-                          </tr>
-                          <tr>
-                              <td><?php echo $entry_amount; ?></td>
-                              <td>
-                                  <input type="text" name="amount" value="" size="6" />&nbsp;
-                                  <select name="currency_code">
-                                      <?php foreach($currency_codes as $code){ ?>
-                                          <option <?php if($code == $default_currency){ echo 'selected'; } ?>><?php echo $code; ?></option>
-                                      <?php } ?>
-                                  </select>
-                              </td>
-                          </tr>
-                          <tr>
-                              <td><?php echo $entry_profile_id; ?></td>
-                              <td><input type="text" name="profile_id" value=""  /></td>
-                          </tr>
-                      </table>
+      <div id="search_input">
+        <form id="form" class="form-horizontal">
+        <h3><?php echo $text_date_search; ?></h3>
 
-                      <h3><?php echo $text_buyer_info; ?></h3>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_date_start; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_date_end; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" class="form-control" />
+          </div>
+        </div>
 
-                      <table class="table table-striped table-bordered">
-                          <tr>
-                              <td><?php echo $text_name; ?></td>
-                              <td>
-                                  <input type="text" name="name_salutation" value="" placeholder="<?php echo $entry_salutation; ?>" />&nbsp;&nbsp;
-                                  <input type="text" name="name_first" value="" placeholder="<?php echo $entry_firstname; ?>" />&nbsp;&nbsp;
-                                  <input type="text" name="name_middle" value="" placeholder="<?php echo $entry_middlename; ?>" />&nbsp;&nbsp;
-                                  <input type="text" name="name_last" value="" placeholder="<?php echo $entry_lastname; ?>" />
-                                  <input type="text" name="name_suffix" value="" placeholder="<?php echo $entry_suffix; ?>" />
-                              </td>
-                          </tr>
-                      </table>
+        <h3><?php echo $entry_transaction; ?></h3>
 
-                  </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_transaction_type; ?></label>
+          <div class="col-sm-10">
+            <select name="status" class="form-control">
+              <option value="All"><?php echo $entry_trans_all;?></option>
+              <option value="Sent"><?php echo $entry_trans_sent;?></option>
+              <option value="Received"><?php echo $entry_trans_received;?></option>
+              <option value="MassPay"><?php echo $entry_trans_masspay;?></option>
+              <option value="MoneyRequest"><?php echo $entry_trans_money_req;?></option>
+              <option value="FundsAdded"><?php echo $entry_trans_funds_add;?></option>
+              <option value="FundsWithdrawn"><?php echo $entry_trans_funds_with;?></option>
+              <option value="Referral"><?php echo $entry_trans_referral;?></option>
+              <option value="Fee"><?php echo $entry_trans_fee;?></option>
+              <option value="Subscription"><?php echo $entry_trans_subscription;?></option>
+              <option value="Dividend"><?php echo $entry_trans_dividend;?></option>
+              <option value="Billpay"><?php echo $entry_trans_billpay;?></option>
+              <option value="Refund"><?php echo $entry_trans_refund;?></option>
+              <option value="CurrencyConversions"><?php echo $entry_trans_conv;?></option>
+              <option value="BalanceTransfer"><?php echo $entry_trans_bal_trans;?></option>
+              <option value="Reversal"><?php echo $entry_trans_reversal;?></option>
+              <option value="Shipping"><?php echo $entry_trans_shipping;?></option>
+              <option value="BalanceAffecting"><?php echo $entry_trans_bal_affect;?></option>
+              <option value="ECheck"><?php echo $entry_trans_echeque;?></option>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_email; ?> (<?php echo $entry_email_buyer; ?>)</label>
+          <div class="col-sm-10">
+            <input type="text" name="buyer_email" value="" placeholder="<?php echo $entry_email_buyer; ?>" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_email; ?> (<?php echo $entry_email_merchant; ?>)</label>
+          <div class="col-sm-10">
+            <input type="text" name="merchant_email" value="" placeholder="<?php echo $entry_email_merchant; ?>" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_receipt; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="receipt_id" value="" placeholder="<?php echo $entry_receipt; ?>" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_transaction_id; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="transaction_id" value="" placeholder="<?php echo $entry_transaction_id; ?>" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_invoice_no; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="invoice_number" value="" placeholder="<?php echo $entry_invoice_no; ?>" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_auction; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="auction_item_number" value="" placeholder="<?php echo $entry_auction; ?>" class="form-control" />
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_amount; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="amount" value="" placeholder="<?php echo $entry_amount; ?>" class="form-control" />
+            <br />
+            <select name="currency_code" class="form-control">
+              <?php foreach($currency_codes as $code){ ?>
+                <option <?php if($code == $default_currency){ echo 'selected'; } ?>><?php echo $code; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_profile_id; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="profile_id" value="" placeholder="<?php echo $entry_profile_id; ?>" class="form-control" />
+          </div>
+        </div>
+
+        <h3><?php echo $text_buyer_info; ?></h3>
+
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_salutation; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="name_salutation" value="" placeholder="<?php echo $entry_salutation; ?>" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_firstname; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="name_first" value="" placeholder="<?php echo $entry_firstname; ?>" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_middlename; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="name_middle" value="" placeholder="<?php echo $entry_middlename; ?>" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_lastname; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="name_last" value="" placeholder="<?php echo $entry_lastname; ?>" class="form-control" />
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label"><?php echo $entry_suffix; ?></label>
+          <div class="col-sm-10">
+            <input type="text" name="name_suffix" value="" placeholder="<?php echo $entry_suffix; ?>" class="form-control" />
+          </div>
+        </div>
       </form>
+      </div>
 
       <div id="search_box" style="display:none;">
         <div id="searching"><i class="fa fa-cog fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
-        <div id="error" class="warning" style="display:none;"></div>
+        <div style="display:none;" id="error" class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
         <table id="search_results" style="display:none;" class="table table-striped table-bordered" ></table>
       </div>
     </div>
   </div>
 </div>
-<script type="text/javascript" src="view/javascript/jquery/ui/jquery-ui-timepicker-addon.js"></script>
 <script type="text/javascript"><!--
-    $('.date').datepicker({dateFormat: 'yy-mm-dd'});
-//--></script>
-<script type="text/javascript"><!--
-
     function doSearch(){
         var html;
 
@@ -168,30 +203,36 @@
                         html += '</tr></thead>';
 
                         $.each(data.result, function(k,v){
+                            if ("L_LONGMESSAGE" in v) {
+                              $('#error').text(v.L_LONGMESSAGE).fadeIn();
+                            } else {
+                              if (!("L_EMAIL" in v)) {
+                                  v.L_EMAIL = '';
+                              }
 
-                            if(!("L_EMAIL" in v)){
-                                v.L_EMAIL = '';
+                              html += '<tr>';
+                                  html += '<td class="left">'+ v.L_TIMESTAMP+'</td>';
+                                  html += '<td class="left">'+ v.L_TYPE+'</td>';
+                                  html += '<td class="left">'+ v.L_EMAIL +'</td>';
+                                  html += '<td class="left">'+ v.L_NAME+'</td>';
+                                  html += '<td class="left">'+ v.L_TRANSACTIONID+'</td>';
+                                  html += '<td class="left">'+ v.L_STATUS+'</td>';
+                                  html += '<td class="left">'+ v.L_CURRENCYCODE+'</td>';
+                                  html += '<td class="right">'+ v.L_AMT+'</td>';
+                                  html += '<td class="right">'+ v.L_FEEAMT+'</td>';
+                                  html += '<td class="right">'+ v.L_NETAMT+'</td>';
+                                  html += '<td class="center">';
+                                      html += '<a href="<?php echo $view_link; ?>&transaction_id='+v.L_TRANSACTIONID+'"><?php echo $text_view; ?></a>';
+                                  html += '</td>';
+                              html += '</tr>';
                             }
-
-                            html += '<tr>';
-                                html += '<td class="left">'+ v.L_TIMESTAMP+'</td>';
-                                html += '<td class="left">'+ v.L_TYPE+'</td>';
-                                html += '<td class="left">'+ v.L_EMAIL +'</td>';
-                                html += '<td class="left">'+ v.L_NAME+'</td>';
-                                html += '<td class="left">'+ v.L_TRANSACTIONID+'</td>';
-                                html += '<td class="left">'+ v.L_STATUS+'</td>';
-                                html += '<td class="left">'+ v.L_CURRENCYCODE+'</td>';
-                                html += '<td class="right">'+ v.L_AMT+'</td>';
-                                html += '<td class="right">'+ v.L_FEEAMT+'</td>';
-                                html += '<td class="right">'+ v.L_NETAMT+'</td>';
-                                html += '<td class="center">';
-                                    html += '<a href="<?php echo $view_link; ?>&transaction_id='+v.L_TRANSACTIONID+'"><?php echo $text_view; ?></a>';
-                                html += '</td>';
-                            html += '</tr>';
                         });
 
                         $('#searching').hide();
                         $('#search_results').append(html).fadeIn();
+                    } else {
+                      $('#searching').hide();
+                      $('#error').text('<?php echo $text_no_results; ?>').fadeIn();
                     }
                 }
             }

@@ -2,6 +2,7 @@
 //Headings
 $_['heading_title']                     = 'Search Transactions';
 $_['text_pp_express']                   = 'PayPal Express Checkout';
+$_['text_date_search']                  = 'Search by date';
 
 //Table column
 $_['tbl_column_date']                   = 'Date';
@@ -75,3 +76,5 @@ $_['text_searching']                    = 'Searching';
 $_['text_name']                         = 'Name';
 $_['text_buyer_info']                   = 'Buyer information';
 $_['text_view']                         = 'View';
+$_['text_format']                     	= 'Format';
+$_['text_no_results']                   = 'No results found';

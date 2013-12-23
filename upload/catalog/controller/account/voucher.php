@@ -152,7 +152,7 @@ class ControllerAccountVoucher extends Controller {
 		if (isset($this->request->post['amount'])) {
 			$data['amount'] = $this->request->post['amount'];
 		} else {
-			$data['amount'] = $this->currency->format(25, $this->config->get('config_currency'), false, false);
+			$data['amount'] = $this->currency->format($this->config->get('config_voucher_min'), $this->config->get('config_currency'), false, false);
 		}
 
 		if (isset($this->request->post['agree'])) {

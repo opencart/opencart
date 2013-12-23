@@ -13,96 +13,56 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
 }
 @media (min-width: 1200px) {
-	span.hidden-xs {
-		display: inline;
-	}
-}
-
-@media (min-width: 1200px) {
 	.container {
+		min-width: 97%;
+	}
+	
+	#header .container {
 		min-width: 95%;
 	}
 }
-
 #header {
-	min-height: 45px;
-	margin-bottom: 0px;
-	background-color: #2D2D2E;
-	background-repeat: no-repeat, repeat;
-	background-size: auto, 5px 5px;
-	background-position: center, center;
-	background-image: linear-gradient(90deg, transparent, transparent 20%, rgba(255, 255, 255, 0.1) 50%, transparent 80%), linear-gradient(-135deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.05) 50%, transparent 60%, transparent 100%);
-	box-shadow: inset 0 0 8px 0px #000000;        
-	border-bottom: 3px solid #2FC5F0;
+	background-color: #333333;
+	min-height: 40px;
+	margin-bottom: 15px;
 }
 
 #header .navbar-brand {
-	padding: 7px 15px 5px 15px;
+	padding: 8px 12px 5px 15px;
 	line-height: 20px;
 }
-#header .navbar-nav > li + li {
-	background-repeat: no-repeat;
-	background-size: 2px 18px;
-	background-position: left;
-	background-image: linear-gradient(90deg, #000000 1px, #505050 1px);
+#header .navbar-nav > li > a {
+	color: #999999;
+	font-size: 12px;
+	padding: 12px 12px;
+	line-height: 18px;
+	cursor: pointer;
+}
+#header .navbar-nav + .navbar-nav > li > a {
+	padding: 5px 12px;
+	line-height: 32px;
+}
+#header .navbar-nav > li.open > a, #header .navbar-nav > li > a:hover, #header .navbar-nav > li.active > a {
+	background-color: #62A8D1;
 }
 
-#header .navbar-nav > li > a {
-	padding: 6px 12px;
-	line-height: 29px;
-	text-shadow: 1px 1px #000000;
-	cursor: pointer;
-	border-right: none;
+#header .navbar-nav + .navbar-nav > li + li {
+	background-repeat: no-repeat;
+	background-size: 1px 15px;
+	background-position: left center;
+	background-image: linear-gradient(90deg, #345B7E 1px, #345B7E 1px);
 }
 #header .navbar-nav > li > a i.fa-lg {
 	font-size: 20px;
 }
 #header .navbar-nav > li > a > img {
-	border-radius: 7px;
+	border-radius: 5px;
 }
 #header .navbar-nav > li > a .fa-angle-down {
 	margin-left: 3px;
 }
 #header .navbar-nav > li > a .label {
 	text-shadow: none;
-}
-
-
-/* menu */
-#menu {
-	z-index: 1;
-	min-height: 30px;
-	margin-bottom: 15px;
-	background-color: #FFFFFF;
-	background-repeat: repeat-x;
-	background-position: top;
-	background-image: linear-gradient(0deg, #FFFFFF 1px, #F3F3F3 1px, #FFFFFF);
-	-webkit-box-shadow: 0px 0px 4px 0px #CCCCCC;
-	-moz-box-shadow: 0px 0px 4px 0px #CCCCCC;
-	box-shadow: 0px 0px 4px 0px #CCCCCC;
-	border-bottom: 1px solid #CCCCCC;
-}
-#menu .navbar-nav, #menu .navbar-collapse {
-	padding: 0;
-}
-#menu .icon-bar {
-	color: #000;
-	border: 1px solid #000;
-}
-#menu li.active {
-	color: #000000;
-}
-#menu .navbar-nav > li > a {
-	color: #444444;
-	cursor: pointer;
-	padding: 5px 20px 5px 20px;
-	text-shadow: 1px 1px 1px #FFFFFF;
-}
-#menu .navbar-nav > li + li {
-	background-repeat: no-repeat;
-	background-size: 1px 100%;
-	background-position: top left;
-	background-image: linear-gradient(0deg, #CCCCCC, #FFFFFF);
 }
 /* drop down submen */
 .dropdown-menu {
@@ -169,12 +129,9 @@ footer {
 	margin-top: -100px;
 	clear: both;
 }
-footer a {
-	color: #005580;
-}
 .breadcrumb {
 	border: 1px solid #E5E5E5;
-	background: #F4F4F4;
+	background: #FFFFFF;
 	padding: 0px 15px;
 	margin-bottom: 15px;
 }
@@ -209,18 +166,30 @@ footer a {
 	border-top: 1px solid #E5E5E5;
 	border-right: 1px solid #E5E5E5;
 	transform: rotate(45deg);
+	-ms-transform:rotate(45deg);
+	-webkit-transform:rotate(45deg);
 }
 .alert {
 	font-size: 12px;
 	padding: 10px;
 }
 .panel-heading {
-	padding: 8px 15px;
+	padding: 6px 15px;
 	overflow: auto;
 }
+.panel-default .panel-heading {
+	background: #F9F9F9;
+}
 .panel-title {
+	font-size: 18px;
 	line-height: 30px;
 	text-shadow: 1px 1px #FFFFFF;
+	color: #666666;
+}
+.panel-title i {
+	color: #2BBEED;
+	margin-right: 3px;
+
 }
 .nav-tabs {
 	margin-bottom: 15px;
@@ -261,6 +230,11 @@ input.form-control, select.form-control {
 .btn-group > .btn-lg {
 	font-size: 15px;
 }
+
+.btn-default {
+	background: #CCC
+}
+
 
 .table {
 

@@ -15,7 +15,7 @@
       <div class="pull-right">
         <button type="submit" form="form-order" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-order" class="form-horizontal">
@@ -1173,17 +1173,9 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				}	
 			
 				// Payment Address
-				if (json['error']['payment']) {	
-					if (json['error']['payment']['country']) {
-						$('select[name=\'payment_country_id\']').after('<div class="text-danger">' + json['error']['payment']['country'] + '</div>');
-					}	
-					
-					if (json['error']['payment']['zone']) {
-						$('select[name=\'payment_zone_id\']').after('<div class="text-danger">' + json['error']['payment']['zone'] + '</div>');
-					}
-					
-					if (json['error']['payment']['postcode']) {
-						$('input[name=\'payment_postcode\']').after('<div class="text-danger">' + json['error']['payment']['postcode'] + '</div>');
+				if (json['error']['payment']) {
+					for (i in json['error']['payment']) {
+						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['payment'][i] + '</div>');
 					}
 				}
 			

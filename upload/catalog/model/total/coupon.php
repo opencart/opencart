@@ -110,4 +110,8 @@ class ModelTotalCoupon extends Model {
 			$this->model_checkout_coupon->redeem($coupon_info['coupon_id'], $order_info['order_id'], $order_info['customer_id'], $order_total['value']);	
 		}						
 	}
+	
+	public function clear($order_id) {
+		
+	}
 }

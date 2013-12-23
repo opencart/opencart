@@ -44,13 +44,12 @@ legend {
 	font-size: 18px;
 	padding: 7px 0px
 }
-label, input, button, select, textarea {
+label {
 	font-size: 12px;
 	font-weight: normal;
 }
-select.form-control, textarea, input[type="text"], input[type="password"], input[type="datetime"], input[type="datetime-local"], input[type="date"], input[type="month"], input[type="time"], input[type="week"], input[type="number"], input[type="email"], input[type="url"], input[type="search"], input[type="tel"], input[type="color"] {
+select.form-control, textarea.form-control, input[type="text"].form-control, input[type="password"].form-control, input[type="datetime"].form-control, input[type="datetime-local"].form-control, input[type="date"].form-control, input[type="month"].form-control, input[type="time"].form-control, input[type="week"].form-control, input[type="number"].form-control, input[type="email"].form-control, input[type="url"].form-control, input[type="search"].form-control, input[type="tel"].form-control, input[type="color"].form-control {
 	font-size: 12px;
-	height: 31px;
 }
 .input-group input, .input-group select, .input-group .dropdown-menu, .input-group .popover {
 	font-size: 12px;
@@ -476,11 +475,11 @@ footer h5 {
 }
 /* product list */
 .product-thumb {
-	margin-bottom: 20px;
 	border: 1px solid #ddd;
+	margin-bottom: 20px;
+	overflow: auto;
 }
 .product-thumb .image {
-	padding: 5px;
 	text-align: center;
 }
 .product-thumb .image a {
@@ -493,10 +492,42 @@ footer h5 {
 	margin-left: auto;
 	margin-right: auto;	
 }
+.product-grid .product-thumb .image {
+	float: none;
+}
+@media (min-width: 767px) {
+.product-list .product-thumb .image {
+	float: left;
+	padding: 15px;
+}
+}
+.product-thumb h4 {
+	font-weight: bold;
+}
 .product-thumb .caption {
 	padding: 0 20px;
-	min-height: 200px;
+	min-height: 180px;
 }
+.product-list .product-thumb .caption {
+	margin-left: 230px;
+}
+@media (max-width: 1200px) {
+.product-grid .product-thumb .caption {
+	min-height: 210px;
+	padding: 0 10px;
+}	
+}
+@media (max-width: 767px) {
+.product-list .product-thumb .caption {
+	min-height: 0;
+	margin-left: 0;
+	padding: 0 10px;
+}
+.product-grid .product-thumb .caption {
+	min-height: 0;
+}
+}
+
 .product-thumb .rating {
 	padding-bottom: 10px;
 }
@@ -538,6 +569,17 @@ h2.price {
 	background-color: #eee;
 	overflow: auto;
 }
+.product-list .product-thumb .button-group {
+	border-left: 1px solid #ddd;
+}
+.product-list .product-thumb .button-group {
+	border-left: 1px solid #ddd;
+}
+@media (max-width: 768px) {
+.product-list .product-thumb .button-group {
+	border-left: none;
+}
+}
 .product-thumb .button-group button {
 	width: 60%;
 	border: none;
@@ -561,19 +603,11 @@ h2.price {
 	cursor: pointer;
 }
 @media (max-width: 1200px) {
-.product-thumb .caption {
-	min-height: 210px;
-	padding: 0 10px;
-}	
 .product-thumb .button-group button, .product-thumb .button-group button + button {
 	width: 33.33%;
 }
 }
-
-@media (max-width: 767px) {
-.product-thumb .caption {
-	min-height: 0;
-}		
+@media (max-width: 767px) {	
 .product-thumb .button-group button, .product-thumb .button-group button + button {
 	width: 33.33%;
 }
@@ -581,31 +615,6 @@ h2.price {
 
 
 
-
-
-.product-list .col-sm-3 {
-	float: none;
-	width: auto;
-}
-.product-list .product-thumb {
-	padding-bottom: 20px;
-}
-.product-list .product-thumb .image {
-	padding: 0 2%;
-	float: left;
-	width: 26%;
-}
-.product-list .product-thumb .caption {
-	padding: 0;
-	float: left;
-	width: 70%;
-}
-.product-list .product-thumb .button-group {
-	float: left;
-	width: 70%;
-	width: 250px;
-	border: 1px solid #DDD;
-}
 
 .thumbnails {
 	overflow: auto;

@@ -3,8 +3,6 @@ class ControllerProductProduct extends Controller {
 	private $error = array(); 
 	
 	public function index() { 
-		$data = array();
-	
 		$this->load->language('product/product');
 	
 		$data['breadcrumbs'] = array();

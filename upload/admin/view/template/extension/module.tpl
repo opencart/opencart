@@ -17,7 +17,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-puzzle-piece"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="table-responsive">

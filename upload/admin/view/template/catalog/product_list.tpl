@@ -21,7 +21,7 @@
         <button type="submit" form="form-product" formaction="<?php echo $copy; ?>" class="btn btn-default"><i class="fa fa-copy"></i> <?php echo $button_copy; ?></button>
         <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-product').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
       </div>
-      <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-list fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="well">

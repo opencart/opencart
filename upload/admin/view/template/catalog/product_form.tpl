@@ -15,7 +15,7 @@
       <div class="pull-right">
         <button type="submit" form="form-product" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-product" class="form-horizontal">
@@ -1254,7 +1254,7 @@ function addDiscount() {
 	html  = '<tr id="discount-row' + discount_row + '">'; 
     html += '  <td class="text-left"><select name="product_discount[' + discount_row + '][customer_group_id]" class="form-control">';
     <?php foreach ($customer_groups as $customer_group) { ?>
-    html += '    <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
+    html += '    <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo addslashes($customer_group['name']); ?></option>';
     <?php } ?>
     html += '  </select></td>';		
     html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>';
@@ -1277,7 +1277,7 @@ function addSpecial() {
 	html  = '<tr id="special-row' + special_row + '">'; 
     html += '  <td class="text-left"><select name="product_special[' + special_row + '][customer_group_id]" class="form-control">';
     <?php foreach ($customer_groups as $customer_group) { ?>
-    html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
+    html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo addslashes($customer_group['name']); ?></option>';
     <?php } ?>
     html += '  </select></td>';		
     html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>';

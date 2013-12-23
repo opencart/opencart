@@ -10,7 +10,7 @@
       <div class="pull-right">
         <button id="button-send" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&token=<?php echo $token; ?>');"><i class="fa fa-envelope"></i> <?php echo $button_send; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-      <h1 class="panel-title"><i class="fa fa-envelope"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-envelope fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <form class="form-horizontal">

@@ -402,8 +402,6 @@ class ControllerCatalogAttribute extends Controller {
 				'limit'       => 5
 			);
 
-			$json = array();
-
 			$results = $this->model_catalog_attribute->getAttributes($filter_data);
 
 			foreach ($results as $result) {

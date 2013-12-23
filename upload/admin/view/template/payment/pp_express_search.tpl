@@ -11,7 +11,7 @@
         <a onclick="editSearch();" id="btn_edit" class="btn btn-primary" style="display:none;"><?php echo $btn_edit_search; ?></a>
         <a onclick="doSearch();" id="btn_search" class="btn btn-primary"><?php echo $btn_search; ?></a>
       </div>
-      <h1 class="panel-title"><?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-search fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div id="search_input">

@@ -79,7 +79,7 @@
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
   $.ajax({
-    url: 'index.php?route=payment/pp_pro_pf/send',
+    url: 'index.php?route=payment/pp_payflow/send',
     type: 'post',
     data: $('#payment :input'),
     dataType: 'json',

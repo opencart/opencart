@@ -16,7 +16,7 @@
     <button type="submit" form="form-ppexpress" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
     <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a>
     <a href="<?php echo $search; ?>" class="btn btn-info"><i class="fa fa-search"></i> <?php echo $button_search; ?></a></div>
-  <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
+  <h1 class="panel-title"><i class="fa fa-credit-card fa-lg"></i> <?php echo $heading_title; ?></h1>
 </div>
 <div class="panel-body">
 <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ppexpress" class="form-horizontal">

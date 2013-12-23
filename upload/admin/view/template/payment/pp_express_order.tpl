@@ -20,7 +20,6 @@
     <td><?php echo $text_amount_refunded; ?></td>
     <td id="paypal_refunded"><?php echo $paypal_order['refunded']; ?></td>
   </tr>
-
   <?php if ($paypal_order['capture_status'] != 'Complete') { ?>
   <tr class="paypal_capture">
     <td><?php echo $text_capture_amount; ?></td>
@@ -34,7 +33,6 @@
     </td>
   </tr>
   <?php } ?>
-
   <tr>
     <td><?php echo $text_transactions; ?>:</td>
     <td>

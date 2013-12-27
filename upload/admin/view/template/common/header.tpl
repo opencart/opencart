@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>">
-<head>
+<html dir="<?php echo $direction; ?>" lang="<?php echo $lang; ?>"><head>
 <meta charset="UTF-8" />
 <title><?php echo $title; ?></title>
 <base href="<?php echo $base; ?>" />
@@ -14,7 +13,11 @@
 <link href="view/javascript/bootstrap/css/bootstrap.css" rel="stylesheet" media="screen" />
 <script type="text/javascript" src="view/javascript/bootstrap/js/bootstrap.js"></script>
 <link href="view/javascript/font-awesome/css/font-awesome.min.css" type="text/css" rel="stylesheet" />
-<link href="http://fonts.googleapis.com/css?family=Open+Sans:400,400i,300,700" rel="stylesheet" type="text/css" />
+
+<link href='http://fonts.googleapis.com/css?family=Montserrat:400,700' rel='stylesheet' type='text/css'>
+
+<link type="text/css" href="http://bootswatch.com/cerulean/bootstrap.css" rel="stylesheet" media="screen" />
+
 <link type="text/css" href="view/stylesheet/stylesheet.css" rel="stylesheet" media="screen" />
 <?php foreach ($styles as $style) { ?>
 <link type="text/css" href="<?php echo $style['href']; ?>" rel="<?php echo $style['rel']; ?>" media="<?php echo $style['media']; ?>" />
@@ -29,10 +32,15 @@
 </head>
 <body>
 <div id="container">
-<header id="header" class="navbar navbar-static-top">
+<!--
+<div id="top">
+  <div class="container"><?php echo $logged; ?>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="<?php echo $logout; ?>"><i class="fa fa-cog"></i> Settings</a>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;<a href="<?php echo $logout; ?>"><i class="fa fa-lock"></i> <?php echo $text_logout; ?></a></div>
+</div>
+//-->
+<header id="header" class="navbar navbar-default navbar-static-top">
   <div class="container">
     <div class="navbar-header"><a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="fa icon-bar"></span> ghghf</button>
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"><span class="icon-bar"></span><span class="icon-bar"></span><span class="fa icon-bar"></span></button>
     </div>
     <?php if ($logged) { ?>
     <div class="collapse navbar-collapse navbar-ex1-collapse">
@@ -188,7 +196,7 @@
           <ul class="dropdown-menu">
             <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
             <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
-            <li><a href="<?php echo $logout; ?>"><i class="fa fa-lock"></i> <?php echo $text_logout; ?></a></li>
+            <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
           </ul>
         </li>
         <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left">4</span> <i class="fa fa-bell fa-lg"></i> <i class="fa fa-angle-down"></i></a>

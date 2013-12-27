@@ -15,17 +15,17 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i> <?php echo $button_insert; ?></a> <a href="<?php echo $repair; ?>" class="btn btn-default"><i class="fa fa-wrench"></i> <?php echo $button_repair; ?></a>
-        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-category').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
-      </div>
-      <h1 class="panel-title"><i class="fa fa-list fa-lg"></i> <?php echo $heading_title; ?></h1>
+  <div class="page-header">
+    <div class="pull-right"><a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i> <?php echo $button_insert; ?></a> <a href="<?php echo $repair; ?>" class="btn btn-default"><i class="fa fa-wrench"></i> <?php echo $button_repair; ?></a>
+      <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-category').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
     </div>
+    <h1><i class="fa fa-bars"></i> <?php echo $heading_title; ?></h1>
+  </div>
+  <div class="panel panel-default">
     <div class="panel-body">
       <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-category">
         <div class="table-responsive">
-          <table class="table table-striped table-bordered table-hover">
+          <table class="table table-bordered table-hover">
             <thead>
               <tr>
                 <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
@@ -45,7 +45,7 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $category['name']; ?></td>
                 <td class="text-right"><?php echo $category['sort_order']; ?></td>
-                <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-link"><i class="fa fa-pencil fa-lg"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

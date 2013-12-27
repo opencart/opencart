@@ -1009,6 +1009,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$this->data = array_merge($this->data, $this->load->language('catalog/product'));
 		$this->data = array_merge($this->data, $this->load->language('extension/default'));
+		$this->data = array_merge($this->data, $this->load->language('openbay/openbay_itemlist'));
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -1017,6 +1018,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->load->model('catalog/manufacturer');
 		$this->load->model('openbay/openbay');
 		$this->load->model('tool/image');
+
 		if ($this->openbay->addonLoad('openstock')) {
 			$this->load->model('openstock/openstock');
 			$openstock_installed = true;

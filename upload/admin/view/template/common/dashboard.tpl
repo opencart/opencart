@@ -1,4 +1,9 @@
 <?php echo $header; ?>
+<div class="page-header">
+  <div class="container">
+    <h1><i class="fa fa-eye fa-lg"></i> <?php echo $heading_title; ?></h1>
+  </div>
+</div>
 <div id="content" class="container">
   <?php if ($error_install) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_install; ?>

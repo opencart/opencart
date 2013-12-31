@@ -1,52 +1,45 @@
 <?php echo $header; ?>
+<div class="page-header">
+  <div class="container">
+    <h1><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
+  </div>
+</div>
 <div id="content" class="container">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
+  <form class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-2 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>
+      <div class="col-sm-10">
+        <button type="button" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
+        <?php if ($error_warning) { ?>
+        <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+        <?php } else { ?>
+        <button type="button" id="button-clear" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
+        <?php } ?>
+        <span class="help-block"><?php echo $help_upload; ?></span></div>
     </div>
-    <div class="panel-body">
-      <form class="form-horizontal">
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>
-          <div class="col-sm-10">
-            <button type="button" id="button-upload" class="btn btn-primary"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-            <?php if ($error_warning) { ?>
-            <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
-            <?php } else { ?>
-            <button type="button" id="button-clear" disabled="disabled" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></button>
-            <?php } ?>
-            <span class="help-block"><?php echo $help_upload; ?></span></div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
+      <div class="col-sm-10">
+        <div class="progress">
+          <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label"><?php echo $entry_progress; ?></label>
-          <div class="col-sm-10">
-            <div class="progress">
-              <div id="progress-bar" class="progress-bar" style="width: 0%;"></div>
-            </div>
-            <div id="progress-text"></div>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label"><?php echo $entry_overwrite; ?></label>
-          <div class="col-sm-10">
-            <textarea rows="10" readonly="readonly" id="overwrite" class="form-control"></textarea>
-            <br />
-            <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
-          </div>
-        </div>
-      </form>
+        <div id="progress-text"></div>
+      </div>
     </div>
-  </div>
+    <div class="form-group">
+      <label class="col-sm-2 control-label"><?php echo $entry_overwrite; ?></label>
+      <div class="col-sm-10">
+        <textarea rows="10" readonly="readonly" id="overwrite" class="form-control"></textarea>
+        <br />
+        <button type="button" id="button-continue" class="btn btn-primary" disabled="disabled"><i class="fa fa-check"></i> <?php echo $button_continue; ?></button>
+      </div>
+    </div>
+  </form>
 </div>
 <script type="text/javascript"><!--
 var step = new Array();

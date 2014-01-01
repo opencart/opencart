@@ -158,7 +158,13 @@ class ModelCheckoutOrder extends Model {
 		} else {
 			return false;	
 		}
-	}	
+	}
+	
+	// get the customer balance
+  	public function getBalance($customer_id) {
+		$query = $this->db->query("SELECT SUM(amount) AS total FROM " . DB_PREFIX . "customer_transaction WHERE customer_id = '" . (int)$customer_id . "'");
+		return $query->row['total'];
+  	}
 
 	public function confirm($order_id, $order_status_id, $comment = '', $notify = false) {
 		$order_info = $this->getOrder($order_id);
@@ -179,6 +185,16 @@ class ModelCheckoutOrder extends Model {
 			$status = false;
 			
 			$this->load->model('account/customer');
+			
+			 // check if customer balance is negative
+			$this->load->language('mail/order');
+			if ($order_info['customer_id']) {
+				$customerbalance = $this->getBalance($order_info['customer_id']); // get balance
+			if ((int)$customerbalance < 0) {
+					$order_status_id = $this->config->get('config_order_status_id');
+					$comment = $this->language->get('text_negative_balance');
+				}
+			}	
 			
 			if ($order_info['customer_id']) {
 				$results = $this->model_account_customer->getIps($order_info['customer_id']);
@@ -601,6 +617,16 @@ class ModelCheckoutOrder extends Model {
 			$status = false;
 			
 			$this->load->model('account/customer');
+			
+			 // check if customer balance is negative
+			$this->load->language('mail/order');
+			if ($order_info['customer_id']) {
+				$customerbalance = $this->getBalance($order_info['customer_id']); // get balance
+			if ((int)$customerbalance < 0) {
+					$order_status_id = $this->config->get('config_order_status_id');
+					$comment = $this->language->get('text_negative_balance');
+				}
+			}
 			
 			if ($order_info['customer_id']) {
 				$results = $this->model_account_customer->getIps($order_info['customer_id']);

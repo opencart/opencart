@@ -75,11 +75,11 @@
             <div style="float:right; width:40%; text-align:center;">
 
                 <div id="openbay_version" class="attention" style="background-image:none; margin:0px 20px 10px 20px; text-align:left;">
-                    <div id="openbay_version_loading"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" /> <?php echo $lang_checking_version; ?></div>
+                    <div id="openbay_version_loading"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_checking_version; ?></div>
                 </div>
 
                 <div id="openbay_notification" class="attention" style="background-image:none; margin: 0px 20px; text-align:left;">
-                    <div id="openbay_loading"><img src="<?php echo HTTPS_SERVER; ?>/view/image/loading.gif" /> <?php echo $lang_getting_messages; ?></div>
+                    <div id="openbay_loading"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_getting_messages; ?></div>
                 </div>
 
             </div>
@@ -91,7 +91,7 @@
 
         var version = '<?php echo $openbay_version; ?>';
 
-        $('#openbay_version').empty().html('<div id="openbay_version_loading"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" /> <?php echo $lang_checking_version; ?></div>');
+        $('#openbay_version').empty().html('<div id="openbay_version_loading"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_checking_version; ?></div>');
 
         setTimeout(function(){
 
@@ -122,7 +122,7 @@
     }
 
     function getOpenbayNotifications() {
-        $('#openbay_notification').empty().html('<div id="openbay_loading"><img src="<?php echo HTTPS_SERVER; ?>/view/image/loading.gif" /> <?php echo $lang_checking_messages; ?></div>');
+        $('#openbay_notification').empty().html('<div id="openbay_loading"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_checking_messages; ?></div>');
 
         var html = '';
 

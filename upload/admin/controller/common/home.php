@@ -52,7 +52,7 @@ class ControllerCommonHome extends Controller {
 		fclose($handle); 		
 
 		if (!file_exists($file)) {
-			$this->data['error_image'] = sprintf($this->language->get('error_image'). DIR_IMAGE);
+			$this->data['error_image'] = sprintf($this->language->get('error_image'), DIR_IMAGE);
 		} else {
 			$this->data['error_image'] = '';
 
@@ -69,7 +69,7 @@ class ControllerCommonHome extends Controller {
 		fclose($handle); 		
 
 		if (!file_exists($file)) {
-			$this->data['error_image_cache'] = sprintf($this->language->get('error_image_cache'). DIR_IMAGE . 'cache/');
+			$this->data['error_image_cache'] = sprintf($this->language->get('error_image_cache'), DIR_IMAGE . 'cache/');
 		} else {
 			$this->data['error_image_cache'] = '';
 
@@ -86,7 +86,7 @@ class ControllerCommonHome extends Controller {
 		fclose($handle); 		
 
 		if (!file_exists($file)) {
-			$this->data['error_cache'] = sprintf($this->language->get('error_image_cache'). DIR_CACHE);
+			$this->data['error_cache'] = sprintf($this->language->get('error_image_cache'), DIR_CACHE);
 		} else {
 			$this->data['error_cache'] = '';
 
@@ -103,7 +103,7 @@ class ControllerCommonHome extends Controller {
 		fclose($handle); 		
 
 		if (!file_exists($file)) {
-			$this->data['error_download'] = sprintf($this->language->get('error_download'). DIR_DOWNLOAD);
+			$this->data['error_download'] = sprintf($this->language->get('error_download'), DIR_DOWNLOAD);
 		} else {
 			$this->data['error_download'] = '';
 
@@ -120,7 +120,7 @@ class ControllerCommonHome extends Controller {
 		fclose($handle); 		
 
 		if (!file_exists($file)) {
-			$this->data['error_logs'] = sprintf($this->language->get('error_logs'). DIR_LOGS);
+			$this->data['error_logs'] = sprintf($this->language->get('error_logs'), DIR_LOGS);
 		} else {
 			$this->data['error_logs'] = '';
 

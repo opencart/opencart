@@ -350,7 +350,7 @@ class ModelUpgrade extends Model {
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip_blacklist");
 
 			foreach ($query->rows as $result) {
-				$db->query("INSERT INTO " . DB_PREFIX . "customer_ban_ip SET ip = '" . $this->db->escape($result['ip']) . "'");
+				$this->db->query("INSERT INTO " . DB_PREFIX . "customer_ban_ip SET ip = '" . $this->db->escape($result['ip']) . "'");
 			}
 
 			// drop unused table

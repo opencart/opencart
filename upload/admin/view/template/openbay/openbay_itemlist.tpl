@@ -57,35 +57,35 @@
             <td style="font-weight:bold;" class="left"><?php echo $text_status_marketplace; ?></td>
             <td class="left">
               <select name="filter_marketplace">
-                <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>>All</option>
+                <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>><?php echo $text_status_all; ?></option>
                 <?php if ($marketplace_statuses['ebay']) { ?>
-                  <option value="ebay_active" <?php echo ($filter_marketplace == 'ebay_active' ? ' selected' : ''); ?>>eBay active</option>
-                  <option value="ebay_inactive" <?php echo ($filter_marketplace == 'ebay_inactive' ? ' selected' : ''); ?>>eBay not active</option>
+                  <option value="ebay_active" <?php echo ($filter_marketplace == 'ebay_active' ? ' selected' : ''); ?>><?php echo $text_status_ebay_active; ?></option>
+                  <option value="ebay_inactive" <?php echo ($filter_marketplace == 'ebay_inactive' ? ' selected' : ''); ?>><?php echo $text_status_ebay_inactive; ?></option>
                 <?php } ?>
                 <?php if ($marketplace_statuses['amazon']) { ?>
-                  <option value="amazon_saved" <?php echo ($filter_marketplace == 'amazon_saved' ? ' selected' : ''); ?>>Amazon EU saved</option>
-                  <option value="amazon_uploaded" <?php echo ($filter_marketplace == 'amazon_uploaded' ? ' selected' : ''); ?>>Amazon EU processing</option>
-                  <option value="amazon_ok" <?php echo ($filter_marketplace == 'amazon_ok' ? ' selected' : ''); ?>>Amazon EU active</option>
-                  <option value="amazon_error" <?php echo ($filter_marketplace == 'amazon_error' ? ' selected' : ''); ?>>Amazon EU failed</option>
-                  <option value="amazon_unlisted" <?php echo ($filter_marketplace == 'amazon_unlisted' ? ' selected' : ''); ?>>Amazon EU not listed</option>
-                  <option value="amazon_linked" <?php echo ($filter_marketplace == 'amazon_linked' ? ' selected' : ''); ?>>Amazon EU linked</option>
-                  <option value="amazon_not_linked" <?php echo ($filter_marketplace == 'amazon_not_linked' ? ' selected' : ''); ?>>Amazon EU not linked</option>
+                  <option value="amazon_saved" <?php echo ($filter_marketplace == 'amazon_saved' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_saved; ?></option>
+                  <option value="amazon_uploaded" <?php echo ($filter_marketplace == 'amazon_uploaded' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_processing; ?></option>
+                  <option value="amazon_ok" <?php echo ($filter_marketplace == 'amazon_ok' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_active; ?></option>
+                <option value="amazon_unlisted" <?php echo ($filter_marketplace == 'amazon_unlisted' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_notlisted; ?></option>
+                  <option value="amazon_error" <?php echo ($filter_marketplace == 'amazon_error' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_failed; ?></option>
+                  <option value="amazon_linked" <?php echo ($filter_marketplace == 'amazon_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_linked; ?></option>
+                  <option value="amazon_not_linked" <?php echo ($filter_marketplace == 'amazon_not_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazoneu_notlinked; ?></option>
                 <?php } ?>
                 <?php if ($marketplace_statuses['amazonus']) { ?>
-                  <option value="amazonus_saved" <?php echo ($filter_marketplace == 'amazonus_saved' ? ' selected' : ''); ?>>Amazon US saved</option>
-                  <option value="amazonus_uploaded" <?php echo ($filter_marketplace == 'amazonus_uploaded' ? ' selected' : ''); ?>>Amazon US processing</option>
-                  <option value="amazonus_ok" <?php echo ($filter_marketplace == 'amazonus_ok' ? ' selected' : ''); ?>>Amazon US active</option>
-                  <option value="amazonus_error" <?php echo ($filter_marketplace == 'amazonus_error' ? ' selected' : ''); ?>>Amazon US failed</option>
-                  <option value="amazonus_unlisted" <?php echo ($filter_marketplace == 'amazonus_unlisted' ? ' selected' : ''); ?>>Amazon US not listed</option>
-                  <option value="amazonus_linked" <?php echo ($filter_marketplace == 'amazonus_linked' ? ' selected' : ''); ?>>Amazon US linked</option>
-                  <option value="amazonus_not_linked" <?php echo ($filter_marketplace == 'amazonus_not_linked' ? ' selected' : ''); ?>>Amazon US not linked</option>
+                  <option value="amazonus_saved" <?php echo ($filter_marketplace == 'amazonus_saved' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_saved; ?></option>
+                  <option value="amazonus_uploaded" <?php echo ($filter_marketplace == 'amazonus_uploaded' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_processing; ?></option>
+                  <option value="amazonus_ok" <?php echo ($filter_marketplace == 'amazonus_ok' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_active; ?></option>
+                <option value="amazonus_unlisted" <?php echo ($filter_marketplace == 'amazonus_unlisted' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_notlisted; ?></option>
+                  <option value="amazonus_error" <?php echo ($filter_marketplace == 'amazonus_error' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_failed; ?></option>
+                  <option value="amazonus_linked" <?php echo ($filter_marketplace == 'amazonus_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_linked; ?></option>
+                  <option value="amazonus_not_linked" <?php echo ($filter_marketplace == 'amazonus_not_linked' ? ' selected' : ''); ?>><?php echo $text_status_amazonus_notlinked; ?></option>
                 <?php } ?>
               </select>
             </td>
             <td style="font-weight:bold;" class="left"><?php echo $text_price_range; ?></td>
             <td class="left">
-              <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" size="8"/> -
-              <input type="text" name="filter_price_to" value="<?php echo $filter_price_to; ?>" size="8"/>
+              <input type="text" name="filter_price" value="<?php echo $filter_price; ?>" size="8" /> -
+              <input type="text" name="filter_price_to" value="<?php echo $filter_price_to; ?>" size="8" />
             </td>
             <td style="font-weight:bold;" class="left"><?php echo $text_model; ?></td>
             <td class="left"><input type="text" name="filter_model" value="<?php echo $filter_model; ?>" /></td>

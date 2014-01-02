@@ -392,7 +392,6 @@ class ControllerExtensionOpenbay extends Controller {
 		}
 
 		if($this->config->get('amazon_status') == 1) {
-
 			$this->data['order_info'] = $this->openbay->amazon->getOrder($this->request->get['order_id']);
 
 			//if is amazon order
@@ -407,7 +406,6 @@ class ControllerExtensionOpenbay extends Controller {
 		}
 
 		if($this->config->get('amazonus_status') == 1) {
-
 			$this->data['order_info'] = $this->openbay->amazonus->getOrder($this->request->get['order_id']);
 
 			//if is amazonus order

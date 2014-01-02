@@ -50,7 +50,7 @@ class ControllerCheckoutManual extends Controller {
 			}
 
 			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
-				$json['error']['firstname'] = $this->language->get('error_firstname');
+				$json['error']['customer']['firstname'] = $this->language->get('error_firstname');
 			}
 	
 			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {

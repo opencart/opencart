@@ -13,7 +13,7 @@
         </div>
 
         <div class="content" id="loadingForm">
-            <p class="m3"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" /> <?php echo $lang_loading; ?></p>
+            <p class="m3"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_loading; ?></p>
         </div>
 
         <div class="content displayNone" id="errorForm">
@@ -103,7 +103,7 @@
                     <tr>
                         <td align="right" colspan="2">
                             <a onclick="save();" class="button" id="reviewButton"><span><?php echo $lang_save; ?></span></a>
-                            <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="reviewButtonLoading" class="displayNone" />
+                            <img src="view/image/loading.gif" id="reviewButtonLoading" class="displayNone" alt="Loading" />
                         </td>
                     </tr>
                 </table>
@@ -268,7 +268,7 @@
             if(id !== ''){
                 $.ajax({
                     type: 'GET',
-                    url: 'index.php?route=openbay/openbay/removeItemLink&token=<?php echo $token; ?>&ebay_id='+id,
+                    url: 'index.php?route=openbay/openbay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
                     dataType: 'json',
                     success: function() {
                         alert('<?php echo $lang_alert_removed; ?>');

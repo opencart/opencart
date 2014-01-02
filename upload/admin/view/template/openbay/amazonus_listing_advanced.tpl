@@ -254,9 +254,8 @@ function show_form(xml, formType) {
                     row += getStringField(fieldsArray[formType][i]);
                 }
 
-                if(fieldsArray[formType][i]['type'] == "required") {
-                    row += '<span class="required" id="required_' + fieldsArray[formType][i]['name'] + '"></span>'
-                }
+                row += '<span class="required" id="error_' + fieldsArray[formType][i]['name'] + '"></span>'
+                
                 row += '</td>';
                 row += '</tr>';
 
@@ -498,7 +497,7 @@ function validate(formType) {
 
     $('.fields_' + formType + ' :input').each(function (i) {
 
-        if($(this).parent().parent().attr('display') == "no") {
+        if($(this).parent().parent().attr('display') === "no") {
             return;
         }
 
@@ -513,28 +512,28 @@ function validate(formType) {
             productIdType = field_value;
         } else if(field_name === 'Value') {
             productId = field_value;
-            if(field_type == 'required') {
+            if(field_type === 'required') {
                 productIdRequired = true;
             } else {
                 productIdRequired = false;
             }
         }
 
-        if(field_type == 'required') {
-            if(field_value == '') {
-                $('.fields_' + formType + ' #required_' + field_name).text('<?php echo $field_required_text ?>');
+        if(field_type == 'required' || field_value !== '') {
+            if(field_value === '') {
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $field_required_text ?>');
                 warnings ++;
             }
             else if (min_length != undefined && field_value.length < min_length) {
-                $('.fields_' + formType + ' #required_' + field_name).text('<?php echo $minimum_length_text; ?> ' + min_length + ' <?php echo $characters_text; ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $minimum_length_text; ?> ' + min_length + ' <?php echo $characters_text; ?>');
                 warnings ++;
             }
             else if (max_length != undefined && field_value.length > max_length) {
-                $('.fields_' + formType + ' #required_' + field_name).text((field_value.length - max_length) + ' <?php echo $chars_over_limit_text; ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $chars_over_limit_text; ?>');
                 warnings ++;
             }
             else {
-                $('.fields_' + formType + ' #required_' + field_name).text('');
+                $('.fields_' + formType + ' #error_' + field_name).text('');
             }
         }
     });
@@ -543,7 +542,7 @@ function validate(formType) {
         $('.fields_' + formType + ' :input').each(function (i) {
             var field_name = $(this).attr('field_name');
             if(field_name === 'Value') {
-                $('.fields_' + formType + ' #required_' + field_name).text('Not valid product ID!');
+                $('.fields_' + formType + ' #error_' + field_name).text('Not valid product ID!');
                 warnings ++;
                 return;
             }

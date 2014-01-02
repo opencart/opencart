@@ -89,11 +89,8 @@ $_['lang_clearfaq']                     = 'Clear hidden FAQ popups';
 $_['lang_clearfaqbtn']                  = 'Clear';
 
 // Ajax elements
-$_['lang_ajax_ebay_shipped']            = 'The order will be marked as shipped on eBay automatically';
-$_['lang_ajax_play_shipped']            = 'The order will be marked as shipped on Play.com automatically';
 $_['lang_ajax_amazoneu_shipped']        = 'The order will be marked as shipped on Amazon EU automatically';
 $_['lang_ajax_amazonus_shipped']        = 'The order will be marked as shipped on Amazon US automatically';
-$_['lang_ajax_play_refund']             = 'A refund will be issued to play.com for this order automatically';
 $_['lang_ajax_refund_reason']           = 'Refund reason';
 $_['lang_ajax_refund_message']          = 'Refund message';
 $_['lang_ajax_refund_entermsg']         = 'You must enter a refund message';

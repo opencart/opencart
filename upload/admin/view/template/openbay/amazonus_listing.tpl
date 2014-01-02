@@ -45,7 +45,7 @@
                     <p>
                         <input type="text" name="search_string" placeholder="<?php echo $lang_placeholder_search; ?>" id="search_string" class="width250" />
                         <a onclick="doSearch();" id="search_submit" class="button"><?php echo $button_search; ?></a>
-                        <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="search_submit_loading" class="displayNone" />
+                        <img src="view/image/loading.gif" id="search_submit_loading" class="displayNone" alt="Loading" />
                     </p>
                 </div>
 
@@ -113,7 +113,7 @@
                                 <td><span class="required">*</span> <label for="price"><?php echo $entry_price; ?></label></td>
                                 <td>
                                     <div id="best_price_info" class="displayNone border mBottom10 p10 width200"></div>
-                                    <input type="text" name="price" id="price" value="<?php echo $price ?>" /> <a id="button-amazonus-price" onclick="getBestPrice()" class="button"><?php echo $button_amazonus_price ?></a><img class="displayNone" id="loading-amazonus-price" src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" />
+                                    <input type="text" name="price" id="price" value="<?php echo $price ?>" /> <a id="button-amazonus-price" onclick="getBestPrice()" class="button"><?php echo $button_amazonus_price ?></a><img class="displayNone" id="loading-amazonus-price" src="view/image/loading.gif" alt="Loading" />
                                 </td>
                             </tr>
                         </table>

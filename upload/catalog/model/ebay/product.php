@@ -1,86 +1,5 @@
 <?php
 class ModelEbayProduct extends Model {
-	public function stockCheck($products, $summary) {
-		$this->openbay->ebay->log('Inside the stock check method');
-
-		//items not linked to a store item
-		//total ebay items
-		//% linked
-		//total not matching stock
-		//% items not matching
-
-		$template                   = new Template();
-		$template->data             = array_merge($template->data, $this->load->language('ebay/stock_report'));
-
-		$template->data['summary']  = $summary;
-
-		$liveArray                              = $this->openbay->ebay->getLiveProducts();
-		$template->data['storelinked_products'] = count($liveArray);
-		$template->data['store_products']       = $this->countStoreProducts();
-		$template->data['ebay_products']        = count($products);
-		$template->data['product_errors']       = 0;
-
-		foreach($products as $id => $product)
-		{
-			$this->openbay->ebay->log('Product: '.$id);
-			$eQty = (int)$product['qty'];
-
-			if(array_key_exists((int)$id, $liveArray)) {
-				$sQty = (int)$liveArray[$id]['qty'];
-
-				if($eQty == $sQty) {
-					$status = 'OK';
-				}else{
-					$status = 'Stock error';
-					$template->data['product_errors']++;
-				}
-
-				$template->data['products'][] = array(
-					'name'      => (string)$product['name'],
-					'eQty'      => $eQty,
-					'sQty'      => $sQty,
-					'status'    => $status,
-					'type'      => (string)$product['type'],
-					'id'        => $id
-				);
-
-				unset($liveArray[$id]);
-			}else{
-				$template->data['products'][] = array(
-					'name'      => (string)$product['name'],
-					'eQty'      => $eQty,
-					'sQty'      => '-',
-					'status'    => 'Not linked',
-					'type'      => (string)$product['type'],
-					'id'        => $id
-				);
-			}
-		}
-
-		$template->data['error_links']   = count($liveArray);
-		$template->data['storelinked_products'] = $template->data['storelinked_products'] - $template->data['error_links'];
-		$template->data['storelinked_percent'] = number_format(((100 / $template->data['store_products']) * $template->data['storelinked_products']),2);
-		$template->data['errorlinked_percent'] = number_format(((100 / $template->data['ebay_products']) * $template->data['product_errors']),2);
-
-		$html = $template->fetch('default/template/mail/ebay_stockreport.tpl');
-
-		$mail = new Mail();
-		$mail->protocol = $this->config->get('config_mail_protocol');
-		$mail->parameter = $this->config->get('config_mail_parameter');
-		$mail->hostname = $this->config->get('config_smtp_host');
-		$mail->username = $this->config->get('config_smtp_username');
-		$mail->password = $this->config->get('config_smtp_password');
-		$mail->port = $this->config->get('config_smtp_port');
-		$mail->timeout = $this->config->get('config_smtp_timeout');
-		$mail->setTo($this->config->get('config_email'));
-		$mail->setFrom($this->config->get('config_email'));
-		$mail->setSender('OpenBay Pro robot');
-		$mail->setSubject(html_entity_decode('Your OpenBay Pro stock link report', ENT_QUOTES, 'UTF-8'));
-		$mail->setHtml($html);
-		$mail->setText(html_entity_decode('', ENT_QUOTES, 'UTF-8'));
-		$mail->send();
-	}
-
 	public function getRelistRule($id) {
 		return $this->openbay->ebay->openbay_call('item/getAutomationRule', array('id' => $id));
 	}
@@ -393,12 +312,6 @@ class ModelEbayProduct extends Model {
 		$data['search_desc']    = $this->config->get('ebaydisplay_module_description');
 
 		return $this->openbay->ebay->openbay_call('item/searchListingsForDisplay', $data);
-	}
-
-	private function countStoreProducts() {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product`");
-
-		return $qry->num_rows;
 	}
 
 	private function createVariants($product_id, $data) {

@@ -14,20 +14,20 @@
             <div class="buttons">
                 <?php if($validation == true) { ?>
                     <a onclick="loadAccount(); loadUsage();" class="button" id="loadAccount"><span><?php echo $lang_load; ?></span></a>
-                    <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" class="imageLoadAccount" class="displayNone"/>
+                    <img src="view/image/loading.gif" class="imageLoadAccount" class="displayNone" alt="Loading" />
                 <?php } ?>
                 <a onclick="location = '<?php echo $return; ?>';" class="button"><span><?php echo $lang_btn_return; ?></span></a>
             </div>
         </div>
         <div class="content">
         <?php if($validation == true) { ?>
-            <h2><?php echo $lang_usage_title; ?> <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoadUsage" class="displayNone" /></h2>
+            <h2><?php echo $lang_usage_title; ?> <img src="view/image/loading.gif" id="imageLoadUsage" class="displayNone" alt="Loading" /></h2>
             <div id="usageTable" class="displayNone"></div>
             
-            <h2 class="mTop10"><?php echo $lang_subscription_current; ?> <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" class="imageLoadAccount" class="displayNone" /></h2>
+            <h2 class="mTop10"><?php echo $lang_subscription_current; ?> <img src="view/image/loading.gif" class="imageLoadAccount" class="displayNone" alt="Loading" /></h2>
             <table width="100%" cellspacing="0" cellpadding="5" border="0" id="myopenbayplan" class="displayNone border borderNoBottom"></table>
             
-            <h2 class="mTop10"><?php echo $lang_subscription_avail; ?> <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" class="imageLoadAccount" class="displayNone" /></h2>
+            <h2 class="mTop10"><?php echo $lang_subscription_avail; ?> <img src="view/image/loading.gif" class="imageLoadAccount" class="displayNone" alt="Loading" /></h2>
             <p><?php echo $lang_subscription_avail1; ?></p>
             <p><?php echo $lang_subscription_avail2; ?></p>
             

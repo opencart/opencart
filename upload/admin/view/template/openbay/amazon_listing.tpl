@@ -1,33 +1,27 @@
 <?php echo $header; ?>
 <div id="content">
     <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+      <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <?php echo $breadcrumb['separator'] ?><a href="<?php echo $breadcrumb['href'] ?>"><?php echo $breadcrumb['text'] ?></a>
-        <?php } ?>
+      <?php } ?>
     </div>
     
     <?php if (isset($error_warning)) { ?>
-    
-    <div class="warning">
+      <div class="warning">
         <ul>
-            <li><?php echo $error_warning ?></li>
+          <li><?php echo $error_warning ?></li>
         </ul>
-    </div>
-    
+      </div>
     <?php } ?>
         
     <?php if ($listing_errors) { ?>
-    
-    <div class="warning">
+      <div class="warning">
         <ul>
-            <?php foreach ($listing_errors as $listing_error) { ?>
-            
+          <?php foreach ($listing_errors as $listing_error) { ?>
             <li><?php echo $listing_error ?></li>
-            
-            <?php } ?>
+          <?php } ?>
         </ul>
-    </div>
-    
+      </div>
     <?php } ?>
 
     <div class="box mBottom130">
@@ -45,7 +39,7 @@
                     <p>
                         <input type="text" name="search_string" placeholder="<?php echo $lang_placeholder_search; ?>" id="search_string" class="width250" />
                         <a onclick="doSearch();" id="search_submit" class="button"><?php echo $button_search; ?></a>
-                        <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="search_submit_loading" class="displayNone" />
+                        <img src="view/image/loading.gif" id="search_submit_loading" class="displayNone" alt="Loading" />
                     </p>
                     <?php foreach ($marketplaces as $id => $name) {?>
 
@@ -125,7 +119,7 @@
                                 <td><span class="required">*</span> <label for="price"><?php echo $entry_price; ?></label></td>
                                 <td>
                                     <div id="best_price_info" class="displayNone border mBottom10 p10 width200"></div>
-                                    <input type="text" name="price" id="price" value="<?php echo $price ?>" /> <a id="button-amazon-price" onclick="getBestPrice()" class="button"><?php echo $button_amazon_price ?></a><img class="displayNone" id="loading-amazon-price" src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" />
+                                    <input type="text" name="price" id="price" value="<?php echo $price ?>" /> <a id="button-amazon-price" onclick="getBestPrice()" class="button"><?php echo $button_amazon_price ?></a><img class="displayNone" id="loading-amazon-price" src="view/image/loading.gif" alt="Loading" />
                                 </td>
                             </tr>
                         </table>

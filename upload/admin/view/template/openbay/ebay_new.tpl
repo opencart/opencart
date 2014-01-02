@@ -52,7 +52,7 @@
                     <tr>
                         <td><?php echo $lang_category_suggested; ?><span class="help"><?php echo $lang_category_suggested_help; ?></span></td>
                         <td>
-                            <p id="suggestedLoading" class="displayNone"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoadingSuggestedLoading"/> <?php echo $lang_category_suggested_check; ?></p>
+                            <p id="suggestedLoading" class="displayNone"><img src="view/image/loading.gif" id="imageLoadingSuggestedLoading" alt="Loading" /> <?php echo $lang_category_suggested_check; ?></p>
                             <div id="suggested_cats"></div>
                         </td>
                     </tr>
@@ -82,7 +82,7 @@
                                 <select id="catsSelect4" class="displayNone m10" onchange="loadCategories(5);"></select>
                                 <select id="catsSelect5" class="displayNone m10" onchange="loadCategories(6);"></select>
                                 <select id="catsSelect6" class="displayNone m10" onchange="loadCategories(7);"></select>
-                                <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoading" class="displayNone" />
+                                <img src="view/image/loading.gif" id="imageLoading" class="displayNone" />
                             </div>
                             <input type="hidden" name="finalCat" id="finalCat" />
                         </td>
@@ -92,7 +92,7 @@
                         <td><?php echo $lang_listing_condition; ?></td>
                         <td>
                             <select name="condition" id="conditionRow" class="displayNone width200"></select>
-                            <img id="conditionLoading" src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" />
+                            <img id="conditionLoading" src="view/image/loading.gif" />
                         </td>
                     </tr>
 
@@ -100,7 +100,7 @@
                         <td><?php echo $lang_listing_duration; ?></td>
                         <td>
                             <select name="auction_duration" id="durationRow" class="displayNone width200"></select>
-                            <img id="durationLoading" src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" />
+                            <img id="durationLoading" src="view/image/loading.gif" />
                         </td>
                     </tr>
 
@@ -113,7 +113,7 @@
                     <tr>
                         <td style="vertical-align:top; padding-top:15px;"><?php echo $lang_category_features; ?></td>
                         <td>
-                            <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="featLoading" class="displayNone" />
+                            <img src="view/image/loading.gif" id="featLoading" class="displayNone" />
                             <table class="form" id="featureRow"></table>
                         </td>
                     </tr>
@@ -128,7 +128,7 @@
                             <div class="buttons">
                                 <input type="text" name="catalog_search" id="catalog_search" value="" />
                                 <a onclick="searchEbayCatalog();" class="button" id="catalog_search_btn"><span>Search</span></a>
-                                <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="catalog_search_img" class="displayNone" />
+                                <img src="view/image/loading.gif" id="catalog_search_img" class="displayNone" />
                             </div>
                         </td>
                     </tr>
@@ -172,7 +172,7 @@
                                     <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                                 <?php } }?>
                             </select>
-                            <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="profileThemeLoading" class="displayNone" />
+                            <img src="view/image/loading.gif" id="profileThemeLoading" class="displayNone" />
                         </td>
                     </tr>
                     <tr>
@@ -319,7 +319,7 @@
                                 <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                                 <?php } }?>
                             </select>
-                            <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="profileGenericLoading" class="displayNone" />
+                            <img src="view/image/loading.gif" id="profileGenericLoading" class="displayNone" />
                         </td>
                     </tr>
 
@@ -485,7 +485,7 @@
                                     <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                                 <?php } }?>
                             </select>
-                            <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="profileShippingLoading" class="displayNone" />
+                            <img src="view/image/loading.gif" id="profileShippingLoading" class="displayNone" />
                         </td>
                     </tr>
                     <tr>
@@ -560,7 +560,7 @@
                                     <option value="<?php echo $profile['ebay_profile_id']; ?>"><?php echo $profile['name']; ?></option>
                                 <?php } } ?>
                             </select>
-                            <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="profileReturnsLoading" class="displayNone" />
+                            <img src="view/image/loading.gif" id="profileReturnsLoading" class="displayNone" />
                         </td>
                     </tr>
                     <?php if(!empty($setting['returns']['accepted'])) { ?>
@@ -642,7 +642,7 @@
             <tr>
                 <td align="right" colspan="2">
                     <a onclick="ebayVerify();" class="button" id="reviewButton"><span><?php echo $lang_preview; ?></span></a>
-                    <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="reviewButtonLoading" class="displayNone" />
+                    <img src="view/image/loading.gif" id="reviewButtonLoading" class="displayNone" />
                 </td>
             </tr>
         </table>
@@ -663,7 +663,7 @@
           <tr>
             <td></td>
             <td align="right">
-                <a onclick="goToEdit();" class="button" id="editButton"><span><?php echo $lang_review_edit; ?></span></a>&nbsp;&nbsp;&nbsp;<a onclick="eBaySubmit();" class="button" id="submitListing"><span><?php echo $lang_save; ?></span></a><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="submitListingLoading" class="displayNone" />
+                <a onclick="goToEdit();" class="button" id="editButton"><span><?php echo $lang_review_edit; ?></span></a>&nbsp;&nbsp;&nbsp;<a onclick="eBaySubmit();" class="button" id="submitListing"><span><?php echo $lang_save; ?></span></a><img src="view/image/loading.gif" id="submitListingLoading" class="displayNone" />
             </td>
           </tr>
           <tr id="previewFrameRow" class="displayNone">

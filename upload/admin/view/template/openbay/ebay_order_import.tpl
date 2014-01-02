@@ -17,8 +17,8 @@
             <?php if($validation === true) { ?>
                 <table  width="100%" cellspacing="0" cellpadding="2" border="0" class="adminlist">
                     <tr class="row0">
-                        <td width="230" height="50" valign="middle"><label for=""><?php echo $lang_sync_pull_orders; ?></td>
-                        <td><a onclick="importOrders();" class="button" id="importOrders"><span><?php echo $lang_sync_pull_orders_text; ?></span></a><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoadingImportOrders" class="displayNone" /></td>
+                        <td width="230" height="50" valign="middle"><label><?php echo $lang_sync_pull_orders; ?></label></td>
+                        <td><a onclick="importOrders();" class="button" id="importOrders"><span><?php echo $lang_sync_pull_orders_text; ?></span></a><img src="view/image/loading.gif" id="imageLoadingImportOrders" class="displayNone" alt="Loading" /></td>
                     </tr>
                 </table>
                 <p><?php echo $lang_sync_pull_notice; ?></p>

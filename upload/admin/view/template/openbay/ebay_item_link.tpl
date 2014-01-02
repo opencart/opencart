@@ -52,7 +52,7 @@
 
             <div class="buttons">
                 <a onclick="checkUnlinkedItems();" class="button" id="checkUnlinkedItems"><span><?php echo $lang_btn_check_unlinked; ?></span></a>
-                <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="checkUnlinkedItemsLoading" class="displayNone"/>
+                <img src="view/image/loading.gif" id="checkUnlinkedItemsLoading" class="displayNone" alt="Loading" />
                 <input type="hidden" name="unlinked_page" id="unlinked_page" value="1" />
             </div>
 
@@ -74,7 +74,7 @@
                 </thead>
                 <tr>
                     <td class="left" colspan="8" id="checking_linked_items">
-                        <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" /> <?php echo $lang_text_loading_items; ?>
+                        <img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_text_loading_items; ?>
                     </td>
                 </tr>
                 <tbody style="display:none;" id="show_linked_items">
@@ -203,7 +203,7 @@ function updateLink(itemid, qty, product_id, storeQty){
     var r = confirm("<?php echo $lang_alert_stock_local; ?>");
     varBtnOld = $('#text_buttons_'+itemid).html();
 
-    $('#text_buttons_'+itemid).html('<p class="center"><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" /></p>');
+    $('#text_buttons_'+itemid).html('<p class="center"><img src="view/image/loading.gif" alt="Loading" /></p>');
 
     if(r == true){
         $.ajax({
@@ -338,9 +338,9 @@ function checkUnlinkedItems(){
                         });
                         htmlInj += '</td>';
                         htmlInj += '<input type="hidden" name="variants" id="l_'+key+'_variants" value="1" />';
-                        htmlInj += '<td class="center"><img title="" alt="" src="<?php echo HTTPS_SERVER; ?>view/image/success.png" style="margin-top:3px;"></td>';
+                        htmlInj += '<td class="center"><img title="Success" alt="Success" src="view/image/success.png" style="margin-top:3px;"></td>';
                     }
-                    htmlInj += '<td class="center"><a style="display:none;" class="button" onclick="saveListingLink('+key+'); return false;" id="l_'+key+'_saveBtn"><span><?php echo $lang_btn_save; ?></span></a> <img src="<?php echo HTTPS_SERVER; ?>/view/image/loading.gif" class="displayNone" id="l_'+key+'_saveLoading" /></td>';
+                    htmlInj += '<td class="center"><a style="display:none;" class="button" onclick="saveListingLink('+key+'); return false;" id="l_'+key+'_saveBtn"><span><?php echo $lang_btn_save; ?></span></a> <img src="view/image/loading.gif" class="displayNone" id="l_'+key+'_saveLoading" alt="Loading" /></td>';
                     htmlInj += '</tr>';
 
                     $('#eBayListings').append(htmlInj);

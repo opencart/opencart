@@ -75,14 +75,14 @@
                             <td height="50" valign="middle"><?php echo $lang_test_conn; ?></td>
                             <td>
                                 <a onclick="ftpTest();" class="button" id="ftpTest"><span><?php echo $lang_btn_test; ?></span></a>
-                                <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageFtpTest" class="displayNone"/>
+                                <img src="view/image/loading.gif" id="imageFtpTest" class="displayNone" alt="Loading" />
                             </td>
                         </tr>
                         <tr id="ftpUpdateRow" class="displayNone">
                             <td height="50" valign="middle"><?php echo $lang_text_run_1; ?></td>
                             <td><span id="preFtpTestText"><?php echo $lang_text_run_2; ?></span>
                                 <a onclick="updateModule();" class="button displayNone" id="moduleUpdate"><span><?php echo $lang_btn_update; ?></span></a>
-                                <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageModuleUpdate" class="displayNone" />
+                                <img src="view/image/loading.gif" id="imageModuleUpdate" class="displayNone" alt="Loading" />
                             </td>
                         </tr>
                         <tr>
@@ -105,7 +105,7 @@
                         </tr>
                         <tr>
                             <td valign="middle"><label for=""><?php echo $lang_clearfaq; ?></td>
-                            <td><a onclick="clearFaq();" class="button" id="clearFaq"><span><?php echo $lang_clearfaqbtn; ?></span></a><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageClearFaq" class="displayNone" /></td>
+                            <td><a onclick="clearFaq();" class="button" id="clearFaq"><span><?php echo $lang_clearfaqbtn; ?></span></a><img src="view/image/loading.gif" id="imageClearFaq" class="displayNone" alt="Loading" /></td>
                         </tr>
                     </table>
                 </div>
@@ -114,7 +114,7 @@
                     <table class="form">
                         <tr>
                             <td ><?php echo $lang_run_patch_desc; ?></td>
-                            <td><a onclick="runPatch();" class="button" id="runPatch"><span><?php echo $lang_run_patch; ?></span></a><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageRunPatch" class="displayNone" /></td>
+                            <td><a onclick="runPatch();" class="button" id="runPatch"><span><?php echo $lang_run_patch; ?></span></a><img src="view/image/loading.gif" id="imageRunPatch" class="displayNone" alt="Loading" /></td>
                         </tr>
                     </table>
                 </div>

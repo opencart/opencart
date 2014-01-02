@@ -25,15 +25,15 @@
             <table class="form">
                 <tr>
                     <td valign="middle"><label for="syncCats"><?php echo $lang_sync_cats_lbl; ?></td>
-                    <td><a onclick="syncCats();" class="button" id="syncCats"><span><?php echo $lang_sync_btn; ?></span></a><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoadingCats" class="displayNone" /></td>
+                    <td><a onclick="syncCats();" class="button" id="syncCats"><span><?php echo $lang_sync_btn; ?></span></a><img src="view/image/loading.gif" id="imageLoadingCats" class="displayNone" alt="Loading" /></td>
                 </tr>
                 <tr>
                     <td valign="middle"><label for="syncShopCats"><?php echo $lang_sync_shop_lbl; ?></td>
-                    <td><a onclick="syncShopCats();" class="button" id="syncShopCats"><span><?php echo $lang_sync_btn; ?></span></a><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoadingShopCats" class="displayNone" /></td>
+                    <td><a onclick="syncShopCats();" class="button" id="syncShopCats"><span><?php echo $lang_sync_btn; ?></span></a><img src="view/image/loading.gif" id="imageLoadingShopCats" class="displayNone" alt="Loading" /></td>
                 </tr>
                 <tr>
                     <td valign="middle"><label for="loadSettings"><?php echo $lang_sync_setting_lbl; ?></td>
-                    <td><a onclick="loadSettings();" class="button" id="loadSettings"><span><?php echo $lang_sync_btn; ?></span></a><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageloadSettings" class="displayNone" /></td>
+                    <td><a onclick="loadSettings();" class="button" id="loadSettings"><span><?php echo $lang_sync_btn; ?></span></a><img src="view/image/loading.gif" id="imageloadSettings" class="displayNone" alt="Loading" /></td>
                 </tr>
             </table>
         <?php }else{ ?>

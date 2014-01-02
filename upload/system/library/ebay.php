@@ -207,9 +207,9 @@ final class Ebay {
 	}
 
 	public function getEndedEbayItemId($product_id) {
-		$this->log('getEndedEbayItemId() - Product ID: '.$product_id);
+		$this->log('getEndedEbayItemId() - ID: '.$product_id);
 
-		$qry = $this->db->query("SELECT `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '".$product_id."' AND `status` = '0' ORDER BY `ebay_listing_id` DESC LIMIT 1");
+		$qry = $this->db->query("SELECT `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '".(int)$product_id."' AND `status` = '0' ORDER BY `ebay_listing_id` DESC LIMIT 1");
 
 		if(!$qry->num_rows) {
 			$this->log('getEndedEbayItemId() - No link');
@@ -220,21 +220,27 @@ final class Ebay {
 		}
 	}
 
-	public function removeItemId($id) {
-		/**
-		 * this will only remove the link.
-		 */
-		$this->log('removeItemId() - ID: '.$id.'');
-		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = '0' WHERE `ebay_item_id` = '".$this->db->escape($id)."'");
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `item_id` = '".$this->db->escape($id)."'");
+	public function removeItemByItemId($item_id) {
+		$this->log('removeItemByItemId() - ID: '.(int)$item_id);
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = '0' WHERE `ebay_item_id` = '".(int)$item_id."'");
+
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `item_id` = '".(int)$item_id."'");
+	}
+
+	public function removeItemByProductId($product_id) {
+		$this->log('removeItemByProductId() - ID: '.$product_id.'');
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = '0' WHERE `product_id` = '".(int)$product_id."'");
+
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '".(int)$product_id."'");
 	}
 
 	public function deleteProduct($product_id) {
-		/**
-		 * this is called when the product is removed from the database
-		 */
-		$this->log('deleteProduct() - Removing product id '.$product_id.' from ebay_listing table');
+		$this->log('deleteProduct() - ID: '.$product_id);
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '".(int)$product_id."'");
+
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '".(int)$product_id."'");
 	}
 
@@ -302,68 +308,12 @@ final class Ebay {
 		return $data;
 	}
 
-	public function getLiveProducts() {
-		/**
-		* returns full array data about live items.
-		*/
-		$this->load->model('tool/image');
-
-		$has_option = '';
-		if ($this->openbay->addonLoad('openstock') == true) {
-			$this->load->model('openstock/openstock');
-			$has_option = '`p`.`has_option`, ';
-		}
-
-		$qry = $this->db->query("
-		SELECT
-			".$has_option."
-			`el`.`ebay_item_id`,
-			`p`.`product_id`,
-			`p`.`sku`,
-			`p`.`model`,
-			`p`.`quantity`,
-			`pd`.name
-		FROM `" . DB_PREFIX . "ebay_listing` `el`
-		LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
-		LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)
-		WHERE `el`.`status` = '1'
-		AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'");
-
-		$data = array();
-		if($qry->num_rows) {
-			foreach($qry->rows as $row) {
-				$data[$row['ebay_item_id']] = array(
-					'product_id'    => $row['product_id'],
-					'sku'           => $row['sku'],
-					'model'         => $row['model'],
-					'qty'           => $row['quantity'],
-					'name'          => $row['name']
-				);
-
-				$data[$row['ebay_item_id']]['options'] = 0;
-
-				if ((isset($row['has_option']) && $row['has_option'] == 1) && $this->openbay->addonLoad('openstock') == true) {
-					$data[$row['ebay_item_id']]['options'] = $this->model_openstock_openstock->getProductOptionStocks((int)$row['product_id']);
-				}
-
-				//get the allocated stock - items that have been bought but not assigned to an order
-				if($this->config->get('openbaypro_stock_allocate') == 0) {
-					$data[$row['ebay_item_id']]['allocated'] = $this->getAllocatedStock($row['product_id']);
-				}else{
-					$data[$row['ebay_item_id']]['allocated'] = 0;
-				}
-			}
-		}
-
-		return $data;
-	}
-
 	public function endItem($item_id) {
 		$this->log('endItem() - ID "'.$item_id);
 
 		if($this->config->get('openbaypro_enditems') == 1) {
 			$this->openbay_call('item/endItem/', array('id' => $item_id));
-			$this->removeItemId($item_id);
+			$this->removeItemByItemId($item_id);
 
 			if($this->lasterror != true) {
 				$this->log('endItem() - OK');
@@ -372,7 +322,7 @@ final class Ebay {
 				return array('error' => true, 'msg' => $this->lasterror);
 			}
 		}else{
-			$this->removeItemId($item_id);
+			$this->removeItemByItemId($item_id);
 			$this->log('endItem() - config disables ending items');
 
 			$message = "An item has gone out of stock but your settings are not set to end eBay items automatically.\r\n\r\n";
@@ -722,7 +672,7 @@ final class Ebay {
 				}
 			}
 		}else{
-			$this->ebay->removeItemId($item_id);
+			$this->ebay->removeItemByItemId($item_id);
 			$this->log('putStockUpdate() - Listing not active, item id: '. $item_id .', status returned: '.$listing['statusActual']);
 		}
 	}
@@ -814,7 +764,7 @@ final class Ebay {
 			//check if the itemid was returned by ebay, if not unlink it as it is ended.
 			if(!isset($ebay_listings[$item['itemId']])){
 				$this->log('eBay item was not returned, removing link ('.$item['itemId'].')');
-				$this->removeItemId($item['itemId']);
+				$this->removeItemByItemId($item['itemId']);
 			}else{
 				//check if the local item is now inactive - end if it is
 				if($endInactive == true && $local_stock['status'] == 0){
@@ -908,7 +858,7 @@ final class Ebay {
 					$this->load->model('openstock/openstock');
 
 					$variants           = $this->model_openstock_openstock->getProductOptionStocks($product_id);
-					$groups             = $this->model_catalog_product->getProductOptions($product_id);
+					$groups             = $this->openbay->getProductOptions($product_id);
 					$varData['groups']  = array();
 					$varData['related'] = array();
 
@@ -917,7 +867,7 @@ final class Ebay {
 						foreach($grp['product_option_value'] as $grp_node) {
 							$t_tmp[$grp_node['option_value_id']] = $grp_node['name'];
 
-							$varData['related'][$grp_node['product_option_value_id']] = $grp['product_option_value_id'];
+							$varData['related'][$grp_node['product_option_value_id']] = $grp['name'];
 						}
 						$varData['groups'][] = array('name' => $grp['name'], 'child' => $t_tmp);
 					}
@@ -1191,7 +1141,7 @@ final class Ebay {
 	public function createLink($product_id, $item_id, $variant) {
 		//flush any old links just in case they still exist.
 		$this->deleteProduct($product_id);
-		$this->removeItemId($item_id);
+		$this->removeItemByItemId($item_id);
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_listing` SET `product_id` = '".(int)$product_id."', `ebay_item_id` = '".$this->db->escape($item_id)."', `variant` = '".(int)$variant."', `status` = '1'");
 	}
@@ -1332,7 +1282,9 @@ final class Ebay {
 		if ($this->lasterror === false) {
 			if (isset($response['urls']['ViewItemURL'])) {
 				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE  `key` = 'openbaypro_ebay_itm_link' LIMIT 1");
+
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$response['urls']['ViewItemURL']) . "', `key` = 'openbaypro_ebay_itm_link', `group` = 'openbay'");
+
 				$this->log('Updated eBay item link');
 			} else {
 				$this->log('Item link URL not set!');
@@ -1344,12 +1296,7 @@ final class Ebay {
 				$this->log('Emptied ebay_payment_method table');
 
 				foreach ($response['payment_options'] as $child) {
-					$this->db->query("
-						INSERT INTO `" . DB_PREFIX . "ebay_payment_method`
-						SET
-							`ebay_name`         = '" . $this->db->escape((string)$child['PaymentOption']) . "',
-							`local_name`        = '" . $this->db->escape((string)$child['Description']) . "'
-					");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_payment_method` SET `ebay_name` = '" . $this->db->escape((string)$child['PaymentOption']) . "', `local_name` = '" . $this->db->escape((string)$child['Description']) . "'");
 				}
 
 				$this->log('Populated ebay_payment_method table');

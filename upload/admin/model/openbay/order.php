@@ -109,12 +109,6 @@ class ModelOpenbayOrder extends Model {
 			}
 		}
 
-		if($this->config->get('play_status') == 1){
-			if($this->openbay->play->isPlayOrder($order_id) != false){
-				return 'Play';
-			}
-		}
-
 		return 'Web';
 	}
 }

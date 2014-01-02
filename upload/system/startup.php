@@ -102,7 +102,6 @@ require_once(DIR_SYSTEM . 'library/response.php');
 require_once(DIR_SYSTEM . 'library/session.php');
 require_once(DIR_SYSTEM . 'library/template.php');
 require_once(DIR_SYSTEM . 'library/openbay.php');
-require_once(DIR_SYSTEM . 'library/play.php');
 require_once(DIR_SYSTEM . 'library/ebay.php');
 require_once(DIR_SYSTEM . 'library/amazon.php');
 require_once(DIR_SYSTEM . 'library/amazonus.php');

@@ -39,12 +39,12 @@
                         <td><input type="checkbox" name="importDescription" id="importDescription" value="1"/></td>
                     </tr>
                     <tr class="row0">
-                        <td width="230" height="50" valign="middle"><label for="items_import_notes_to_location"><?php echo $lang_sync_notes_location; ?></label></td>
+                        <td width="230" height="50" valign="middle"><label for="import_notes"><?php echo $lang_sync_notes_location; ?></label></td>
                         <td><input type="checkbox" name="import_notes" id="import_notes" value="1"/></td>
                     </tr>
                     <tr class="row0">
-                        <td width="230" height="50" valign="middle"><label for=""><?php echo $lang_import_ebay_items; ?></td>
-                        <td><a onclick="importItems();" class="button" id="importItems"><span><?php echo $lang_import; ?></span></a><img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoadingImportItems" class="displayNone" /></td>
+                        <td width="230" height="50" valign="middle"><label><?php echo $lang_import_ebay_items; ?></td>
+                        <td><a onclick="importItems();" class="button" id="importItems"><span><?php echo $lang_import; ?></span></a><img src="view/image/loading.gif" id="imageLoadingImportItems" class="displayNone" alt="Loading" /></td>
                     </tr>
                 </table>
             <?php }else{ ?>
@@ -92,5 +92,4 @@
         }
     }
 //--></script>
-
 <?php echo $footer; ?>

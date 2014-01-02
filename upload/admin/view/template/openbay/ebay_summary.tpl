@@ -14,7 +14,7 @@
             <div class="buttons">
                 <?php if($validation == true) { ?>
                     <a onclick="loadSummary();" class="button" id="loadUsage"><span><?php echo $lang_load; ?></span></a>
-                    <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageLoadUsage" class="displayNone"/>
+                    <img src="view/image/loading.gif" id="imageLoadUsage" class="displayNone" alt="Loading"/>
                 <?php } ?>
                 <a onclick="location = '<?php echo $return; ?>';" class="button"><span><?php echo $lang_btn_return; ?></span></a>
             </div>

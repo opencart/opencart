@@ -14,7 +14,7 @@
   <?php foreach ($orders as $order) { ?>
   <div style="page-break-after: always;">
     <h1><?php echo $text_picklist; ?> #<?php echo $order['order_id']; ?></h1>
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <td style="width: 50%;"><?php echo $text_from; ?></td>
@@ -44,7 +44,7 @@
         </tr>
       </tbody>
     </table>
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <td style="width: 50%;"><b><?php echo $text_to; ?></b></td>
@@ -59,7 +59,7 @@
         </tr>
       </tbody>
     </table>
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <td><b><?php echo $column_location; ?></b></td>
@@ -103,7 +103,7 @@
       </tbody>
     </table>
     <?php if ($order['comment']) { ?>
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <td><b><?php echo $column_comment; ?></b></td>

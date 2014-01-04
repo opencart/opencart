@@ -1,15 +1,20 @@
 <?php echo $header; ?>
-<div class="page-header">
-  <div class="container">
-    <h1><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
-  </div>
-</div>
 <div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
+  <div class="page-header">
+    <div class="container">
+      <h1><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
+  </div>
   <form class="form-horizontal">
     <div class="form-group">
       <label class="col-sm-2 control-label" for="button-upload"><?php echo $entry_upload; ?> </label>

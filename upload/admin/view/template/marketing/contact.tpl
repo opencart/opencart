@@ -1,13 +1,18 @@
 <?php echo $header; ?>
-<div class="page-header">
-  <div class="container">
-    <div class="pull-right">
-      <button id="button-send" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&token=<?php echo $token; ?>');"><i class="fa fa-envelope"></i> <?php echo $button_send; ?></button>
-      <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-    <h1><i class="fa fa-envelope fa-lg"></i> <?php echo $heading_title; ?></h1>
-  </div>
-</div>
 <div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="page-header">
+    <div class="container">
+      <div class="pull-right">
+        <button id="button-send" class="btn btn-primary" onclick="send('index.php?route=marketing/contact/send&token=<?php echo $token; ?>');"><i class="fa fa-envelope"></i> <?php echo $button_send; ?></button>
+        <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
+      <h1><i class="fa fa-envelope fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
+  </div>
   <form class="form-horizontal">
     <div class="form-group">
       <label class="col-sm-2 control-label" for="input-store"><?php echo $entry_store; ?></label>

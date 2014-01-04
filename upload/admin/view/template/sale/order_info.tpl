@@ -1,13 +1,18 @@
 <?php echo $header; ?>
-<div class="page-header">
-  <div class="container">
-    <div class="pull-right">
-      <button type="button" id="button-restock" data-toggle="tooltip" title="<?php echo $help_restock; ?>" class="btn btn-warning"><i class="fa fa-reply"></i> <?php echo $button_restock; ?></button>
-      <a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="fa fa-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-    <h1><i class="fa fa-info-circle fa-lg"></i> <?php echo $heading_title; ?></h1>
-  </div>
-</div>
 <div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="page-header">
+    <div class="container">
+      <div class="pull-right">
+        <button type="button" id="button-restock" data-toggle="tooltip" title="<?php echo $help_restock; ?>" class="btn btn-warning"><i class="fa fa-reply"></i> <?php echo $button_restock; ?></button>
+        <a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="fa fa-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
+      <h1><i class="fa fa-info-circle fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
+  </div>
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab-order" data-toggle="tab"><?php echo $tab_order; ?></a></li>
     <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
@@ -22,7 +27,7 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab-order">
-      <table class="table table-striped table-bordered">
+      <table class="table table-bordered">
         <tr>
           <td><?php echo $text_order_id; ?></td>
           <td>#<?php echo $order_id; ?></td>
@@ -151,7 +156,7 @@
       </table>
     </div>
     <div class="tab-pane" id="tab-payment">
-      <table class="table table-striped table-bordered">
+      <table class="table table-bordered">
         <tr>
           <td><?php echo $text_firstname; ?></td>
           <td><?php echo $payment_firstname; ?></td>
@@ -208,7 +213,7 @@
     </div>
     <?php if ($shipping_method) { ?>
     <div class="tab-pane" id="tab-shipping">
-      <table class="table table-striped table-bordered">
+      <table class="table table-bordered">
         <tr>
           <td><?php echo $text_firstname; ?></td>
           <td><?php echo $shipping_firstname; ?></td>
@@ -267,7 +272,7 @@
     </div>
     <?php } ?>
     <div class="tab-pane" id="tab-product">
-      <table class="table table-striped table-bordered">
+      <table class="table table-bordered">
         <thead>
           <tr>
             <td class="text-left"><?php echo $column_product; ?></td>
@@ -350,7 +355,7 @@
     </div>
     <?php if ($maxmind_id) { ?>
     <div class="tab-pane" id="tab-fraud">
-      <table class="table table-striped table-bordered">
+      <table class="table table-bordered">
         <?php if ($country_match) { ?>
         <tr>
           <td><?php echo $text_country_match; ?></td>

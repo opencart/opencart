@@ -1,18 +1,23 @@
 <?php echo $header; ?>
-<div class="page-header">
-  <div class="container">
-    <div class="pull-right"><a href="<?php echo $reset; ?>" class="btn btn-danger"><i class="fa fa-refresh"></i> <?php echo $button_reset; ?></a></div>
-    <h1><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
-  </div>
-</div>
 <div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
   <?php if ($success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
+  <div class="page-header">
+    <div class="container">
+      <div class="pull-right"><a href="<?php echo $reset; ?>" class="btn btn-danger"><i class="fa fa-refresh"></i> <?php echo $button_reset; ?></a></div>
+      <h1><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
+  </div>
   <div class="table-responsive">
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <td class="text-left"><?php echo $column_name; ?></td>

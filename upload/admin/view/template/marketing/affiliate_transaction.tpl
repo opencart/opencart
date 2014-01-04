@@ -9,7 +9,7 @@
 </div>
 <?php } ?>
 <div class="table-responsive">
-  <table class="table table-striped table-bordered table-hover">
+  <table class="table table-bordered table-hover">
     <thead>
       <tr>
         <td class="text-left"><?php echo $column_date_added; ?></td>

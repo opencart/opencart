@@ -3285,6 +3285,54 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 
 -- --------------------------------------------------------
 
+
+
+-- --------------------------------------------------------
+-- Struktura tabulky `oc_unit_class`
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `oc_unit_class` (
+  `unit_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `value` decimal(15,8) NOT NULL DEFAULT '0.00000000',
+  PRIMARY KEY (`unit_class_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
+
+-- --------------------------------------------------------
+-- Vypisuji data pro tabulku `oc_unit_class`
+-- --------------------------------------------------------
+
+INSERT INTO `oc_unit_class` (`unit_class_id`, `value`) VALUES
+(1, '1.00000000'),
+(2, '0.00000000'),
+(3, '0.00000000'),
+(4, '0.00000000'),
+(5, '0.00000000'),
+(6, '0.00000000');
+
+-- --------------------------------------------------------
+-- Struktura tabulky `oc_unit_class_description`
+-- --------------------------------------------------------
+
+CREATE TABLE IF NOT EXISTS `oc_unit_class_description` (
+  `unit_class_id` int(11) NOT NULL AUTO_INCREMENT,
+  `language_id` int(11) NOT NULL,
+  `title` varchar(32) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL,
+  `unit` varchar(32) CHARACTER SET utf8 COLLATE utf8_czech_ci NOT NULL DEFAULT '',
+  PRIMARY KEY (`unit_class_id`,`language_id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=utf8 COLLATE=utf8_bin AUTO_INCREMENT=11 ;
+
+-- --------------------------------------------------------
+-- Vypisuji data pro tabulku `oc_unit_class_description` (CZECH)
+-- --------------------------------------------------------
+
+INSERT INTO `oc_unit_class_description` (`unit_class_id`, `language_id`, `title`, `unit`) VALUES
+(1, 2, 'ks - kusy', 'ks'),
+(2, 2, 'pár - 2ks', 'pár|páry|párů'),
+(3, 2, 'bm - běžný metr', 'bm'),
+(4, 2, 'sada - balíček', 'sada|sady|sad'),
+(5, 2, 'm2', 'm2'),
+(6, 2, 'balíček - sáček', 'balíček|balíčky|balíčků');
+
 --
 -- Table structure for table `oc_url_alias`
 --

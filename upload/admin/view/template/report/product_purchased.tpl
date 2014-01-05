@@ -1,10 +1,15 @@
 <?php echo $header; ?>
-<div class="page-header">
-  <div class="container">
-    <h1><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
-  </div>
-</div>
 <div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="page-header">
+    <div class="container">
+      <h1><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
+  </div>
   <div class="well">
     <div class="row">
       <div class="col-sm-6">
@@ -36,7 +41,7 @@
     </div>
   </div>
   <div class="table-responsive">
-    <table class="table table-striped table-bordered">
+    <table class="table table-bordered">
       <thead>
         <tr>
           <td class="text-left"><?php echo $column_name; ?></td>

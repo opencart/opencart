@@ -1,11 +1,16 @@
 <?php echo $header; ?>
-<div class="page-header">
-  <div class="container">
-    <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
-    <h1><i class="fa fa-info-circle fa-lg"></i> <?php echo $heading_title; ?></h1>
-  </div>
-</div>
 <div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="page-header">
+    <div class="container">
+      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
+      <h1><i class="fa fa-info-circle fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
+  </div>
   <ul class="nav nav-tabs">
     <li class="active"><a href="#tab-return" data-toggle="tab"><?php echo $tab_return; ?></a></li>
     <li><a href="#tab-product" data-toggle="tab"><?php echo $tab_product; ?></a></li>
@@ -13,7 +18,7 @@
   </ul>
   <div class="tab-content">
     <div class="tab-pane active" id="tab-return">
-      <table class="table table-striped table-bordered">
+      <table class="table table-bordered">
         <tr>
           <td><?php echo $text_return_id; ?></td>
           <td><?php echo $return_id; ?></td>
@@ -69,7 +74,7 @@
       </table>
     </div>
     <div class="tab-pane" id="tab-product">
-      <table class="table table-striped table-bordered">
+      <table class="table table-bordered">
         <tr>
           <td><?php echo $text_product; ?></td>
           <td><?php echo $product; ?></td>

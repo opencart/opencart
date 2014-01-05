@@ -1,13 +1,10 @@
 <?php echo $header; ?>
-<div class="page-header">
-  <div class="container">
-    <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-info"><i class="fa fa-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></a>
-      <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-modification').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
-    </div>
-    <h1><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
-  </div>
-</div>
 <div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -21,9 +18,17 @@
   <div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_refresh; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
+  <div class="page-header">
+    <div class="container">
+      <div class="pull-right"><a href="<?php echo $refresh; ?>" class="btn btn-info"><i class="fa fa-refresh"></i> <?php echo $button_refresh; ?></a> <a href="<?php echo $clear; ?>" class="btn btn-danger"><i class="fa fa-eraser"></i> <?php echo $button_clear; ?></a>
+        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-modification').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
+      </div>
+      <h1><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
+  </div>
   <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-modification">
     <div class="table-responsive">
-      <table class="table table-striped table-bordered table-hover">
+      <table class="table table-bordered table-hover">
         <thead>
           <tr>
             <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>

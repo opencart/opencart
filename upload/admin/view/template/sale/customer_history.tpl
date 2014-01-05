@@ -8,7 +8,7 @@
   <button type="button" class="close" data-dismiss="alert">&times;</button>
 </div>
 <?php } ?>
-<table class="table table-striped table-bordered">
+<table class="table table-bordered">
   <thead>
     <tr>
       <td class="text-left"><?php echo $column_date_added; ?></td>

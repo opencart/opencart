@@ -43,9 +43,11 @@ $(document).ready(function() {
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 });
 
+$('#button-slide').on('click', function() {
+
+});
+
 // Image Manager
-
-
 $(document).delegate('.img-edit', 'click', function(e) {
 	e.preventDefault();
 	

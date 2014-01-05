@@ -1,10 +1,10 @@
-<?php echo $header; ?>
-<div class="page-header">
-  <div class="container">
-    <h1><i class="fa fa-eye fa-lg"></i> <?php echo $heading_title; ?></h1>
-  </div>
-</div>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content" class="container">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
   <?php if ($error_install) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_install; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -13,6 +13,11 @@
   <?php } ?>
   <div class="alert alert-info"><i class="fa fa-thumbs-o-up"></i> <?php echo $text_welcome; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <div class="page-header">
+    <div class="container">
+      <h1><i class="fa fa-eye fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
   </div>
   <div class="row">
     <div class="col-md-3">

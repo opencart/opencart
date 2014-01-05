@@ -12,3 +12,5 @@ $_['text_front']         = 'Store Front';
 $_['text_opencart']      = 'Homepage';
 $_['text_support']       = 'Support Forum';
 $_['text_documentation'] = 'Documentation';
+
+$_['text_unit_class']        = 'Unit Quantity';

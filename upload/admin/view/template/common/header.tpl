@@ -29,8 +29,9 @@
 <body>
 <header id="header" class="navbar navbar-default navbar-static-top">
   <div class="container">
-    <div class="navbar-header"><a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
+    <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu"><span class="icon-bar"></span><span class="icon-bar"></span><span class="fa icon-bar"></span></button>
+      <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
     </div>
     <?php if ($logged) { ?>
     <ul class="nav navbar-nav navbar-right">

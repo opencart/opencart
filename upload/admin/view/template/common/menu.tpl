@@ -1,7 +1,7 @@
-<column id="menu" class="collapse navbar-collapse navbar-ex1-collapse">
+<column id="column-left">
   <ul class="nav nav-stacked">
-    <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-lg"></i> <span class="hidden-xs"><?php echo $text_dashboard; ?></span></a></li>
-    <li id="catalog" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tags fa-lg"></i> <span class="hidden-xs"><?php echo $text_catalog; ?></span></a>
+    <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-lg"></i> <?php echo $text_dashboard; ?></a></li>
+    <li id="catalog" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tags fa-lg"></i> <?php echo $text_catalog; ?></a>
       <ul class="dropdown-menu">
         <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
         <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
@@ -19,7 +19,7 @@
         <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
       </ul>
     </li>
-    <li id="extension" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-puzzle-piece fa-lg"></i> <span class="hidden-xs"><?php echo $text_extension; ?></span></a>
+    <li id="extension" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $text_extension; ?></a>
       <ul class="dropdown-menu">
         <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
         <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
@@ -30,7 +30,7 @@
         <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
       </ul>
     </li>
-    <li id="sale" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart fa-lg"></i> <span class="hidden-xs"><?php echo $text_sale; ?></span></a>
+    <li id="sale" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart fa-lg"></i> <?php echo $text_sale; ?></a>
       <ul class="dropdown-menu">
         <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
         <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
@@ -58,7 +58,7 @@
         </li>
       </ul>
     </li>
-    <li id="system" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i> <span class="hidden-xs"><?php echo $text_system; ?></span></a>
+    <li id="system" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i> <?php echo $text_system; ?></a>
       <ul class="dropdown-menu">
         <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
         <li class="dropdown-submenu"><a><?php echo $text_design; ?></a>
@@ -105,7 +105,7 @@
         <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
       </ul>
     </li>
-    <li id="reports" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o fa-lg"></i> <span class="hidden-xs"><?php echo $text_reports; ?></span></a>
+    <li id="reports" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_reports; ?></a>
       <ul class="dropdown-menu">
         <li class="dropdown-submenu"><a><?php echo $text_sale; ?></a>
           <ul class="dropdown-menu">

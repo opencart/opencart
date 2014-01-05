@@ -5,4 +5,12 @@ class ModelLocalisationLocation extends Model {
         
         return $query->row; 
     }
+    
+	public function getLocations() {
+		$sql = "SELECT location_id FROM " . DB_PREFIX . "location";
+		$query = $this->db->query($sql);
+
+		return $query->rows;
+	}
+	
 }

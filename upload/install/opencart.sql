@@ -1221,7 +1221,7 @@ CREATE TABLE `oc_customer_ip` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_customer_ip_ban_ip`
+-- Table structure for table `oc_customer_ban_ip`
 --
 
 DROP TABLE IF EXISTS `oc_customer_ban_ip`;

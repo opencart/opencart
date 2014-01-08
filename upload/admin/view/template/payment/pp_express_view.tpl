@@ -5,63 +5,61 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container">
       <div class="pull-right">
         <a href="<?php echo $cancel; ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a>
       </div>
       <h1 class="panel-title"><?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <table class="table table-striped table-bordered">
+  </div>
+  <table class="table table-striped table-bordered">
         <?php if(!empty($lines)) { ?>
           <tr>
             <td><?php echo $text_product_lines; ?></td>
             <td>
-                <table class="table table-striped table-bordered">
-                    <?php $i = 0;  foreach($lines as  $k => $v){
-                        if($i == 0) { ?>
-                            <thead>
-                                <tr>
-                                    <?php foreach($v as $k => $row) {
-                                        if($k == 'L_EBAYITEMTXNID') { echo '<td class="left">'.$text_ebay_txn_id.'</td>'; }
-                                        if($k == 'L_NAME') { echo '<td class="left">'.$text_name.'</td>'; }
-                                        if($k == 'L_NUMBER') { echo '<td class="left">'.$text_number.'</td>'; }
-                                        if($k == 'L_QTY') { echo '<td class="left">'.$text_qty.'</td>'; }
-                                        if($k == 'L_COUPONID') { echo '<td class="left">'.$text_coupon_id.'</td>'; }
-                                        if($k == 'L_COUPONAMOUNT') { echo '<td class="left">'.$text_coupon_amount.'</td>'; }
-                                        if($k == 'L_COUPONAMOUNTCURRENCY') { echo '<td class="left">'.$text_coupon_currency.'</td>'; }
-                                        if($k == 'L_LOYALTYCARDDISCOUNTAMOUNT') { echo '<td class="left">'.$text_loyalty_disc_amt.'</td>'; }
-                                        if($k == 'L_LOYALTYCARDISCOUNTCURRENCY') { echo '<td class="left">'.$text_loyalty_currency.'</td>'; }
-                                        if($k == 'L_AMT') { echo '<td class="left">'.$text_amount.'</td>'; }
-                                        if($k == 'L_OPTIONSNAME') { echo '<td class="left">'.$text_options_name.'</td>'; }
-                                        if($k == 'L_TAXAMT') { echo '<td class="left">'.$text_tax_amt.'</td>'; }
-                                        if($k == 'L_CURRENCYCODE') { echo '<td class="left">'.$text_currency_code.'</td>'; }
-                                    } $i++; ?>
-                                </tr>
-                            </thead>
-                        <?php } ?>
-
+              <table class="table table-striped table-bordered">
+                  <?php $i = 0;  foreach($lines as  $k => $v){
+                    if($i == 0) { ?>
+                      <thead>
                         <tr>
-                            <?php foreach($v as $k => $row) {
-                                if($k == 'L_EBAYITEMTXNID') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_NAME') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_NUMBER') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_QTY') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_COUPONID') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_COUPONAMOUNT') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_COUPONAMOUNTCURRENCY') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_LOYALTYCARDDISCOUNTAMOUNT') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_LOYALTYCARDISCOUNTCURRENCY') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_AMT') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_OPTIONSNAME') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_OPTIONSVALUE') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_TAXAMT') { echo '<td class="left">'.$row.'</td>'; }
-                                if($k == 'L_CURRENCYCODE') { echo '<td class="left">'.$row.'</td>'; }
-                            } $i++; ?>
+                          <?php foreach($v as $k => $row) {
+                            if($k == 'L_EBAYITEMTXNID') { echo '<td class="left">'.$text_ebay_txn_id.'</td>'; }
+                            if($k == 'L_NAME') { echo '<td class="left">'.$text_name.'</td>'; }
+                            if($k == 'L_NUMBER') { echo '<td class="left">'.$text_number.'</td>'; }
+                            if($k == 'L_QTY') { echo '<td class="left">'.$text_qty.'</td>'; }
+                            if($k == 'L_COUPONID') { echo '<td class="left">'.$text_coupon_id.'</td>'; }
+                            if($k == 'L_COUPONAMOUNT') { echo '<td class="left">'.$text_coupon_amount.'</td>'; }
+                            if($k == 'L_COUPONAMOUNTCURRENCY') { echo '<td class="left">'.$text_coupon_currency.'</td>'; }
+                            if($k == 'L_LOYALTYCARDDISCOUNTAMOUNT') { echo '<td class="left">'.$text_loyalty_disc_amt.'</td>'; }
+                            if($k == 'L_LOYALTYCARDISCOUNTCURRENCY') { echo '<td class="left">'.$text_loyalty_currency.'</td>'; }
+                            if($k == 'L_AMT') { echo '<td class="left">'.$text_amount.'</td>'; }
+                            if($k == 'L_OPTIONSNAME') { echo '<td class="left">'.$text_options_name.'</td>'; }
+                            if($k == 'L_TAXAMT') { echo '<td class="left">'.$text_tax_amt.'</td>'; }
+                            if($k == 'L_CURRENCYCODE') { echo '<td class="left">'.$text_currency_code.'</td>'; }
+                          } $i++; ?>
                         </tr>
-
+                      </thead>
                     <?php } ?>
+                    <tr>
+                      <?php foreach($v as $k => $row) {
+                        if($k == 'L_EBAYITEMTXNID') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_NAME') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_NUMBER') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_QTY') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_COUPONID') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_COUPONAMOUNT') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_COUPONAMOUNTCURRENCY') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_LOYALTYCARDDISCOUNTAMOUNT') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_LOYALTYCARDISCOUNTCURRENCY') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_AMT') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_OPTIONSNAME') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_OPTIONSVALUE') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_TAXAMT') { echo '<td class="left">'.$row.'</td>'; }
+                        if($k == 'L_CURRENCYCODE') { echo '<td class="left">'.$row.'</td>'; }
+                      } $i++; ?>
+                    </tr>
+                  <?php } ?>
                 </table>
             </td>
           </tr>
@@ -529,7 +527,5 @@
         </tr>
         <?php } ?>
     </table>
-  </div>
-  </div>
 </div>
 <?php echo $footer; ?>

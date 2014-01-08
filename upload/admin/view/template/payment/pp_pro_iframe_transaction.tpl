@@ -5,14 +5,15 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container">
       <div class="pull-right">
         <a href="<?php echo $back ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_back ?></a>
       </div>
       <h1 class="panel-title"><?php echo $text_transaction; ?></h1>
     </div>
-    <table class="table table-striped table-bordered">
+  </div>
+  <table class="table table-striped table-bordered">
       <?php if(isset($transaction['GIFTMESSAGE'])) { ?>
       <tr>
           <td><?php echo $text_gift_msg; ?></td>
@@ -474,7 +475,6 @@
           <td><?php echo $transaction['PERIOD']; ?></td>
       </tr>
       <?php } ?>
-    </table>
-  </div>
+  </table>
 </div>
 <?php echo $footer; ?>

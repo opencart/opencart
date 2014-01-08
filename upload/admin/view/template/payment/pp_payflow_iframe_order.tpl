@@ -69,7 +69,7 @@ function markAsComplete() {
     $('#complete-entry, #reauthorise-entry, #reauthorise-entry').html('-');
     $('#capture-status').html('<?php echo $text_complete ?>');
 }
-    
+
 function doVoid(){
     if (confirm('<?php echo $text_confirm_void; ?>')) {
         $.ajax({
@@ -94,7 +94,7 @@ function doVoid(){
                     html += ' <td class="left"></td>';
                     html += '</tr>';
                     $('#transaction-table tbody').append(html);
-                    
+
                     markAsComplete();
                 }
 
@@ -112,22 +112,22 @@ function doVoid(){
 function capture(){
     var amount = $('input[name="capture-amount"]').val();
     var complete = 0;
-    
+
     if ($('input[name="capture-complete"]').is(':checked')) {
         complete = 1;
     }
-    
+
     $.ajax({
         type:'POST',
         dataType: 'json',
         data: {'order_id':<?php echo $order_id; ?>, 'amount':amount, 'complete':complete },
         url: 'index.php?route=payment/pp_payflow_iframe/capture&token=<?php echo $token; ?>',
-        
+
         beforeSend: function(){
             $('#button-capture').after('<span class="btn btn-primary loading"><i class="fa fa-cog fa-spin fa-lg"></i></span>');
             $('#button-capture').hide();
         },
-        
+
         success: function(data){
             if(!data.error){
                 var html = '';
@@ -137,15 +137,15 @@ function capture(){
                 html += ' <td class="left">' + data.success.amount + '</td>';
                 html += ' <td class="left">' + data.success.time + '</td>';
                 html += ' <td class="left">';
-                
+
                 $.each(data.success.actions, function(index, value){
                     html += ' [<a href="' + value.href + '">' + value.title + '</a>] ';
                 });
-                
+
                 html += '</td>';
                 html += '</tr>';
                 $('#transaction-table tbody').append(html);
-                
+
                 if (complete == 1) {
                     markAsComplete();
                 }
@@ -160,5 +160,4 @@ function capture(){
         }
     });
 }
-
 //--></script>

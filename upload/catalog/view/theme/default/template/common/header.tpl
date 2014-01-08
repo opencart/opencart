@@ -95,3 +95,12 @@
   </nav>
 </div>
 <?php } ?>
+
+<?php if ($error) { ?>
+  <div class="container">
+    <div class="alert alert-danger">
+      <i class="fa fa-exclamation-circle"></i> <?php echo $error ?>
+      <button class="close" data-dismiss="alert" type="button">×</button>
+    </div>
+  </div>
+<?php } ?>

@@ -18,3 +18,4 @@ $_['text_reward']      = 'Reward Points';
 $_['text_return']      = 'Returns';
 $_['text_transaction'] = 'Transactions';
 $_['text_newsletter']  = 'Newsletter';
+$_['text_recurring']   = 'Recurring payments';

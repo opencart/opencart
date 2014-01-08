@@ -1,5 +1,5 @@
 <?php if ($testmode) { ?>
-<div class="alert alert-danger"><?php echo $text_testmode; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $text_testmode; ?></div>
 <?php } ?>
 <form action="<?php echo $action; ?>" method="post">
   <input type="hidden" name="cmd" value="_cart" />
@@ -21,7 +21,7 @@
   <?php $i++; ?>
   <?php } ?>
   <?php if ($discount_amount_cart) { ?>
-  <input type="hidden" name="discount_amount_cart" value="<?php echo $discount_amount_cart; ?>" />
+    <input type="hidden" name="discount_amount_cart" value="<?php echo $discount_amount_cart; ?>" />
   <?php } ?>
   <input type="hidden" name="currency_code" value="<?php echo $currency_code; ?>" />
   <input type="hidden" name="first_name" value="<?php echo $first_name; ?>" />
@@ -43,6 +43,7 @@
   <input type="hidden" name="cancel_return" value="<?php echo $cancel_return; ?>" />
   <input type="hidden" name="paymentaction" value="<?php echo $paymentaction; ?>" />
   <input type="hidden" name="custom" value="<?php echo $custom; ?>" />
+  <input type="hidden" name="bn" value="OpenCart_Cart_WPS" />
   <div class="buttons">
     <div class="pull-right">
       <input type="submit" value="<?php echo $button_confirm; ?>" class="btn btn-primary" />

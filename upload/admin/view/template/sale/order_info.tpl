@@ -210,7 +210,8 @@
           <td><?php echo $payment_method; ?></td>
         </tr>
       </table>
-    </div>
+	  <?php echo $payment_action; ?>
+	</div>
     <?php if ($shipping_method) { ?>
     <div class="tab-pane" id="tab-shipping">
       <table class="table table-bordered">

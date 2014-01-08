@@ -1814,6 +1814,8 @@ class ControllerSaleOrder extends Controller {
 				$data['maxmind_id'] = '';
 			}
 
+			$data['payment_action'] = $this->load->controller('payment/' . $order_info['payment_code'] . '/orderAction', '');
+
 			$data['header'] = $this->load->controller('common/header');
 			$data['footer'] = $this->load->controller('common/footer');
 

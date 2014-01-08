@@ -185,6 +185,13 @@ class ModelLocalisationLanguage extends Model {
 		}	
 		
 		$this->cache->delete('weight_class');
+
+		// Profiles
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "profile_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");
+
+		foreach ($query->rows as $profile) {
+			$this->db->query("INSERT INTO " . DB_PREFIX . "profile_description SET profile_id = '" . (int)$profile['profile_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($profile['name']));
+		}
 	}
 	
 	public function editLanguage($language_id, $data) {
@@ -249,10 +256,12 @@ class ModelLocalisationLanguage extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "voucher_theme_description WHERE language_id = '" . (int)$language_id . "'");
 		
 		$this->cache->delete('voucher_theme');
-				
+
 		$this->db->query("DELETE FROM " . DB_PREFIX . "weight_class_description WHERE language_id = '" . (int)$language_id . "'");
-		
+
 		$this->cache->delete('weight_class');
+
+		$this->db->query("DELETE FROM " . DB_PREFIX . "profile_description WHERE language_id = '" . (int)$language_id . "'");
 	}
 	
 	public function getLanguage($language_id) {

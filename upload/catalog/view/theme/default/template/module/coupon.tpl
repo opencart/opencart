@@ -16,7 +16,7 @@ $('#button-coupon').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=module/coupon/coupon',
 		type: 'post',
-		data: 'coupon=' + encodeURIComponent($('input[name=\'coupon\']').val()),
+		data: 'coupon=' + encodeURIComponent($('input[name=\'coupon\']').val()) + '&redirect=<?php echo $redirect; ?>',
 		dataType: 'json',    
 		beforeSend: function() {
 			$('#button-coupon').button('loading');

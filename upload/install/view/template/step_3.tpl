@@ -45,7 +45,15 @@
         </tr>
         <tr>
           <td>Password:</td>
-          <td><input type="text" name="db_password" value="<?php echo $db_password; ?>" /></td>
+          <td><input type="password" name="db_password" value="" /></td>
+        </tr>
+        <tr>
+          <td>Confirm Password:</td>
+          <td><input type="password" name="db_confirm_password" value="" />
+            <?php if ($error_db_confirm_password) { ?>
+            <br />
+            <span class="required"><?php echo $error_db_confirm_password; ?></span>
+            <?php } ?></td>
         </tr>
         <tr>
           <td><span class="required">*</span> Database Name:</td>
@@ -78,10 +86,18 @@
         </tr>
         <tr>
           <td><span class="required">*</span> Password:</td>
-          <td><input type="text" name="password" value="<?php echo $password; ?>" />
+          <td><input type="password" name="password" value="" />
             <br />
             <?php if ($error_password) { ?>
             <span class="required"><?php echo $error_password; ?></span>
+            <?php } ?></td>
+        </tr>
+        <tr>
+          <td><span class="required">*</span> Confirm Password:</td>
+          <td><input type="password" name="confirm_password" value="" />
+            <br />
+            <?php if ($error_confirm_password) { ?>
+            <span class="required"><?php echo $error_confirm_password; ?></span>
             <?php } ?></td>
         </tr>
         <tr>

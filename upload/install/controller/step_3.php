@@ -106,6 +106,12 @@ class ControllerStep3 extends Controller {
 			$this->data['error_db_user'] = '';
 		}
 
+		if (isset($this->error['db_confirm_password'])) {
+			$this->data['error_db_confirm_password'] = $this->error['db_confirm_password'];
+		} else {
+			$this->data['error_db_confirm_password'] = '';
+		}
+
 		if (isset($this->error['db_name'])) {
 			$this->data['error_db_name'] = $this->error['db_name'];
 		} else {
@@ -128,6 +134,12 @@ class ControllerStep3 extends Controller {
 			$this->data['error_password'] = $this->error['password'];
 		} else {
 			$this->data['error_password'] = '';
+		}
+
+		if (isset($this->error['confirm_password'])) {
+			$this->data['error_confirm_password'] = $this->error['confirm_password'];
+		} else {
+			$this->data['error_confirm_password'] = '';
 		}
 
 		if (isset($this->error['email'])) {
@@ -204,23 +216,33 @@ class ControllerStep3 extends Controller {
 	}
 
 	private function validate() {
+		$database_valid = true;
 		if (!$this->request->post['db_host']) {
 			$this->error['db_host'] = 'Host required!';
+			$database_valid = false;
 		}
 
 		if (!$this->request->post['db_user']) {
 			$this->error['db_user'] = 'User required!';
+			$database_valid = false;
 		}
 
 		if (!$this->request->post['db_name']) {
 			$this->error['db_name'] = 'Database Name required!';
+			$database_valid = false;
+		}
+
+		if (isset($this->request->post['db_password']) && isset($this->request->post['db_confirm_password']) && strcmp($this->request->post['db_password'], $this->request->post['db_confirm_password']) != 0) {
+			$this->error['db_confirm_password'] = 'Password and Confirm Password didn\'t match';
+			$database_valid = false;
 		}
 
 		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
 			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
+			$database_valid = false;
 		}
 
-		if ($this->request->post['db_driver'] == 'mysql') {
+		if ($database_valid && $this->request->post['db_driver'] == 'mysql') {
 			if(function_exists('mysql_connect')) {
 				if (!$connection = @mysql_connect($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'])) {
 					$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
@@ -236,7 +258,7 @@ class ControllerStep3 extends Controller {
 			}
 		}
 
-		if ($this->request->post['db_driver'] == 'mysqli') {
+		if ($database_valid && $this->request->post['db_driver'] == 'mysqli') {
 			if(function_exists('mysqli_connect')) {
 				$connection = new mysqli($this->request->post['db_host'], $this->request->post['db_user'], $this->request->post['db_password'], $this->request->post['db_name']);
 
@@ -256,6 +278,14 @@ class ControllerStep3 extends Controller {
 
 		if (!$this->request->post['password']) {
 			$this->error['password'] = 'Password required!';
+		}
+
+		if (!$this->request->post['confirm_password']) {
+			$this->error['confirm_password'] = 'Confirm Password required!';
+		}
+
+		if (!isset($this->error['confirm_password']) && isset($this->request->post['password']) && isset($this->request->post['confirm_password']) && strcmp($this->request->post['password'], $this->request->post['confirm_password']) != 0 ) {
+			$this->error['confirm_password'] = 'Password and Confirm Password didn\'t match';
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {

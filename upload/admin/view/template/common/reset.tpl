@@ -1,10 +1,10 @@
 <?php echo $header; ?>
-<div class="page-header">
-  <div class="container">
-    <h1><i class="fa fa-repeat fa-lg"></i> <?php echo $heading_title; ?></h1>
-  </div>
-</div>
 <div id="content" class="container">
+  <div class="page-header">
+    <div class="container">
+      <h1><i class="fa fa-repeat fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
+  </div>
   <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
     <p><?php echo $text_password; ?></p>
     <div class="form-group">
@@ -25,8 +25,8 @@
         <?php } ?>
       </div>
     </div>
-    <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-    <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a>
+    <button type="submit" class="btn btn-success"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
+    <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a>
   </form>
 </div>
 <?php echo $footer; ?>

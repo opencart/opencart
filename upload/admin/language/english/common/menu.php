@@ -75,3 +75,5 @@ $_['text_voucher_theme']               = 'Voucher Themes';
 $_['text_weight_class']                = 'Weight Classes';
 $_['text_length_class']                = 'Length Classes';
 $_['text_zone']                        = 'Zones';
+$_['text_recurring_profile']           = 'Recurring Profiles';
+$_['text_product_profile']             = 'Product Profiles';

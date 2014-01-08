@@ -5,6 +5,7 @@
       <ul class="dropdown-menu">
         <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
         <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
+        <li><a href="<?php echo $product_profile; ?>"><?php echo $text_product_profile; ?></a></li>
         <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
         <li class="dropdown-submenu"><a><?php echo $text_attribute; ?></a>
           <ul class="dropdown-menu">
@@ -33,6 +34,7 @@
     <li id="sale" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-shopping-cart fa-lg"></i> <?php echo $text_sale; ?></a>
       <ul class="dropdown-menu">
         <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
+        <li><a href="<?php echo $recurring_profile; ?>"><?php echo $text_recurring_profile; ?></a></li>
         <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
         <li class="dropdown-submenu"><a><?php echo $text_customer; ?></a>
           <ul class="dropdown-menu">

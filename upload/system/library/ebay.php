@@ -561,42 +561,42 @@ final class Ebay {
 		}
 	}
 
-	private function osProducts($order_id) {
+	private function osProducts($order_id){
 		$this->log('osProducts() - Getting products from');
-		$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+		$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '".(int)$order_id."'");
 
-		$passArray = array();
+		$response = array();
 		foreach ($order_product_query->rows as $order_product) {
-			$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE `product_id` = '" .(int)$order_product['product_id']."' LIMIT 1");
+			$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE `product_id` = '".(int)$order_product['product_id']."' LIMIT 1");
 
 			if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
-				$pOption_query = $this->db->query("
-						SELECT `" . DB_PREFIX . "order_option`.`product_option_value_id`
-						FROM `" . DB_PREFIX . "order_option`, `" . DB_PREFIX . "product_option`, `" . DB_PREFIX . "option`
-						WHERE `" . DB_PREFIX . "order_option`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
-						AND `" . DB_PREFIX . "order_option`.`order_id` = '" . (int)$order_id . "'
-						AND `" . DB_PREFIX . "order_option`.`product_option_id` = `" . DB_PREFIX . "product_option`.`product_option_id`
-						AND `" . DB_PREFIX . "product_option`.`option_id` = `" . DB_PREFIX . "option`.`option_id`
-						AND ((`" . DB_PREFIX . "option`.`type` = 'radio') OR (`" . DB_PREFIX . "option`.`type` = 'select'))
-						ORDER BY `" . DB_PREFIX . "order_option`.`order_option_id`
-						ASC");
+				$product_option_query = $this->db->query("
+					SELECT `oo`.`product_option_value_id`
+					FROM `" . DB_PREFIX . "order_option` `oo`
+						LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
+						LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `pov`.`option_id`)
+					WHERE `oo`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
+					AND `oo`.`order_id` = '" . (int)$order_id . "'
+					AND ((`o`.`type` = 'radio') OR (`o`.`type` = 'select') OR (`o`.`type` = 'image'))
+					ORDER BY `oo`.`order_option_id`
+					ASC");
 
-				if ($pOption_query->num_rows != 0) {
-					$pOptions = array();
-					foreach ($pOption_query->rows as $pOptionRow) {
-						$pOptions[] = $pOptionRow['product_option_value_id'];
+				if ($product_option_query->num_rows != 0) {
+					$product_options = array();
+					foreach ($product_option_query->rows as $product_option_row) {
+						$product_options[] = $product_option_row['product_option_value_id'];
 					}
 
-					$var = implode(':', $pOptions);
+					$var = implode(':', $product_options);
 
-					$passArray[] = array('pid' => $order_product['product_id'], 'qty' => $order_product['quantity'], 'var' => $var);
+					$response[] = array('pid' => $order_product['product_id'], 'qty' => $order_product['quantity'], 'var' => $var);
 				}
 			} else {
-				$passArray[] = array('pid' => $order_product['product_id'], 'qty' => $order_product['quantity'], 'var' => null);
+				$response[] = array('pid' => $order_product['product_id'], 'qty' => $order_product['quantity'], 'var' => null);
 			}
 		}
 
-		return $passArray;
+		return $response;
 	}
 
 	public function getApiServer() {

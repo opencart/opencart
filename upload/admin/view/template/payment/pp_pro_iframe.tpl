@@ -10,15 +10,16 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <div class="panel panel-default">
-    <div class="panel-heading">
+  <div class="page-header">
+    <div class="container">
       <div class="pull-right">
         <button type="submit" form="form-pp-pro-iframe-uk" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a></div>
+        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a>
+      </div>
       <h1 class="panel-title"><i class="fa fa-credit-card fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pp-pro-iframe-uk" class="form-horizontal">
+  </div>
+  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pp-pro-iframe-uk" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_settings; ?></a></li>
           <li><a href="#tab-order-status" data-toggle="tab"><?php echo $tab_order_status; ?></a></li>
@@ -297,7 +298,5 @@
           </div>
         </div>
       </form>
-    </div>
-  </div>
 </div>
 <?php echo $footer; ?>

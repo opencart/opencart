@@ -152,7 +152,7 @@ function checkLinkedItems(){
                         }else{
                             $('#text_status_'+key).text('Listing ended');
                             $('#row_'+key+' > td').css('background-color', '#FFD4D4');
-                            $('#text_buttons_'+key).html('<a onclick="removeLink('+key+');" class="button"><span><?php echo $lang_btn_remove_link; ?></span></a>');
+                            $('#text_buttons_'+key).html('<a onclick="removeLink('+product_id+');" class="button"><span><?php echo $lang_btn_remove_link; ?></span></a>');
                         }
                     }else{
                         var htmlInj = '';
@@ -170,7 +170,7 @@ function checkLinkedItems(){
                         if(val.status == 0){
                             $('#text_status_'+key).text('Listing ended');
                             $('#row_'+key+' > td').css('background-color', '#FFD4D4');
-                            $('#text_buttons_'+key).html('<a onclick="removeLink('+key+');" class="button"><span><?php echo $lang_btn_remove_link; ?></span></a>');
+                            $('#text_buttons_'+key).html('<a onclick="removeLink('+product_id+');" class="button"><span><?php echo $lang_btn_remove_link; ?></span></a>');
                         }
                     }
                 });
@@ -188,10 +188,10 @@ function checkLinkedItems(){
     });
 }
 
-function removeLink(id) {
+function removeLink(product_id) {
     $.ajax({
         type: 'GET',
-        url: 'index.php?route=openbay/openbay/removeItemLink&token=<?php echo $token; ?>&ebay_id='+id,
+        url: 'index.php?route=openbay/openbay/removeItemLink&token=<?php echo $token; ?>&product_id='+product_id,
         dataType: 'json',
         success: function(json) {
             $('#row_'+id).fadeOut('slow');

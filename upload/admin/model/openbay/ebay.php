@@ -387,18 +387,18 @@ class ModelOpenbayEbay extends Model{
 		$qry = $this->db->query("SHOW TABLES LIKE '" . DB_PREFIX . "ebay_store_category'");
 
 		if( $qry->num_rows ){
-			$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '0'");
+			$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '0' ORDER BY `CategoryName` ASC");
 
 			if($qry->num_rows){
 				$cats = array();
 
 				foreach($qry->rows as $row){
 					$lev1 = $row['CategoryName'];
-					$qry2 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '".$row['ebay_store_category_id']."'");
+					$qry2 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '".$row['ebay_store_category_id']."' ORDER BY `CategoryName` ASC");
 
 					if($qry2->num_rows){
 						foreach($qry2->rows as $row2){
-							$qry3 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '".$row2['ebay_store_category_id']."'");
+							$qry3 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_store_category` WHERE `parent_id` = '".$row2['ebay_store_category_id']."' ORDER BY `CategoryName` ASC");
 
 							if($qry3->num_rows){
 								foreach($qry3->rows as $row3){

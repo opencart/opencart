@@ -401,23 +401,19 @@ class Amazon {
 
 		$passArray = array();
 		foreach ($order_product_query->rows as $order_product) {
-			$product_query = $this->db->query("
-				SELECT *
-				FROM " . DB_PREFIX . "product
-				WHERE `product_id` = '" . (int)$order_product['product_id'] . "'
-				LIMIT 1");
+			$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE `product_id` = '".(int)$order_product['product_id']."' LIMIT 1");
 
 			if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
 				$pOption_query = $this->db->query("
-						SELECT `" . DB_PREFIX . "order_option`.`product_option_value_id`
-						FROM `" . DB_PREFIX . "order_option`, `" . DB_PREFIX . "product_option`, `" . DB_PREFIX . "option`
-						WHERE `" . DB_PREFIX . "order_option`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
-						AND `" . DB_PREFIX . "order_option`.`order_id` = '" . (int)$order_id . "'
-						AND `" . DB_PREFIX . "order_option`.`product_option_id` = `" . DB_PREFIX . "product_option`.`product_option_id`
-						AND `" . DB_PREFIX . "product_option`.`option_id` = `" . DB_PREFIX . "option`.`option_id`
-						AND ((`" . DB_PREFIX . "option`.`type` = 'radio') OR (`" . DB_PREFIX . "option`.`type` = 'select'))
-						ORDER BY `" . DB_PREFIX . "order_option`.`order_option_id`
-						ASC");
+					SELECT `oo`.`product_option_value_id`
+					FROM `" . DB_PREFIX . "order_option` `oo`
+						LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
+						LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `pov`.`option_id`)
+					WHERE `oo`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
+					AND `oo`.`order_id` = '" . (int)$order_id . "'
+					AND ((`o`.`type` = 'radio') OR (`o`.`type` = 'select') OR (`o`.`type` = 'image'))
+					ORDER BY `oo`.`order_option_id`
+					ASC");
 
 				if ($pOption_query->num_rows != 0) {
 					$pOptions = array();

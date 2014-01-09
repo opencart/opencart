@@ -23,6 +23,7 @@ $_['lang_ajax_load_error']          = 'Sorry, could not get a response. Try late
 $_['lang_ajax_error_link']          = 'The product link is not value';
 $_['lang_ajax_error_link_no_sk']    = 'A link cannot be created for an out of stock item. End the item manually on eBay.';
 $_['lang_ajax_loaded_ok']           = 'Items have been loaded ok';
+$_['lang_ajax_not_subtract']        = 'This product is set not to subtract stock in OpenCart.';
 
 // Text
 $_['lang_link_desc1']               = 'Linking your items will allow for stock control on your eBay listings.';

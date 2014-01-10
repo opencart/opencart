@@ -41,12 +41,18 @@ $(document).ready(function() {
 	
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	
+	$('#button-menu').on('click', function() {
+		if ($('#container').hasClass('test')) {
+			$('#container').removeClass('test');
+		} else {
+			$('#container').addClass('test');
+		}
+	});
 });
 
-$('#button-slide').on('click', function() {
 
-});
-
+	
 // Image Manager
 $(document).delegate('.img-edit', 'click', function(e) {
 	e.preventDefault();

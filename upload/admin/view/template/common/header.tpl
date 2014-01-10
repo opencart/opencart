@@ -29,10 +29,8 @@
 <body>
 <header id="header" class="navbar navbar-default navbar-static-top">
   <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#menu"><span class="icon-bar"></span><span class="icon-bar"></span><span class="fa icon-bar"></span></button>
-      <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a>
-    </div>
+    <div class="navbar-header"><a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a> </div>
+    <button type="button" id="button-menu" class="btn btn-link navbar-btn"><span class="fa fa-bars"></span></button>
     <?php if ($logged) { ?>
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left">4</span> <i class="fa fa-bell fa-lg"></i></a>

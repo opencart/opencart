@@ -84,7 +84,7 @@
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
+                <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
                 <td class="text-right"><?php if ($sort == 'r.return_id') { ?>
                   <a href="<?php echo $sort_return_id; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_return_id; ?></a>
                   <?php } else { ?>

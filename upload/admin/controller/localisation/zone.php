@@ -255,6 +255,7 @@ class ControllerLocalisationZone extends Controller {
 		$data['order'] = $order;
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('localisation/zone_list.tpl', $data));
@@ -361,6 +362,7 @@ class ControllerLocalisationZone extends Controller {
 		$data['countries'] = $this->model_localisation_country->getCountries();
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('localisation/zone_form.tpl', $data));

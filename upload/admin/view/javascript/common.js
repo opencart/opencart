@@ -26,7 +26,7 @@ $(document).ready(function() {
 	route = getURLVar('route');
 	
 	if (!route) {
-		$('#header #dashboard').addClass('active');
+		$('#menu #dashboard').addClass('active');
 	} else {
 		part = route.split('/');
 		
@@ -36,17 +36,17 @@ $(document).ready(function() {
 			url += '/' + part[1];
 		}
 		
-		$('#header a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
+		$('#menu a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 	
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	
 	$('#button-menu').on('click', function() {
-		if ($('#container').hasClass('test')) {
-			$('#container').removeClass('test');
+		if ($('#column-left').hasClass('closed')) {
+			$('#column-left').removeClass('closed');
 		} else {
-			$('#container').addClass('test');
+			$('#column-left').addClass('closed');
 		}
 	});
 });

@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content" class="container"><br />
+<div id="container"><?php echo $menu; ?><div id="content"><br />
   <br />
   <div class="row">
     <div class="col-sm-offset-4 col-sm-4">

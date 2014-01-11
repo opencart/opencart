@@ -98,6 +98,7 @@ class ControllerReportProductViewed extends Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_viewed_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_viewed_total - $this->config->get('config_limit_admin'))) ? $product_viewed_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_viewed_total, ceil($product_viewed_total / $this->config->get('config_limit_admin')));
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 						 
 		$this->response->setOutput($this->load->view('report/product_viewed.tpl', $data));

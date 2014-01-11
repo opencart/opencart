@@ -199,6 +199,7 @@ class ControllerCatalogCategory extends Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($category_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($category_total - $this->config->get('config_limit_admin'))) ? $category_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $category_total, $category_total, ceil($category_total / $this->config->get('config_limit_admin')));
 
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/category_list.tpl', $data));
@@ -420,6 +421,7 @@ class ControllerCatalogCategory extends Controller {
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/category_form.tpl', $data));

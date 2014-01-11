@@ -252,6 +252,7 @@ class ControllerLocalisationGeoZone extends Controller {
 		$data['order'] = $order;
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('localisation/geo_zone_list.tpl', $data));
@@ -354,8 +355,10 @@ class ControllerLocalisationGeoZone extends Controller {
 			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZoneToGeoZones($this->request->get['geo_zone_id']);
 		} else {
 			$data['zone_to_geo_zones'] = array();
-		}
+		}		
+		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 				
 		$this->response->setOutput($this->load->view('localisation/geo_zone_form.tpl', $data));

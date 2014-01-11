@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content" class="container">
+<div id="container"><?php echo $menu; ?><div id="content">
   <div class="page-header">
     <div class="container">
       <h1><i class="fa fa-repeat fa-lg"></i> <?php echo $heading_title; ?></h1>

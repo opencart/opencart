@@ -30,7 +30,7 @@
 <header id="header" class="navbar navbar-default navbar-static-top">
   <div class="container">
     <div class="navbar-header"><a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a> </div>
-    <button type="button" id="button-menu" class="btn btn-link navbar-btn"><span class="fa fa-bars"></span></button>
+    <a type="button" id="button-menu" class="navbar-btn"><span class="fa fa-bars"></span></a>
     <?php if ($logged) { ?>
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left">4</span> <i class="fa fa-bell fa-lg"></i></a>

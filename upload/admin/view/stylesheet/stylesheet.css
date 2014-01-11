@@ -66,56 +66,80 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 1px 3px;
 }
 
-#container {
-	background-color: #FFFFFF; 
-}
 
 #column-left {
-	height: 100%;
 	float: left;
 	width: 230px;
-	overflow: hidden;
 	background-color: #333333;
 	border-right: 1px solid #000000;
-	transition: width 1s;
-	-webkit-transition: width 1s;
-
-}
-.test #column-left {
-	width: 50px;
 }
 #content {
-	height: 100%;
-	background-color: #FFF;
 	padding-top: 15px;
 	padding-bottom: 120px;
 	overflow: auto;
 }
+#column-left li.open a, #column-left li.active a {
+	color: #FFF;
+}
 
 
+/* Desktop */
+@media (min-width: 768px) {
+	#column-left.closed {
+		width: 50px;
+	}
+	
+	#column-left.closed span {
+		display: none;
+	}
+	
+	#column-left.closed li.open a span {
+		display: inline;
+	}	
+}
+
+/* Mobile */
 @media (max-width: 767px) {
-#column-left, .test #column-left {
+#column-left,  #column-left.closed {
 	width: 0;
 	border-right: none;
 }
 
-#content {
-	margin-left: 0;
-}
+
+
+
+
+
 }
 
 
 #column-left .nav > li > a {
-	padding: 3px 14px;
-	line-height: 35px;
+	/*padding: 3px 0px 3px 12px;*/
+	
+	padding: 10px;
 	cursor: pointer;
 	color: #989895;
 	text-shadow: 1px 1px 0 #000;
 	white-space: nowrap;
 }
-
+#column-left .nav > li.open > a #column-left .nav > li.active > a {
+	background-color: #000;
+}
 #column-left .nav > li > a i {
-	padding: 0px 40px 0px 5px;
+	padding: 0px 28px 0px 5px;
+}
+
+#column-left .dropdown-menu { 
+	position: relative;
+	float: none;
+	background: none;
+	box-shadow: none;
+	border: none;
+}
+
+#column-left .dropdown-menu li a { 
+	color: #989895;
+	padding: 5px 10px 5px 37px;
 }
 
 
@@ -232,7 +256,7 @@ input.form-control, select.form-control {
 	height: 31px;
 }
 .btn {
-	font-size: 12px;
+	font-size: 13px;
 	border-radius: 4px;
 	border: none;
 }

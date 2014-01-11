@@ -249,6 +249,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		$data['order'] = $order;
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('localisation/return_action_list.tpl', $data));
@@ -321,6 +322,7 @@ class ControllerLocalisationReturnAction extends Controller {
 		}
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('localisation/return_action_form.tpl', $data));	

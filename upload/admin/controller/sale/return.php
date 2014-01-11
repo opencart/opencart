@@ -548,6 +548,7 @@ class ControllerSaleReturn extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/return_list.tpl', $data));
@@ -853,6 +854,7 @@ class ControllerSaleReturn extends Controller {
 		$data['return_statuses'] = $this->model_localisation_return_status->getReturnStatuses();
 
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('sale/return_form.tpl', $data));
@@ -1043,6 +1045,7 @@ class ControllerSaleReturn extends Controller {
 			$data['return_status_id'] = $return_info['return_status_id'];
 
 			$data['header'] = $this->load->controller('common/header');
+			$data['menu'] = $this->load->controller('common/menu');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('sale/return_info.tpl', $data));		
@@ -1068,6 +1071,7 @@ class ControllerSaleReturn extends Controller {
 			);
 
 			$data['header'] = $this->load->controller('common/header');
+			$data['menu'] = $this->load->controller('common/menu');
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));			

@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div id="content" class="container">
+<div id="container"><?php echo $menu; ?><div id="content">
   <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>

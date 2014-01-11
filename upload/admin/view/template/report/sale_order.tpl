@@ -1,92 +1,96 @@
 <?php echo $header; ?>
-<div id="container"><?php echo $menu; ?><div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <div class="page-header">
+<div id="container"><?php echo $menu; ?>
+  <div id="content">
     <div class="container">
-      <h1><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
-    </div>
-  </div>
-  <div class="well">
-    <div class="row">
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-          <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
-        </div>
-        <div class="form-group">
-          <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-          <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
+      <ul class="breadcrumb">
+        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+        <?php } ?>
+      </ul>
+      <div class="page-header">
+        <div class="container">
+          <h1><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
         </div>
       </div>
-      <div class="col-sm-6">
-        <div class="form-group">
-          <label class="control-label" for="input-group"><?php echo $entry_group; ?></label>
-          <select name="filter_group" id="input-group" class="form-control">
-            <?php foreach ($groups as $group) { ?>
-            <?php if ($group['value'] == $filter_group) { ?>
-            <option value="<?php echo $group['value']; ?>" selected="selected"><?php echo $group['text']; ?></option>
-            <?php } else { ?>
-            <option value="<?php echo $group['value']; ?>"><?php echo $group['text']; ?></option>
-            <?php } ?>
-            <?php } ?>
-          </select>
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+              <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+              <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="control-label" for="input-group"><?php echo $entry_group; ?></label>
+              <select name="filter_group" id="input-group" class="form-control">
+                <?php foreach ($groups as $group) { ?>
+                <?php if ($group['value'] == $filter_group) { ?>
+                <option value="<?php echo $group['value']; ?>" selected="selected"><?php echo $group['text']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $group['value']; ?>"><?php echo $group['text']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
+              <select name="filter_order_status_id" id="input-status" class="form-control">
+                <option value="0"><?php echo $text_all_status; ?></option>
+                <?php foreach ($order_statuses as $order_status) { ?>
+                <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
+                <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
+            </div>
+            <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+          </div>
         </div>
-        <div class="form-group">
-          <label class="control-label" for="input-status"><?php echo $entry_status; ?></label>
-          <select name="filter_order_status_id" id="input-status" class="form-control">
-            <option value="0"><?php echo $text_all_status; ?></option>
-            <?php foreach ($order_statuses as $order_status) { ?>
-            <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
-            <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <td class="text-left"><?php echo $column_date_start; ?></td>
+              <td class="text-left"><?php echo $column_date_end; ?></td>
+              <td class="text-right"><?php echo $column_orders; ?></td>
+              <td class="text-right"><?php echo $column_products; ?></td>
+              <td class="text-right"><?php echo $column_tax; ?></td>
+              <td class="text-right"><?php echo $column_total; ?></td>
+            </tr>
+          </thead>
+          <tbody>
+            <?php if ($orders) { ?>
+            <?php foreach ($orders as $order) { ?>
+            <tr>
+              <td class="text-left"><?php echo $order['date_start']; ?></td>
+              <td class="text-left"><?php echo $order['date_end']; ?></td>
+              <td class="text-right"><?php echo $order['orders']; ?></td>
+              <td class="text-right"><?php echo $order['products']; ?></td>
+              <td class="text-right"><?php echo $order['tax']; ?></td>
+              <td class="text-right"><?php echo $order['total']; ?></td>
+            </tr>
+            <?php } ?>
             <?php } else { ?>
-            <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+            <tr>
+              <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
+            </tr>
             <?php } ?>
-            <?php } ?>
-          </select>
-        </div>
-        <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+          </tbody>
+        </table>
+      </div>
+      <div class="row">
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
       </div>
     </div>
-  </div>
-  <div class="table-responsive">
-    <table class="table table-bordered">
-      <thead>
-        <tr>
-          <td class="text-left"><?php echo $column_date_start; ?></td>
-          <td class="text-left"><?php echo $column_date_end; ?></td>
-          <td class="text-right"><?php echo $column_orders; ?></td>
-          <td class="text-right"><?php echo $column_products; ?></td>
-          <td class="text-right"><?php echo $column_tax; ?></td>
-          <td class="text-right"><?php echo $column_total; ?></td>
-        </tr>
-      </thead>
-      <tbody>
-        <?php if ($orders) { ?>
-        <?php foreach ($orders as $order) { ?>
-        <tr>
-          <td class="text-left"><?php echo $order['date_start']; ?></td>
-          <td class="text-left"><?php echo $order['date_end']; ?></td>
-          <td class="text-right"><?php echo $order['orders']; ?></td>
-          <td class="text-right"><?php echo $order['products']; ?></td>
-          <td class="text-right"><?php echo $order['tax']; ?></td>
-          <td class="text-right"><?php echo $order['total']; ?></td>
-        </tr>
-        <?php } ?>
-        <?php } else { ?>
-        <tr>
-          <td class="text-center" colspan="6"><?php echo $text_no_results; ?></td>
-        </tr>
-        <?php } ?>
-      </tbody>
-    </table>
-  </div>
-  <div class="row">
-    <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-    <div class="col-sm-6 text-right"><?php echo $results; ?></div>
   </div>
 </div>
 <script type="text/javascript"><!--

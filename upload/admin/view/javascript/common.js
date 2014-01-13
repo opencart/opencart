@@ -43,10 +43,10 @@ $(document).ready(function() {
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	
 	$('#button-menu').on('click', function() {
-		if ($('#column-left').hasClass('closed')) {
-			$('#column-left').removeClass('closed');
+		if ($('#column-left').hasClass('mini')) {
+			$('#column-left').removeClass('mini');
 		} else {
-			$('#column-left').addClass('closed');
+			$('#column-left').addClass('mini');
 		}
 	});
 });

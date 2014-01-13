@@ -66,68 +66,91 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 1px 3px;
 }
 
-
 #column-left {
 	float: left;
 	width: 230px;
 	background-color: #333333;
 	border-right: 1px solid #000000;
-}
-#content {
-	padding-top: 15px;
-	padding-bottom: 120px;
-	overflow: auto;
-}
-#column-left li.open a, #column-left li.active a {
-	color: #FFF;
+	position: relative;
 }
 
+#menu, #menu ul, #menu li {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+#menu li a {
+	text-decoration: none;
+	color: #989895;
+	display: block;
+	padding: 10px;
+	white-space: nowrap;
+	width: 200px;
+}
+#menu li.active a {
+	color: #FFF;
+}
+#menu li ul {
+	display: none;
+}
+#menu li {
+	
+}
 
 /* Desktop */
 @media (min-width: 768px) {
-	#column-left.closed {
-		width: 50px;
+	#column-left.mini {
+		width: 40px;
 	}
 	
-	#column-left.closed span {
-		display: none;
+	#menu > li > ul {
+		display: block;
 	}
 	
-	#column-left.closed li.open a span {
-		display: inline;
+	#menu li:hover ul {
+		background-color: #000;
 	}	
+	
+	#menu > li > ul {
+		position: absolute;
+		left: 40px;
+		
+	}
+		
+	#menu li:hover > a {
+		background-color: #000;
+	}
+	#menu li a span {
+		display: none;
+		margin-left: 20px;
+	}
+	#menu li:hover a span {
+		display: inline;
+		
+	}
+		
+
+
+
+
+
+	
+	
 }
 
 /* Mobile */
 @media (max-width: 767px) {
-#column-left,  #column-left.closed {
+#column-left,  #column-left.mini {
 	width: 0;
 	border-right: none;
 }
-
-
-
-
-
-
 }
 
 
-#column-left .nav > li > a {
-	/*padding: 3px 0px 3px 12px;*/
-	
-	padding: 10px;
-	cursor: pointer;
-	color: #989895;
-	text-shadow: 1px 1px 0 #000;
-	white-space: nowrap;
-}
-#column-left .nav > li.open > a #column-left .nav > li.active > a {
-	background-color: #000;
-}
-#column-left .nav > li > a i {
-	padding: 0px 28px 0px 5px;
-}
+
+
+
+
 
 #column-left .dropdown-menu { 
 	position: relative;
@@ -143,7 +166,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 
 
-
+#content {
+	padding-top: 15px;
+	padding-bottom: 120px;
+	overflow: auto;
+}
 
 #footer {
 	border-top: 1px solid #E5E5E5;
@@ -156,12 +183,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-top: -100px;
 	clear: both;
 }
-
-
-
-
-
-
 
 .page-header {
 	min-height: 55px;

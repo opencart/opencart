@@ -1,4 +1,4 @@
-<nav id="column-left">
+<nav id="column-left" class="mini">
   <div id="search">
     <div class="input-group"> <span class="input-group-btn">
       <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
@@ -6,7 +6,7 @@
       <input type="text" name="search" value="" class="form-control" />
     </div>
   </div>
-  <ul id="menu" class="nav nav-stacked">
+  <ul id="menu">
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw fa-lg"></i> <span><?php echo $text_dashboard; ?></span></a></li>
     <li id="catalog" class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-tags fa-fw fa-lg"></i> <span><?php echo $text_catalog; ?></span></a>
       <ul class="dropdown-menu">

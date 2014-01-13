@@ -59,6 +59,7 @@ class ControllerMarketingContact extends Controller {
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups(0);
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 						
 		$this->response->setOutput($this->load->view('marketing/contact.tpl', $data));

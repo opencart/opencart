@@ -158,6 +158,7 @@ class ControllerSettingStore extends Controller {
 		}
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 				
 		$this->response->setOutput($this->load->view('setting/store_list.tpl', $data));
@@ -965,6 +966,7 @@ class ControllerSettingStore extends Controller {
 		}
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('setting/store_form.tpl', $data));

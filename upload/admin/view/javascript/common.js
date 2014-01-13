@@ -26,7 +26,7 @@ $(document).ready(function() {
 	route = getURLVar('route');
 	
 	if (!route) {
-		$('#header #dashboard').addClass('active');
+		$('#menu #dashboard').addClass('active');
 	} else {
 		part = route.split('/');
 		
@@ -36,17 +36,23 @@ $(document).ready(function() {
 			url += '/' + part[1];
 		}
 		
-		$('#header a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
+		$('#menu a[href*=\'' + url + '\']').parents('li[id]').addClass('active');
 	}
 	
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	
+	$('#button-menu').on('click', function() {
+		if ($('#column-left').hasClass('mini')) {
+			$('#column-left').removeClass('mini');
+		} else {
+			$('#column-left').addClass('mini');
+		}
+	});
 });
 
-$('#button-slide').on('click', function() {
 
-});
-
+	
 // Image Manager
 $(document).delegate('.img-edit', 'click', function(e) {
 	e.preventDefault();

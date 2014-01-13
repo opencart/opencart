@@ -444,6 +444,7 @@ class ControllerShippingRoyalMail extends Controller {
 		}	
 					
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('shipping/royal_mail.tpl', $data));

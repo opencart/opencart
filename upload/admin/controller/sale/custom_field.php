@@ -295,6 +295,7 @@ class ControllerSaleCustomField extends Controller {
 		$data['order'] = $order;
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('sale/custom_field_list.tpl', $data));
@@ -509,6 +510,7 @@ class ControllerSaleCustomField extends Controller {
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('sale/custom_field_form.tpl', $data));

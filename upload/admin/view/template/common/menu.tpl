@@ -1,19 +1,16 @@
 <nav id="column-left" class="mini">
-  <div id="search">
-    <div class="input-group"> <span class="input-group-btn">
-      <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
-      </span>
-      <input type="text" name="search" value="" class="form-control" />
-    </div>
-  </div>
   <ul id="menu">
+    <li id="search">
+      <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
+      <input type="text" name="search" value="" />
+    </li>
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw fa-lg"></i> <span><?php echo $text_dashboard; ?></span></a></li>
-    <li id="catalog"><a><i class="fa fa-tags fa-fw fa-lg"></i> <span><?php echo $text_catalog; ?></span></a>
+    <li id="catalog"><a data-toggle="dropdown"><i class="fa fa-tags fa-fw fa-lg"></i> <span><?php echo $text_catalog; ?></span></a>
       <ul>
         <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
         <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
         <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
-        <li><a><?php echo $text_attribute; ?></a>
+        <li><a class="parent" data-toggle="dropdown"><?php echo $text_attribute; ?></a>
           <ul>
             <li><a href="<?php echo $attribute; ?>"><?php echo $text_attribute; ?></a></li>
             <li><a href="<?php echo $attribute_group; ?>"><?php echo $text_attribute_group; ?></a></li>
@@ -26,7 +23,7 @@
         <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
       </ul>
     </li>
-    <li id="extension"><a><i class="fa fa-puzzle-piece fa-fw fa-lg"></i> <span><?php echo $text_extension; ?></span></a>
+    <li id="extension"><a data-toggle="dropdown"><i class="fa fa-puzzle-piece fa-fw fa-lg"></i> <span><?php echo $text_extension; ?></span></a>
       <ul>
         <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
         <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
@@ -37,7 +34,7 @@
         <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
       </ul>
     </li>
-    <li id="sale"><a><i class="fa fa-shopping-cart fa-fw fa-lg"></i> <span><?php echo $text_sale; ?></span></a>
+    <li id="sale"><a data-toggle="dropdown"><i class="fa fa-shopping-cart fa-fw fa-lg"></i> <span><?php echo $text_sale; ?></span></a>
       <ul>
         <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
         <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
@@ -65,7 +62,7 @@
         </li>
       </ul>
     </li>
-    <li id="system"><a><i class="fa fa-cog fa-fw fa-lg"></i> <span><?php echo $text_system; ?></span></a>
+    <li id="system"><a data-toggle="dropdown"><i class="fa fa-cog fa-fw fa-lg"></i> <span><?php echo $text_system; ?></span></a>
       <ul>
         <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
         <li><a><?php echo $text_design; ?></a>
@@ -112,7 +109,7 @@
         <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
       </ul>
     </li>
-    <li id="reports"><a><i class="fa fa-bar-chart-o fa-fw fa-lg"></i> <span><?php echo $text_reports; ?></span></a>
+    <li id="reports"><a data-toggle="dropdown"><i class="fa fa-bar-chart-o fa-fw fa-lg"></i> <span><?php echo $text_reports; ?></span></a>
       <ul>
         <li><a><?php echo $text_sale; ?></a>
           <ul>

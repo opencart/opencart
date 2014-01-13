@@ -8,9 +8,6 @@
           <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
           <?php } ?>
         </ul>
-        <div class="page-header">
-          <h1><i class="fa fa-eye fa-lg"></i> <?php echo $heading_title; ?></h1>
-        </div>
         <?php if ($error_install) { ?>
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_install; ?>
           <button type="button" class="close" data-dismiss="alert">&times;</button>

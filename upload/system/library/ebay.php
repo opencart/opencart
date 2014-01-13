@@ -672,7 +672,7 @@ final class Ebay {
 				}
 			}
 		}else{
-			$this->ebay->removeItemByItemId($item_id);
+			$this->removeItemByItemId($item_id);
 			$this->log('putStockUpdate() - Listing not active, item id: '. $item_id .', status returned: '.$listing['statusActual']);
 		}
 	}

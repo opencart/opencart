@@ -21,7 +21,7 @@ class ControllerAccountRegister extends Controller {
 			unset($this->session->data['guest']);
 
 			$this->load->model('account/address');
-
+			
 			// Default Payment Address
 			if ($this->config->get('config_tax_customer') == 'payment') {
 				$this->session->data['payment_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());		
@@ -31,7 +31,7 @@ class ControllerAccountRegister extends Controller {
 			if ($this->config->get('config_tax_customer') == 'shipping') {
 				$this->session->data['shipping_address'] = $this->model_account_address->getAddress($this->customer->getAddressId());
 			}
-
+			
 			// Add to activity log
 			$this->load->model('account/activity');
 			

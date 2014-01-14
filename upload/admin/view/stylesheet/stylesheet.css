@@ -7,9 +7,8 @@ html {
 }
 body {
 	font-family: Arial;
-	font-size: 13px;
+	font-size: 12px;
 	color: #45484D;
-	padding-top: 43px;
 }
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
@@ -66,20 +65,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	text-shadow: none;
 	padding: 1px 3px;
 }
-#header {
-	position: relative;
-	top: -40px;	
-}
 #container {
-	height: 100%;
+	
 }
 #column-left {
-	height: 100%;
 	float: left;
 	width: 230px;
 	background-color: #444;
 	border-right: 1px solid #000000;
-	position: relative;
 	z-index: 100;
 }
 #content {
@@ -106,7 +99,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 10px;
 }
 #menu > li > a {
-	
 	padding-left: 13px;
 	cursor: pointer;
 }

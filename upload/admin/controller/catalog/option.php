@@ -252,6 +252,7 @@ class ControllerCatalogOption extends Controller {
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/option_list.tpl', $data));
@@ -399,6 +400,7 @@ class ControllerCatalogOption extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('catalog/option_form.tpl', $data));

@@ -255,6 +255,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$data['order'] = $order;
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('localisation/weight_class_list.tpl', $data));
@@ -349,6 +350,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		}
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('localisation/weight_class_form.tpl', $data));

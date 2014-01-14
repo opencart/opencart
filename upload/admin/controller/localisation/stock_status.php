@@ -249,6 +249,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		$data['order'] = $order;
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('localisation/stock_status_list.tpl', $data));
@@ -322,6 +323,7 @@ class ControllerLocalisationStockStatus extends Controller {
 		}
 		
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('localisation/stock_status_form.tpl', $data));	

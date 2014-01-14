@@ -1,157 +1,32 @@
-html {
-	width: 100%;
+html, body {
 	height: 100%;
+}
+html {
 	margin: 0;
 	padding: 0;
-	overflow: hidden;
 }
 body {
 	font-family: Arial;
 	font-size: 13px;
 	color: #45484D;
-	height: 100%;
-}
-
-
-#column-left {
-	float: left;
-	width: 230px;
-	background: #CCCCCC;
-	position: relative;	
-}
-
-#content {
-	margin-left: 230px;
-	width: auto;
-	padding-bottom: 120px;
-}
-
-
-@media (max-width: 767px) {
-#column-left {
-	float: left;
-	width: 0;
-	dispaly: none;
-}
-
-#content {
-	margin-left: 0;
-}
-}
-
-.container {
-	width: 100%;
-}
-
-
-#footer {
-	border-top: 1px solid #E5E5E5;
-	background: #F5F5F5;
-	text-align: center;
-	color: #000000;
-	padding-top: 15px;
-	height: 100px;
-	position: relative;
-	margin-top: -100px;
-	clear: both;
+	padding-top: 43px;
 }
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
+}
+.container {
+	width: 100%;
 }
 
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
 }
-span.visible-xs, span.visible-sm, span.visible-md, span.visible-lg {
-	display: none;
-}
-
-@media (max-width: 767px) {
-	span.visible-xs {
-		display: inline;
-	}
-}
-
-@media (min-width: 768px) and (max-width: 991px) {
-	span.visible-xs.visible-sm {
-		display: inline;
-	}
-	
-	span.visible-sm {
-		display: inline;
-	}
-	
-	span.visible-md.visible-sm {
-		display: inline;
-	}
-	
-	span.visible-lg.visible-sm {
-		display: inline;
-	}
-}
-@media (min-width: 1200px) {
-	span.visible-xs.visible-lg {
-		display: inline;
-	}	
-	
-	span.visible-sm.visible-lg {
-		display: inline !important;
-	}	
-	
-	span.visible-md.visible-lg {
-		display: inline !important;
-	}	
-	
-	span.visible-lg {
-		display: inline !important;
-	}	
-}
-@media (min-width: 992px) and (max-width: 1199px) {
-	span.visible-xs.visible-md {
-		display: inline !important;
-	}
-	
-	span.visible-sm.visible-md {
-		display: inline !important;
-	}
-	
-	span.visible-md {
-		display: inline !important;
-	}
-	
-	span.visible-lg.visible-md {
-		display: inline !important;
-	}		
-}
-@media (max-width: 767px) {
-	span.visible-sm.visible-xs {
-		display: inlin !important;
-	}
-	span.visible-md.visible-xs {
-		display: inline !important;
-	}	
-	span.visible-lg.visible-xs {
-		display: inline !important;
-	}	
-}
-
-
-
-#top {
-	background: #333333;
-	border-bottom: 1px solid #000;
-	text-align: right;
-	color: #999999;
-	font-size: 11px;
-	padding: 4px 0;
-}
 #header {
-	z-index: 2;
 	background-color: #5BC0DE;
 	border-bottom: 1px solid #2495B6;
 	min-height: 40px;
-	margin-bottom: 15px;
+	margin-bottom: 0;
 }
 #header .navbar-brand {
 	padding: 6px 15px 4px 20px;
@@ -191,79 +66,142 @@ span.visible-xs, span.visible-sm, span.visible-md, span.visible-lg {
 	text-shadow: none;
 	padding: 1px 3px;
 }
-/* drop down submen
-.dropdown-menu {
-	font-size: 12px;
+#header {
+	position: relative;
+	top: -40px;	
 }
-.dropdown-menu a {
+#container {
+	height: 100%;
+}
+#column-left {
+	height: 100%;
+	float: left;
+	width: 230px;
+	background-color: #444;
+	border-right: 1px solid #000000;
+	position: relative;
+	z-index: 100;
+}
+#content {
+	padding-top: 15px;
+	padding-bottom: 120px;
+	overflow: auto;
+}
+
+
+
+#menu, #menu ul, #menu li {
+	padding: 0;
+	margin: 0;
+	list-style: none;
+}
+#menu li ul {
+	display: none;
+	background-color: #222;
+}
+#menu li a {
+	text-decoration: none;
+	color: #989895;
+	display: block;
+	padding: 10px;
+}
+#menu > li > a {
+	
+	padding-left: 13px;
 	cursor: pointer;
 }
-.dropdown-submenu {
-	position: relative;
+#menu > li li {
+	padding: 3px 0;
 }
-.dropdown-submenu > .dropdown-menu {
-	top: 0;
-	left: 100%;
-	margin-top: -6px;
-	margin-left: -1px;
-	-webkit-border-radius: 0 6px 6px 6px;
-	-moz-border-radius: 0 6px 6px 6px;
-	border-radius: 0 6px 6px 6px;
+#menu > li > ul > li a {
+	padding: 7px 10px;
 }
-.dropdown-submenu:hover > .dropdown-menu {
-	display: block;
+
+#menu li.active > a i  {
+	color: #FFF;
 }
-.dropdown-submenu > a:after {
-	display: block;
-	content: " ";
+
+#menu li li .parent:after {
+	font-family: FontAwesome;
+	content: "\f105";
 	float: right;
+}
+#menu li li.open .parent:after {
+	font-family: FontAwesome;
+	content: "\f107";
+	float: right;
+}
+#menu li li ul a {
+	padding-left: 20px;
+}
+#menu li li.open ul {
+	display: block;
+	transition: ease-out;
+}
+
+/* Desktop */
+@media (min-width: 768px) {
+	#column-left.mini {
+		width: 50px;
+	}
+	
+	.mini #menu > li a span {
+		display: none;
+		margin-left: 20px;
+	}
+	
+	.mini #menu > li:hover a span {
+		display: inline;
+	}
+	
+	.mini #menu > li:hover > a {
+		background-color: #111;
+		width: 260px;
+	}	
+	
+	
+	
+	
+	
+	.mini #menu > li > ul {
+		position: absolute;
+		left: 50px;
+	}
+		
+	.mini #menu > li:hover > ul {
+		display: block;
+		width: 210px;
+	}
+}
+
+
+
+/* Mobile */
+@media (max-width: 767px) {
+#column-left,  #column-left.mini {
 	width: 0;
-	height: 0;
-	border-color: transparent;
-	border-style: solid;
-	border-width: 5px 0 5px 5px;
-	border-left-color: #cccccc;
-	margin-top: 5px;
-	margin-right: -10px;
+	border-right: none;
 }
-.dropdown-submenu:hover > a:after {
-	border-left-color: #ffffff;
-}
-.dropdown-submenu.pull-left {
-	float: none;
-}
-.dropdown-submenu.pull-left > .dropdown-menu {
-	left: -100%;
-	margin-left: 10px;
-	-webkit-border-radius: 6px 0 6px 6px;
-	-moz-border-radius: 6px 0 6px 6px;
-	border-radius: 6px 0 6px 6px;
 }
 
 
- */
 
 
 
 
-.page-header {
-	min-height: 55px;
-	padding-top: 13px;
-	padding-bottom: 8px;
-	margin: 0;
-	overflow: auto;
-	background-color: #F8F8F8;
-	border-bottom: 1px solid #E7E7E7;
+
+#footer {
+	border-top: 1px solid #E5E5E5;
+	background: #F5F5F5;
+	text-align: center;
+	color: #000000;
+	padding-top: 15px;
+	height: 100px;
+	position: relative;
+	margin-top: -100px;
+	clear: both;
 }
-.page-header h1 {
-	color: #000;
-	font-size: 24px;
-	margin: 0px;
-}
-.page-header h1 i {
-	color: #5BC0DE;
-	margin-right: 3px;
-}
+
 .panel-default > .panel-heading {
 	background-color: #EFEFEF;
 	padding: 5px 15px;
@@ -339,7 +277,7 @@ input.form-control, select.form-control {
 	height: 31px;
 }
 .btn {
-	font-size: 12px;
+	font-size: 13px;
 	border-radius: 4px;
 	border: none;
 }

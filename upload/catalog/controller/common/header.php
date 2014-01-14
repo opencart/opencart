@@ -9,14 +9,6 @@ class ControllerCommonHeader extends Controller {
 			$server = $this->config->get('config_url');
 		}
 
-		if (isset($this->session->data['error']) && !empty($this->session->data['error'])) {
-			$data['error'] = $this->session->data['error'];
-
-			unset($this->session->data['error']);
-		} else {
-			$data['error'] = '';
-		}
-
 		$data['base'] = $server;
 		$data['description'] = $this->document->getDescription();
 		$data['keywords'] = $this->document->getKeywords();

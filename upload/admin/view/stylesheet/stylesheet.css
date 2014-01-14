@@ -66,10 +66,20 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 1px 3px;
 }
 
+#test {
+	height: 100%;
+	position: relative;
+	overflow: auto;
+}
+	
+#container {
+	
+
+}
 
 #column-left {
 	width: 230px;
-	min-height: 100%;
+	height: 100%;
 	background-color: #444;
 	border-right: 1px solid #000000;
 	position: absolute; 
@@ -96,8 +106,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin: 0;
 	list-style: none;
 }
-
-
 #menu li a {
 	text-decoration: none;
 	color: #989895;

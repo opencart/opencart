@@ -115,7 +115,8 @@ div.required .control-label:before {
 	margin-bottom: 10px;
 }
 #search .input-lg {
-	min-height: 40px;
+	height: 40px;
+	line-height: 20px;
 	padding: 0 10px;
 }
 #search .btn-lg {

@@ -60,6 +60,7 @@ class ControllerModuleCart extends Controller {
 		$data['text_empty'] = $this->language->get('text_empty');
 		$data['text_cart'] = $this->language->get('text_cart');
 		$data['text_checkout'] = $this->language->get('text_checkout');
+		$data['text_profile'] = $this->language->get('text_profile');
 		
 		$data['button_remove'] = $this->language->get('button_remove');
 		
@@ -115,7 +116,9 @@ class ControllerModuleCart extends Controller {
 				'quantity' => $product['quantity'],
 				'price'    => $price,	
 				'total'    => $total,	
-				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id'])		
+				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+				'recurring'=> $product['recurring'],
+				'profile'  => $product['profile_name'],
 			);
 		}
 		

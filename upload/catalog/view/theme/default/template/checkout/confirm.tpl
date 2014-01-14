@@ -14,9 +14,16 @@
     <tr>
       <td class="text-left"><a href="<?php echo $product['href']; ?>"><?php echo $product['name']; ?></a>
         <?php foreach ($product['option'] as $option) { ?>
-        <br />
-        &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
-        <?php } ?></td>
+          <br />
+          &nbsp;<small> - <?php echo $option['name']; ?>: <?php echo $option['value']; ?></small>
+        <?php } ?>
+
+        <?php if($product['recurring']) { ?>
+          <br />
+          <span class="label label-info"><?php echo $text_recurring_item; ?></span>
+          <small><?php echo $product['profile_description']; ?></small>
+        <?php } ?>
+      </td>
       <td class="text-left"><?php echo $product['model']; ?></td>
       <td class="text-right"><?php echo $product['quantity']; ?></td>
       <td class="text-right"><?php echo $product['price']; ?></td>

@@ -60,6 +60,9 @@ class ControllerCheckoutCheckout extends Controller {
 		$data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
 		
 		$data['logged'] = $this->customer->isLogged();
+		if (isset($this->request->get['quickconfirm'])) {
+			$data['quickconfirm'] = $this->request->get['quickconfirm'];
+		}
 		
 		if (isset($this->session->data['account'])) {
 			$data['account'] = $this->session->data['account'];

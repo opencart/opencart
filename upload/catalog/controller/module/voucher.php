@@ -12,6 +12,8 @@ class ControllerModuleVoucher extends Controller {
 		$data['button_voucher'] = $this->language->get('button_voucher');
 		
 		$data['status'] = $this->config->get('voucher_status');
+
+		$data['redirect'] = $this->request->get['route'];
 		
 		if (isset($this->session->data['voucher'])) {
 			$data['voucher'] = $this->session->data['voucher'];
@@ -46,7 +48,7 @@ class ControllerModuleVoucher extends Controller {
 				
 			$this->session->data['success'] = $this->language->get('text_success');
 				
-			$json['redirect'] = $this->url->link('checkout/cart');			
+			$json['redirect'] = $this->url->link($this->request->post['redirect']);
 		} else {
 			$json['error'] = $this->language->get('error_voucher');
 		}

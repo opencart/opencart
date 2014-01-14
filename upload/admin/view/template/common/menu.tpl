@@ -9,6 +9,7 @@
       <ul>
         <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
         <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
+        <li><a href="<?php echo $product_profile; ?>"><?php echo $text_product_profile; ?></a></li>
         <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
         <li><a class="parent" data-toggle="dropdown"><?php echo $text_attribute; ?></a>
           <ul>
@@ -37,6 +38,7 @@
     <li id="sale"><a data-toggle="dropdown"><i class="fa fa-shopping-cart fa-fw fa-lg"></i> <span><?php echo $text_sale; ?></span></a>
       <ul>
         <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
+        <li><a href="<?php echo $recurring_profile; ?>"><?php echo $text_recurring_profile; ?></a></li>
         <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
         <li><a class="parent" data-toggle="dropdown"><?php echo $text_customer; ?></a>
           <ul>

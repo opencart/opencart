@@ -27,6 +27,7 @@
               <li><a href="#tab-links" data-toggle="tab"><?php echo $tab_links; ?></a></li>
               <li><a href="#tab-attribute" data-toggle="tab"><?php echo $tab_attribute; ?></a></li>
               <li><a href="#tab-option" data-toggle="tab"><?php echo $tab_option; ?></a></li>
+              <li><a href="#tab-profile" data-toggle="tab"><?php echo $tab_profile; ?></a></li>
               <li><a href="#tab-discount" data-toggle="tab"><?php echo $tab_discount; ?></a></li>
               <li><a href="#tab-special" data-toggle="tab"><?php echo $tab_special; ?></a></li>
               <li><a href="#tab-image" data-toggle="tab"><?php echo $tab_image; ?></a></li>
@@ -627,6 +628,56 @@
                       <?php } ?>
                     </div>
                   </div>
+                </div>
+              </div>
+              <div class="tab-pane" id="tab-profile">
+                <div class="table-responsive">
+                  <table class="table table-striped table-bordered table-hover">
+                    <thead>
+                    <tr>
+                      <td class="text-left"><?php echo $entry_profile; ?></td>
+                      <td class="text-left"><?php echo $entry_customer_group; ?></td>
+                      <td class="text-left"></td>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <?php $profileCount = 0; ?>
+                    <?php foreach ($product_profiles as $product_profile) { ?>
+                    <?php $profileCount++ ?>
+                    <tr id="profile-row<?php echo $profileCount ?>">
+                      <td class="text-left">
+                        <select name="product_profiles[<?php echo $profileCount ?>][profile_id]" class="form-control">
+                          <?php foreach ($profiles as $profile) { ?>
+                          <?php if ($profile['profile_id'] == $product_profile['profile_id']) { ?>
+                          <option value="<?php echo $profile['profile_id'] ?>" selected="selected"><?php echo $profile['name'] ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $profile['profile_id'] ?>"><?php echo $profile['name'] ?></option>
+                          <?php } ?>
+                          <?php } ?>
+                        </select>
+                      </td>
+                      <td class="text-left">
+                        <select name="product_profiles[<?php echo $profileCount ?>][customer_group_id]" class="form-control">
+                          <?php foreach ($customer_groups as $customer_group) { ?>
+                          <?php if ($customer_group['customer_group_id'] == $product_profile['customer_group_id']) { ?>
+                          <option value="<?php echo $customer_group['customer_group_id'] ?>" selected="selected"><?php echo $customer_group['name'] ?></option>
+                          <?php } else { ?>
+                          <option value="<?php echo $customer_group['customer_group_id'] ?>"><?php echo $customer_group['name'] ?></option>
+                          <?php } ?>
+                          <?php } ?>
+                        </select>
+                      </td>
+                      <td class="text-left"><button type="button" onclick="$('#profile-row<?php echo $profileCount ?>').remove()" class="btn btn-danger"><i class="fa fa-trash-o"></i> <?php echo $button_remove ?></button></td>
+                    </tr>
+                    <?php } ?>
+                    </tbody>
+                    <tfoot>
+                    <tr>
+                      <td colspan="2"></td>
+                      <td class="text-left"><button type="button" onclick="addProfile()" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_add_profile ?></button></td>
+                    </tr>
+                    </tfoot>
+                  </table>
                 </div>
               </div>
               <div class="tab-pane" id="tab-discount">
@@ -1257,7 +1308,37 @@ function addImage() {
 	
 	image_row++;
 }
-//--></script> 
+//--></script>
+<script type="text/javascript"><!--
+var profileCount = <?php echo $profileCount ?>;
+
+function addProfile() {
+  profile_count++;
+
+  var html = '';
+  html += '<tr id="profile-row' + profile_count + '">';
+  html += '  <td class="left">';
+  html += '    <select name="product_profiles[' + profile_count + '][profile_id]" class="form-control">>';
+  <?php foreach ($profiles as $profile) { ?>
+    html += '      <option value="<?php echo $profile['profile_id']; ?>"><?php echo $profile['name']; ?></option>';
+  <?php } ?>
+  html += '    </select>';
+  html += '  </td>';
+  html += '  <td class="left">';
+  html += '    <select name="product_profiles[' + profile_count + '][customer_group_id]" class="form-control">>';
+  <?php foreach ($customer_groups as $customer_group) { ?>
+    html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
+  <?php } ?>
+  html += '    <select>';
+  html += '  </td>';
+  html += '  <td class="left">';
+  html += '    <a onclick="$(\'#profile-row' + profile_count + '\').remove()" class="btn btn-danger"><i class="fa fa-trash-o"></i> <?php echo $button_remove; ?></a>';
+  html += '  </td>';
+  html += '</tr>';
+
+  $('#tab-profile table tbody').append(html);
+}
+//--></script>
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');
 $('#option a:first').tab('show');

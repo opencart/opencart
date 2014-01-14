@@ -22,6 +22,8 @@ class ControllerModuleReward extends Controller {
 		$data['button_reward'] = $this->language->get('button_reward');
 		
 		$data['status'] = ($points && $points_total && $this->config->get('reward_status'));
+
+		$data['redirect'] = $this->request->get['route'];
 		
 		if (isset($this->session->data['reward'])) {
 			$data['reward'] = $this->session->data['reward'];
@@ -68,7 +70,7 @@ class ControllerModuleReward extends Controller {
 				
 			$this->session->data['success'] = $this->language->get('text_success');
 				
-			$json['redirect'] = $this->url->link('checkout/cart');		
+			$json['redirect'] = $this->url->link($this->request->post['redirect']);
 		}
 		
 		$this->response->setOutput(json_encode($json));		

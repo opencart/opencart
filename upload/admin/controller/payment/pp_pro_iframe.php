@@ -233,6 +233,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		$data['ipn_url'] = HTTPS_CATALOG . 'index.php?route=payment/pp_pro_iframe/notify';
 
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_pro_iframe.tpl', $data));
@@ -321,6 +322,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_pro_iframe_refund.tpl', $data));
@@ -591,6 +593,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		}
 
 		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('payment/pp_pro_iframe_transaction.tpl', $data));

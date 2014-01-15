@@ -1,38 +1,32 @@
-<?php echo $header; ?>
-<div id="container"><?php echo $menu; ?>
-  <div id="content">
-    <div class="container">
+<?php echo $header; ?><?php echo $menu; ?>
+<div id="content">
+  <div class="container">
     <ul class="breadcrumb">
       <?php foreach ($breadcrumbs as $breadcrumb) { ?>
       <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
       <?php } ?>
     </ul>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="pull-right">
-            <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a>
-          </div>
-          <h1 class="panel-title"><i class="fa fa-credit-card fa-lg"></i> <?php echo $heading_refund; ?></h1>
-        </div>
-        <div class="panel-body">
-          <table class="table table-striped table-bordered">
-            <tr>
-              <td><?php echo $entry_transaction_reference ?></td>
-              <td><?php echo $transaction_reference ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_transaction_amount ?></td>
-              <td><?php echo $transaction_amount ?></td>
-            </tr>
-            <tr>
-              <td><?php echo $entry_refund_amount ?></td>
-              <td>
-                <input type="text" value="0.00" name="amount" />
-                <a class="btn btn-primary" onclick="refund()" id="button-refund"><?php echo $button_refund ?></a>
-              </td>
-            </tr>
-          </table>
-        </div>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="pull-right"> <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a> </div>
+        <h1 class="panel-title"><i class="fa fa-credit-card fa-lg"></i> <?php echo $heading_refund; ?></h1>
+      </div>
+      <div class="panel-body">
+        <table class="table table-striped table-bordered">
+          <tr>
+            <td><?php echo $entry_transaction_reference ?></td>
+            <td><?php echo $transaction_reference ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_transaction_amount ?></td>
+            <td><?php echo $transaction_amount ?></td>
+          </tr>
+          <tr>
+            <td><?php echo $entry_refund_amount ?></td>
+            <td><input type="text" value="0.00" name="amount" />
+              <a class="btn btn-primary" onclick="refund()" id="button-refund"><?php echo $button_refund ?></a></td>
+          </tr>
+        </table>
       </div>
     </div>
   </div>
@@ -67,5 +61,5 @@ function refund() {
     }
   });
 }
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

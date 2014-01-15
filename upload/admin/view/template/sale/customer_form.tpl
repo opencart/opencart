@@ -1,5 +1,4 @@
-<?php echo $header; ?>
-<div id="container"><?php echo $menu; ?>
+<?php echo $header; ?><?php echo $menu; ?>
   <div id="content">
     <div class="container">
       <ul class="breadcrumb">
@@ -346,7 +345,6 @@
           </form>
         </div>
       </div>
-    </div>
   </div>
 </div>
 <script type="text/javascript"><!--

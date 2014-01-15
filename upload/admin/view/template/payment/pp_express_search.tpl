@@ -1,25 +1,20 @@
-<?php echo $header; ?>
-<div id="container"><?php echo $menu; ?>
-  <div id="content">
-    <div class="container">
-      <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
-      </ul>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="pull-right">
-            <a onclick="editSearch();" id="btn_edit" class="btn btn-primary" style="display:none;"><?php echo $btn_edit_search; ?></a>
-            <a onclick="doSearch();" id="btn_search" class="btn btn-primary"><?php echo $btn_search; ?></a>
-          </div>
-          <h1 class="panel-title"><i class="fa fa-search fa-lg"></i> <?php echo $heading_title; ?></h1>
-        </div>
-        <div class="panel-body">
-          <div id="search_input">
-            <form id="form" class="form-horizontal">
+<?php echo $header; ?><?php echo $menu; ?>
+<div id="content">
+  <div class="container">
+    <ul class="breadcrumb">
+      <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+      <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="pull-right"> <a onclick="editSearch();" id="btn_edit" class="btn btn-primary" style="display:none;"><?php echo $btn_edit_search; ?></a> <a onclick="doSearch();" id="btn_search" class="btn btn-primary"><?php echo $btn_search; ?></a> </div>
+        <h1 class="panel-title"><i class="fa fa-search fa-lg"></i> <?php echo $heading_title; ?></h1>
+      </div>
+      <div class="panel-body">
+        <div id="search_input">
+          <form id="form" class="form-horizontal">
             <h3><?php echo $text_date_search; ?></h3>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_date_start; ?></label>
               <div class="col-sm-10">
@@ -32,9 +27,7 @@
                 <input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $text_format; ?>: yy-mm-dd" class="form-control" />
               </div>
             </div>
-
             <h3><?php echo $entry_transaction; ?></h3>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_transaction_type; ?></label>
               <div class="col-sm-10">
@@ -61,49 +54,42 @@
                 </select>
               </div>
             </div>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_email; ?> (<?php echo $entry_email_buyer; ?>)</label>
               <div class="col-sm-10">
                 <input type="text" name="buyer_email" value="" placeholder="<?php echo $entry_email_buyer; ?>" class="form-control" />
               </div>
             </div>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_email; ?> (<?php echo $entry_email_merchant; ?>)</label>
               <div class="col-sm-10">
                 <input type="text" name="merchant_email" value="" placeholder="<?php echo $entry_email_merchant; ?>" class="form-control" />
               </div>
             </div>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_receipt; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="receipt_id" value="" placeholder="<?php echo $entry_receipt; ?>" class="form-control" />
               </div>
             </div>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_transaction_id; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="transaction_id" value="" placeholder="<?php echo $entry_transaction_id; ?>" class="form-control" />
               </div>
             </div>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_invoice_no; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="invoice_number" value="" placeholder="<?php echo $entry_invoice_no; ?>" class="form-control" />
               </div>
             </div>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_auction; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="auction_item_number" value="" placeholder="<?php echo $entry_auction; ?>" class="form-control" />
               </div>
             </div>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_amount; ?></label>
               <div class="col-sm-10">
@@ -111,21 +97,18 @@
                 <br />
                 <select name="currency_code" class="form-control">
                   <?php foreach($currency_codes as $code){ ?>
-                    <option <?php if($code == $default_currency){ echo 'selected'; } ?>><?php echo $code; ?></option>
+                  <option <?php if($code == $default_currency){ echo 'selected'; } ?>><?php echo $code; ?></option>
                   <?php } ?>
                 </select>
               </div>
             </div>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_profile_id; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="profile_id" value="" placeholder="<?php echo $entry_profile_id; ?>" class="form-control" />
               </div>
             </div>
-
             <h3><?php echo $text_buyer_info; ?></h3>
-
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_salutation; ?></label>
               <div class="col-sm-10">
@@ -157,14 +140,14 @@
               </div>
             </div>
           </form>
+        </div>
+        <div id="search_box" style="display:none;">
+          <div id="searching"><i class="fa fa-cog fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
+          <div style="display:none;" id="error" class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
           </div>
-          <div id="search_box" style="display:none;">
-            <div id="searching"><i class="fa fa-cog fa-spin fa-lg"></i> <?php echo $text_searching; ?></div>
-            <div style="display:none;" id="error" class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
-              <button type="button" class="close" data-dismiss="alert">&times;</button>
-            </div>
-            <table id="search_results" style="display:none;" class="table table-striped table-bordered" ></table>
-          </div>
+          <table id="search_results" style="display:none;" class="table table-striped table-bordered" >
+          </table>
         </div>
       </div>
     </div>
@@ -251,5 +234,5 @@ function editSearch() {
   $('#search_results').empty().hide();
   $('#error').empty().hide();
 }
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

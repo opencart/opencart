@@ -1,27 +1,25 @@
-<?php echo $header; ?>
-<div id="container"><?php echo $menu; ?>
-  <div id="content">
-    <div class="container">
-      <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
-      </ul>
-      <?php if (isset($error['error_warning'])) { ?>
-      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['error_warning']; ?>
-        <button type="button" class="close" data-dismiss="alert">&times;</button>
-      </div>
+<?php echo $header; ?><?php echo $menu; ?>
+<div id="content">
+  <div class="container">
+    <ul class="breadcrumb">
+      <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+      <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
       <?php } ?>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <div class="pull-right">
-            <button type="submit" form="form-pp-pro-iframe-uk" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-            <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a>
-          </div>
-          <h1 class="panel-title"><i class="fa fa-credit-card fa-lg"></i> <?php echo $heading_title; ?></h1>
-        </div>
-        <div class="panel-body">
-          <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pp-pro-iframe-uk" class="form-horizontal">
+    </ul>
+    <?php if (isset($error['error_warning'])) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error['error_warning']; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <div class="pull-right">
+          <button type="submit" form="form-pp-pro-iframe-uk" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
+          <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a> </div>
+        <h1 class="panel-title"><i class="fa fa-credit-card fa-lg"></i> <?php echo $heading_title; ?></h1>
+      </div>
+      <div class="panel-body">
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-pp-pro-iframe-uk" class="form-horizontal">
           <ul class="nav nav-tabs">
             <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $tab_settings; ?></a></li>
             <li><a href="#tab-order-status" data-toggle="tab"><?php echo $tab_order_status; ?></a></li>
@@ -67,8 +65,7 @@
                     <option value="0" selected="selected"><?php echo $text_no; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $entry_test_help; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $entry_test_help; ?></span> </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-debug"><?php echo $entry_debug; ?></label>
@@ -82,8 +79,7 @@
                     <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $help_debug ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_debug ?></span> </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-trans-method"><?php echo $entry_transaction_method; ?></label>
@@ -111,14 +107,12 @@
                     <option value="redirect" selected="selected"><?php echo $text_redirect ?></option>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $help_checkout_method ?></span>
-                </div>
+                  <span class="help-block"><?php echo $help_checkout_method ?></span> </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_ipn_url; ?></label>
                 <div class="col-sm-10">
-                  <div class="input-group">
-                    <span class="input-group-addon"><i class="fa fa-link"></i></span>
+                  <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
                     <input type="text" value="<?php echo $ipn_url ?>" class="form-control" />
                   </div>
                 </div>
@@ -127,8 +121,7 @@
                 <label class="col-sm-2 control-label" for="input-total"><?php echo $entry_total; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="pp_pro_iframe_total" value="<?php echo $pp_pro_iframe_total; ?>" placeholder="<?php echo $entry_total; ?>" id="input-total" class="form-control" />
-                  <span class="help-block"><?php echo $entry_total_help; ?></span>
-                </div>
+                  <span class="help-block"><?php echo $entry_total_help; ?></span> </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
@@ -169,138 +162,147 @@
             <div class="tab-pane" id="tab-order-status">
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_canceled_reversal_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_canceled_reversal_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_canceled_reversal_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_canceled_reversal_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_completed_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_completed_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_completed_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_completed_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_denied_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_denied_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_denied_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_denied_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_expired_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_expired_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_expired_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_expired_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_failed_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_failed_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_failed_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_failed_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_pending_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_pending_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_pending_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_pending_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_processed_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_processed_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_processed_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_processed_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_refunded_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_refunded_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_refunded_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_refunded_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_reversed_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_reversed_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_reversed_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_reversed_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_voided_status; ?></label>
-
                 <div class="col-sm-10">
                   <select name="pp_pro_iframe_voided_status_id" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?><?php if ($order_status['order_status_id'] == $pp_pro_iframe_voided_status_id) { ?>
+                    <?php foreach ($order_statuses as $order_status) { ?>
+                    <?php if ($order_status['order_status_id'] == $pp_pro_iframe_voided_status_id) { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
                     <?php } else { ?>
                     <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                    <?php } ?><?php } ?>
+                    <?php } ?>
+                    <?php } ?>
                   </select>
                 </div>
               </div>
             </div>
           </div>
         </form>
-        </div>
       </div>
     </div>
   </div>

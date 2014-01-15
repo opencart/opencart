@@ -48,12 +48,10 @@ $(document).ready(function() {
 		} else {
 			$('#column-left').addClass('mini');
 		}
-	});
+	});	
 });
 
 
-$("#column-left").css({"max-height": $("body").height()});
-	
 // Image Manager
 $(document).delegate('.img-edit', 'click', function(e) {
 	e.preventDefault();

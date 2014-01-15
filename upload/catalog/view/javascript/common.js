@@ -47,9 +47,6 @@ $(document).ready(function() {
 			$(this).css('margin-left', '-' + (i + 5) + 'px');
 		}
 	});
-	
-	// What a shame bootstrap does not take into account dynamically loaded columns
-	cols = $('#column-right, #column-left').length;
 		
 	// product-list
 	$('#list-view').click(function() {
@@ -63,7 +60,10 @@ $(document).ready(function() {
 	// product-grid
 	$('#grid-view').click(function() {
 		$('#content .product-layout > .clearfix').remove();
-	
+		
+		// What a shame bootstrap does not take into account dynamically loaded columns
+		cols = $('#column-right, #column-left').length;
+		
 		if (cols == 2) {
 			$('#content .product-layout').attr('class', 'product-layout product-grid col-lg-6 col-md-6 col-sm-12 col-xs-12');
 			

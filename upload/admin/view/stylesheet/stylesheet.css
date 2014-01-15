@@ -1,7 +1,5 @@
 html, body {
 	height: 100%;
-}
-html {
 	margin: 0;
 	padding: 0;
 }
@@ -16,7 +14,6 @@ h1, h2, h3, h4, h5, h6, p {
 .container {
 	width: 100%;
 }
-
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
@@ -65,42 +62,32 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	text-shadow: none;
 	padding: 1px 3px;
 }
-
-#test {
-	height: 100%;
-	position: relative;
-	overflow: auto;
-}
-	
 #container {
-	
-
+	min-height: 100%;
+	width: 100%;
+	position: relative;
 }
-
 #column-left {
 	width: 230px;
 	height: 100%;
 	background-color: #444;
 	border-right: 1px solid #000000;
-	position: absolute; 
+	position: absolute;
 	top: 0px;
 	padding-top: 50px;
 	z-index: 999;
 }
-
 #content {
 	padding-top: 15px;
 	padding-bottom: 120px;
 	overflow: auto;
 }
-#column-left + #content { 
+#column-left + #content {
 	margin-left: 230px;
 }
-#column-left.mini + #content { 
+#column-left.mini + #content {
 	margin-left: 50px;
 }
-
-
 #menu, #menu ul, #menu li {
 	padding: 0;
 	margin: 0;
@@ -125,18 +112,15 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #menu > li > ul {
 	z-index: 1;
 }
-
 #menu > li li {
 	padding: 3px 0;
 }
 #menu > li > ul > li a {
 	padding: 7px 10px;
 }
-
-#menu li.active > a i  {
+#menu li.active > a i {
 	color: #FFF;
 }
-
 #menu li li .parent:after {
 	font-family: FontAwesome;
 	content: "\f105";
@@ -157,56 +141,39 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 
 /* Desktop */
 @media (min-width: 768px) {
-	#column-left.mini {
-		width: 50px;
-	}
-	
-	.mini #menu > li a span {
-		display: none;
-		margin-left: 20px;
-	}
-	
-	.mini #menu > li:hover a span {
-		display: inline;
-	}
-	
-	.mini #menu > li:hover > a {
-		background-color: #111;
-		width: 260px;
-		
-	}	
-	
-	
-	
-	
-	
-	.mini #menu > li > ul {
-		position: absolute;
-		left: 50px;
-	}
-		
-	.mini #menu > li:hover > ul {
-		display: block;
-		width: 210px;
-	}
+#column-left.mini {
+	width: 50px;
+}
+.mini #menu > li a span {
+	display: none;
+	margin-left: 20px;
+}
+.mini #menu > li:hover a span {
+	display: inline;
+}
+.mini #menu > li:hover > a {
+	background-color: #111;
+	width: 260px;
+}
+.mini #menu > li > ul {
+	position: absolute;
+	left: 50px;
+}
+.mini #menu > li:hover > ul {
+	display: block;
+	width: 210px;
+}
 }
 
 
 
 /* Mobile */
 @media (max-width: 767px) {
-#column-left,  #column-left.mini {
+#column-left, #column-left.mini {
 	width: 0;
 	border-right: none;
 }
 }
-
-
-
-
-
-
-
 #footer {
 	border-top: 1px solid #E5E5E5;
 	background: #F5F5F5;
@@ -218,7 +185,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	margin-top: -100px;
 	clear: both;
 }
-
 .panel-default > .panel-heading {
 	background-color: #EFEFEF;
 	padding: 5px 15px;
@@ -226,7 +192,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 .panel-title {
 	padding: 5px 0;
-	font-size: 23px;
+	font-size: 18px;
 	text-shadow: 1px 1px 0px #FFFFFF;
 }
 .panel-title i {
@@ -270,7 +236,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	-ms-transform: rotate(45deg);
 	-webkit-transform: rotate(45deg);
 }
-
 .alert {
 	font-size: 12px;
 	padding: 10px;
@@ -294,7 +259,7 @@ input.form-control, select.form-control {
 	height: 31px;
 }
 .btn {
-	font-size: 13px;
+	font-size: 12px;
 	border-radius: 4px;
 	border: none;
 }

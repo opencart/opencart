@@ -27,6 +27,7 @@
 <?php } ?>
 </head>
 <body>
+<div id="container">
 <header id="header" class="navbar navbar-default navbar-static-top">
   <div class="container">
     <div class="navbar-header"><a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a> </div>

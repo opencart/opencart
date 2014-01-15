@@ -29,9 +29,8 @@
 <body>
 <div id="container">
 <header id="header" class="navbar navbar-default navbar-static-top">
-  <div class="container">
+  <div class="container"> <a type="button" id="button-menu" class="navbar-btn pull-left"><span class="fa fa-bars"></span></a>
     <div class="navbar-header"><a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a> </div>
-    <a type="button" id="button-menu" class="navbar-btn"><span class="fa fa-bars"></span></a>
     <?php if ($logged) { ?>
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left">4</span> <i class="fa fa-bell fa-lg"></i></a>

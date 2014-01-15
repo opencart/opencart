@@ -18,11 +18,26 @@ h1, h2, h3, h4, h5, h6, p {
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
 }
+#container {
+	min-height: 100%;
+	width: 100%;
+	position: relative;
+}
 #header {
 	background-color: #5BC0DE;
 	border-bottom: 1px solid #2495B6;
 	min-height: 40px;
 	margin-bottom: 0;
+}
+#button-menu {
+	font-size: 21px;
+	line-height: 25px;
+	float: left;
+	margin-right: 15px;
+	display: inline-block;
+	cursor: pointer;
+	color: #FFF;
+	text-shadow: 1px 1px 0 #2495B6;
 }
 #header .navbar-brand {
 	padding: 6px 15px 4px 20px;
@@ -62,11 +77,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	text-shadow: none;
 	padding: 1px 3px;
 }
-#container {
-	min-height: 100%;
-	width: 100%;
-	position: relative;
-}
+
 #column-left {
 	width: 230px;
 	height: 100%;

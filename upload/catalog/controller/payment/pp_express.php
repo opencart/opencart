@@ -682,23 +682,25 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['action_confirm'] = $this->url->link('payment/pp_express/expressComplete', '', 'SSL');
 
-		$data['error_warning'] = '';
-		$data['attention'] = '';
-		$data['success'] = '';
-
 		if(isset($this->session->data['error_warning'])) {
 			$data['error_warning'] = $this->session->data['error_warning'];
 			unset($this->session->data['error_warning']);
+		} else {
+			$data['error_warning'] = '';
 		}
 
 		if(isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
 		}
 
 		if(isset($this->session->data['attention'])) {
 			$data['attention'] = $this->session->data['attention'];
 			unset($this->session->data['attention']);
+		} else {
+			$data['attention'] = '';
 		}
 
 		$data['coupon'] = $this->load->controller('module/coupon');

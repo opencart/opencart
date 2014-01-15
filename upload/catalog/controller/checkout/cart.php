@@ -86,6 +86,9 @@ class ControllerCheckoutCart extends Controller {
 				$data['error_warning'] = $this->error['warning'];
 			} elseif (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
       			$data['error_warning'] = $this->language->get('error_stock');		
+			} elseif (isset($this->session->data['error'])) {
+				$data['error_warning'] = $this->session->data['error'];
+				unset($this->session->data['error']);
 			} else {
 				$data['error_warning'] = '';
 			}

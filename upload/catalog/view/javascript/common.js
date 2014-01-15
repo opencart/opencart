@@ -48,17 +48,19 @@ $(document).ready(function() {
 		}
 	});
 	
-	// What a shame bootstrap did not take into account dynamically loaded columns
+	// What a shame bootstrap does not take into account dynamically loaded columns
 	cols = $('#column-right, #column-left').length;
 		
-	// Product-grid to product-list
+	// product-list
 	$('#list-view').click(function() {
 		$('#content .product-layout > .clearfix').remove();
 		
 		$('#content .product-layout').attr('class', 'product-layout product-list col-xs-12');
+		
+		localStorage.setItem('display', 'list');
 	});
 	
-	// Product-list to product-grid
+	// product-grid
 	$('#grid-view').click(function() {
 		$('#content .product-layout > .clearfix').remove();
 	
@@ -75,7 +77,15 @@ $(document).ready(function() {
 			
 			$('#content .product-layout:nth-child(4)').after('<div class="clearfix"></div>');
 		}
+		
+		 localStorage.setItem('display', 'grid');
 	});
+	
+	if (localStorage.getItem('display') == 'list') {
+		$('#list-view').trigger('click');
+	} else {
+		$('#grid-view').trigger('click');
+	}
 	
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});

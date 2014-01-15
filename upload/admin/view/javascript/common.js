@@ -52,6 +52,7 @@ $(document).ready(function() {
 });
 
 
+$("#column-left").css({"max-height": $("body").height()});
 	
 // Image Manager
 $(document).delegate('.img-edit', 'click', function(e) {

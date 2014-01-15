@@ -1,13 +1,9 @@
 <div class="panel panel-default">
   <div class="panel-heading"><?php echo $heading_title; ?></div>
-  <ul class="list-group">
+  <div class="list-group">
     <?php foreach ($filter_groups as $filter_group) { ?>
-    <li class="list-group-item"><a href=""><i class="fa fa-plus-square-o"></i> <?php echo $filter_group['name']; ?></a></li>
-    <li class="list-group-item">
-    
-      
-    
-    
+    <a class="list-group-item"><?php echo $filter_group['name']; ?></a>
+    <div class="list-group-item">
       <div id="filter-group<?php echo $filter_group['filter_group_id']; ?>">
         <?php foreach ($filter_group['filter'] as $filter) { ?>
         <?php if (in_array($filter['filter_id'], $filter_category)) { ?>
@@ -21,20 +17,14 @@
         <?php } ?>
         <?php } ?>
       </div>
-      
-      
-    </li>
+    </div>
     <?php } ?>
-  </ul>
+  </div>
   <div class="panel-footer text-right">
     <button type="button" id="button-filter" class="btn btn-primary"><?php echo $button_filter; ?></button>
   </div>
 </div>
 <script type="text/javascript"><!--
-$('.button-filter').on('click', function() {
-	$('#product-filter').nextSibling().on('click');
-});
-
 $('#button-filter').on('click', function() {
 	filter = [];
 	

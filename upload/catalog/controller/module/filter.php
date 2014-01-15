@@ -50,15 +50,15 @@ class ControllerModuleFilter extends Controller {
 			
 			if ($filter_groups) {
 				foreach ($filter_groups as $filter_group) {
-					$filter_data = array();
+					$childen_data = array();
 					
 					foreach ($filter_group['filter'] as $filter) {
 						$filter_data = array(
 							'filter_category_id' => $category_id,
 							'filter_filter'      => $filter['filter_id']
 						);	
-						
-						$filter_data[] = array(
+
+						$childen_data[] = array(
 							'filter_id' => $filter['filter_id'],
 							'name'      => $filter['name'] . ($this->config->get('config_product_count') ? ' (' . $this->model_catalog_product->getTotalProducts($filter_data) . ')' : '')
 						);
@@ -67,7 +67,7 @@ class ControllerModuleFilter extends Controller {
 					$data['filter_groups'][] = array(
 						'filter_group_id' => $filter_group['filter_group_id'],
 						'name'            => $filter_group['name'],
-						'filter'          => $filter_data
+						'filter'          => $childen_data
 					);
 				} 
 				

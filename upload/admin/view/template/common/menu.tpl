@@ -1,17 +1,17 @@
-<nav id="column-left" class="mini">
+<nav id="column-left">
   <ul id="menu">
     <li id="search">
       <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
       <div style="display: none;"><input type="text" name="search" value="" /></div>
     </li>
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-tachometer fa-fw fa-lg"></i> <span><?php echo $text_dashboard; ?></span></a></li>
-    <li id="catalog"><a data-toggle="dropdown"><i class="fa fa-tags fa-fw fa-lg"></i> <span><?php echo $text_catalog; ?></span></a>
+    <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw fa-lg"></i> <span><?php echo $text_catalog; ?></span></a>
       <ul>
         <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>
         <li><a href="<?php echo $product; ?>"><?php echo $text_product; ?></a></li>
         <li><a href="<?php echo $product_profile; ?>"><?php echo $text_product_profile; ?></a></li>
         <li><a href="<?php echo $filter; ?>"><?php echo $text_filter; ?></a></li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_attribute; ?></a>
+        <li><a class="parent"><?php echo $text_attribute; ?></a>
           <ul>
             <li><a href="<?php echo $attribute; ?>"><?php echo $text_attribute; ?></a></li>
             <li><a href="<?php echo $attribute_group; ?>"><?php echo $text_attribute_group; ?></a></li>
@@ -24,7 +24,7 @@
         <li><a href="<?php echo $information; ?>"><?php echo $text_information; ?></a></li>
       </ul>
     </li>
-    <li id="extension"><a data-toggle="dropdown"><i class="fa fa-puzzle-piece fa-fw fa-lg"></i> <span><?php echo $text_extension; ?></span></a>
+    <li id="extension"><a class="parent"><i class="fa fa-puzzle-piece fa-fw fa-lg"></i> <span><?php echo $text_extension; ?></span></a>
       <ul>
         <li><a href="<?php echo $installer; ?>"><?php echo $text_installer; ?></a></li>
         <li><a href="<?php echo $modification; ?>"><?php echo $text_modification; ?></a></li>
@@ -35,12 +35,12 @@
         <li><a href="<?php echo $feed; ?>"><?php echo $text_feed; ?></a></li>
       </ul>
     </li>
-    <li id="sale"><a data-toggle="dropdown"><i class="fa fa-shopping-cart fa-fw fa-lg"></i> <span><?php echo $text_sale; ?></span></a>
+    <li id="sale"><a class="parent"><i class="fa fa-shopping-cart fa-fw fa-lg"></i> <span><?php echo $text_sale; ?></span></a>
       <ul>
         <li><a href="<?php echo $order; ?>"><?php echo $text_order; ?></a></li>
         <li><a href="<?php echo $recurring_profile; ?>"><?php echo $text_recurring_profile; ?></a></li>
         <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?></a></li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_customer; ?></a>
+        <li><a class="parent"><?php echo $text_customer; ?></a>
           <ul>
             <li><a href="<?php echo $customer; ?>"><?php echo $text_customer; ?></a></li>
             <li><a href="<?php echo $customer_group; ?>"><?php echo $text_customer_group; ?></a></li>
@@ -48,13 +48,13 @@
             <li><a href="<?php echo $customer_ban_ip; ?>"><?php echo $text_customer_ban_ip; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_voucher; ?></a>
+        <li><a class="parent"><?php echo $text_voucher; ?></a>
           <ul>
             <li><a href="<?php echo $voucher; ?>"><?php echo $text_voucher; ?></a></li>
             <li><a href="<?php echo $voucher_theme; ?>"><?php echo $text_voucher_theme; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_marketing; ?></a>
+        <li><a class="parent"><?php echo $text_marketing; ?></a>
           <ul>
             <li><a href="<?php echo $marketing; ?>"><?php echo $text_marketing; ?></a></li>
             <li><a href="<?php echo $affiliate; ?>"><?php echo $text_affiliate; ?></a></li>
@@ -64,29 +64,29 @@
         </li>
       </ul>
     </li>
-    <li id="system"><a data-toggle="dropdown"><i class="fa fa-cog fa-fw fa-lg"></i> <span><?php echo $text_system; ?></span></a>
+    <li id="system"><a class="parent"><i class="fa fa-cog fa-fw fa-lg"></i> <span><?php echo $text_system; ?></span></a>
       <ul>
         <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_design; ?></a>
+        <li><a class="parent"><?php echo $text_design; ?></a>
           <ul>
             <li><a href="<?php echo $layout; ?>"><?php echo $text_layout; ?></a></li>
             <li><a href="<?php echo $banner; ?>"><?php echo $text_banner; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_users; ?></a>
+        <li><a class="parent"><?php echo $text_users; ?></a>
           <ul>
             <li><a href="<?php echo $user; ?>"><?php echo $text_user; ?></a></li>
             <li><a href="<?php echo $user_group; ?>"><?php echo $text_user_group; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_localisation; ?></a>
+        <li><a class="parent"><?php echo $text_localisation; ?></a>
           <ul>
             <li><a href="<?php echo $location; ?>"><?php echo $text_location; ?></a></li>
             <li><a href="<?php echo $language; ?>"><?php echo $text_language; ?></a></li>
             <li><a href="<?php echo $currency; ?>"><?php echo $text_currency; ?></a></li>
             <li><a href="<?php echo $stock_status; ?>"><?php echo $text_stock_status; ?></a></li>
             <li><a href="<?php echo $order_status; ?>"><?php echo $text_order_status; ?></a></li>
-            <li><a class="parent" data-toggle="dropdown"><?php echo $text_return; ?></a>
+            <li><a class="parent"><?php echo $text_return; ?></a>
               <ul>
                 <li><a href="<?php echo $return_status; ?>"><?php echo $text_return_status; ?></a></li>
                 <li><a href="<?php echo $return_action; ?>"><?php echo $text_return_action; ?></a></li>
@@ -96,7 +96,7 @@
             <li><a href="<?php echo $country; ?>"><?php echo $text_country; ?></a></li>
             <li><a href="<?php echo $zone; ?>"><?php echo $text_zone; ?></a></li>
             <li><a href="<?php echo $geo_zone; ?>"><?php echo $text_geo_zone; ?></a></li>
-            <li><a class="parent" data-toggle="dropdown"><?php echo $text_tax; ?></a>
+            <li><a class="parent"><?php echo $text_tax; ?></a>
               <ul>
                 <li><a href="<?php echo $tax_class; ?>"><?php echo $text_tax_class; ?></a></li>
                 <li><a href="<?php echo $tax_rate; ?>"><?php echo $text_tax_rate; ?></a></li>
@@ -111,9 +111,9 @@
         <li><a href="<?php echo $backup; ?>"><?php echo $text_backup; ?></a></li>
       </ul>
     </li>
-    <li id="reports"><a data-toggle="dropdown"><i class="fa fa-bar-chart-o fa-fw fa-lg"></i> <span><?php echo $text_reports; ?></span></a>
+    <li id="reports"><a class="parent"><i class="fa fa-bar-chart-o fa-fw fa-lg"></i> <span><?php echo $text_reports; ?></span></a>
       <ul>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_sale; ?></a>
+        <li><a class="parent"><?php echo $text_sale; ?></a>
           <ul>
             <li><a href="<?php echo $report_sale_order; ?>"><?php echo $text_report_sale_order; ?></a></li>
             <li><a href="<?php echo $report_sale_tax; ?>"><?php echo $text_report_sale_tax; ?></a></li>
@@ -122,13 +122,13 @@
             <li><a href="<?php echo $report_sale_coupon; ?>"><?php echo $text_report_sale_coupon; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_product; ?></a>
+        <li><a class="parent"><?php echo $text_product; ?></a>
           <ul>
             <li><a href="<?php echo $report_product_viewed; ?>"><?php echo $text_report_product_viewed; ?></a></li>
             <li><a href="<?php echo $report_product_purchased; ?>"><?php echo $text_report_product_purchased; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_customer; ?></a>
+        <li><a class="parent"><?php echo $text_customer; ?></a>
           <ul>
             <li><a href="<?php echo $report_customer_online; ?>"><?php echo $text_report_customer_online; ?></a></li>
             <li><a href="<?php echo $report_customer_activity; ?>"><?php echo $text_report_customer_activity; ?></a></li>
@@ -137,7 +137,7 @@
             <li><a href="<?php echo $report_customer_credit; ?>"><?php echo $text_report_customer_credit; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent" data-toggle="dropdown"><?php echo $text_marketing; ?></a>
+        <li><a class="parent"><?php echo $text_marketing; ?></a>
           <ul>
             <li><a href="<?php echo $report_marketing; ?>"><?php echo $text_marketing; ?></a></li>
             <li><a href="<?php echo $report_affiliate; ?>"><?php echo $text_affiliate; ?></a></li>

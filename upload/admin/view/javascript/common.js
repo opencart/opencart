@@ -43,12 +43,20 @@ $(document).ready(function() {
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	
 	$('#button-menu').on('click', function() {
-		if ($('#column-left').hasClass('mini')) {
-			$('#column-left').removeClass('mini');
+		if ($('#column-left').hasClass('active')) {
+			$('#column-left').removeClass('active');
 		} else {
-			$('#column-left').addClass('mini');
+			$('#column-left').addClass('active');
 		}
 	});	
+	
+	$('#column-left a.parent').on('click', function() {
+		if ($(this).parent().hasClass('open')) {
+			$(this).parent().removeClass('open');
+		} else {
+			$(this).parent().addClass('open');
+		}
+	});		
 });
 
 

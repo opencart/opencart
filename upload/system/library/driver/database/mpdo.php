@@ -1,115 +1,208 @@
 <?php
 /**
-*   i changed class name as mPDO because, give me an error 
-*    
-*    " Fatal error: Cannot redeclare class pdo. If this code worked without the Zend Optimizer+, 
-*      please set zend_optimizerplus.dups_fix=1 in your php.ini "
-*/
+ * "mPDO" name is given because the "PDO" is already used by PHP.
+ */
 
 final class DBmPDO {
+	/**
+	 * @var PDO
+	 */
 	private $pdo = null;
+	
+	/**
+	 * @var PDOStatement
+	 */
 	private $statement = null;
-
-	public function __construct($hostname, $username, $password, $database, $port = "3306") {
-
+	
+	/**
+	 * Initialization
+	 * @param  string $hostname Host name to connect
+	 * @param  string $username Username for database access
+	 * @param  string $password Password for database access
+	 * @param  string $database Database name
+	 * @param  string $port     Port number
+	 */
+	public function __construct($hostname, $username, $password, $database, $port = '3306') {
 		try {
-			$this->pdo = new PDO("mysql:host=".$hostname.";port=".$port.";dbname=".$database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
+			$this->pdo = new PDO("mysql:host=$hostname;port=$port;dbname=$database", $username, $password, array(PDO::ATTR_PERSISTENT => true));
+			$this->pdo->query("SET NAMES 'utf8', CHARACTER SET utf8, CHARACTER_SET_CONNECTION=utf8, SQL_MODE = ''");
+			$this->pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 		} catch(PDOException $e) {
-			trigger_error('Error: Could not make a database link ( '. $e->getMessage() . '). Error Code : ' . $e->getCode() . ' <br />');
-		}
-
-		$this->pdo->exec("SET NAMES 'utf8'");
-		$this->pdo->exec("SET CHARACTER SET utf8");
-		$this->pdo->exec("SET CHARACTER_SET_CONNECTION=utf8");
-		$this->pdo->exec("SET SQL_MODE = ''");
-
-	}
-
-	public function prepare($sql) {
-		$this->statement = $this->pdo->prepare($sql);
-	}
-
-	public function bindParam($parameter, $variable, $data_type = PDO::PARAM_STR, $length = 0) {
-		if ($length) {
-			$this->statement->bindParam($parameter, $variable, $data_type, $length);
-		} else {
-			$this->statement->bindParam($parameter, $variable, $data_type);
-		}
-	}
-
-	public function execute() {
-		try {
-			if ($this->statement && $this->statement->execute()) {
-				$data = array();
-
-				while ($row = $this->statement->fetch(PDO::FETCH_ASSOC)) {
-					$data[] = $row;
-				}
-
-				$result = new stdClass();
-				$result->row = ( isset($data[0]) ? $data[0] : array() );
-				$result->rows = $data;
-				$result->num_rows = $this->statement->rowCount();
-			}
-		} catch(PDOException $e) {
-			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
-		}
-	}
-
-	public function query($sql, $params = array()) {
-		$this->statement = $this->pdo->prepare($sql);
-		$result = false;
-
-		try {
-			if ($this->statement && $this->statement->execute($params)) {
-				$data = array();
-
-				while ($row = $this->statement->fetch(PDO::FETCH_ASSOC)) {
-					$data[] = $row;
-				}
-
-				$result = new stdClass();
-				$result->row = (isset($data[0]) ? $data[0] : array());
-				$result->rows = $data;
-				$result->num_rows = $this->statement->rowCount();
-			}
-		} catch (PDOException $e) {
-			trigger_error('Error: ' . $e->getMessage() . ' Error Code : ' . $e->getCode() . ' <br />' . $sql);
+			trigger_error('Error: Could not make a database link ('. $e->getMessage() . '). Error Code : ' . $e->getCode() . ' <br />');
 			exit();
 		}
-
-		if ($result) {
-			return $result;
-		} else {
-			$result = new stdClass();
-			$result->row = array();
-			$result->rows = array();
-			$result->num_rows = 0;
-			return $result;
+	}
+	
+	/**
+	 * Query database
+	 * @param  string $sql    Query string
+	 * @param  array  $params Additional parameters to pass into query string
+	 * @return stdClass       Query result
+	 */
+	public function query($sql, $params = array()) {
+		try {
+			if ($this->statement) {
+				// Close cursor to prevent HY000 error.
+				$this->statement->closeCursor();
+			}
+			
+			$this->statement = $this->pdo->prepare($sql);
+			$this->statement->execute($params);
+			
+			$result = $this->statement->fetchAll();
+			
+			$query = new stdClass();
+			$query->row = isset($result[0]) ? $result[0] : array();
+			$query->rows = $result;
+			$query->num_rows = count($result);
+			
+			unset($result);
+			
+			return $query;
+		} catch (PDOException $e) {
+			if ($e->getCode() != 'HY000') {
+				trigger_error('Error: ' . $e->getMessage() . '<br>Error No: ' . $e->getCode() . '<br>Query: ' . $this->explain($sql, $params) . '<br>');
+				exit();
+			}
 		}
 	}
-
-	// From http://www.php.net/manual/de/function.mysql-real-escape-string.php#98506
+	
+	/**
+	 * Escape value for including in a query
+	 * @param  mixed  $value Value to escape
+	 * @return string Escaped string
+	 */
 	public function escape($value) {
-		// Maybe we should use quote for this.
-		$search=array("\\","\0","\n","\r","\x1a","'",'"');
-		$replace=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
-		return str_replace($search,$replace,$value);
-	}
-
-	public function countAffected() {
-		if ($this->statement) {
-			return $this->statement->rowCount();
+		if ($this->pdo) {
+			return preg_replace("/^'(.*)'$/", '$1', $this->pdo->quote($value));
 		} else {
-			return 0;
+			trigger_error('Error: Escaping value is avilable only for an active database link.');
+			exit();
 		}
 	}
-
-	public function getLastId() {
-		return $this->pdo->lastInsertId();
+	
+	/**
+	 * Get count of rows which were affected by the last query
+	 * @return integer Rows count
+	 */
+	public function countAffected() {
+		return $this->statement ? $this->statement->rowCount() : 0;
 	}
-
+	
+	/**
+	 * Get last inserted id
+	 * @return integer Id
+	 */
+	public function getLastId() {
+		if ($this->pdo) {
+			return $this->pdo->lastInsertId();
+		} else {
+			trigger_error('Error: Could not obtain last inserted ID because of inactive database link.');
+			exit();
+		}
+	}
+	
+	/**
+	 * Returns query string which is prepared with parameters.
+	 * @param  string $sql    Query string
+	 * @param  array  $params Additional parameters
+	 * @return mixed         $db.explain()
+	 */
+	public function explain($sql, $params = array()) {
+		if ( count($params) ) {
+			/*
+			 * PDO SQL parser algorithm implementation.
+			 * See PHP source code: /ext/pdo/pdo_sql_parser.c
+			 */
+			$params_keys = array_keys($params);
+			
+			$positional_mode = array_filter($params_keys, 'is_int') === $params_keys ? true : false;
+			
+			$result_sql = '';
+			$sql_chars = str_split($sql);
+			$subst = $quote = $double_quote = $comment = $eol_comment = false;
+			$subst_token = '';
+			$position = 0;
+			
+			foreach ($sql_chars as $key => $char) {
+				switch ($char) {
+					case '"':
+						if ($sql_chars[$key-1] != '\\') {
+							$double_quote = $double_quote && !$comment && !$eol_comment ? false : true;
+						}
+						break;
+					case "'":
+						if ($sql_chars[$key-1] != '\\') {
+							$quote = $quote && !$comment && !$eol_comment ? false : true;
+						}
+						break;
+					case "/":
+						if ($sql_chars[$key+1] == '*' && !$eol_comment) {
+							$comment = true;
+						}
+						
+						if ($sql_chars[$key-1] == '*' && !$eol_comment) {
+							$comment = false;
+						}
+						break;
+					case "-":
+						if ($sql_chars[$key+1] == '-' && !$comment) {
+							$eol_comment = true;
+						}
+						break;
+					case "\n":
+					case "\r":
+						$eol_comment = false;
+						break;
+					case "?":
+						if (!$double_quote && !$quote && !$comment && !$eol_comment && $positional_mode) {
+							$char = "'" . $this->escape($params[$position++]) . "'";
+						}
+						break;
+					case ":":
+						if (!$double_quote && !$quote && !$comment && !$eol_comment && !$positional_mode && preg_match('/[a-zA-Z0-9_]/', $sql_chars[$key+1])) {
+							$subst = true;
+							$subst_token = $char;
+							$char = '';
+						}
+						break;
+					default:
+						if ($subst) {
+							if ( preg_match('/[a-zA-Z0-9_]/', $char) ) {
+								$subst_token .= $char;
+								$char = '';
+							} else {
+								$subst = false;
+								$char = "'" . $this->escape($params[$subst_token]) . "'";	
+							}
+							
+							if ($subst && count($sql_chars) == $key+1) {
+								$subst = false;
+								$char = "'" . $this->escape($params[$subst_token]) . "'";
+							}
+						}
+						break;
+				}
+				
+				$result_sql .= $char;
+			}
+		} else {
+			$result_sql = $sql;
+		}
+		
+		return $result_sql;
+	}
+	
+	/**
+	 * Destruct PDOStatement and PDO instances
+	 */
 	public function __destruct() {
-		$this->pdo = null;
+		if ($this->statement) {
+			unset($this->statement);
+		}
+		
+		if ($this->pdo) {
+			unset($this->pdo);
+		}
 	}
 }

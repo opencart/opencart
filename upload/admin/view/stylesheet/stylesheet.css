@@ -139,20 +139,29 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: 270px;	
 	background-color: #222;
 }
+.active #search:hover {
+	width: 100%;
+}
 #search .btn {
 	padding: 10px;
 	color: #FFF;
 }
 #search input {
+	color: #ccc;
+	padding: 0 10px;
 	display: none;
 	height: 25px;
-	width: 200px;
+	width: 215px;
 	margin-left: 3px;
 	border: 1px solid #000;	
 	background-color: #000;	
 }
 #search:hover input {
 	display: inline-block;	
+}
+.active #search input {
+	display: inline-block !important;
+	width: 165px;
 }
 #menu > li {
 	position: relative;

@@ -1,8 +1,10 @@
 <nav id="column-left">
   <ul id="menu">
-    <li id="search">
-      <button type="button" class="btn btn-default"><i class="fa fa-search"></i></button>
-      <div style="display: none;"><input type="text" name="search" value="" /></div>
+    <li>
+      <div id="search">
+        <button type="button" class="btn btn-link"><i class="fa fa-search fa-fw fa-lg"></i></button>
+        <input type="text" name="search" value="" />
+      </div>
     </li>
     <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-tachometer fa-fw fa-lg"></i> <span><?php echo $text_dashboard; ?></span></a></li>
     <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw fa-lg"></i> <span><?php echo $text_catalog; ?></span></a>

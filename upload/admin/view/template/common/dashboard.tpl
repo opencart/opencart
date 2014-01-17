@@ -15,7 +15,7 @@
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
     <div class="row">
-      <div class="col-md-3">
+      <div class="col-sm-3">
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="row">
@@ -32,7 +32,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-sm-3">
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="row">
@@ -49,7 +49,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-sm-3">
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="row">
@@ -67,7 +67,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-3">
+      <div class="col-sm-3">
         <div class="panel panel-default">
           <div class="panel-body">
             <div class="row">
@@ -89,7 +89,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             <div class="pull-right">
@@ -115,7 +115,7 @@
           </div>
         </div>
       </div>
-      <div class="col-md-6">
+      <div class="col-sm-6">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title"><i class="fa fa-eye fa-lg"></i> <?php echo $text_online; ?></h1>
@@ -127,7 +127,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="col-md-4">
+      <div class="col-sm-4">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title"><i class="fa fa-calendar-o fa-lg"></i> <?php echo $text_activity; ?></h1>
@@ -144,7 +144,7 @@
           </ul>
         </div>
       </div>
-      <div class="col-md-8">
+      <div class="col-sm-8">
         <div class="panel panel-default">
           <div class="panel-heading">
             <h1 class="panel-title"><i class="fa fa-shopping-cart fa-lg"></i> <?php echo $text_last_order; ?></h1>

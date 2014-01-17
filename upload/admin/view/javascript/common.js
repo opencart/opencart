@@ -45,11 +45,19 @@ $(document).ready(function() {
 	$('#button-menu').on('click', function() {
 		if ($('#column-left').hasClass('active')) {
 			$('#column-left').removeClass('active');
+			
+			localStorage.setItem('column-left', '');
 		} else {
 			$('#column-left').addClass('active');
+			
+			localStorage.setItem('column-left', 'active');
 		}
 	});	
 	
+	if (localStorage.getItem('column-left') == 'active') {
+		$('#column-left').addClass('active');
+	}
+		
 	$('#column-left a.parent').on('click', function() {
 		if ($(this).parent().hasClass('open')) {
 			$(this).parent().removeClass('open');

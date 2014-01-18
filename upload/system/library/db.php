@@ -6,6 +6,14 @@ class DB {
 	private $db;
 	
 	/**
+	 * @var array Additional database extension parameters
+	 */
+	private $db_param = array(
+		'can_parametrize' => false,
+		'can_explain' => false,
+	);
+	
+	/**
 	 * Initialization
 	 * @param string $driver   Database driver name
 	 * @param string $hostname Host name to connect
@@ -23,6 +31,17 @@ class DB {
 			$class = 'DB' . $driver;
 			
 			$this->db = new $class($hostname, $username, $password, $database, $port);
+			
+			$db_reflection = new ReflectionClass($this->db);
+			$query_method = $db_reflection->getMethod('query');
+			
+			if (count($query_method->getParameters()) > 1) {
+				$this->db_param['can_parametrize'] = true;
+			}
+			
+			if (method_exists($this->db, 'explain')) {
+				$this->db_param['can_explain'] = true;
+			}
 		} else {
 			exit('Error: Could not load database driver ' . $driver . '!');
 		}		
@@ -50,10 +69,7 @@ class DB {
 	 */
 	public function query($sql, $params = array()) {
 		if (count($params)) {
-			$reflection = new ReflectionClass($this->db);
-			$method = $reflection->getMethod('query');
-			
-			if (count($method->getParameters()) > 1) {
+			if ($this->db_param['can_parametrize']) {
 				return $this->db->query($sql, $params);
 			} else {
 				$sql = $this->explain($sql, $params);
@@ -100,7 +116,7 @@ class DB {
 	 * @return string         $db.explain()
 	 */
 	public function explain($sql, $params = array()) {
-		if (method_exists($this->db, 'explain')) {
+		if ($this->db_param['can_explain']) {
 			return $this->db->explain($sql, $params);
 		} else {
 			/*

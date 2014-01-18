@@ -1,7 +1,7 @@
-<form id="payment" class="form-horizontal">
-  <fieldset>
+<form class="form-horizontal">
+  <fieldset id="payment">
     <legend><?php echo $text_credit_card; ?></legend>
-    <div class="form-group">
+    <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-cc-type"><?php echo $entry_cc_type; ?></label>
       <div class="col-sm-10">
         <select name="cc_type" id="input-cc-type" class="form-control">
@@ -25,8 +25,7 @@
           <option value="<?php echo $month['value']; ?>"><?php echo $month['text']; ?></option>
           <?php } ?>
         </select>
-        <span class="help-block"><?php echo $help_start_date; ?></span>
-      </div>
+        <span class="help-block"><?php echo $help_start_date; ?></span></div>
       <div class="col-sm-3">
         <select name="cc_start_date_year" class="form-control">
           <?php foreach ($year_valid as $year) { ?>
@@ -55,13 +54,13 @@
     <div class="form-group required">
       <label class="col-sm-2 control-label" for="input-cc-cvv2"><?php echo $entry_cc_cvv2; ?></label>
       <div class="col-sm-10">
-        <input type="text" name="cc_cvv2" value="" id="input-cc-cvv2" class="form-control" />
+        <input type="text" name="cc_cvv2" value="" placeholder="<?php echo $entry_cc_cvv2; ?>" id="input-cc-cvv2" class="form-control" />
       </div>
     </div>
     <div class="form-group">
       <label class="col-sm-2 control-label" for="input-cc-issue"><?php echo $entry_cc_issue; ?></label>
       <div class="col-sm-10">
-        <input type="text" name="cc_issue" value="" id="input-cc-issue" class="form-control" />
+        <input type="text" name="cc_issue" value="" placeholder="<?php echo $entry_cc_issue; ?>" id="input-cc-issue" class="form-control" />
         <span class="help-block"><?php echo $help_issue; ?></span></div>
     </div>
   </fieldset>
@@ -73,27 +72,28 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-confirm').bind('click', function() {
-	$.ajax({
-		url: 'index.php?route=payment/pp_pro/send',
-		type: 'post',
-		data: $('#payment :input'),
-		dataType: 'json',	
-		cache: false,	
-		beforeSend: function() {
-			$('#button-confirm').button('loading');
-		},
-		complete: function() {
-			$('#button-confirm').button('reset');
-		},				
-		success: function(json) {
-			if (json['error']) {
-				alert(json['error']);
-			}
-			
-			if (json['redirect']) {
-				location = json['redirect'];
-			}
-		}
-	});
+  $.ajax({
+    url: 'index.php?route=payment/pp_pro/send',
+    type: 'post',
+    data: $('#payment :input'),
+    dataType: 'json',
+    beforeSend: function() {
+      $('#button-confirm').attr('disabled', true);
+      $('#payment').before('<div class="alert alert-info"><i class="fa fa-info-circle"></i> <?php echo $text_wait; ?></div>');
+    },
+    complete: function() {
+      $('#button-confirm').attr('disabled', false);
+      $('.attention').remove();
+    },
+    success: function(json) {
+      if (json['error']) {
+        alert(json['error']);
+      }
+
+      if (json['success']) {
+        location = json['success'];
+      }
+    }
+  });
 });
-//--></script> 
+//--></script>

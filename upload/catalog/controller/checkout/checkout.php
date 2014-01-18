@@ -58,8 +58,18 @@ class ControllerCheckoutCheckout extends Controller {
 		$data['text_checkout_shipping_method'] = $this->language->get('text_checkout_shipping_method');
 		$data['text_checkout_payment_method'] = $this->language->get('text_checkout_payment_method');		
 		$data['text_checkout_confirm'] = $this->language->get('text_checkout_confirm');
+
+		if (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+			unset($this->session->data['error']);
+		} else {
+			$data['error_warning'] = '';
+		}
 		
 		$data['logged'] = $this->customer->isLogged();
+		if (isset($this->request->get['quickconfirm'])) {
+			$data['quickconfirm'] = $this->request->get['quickconfirm'];
+		}
 		
 		if (isset($this->session->data['account'])) {
 			$data['account'] = $this->session->data['account'];

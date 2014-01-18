@@ -1,72 +1,70 @@
-<?php echo $header; ?>
-<div id="container"><?php echo $menu; ?>
-  <div id="content">
-    <div class="container">
-      <ul class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-        <?php } ?>
-      </ul>
-      <div class="panel panel-default">
-        <div class="panel-heading">
-          <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
-        </div>
-        <div class="panel-body">
-          <div class="well">
-            <div class="row">
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-                  <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
-                </div>
-                <div class="form-group">
-                  <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-                  <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
-                </div>
+<?php echo $header; ?><?php echo $menu; ?>
+<div id="content">
+  <div class="container">
+    <ul class="breadcrumb">
+      <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+      <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
+      </div>
+      <div class="panel-body">
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
+                <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
               </div>
-              <div class="col-sm-6">
-                <div class="form-group">
-                  <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
-                  <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" id="input-customer" class="form-control" />
-                </div>
-                <div class="form-group">
-                  <label class="control-label" for="input-ip"><?php echo $entry_ip; ?></label>
-                  <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" id="input-ip" class="form-control" />
-                </div>
-                <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+              <div class="form-group">
+                <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
+                <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
               </div>
             </div>
+            <div class="col-sm-6">
+              <div class="form-group">
+                <label class="control-label" for="input-customer"><?php echo $entry_customer; ?></label>
+                <input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" id="input-customer" class="form-control" />
+              </div>
+              <div class="form-group">
+                <label class="control-label" for="input-ip"><?php echo $entry_ip; ?></label>
+                <input type="text" name="filter_ip" value="<?php echo $filter_ip; ?>" id="input-ip" class="form-control" />
+              </div>
+              <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
+            </div>
           </div>
-          <div class="table-responsive">
-            <table class="table table-bordered">
-              <thead>
-                <tr>
-                  <td class="text-left"><?php echo $column_comment; ?></td>
-                  <td class="text-left"><?php echo $column_ip; ?></td>
-                  <td class="text-left"><?php echo $column_date_added; ?></td>
-                </tr>
-              </thead>
-              <tbody>
-                <?php if ($activities) { ?>
-                <?php foreach ($activities as $activity) { ?>
-                <tr>
-                  <td class="text-left"><?php echo $activity['comment']; ?></td>
-                  <td class="text-left"><?php echo $activity['ip']; ?></td>
-                  <td class="text-left"><?php echo $activity['date_added']; ?></td>
-                </tr>
-                <?php } ?>
-                <?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
-                </tr>
-                <?php } ?>
-              </tbody>
-            </table>
-          </div>
-          <div class="row">
-            <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
-            <div class="col-sm-6 text-right"><?php echo $results; ?></div>
-          </div>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-bordered">
+            <thead>
+              <tr>
+                <td class="text-left"><?php echo $column_comment; ?></td>
+                <td class="text-left"><?php echo $column_ip; ?></td>
+                <td class="text-left"><?php echo $column_date_added; ?></td>
+              </tr>
+            </thead>
+            <tbody>
+              <?php if ($activities) { ?>
+              <?php foreach ($activities as $activity) { ?>
+              <tr>
+                <td class="text-left"><?php echo $activity['comment']; ?></td>
+                <td class="text-left"><?php echo $activity['ip']; ?></td>
+                <td class="text-left"><?php echo $activity['date_added']; ?></td>
+              </tr>
+              <?php } ?>
+              <?php } else { ?>
+              <tr>
+                <td class="text-center" colspan="4"><?php echo $text_no_results; ?></td>
+              </tr>
+              <?php } ?>
+            </tbody>
+          </table>
+        </div>
+        <div class="row">
+          <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+          <div class="col-sm-6 text-right"><?php echo $results; ?></div>
         </div>
       </div>
     </div>

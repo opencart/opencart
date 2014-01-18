@@ -51,8 +51,7 @@ class ControllerCommonHeader extends Controller {
 		$data['shopping_cart'] = $this->url->link('checkout/cart');
 		$data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');
 		$data['telephone'] = $this->config->get('config_telephone');
-		
-		// Daniel's robot detector
+
 		$status = true;
 		
 		if (isset($this->request->server['HTTP_USER_AGENT'])) {

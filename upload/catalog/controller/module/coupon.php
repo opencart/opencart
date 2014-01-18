@@ -12,6 +12,8 @@ class ControllerModuleCoupon extends Controller {
 		$data['button_coupon'] = $this->language->get('button_coupon');
 		
 		$data['status'] = $this->config->get('coupon_status');
+
+		$data['redirect'] = $this->request->get['route'];
 		
 		if (isset($this->session->data['coupon'])) {
 			$data['coupon'] = $this->session->data['coupon'];
@@ -46,7 +48,7 @@ class ControllerModuleCoupon extends Controller {
 				
 			$this->session->data['success'] = $this->language->get('text_success');
 			
-			$json['redirect'] = $this->url->link('checkout/cart');
+			$json['redirect'] = $this->url->link($this->request->post['redirect']);
 		} else {
 			$json['error'] = $this->language->get('error_coupon');			
 		}

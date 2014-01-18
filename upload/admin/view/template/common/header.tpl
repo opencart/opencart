@@ -27,15 +27,15 @@
 <?php } ?>
 </head>
 <body>
+<div id="container">
 <header id="header" class="navbar navbar-default navbar-static-top">
   <div class="container">
-    <div class="navbar-header"><a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a> </div>
-    <a type="button" id="button-menu" class="navbar-btn"><span class="fa fa-bars"></span></a>
+    <div class="navbar-header"><a type="button" id="button-menu" class="pull-left"><span class="fa fa-bars"></span></a> <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a> </div>
     <?php if ($logged) { ?>
     <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left">4</span> <i class="fa fa-bell fa-lg"></i></a>
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left">0</span> <i class="fa fa-bell fa-lg"></i></a>
         <ul class="dropdown-menu">
-          <li><a href="<?php echo $profile; ?>">test</a></li>
+          <li><a href="">test</a></li>
         </ul>
       </li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>

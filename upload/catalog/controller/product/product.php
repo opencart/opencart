@@ -447,6 +447,9 @@ class ControllerProductProduct extends Controller {
 					);
 				}
 			}
+
+			$data['text_payment_profile'] = $this->language->get('text_payment_profile');
+			$data['profiles'] = $this->model_catalog_product->getProfiles($product_info['product_id']);
 			
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 						
@@ -586,6 +589,66 @@ class ControllerProductProduct extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/product/review.tpl', $data));
 		}
+	}
+
+	public function getRecurringDescription() {
+		$this->language->load('product/product');
+		$this->load->model('catalog/product');
+
+		if (isset($this->request->post['product_id'])) {
+			$product_id = $this->request->post['product_id'];
+		} else {
+			$product_id = 0;
+		}
+
+		if (isset($this->request->post['profile_id'])) {
+			$profile_id = $this->request->post['profile_id'];
+		} else {
+			$profile_id = 0;
+		}
+
+		if (isset($this->request->post['quantity'])) {
+			$quantity = $this->request->post['quantity'];
+		} else {
+			$quantity = 1;
+		}
+
+		$product_info = $this->model_catalog_product->getProduct($product_id);
+		$profile_info = $this->model_catalog_product->getProfile($product_id, $profile_id);
+
+		$json = array();
+
+		if ($product_info && $profile_info) {
+
+			if (!$json) {
+				$frequencies = array(
+					'day' => $this->language->get('text_day'),
+					'week' => $this->language->get('text_week'),
+					'semi_month' => $this->language->get('text_semi_month'),
+					'month' => $this->language->get('text_month'),
+					'year' => $this->language->get('text_year'),
+				);
+
+				if ($profile_info['trial_status'] == 1) {
+					$price = $this->currency->format($this->tax->calculate($profile_info['trial_price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')));
+					$trial_text = sprintf($this->language->get('text_trial_description'), $price, $profile_info['trial_cycle'], $frequencies[$profile_info['trial_frequency']], $profile_info['trial_duration']) . ' ';
+				} else {
+					$trial_text = '';
+				}
+
+				$price = $this->currency->format($this->tax->calculate($profile_info['price'] * $quantity, $product_info['tax_class_id'], $this->config->get('config_tax')));
+
+				if ($profile_info['duration']) {
+					$text = $trial_text . sprintf($this->language->get('text_payment_description'), $price, $profile_info['cycle'], $frequencies[$profile_info['frequency']], $profile_info['duration']);
+				} else {
+					$text = $trial_text . sprintf($this->language->get('text_payment_until_canceled_description'), $price, $profile_info['cycle'], $frequencies[$profile_info['frequency']], $profile_info['duration']);
+				}
+
+				$json['success'] = $text;
+			}
+		}
+
+		$this->response->setOutput(json_encode($json));
 	}
 	
 	public function write() {

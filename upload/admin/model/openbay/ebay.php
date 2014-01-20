@@ -28,8 +28,6 @@ class ModelOpenbayEbay extends Model{
 		$value["openbaypro_confirm_notify"]     = '1';
 		$value["openbaypro_confirmadmin_notify"]= '1';
 		$value["openbaypro_created_hours"]      = '48';
-		$value["openbaypro_stock_report"]       = '1';
-		$value["openbaypro_stock_report_summary"]= '1';
 		$value["openbaypro_create_date"]        = '0';
 		$value["openbaypro_ebay_itm_link"]      = 'http://www.ebay.com/itm/';
 		$value["openbaypro_relistitems"]        = 0;

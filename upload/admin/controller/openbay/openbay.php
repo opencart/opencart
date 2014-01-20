@@ -245,20 +245,6 @@ class ControllerOpenbayOpenbay extends Controller {
 			$this->data['openbaypro_create_date'] = $this->config->get('openbaypro_create_date');
 		}
 
-		/**
-		 * stock reports
-		 */
-		if (isset($this->request->post['openbaypro_stock_report'])) {
-			$this->data['openbaypro_stock_report'] = $this->request->post['openbaypro_stock_report'];
-		} else {
-			$this->data['openbaypro_stock_report'] = $this->config->get('openbaypro_stock_report');
-		}
-		if (isset($this->request->post['openbaypro_stock_report_summary'])) {
-			$this->data['openbaypro_stock_report_summary'] = $this->request->post['openbaypro_stock_report_summary'];
-		} else {
-			$this->data['openbaypro_stock_report_summary'] = $this->config->get('openbaypro_stock_report_summary');
-		}
-
 		$this->data['durations'] = array(
 			'Days_1' => $this->data['lang_listing_1day'],
 			'Days_3' => $this->data['lang_listing_3day'],

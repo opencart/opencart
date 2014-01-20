@@ -294,38 +294,6 @@
                     </table>
                     <br /><br />
 
-                    <h2><?php echo $lang_legend_stock_rep; ?></h2>
-                    <p><?php echo $lang_desc_stock_rep; ?></p>
-                    <table class="form">
-                        <tr>
-                            <td><?php echo $lang_stock_reports; ?></td>
-                            <td>
-                                <select name="openbaypro_stock_report" style="width:200px;">
-                                    <?php if ($openbaypro_stock_report) { ?>
-                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                        <option value="0"><?php echo $lang_no; ?></option>
-                                    <?php } else { ?>
-                                        <option value="1"><?php echo $lang_yes; ?></option>
-                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo $lang_stock_summary; ?></td>
-                            <td>
-                                <select name="openbaypro_stock_report_summary" style="width:200px;">
-                                    <?php if ($openbaypro_stock_report_summary) { ?>
-                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                        <option value="0"><?php echo $lang_no; ?></option>
-                                    <?php } else { ?>
-                                        <option value="1"><?php echo $lang_yes; ?></option>
-                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-                    </table><br /><br />
                     <h2><?php echo $lang_legend_default_import; ?></h2>
                     <table class="form">
                         <tr>

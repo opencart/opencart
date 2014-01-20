@@ -103,11 +103,6 @@ $_['lang_listing_gtc']              = 'GTC- Good till cancelled';
 $_['lang_openbay_duration']         = 'Default listing duration<span class="help">GTC is only available is you have an eBay shop.</span>';
 $_['lang_address_format']           = 'Default address format<span class="help">Only used if the country does not have an address format set-up already.</span>';
 
-$_['lang_legend_stock_rep']         = 'Stock reports';
-$_['lang_desc_stock_rep']           = 'Sends an email to store administrators periodically about the status of linked items. This feature is only available on some subscription plans.';
-$_['lang_stock_reports']            = 'Send reports';
-$_['lang_stock_summary']            = 'Send full report<span class="help">If disabled only a summary will be sent</span>';
-
 $_['lang_api_status']               = 'API connection status';
 $_['lang_api_checking']             = 'Checking';
 $_['lang_api_ok']                   = 'Connection OK, token expires';

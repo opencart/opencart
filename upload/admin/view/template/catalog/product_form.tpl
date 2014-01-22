@@ -640,36 +640,36 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <?php $profileCount = 0; ?>
+                    <?php $profile_count = 0; ?>
                     <?php foreach ($product_profiles as $product_profile) { ?>
-                    <?php $profileCount++ ?>
-                    <tr id="profile-row<?php echo $profileCount ?>">
-                      <td class="text-left"><select name="product_profiles[<?php echo $profileCount ?>][profile_id]" class="form-control">
+                    <?php $profile_count++; ?>
+                    <tr id="profile-row<?php echo $profile_count; ?>">
+                      <td class="text-left"><select name="product_profiles[<?php echo $profile_count; ?>][profile_id]" class="form-control">
                           <?php foreach ($profiles as $profile) { ?>
                           <?php if ($profile['profile_id'] == $product_profile['profile_id']) { ?>
-                          <option value="<?php echo $profile['profile_id'] ?>" selected="selected"><?php echo $profile['name'] ?></option>
+                          <option value="<?php echo $profile['profile_id']; ?>" selected="selected"><?php echo $profile['name']; ?></option>
                           <?php } else { ?>
-                          <option value="<?php echo $profile['profile_id'] ?>"><?php echo $profile['name'] ?></option>
+                          <option value="<?php echo $profile['profile_id']; ?>"><?php echo $profile['name']; ?></option>
                           <?php } ?>
                           <?php } ?>
                         </select></td>
-                      <td class="text-left"><select name="product_profiles[<?php echo $profileCount ?>][customer_group_id]" class="form-control">
+                      <td class="text-left"><select name="product_profiles[<?php echo $profile_count; ?>][customer_group_id]" class="form-control">
                           <?php foreach ($customer_groups as $customer_group) { ?>
                           <?php if ($customer_group['customer_group_id'] == $product_profile['customer_group_id']) { ?>
-                          <option value="<?php echo $customer_group['customer_group_id'] ?>" selected="selected"><?php echo $customer_group['name'] ?></option>
+                          <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>
                           <?php } else { ?>
-                          <option value="<?php echo $customer_group['customer_group_id'] ?>"><?php echo $customer_group['name'] ?></option>
+                          <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>
                           <?php } ?>
                           <?php } ?>
                         </select></td>
-                      <td class="text-left"><button type="button" onclick="$('#profile-row<?php echo $profileCount ?>').remove()" class="btn btn-danger"><i class="fa fa-trash-o"></i> <?php echo $button_remove ?></button></td>
+                      <td class="text-left"><button type="button" onclick="$('#profile-row<?php echo $profile_count; ?>').remove()" class="btn btn-danger"><i class="fa fa-trash-o"></i> <?php echo $button_remove; ?></button></td>
                     </tr>
                     <?php } ?>
                   </tbody>
                   <tfoot>
                     <tr>
                       <td colspan="2"></td>
-                      <td class="text-left"><button type="button" onclick="addProfile()" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_add_profile ?></button></td>
+                      <td class="text-left"><button type="button" onclick="addProfile()" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_add_profile; ?></button></td>
                     </tr>
                   </tfoot>
                 </table>
@@ -1304,7 +1304,7 @@ function addImage() {
 }
 //--></script> 
 <script type="text/javascript"><!--
-var profileCount = <?php echo $profileCount ?>;
+var profile_count = <?php echo $profile_count; ?>;
 
 function addProfile() {
   profile_count++;

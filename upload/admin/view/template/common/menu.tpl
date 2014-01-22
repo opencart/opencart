@@ -2,11 +2,11 @@
   <ul id="menu">
     <li>
       <div id="search">
-        <button type="button" class="btn btn-link"><i class="fa fa-search fa-fw fa-lg"></i></button>
-        <input type="text" name="search" value="" />
+        <button type="button" class="btn btn-link"><i class="fa fa-search fa-fw"></i></button>
+        <input type="text" name="search" value="" placeholder="<?php echo $text_search; ?>" />
       </div>
     </li>
-    <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-tachometer fa-fw fa-lg"></i> <span><?php echo $text_dashboard; ?></span></a></li>
+    <li id="dashboard"><a href="<?php echo $home; ?>"><i class="fa fa-home fa-fw fa-lg"></i> <span><?php echo $text_dashboard; ?></span></a></li>
     <li id="catalog"><a class="parent"><i class="fa fa-tags fa-fw fa-lg"></i> <span><?php echo $text_catalog; ?></span></a>
       <ul>
         <li><a href="<?php echo $category; ?>"><?php echo $text_category; ?></a></li>

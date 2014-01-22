@@ -672,7 +672,7 @@ class ModelOpenbayAmazonus extends Model {
 
 	public function deleteListingReports() {
 		$this->db->query("
-			DELETE FROM " . DB_PREFIX . "amazon_listing_report
+			DELETE FROM " . DB_PREFIX . "amazonus_listing_report
 		");
 	}
 

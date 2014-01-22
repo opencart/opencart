@@ -397,39 +397,43 @@ class Amazon {
 	}
 
 	public function osProducts($order_id){
-		$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+		$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		$passArray = array();
 		foreach ($order_product_query->rows as $order_product) {
-			$product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "product WHERE `product_id` = '".(int)$order_product['product_id']."' LIMIT 1");
+			$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".(int)$order_product['product_id']."' LIMIT 1");
 
-			if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
-				$pOption_query = $this->db->query("
-					SELECT `oo`.`product_option_value_id`
-					FROM `" . DB_PREFIX . "order_option` `oo`
-						LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
-						LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `pov`.`option_id`)
-					WHERE `oo`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
-					AND `oo`.`order_id` = '" . (int)$order_id . "'
-					AND ((`o`.`type` = 'radio') OR (`o`.`type` = 'select') OR (`o`.`type` = 'image'))
-					ORDER BY `oo`.`order_option_id`
-					ASC");
+			if (!empty($product_query->row)) {
+				if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
+					$pOption_query = $this->db->query("
+						SELECT `oo`.`product_option_value_id`
+						FROM `" . DB_PREFIX . "order_option` `oo`
+							LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
+							LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `pov`.`option_id`)
+						WHERE `oo`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
+						AND `oo`.`order_id` = '" . (int)$order_id . "'
+						AND ((`o`.`type` = 'radio') OR (`o`.`type` = 'select') OR (`o`.`type` = 'image'))
+						ORDER BY `oo`.`order_option_id`
+						ASC");
 
-				if ($pOption_query->num_rows != 0) {
-					$pOptions = array();
-					foreach ($pOption_query->rows as $pOptionRow) {
-						$pOptions[] = $pOptionRow['product_option_value_id'];
+					if ($pOption_query->num_rows != 0) {
+						$pOptions = array();
+						foreach ($pOption_query->rows as $pOptionRow) {
+							$pOptions[] = $pOptionRow['product_option_value_id'];
+						}
+
+						$var = implode(':', $pOptions);
+						$qtyLeftRow = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
+
+						if(empty($qtyLeftRow)) {
+							$qtyLeftRow['stock'] = 0;
+						}
+
+						$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $qtyLeftRow['stock'], 'var' => $var);
 					}
-
-					$var = implode(':', $pOptions);
-					$qtyLeftRow = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
-					if(empty($qtyLeftRow)) {
-						$qtyLeftRow['stock'] = 0;
-					}
-					$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $qtyLeftRow['stock'], 'var' => $var);
+				} else {
+					$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
 				}
-			} else {
-				$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
 			}
 		}
 

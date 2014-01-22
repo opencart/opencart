@@ -28,6 +28,15 @@ class ControllerExtensionShipping extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'shipping/' . $this->request->get['extension']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
+			
+			require_once(DIR_APPLICATION . 'controller/shipping/' . $this->request->get['extension'] . '.php');
+
+			$class = 'ControllerShipping' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+
+			if (method_exists($class, 'install')) {
+				$class->install();
+			}
 
 			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -50,6 +59,15 @@ class ControllerExtensionShipping extends Controller {
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
+			
+			require_once(DIR_APPLICATION . 'controller/shipping/' . $this->request->get['extension'] . '.php');
+
+			$class = 'ControllerShipping' . str_replace('_', '', $this->request->get['extension']);
+			$class = new $class($this->registry);
+
+			if (method_exists($class, 'uninstall')) {
+				$class->uninstall();
+			}
 
 			$this->response->redirect($this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL'));
 		}

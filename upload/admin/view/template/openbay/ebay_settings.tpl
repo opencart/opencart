@@ -49,8 +49,8 @@
                         <tr>
                             <td><p><label for="openbaypro_token"><?php echo $lang_obp_token; ?></p></td>
                             <td>
-                                <p><img src="view/image/lock.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://uk.openbaypro.com/account/live/register.php" target="_BLANK"><?php echo $lang_obp_token_register; ?></a></p>
-                                <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://uk.openbaypro.com/account/live/renew.php" target="_BLANK"><?php echo $lang_obp_token_renew; ?></a></p>
+                                <p><img src="view/image/lock.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><?php echo $lang_obp_token_register; ?></a></p>
+                                <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><?php echo $lang_obp_token_renew; ?></a></p>
                                 <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://uk.openbaypro.com/account/live/update.php" target="_BLANK"><?php echo $lang_obp_detail_update; ?></a></p>
                                 <p><input type="text" name="openbaypro_token" id="openbaypro_token" style="width:300px;" maxlength="" value="<?php echo $openbaypro_token;?>" class="credentials" /></p>
                             </td>

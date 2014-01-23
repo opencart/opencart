@@ -98,6 +98,7 @@ function get_options($argv) {
 
 function valid($options) {
 	$required = array(
+		'db_driver',
 		'db_host',
 		'db_user',
 		'db_password',
@@ -129,6 +130,7 @@ function install($options) {
 		setup_mysql($options);
 		write_config_files($options);
 		dir_permissions();
+		delete_install_folder();
 	} else {
 		echo 'FAILED! Pre-installation check failed: ' . $check[1] . "\n\n";
 		exit(1);
@@ -171,11 +173,15 @@ function check_requirements() {
 	}
 
 	if (!is_writable(DIR_OPENCART . 'config.php')) {
-		$error = 'Warning: config.php needs to be writable for OpenCart to be installed!';
+		if (!rename(DIR_OPENCART . 'config-dist.php', DIR_OPENCART . 'config.php')) {
+			$error = 'Warning: config.php needs to be writable for OpenCart to be installed!';
+		}
 	}
 
 	if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-		$error = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
+		if (!rename(DIR_OPENCART . 'admin/config-dist.php', DIR_OPENCART . 'admin/config.php')) {
+			$error = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
+		}
 	}
 
 	if (!is_writable(DIR_SYSTEM . 'cache')) {
@@ -292,6 +298,9 @@ function write_config_files($options) {
 	fclose($file);
 }
 
+function delete_install_folder() {
+	exec('rm -rf ' . DIR_OPENCART . 'install');
+}
 
 function dir_permissions() {
 	$dirs = array(

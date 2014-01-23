@@ -55,39 +55,18 @@ $(document).ready(function() {
 	if (localStorage.getItem('column-left') == 'active') {
 		$('#column-left').addClass('active');
 	}
-		
-	$('#column-left a.parent').on('click', function() {
-		//$(this).parents('li.open').removeClass('open');
-
-//		$(this).parent().find(' > ul').toggleClass('open');
-		
-		
-		if ($(this).parent().hasClass('open')) {
-			$(this).parent().removeClass('open');
-			//$(this).parent().find(' > ul').removeClass('open');
-			
-			/*
-			$(this).parent().find(' > ul').slideUp({
-				duration: 'fast',
-				complete: function() {
-					$(this).parent().removeClass('open');
-				}
-			}); 
-			*/		
-		} else {
-			$(this).parent().addClass('open');
-			//$(this).parent().find(' > ul').addClass('open');
-			/*
-			$(this).parent().find(' > ul').slideDown({
-				duration: 'fast',
-				complete: function() {
-					$(this).parent().addClass('open');
-				}
-			});
-			*/	 
-		}
-	});	
 	
+	// menu slide downs	
+	$('#menu').find('li.active').has('ul').children('ul').addClass('collapse in');
+	$('#menu').find('li').not('.active').has('ul').children('ul').addClass('collapse');
+	
+	//'#column-left li li a.parent, #column-left.active a.parent'
+	
+	$('#menu').find('li').has('ul').children('a').on('click', function() {	
+		$(this).parent('li').children('ul').collapse('toggle');
+		
+		$(this).parent('li').siblings().children('ul.in').collapse('hide');
+	});	
 	
 	// Tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});	

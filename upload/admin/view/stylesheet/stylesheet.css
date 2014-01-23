@@ -25,12 +25,11 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	overflow: hidden;
 }
 #header {
-	background-color: #3084B6;
-	border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+	background-color: #5BC0DE;
+	border-bottom: 1px solid #2495B6;
 	background-repeat: repeat-x;
 	min-height: 40px;
 	margin-bottom: 0;
-	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.2);
 }
 #header .container {
 	padding-left: 0;
@@ -128,10 +127,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background: #202020;
 }
 #search:hover {
-	width: 259px;	
+	width: 259px;
 }
 #search .btn {
-	font-size: 18px;	
+	font-size: 18px;
 	padding: 8px;
 	color: #909090;
 }
@@ -143,23 +142,19 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	height: 26px;
 	width: 195px;
 	padding: 5px 10px;
-	border: none;	
+	border: none;
 	background-color: #333333;
 }
 #search:hover input {
-	display: inline-block;	
+	display: inline-block;
 }
-#column-left.active #search {	
+#column-left.active #search {
 	width: auto;
 }
 #column-left.active #search input {
 	display: inline-block;
 	width: 174px;
 }
-
-
-
-
 #menu > li {
 	position: relative;
 }
@@ -187,6 +182,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #menu li a:hover {
 	background-color: #1B1B1B;
+	color: #FFF;
 }
 #menu > li > a > span {
 	display: none;
@@ -196,7 +192,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #FFF;
 }
 #menu li ul {
-	display: none;
+	/*display: none;*/
 }
 #menu > li > ul {
 	position: absolute;
@@ -206,13 +202,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background: #202020;
 }
 #menu > li:hover > ul {
-	display: block;
+	/*display: block;*/
 }
 #menu li.open > a {
 	background-color: #161616;
 }
 #menu li li.open > ul {
-	display: block;
+	/*display: block;*/
 }
 #menu li li a.parent:after, #column-left.active #menu li a.parent:after {
 	font-family: FontAwesome;
@@ -240,6 +236,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 /* Menu Active */
 /* Desktop */
 @media (min-width: 768px) {
+#column-left.active {
+	overflow: auto;
+}	
 #column-left.active + #content {
 	margin-left: 230px;
 }
@@ -264,10 +263,10 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: auto;
 }
 #column-left.active #menu > li:hover > ul {
-	display: none;
+	/*display: none;*/
 }
 #column-left.active #menu > li.open > ul {
-	display: block;
+	/*display: block;*/
 }
 #column-left.active #menu li ul a {
 	padding-left: 48px;
@@ -281,6 +280,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left.active #menu li li li li ul a {
 	padding-left: 123px;
 }
+
 /* footer */
 #footer {
 	width: 100%;

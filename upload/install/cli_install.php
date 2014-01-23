@@ -210,7 +210,7 @@ function setup_mysql($dbdata) {
 	global $loader, $registry;
 	$loader->model('install');
 	$model = $registry->get('model_install');
-	$model->mysql($dbdata);
+	$model->database($dbdata);
 }
 
 

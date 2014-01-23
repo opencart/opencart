@@ -218,8 +218,8 @@ class ControllerPaymentPPExpress extends Controller {
 					$this->session->data['shipping_country_id'] = '';
 				}
 
-				if (isset($result['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE'])) {
-					$returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE'];
+				if (isset($result['PAYMENTREQUEST_0_SHIPTOSTATE'])) {
+					$returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOSTATE'];
 				} else {
 					$returned_shipping_zone = '';
 				}

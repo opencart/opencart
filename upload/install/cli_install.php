@@ -9,7 +9,8 @@
 // Usage:
 //
 //   cd install
-//   php cli_install.php install --db_host localhost \
+//   php cli_install.php install --db_driver mysqli \
+//				 --db_host localhost \
 //                               --db_user root \
 //                               --db_password pass \
 //                               --db_name opencart \
@@ -58,7 +59,8 @@ function usage() {
 	echo "Usage:\n";
 	echo "======\n";
 	echo "\n";
-	$options = implode(" ", array('--db_host', 'localhost',
+	$options = implode(" ", array( '--db_driver', 'mysqli',
+								  '--db_host', 'localhost',
 								  '--db_user', 'root',
 								  '--db_password', 'pass',
 								  '--db_name', 'opencart',
@@ -73,6 +75,7 @@ function usage() {
 
 function get_options($argv) {
 	$defaults = array(
+		'db_driver' => 'mysqli',
 		'db_host' => 'localhost',
 		'db_name' => 'opencart',
 		'db_prefix' => '',

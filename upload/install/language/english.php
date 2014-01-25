@@ -62,6 +62,7 @@ $_['entry_email']            = 'E-Mail';
 
 // Buttons
 $_['button_continue']        = 'Continue';
+$_['button_agree_continue']  = 'I agree, continue';
 $_['button_back']            = 'Back';
 
 

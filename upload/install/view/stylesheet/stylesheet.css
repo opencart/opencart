@@ -68,6 +68,9 @@ a, a:visited, a b {
 a:hover {
 	text-decoration: none;
 }
+.nav > li > a, .btn {
+	text-decoration: none;
+}
 b, strong {
 	color: #555;
 }
@@ -153,6 +156,7 @@ a.button, input.button {
 footer {
 	text-align: center;
 	margin-bottom: 25px;
+	margin-top: 25px;
 }
 footer a {
 	margin: 0px 5px;

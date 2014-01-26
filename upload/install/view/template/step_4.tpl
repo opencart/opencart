@@ -1,7 +1,10 @@
 <?php echo $header; ?>
 <div class="container">
   <h1><?php echo $heading_step_4; ?></h1>
-  <div class="alert alert-danger"><?php echo $text_forget; ?></div>
+  <div class="alert alert-danger">
+    <?php echo $text_forget; ?><br><br>
+	<a href="index.php?route=step_4/delete" class="btn btn-danger"><span class="fa fa-trash-o"></span> <?php echo $text_forget_button; ?></a>
+  </div>
   <div class="row">
     <div class="col-sm-9">
       <h4><?php echo $text_congratulation; ?></h4>

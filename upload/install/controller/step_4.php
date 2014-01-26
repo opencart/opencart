@@ -26,7 +26,7 @@ class ControllerStep4 extends Controller {
 		$it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
 		$files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
 		foreach($files as $file) {
-			if ($file->isDir()) {d
+			if ($file->isDir()) {
 				rmdir($file->getRealPath());
 			} else {
 				unlink($file->getRealPath());

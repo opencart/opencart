@@ -23,13 +23,10 @@ class ControllerStep4 extends Controller {
 	
 	public function delete() {
 		$dir = '../install';
-		$it = new RecursiveDirectoryIterator($dir);
+		$it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
 		$files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
 		foreach($files as $file) {
-			if ($file->getFilename() === '.' || $file->getFilename() === '..') {
-				continue;
-			}
-			if ($file->isDir()) {
+			if ($file->isDir()) {d
 				rmdir($file->getRealPath());
 			} else {
 				unlink($file->getRealPath());

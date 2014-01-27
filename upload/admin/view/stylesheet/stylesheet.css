@@ -140,7 +140,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #search input {
 	display: none;
 	height: 26px;
-	width: 195px;
+	width: 180px;
 	padding: 5px 10px;
 	border: none;
 	background-color: #333333;
@@ -153,7 +153,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #column-left.active #search input {
 	display: inline-block;
-	width: 174px;
+	width: 160px;
 }
 #menu > li {
 	position: relative;
@@ -177,45 +177,46 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding-left: 13px;
 }
 #menu li.active > a {
-	color: #FFFFF;
+	color: #FFFFFF;
+	background-color: #161616;
+}
+#menu li.open > a {
 	background-color: #161616;
 }
 #menu li a:hover {
-	background-color: #1B1B1B;
 	color: #FFF;
+	background-color: #1B1B1B;
 }
 #menu > li > a > span {
 	display: none;
 	margin-left: 8px;
 }
-#menu li.active > a {
-	color: #FFF;
-}
+
 #menu li ul {
-	/*display: none;*/
+	overflow: hidden;
 }
+
 #menu > li > ul {
 	position: absolute;
 	left: 49px;
 	top: 0px;
 	width: 210px;
 	background: #202020;
+	visibility: hidden;
+}
+#menu > li > ul {	
+	/*display: none;*/
 }
 #menu > li:hover > ul {
+	visibility: visible;
 	/*display: block;*/
 }
-#menu li.open > a {
-	background-color: #161616;
-}
-#menu li li.open > ul {
-	/*display: block;*/
-}
-#menu li li a.parent:after, #column-left.active #menu li a.parent:after {
+#menu li li a.parent:after, #column-left.active #menu > li a.parent:after {
 	font-family: FontAwesome;
 	content: "\f105";
 	float: right;
 }
-#menu li li.open > a.parent:after, #column-left.active #menu li.open > a.parent:after {
+#menu li li.open > a.parent:after, #column-left.active #menu > li.open > a.parent:after {
 	font-family: FontAwesome;
 	content: "\f107";
 	float: right;
@@ -261,12 +262,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	left: auto;
 	top: auto;
 	width: auto;
-}
-#column-left.active #menu > li:hover > ul {
-	/*display: none;*/
-}
-#column-left.active #menu > li.open > ul {
-	/*display: block;*/
+	visibility: visible;
 }
 #column-left.active #menu li ul a {
 	padding-left: 48px;

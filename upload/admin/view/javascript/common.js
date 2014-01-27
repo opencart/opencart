@@ -25,48 +25,58 @@ function getURLVar(key) {
 $(document).ready(function() {
 	// Set last page opened on the menu
 	$('#menu a[href]').on('click', function() {
-		var value = $(this).attr('href');
-		
-		if (value) {
-			sessionStorage.setItem('menu', value);
-		}
+		sessionStorage.setItem('menu', $(this).attr('href'));
 	});
 	
-	value = sessionStorage.getItem('menu');
-	
-	if (!value) {
+	if (!sessionStorage.getItem('menu')) {
 		$('#menu #dashboard').addClass('active');
 	} else {
-		$('#menu a[href=\'' + value + '\']').parents('li').addClass('active open');
+		// Sets active and open to selected page in the left column menu.
+		$('#menu a[href=\'' + sessionStorage.getItem('menu') + '\']').parents('li').addClass('active open');
 	}
-	
-	$('#button-menu').on('click', function() {
-		if ($('#column-left').hasClass('active')) {
-			$('#column-left').removeClass('active');
-			
-			localStorage.setItem('column-left', '');
-		} else {
-			$('#column-left').addClass('active');
-			
-			localStorage.setItem('column-left', 'active');
-		}
-	});	
 	
 	if (localStorage.getItem('column-left') == 'active') {
 		$('#column-left').addClass('active');
-	}
-	
-	// menu slide downs	
-	$('#menu').find('li.active').has('ul').children('ul').addClass('collapse in');
-	$('#menu').find('li').not('.active').has('ul').children('ul').addClass('collapse');
-	
-	//'#column-left li li a.parent, #column-left.active a.parent'
-	
-	$('#menu').find('li').has('ul').children('a').on('click', function() {	
-		$(this).parent('li').children('ul').collapse('toggle');
 		
-		$(this).parent('li').siblings().children('ul.in').collapse('hide');
+		// Slide Down Menu
+		$('#menu li.active').has('ul').children('ul').addClass('collapse in');
+		$('#menu li').not('.active').has('ul').children('ul').addClass('collapse');		
+	} else {
+		$('#menu li li.active').has('ul').children('ul').addClass('collapse in');
+		$('#menu li li').not('.active').has('ul').children('ul').addClass('collapse');		
+	}
+		
+	// Menu button
+	$('#button-menu').on('click', function() {
+		// Checks if the left column is active or not.
+		if ($('#column-left').hasClass('active')) {
+			localStorage.setItem('column-left', '');
+			
+			$('#column-left').removeClass('active');
+			
+			$('#menu > li > ul').removeClass('in collapse');
+			$('#menu > li > ul').removeAttr('style');
+		} else {
+			localStorage.setItem('column-left', 'active');
+			
+			$('#column-left').addClass('active');
+			
+			// Add the slide down to open menu items
+			$('#menu li.open').has('ul').children('ul').addClass('collapse in');
+			$('#menu li').not('.open').has('ul').children('ul').addClass('collapse');
+		}
 	});	
+	
+	// Menu
+	$('#menu').find('li').has('ul').children('a').on('click', function() {
+		if ($('#column-left').hasClass('active')) {
+			$(this).parent('li').toggleClass('open').children('ul').collapse('toggle');
+			$(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');	
+		} else if (!$(this).parent().parent().is('#menu')) {
+			$(this).parent('li').toggleClass('open').children('ul').collapse('toggle');
+			$(this).parent('li').siblings().removeClass('open').children('ul.in').collapse('hide');							
+		}
+	});		
 	
 	// Tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});	

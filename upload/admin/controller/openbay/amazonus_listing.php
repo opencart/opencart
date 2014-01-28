@@ -597,5 +597,17 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 		$this->response->setOutput(json_encode($response));
 	}
+
+	public function getBrowseNodes() {
+		$this->load->model('openbay/amazonus_listing');
+
+		$data = array(
+			'node' => (isset($this->request->post['node']) ? $this->request->post['node'] : ''),
+		);
+
+		$response = $this->model_openbay_amazonus_listing->getBrowseNodes($data);
+
+		$this->response->setOutput($response);
+	}
 }
 ?>

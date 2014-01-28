@@ -30,12 +30,38 @@
 <div id="container">
 <header id="header" class="navbar navbar-default navbar-static-top">
   <div class="container">
-    <div class="navbar-header"><a type="button" id="button-menu" class="pull-left"><span class="fa fa-bars"></span></a> <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a> </div>
+    <div class="navbar-header">
+      <?php if ($logged) { ?>
+      <a type="button" id="button-menu" class="pull-left"><span class="fa fa-bars"></span></a>
+      <?php } ?>
+      <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a> </div>
     <?php if ($logged) { ?>
     <ul class="nav navbar-nav navbar-right">
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left">0</span> <i class="fa fa-bell fa-lg"></i></a>
+        
         <ul class="dropdown-menu">
-          <li><a href="">test</a></li>
+
+          <li class="dropdown-header"><?php echo $text_order; ?></li>
+          <li><a href="<?php echo $order_status; ?>" target="_blank"><?php echo $text_order_status; ?> <span class="label label-warning"><?php echo $order_status_total; ?></span></a></li>
+          <li><a href="<?php echo $complete_status; ?>" target="_blank"><?php echo $text_complete_status; ?> <span class="label label-success"><?php echo $complete_status_total; ?></span></a></li>
+          
+          <li class="divider"></li>
+          <li class="dropdown-header"><?php echo $text_customer; ?></li>
+          <li><a href="<?php echo $online; ?>" target="_blank"><?php echo $text_online; ?> <span class="label label-success"><?php echo $online_total; ?></span></a></li>
+          <li><a href=""><?php echo $text_approval; ?></a></li>
+          
+          <li class="divider"></li>
+          <li class="dropdown-header"><?php echo $text_product; ?></li>
+          
+          <li><a href=""><?php echo $text_stock; ?></a></li>
+          <li><a href=""><?php echo $text_review; ?></a></li>
+          <li><a href=""><?php echo $text_return; ?></a></li>
+          
+          <li class="divider"></li>
+          <li class="dropdown-header"><?php echo $text_affiliate; ?></i></li>
+          
+          <li><a href=""><?php echo $text_approval; ?></a></li>
+
         </ul>
       </li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>
@@ -46,18 +72,19 @@
           <?php } ?>
           <li class="divider"></li>
           <li class="dropdown-header"><?php echo $text_help; ?> <i class="fa fa-question-circle"></i></li>
-          <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_opencart; ?></a></li>
+          <li><a href="http://www.opencart.com" target="_blank"><?php echo $text_homepage; ?></a></li>
           <li><a href="http://docs.opencart.com" target="_blank"><?php echo $text_documentation; ?></a></li>
           <li><a href="http://forum.opencart.com" target="_blank"><?php echo $text_support; ?></a></li>
         </ul>
       </li>
       <li class="dropdown">
         <?php if ($image) { ?>
-        <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" /></a>
+        <a class="dropdown-toggle" data-toggle="dropdown"><img src="<?php echo $image; ?>" alt="<?php echo $username; ?>" title="<?php echo $username; ?>" /></a>
         <?php } else { ?>
         <a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user fa-lg"></i></a>
         <?php } ?>
         <ul class="dropdown-menu">
+          <li class="dropdown-header"><?php echo $text_logged; ?></li>
           <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
           <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
           <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>

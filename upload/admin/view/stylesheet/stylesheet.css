@@ -25,11 +25,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	overflow: hidden;
 }
 #header {
-	background-color: #5BC0DE;
-	border-bottom: 1px solid #2495B6;
+	background-color: #444444;
+	border-bottom: 1px solid #000000;
 	background-repeat: repeat-x;
 	min-height: 40px;
 	margin-bottom: 0;
+}
+#header .nav > li {
+	display: inline-block;
 }
 #header .container {
 	padding-left: 0;
@@ -44,7 +47,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	line-height: 35px;
 	cursor: pointer;
 	color: #FFFFFF;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+	text-shadow: 1px 1px 0 #000000;
 }
 #header .navbar-nav > li li > a {
 	font-size: 12px;
@@ -57,14 +60,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background-repeat: no-repeat;
 	background-size: 1px 15px;
 	background-position: left center;
-	background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, rgba(255, 255, 255, 0.3) 1px);
+	background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, rgba(255, 255, 255, 0.1) 1px);
 }
 #header .navbar-nav > li > a i.fa-lg {
 	font-size: 18px;
 }
 #header .navbar-nav > li > a > img {
 	border-radius: 5px;
-	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+	box-shadow: 1px 1px 0 #000000;
 }
 #header .navbar-nav > li > a .fa-angle-down {
 	margin-left: 2px;
@@ -84,7 +87,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline-block;
 	cursor: pointer;
 	color: #FFF;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+	text-shadow: 1px 1px 0 #000000;
 }
 #button-menu:hover {
 	background: rgba(0, 0, 0, 0.3);
@@ -92,8 +95,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 50px;
 	height: 100%;
-	background-color: #202020;
-	border-right: 1px solid #000000;
+	background-color: #F4F4F4;
+	border-right: 1px solid #D4D4D4;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -106,6 +109,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left + #content {
 	margin-left: 50px;
 }
+#column-left + #content + #footer {
+	margin-left: 50px;
+}
 /* Mobile */
 @media (max-width: 767px) {
 #column-left {
@@ -116,6 +122,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left + #content {
 	margin-left: 0;
 }
+#column-left + #content + #footer {
+	margin-left: 0;
+}
 }
 #menu, #menu ul, #menu li {
 	padding: 0;
@@ -124,7 +133,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #search {
 	padding-left: 5px;
-	background: #202020;
+	background: #F4F4F4;
 }
 #search:hover {
 	width: 259px;
@@ -140,7 +149,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #search input {
 	display: none;
 	height: 26px;
-	width: 195px;
+	width: 180px;
 	padding: 5px 10px;
 	border: none;
 	background-color: #333333;
@@ -153,69 +162,63 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #column-left.active #search input {
 	display: inline-block;
-	width: 174px;
+	width: 160px;
 }
 #menu > li {
 	position: relative;
 }
 #menu li a {
-	color: #909090;
+	color: #AAAAAA;
 	text-decoration: none;
-	text-shadow: 1px 1px 0 #000000;
 	display: block;
 	padding: 8px;
 	cursor: pointer;
 }
 #menu li a i {
 	font-size: 18px;
-	color: #666666;
+	color: #AAAAAA;
 }
 #menu > li.active > a i {
-	color: #8B8B8B;
+	color: #666666;
 }
 #menu > li > a {
 	padding-left: 13px;
 }
 #menu li.active > a {
-	color: #FFFFF;
-	background-color: #161616;
+	color: #666666;
+	background-color: #DDDDDD;
+}
+#menu li.open > a {
+	background-color: #DDDDDD;
 }
 #menu li a:hover {
-	background-color: #1B1B1B;
-	color: #FFF;
+	color: #666666;
+	background-color: #EEEEEE;
 }
 #menu > li > a > span {
 	display: none;
 	margin-left: 8px;
 }
-#menu li.active > a {
-	color: #FFF;
-}
 #menu li ul {
-	/*display: none;*/
+	overflow: hidden;
 }
 #menu > li > ul {
 	position: absolute;
 	left: 49px;
 	top: 0px;
 	width: 210px;
-	background: #202020;
+	background: #F4F4F4;
+	visibility: hidden;
 }
 #menu > li:hover > ul {
-	/*display: block;*/
+	visibility: visible;
 }
-#menu li.open > a {
-	background-color: #161616;
-}
-#menu li li.open > ul {
-	/*display: block;*/
-}
-#menu li li a.parent:after, #column-left.active #menu li a.parent:after {
+#menu li li a.parent:after, #column-left.active #menu > li a.parent:after {
 	font-family: FontAwesome;
 	content: "\f105";
 	float: right;
 }
-#menu li li.open > a.parent:after, #column-left.active #menu li.open > a.parent:after {
+#menu li li.open > a.parent:after, #column-left.active #menu > li.open > a.parent:after {
 	font-family: FontAwesome;
 	content: "\f107";
 	float: right;
@@ -242,10 +245,17 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left.active + #content {
 	margin-left: 230px;
 }
+#column-left.active + #content + #footer {
+	margin-left: 230px;
+}
 }
 /* Mobile */
 @media (max-width: 767px) {
 #column-left.active + #content {
+	position: relative;
+	left: 230px;
+}
+#column-left.active + #content + #footer {
 	position: relative;
 	left: 230px;
 }
@@ -261,12 +271,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	left: auto;
 	top: auto;
 	width: auto;
-}
-#column-left.active #menu > li:hover > ul {
-	/*display: none;*/
-}
-#column-left.active #menu > li.open > ul {
-	/*display: block;*/
+	visibility: visible;
 }
 #column-left.active #menu li ul a {
 	padding-left: 48px;
@@ -283,7 +288,6 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 
 /* footer */
 #footer {
-	width: 100%;
 	height: 100px;
 	bottom: 0;
 	text-align: center;

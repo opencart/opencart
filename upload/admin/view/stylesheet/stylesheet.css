@@ -25,11 +25,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	overflow: hidden;
 }
 #header {
-	background-color: #5BC0DE;
-	border-bottom: 1px solid #2495B6;
+	background-color: #444444;
+	border-bottom: 1px solid #000000;
 	background-repeat: repeat-x;
 	min-height: 40px;
 	margin-bottom: 0;
+}
+#header .nav > li {
+	display: inline-block;
 }
 #header .container {
 	padding-left: 0;
@@ -44,7 +47,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	line-height: 35px;
 	cursor: pointer;
 	color: #FFFFFF;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+	text-shadow: 1px 1px 0 #000000;
 }
 #header .navbar-nav > li li > a {
 	font-size: 12px;
@@ -57,14 +60,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background-repeat: no-repeat;
 	background-size: 1px 15px;
 	background-position: left center;
-	background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.3) 1px, rgba(255, 255, 255, 0.3) 1px);
+	background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, rgba(255, 255, 255, 0.1) 1px);
 }
 #header .navbar-nav > li > a i.fa-lg {
 	font-size: 18px;
 }
 #header .navbar-nav > li > a > img {
 	border-radius: 5px;
-	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+	box-shadow: 1px 1px 0 #000000;
 }
 #header .navbar-nav > li > a .fa-angle-down {
 	margin-left: 2px;
@@ -84,7 +87,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline-block;
 	cursor: pointer;
 	color: #FFF;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+	text-shadow: 1px 1px 0 #000000;
 }
 #button-menu:hover {
 	background: rgba(0, 0, 0, 0.3);
@@ -92,8 +95,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 50px;
 	height: 100%;
-	background-color: #202020;
-	border-right: 1px solid #000000;
+	background-color: #F4F4F4;
+	border-right: 1px solid #D4D4D4;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -130,7 +133,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #search {
 	padding-left: 5px;
-	background: #202020;
+	background: #F4F4F4;
 }
 #search:hover {
 	width: 259px;
@@ -165,33 +168,32 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	position: relative;
 }
 #menu li a {
-	color: #909090;
+	color: #AAAAAA;
 	text-decoration: none;
-	text-shadow: 1px 1px 0 #000000;
 	display: block;
 	padding: 8px;
 	cursor: pointer;
 }
 #menu li a i {
 	font-size: 18px;
-	color: #666666;
+	color: #AAAAAA;
 }
 #menu > li.active > a i {
-	color: #8B8B8B;
+	color: #666666;
 }
 #menu > li > a {
 	padding-left: 13px;
 }
 #menu li.active > a {
-	color: #FFFFFF;
-	background-color: #161616;
+	color: #666666;
+	background-color: #DDDDDD;
 }
 #menu li.open > a {
-	background-color: #161616;
+	background-color: #DDDDDD;
 }
 #menu li a:hover {
-	color: #FFF;
-	background-color: #1B1B1B;
+	color: #666666;
+	background-color: #EEEEEE;
 }
 #menu > li > a > span {
 	display: none;
@@ -205,7 +207,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	left: 49px;
 	top: 0px;
 	width: 210px;
-	background: #202020;
+	background: #F4F4F4;
 	visibility: hidden;
 }
 #menu > li:hover > ul {

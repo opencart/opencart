@@ -50,7 +50,10 @@ $registry->set('document', $document);
 // Upgrade
 $upgrade = false;
 
-if (file_exists('../config.php')) {
+if (!file_exists('../config.php')) {
+   touch("../config.php");
+   touch(DIR_OPENCART . 'admin/config.php');
+   }else{
 	if (filesize('../config.php') > 0) {
 		$upgrade = true;
 

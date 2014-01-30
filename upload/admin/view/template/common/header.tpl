@@ -37,31 +37,23 @@
       <a href="<?php echo $home; ?>" class="navbar-brand"><img src="view/image/logo.png" alt="<?php echo $heading_title; ?>" title="<?php echo $heading_title; ?>" /></a> </div>
     <?php if ($logged) { ?>
     <ul class="nav navbar-nav navbar-right">
-      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left">0</span> <i class="fa fa-bell fa-lg"></i></a>
-        
+      <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><span class="label label-danger pull-left"><?php echo $alerts; ?></span> <i class="fa fa-bell fa-lg"></i></a>
         <ul class="dropdown-menu">
-
           <li class="dropdown-header"><?php echo $text_order; ?></li>
-          <li><a href="<?php echo $order_status; ?>" target="_blank"><?php echo $text_order_status; ?> <span class="label label-warning"><?php echo $order_status_total; ?></span></a></li>
-          <li><a href="<?php echo $complete_status; ?>" target="_blank"><?php echo $text_complete_status; ?> <span class="label label-success"><?php echo $complete_status_total; ?></span></a></li>
-          
+          <li><a href="<?php echo $order_status; ?>" target="_blank"><?php echo $text_order_status; ?> <span class="label label-warning pull-right"><?php echo $order_status_total; ?></span></a></li>
+          <li><a href="<?php echo $complete_status; ?>" target="_blank"><?php echo $text_complete_status; ?> <span class="label label-success pull-right"><?php echo $complete_status_total; ?></span></a></li>
           <li class="divider"></li>
           <li class="dropdown-header"><?php echo $text_customer; ?></li>
-          <li><a href="<?php echo $online; ?>" target="_blank"><?php echo $text_online; ?> <span class="label label-success"><?php echo $online_total; ?></span></a></li>
-          <li><a href=""><?php echo $text_approval; ?></a></li>
-          
+          <li><a href="<?php echo $online; ?>" target="_blank"><?php echo $text_online; ?> <span class="label label-success pull-right"><?php echo $online_total; ?></span></a></li>
+          <li><a href="<?php echo $customer_approval; ?>"><?php echo $text_approval; ?> <span class="label label-danger pull-right"><?php echo $customer_total; ?></span></a></li>
           <li class="divider"></li>
           <li class="dropdown-header"><?php echo $text_product; ?></li>
-          
-          <li><a href=""><?php echo $text_stock; ?></a></li>
-          <li><a href=""><?php echo $text_review; ?></a></li>
-          <li><a href=""><?php echo $text_return; ?></a></li>
-          
+          <li><a href=""><?php echo $text_stock; ?> <span class="label label-danger pull-right"><?php echo $product_total; ?></a></li>
+          <li><a href="<?php echo $review; ?>"><?php echo $text_review; ?> <span class="label label-danger pull-right"><?php echo $review_total; ?></span></a></li>
+          <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?> <span class="label label-danger pull-right"><?php echo $return_total; ?></span></a></li>
           <li class="divider"></li>
-          <li class="dropdown-header"><?php echo $text_affiliate; ?></i></li>
-          
-          <li><a href=""><?php echo $text_approval; ?></a></li>
-
+          <li class="dropdown-header"><?php echo $text_affiliate; ?></li>
+          <li style="white-space: nowrap;"><a href="<?php echo $affiliate_approval; ?>"><?php echo $text_approval; ?> <span class="label label-danger pull-right"><?php echo $affiliate_total; ?></span></a></li>
         </ul>
       </li>
       <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-cog fa-lg"></i></a>

@@ -27,6 +27,22 @@ class ModelCatalogReview extends Model {
 	public function getReviews($data = array()) {
 		$sql = "SELECT r.review_id, pd.name, r.author, r.rating, r.status, r.date_added FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product_description pd ON (r.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";																																					  
 		
+		if (!empty($data['filter_product'])) {
+			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_product']) . "%'";
+		}
+
+		if (!empty($data['filter_author'])) {
+			$sql .= " AND r.author LIKE '" . $this->db->escape($data['filter_author']) . "%'";
+		}
+		
+		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
+			$sql .= " AND r.status = '" . (int)$data['filter_status'] . "'";
+		}
+		
+		if (!empty($data['filter_date_added'])) {
+			$sql .= " AND DATE(r.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+		}
+				
 		$sort_data = array(
 			'pd.name',
 			'r.author',
@@ -64,8 +80,26 @@ class ModelCatalogReview extends Model {
 		return $query->rows;	
 	}
 	
-	public function getTotalReviews() {
-		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review");
+	public function getTotalReviews($data = array()) {
+		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "review r LEFT JOIN " . DB_PREFIX . "product_description pd ON (r.product_id = pd.product_id) WHERE pd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
+		
+		if (!empty($data['filter_product'])) {
+			$sql .= " AND pd.name LIKE '" . $this->db->escape($data['filter_product']) . "%'";
+		}
+
+		if (!empty($data['filter_author'])) {
+			$sql .= " AND r.author LIKE '" . $this->db->escape($data['filter_author']) . "%'";
+		}
+		
+		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
+			$sql .= " AND r.status = '" . (int)$data['filter_status'] . "'";
+		}
+		
+		if (!empty($data['filter_date_added'])) {
+			$sql .= " AND DATE(r.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
+		}
+		
+		$query = $this->db->query($sql);
 		
 		return $query->row['total'];
 	}

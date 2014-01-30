@@ -15,6 +15,7 @@
     <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
       <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
     </div>
+    <?php } ?>
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="pull-right">

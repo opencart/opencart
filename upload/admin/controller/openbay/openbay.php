@@ -1508,6 +1508,9 @@ class ControllerOpenbayOpenbay extends Controller {
 				$data['qty'][0]             = (int)$post['qty'];
 				$data['product_id']         = (int)$post['product_id'];
 
+				$data['feat']           	= $post['feat'];
+				$data['featother']          = $post['featother'];
+
 				if(!empty($product_info['sku'])){
 					$data['sku'] = $product_info['sku'];
 				}
@@ -1713,6 +1716,9 @@ class ControllerOpenbayOpenbay extends Controller {
 				$data['price'][0]           = $post['price'];
 				$data['qty'][0]             = $post['qty'];
 				$data['product_id']         = $post['product_id'];
+
+				$data['feat']           	= $post['feat'];
+				$data['featother']          = $post['featother'];
 
 				if(!empty($product_info['sku'])){
 					$data['sku'] = $product_info['sku'];

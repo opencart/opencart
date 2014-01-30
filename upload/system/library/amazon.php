@@ -114,7 +114,7 @@ class Amazon {
 		$log->write("Order's $amazonOrderId status changed to $orderStatusString");
 
 
-		$this->load->model('amazon/amazon');
+		$this->load->model('openbay/amazon');
 		$amazonOrderProducts = $this->model_amazon_amazon->getAmazonOrderedProducts($orderId);
 
 

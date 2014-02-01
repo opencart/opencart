@@ -26,22 +26,22 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header {
 	background-color: #3B7DA5;
-	border-bottom: 1px solid #2F7098;
+	border-bottom: 1px solid #295773;
 	background-repeat: repeat-x;
 	min-height: 40px;
 	margin-bottom: 0;
 	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
 }
 #header .nav > li {
-	display: inline-block;
+	float: left;
 }
 #header .nav > li li {
 	min-width: 200px;
 }
 #header .container-fluid {
 	padding-left: 0px;
-	padding-right: 20px;
-	margin: -0;
+	padding-right: 15px;
+	margin: 0;
 }
 /* Mobile */
 @media (max-width: 767px) {
@@ -62,6 +62,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 
 #header .nav > li > a {
 	padding: 3px 13px 2px 13px;
+	margin: 0;
 	line-height: 35px;
 	cursor: pointer;
 	color: #FFFFFF;
@@ -74,6 +75,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background: rgba(0, 0, 0, 0.3);
 }
 #header .nav > li + li {
+	padding: 0;
+	margin: 0;
 	padding-left: 1px;
 	background-repeat: no-repeat;
 	background-size: 1px 15px;

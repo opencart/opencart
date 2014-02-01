@@ -4,7 +4,7 @@ html, body {
 	padding: 0;
 }
 body {
-	font-family: Arial;
+	font-family: "Arial", Gadget, sans-serif;
 	font-size: 12px;
 	color: #45484D;
 }
@@ -26,7 +26,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #header {
 	background-color: #3B7DA5;
-	border-bottom: 1px solid #295773;
+	border-bottom: 1px solid #2F7098;
 	background-repeat: repeat-x;
 	min-height: 40px;
 	margin-bottom: 0;
@@ -35,20 +35,36 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #header .nav > li {
 	display: inline-block;
 }
+#header .nav > li li {
+	min-width: 200px;
+}
 #header .container {
-	padding-left: 0;
+	padding-left: 0px;
 	padding-right: 20px;
 	margin: -0;
+}
+/* Mobile */
+@media (max-width: 767px) {
+	#header .container > .navbar-header {
+		margin-right: 0px;
+		margin-left: 0px;
+		float: left;	
+	}
+	
+	#header .navbar > .container .navbar-brand {
+		margin-left: -15px;
+	}
 }
 #header .navbar-brand {
 	padding: 6px 15px 4px 20px;
 }
+
 #header .navbar-nav > li > a {
 	padding: 3px 13px 2px 13px;
 	line-height: 35px;
 	cursor: pointer;
 	color: #FFFFFF;
-	text-shadow: 1px 1px 0 #295773;
+	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
 }
 #header .navbar-nav > li li > a {
 	font-size: 12px;
@@ -61,19 +77,16 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background-repeat: no-repeat;
 	background-size: 1px 15px;
 	background-position: left center;
-	background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.2) 1px, rgba(0, 0, 0, 0.2) 1px);
+	background-image: linear-gradient(90deg, rgba(255, 255, 255, 0.1) 1px, rgba(255, 255, 255, 0.1) 1px);
 }
-#header .navbar-nav > li > a i.fa-lg {
+#header .navbar-nav > li > a > i {
 	font-size: 18px;
 }
 #header .navbar-nav > li > a > img {
 	border-radius: 5px;
-	box-shadow: 1px 1px 0 #295773;
+	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
 }
-#header .navbar-nav > li > a .fa-angle-down {
-	margin-left: 2px;
-}
-#header .navbar-nav > li > a .label {
+#header .navbar-nav > li > a > .label {
 	text-shadow: none;
 	padding: 1px 4px;
 	position: absolute;
@@ -302,7 +315,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 .panel-title {
 	padding: 5px 0;
-	font-size: 18px;
+	font-size: 23px;
 	text-shadow: 1px 1px 0 #FFF;
 }
 .panel-title i {

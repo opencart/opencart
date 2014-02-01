@@ -29,7 +29,7 @@
 <body>
 <div id="container">
 <header id="header" class="navbar navbar-static-top">
-  <div class="container">
+  <div class="container-fluid">
     <div class="navbar-header">
       <?php if ($logged) { ?>
       <a type="button" id="button-menu" class="pull-left"><span class="fa fa-bars"></span></a>

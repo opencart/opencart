@@ -966,60 +966,95 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$this->data['bulk_linking_status'] = $bulk_linking_status;
 
+		$url = '';
+
+		if (!isset($this->request->get['marketplace'])) {
+			$marketplace_code = 'uk';
+		} else {
+			$marketplace_code = $this->request->get['marketplace'];
+		}
+
+		$total_linked = $this->model_openbay_amazon->getTotalUnlinkedItemsFromReport();
+
+		if(isset($this->request->get['linked_item_page'])){
+			$linked_item_page = (int)$this->request->get['linked_item_page'];
+		}else{
+			$linked_item_page = 1;
+		}
+
+		if(isset($this->request->get['linked_item_limit'])){
+			$linked_item_limit = (int)$this->request->get['linked_item_limit'];
+		}else{
+			$linked_item_limit = 4;
+		}
+
 		$marketplaces = array(
-			array(
+			'uk' => array(
 				'name' => $this->language->get('text_uk'),
 				'code' => 'uk',
 				'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=uk', 'SSL'),
+				'link' => $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'] . '&marketplace=uk', 'SSL'),
 			),
-			array(
+			'de' => array(
 				'name' => $this->language->get('text_de'),
 				'code' => 'de',
 				'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=de', 'SSL'),
+				'link' => $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'] . '&marketplace=de', 'SSL'),
 			),
-			array(
+			'fr' => array(
 				'name' => $this->language->get('text_fr'),
 				'code' => 'fr',
 				'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=fr', 'SSL'),
+				'link' => $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'] . '&marketplace=fr', 'SSL'),
 			),
-			array(
+			'it' => array(
 				'name' => $this->language->get('text_it'),
 				'code' => 'it',
 				'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=it', 'SSL'),
+				'link' => $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'] . '&marketplace=it', 'SSL'),
 			),
-			array(
+			'es' => array(
 				'name' => $this->language->get('text_es'),
 				'code' => 'es',
 				'href_load_listings' => $this->url->link('openbay/amazon/loadListingReport', 'token=' . $this->session->data['token'] . '&marketplace=es', 'SSL'),
+				'link' => $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'] . '&marketplace=es', 'SSL'),
 			),
 		);
 
-		foreach ($marketplaces as &$marketplace) {
-			$results = $this->model_openbay_amazon->getUnlinkedItemsFromReport($marketplace['code']);
+		$pagination = new Pagination();
+		$pagination->total = $total_linked;
+		$pagination->page = $linked_item_page;
+		$pagination->limit = 4;
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'] . '&linked_item_page={page}&marketplace='.$marketplace_code, 'SSL');
 
-			$products = array();
+		$this->data['pagination'] = $pagination->render();
 
-			foreach ($results as $result) {
-				$products[] = array(
-					'asin' => $result['asin'],
-					'href_amazon' => $this->model_openbay_amazon->getAsinLink($result['asin'], $marketplace['code']),
-					'amazon_sku' => $result['amazon_sku'],
-					'amazon_quantity' => $result['amazon_quantity'],
-					'amazon_price' => $result['amazon_price'],
-					'name' => $result['name'],
-					'sku' => $result['sku'],
-					'quantity' => $result['quantity'],
-					'combination' => $result['combination'],
-					'product_id' => $result['product_id'],
-					'var' => $result['var'],
-					'href_product' => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'], 'SSL'),
-				);
-			}
+		$results = $this->model_openbay_amazon->getUnlinkedItemsFromReport($marketplace_code, $linked_item_limit, $linked_item_page);
 
-			$marketplace['unlinked_products'] = $products;
+		$products = array();
+
+		foreach ($results as $result) {
+			$products[] = array(
+				'asin' => $result['asin'],
+				'href_amazon' => $this->model_openbay_amazon->getAsinLink($result['asin'], $marketplace_code),
+				'amazon_sku' => $result['amazon_sku'],
+				'amazon_quantity' => $result['amazon_quantity'],
+				'amazon_price' => $result['amazon_price'],
+				'name' => $result['name'],
+				'sku' => $result['sku'],
+				'quantity' => $result['quantity'],
+				'combination' => $result['combination'],
+				'product_id' => $result['product_id'],
+				'var' => $result['var'],
+				'href_product' => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'], 'SSL'),
+			);
 		}
 
+		$this->data['unlinked_products'] = $products;
+
 		$this->data['marketplaces'] = $marketplaces;
+		$this->data['marketplace_code'] = $marketplace_code;
 
 		$this->data['marketplaces_processing'] = $this->config->get('openbay_amazon_processing_listing_reports');
 		$this->data['href_return'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');

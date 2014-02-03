@@ -21,19 +21,19 @@
             
                 <div class="htabs">
                     <?php foreach ($marketplaces as $marketplace) { ?>
-                        <a href="#tab-marketplace-<?php echo $marketplace['code']; ?>" id="address-<?php echo $marketplace['code']; ?>"><?php echo $marketplace['name'] ?></a>
+                        <a href="<?php echo $marketplace['link']; ?>" <?php if($marketplace['code'] == $marketplace_code) { echo ' class="active"'; } ?>><?php echo $marketplace['name'] ?></a>
                     <?php } ?>
                 </div>
-                <?php foreach ($marketplaces as $marketplace) { ?>
-                    <div id="tab-marketplace-<?php echo $marketplace['code']; ?>">
+
+                <div style="display:block;">
                         <p><?php echo $text_load_listings_help ?></p>
-                        <p id="text-<?php echo $marketplace['code']; ?>">
-                            <?php if (in_array($marketplace['code'], $marketplaces_processing)) { ?>
+                        <p id="text-<?php echo $marketplace_code; ?>">
+                            <?php if (in_array($marketplace_code, $marketplaces_processing)) { ?>
                                 <?php echo $text_loading_listings ?> <img src="view/image/loading.gif" class="loading" style="padding-left: 5px;" />
                             <?php } else { ?>
-                                <?php echo $text_load_listings ?> <a class="button-load-listings button" href="<?php echo $marketplace['href_load_listings'] ?>"><?php echo $button_load ?></a>
+                                <?php echo $text_load_listings ?> <a class="button-load-listings button" href="<?php echo $marketplaces[$marketplace_code]['href_load_listings'] ?>"><?php echo $button_load ?></a>
 
-                                <?php if ($marketplace['unlinked_products']) { ?>
+                                <?php if ($unlinked_products) { ?>
 
                                     <table class="list">
                                         <thead>
@@ -58,7 +58,7 @@
                                         </thead>
                                         <tbody>
                                             <?php $row = 0; ?>
-                                            <?php foreach ($marketplace['unlinked_products'] as $product) { ?>
+                                            <?php foreach ($unlinked_products as $product) { ?>
                                                 <?php $row++ ?>
                                                 <tr>
                                                     <td class="center">
@@ -86,7 +86,6 @@
                             <?php } ?>
                         </p>
                     </div>
-                <?php } ?>
             
             <?php } else { ?>
                 <div class="warning"><?php echo $error_bulk_linking_not_allowed ?></div>

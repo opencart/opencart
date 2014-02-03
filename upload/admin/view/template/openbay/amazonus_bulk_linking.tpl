@@ -74,6 +74,7 @@
                                 </tbody>
                             </table>
 
+                            <div class="pagination"><?php echo $pagination; ?></div>
                         <?php } ?>
                     <?php } ?>
                 </p>          

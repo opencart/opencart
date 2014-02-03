@@ -542,7 +542,7 @@ class ModelOpenbayAmazon extends Model {
 	public function getTotalUnlinkedItemsFromReport($marketplace) {
 		if ($this->openbay->addonLoad('openstock')) {
 			$result = $this->db->query("
-				SELECT COUNT(*) AS `total`
+				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity,
 				  (
 					SELECT GROUP_CONCAT(ovd.name ORDER BY o.sort_order SEPARATOR ' > ')
 					FROM " . DB_PREFIX . "product_option_value pov
@@ -564,7 +564,7 @@ class ModelOpenbayAmazon extends Model {
 			");
 		} else {
 			$result = $this->db->query("
-				SELECT COUNT(*) AS `total`
+				SELECT alr.sku AS 'amazon_sku', alr.quantity AS 'amazon_quantity', alr.asin, alr.price AS 'amazon_price', oc_sku.product_id, pd.name, oc_sku.sku, oc_sku.var, oc_sku.quantity, '' AS combination
 				FROM " . DB_PREFIX . "amazon_listing_report alr
 				LEFT JOIN (
 					SELECT p.product_id, p.sku, NULL AS 'var', p.quantity
@@ -579,7 +579,6 @@ class ModelOpenbayAmazon extends Model {
 
 		return (int)$result->num_rows;
 	}
-
 
 	public function getUnlinkedItemsFromReport($marketplace, $limit = 100, $page = 1) {
 		$start = $limit * ($page - 1);

@@ -946,7 +946,30 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$this->data['bulk_linking_status'] = $bulk_linking_status;
 
-		$results = $this->model_openbay_amazonus->getUnlinkedItemsFromReport();
+		$total_linked = $this->model_openbay_amazonus->getTotalUnlinkedItemsFromReport();
+
+		if(isset($this->request->get['linked_item_page'])){
+			$linked_item_page = (int)$this->request->get['linked_item_page'];
+		}else{
+			$linked_item_page = 1;
+		}
+
+		if(isset($this->request->get['linked_item_limit'])){
+			$linked_item_limit = (int)$this->request->get['linked_item_limit'];
+		}else{
+			$linked_item_limit = 25;
+		}
+
+		$pagination = new Pagination();
+		$pagination->total = $total_linked;
+		$pagination->page = $linked_item_page;
+		$pagination->limit = $linked_item_limit;
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->link('openbay/amazonus/bulkLinking', 'token=' . $this->session->data['token'] . '&linked_item_page={page}', 'SSL');
+
+		$this->data['pagination'] = $pagination->render();
+
+		$results = $this->model_openbay_amazonus->getUnlinkedItemsFromReport($linked_item_limit, $linked_item_page);
 
 		$products = array();
 

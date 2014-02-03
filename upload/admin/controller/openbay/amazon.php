@@ -966,15 +966,13 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$this->data['bulk_linking_status'] = $bulk_linking_status;
 
-		$url = '';
-
 		if (!isset($this->request->get['marketplace'])) {
 			$marketplace_code = 'uk';
 		} else {
 			$marketplace_code = $this->request->get['marketplace'];
 		}
 
-		$total_linked = $this->model_openbay_amazon->getTotalUnlinkedItemsFromReport();
+		$total_linked = $this->model_openbay_amazon->getTotalUnlinkedItemsFromReport($marketplace_code);
 
 		if(isset($this->request->get['linked_item_page'])){
 			$linked_item_page = (int)$this->request->get['linked_item_page'];
@@ -985,7 +983,7 @@ class ControllerOpenbayAmazon extends Controller {
 		if(isset($this->request->get['linked_item_limit'])){
 			$linked_item_limit = (int)$this->request->get['linked_item_limit'];
 		}else{
-			$linked_item_limit = 4;
+			$linked_item_limit = 25;
 		}
 
 		$marketplaces = array(
@@ -1024,7 +1022,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $total_linked;
 		$pagination->page = $linked_item_page;
-		$pagination->limit = 4;
+		$pagination->limit = $linked_item_limit;
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'] . '&linked_item_page={page}&marketplace='.$marketplace_code, 'SSL');
 
@@ -1122,5 +1120,4 @@ class ControllerOpenbayAmazon extends Controller {
 		}
 	}
 }
-
 ?>

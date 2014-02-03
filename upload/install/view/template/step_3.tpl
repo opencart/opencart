@@ -36,6 +36,11 @@
                 <option value="mpdo"><?php echo $text_mpdo; ?></option>
                 <?php } ?>
                 <?php } ?>
+                <?php if ($pgsql) { ?>
+                <option value="postgre" <?php echo $db_driver == 'pgsql' ? 'selected="selected"' : ''; ?>>
+                  <?php echo $text_pgsql; ?>
+                </option>
+                <?php } ?>
               </select>
             </div>
           </div>

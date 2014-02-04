@@ -1,6 +1,6 @@
 <?php echo $header; ?>
 <div id="content">
-  <div class="container"><br />
+  <div class="container-fluid"><br />
     <br />
     <div class="row">
       <div class="col-sm-offset-4 col-sm-4">

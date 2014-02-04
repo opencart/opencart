@@ -351,7 +351,7 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== null) {
-			$sql .= " AND p.quantity = '" . $this->db->escape($data['filter_quantity']) . "'";
+			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";
 		}
 		
 		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
@@ -609,7 +609,7 @@ class ModelCatalogProduct extends Model {
 		}
 		
 		if (isset($data['filter_quantity']) && $data['filter_quantity'] !== null) {
-			$sql .= " AND p.quantity = '" . $this->db->escape($data['filter_quantity']) . "'";
+			$sql .= " AND p.quantity = '" . (int)$data['filter_quantity'] . "'";
 		}
 		
 		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
@@ -674,4 +674,10 @@ class ModelCatalogProduct extends Model {
 
 		return $query->row['total'];
 	}
+	
+	public function getTotalProductsOutOfStock() {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "product WHERE status <= 0");
+
+		return $query->row['total'];
+	}	
 }

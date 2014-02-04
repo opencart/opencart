@@ -1,6 +1,6 @@
 <?php
 // Heading
-$_['heading_title']       = 'Reviews';
+$_['heading_title']     = 'Reviews';
 
 // Text
 $_['text_success']      = 'Success: You have modified reviews!';
@@ -19,6 +19,7 @@ $_['entry_author']      = 'Author';
 $_['entry_rating']      = 'Rating';
 $_['entry_status']      = 'Status';
 $_['entry_text']        = 'Text';
+$_['entry_date_added']  = 'Date Added';
 
 // Help
 $_['help_product']      = '(Autocomplete)';

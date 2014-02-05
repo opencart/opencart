@@ -47,7 +47,14 @@ class ControllerCommonColumnLeft extends Controller {
 		
 			if ($modules) {
 				foreach ($modules as $module) {
-					if (((isset($module['layout_id']) && $module['layout_id'] == $layout_id) || (isset($module['layouts']) && in_array($layout_id, $module['layouts']))) && $module['position'] == 'column_left' && $module['status']) {
+					$layout_status = false;
+					if (isset($module['layout_id']) && $module['layout_id'] == $layout_id) {
+						$layout_status = true;
+					}
+					if (isset($module['layouts']) && in_array($layout, $module['layouts'])) {
+						$layout_status = true;
+					}
+					if ($layout_status && $module['position'] == 'column_left' && $module['status']) {
 						$module_data[] = array(
 							'code'       => $extension['code'],
 							'setting'    => $module,

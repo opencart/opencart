@@ -10,18 +10,23 @@ final class DBmPDO {
 	private $pdo = null;
 	private $statement = null;
 
-	public function __construct($hostname, $username, $password, $database, $port = "3306") {
+	public function __construct($dsnPrefix, $hostname, $username, $password, $database) {
 
 		try {
-			$this->pdo = new PDO("mysql:host=".$hostname.";port=".$port.";dbname=".$database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
+			$dsn = sprintf("%s:host=%s;dbname=%s", $dsnPrefix, $hostname, $database);
+			$this->pdo = new PDO($dsn, $username, $password, array(PDO::ATTR_PERSISTENT => true));
 		} catch(PDOException $e) {
 			trigger_error('Error: Could not make a database link ( '. $e->getMessage() . '). Error Code : ' . $e->getCode() . ' <br />');
 		}
 
-		$this->pdo->exec("SET NAMES 'utf8'");
-		$this->pdo->exec("SET CHARACTER SET utf8");
-		$this->pdo->exec("SET CHARACTER_SET_CONNECTION=utf8");
-		$this->pdo->exec("SET SQL_MODE = ''");
+		if ($dsnPrefix == 'mysql') {
+			$this->pdo->exec("SET NAMES 'utf8'");
+			$this->pdo->exec("SET CHARACTER SET utf8");
+			$this->pdo->exec("SET CHARACTER_SET_CONNECTION=utf8");
+			$this->pdo->exec("SET SQL_MODE = ''");
+		} elseif ($dsnPrefix == 'pgsql') {
+			$this->pdo->exec("SET CLIENT_ENCODING TO 'UTF8'");
+		}
 
 	}
 

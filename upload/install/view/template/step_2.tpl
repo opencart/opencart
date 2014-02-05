@@ -172,24 +172,8 @@
             </thead>
             <tbody>
               <tr>
-                <td><?php echo $text_mysqli; ?></td>
-                <td class="text-center"><?php if ($mysqli) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
-                  <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
                 <td><?php echo $text_mysql; ?></td>
-                <td class="text-center"><?php if ($mysql) { ?>
-                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
-                  <?php } else { ?>
-                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
-              </tr>
-              <tr>
-                <td><?php echo $text_mpdo; ?></td>
-                <td class="text-center"><?php if ($mpdo) { ?>
+                <td class="text-center"><?php if ($has_mysql_drivers) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
@@ -197,7 +181,7 @@
               </tr>
               <tr>
                 <td><?php echo $text_pgsql; ?></td>
-                <td class="text-center"><?php if ($pgsql) { ?>
+                <td class="text-center"><?php if ($has_pg_drivers) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>

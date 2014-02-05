@@ -7,7 +7,7 @@ class ModelInstall extends Model {
 		$this->dbPrefix = $data['db_prefix'];
 		$this->db = new DB($data['db_driver'], $data['db_hostname'], $data['db_username'], $data['db_password'], $data['db_database']);
 
-		if ($data['db_driver'] == 'postgre') {
+		if (in_array($data['db_driver'], array('postgre', 'mpdo.pgsql'))) {
 			$this->buildPostgreDatabase($data);
 		} else {
 			$this->buildStandardDatabase($data);

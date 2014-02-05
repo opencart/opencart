@@ -70,15 +70,15 @@ class ControllerStep2 extends Controller {
 		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
 		$data['zlib'] = extension_loaded('zlib');
 
-		$data['mysqli'] = extension_loaded('mysqli');
-		$data['mysql'] = extension_loaded('mysql');
-		$data['pgsql'] = extension_loaded('pgsql');
-		$data['mpdo'] = extension_loaded('pdo');
+		$data['has_mysql_drivers'] = extension_loaded('mysqli') || extension_loaded('mysql');
+		$data['has_pg_drivers'] = extension_loaded('pgsql');
 
+		$data['mpdo'] = extension_loaded('pdo');
 		if ($data['mpdo']) {
 			$availablePDODrivers = PDO::getAvailableDrivers();
 			if (!empty($availablePDODrivers)) {
-				$data['text_mpdo'] .= sprintf(" (%s)", implode(', ', $availablePDODrivers));
+				$data['has_mysql_drivers'] = $data['has_mysql_drivers'] || in_array('mysql', $availablePDODrivers);
+				$data['has_pg_drivers'] = $data['has_pg_drivers'] || in_array('pgsql', $availablePDODrivers);
 			} else {
 				$data['mpdo'] = false;
 			}

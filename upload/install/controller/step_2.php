@@ -72,8 +72,17 @@ class ControllerStep2 extends Controller {
 
 		$data['mysqli'] = extension_loaded('mysqli');
 		$data['mysql'] = extension_loaded('mysql');
-		$data['mpdo'] = extension_loaded('pdo');
 		$data['pgsql'] = extension_loaded('pgsql');
+		$data['mpdo'] = extension_loaded('pdo');
+
+		if ($data['mpdo']) {
+			$availablePDODrivers = PDO::getAvailableDrivers();
+			if (!empty($availablePDODrivers)) {
+				$data['text_mpdo'] .= sprintf(" (%s)", implode(', ', $availablePDODrivers));
+			} else {
+				$data['mpdo'] = false;
+			}
+		}
 
 		$data['config_catalog'] = DIR_OPENCART . 'config.php';
 		$data['config_admin'] = DIR_OPENCART . 'admin/config.php';
@@ -107,9 +116,12 @@ class ControllerStep2 extends Controller {
 		}
 		
 		$availableDrivers = array_filter(array('mysqli', 'mysql', 'pdo', 'pgsql'), 'extension_loaded');
-		if (empty($availableDrivers)) {
+		if (empty($availableDrivers) ||
+			(count($availableDrivers) == 1 && $availableDrivers[0] == 'pdo' && empty(PDO::getAvailableDrivers()))
+		) {
 			$this->error['warning'] = 'Warning: A useable database driver needs to be loaded for OpenCart to work!';
 		}
+			
 				
 		if (!extension_loaded('gd')) {
 			$this->error['warning'] = 'Warning: GD extension needs to be loaded for OpenCart to work!';

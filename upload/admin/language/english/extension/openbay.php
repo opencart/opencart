@@ -89,6 +89,7 @@ $_['lang_clearfaq']                     = 'Clear hidden FAQ popups';
 $_['lang_clearfaqbtn']                  = 'Clear';
 
 // Ajax elements
+$_['lang_ajax_ebay_shipped']            = 'The order will be marked as shipped on eBay automatically';
 $_['lang_ajax_amazoneu_shipped']        = 'The order will be marked as shipped on Amazon EU automatically';
 $_['lang_ajax_amazonus_shipped']        = 'The order will be marked as shipped on Amazon US automatically';
 $_['lang_ajax_refund_reason']           = 'Refund reason';

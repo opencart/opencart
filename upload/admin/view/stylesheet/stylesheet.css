@@ -25,8 +25,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	overflow: hidden;
 }
 #header {
-	background-color: #3B7DA5;
-	border-bottom: 1px solid #295773;
+	background-color: #4E94BF;
+	border-bottom: 1px solid #37769C;
 	background-repeat: repeat-x;
 	min-height: 40px;
 	margin-bottom: 0;
@@ -57,7 +57,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 
 #header .navbar-brand {
-	padding: 6px 15px 4px 20px;
+	padding: 7px 15px 4px 30px;
 }
 
 #header .nav > li > a {
@@ -319,7 +319,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 .panel-title {
 	padding: 5px 0;
-	font-size: 23px;
+	font-size: 20px;
 	text-shadow: 1px 1px 0 #FFF;
 }
 .panel-title i {
@@ -413,26 +413,28 @@ input.form-control, select.form-control {
 }
 .btn-default {
 	color: #333333;
-	text-shadow: none;
-	background: #F5F5F5;
-	border: 1px solid #DCDCDC;
+	background: #ffffff;
+	border: 1px solid #D5D5D5;
 }
 .btn-primary {
-	background-color: #479CCF;
-	text-shadow: 0px -1px 0px #296192;
+	background-color: #2f9fe0;
+	border: 1px solid #2299de;
 }
 .btn-warning {
-	text-shadow: 0px -1px 0px #B36D0F;
+	background-color: #f6bb42;
+	border: 1px solid #f5b633;
 }
 .btn-danger {
-	text-shadow: 0px -1px 0px #AA2824;
+	background-color: #da4453;
+	border: 1px solid #d73747;
 }
 .btn-success {
-	background-color: #AACB48;
-	text-shadow: 0px -1px 0px #869D41;
+	background-color: #8cc152;
+	border: 1px solid #85bd47;
 }
 .btn-info {
-	text-shadow: 0px -1px 0px #2495B6;
+	background-color: #4fc1e9;
+	border: 1px solid #41bce7;
 }
 .table thead > tr > td, .table tbody > tr > td {
 	vertical-align: middle;

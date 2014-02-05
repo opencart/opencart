@@ -77,9 +77,9 @@
         <?php } ?>
         <ul class="dropdown-menu dropdown-menu-right">
           <li class="dropdown-header"><?php echo $text_logged; ?></li>
-          <li><a href="<?php echo $profile; ?>"><?php echo $text_profile; ?></a></li>
-          <li><a href="<?php echo $setting; ?>"><?php echo $text_setting; ?></a></li>
-          <li><a href="<?php echo $logout; ?>"><?php echo $text_logout; ?></a></li>
+          <li><a href="<?php echo $profile; ?>"><i class="fa fa-user"></i> <?php echo $text_profile; ?></a></li>
+          <li><a href="<?php echo $setting; ?>"><i class="fa fa-cog"></i> <?php echo $text_setting; ?></a></li>
+          <li><a href="<?php echo $logout; ?>"><i class="fa fa-sign-out"></i> <?php echo $text_logout; ?></a></li>
         </ul>
       </li>
     </ul>

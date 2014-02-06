@@ -7,8 +7,8 @@ class ControllerAmazonusListing extends Controller {
 
 		$this->load->library('log');
 		$this->load->library('amazonus');
-		$this->load->model('amazonus/listing');
-		$this->load->model('amazonus/product');
+		$this->load->model('openbay/amazonus_listing');
+		$this->load->model('openbay/amazonus_product');
 
 		$logger = new Log('amazonus_listing.log');
 		$logger->write('amazonus/listing - started');

@@ -115,7 +115,7 @@ class Amazon {
 
 
 		$this->load->model('openbay/amazon');
-		$amazonOrderProducts = $this->model_amazon_amazon->getAmazonOrderedProducts($orderId);
+		$amazonOrderProducts = $this->model_openbay_amazon->getAmazonOrderedProducts($orderId);
 
 
 		$requestNode = new SimpleXMLElement('<Request/>');
@@ -145,7 +145,7 @@ class Amazon {
 		$doc->loadXML($requestNode->asXML());
 		$doc->formatOutput = true;
 
-		$this->model_amazon_amazon->updateAmazonOrderTracking($orderId, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
+		$this->model_openbay_amazon->updateAmazonOrderTracking($orderId, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
 		$response = $this->callWithResponse('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");

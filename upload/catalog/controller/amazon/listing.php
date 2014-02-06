@@ -7,8 +7,8 @@ class ControllerAmazonListing extends Controller {
 
 		$this->load->library('log');
 		$this->load->library('amazon');
-		$this->load->model('amazon/listing');
-		$this->load->model('amazon/product');
+		$this->load->model('openbay/amazon_listing');
+		$this->load->model('openbay/amazon_product');
 
 		$logger = new Log('amazon_listing.log');
 		$logger->write('amazon/listing - started');

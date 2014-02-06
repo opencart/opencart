@@ -3,7 +3,7 @@ class ControllerModuleEbaydisplay extends Controller {
 	protected function index($setting) {
 		$this->language->load('module/ebaydisplay');
 		$this->load->model('tool/image');
-		$this->load->model('ebay/product');
+		$this->load->model('openbay/ebay_product');
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
 

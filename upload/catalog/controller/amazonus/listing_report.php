@@ -5,7 +5,7 @@ class ControllerAmazonusListingReport extends Controller {
 			return;
 		}
 
-		$this->load->model('amazonus/product');
+		$this->load->model('openbay/amazonus_product');
 
 		$logger = new Log('amazonus.log');
 		$logger->write('amazonus/listing_reports - started');

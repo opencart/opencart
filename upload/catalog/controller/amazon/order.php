@@ -8,7 +8,7 @@ class ControllerAmazonOrder extends Controller {
 		$this->load->library('log');
 		$this->load->library('amazon');
 		$this->load->model('checkout/order');
-		$this->load->model('amazon/order');
+		$this->load->model('openbay/amazon_order');
 		$this->language->load('amazon/order');
 
 		$logger = new Log('amazon.log');

@@ -7,9 +7,9 @@ class ControllerEbayOpenbay extends Controller {
 		$s1             = $this->config->get('openbaypro_string1');
 		$s2             = $this->config->get('openbaypro_string2');
 
-		$this->load->model('ebay/openbay');
-		$this->load->model('ebay/product');
-		$this->load->model('ebay/order');
+		$this->load->model('openbay/ebay_openbay');
+		$this->load->model('openbay/ebay_product');
+		$this->load->model('openbay/ebay_order');
 
 		if(empty($encrypted)) {
 			$this->response->setOutput(json_encode(array('msg' => 'error 002')));
@@ -89,8 +89,8 @@ class ControllerEbayOpenbay extends Controller {
 		$active = $this->config->get('openbay_status');
 
 		if(isset($data['secret']) && $secret == $data['secret'] && $active == 1 && isset($data['data'])) {
-			$this->load->model('ebay/openbay');
-			$this->load->model('ebay/product');
+			$this->load->model('openbay/ebay_openbay');
+			$this->load->model('openbay/ebay_product');
 			$this->model_ebay_product->importItems($data);
 			$this->response->setOutput(json_encode(array('msg' => 'ok', 'error' => false)));
 		} else {

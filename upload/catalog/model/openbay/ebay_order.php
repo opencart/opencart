@@ -1,5 +1,5 @@
 <?php
-class ModelEbayOrder extends Model{
+class ModelOpenbayEbayOrder extends Model{
 	public function addOrderLine($data, $order_id, $created) {
 		$orderLine      = $this->getOrderLine($data['txn_id'], $data['item_id']);
 

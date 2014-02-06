@@ -1,5 +1,5 @@
 <?php
-class ModelEbayOpenbay extends Model{
+class ModelOpenbayEbayOpenbay extends Model{
 	public function importOrders($data) {
 		$this->default_shipped_id         = $this->config->get('EBAY_DEF_SHIPPED_ID');
 		$this->default_paid_id            = $this->config->get('EBAY_DEF_PAID_ID');
@@ -36,7 +36,7 @@ class ModelEbayOpenbay extends Model{
 
 	public function orderHandle($order) {
 		$this->load->model('checkout/order');
-		$this->load->model('ebay/order');
+		$this->load->model('openbay/ebay_order');
 
 		/**
 		 * Check the order is not locked

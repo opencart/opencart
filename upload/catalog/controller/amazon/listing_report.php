@@ -5,7 +5,7 @@ class ControllerAmazonListingReport extends Controller {
 			return;
 		}
 
-		$this->load->model('amazon/product');
+		$this->load->model('openbay/amazon_product');
 
 		$logger = new Log('amazon.log');
 		$logger->write('amazon/listing_reports - started');

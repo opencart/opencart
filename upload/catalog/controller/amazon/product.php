@@ -9,7 +9,7 @@ class ControllerAmazonProduct extends Controller {
 		ob_start();
 
 		$this->load->library('amazon');
-		$this->load->model('amazon/product');
+		$this->load->model('openbay/amazon_product');
 		$this->load->library('log');
 		$logger = new Log('amazon_product.log');
 

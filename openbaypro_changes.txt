@@ -1,5 +1,7 @@
 Type: Enhancement, New Feature, Bug
 
+06-02-14 - Enhancement - Moved the catalog model and language files to a single OpenBay Pro folder.
+05-02-14 - Bug - Added missing eBay language string in Order page
 03-02-14 - Enhancement - Added pagination for Amazon bulk linking page, EU & US markets.
 30-01-14 - Bug - Fixed incorrect model name reference causing Amazon order updates to not pass to Amazon.
 28-01-14 - Enhancement - Added browse node support for Amazon US listings.

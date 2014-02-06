@@ -54,15 +54,15 @@ class ControllerCheckoutManual extends Controller {
 			}
 	
 			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
-				$json['error']['lastname'] = $this->language->get('error_lastname');
+				$json['error']['customer']['lastname'] = $this->language->get('error_lastname');
 			}
 	
 			if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
-				$json['error']['email'] = $this->language->get('error_email');
+				$json['error']['customer']['email'] = $this->language->get('error_email');
 			}
 			
 			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-				$json['error']['telephone'] = $this->language->get('error_telephone');
+				$json['error']['customer']['telephone'] = $this->language->get('error_telephone');
 			}
 			
 			// Product

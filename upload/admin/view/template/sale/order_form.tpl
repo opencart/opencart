@@ -1176,6 +1176,13 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				// Order Details
 				if (json['error']['customer']) {
 					$('.panel').before('<div class="text-danger">' + json['error']['customer'] + '</div>');
+					
+					if (json['error']['customer']) {
+						for (i in json['error']['customer']) {
+							$('select[name=\'input-customer_country_id\']').after('<div class="text-danger">' + json['error']['shipping']['country'] + '</div>');
+						}
+					}						
+					
 				}	
 			
 				// Payment Address

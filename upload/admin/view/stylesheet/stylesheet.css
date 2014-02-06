@@ -25,12 +25,15 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	overflow: hidden;
 }
 #header {
-	background-color: #4E94BF;
-	border-bottom: 1px solid #37769C;
-	background-repeat: repeat-x;
 	min-height: 40px;
+	background-color: #0D0D0D;
+	background-image: linear-gradient(0deg, #242424, #323232);
+	background-repeat: repeat-x;
+	background-position: top;
+	background-size: 100% 39px;
+	border-bottom: 1px solid #5D5D5D;
+	box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.15);
 	margin-bottom: 0;
-	box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.15);
 }
 #header .nav > li {
 	float: left;
@@ -57,16 +60,20 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 
 #header .navbar-brand {
-	padding: 7px 15px 4px 30px;
+	padding: 7px 15px 4px 35px;
 }
 
+ #header #button-menu + .navbar-brand {
+	padding: 7px 15px 4px 20px;
+}
+	
 #header .nav > li > a {
 	padding: 3px 13px 2px 13px;
 	margin: 0;
 	line-height: 35px;
 	cursor: pointer;
-	color: #FFFFFF;
-	text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+	color: #777777;
+	text-shadow: 1px 1px 0 #000000;
 }
 #header .nav > li li > a {
 	font-size: 12px;
@@ -81,14 +88,14 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	background-repeat: no-repeat;
 	background-size: 1px 15px;
 	background-position: left center;
-	background-image: linear-gradient(90deg, rgba(0, 0, 0, 0.1) 1px, rgba(0, 0, 0, 0.1) 1px);
+	background-image: linear-gradient(90deg, #000000, #000000);
 }
 #header .nav > li > a > i {
 	font-size: 18px;
 }
 #header .nav > li > a > img {
 	border-radius: 5px;
-	box-shadow: 1px 1px 0 rgba(0, 0, 0, 0.3);
+	box-shadow: 1px 1px 0 #000000;
 }
 #header .nav > li > a > .label {
 	text-shadow: none;
@@ -104,8 +111,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	float: left;
 	display: inline-block;
 	cursor: pointer;
-	color: #FFF;
-	text-shadow: 1px 1px 0 #295773;
+	color: #777777;
+	text-shadow: 1px 1px 0 #000000;
 }
 #button-menu:hover {
 	background: rgba(0, 0, 0, 0.3);
@@ -113,8 +120,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 50px;
 	height: 100%;
-	background-color: #202020;
-	border-right: 1px solid #000000;
+	background-color: #F4F4F4;
+	border-right: 1px solid #DDDDDD;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -151,15 +158,16 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #search {
 	padding-left: 5px;
-	background-color: #202020;
+	background-color: #F4F4F4;
 }
 #search:hover {
 	width: 259px;
+	background-color: #DDDDDD;
 }
 #search .btn {
 	font-size: 18px;
 	padding: 8px;
-	color: #666666;
+	color: #999999;
 }
 #search:hover .btn {
 	color: #8B8B8B;
@@ -170,7 +178,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	width: 180px;
 	padding: 5px 10px;
 	border: none;
-	background-color: #333333;
+	background-color: #CCCCCC;
 }
 #search:hover input {
 	display: inline-block;
@@ -186,33 +194,32 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	position: relative;
 }
 #menu li a {
-	color: #909090;
+	color: #999999;
 	text-decoration: none;
-	 text-shadow: 1px 1px 0 #000000;
 	display: block;
 	padding: 8px;
 	cursor: pointer;
 }
 #menu li a i {
 	font-size: 18px;
-	color: #666666;
+	color: #999999;
 }
 #menu > li.active > a i {
-	color: #8B8B8B;
+	color: #666666;
 }
 #menu > li > a {
 	padding-left: 13px;
 }
 #menu li.active > a {
-	color: #FFFFFF;
-	background-color: #161616;
+	color: #666666;
+	background-color: #DDDDDD;
 }
 #menu li.open > a {
-	background-color: #161616;
+	background-color: #DDDDDD;
 }
 #menu li a:hover {
-	color: #FFF;
-	background-color: #1B1B1B;
+	color: #666666;
+	background-color: #EEEEEE;
 }
 #menu > li > a > span {
 	display: none;
@@ -226,7 +233,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	left: 49px;
 	top: 0px;
 	width: 210px;
-	background: #202020;
+	background: #F4F4F4;
 	visibility: hidden;
 }
 #menu > li:hover > ul {

@@ -42,10 +42,10 @@ class ControllerAmazonusListingReport extends Controller {
 		}
 
 		if ($data) {
-			$this->model_amazonus_product->addListingReport($data);
+			$this->model_openbay_amazonus_product->addListingReport($data);
 		}
 
-		$this->model_amazonus_product->removeListingReportLock($request['marketplace']);
+		$this->model_openbay_amazonus_product->removeListingReportLock($request['marketplace']);
 
 		$logger->write('amazonus/listing_reports - Finished');
 	}

@@ -35,12 +35,12 @@ class ControllerAmazonusListing extends Controller {
 
 		if ($data['status']) {
 			$logger->write("Updating " . $data['product_id'] . ' as successful');
-			$this->model_amazonus_listing->listingSuccessful($data['product_id']);
-			$this->model_amazonus_product->linkProduct($data['sku'], $data['product_id']);
+			$this->model_openbay_amazonus_listing->listingSuccessful($data['product_id']);
+			$this->model_openbay_amazonus_product->linkProduct($data['sku'], $data['product_id']);
 			$logger->write("Updated successfully");
 		} else {
 			$logger->write("Updating " . $data['product_id'] . ' as failed');
-			$this->model_amazonus_listing->listingFailed($data['product_id'], $data['messages']);
+			$this->model_openbay_amazonus_listing->listingFailed($data['product_id'], $data['messages']);
 			$logger->write("Updated successfully");
 		}
 	}

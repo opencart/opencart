@@ -30,7 +30,7 @@ class ControllerAmazonusSearch extends Controller {
 
 		$json = json_decode($decrypted, 1);
 
-		$this->model_amazonus_product->updateSearch($json);
+		$this->model_openbay_amazonus_product->updateSearch($json);
 	}
 }
 ?>

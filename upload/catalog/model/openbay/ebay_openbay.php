@@ -392,7 +392,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 	private function updateOrderWithConfirmedData($order_id, $order, $user) {
 		$this->load->model('localisation/currency');
 		$this->load->model('catalog/product');
-		$totals_language = $this->load->language('ebay/order');
+		$totals_language = $this->language->load('openbay/ebay_order');
 
 		$currency           = $this->model_localisation_currency->getCurrencyByCode($this->config->get('openbay_def_currency'));
 		$address_format     = $this->model_ebay_order->getCountryAddressFormat((string)$order->address->iso2);

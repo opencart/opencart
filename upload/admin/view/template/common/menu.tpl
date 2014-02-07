@@ -64,6 +64,11 @@
             <li><a href="<?php echo $contact; ?>"><?php echo $text_contact; ?></a></li>
           </ul>
         </li>
+        <li><a class="parent"><?php echo $text_paypal ?></a>
+          <ul>
+            <li><a href="<?php echo $paypal_search ?>"><?php echo $text_paypal_search ?></a></li>
+          </ul>
+        </li>
       </ul>
     </li>
     <li id="system"><a class="parent"><i class="fa fa-cog fa-fw fa-lg"></i> <span><?php echo $text_system; ?></span></a>

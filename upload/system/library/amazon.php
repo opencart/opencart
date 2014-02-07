@@ -26,8 +26,8 @@ class Amazon {
 
 		/* Is called from front-end? */
 		if (!defined('HTTPS_CATALOG')) {
-			$this->load->model('amazon/order');
-			$amazonOrderId = $this->model_amazon_order->getAmazonOrderId($orderId);
+			$this->load->model('openbay/amazon_order');
+			$amazonOrderId = $this->model_openbay_amazon_order->getAmazonOrderId($orderId);
 
 			$this->load->library('log');
 			$logger = new Log('amazon_stocks.log');

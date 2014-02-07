@@ -26,8 +26,8 @@ class Amazonus {
 
 		/* Is called from front-end? */
 		if (!defined('HTTPS_CATALOG')) {
-			$this->load->model('amazonus/order');
-			$amazonusOrderId = $this->model_amazonus_order->getAmazonusOrderId($orderId);
+			$this->load->model('openbay/amazonus_order');
+			$amazonusOrderId = $this->model_openbay_amazonus_order->getAmazonusOrderId($orderId);
 
 			$this->load->library('log');
 			$logger = new Log('amazonus_stocks.log');

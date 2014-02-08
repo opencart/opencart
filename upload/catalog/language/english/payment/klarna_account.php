@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_title']           = 'Klarna Account - Pay from %s/month';
-$_['text_terms']           = '<span id="klarna_account_toc"><span><script type="text/javascript">var terms = new Klarna.Terms.Account({el: \'klarna_account_toc\', eid: \'%s\', country: \'%s\'});</script>';
+$_['text_terms']           = '<span id="klarna_account_toc"></span><script type="text/javascript">var terms = new Klarna.Terms.Account({el: \'klarna_account_toc\', eid: \'%s\', country: \'%s\'});</script>';
 $_['text_information']     = 'Klarna Account Information';
 $_['text_additional']      = 'Klarna Account requires some additional information before they can proccess your order.';
 $_['text_male']            = 'Male';

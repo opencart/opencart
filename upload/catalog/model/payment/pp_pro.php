@@ -21,6 +21,7 @@ class ModelPaymentPPPro extends Model {
 			$method_data = array(
 				'code'       => 'pp_pro',
 				'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('pp_pro_sort_order')
 			);
 		}

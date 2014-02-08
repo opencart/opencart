@@ -1,59 +1,59 @@
 <?php
 class ControllerModuleShipping extends Controller {
 	public function index() {
-		$this->load->language('module/shipping');
-
-		$data['heading_title'] = $this->language->get('heading_title');
-		
-		$data['text_shipping'] = $this->language->get('text_shipping');
-		$data['text_shipping_method'] = $this->language->get('text_shipping_method');
-		$data['text_select'] = $this->language->get('text_select');
-		$data['text_none'] = $this->language->get('text_none');
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		$data['entry_country'] = $this->language->get('entry_country');
-		$data['entry_zone'] = $this->language->get('entry_zone');
-		$data['entry_postcode'] = $this->language->get('entry_postcode');
+		if ($this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping()) {
+			$this->load->language('module/shipping');
 	
-		$data['button_quote'] = $this->language->get('button_quote');
-		$data['button_shipping'] = $this->language->get('button_shipping');
-		$data['button_cancel'] = $this->language->get('button_cancel');			
-
-		$data['status'] = $this->config->get('shipping_status') && $this->config->get('shipping_estimator') && $this->cart->hasShipping();	
-							
-		if (isset($this->session->data['shipping_address']['country_id'])) {
-			$data['country_id'] = $this->session->data['shipping_address']['country_id'];			  	
-		} else {
-			$data['country_id'] = $this->config->get('config_country_id');
-		}
+			$data['heading_title'] = $this->language->get('heading_title');
 			
-		$this->load->model('localisation/country');
+			$data['text_shipping'] = $this->language->get('text_shipping');
+			$data['text_shipping_method'] = $this->language->get('text_shipping_method');
+			$data['text_select'] = $this->language->get('text_select');
+			$data['text_none'] = $this->language->get('text_none');
+			$data['text_loading'] = $this->language->get('text_loading');
+	
+			$data['entry_country'] = $this->language->get('entry_country');
+			$data['entry_zone'] = $this->language->get('entry_zone');
+			$data['entry_postcode'] = $this->language->get('entry_postcode');
 		
-		$data['countries'] = $this->model_localisation_country->getCountries();
-					
-		if (isset($this->session->data['shipping_address']['zone_id'])) {
-			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];			
-		} else {
-			$data['zone_id'] = '';
+			$data['button_quote'] = $this->language->get('button_quote');
+			$data['button_shipping'] = $this->language->get('button_shipping');
+			$data['button_cancel'] = $this->language->get('button_cancel');			
+								
+			if (isset($this->session->data['shipping_address']['country_id'])) {
+				$data['country_id'] = $this->session->data['shipping_address']['country_id'];			  	
+			} else {
+				$data['country_id'] = $this->config->get('config_country_id');
+			}
+				
+			$this->load->model('localisation/country');
+			
+			$data['countries'] = $this->model_localisation_country->getCountries();
+						
+			if (isset($this->session->data['shipping_address']['zone_id'])) {
+				$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];			
+			} else {
+				$data['zone_id'] = '';
+			}
+			
+			if (isset($this->session->data['shipping_address']['postcode'])) {
+				$data['postcode'] = $this->session->data['shipping_address']['postcode'];					
+			} else {
+				$data['postcode'] = '';
+			}
+			
+			if (isset($this->session->data['shipping_method'])) {
+				$data['shipping_method'] = $this->session->data['shipping_method']['code']; 
+			} else {
+				$data['shipping_method'] = '';
+			}
+						
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/shipping.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/module/shipping.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/shipping.tpl', $data);
+			}	
 		}
-		
-		if (isset($this->session->data['shipping_address']['postcode'])) {
-			$data['postcode'] = $this->session->data['shipping_address']['postcode'];					
-		} else {
-			$data['postcode'] = '';
-		}
-		
-		if (isset($this->session->data['shipping_method'])) {
-			$data['shipping_method'] = $this->session->data['shipping_method']['code']; 
-		} else {
-			$data['shipping_method'] = '';
-		}
-					
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/shipping.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/shipping.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/shipping.tpl', $data);
-		}	
 	}	
 	
 	public function quote() {

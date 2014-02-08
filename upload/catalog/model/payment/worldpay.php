@@ -21,6 +21,7 @@ class ModelPaymentWorldPay extends Model {
       		$method_data = array( 
         		'code'       => 'worldpay',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('worldpay_sort_order')
       		);
     	}

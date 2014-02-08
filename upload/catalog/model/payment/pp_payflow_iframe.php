@@ -21,6 +21,7 @@ class ModelPaymentPPPayflowIframe extends Model {
 			$method_data = array(
 				'code' => 'pp_payflow_iframe',
 				'title' => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('pp_payflow_iframe_sort_order')
 			);
 		}

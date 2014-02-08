@@ -1,10 +1,9 @@
 <?php
 // Text
-$_['text_title']           = 'Klarna Invoice';
-$_['text_fee']             = 'Klarna Invoice - Pay within 14 days <span id="klarna_invoice_toc"></span> (+%s)<script type="text/javascript">var terms = new Klarna.Terms.Invoice({el: \'klarna_invoice_toc\', eid: \'%s\', country: \'%s\', charge: %s});</script>';
-$_['text_no_fee']          = 'Klarna Invoice - Pay within 14 days <span id="klarna_invoice_toc"></span><script type="text/javascript">var terms = new Klarna.Terms.Invoice({el: \'klarna_invoice_toc\', eid: \'%s\', country: \'%s\'});</script>';
+$_['text_title']           = 'Klarna Invoice - Pay within 14 days';
+$_['text_terms_fee']       = '<span id="klarna_invoice_toc"></span> (+%s)<script type="text/javascript">var terms = new Klarna.Terms.Invoice({el: \'klarna_invoice_toc\', eid: \'%s\', country: \'%s\', charge: %s});</script>';
+$_['text_terms_no_fee']    = '<span id="klarna_invoice_toc"></span><script type="text/javascript">var terms = new Klarna.Terms.Invoice({el: \'klarna_invoice_toc\', eid: \'%s\', country: \'%s\'});</script>';
 $_['text_additional']      = 'Klarna Invoice requires some additional information before they can proccess your order.';
-$_['text_wait']            = 'Please wait!';
 $_['text_male']            = 'Male';
 $_['text_female']          = 'Female';
 $_['text_year']            = 'Year';

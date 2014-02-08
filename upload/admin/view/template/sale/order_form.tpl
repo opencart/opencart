@@ -67,45 +67,45 @@
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
+              <label class="col-sm-2 control-label" for="input-customer-firstname"><?php echo $entry_firstname; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-firstname" class="form-control" />
+                <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-customer-firstname" class="form-control" />
                 <?php if ($error_firstname) { ?>
                 <div class="text-danger"><?php echo $error_firstname; ?></div>
                 <?php } ?>
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
+              <label class="col-sm-2 control-label" for="input-customer-lastname"><?php echo $entry_lastname; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-lastname" class="form-control" />
+                <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-customer-lastname" class="form-control" />
                 <?php if ($error_lastname) { ?>
                 <div class="text-danger"><?php echo $error_lastname; ?></div>
                 <?php } ?>
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
+              <label class="col-sm-2 control-label" for="input-customer-email"><?php echo $entry_email; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />
+                <input type="text" name="email" value="<?php echo $email; ?>" id="input-customer-email" class="form-control" />
                 <?php if ($error_email) { ?>
                 <div class="text-danger"><?php echo $error_email; ?></div>
                 <?php } ?>
               </div>
             </div>
             <div class="form-group required">
-              <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
+              <label class="col-sm-2 control-label" for="input-customer-telephone"><?php echo $entry_telephone; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-telephone" class="form-control" />
+                <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-customer-telephone" class="form-control" />
                 <?php if ($error_telephone) { ?>
                 <div class="text-danger"><?php echo $error_telephone; ?></div>
                 <?php } ?>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
+              <label class="col-sm-2 control-label" for="input-customer-fax"><?php echo $entry_fax; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="fax" value="<?php echo $fax; ?>" id="input-fax" class="form-control" />
+                <input type="text" name="fax" value="<?php echo $fax; ?>" id="input-customer-fax" class="form-control" />
               </div>
             </div>
           </div>
@@ -1175,14 +1175,9 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 							
 				// Order Details
 				if (json['error']['customer']) {
-					$('.panel').before('<div class="text-danger">' + json['error']['customer'] + '</div>');
-					
-					if (json['error']['customer']) {
-						for (i in json['error']['customer']) {
-							$('select[name=\'input-customer_country_id\']').after('<div class="text-danger">' + json['error']['shipping']['country'] + '</div>');
-						}
-					}						
-					
+					for (i in json['error']['customer']) {
+						$('#input-customer-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['customer'][i] + '</div>');
+					}
 				}	
 			
 				// Payment Address
@@ -1194,16 +1189,8 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			
 				// Shipping	Address
 				if (json['error']['shipping']) {		
-					if (json['error']['shipping']['country']) {
-						$('select[name=\'shipping_country_id\']').after('<div class="text-danger">' + json['error']['shipping']['country'] + '</div>');
-					}	
-					
-					if (json['error']['shipping']['zone']) {
-						$('select[name=\'shipping_zone_id\']').after('<div class="text-danger">' + json['error']['shipping']['zone'] + '</div>');
-					}
-					
-					if (json['error']['shipping']['postcode']) {
-						$('input[name=\'shipping_postcode\']').after('<div class="text-danger">' + json['error']['shipping']['postcode'] + '</div>');
+					if (json['error']['shipping']) {
+						$('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['shipping'][i] + '</div>');
 					}	
 				}
 				
@@ -1267,27 +1254,27 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				
 				// Shipping Method	
 				if (json['error']['shipping_method']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['shipping_method'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['shipping_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}	
 				
 				// Payment Method
 				if (json['error']['payment_method']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['payment_method'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['payment_method'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}	
 															
 				// Coupon
 				if (json['error']['coupon']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['coupon'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['coupon'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 				
 				// Voucher
 				if (json['error']['voucher']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['voucher'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['voucher'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}
 				
 				// Reward Points		
 				if (json['error']['reward']) {
-					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '</div>');
+					$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['reward'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 				}	
 			} else {
 				$('input[name=\'product\']').val('');
@@ -1304,7 +1291,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 			}
 
 			if (json['success']) {
-				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
+				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
 			if (json['order_product'] != '') {

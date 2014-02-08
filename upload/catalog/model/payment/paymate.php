@@ -33,6 +33,7 @@ class ModelPaymentPayMate extends Model {
       		$method_data = array( 
         		'code'       => 'paymate',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('paymate_sort_order')
       		);
     	}

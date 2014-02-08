@@ -21,6 +21,7 @@ class ModelPaymentPPPayflow extends Model {
 			$method_data = array(
 				'code'       => 'pp_payflow',
 				'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('pp_payflow_sort_order')
 			);
 		}

@@ -1,4 +1,3 @@
-<?php if ($status) { ?>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h4 class="panel-title"><a href="#collapse-shipping" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="fa fa-caret-down"></i></a></h4>
@@ -207,4 +206,3 @@ $('select[name=\'country_id\']').trigger('change');
     </div>
   </div>
 </div>
-<?php } ?>

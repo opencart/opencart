@@ -42,7 +42,7 @@ class ControllerCheckoutManual extends Controller {
 					$this->customer->login($customer_info['email'], '', true);
 					$this->cart->clear();
 				} else {
-					$json['error']['customer'] = $this->language->get('error_customer');
+					$json['error']['warning'] = $this->language->get('error_customer');
 				}
 			} else {
 				// Customer Group
@@ -421,6 +421,7 @@ class ControllerCheckoutManual extends Controller {
 			}
 			
 			// Remove coupon, vouchers reward points history
+			/*
 			if (isset($this->request->get['order_id'])) {
 				$this->load->model('account/order');
 			
@@ -434,7 +435,7 @@ class ControllerCheckoutManual extends Controller {
 					}
 				}			
 			}
-			
+			*/
 			// Coupon
 			if (!empty($this->request->post['coupon'])) {
 				$this->load->model('checkout/coupon');
@@ -487,8 +488,6 @@ class ControllerCheckoutManual extends Controller {
 					}
 				}
 			}
-			
-			
 			 		
 			// Payment address
 			if ((utf8_strlen($this->request->post['payment_firstname']) < 1) || (utf8_strlen($this->request->post['payment_firstname']) > 32)) {

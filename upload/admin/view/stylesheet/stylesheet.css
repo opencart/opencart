@@ -63,7 +63,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	padding: 7px 15px 4px 35px;
 }
 
- #header #button-menu + .navbar-brand {
+#header #button-menu + .navbar-brand {
 	padding: 7px 15px 4px 20px;
 }
 	
@@ -120,8 +120,8 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #column-left {
 	width: 50px;
 	height: 100%;
-	background-color: #F4F4F4;
-	border-right: 1px solid #DDDDDD;
+	background-color: #EFEFEF;
+	border-right: 1px solid #DFDFDF;
 	position: absolute;
 	top: 0px;
 	padding-top: 50px;
@@ -167,7 +167,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 #search .btn {
 	font-size: 18px;
 	padding: 8px;
-	color: #999999;
+	color: #777777;
 }
 #search:hover .btn {
 	color: #8B8B8B;
@@ -194,7 +194,7 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	position: relative;
 }
 #menu li a {
-	color: #999999;
+	color: #666666;
 	text-decoration: none;
 	display: block;
 	padding: 8px;
@@ -202,23 +202,17 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 #menu li a i {
 	font-size: 18px;
-	color: #999999;
-}
-#menu > li.active > a i {
-	color: #666666;
 }
 #menu > li > a {
 	padding-left: 13px;
 }
 #menu li.active > a {
-	color: #666666;
-	background-color: #DDDDDD;
+	background-color: #FFFFFF;
 }
 #menu li.open > a {
-	background-color: #DDDDDD;
+	background-color: #FFFFFF;
 }
 #menu li a:hover {
-	color: #666666;
 	background-color: #EEEEEE;
 }
 #menu > li > a > span {
@@ -419,29 +413,34 @@ input.form-control, select.form-control {
 	font-size: 15px;
 }
 .btn-default {
+	background-color: #F1F3F6;
+	border-bottom: 1px solid #DBE1E8;
 	color: #333333;
-	background: #ffffff;
-	border: 1px solid #D5D5D5;
 }
 .btn-primary {
-	background-color: #2f9fe0;
-	border: 1px solid #2299de;
+	background-color: #7ABCE7;
+	border-bottom: 1px solid #3498DB;
+	text-shadow: 0 -1px #3498DB;
 }
 .btn-warning {
-	background-color: #f6bb42;
-	border: 1px solid #f5b633;
+	background-color: #F7BE64;
+	border-bottom: 1px solid #F39C12;
+	text-shadow: 0 -1px #F39C12;
 }
 .btn-danger {
-	background-color: #da4453;
-	border: 1px solid #d73747;
+	background-color: #EF8A80;
+	border-bottom: 1px solid #E74C3C;
+	text-shadow: 0 -1px #E74C3C;
 }
 .btn-success {
-	background-color: #8cc152;
-	border: 1px solid #85bd47;
+	background-color: #AAD178;
+	border-bottom: 1px solid #7DB831;
+	text-shadow: 0 -1px #7DB831;
 }
 .btn-info {
-	background-color: #4fc1e9;
-	border: 1px solid #41bce7;
+	background-color: #6AD2EB;
+	border-bottom: 1px solid #1BBAE1;
+	text-shadow: 0 -1px #1BBAE1;
 }
 .table thead > tr > td, .table tbody > tr > td {
 	vertical-align: middle;

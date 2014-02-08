@@ -21,6 +21,7 @@ class ModelPaymentTwoCheckout extends Model {
       		$method_data = array( 
         		'code'       => 'twocheckout',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('twocheckout_sort_order')
       		);
     	}

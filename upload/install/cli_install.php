@@ -233,6 +233,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
 	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
 	$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
+	$output .= 'define(\'DIR_VENDOR\', \'' . DIR_OPENCART . 'vendor/\');' . "\n\n";
 
 	$output .= '// DB' . "\n";
 	$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
@@ -272,6 +273,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
 	$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n";
 	$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
+	$output .= 'define(\'DIR_VENDOR\', \'' . DIR_OPENCART . 'vendor/\');' . "\n\n";
 
 	$output .= '// DB' . "\n";
 	$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";

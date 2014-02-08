@@ -231,6 +231,9 @@ $registry->set('cart', new Cart($registry));
 
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
+
+// Twig Templates
+$registry->set('twig', new Twig());
 		
 // Front Controller
 $controller = new Front($registry);

@@ -26,6 +26,7 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
 			$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
 			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
+			$output .= 'define(\'DIR_VENDOR\', \'' . DIR_OPENCART . 'vendor/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";
@@ -62,6 +63,7 @@ class ControllerStep3 extends Controller {
 			$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n";
 			$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
 			$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
+			$output .= 'define(\'DIR_VENDOR\', \'' . DIR_OPENCART . 'vendor/\');' . "\n\n";
 
 			$output .= '// DB' . "\n";
 			$output .= 'define(\'DB_DRIVER\', \'' . addslashes($this->request->post['db_driver']) . '\');' . "\n";

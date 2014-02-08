@@ -92,8 +92,8 @@ require_once(DIR_SYSTEM . 'engine/loader.php');
 require_once(DIR_SYSTEM . 'engine/model.php');
 require_once(DIR_SYSTEM . 'engine/registry.php');
 
-// Autoloader
-function __autoload($class) {
+// OpenCart Autoloader
+function oc_autoload($class) {
 	if (substr($class, 0, 10) == 'Controller' || substr($class, 0, 5) == 'Model') {
 		$file = DIR_APPLICATION . str_replace('\\', '/', strtolower($class)) . '.php';
 	} else {
@@ -101,12 +101,14 @@ function __autoload($class) {
 	}
 	
 	if (file_exists($file)) {
-		include($file);
-	} else {
-		trigger_error('Error: Could not load class ' . $class . '.php!');
-		exit();
+		require $file;
 	}
 }
+spl_autoload_register('oc_autoload', true, false);
+
+// Twig Autoloader
+require_once DIR_VENDOR . 'Twig' . DIRECTORY_SEPARATOR . 'Autoloader.php';
+Twig_Autoloader::register();
 
 // Helper
 require_once(DIR_SYSTEM . 'helper/json.php');

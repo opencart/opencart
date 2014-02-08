@@ -40,21 +40,40 @@ final class Loader {
 		$file = DIR_TEMPLATE . $template;
 		
 		if (file_exists($file)) {
-			extract($data);
-			
-			ob_start();
 
-			require($file);
+			$templateType = pathinfo($file, PATHINFO_EXTENSION);
 
-			$output = ob_get_contents();
+			if ($templateType == 'twig') {
+				return $this->renderTwigTemplate($template, $data);
+			} else {
+				return $this->renderTemplate($file, $data);
+			}
 
-			ob_end_clean();
-
-			return $output;
-		} else {
-			trigger_error('Error: Could not load template ' . $file . '!');
-			exit();
 		}
+
+		trigger_error('Error: Could not load template ' . $file . '!');
+		exit();
+	}
+
+	protected function renderTemplate($file, $data) {
+
+		extract($data);
+		
+		ob_start();
+
+		require($file);
+
+		$output = ob_get_contents();
+
+		ob_end_clean();
+
+		return $output;
+	}
+
+	protected function renderTwigTemplate($template, $data) {
+		$twig = $this->registry->get('twig');
+
+		return $twig->render($template, $data);
 	}
 
 	public function library($library) {

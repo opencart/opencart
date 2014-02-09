@@ -238,7 +238,7 @@ class ModelOpenbayEbayProduct extends Model {
 						`product_id`            = '".(int)$product_id."',
 						`language_id`           = '".(int)$this->config->get('config_language_id')."',
 						`name`                  = '".$this->db->escape(htmlspecialchars(base64_decode($item['Title']), ENT_COMPAT, 'UTF-8'))."',
-						`description`           = '".$this->db->escape(htmlspecialchars($item['Description'], ENT_COMPAT, 'UTF-8'))."'";
+						`description`           = '".$this->db->escape(htmlspecialchars(utf8_encode($item['Description']), ENT_COMPAT, 'UTF-8'))."'";
 
 				$this->db->query($sql);
 				$this->openbay->ebay->log('Product description done');

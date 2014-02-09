@@ -688,7 +688,7 @@ final class Ebay {
 		 * Try to load OpenStock module
 		 */
 		$openstock = false;
-		if($this->addonLoad('openstock') == true) {
+		if($this->openbay->addonLoad('openstock') == true) {
 			$this->load->model('openstock/openstock');
 			$openstock = true;
 		}

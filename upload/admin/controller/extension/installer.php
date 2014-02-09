@@ -279,7 +279,7 @@ class ControllerExtensionInstaller extends Controller {
 			}
 
 			// Connect to the site via FTP
-			$connection = ftp_connect($this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
+			$connection = ftp_connect($this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
 
 			if ($connection) {
 				$login = ftp_login($connection, $this->config->get('config_ftp_username'), $this->config->get('config_ftp_password'));

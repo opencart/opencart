@@ -42,11 +42,11 @@ class ModelTotalVoucher extends Model {
 		$voucher_info = $this->model_checkout_voucher->getVoucher($code);
 		
 		if ($voucher_info) {
-			$this->model_checkout_voucher->redeem($voucher_info['voucher_id'], $order_info['order_id'], $order_total['value']);	
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "voucher_history` SET voucher_id = '" . (int)$voucher_info['voucher_id'] . "', order_id = '" . (int)$order_info['order_id'] . "', amount = '" . (float)$order_total['value'] . "', date_added = NOW()");
 		}						
 	}
 	
 	public function clear($order_id) {
-		
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "voucher_history` WHERE order_id = '" . (int)$order_id . "'");
 	}		
 }

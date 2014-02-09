@@ -1152,7 +1152,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 	data += '#tab-total input, #tab-total select, #tab-total textarea';
 
 	$.ajax({
-		url: '<?php echo $store_url; ?>index.php?route=checkout/manual&token=<?php echo $token; ?>',
+		url: '<?php echo $store_url; ?>index.php?route=checkout/manual&token=<?php echo $token; ?>&order_id=73',
 		type: 'post',
 		data: $(data),
 		dataType: 'json',

@@ -7,17 +7,19 @@
         <div class="terms"><?php echo $text_terms; ?></div>
         <div class="buttons">
           <div class="pull-right">
-            <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
+            <button type="submit" class="btn btn-primary">
+				<?php echo $button_continue; ?> <span class="fa fa-chevron-right"></span>
+			</button>
           </div>
         </div>
       </form>
     </div>
     <div class="col-sm-3">
-      <ul>
-        <li><b><?php echo $text_license; ?></b></li>
-        <li><?php echo $text_installation; ?></li>
-        <li><?php echo $text_configuration; ?></li>
-        <li><?php echo $text_finished; ?></li>
+      <ul class="nav nav-pills nav-stacked">
+        <li class="active"><a href="index.php?route=step_1"><?php echo $text_license; ?></a></li>
+        <li><a href="index.php?route=step_1"><?php echo $text_installation; ?></a></li>
+        <li><a href="index.php?route=step_1"><?php echo $text_configuration; ?></a></li>
+        <li><a href="index.php?route=step_1"><?php echo $text_finished; ?></a></li>
       </ul>
     </div>
   </div>

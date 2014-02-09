@@ -9,7 +9,7 @@
   <div class="row">
     <div class="col-sm-9">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
-        <p><?php echo $text_db_connection; ?></p>
+        <h4><?php echo $text_db_connection; ?></h4>
         <fieldset>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-db-driver"><?php echo $entry_db_driver; ?></label>
@@ -79,7 +79,7 @@
             </div>
           </div>
         </fieldset>
-        <p><?php echo $text_db_administration; ?></p>
+        <h4><?php echo $text_db_administration; ?></h4>
         <fieldset>
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-username"><?php echo $entry_username; ?></label>
@@ -110,19 +110,21 @@
           </div>
         </fieldset>
         <div class="buttons">
-          <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
+          <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php echo $button_back; ?></a></div>
           <div class="pull-right">
-            <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
+            <button type="submit" class="btn btn-primary">
+				<?php echo $button_continue; ?> <span class="fa fa-chevron-right"></span>
+			</button>
           </div>
         </div>
       </form>
     </div>
     <div class="col-sm-3">
-      <ul>
-        <li><?php echo $text_license; ?></li>
-        <li><?php echo $text_installation; ?></li>
-        <li><b><?php echo $text_configuration; ?></b></li>
-        <li><?php echo $text_finished; ?></li>
+      <ul class="nav nav-pills nav-stacked">
+        <li><a href="index.php?route=step_3"><?php echo $text_license; ?> <span class="fa fa-check"></span></a></li>
+        <li><a href="index.php?route=step_3"><?php echo $text_installation; ?> <span class="fa fa-check"></span></a></li>
+        <li class="active"><a href="index.php?route=step_3"><?php echo $text_configuration; ?></a></li>
+        <li><a href="index.php?route=step_3"><?php echo $text_finished; ?></a></li>
       </ul>
     </div>
   </div>

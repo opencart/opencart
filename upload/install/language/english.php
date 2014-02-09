@@ -42,6 +42,7 @@ $_['text_writable']          = 'Writable';
 $_['text_unwritable']        = 'Unwritable';
 $_['text_missing']           = 'Missing';
 $_['text_forget']            = 'Don\'t forget to delete your installation directory!';
+$_['text_forget_button']     = 'Delete installation directory';
 $_['text_shop']              = 'Go to your Online Shop';
 $_['text_login']             = 'Login to your Administration';
 $_['text_project']           = 'Project Homepage';
@@ -62,6 +63,7 @@ $_['entry_email']            = 'E-Mail';
 
 // Buttons
 $_['button_continue']        = 'Continue';
+$_['button_agree_continue']  = 'I agree, continue';
 $_['button_back']            = 'Back';
 
 

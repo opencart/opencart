@@ -1,5 +1,6 @@
 Type: Enhancement, New Feature, Bug
 
+09-02-14 - Bug - Bulk stock update checks settings before relisting an item
 07-02-14 - Bug - Fixed row not hiding when remove link clicked in eBay item links
 06-02-14 - Enhancement - Moved the catalog model and language files to a single OpenBay Pro folder.
 05-02-14 - Bug - Added missing eBay language string in Order page

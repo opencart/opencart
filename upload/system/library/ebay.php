@@ -746,7 +746,10 @@ final class Ebay {
 						}
 					}
 
-					$this->relistItem($item['itemId'], $item['productId'],(int)$local_stock['quantity']);
+					if($this->config->get('openbaypro_relistitems') == 1) {
+						//relist item with new stock
+						$this->relistItem($item['itemId'], $item['productId'],(int)$local_stock['quantity']);
+					}
 				}
 			}else{
 				$this->log('putStockUpdateBulk() - options existed for item ('.$item['itemId'].') when trying to relist');

@@ -259,7 +259,7 @@ function write_config_files($options) {
 	$output .= '// HTTP' . "\n";
 	$output .= 'define(\'HTTP_SERVER\', \'http://' . $options['http_server'] .'/'. $options['domain'].'/'. 'admin/\');' . "\n";
 
-	$output .= 'define(\'HTTPS_SERVER\', \'https://' . $options['http_server'] . 'admin/\');' . "\n";
+	$output .= 'define(\'HTTPS_SERVER\', \'https://' . $options['http_server'] .'/'. $options['domain'].'/'. 'admin/\');' . "\n";
 
 	$output .= '// DIR' . "\n";
 	$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'admin/\');' . "\n";

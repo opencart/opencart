@@ -195,7 +195,7 @@ function check_requirements() {
 		$error = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
 	}
 
-	if (!is_writable(DIR_OPENCART . 'download')) {
+	if (!is_writable(DIR_SYSTEM . 'download')) {
 		$error = 'Warning: Download directory needs to be writable for OpenCart to work!';
 	}
 

@@ -353,7 +353,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function loadSettings() {
-		display_errors(0);
+
 		set_time_limit(0);
 
 		$json = $this->openbay->ebay->loadSettings();
@@ -362,7 +362,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function loadCategories() {
-		display_errors(0);
+
 		set_time_limit(0);
 
 		$json = $this->openbay->ebay->loadCategories();
@@ -371,7 +371,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function loadSellerStore() {
-		display_errors(0);
+
 		set_time_limit(0);
 
 		$json = $this->openbay->ebay->loadSellerStore();
@@ -380,7 +380,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getCategories() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -390,7 +390,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getSuggestedCategories() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -400,7 +400,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getShippingService() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -410,7 +410,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getEbayCategorySpecifics() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -420,7 +420,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getCategoryFeatures() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -430,7 +430,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function searchEbayCatalog() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay_product');
 
@@ -486,7 +486,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getSellerSummary() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -496,7 +496,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function verifyCreds() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -506,7 +506,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function importItems() {
-		display_errors(0);
+
 
 		$data = array('d' => $this->request->get['desc'], 'c' => 1, 'n' => $this->request->get['note']);
 		$this->openbay->ebay->openbay_call_noresponse('setup/getItemsMain/', $data);
@@ -517,7 +517,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function importOrdersManual() {
-		display_errors(0);
+
 
 		$this->openbay->ebay->openbay_call_noresponse('order/getOrdersManual/');
 
@@ -527,7 +527,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getProductStock() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -537,7 +537,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function setProductStock() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 		$this->load->model('catalog/product');
@@ -562,7 +562,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getUsage() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 		$json               = $this->model_openbay_ebay->getUsage();
@@ -574,7 +574,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getPlans() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -584,7 +584,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getMyPlan() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -594,7 +594,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function devClear() {
-		display_errors(0);
+
 
 		if ($this->request->post['pass'] == '') {
 			$json = array('msg' => 'Password needed');
@@ -918,7 +918,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function saveItemLink() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 
@@ -928,7 +928,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function removeItemLink() {
-		display_errors(0);
+
 
 		$this->load->language('openbay/openbay');
 
@@ -940,7 +940,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function loadUnlinked(){
-		display_errors(0);
+
 
 		set_time_limit(0);
 
@@ -963,7 +963,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function loadLinkedStatus(){
-		display_errors(0);
+
 
 		set_time_limit(0);
 
@@ -1063,7 +1063,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function editLoad() {
-		display_errors(0);
+
 
 		$this->load->model('catalog/product');
 		$this->load->model('openbay/ebay_product');
@@ -1177,7 +1177,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function editSave() {
-		display_errors(0);
+
 
 		if ($this->checkConfig() == true && $this->request->server['REQUEST_METHOD'] == 'POST') {
 
@@ -1511,7 +1511,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function verify() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
@@ -1568,7 +1568,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function verifyBulk() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay_profile');
 		$this->load->model('openbay/ebay');
@@ -1735,7 +1735,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function listItem() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
@@ -1782,7 +1782,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function listItemBulk() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay_profile');
 		$this->load->model('openbay/ebay');
@@ -1948,7 +1948,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getImportImages() {
-		display_errors(0);
+
 
 		set_time_limit(0);
 		$this->openbay->ebay->getImages();
@@ -1959,7 +1959,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function repairLinks() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay_product');
 
@@ -1971,7 +1971,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function deleteAllLocks() {
-		display_errors(0);
+
 
 		$this->openbay->ebay->log('deleteAllLocks() - Deleting all locks');
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_order_lock`");
@@ -1982,7 +1982,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function endItem() {
-		display_errors(0);
+
 
 		$json = $this->openbay->ebay->endItem($this->request->get['id']);
 

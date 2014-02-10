@@ -534,7 +534,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 	}
 
 	public function search() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/amazon_listing');
 		$this->load->language('openbay/amazon_listing');
@@ -566,7 +566,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 	}
 
 	public function bestPrice() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/amazon_listing');
 		$this->load->language('openbay/amazon_listing');
@@ -610,7 +610,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 	}
 
 	public function getProductByAsin() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/amazon_listing');
 

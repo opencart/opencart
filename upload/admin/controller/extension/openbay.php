@@ -299,7 +299,7 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function ftpTestConnection() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/openbay');
 
@@ -309,7 +309,7 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function ftpUpdateModule() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/openbay');
 
@@ -319,14 +319,14 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function getNotifications() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/openbay');
 		$this->response->setOutput(json_encode($this->model_openbay_openbay->getNotifications()));
 	}
 
 	public function getVersion() {
-		display_errors(0);
+
 		sleep(1);
 
 		$this->load->model('openbay/openbay');
@@ -334,7 +334,7 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function runPatch() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/ebay_patch');
 		$this->load->model('openbay/amazon_patch');
@@ -370,7 +370,7 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function faqGet(){
-		display_errors(0);
+
 
 		$this->load->model('openbay/openbay');
 		$this->load->language('extension/openbay');
@@ -381,14 +381,14 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function faqDismiss(){
-		display_errors(0);
+
 
 		$this->load->model('openbay/openbay');
 		$this->response->setOutput(json_encode($this->model_openbay_openbay->faqDismiss($this->request->get['qry_route'])));
 	}
 
 	public function faqClear(){
-		display_errors(0);
+
 
 		$this->load->model('openbay/openbay');
 		$this->model_openbay_openbay->faqClear();

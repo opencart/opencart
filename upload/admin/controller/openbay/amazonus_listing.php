@@ -521,7 +521,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 	}
 
 	public function search() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->language('openbay/amazonus_listing');
@@ -548,7 +548,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 	}
 
 	public function bestPrice() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->language('openbay/amazonus_listing');
@@ -588,7 +588,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 	}
 
 	public function getProductByAsin() {
-		display_errors(0);
+
 
 		$this->load->model('openbay/amazonus_listing');
 

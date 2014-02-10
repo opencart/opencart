@@ -62,6 +62,7 @@ function usage() {
 								  '--db_user', 'root',
 								  '--db_password', 'pass',
 								  '--db_name', 'opencart',
+								  '--db_prefix', 'oc_',
 								  '--username', 'admin',
 								  '--password', 'admin',
 								  '--email', 'youremail@example.com',
@@ -75,9 +76,10 @@ function get_options($argv) {
 	$defaults = array(
 		'db_host' => 'localhost',
 		'db_name' => 'opencart',
-		'db_prefix' => '',
+		'db_prefix' => 'oc_',
 		'username' => 'admin',
 		'agree_tnc' => 'no',
+		
 	);
 
 	$options = array();
@@ -213,16 +215,15 @@ function setup_mysql($dbdata) {
 
 
 function write_config_files($options) {
+	
 	$output  = '<?php' . "\n";
 	$output .= '// HTTP' . "\n";
-	$output .= 'define(\'HTTP_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
-	$output .= 'define(\'HTTP_IMAGE\', \'' . $options['http_server'] . 'image/\');' . "\n";
+	$output .= 'define(\'HTTP_SERVER\', \'http://' . $options['http_server'].'\'. . '\');' . "\n";
 	$output .= 'define(\'HTTP_ADMIN\', \'' . $options['http_server'] . 'admin/\');' . "\n\n";
 
 	$output .= '// HTTPS' . "\n";
 	$output .= 'define(\'HTTPS_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
-	$output .= 'define(\'HTTPS_IMAGE\', \'' . $options['http_server'] . 'image/\');' . "\n\n";
-
+	
 	$output .= '// DIR' . "\n";
 	$output .= 'define(\'DIR_APPLICATION\', \'' . DIR_OPENCART . 'catalog/\');' . "\n";
 	$output .= 'define(\'DIR_SYSTEM\', \'' . DIR_OPENCART. 'system/\');' . "\n";
@@ -231,6 +232,7 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_TEMPLATE\', \'' . DIR_OPENCART . 'catalog/view/theme/\');' . "\n";
 	$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
 	$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
+	$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART . 'system/modification/\');' . "\n";
 	$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
 	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'download/\');' . "\n";
 	$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";

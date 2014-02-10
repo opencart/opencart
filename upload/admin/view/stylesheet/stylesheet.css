@@ -6,7 +6,7 @@ html, body {
 body {
 	font-family: "Arial", Gadget, sans-serif;
 	font-size: 12px;
-	color: #555555;
+	color: #333333;
 }
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
@@ -320,12 +320,13 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 
 .panel-default > .panel-heading .btn {
 	font-size: 18px;
-	color: #B7B7B7;
+	color: #3C8DBC;
 	background: none;
 	padding: 4px 8px;
 }
+
 .panel-default > .panel-heading .btn:hover {
-	color: #428BCA;
+	color: #2F7098;
 }
 
 .panel-title {

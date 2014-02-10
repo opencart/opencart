@@ -12,6 +12,26 @@ class ControllerSaleOrder extends Controller {
 		$this->getList();
 	}
 	
+	public function insert() {
+		$this->load->language('sale/order');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('sale/order');
+
+    	$this->getForm();
+  	}
+
+	public function update() {
+		$this->load->language('sale/order');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+
+		$this->load->model('sale/order');
+    			
+    	$this->getForm();
+  	}
+		
   	public function delete() {
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateDelete()) {
 			$this->model_sale_order->editOrder($this->request->get['order_id']);

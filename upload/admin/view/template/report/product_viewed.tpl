@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $reset; ?>" class="btn btn-danger"><i class="fa fa-refresh"></i> <?php echo $button_reset; ?></a></div>
+      <div class="pull-right"><a href="<?php echo $reset; ?>" data-toggle="tooltip" title="<?php echo $button_reset; ?>" class="btn"><i class="fa fa-refresh"></i></a></div>
       <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">

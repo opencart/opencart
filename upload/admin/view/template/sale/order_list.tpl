@@ -18,10 +18,10 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-order" formaction="<?php echo $picklist; ?>" formtarget="_blank" class="btn btn-info"><i class="fa fa-truck"></i> <?php echo $button_picklist; ?></button>
-        <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" class="btn btn-info"><i class="fa fa-print"></i> <?php echo $button_invoice; ?></button>
-        <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_insert; ?></a>
-        <button type="button" class="btn btn-danger" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-order').submit() : false;"><i class="fa fa-trash-o"></i> <?php echo $button_delete; ?></button>
+        <button type="submit" form="form-order" formaction="<?php echo $picklist; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_picklist; ?>" class="btn"><i class="fa fa-truck"></i></button>
+        <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_invoice; ?>" class="btn"><i class="fa fa-print"></i></button>
+        <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a>
+        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-order').submit() : false;"><i class="fa fa-times-circle"></i></button>
       </div>
       <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>

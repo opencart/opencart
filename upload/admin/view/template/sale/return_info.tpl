@@ -7,7 +7,7 @@
   </ul>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
+      <div class="pull-right"><a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
       <h1 class="panel-title"><i class="fa fa-info-circle fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">

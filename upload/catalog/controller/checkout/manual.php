@@ -672,6 +672,11 @@ class ControllerCheckoutManual extends Controller {
 				}
 			}
 			
+			
+			if () {
+				
+			}
+			
 			// Reset everything			
 			$this->cart->clear();
 			$this->customer->logout();

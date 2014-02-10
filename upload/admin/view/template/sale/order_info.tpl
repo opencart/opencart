@@ -8,8 +8,8 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="button" id="button-restock" data-toggle="tooltip" title="<?php echo $help_restock; ?>" class="btn btn-warning"><i class="fa fa-reply"></i> <?php echo $button_restock; ?></button>
-        <a href="<?php echo $invoice; ?>" target="_blank" class="btn btn-info"><i class="fa fa-print"></i> <?php echo $button_invoice; ?></a> <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
+        <button type="button" id="button-restock" data-toggle="tooltip" data-placement="left" title="<?php echo $button_restock; ?>" class="btn"><i class="fa fa-undo"></i></button>
+        <a href="<?php echo $invoice; ?>" target="_blank" data-toggle="tooltip" title="<?php echo $button_invoice; ?>" class="btn"><i class="fa fa-print"></i></a> <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
       <h1 class="panel-title"><i class="fa fa-info-circle fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
@@ -210,7 +210,7 @@
               <td><?php echo $payment_method; ?></td>
             </tr>
           </table>
-          <?php echo $payment_action; ?> </div>
+          <?php echo $payment_action; ?></div>
         <?php if ($shipping_method) { ?>
         <div class="tab-pane" id="tab-shipping">
           <table class="table table-bordered">

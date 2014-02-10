@@ -16,8 +16,8 @@
         <?php if ($voucher_id) { ?>
         <button type="button" id="button-send" class="btn btn-default"><i class="fa fa-envelope"></i> <?php echo $button_send; ?></button>
         <?php } ?>
-        <button type="submit" form="form-voucher" class="btn btn-success"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
+        <button type="submit" form="form-voucher" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">

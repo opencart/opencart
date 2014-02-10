@@ -17,8 +17,8 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"> <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a> <a href="<?php echo $repair; ?>" data-toggle="tooltip" title="<?php echo $button_repair; ?>" class="btn"><i class="fa fa-wrench"></i></a>
-        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-category').submit() : false;"><i class="fa fa-trash-o"></i></button>
+      <div class="pull-right"><a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a> <a href="<?php echo $repair; ?>" data-toggle="tooltip" title="<?php echo $button_repair; ?>" class="btn"><i class="fa fa-wrench"></i></a>
+        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-category').submit() : false;"><i class="fa fa-times-circle"></i></button>
       </div>
       <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
@@ -45,7 +45,7 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $category['name']; ?></td>
                 <td class="text-right"><?php echo $category['sort_order']; ?></td>
-                <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-warning"><i class="fa fa-wrench fa-lg"></i></a></td>
+                <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-warning"><i class="fa fa-wrench"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

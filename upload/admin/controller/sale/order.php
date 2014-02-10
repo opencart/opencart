@@ -11,30 +11,10 @@ class ControllerSaleOrder extends Controller {
 
 		$this->getList();
 	}
-
-	public function insert() {
-		$this->load->language('sale/order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/order');
-		
-    	$this->getForm();
-  	}
-
-	public function update() {
-		$this->load->language('sale/order');
-
-		$this->document->setTitle($this->language->get('heading_title'));
-
-		$this->load->model('sale/order');
-    			
-    	$this->getForm();
-  	}
 	
   	public function delete() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_sale_order->editOrder($this->request->get['order_id'], $this->request->post);
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateDelete()) {
+			$this->model_sale_order->editOrder($this->request->get['order_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -79,7 +59,7 @@ class ControllerSaleOrder extends Controller {
 			$this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
-		$this->getForm();
+		$this->getList();
 	}
 
 	protected function getList() {
@@ -1316,7 +1296,6 @@ class ControllerSaleOrder extends Controller {
 			$data['text_maxmind_id'] = $this->language->get('text_maxmind_id');
 			$data['text_error'] = $this->language->get('text_error');
 
-			$data['help_restock'] = $this->language->get('help_restock');
 			$data['help_country_match'] = $this->language->get('help_country_match');
 			$data['help_country_code'] = $this->language->get('help_country_code');
 			$data['help_high_risk_country'] = $this->language->get('help_high_risk_country');

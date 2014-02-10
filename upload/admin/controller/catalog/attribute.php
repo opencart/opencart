@@ -83,8 +83,14 @@ class ControllerCatalogAttribute extends Controller {
 
 		$this->load->model('catalog/attribute');
 
+		if (isset($this->request->get['attribute'])) {
+			$selected[] = $this->request->get['attribute_id'];
+		} else {
+			$selected = $this->request->post['selected'];
+		}
+
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $attribute_id) {
+			foreach ($selected as $attribute_id) {
 				$this->model_catalog_attribute->deleteAttribute($attribute_id);
 			}
 

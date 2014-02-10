@@ -25,8 +25,8 @@
         <?php } ?>
       </div>
     </div>
-    <button type="submit" class="btn btn-success"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
-    <a href="<?php echo $cancel; ?>" class="btn btn-default"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a>
+    <button type="submit" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
+    <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
   </form>
 </div>
 <?php echo $footer; ?>

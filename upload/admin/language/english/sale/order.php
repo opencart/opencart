@@ -175,7 +175,6 @@ $_['entry_date_added']                        = 'Date Added';
 $_['entry_date_modified']                     = 'Date Modified';
 
 // Help
-$_['help_restock']                            = 'Only use restock when you plan to void an order but not delete it. Deleting an order will automatically restock products. You should also leave a note in the order history let others know if you have already restocked the items.';
 $_['help_country_match']                      = 'Whether country of IP address matches billing address country (mismatch = higher risk).';
 $_['help_country_code']                       = 'Country Code of the IP address.';
 $_['help_high_risk_country']                  = 'Whether IP address or billing address country is in Ghana, Nigeria, or Vietnam.';

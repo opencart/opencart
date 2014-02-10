@@ -1,7 +1,8 @@
 <?php
 class ModelInstall extends Model {
+	
 	public function database($data) {
-		$db = new DB($data['db_driver'], $data['db_hostname'], $data['db_username'], $data['db_password'], $data['db_database']);
+		$db = new DB($data['db_driver'], $data['db'], $data['db_user'], $data['db_password'], $data['dbname']);
 				
 		$file = DIR_APPLICATION . 'opencart.sql';
 		
@@ -20,7 +21,10 @@ class ModelInstall extends Model {
   
 					if (preg_match('/;\s*$/', $line)) {
 						$sql = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $sql);
+						
+
 						$sql = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $sql);
+				
 						$sql = str_replace("INSERT INTO `oc_", "INSERT INTO `" . $data['db_prefix'], $sql);
 						
 						$db->query($sql);

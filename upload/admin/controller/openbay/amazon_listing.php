@@ -534,6 +534,8 @@ class ControllerOpenbayAmazonListing extends Controller {
 	}
 
 	public function search() {
+		display_errors(0);
+
 		$this->load->model('openbay/amazon_listing');
 		$this->load->language('openbay/amazon_listing');
 
@@ -549,26 +551,27 @@ class ControllerOpenbayAmazonListing extends Controller {
 		}
 
 		if ($error) {
-			$response = array(
+			$json = array(
 				'data' => '',
 				'error' => $error,
 			);
 		} else {
-			$response = array(
+			$json = array(
 				'data' => $this->model_openbay_amazon_listing->search($this->request->post['search_string'], $this->request->post['marketplace']),
 				'error' => '',
 			);
 		}
 
-		$this->response->setOutput(json_encode($response));
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function bestPrice() {
+		display_errors(0);
+
 		$this->load->model('openbay/amazon_listing');
 		$this->load->language('openbay/amazon_listing');
 
 		$error = '';
-
 
 		if (empty($this->request->post['asin'])) {
 			$error = $this->language->get('error_missing_asin');
@@ -583,7 +586,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		}
 
 		if ($error) {
-			$response = array(
+			$json = array(
 				'data' => '',
 				'error' => $error,
 			);
@@ -591,32 +594,34 @@ class ControllerOpenbayAmazonListing extends Controller {
 			$bestPrice = $this->model_openbay_amazon_listing->getBestPrice($this->request->post['asin'], $this->request->post['condition'], $this->request->post['marketplace']);
 
 			if ($bestPrice) {
-				$response = array(
+				$json = array(
 					'data' => $bestPrice,
 					'error' => '',
 				);
 			} else {
-				$response = array(
+				$json = array(
 					'data' => '',
 					'error' => $this->language->get('error_amazon_price'),
 				);
 			}
 		}
 
-		$this->response->setOutput(json_encode($response));
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getProductByAsin() {
+		display_errors(0);
+
 		$this->load->model('openbay/amazon_listing');
 
 		$data = $this->model_openbay_amazon_listing->getProductByAsin($this->request->post['asin'], $this->request->post['market']);
 
-		$response = array(
+		$json = array(
 			'title' => (string)$data['ItemAttributes']['Title'],
 			'img' => (!isset($data['ItemAttributes']['SmallImage']['URL']) ? '' : $data['ItemAttributes']['SmallImage']['URL'])
 		);
 
-		$this->response->setOutput(json_encode($response));
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getBrowseNodes() {

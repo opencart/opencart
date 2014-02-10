@@ -548,94 +548,103 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function getOpenstockOptionsAjax() {
+		display_errors(0);
+
 		$options = array();
 		if($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
 			$this->load->model('openstock/openstock');
 			$this->load->model('tool/image');
-			$options = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
+			$json = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
 		}
 		if(empty($options)) {
-			$options = false;
+			$json = false;
 		}
-		$this->response->setOutput(json_encode($options));
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function addItemLinkAjax() {
+		display_errors(0);
+
 		if(isset($this->request->get['product_id']) && isset($this->request->get['amazon_sku'])) {
+			$this->load->model('openbay/amazon');
+			$this->load->library('amazon');
+
 			$amazon_sku = $this->request->get['amazon_sku'];
 			$product_id = $this->request->get['product_id'];
 			$var = isset($this->request->get['var']) ? $this->request->get['var'] : '';
 
-		} else {
-			$result = json_encode('error');
-			$this->response->setOutput($result);
-			return;
-		}
-		$this->load->model('openbay/amazon');
-		$this->load->library('amazon');
-		$this->model_openbay_amazon->linkProduct($amazon_sku, $product_id, $var);
-		$logger = new Log('amazon_stocks.log');
-		$logger->write('addItemLink() called for product id: ' . $product_id . ', amazon sku: ' . $amazon_sku . ', var: ' . $var);
+			$this->model_openbay_amazon->linkProduct($amazon_sku, $product_id, $var);
+			$logger = new Log('amazon_stocks.log');
+			$logger->write('addItemLink() called for product id: ' . $product_id . ', amazon sku: ' . $amazon_sku . ', var: ' . $var);
 
-		if($var != '' && $this->openbay->addonLoad('openstock')) {
-			$logger->write('Using openStock');
-			$this->load->model('tool/image');
-			$this->load->model('openstock/openstock');
-			$optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
-			$quantityData = array();
-			foreach($optionStocks as $optionStock) {
-				if(isset($optionStock['var']) && $optionStock['var'] == $var) {
-					$quantityData[$amazon_sku] = $optionStock['stock'];
-					break;
+			if($var != '' && $this->openbay->addonLoad('openstock')) {
+				$logger->write('Using openStock');
+				$this->load->model('tool/image');
+				$this->load->model('openstock/openstock');
+				$optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+				$quantityData = array();
+				foreach($optionStocks as $optionStock) {
+					if(isset($optionStock['var']) && $optionStock['var'] == $var) {
+						$quantityData[$amazon_sku] = $optionStock['stock'];
+						break;
+					}
 				}
-			}
-			if(!empty($quantityData)) {
-				$logger->write('Updating quantities with data: ' . print_r($quantityData, true));
-				$this->openbay->amazon->updateQuantities($quantityData);
+				if(!empty($quantityData)) {
+					$logger->write('Updating quantities with data: ' . print_r($quantityData, true));
+					$this->openbay->amazon->updateQuantities($quantityData);
+				} else {
+					$logger->write('No quantity data will be posted.');
+				}
 			} else {
-				$logger->write('No quantity data will be posted.');
+				$this->openbay->amazon->putStockUpdateBulk(array($product_id));
 			}
+
+			$json = json_encode('ok');
 		} else {
-			$this->openbay->amazon->putStockUpdateBulk(array($product_id));
+			$json = json_encode('error');
 		}
 
-		$result = json_encode('ok');
-		$this->response->setOutput($result);
-		$logger->write('addItemLink() exiting');
+		$this->response->setOutput($json);
 	}
 
 	public function removeItemLinkAjax() {
+		display_errors(0);
+
 		if(isset($this->request->get['amazon_sku'])) {
+			$this->load->model('openbay/amazon');
+
 			$amazon_sku = $this->request->get['amazon_sku'];
+
+			$this->model_openbay_amazon->removeProductLink($amazon_sku);
+
+			$json = json_encode('ok');
 		} else {
-			$result = json_encode('error');
-			$this->response->setOutput($result);
-			return;
+			$json = json_encode('error');
 		}
-		$this->load->model('openbay/amazon');
 
-		$this->model_openbay_amazon->removeProductLink($amazon_sku);
-
-		$result = json_encode('ok');
-		$this->response->setOutput($result);
+		$this->response->setOutput($json);
 	}
 
 	public function getItemLinksAjax() {
+		display_errors(0);
+
 		$this->load->model('openbay/amazon');
 		$this->load->model('catalog/product');
 
-		$itemLinks = $this->model_openbay_amazon->getProductLinks();
-		$result = json_encode($itemLinks);
-		$this->response->setOutput($result);
+		$json = json_encode($this->model_openbay_amazon->getProductLinks());
+
+		$this->response->setOutput($json);
 	}
 
 	public function getUnlinkedItemsAjax() {
+		display_errors(0);
+
 		$this->load->model('openbay/amazon');
 		$this->load->model('catalog/product');
 
-		$unlinkedProducts = $this->model_openbay_amazon->getUnlinkedProducts();
-		$result = json_encode($unlinkedProducts);
-		$this->response->setOutput($result);
+		$json = json_encode($this->model_openbay_amazon->getUnlinkedProducts());
+
+		$this->response->setOutput($json);
 	}
 
 	public function deleteSavedAjax() {
@@ -648,6 +657,8 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function doBulkList() {
+		display_errors(0);
+
 		$this->load->language('openbay/amazon_listing');
 		$this->load->model('openbay/amazon_listing');
 
@@ -704,6 +715,8 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function doBulkSearch() {
+		display_errors(0);
+
 		$this->load->model('catalog/product');
 		$this->load->model('openbay/amazon_listing');
 		$this->load->language('openbay/amazon_bulk');
@@ -1063,6 +1076,8 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function loadListingReport() {
+		display_errors(0);
+
 		$this->load->model('openbay/amazon');
 		$this->load->model('setting/setting');
 		$this->load->language('openbay/amazon_bulk_linking');

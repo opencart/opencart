@@ -521,11 +521,12 @@ class ControllerOpenbayAmazonusListing extends Controller{
 	}
 
 	public function search() {
+		display_errors(0);
+
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->language('openbay/amazonus_listing');
 
 		$error = '';
-
 
 		if (empty($this->request->post['search_string'])) {
 			$error = $this->language->get('error_text_missing');
@@ -547,11 +548,12 @@ class ControllerOpenbayAmazonusListing extends Controller{
 	}
 
 	public function bestPrice() {
+		display_errors(0);
+
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->language('openbay/amazonus_listing');
 
 		$error = '';
-
 
 		if (empty($this->request->post['asin'])) {
 			$error = $this->language->get('error_missing_asin');
@@ -586,6 +588,8 @@ class ControllerOpenbayAmazonusListing extends Controller{
 	}
 
 	public function getProductByAsin() {
+		display_errors(0);
+
 		$this->load->model('openbay/amazonus_listing');
 
 		$data = $this->model_openbay_amazonus_listing->getProductByAsin($this->request->post['asin']);

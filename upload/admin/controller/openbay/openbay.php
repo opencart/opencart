@@ -353,54 +353,90 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function loadSettings() {
+		display_errors(0);
 		set_time_limit(0);
-		$this->response->setOutput(json_encode($this->openbay->ebay->loadSettings()));
+
+		$json = $this->openbay->ebay->loadSettings();
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function loadCategories() {
+		display_errors(0);
 		set_time_limit(0);
-		$this->response->setOutput(json_encode($this->openbay->ebay->loadCategories()));
+
+		$json = $this->openbay->ebay->loadCategories();
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function loadSellerStore() {
+		display_errors(0);
 		set_time_limit(0);
-		$this->response->setOutput(json_encode($this->openbay->ebay->loadSellerStore()));
+
+		$json = $this->openbay->ebay->loadSellerStore();
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getCategories() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$data = $this->model_openbay_ebay->getCategory($this->request->get['parent']);
-		$this->response->setOutput(json_encode($data));
+
+		$json = $this->model_openbay_ebay->getCategory($this->request->get['parent']);
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getSuggestedCategories() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$data = $this->model_openbay_ebay->getSuggestedCategories($this->request->get['qry']);
-		$this->response->setOutput(json_encode($data));
+
+		$json = $this->model_openbay_ebay->getSuggestedCategories($this->request->get['qry']);
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getShippingService() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$data = $this->model_openbay_ebay->getShippingService($this->request->get['loc']);
-		$this->response->setOutput(json_encode($data));
+
+		$json = $this->model_openbay_ebay->getShippingService($this->request->get['loc']);
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getEbayCategorySpecifics() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$data = $this->model_openbay_ebay->getEbayCategorySpecifics($this->request->get['category']);
-		$this->response->setOutput(json_encode($data));
+
+		$json = $this->model_openbay_ebay->getEbayCategorySpecifics($this->request->get['category']);
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getCategoryFeatures() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$data = $this->model_openbay_ebay->getCategoryFeatures($this->request->get['category']);
-		$this->response->setOutput(json_encode($data));
+
+		$json = $this->model_openbay_ebay->getCategoryFeatures($this->request->get['category']);
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function searchEbayCatalog() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay_product');
-		$data = $this->model_openbay_ebay_product->searchEbayCatalog($this->request->post);
-		$this->response->setOutput(json_encode($data));
+
+		$json = $this->model_openbay_ebay_product->searchEbayCatalog($this->request->post);
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function viewSellerSummary() {
@@ -450,35 +486,59 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getSellerSummary() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$data = $this->model_openbay_ebay->getSellerSummary();
-		$this->response->setOutput(json_encode($data));
+
+		$json = $this->model_openbay_ebay->getSellerSummary();
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function verifyCreds() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$response = $this->model_openbay_ebay->verifyCreds();
-		$this->response->setOutput(json_encode($response));
+
+		$json = $this->model_openbay_ebay->verifyCreds();
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function importItems() {
+		display_errors(0);
+
 		$data = array('d' => $this->request->get['desc'], 'c' => 1, 'n' => $this->request->get['note']);
 		$this->openbay->ebay->openbay_call_noresponse('setup/getItemsMain/', $data);
-		$this->response->setOutput(json_encode(array('msg' => 'ok')));
+
+		$json = array('msg' => 'ok');
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function importOrdersManual() {
+		display_errors(0);
+
 		$this->openbay->ebay->openbay_call_noresponse('order/getOrdersManual/');
-		$this->response->setOutput(json_encode(array('msg' => 'ok')));
+
+		$json = array('msg' => 'ok');
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getProductStock() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$response = $this->model_openbay_ebay->getProductStock($this->request->get['pid']);
-		return $this->response->setOutput(json_encode($response));
+
+		$json = $this->model_openbay_ebay->getProductStock($this->request->get['pid']);
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function setProductStock() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
 		$this->load->model('catalog/product');
 
@@ -502,33 +562,45 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getUsage() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$data               = $this->model_openbay_ebay->getUsage();
-		$data['html']       = base64_decode($data['html']);
-		$data['lasterror']  = $this->openbay->ebay->lasterror;
-		$data['lastmsg']    = $this->openbay->ebay->lastmsg;
-		return $this->response->setOutput(json_encode($data));
+		$json               = $this->model_openbay_ebay->getUsage();
+		$json['html']       = base64_decode($json['html']);
+		$json['lasterror']  = $this->openbay->ebay->lasterror;
+		$json['lastmsg']    = $this->openbay->ebay->lastmsg;
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getPlans() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$data = $this->model_openbay_ebay->getPlans();
-		return $this->response->setOutput(json_encode($data));
+
+		$json = $this->model_openbay_ebay->getPlans();
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function getMyPlan() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$data = $this->model_openbay_ebay->getMyPlan();
-		return $this->response->setOutput(json_encode($data));
+
+		$json = $this->model_openbay_ebay->getMyPlan();
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function devClear() {
-		if ($this->request->post['pass'] == '') {
-			return $this->response->setOutput(json_encode(array('msg' => 'Password needed')));
-		} else {
+		display_errors(0);
 
+		if ($this->request->post['pass'] == '') {
+			$json = array('msg' => 'Password needed');
+		} else {
 			if ($this->request->post['pass'] != $this->config->get('openbaypro_secret')) {
-				return $this->response->setOutput(json_encode(array('msg' => 'Wrong password')));
+				$json = array('msg' => 'Wrong password');
 			} else {
 				/*
 				  $this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
@@ -568,9 +640,11 @@ class ControllerOpenbayOpenbay extends Controller {
 					$this->db->query("TRUNCATE `" . DB_PREFIX . "product_option_relation`");
 				}
 
-				return $this->response->setOutput(json_encode(array('msg' => 'Data cleared')));
+				$json = array('msg' => 'Data cleared');
 			}
 		}
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function viewSubscription() {
@@ -844,18 +918,30 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function saveItemLink() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
-		$response = $this->model_openbay_ebay->saveItemLink($this->request->get);
-		$this->response->setOutput(json_encode($response));
+
+		$json = $this->model_openbay_ebay->saveItemLink($this->request->get);
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function removeItemLink() {
+		display_errors(0);
+
 		$this->load->language('openbay/openbay');
+
 		$this->openbay->ebay->removeItemByProductId($this->request->get['product_id']);
-		$this->response->setOutput(json_encode(array('error' => false, 'msg' => $this->language->get('item_link_removed'))));
+
+		$json = array('error' => false, 'msg' => $this->language->get('item_link_removed'));
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function loadUnlinked(){
+		display_errors(0);
+
 		set_time_limit(0);
 
 		$this->load->model('openbay/ebay');
@@ -877,6 +963,8 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function loadLinkedStatus(){
+		display_errors(0);
+
 		set_time_limit(0);
 
 		$this->load->model('openbay/ebay');
@@ -975,6 +1063,8 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function editLoad() {
+		display_errors(0);
+
 		$this->load->model('catalog/product');
 		$this->load->model('openbay/ebay_product');
 		$this->load->model('tool/image');
@@ -1077,23 +1167,25 @@ class ControllerOpenbayOpenbay extends Controller {
 			);
 
 			if (!empty($listings)) {
-				return $this->response->setOutput(json_encode(array('error' => false, 'data' => $data)));
+				$this->response->setOutput(json_encode(array('error' => false, 'data' => $data)));
 			} else {
-				return $this->response->setOutput(json_encode(array('error' => true)));
+				$this->response->setOutput(json_encode(array('error' => true)));
 			}
 		} else {
-			return $this->response->setOutput(json_encode(array('error' => true)));
+			$this->response->setOutput(json_encode(array('error' => true)));
 		}
 	}
 
 	public function editSave() {
+		display_errors(0);
+
 		if ($this->checkConfig() == true && $this->request->server['REQUEST_METHOD'] == 'POST') {
 
 			$this->load->model('openbay/ebay');
 
-			$save = $this->model_openbay_ebay->editSave($this->request->post);
+			$json = $this->model_openbay_ebay->editSave($this->request->post);
 
-			$this->response->setOutput(json_encode($save));
+			$this->response->setOutput(json_encode($json));
 		} else {
 			$this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -1419,6 +1511,8 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function verify() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
 		$this->load->model('catalog/product');
@@ -1461,9 +1555,9 @@ class ControllerOpenbayOpenbay extends Controller {
 						$data['sku'] = $data['product_info']['sku'];
 					}
 
-					$verifyResponse = $this->model_openbay_ebay->ebayVerifyAddItem($data, $this->request->get['options']);
+					$json = $this->model_openbay_ebay->ebayVerifyAddItem($data, $this->request->get['options']);
 
-					$this->response->setOutput(json_encode($verifyResponse));
+					$this->response->setOutput(json_encode($json));
 				} else {
 					$this->response->setOutput(json_encode(array('error' => true, 'msg' => 'This item is already listed in your eBay account', 'item' => $item_id)));
 				}
@@ -1474,6 +1568,8 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function verifyBulk() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay_profile');
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
@@ -1622,7 +1718,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
 				$verifyResponse = $this->model_openbay_ebay->ebayVerifyAddItem($data, 'no');
 
-				$response = array(
+				$json = array(
 					'errors'    => $verifyResponse['data']['Errors'],
 					'fees'      => $verifyResponse['data']['Fees'],
 					'itemid'    => (string)$verifyResponse['data']['ItemID'],
@@ -1631,7 +1727,7 @@ class ControllerOpenbayOpenbay extends Controller {
 					'ack'       => (string)$verifyResponse['data']['Ack'],
 				);
 
-				$this->response->setOutput(json_encode($response));
+				$this->response->setOutput(json_encode($json));
 			}
 		} else {
 			$this->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
@@ -1639,6 +1735,8 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function listItem() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
 		$this->load->model('catalog/product');
@@ -1675,15 +1773,17 @@ class ControllerOpenbayOpenbay extends Controller {
 				$data['sku'] = $data['product_info']['sku'];
 			}
 
-			$verifyResponse = $this->model_openbay_ebay->ebayAddItem($data, $this->request->get['options']);
+			$json = $this->model_openbay_ebay->ebayAddItem($data, $this->request->get['options']);
 
-			$this->response->setOutput(json_encode($verifyResponse));
+			$this->response->setOutput(json_encode($json));
 		} else {
 			$this->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
 		}
 	}
 
 	public function listItemBulk() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay_profile');
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
@@ -1831,7 +1931,7 @@ class ControllerOpenbayOpenbay extends Controller {
 
 				$verifyResponse = $this->model_openbay_ebay->ebayAddItem($data, 'no');
 
-				$response = array(
+				$json = array(
 					'errors'    => $verifyResponse['data']['Errors'],
 					'fees'      => $verifyResponse['data']['Fees'],
 					'itemid'    => (string)$verifyResponse['data']['ItemID'],
@@ -1840,7 +1940,7 @@ class ControllerOpenbayOpenbay extends Controller {
 					'ack'       => (string)$verifyResponse['data']['Ack'],
 				);
 
-				$this->response->setOutput(json_encode($response));
+				$this->response->setOutput(json_encode($json));
 			}
 		} else {
 			$this->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
@@ -1848,25 +1948,45 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function getImportImages() {
+		display_errors(0);
+
 		set_time_limit(0);
 		$this->openbay->ebay->getImages();
-		$this->response->setOutput(json_encode(array('error' => false, 'msg' => 'OK')));
+
+		$json = array('error' => false, 'msg' => 'OK');
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function repairLinks() {
+		display_errors(0);
+
 		$this->load->model('openbay/ebay_product');
+
 		$this->model_openbay_ebay_product->repairLinks();
-		return $this->response->setOutput(json_encode(array('msg' => 'Links repaired')));
+
+		$json = array('msg' => 'Links repaired');
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function deleteAllLocks() {
+		display_errors(0);
+
 		$this->openbay->ebay->log('deleteAllLocks() - Deleting all locks');
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_order_lock`");
-		return $this->response->setOutput(json_encode(array('msg' => 'Locks deleted')));
+
+		$json = array('msg' => 'Locks deleted');
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function endItem() {
-		return $this->response->setOutput(json_encode($this->openbay->ebay->endItem($this->request->get['id'])));
+		display_errors(0);
+
+		$json = $this->openbay->ebay->endItem($this->request->get['id']);
+
+		$this->response->setOutput(json_encode($json));
 	}
 }
 ?>

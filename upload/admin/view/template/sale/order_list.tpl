@@ -158,41 +158,15 @@
 $('#button-filter').on('click', function() {
 	url = 'index.php?route=sale/order&token=<?php echo $token; ?>';
 	
-	var filter_order_id = $('input[name=\'filter_order_id\']').val();
-	
-	if (filter_order_id) {
-		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
-	}
-	
-	var filter_customer = $('input[name=\'filter_customer\']').val();
-	
-	if (filter_customer) {
-		url += '&filter_customer=' + encodeURIComponent(filter_customer);
-	}
-	
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').val();
-	
-	if (filter_order_status_id != '*') {
-		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
-	}	
-
-	var filter_total = $('input[name=\'filter_total\']').val();
-
-	if (filter_total) {
-		url += '&filter_total=' + encodeURIComponent(filter_total);
-	}	
-	
-	var filter_date_added = $('input[name=\'filter_date_added\']').val();
-	
-	if (filter_date_added) {
-		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
-	}
-	
-	var filter_date_modified = $('input[name=\'filter_date_modified\']').val();
-	
-	if (filter_date_modified) {
-		url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
-	}
+	$(':input').each(function() {
+		var value = $(this).attr('value');
+		
+		if(value) {
+			if($(this).attr('type')!='checkbox' && value!='*') {
+				url += '&' +  $(this).attr('name') + '=' + encodeURIComponent(value);
+			}
+		}
+	});
 				
 	location = url;
 });

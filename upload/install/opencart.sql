@@ -2814,7 +2814,7 @@ CREATE TABLE `oc_product_to_category` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`category_id`),
-  KEY `product_id` (`product_id`)
+  KEY `category_id` (`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -2900,7 +2900,7 @@ DROP TABLE IF EXISTS `oc_product_to_store`;
 CREATE TABLE `oc_product_to_store` (
   `product_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`product_id`,`store_id`)
+  PRIMARY KEY (`product_id`,`store_id`),
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --

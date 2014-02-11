@@ -52,3 +52,10 @@ RewriteRule ^([^?]*) index.php?_route_=$1 [L,QSA]
 
 # 7. disable open_basedir limitations
 # php_admin_value open_basedir none
+
+# 8. If Font-Awesome icons aren't displaying correctly for alternate paths, domains, or subdomains on the same server, this may help:
+#<FilesMatch "\.(ttf|ttc|otf|eot|woff)$">
+# <IfModule mod_headers.c>
+#  Header set Access-Control-Allow-Origin "*"
+# </IfModule>
+#</FilesMatch>

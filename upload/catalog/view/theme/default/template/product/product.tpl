@@ -405,22 +405,22 @@
 </div>
 <script type="text/javascript"><!--
 $('select[name="profile_id"], input[name="quantity"]').change(function(){
-  $.ajax({
-    url: 'index.php?route=product/product/getRecurringDescription',
-    type: 'post',
-    data: $('input[name="product_id"], input[name="quantity"], select[name="profile_id"]'),
-    dataType: 'json',
-    beforeSend: function() {
-      $('#profile-description').html('');
-    },
-    success: function(json) {
-      $('.alert, .text-danger').remove();
-
-      if (json['success']) {
-        $('#profile-description').html(json['success']);
-      }
-    }
-  });
+	$.ajax({
+		url: 'index.php?route=product/product/getRecurringDescription',
+		type: 'post',
+		data: $('input[name=\'product_id\'], input[name=\'quantity\'], select[name=\'profile_id\']'),
+		dataType: 'json',
+		beforeSend: function() {
+			$('#profile-description').html('');
+		},
+		success: function(json) {
+			$('.alert, .text-danger').remove();
+		
+			if (json['success']) {
+				$('#profile-description').html(json['success']);
+			}
+		}
+	});
 });
 //--></script>
 <script type="text/javascript"><!--

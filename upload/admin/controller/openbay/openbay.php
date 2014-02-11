@@ -186,6 +186,11 @@ class ControllerOpenbayOpenbay extends Controller {
 		} else {
 			$this->data['openbaypro_relistitems'] = $this->config->get('openbaypro_relistitems');
 		}
+		if (isset($this->request->post['ebay_disable_nostock'])) {
+			$this->data['ebay_disable_nostock'] = $this->request->post['ebay_disable_nostock'];
+		} else {
+			$this->data['ebay_disable_nostock'] = $this->config->get('ebay_disable_nostock');
+		}
 		if (isset($this->request->post['openbaypro_logging'])) {
 			$this->data['openbaypro_logging'] = $this->request->post['openbaypro_logging'];
 		} else {
@@ -264,12 +269,6 @@ class ControllerOpenbayOpenbay extends Controller {
 			$this->data['openbay_default_addressformat'] = $this->request->post['openbay_default_addressformat'];
 		} else {
 			$this->data['openbay_default_addressformat'] = $this->config->get('openbay_default_addressformat');
-		}
-
-		if (isset($this->request->post['ebay_disable_nostock'])) {
-			$this->data['ebay_disable_nostock'] = $this->request->post['ebay_disable_nostock'];
-		} else {
-			$this->data['ebay_disable_nostock'] = $this->config->get('ebay_disable_nostock');
 		}
 
 		/*
@@ -520,7 +519,7 @@ class ControllerOpenbayOpenbay extends Controller {
 			'cat' => $this->request->get['categories'],
 		);
 
-		$this->openbay->ebay->openbay_call_noresponse('setup/getItemsMain/', $data);
+		$this->openbay->ebay->callNoResponse('setup/getItemsMain/', $data);
 
 		$json = array('msg' => 'ok');
 
@@ -530,7 +529,7 @@ class ControllerOpenbayOpenbay extends Controller {
 	public function importOrdersManual() {
 
 
-		$this->openbay->ebay->openbay_call_noresponse('order/getOrdersManual/');
+		$this->openbay->ebay->callNoResponse('order/getOrdersManual/');
 
 		$json = array('msg' => 'ok');
 

@@ -46,6 +46,7 @@ $_['lang_obp_string2']          = 'Encryption string 2';
 $_['lang_app_setting_msg']      = 'Your application settings allow you to configure the way OpenBay Pro works and integrates with your system.';
 $_['lang_app_end_ebay']         = 'End items?<span class="help">If items sell out, should the listing be ended on eBay?</span>';
 $_['lang_app_relist_ebay']      = 'Relist when back in stock?<span class="help">If an item link existed before it will relist previous item if back in stock</span>';
+$_['lang_app_nostock_ebay']     = 'Disable product when no stock?<span class="help">When the item sells out it then disables the product in OpenCart</span>';
 $_['lang_app_logging']          = 'Enable logging';
 $_['lang_app_currency']         = 'Default currency';
 $_['lang_app_currency_msg']     = 'Based on currencies from your store';

@@ -114,6 +114,20 @@
                             </td>
                         </tr>
                         <tr>
+                            <td><?php echo $lang_app_nostock_ebay; ?></td>
+                            <td>
+                                <select name="ebay_disable_nostock" style="width:200px;">
+                                    <?php if ($ebay_disable_nostock) { ?>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
+                                    <?php } else { ?>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
                             <td><?php echo $lang_app_logging; ?></td>
                             <td>
                                 <select name="openbaypro_logging" style="width:200px;">

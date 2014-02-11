@@ -300,7 +300,7 @@ class ModelOpenbayEbay extends Model{
 
 	public function loadLinkedStatus($item_ids){
 		$this->openbay->ebay->log('loadLinkedStatus() - Get item status from ebay for multiple IDs');
-		return $this->openbay->ebay->openbay_call('item/getItemsById/', array('item_ids' => $item_ids));
+		return $this->openbay->ebay->call('item/getItemsById/', array('item_ids' => $item_ids));
 	}
 
 	public function loadUnlinked($limit = 100, $page = 1){
@@ -452,7 +452,7 @@ class ModelOpenbayEbay extends Model{
 	public function getSuggestedCategories($qry){
 		$this->load->language('openbay/openbay');
 
-		$response['data']   = $this->openbay->ebay->openbay_call('listing/getSuggestedCategories/', array('qry' => $qry));
+		$response['data']   = $this->openbay->ebay->call('listing/getSuggestedCategories/', array('qry' => $qry));
 		$response['error']  = $this->openbay->ebay->lasterror;
 		$response['msg']    = $this->openbay->ebay->lastmsg;
 
@@ -499,21 +499,21 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getEbayCategorySpecifics($catId){
-	$response['data']   = $this->openbay->ebay->openbay_call('listing/getEbayCategorySpecifics/', array('id' => $catId));
+	$response['data']   = $this->openbay->ebay->call('listing/getEbayCategorySpecifics/', array('id' => $catId));
 		$response['error']  = $this->openbay->ebay->lasterror;
 		$response['msg']    = $this->openbay->ebay->lastmsg;
 		return $response;
 	}
 
 	public function getCategoryFeatures($catId){
-	$response['data']   = $this->openbay->ebay->openbay_call('listing/getCategoryFeatures/', array('id' => $catId));
+	$response['data']   = $this->openbay->ebay->call('listing/getCategoryFeatures/', array('id' => $catId));
 		$response['error']  = $this->openbay->ebay->lasterror;
 		$response['msg']    = $this->openbay->ebay->lastmsg;
 		return $response;
 	}
 
 	public function getSellerSummary(){
-	$response['data']   = $this->openbay->ebay->openbay_call('account/getSellerSummary/');
+	$response['data']   = $this->openbay->ebay->call('account/getSellerSummary/');
 		$response['error']  = $this->openbay->ebay->lasterror;
 		$response['msg']    = $this->openbay->ebay->lastmsg;
 
@@ -549,9 +549,9 @@ class ModelOpenbayEbay extends Model{
 
 	public function ebayVerifyAddItem($data, $options){
 		if($options == 'yes'){
-			$response['data'] = $this->openbay->ebay->openbay_call('listing/verifyFixedPrice/', $data);
+			$response['data'] = $this->openbay->ebay->call('listing/verifyFixedPrice/', $data);
 		}else{
-			$response['data'] = $this->openbay->ebay->openbay_call('listing/ebayVerifyAddItem/', $data);
+			$response['data'] = $this->openbay->ebay->call('listing/ebayVerifyAddItem/', $data);
 		}
 
 		$response['error']  = $this->openbay->ebay->lasterror;
@@ -562,10 +562,10 @@ class ModelOpenbayEbay extends Model{
 
 	public function ebayAddItem($data, $options){
 		if($options == 'yes'){
-			$response = $this->openbay->ebay->openbay_call('listing/addFixedPrice/', $data);
+			$response = $this->openbay->ebay->call('listing/addFixedPrice/', $data);
 			$variant = 1;
 		}else{
-			$response = $this->openbay->ebay->openbay_call('listing/ebayAddItem/', $data);
+			$response = $this->openbay->ebay->call('listing/ebayAddItem/', $data);
 			$variant = 0;
 		}
 
@@ -576,7 +576,7 @@ class ModelOpenbayEbay extends Model{
 
 		if(!empty($response['ItemID'])){
 			$this->openbay->ebay->createLink($data['product_id'], $response['ItemID'], $variant);
-			$this->openbay->ebay->insertReserve($data, $response['ItemID'], $variant);
+			$this->openbay->ebay->addReserve($data, $response['ItemID'], $variant);
 
 			$data2['data']['viewLink']  = html_entity_decode($this->config->get('openbaypro_ebay_itm_link') . $response['ItemID']);
 		}else{
@@ -650,15 +650,15 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getUsage(){
-		return $this->openbay->ebay->openbay_call('report/accountUse/');
+		return $this->openbay->ebay->call('report/accountUse/');
 	}
 
 	public function getPlans(){
-		return $this->openbay->ebay->openbay_call('plan/getPlans/');
+		return $this->openbay->ebay->call('plan/getPlans/');
 	}
 
 	public function getMyPlan(){
-		return $this->openbay->ebay->openbay_call('plan/myPlan/');
+		return $this->openbay->ebay->call('plan/myPlan/');
 	}
 
 	public function getLiveListingArray(){
@@ -677,7 +677,7 @@ class ModelOpenbayEbay extends Model{
 	public function verifyCreds(){
 		$this->request->post['domain'] = HTTPS_SERVER;
 
-		$data = $this->openbay->ebay->openbay_call('account/validate/', $this->request->post, array(), 'json', 1);
+		$data = $this->openbay->ebay->call('account/validate/', $this->request->post, array(), 'json', 1);
 
 		if($this->openbay->ebay->lasterror == true){
 			return array(
@@ -712,7 +712,7 @@ class ModelOpenbayEbay extends Model{
 			$this->openbay->ebay->putStockUpdate($data['itemId'], $stock['quantity']);
 
 			//finish the revise item call
-			return $this->openbay->ebay->openbay_call('listing/reviseItem/', $data);
+			return $this->openbay->ebay->call('listing/reviseItem/', $data);
 		}else{
 			$this->openbay->ebay->log('editSave() - variant item');
 
@@ -770,7 +770,7 @@ class ModelOpenbayEbay extends Model{
 			//send to the api to process
 			if($stockFlag == true){
 				$this->openbay->ebay->log('editSave() - Sending to API');
-				$response = $this->openbay->ebay->openbay_call('item/reviseVariants', $varData);
+				$response = $this->openbay->ebay->call('item/reviseVariants', $varData);
 				return $response;
 			}else{
 				$this->openbay->ebay->log('editSave() - Ending item');

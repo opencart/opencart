@@ -1,5 +1,6 @@
 Type: Enhancement, New Feature, Bug
 
+11-02-14 - Feature - Option to disable store products when the eBay stock reaches 0
 11-02-14 - Enhancement - Added advanced importing option which can get more detail information when importing
 09-02-14 - Bug - Bulk stock update checks settings before relisting an item
 07-02-14 - Bug - Fixed row not hiding when remove link clicked in eBay item links

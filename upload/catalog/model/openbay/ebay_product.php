@@ -1,7 +1,7 @@
 <?php
 class ModelOpenbayEbayProduct extends Model {
 	public function getRelistRule($id) {
-		return $this->openbay->ebay->openbay_call('item/getAutomationRule', array('id' => $id));
+		return $this->openbay->ebay->call('item/getAutomationRule', array('id' => $id));
 	}
 
 	public function importItems($data) {
@@ -359,7 +359,7 @@ class ModelOpenbayEbayProduct extends Model {
 		$data['sort']           = $this->config->get('ebaydisplay_module_sort');
 		$data['search_desc']    = $this->config->get('ebaydisplay_module_description');
 
-		return $this->openbay->ebay->openbay_call('item/searchListingsForDisplay', $data);
+		return $this->openbay->ebay->call('item/searchListingsForDisplay', $data);
 	}
 
 	private function createVariants($product_id, $data) {
@@ -567,7 +567,7 @@ class ModelOpenbayEbayProduct extends Model {
 		$varData['id']      = $item_id;
 
 		//send to the api to process
-		$this->openbay->ebay->openbay_call_noresponse('item/reviseVariants', $varData);
+		$this->openbay->ebay->callNoResponse('item/reviseVariants', $varData);
 	}
 
 	private function attributeGroupExists($name) {

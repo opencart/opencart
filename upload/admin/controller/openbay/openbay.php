@@ -266,6 +266,12 @@ class ControllerOpenbayOpenbay extends Controller {
 			$this->data['openbay_default_addressformat'] = $this->config->get('openbay_default_addressformat');
 		}
 
+		if (isset($this->request->post['ebay_disable_nostock'])) {
+			$this->data['ebay_disable_nostock'] = $this->request->post['ebay_disable_nostock'];
+		} else {
+			$this->data['ebay_disable_nostock'] = $this->config->get('ebay_disable_nostock');
+		}
+
 		/*
 		 * Payments & tax
 		 */

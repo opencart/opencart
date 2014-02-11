@@ -323,7 +323,7 @@ final class Ebay {
 			}
 		}else{
 			$this->removeItemByItemId($item_id);
-			$this->log('endItem() - config disables ending items');
+			$this->log('endItem() - config has disabled ending items');
 
 			$message = "An item has gone out of stock but your settings are not set to end eBay items automatically.\r\n\r\n";
 			$message.= "You need to ensure you have stock left of this item or end your eBay listing manually.\r\n\r\n";
@@ -542,6 +542,7 @@ final class Ebay {
 	public function orderNew($order_id) {
 		$this->log('orderNew() - Order id:'.$order_id.' passed');
 		if(!$this->isEbayOrder($order_id)) {
+
 			if ($this->openbay->addonLoad('openstock') == true) {
 				$this->log('orderNew() - Loop over products (with OpenStock)');
 
@@ -616,7 +617,7 @@ final class Ebay {
 		return $this->openbay_call('item/getItemListLimited/', array('page' => $page, 'limit' => $limit));
 	}
 
-	public function putStockUpdate($item_id, $stock, $sku = null){
+	public function putStockUpdate($item_id, $stock, $sku = null) {
 		$this->log('putStockUpdate()');
 		$this->log('putStockUpdate() - New local stock: '.$stock);
 
@@ -624,8 +625,8 @@ final class Ebay {
 		$product_id = $this->getProductId($item_id);
 		$reserve    = $this->getReserve($product_id, $item_id, ($sku != null ? $sku : ''));
 
-		if($listing['status'] == 1 ){
-			if($reserve != false){
+		if($listing['status'] == 1 ) {
+			if($reserve != false) {
 				$this->log('putStockUpdate() - Reserve stock: '.$reserve);
 
 				if($stock > $reserve){
@@ -634,10 +635,14 @@ final class Ebay {
 				}
 			}
 
-			if($sku == null){
+			if($sku == null) {
 				$this->log('putStockUpdate() - Listing stock: '.$listing['qty'].', new stock: '.$stock);
 
-				if($stock == 0){
+				if($stock <= 0){
+					if ($this->config->get('ebay_disable_nostock') == 1) {
+						$this->disableProduct($product_id);
+					}
+
 					$this->endItem($item_id);
 					return true;
 				}elseif($listing['qty'] != $stock){
@@ -662,6 +667,12 @@ final class Ebay {
 					}
 				}
 
+				if ($stock <= 0) {
+					if ($this->config->get('ebay_disable_nostock') == 1) {
+						$this->disableVariant($product_id, $sku);
+					}
+				}
+
 				if($variantStock == true || $stock > 0){
 					$this->log('putStockUpdate() - Revising item with Item ID "'.$item_id.'" to stock level "'.$stock.'", sku "'.$sku.'"');
 					$this->openbay_call('item/reviseStock/', array('itemId' => $item_id, 'stock' => $stock, 'sku' => $sku));
@@ -675,6 +686,14 @@ final class Ebay {
 			$this->removeItemByItemId($item_id);
 			$this->log('putStockUpdate() - Listing not active, item id: '. $item_id .', status returned: '.$listing['statusActual']);
 		}
+	}
+
+	public function disableProduct($product_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `status` = 0 WHERE `product_id` = '".(int)$product_id."' LIMIT 1");
+	}
+
+	public function disableVariant($product_id, $sku) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "product_option_relation` SET `active` = 0 WHERE `product_id` = '".(int)$product_id."' AND `var` = '".$this->db->escape($sku)."' LIMIT 1");
 	}
 
 	public function putStockUpdateBulk($product_id_array, $endInactive = false){
@@ -1020,15 +1039,7 @@ final class Ebay {
 			$item_id = $this->getEbayItemId($product_id);
 
 			if($item_id != false) {
-				if($sku == null) {
-					if($qty < 1) {
-						$this->endItem($item_id);
-					}else{
-						$this->putStockUpdate($item_id, $qty);
-					}
-				}else{
-					$this->putStockUpdate($item_id, $qty, $sku);
-				}
+				$this->putStockUpdate($item_id, $qty, $sku);
 			}
 		}else{
 			$this->log('decideEbayStockAction() - Product ID: '.$product_id.' does not subtract stock');

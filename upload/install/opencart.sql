@@ -1374,7 +1374,7 @@ CREATE TABLE IF NOT EXISTS `oc_custom_field_location` (
   `customer_group_id` int(11) NOT NULL,
   `required` tinyint(1) NOT NULL,
   PRIMARY KEY (`custom_field_id`,`location`,`customer_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_custom_field_location`

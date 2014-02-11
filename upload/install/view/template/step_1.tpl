@@ -13,11 +13,11 @@
       </form>
     </div>
     <div class="col-sm-3">
-      <ul>
-        <li><b><?php echo $text_license; ?></b></li>
-        <li><?php echo $text_installation; ?></li>
-        <li><?php echo $text_configuration; ?></li>
-        <li><?php echo $text_finished; ?></li>
+      <ul class="list-group">
+        <li class="list-group-item"><b><?php echo $text_license; ?></b></li>
+        <li class="list-group-item"><?php echo $text_installation; ?></li>
+        <li class="list-group-item"><?php echo $text_configuration; ?></li>
+        <li class="list-group-item"><?php echo $text_finished; ?></li>
       </ul>
     </div>
   </div>

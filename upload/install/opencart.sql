@@ -20,7 +20,7 @@ CREATE TABLE `oc_product_profile` (
   `profile_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`profile_id`,`customer_group_id`)
-) ENGINE=MyISAM COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 CREATE TABLE `oc_profile` (
   `profile_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -36,7 +36,7 @@ CREATE TABLE `oc_profile` (
   `trial_duration` int(10) unsigned NOT NULL,
   `trial_cycle` int(10) unsigned NOT NULL,
   PRIMARY KEY (`profile_id`)
-) ENGINE=MyISAM COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
 CREATE TABLE `oc_profile_description` (
@@ -44,7 +44,7 @@ CREATE TABLE `oc_profile_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`profile_id`,`language_id`)
-) ENGINE=MyISAM COLLATE=utf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Table structure for table `oc_order_recurring`

@@ -506,9 +506,14 @@ class ControllerOpenbayOpenbay extends Controller {
 	}
 
 	public function importItems() {
+		$data = array(
+			'adv' => $this->request->get['advanced'],
+			'c' => 1,
+			'd' => $this->request->get['desc'],
+			'n' => $this->request->get['note'],
+			'cat' => $this->request->get['categories'],
+		);
 
-
-		$data = array('d' => $this->request->get['desc'], 'c' => 1, 'n' => $this->request->get['note']);
 		$this->openbay->ebay->openbay_call_noresponse('setup/getItemsMain/', $data);
 
 		$json = array('msg' => 'ok');

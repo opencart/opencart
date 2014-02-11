@@ -240,7 +240,6 @@ class ModelOpenbayEbayProduct extends Model {
 						`quantity`              = '".$item['Quantity']."',
 						`manufacturer_id`       = '".$manufacturer_id."',
 						`stock_status_id`       = '6',
-						`model`                 = '".$this->db->escape($item['SKU'])."',
 						`price`                 = '".$net_price."',
 						`tax_class_id`          = '9',
 						`location`              = '".$this->db->escape(isset($item['note']) ? $item['note'] : '')."',

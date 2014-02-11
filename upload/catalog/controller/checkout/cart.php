@@ -39,36 +39,36 @@ class ControllerCheckoutCart extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
-      	$data['breadcrumbs'] = array();
-
-      	$data['breadcrumbs'][] = array(
-        	'href' => $this->url->link('common/home'),
-        	'text' => $this->language->get('text_home')
-      	); 
-
-      	$data['breadcrumbs'][] = array(
-        	'href' => $this->url->link('checkout/cart'),
-        	'text' => $this->language->get('heading_title')
-      	);
-			
-    	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
-      		$data['heading_title'] = $this->language->get('heading_title');
+	      	$data['breadcrumbs'] = array();
+	
+	      	$data['breadcrumbs'][] = array(
+	        	'href' => $this->url->link('common/home'),
+	        	'text' => $this->language->get('text_home')
+	      	); 
+	
+	      	$data['breadcrumbs'][] = array(
+	        	'href' => $this->url->link('checkout/cart'),
+	        	'text' => $this->language->get('heading_title')
+	      	);
+				
+	    	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+	      		$data['heading_title'] = $this->language->get('heading_title');
 			
 			$data['text_next'] = $this->language->get('text_next');
 			$data['text_next_choice'] = $this->language->get('text_next_choice');
 			
 			$data['column_image'] = $this->language->get('column_image');
-      		$data['column_name'] = $this->language->get('column_name');
-      		$data['column_model'] = $this->language->get('column_model');
-      		$data['column_quantity'] = $this->language->get('column_quantity');
+	      		$data['column_name'] = $this->language->get('column_name');
+	      		$data['column_model'] = $this->language->get('column_model');
+	      		$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_price'] = $this->language->get('column_price');
-      		$data['column_total'] = $this->language->get('column_total');
+      			$data['column_total'] = $this->language->get('column_total');
 			
 			$data['button_update'] = $this->language->get('button_update');
 			$data['button_remove'] = $this->language->get('button_remove');
 			
-      		$data['button_shopping'] = $this->language->get('button_shopping');
-      		$data['button_checkout'] = $this->language->get('button_checkout');
+	      		$data['button_shopping'] = $this->language->get('button_shopping');
+	      		$data['button_checkout'] = $this->language->get('button_checkout');
 
 			$data['text_until_cancelled'] = $this->language->get('text_until_cancelled');
 			$data['text_freq_day'] = $this->language->get('text_freq_day');
@@ -117,7 +117,7 @@ class ControllerCheckoutCart extends Controller {
 						 
 			$this->load->model('tool/image');
 			
-      		$data['products'] = array();
+      			$data['products'] = array();
 			
 			$products = $this->cart->getProducts();
 
@@ -303,14 +303,14 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$this->response->setOutput($this->load->view('default/template/checkout/cart.tpl', $data));
 			}					
-    	} else {
-      		$data['heading_title'] = $this->language->get('heading_title');
+    		} else {
+      			$data['heading_title'] = $this->language->get('heading_title');
 
-      		$data['text_error'] = $this->language->get('text_empty');
+      			$data['text_error'] = $this->language->get('text_empty');
 
-      		$data['button_continue'] = $this->language->get('button_continue');
+      			$data['button_continue'] = $this->language->get('button_continue');
 			
-      		$data['continue'] = $this->url->link('common/home');
+      			$data['continue'] = $this->url->link('common/home');
 
 			unset($this->session->data['success']);
 			
@@ -326,7 +326,7 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
 			}			
-    	}
+    		}
   	}
 								
 	public function add() {
@@ -349,6 +349,10 @@ class ControllerCheckoutCart extends Controller {
 				$quantity = $this->request->post['quantity'];
 			} else {
 				$quantity = 1;
+			}
+			
+			if ($product_info['minimum'] > $quantity) {
+				$json['error']['minimum'] = true;
 			}
 														
 			if (isset($this->request->post['option'])) {

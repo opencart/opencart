@@ -22,13 +22,6 @@
                 <option value="mysqli"><?php echo $text_mysqli; ?></option>
                 <?php } ?>
                 <?php } ?>
-                <?php if ($mysql) { ?>
-                <?php if ($db_driver == 'mysql') { ?>
-                <option value="mysql" selected="selected"><?php echo $text_mysql; ?></option>
-                <?php } else { ?>
-                <option value="mysql"><?php echo $text_mysql; ?></option>
-                <?php } ?>
-                <?php } ?>
                 <?php if ($pdo) { ?>
                 <?php if ($db_driver == 'mpdo') { ?>
                 <option value="mpdo" selected="selected"><?php echo $text_mpdo; ?></option>

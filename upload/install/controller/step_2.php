@@ -37,7 +37,9 @@ class ControllerStep2 extends Controller {
 		$data['text_upload'] = $this->language->get('text_upload');
 		$data['text_session'] = $this->language->get('text_session');
 		$data['text_global'] = $this->language->get('text_global');
-		$data['text_mysql'] = $this->language->get('text_mysql');
+		$data['text_mysqli'] = $this->language->get('text_mysqli');
+  		$data['text_mpdo'] = $this->language->get('text_mpdo');
+		$data['text_pgsql'] = $this->language->get('text_pgsql');
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
 		$data['text_mcrypt'] = $this->language->get('text_mcrypt');
@@ -61,6 +63,9 @@ class ControllerStep2 extends Controller {
 		$data['session_auto_start'] = ini_get('session_auto_start');
 		
 		$data['mysql'] = extension_loaded('mysql');
+		$data['mysqli'] = extension_loaded('mysqli');
+		$data['mpdo'] = extension_loaded('pdo');
+		$data['pgsql'] = extension_loaded('pgsql');		
 		$data['gd'] = extension_loaded('gd');
 		$data['curl'] = extension_loaded('curl');
 		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
@@ -97,9 +102,9 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: OpenCart will not work with session.auto_start enabled!';
 		}
 		
-		if (!extension_loaded('mysql')) {
-			$this->error['warning'] = 'Warning: MySQL extension needs to be loaded for OpenCart to work!';
-		}
+		if (!array_filter(array('mysqli', 'pdo', 'pgsql'), 'extension_loaded')) {
+			$this->error['warning'] = 'Warning: A database extension needs to be loaded in th php.ini for OpenCart to work!';
+  		}
 				
 		if (!extension_loaded('gd')) {
 			$this->error['warning'] = 'Warning: GD extension needs to be loaded for OpenCart to work!';

@@ -91,7 +91,6 @@ class ControllerStep3 extends Controller {
 		$data['text_db_connection'] = $this->language->get('text_db_connection');	
 		$data['text_db_administration'] = $this->language->get('text_db_administration');
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
-		$data['text_mysql'] = $this->language->get('text_mysql');
 		$data['text_mpdo'] = $this->language->get('text_mpdo');
 
 		$data['entry_db_driver'] = $this->language->get('entry_db_driver');
@@ -240,22 +239,10 @@ class ControllerStep3 extends Controller {
 			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
 		}
 
-		if ($this->request->post['db_driver'] == 'mysql') {
-			if (!$connection = @mysql_connect($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'])) {
-				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
-			} else {
-				if (!@mysql_select_db($this->request->post['db_database'], $connection)) {
-					$this->error['warning'] = 'Error: Database does not exist!';
-				}
-
-				mysql_close($connection);
-			}
-		}
-
 		if ($this->request->post['db_driver'] == 'mysqli') {
-			$connection = new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database']);
+			$connection = @new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database']);
 
-			if (mysqli_connect_error()) {
+			if ($mysqli->connect_error) {
 				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
 			} else {
 				$connection->close();

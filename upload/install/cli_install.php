@@ -58,7 +58,8 @@ function usage() {
 	echo "Usage:\n";
 	echo "======\n";
 	echo "\n";
-	$options = implode(" ", array('--db_host', 'localhost',
+	$options = implode(" ", array('--db_driver', 'mysqli',
+								'--db_host', 'localhost',
 								'--db_user', 'root',
 								'--db_password', 'pass',
 								'--db_name', 'opencart',
@@ -73,6 +74,7 @@ function usage() {
 
 function get_options($argv) {
 	$defaults = array(
+		'db_driver' => 'mysqli',
 		'db_host' => 'localhost',
 		'db_name' => 'opencart',
 		'db_prefix' => '',
@@ -95,6 +97,7 @@ function get_options($argv) {
 
 function valid($options) {
 	$required = array(
+		'db_driver',
 		'db_host',
 		'db_user',
 		'db_password',
@@ -207,7 +210,7 @@ function setup_mysql($dbdata) {
 	global $loader, $registry;
 	$loader->model('install');
 	$model = $registry->get('model_install');
-	$model->mysql($dbdata);
+	$model->database($dbdata);
 }
 
 

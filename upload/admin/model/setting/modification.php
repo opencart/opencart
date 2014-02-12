@@ -22,7 +22,7 @@ class ModelSettingModification extends Model {
 		return $query->row;
 	}
 			
-	public function getModifications() {
+	public function getModifications($data=array()) {
 		$sql = "SELECT * FROM " . DB_PREFIX . "modification";
 								
 		$sort_data = array(

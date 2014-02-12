@@ -90,9 +90,8 @@ class ControllerStep3 extends Controller {
 		$data['text_finished'] = $this->language->get('text_finished');	
 		$data['text_db_connection'] = $this->language->get('text_db_connection');	
 		$data['text_db_administration'] = $this->language->get('text_db_administration');
-		$data['text_mysqli'] = $this->language->get('text_mysqli');
 		$data['text_mysql'] = $this->language->get('text_mysql');
-		$data['text_mpdo'] = $this->language->get('text_mpdo');
+		$data['text_pgsql'] = $this->language->get('text_pgsql');
 
 		$data['entry_db_driver'] = $this->language->get('entry_db_driver');
 		$data['entry_db_hostname'] = $this->language->get('entry_db_hostname');
@@ -158,7 +157,9 @@ class ControllerStep3 extends Controller {
 		$data['action'] = $this->url->link('step_3');
 
 		if (isset($this->request->post['db_driver'])) {
-			$data['db_driver'] = $this->request->post['db_driver'];
+			$search = array('mysqli', 'mpdo.mysql', 'postgre', 'mpdo.pgsql');
+			$replace = array('mysql', 'mysql', 'postgres', 'postgres');
+			$data['db_driver'] = str_replace($search, $replace, $this->request->post['db_driver'] );
 		} else {
 			$data['db_driver'] = '';
 		}
@@ -211,9 +212,19 @@ class ControllerStep3 extends Controller {
 			$data['email'] = '';
 		}
 
-		$data['mysqli'] = extension_loaded('mysqli');
-		$data['mysql'] = extension_loaded('mysql');
-		$data['pdo'] = extension_loaded('pdo');
+		$data['has_mysql_drivers'] = extension_loaded('mysqli') || extension_loaded('mysql');
+		$data['has_pg_drivers'] = extension_loaded('pgsql');
+
+		$data['mpdo'] = extension_loaded('pdo');
+		if ($data['mpdo']) {
+			$availablePDODrivers = PDO::getAvailableDrivers();
+			if (!empty($availablePDODrivers)) {
+				$data['has_mysql_drivers'] = $data['has_mysql_drivers'] || in_array('mysql', $availablePDODrivers);
+				$data['has_pg_drivers'] = $data['has_pg_drivers'] || in_array('pgsql', $availablePDODrivers);
+			} else {
+				$data['mpdo'] = false;
+			}
+		}
 
 		$data['back'] = $this->url->link('step_2');
 
@@ -240,27 +251,7 @@ class ControllerStep3 extends Controller {
 			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
 		}
 
-		if ($this->request->post['db_driver'] == 'mysql') {
-			if (!$connection = @mysql_connect($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'])) {
-				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
-			} else {
-				if (!@mysql_select_db($this->request->post['db_database'], $connection)) {
-					$this->error['warning'] = 'Error: Database does not exist!';
-				}
-
-				mysql_close($connection);
-			}
-		}
-
-		if ($this->request->post['db_driver'] == 'mysqli') {
-			$connection = new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database']);
-
-			if (mysqli_connect_error()) {
-				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
-			} else {
-				$connection->close();
-			}
-		}
+		$this->checkDatabaseConnection();
 
 		if (!$this->request->post['username']) {
 			$this->error['username'] = 'Username required!';
@@ -283,5 +274,105 @@ class ControllerStep3 extends Controller {
 		}	
 
 		return !$this->error;
+	}
+
+	protected function checkDatabaseConnection()
+	{
+		$availablePDODrivers = array();
+		if (extension_loaded('pdo')) {
+			$availablePDODrivers = PDO::getAvailableDrivers();
+		}
+
+		if ($this->request->post['db_driver'] == 'mysql') {
+			if (in_array('mysql', $availablePDODrivers)) {
+				$this->checkPDOConnection('mysql');
+			} else {
+				$this->checkMySQLConnection();
+			}
+		} elseif ($this->request->post['db_driver'] == 'postgres') {
+			if (in_array('pgsql', $availablePDODrivers)) {
+				$this->checkPDOConnection('pgsql');
+			} else {
+				$this->checkPostreSQLConnection();
+			}
+		} else {
+			$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+		}
+	}
+
+	protected function checkPDOConnection($dsnPrefix)
+	{
+		try {
+			$this->request->post['db_driver'] = 'mpdo.' . $dsnPrefix;
+			list($db, $host, $user, $pass) = $this->getConnectionParams();
+			$dsn = sprintf("%s:host=%s;dbname=%s", $dsnPrefix, $host, $db);
+			$conn = new PDO($dsn, $user, $pass);
+		} catch (PDOException $e) {
+			$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username, password and database name are correct!';
+		}
+
+		$conn = null;
+	}
+
+	protected function checkMySQLConnection()
+	{
+		$mysqli = extension_loaded('mysqli');
+		$mysql = extension_loaded('mysql');
+
+		if ($mysqli) {
+			$driver = 'mysqli';
+		} elseif ($mysql) {
+			$driver = 'mysql';
+		} else {
+			$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password are correct!';
+			return;
+		}
+
+		$this->request->post['db_driver'] = $driver;
+		list($db, $host, $user, $pass) = $this->getConnectionParams();
+		$functions = array(
+			'connect' => sprintf("%s_connect", $driver),
+			'select_db' => sprintf("%s_select_db", $driver),
+			'close' => sprintf("%s_close", $driver)
+		);
+
+		$link = @call_user_func_array($functions['connect'], array($host, $user, $pass));
+		if ($link) {
+			if (!call_user_func_array($functions['select_db'], array($db, $link))) {
+				$this->error['warning'] = 'Error: Database does not exist!';
+			}
+			call_user_func($functions['close'], $link);
+			return;
+		}
+
+		$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password are correct!';
+	}
+
+	protected function checkPostgreSQLConnection()
+	{
+		if (!extension_loaded('pgsql')) {
+			$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password are correct!';
+		}
+
+		$this->request->post['db_driver'] = 'postgre';
+		list($db, $host, $user, $pass) = $this->getConnectionParams();
+		$connectionString = sprintf("host=%s dbname=%s user=%s password=%s", $host, $db, $user, $pass);
+		$link = pg_connect($connectionString);
+
+		if (!$link) {
+			$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username, password and database name are correct!';
+		}
+
+		pg_close($link);
+	}
+
+	protected function getConnectionParams()
+	{
+		return array(
+			$this->request->post['db_database'],
+			$this->request->post['db_hostname'],
+			$this->request->post['db_username'],
+			$this->request->post['db_password']
+		);
 	}
 }

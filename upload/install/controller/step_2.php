@@ -17,6 +17,7 @@ class ControllerStep2 extends Controller {
 		$data['text_finished'] = $this->language->get('text_finished');	
 		$data['text_install_php'] = $this->language->get('text_install_php');
 		$data['text_install_extension'] = $this->language->get('text_install_extension');
+		$data['text_install_db'] = $this->language->get('text_install_db');
 		$data['text_install_file'] = $this->language->get('text_install_file');
 		$data['text_install_directory'] = $this->language->get('text_install_directory');
 		$data['text_setting'] = $this->language->get('text_setting');
@@ -37,7 +38,11 @@ class ControllerStep2 extends Controller {
 		$data['text_upload'] = $this->language->get('text_upload');
 		$data['text_session'] = $this->language->get('text_session');
 		$data['text_global'] = $this->language->get('text_global');
+		$data['text_database_driver'] = $this->language->get('text_database_driver');
+		$data['text_mysqli'] = $this->language->get('text_mysqli');
 		$data['text_mysql'] = $this->language->get('text_mysql');
+		$data['text_mpdo'] = $this->language->get('text_mpdo');
+		$data['text_pgsql'] = $this->language->get('text_pgsql');
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
 		$data['text_mcrypt'] = $this->language->get('text_mcrypt');
@@ -60,11 +65,24 @@ class ControllerStep2 extends Controller {
 		$data['file_uploads'] = ini_get('file_uploads');
 		$data['session_auto_start'] = ini_get('session_auto_start');
 		
-		$data['mysql'] = extension_loaded('mysql');
 		$data['gd'] = extension_loaded('gd');
 		$data['curl'] = extension_loaded('curl');
 		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
 		$data['zlib'] = extension_loaded('zlib');
+
+		$data['has_mysql_drivers'] = extension_loaded('mysqli') || extension_loaded('mysql');
+		$data['has_pg_drivers'] = extension_loaded('pgsql');
+
+		$data['mpdo'] = extension_loaded('pdo');
+		if ($data['mpdo']) {
+			$availablePDODrivers = PDO::getAvailableDrivers();
+			if (!empty($availablePDODrivers)) {
+				$data['has_mysql_drivers'] = $data['has_mysql_drivers'] || in_array('mysql', $availablePDODrivers);
+				$data['has_pg_drivers'] = $data['has_pg_drivers'] || in_array('pgsql', $availablePDODrivers);
+			} else {
+				$data['mpdo'] = false;
+			}
+		}
 
 		$data['config_catalog'] = DIR_OPENCART . 'config.php';
 		$data['config_admin'] = DIR_OPENCART . 'admin/config.php';
@@ -97,9 +115,13 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: OpenCart will not work with session.auto_start enabled!';
 		}
 		
-		if (!extension_loaded('mysql')) {
-			$this->error['warning'] = 'Warning: MySQL extension needs to be loaded for OpenCart to work!';
+		$availableDrivers = array_filter(array('mysqli', 'mysql', 'pdo', 'pgsql'), 'extension_loaded');
+		if (empty($availableDrivers) ||
+			(count($availableDrivers) == 1 && $availableDrivers[0] == 'pdo' && empty(PDO::getAvailableDrivers()))
+		) {
+			$this->error['warning'] = 'Warning: A useable database driver needs to be loaded for OpenCart to work!';
 		}
+			
 				
 		if (!extension_loaded('gd')) {
 			$this->error['warning'] = 'Warning: GD extension needs to be loaded for OpenCart to work!';

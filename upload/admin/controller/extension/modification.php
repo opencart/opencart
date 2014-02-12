@@ -61,7 +61,9 @@ class ControllerExtensionModification extends Controller {
 			$results = $this->model_setting_modification->getModifications();
 
 			foreach ($results as $result) {
-				$this->modification->addModification($result['code']);
+				if ($result['status']) {
+					$this->modification->addModification($result['code']);
+				}
 			}
 
 			$this->modification->write();

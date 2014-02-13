@@ -77,7 +77,7 @@ function get_options($argv) {
 	$defaults = array(
 		'db_hostname' => 'localhost',
 		'db_database' => 'opencart',
-		'db_prefix' => '',
+		'db_prefix' => 'oc_',
 		'db_driver' => 'mysqli',
 		'username' => 'admin',
 		'agree_tnc' => 'no',

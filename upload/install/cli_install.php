@@ -264,7 +264,7 @@ function write_config_files($options) {
 function dir_permissions() {
 	$dirs = array(
 		DIR_OPENCART . 'image/',
-		DIR_OPENCART . 'download/',
+		DIR_SYSTEM . 'download/',
 		DIR_SYSTEM . 'cache/',
 		DIR_SYSTEM . 'logs/',
 	);

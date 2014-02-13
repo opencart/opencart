@@ -9,10 +9,10 @@
 // Usage:
 //
 //   cd install
-//   php cli_install.php install --db_host localhost \
-//                               --db_user root \
+//   php cli_install.php install --db_hostname localhost \
+//                               --db_username root \
 //                               --db_password pass \
-//                               --db_name opencart \
+//                               --db_database opencart \
 //                               --db_driver mysqli \
 //                               --username admin \
 //                               --password admin \
@@ -59,10 +59,10 @@ function usage() {
 	echo "Usage:\n";
 	echo "======\n";
 	echo "\n";
-	$options = implode(" ", array('--db_host', 'localhost',
-								  '--db_user', 'root',
+	$options = implode(" ", array('--db_hostname', 'localhost',
+								  '--db_username', 'root',
 								  '--db_password', 'pass',
-								  '--db_name', 'opencart',
+								  '--db_database', 'opencart',
 								  '--db_driver', 'mysqli',
 								  '--username', 'admin',
 								  '--password', 'admin',
@@ -75,8 +75,8 @@ function usage() {
 
 function get_options($argv) {
 	$defaults = array(
-		'db_host' => 'localhost',
-		'db_name' => 'opencart',
+		'db_hostname' => 'localhost',
+		'db_database' => 'opencart',
 		'db_prefix' => '',
         'db_driver' => 'mysqli',
 		'username' => 'admin',
@@ -98,10 +98,10 @@ function get_options($argv) {
 
 function valid($options) {
 	$required = array(
-		'db_host',
-		'db_user',
+		'db_hostname',
+		'db_username',
 		'db_password',
-		'db_name',
+		'db_database',
 		'db_prefix',
 		'username',
 		'password',
@@ -207,10 +207,10 @@ function write_config_files($options) {
 
 	$output .= '// DB' . "\n";
 	$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
-	$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_host']) . '\');' . "\n";
-	$output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_user']) . '\');' . "\n";
+	$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_hostname']) . '\');' . "\n";
+	$output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_username']) . '\');' . "\n";
 	$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($options['db_password']) . '\');' . "\n";
-	$output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_name']) . '\');' . "\n";
+	$output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_database']) . '\');' . "\n";
 	$output .= 'define(\'DB_PREFIX\', \'' . addslashes($options['db_prefix']) . '\');' . "\n";
 	$output .= '?>';
 
@@ -246,10 +246,10 @@ function write_config_files($options) {
 
 	$output .= '// DB' . "\n";
 	$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
-	$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_host']) . '\');' . "\n";
-	$output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_user']) . '\');' . "\n";
+	$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_hostname']) . '\');' . "\n";
+	$output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_username']) . '\');' . "\n";
 	$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($options['db_password']) . '\');' . "\n";
-	$output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_name']) . '\');' . "\n";
+	$output .= 'define(\'DB_DATABASE\', \'' . addslashes($options['db_database']) . '\');' . "\n";
 	$output .= 'define(\'DB_PREFIX\', \'' . addslashes($options['db_prefix']) . '\');' . "\n";
 	$output .= '?>';
 

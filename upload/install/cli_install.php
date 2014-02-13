@@ -167,38 +167,6 @@ function check_requirements() {
 		$error = 'Warning: ZLIB extension needs to be loaded for OpenCart to work!';
 	}
 
-	if (!is_writable(DIR_OPENCART . 'config.php')) {
-		$error = 'Warning: config.php needs to be writable for OpenCart to be installed!';
-	}
-
-	if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-		$error = 'Warning: admin/config.php needs to be writable for OpenCart to be installed!';
-	}
-
-	if (!is_writable(DIR_SYSTEM . 'cache')) {
-		$error = 'Warning: Cache directory needs to be writable for OpenCart to work!';
-	}
-
-	if (!is_writable(DIR_SYSTEM . 'logs')) {
-		$error = 'Warning: Logs directory needs to be writable for OpenCart to work!';
-	}
-
-	if (!is_writable(DIR_OPENCART . 'image')) {
-		$error = 'Warning: Image directory needs to be writable for OpenCart to work!';
-	}
-
-	if (!is_writable(DIR_OPENCART . 'image/cache')) {
-		$error = 'Warning: Image cache directory needs to be writable for OpenCart to work!';
-	}
-
-	if (!is_writable(DIR_OPENCART . 'image/catalog')) {
-		$error = 'Warning: Image catalog directory needs to be writable for OpenCart to work!';
-	}
-
-	if (!is_writable(DIR_OPENCART . 'download')) {
-		$error = 'Warning: Download directory needs to be writable for OpenCart to work!';
-	}
-
 	return array($error === null, $error);
 }
 

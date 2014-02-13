@@ -21,6 +21,7 @@ class ModelPaymentNOCHEX extends Model {
       		$method_data = array( 
         		'code'       => 'nochex',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('nochex_sort_order')
       		);
     	}

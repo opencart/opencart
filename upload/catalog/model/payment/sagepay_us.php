@@ -21,6 +21,7 @@ class ModelPaymentSagePayUS extends Model {
       		$method_data = array( 
         		'code'       => 'sagepay_us',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('sagepay_us_sort_order')
       		);
     	}

@@ -46,7 +46,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 					
 					if ($method) {
 						if ($cart_has_recurring > 0) {
-							if (method_exists($this->{'model_payment_' . $result['code']},'recurringPayments')) {
+							if (method_exists($this->{'model_payment_' . $result['code']}, 'recurringPayments')) {
 								if ($this->{'model_payment_' . $result['code']}->recurringPayments() == true) {
 									$method_data[$result['code']] = $method;
 								}
@@ -67,7 +67,6 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			array_multisort($sort_order, SORT_ASC, $method_data);			
 			
 			$this->session->data['payment_methods'] = $method_data;	
-			
 		}			
 		
 		$data['text_payment_method'] = $this->language->get('text_payment_method');
@@ -100,6 +99,8 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			$data['comment'] = '';
 		}
 		
+		$data['scripts'] = $this->document->getScripts();
+				
 		if ($this->config->get('config_checkout_id')) {
 			$this->load->model('catalog/information');
 			

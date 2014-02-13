@@ -21,6 +21,7 @@ class ModelPaymentMoneybookers extends Model {
       		$method_data = array( 
         		'code'       => 'moneybookers',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('moneybookers_sort_order')
       		);
     	}

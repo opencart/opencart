@@ -21,6 +21,7 @@ class ModelPaymentPPProIframe extends Model {
 			$method_data = array(
 				'code'       => 'pp_pro_iframe',
 				'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('pp_pro_iframe_sort_order')
 			);
 		}

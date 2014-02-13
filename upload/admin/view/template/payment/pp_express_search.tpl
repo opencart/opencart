@@ -30,7 +30,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label"><?php echo $entry_transaction_type; ?></label>
             <div class="col-sm-10">
-              <select name="status" class="form-control">
+              <select name="transaction_class" class="form-control">
                 <option value="All"><?php echo $entry_trans_all;?></option>
                 <option value="Sent"><?php echo $entry_trans_sent;?></option>
                 <option value="Received"><?php echo $entry_trans_received;?></option>

@@ -21,6 +21,7 @@ class ModelPaymentPerpetualPayments extends Model {
       		$method_data = array( 
         		'code'       => 'perpetual_payments',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('perpetual_payments_sort_order')
       		);
     	}

@@ -88,6 +88,7 @@ class ControllerCheckoutCart extends Controller {
       			$data['error_warning'] = $this->language->get('error_stock');		
 			} elseif (isset($this->session->data['error'])) {
 				$data['error_warning'] = $this->session->data['error'];
+				
 				unset($this->session->data['error']);
 			} else {
 				$data['error_warning'] = '';
@@ -350,7 +351,7 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$quantity = 1;
 			}
-														
+ 														
 			if (isset($this->request->post['option'])) {
 				$option = array_filter($this->request->post['option']);
 			} else {

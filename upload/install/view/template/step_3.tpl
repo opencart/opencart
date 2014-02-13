@@ -22,13 +22,6 @@
                 <option value="mysqli"><?php echo $text_mysqli; ?></option>
                 <?php } ?>
                 <?php } ?>
-                <?php if ($mysql) { ?>
-                <?php if ($db_driver == 'mysql') { ?>
-                <option value="mysql" selected="selected"><?php echo $text_mysql; ?></option>
-                <?php } else { ?>
-                <option value="mysql"><?php echo $text_mysql; ?></option>
-                <?php } ?>
-                <?php } ?>
                 <?php if ($pdo) { ?>
                 <?php if ($db_driver == 'mpdo') { ?>
                 <option value="mpdo" selected="selected"><?php echo $text_mpdo; ?></option>
@@ -118,11 +111,11 @@
       </form>
     </div>
     <div class="col-sm-3">
-      <ul>
-        <li><?php echo $text_license; ?></li>
-        <li><?php echo $text_installation; ?></li>
-        <li><b><?php echo $text_configuration; ?></b></li>
-        <li><?php echo $text_finished; ?></li>
+      <ul class="list-group">
+        <li class="list-group-item"><?php echo $text_license; ?></li>
+        <li class="list-group-item"><?php echo $text_installation; ?></li>
+        <li class="list-group-item"><b><?php echo $text_configuration; ?></b></li>
+        <li class="list-group-item"><?php echo $text_finished; ?></li>
       </ul>
     </div>
   </div>

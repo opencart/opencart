@@ -21,6 +21,7 @@ class ModelPaymentCOD extends Model {
       		$method_data = array( 
         		'code'       => 'cod',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('cod_sort_order')
       		);
     	}

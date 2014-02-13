@@ -93,18 +93,13 @@
         <div class="panel-heading">
           <div class="pull-right">
             <div class="btn-group" data-toggle="buttons">
-              <label class="btn btn-default active">
-                <input type="radio" name="range" value="day" />
-                <?php echo $text_day; ?></label>
-              <label class="btn btn-default">
-                <input type="radio" name="range" value="week" />
-                <?php echo $text_week; ?></label>
-              <label class="btn btn-default">
-                <input type="radio" name="range" value="month" />
-                <?php echo $text_month; ?></label>
-              <label class="btn btn-default">
-                <input type="radio" name="range" value="year" />
-                <?php echo $text_year; ?></label>
+              <button type="button" class="btn dropdown-toggle" data-toggle="dropdown"> <i class="fa fa-calendar"></i></button>
+              <ul id="range" class="dropdown-menu dropdown-menu-right">
+                <li><a href="day"><?php echo $text_day; ?></a></li>
+                <li><a href="week"><?php echo $text_week; ?></a></li>
+                <li class="active"><a href="month"><?php echo $text_month; ?></a></li>
+                <li><a href="year"><?php echo $text_year; ?></a></li>
+              </ul>
             </div>
           </div>
           <h1 class="panel-title"><i class="fa fa-bar-chart-o fa-lg"></i> <?php echo $text_analytics; ?></h1>
@@ -187,11 +182,17 @@
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.js"></script> 
 <script type="text/javascript" src="view/javascript/jquery/flot/jquery.flot.resize.min.js"></script> 
 <script type="text/javascript"><!--
-$('input[name=\'range\']').on('change', function() {
+$('#range a').on('click', function(e) {
+	e.preventDefault();
+	
+	$(this).parent().parent().find('li').removeClass('active');
+	
+	$(this).parent().addClass('active');
+	
 	// Sales
 	$.ajax({
 		type: 'get',
-		url: 'index.php?route=common/dashboard/sale&token=<?php echo $token; ?>&range=' + this.value,
+		url: 'index.php?route=common/dashboard/sale&token=<?php echo $token; ?>&range=' + $(this).attr('href'),
 		dataType: 'json',
 		success: function(json) {
 			var option = {	
@@ -242,7 +243,7 @@ $('input[name=\'range\']').on('change', function() {
 	});
 });
 
-$('.active input[name=\'range\']').trigger('change');
+$('#range .active a').trigger('click');
 
 function online() {
 	$.ajax({

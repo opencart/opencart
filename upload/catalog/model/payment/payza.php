@@ -21,6 +21,7 @@ class ModelPaymentPayza extends Model {
       		$method_data = array( 
         		'code'       => 'payza',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('payza_sort_order')
       		);
     	}

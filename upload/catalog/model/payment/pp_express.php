@@ -99,6 +99,7 @@ class ModelPaymentPPExpress extends Model {
 			$method_data = array(
 				'code'       => 'pp_express',
 				'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('pp_express_sort_order')
 			);
 		}

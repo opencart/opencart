@@ -1,4 +1,3 @@
-<?php if ($status) { ?>
 <div class="panel panel-default">
   <div class="panel-heading">
     <h4 class="panel-title"><a href="#collapse-coupon" class="accordion-toggle" data-toggle="collapse" data-parent="#accordion"><?php echo $heading_title; ?> <i class="fa fa-caret-down"></i></a></h4>
@@ -16,7 +15,7 @@ $('#button-coupon').on('click', function() {
 	$.ajax({
 		url: 'index.php?route=module/coupon/coupon',
 		type: 'post',
-		data: 'coupon=' + encodeURIComponent($('input[name=\'coupon\']').val()) + '&redirect=<?php echo $redirect; ?>',
+		data: 'coupon=' + encodeURIComponent($('input[name=\'coupon\']').val()),
 		dataType: 'json',    
 		beforeSend: function() {
 			$('#button-coupon').button('loading');
@@ -43,4 +42,3 @@ $('#button-coupon').on('click', function() {
     </div>
   </div>
 </div>
-<?php } ?>

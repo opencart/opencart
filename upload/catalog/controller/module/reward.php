@@ -1,8 +1,6 @@
 <?php
 class ControllerModuleReward extends Controller {
 	public function index() {
-		$this->load->language('module/reward');
-					
 		$points = $this->customer->getRewardPoints();
 		
 		$points_total = 0;
@@ -12,30 +10,30 @@ class ControllerModuleReward extends Controller {
 				$points_total += $product['points'];
 			}
 		}
-					
-		$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
 		
-		$data['text_loading'] = $this->language->get('text_loading');
-	
-		$data['entry_reward'] = sprintf($this->language->get('entry_reward'), $points_total);
+		if ($points && $points_total && $this->config->get('reward_status')) {
+			$this->load->language('module/reward');			
+			
+			$data['heading_title'] = sprintf($this->language->get('heading_title'), $points);
+			
+			$data['text_loading'] = $this->language->get('text_loading');
 		
-		$data['button_reward'] = $this->language->get('button_reward');
-		
-		$data['status'] = ($points && $points_total && $this->config->get('reward_status'));
-
-		$data['redirect'] = $this->request->get['route'];
-		
-		if (isset($this->session->data['reward'])) {
-			$data['reward'] = $this->session->data['reward'];
-		} else {
-			$data['reward'] = '';
+			$data['entry_reward'] = sprintf($this->language->get('entry_reward'), $points_total);
+			
+			$data['button_reward'] = $this->language->get('button_reward');
+			
+			if (isset($this->session->data['reward'])) {
+				$data['reward'] = $this->session->data['reward'];
+			} else {
+				$data['reward'] = '';
+			}
+						
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/reward.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/module/reward.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/reward.tpl', $data);
+			}
 		}
-					
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/reward.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/reward.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/reward.tpl', $data);
-		}		
 	}
 	
 	public function reward() {

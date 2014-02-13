@@ -42,30 +42,30 @@ class ControllerCheckoutManual extends Controller {
 					$this->customer->login($customer_info['email'], '', true);
 					$this->cart->clear();
 				} else {
-					$json['error']['customer'] = $this->language->get('error_customer');
+					$json['error']['warning'] = $this->language->get('error_customer');
 				}
 			} else {
 				// Customer Group
 				$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
 			}
 
-			if ((utf8_strlen($this->request->post['firstname']) < 1) || (utf8_strlen($this->request->post['firstname']) > 32)) {
+			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 				$json['error']['customer']['firstname'] = $this->language->get('error_firstname');
 			}
 	
-			if ((utf8_strlen($this->request->post['lastname']) < 1) || (utf8_strlen($this->request->post['lastname']) > 32)) {
-				$json['error']['lastname'] = $this->language->get('error_lastname');
+			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+				$json['error']['customer']['lastname'] = $this->language->get('error_lastname');
 			}
 	
 			if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
-				$json['error']['email'] = $this->language->get('error_email');
+				$json['error']['customer']['email'] = $this->language->get('error_email');
 			}
 			
 			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-				$json['error']['telephone'] = $this->language->get('error_telephone');
+				$json['error']['customer']['telephone'] = $this->language->get('error_telephone');
 			}
 			
-			// Product
+			// Products
 			$this->load->model('catalog/product');
 			
 			if (isset($this->request->post['order_product'])) {
@@ -92,6 +92,7 @@ class ControllerCheckoutManual extends Controller {
 				}
 			}
 			
+			// Add new product
 			if (isset($this->request->post['product_id'])) {
 				$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
 
@@ -487,8 +488,6 @@ class ControllerCheckoutManual extends Controller {
 					}
 				}
 			}
-			
-			
 			 		
 			// Payment address
 			if ((utf8_strlen($this->request->post['payment_firstname']) < 1) || (utf8_strlen($this->request->post['payment_firstname']) > 32)) {
@@ -617,7 +616,7 @@ class ControllerCheckoutManual extends Controller {
 				}
 			}
 
-			// Order total calculation to be fed back to the admin
+			// Order total calculation to be feed back to the admin
 			$json['order_total'] = array();					
 			$total = 0;
 			$taxes = $this->cart->getTaxes();
@@ -654,7 +653,31 @@ class ControllerCheckoutManual extends Controller {
 				$json['error']['warning'] = $this->language->get('error_warning');
 			}
 			
-			// Reset everything
+			// Add the coupon, vouchers and reward points back
+			if (isset($this->request->get['order_id'])) {
+				$this->load->model('account/order');
+				
+				$order_info = $this->model_account_order->getOrder($this->request->get['order_id']);
+				
+				if ($order_info) {
+					$order_totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
+					
+					foreach ($order_totals as $order_total) {
+						$this->load->model('total/' . $order_total['code']);
+						
+						if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
+							$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
+						}
+					}
+				}
+			}
+			
+			
+			if () {
+				
+			}
+			
+			// Reset everything			
 			$this->cart->clear();
 			$this->customer->logout();
 			

@@ -21,6 +21,7 @@ class ModelPaymentPayPoint extends Model {
       		$method_data = array( 
         		'code'       => 'paypoint',
         		'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('paypoint_sort_order')
       		);
     	}

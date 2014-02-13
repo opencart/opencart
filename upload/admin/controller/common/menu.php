@@ -22,6 +22,8 @@ class ControllerCommonMenu extends Controller {
 		$data['text_customer_ban_ip'] = $this->language->get('text_customer_ban_ip');
 		$data['text_custom_field'] = $this->language->get('text_custom_field');
 		$data['text_sale'] = $this->language->get('text_sale');
+		$data['text_paypal'] = $this->language->get('text_paypal');
+		$data['text_paypal_search'] = $this->language->get('text_paypal_search');
 		$data['text_design'] = $this->language->get('text_design');
 		$data['text_download'] = $this->language->get('text_download');
 		$data['text_error_log'] = $this->language->get('text_error_log');
@@ -131,6 +133,7 @@ class ControllerCommonMenu extends Controller {
 			$data['order'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'], 'SSL');
 			$data['order_status'] = $this->url->link('localisation/order_status', 'token=' . $this->session->data['token'], 'SSL');
 			$data['payment'] = $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL');
+			$data['paypal_search'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
 			$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL');
 			$data['profile'] = $this->url->link('user/user/update', 'token=' . $this->session->data['token'] . '&user_id=' . $this->user->getId(), 'SSL');
 			$data['report_sale_order'] = $this->url->link('report/sale_order', 'token=' . $this->session->data['token'], 'SSL');

@@ -94,12 +94,4 @@ class ModelCheckoutCoupon extends Model {
 			);
 		}
 	}
-	
-	public function redeem($coupon_id, $order_id, $customer_id, $amount) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "coupon_history` SET coupon_id = '" . (int)$coupon_id . "', order_id = '" . (int)$order_id . "', customer_id = '" . (int)$customer_id . "', amount = '" . (float)$amount . "', date_added = NOW()");
-	}
-	
-	public function clear($order_id) {
-		$this->db->query("DERLETE FROM `" . DB_PREFIX . "coupon_history` WHERE order_id = '" . (int)$order_id . "'");
-	}
 }

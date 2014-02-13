@@ -202,11 +202,12 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
 	$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
 	$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
-	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_SYSTEM . 'download/\');' . "\n";
+	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
+    $output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
 	$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n\n";
 
 	$output .= '// DB' . "\n";
-	$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
+	$output .= 'define(\'DB_DRIVER\', \'' . addslashes($options['db_driver']) . '\');' . "\n";
 	$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_hostname']) . '\');' . "\n";
 	$output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_username']) . '\');' . "\n";
 	$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($options['db_password']) . '\');' . "\n";
@@ -240,12 +241,13 @@ function write_config_files($options) {
 	$output .= 'define(\'DIR_CONFIG\', \'' . DIR_OPENCART . 'system/config/\');' . "\n";
 	$output .= 'define(\'DIR_IMAGE\', \'' . DIR_OPENCART . 'image/\');' . "\n";
 	$output .= 'define(\'DIR_CACHE\', \'' . DIR_OPENCART . 'system/cache/\');' . "\n";
-	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_SYSTEM . 'download/\');' . "\n";
+	$output .= 'define(\'DIR_DOWNLOAD\', \'' . DIR_OPENCART . 'system/download/\');' . "\n";
 	$output .= 'define(\'DIR_LOGS\', \'' . DIR_OPENCART . 'system/logs/\');' . "\n";
+	$output .= 'define(\'DIR_MODIFICATION\', \'' . DIR_OPENCART. 'system/modification/\');' . "\n";
 	$output .= 'define(\'DIR_CATALOG\', \'' . DIR_OPENCART . 'catalog/\');' . "\n\n";
 
 	$output .= '// DB' . "\n";
-	$output .= 'define(\'DB_DRIVER\', \'mysql\');' . "\n";
+	$output .= 'define(\'DB_DRIVER\', \'' . addslashes($options['db_driver']) . '\');' . "\n";
 	$output .= 'define(\'DB_HOSTNAME\', \'' . addslashes($options['db_hostname']) . '\');' . "\n";
 	$output .= 'define(\'DB_USERNAME\', \'' . addslashes($options['db_username']) . '\');' . "\n";
 	$output .= 'define(\'DB_PASSWORD\', \'' . addslashes($options['db_password']) . '\');' . "\n";
@@ -264,7 +266,7 @@ function write_config_files($options) {
 function dir_permissions() {
 	$dirs = array(
 		DIR_OPENCART . 'image/',
-		DIR_SYSTEM . 'download/',
+		DIR_OPENCART . 'system/download/',
 		DIR_SYSTEM . 'cache/',
 		DIR_SYSTEM . 'logs/',
 	);

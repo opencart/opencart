@@ -13,6 +13,7 @@
 //                               --db_user root \
 //                               --db_password pass \
 //                               --db_name opencart \
+//                               --db_driver mysqli \
 //                               --username admin \
 //                               --password admin \
 //                               --email youremail@example.com \
@@ -62,6 +63,7 @@ function usage() {
 								  '--db_user', 'root',
 								  '--db_password', 'pass',
 								  '--db_name', 'opencart',
+								  '--db_driver', 'mysqli',
 								  '--username', 'admin',
 								  '--password', 'admin',
 								  '--email', 'youremail@example.com',

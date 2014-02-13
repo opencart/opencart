@@ -53,7 +53,9 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label class="control-label" for="input-date-created"><?php echo $entry_date_created; ?></label>
-              <input type="date" name="filter_created" value="<?php echo $filter_created; ?>" id="input-date-created" class="form-control" />
+              <div class="input-group date"><input type="text" name="filter_created" value="<?php echo $filter_created; ?>" placeholder="<?php echo $entry_date_created; ?>" data-format="YYYY-MM-DD" id="input-date-created" class="form-control" /><span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span></div>
             </div>
           </div>
         </div>

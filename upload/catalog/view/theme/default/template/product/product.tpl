@@ -275,7 +275,7 @@
               <div class="input-group datetime">
                 <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
             </div>
             <?php } ?>
@@ -285,7 +285,7 @@
               <div class="input-group time">
                 <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" data-format="HH:mm" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
                 <span class="input-group-btn">
-                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                 </span></div>
             </div>
             <?php } ?>
@@ -469,19 +469,17 @@ $('#button-cart').on('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$(document).ready(function() {
-	$('.date').datetimepicker({
-		pickTime: false
-	});
-	
-	$('.datetime').datetimepicker({
-		pickDate: true,
-    	pickTime: true
-	});
-	
-	$('.time').datetimepicker({
-		pickDate: false
-	});
+$('.date').datetimepicker({
+	pickTime: false
+});
+
+$('.datetime').datetimepicker({
+	pickDate: true,
+	pickTime: true
+});
+
+$('.time').datetimepicker({
+	pickDate: false
 });
 		
 $('button[id^=\'button-upload\']').on('click', function() {

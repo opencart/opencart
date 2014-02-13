@@ -152,13 +152,17 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
               <div class="col-sm-3">
-                <input type="date" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" id="input-date-start" class="form-control" />
+                <div class="input-group date"><input type="text" name="date_start" value="<?php echo $date_start; ?>" placeholder="<?php echo $entry_date_start; ?>" data-format="YYYY-MM-DD" id="input-date-start" class="form-control" /><span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span></div>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
               <div class="col-sm-3">
-                <input type="date" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" id="input-date-end" class="form-control" />
+                <div class="input-group date"><input type="text" name="date_end" value="<?php echo $date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-format="YYYY-MM-DD" id="input-date-end" class="form-control" /><span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span></div>
               </div>
             </div>
             <div class="form-group">
@@ -267,4 +271,9 @@ $('#history').delegate('.pagination a', 'click', function(e) {
 $('#history').load('index.php?route=marketing/coupon/history&token=<?php echo $token; ?>&coupon_id=<?php echo $coupon_id; ?>');
 //--></script>
 <?php } ?>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
+//--></script>
 <?php echo $footer; ?>

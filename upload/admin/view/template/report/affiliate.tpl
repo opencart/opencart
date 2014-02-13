@@ -15,13 +15,17 @@
           <div class="col-sm-6">
             <div class="form-group">
               <label class="control-label" for="input-date-start"><?php echo $entry_date_start; ?></label>
-              <input type="date" name="filter_date_start" value="<?php echo $filter_date_start; ?>" id="input-date-start" class="form-control" />
+              <div class="input-group date"><input type="text" name="filter_date_start" value="<?php echo $filter_date_start; ?>" placeholder="<?php echo $entry_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-start" class="form-control" /><span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span></div>
             </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
               <label class="control-label" for="input-date-end"><?php echo $entry_date_end; ?></label>
-              <input type="date" name="filter_date_end" value="<?php echo $filter_date_end; ?>" id="input-date-end" class="form-control" />
+              <div class="input-group date"><input type="text" name="filter_date_end" value="<?php echo $filter_date_end; ?>" placeholder="<?php echo $entry_date_end; ?>" data-format="YYYY-MM-DD" id="input-date-end" class="form-control" /><span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span></div>
             </div>
             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
           </div>
@@ -85,6 +89,11 @@ $('#button-filter').on('click', function() {
 	}
 	
 	location = url;
+});
+//--></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
 });
 //--></script> 
 <?php echo $footer; ?>

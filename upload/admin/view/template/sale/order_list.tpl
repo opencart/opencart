@@ -65,11 +65,19 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
-              <input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" id="input-date-added" class="form-control" />
+              <div class="input-group date">
+                <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                </span></div>
             </div>
             <div class="form-group">
               <label class="control-label" for="input-date-modified"><?php echo $entry_date_modified; ?></label>
-              <input type="date" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" id="input-date-modified" class="form-control" />
+              <div class="input-group date">
+                <input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" data-format="YYYY-MM-DD" id="input-date-modified" class="form-control" />
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                </span></div>
             </div>
             <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
           </div>
@@ -217,5 +225,12 @@ $('input[name=\'filter_customer\']').autocomplete({
 		$('input[name=\'filter_customer\']').val(item['label']);
 	}	
 });
-//--></script> 
+//--></script>
+<script type="text/javascript"><!--
+$(document).ready(function() {
+	$('.date').datetimepicker({
+		pickTime: false
+	});
+});
+//--></script>
 <?php echo $footer; ?>

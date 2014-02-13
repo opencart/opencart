@@ -218,9 +218,12 @@ class ControllerProductProduct extends Controller {
 			$this->document->setDescription($product_info['meta_description']);
 			$this->document->setKeywords($product_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/product', 'product_id=' . $this->request->get['product_id']), 'canonical');
-			$this->document->addScript('catalog/view/javascript/jquery/magnific/magnific.js');
-			$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific.css');
-			
+			//$this->document->addScript('catalog/view/javascript/jquery/magnific/magnific.css');
+			//$this->document->addStyle('catalog/view/javascript/jquery/magnific/magnific.js');
+			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+			$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+			$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+						
 			$data['heading_title'] = $product_info['name'];
 			
 			$data['text_select'] = $this->language->get('text_select');
@@ -371,6 +374,7 @@ class ControllerProductProduct extends Controller {
 			}
 			
 			$data['review_status'] = $this->config->get('config_review_status');
+			
 			if ($this->config->get('config_review_guest') || $this->customer->isLogged()) {
 				$data['review_guest'] = true;
 			} else {

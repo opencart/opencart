@@ -165,9 +165,6 @@
             <?php } ?>
             <?php } ?>
           </ul>
-
-
-
           <?php } ?>
           <div id="product">
             <?php if ($options) { ?>
@@ -265,35 +262,47 @@
             <?php if ($option['type'] == 'date') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label" for="input-option<?php echo $option['product_option_id']; ?>"><?php echo $option['name']; ?></label>
-              <input type="date" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
+              <div class="input-group date">
+                <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" data-format="YYYY-MM-DD" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                </span></div>
             </div>
             <?php } ?>
             <?php if ($option['type'] == 'datetime') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label" for="input-option<?php echo $option['product_option_id']; ?>"><?php echo $option['name']; ?></label>
-              <input type="datetime-local" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
+              <div class="input-group datetime">
+                <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                </span></div>
             </div>
             <?php } ?>
             <?php if ($option['type'] == 'time') { ?>
             <div class="form-group<?php echo ($option['required'] ? ' required' : ''); ?>">
               <label class="control-label" for="input-option<?php echo $option['product_option_id']; ?>"><?php echo $option['name']; ?></label>
-              <input type="time" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
+              <div class="input-group time">
+                <input type="text" name="option[<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" data-format="HH:mm" id="input-option<?php echo $option['product_option_id']; ?>" class="form-control" />
+                <span class="input-group-btn">
+                <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                </span></div>
             </div>
             <?php } ?>
             <?php } ?>
             <?php } ?>
             <?php if ($profiles) { ?>
-              <hr>
-              <h3><?php echo $text_payment_profile ?></h3>
-              <div class="form-group required">
-                <select name="profile_id" class="form-control">
-                  <option value=""><?php echo $text_select; ?></option>
-                  <?php foreach ($profiles as $profile) { ?>
-                  <option value="<?php echo $profile['profile_id'] ?>"><?php echo $profile['name'] ?></option>
-                  <?php } ?>
-                </select>
-                <div class="help-block" id="profile-description"></div>
-              </div>
+            <hr>
+            <h3><?php echo $text_payment_profile ?></h3>
+            <div class="form-group required">
+              <select name="profile_id" class="form-control">
+                <option value=""><?php echo $text_select; ?></option>
+                <?php foreach ($profiles as $profile) { ?>
+                <option value="<?php echo $profile['profile_id'] ?>"><?php echo $profile['name'] ?></option>
+                <?php } ?>
+              </select>
+              <div class="help-block" id="profile-description"></div>
+            </div>
             <?php } ?>
             <div class="form-group">
               <label class="control-label" for="input-quantity"><?php echo $entry_qty; ?></label>
@@ -331,7 +340,6 @@
       <div class="row">
         <?php $i = 0; ?>
         <?php foreach ($products as $product) { ?>
-        
         <?php if ($column_left && $column_right) { ?>
         <?php $class = 'col-lg-6 col-md-6 col-sm-12 col-xs-12'; ?>
         <?php } elseif ($column_left || $column_right) { ?>
@@ -384,8 +392,6 @@
         <div class="clearfix visible-md"></div>
         <?php } ?>
         <?php $i++; ?>
-        
-        
         <?php } ?>
       </div>
       <?php } ?>
@@ -422,7 +428,7 @@ $('select[name="profile_id"], input[name="quantity"]').change(function(){
 		}
 	});
 });
-//--></script>
+//--></script> 
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
     $.ajax({
@@ -446,9 +452,9 @@ $('#button-cart').on('click', function() {
                     }
                 }
 
-              if (json['error']['profile']) {
-                $('select[name="profile_id"]').after('<span class="text-danger">' + json['error']['profile'] + '</span>');
-              }
+				if (json['error']['profile']) {
+					$('select[name="profile_id"]').after('<span class="text-danger">' + json['error']['profile'] + '</span>');
+				}
             } 
             
             if (json['success']) {
@@ -463,6 +469,21 @@ $('#button-cart').on('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
+$(document).ready(function() {
+	$('.date').datetimepicker({
+		pickTime: false
+	});
+	
+	$('.datetime').datetimepicker({
+		pickDate: true,
+    	pickTime: true
+	});
+	
+	$('.time').datetimepicker({
+		pickDate: false
+	});
+});
+		
 $('button[id^=\'button-upload\']').on('click', function() {
 	var node = this;
 	

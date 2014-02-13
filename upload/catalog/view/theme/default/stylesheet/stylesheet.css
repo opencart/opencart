@@ -60,7 +60,7 @@ select.form-control, textarea.form-control, input[type="text"].form-control, inp
 }
 /* Fix some bootstrap issues */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
-	display: inline !important;
+	display: inline;
 }
 
 .nav-tabs {
@@ -335,6 +335,7 @@ footer h5 {
 	overflow: auto;
 }
 .btn {
+	padding: 7px 12px;
 	font-size: 12px;
 	border: 1px solid #cccccc;
 	border-radius: 4px;
@@ -347,6 +348,7 @@ footer h5 {
 	font-size: 10.2px;
 }
 .btn-lg {
+	padding: 10px 16px;
 	font-size: 15px;
 }
 .btn-group > .btn, .btn-group > .dropdown-menu, .btn-group > .popover {
@@ -620,10 +622,12 @@ h2.price {
 .thumbnails {
 	overflow: auto;
 	clear: both;
+	list-style: none;
+	padding: 0;
+	margin: 0;
 }
 .thumbnails > li {
 	margin-left: 20px;
-	list-style:none;
 }
 .thumbnails {
 	margin-left: -20px;

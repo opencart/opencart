@@ -233,8 +233,8 @@ class ControllerCheckoutManual extends Controller {
 					$json['error']['vouchers']['to_email'] = $this->language->get('error_email');
 				}
 			
-				if (($this->request->post['amount'] < 1) || ($this->request->post['amount'] > 1000)) {
-					$json['error']['vouchers']['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format(1, false, 1), $this->currency->format(1000, false, 1) . ' ' . $this->config->get('config_currency'));
+				if (($this->request->post['amount'] < $this->config->get('config_voucher_min')) || ($this->request->post['amount'] > $this->config->get('config_voucher_max'))) {
+					$json['error']['vouchers']['amount'] = sprintf($this->language->get('error_amount'), $this->currency->format($this->config->get('config_voucher_min')), $this->currency->format($this->config->get('config_voucher_max')));
 				}
 			
 				if (!isset($json['error']['vouchers'])) { 

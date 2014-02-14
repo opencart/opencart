@@ -492,7 +492,7 @@ class ControllerMarketingCoupon extends Controller {
 		if (isset($this->request->post['date_start'])) {
 			$data['date_start'] = $this->request->post['date_start'];
 		} elseif (!empty($coupon_info)) {
-			$data['date_start'] = date('Y-m-d', strtotime($coupon_info['date_start']));
+			$data['date_start'] = ($coupon_info['date_start'] != '0000-00-00' ? $coupon_info['date_start'] : '');
 		} else {
 			$data['date_start'] = date('Y-m-d', time());
 		}
@@ -500,9 +500,9 @@ class ControllerMarketingCoupon extends Controller {
 		if (isset($this->request->post['date_end'])) {
 			$data['date_end'] = $this->request->post['date_end'];
 		} elseif (!empty($coupon_info)) {
-			$data['date_end'] = date('Y-m-d', strtotime($coupon_info['date_end']));
+			$data['date_end'] = ($coupon_info['date_end'] != '0000-00-00' ? $coupon_info['date_end'] : '');
 		} else {
-			$data['date_end'] = date('Y-m-d', time());
+			$data['date_end'] = date('Y-m-d', strtotime('+1 month'));
 		}
 
 		if (isset($this->request->post['uses_total'])) {

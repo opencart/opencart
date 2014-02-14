@@ -231,9 +231,13 @@
                 <span class="help-block"><?php echo $help_keyword; ?></span> </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-available"><?php echo $entry_date_available; ?></label>
+              <label class="col-sm-2 control-label" for="input-date-available"><?php echo $entry_date_available; ?></label>
               <div class="col-sm-3">
-                <input type="date" name="date_available" value="<?php echo $date_available; ?>" placeholder="<?php echo $entry_date_available; ?>" data-format="YYYY-MM-DD" id="input-available" class="form-control" />
+                <div class="input-group date">
+                  <input type="text" name="date_available" value="<?php echo $date_available; ?>" placeholder="<?php echo $entry_date_available; ?>" data-format="YYYY-MM-DD" id="input-date-available" class="form-control" />
+                  <span class="input-group-btn">
+                  <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                  </span></div>
               </div>
             </div>
             <div class="form-group">
@@ -502,7 +506,11 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
                       <div class="col-sm-3">
-                        <input type="date" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-format="YYYY-MM-DD" id="input-value<?php echo $option_row; ?>" class="form-control" />
+                        <div class="input-group date">
+                          <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-format="YYYY-MM-DD" id="input-value<?php echo $option_row; ?>" class="form-control" />
+                          <span class="input-group-btn">
+                          <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                          </span></div>
                       </div>
                     </div>
                     <?php } ?>
@@ -510,7 +518,11 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
                       <div class="col-sm-10">
-                        <input type="datetime-local" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" id="input-value<?php echo $option_row; ?>" class="form-control" />
+                        <div class="input-group datetime">
+                          <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-format="YYYY-MM-DD HH:mm" id="input-value<?php echo $option_row; ?>" class="form-control" />
+                          <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                          </span></div>
                       </div>
                     </div>
                     <?php } ?>
@@ -518,7 +530,11 @@
                     <div class="form-group">
                       <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
                       <div class="col-sm-10">
-                        <input type="time" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" id="input-value<?php echo $option_row; ?>" class="form-control" />
+                        <div class="input-group time">
+                          <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-format="HH:mm" id="input-value<?php echo $option_row; ?>" class="form-control" />
+                          <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                          </span></div>
                       </div>
                     </div>
                     <?php } ?>
@@ -704,8 +720,16 @@
                     <td class="text-right"><input type="text" name="product_discount[<?php echo $discount_row; ?>][quantity]" value="<?php echo $product_discount['quantity']; ?>" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>
                     <td class="text-right"><input type="text" name="product_discount[<?php echo $discount_row; ?>][priority]" value="<?php echo $product_discount['priority']; ?>" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>
                     <td class="text-right"><input type="text" name="product_discount[<?php echo $discount_row; ?>][price]" value="<?php echo $product_discount['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>
-                    <td class="text-left"><input type="date" name="product_discount[<?php echo $discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" data-format="YYYY-MM-DD" class="form-control" /></td>
-                    <td class="text-left"><input type="date" name="product_discount[<?php echo $discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-format="YYYY-MM-DD" class="form-control" /></td>
+                    <td class="text-left"><div class="input-group date">
+                        <input type="text" name="product_discount[<?php echo $discount_row; ?>][date_start]" value="<?php echo $product_discount['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" data-format="YYYY-MM-DD" class="form-control" />
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span></div></td>
+                    <td class="text-left"><div class="input-group date">
+                        <input type="text" name="product_discount[<?php echo $discount_row; ?>][date_end]" value="<?php echo $product_discount['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-format="YYYY-MM-DD" class="form-control" />
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span></div></td>
                     <td class="text-left"><button type="button" onclick="$('#discount-row<?php echo $discount_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
                   </tr>
                   <?php $discount_row++; ?>
@@ -748,8 +772,16 @@
                       </select></td>
                     <td class="text-right"><input type="text" name="product_special[<?php echo $special_row; ?>][priority]" value="<?php echo $product_special['priority']; ?>" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>
                     <td class="text-right"><input type="text" name="product_special[<?php echo $special_row; ?>][price]" value="<?php echo $product_special['price']; ?>" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>
-                    <td class="text-left"><input type="date" name="product_special[<?php echo $special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" class="form-control" /></td>
-                    <td class="text-left"><input type="date" name="product_special[<?php echo $special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" class="form-control" /></td>
+                    <td class="text-left"><div class="input-group date">
+                        <input type="text" name="product_special[<?php echo $special_row; ?>][date_start]" value="<?php echo $product_special['date_start']; ?>" placeholder="<?php echo $entry_date_start; ?>" data-format="YYYY-MM-DD" class="form-control" />
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span></div></td>
+                    <td class="text-left"><div class="input-group date">
+                        <input type="text" name="product_special[<?php echo $special_row; ?>][date_end]" value="<?php echo $product_special['date_end']; ?>" placeholder="<?php echo $entry_date_end; ?>" data-format="YYYY-MM-DD" class="form-control" />
+                        <span class="input-group-btn">
+                        <button class="btn btn-default" type="button"><i class="fa fa-calendar"></i></button>
+                        </span></div></td>
                     <td class="text-left"><button type="button" onclick="$('#special-row<?php echo $special_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
                   </tr>
                   <?php $special_row++; ?>
@@ -1142,21 +1174,21 @@ $('input[name=\'option\']').autocomplete({
 		if (item['type'] == 'date') {
 			html += '	<div class="form-group">';
 			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-			html += '	  <div class="col-sm-3"><input type="date" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control" /></div>';
+			html += '	  <div class="col-sm-3"><div class="input-group date"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-format="YYYY-MM-DD" id="input-value' + option_row + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 			html += '	</div>';
 		}
 		
 		if (item['type'] == 'datetime') {
 			html += '	<div class="form-group">';
 			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-			html += '	  <div class="col-sm-10"><input type="datetime-local" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control" /></div>';
+			html += '	  <div class="col-sm-10"><div class="input-group datetime"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-format="YYYY-MM-DD HH:mm" id="input-value' + option_row + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 			html += '	</div>';
 		}
 		
 		if (item['type'] == 'time') {
 			html += '	<div class="form-group">';
 			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-			html += '	  <div class="col-sm-10"><input type="time" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" id="input-value' + option_row + '" class="form-control" /></div>';
+			html += '	  <div class="col-sm-10"><div class="input-group time"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-format="HH:mm" id="input-value' + option_row + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 			html += '	</div>';
 		}
 			
@@ -1196,11 +1228,24 @@ $('input[name=\'option\']').autocomplete({
 		}
 		
 		$('#tab-option .tab-content').append(html);
-		
+			
 		$('#option > li:last-child').before('<li><a href="#tab-option' + option_row + '" data-toggle="tab"><i class="fa fa-minus-circle" onclick="$(\'a[href=\\\'#tab-option' + option_row + '\\\']\').parent().remove(); $(\'#tab-option' + option_row + '\').remove(); $(\'#option a:first\').tab(\'show\')"></i> ' + item['label'] + '</li>');
 		
 		$('#option a[href=\'#tab-option' + option_row + '\']').tab('show');
-				
+		
+		$('.date').datetimepicker({
+			pickTime: false
+		});
+		
+		$('.datetime').datetimepicker({
+			pickDate: true,
+			pickTime: true
+		});
+		
+		$('.time').datetimepicker({
+			pickDate: false
+		});
+		
 		option_row++;
 	}	
 });
@@ -1254,12 +1299,16 @@ function addDiscount() {
     html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][quantity]" value="" placeholder="<?php echo $entry_quantity; ?>" class="form-control" /></td>';
     html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_discount[' + discount_row + '][price]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>';
-    html += '  <td class="text-left"><input type="date" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="<?php echo $entry_date_start; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="date" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="<?php echo $entry_date_end; ?>" class="form-control" /></td>';
+    html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_start]" value="" placeholder="<?php echo $entry_date_start; ?>" data-format="YYYY-MM-DD" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></td>';
+	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_discount[' + discount_row + '][date_end]" value="" placeholder="<?php echo $entry_date_end; ?>" data-format="YYYY-MM-DD" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#discount-row' + discount_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';	
 	
 	$('#discount tbody').append(html);
+
+	$('.date').datetimepicker({
+		pickTime: false
+	});
 	
 	discount_row++;
 }
@@ -1276,13 +1325,17 @@ function addSpecial() {
     html += '  </select></td>';		
     html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][priority]" value="" placeholder="<?php echo $entry_priority; ?>" class="form-control" /></td>';
 	html += '  <td class="text-right"><input type="text" name="product_special[' + special_row + '][price]" value="" placeholder="<?php echo $entry_price; ?>" class="form-control" /></td>';
-    html += '  <td class="text-left"><input type="date" name="product_special[' + special_row + '][date_start]" value="" placeholder="<?php echo $entry_date_start; ?>" class="form-control" /></td>';
-	html += '  <td class="text-left"><input type="date" name="product_special[' + special_row + '][date_end]" value="" placeholder="<?php echo $entry_date_end; ?>" class="form-control" /></td>';
+    html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_start]" value="" placeholder="<?php echo $entry_date_start; ?>" data-format="YYYY-MM-DD" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></td>';
+	html += '  <td class="text-left"><div class="input-group date"><input type="text" name="product_special[' + special_row + '][date_end]" value="" placeholder="<?php echo $entry_date_end; ?>" data-format="YYYY-MM-DD" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#special-row' + special_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';
 	
 	$('#special tbody').append(html);
-	
+
+	$('.date').datetimepicker({
+		pickTime: false
+	});
+		
 	special_row++;
 }
 //--></script> 
@@ -1305,31 +1358,45 @@ function addImage() {
 var profile_count = <?php echo $profile_count; ?>;
 
 function addProfile() {
-  profile_count++;
-
-  var html = '';
-  html += '<tr id="profile-row' + profile_count + '">';
-  html += '  <td class="left">';
-  html += '    <select name="product_profiles[' + profile_count + '][profile_id]" class="form-control">>';
-  <?php foreach ($profiles as $profile) { ?>
-    html += '      <option value="<?php echo $profile['profile_id']; ?>"><?php echo $profile['name']; ?></option>';
-  <?php } ?>
-  html += '    </select>';
-  html += '  </td>';
-  html += '  <td class="left">';
-  html += '    <select name="product_profiles[' + profile_count + '][customer_group_id]" class="form-control">>';
-  <?php foreach ($customer_groups as $customer_group) { ?>
-    html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
-  <?php } ?>
-  html += '    <select>';
-  html += '  </td>';
-  html += '  <td class="left">';
-  html += '    <a onclick="$(\'#profile-row' + profile_count + '\').remove()" class="btn btn-danger"><i class="fa fa-trash-o"></i> <?php echo $button_remove; ?></a>';
-  html += '  </td>';
-  html += '</tr>';
-
-  $('#tab-profile table tbody').append(html);
+	profile_count++;
+	
+	html  = '';
+	html += '<tr id="profile-row' + profile_count + '">';
+	html += '  <td class="left">';
+	html += '    <select name="product_profiles[' + profile_count + '][profile_id]" class="form-control">>';
+	<?php foreach ($profiles as $profile) { ?>
+	html += '      <option value="<?php echo $profile['profile_id']; ?>"><?php echo $profile['name']; ?></option>';
+	<?php } ?>
+	html += '    </select>';
+	html += '  </td>';
+	html += '  <td class="left">';
+	html += '    <select name="product_profiles[' + profile_count + '][customer_group_id]" class="form-control">>';
+	<?php foreach ($customer_groups as $customer_group) { ?>
+	html += '      <option value="<?php echo $customer_group['customer_group_id']; ?>"><?php echo $customer_group['name']; ?></option>';
+	<?php } ?>
+	html += '    <select>';
+	html += '  </td>';
+	html += '  <td class="left">';
+	html += '    <a onclick="$(\'#profile-row' + profile_count + '\').remove()" class="btn btn-danger"><i class="fa fa-trash-o"></i> <?php echo $button_remove; ?></a>';
+	html += '  </td>';
+	html += '</tr>';
+	
+	$('#tab-profile table tbody').append(html);
 }
+//--></script> 
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
+
+$('.datetime').datetimepicker({
+	pickDate: true,
+	pickTime: true
+});
+
+$('.time').datetimepicker({
+	pickDate: false
+});
 //--></script> 
 <script type="text/javascript"><!--
 $('#language a:first').tab('show');

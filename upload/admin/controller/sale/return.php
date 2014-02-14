@@ -716,7 +716,7 @@ class ControllerSaleReturn extends Controller {
 		if (isset($this->request->post['date_ordered'])) {
 			$data['date_ordered'] = $this->request->post['date_ordered'];
 		} elseif (!empty($return_info)) { 
-			$data['date_ordered'] = $return_info['date_ordered'];
+			$data['date_ordered'] = ($return_info['date_ordered'] != '0000-00-00' ? $return_info['date_ordered'] : '');
 		} else {
 			$data['date_ordered'] = '';
 		}

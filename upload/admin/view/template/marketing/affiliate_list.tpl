@@ -72,7 +72,11 @@
           <div class="col-sm-4">
             <div class="form-group">
               <label class="control-label" for="input-date-added"><?php echo $entry_date_added; ?></label>
-              <input type="date" name="filter_date_added" value="<?php echo $filter_date_added; ?>" id="input-date-added" class="form-control" />
+              <div class="input-group date">
+                <input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" placeholder="<?php echo $entry_date_added; ?>" data-format="YYYY-MM-DD" id="input-date-added" class="form-control" />
+                <span class="input-group-btn">
+                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                </span></div>
             </div>
             <div class="form-group">
               <button type="button" id="button-filter" class="btn btn-primary pull-right"><i class="fa fa-search"></i> <?php echo $button_filter; ?></button>
@@ -225,5 +229,10 @@ $('input[name=\'filter_email\']').autocomplete({
 		$('input[name=\'filter_email\']').val(item['label']);
 	}	
 });
-//--></script> 
+//--></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
+//--></script>
 <?php echo $footer; ?>

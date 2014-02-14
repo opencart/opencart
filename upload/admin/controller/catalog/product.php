@@ -879,9 +879,9 @@ class ControllerCatalogProduct extends Controller {
 		if (isset($this->request->post['date_available'])) {
 			$data['date_available'] = $this->request->post['date_available'];
 		} elseif (!empty($product_info)) {
-			$data['date_available'] = date('Y-m-d', strtotime($product_info['date_available']));
+			$data['date_available'] = ($product_info['date_available'] != '0000-00-00' ? $product_info['date_available'] : '');
 		} else {
-			$data['date_available'] = date('Y-m-d', time() - 86400);
+			$data['date_available'] = date('Y-m-d');
 		}
 
 		if (isset($this->request->post['quantity'])) {
@@ -1148,19 +1148,44 @@ class ControllerCatalogProduct extends Controller {
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
 		if (isset($this->request->post['product_discount'])) {
-			$data['product_discounts'] = $this->request->post['product_discount'];
+			$product_discounts = $this->request->post['product_discount'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$data['product_discounts'] = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
+			$product_discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
 		} else {
-			$data['product_discounts'] = array();
+			$product_discounts = array();
 		}
 
+		$data['product_discounts'] = array();
+
+		foreach ($product_discounts as $product_discount) {
+			$data['product_discounts'][] = array(
+				'customer_group_id' => $product_discount['customer_group_id'],
+				'quantity'          => $product_discount['quantity'],
+				'priority'          => $product_discount['priority'],
+				'price'             => $product_discount['price'],
+				'date_start'        => ($product_discount['date_start'] != '0000-00-00' ? $product_discount['date_start'] : ''),
+				'date_end'          => ($product_discount['date_end'] != '0000-00-00' ? $product_discount['date_end'] : '')
+			);
+		}
+		
 		if (isset($this->request->post['product_special'])) {
-			$data['product_specials'] = $this->request->post['product_special'];
+			$product_specials = $this->request->post['product_special'];
 		} elseif (isset($this->request->get['product_id'])) {
-			$data['product_specials'] = $this->model_catalog_product->getProductSpecials($this->request->get['product_id']);
+			$product_specials = $this->model_catalog_product->getProductSpecials($this->request->get['product_id']);
 		} else {
-			$data['product_specials'] = array();
+			$product_specials = array();
+		}
+
+		$data['product_specials'] = array();
+
+		foreach ($product_specials as $product_special) {
+			$data['product_discounts'][] = array(
+				'customer_group_id' => $product_special['customer_group_id'],
+				'priority'          => $product_special['priority'],
+				'price'             => $product_special['price'],
+				'date_start'        => ($product_special['date_start'] != '0000-00-00' ? $product_discount['date_start'] : ''),
+				'date_end'          => ($product_special['date_end'] != '0000-00-00' ? $product_discount['date_end'] :  '')
+			);
 		}
 
 		if (isset($this->request->post['image'])) {

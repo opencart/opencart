@@ -281,5 +281,10 @@ $('input[name=\'filter_model\']').autocomplete({
 		$('input[name=\'filter_model\']').val(item['label']);
 	}	
 });
+//--></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
 //--></script> 
 <?php echo $footer; ?> 

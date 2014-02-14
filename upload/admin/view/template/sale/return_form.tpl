@@ -233,5 +233,10 @@ $('input[name=\'product\']').autocomplete({
 		$('input[name=\'model\']').val(item['model']);	
 	}
 });
+//--></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
 //--></script> 
 <?php echo $footer; ?>

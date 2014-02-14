@@ -242,7 +242,7 @@ class ControllerStep3 extends Controller {
 		if ($this->request->post['db_driver'] == 'mysqli') {
 			$connection = @new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database']);
 
-			if ($mysqli->connect_error) {
+			if ($connection->connect_error) {
 				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
 			} else {
 				$connection->close();

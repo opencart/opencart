@@ -303,17 +303,3 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 	});
 });
 //--></script>
-<script type="text/javascript"><!--
-$('.date').datetimepicker({
-	pickTime: false
-});
-
-$('.datetime').datetimepicker({
-	pickDate: true,
-	pickTime: true
-});
-
-$('.time').datetimepicker({
-	pickDate: false
-});
-//--></script>

@@ -230,11 +230,15 @@ class ControllerCheckoutRegister extends Controller {
 		}
 
 		if (!$json) {
-			$csutomer_id = $this->model_account_customer->addCustomer($this->request->post);
+			$customer_id = $this->model_account_customer->addCustomer($this->request->post);
 			
 			$this->session->data['account'] = 'register';
 
-			if ($customer_group && !$customer_group['approval']) {
+			$this->load->model('account/customer_group');
+
+			$customer_group_info = $this->model_account_customer_group->getCustomerGroup($customer_group_id);
+
+			if ($customer_group_info && !$customer_group_info['approval']) {
 				$this->customer->login($this->request->post['email'], $this->request->post['password']);
 
 				// Default Payment Address

@@ -5,7 +5,11 @@ class ControllerStep3 extends Controller {
 	public function index() {		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install');
-
+			
+			sleep(3);
+			$this->response->redirect($this->url->link('step_4'));
+			return;
+			
 			$this->model_install->database($this->request->post);
 
 			$output  = '<?php' . "\n";
@@ -91,8 +95,8 @@ class ControllerStep3 extends Controller {
 		$data['text_db_connection'] = $this->language->get('text_db_connection');	
 		$data['text_db_administration'] = $this->language->get('text_db_administration');
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
+		$data['text_mysql'] = $this->language->get('text_mysql');
 		$data['text_mpdo'] = $this->language->get('text_mpdo');
-		$data['text_pgsql'] = $this->language->get('text_pgsql');
 
 		$data['entry_db_driver'] = $this->language->get('entry_db_driver');
 		$data['entry_db_hostname'] = $this->language->get('entry_db_hostname');
@@ -214,7 +218,6 @@ class ControllerStep3 extends Controller {
 		$data['mysqli'] = extension_loaded('mysqli');
 		$data['mysql'] = extension_loaded('mysql');
 		$data['pdo'] = extension_loaded('pdo');
-		$data['pgsql'] = extension_loaded('pgsql');
 
 		$data['back'] = $this->url->link('step_2');
 
@@ -241,13 +244,25 @@ class ControllerStep3 extends Controller {
 			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
 		}
 
-		if ($this->request->post['db_driver'] == 'mysqli') {
-			$mysql = @new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database']);
-
-			if ($mysql->connect_error) {
+		if ($this->request->post['db_driver'] == 'mysql') {
+			if (!$connection = @mysql_connect($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'])) {
 				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
 			} else {
-				$mysql->close();
+				if (!@mysql_select_db($this->request->post['db_database'], $connection)) {
+					$this->error['warning'] = 'Error: Database does not exist!';
+				}
+
+				mysql_close($connection);
+			}
+		}
+
+		if ($this->request->post['db_driver'] == 'mysqli') {
+			$connection = @new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database']);
+
+			if (mysqli_connect_error()) {
+				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+			} else {
+				$connection->close();
 			}
 		}
 
@@ -258,17 +273,21 @@ class ControllerStep3 extends Controller {
 		if (!$this->request->post['password']) {
 			$this->error['password'] = 'Password required!';
 		}
+		
+		if (!$this->request->post['email']) {
+			$this->error['email'] = 'Email required!';
+		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
 			$this->error['email'] = 'Invalid E-Mail!';
 		}
 
 		if (!is_writable(DIR_OPENCART . 'config.php')) {
-			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'config.php!';
+			$this->error['warning'] = 'Error: Could not write to config.php please check if the file exists and you have set the correct permissions on: ' . DIR_OPENCART . 'config.php!';
 		}
 
 		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'admin/config.php!';
+			$this->error['warning'] = 'Error: Could not write to config.php please check if the file exists and you have set the correct permissions on: ' . DIR_OPENCART . 'admin/config.php!';
 		}	
 
 		return !$this->error;

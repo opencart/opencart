@@ -15,7 +15,7 @@ class ControllerStep1 extends Controller {
 		$data['text_finished'] = $this->language->get('text_finished');		
 		$data['text_terms'] = $this->language->get('text_terms');
 		
-		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_continue'] = $this->language->get('button_agree_continue');
 		
 		$data['action'] = $this->url->link('step_1');
 		

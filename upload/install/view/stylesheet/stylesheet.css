@@ -1,160 +1,28 @@
-html {
-	overflow: -moz-scrollbars-vertical;
-	margin: 0;
-	padding: 0;
-}
-* {
-	font-family: Arial, Verdana, sans-serif;
-}
-body {
-	margin: 0px;
-	padding: 0px;
-	background: #F6F6F6 url('../image/background.png');
-}
-body, p, td, th, input, textarea, select, option {
-	color: #777777;
-	text-decoration: none;
-	font-size: 13px;
-}
-#container > h1 {
-	background: url('../image/heading.png') repeat-y;
-	font-family: Verdana, Arial, Helvetica, sans-serif;
-	font-size: 26px;
-	font-weight: bold;
-	text-transform: uppercase;
-	padding: 26px 27px;
-	margin-top: 0px;
-	margin-bottom: 25px;
-	color: #FFF;
-	vertical-align: middle;
-}
-fieldset {
-	border: 1px solid #DBDBDB;
-	padding: 10px;
-	margin-bottom: 20px;
-	-webkit-border-radius: 5px 5px 5px 5px;
-	-moz-border-radius: 5px 5px 5px 5px;
-	-khtml-border-radius: 5px 5px 5px 5px;
-	border-radius: 5px 5px 5px 5px;
-}
-fieldset table {
-	width: 100%;
-	border-collapse: collapse;
-}
-fieldset table.form tr td:first-child {
-	width: 250px;
-}
-fieldset table td {
-	padding: 5px;
-}
-select, input[type='text'], input[type='password'], textarea {
-	background: #FFFFFF;
-	-webkit-border-radius: 5px 5px 5px 5px;
-	-moz-border-radius: 5px 5px 5px 5px;
-	-khtml-border-radius: 5px 5px 5px 5px;
-	border-radius: 5px 5px 5px 5px;
-	border: 1px solid #DBDBDB;
-	padding: 4px;
-	color: #000;
-}
-option {
-	color: #000;
-}
-a, a:visited, a b {
-	color: #23A1D1;
-	text-decoration: underline;
-	cursor: pointer;
-}
-a:hover {
-	text-decoration: none;
-}
-b, strong {
-	color: #555;
-}
-label {
-	cursor: pointer;
-}
+.wizard {padding: 0; margin: 0;}
+.wizard li {padding: 12px 12px 8px 12px; min-width: 23.5%; margin-right:0.5%; background:#efefef; position:relative; display:inline-block; }
+.wizard li:before {width:0px; height:0px; border-top: 20px inset transparent; border-bottom: 20px inset transparent; border-left: 20px solid #fff; position: absolute; content: ""; top: 0; left: 0;}
+.wizard li:after {width:0px; height:0px; border-top: 20px inset transparent; border-bottom: 20px inset transparent; border-left: 20px solid #efefef; position: absolute; content: ""; top: 0; right: -20px; z-index:2;}
+.wizard li:first-child:before {border:none;}
+.wizard li:last-child:after {border:none;}
 
-#column-right {
-	float: right;
-	width: 284px;
-	margin-left: 30px;
-	margin-bottom: 20px;
-	min-height: 350px;
-}
-#column-right ul, #column-right ul li {
-	margin: 0;
-	padding: 0;
-	list-style: none;
-}
-#column-right ul ul {
-	margin-left: 30px;
-}
-#column-right ul a, #column-right ul a b {
-	color: #777777;
-	text-decoration: none;
-}
-#column-right ul li {
-	display: block;
-	padding: 0px 8px 8px 22px;
-	margin-bottom: 8px;
-	border-bottom: 1px solid #DBDBDB;
-	background: url('../image/bullet-arrow.png') 0px 5px no-repeat;
-}
+.wizard li:first-child {-moz-border-radius: 4px 0 0 4px; -webkit-border-radius: 4px 0 0 4px; border-radius:   4px 0 0 4px;}
+.wizard li:last-child {-moz-border-radius: 0 4px 4px 0; -webkit-border-radius: 0 4px 4px 0; border-radius:   0 4px 4px 0;}
 
+.wizard .badge {margin:0 5px 0 18px; position:relative; top:-1px;}
+.wizard li:first-child .badge {margin-left:0;}
 
-div.required .control-label:before {
-	content: '* ';
-	color: #F00;
-	font-weight: bold;
-}
+.wizard .active {background:#007ACC; color:#fff;}
+.wizard .active:after {border-left-color:#007ACC;}
 
-a.button, input.button {
-	cursor: pointer;
-	color: #FFF;
-	font-size: 13px;
-	border: 1px solid #78883C;
-	background: url('../image/button.png') repeat-x;
-	text-shadow: 0px -1px #7A8A3D;
-	-webkit-border-radius: 5px 5px 5px 5px;
-	-moz-border-radius: 5px 5px 5px 5px;
-	-khtml-border-radius: 5px 5px 5px 5px;
-	border-radius: 5px 5px 5px 5px;
-	-webkit-box-shadow: 1px 2px 2px #DDDDDD;
-	-moz-box-shadow: 1px 2px 2px #DDDDDD;
-	box-shadow: 1px 2px 2px #DDDDDD;
-	margin-bottom: 2px;
-}
+#logo {margin-top: 15px; margin-bottom: 15px; margin-right: 30px;}
 
-.buttons {
-	border: 1px solid #DBDBDB;
-	overflow: auto;
-	padding: 6px;
-	margin-bottom: 20px;
-}
+.terms {max-height: 500px; overflow-y: scroll;}
+.terms h3 {margin-top: 0;}
 
-.terms {
-	background: #FFFFFF;
-	border: 1px solid #DBDBDB;
-	margin: 3px 0px 10px 0px;
-	padding: 4px;
-	height: 250px;
-	overflow-y: scroll;
-}
-.terms p, .terms ul, .terms ol {
-	color: #000000;
-}
+footer {text-align: center; margin-top: 20px; margin-bottom: 20px;}
 
-/* alert */
-.alert {
-	padding: 8px 14px 8px 14px;
-}
+h4 {margin-top: 40px; margin-bottom: 20px;}
 
-footer {
-	text-align: center;
-	margin-bottom: 25px;
-}
-footer a {
-	margin: 0px 5px;
-	line-height: 28px;
-}
+.text-success {color: #3c763d;}
+
+.alert-js {display: inline-block;}

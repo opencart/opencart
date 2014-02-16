@@ -61,6 +61,9 @@ class ControllerStep2 extends Controller {
 		$data['session_auto_start'] = ini_get('session_auto_start');
 		
 		$data['mysql'] = extension_loaded('mysql');
+		$data['mysqli'] = extension_loaded('mysqli');
+		$data['mpdo'] = extension_loaded('pdo');
+		$data['pgsql'] = extension_loaded('pgsql');
 		$data['gd'] = extension_loaded('gd');
 		$data['curl'] = extension_loaded('curl');
 		$data['mcrypt_encrypt'] = function_exists('mcrypt_encrypt');
@@ -97,8 +100,8 @@ class ControllerStep2 extends Controller {
 			$this->error['warning'] = 'Warning: OpenCart will not work with session.auto_start enabled!';
 		}
 		
-		if (!extension_loaded('mysql')) {
-			$this->error['warning'] = 'Warning: MySQL extension needs to be loaded for OpenCart to work!';
+		if (!array_filter(array('mysqli', 'pdo', 'pgsql'), 'extension_loaded')) {
+			$this->error['warning'] = 'Warning: A database extension needs to be loaded in th php.ini for OpenCart to work!';
 		}
 				
 		if (!extension_loaded('gd')) {

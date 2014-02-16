@@ -57,7 +57,7 @@ $_['text_footer']            = 'Copyright &copy; 2014 OpenCart - All rights rese
 $_['text_footer_desc']       = 'OpenCart is a free open source PHP-based online e-commerce solution.';
 $_['text_upgrading']         = 'Upgrading...';
 $_['text_installing']        = 'Installing...';
-$_['text_upgrade_progress']  = 'Please wait while OpenCart is being upgrated. Don\'t close this page during this process.';
+$_['text_upgrade_progress']  = 'Please wait while OpenCart is being upgraded. Don\'t close this page during this process.';
 $_['text_install_progress']  = 'Please wait while OpenCart is being installed. Don\'t close this page during this process.';
 
 // Entry

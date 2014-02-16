@@ -30,7 +30,7 @@
 	</div>
   </div>
   <div class="alert alert-warning">
-    <?php echo $text_forget; ?> <button class="btn btn-warning btn-sm pull-right" id="deleteInstallDirBtn" data-loading-text="Deleting..."><span class="fa fa-trash-o"></span> <?php echo $text_forget_button; ?></button><br><br>
+    <?php echo $text_forget; ?> <button class="btn btn-warning btn-sm pull-right" id="deleteInstallDirBtn" data-loading-text="<?php echo $button_deleting; ?>"><span class="fa fa-trash-o"></span> <?php echo $button_delete; ?></button><br><br>
   </div>
 </div>
 <?php echo $footer; ?>

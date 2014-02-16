@@ -4,19 +4,24 @@ $_['heading_step_1']         = 'License';
 $_['heading_step_2']         = 'Requirements';
 $_['heading_step_3']         = 'Configuration';
 $_['heading_step_4']         = 'Finished';
+$_['heading_upgrade_step_1'] = 'Upgrade';
+$_['heading_upgrade_step_2'] = 'Finished';
 
 // Text
 $_['text_license']           = 'License';
 $_['text_installation']      = 'Requirements';
 $_['text_configuration']     = 'Configuration';
 $_['text_finished']          = 'Finished';
+$_['text_upgrade']           = 'Upgrade';
 $_['text_install_php']       = 'Please configure your PHP settings to match the requirements listed below.';
 $_['text_install_extension'] = 'Please make sure the PHP extensions listed below are installed.';
 $_['text_install_file']      = 'Please make sure you have set the correct permissions on the files listed below.';
 $_['text_install_directory'] = 'Please make sure you have set the correct permissions on the directories listed below.';
 $_['text_db_connection']     = 'Please enter your database connection details.';
 $_['text_db_administration'] = 'Please enter a username and password for the shop administration.';
+$_['text_upgrade_tasks']     = 'Follow these steps carefully.';
 $_['text_congratulation']    = 'Congratulations! You have successfully installed OpenCart.';
+$_['text_upgrade_finished']  = 'Congratulations! You have successfully upgrated OpenCart.';
 $_['text_setting']           = 'PHP Settings';
 $_['text_current']           = 'Current Settings';
 $_['text_required']          = 'Required Settings';
@@ -43,7 +48,6 @@ $_['text_writable']          = 'Writable';
 $_['text_unwritable']        = 'Unwritable';
 $_['text_missing']           = 'Missing';
 $_['text_forget']            = 'Don\'t forget to delete your installation directory! You can either do that manually or by clicking this button.';
-$_['text_forget_button']     = 'Delete installation directory now';
 $_['text_shop']              = 'Go to your Online Shop';
 $_['text_login']             = 'Login to your Administration';
 $_['text_project']           = 'Project Homepage';
@@ -51,6 +55,10 @@ $_['text_documentation']     = 'Documentation';
 $_['text_support']           = 'Community Forums';
 $_['text_footer']            = 'Copyright &copy; 2014 OpenCart - All rights reserved.';
 $_['text_footer_desc']       = 'OpenCart is a free open source PHP-based online e-commerce solution.';
+$_['text_upgrading']         = 'Upgrading...';
+$_['text_installing']        = 'Installing...';
+$_['text_upgrade_progress']  = 'Please wait while OpenCart is being upgrated. Don\'t close this page during this process.';
+$_['text_install_progress']  = 'Please wait while OpenCart is being installed. Don\'t close this page during this process.';
 
 // Entry
 $_['entry_db_driver']        = 'DB Driver';
@@ -67,13 +75,21 @@ $_['entry_email']            = 'E-Mail';
 $_['button_continue']        = 'Continue';
 $_['button_agree_continue']  = 'I agree, continue';
 $_['button_back']            = 'Back';
-
+$_['button_checking']        = 'Checking...';
+$_['button_delete']          = 'Delete installation directory now';
+$_['button_deleting']        = 'Deleting...';
 
 // Error
 $_['error_javascript']       = 'Your browser has javascript disabled. Please activate it before continuing.';	
 
-
-
+$_['text_upgrade_steps'] = '<ol>
+		<li>Click on the continue button.</li>
+		<li>After upgrade, clear any cookies in your browser to avoid getting token errors.</li>
+		<li>Load the admin page & press Ctrl+F5 twice to force the browser to update the css changes.</li>
+		<li>Goto Admin -> Users -> User Groups and Edit the Top Adminstrator group. Check All boxes.</li>
+		<li>Goto Admin and Edit the main System Settings. Update all fields and click save, even if nothing changed.</li>
+		<li>Load the store front & press Ctrl+F5 twice to force the browser to update the css changes.</li>
+	  </ol>';
 
 $_['text_terms'] = '<h3>GNU GENERAL PUBLIC LICENSE</h3>
         <p>Version 3, 29 June 2007</p>

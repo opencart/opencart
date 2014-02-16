@@ -111,7 +111,7 @@
 	  <hr>
 	  <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><span class="fa fa-chevron-left"></span> <?php echo $button_back; ?></a></div>
 	  <div class="pull-right">
-		<button type="submit" class="btn btn-primary" id="startInstallationBtn" data-loading-text="Checking...">
+		<button type="submit" class="btn btn-primary" id="startInstallationBtn" data-loading-text="<?php echo $button_checking; ?>">
 			<?php echo $button_continue; ?> <span class="fa fa-chevron-right"></span>
 		</button>
 	  </div>

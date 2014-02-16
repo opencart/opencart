@@ -108,6 +108,7 @@ class ControllerStep3 extends Controller {
 		
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
+		$data['button_checking'] = $this->language->get('button_checking');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

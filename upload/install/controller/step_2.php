@@ -37,7 +37,9 @@ class ControllerStep2 extends Controller {
 		$data['text_upload'] = $this->language->get('text_upload');
 		$data['text_session'] = $this->language->get('text_session');
 		$data['text_global'] = $this->language->get('text_global');
-		$data['text_mysql'] = $this->language->get('text_mysql');
+		$data['text_mysqli'] = $this->language->get('text_mysqli');
+		$data['text_mpdo'] = $this->language->get('text_mpdo');
+		$data['text_pgsql'] = $this->language->get('text_pgsql');
 		$data['text_gd'] = $this->language->get('text_gd');
 		$data['text_curl'] = $this->language->get('text_curl');
 		$data['text_mcrypt'] = $this->language->get('text_mcrypt');

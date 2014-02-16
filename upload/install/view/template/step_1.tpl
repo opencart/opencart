@@ -1,25 +1,21 @@
 <?php echo $header; ?>
 <div class="container">
+  <ul class="wizard">         
+    <li class="active"><span class="badge">1</span> <span class="hidden-xs"><?php echo $text_license; ?></span></li>
+    <li><span class="badge">2</span> <span class="hidden-xs"><?php echo $text_installation; ?></span></li>
+    <li><span class="badge">3</span> <span class="hidden-xs"><?php echo $text_configuration; ?></span></li>
+    <li><span class="badge">4</span> <span class="hidden-xs"><?php echo $text_finished; ?></span></li>
+  </ul>
   <h1><?php echo $heading_step_1; ?></h1>
-  <div class="row">
-    <div class="col-sm-9">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
-        <div class="terms"><?php echo $text_terms; ?></div>
-        <div class="buttons">
-          <div class="pull-right">
-            <input type="submit" value="<?php echo $button_continue; ?>" class="btn btn-primary" />
-          </div>
-        </div>
-      </form>
+  <hr>
+  <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data">
+    <div class="terms"><?php echo $text_terms; ?></div>
+    <div class="buttons">
+	  <hr>
+      <div class="pull-right">
+        <button type="submit" class="btn btn-primary" data-loading-text="Loading..."><?php echo $button_continue; ?> <span class="fa fa-chevron-right"></span></button>
+      </div>
     </div>
-    <div class="col-sm-3">
-      <ul class="list-group">
-        <li class="list-group-item"><b><?php echo $text_license; ?></b></li>
-        <li class="list-group-item"><?php echo $text_installation; ?></li>
-        <li class="list-group-item"><?php echo $text_configuration; ?></li>
-        <li class="list-group-item"><?php echo $text_finished; ?></li>
-      </ul>
-    </div>
-  </div>
+  </form>
 </div>
 <?php echo $footer; ?>

@@ -11,6 +11,7 @@ class ControllerStep4 extends Controller {
 		$data['text_finished'] = $this->language->get('text_finished');	
 		$data['text_congratulation'] = $this->language->get('text_congratulation');	
 		$data['text_forget'] = $this->language->get('text_forget');	
+		$data['text_forget_button'] = $this->language->get('text_forget_button');	
 		$data['text_shop'] = $this->language->get('text_shop');	
 		$data['text_login'] = $this->language->get('text_login');	
 		
@@ -18,5 +19,21 @@ class ControllerStep4 extends Controller {
 		$data['header'] = $this->load->controller('header');
 
 		$this->response->setOutput($this->load->view('step_4.tpl', $data));
+	}
+	
+	public function delete() {
+		$dir = '../install';
+		$it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
+		$files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+		foreach($files as $file) {
+			if ($file->isDir()) {
+				rmdir($file->getRealPath());
+			} else {
+				unlink($file->getRealPath());
+			}
+		}
+		rmdir($dir);
+		
+		echo "Done. <span class=\"fa fa-check\"></span>";
 	}
 }

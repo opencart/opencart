@@ -1,22 +1,21 @@
 <?php
 // Heading
-$_['heading_step_1']         = 'Step 1 - License';
-$_['heading_step_2']         = 'Step 2 - Pre-Installation';
-$_['heading_step_3']         = 'Step 3 - Configuration';
-$_['heading_step_4']         = 'Step 4 - Finished!';
+$_['heading_step_1']         = 'License';
+$_['heading_step_2']         = 'Requirements';
+$_['heading_step_3']         = 'Configuration';
+$_['heading_step_4']         = 'Finished';
 
 // Text
 $_['text_license']           = 'License';
-$_['text_installation']      = 'Pre-Installation';
+$_['text_installation']      = 'Requirements';
 $_['text_configuration']     = 'Configuration';
 $_['text_finished']          = 'Finished';
-$_['text_install_php']       = '1. Please configure your PHP settings to match requirements listed below.';
-$_['text_install_extension'] = '2. Please make sure the PHP extensions listed below are installed.';
-$_['text_install_db']        = '3. Please ensure you have at least one available database driver.';
-$_['text_install_file']      = '4. Please make sure you have set the correct permissions on the files list below.';
-$_['text_install_directory'] = '5. Please make sure you have set the correct permissions on the directories list below.';
-$_['text_db_connection']     = '1. Please enter your database connection details.';
-$_['text_db_administration'] = '2. Please enter a username and password for the administration.';
+$_['text_install_php']       = 'Please configure your PHP settings to match the requirements listed below.';
+$_['text_install_extension'] = 'Please make sure the PHP extensions listed below are installed.';
+$_['text_install_file']      = 'Please make sure you have set the correct permissions on the files listed below.';
+$_['text_install_directory'] = 'Please make sure you have set the correct permissions on the directories listed below.';
+$_['text_db_connection']     = 'Please enter your database connection details.';
+$_['text_db_administration'] = 'Please enter a username and password for the shop administration.';
 $_['text_congratulation']    = 'Congratulations! You have successfully installed OpenCart.';
 $_['text_setting']           = 'PHP Settings';
 $_['text_current']           = 'Current Settings';
@@ -31,6 +30,7 @@ $_['text_global']            = 'Register Globals';
 $_['text_magic']             = 'Magic Quotes GPC';
 $_['text_upload']            = 'File Uploads';
 $_['text_session']           = 'Session Auto Start';
+$_['text_mysql']             = 'MySQL';
 $_['text_mysqli']            = 'MySQLi';
 $_['text_mpdo']              = 'mPDO';
 $_['text_gd']                = 'GD';
@@ -42,13 +42,15 @@ $_['text_off']               = 'Off';
 $_['text_writable']          = 'Writable';
 $_['text_unwritable']        = 'Unwritable';
 $_['text_missing']           = 'Missing';
-$_['text_forget']            = 'Don\'t forget to delete your installation directory!';
+$_['text_forget']            = 'Don\'t forget to delete your installation directory! You can either do that manually or by clicking this the button.';
+$_['text_forget_button']     = 'Delete installation directory now';
 $_['text_shop']              = 'Go to your Online Shop';
 $_['text_login']             = 'Login to your Administration';
 $_['text_project']           = 'Project Homepage';
 $_['text_documentation']     = 'Documentation';
-$_['text_support']           = 'Support Forums';
-$_['text_footer']            = 'Copyright © 2012 OpenCart - All rights reserved';
+$_['text_support']           = 'Community Forums';
+$_['text_footer']            = 'Copyright &copy; 2014 OpenCart - All rights reserved.';
+$_['text_footer_desc']       = 'OpenCart is a free open source PHP-based online e-commerce solution.';
 
 // Entry
 $_['entry_db_driver']        = 'DB Driver';
@@ -63,10 +65,13 @@ $_['entry_email']            = 'E-Mail';
 
 // Buttons
 $_['button_continue']        = 'Continue';
+$_['button_agree_continue']  = 'I agree, continue';
 $_['button_back']            = 'Back';
 
 
 // Error
+$_['error_javascript']       = 'Your browser has javascript disabled. Please activate it before continuing.';	
+
 
 
 

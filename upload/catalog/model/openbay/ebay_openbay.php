@@ -289,8 +289,11 @@ class ModelOpenbayEbayOpenbay extends Model{
 				//calculate taxes that come in from eBay
 				$this->openbay->ebay->log('create() - Using tax rates from eBay');
 
+				$priceNet = $price;
+				$this->openbay->ebay->log('create() - Net price: '.$priceNet);
+
 				$totalNet = $price * $qty;
-				$this->openbay->ebay->log('create() - Price: '.$totalNet);
+				$this->openbay->ebay->log('create() - Total net price: '.$totalNet);
 
 				$tax = number_format((double)$txn->item->tax->item, 4,'.','');
 				$this->openbay->ebay->log('create() - Tax: '.$tax);

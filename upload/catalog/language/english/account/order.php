@@ -15,7 +15,7 @@ $_['text_payment_address']  = 'Payment Address';
 $_['text_payment_method']   = 'Payment Method:';
 $_['text_comment']          = 'Order Comments';
 $_['text_history']          = 'Order History';
-$_['text_success']          = 'You have successfully added the products from order ID #%s to your cart!';
+$_['text_success']          = 'Success: You have added <a href="%s">%s</a> to your <a href="%s">shopping cart</a>!';
 $_['text_empty']            = 'You have not made any previous orders!';
 $_['text_error']            = 'The order you requested could not be found!';
 
@@ -32,3 +32,6 @@ $_['column_action']         = 'Action';
 $_['column_date_added']     = 'Date Added';
 $_['column_status']         = 'Order Status';
 $_['column_comment']        = 'Comment';
+
+// Error
+$_['error_reorder']         = '%s is not currently avaliable to be reordered.';

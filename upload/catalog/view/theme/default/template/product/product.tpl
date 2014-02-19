@@ -453,7 +453,7 @@ $('#button-cart').on('click', function() {
                 }
 
 				if (json['error']['profile']) {
-					$('select[name="profile_id"]').after('<span class="text-danger">' + json['error']['profile'] + '</span>');
+					$('select[name=\'profile_id\']').after('<span class="text-danger">' + json['error']['profile'] + '</span>');
 				}
             } 
             
@@ -574,7 +574,9 @@ $(document).ready(function() {
 	$('.thumbnails').magnificPopup({
 		type:'image',
 		delegate: 'a',
-		gallery: { enabled:true }
+		gallery: { 
+			enabled:true 
+		}
 	});
 });
 //--></script> 

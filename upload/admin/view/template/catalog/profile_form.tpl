@@ -139,7 +139,7 @@
               <div class="col-sm-10">
                 <select name="trial_frequency" id="input-trial-frequency" class="form-control">
                   <?php foreach ($frequencies as $key => $title) { ?>
-                  <?php if ($frequency == $key) { ?>
+                  <?php if ($trial_frequency  == $key) { ?>
                   <option value="<?php echo $key ?>" selected="selected"><?php echo $title ?></option>
                   <?php } else { ?>
                   <option value="<?php echo $key ?>"><?php echo $title ?></option>

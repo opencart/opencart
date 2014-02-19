@@ -319,18 +319,21 @@ class ModelOpenbayAmazonus extends Model {
 			$this->load->model('openstock/openstock');
 			$this->load->model('tool/image');
 			foreach($rows as $row) {
-				if(!$this->productLinkExists($row['product_id'], $row['var'])) {
-					$result[] = $row;
-				}
-				$stockOpts = $this->model_openstock_openstock->getProductOptionStocks($row['product_id']);
-				foreach($stockOpts as $opt) {
-					if($this->productLinkExists($row['product_id'], $opt['var'])) {
-						continue;
+				if ($row['has_option'] == 1) {
+					$stockOpts = $this->model_openstock_openstock->getProductOptionStocks($row['product_id']);
+					foreach($stockOpts as $opt) {
+						if($this->productLinkExists($row['product_id'], $opt['var'])) {
+							continue;
+						}
+						$row['var'] = $opt['var'];
+						$row['combi'] = $opt['combi'];
+						$row['sku'] = $opt['sku'];
+						$result[] = $row;
 					}
-					$row['var'] = $opt['var'];
-					$row['combi'] = $opt['combi'];
-					$row['sku'] = $opt['sku'];
-					$result[] = $row;
+				} else {
+					if(!$this->productLinkExists($row['product_id'], $row['var'])) {
+						$result[] = $row;
+					}
 				}
 			}
 		} else {

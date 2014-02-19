@@ -1,5 +1,6 @@
 Type: Enhancement, New Feature, Bug
 
+19-02-14 - Bug - Fixed unlinked items not loading correctly with OpenStock installed for Amazon EU and Amazon US
 19-02-14 - Feature - Added new button in settings to remove stuck order locks
 19-02-14 - Enhancement - Added alert if an error is thrown for an ajax call
 19-02-14 - Bug - Net price of product now shows in the order when tax values are used from eBay

@@ -1,6 +1,7 @@
 <?php
 class ModelAccountAddress extends Model {
 	public function addAddress($data) {
+		if (! isset($data['custom_field'])) $data['custom_field'] = '';
 		$this->db->query("INSERT INTO " . DB_PREFIX . "address SET customer_id = '" . (int)$this->customer->getId() . "', firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', company = '" . $this->db->escape($data['company']) . "', address_1 = '" . $this->db->escape($data['address_1']) . "', address_2 = '" . $this->db->escape($data['address_2']) . "', postcode = '" . $this->db->escape($data['postcode']) . "', city = '" . $this->db->escape($data['city']) . "', zone_id = '" . (int)$data['zone_id'] . "', country_id = '" . (int)$data['country_id'] . "', custom_field = '" . $this->db->escape($data['custom_field'] ? serialize($data['custom_field']) : '') . "'");
 		
 		$address_id = $this->db->getLastId();

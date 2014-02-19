@@ -210,7 +210,10 @@
                 html += '<div style="clear:both;" class="shipping_' + id + '_' + count + '"></div>';                
 
                 $('#' + id + 'Btn').append(html);
-            }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         });
 
         $('#count_' + id).val(count + 1);

@@ -185,7 +185,6 @@ function bulkList() {
     data: request_data,
     dataType: 'json',
     type: 'POST',
-
     success: function (json) {
       $('.warning, .success').remove();
 
@@ -199,6 +198,9 @@ function bulkList() {
       }
 
       $('.box').prepend(html);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
     }
   });
 }
@@ -215,7 +217,6 @@ function searchListings() {
     data: request_data,
     dataType: 'json',
     type: 'POST',
-
     success: function (json) {
       $.each(json, function (key, value) {
         var element = $('#result-' + key);
@@ -227,6 +228,9 @@ function searchListings() {
 
         $('input[name="product_ids[]"]').removeAttr('checked');
       });
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
     }
   });
 }

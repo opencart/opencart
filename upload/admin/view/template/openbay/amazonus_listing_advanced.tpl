@@ -473,7 +473,10 @@ function image_upload(field, thumb) {
                             var imageUrl = $('#' + field).attr('value');
                             $('#' + field).attr('value', '<?php echo HTTPS_CATALOG; ?>image/' + imageUrl);
                         }
-                    }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                  }
                 });
             }
         },

@@ -195,7 +195,10 @@ function removeLink(product_id, id) {
         dataType: 'json',
         success: function(json) {
             $('#row_'+id).fadeOut('slow');
-        }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
     });
 }
 
@@ -265,7 +268,10 @@ function saveListingLink(id){
         success: function(json) {
             $('#row'+id).fadeOut('slow');
             $('#l_'+id+'_saveLoading').hide();
-        }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
     });
 }
 
@@ -385,7 +391,10 @@ $(".localName:not(.ui-autocomplete-input)").live("focus", function (event) {
                             value: item.product_id
                         }
                     }));
-                }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              }
             });
         },
         select: function(event, ui) {

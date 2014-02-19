@@ -67,9 +67,10 @@ $_['lang_import_cancelled_id']  = 'Cancelled status:';
 $_['lang_import_refund_id']     = 'Refunded status:';
 $_['lang_import_part_refund_id']= 'Partially Refunded status:';
 
-$_['lang_developer']            = 'Developer';
+$_['lang_developer']            = 'Developer / support';
 $_['lang_developer_desc']       = 'You should not use this area unless instructed to do so.'; 
 $_['lang_developer_empty']      = 'Empty ALL data?'; 
+$_['lang_developer_locks']      = 'Remove order locks?';
 $_['lang_setting_desc']         = 'Default settings are used to pre-set many eBay listing options. All defaults can be changed on the listing page for each item.';
 $_['lang_payment_instruction']  = 'Payment instructions';
 $_['lang_payment_paypal']       = 'PayPal Accepted';

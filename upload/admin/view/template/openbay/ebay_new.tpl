@@ -731,7 +731,10 @@
                             $('#' + thumb).replaceWith('<img src="' + text + '" alt="" id="' + thumb + '" />');
                             $('#' + container).show();
                             $('#' + hidden).val($('#' + field).attr('value'));
-                        }
+                        },
+                        error: function (xhr, ajaxOptions, thrownError) {
+                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                      }
                     });
                 }else{
                     $('#' + container).remove();
@@ -891,7 +894,10 @@
                     }
                 }
                 $('#imageLoading').hide();
-            }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         });
     }
 
@@ -937,7 +943,10 @@
                         alert(data.msg);
                     }
                 }
-            }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         });
     }
 
@@ -991,7 +1000,10 @@
 
                 $('#catalog_search_btn').show();
                 $('#catalog_search_img').hide();
-            }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         });
     }
     
@@ -1110,7 +1122,10 @@
                 }
 
                 $('#featLoading').hide();
-            }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         });
     }
 
@@ -1171,7 +1186,10 @@
                     html += '&nbsp;&nbsp;<label><?php echo $lang_shipping_add; ?></label><input type="text" name="priceadditional_' + id + '[' + count + ']" style="width:50px;" value="0.00" />&nbsp;&nbsp;<a onclick="removeShipping(\'' + id + '\',\'' + count + '\');" class="button"><span><?php echo $lang_btn_remove; ?></span></a></p>';
                     html += '<div style="clear:both;" class="shipping_' + id + '_' + count + '"></div>';    
                     $('#'+id+'Btn').append(html);
-                }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         });
 
         $('#count_'+id).val(count + 1);
@@ -1358,7 +1376,10 @@
                     $('#reviewButton').hide();
                     $('#reviewButtonLoading').show();
                     $('.listingFees').show();
-                }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              }
             });
         }
     }
@@ -1407,7 +1428,10 @@
                 $('#submitListing').hide();
                 $('#submitListingLoading').show();
                 $('#editButton').hide();
-            }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         });
     }
 
@@ -1577,7 +1601,10 @@
                         $('#count_national').val(data.html.national_count);
                         $('#profileShippingLoading').hide();
                     }, 1000);
-                }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              }
             });
         }
     }
@@ -1613,7 +1640,10 @@
 
                         $('#profileReturnsLoading').hide();
                     }, 1000);
-                }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              }
             });
         }
     }
@@ -1661,7 +1691,10 @@
 
                     $('#profileThemeLoading').hide();
                 }, 1000);
-            }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         });
     }
 }
@@ -1684,7 +1717,10 @@
 
                         $('#profileGenericLoading').hide();
                     }, 1000);
-                }
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              }
             });
         }
     }

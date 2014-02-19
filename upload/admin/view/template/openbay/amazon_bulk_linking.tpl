@@ -99,12 +99,10 @@ $('.button-load-listings').live('click', function () {
   $.ajax({
     url: $(this).attr('href'),
     dataType: 'json',
-
     beforeSend: function () {
       paragraph.html('<img src="view/image/loading.gif" class="loading" />');
       $('.success, .warning').remove();
     },
-
     success: function (json) {
       if (json['status'] == 1) {
         paragraph.before('<div class="success">' + json['message'] + '</div>');
@@ -113,6 +111,9 @@ $('.button-load-listings').live('click', function () {
         paragraph.before('<div class="warning">' + json['message'] + '</div>');
         paragraph.html(oldText);
       }
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
     }
   });
 
@@ -135,9 +136,11 @@ $('.link-button').click(function () {
     dataType: 'json',
     type: 'POST',
     data: $('.link-checkbox:checked').parent().siblings('input[type="hidden"]').serialize(),
-
     success: function (json) {
       document.location.reload(true);
+    },
+    error: function(xhr, ajaxOptions, thrownError) {
+      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
     }
   });
 });

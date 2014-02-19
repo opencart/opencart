@@ -40,7 +40,6 @@ $_['lang_column_action']        = 'Action';
 
 // Error
 $_['error_permission']          = 'Warning: You do not have permission to modify eBay extensions!';
-$_['lang_error_retry']          = 'Could not connect to the OpenBay server. ';
 
 // Updates
 $_['lang_use_pasv']                     = 'Use passive FTP';

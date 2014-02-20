@@ -156,6 +156,19 @@
                 </select>
               </td>
             </tr>
+            <tr>
+              <td>
+                <?php echo $lang_default_shipping; ?>
+                <span class="help"><?php echo $lang_default_shipping_help; ?></span>
+              </td>
+              <td>
+                <select class="width120" name="openbay_amazonus_default_carrier">
+                  <?php foreach($carriers as $carrier) { ?>
+                  <?php echo '<option'.($carrier == $openbay_amazonus_default_carrier ? ' selected' : '').'>'.$carrier.'</option>'; ?>
+                  <?php } ?>
+                </select>
+              </td>
+            </tr>
           </table>
         </div>
       </form>

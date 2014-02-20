@@ -1,5 +1,7 @@
 Type: Enhancement, New Feature, Bug
 
+20-02-14 - Bug - Fixed issue with bulk order update page not showing template correctly.
+19-02-14 - Enhancement - Added setting to allow a pre-selected shipping method during bulk update for Amazon orders
 19-02-14 - Bug - Fixed unlinked items not loading correctly with OpenStock installed for Amazon EU and Amazon US
 19-02-14 - Feature - Added new button in settings to remove stuck order locks
 19-02-14 - Enhancement - Added alert if an error is thrown for an ajax call

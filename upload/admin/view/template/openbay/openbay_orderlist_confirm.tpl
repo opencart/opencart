@@ -71,7 +71,7 @@
                             <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>
                             <select name="carrier[<?php echo $order['order_id']; ?>]" class="amazon_carrier" id="amazon_carrier_<?php echo $order['order_id']; ?>">
                                 <?php foreach($market_options['amazon']['carriers'] as $courier){ ?>
-                                    <option><?php echo $courier; ?></option>
+                                    <?php echo '<option'.($courier == $market_options['amazon']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
                                 <?php } ?>
                                 <option value="other"><?php echo $lang_other; ?></option>
                             </select>
@@ -95,7 +95,7 @@
                             <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>
                             <select name="carrier[<?php echo $order['order_id']; ?>]" class="amazonus_carrier" id="amazonus_carrier_<?php echo $order['order_id']; ?>">
                                 <?php foreach($market_options['amazonus']['carriers'] as $courier){ ?>
-                                    <option><?php echo $courier; ?></option>
+                                  <?php echo '<option'.($courier == $market_options['amazonus']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
                                 <?php } ?>
                                 <option value="other"><?php echo $lang_other; ?></option>
                             </select>

@@ -780,6 +780,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 			if ($this->config->get('amazon_status') == 1) {
 				$this->data['market_options']['amazon']['carriers'] = $this->openbay->amazon->getCarriers();
+				$this->data['market_options']['amazon']['default_carrier'] = $this->config->get('openbay_amazon_default_carrier');
 			}
 
 			if ($this->config->get('amazonus_status') == 1) {

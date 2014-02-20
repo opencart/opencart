@@ -329,6 +329,9 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->data['openbay_amazon_default_listing_marketplace'] = isset($settings['openbay_amazon_default_listing_marketplace']) ? $settings['openbay_amazon_default_listing_marketplace'] : '';
 		$this->data['openbay_amazon_listing_default_condition'] = isset($settings['openbay_amazon_listing_default_condition']) ? $settings['openbay_amazon_listing_default_condition'] : '';
 
+		$this->data['carriers'] = $this->openbay->amazon->getCarriers();
+		$this->data['openbay_amazon_default_carrier'] = isset($settings['openbay_amazon_default_carrier']) ? $settings['openbay_amazon_default_carrier'] : '';
+
 		$unshippedStatusId = isset($settings['openbay_amazon_order_status_unshipped']) ? $settings['openbay_amazon_order_status_unshipped'] : '';
 		$partiallyShippedStatusId = isset($settings['openbay_amazon_order_status_partially_shipped']) ? $settings['openbay_amazon_order_status_partially_shipped'] : '';
 		$shippedStatusId = isset($settings['openbay_amazon_order_status_shipped']) ? $settings['openbay_amazon_order_status_shipped'] : '';

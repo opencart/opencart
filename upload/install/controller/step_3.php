@@ -5,7 +5,9 @@ class ControllerStep3 extends Controller {
 	public function index() {		
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
 			$this->load->model('install');
-
+			
+			sleep(3);
+			
 			$this->model_install->database($this->request->post);
 
 			$output  = '<?php' . "\n";
@@ -106,6 +108,7 @@ class ControllerStep3 extends Controller {
 		
 		$data['button_continue'] = $this->language->get('button_continue');
 		$data['button_back'] = $this->language->get('button_back');
+		$data['button_checking'] = $this->language->get('button_checking');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
@@ -258,17 +261,21 @@ class ControllerStep3 extends Controller {
 		if (!$this->request->post['password']) {
 			$this->error['password'] = 'Password required!';
 		}
+		
+		if (!$this->request->post['email']) {
+			$this->error['email'] = 'Email required!';
+		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
 			$this->error['email'] = 'Invalid E-Mail!';
 		}
 
 		if (!is_writable(DIR_OPENCART . 'config.php')) {
-			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'config.php!';
+			$this->error['warning'] = 'Error: Could not write to config.php please check if the file exists and you have set the correct permissions on: ' . DIR_OPENCART . 'config.php!';
 		}
 
 		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'admin/config.php!';
+			$this->error['warning'] = 'Error: Could not write to config.php please check if the file exists and you have set the correct permissions on: ' . DIR_OPENCART . 'admin/config.php!';
 		}	
 
 		return !$this->error;

@@ -8,7 +8,7 @@ class ControllerUpgrade extends Controller {
 
 			$this->model_upgrade->mysql();
 			
-			$this->response->redirect($this->url->link('upgrade/success'));
+			$this->response->redirect($this->url->link('upgrade/step_2'));
 		}		
 		
 		$data = array();
@@ -19,21 +19,61 @@ class ControllerUpgrade extends Controller {
 			$data['error_warning'] = '';
 		}
 		
+		$this->document->setTitle($this->language->get('heading_upgrade_step_1'));
+		
+		$data['heading_step_1'] = $this->language->get('heading_upgrade_step_1');
+		
+		$data['text_upgrade'] = $this->language->get('text_upgrade');
+		$data['text_finished'] = $this->language->get('text_finished');
+		$data['text_upgrade_tasks'] = $this->language->get('text_upgrade_tasks');
+		$data['text_upgrade_steps'] = $this->language->get('text_upgrade_steps');
+		$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_checking'] = $this->language->get('button_checking');
+		
 		$data['action'] = $this->url->link('upgrade');
 
 		$data['header'] = $this->load->controller('header');
 		$data['footer'] = $this->load->controller('footer');
 
-		$this->response->setOutput($this->load->view('upgrade.tpl', $data));
+		$this->response->setOutput($this->load->view('upgrade_step_1.tpl', $data));
 	}
 
-	public function success() {
+	public function step_2() {
 		$data = array();
+		
+		$this->document->setTitle($this->language->get('heading_upgrade_step_2'));
+		
+		$data['heading_step_2'] = $this->language->get('heading_upgrade_step_2');
+		
+		$data['text_upgrade'] = $this->language->get('text_upgrade');
+		$data['text_finished'] = $this->language->get('text_finished');
+		$data['text_shop'] = $this->language->get('text_shop');
+		$data['text_login'] = $this->language->get('text_login');
+		$data['text_upgrade_finished'] = $this->language->get('text_upgrade_finished');
+		$data['text_forget'] = $this->language->get('text_forget');	
+		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_deleting'] = $this->language->get('button_deleting');	
 		
 		$data['header'] = $this->load->controller('header');
 		$data['footer'] = $this->load->controller('footer');
 
-		$this->response->setOutput($this->load->view('success.tpl', $data));
+		$this->response->setOutput($this->load->view('upgrade_step_2.tpl', $data));
+	}
+	
+	public function delete() {
+		$dir = '../install';
+		$it = new RecursiveDirectoryIterator($dir, FilesystemIterator::SKIP_DOTS);
+		$files = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::CHILD_FIRST);
+		foreach($files as $file) {
+			if ($file->isDir()) {
+				rmdir($file->getRealPath());
+			} else {
+				unlink($file->getRealPath());
+			}
+		}
+		rmdir($dir);
+		
+		echo "Done. <span class=\"fa fa-check\"></span>";
 	}
 
 	private function validate() {

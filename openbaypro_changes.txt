@@ -1,5 +1,6 @@
 Type: Enhancement, New Feature, Bug
 
+<!--- RELEASE 2214 ---!>
 20-02-14 - Feature - Added new tags for {{ shop_navigation }} and {{ shop_categories }}
 20-02-14 - Bug - Fixed issue with bulk order update page not showing template correctly.
 19-02-14 - Enhancement - Added setting to allow a pre-selected shipping method during bulk update for Amazon orders
@@ -22,5 +23,6 @@ Type: Enhancement, New Feature, Bug
 09-01-14 - Enhancement - Shop categories will now show in order when creatign a listing
 09-01-14 - Enhancement - Added stock controlled check before resync is requested in manage page
 09-01-14 - Bug - Fix to remove item link on eBay manage item link page
+<!--- RELEASE 2155 ---!>
 09-01-14 - Bug - Fix for Amazon option products.Affects stock control for variant items when there is more than 1 option used to calculate the unique variant code
 08-01-14 - Bug - Fix for eBay option products.Affects stock control for variant items when there is more than 1 option used to calculate the unique variant code

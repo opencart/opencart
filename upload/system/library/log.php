@@ -1,18 +1,17 @@
 <?php
 class Log {
-	private $filename;
+	private $filehandle;
 
 	public function __construct($filename) {
-		$this->filename = $filename;
+		$file = DIR_LOGS . $filename;
+		$this->filehandle = fopen($file, 'a');
+	}
+
+	public function __destruct() {
+		fclose($this->filehandle); 
 	}
 
 	public function write($message) {
-		$file = DIR_LOGS . $this->filename;
-
-		$handle = fopen($file, 'a'); 
-
-		fwrite($handle, date('Y-m-d G:i:s') . ' - ' . $message . "\n");
-
-		fclose($handle); 
+		fwrite($this->filehandle, date('Y-m-d G:i:s') . ' - ' . $message . "\n");
 	}
 }

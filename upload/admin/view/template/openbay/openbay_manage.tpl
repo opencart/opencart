@@ -1,12 +1,10 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-        <?php } ?>
-    </div>
-
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
     <div class="box mBottom130">
         <div class="left"></div>
         <div class="right"></div>
@@ -26,7 +24,7 @@
                 <div id="tab-updates">
                     <p><?php echo $lang_patch_notes1; ?> <a href="http://shop.openbaypro.com/index.php?route=information/information/changelog" title="OpenBay Pro change log" target="_BLANK"><?php echo $lang_patch_notes2; ?></a></p>
                     <p><?php echo $lang_patch_notes3; ?></p>
-                    
+
                     <table class="form">
                         <tr>
                             <td><?php echo $lang_installed_version; ?>:</td>
@@ -143,7 +141,7 @@
 
 <script type="text/javascript"><!--
     var token = "<?php echo $_GET['token']; ?>";
-    
+
     $('.ftpsetting').keypress(function(){
         $('#preFtpTestText').show();
         $('#moduleUpdate').hide();
@@ -206,7 +204,7 @@
             type: 'post',
             data: $('.ftpsetting').serialize(),
             dataType: 'json',
-            beforeSend: function(){ 
+            beforeSend: function(){
                 $('#moduleUpdate').hide();
                 $('#imageModuleUpdate').show();
             },
@@ -222,7 +220,7 @@
             }
         });
     }
-    
+
     function validateForm(){
         $('#form').submit();
     }

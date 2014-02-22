@@ -231,6 +231,9 @@ $registry->set('cart', new Cart($registry));
 
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
+
+//OpenBay Pro
+$registry->set('openbay', new Openbay($registry));
 		
 // Front Controller
 $controller = new Front($registry);

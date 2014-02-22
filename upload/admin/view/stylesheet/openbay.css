@@ -1,0 +1,393 @@
+.box > .content{
+    padding:20px;
+}
+
+#greyScreen{
+    position: absolute;
+    left: 0;
+    top: 0;
+    background: #000;
+}
+
+.greyScreenBox{
+    width: 300px;
+    height: 125px;
+    border-radius: 15px;
+    background: #FFF;
+    border: 1px solid #000;
+    text-align: center;
+    position: absolute;
+    margin-left: -125px;
+    margin-top: -50px;
+    left: 50%;
+    top: 50%;
+    z-index: 20;
+    display: none;
+}
+
+#previewPage{
+    width:80%;
+    height:90%;
+    left: 20%;
+    top: 5%;
+    margin-left: -10%;
+    margin-top: 0px;
+    border-radius: 5px;
+    padding:5px;
+}
+
+.featurePage {
+    width:500px;
+    height:650px;
+    left: 50%;
+    top: 15%;
+    margin-left: -250px;
+    margin-top: 0px;
+    border-radius: 5px;
+    padding:5px;
+    position:fixed;
+}
+
+.nodePage {
+    width:300px;
+    height:400px;
+    left: 50%;
+    top: 25%;
+    margin-left: -150px;
+    margin-top: 0px;
+    border-radius: 5px;
+    padding:5px;
+    position:fixed;
+}
+
+.previewContent{
+    overflow:hidden;
+    height: 100%;
+    width: 100%;
+}
+
+.previewContentScroll{
+    overflow:auto;
+    height: 100%;
+    width: 100%;
+}
+
+.previewClose{
+    position: absolute;
+    top: -15px;
+    right: -15px;
+    cursor: pointer;
+    background-color: #ffffff;
+    font-size:16px;
+    border-radius: 5px;
+    width:15px;
+    height:15px;
+    line-height:15px;
+}
+
+.openbayLinks{}
+
+.openbayPod, a > .openbayPod{
+    width:120px;
+    height:150px;
+    margin-right:20px;
+    margin-bottom:20px;
+    border:1px solid #CCCCCC;
+    cursor:pointer;
+    float:left;
+    padding:10px;
+    color:#003366;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+}
+
+.openbayPod img{
+    float:left;
+    width:70px;
+    height:70px;
+    margin:25px;
+}
+
+.openbayPod h3{
+    line-height:30px;
+    width:120px;
+    text-align:center;
+    font-weight:bold;
+    font-size:13px;
+    padding:0px;
+    margin:0px;
+    float:left;
+}
+
+.overviewPod{
+    float:left !important;
+    width:90px !important;
+    height:120px !important;
+}
+
+.overviewPod img{
+    width:70px !important;
+    height:70px !important;
+    margin:10px !important;
+}
+
+
+.overviewPod h3{
+    width:90px !important;
+}
+
+#faqPopupContainer{
+    display:none;
+    position: absolute;
+    top: 1em;
+    right: 1em;
+    min-height:50px;
+    width:300px;
+    background-color: #EAF7D9;
+    border: 1px solid #BBDF8D;
+    z-index: 999;
+    padding:10px;
+    color: #555555;
+    border-radius: 7px 7px 7px 7px;
+}
+
+#faqClose{
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    font-weight:bold;
+    cursor: pointer;
+}
+
+#faqPopupContainer > h4{
+    margin:0 0 10px 0;
+    padding:0px;
+}
+
+.ebaySpecificTitle{
+    font-weight:bold;
+}
+.ebaySpecificSelect{
+    margin-right:10px;
+    width:200px;
+}
+.ebaySpecificInput{
+    margin-left:0px;
+    width:195px;
+}
+.ebaySpecificOther{
+    width:190px;
+}
+.ebaySpecificSpan{
+    display:none;
+}
+
+.attention, .warning, .success{
+    margin-bottom:5px;
+}
+
+.apiConnectionImg{
+    display:inline;
+    position:relative;
+    top:3px;
+    margin-right:10px;
+}
+
+#myopenbayplan{
+    margin-bottom:20px;
+}
+
+#openbayplans{
+    margin-bottom:100px;
+}
+
+#openbay_notification ul{
+    margin:0px; padding:0px;
+}
+
+#openbay_notification li{
+    margin:10px 0px;
+    line-height:22px;
+    margin-left:15px;
+}
+
+#openbay_notification h3{
+    font-weight:bold;
+    line-height:22px;
+    font-size:16px;
+    padding-left:27px;
+    margin: 5px 0px;
+}
+
+.displayNone{
+    display:none;
+}
+
+.bold{
+    font-weight:bold;
+}
+
+.underline{
+    text-decoration: underline;
+}
+
+.border{
+    border:1px solid #DDDDDD;
+}
+
+.borderBottom{
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.borderNoBottom{
+    border-bottom:0px;
+}
+
+.m0{
+    margin:0px;
+}
+
+.m3{
+    margin:3px;
+}
+
+.m10{
+    margin:10px;
+}
+
+.mTop10{
+    margin-top:10px;
+}
+
+.mTop15{
+    margin-top:15px;
+}
+
+.mTop20{
+    margin-top:20px;
+}
+
+.mTop30{
+    margin-top:30px;
+}
+
+.mBottom5{
+    margin-bottom:5px;
+}
+
+
+.mBottom10{
+    margin-bottom:10px;
+}
+
+.mBottom130{
+    margin-bottom:130px;
+}
+
+.mLeft5{
+    margin-left:5px;
+}
+
+.mLeft10{
+    margin-left:10px;
+}
+
+.mLeft20{
+    margin-left:20px;
+}
+
+.mLeft30{
+    margin-left:30px;
+}
+
+.mRight10{
+    margin-right:10px;
+}
+
+.width50{
+    width:50px;
+}
+
+.width75{
+    width:75px;
+}
+
+.width100{
+    width:100px;
+}
+
+.width120{
+    width:120px;
+}
+
+.width200{
+    width:200px;
+}
+
+.width250{
+    width:250px;
+}
+
+.width390{
+    width:390px;
+}
+
+.width400{
+    width:400px;
+}
+
+.width600{
+    width:600px;
+}
+
+.height250{
+    height:250px;
+}
+
+.height400{
+    height:400px;
+}
+
+.p0{
+    padding:0px;
+}
+
+.p5{
+    padding:5px;
+}
+
+.p10{
+    padding:10px;
+}
+
+.pLeft10{
+    padding-left:10px;
+}
+
+.pLeft30{
+    padding-left:30px;
+}
+
+.pTop10{
+    padding-top:10px;
+}
+
+.floatLeft{
+    float:left;
+}
+
+.floatRight{
+    float:right;
+}
+
+.textCenter{
+    text-align:center;
+}
+
+.textRight{
+    text-align:right;
+}
+
+.cursor{
+    cursor: pointer;
+}

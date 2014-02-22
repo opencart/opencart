@@ -146,6 +146,9 @@ $registry->set('length', new Length($registry));
 // User
 $registry->set('user', new User($registry));
 
+//OpenBay Pro
+$registry->set('openbay', new Openbay($registry));
+
 // Front Controller
 $controller = new Front($registry);
 

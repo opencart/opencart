@@ -19,16 +19,9 @@ $_['lang_btn_patch']            = 'Patch';
 $_['lang_btn_test']             = 'Test connection';
 $_['lang_btn_faq']               = 'View FAQ';
 $_['lang_latest']               = 'You are running the latest version';
-$_['lang_installed_version']    = 'Installed version';
-$_['lang_admin_dir']            = 'Admin directory';
-$_['lang_admin_dir_desc']       = 'If you have changed your admin directory update it to the new location';
+$_['text_installed_version']    = 'Installed version of OpenBay Pro: v';
 $_['lang_version_old_1']        = 'Your version is';
 $_['lang_version_old_2']        = 'the latest is';
-$_['lang_use_beta']             = 'Use Beta release';
-$_['lang_use_beta_2']           = 'NOT suggested!';
-$_['lang_test_conn']            = 'Test FTP connection';
-$_['lang_text_run_1']           = 'Run update';
-$_['lang_text_run_2']           = 'Run';
 $_['lang_no']                   = 'No';
 $_['lang_yes']                  = 'Yes';
 $_['lang_language']             = 'API response language';
@@ -40,13 +33,21 @@ $_['lang_column_status']        = 'Status';
 $_['lang_column_action']        = 'Action';
 
 // Updates
-$_['lang_use_pasv']                     = 'Use passive FTP';
 $_['field_ftp_user']                    = 'FTP Username';
+$_['text_help_ftp_user']           		= 'Use the FTP username from your host';
 $_['field_ftp_pw']                      = 'FTP Password';
+$_['text_help_ftp_pw']           		= 'Use the FTP password from your host';
 $_['field_ftp_server_address']          = 'FTP server address';
+$_['text_help_ftp_server_address']      = 'IP address or domain name for your FTP server';
 $_['field_ftp_root_path']               = 'FTP path on server';
-$_['field_ftp_root_path_info']          = '(No trailing slash e.g. httpdocs/www)';
-$_['desc_ftp_updates']                  = 'Enabling updates from here means you do not have to manually update your module using the standard drag and drop through FTP. Your FTP are not sent to the API.<br />';
+$_['text_help_ftp_root_path']           = '(No trailing slash e.g. httpdocs/www)';
+$_['field_ftp_admin']            		= 'Admin directory';
+$_['text_help_ftp_admin']               = 'If you have changed your admin directory update it to the new location';
+$_['field_ftp_pasv']                    = 'Use passive FTP';
+$_['field_ftp_beta']             		= 'Use beta version';
+$_['text_test_connection']              = 'Test FTP connection';
+$_['text_run_update']           		= 'Run update';
+$_['text_run']           				= 'Run';
 
 //Updates
 $_['text_patch']            			= 'Post update patch';
@@ -63,18 +64,16 @@ $_['update_okcon']                      = 'Connected to server OK. OpenCart fold
 $_['update_failed_user']                = 'Could not login with that user';
 $_['update_failed_connect']             = 'Could not connect to server';
 $_['update_success']                    = 'Module has been updated (v.%s)';
-$_['lang_patch_notes1']                 = 'To read about the recent and past updates';
-$_['lang_patch_notes2']                 = 'click here';
-$_['lang_patch_notes3']                 = "The update tool will make changes to your shop's file system. Make sure you have a backup before using this tool.";
+$_['text_patch_description']            = "The update tool will make changes to your shop's file system. Make sure you have a backup before using this tool.";
 
 $_['lang_mcrypt_text_false']            = 'PHP function "mcrypt_encrypt" is not enabled. Contact your hosting provider.';
 $_['lang_mb_text_false']                = 'PHP library "mb strings" is not enabled. Contact your hosting provider.';
 $_['lang_ftp_text_false']               = 'PHP FTP functions are not enabled. Contact your hosting provider.';
 $_['lang_error_oc_version']             = 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
-$_['lang_patch_applied']                = 'Patch applied';
-$_['lang_clear_faq']                    = 'Clear hidden FAQ popups';
+$_['text_clear_faq']                    = 'Clear hidden FAQ popups';
 $_['text_clear']                    	= 'Clear';
-$_['text_clear_faq_complete']           = 'FAQ notifications will now show again';
+$_['text_clear_faq_complete']           = 'Notifications will now show again';
+$_['text_clear_faq_description']        = 'Show all of the help notifications again';
 
 // Ajax elements
 $_['lang_ajax_ebay_shipped']            = 'The order will be marked as shipped on eBay automatically';

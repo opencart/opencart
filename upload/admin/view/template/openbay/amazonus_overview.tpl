@@ -15,14 +15,14 @@
       <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $lang_heading; ?></h1>
     </div>
     <div class="panel-body">
-      <div class="col-md-3 text-center">
-        <div class="row">
+      <div class="row">
+        <div class="col-md-3 text-center">
           <div class="well">
             <a href="<?php echo $link_settings; ?>">
-              <span class="fa-stack fa-3x">
-                <i class="fa fa-square-o fa-stack-2x"></i>
-                <i class="fa fa-wrench fa-stack-1x"></i>
-              </span>
+                <span class="fa-stack fa-3x">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-wrench fa-stack-1x"></i>
+                </span>
               <h4><?php echo $lang_heading_settings; ?></h4>
             </a>
           </div>
@@ -31,10 +31,10 @@
         <div class="col-md-3 text-center">
           <div class="well">
             <a href="<?php echo $link_subscription; ?>">
-              <span class="fa-stack fa-3x">
-                <i class="fa fa-user fa-stack-2x"></i>
-                <i class="fa fa-wrench fa-stack-1x"></i>
-              </span>
+                <span class="fa-stack fa-3x">
+                  <i class="fa fa-user fa-stack-2x"></i>
+                  <i class="fa fa-wrench fa-stack-1x"></i>
+                </span>
               <h4><?php echo $lang_heading_account; ?></h4>
             </a>
           </div>
@@ -86,10 +86,10 @@
         <div class="col-md-3 text-center">
           <div class="well">
             <a href="<?php echo $link_saved_listings; ?>">
-              <span class="fa-stack fa-3x">
-                <i class="fa fa-square-o fa-stack-2x"></i>
-                <i class="fa fa-save fa-stack-1x"></i>
-              </span>
+            <span class="fa-stack fa-3x">
+              <i class="fa fa-square-o fa-stack-2x"></i>
+              <i class="fa fa-save fa-stack-1x"></i>
+            </span>
               <h4><?php echo $lang_heading_saved_listings; ?></h4>
             </a>
           </div>
@@ -97,7 +97,7 @@
         <?php } else { ?>
         <div class="col-md-3 text-center">
           <div class="well">
-            <a href="https://account.openbaypro.com/amazon/apiRegister/" target="_BLANK">
+            <a href="https://account.openbaypro.com/amazonus/apiRegister/" target="_BLANK">
               <span class="fa-stack fa-3x">
                 <i class="fa fa-square-o fa-stack-2x"></i>
                 <i class="fa fa-star fa-stack-1x"></i>

@@ -29,8 +29,9 @@
             </a>
           </div>
         </div>
-        <div class="col-md-3 text-center">
-          <?php if($validation == true){ ?>
+
+        <?php if($validation == true){ ?>
+          <div class="col-md-3 text-center">
             <div class="well">
               <a href="<?php echo $links_sync; ?>">
                 <span class="fa-stack fa-3x">
@@ -119,17 +120,17 @@
             </div>
           </div>
         <?php }else{ ?>
-        <div class="col-md-3 text-center">
-          <div class="well">
-            <a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK">
-              <span class="fa-stack fa-3x">
-                <i class="fa fa-square-o fa-stack-2x"></i>
-                <i class="fa fa-star fa-stack-1x"></i>
-              </span>
-              <h4><?php echo $lang_heading_register; ?></h4>
-            </a>
+          <div class="col-md-3 text-center">
+            <div class="well">
+              <a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK">
+                <span class="fa-stack fa-3x">
+                  <i class="fa fa-square-o fa-stack-2x"></i>
+                  <i class="fa fa-star fa-stack-1x"></i>
+                </span>
+                <h4><?php echo $lang_heading_register; ?></h4>
+              </a>
+            </div>
           </div>
-        </div>
         <?php } ?>
       </div>
     </div>

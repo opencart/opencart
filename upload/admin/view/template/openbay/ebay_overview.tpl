@@ -1,81 +1,126 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-<?php 
-        foreach ($breadcrumbs as $breadcrumb) {
-            echo $breadcrumb['separator'].'<a href="'.$breadcrumb['href'].'">'.$breadcrumb['text'].'</a>';
-        } 
-?>
-    </div> 
-        
-    <?php if ($success) { ?>
-        <div class="success mBottom10"><?php echo $success; ?></div>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
+  </ul>
 
-    <div class="box mBottom130"> 
-        <div class="heading">
-            <h1><?php echo $lang_heading; ?></h1>
-        </div>
-        <div class="content">
-            <div class="openbayLinks">
-                <div class="openbayPod" onclick="location='<?php echo $links_settings; ?>'">
-                    <img src="view/image/openbay/openbay_icon1.png" title="" alt="" border="0" />
-                    <h3><?php echo $lang_heading_settings; ?></h3>
-                </div>
-                
-                <?php if($validation == true){ ?>
-                    <div class="openbayPod" onclick="location='<?php echo $links_sync; ?>'">
-                        <img src="view/image/openbay/openbay_icon10.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_sync; ?></h3>
-                    </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_subscribe; ?>'">
-                        <img src="view/image/openbay/openbay_icon2.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_account; ?></h3>
-                    </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_itemlink; ?>'">
-                        <img src="view/image/openbay/openbay_icon3.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_links; ?></h3>
-                    </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_itemimport; ?>'">
-                        <img src="view/image/openbay/openbay_icon5.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_item_import; ?></h3>
-                    </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_orderimport; ?>'">
-                        <img src="view/image/openbay/openbay_icon13.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_order_import; ?></h3>
-                    </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_summary; ?>'">
-                        <img src="view/image/openbay/openbay_icon8.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_summary; ?></h3>
-                    </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_profile; ?>'">
-                        <img src="view/image/openbay/openbay_icon12.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_profile; ?></h3>
-                    </div>
-                    <div class="openbayPod" onclick="location='<?php echo $links_template; ?>'">
-                        <img src="view/image/openbay/openbay_icon12.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_template; ?></h3>
-                    </div>
-                <?php }else{ ?>
-                    <a class="openbayPod" href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK">
-                        <img src="view/image/openbay/openbay_icon2.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_register; ?></h3>
-                    </a>
-                <?php } ?>
-            </div>
-        </div>
+  <?php if ($error) { ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+
+  <?php if ($success) { ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $lang_heading; ?></h1>
     </div>
+    <div class="panel-body">
+      <div class="row">
+        <div class="col-md-3 text-center">
+          <div class="well">
+            <a href="<?php echo $links_settings; ?>">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-wrench fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_settings; ?></h4>
+            </a>
+          </div>
+
+          <?php if($validation == true){ ?>
+          <div class="well">
+            <a href="<?php echo $links_sync; ?>">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-refresh fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_sync; ?></h4>
+            </a>
+          </div>
+          <div class="well">
+            <a href="<?php echo $links_subscribe; ?>">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-user fa-stack-2x"></i>
+                <i class="fa fa-wrench fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_account; ?></h4>
+            </a>
+          </div>
+          <div class="well">
+            <a href="<?php echo $links_itemlink; ?>">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-link fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_links; ?></h4>
+            </a>
+          </div>
+          <div class="well">
+            <a href="<?php echo $links_itemimport; ?>">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-cloud-download fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_item_import; ?></h4>
+            </a>
+          </div>
+          <div class="well">
+            <a href="<?php echo $links_orderimport; ?>">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-download fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_order_import; ?></h4>
+            </a>
+          </div>
+          <div class="well">
+            <a href="<?php echo $links_summary; ?>">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-bar-chart-o fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_summary; ?></h4>
+            </a>
+          </div>
+          <div class="well">
+            <a href="<?php echo $links_profile; ?>">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-file-text fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_profile; ?></h4>
+            </a>
+          </div>
+          <div class="well">
+            <a href="<?php echo $links_template; ?>">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-code fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_template; ?></h4>
+            </a>
+          </div>
+        <?php }else{ ?>
+          <div class="well">
+            <a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK">
+              <span class="fa-stack fa-3x">
+                <i class="fa fa-square-o fa-stack-2x"></i>
+                <i class="fa fa-star fa-stack-1x"></i>
+              </span>
+              <h4><?php echo $lang_heading_register; ?></h4>
+            </a>
+          </div>
+        <?php } ?>
+      </div>
+    </div>
+  </div>
 </div>
-
-<script type="text/javascript"><!--
-    $(document).ready(function() {
-        $('.openbayPod').hover( function(){
-            $(this).css('background-color', '#CCCCCC').css('border-color', '#003366');
-        },
-        function(){
-            $(this).css('background-color', '#FFFFFF').css('border-color', '#CCCCCC');
-        });
-    });
-//--></script>
-
 <?php echo $footer; ?>

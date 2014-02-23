@@ -82,7 +82,7 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function index() {
-		$this->redirect($this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->response->redirect($this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'));
 		return;
 	}
 
@@ -245,7 +245,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			$this->model_openbay_amazonus->scheduleOrders($settings);
 
 			$this->session->data['success'] = $this->language->get('lang_setttings_updated');
-			$this->redirect($this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
 

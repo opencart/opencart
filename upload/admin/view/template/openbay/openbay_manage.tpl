@@ -13,7 +13,7 @@
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $lang_text_manager; ?></h1>
     </div>
     <div class="panel-body">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-openbay-manager">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-openbay-manager" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-updates" data-toggle="tab"><?php echo $lang_btn_update; ?></a></li>
           <li><a href="#tab-settings" data-toggle="tab"><?php echo $lang_btn_settings; ?></a></li>
@@ -22,7 +22,7 @@
         <div class="tab-content">
           <div class="tab-pane active" id="tab-updates">
             <div class="alert alert-info text-left">
-              <?php echo $text_installed_version; ?> <i class="fa fa-refresh fa-spin"></i> <span id="version-text"><?php echo $txt_obp_version; ?></span>
+              <?php echo $text_installed_version; ?><span id="version-text"><?php echo $txt_obp_version; ?></span>
             </div>
 
             <input type="hidden" name="openbay_version" value="<?php echo $openbay_version;?>" id="openbay_version" />
@@ -33,50 +33,64 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="openbay_ftp_username"><?php echo $field_ftp_user; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_ftp_username" value="<?php echo $openbay_ftp_username;?>" placeholder="<?php echo $field_ftp_user; ?>" id="openbay_ftp_username" class="form-control" />
+                <input type="text" name="openbay_ftp_username" value="<?php echo $openbay_ftp_username;?>" placeholder="<?php echo $field_ftp_user; ?>" id="openbay_ftp_username" class="form-control ftpsetting" />
                 <span class="help-block"><?php echo $text_help_ftp_user; ?></span>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="openbay_ftp_pw"><?php echo $field_ftp_pw; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_ftp_pw" value="<?php echo $openbay_ftp_pw;?>" placeholder="<?php echo $field_ftp_user; ?>" id="openbay_ftp_pw" class="form-control" />
+                <input type="text" name="openbay_ftp_pw" value="<?php echo $openbay_ftp_pw;?>" placeholder="<?php echo $field_ftp_user; ?>" id="openbay_ftp_pw" class="form-control ftpsetting" />
                 <span class="help-block"><?php echo $text_help_ftp_pw; ?></span>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="openbay_ftp_server"><?php echo $field_ftp_server_address; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_ftp_server" value="<?php echo $openbay_ftp_server;?>" placeholder="<?php echo $field_ftp_server_address; ?>" id="openbay_ftp_server" class="form-control" />
+                <input type="text" name="openbay_ftp_server" value="<?php echo $openbay_ftp_server;?>" placeholder="<?php echo $field_ftp_server_address; ?>" id="openbay_ftp_server" class="form-control ftpsetting" />
                 <span class="help-block"><?php echo $text_help_ftp_server_address; ?></span>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="openbay_ftp_rootpath"><?php echo $field_ftp_root_path; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_ftp_rootpath" value="<?php echo $openbay_ftp_rootpath;?>" placeholder="<?php echo $field_ftp_root_path; ?>" id="openbay_ftp_rootpath" class="form-control" />
+                <input type="text" name="openbay_ftp_rootpath" value="<?php echo $openbay_ftp_rootpath;?>" placeholder="<?php echo $field_ftp_root_path; ?>" id="openbay_ftp_rootpath" class="form-control ftpsetting" />
                 <span class="help-block"><?php echo $text_help_ftp_root_path; ?></span>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="openbay_admin_directory"><?php echo $field_ftp_admin; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="openbay_admin_directory" value="<?php echo $openbay_admin_directory;?>" placeholder="<?php echo $field_ftp_admin; ?>" id="openbay_admin_directory" class="form-control" />
+                <input type="text" name="openbay_admin_directory" value="<?php echo $openbay_admin_directory;?>" placeholder="<?php echo $field_ftp_admin; ?>" id="openbay_admin_directory" class="form-control ftpsetting" />
                 <span class="help-block"><?php echo $text_help_ftp_admin; ?></span>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="openbay_ftp_pasv"><?php echo $field_ftp_pasv; ?></label>
               <div class="col-sm-10">
-                <input class="ftpsetting" type="hidden" name="openbay_ftp_pasv" value="0" />
-                <input class="ftpsetting" type="checkbox" name="openbay_ftp_pasv" id="openbay_ftp_pasv" value="1" <?php if(isset($openbay_ftp_pasv) && $openbay_ftp_pasv == 1){ echo 'checked="checked"'; } ?> />
+                <select name="openbay_ftp_pasv" id="openbay_ftp_pasv" class="form-control ftpsetting">
+                  <?php if ($openbay_ftp_pasv) { ?>
+                  <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                  <option value="0"><?php echo $text_no; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_yes; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="openbay_ftp_beta"><?php echo $field_ftp_beta; ?></label>
               <div class="col-sm-10">
-                <input class="ftpsetting" type="hidden" name="openbay_ftp_beta" value="0" />
-                <input class="ftpsetting" type="checkbox" name="openbay_ftp_beta" id="openbay_ftp_beta" value="1" <?php if(isset($openbay_ftp_beta) && $openbay_ftp_beta == 1){ echo 'checked="checked"'; } ?> />
+                <select name="openbay_ftp_beta" id="openbay_ftp_beta" class="form-control ftpsetting">
+                  <?php if ($openbay_ftp_beta) { ?>
+                  <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                  <option value="0"><?php echo $text_no; ?></option>
+                  <?php } else { ?>
+                  <option value="1"><?php echo $text_yes; ?></option>
+                  <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
             <div class="form-group" id="ftp-test-row">

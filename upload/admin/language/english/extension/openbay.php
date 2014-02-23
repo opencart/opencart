@@ -1,7 +1,7 @@
 <?php
-// Heading 
-$_['lang_heading_title']        = 'OpenBay Pro'; 
-$_['lang_text_manager']         = 'OpenBay Pro manager'; 
+// Heading
+$_['lang_heading_title']        = 'OpenBay Pro';
+$_['lang_text_manager']         = 'OpenBay Pro manager';
 
 // Text
 $_['text_install']              = 'Install';
@@ -22,7 +22,7 @@ $_['lang_latest']               = 'You are running the latest version';
 $_['lang_installed_version']    = 'Installed version';
 $_['lang_admin_dir']            = 'Admin directory';
 $_['lang_admin_dir_desc']       = 'If you have changed your admin directory update it to the new location';
-$_['lang_version_old_1']        = 'A new version is available. Your version is';
+$_['lang_version_old_1']        = 'Your version is';
 $_['lang_version_old_2']        = 'the latest is';
 $_['lang_use_beta']             = 'Use Beta release';
 $_['lang_use_beta_2']           = 'NOT suggested!';
@@ -109,7 +109,6 @@ $_['lang_pod_help']                     = 'Help';
 $_['lang_title_manage']                 = 'Manage OpenBay Pro; updates, settings and more';
 $_['lang_pod_manage']                   = 'Manage';
 $_['lang_title_shop']                   = 'OpenBay Pro store; addons, templates and more';
-$_['lang_pod_shop']                     = 'Store';
 
 $_['lang_checking_messages']            = 'Checking for messages';
 $_['lang_title_messages']               = 'Messages &amp; notifications';

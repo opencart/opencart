@@ -24,9 +24,9 @@ class ControllerExtensionOpenbay extends Controller {
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
-		$data['mcrypt'] = $this->model_openbay_openbay->checkMcrypt();
-		$data['mbstring'] = $this->model_openbay_openbay->checkMbstings();
-		$data['ftpenabled'] = $this->model_openbay_openbay->checkFtpenabled();
+		$data['check']['mcrypt'] = $this->model_openbay_openbay->checkMcrypt();
+		$data['check']['mbstring'] = $this->model_openbay_openbay->checkMbstings();
+		$data['check']['ftpenabled'] = $this->model_openbay_openbay->checkFtpenabled();
 		$data['manage_link'] = $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['success'] = '';

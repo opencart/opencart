@@ -48,7 +48,7 @@
                     <td class="left">
 <?php
                       if($order['channel'] == 'eBay') {
-                        if($this->request->post['change_order_status_id'] == $this->config->get('EBAY_DEF_SHIPPED_ID')) {
+                        if($this->request->post['change_order_status_id'] == $this->config->get('ebay_status_shipped_id')) {
 ?>
                             <p>
                                 <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>

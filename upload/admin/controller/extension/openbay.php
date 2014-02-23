@@ -63,8 +63,9 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$data['extensions'][] = array(
 				'name' => $this->language->get('heading_title'),
+				'edit' => $this->url->link('openbay/' . $extension . '', 'token=' . $this->session->data['token'], 'SSL'),
 				'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'install'   => $this->url->link('extension/openbay/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+				'install' => $this->url->link('extension/openbay/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
 				'uninstall' => $this->url->link('extension/openbay/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
 				'installed' => in_array($extension, $extensions)
 			);
@@ -88,10 +89,15 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function install() {
+		$this->load->language('extension/openbay');
+
 		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
-			$this->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->session->data['error'] = $this->language->get('text_error_permission');
+
+			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
+			$this->session->data['success'] = $this->language->get('text_install_success');
+
 			$this->load->model('user/user_group');
 
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/' . $this->request->get['extension']);
@@ -106,16 +112,22 @@ class ControllerExtensionOpenbay extends Controller {
 				$class->install();
 			}
 
-			$this->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 	}
 
 	public function uninstall() {
-		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
-			$this->session->data['error'] = $this->language->get('error_permission');
+		$this->load->language('extension/openbay');
 
-			$this->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
+		$this->load->model('setting/extension');
+
+		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
+			$this->session->data['error'] = $this->language->get('text_error_permission');
+
+			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
+			$this->session->data['success'] = $this->language->get('text_uninstall_success');
+
 			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
 
 			$this->load->model('setting/extension');
@@ -131,7 +143,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$class->uninstall();
 			}
 
-			$this->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 	}
 
@@ -358,9 +370,9 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data = array_merge($data, $this->load->language('extension/openbay'));
 
-		if ($this->config->get('openbay_status') == 1) {
+		if ($this->config->get('ebay_status') == 1) {
 			if($this->openbay->ebay->isEbayOrder($this->request->get['order_id']) !== false) {
-				if($this->config->get('EBAY_DEF_SHIPPED_ID') == $this->request->get['status_id']) {
+				if($this->config->get('ebay_status_shipped_id') == $this->request->get['status_id']) {
 					$data['carriers'] = $this->openbay->ebay->getCarriers();
 					$data['order_info'] = $this->openbay->ebay->getOrder($this->request->get['order_id']);
 					$this->response->setOutput($this->load->view('openbay/ebay_ajax_shippinginfo.tpl', $data));
@@ -394,8 +406,8 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function ajaxAddOrderInfo() {
-		if($this->config->get('openbay_status') == 1 && $this->openbay->ebay->isEbayOrder($this->request->get['order_id']) !== false) {
-			if($this->config->get('EBAY_DEF_SHIPPED_ID') == $this->request->get['status_id']) {
+		if($this->config->get('ebay_status') == 1 && $this->openbay->ebay->isEbayOrder($this->request->get['order_id']) !== false) {
+			if($this->config->get('ebay_status_shipped_id') == $this->request->get['status_id']) {
 				$this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id'], array('tracking_no' => $this->request->post['tracking_no'], 'carrier_id' => $this->request->post['carrier_id']));
 			}else{
 				$this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id']);
@@ -706,7 +718,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$data['market_options'] = array();
 
-			if ($this->config->get('openbay_status') == 1) {
+			if ($this->config->get('ebay_status') == 1) {
 				$data['market_options']['ebay']['carriers'] = $this->openbay->ebay->getCarriers();
 			}
 
@@ -785,8 +797,8 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$i = 0;
 		foreach($this->request->post['order_id'] as $order_id) {
-			if ($this->config->get('openbay_status') == 1 && $this->request->post['channel'][$order_id] == 'eBay') {
-				if($this->config->get('EBAY_DEF_SHIPPED_ID') == $this->request->post['order_status_id']) {
+			if ($this->config->get('ebay_status') == 1 && $this->request->post['channel'][$order_id] == 'eBay') {
+				if($this->config->get('ebay_status_shipped_id') == $this->request->post['order_status_id']) {
 					$this->openbay->ebay->orderStatusListen($order_id, $this->request->post['order_status_id'], array('tracking_no' => $this->request->post['tracking'][$order_id], 'carrier_id' => $this->request->post['carrier'][$order_id]));
 				}else{
 					$this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id']);
@@ -843,7 +855,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$markets = array();
 
-		if ($this->config->get('openbay_status') == '1') {
+		if ($this->config->get('ebay_status') == '1') {
 			$this->load->model('openbay/ebay');
 
 			if($this->openbay->ebay->getEbayItemId($product_id) == false) {
@@ -1218,7 +1230,7 @@ class ControllerExtensionOpenbay extends Controller {
 			'limit'                 => $this->config->get('config_admin_limit')
 		);
 
-		if($this->config->get('openbay_status') != '1' && $data['filter_market_name'] == 'ebay') {
+		if($this->config->get('ebay_status') != '1' && $data['filter_market_name'] == 'ebay') {
 			$this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
@@ -1234,7 +1246,7 @@ class ControllerExtensionOpenbay extends Controller {
 		}
 
 		$data['marketplace_statuses'] = array(
-			'ebay' => $this->config->get('openbay_status'),
+			'ebay' => $this->config->get('ebay_status'),
 			'amazon' => $this->config->get('amazon_status'),
 			'amazonus' => $this->config->get('amazonus_status'),
 		);
@@ -1266,7 +1278,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$markets = array();
 
-			if ($this->config->get('openbay_status') == '1') {
+			if ($this->config->get('ebay_status') == '1') {
 				$this->load->model('openbay/ebay');
 
 				$activeList = $this->model_openbay_ebay->getLiveListingArray();

@@ -82,13 +82,13 @@ $_['lang_images_gallery_plus']      = 'Gallery plus<span class="help">Large pict
 //Price and details
 $_['lang_listing_condition']        = 'Item condition';
 $_['lang_listing_duration']         = 'Listing duration';
-$_['lang_listing_1day']             = '1 day';
-$_['lang_listing_3day']             = '3 days';
-$_['lang_listing_5day']             = '5 days';
-$_['lang_listing_7day']             = '7 days';
-$_['lang_listing_10day']            = '10 days';
-$_['lang_listing_30day']            = '30 days';
-$_['lang_listing_gtc']              = 'GTC- Good till cancelled';
+$_['text_listing_1day']             = '1 day';
+$_['text_listing_3day']             = '3 days';
+$_['text_listing_5day']             = '5 days';
+$_['text_listing_7day']             = '7 days';
+$_['text_listing_10day']            = '10 days';
+$_['text_listing_30day']            = '30 days';
+$_['text_listing_gtc']              = 'GTC- Good till cancelled';
 $_['lang_stock_matrix']             = 'Stock matrix';
 $_['lang_stock_col_qty_total']      = 'In stock';
 $_['lang_stock_col_qty']            = 'To list';

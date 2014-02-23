@@ -6,9 +6,9 @@ final class Ebay {
 
 	public function __construct($registry) {
 		$this->registry = $registry;
-		$this->token = $this->config->get('openbaypro_token');
-		$this->secret = $this->config->get('openbaypro_secret');
-		$this->logging = $this->config->get('openbaypro_logging');
+		$this->token = $this->config->get('ebay_token');
+		$this->secret = $this->config->get('ebay_secret');
+		$this->logging = $this->config->get('ebay_logging');
 		$this->tax = $this->config->get('tax');
 		$this->server = 1;
 		$this->lasterror = '';
@@ -36,7 +36,7 @@ final class Ebay {
 	}
 
 	public function call($call, array $post = null, array $options = array(), $content_type = 'json', $statusOverride = false) {
-		if($this->config->get('openbay_status') == 1 || $statusOverride == true) {
+		if($this->config->get('ebay_status') == 1 || $statusOverride == true) {
 			$this->lasterror    = '';
 			$this->lastmsg      = '';
 
@@ -119,7 +119,7 @@ final class Ebay {
 	}
 
 	public function callNoResponse($call, array $post = null, array $options = array(), $content_type = 'json') {
-		if($this->config->get('openbay_status') == 1) {
+		if($this->config->get('ebay_status') == 1) {
 			$this->log('openbay_noresponse_call('.$call.') - Data :'.  json_encode($post));
 
 			if(defined("HTTPS_CATALOG")) {
@@ -283,7 +283,7 @@ final class Ebay {
 	public function endItem($item_id) {
 		$this->log('endItem() - ID "'.$item_id);
 
-		if($this->config->get('openbaypro_enditems') == 1) {
+		if($this->config->get('ebay_enditems') == 1) {
 			$this->call('item/endItem/', array('id' => $item_id));
 			$this->removeItemByItemId($item_id);
 
@@ -701,7 +701,7 @@ final class Ebay {
 						}
 					}
 
-					if($this->config->get('openbaypro_relistitems') == 1) {
+					if($this->config->get('ebay_relistitems') == 1) {
 						//relist item with new stock
 						$this->relistItem($item['itemId'], $item['productId'],(int)$local_stock['quantity']);
 					}
@@ -886,7 +886,7 @@ final class Ebay {
 					//no, its a normal item, is there now stock?
 					if($data['quantity'] > 0) {
 						//yes, is relist setting yes?
-						if($this->config->get('openbaypro_relistitems') == 1) {
+						if($this->config->get('ebay_relistitems') == 1) {
 							//relist item with new stock
 							$this->relistItem($old_item_id, $product_id, $data['quantity']);
 						}
@@ -911,7 +911,7 @@ final class Ebay {
 
 			if(!empty($item_txn_array)) {
 				//Has it been marked as paid?
-				if($status_id == $this->config->get('EBAY_DEF_PAID_ID')) {
+				if($status_id == $this->config->get('ebay_status_paid_id')) {
 					$this->log('orderStatusListen() - Updating to paid status');
 					foreach($item_txn_array as $item) {
 						$tmp = simplexml_load_string($this->eBayPaymentStatus($item['item'], $item['txn'], true));
@@ -919,7 +919,7 @@ final class Ebay {
 				}
 
 				// Has it been marked as shipped?
-				if($status_id == $this->config->get('EBAY_DEF_SHIPPED_ID')) {
+				if($status_id == $this->config->get('ebay_status_shipped_id')) {
 					$this->log('orderStatusListen() - Updating to shipped status');
 					foreach($item_txn_array as $item) {
 						$tmp = simplexml_load_string($this->eBayShippingStatus($item['item'], $item['txn'], true, (isset($data['tracking_no']) ? $data['tracking_no'] : ''), (isset($data['carrier_id']) ? $data['carrier_id'] : '')));
@@ -928,7 +928,7 @@ final class Ebay {
 				}
 
 				//Has it been marked as cancelled?
-				if($status_id == $this->config->get('EBAY_DEF_CANCELLED_ID')) {
+				if($status_id == $this->config->get('ebay_status_cancelled_id')) {
 					$this->log('orderStatusListen() - Updating to cancelled status');
 					foreach($item_txn_array as $item) {
 						$tmp = simplexml_load_string($this->eBayPaymentStatus($item['item'], $item['txn'], false));
@@ -940,7 +940,7 @@ final class Ebay {
 				}
 
 				//Has it been marked as refunded?
-				if($status_id == $this->config->get('EBAY_DEF_REFUNDED_ID')) {
+				if($status_id == $this->config->get('ebay_status_refunded_id')) {
 					$this->log('orderStatusListen() - Updating to refunded status');
 					foreach($item_txn_array as $item) {
 						$tmp = simplexml_load_string($this->eBayPaymentStatus($item['item'], $item['txn'], false));
@@ -1001,7 +1001,7 @@ final class Ebay {
 	}
 
 	public function validate() {
-		if($this->config->get('openbay_status') != 0 && $this->config->get('openbaypro_token') != '' && $this->config->get('openbaypro_secret') != '' && $this->config->get('openbaypro_string1') != '' && $this->config->get('openbaypro_string2') != '') {
+		if($this->config->get('ebay_status') != 0 && $this->config->get('ebay_token') != '' && $this->config->get('ebay_secret') != '' && $this->config->get('ebay_string1') != '' && $this->config->get('ebay_string2') != '') {
 			return true;
 		}else{
 			return false;
@@ -1192,9 +1192,9 @@ final class Ebay {
 
 		if ($this->lasterror === false) {
 			if (isset($response['urls']['ViewItemURL'])) {
-				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE  `key` = 'openbaypro_ebay_itm_link' LIMIT 1");
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE  `key` = 'ebay_itm_link' LIMIT 1");
 
-				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$response['urls']['ViewItemURL']) . "', `key` = 'openbaypro_ebay_itm_link', `group` = 'openbay'");
+				$this->db->query("INSERT INTO `" . DB_PREFIX . "setting` SET `value` = '" . $this->db->escape((string)$response['urls']['ViewItemURL']) . "', `key` = 'ebay_itm_link', `group` = 'openbay'");
 
 				$this->log('Updated eBay item link');
 			} else {

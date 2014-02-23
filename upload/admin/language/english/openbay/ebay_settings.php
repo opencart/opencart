@@ -89,19 +89,19 @@ $_['lang_ajax_dev_enter_pw']    = 'Please enter your admin password';
 $_['lang_ajax_dev_enter_warn']  = 'This action is dangerous so is password protected.';
 
 $_['lang_legend_notify_settings']           = 'Notification settings';
-$_['lang_openbaypro_update_notify']         = 'Order updates<span class="help">This is only for automated updates</span>';
+$_['lang_ebay_update_notify']         = 'Order updates<span class="help">This is only for automated updates</span>';
 $_['lang_notify_setting_msg']               = 'Control when customers receive notifications from the application. Enabling update emails can improve your DSR ratings as the user will get updates about their order.';
-$_['lang_openbaypro_confirm_notify']        = 'New order - buyer<span class="help">Notify the user with the default new order email</span>';
-$_['lang_openbaypro_confirmadmin_notify']   = 'New order - admin<span class="help">Notify the store admin with the default new order email</span>';
+$_['lang_ebay_confirm_notify']        = 'New order - buyer<span class="help">Notify the user with the default new order email</span>';
+$_['lang_ebay_confirmadmin_notify']   = 'New order - admin<span class="help">Notify the store admin with the default new order email</span>';
 $_['lang_openbaypro_brand_disable']         = 'Disable link<span class="help">Removes the OpenBay Pro link in order emails</span>';
 
-$_['lang_listing_1day']             = '1 day';
-$_['lang_listing_3day']             = '3 days';
-$_['lang_listing_5day']             = '5 days';
-$_['lang_listing_7day']             = '7 days';
-$_['lang_listing_10day']            = '10 days';
-$_['lang_listing_30day']            = '30 days';
-$_['lang_listing_gtc']              = 'GTC- Good till cancelled';
+$_['text_listing_1day']             = '1 day';
+$_['text_listing_3day']             = '3 days';
+$_['text_listing_5day']             = '5 days';
+$_['text_listing_7day']             = '7 days';
+$_['text_listing_10day']            = '10 days';
+$_['text_listing_30day']            = '30 days';
+$_['text_listing_gtc']              = 'GTC- Good till cancelled';
 $_['lang_openbay_duration']         = 'Default listing duration<span class="help">GTC is only available is you have an eBay shop.</span>';
 $_['lang_address_format']           = 'Default address format<span class="help">Only used if the country does not have an address format set-up already.</span>';
 

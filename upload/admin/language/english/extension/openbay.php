@@ -39,9 +39,6 @@ $_['lang_column_name']          = 'Plugin name';
 $_['lang_column_status']        = 'Status';
 $_['lang_column_action']        = 'Action';
 
-// Error
-$_['error_permission']          = 'Warning: You do not have permission to modify eBay extensions!';
-
 // Updates
 $_['lang_use_pasv']                     = 'Use passive FTP';
 $_['field_ftp_user']                    = 'FTP Username';
@@ -67,17 +64,6 @@ $_['update_success']                    = 'Module has been updated (v.%s)';
 $_['lang_patch_notes1']                 = 'To read about the recent and past updates';
 $_['lang_patch_notes2']                 = 'click here';
 $_['lang_patch_notes3']                 = "The update tool will make changes to your shop's file system. Make sure you have a backup before using this tool.";
-
-//Help tab
-$_['lang_help_title']                   = 'Information on help & support';
-$_['lang_help_support_title']           = 'Support';
-$_['lang_help_support_description']     = 'You should read our FAQ section to see if your question is already answered <a href="http://shop.openbaypro.com/index.php?route=information/faq" title="OpenBay Pro for OpenCart support FAQ">here</a>. <br />If you cannot find an answer then you can create a support ticket, <a href="http://support.welfordmedia.co.uk" title="OpenBay Pro for OpenCart support site">click here</a>';
-$_['lang_help_template_title']          = 'Creating eBay templates';
-$_['lang_help_template_description']    = 'Information for developers &amp; designers on creating custom templates for their eBay listings, <a href="http://shop.openbaypro.com/index.php?route=information/faq&topic=30" title="OpenBay Pro HTML templates for eBay">click here</a>';
-
-$_['lang_tab_help']                     = 'Help';
-$_['lang_help_guide']                   = 'User guides';
-$_['lang_help_guide_description']       = 'To download and view the eBay and Amazon user guides <a href="http://shop.openbaypro.com/index.php?route=information/faq&topic=37" title="OpenBay Pro user guides">click here</a>';
 
 $_['lang_mcrypt_text_false']            = 'PHP function "mcrypt_encrypt" is not enabled. Contact your hosting provider.';
 $_['lang_mb_text_false']                = 'PHP library "mb strings" is not enabled. Contact your hosting provider.';
@@ -111,6 +97,9 @@ $_['text_manage']                   	= 'Manage';
 $_['lang_title_shop']                   = 'OpenBay Pro store; addons, templates and more';
 $_['text_tutorials']                    = 'Tutorials';
 $_['text_suggestions']                  = 'Suggestions';
+$_['text_install_success']              = 'Marketplace has been installed';
+$_['text_uninstall_success']            = 'Marketplace has been removed';
+$_['text_error_permission']             = 'You do not have permission to modify the OpenBay Pro extension';
 
 $_['lang_checking_messages']            = 'Checking for messages';
 $_['lang_title_messages']               = 'Messages &amp; notifications';

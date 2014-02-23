@@ -2,13 +2,13 @@
 class ModelOpenbayEbay extends Model{
 	public function install(){
 		$value                                  = array();
-		$value["openbaypro_token"]              = '';
-		$value["openbaypro_secret"]             = '';
-		$value["openbaypro_string1"]            = '';
-		$value["openbaypro_string2"]            = '';
-		$value["openbaypro_enditems"]           = '0';
-		$value["openbaypro_logging"]            = '1';
-		$value["field_payment_instruction"]     = '';
+		$value["ebay_token"]              = '';
+		$value["ebay_secret"]             = '';
+		$value["ebay_string1"]            = '';
+		$value["ebay_string2"]            = '';
+		$value["ebay_enditems"]           = '0';
+		$value["ebay_logging"]            = '1';
+		$value["ebay_payment_instruction"]     = '';
 		$value["entry_payment_paypal_address"]  = '';
 		$value["field_payment_paypal"]          = '0';
 		$value["field_payment_cheque"]          = '0';
@@ -16,23 +16,23 @@ class ModelOpenbayEbay extends Model{
 		$value["tax"]                           = '0';
 		$value["postcode"]                      = '';
 		$value["dispatch_time"]                 = '1';
-		$value["EBAY_DEF_IMPORT_ID"]            = '1';
-		$value["EBAY_DEF_SHIPPED_ID"]           = '3';
-		$value["EBAY_DEF_PAID_ID"]              = '2';
-		$value["EBAY_DEF_CANCELLED_ID"]         = '7';
-		$value["EBAY_DEF_REFUNDED_ID"]          = '11';
-		$value["openbay_def_currency"]          = 'GBP';
+		$value["ebay_status_import_id"]            = '1';
+		$value["ebay_status_shipped_id"]           = '3';
+		$value["ebay_status_paid_id"]              = '2';
+		$value["ebay_status_cancelled_id"]         = '7';
+		$value["ebay_status_refunded_id"]          = '11';
+		$value["ebay_def_currency"]          = 'GBP';
 		$value["openbay_admin_directory"]       = 'admin';
-		$value["openbaypro_stock_allocate"]     = '0';
-		$value["openbaypro_update_notify"]      = '1';
-		$value["openbaypro_confirm_notify"]     = '1';
-		$value["openbaypro_confirmadmin_notify"]= '1';
-		$value["openbaypro_created_hours"]      = '48';
-		$value["openbaypro_create_date"]        = '0';
-		$value["openbaypro_ebay_itm_link"]      = 'http://www.ebay.com/itm/';
-		$value["openbaypro_relistitems"]        = 0;
-		$value["openbaypro_time_offset"]        = 0;
-		$value["openbay_default_addressformat"] = '{firstname} {lastname}
+		$value["ebay_stock_allocate"]     = '0';
+		$value["ebay_update_notify"]      = '1';
+		$value["ebay_confirm_notify"]     = '1';
+		$value["ebay_confirmadmin_notify"]= '1';
+		$value["ebay_created_hours"]      = '48';
+		$value["ebay_create_date"]        = '0';
+		$value["ebay_itm_link"]      = 'http://www.ebay.com/itm/';
+		$value["ebay_relistitems"]        = 0;
+		$value["ebay_time_offset"]        = 0;
+		$value["ebay_default_addressformat"] = '{firstname} {lastname}
 {company}
 {address_1}
 {address_2}
@@ -277,7 +277,7 @@ class ModelOpenbayEbay extends Model{
 					'qty'           => $row['quantity'],
 					'name'          => $row['name'],
 					'link_edit'     => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id='.$row['product_id'], 'SSL'),
-					'link_ebay'     => $this->config->get('openbaypro_ebay_itm_link').$row['ebay_item_id'],
+					'link_ebay'     => $this->config->get('ebay_itm_link').$row['ebay_item_id'],
 				);
 
 				$data[$row['ebay_item_id']]['options'] = 0;
@@ -287,7 +287,7 @@ class ModelOpenbayEbay extends Model{
 				}
 
 				//get the allocated stock - items that have been bought but not assigned to an order
-				if($this->config->get('openbaypro_stock_allocate') == 0){
+				if($this->config->get('ebay_stock_allocate') == 0){
 					$data[$row['ebay_item_id']]['allocated'] = $this->openbay->ebay->getAllocatedStock($row['product_id']);
 				}else{
 					$data[$row['ebay_item_id']]['allocated'] = 0;
@@ -578,7 +578,7 @@ class ModelOpenbayEbay extends Model{
 			$this->openbay->ebay->createLink($data['product_id'], $response['ItemID'], $variant);
 			$this->openbay->ebay->addReserve($data, $response['ItemID'], $variant);
 
-			$data2['data']['viewLink']  = html_entity_decode($this->config->get('openbaypro_ebay_itm_link') . $response['ItemID']);
+			$data2['data']['viewLink']  = html_entity_decode($this->config->get('ebay_itm_link') . $response['ItemID']);
 		}else{
 			$data2['error']             = false;
 			$data2['msg']               = 'ok';

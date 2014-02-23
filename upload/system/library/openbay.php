@@ -23,7 +23,7 @@ final class Openbay {
 		 */
 
 		// eBay Module
-		if ($this->config->get('openbay_status') == 1) {
+		if ($this->config->get('ebay_status') == 1) {
 			$this->ebay->orderNew($orderId);
 		}
 
@@ -53,7 +53,7 @@ final class Openbay {
 		 */
 
 		// eBay Module
-		if ($this->config->get('openbay_status') == 1) {
+		if ($this->config->get('ebay_status') == 1) {
 			$this->ebay->productUpdateListen($productId, $data);
 		}
 
@@ -78,7 +78,7 @@ final class Openbay {
 		 */
 
 		// eBay Module
-		if ($this->config->get('openbay_status') == 1) {
+		if ($this->config->get('ebay_status') == 1) {
 			$this->ebay->putStockUpdateBulk($productIdArray, $endInactive);
 		}
 
@@ -277,7 +277,7 @@ final class Openbay {
 
 	public function deleteProduct($product_id) {
 		// eBay Module
-		if ($this->config->get('openbay_status') == 1) {
+		if ($this->config->get('ebay_status') == 1) {
 			$this->ebay->deleteProduct($product_id);
 		}
 
@@ -297,7 +297,7 @@ final class Openbay {
 		 * Called when an order is deleted - usually by the admin. Helpful to loop over the products to add the stock back to the markets.
 		 */
 		// eBay Module
-		if ($this->config->get('openbay_status') == 1) {
+		if ($this->config->get('ebay_status') == 1) {
 			$this->ebay->deleteOrder($order_id);
 		}
 

@@ -448,8 +448,8 @@
                     <tr>
                         <td><?php echo $lang_imediate_payment; ?></td>
                         <td>
-                            <p><input type="radio" name="payment_immediate" value="0" <?php if($product['defaults']['payment_immediate'] != 1){ echo'checked '; } ?>/> <?php echo $lang_no; ?></p>
-                            <p><input type="radio" name="payment_immediate" value="1" <?php if($product['defaults']['payment_immediate'] == 1){ echo'checked '; } ?>/> <?php echo $lang_yes; ?></p>
+                            <p><input type="radio" name="ebay_payment_immediate" value="0" <?php if($product['defaults']['ebay_payment_immediate'] != 1){ echo'checked '; } ?>/> <?php echo $lang_no; ?></p>
+                            <p><input type="radio" name="ebay_payment_immediate" value="1" <?php if($product['defaults']['ebay_payment_immediate'] == 1){ echo'checked '; } ?>/> <?php echo $lang_yes; ?></p>
                         </td>
                     </tr>
                     <tr>
@@ -1028,13 +1028,13 @@
         var lang            = new Array();
         var listingDefault  = '<?php echo $product['defaults']['listing_duration']; ?>';
 
-        lang["Days_1"]      = '<?php echo $lang_listing_1day; ?>';
-        lang["Days_3"]      = '<?php echo $lang_listing_3day; ?>';
-        lang["Days_5"]      = '<?php echo $lang_listing_5day; ?>';
-        lang["Days_7"]      = '<?php echo $lang_listing_7day; ?>';
-        lang["Days_10"]     = '<?php echo $lang_listing_10day; ?>';
-        lang["Days_30"]     = '<?php echo $lang_listing_30day; ?>';
-        lang["GTC"]         = '<?php echo $lang_listing_gtc; ?>';
+        lang["Days_1"]      = '<?php echo $text_listing_1day; ?>';
+        lang["Days_3"]      = '<?php echo $text_listing_3day; ?>';
+        lang["Days_5"]      = '<?php echo $text_listing_5day; ?>';
+        lang["Days_7"]      = '<?php echo $text_listing_7day; ?>';
+        lang["Days_10"]     = '<?php echo $text_listing_10day; ?>';
+        lang["Days_30"]     = '<?php echo $text_listing_30day; ?>';
+        lang["GTC"]         = '<?php echo $text_listing_gtc; ?>';
 
         htmlInj        = '';
 

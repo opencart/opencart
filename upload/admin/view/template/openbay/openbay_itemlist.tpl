@@ -297,7 +297,7 @@ function filter() {
 }
 //--></script>
 
-<?php  if ($this->config->get('openbay_status') == '1') { ?>
+<?php  if ($this->config->get('ebay_status') == '1') { ?>
 <script type="text/javascript"><!--
         $('.buttons').prepend('<a onclick="bulkUpload();" class="button"><span><?php echo $lang_bulk_btn; ?></span></a>');
 

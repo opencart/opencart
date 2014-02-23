@@ -24,7 +24,7 @@
             </div>
 
             <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-                <input type="hidden" name="openbaypro_ebay_itm_link" value="<?php echo $openbaypro_ebay_itm_link; ?>" />
+                <input type="hidden" name="ebay_itm_link" value="<?php echo $ebay_itm_link; ?>" />
                 <div id="tab-general">
                     <h2><?php echo $lang_legend_api; ?></h2>
 
@@ -33,8 +33,8 @@
                             <td><p><?php echo $lang_status; ?></p></td>
                             <td>
                                 <p>
-                                    <select name="openbay_status" style="width:200px;">
-                                        <?php if ($openbay_status) { ?>
+                                    <select name="ebay_status" style="width:200px;">
+                                        <?php if ($ebay_status) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_enabled; ?></option>
                                         <option value="0"><?php echo $lang_disabled; ?></option>
                                         <?php } else { ?>
@@ -47,28 +47,28 @@
                         </tr>
 
                         <tr>
-                            <td><p><label for="openbaypro_token"><?php echo $lang_obp_token; ?></p></td>
+                            <td><p><label for="ebay_token"><?php echo $lang_obp_token; ?></p></td>
                             <td>
                                 <p><img src="view/image/lock.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><?php echo $lang_obp_token_register; ?></a></p>
                                 <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><?php echo $lang_obp_token_renew; ?></a></p>
                                 <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><?php echo $lang_obp_detail_update; ?></a></p>
-                                <p><input type="text" name="openbaypro_token" id="openbaypro_token" style="width:300px;" maxlength="" value="<?php echo $openbaypro_token;?>" class="credentials" /></p>
+                                <p><input type="text" name="ebay_token" id="ebay_token" style="width:300px;" maxlength="" value="<?php echo $ebay_token;?>" class="credentials" /></p>
                             </td>
                         </tr>
 
                         <tr>
-                            <td><p><label for="openbaypro_secret"><?php echo $lang_obp_secret; ?></p></td>
-                            <td><p><input type="text" name="openbaypro_secret" id="openbaypro_secret" style="width:300px;" maxlength="" value="<?php echo $openbaypro_secret;?>" class="credentials" /></p></td>
+                            <td><p><label for="ebay_secret"><?php echo $lang_obp_secret; ?></p></td>
+                            <td><p><input type="text" name="ebay_secret" id="ebay_secret" style="width:300px;" maxlength="" value="<?php echo $ebay_secret;?>" class="credentials" /></p></td>
                         </tr>
 
                         <tr>
-                            <td><p><label for="openbaypro_string1"><?php echo $lang_obp_string1; ?></p></td>
-                            <td><p><input type="text" name="openbaypro_string1" id="openbaypro_string1" style="width:300px;" maxlength="" value="<?php echo $openbaypro_string1;?>" class="credentials" /></p></td>
+                            <td><p><label for="ebay_string1"><?php echo $lang_obp_string1; ?></p></td>
+                            <td><p><input type="text" name="ebay_string1" id="ebay_string1" style="width:300px;" maxlength="" value="<?php echo $ebay_string1;?>" class="credentials" /></p></td>
                         </tr>
 
                         <tr>
-                            <td><p><label for="openbaypro_string2"><?php echo $lang_obp_string2; ?></p></td>
-                            <td><p><input type="text" name="openbaypro_string2" id="openbaypro_string2" style="width:300px;" maxlength="" value="<?php echo $openbaypro_string2;?>" class="credentials" /></p></td>
+                            <td><p><label for="ebay_string2"><?php echo $lang_obp_string2; ?></p></td>
+                            <td><p><input type="text" name="ebay_string2" id="ebay_string2" style="width:300px;" maxlength="" value="<?php echo $ebay_string2;?>" class="credentials" /></p></td>
                         </tr>
 
                         <tr>
@@ -88,8 +88,8 @@
                         <tr>
                             <td><?php echo $lang_app_end_ebay; ?></td>
                             <td>
-                                <select name="openbaypro_enditems" style="width:200px;">
-                                    <?php if ($openbaypro_enditems) { ?>
+                                <select name="ebay_enditems" style="width:200px;">
+                                    <?php if ($ebay_enditems) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
                                         <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
@@ -102,8 +102,8 @@
                         <tr>
                             <td><?php echo $lang_app_relist_ebay; ?></td>
                             <td>
-                                <select name="openbaypro_relistitems" style="width:200px;">
-                                    <?php if ($openbaypro_relistitems) { ?>
+                                <select name="ebay_relistitems" style="width:200px;">
+                                    <?php if ($ebay_relistitems) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
                                         <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
@@ -130,8 +130,8 @@
                         <tr>
                             <td><?php echo $lang_app_logging; ?></td>
                             <td>
-                                <select name="openbaypro_logging" style="width:200px;">
-                                    <?php if ($openbaypro_logging) { ?>
+                                <select name="ebay_logging" style="width:200px;">
+                                    <?php if ($ebay_logging) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
                                         <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
@@ -147,11 +147,11 @@
                                 <span class="help"><?php echo $lang_app_currency_msg; ?></span>
                             </td>
                             <td>
-                                <select name="openbay_def_currency" style="width:200px;">
+                                <select name="ebay_def_currency" style="width:200px;">
                                     <?php
                                     foreach($currency_list as $currency){
                                         echo '<option value="'.$currency['code'].'"';
-                                            if($openbay_def_currency == $currency['code']){ echo ' selected="selected"';}
+                                            if($ebay_def_currency == $currency['code']){ echo ' selected="selected"';}
                                         echo'>'.$currency['title'].'</option>';
                                     }
                                     ?>
@@ -161,11 +161,11 @@
                         <tr>
                             <td><?php echo $lang_app_cust_grp; ?></td>
                             <td>
-                                <select name="openbay_def_customer_grp" style="width:200px;">
+                                <select name="ebay_def_customer_grp" style="width:200px;">
                                     <?php
                                     foreach($customer_grp_list as $customer_grp){
                                         echo '<option value="'.$customer_grp['customer_group_id'].'"';
-                                            if($openbay_def_customer_grp == $customer_grp['customer_group_id']){ echo ' selected="selected"';}
+                                            if($ebay_def_customer_grp == $customer_grp['customer_group_id']){ echo ' selected="selected"';}
                                         echo'>'.$customer_grp['name'].'</option>';
                                     }
                                     ?>
@@ -175,8 +175,8 @@
                         <tr>
                             <td><?php echo $lang_app_stock_allocate; ?></td>
                             <td>
-                                <select name="openbaypro_stock_allocate" style="width:200px;">
-                                    <?php if ($openbaypro_stock_allocate) { ?>
+                                <select name="ebay_stock_allocate" style="width:200px;">
+                                    <?php if ($ebay_stock_allocate) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_app_stock_2; ?></option>
                                         <option value="0"><?php echo $lang_app_stock_1; ?></option>
                                     <?php } else { ?>
@@ -188,15 +188,15 @@
                         </tr>
 
                         <tr>
-                            <td><label for="openbaypro_created_hours"><?php echo $lang_created_hours; ?></td>
-                            <td><input type="text" name="openbaypro_created_hours" id="openbaypro_created_hours" style="width:30px;" maxlength="" value="<?php echo $openbaypro_created_hours;?>" class="credentials" /></td>
+                            <td><label for="ebay_created_hours"><?php echo $lang_created_hours; ?></td>
+                            <td><input type="text" name="ebay_created_hours" id="ebay_created_hours" style="width:30px;" maxlength="" value="<?php echo $ebay_created_hours;?>" class="credentials" /></td>
                         </tr>
 
                         <tr>
                             <td><?php echo $lang_create_date; ?></td>
                             <td>
-                                <select name="openbaypro_create_date" style="width:200px;">
-                                    <?php if ($openbaypro_create_date) { ?>
+                                <select name="ebay_create_date" style="width:200px;">
+                                    <?php if ($ebay_create_date) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_create_date_1; ?></option>
                                         <option value="0"><?php echo $lang_create_date_0; ?></option>
                                     <?php } else { ?>
@@ -210,39 +210,39 @@
                         <tr>
                             <td><?php echo $lang_timezone_offset; ?></td>
                             <td>
-                                <select name="openbaypro_time_offset" style="width:200px;">
-                                    <option value="-12"<?php if($openbaypro_time_offset == '-12'){ echo ' selected';} ?>>-12</option>
-                                    <option value="-11"<?php if($openbaypro_time_offset == '-11'){ echo ' selected';} ?>>-11</option>
-                                    <option value="-10"<?php if($openbaypro_time_offset == '-10'){ echo ' selected';} ?>>-10</option>
-                                    <option value="-9"<?php if($openbaypro_time_offset == '-9'){ echo ' selected';} ?>>-9</option>
-                                    <option value="-8"<?php if($openbaypro_time_offset == '-8'){ echo ' selected';} ?>>-8</option>
-                                    <option value="-7"<?php if($openbaypro_time_offset == '-7'){ echo ' selected';} ?>>-7</option>
-                                    <option value="-6"<?php if($openbaypro_time_offset == '-6'){ echo ' selected';} ?>>-6</option>
-                                    <option value="-5"<?php if($openbaypro_time_offset == '-5'){ echo ' selected';} ?>>-5</option>
-                                    <option value="-4"<?php if($openbaypro_time_offset == '-4'){ echo ' selected';} ?>>-4</option>
-                                    <option value="-3"<?php if($openbaypro_time_offset == '-3'){ echo ' selected';} ?>>-3</option>
-                                    <option value="-2"<?php if($openbaypro_time_offset == '-2'){ echo ' selected';} ?>>-2</option>
-                                    <option value="-1"<?php if($openbaypro_time_offset == '-1'){ echo ' selected';} ?>>-1</option>
-                                    <option value="0"<?php if($openbaypro_time_offset == '0'){ echo ' selected';} ?>>0</option>
-                                    <option value="+1"<?php if($openbaypro_time_offset == '+1'){ echo ' selected';} ?>>+1</option>
-                                    <option value="+2"<?php if($openbaypro_time_offset == '+2'){ echo ' selected';} ?>>+2</option>
-                                    <option value="+3"<?php if($openbaypro_time_offset == '+3'){ echo ' selected';} ?>>+3</option>
-                                    <option value="+4"<?php if($openbaypro_time_offset == '+4'){ echo ' selected';} ?>>+4</option>
-                                    <option value="+5"<?php if($openbaypro_time_offset == '+5'){ echo ' selected';} ?>>+5</option>
-                                    <option value="+6"<?php if($openbaypro_time_offset == '+6'){ echo ' selected';} ?>>+6</option>
-                                    <option value="+7"<?php if($openbaypro_time_offset == '+7'){ echo ' selected';} ?>>+7</option>
-                                    <option value="+8"<?php if($openbaypro_time_offset == '+8'){ echo ' selected';} ?>>+8</option>
-                                    <option value="+9"<?php if($openbaypro_time_offset == '+9'){ echo ' selected';} ?>>+9</option>
-                                    <option value="+10"<?php if($openbaypro_time_offset == '+10'){ echo ' selected';} ?>>+10</option>
-                                    <option value="+11"<?php if($openbaypro_time_offset == '+11'){ echo ' selected';} ?>>+11</option>
-                                    <option value="+12"<?php if($openbaypro_time_offset == '+12'){ echo ' selected';} ?>>+12</option>
+                                <select name="ebay_time_offset" style="width:200px;">
+                                    <option value="-12"<?php if($ebay_time_offset == '-12'){ echo ' selected';} ?>>-12</option>
+                                    <option value="-11"<?php if($ebay_time_offset == '-11'){ echo ' selected';} ?>>-11</option>
+                                    <option value="-10"<?php if($ebay_time_offset == '-10'){ echo ' selected';} ?>>-10</option>
+                                    <option value="-9"<?php if($ebay_time_offset == '-9'){ echo ' selected';} ?>>-9</option>
+                                    <option value="-8"<?php if($ebay_time_offset == '-8'){ echo ' selected';} ?>>-8</option>
+                                    <option value="-7"<?php if($ebay_time_offset == '-7'){ echo ' selected';} ?>>-7</option>
+                                    <option value="-6"<?php if($ebay_time_offset == '-6'){ echo ' selected';} ?>>-6</option>
+                                    <option value="-5"<?php if($ebay_time_offset == '-5'){ echo ' selected';} ?>>-5</option>
+                                    <option value="-4"<?php if($ebay_time_offset == '-4'){ echo ' selected';} ?>>-4</option>
+                                    <option value="-3"<?php if($ebay_time_offset == '-3'){ echo ' selected';} ?>>-3</option>
+                                    <option value="-2"<?php if($ebay_time_offset == '-2'){ echo ' selected';} ?>>-2</option>
+                                    <option value="-1"<?php if($ebay_time_offset == '-1'){ echo ' selected';} ?>>-1</option>
+                                    <option value="0"<?php if($ebay_time_offset == '0'){ echo ' selected';} ?>>0</option>
+                                    <option value="+1"<?php if($ebay_time_offset == '+1'){ echo ' selected';} ?>>+1</option>
+                                    <option value="+2"<?php if($ebay_time_offset == '+2'){ echo ' selected';} ?>>+2</option>
+                                    <option value="+3"<?php if($ebay_time_offset == '+3'){ echo ' selected';} ?>>+3</option>
+                                    <option value="+4"<?php if($ebay_time_offset == '+4'){ echo ' selected';} ?>>+4</option>
+                                    <option value="+5"<?php if($ebay_time_offset == '+5'){ echo ' selected';} ?>>+5</option>
+                                    <option value="+6"<?php if($ebay_time_offset == '+6'){ echo ' selected';} ?>>+6</option>
+                                    <option value="+7"<?php if($ebay_time_offset == '+7'){ echo ' selected';} ?>>+7</option>
+                                    <option value="+8"<?php if($ebay_time_offset == '+8'){ echo ' selected';} ?>>+8</option>
+                                    <option value="+9"<?php if($ebay_time_offset == '+9'){ echo ' selected';} ?>>+9</option>
+                                    <option value="+10"<?php if($ebay_time_offset == '+10'){ echo ' selected';} ?>>+10</option>
+                                    <option value="+11"<?php if($ebay_time_offset == '+11'){ echo ' selected';} ?>>+11</option>
+                                    <option value="+12"<?php if($ebay_time_offset == '+12'){ echo ' selected';} ?>>+12</option>
                                 </select>
                             </td>
                         </tr>
 
                         <tr>
                             <td><?php echo $lang_address_format; ?></td>
-                            <td><textarea name="openbay_default_addressformat" style="height:150px; width:200px;"><?php echo $openbay_default_addressformat; ?></textarea></td>
+                            <td><textarea name="ebay_default_addressformat" style="height:150px; width:200px;"><?php echo $ebay_default_addressformat; ?></textarea></td>
                         </tr>
                     </table>
                     <br /><br />
@@ -250,10 +250,10 @@
                     <p><?php echo $lang_notify_setting_msg; ?></p>
                     <table class="form">
                         <tr>
-                            <td><?php echo $lang_openbaypro_update_notify; ?></td>
+                            <td><?php echo $lang_ebay_update_notify; ?></td>
                             <td>
-                                <select name="openbaypro_update_notify" style="width:200px;">
-                                    <?php if ($openbaypro_update_notify) { ?>
+                                <select name="ebay_update_notify" style="width:200px;">
+                                    <?php if ($ebay_update_notify) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
                                         <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
@@ -264,10 +264,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_openbaypro_confirm_notify; ?></td>
+                            <td><?php echo $lang_ebay_confirm_notify; ?></td>
                             <td>
-                                <select name="openbaypro_confirm_notify" style="width:200px;">
-                                    <?php if ($openbaypro_confirm_notify) { ?>
+                                <select name="ebay_confirm_notify" style="width:200px;">
+                                    <?php if ($ebay_confirm_notify) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
                                         <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
@@ -278,10 +278,10 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_openbaypro_confirmadmin_notify; ?></td>
+                            <td><?php echo $lang_ebay_confirmadmin_notify; ?></td>
                             <td>
-                                <select name="openbaypro_confirmadmin_notify" style="width:200px;">
-                                    <?php if ($openbaypro_confirmadmin_notify) { ?>
+                                <select name="ebay_confirmadmin_notify" style="width:200px;">
+                                    <?php if ($ebay_confirmadmin_notify) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
                                         <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
@@ -294,8 +294,8 @@
                         <tr>
                             <td><?php echo $lang_openbaypro_brand_disable; ?></td>
                             <td>
-                                <select name="openbaypro_email_brand_disable" style="width:200px;">
-                                    <?php if ($openbaypro_email_brand_disable) { ?>
+                                <select name="ebay_email_brand_disable" style="width:200px;">
+                                    <?php if ($ebay_email_brand_disable) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
                                         <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
@@ -318,15 +318,15 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><label for="EBAY_DEF_IMPORT_ID"><?php echo $lang_import_def_id; ?></td>
+                            <td><label for="ebay_status_import_id"><?php echo $lang_import_def_id; ?></td>
                             <td>
-                                <select name="EBAY_DEF_IMPORT_ID" style="width:200px;">
+                                <select name="ebay_status_import_id" style="width:200px;">
                                     <?php
-                                    if (empty($EBAY_DEF_IMPORT_ID)) { $EBAY_DEF_IMPORT_ID = 1; }
+                                    if (empty($ebay_status_import_id)) { $ebay_status_import_id = 1; }
 
                                     foreach($order_statuses as $status){
                                         echo'<option value="'.$status['order_status_id'].'"';
-                                        if($EBAY_DEF_IMPORT_ID == $status['order_status_id']){echo ' selected=selected';}
+                                        if($ebay_status_import_id == $status['order_status_id']){echo ' selected=selected';}
                                         echo'>'.$status['name'].'</option>';
                                     }
                                     ?>
@@ -335,15 +335,15 @@
                         </tr>
 
                         <tr>
-                            <td><label for="EBAY_DEF_PAID_ID"><?php echo $lang_import_paid_id; ?></td>
+                            <td><label for="ebay_status_paid_id"><?php echo $lang_import_paid_id; ?></td>
                             <td>
-                                <select name="EBAY_DEF_PAID_ID" style="width:200px;">
+                                <select name="ebay_status_paid_id" style="width:200px;">
                                     <?php
-                                    if (empty($EBAY_DEF_PAID_ID)) { $EBAY_DEF_PAID_ID = 2; }
+                                    if (empty($ebay_status_paid_id)) { $ebay_status_paid_id = 2; }
 
                                     foreach($order_statuses as $status){
                                         echo'<option value="'.$status['order_status_id'].'"';
-                                            if($EBAY_DEF_PAID_ID == $status['order_status_id']){echo ' selected=selected';}
+                                            if($ebay_status_paid_id == $status['order_status_id']){echo ' selected=selected';}
                                         echo'>'.$status['name'].'</option>';
                                     }
                                     ?>
@@ -352,15 +352,15 @@
                         </tr>
 
                         <tr>
-                            <td><label for="EBAY_DEF_SHIPPED_ID"><?php echo $lang_import_shipped_id; ?></td>
+                            <td><label for="ebay_status_shipped_id"><?php echo $lang_import_shipped_id; ?></td>
                             <td>
-                                <select name="EBAY_DEF_SHIPPED_ID" style="width:200px;">
+                                <select name="ebay_status_shipped_id" style="width:200px;">
                                     <?php
-                                    if (empty($EBAY_DEF_SHIPPED_ID)) { $EBAY_DEF_SHIPPED_ID = 3; }
+                                    if (empty($ebay_status_shipped_id)) { $ebay_status_shipped_id = 3; }
 
                                     foreach($order_statuses as $status){
                                         echo'<option value="'.$status['order_status_id'].'"';
-                                        if($EBAY_DEF_SHIPPED_ID == $status['order_status_id']){echo ' selected=selected';}
+                                        if($ebay_status_shipped_id == $status['order_status_id']){echo ' selected=selected';}
                                         echo'>'.$status['name'].'</option>';
                                     }
                                     ?>
@@ -369,15 +369,15 @@
                         </tr>
 
                         <tr>
-                            <td><label for="EBAY_DEF_CANCELLED_ID"><?php echo $lang_import_cancelled_id; ?></td>
+                            <td><label for="ebay_status_cancelled_id"><?php echo $lang_import_cancelled_id; ?></td>
                             <td>
-                                <select name="EBAY_DEF_CANCELLED_ID" style="width:200px;">
+                                <select name="ebay_status_cancelled_id" style="width:200px;">
                                     <?php
-                                    if (empty($EBAY_DEF_CANCELLED_ID)) { $EBAY_DEF_CANCELLED_ID = 7; }
+                                    if (empty($ebay_status_cancelled_id)) { $ebay_status_cancelled_id = 7; }
 
                                     foreach($order_statuses as $status){
                                         echo'<option value="'.$status['order_status_id'].'"';
-                                        if($EBAY_DEF_CANCELLED_ID == $status['order_status_id']){echo ' selected=selected';}
+                                        if($ebay_status_cancelled_id == $status['order_status_id']){echo ' selected=selected';}
                                         echo'>'.$status['name'].'</option>';
                                     }
                                     ?>
@@ -385,15 +385,15 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><label for="EBAY_DEF_PARTIAL_REFUND_ID"><?php echo $lang_import_part_refund_id; ?></td>
+                            <td><label for="ebay_status_partial_refund_id"><?php echo $lang_import_part_refund_id; ?></td>
                             <td>
-                                <select name="EBAY_DEF_PARTIAL_REFUND_ID" style="width:200px;">
+                                <select name="ebay_status_partial_refund_id" style="width:200px;">
                                     <?php
-                                    if (empty($EBAY_DEF_PARTIAL_REFUND_ID)) { $EBAY_DEF_PARTIAL_REFUND_ID = 2; }
+                                    if (empty($ebay_status_partial_refund_id)) { $ebay_status_partial_refund_id = 2; }
 
                                     foreach($order_statuses as $status){
                                         echo'<option value="'.$status['order_status_id'].'"';
-                                        if($EBAY_DEF_PARTIAL_REFUND_ID == $status['order_status_id']){echo ' selected=selected';}
+                                        if($ebay_status_partial_refund_id == $status['order_status_id']){echo ' selected=selected';}
                                         echo'>'.$status['name'].'</option>';
                                     }
                                     ?>
@@ -401,15 +401,15 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><label for="EBAY_DEF_REFUNDED_ID"><?php echo $lang_import_refund_id; ?></td>
+                            <td><label for="ebay_status_refunded_id"><?php echo $lang_import_refund_id; ?></td>
                             <td>
-                                <select name="EBAY_DEF_REFUNDED_ID" style="width:200px;">
+                                <select name="ebay_status_refunded_id" style="width:200px;">
                                     <?php
-                                    if (empty($EBAY_DEF_REFUNDED_ID)) { $EBAY_DEF_REFUNDED_ID = 11; }
+                                    if (empty($ebay_status_refunded_id)) { $ebay_status_refunded_id = 11; }
 
                                     foreach($order_statuses as $status){
                                         echo'<option value="'.$status['order_status_id'].'"';
-                                        if($EBAY_DEF_REFUNDED_ID == $status['order_status_id']){echo ' selected=selected';}
+                                        if($ebay_status_refunded_id == $status['order_status_id']){echo ' selected=selected';}
                                         echo'>'.$status['name'].'</option>';
                                     }
                                     ?>
@@ -453,11 +453,11 @@
                         <tr>
                             <td><label><?php echo $lang_openbay_duration; ?></td>
                             <td>
-                                <select name="openbaypro_duration" style="width:200px;">
+                                <select name="ebay_duration" style="width:200px;">
                                     <?php
                                     foreach($durations as $key => $duration){
                                         echo'<option value="'.$key.'"';
-                                        if($key == $openbaypro_duration){echo ' selected=selected';}
+                                        if($key == $ebay_duration){echo ' selected=selected';}
                                         echo'>'.$duration.'</option>';
                                     }
                                     ?>
@@ -472,13 +472,13 @@
 
                     <table class="form">
                         <tr>
-                            <td><label for="field_payment_instruction"><?php echo $lang_payment_instruction; ?></td>
-                            <td><textarea name="field_payment_instruction" id="field_payment_instruction" maxlength="" style="width:400px; height:70px;"><?php echo $field_payment_instruction;?></textarea></td>
+                            <td><label for="ebay_payment_instruction"><?php echo $lang_payment_instruction; ?></td>
+                            <td><textarea name="ebay_payment_instruction" id="ebay_payment_instruction" maxlength="" style="width:400px; height:70px;"><?php echo $ebay_payment_instruction;?></textarea></td>
                         </tr>
 
                         <tr class="row3">
-                            <td><label for="field_payment_paypal_address"><?php echo $lang_payment_paypal_add; ?></td>
-                            <td><input type="text" name="field_payment_paypal_address" id="field_payment_paypal_address" style="width:300px" maxlength="" value="<?php echo $field_payment_paypal_address;?>" /></td>
+                            <td><label for="ebay_payment_paypal_address"><?php echo $lang_payment_paypal_add; ?></td>
+                            <td><input type="text" name="ebay_payment_paypal_address" id="ebay_payment_paypal_address" style="width:300px" maxlength="" value="<?php echo $ebay_payment_paypal_address;?>" /></td>
                         </tr>
 
                         <?php foreach($payment_options as $payment){ ?>
@@ -494,8 +494,8 @@
                         <tr class="row4">
                             <td><label><?php echo $lang_payment_imediate; ?></td>
                             <td>
-                                <input type="hidden" name="payment_immediate" value="0" />
-                                <input type="checkbox" name="payment_immediate" value="1" <?php if ($payment_immediate) { echo 'checked="checked"'; } ?> />
+                                <input type="hidden" name="ebay_payment_immediate" value="0" />
+                                <input type="checkbox" name="ebay_payment_immediate" value="1" <?php if ($ebay_payment_immediate) { echo 'checked="checked"'; } ?> />
                             </td>
                         </tr>
 
@@ -611,7 +611,7 @@
             url: 'index.php?route=openbay/openbay/verifyCreds&token=<?php echo $token; ?>',
             type: 'POST',
             dataType: 'json',
-            data: {token: $('#openbaypro_token').val(), secret: $('#openbaypro_secret').val(), string1: $('#openbaypro_string1').val(), string2: $('#openbaypro_string2').val()},
+            data: {token: $('#ebay_token').val(), secret: $('#ebay_secret').val(), string1: $('#ebay_string1').val(), string2: $('#ebay_string2').val()},
             success: function(data) {
                 if (data.error == false) {
                     $('#apiConnection').html('<img class="apiConnectionImg" src="view/image/success.png" /><?php echo $lang_api_ok; ?>: ' + data.data.expire);

@@ -75,52 +75,52 @@
           </div>
           <div class="row">
             <div class="col-md-12 text-center">
-                <div class="row">
-                  <div class="col-md-3 text-center">
-                    <div class="well">
-                      <a href="<?php echo $manage_link; ?>">
-                        <span class="fa-stack fa-3x">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i class="fa fa-wrench fa-stack-1x"></i>
-                        </span>
-                        <h4><?php echo $text_manage; ?></h4>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-md-3 text-center">
-                    <div class="well">
-                      <a href="http://www.openbaypro.com/help" target="_BLANK">
-                        <span class="fa-stack fa-3x">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i class="fa fa-comments-o fa-stack-1x"></i>
-                        </span>
-                        <h4><?php echo $text_help; ?></h4>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-md-3 text-center">
-                    <div class="well">
-                      <a href="http://www.openbaypro.com/tutorials" target="_BLANK">
-                        <span class="fa-stack fa-3x">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i class="fa fa-youtube-play fa-stack-1x"></i>
-                        </span>
-                        <h4><?php echo $text_tutorials; ?></h4>
-                      </a>
-                    </div>
-                  </div>
-                  <div class="col-md-3 text-center">
-                    <div class="well">
-                      <a href="http://www.openbaypro.com/suggestions" target="_BLANK">
-                        <span class="fa-stack fa-3x">
-                          <i class="fa fa-square-o fa-stack-2x"></i>
-                          <i class="fa fa-bullhorn fa-stack-1x"></i>
-                        </span>
-                        <h4><?php echo $text_suggestions; ?></h4>
-                      </a>
-                    </div>
+              <div class="row">
+                <div class="col-md-3 text-center">
+                  <div class="well">
+                    <a href="<?php echo $manage_link; ?>">
+                      <span class="fa-stack fa-3x">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-wrench fa-stack-1x"></i>
+                      </span>
+                      <h4><?php echo $text_manage; ?></h4>
+                    </a>
                   </div>
                 </div>
+                <div class="col-md-3 text-center">
+                  <div class="well">
+                    <a href="http://www.openbaypro.com/help" target="_BLANK">
+                      <span class="fa-stack fa-3x">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-comments-o fa-stack-1x"></i>
+                      </span>
+                      <h4><?php echo $text_help; ?></h4>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-3 text-center">
+                  <div class="well">
+                    <a href="http://www.openbaypro.com/tutorials" target="_BLANK">
+                      <span class="fa-stack fa-3x">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-youtube-play fa-stack-1x"></i>
+                      </span>
+                      <h4><?php echo $text_tutorials; ?></h4>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-3 text-center">
+                  <div class="well">
+                    <a href="http://www.openbaypro.com/suggestions" target="_BLANK">
+                      <span class="fa-stack fa-3x">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-bullhorn fa-stack-1x"></i>
+                      </span>
+                      <h4><?php echo $text_suggestions; ?></h4>
+                    </a>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

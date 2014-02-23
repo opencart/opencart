@@ -105,10 +105,12 @@ $_['lang_ajax_tracking_msg3']           = 'You must select courier if you want t
 $_['lang_ajax_tracking_msg4']           = 'Please leave courier field empty if you want to use custom courier.';
 
 $_['lang_title_help']                   = 'Need help with OpenBay Pro?';
-$_['lang_pod_help']                     = 'Help';
+$_['text_help']                     	= 'Help';
 $_['lang_title_manage']                 = 'Manage OpenBay Pro; updates, settings and more';
-$_['lang_pod_manage']                   = 'Manage';
+$_['text_manage']                   	= 'Manage';
 $_['lang_title_shop']                   = 'OpenBay Pro store; addons, templates and more';
+$_['text_tutorials']                    = 'Tutorials';
+$_['text_suggestions']                  = 'Suggestions';
 
 $_['lang_checking_messages']            = 'Checking for messages';
 $_['lang_title_messages']               = 'Messages &amp; notifications';

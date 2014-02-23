@@ -36,7 +36,7 @@
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-7">
           <div class="row">
             <div class="col-md-12">
               <table class="table table-bordered table-hover">
@@ -52,8 +52,19 @@
                 <tr>
                   <td class="text-left"><?php echo $extension['name']; ?></td>
                   <td class="text-center"><?php echo $extension['status'] ?></td>
-                  <td class="text-right"><?php foreach ($extension['action'] as $action) { ?>[
-                    <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]<?php } ?></td>
+                  <td class="text-right">
+                    <?php if ($extension['installed']) { ?>
+                      <a href="<?php echo $extension['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>
+                    <?php } else { ?>
+                      <button type="button" class="btn btn-primary" disabled="disabled"><i class="fa fa-pencil"></i></button>
+                    <?php } ?>
+
+                    <?php if (!$extension['installed']) { ?>
+                      <a href="<?php echo $extension['install']; ?>" data-toggle="tooltip" title="<?php echo $button_install; ?>" class="btn btn-success"><i class="fa fa-plus-circle"></i></a>
+                    <?php } else { ?>
+                      <a href="<?php echo $extension['uninstall']; ?>" data-toggle="tooltip" title="<?php echo $button_uninstall; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>
+                    <?php } ?>
+                  </td>
                 </tr>
                 <?php } ?><?php } else { ?>
                 <tr>
@@ -66,44 +77,56 @@
           </div>
           <div class="row">
             <div class="col-md-12 text-center">
-              <div class="well">
                 <div class="row">
-                  <div class="col-md-2 text-center">
-                    <a href="<?php echo $manage_link; ?>">
-                      <i class="fa fa-wrench fa-5x"></i>
-                      <h4><?php echo $lang_pod_manage; ?></h4>
-                    </a>
+                  <div class="col-md-3 text-center">
+                    <div class="well">
+                      <a href="<?php echo $manage_link; ?>">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-square-o fa-stack-2x"></i>
+                          <i class="fa fa-wrench fa-stack-1x"></i>
+                        </span>
+                        <h4><?php echo $text_manage; ?></h4>
+                      </a>
+                    </div>
                   </div>
-                  <div class="col-md-2 text-center">
-                    <a href="http://help.welfordmedia.co.uk/" target="_BLANK">
-                      <i class="fa fa-comments-o fa-5x"></i>
-                      <h4><?php echo $lang_pod_help; ?></h4>
-                    </a>
+                  <div class="col-md-3 text-center">
+                    <div class="well">
+                      <a href="http://www.openbaypro.com/help" target="_BLANK">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-square-o fa-stack-2x"></i>
+                          <i class="fa fa-comments-o fa-stack-1x"></i>
+                        </span>
+                        <h4><?php echo $text_help; ?></h4>
+                      </a>
+                    </div>
                   </div>
-                  <div class="col-md-2 text-center">
-                    <a href="http://help.welfordmedia.co.uk/" target="_BLANK">
-                      <i class="fa fa-users fa-5x"></i>
-                      <h4>Account</h4>
-                    </a>
+                  <div class="col-md-3 text-center">
+                    <div class="well">
+                      <a href="http://www.openbaypro.com/tutorials" target="_BLANK">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-square-o fa-stack-2x"></i>
+                          <i class="fa fa-youtube-play fa-stack-1x"></i>
+                        </span>
+                        <h4><?php echo $text_tutorials; ?></h4>
+                      </a>
+                    </div>
                   </div>
-                  <div class="col-md-2 text-center">
-                    <a href="http://help.welfordmedia.co.uk/" target="_BLANK">
-                      <i class="fa fa-youtube-play fa-5x"></i>
-                      <h4>Tutorials</h4>
-                    </a>
-                  </div>
-                  <div class="col-md-2 text-center">
-                    <a href="http://help.welfordmedia.co.uk/" target="_BLANK">
-                      <i class="fa fa-bullhorn fa-5x"></i>
-                      <h4>Suggestions</h4>
-                    </a>
+                  <div class="col-md-3 text-center">
+                    <div class="well">
+                      <a href="http://www.openbaypro.com/suggestions" target="_BLANK">
+                        <span class="fa-stack fa-3x">
+                          <i class="fa fa-square-o fa-stack-2x"></i>
+                          <i class="fa fa-bullhorn fa-stack-1x"></i>
+                        </span>
+                        <h4><?php echo $text_suggestions; ?></h4>
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
             </div>
           </div>
         </div>
-        <div class="col-md-4" style="padding-left:10px;">
+        <div class="col-md-5" style="padding-left:10px;">
           <div id="openbay_version" class="alert alert-info text-left">
             <div id="openbay_version_loading">
               <i class="fa fa-refresh fa-spin"></i> <?php echo $lang_checking_version; ?>

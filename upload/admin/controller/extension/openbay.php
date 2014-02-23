@@ -61,27 +61,12 @@ class ControllerExtensionOpenbay extends Controller {
 
 			$action = array();
 
-			if (!in_array($extension, $extensions)) {
-				$action[] = array(
-					'text' => $this->language->get('text_install'),
-					'href' => $this->url->link('extension/openbay/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-				);
-			} else {
-				$action[] = array(
-					'text' => $this->language->get('text_edit'),
-					'href' => $this->url->link('openbay/' . $extension, 'token=' . $this->session->data['token'], 'SSL')
-				);
-
-				$action[] = array(
-					'text' => $this->language->get('text_uninstall'),
-					'href' => $this->url->link('extension/openbay/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL')
-				);
-			}
-
 			$data['extensions'][] = array(
 				'name' => $this->language->get('heading_title'),
 				'status' => $this->config->get($extension . '_status') ? $this->language->get('text_enabled') : $this->language->get('text_disabled'),
-				'action' => $action
+				'install'   => $this->url->link('extension/openbay/install', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+				'uninstall' => $this->url->link('extension/openbay/uninstall', 'token=' . $this->session->data['token'] . '&extension=' . $extension, 'SSL'),
+				'installed' => in_array($extension, $extensions)
 			);
 		}
 

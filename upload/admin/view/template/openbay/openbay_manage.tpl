@@ -5,11 +5,6 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
@@ -93,30 +88,31 @@
               </table>
           </div>
           <div class="tab-pane" id="tab-settings">
-              <table class="form">
-                  <tr>
-                      <td ><?php echo $lang_language; ?></td>
-                      <td>
-                          <select name="openbay_language">
-                              <?php foreach($languages as $key => $language){ ?>
-                                  <option value="<?php echo $key; ?>" <?php if($key == $openbay_language){ echo'selected="selected"'; } ?>><?php echo $language; ?></option>
-                              <?php } ?>
-                          </select>
-                      </td>
-                  </tr>
-                  <tr>
-                      <td valign="middle"><label><?php echo $lang_clearfaq; ?></td>
-                      <td><a onclick="clearFaq();" class="button" id="clearFaq"><span><?php echo $lang_clearfaqbtn; ?></span></a><img src="view/image/loading.gif" id="imageClearFaq" class="displayNone" alt="Loading" /></td>
-                  </tr>
-              </table>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-language"><?php echo $lang_language; ?></label>
+              <div class="col-sm-10">
+                <select name="openbay_language" id="input-language" class="form-control">
+                  <?php foreach($languages as $key => $language){ ?>
+                    <option value="<?php echo $key; ?>" <?php if($key == $openbay_language){ echo'selected="selected"'; } ?>><?php echo $language; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="button-clear-faq"><?php echo $text_clear_faq; ?></label>
+              <div class="col-sm-10">
+                <a class="btn" id="button-clear-faq" onclick="clearFaq();"><?php echo $text_clear; ?></a>
+              </div>
+            </div>
           </div>
           <div class="tab-pane" id="tab-patch">
-              <table class="form">
-                  <tr>
-                      <td ><?php echo $lang_run_patch_desc; ?></td>
-                      <td><a onclick="runPatch();" class="button" id="runPatch"><span><?php echo $lang_run_patch; ?></span></a><img src="view/image/loading.gif" id="imageRunPatch" class="displayNone" alt="Loading" /></td>
-                  </tr>
-              </table>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="button-patch"><?php echo $text_patch; ?></label>
+              <div class="col-sm-10">
+                <a class="btn" id="button-patch" onclick="runPatch();"><?php echo $text_patch_button; ?></a>
+              </div>
+              <span class="help-block"><?php echo $text_patch_description; ?></span>
+            </div>
           </div>
         </div>
       </form>
@@ -163,25 +159,41 @@
         });
     }
 
-    function runPatch(){
-        $.ajax({
-            url: 'index.php?route=extension/openbay/runPatch&token='+token,
-            type: 'post',
-            dataType: 'json',
-            beforeSend: function(){
-                $('#runPatch').hide();
-                $('#imageRunPatch').show();
-            },
-            success: function() {
-                alert('<?php echo $lang_patch_applied; ?>');
-                $('#runPatch').show();
-                $('#imageRunPatch').hide();
-            },
-            error: function (xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-            }
-        });
-    }
+    $('#button-patch').bind('click', function() {
+      $.ajax({
+        url: 'index.php?route=extension/openbay/runPatch&token='+token,
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function(){
+          $('#button-patch').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+        },
+        success: function() {
+          $('#button-patch').empty().html('<?php echo $text_patch_button; ?>');
+          alert('<?php echo $text_run_patch_complete; ?>');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
+    });
+
+    $('#button-clear-faq').bind('click', function() {
+      $.ajax({
+        url: 'index.php?route=extension/openbay/faqClear&token='+token,
+        beforeSend: function(){
+          $('#button-clear-faq').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+        },
+        type: 'post',
+        dataType: 'json',
+        success: function(json) {
+          $('#button-clear-faq').empty().html('<?php echo $text_clear; ?>');
+          alert('<?php echo $text_clear_faq_complete; ?>');
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
+    });
 
     function updateModule(){
         $.ajax({
@@ -208,29 +220,6 @@
 
     function validateForm(){
         $('#form-openbay-manager').submit();
-    }
-
-    function clearFaq(){
-        $.ajax({
-            url: 'index.php?route=extension/openbay/faqClear&token='+token,
-            beforeSend: function(){
-                $('#clearFaq').hide();
-                $('#imageClearFaq').show();
-            },
-            type: 'post',
-            dataType: 'json',
-            success: function(json) {
-                $('#clearFaq').show(); $('#imageClearFaq').hide();
-            },
-            failure: function(){
-                $('#imageClearFaq').hide();
-                $('#clearFaq').show();
-            },
-            error: function(){
-                $('#imageClearFaq').hide();
-                $('#clearFaq').show();
-            }
-        });
     }
 
     $('#tabs a').tabs();

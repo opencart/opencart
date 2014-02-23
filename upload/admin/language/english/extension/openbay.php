@@ -49,8 +49,10 @@ $_['field_ftp_root_path_info']          = '(No trailing slash e.g. httpdocs/www)
 $_['desc_ftp_updates']                  = 'Enabling updates from here means you do not have to manually update your module using the standard drag and drop through FTP. Your FTP are not sent to the API.<br />';
 
 //Updates
-$_['lang_run_patch_desc']               = 'Post update patch<span class="help">Only needed if you manually update</span>';
-$_['lang_run_patch']                    = 'Run patch';
+$_['text_patch']            			= 'Post update patch';
+$_['text_patch_description']            = 'If you update your files through FTP you need to run the patch to complete the update';
+$_['text_patch_button']                 = 'Patch';
+$_['text_patch_complete']           	= 'Patch has been applied';
 $_['update_error_username']             = 'Username expected';
 $_['update_error_password']             = 'Password expected';
 $_['update_error_server']               = 'Server expected';
@@ -70,8 +72,9 @@ $_['lang_mb_text_false']                = 'PHP library "mb strings" is not enabl
 $_['lang_ftp_text_false']               = 'PHP FTP functions are not enabled. Contact your hosting provider.';
 $_['lang_error_oc_version']             = 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
 $_['lang_patch_applied']                = 'Patch applied';
-$_['lang_clearfaq']                     = 'Clear hidden FAQ popups';
-$_['lang_clearfaqbtn']                  = 'Clear';
+$_['lang_clear_faq']                    = 'Clear hidden FAQ popups';
+$_['text_clear']                    	= 'Clear';
+$_['text_clear_faq_complete']           = 'FAQ notifications will now show again';
 
 // Ajax elements
 $_['lang_ajax_ebay_shipped']            = 'The order will be marked as shipped on eBay automatically';

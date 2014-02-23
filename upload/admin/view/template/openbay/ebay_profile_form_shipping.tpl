@@ -18,7 +18,7 @@
         </div>
         <div class="content">
             <div id="tabs" class="htabs">
-                <a href="#tab-general"><?php echo $lang_tab_general; ?></a>    
+                <a href="#tab-general"><?php echo $lang_tab_general; ?></a>
                 <a href="#tab-shipping"><?php echo $lang_tab_shipping; ?></a>
             </div>
             <form action="<?php echo $btn_save; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -46,7 +46,7 @@
                         </tr>
                     </table>
                 </div>
-                
+
                 <div id="tab-shipping">
                     <table class="form">
                         <tr>
@@ -74,7 +74,7 @@
                             <td>
                                 <select name="data[dispatch_time]" id="dispatch_time" class="width100">
                                     <?php foreach($setting['dispatch_times'] as $dis){ ?>
-                                        <option value="<?php echo $dis['DispatchTimeMax'];?>" 
+                                        <option value="<?php echo $dis['DispatchTimeMax'];?>"
                                         <?php if(isset($data['dispatch_time']) && $data['dispatch_time'] == $dis['DispatchTimeMax']){ echo' selected'; } ?>
                                         ><?php echo $dis['Description'];?></option>
                                     <?php } ?>
@@ -176,7 +176,7 @@
         count = parseInt(count);
 
         $.ajax({
-            url: 'index.php?route=openbay/openbay/getShippingService&token=<?php echo $token; ?>&loc=' + loc,
+            url: 'index.php?route=openbay/ebay/getShippingService&token=<?php echo $token; ?>&loc=' + loc,
             type: 'GET',
             dataType: 'json',
             success: function(data) {
@@ -194,20 +194,20 @@
                     html += '<div style="border:1px solid #000; background-color:#F5F5F5; width:100%; min-height:40px; margin-bottom:10px; display:inline-block;" class="shipping_' + id + '_' + count + '">';
                     html += '<div style="display:inline; float:left; padding:10px 6px;line-height:20px; height:20px;">';
                     html += '<input type="checkbox" name="data[shipto_international][' + count + '][]" value="Worldwide" /> Worldwide</div>';
-                    
+
                     <?php foreach($shipping_international_zones as $zone){ ?>
                         html += '<div style="display:inline; float:left; padding:10px 6px;line-height:20px; height:20px;">';
                         html += '<input type="checkbox" name="data[shipto_international][' + count + '][]" value="<?php echo $zone['shipping_location']; ?>" /> <?php echo $zone['description']; ?></div>';
                     <?php } ?>
-                    
+
                     html += '</div>';
                     html += '<div style="clear:both;" class="shipping_' + id + '_' + count + '"></div>';
                 }
-                
-                
+
+
                 html += '<p class="shipping_' + id + '_' + count + '"><label><?php echo $lang_shipping_first; ?></label><input type="text" name="data[price_' + id + '][' + count + ']" style="width:50px;" value="0.00" />';
                 html += '&nbsp;&nbsp;<label><?php echo $lang_shipping_add; ?></label><input type="text" name="data[priceadditional_' + id + '][' + count + ']" style="width:50px;" value="0.00" />&nbsp;&nbsp;<a onclick="removeShipping(\'' + id + '\',\'' + count + '\');" class="button"><span><?php echo $lang_btn_remove; ?></span></a></p>';
-                html += '<div style="clear:both;" class="shipping_' + id + '_' + count + '"></div>';                
+                html += '<div style="clear:both;" class="shipping_' + id + '_' + count + '"></div>';
 
                 $('#' + id + 'Btn').append(html);
             },

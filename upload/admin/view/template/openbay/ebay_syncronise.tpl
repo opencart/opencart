@@ -10,7 +10,7 @@
         <div class="warning"><?php echo $error_warning; ?></div>
     <?php } ?>
 
-    <div class="box mBottom130"> 
+    <div class="box mBottom130">
         <div class="heading">
             <h1><?php echo $lang_heading; ?></h1>
             <div class="buttons">
@@ -45,7 +45,7 @@
 <script type="text/javascript"><!--
     function syncCats(){
         $.ajax({
-            url: 'index.php?route=openbay/openbay/loadCategories&token=<?php echo $token; ?>',
+            url: 'index.php?route=openbay/ebay/loadCategories&token=<?php echo $token; ?>',
             beforeSend: function(){
                 $('#syncCats').hide();
                 $('#imageLoadingCats').show();
@@ -72,7 +72,7 @@
 
     function loadSettings(){
         $.ajax({
-            url: 'index.php?route=openbay/openbay/loadSettings&token=<?php echo $token; ?>',
+            url: 'index.php?route=openbay/ebay/loadSettings&token=<?php echo $token; ?>',
             beforeSend: function(){
                 $('#loadSettings').hide();
                 $('#imageloadSettings').show();
@@ -105,7 +105,7 @@
 
     function syncShopCats(){
         $.ajax({
-            url: 'index.php?route=openbay/openbay/loadSellerStore&token=<?php echo $token; ?>',
+            url: 'index.php?route=openbay/ebay/loadSellerStore&token=<?php echo $token; ?>',
                 beforeSend: function(){
                     $('#syncShopCats').hide();
                     $('#imageLoadingShopCats').show();

@@ -34,4 +34,3 @@ $_['lang_stock_col_add']            = 'Add <span class="help">Must be active in 
 $_['lang_stock_col_comb']           = 'Combination';
 $_['lang_error_ended']              = 'The linked listing has ended, you are unable to edit it. You should remove the link.';
 $_['lang_error_reserve_size']       = 'You cannot set the reserve higher than the local stock';
-?>

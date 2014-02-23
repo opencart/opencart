@@ -24,4 +24,3 @@ $_['lang_account_status']           = 'Account status';
 $_['lang_merchantid']               = 'Merchant ID';
 $_['lang_change_merchantid']        = 'Change';
 $_['lang_bulk_listing']             = 'Bulk Listing';
-?>

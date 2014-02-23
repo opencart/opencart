@@ -46,4 +46,3 @@ $_['lang_column_stock_available']   = 'Local stock<br /><span class="help">Avail
 $_['lang_column_listing_title']     = 'Listing title<span class="help">(eBay listing title)</span>';
 $_['lang_column_allocated']         = 'Allocated stock<br /><span class="help">Sold but not paid</span>';
 $_['lang_column_ebay_stock']        = 'eBay stock<span class="help">On listing</span>';
-?>

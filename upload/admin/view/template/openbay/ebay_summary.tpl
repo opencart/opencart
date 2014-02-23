@@ -1,14 +1,14 @@
 <?php echo $header; ?>
 <div id="content">
     <div class="breadcrumb">
-<?php 
+<?php
         foreach ($breadcrumbs as $breadcrumb) {
             echo $breadcrumb['separator'].'<a href="'.$breadcrumb['href'].'">'.$breadcrumb['text'].'</a>';
-        } 
+        }
 ?>
     </div>
 
-    <div class="box mBottom130"> 
+    <div class="box mBottom130">
         <div class="heading">
             <h1><?php echo $lang_heading; ?></h1>
             <div class="buttons">
@@ -52,8 +52,8 @@
 
 <script type="text/javascript"><!--
     function loadSummary(){
-	$.ajax({ 
-            url: 'index.php?route=openbay/openbay/getSellerSummary&token=<?php echo $token; ?>',
+	$.ajax({
+            url: 'index.php?route=openbay/ebay/getSellerSummary&token=<?php echo $token; ?>',
             type: 'post',
             dataType: 'json',
             beforeSend: function(){
@@ -107,7 +107,7 @@
                         }
                     });
                 }
-                
+
                 if(json.lasterror == true){
                     alert(json.lastmsg);
                 }
@@ -124,7 +124,7 @@
             }
 	});
     }
-//--></script> 
+//--></script>
 
 <?php if($validation == true) { ?>
     <script type="text/javascript"><!--

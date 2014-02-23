@@ -6,7 +6,7 @@
         <?php } ?>
     </div>
 
-    <div class="box mBottom130"> 
+    <div class="box mBottom130">
         <div class="heading">
             <h1><?php echo $lang_heading; ?></h1>
             <div class="buttons">
@@ -32,9 +32,9 @@
 <script type="text/javascript"><!--
     function importOrders(){
         $.ajax({
-                url: 'index.php?route=openbay/openbay/importOrdersManual&token=<?php echo $token; ?>',
+                url: 'index.php?route=openbay/ebay/importOrdersManual&token=<?php echo $token; ?>',
                 beforeSend: function(){
-                    $('#importOrders').hide(); 
+                    $('#importOrders').hide();
                     $('#imageLoadingImportOrders').show();
                 },
                 type: 'post',

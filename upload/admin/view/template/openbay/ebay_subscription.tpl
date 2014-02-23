@@ -1,14 +1,14 @@
 <?php echo $header; ?>
 <div id="content">
     <div class="breadcrumb">
-<?php 
+<?php
         foreach ($breadcrumbs as $breadcrumb) {
             echo $breadcrumb['separator'] .'<a href="'.$breadcrumb['href'].'">'.$breadcrumb['text'].'</a>';
-        } 
+        }
 ?>
     </div>
 
-    <div class="box mBottom130"> 
+    <div class="box mBottom130">
         <div class="heading">
             <h1><?php echo $lang_heading; ?></h1>
             <div class="buttons">
@@ -23,14 +23,14 @@
         <?php if($validation == true) { ?>
             <h2><?php echo $lang_usage_title; ?> <img src="view/image/loading.gif" id="imageLoadUsage" class="displayNone" alt="Loading" /></h2>
             <div id="usageTable" class="displayNone"></div>
-            
+
             <h2 class="mTop10"><?php echo $lang_subscription_current; ?> <img src="view/image/loading.gif" class="imageLoadAccount" class="displayNone" alt="Loading" /></h2>
             <table width="100%" cellspacing="0" cellpadding="5" border="0" id="myopenbayplan" class="displayNone border borderNoBottom"></table>
-            
+
             <h2 class="mTop10"><?php echo $lang_subscription_avail; ?> <img src="view/image/loading.gif" class="imageLoadAccount" class="displayNone" alt="Loading" /></h2>
             <p><?php echo $lang_subscription_avail1; ?></p>
             <p><?php echo $lang_subscription_avail2; ?></p>
-            
+
             <table width="100%" cellspacing="0" cellpadding="5" border="0" id="openbayplans" class="displayNone border borderNoBottom"></table>
 
         <?php }else{ ?>
@@ -42,7 +42,7 @@
 <script type="text/javascript"><!--
     function loadAccount(){
 	    $.ajax({
-        url: 'index.php?route=openbay/openbay/getMyPlan&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/ebay/getMyPlan&token=<?php echo $token; ?>',
         type: 'post',
         dataType: 'json',
         beforeSend: function(){
@@ -82,9 +82,9 @@
           alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
 	    });
-        
+
       $.ajax({
-        url: 'index.php?route=openbay/openbay/getPlans&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/ebay/getPlans&token=<?php echo $token; ?>',
         type: 'post',
         dataType: 'json',
         beforeSend: function(){
@@ -143,10 +143,10 @@
         }
       });
     }
-    
+
     function loadUsage(){
 	    $.ajax({
-        url: 'index.php?route=openbay/openbay/getUsage&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/ebay/getUsage&token=<?php echo $token; ?>',
         type: 'post',
         dataType: 'json',
         beforeSend: function(){

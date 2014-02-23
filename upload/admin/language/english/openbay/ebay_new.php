@@ -183,4 +183,3 @@ $_['lang_error_enter_text']         = 'Enter search text';
 $_['lang_error_no_stock']           = 'You cannot list an item with zero stock';
 $_['lang_error_no_catalog_data']    = 'No eBay catalog data was found for your product in eBay';
 $_['lang_error_missing_settings']   = 'You cannot list items until you sync the eBay settings';
-?>

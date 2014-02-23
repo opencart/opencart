@@ -242,7 +242,5 @@
     function validateForm(){
         $('#form-openbay-manager').submit();
     }
-
-    $('#tabs a').tabs();
 //--></script>
 <?php echo $footer; ?>

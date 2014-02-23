@@ -1,6 +1,6 @@
 <?php
 $_['lang_title']                    = 'OpenBay Pro for eBay';
-$_['lang_heading']                  = 'eBay Overview';
+$_['lang_heading']                  = 'eBay dashboard';
 $_['lang_openbay']                  = 'OpenBay Pro';
 $_['lang_heading_settings']         = 'Settings';
 $_['lang_heading_sync']             = 'Syncronise';
@@ -14,4 +14,3 @@ $_['lang_heading_profile']          = 'Profiles';
 $_['lang_heading_template']         = 'Templates';
 $_['lang_heading_ebayacc']          = 'eBay account';
 $_['lang_heading_register']         = 'Register here';
-?>

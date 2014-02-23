@@ -15,4 +15,3 @@ $_['lang_amazonus_sku_column']      = 'Amazon US item SKU';
 $_['lang_actions_column']           = 'Action';
 $_['lang_uploaded_alert']           = 'Saved listing(s) uploaded!';
 $_['lang_delete_confirm']           = 'Are you sure?';
-?>

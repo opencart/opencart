@@ -21,4 +21,3 @@ $_['lang_maintenance_fail']             = 'Your store is in maintenance mode. Im
 $_['lang_import_images_msg1']           = 'images are pending import/copy from eBay. Refresh this page, if the number does not decrease then';
 $_['lang_import_images_msg2']           = 'click here';
 $_['lang_import_images_msg3']           = 'and wait. More information about why this happened can be found <a href="http://shop.openbaypro.com/index.php?route=information/faq&topic=8_45" target="_blank">here</a>';
-?>

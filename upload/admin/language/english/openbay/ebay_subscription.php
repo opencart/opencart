@@ -20,4 +20,3 @@ $_['lang_ajax_acc_load_text4']  = 'Description';
 $_['lang_ajax_acc_load_text5']  = 'Current plan';
 $_['lang_ajax_acc_load_text6']  = 'Change to plan';
 $_['lang_ajax_load_error']      = 'Sorry, could not get a response. Try later.';
-?>

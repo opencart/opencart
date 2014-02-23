@@ -30,6 +30,4 @@ $_['column_sku'] = "SKU";
 $_['column_quantity'] = "Quantity";
 $_['column_combination'] = "Combination";
 
-$_['error_bulk_linking_not_allowed'] = 'Bulk linking is not allowed. Your account must be on at least Medium plan'
-
-?>
+$_['error_bulk_linking_not_allowed'] = 'Bulk linking is not allowed. Your account must be on at least Medium plan';

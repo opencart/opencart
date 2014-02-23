@@ -49,12 +49,12 @@
                                             <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_price; ?>:</label><input id="price_<?php echo $i; ?>" type="text" name="price" class="openbayData_<?php echo $i; ?> width50" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" /></p>
                                             <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_stock; ?>:</label><?php echo $product['quantity']; ?></p>
                                             <input type="hidden" name="qty" value="<?php echo $product['quantity']; ?>" class="openbayData_<?php echo $i; ?>" />
-                                            
+
                                             <div class="buttons right">
                                                 <a class="button" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>" style="display:none;"><span><?php echo $lang_features; ?></span></a>
                                                 <a class="button" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" style="display:none;"><span><?php echo $lang_catalog; ?></span></a>
                                             </div>
-                                            
+
                                             <div id="featurePage_<?php echo $i; ?>" class="greyScreenBox featurePage">
                                                 <div class="bold border p5 previewClose">X</div>
                                                 <div class="previewContentScroll">
@@ -265,7 +265,7 @@
 
     function removeBox(id){
         $('#p_row_'+id).fadeOut('medium');
-    
+
         setTimeout(function(){
             $('#p_row_'+id).remove();
         }, 1000);
@@ -288,7 +288,7 @@
         var qry = $('#title_'+id).val();
 
         $.ajax({
-            url: 'index.php?route=openbay/openbay/getSuggestedCategories&token=<?php echo $token; ?>&qry='+qry,
+            url: 'index.php?route=openbay/ebay/getSuggestedCategories&token=<?php echo $token; ?>&qry='+qry,
             type: 'GET',
             async: true,
             dataType: 'json',
@@ -304,7 +304,7 @@
                         $.each(data.data, function(key,val){
                             if(val.percent != 0) {
                                 htmlInj += '<p style="margin:0px; padding:0 0 0 10px;"><input type="radio" id="suggested_category_'+id+'" name="suggested_'+id+'" value="'+val.id+'" onchange="categorySuggestedChange('+val.id+','+id+')"';
-                                if(i == 1){ 
+                                if(i == 1){
                                     htmlInj += ' checked="checked"';
                                     categorySuggestedChange(val.id, id);
                                 }
@@ -337,7 +337,7 @@
 
     function loadCategories(level, skip, id){
         var parent = '';
-        
+
         if(level == 1){
             parent = ''
         }else{
@@ -353,7 +353,7 @@
         }
 
         $.ajax({
-            url: 'index.php?route=openbay/openbay/getCategories&token=<?php echo $token; ?>&parent='+parent,
+            url: 'index.php?route=openbay/ebay/getCategories&token=<?php echo $token; ?>&parent='+parent,
             type: 'GET',
             dataType: 'json',
             beforeSend: function(){
@@ -410,7 +410,7 @@
         $('#conditionContainer_'+id).show();
 
         $.ajax({
-            url: 'index.php?route=openbay/openbay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
+            url: 'index.php?route=openbay/ebay/getCategoryFeatures&token=<?php echo $token; ?>&category='+cat,
             type: 'GET',
             dataType: 'json',
             beforeSend: function(){ addCount(); },
@@ -449,12 +449,12 @@
             }
         });
     }
-    
+
     function itemFeatures(cat, id){
         $('#editFeature_'+id).hide();
-        
+
         $.ajax({
-            url: 'index.php?route=openbay/openbay/getEbayCategorySpecifics&token=<?php echo $token; ?>&category='+cat,
+            url: 'index.php?route=openbay/ebay/getEbayCategorySpecifics&token=<?php echo $token; ?>&category='+cat,
             type: 'GET',
             dataType: 'json',
             beforeSend: function(){ addCount(); },
@@ -516,7 +516,7 @@
                 }
 
                 $('#editFeature_'+id).show();
-                
+
                 removeCount();
             },
             failure: function(){
@@ -547,9 +547,9 @@
         if(qry == ''){
             alert('<?php echo $lang_search_text; ?>');
         }
-        
+
         $.ajax({
-            url: 'index.php?route=openbay/openbay/searchEbayCatalog&token=<?php echo $token; ?>',
+            url: 'index.php?route=openbay/ebay/searchEbayCatalog&token=<?php echo $token; ?>',
             type: 'POST',
             dataType: 'json',
             data: {
@@ -589,7 +589,7 @@
             }
         });
     }
-    
+
     function processCatalogItem(val, id){
         html = '';
         html += '<div style="float:left; display:inline; width:450px; height:100px; padding:5px; margin-right:10px; margin-bottom:10px;" class="border">';
@@ -673,7 +673,7 @@
         $.each($('.pId'), function(i){
             id = $(this).val();
             name = $('#title_'+$(this).val()).val();
-        
+
             $('#p_row_msg_'+$(this).val()).show();
             $('.p_row_content_'+$(this).val()).hide();
             $('#p_row_title_'+$(this).val()).text(name).show();
@@ -684,7 +684,7 @@
             processedData = $(".openbayData_"+id).serialize();
 
             $.ajax({
-                url: 'index.php?route=openbay/openbay/verifyBulk&token=<?php echo $token; ?>&i='+id,
+                url: 'index.php?route=openbay/ebay/verifyBulk&token=<?php echo $token; ?>&i='+id,
                 type: 'POST',
                 dataType: 'json',
                 data: processedData,
@@ -748,7 +748,7 @@
             var id = '';
             var name = '';
             var processedData = '';
-            
+
             showGreyScreen('loadingVerify');
 
             $('.warning').hide();
@@ -767,7 +767,7 @@
                 $('#p_row_title_'+$(this).val()).text(name).show();
 
                 $.ajax({
-                    url: 'index.php?route=openbay/openbay/listItemBulk&token=<?php echo $token; ?>&i='+id,
+                    url: 'index.php?route=openbay/ebay/listItemBulk&token=<?php echo $token; ?>&i='+id,
                     type: 'POST',
                     dataType: 'json',
                     data: $(".openbayData_"+id).serialize(),
@@ -824,11 +824,11 @@
         showGreyScreen('previewPage');
         $('#previewContentIframe').attr('src', url);
     }
-    
+
     function showFeatures(id){
         showGreyScreen('featurePage_'+id);
     }
-    
+
     function showCatalog(id){
         showGreyScreen('catalogPage_'+id);
     }

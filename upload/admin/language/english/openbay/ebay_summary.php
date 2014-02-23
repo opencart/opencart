@@ -21,4 +21,3 @@ $_['lang_count']                = 'Count';
 $_['lang_report_30']            = '30 days';
 $_['lang_report_52']            = '52 weeks';
 $_['lang_title_dsr']            = 'DSR reports';
-?>

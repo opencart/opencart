@@ -86,9 +86,9 @@
             if(importCategories == undefined){ importCategories = 0; }else{ importCategories = 1; }
 
             $.ajax({
-                url: 'index.php?route=openbay/openbay/importItems&token=<?php echo $token; ?>&desc='+descImport+'&note='+noteImport+'&advanced='+advImport+'&categories='+importCategories,
+                url: 'index.php?route=openbay/ebay/importItems&token=<?php echo $token; ?>&desc='+descImport+'&note='+noteImport+'&advanced='+advImport+'&categories='+importCategories,
                 beforeSend: function(){
-                    $('#importItems').hide(); 
+                    $('#importItems').hide();
                     $('#imageLoadingImportItems').show();
                 },
                 type: 'post',

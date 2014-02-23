@@ -302,7 +302,7 @@ function filter() {
         $('.buttons').prepend('<a onclick="bulkUpload();" class="button"><span><?php echo $lang_bulk_btn; ?></span></a>');
 
         function bulkUpload() {
-            $('#form').attr('action', 'index.php?route=openbay/openbay/createBulk&token=<?php echo $this->request->get['token']; ?>');
+            $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $this->request->get['token']; ?>');
             $('#form').submit();
         }
 //--></script>

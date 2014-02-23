@@ -105,4 +105,3 @@ $_['text_error_permission']             = 'You do not have permission to modify 
 
 $_['lang_checking_messages']            = 'Checking for messages';
 $_['lang_title_messages']               = 'Messages &amp; notifications';
-?>

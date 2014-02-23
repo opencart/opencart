@@ -17,13 +17,13 @@ $_['lang_text_success']         = 'Your settings have been saved';
 
 $_['lang_error_save_settings']  = 'You need to save your settings first.';
 
-$_['lang_tab_token']            = 'API details'; 
-$_['lang_tab_general']          = 'Settings'; 
-$_['lang_tab_setup']            = 'Settings'; 
-$_['lang_tab_defaults']         = 'Listing defaults'; 
+$_['lang_tab_token']            = 'API details';
+$_['lang_tab_general']          = 'Settings';
+$_['lang_tab_setup']            = 'Settings';
+$_['lang_tab_defaults']         = 'Listing defaults';
 $_['lang_tab_shipping']         = 'Shipping defaults';
 
-$_['lang_legend_api']           = 'API connection details';
+$_['lang_legend_api']           = 'API details';
 $_['lang_legend_app_settings']  = 'Application settings';
 $_['lang_legend_default_import']= 'Default import settings';
 $_['lang_legend_payments']      = 'Payments';
@@ -38,8 +38,8 @@ $_['lang_status']               = 'Status';
 $_['lang_enabled']              = 'Enabled';
 $_['lang_disabled']             = 'Disabled';
 $_['lang_obp_token']            = 'Token';
-$_['lang_obp_token_register']   = 'Click here to register for your token';
-$_['lang_obp_token_renew']      = 'Click here to renew your token';
+$_['lang_obp_token_register']   = 'Register for your eBay token';
+$_['lang_obp_token_renew']      = 'Renew your eBay token';
 $_['lang_obp_secret']           = 'Secret';
 $_['lang_obp_string1']          = 'Encryption string 1';
 $_['lang_obp_string2']          = 'Encryption string 2';
@@ -68,8 +68,8 @@ $_['lang_import_refund_id']     = 'Refunded status:';
 $_['lang_import_part_refund_id']= 'Partially Refunded status:';
 
 $_['lang_developer']            = 'Developer / support';
-$_['lang_developer_desc']       = 'You should not use this area unless instructed to do so.'; 
-$_['lang_developer_empty']      = 'Empty ALL data?'; 
+$_['lang_developer_desc']       = 'You should not use this area unless instructed to do so.';
+$_['lang_developer_empty']      = 'Empty ALL data?';
 $_['lang_developer_locks']      = 'Remove order locks?';
 $_['lang_setting_desc']         = 'Default settings are used to pre-set many eBay listing options. All defaults can be changed on the listing page for each item.';
 $_['lang_payment_instruction']  = 'Payment instructions';
@@ -106,17 +106,16 @@ $_['lang_openbay_duration']         = 'Default listing duration<span class="help
 $_['lang_address_format']           = 'Default address format<span class="help">Only used if the country does not have an address format set-up already.</span>';
 
 $_['lang_api_status']               = 'API connection status';
-$_['lang_api_checking']             = 'Checking';
 $_['lang_api_ok']                   = 'Connection OK, token expires';
 $_['lang_api_failed']               = 'Validation failed';
 $_['lang_api_connect_fail']         = 'Failure connecting';
 $_['lang_api_connect_error']        = 'Error connecting';
+$_['lang_api_other']        		= 'Other actions';
 
 $_['lang_create_date']              = 'Created date for new orders';
 $_['lang_create_date_0']            = 'When added to OpenCart';
 $_['lang_create_date_1']            = 'When created on eBay';
-$_['lang_obp_detail_update']        = 'Click here to update your store URL & contact email';
+$_['lang_obp_detail_update']        = 'Update your store URL &amp; contact email';
 $_['lang_developer_repairlinks']    = 'Repair item links';
 
 $_['lang_timezone_offset']          = 'Timezone offset<span class="help">Based on hours. 0 is GMT timezone. Only works if eBay time is used for order creation.</span>';
-?>

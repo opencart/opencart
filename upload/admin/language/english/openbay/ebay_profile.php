@@ -90,4 +90,3 @@ $_['invalid_permission']        = 'You do not have permission to edit profiles';
 $_['lang_error_name']           = 'You must enter a profile name';
 $_['lang_no_template']          = 'Template ID does not exist';
 $_['lang_error_missing_settings'] = 'You cannot add,edit or delete profiles until you syncronise your eBay settings';
-?>

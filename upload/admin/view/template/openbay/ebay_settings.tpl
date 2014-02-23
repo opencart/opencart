@@ -1,87 +1,92 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-        <?php } ?>
-    </div>
-
-    <?php if ($error_warning) { ?>
-    <div class="warning"><?php echo $error_warning; ?></div>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
+  </ul>
 
-    <div class="box" style="margin-bottom:130px;">
+  <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+  <?php } ?>
 
-        <div class="heading">
-            <h1><?php echo $lang_heading_title; ?></h1>
-            <div class="buttons"><a onclick="validateForm(); return false;" class="button"><span><?php echo $lang_save; ?></span></a><a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_cancel; ?></span></a></div>
-        </div>
-        <div class="content">
-            <div id="tabs" class="htabs">
-                <a href="#tab-general"><?php echo $lang_tab_token; ?></a>
-                <a href="#tab-setup"><?php echo $lang_tab_setup; ?></a>
-                <a href="#tab-defaults"><?php echo $lang_tab_defaults; ?></a>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <button type="submit" form="form-ebay-settings" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $lang_heading_title; ?></h1>
+    </div>
+    <div class="panel-body">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-ebay-settings" class="form-horizontal">
+        <input type="hidden" name="ebay_itm_link" value="<?php echo $ebay_itm_link; ?>" />
+
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#tab-general" data-toggle="tab"><?php echo $lang_tab_token; ?></a></li>
+          <li><a href="#tab-setup" data-toggle="tab"><?php echo $lang_tab_setup; ?></a></li>
+          <li><a href="#tab-defaults" data-toggle="tab"><?php echo $lang_tab_defaults; ?></a></li>
+        </ul>
+
+        <div class="tab-content">
+          <div class="tab-pane active" id="tab-general">
+            <h4><?php echo $lang_legend_api; ?></h4>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay_status"><?php echo $lang_status; ?></label>
+              <div class="col-sm-10">
+                <select name="ebay_status" id="ebay_status" class="form-control ftpsetting">
+                  <?php if ($ebay_status) { ?>
+                    <option value="1" selected="selected"><?php echo $lang_enabled; ?></option>
+                    <option value="0"><?php echo $lang_disabled; ?></option>
+                  <?php } else { ?>
+                    <option value="1"><?php echo $lang_enabled; ?></option>
+                    <option value="0" selected="selected"><?php echo $lang_disabled; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
             </div>
-
-            <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
-                <input type="hidden" name="ebay_itm_link" value="<?php echo $ebay_itm_link; ?>" />
-                <div id="tab-general">
-                    <h2><?php echo $lang_legend_api; ?></h2>
-
-                    <table class="form">
-                        <tr>
-                            <td><p><?php echo $lang_status; ?></p></td>
-                            <td>
-                                <p>
-                                    <select name="ebay_status" style="width:200px;">
-                                        <?php if ($ebay_status) { ?>
-                                        <option value="1" selected="selected"><?php echo $lang_enabled; ?></option>
-                                        <option value="0"><?php echo $lang_disabled; ?></option>
-                                        <?php } else { ?>
-                                        <option value="1"><?php echo $lang_enabled; ?></option>
-                                        <option value="0" selected="selected"><?php echo $lang_disabled; ?></option>
-                                        <?php } ?>
-                                    </select>
-                                </p>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><p><label for="ebay_token"><?php echo $lang_obp_token; ?></p></td>
-                            <td>
-                                <p><img src="view/image/lock.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><?php echo $lang_obp_token_register; ?></a></p>
-                                <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><?php echo $lang_obp_token_renew; ?></a></p>
-                                <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><?php echo $lang_obp_detail_update; ?></a></p>
-                                <p><input type="text" name="ebay_token" id="ebay_token" style="width:300px;" maxlength="" value="<?php echo $ebay_token;?>" class="credentials" /></p>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td><p><label for="ebay_secret"><?php echo $lang_obp_secret; ?></p></td>
-                            <td><p><input type="text" name="ebay_secret" id="ebay_secret" style="width:300px;" maxlength="" value="<?php echo $ebay_secret;?>" class="credentials" /></p></td>
-                        </tr>
-
-                        <tr>
-                            <td><p><label for="ebay_string1"><?php echo $lang_obp_string1; ?></p></td>
-                            <td><p><input type="text" name="ebay_string1" id="ebay_string1" style="width:300px;" maxlength="" value="<?php echo $ebay_string1;?>" class="credentials" /></p></td>
-                        </tr>
-
-                        <tr>
-                            <td><p><label for="ebay_string2"><?php echo $lang_obp_string2; ?></p></td>
-                            <td><p><input type="text" name="ebay_string2" id="ebay_string2" style="width:300px;" maxlength="" value="<?php echo $ebay_string2;?>" class="credentials" /></p></td>
-                        </tr>
-
-                        <tr>
-                            <td><p><?php echo $lang_api_status; ?></p></td>
-                            <td id="apiConnection" style="padding:5px;">
-                                <img style="display:inline; position:relative; top:3px;" src="view/image/loading.gif" alt="" title="" /> <?php echo $lang_api_checking; ?>
-                            </td>
-                        </tr>
-
-                    </table>
-                </div>
-
-                <div id="tab-setup">
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay_token"><?php echo $lang_obp_token; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="ebay_token" value="<?php echo $lang_obp_token; ?>" placeholder="<?php echo $field_ftp_user; ?>" id="ebay_token" class="form-control credentials" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay_token"><?php echo $lang_obp_secret; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="ebay_secret" value="<?php echo $ebay_secret; ?>" placeholder="<?php echo $lang_obp_secret; ?>" id="ebay_secret" class="form-control credentials" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay_string1"><?php echo $lang_obp_string1; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="ebay_string1" value="<?php echo $ebay_string1; ?>" placeholder="<?php echo $lang_obp_string1; ?>" id="ebay_string1" class="form-control credentials" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay_string2"><?php echo $lang_obp_string2; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="ebay_string2" value="<?php echo $ebay_string2; ?>" placeholder="<?php echo $lang_obp_string2; ?>" id="ebay_string2" class="form-control credentials" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $lang_api_status; ?></label>
+              <div class="col-sm-10">
+                <h4><span id="api-status" class="label" style="display:none;"></span></h4>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $lang_api_other; ?></label>
+              <div class="col-sm-10">
+                <h4><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><span class="label label-info"><i class="fa fa-link"></i> <?php echo $lang_obp_token_register; ?></span></a></h4>
+                <h4><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><span class="label label-info"><i class="fa fa-link"></i> <?php echo $lang_obp_token_renew; ?></span></a></h4>
+                <h4><a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><span class="label label-info"><i class="fa fa-link"></i> <?php echo $lang_obp_detail_update; ?></span></a></h4>
+              </div>
+            </div>
+          </div>
+          <div class="tab-pane" id="tab-setup">
                     <h2><?php echo $lang_legend_app_settings; ?></h2>
                     <p><?php echo $lang_app_setting_msg; ?></p>
                     <table class="form">
@@ -445,8 +450,7 @@
                       </tr>
                     </table>
                 </div>
-
-                <div id="tab-defaults">
+          <div class="tab-pane" id="tab-defaults">
                     <p><?php echo $lang_setting_desc; ?></p>
 
                     <table class="form">
@@ -521,9 +525,10 @@
 
                     </table>
                 </div>
-            </form>
         </div>
+      </form>
     </div>
+  </div>
 </div>
 
 <script type="text/javascript">
@@ -532,7 +537,7 @@
 
         if (pass != '') {
             $.ajax({
-                url: 'index.php?route=openbay/openbay/devClear&token=<?php echo $token; ?>',
+                url: 'index.php?route=openbay/ebay/devClear&token=<?php echo $token; ?>',
                 type: 'post',
                 dataType: 'json',
                 data: 'pass=' + pass,
@@ -560,7 +565,7 @@
 
     function repairLinks() {
       $.ajax({
-        url: 'index.php?route=openbay/openbay/repairLinks&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/ebay/repairLinks&token=<?php echo $token; ?>',
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
@@ -582,7 +587,7 @@
 
     function removeLocks() {
       $.ajax({
-        url: 'index.php?route=openbay/openbay/deleteAllLocks&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/ebay/deleteAllLocks&token=<?php echo $token; ?>',
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
@@ -603,27 +608,30 @@
     }
 
     function validateForm() {
-        $('#form').submit();
+        $('#form-ebay-settings').submit();
     }
 
     function checkCredentials() {
         $.ajax({
-            url: 'index.php?route=openbay/openbay/verifyCreds&token=<?php echo $token; ?>',
+            url: 'index.php?route=openbay/ebay/verifyCreds&token=<?php echo $token; ?>',
             type: 'POST',
             dataType: 'json',
             data: {token: $('#ebay_token').val(), secret: $('#ebay_secret').val(), string1: $('#ebay_string1').val(), string2: $('#ebay_string2').val()},
+            beforeSend: function() {
+              $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-refresh fa-spin"></i> Checking details').show();
+            },
             success: function(data) {
                 if (data.error == false) {
-                    $('#apiConnection').html('<img class="apiConnectionImg" src="view/image/success.png" /><?php echo $lang_api_ok; ?>: ' + data.data.expire);
+                    $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> <?php echo $lang_api_ok; ?>: ' + data.data.expire);
                 } else {
-                    $('#apiConnection').html('<img class="apiConnectionImg" src="view/image/delete.png" />' + data.msg);
+                    $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> ' + data.msg);
                 }
             },
             failure: function() {
-                $('#apiConnection').html('<img class="apiConnectionImg" src="view/image/delete.png" />&nbsp;&nbsp;<?php echo $lang_api_connect_fail; ?>');
+              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $lang_api_connect_fail; ?>');
             },
             error: function() {
-                $('#apiConnection').html('<img class="apiConnectionImg" src="view/image/delete.png" />&nbsp;&nbsp;<?php echo $lang_api_connect_error; ?>');
+              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $lang_api_connect_error; ?>');
             }
         });
     }
@@ -636,19 +644,17 @@
         }
     }
 
-    $('#tabs a').tabs();
-
     $('.credentials').change(function() {
-        checkCredentials();
+      checkCredentials();
     });
 
     $('#ebay_tax_listing').change(function() {
-        changeTaxHandler();
+      changeTaxHandler();
     });
 
     $(document).ready(function() {
-        checkCredentials();
-        changeTaxHandler();
+      checkCredentials();
+      changeTaxHandler();
     });
 //--></script>
 

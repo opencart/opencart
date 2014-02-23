@@ -25,4 +25,3 @@ $_['lang_amazonus_sku']             = 'Amazon item SKU';
 $_['lang_sku_empty_warning']        = 'Amazon SKU can not be empty!';
 $_['lang_name_empty_warning']       = 'Product name can not be empty!';
 $_['lang_product_warning']          = 'Product does not exist. Please use auto complete values.';
-?>

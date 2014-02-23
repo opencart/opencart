@@ -120,7 +120,7 @@
 
 function checkLinkedItems(){
     $.ajax({
-        url: 'index.php?route=openbay/openbay/loadLinkedStatus&token=<?php echo $token; ?>',
+        url: 'index.php?route=openbay/ebay/loadLinkedStatus&token=<?php echo $token; ?>',
         data: $('.item_id').serialize(),
         type: 'POST',
         dataType: 'json',
@@ -191,7 +191,7 @@ function checkLinkedItems(){
 function removeLink(product_id, id) {
     $.ajax({
         type: 'GET',
-        url: 'index.php?route=openbay/openbay/removeItemLink&token=<?php echo $token; ?>&product_id='+product_id,
+        url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id='+product_id,
         dataType: 'json',
         success: function(json) {
             $('#row_'+id).fadeOut('slow');
@@ -211,7 +211,7 @@ function updateLink(itemid, qty, product_id, storeQty){
     if(r == true){
         $.ajax({
             type: 'GET',
-            url: 'index.php?route=openbay/openbay/setProductStock&token=<?php echo $token; ?>&product_id='+product_id,
+            url: 'index.php?route=openbay/ebay/setProductStock&token=<?php echo $token; ?>&product_id='+product_id,
             dataType: 'json',
             success: function(json) {
                 if(json.error == false){
@@ -258,7 +258,7 @@ function saveListingLink(id){
     }
 
     $.ajax({
-        url: 'index.php?route=openbay/openbay/saveItemLink&token=<?php echo $token; ?>&pid='+product_id+'&itemId='+id+'&qty='+qty+'&ebayqty='+ebayqty+'&variants='+variants,
+        url: 'index.php?route=openbay/ebay/saveItemLink&token=<?php echo $token; ?>&pid='+product_id+'&itemId='+id+'&qty='+qty+'&ebayqty='+ebayqty+'&variants='+variants,
         type: 'post',
         dataType: 'json',
         beforeSend: function(){
@@ -279,7 +279,7 @@ function getProductStock(id, elementId){
     $.ajax({
         type:'GET',
         dataType: 'json',
-        url: 'index.php?route=openbay/openbay/getProductStock&token=<?php echo $token; ?>&pid='+id,
+        url: 'index.php?route=openbay/ebay/getProductStock&token=<?php echo $token; ?>&pid='+id,
         success: function(data){
             if(data.variant == 0){
                 $('#'+elementId+'_qty').text(data.qty);
@@ -305,7 +305,7 @@ function checkUnlinkedItems(){
     var unlinked_page = $('#unlinked_page').val();
 
     $.ajax({
-        url: 'index.php?route=openbay/openbay/loadUnlinked&token=<?php echo $token; ?>&page='+unlinked_page,
+        url: 'index.php?route=openbay/ebay/loadUnlinked&token=<?php echo $token; ?>&page='+unlinked_page,
         type: 'get',
         dataType: 'json',
         beforeSend: function(){

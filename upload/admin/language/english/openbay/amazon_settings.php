@@ -48,4 +48,3 @@ $_['lang_default_mp_help']          = 'Default marketplace for product listings 
 $_['lang_admin_notify']             = 'Notify admin of new order';
 $_['lang_default_shipping']         = 'Default shipping';
 $_['lang_default_shipping_help']    = 'Used as the pre-selected option in the bulk order update';
-?>

@@ -126,7 +126,7 @@
 
     function load(){
         $.ajax({
-            url: 'index.php?route=openbay/openbay/editLoad&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
+            url: 'index.php?route=openbay/ebay/editLoad&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
             type: 'GET',
             dataType: 'json',
             beforeSend: function(){
@@ -226,7 +226,7 @@
     function save(){
         $.ajax({
             type: 'POST',
-            url: 'index.php?route=openbay/openbay/editSave&token=<?php echo $token; ?>',
+            url: 'index.php?route=openbay/ebay/editSave&token=<?php echo $token; ?>',
             dataType: 'json',
             data: $("#form").serialize(),
             beforeSend: function(){
@@ -271,7 +271,7 @@
             if(id !== ''){
                 $.ajax({
                     type: 'GET',
-                    url: 'index.php?route=openbay/openbay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
+                    url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
                     dataType: 'json',
                     success: function() {
                         alert('<?php echo $lang_alert_removed; ?>');
@@ -294,7 +294,7 @@
             if(id !== ''){
                 $.ajax({
                     type: 'GET',
-                    url: 'index.php?route=openbay/openbay/endItem&token=<?php echo $token; ?>&id='+id,
+                    url: 'index.php?route=openbay/ebay/endItem&token=<?php echo $token; ?>&id='+id,
                     dataType: 'json',
                     success: function(data) {
                         if(data.error == true){

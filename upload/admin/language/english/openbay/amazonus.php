@@ -59,4 +59,3 @@ $_['subscription_text'] = 'Subscription';
 $_['link_items_text'] = 'Link Items';
 $_['listing_text'] = 'Listings';
 $_['orders_text'] = 'Orders';
-?>

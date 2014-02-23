@@ -44,5 +44,3 @@ $_['button_search'] = 'Search';
 $_['error_product_sku'] = 'Product must have an SKU';
 $_['error_product_no_searchable_fields'] = 'Product must have ISBN, EAN, UPC or JAN field populated';
 $_['error_bulk_listing_not_allowed'] = 'Bulk listing is not allowed. Your account must be on at least Medium plan';
-
-?>

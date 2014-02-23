@@ -65,4 +65,3 @@ $_['lang_error_stock']              = 'Some items are not in stock and have been
 $_['lang_error_no_product']         = 'There is no eligible products selected to use the bulk upload feature';
 $_['lang_error_reverify']           = 'There was an error, you should edit and re-verify the items';
 $_['lang_error_missing_settings']   = 'You cannot bulk list items until you syncronise your eBay settings';
-?>

@@ -1,62 +1,59 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-        <?php } ?>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
-
-    <div class="box mBottom130">
-        <div class="heading">
-            <h1><?php echo $text_heading; ?></h1>
-            <div class="buttons">
-                <a onclick="location = '<?php echo $return; ?>';" class="button"><span><?php echo $text_btn_return; ?></span></a>
+    <div class="panel-body">
+      <?php if($validation === true) { ?>
+        <form id="form-ebay-import" class="form-horizontal">
+          <p><?php echo $text_sync_pull_notice; ?></p>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="button_import"><?php echo $text_import_ebay_items; ?></label>
+            <div class="col-sm-10">
+              <a class="btn btn-primary" id="button_import"><?php echo $text_sync_pull_orders; ?></a>
             </div>
+          </div>
+        </form>
+      <?php }else{ ?>
+        <div class="alert alert-danger">
+          <i class="fa fa-exclamation-circle"></i> <?php echo $text_error_validation; ?>
         </div>
-        <div class="content">
-            <?php if($validation === true) { ?>
-                <table  width="100%" cellspacing="0" cellpadding="2" border="0" class="adminlist">
-                    <tr class="row0">
-                        <td width="230" height="50" valign="middle"><label><?php echo $text_sync_pull_orders; ?></label></td>
-                        <td><a onclick="importOrders();" class="button" id="importOrders"><span><?php echo $text_sync_pull_orders_text; ?></span></a><img src="view/image/loading.gif" id="imageLoadingImportOrders" class="displayNone" alt="Loading" /></td>
-                    </tr>
-                </table>
-                <p><?php echo $text_sync_pull_notice; ?></p>
-            <?php }else{ ?>
-                <div class="warning"><?php echo $text_error_validation; ?></div>
-            <?php } ?>
-        </div>
+      <?php } ?>
     </div>
+  </div>
 </div>
 
 <script type="text/javascript"><!--
-    function importOrders(){
-        $.ajax({
-                url: 'index.php?route=openbay/ebay/importOrdersManual&token=<?php echo $token; ?>',
-                beforeSend: function(){
-                    $('#importOrders').hide();
-                    $('#imageLoadingImportOrders').show();
-                },
-                type: 'post',
-                dataType: 'json',
-                success: function(json) {
-                    $('#importOrders').show(); $('#imageLoadingImportOrders').hide();
-                    alert('<?php echo $text_ajax_orders_import; ?>');
-                },
-                failure: function(){
-                    $('#imageLoadingImportOrders').hide();
-                    $('#importOrders').show();
-
-                    alert('<?php echo $text_ajax_load_error; ?>');
-                },
-                error: function(){
-                    $('#imageLoadingImportOrders').hide();
-                    $('#importOrders').show();
-
-                    alert('<?php echo $text_ajax_load_error; ?>');
-                }
-        });
-    }
+  $('#button_import').bind('click', function() {
+    $.ajax({
+      url: 'index.php?route=openbay/ebay/importOrdersManual&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#button_import').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+      },
+      type: 'post',
+      dataType: 'json',
+      success: function(json) {
+        $('#button_import').empty().html('<?php echo $text_error_validation; ?>');
+        alert('<?php echo $text_ajax_orders_import; ?>');
+      },
+      failure: function(){
+        $('#button_import').empty().html('<?php echo $text_error_validation; ?>');
+        alert('<?php echo $text_ajax_load_error; ?>');
+      },
+      error: function(){
+        $('#button_import').empty().html('<?php echo $text_error_validation; ?>');
+        alert('<?php echo $text_ajax_load_error; ?>');
+      }
+    });
+  });
 //--></script>
-
 <?php echo $footer; ?>

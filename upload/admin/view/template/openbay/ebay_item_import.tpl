@@ -1,116 +1,111 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?><?php echo $breadcrumb['separator']; ?>
-    <a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a><?php } ?>
-  </div>
-
-  <div class="box mBottom130">
-    <div class="heading">
-      <h1><?php echo $text_heading; ?></h1>
-
-      <div class="buttons">
-        <a onclick="location = '<?php echo $return; ?>';" class="button"><span><?php echo $text_btn_return; ?></span></a>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="content">
+    <div class="panel-body">
       <?php if($validation === true) { ?>
+        <?php if($imgImport > 0){ ?>
+          <div class="alert alert-danger">
+            <i class="fa fa-exclamation-circle"></i> <?php echo $imgImport; ?> <?php echo $text_import_images_msg1; ?>
+            <a href="<?php echo $imgImportLink; ?>" target="_blank"><?php echo $text_import_images_msg2; ?></a> <?php echo $text_import_images_msg3; ?>
+          </div>
+        <?php } ?>
 
-      <?php if($imgImport > 0){ ?>
-      <div class="warning">
-        <?php echo $imgImport; ?> <?php echo $text_import_images_msg1; ?>
-        <a href="<?php echo $imgImportLink; ?>" target="_blank"><?php echo $text_import_images_msg2; ?></a> <?php echo $text_import_images_msg3; ?>
-      </div>
-      <?php } ?>
+        <?php if($this->config->get('config_maintenance') == 1){ ?>
+          <div class="alert alert-danger">
+            <i class="fa fa-exclamation-circle"></i> <?php echo $text_maintenance_fail; ?>
+          </div>
+        <?php } ?>
 
-      <?php if($this->config->get('config_maintenance') == 1){ ?>
-      <div class="warning"><?php echo $text_maintenance_fail; ?></div>
-      <?php } ?>
-
-      <p><?php echo $text_sync_import_line1; ?></p>
-
-      <p><?php echo $text_sync_import_line3; ?></p>
-
-      <div class="attention"><?php echo $text_sync_server_size; ?>
-        <strong><?php echo ini_get('post_max_size'); ?></strong>
-      </div>
-      <div class="attention"><?php echo $text_sync_memory_size; ?>
-        <strong><?php echo ini_get('memory_limit'); ?></strong>
-      </div>
-
-      <table width="100%" cellspacing="0" cellpadding="2" border="0" class="adminlist">
-
-        <tr class="row0">
-          <td width="230" height="50" valign="middle">
-            <label for="importCategories"><?php echo $text_import_categories; ?></label></td>
-          <td><input type="checkbox" name="importCategories" id="importCategories" value="1"/></td>
-        </tr>
-
-        <tr class="row0">
-          <td width="230" height="50" valign="middle">
-            <label for="importDescription"><?php echo $text_sync_item_description; ?></label></td>
-          <td><input type="checkbox" name="importDescription" id="importDescription" value="1"/></td>
-        </tr>
-
-        <tr class="row0">
-          <td width="230" height="50" valign="middle">
-            <label for="importAdvanced"><?php echo $text_import_item_advanced; ?></label></td>
-          <td><input type="checkbox" name="importAdvanced" id="importAdvanced" value="1"/></td>
-        </tr>
-
-        <tr class="row0">
-          <td width="230" height="50" valign="middle"><label><?php echo $text_import_ebay_items; ?></td>
-          <td>
-            <a onclick="importItems();" class="button" id="importItems"><span><?php echo $text_import; ?></span></a><img src="view/image/loading.gif" id="imageLoadingImportItems" class="displayNone" alt="Loading"/>
-          </td>
-        </tr>
-      </table>
+        <p><?php echo $text_sync_import_line1; ?></p>
+        <p><?php echo $text_sync_import_line3; ?></p>
+        <div class="attention"><?php echo $text_sync_server_size; ?>
+          <strong><?php echo ini_get('post_max_size'); ?></strong>
+        </div>
+        <div class="attention"><?php echo $text_sync_memory_size; ?>
+          <strong><?php echo ini_get('memory_limit'); ?></strong>
+        </div>
+        <form id="form-ebay-import" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_import_categories; ?></label>
+            <div class="col-sm-10">
+              <input type="checkbox" name="import_categories" id="import_categories" value="1" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_sync_item_description; ?></label>
+            <div class="col-sm-10">
+              <input type="checkbox" name="import_description" id="import_description" value="1" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label"><?php echo $text_import_item_advanced; ?></label>
+            <div class="col-sm-10">
+              <input type="checkbox" name="import_advanced" id="import_advanced" value="1" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="button_import"><?php echo $text_import_ebay_items; ?></label>
+            <div class="col-sm-10">
+              <a class="btn btn-primary" id="button_import"><?php echo $text_import; ?></a>
+            </div>
+          </div>
+        </form>
       <?php }else{ ?>
-      <div class="warning"><?php echo $text_error_validation; ?></div>
+        <div class="alert alert-danger">
+          <i class="fa fa-exclamation-circle"></i> <?php echo $text_error_validation; ?>
+        </div>
       <?php } ?>
     </div>
   </div>
 </div>
 
 <script type="text/javascript"><!--
-    function importItems(){
-        var answer = confirm("<?php echo $text_ajax_import_confirm;?>");
+  $('#button_import').bind('click', function() {
+    var answer = confirm("<?php echo $text_ajax_import_confirm;?>");
 
-        if (answer){
-            var descImport = $('#importDescription:checked').val();
-            var advImport = $('#importAdvanced:checked').val();
-            var importCategories = $('#importAdvanced:checked').val();
-            var noteImport = 0;
-            if(descImport == undefined){ descImport = 0; }else{ descImport = 1; }
-            if(advImport == undefined){ advImport = 0; }else{ advImport = 1; }
-            if(importCategories == undefined){ importCategories = 0; }else{ importCategories = 1; }
+    if (answer) {
+      var note_import = 0;
+      var import_description = $('#import_description:checked').val();
+      var import_advanced = $('#import_advanced:checked').val();
+      var import_categories = $('#import_categories:checked').val();
+      if(import_description == undefined){ import_description = 0; }else{ import_description = 1; }
+      if(import_advanced == undefined){ import_advanced = 0; }else{ import_advanced = 1; }
+      if(import_categories == undefined){ import_categories = 0; }else{ import_categories = 1; }
 
-            $.ajax({
-                url: 'index.php?route=openbay/ebay/importItems&token=<?php echo $token; ?>&desc='+descImport+'&note='+noteImport+'&advanced='+advImport+'&categories='+importCategories,
-                beforeSend: function(){
-                    $('#importItems').hide();
-                    $('#imageLoadingImportItems').show();
-                },
-                type: 'post',
-                dataType: 'json',
-                success: function(json) {
-                    $('#importItems').show(); $('#imageLoadingImportItems').hide();
-                    alert('<?php echo $text_ajax_import_notify; ?>');
-                },
-                failure: function(){
-                    $('#imageLoadingImportItems').hide();
-                    $('#importItems').show();
-                    alert('<?php echo $text_ajax_load_error; ?>');
-                },
-                error: function(){
-                    $('#imageLoadingImportItems').hide();
-                    $('#importItems').show();
-                    alert('<?php echo $text_ajax_load_error; ?>');
-                }
-            });
-        }else{
-            return 0;
+      $.ajax({
+        url: 'index.php?route=openbay/ebay/importItems&token=<?php echo $token; ?>&desc='+import_description+'&note='+note_import+'&advanced='+import_advanced+'&categories='+import_categories,
+        beforeSend: function(){
+          $('#button_import').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+        },
+        type: 'post',
+        dataType: 'json',
+        success: function(json) {
+          $('#button_import').empty().html('<?php echo $text_import; ?>');
+          alert('<?php echo $text_ajax_import_notify; ?>');
+        },
+        failure: function() {
+          $('#button_import').empty().html('<?php echo $text_import; ?>');
+          alert('<?php echo $text_ajax_load_error; ?>');
+        },
+        error: function() {
+          $('#button_import').empty().html('<?php echo $text_import; ?>');
+          alert('<?php echo $text_ajax_load_error; ?>');
         }
+      });
+    } else {
+      return 0;
     }
+  });
 //--></script>
 <?php echo $footer; ?>

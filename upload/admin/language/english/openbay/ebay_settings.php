@@ -81,10 +81,12 @@ $_['lang_payment_desc']         = 'See description (e.g. bank transfer)';
 $_['lang_payment_desc']         = 'See description (e.g. bank transfer)';
 $_['lang_payment_imediate']     = 'Immediate payment required';
 $_['lang_payment_types']     	= 'Payment types';
-$_['lang_tax_listing']          = 'Product tax<span class="help">If you use the rate from listings ensure your items have the correct tax in eBay</span>';
+$_['lang_tax_listing']          = 'Product tax';
+$_['lang_tax_listing_help']     = 'If you use the rate from listings ensure your items have the correct tax in eBay';
 $_['lang_tax_use_listing']      = 'Use tax rate set in eBay listing';
 $_['lang_tax_use_value']        = 'Use a set value for everything';
-$_['lang_tax']                  = 'Tax % used for everything<span class="help">Used when you import items or orders</span>';
+$_['lang_tax']                  = 'Tax % used for everything';
+$_['lang_tax_help']             = 'Used when you import items or orders';
 
 $_['lang_ajax_dev_enter_pw']    = 'Please enter your admin password';
 $_['lang_ajax_dev_enter_warn']  = 'This action is dangerous so is password protected.';

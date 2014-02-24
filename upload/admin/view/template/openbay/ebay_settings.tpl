@@ -463,7 +463,7 @@
                 <span class="help-block"><?php echo $lang_openbay_duration_help; ?></span>
               </div>
             </div>
-            <h5><?php echo $lang_legend_payments; ?></h5>
+            <h4><?php echo $lang_legend_payments; ?></h4>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="ebay_payment_instruction"><?php echo $lang_payment_instruction; ?></label>
               <div class="col-sm-10">
@@ -516,15 +516,17 @@
                     <option value="0" selected="selected"><?php echo $lang_tax_use_value; ?></option>
                   <?php } ?>
                 </select>
+                <span class="help-block"><?php echo $lang_tax_listing_help; ?></span>
               </div>
             </div>
             <div class="form-group" id="ebay_tax_listing_preset">
               <label class="col-sm-2 control-label" for="tax"><?php echo $lang_tax; ?></label>
               <div class="col-sm-10">
-                <div class="input-group">
+                <div class="input-group col-xs-2">
                   <input type="text" name="tax" value="<?php echo $tax;?>" id="tax" class="form-control" />
                   <span class="input-group-addon">%</span>
                 </div>
+                <span class="help-block"><?php echo $lang_tax_help; ?></span>
               </div>
             </div>
           </div>

@@ -1,34 +1,34 @@
 <?php
 // Heading
-$_['lang_heading_title']        = 'OpenBay Pro';
-$_['lang_text_manager']         = 'OpenBay Pro manager';
+$_['text_heading_title']        = 'OpenBay Pro';
+$_['text_text_manager']         = 'OpenBay Pro manager';
 
 // Text
 $_['text_install']              = 'Install';
 $_['text_uninstall']            = 'Uninstall';
 $_['text_success_settings']         = 'Success: Settings have been saved';
-$_['lang_text_no_results']      = 'No results found';
-$_['lang_text_manage']          = 'Manage';
-$_['lang_checking_version']     = 'Checking software version';
+$_['text_text_no_results']      = 'No results found';
+$_['text_text_manage']          = 'Manage';
+$_['text_checking_version']     = 'Checking software version';
 $_['button_retry']            = 'Retry';
-$_['lang_btn_update']           = 'Update';
-$_['lang_btn_settings']         = 'Settings';
-$_['lang_btn_patch']            = 'Patch';
-$_['lang_btn_test']             = 'Test connection';
-$_['lang_btn_faq']               = 'View FAQ';
-$_['lang_latest']               = 'You are running the latest version';
+$_['text_btn_update']           = 'Update';
+$_['text_btn_settings']         = 'Settings';
+$_['text_btn_patch']            = 'Patch';
+$_['text_btn_test']             = 'Test connection';
+$_['text_btn_faq']               = 'View FAQ';
+$_['text_latest']               = 'You are running the latest version';
 $_['text_installed_version']    = 'Installed version of OpenBay Pro: v';
-$_['lang_version_old_1']        = 'Your version is';
-$_['lang_version_old_2']        = 'the latest is';
+$_['text_version_old_1']        = 'Your version is';
+$_['text_version_old_2']        = 'the latest is';
 $_['text_no']                   = 'No';
 $_['text_yes']                  = 'Yes';
-$_['lang_language']             = 'API response language';
-$_['lang_getting_messages']     = 'Getting OpenBay Pro messages';
+$_['text_language']             = 'API response language';
+$_['text_getting_messages']     = 'Getting OpenBay Pro messages';
 
 // Column
-$_['lang_column_name']          = 'Plugin name';
-$_['lang_column_status']        = 'Status';
-$_['lang_column_action']        = 'Action';
+$_['text_column_name']          = 'Plugin name';
+$_['text_column_status']        = 'Status';
+$_['text_column_action']        = 'Action';
 
 // Updates
 $_['field_ftp_user']                    = 'FTP Username';
@@ -76,32 +76,32 @@ $_['text_clear_faq_complete']           = 'Notifications will now show again';
 $_['text_clear_faq_description']        = 'Show all of the help notifications again';
 
 // Ajax elements
-$_['lang_ajax_ebay_shipped']            = 'The order will be marked as shipped on eBay automatically';
-$_['lang_ajax_amazoneu_shipped']        = 'The order will be marked as shipped on Amazon EU automatically';
-$_['lang_ajax_amazonus_shipped']        = 'The order will be marked as shipped on Amazon US automatically';
-$_['lang_ajax_refund_reason']           = 'Refund reason';
-$_['lang_ajax_refund_message']          = 'Refund message';
-$_['lang_ajax_refund_entermsg']         = 'You must enter a refund message';
-$_['lang_ajax_refund_charmsg']          = 'Your refund message must be less than 1000 characters';
-$_['lang_ajax_refund_charmsg2']         = 'Your message cannot contain the characters > or <';
-$_['lang_ajax_courier']                 = 'Courier';
-$_['lang_ajax_courier_other']           = 'Other courier';
-$_['lang_ajax_tracking']                = 'Tracking #';
-$_['lang_ajax_tracking_msg']            = 'You must enter a tracking id, use "none" if you do not have one';
-$_['lang_ajax_tracking_msg2']           = 'Your tracking ID cannot contain the characters > or <';
-$_['lang_ajax_tracking_msg3']           = 'You must select courier if you want to upload tracking no.';
-$_['lang_ajax_tracking_msg4']           = 'Please leave courier field empty if you want to use custom courier.';
+$_['text_ajax_ebay_shipped']            = 'The order will be marked as shipped on eBay automatically';
+$_['text_ajax_amazoneu_shipped']        = 'The order will be marked as shipped on Amazon EU automatically';
+$_['text_ajax_amazonus_shipped']        = 'The order will be marked as shipped on Amazon US automatically';
+$_['text_ajax_refund_reason']           = 'Refund reason';
+$_['text_ajax_refund_message']          = 'Refund message';
+$_['text_ajax_refund_entermsg']         = 'You must enter a refund message';
+$_['text_ajax_refund_charmsg']          = 'Your refund message must be less than 1000 characters';
+$_['text_ajax_refund_charmsg2']         = 'Your message cannot contain the characters > or <';
+$_['text_ajax_courier']                 = 'Courier';
+$_['text_ajax_courier_other']           = 'Other courier';
+$_['text_ajax_tracking']                = 'Tracking #';
+$_['text_ajax_tracking_msg']            = 'You must enter a tracking id, use "none" if you do not have one';
+$_['text_ajax_tracking_msg2']           = 'Your tracking ID cannot contain the characters > or <';
+$_['text_ajax_tracking_msg3']           = 'You must select courier if you want to upload tracking no.';
+$_['text_ajax_tracking_msg4']           = 'Please leave courier field empty if you want to use custom courier.';
 
-$_['lang_title_help']                   = 'Need help with OpenBay Pro?';
+$_['text_title_help']                   = 'Need help with OpenBay Pro?';
 $_['text_help']                     	= 'Help';
-$_['lang_title_manage']                 = 'Manage OpenBay Pro; updates, settings and more';
+$_['text_title_manage']                 = 'Manage OpenBay Pro; updates, settings and more';
 $_['text_manage']                   	= 'Manage';
-$_['lang_title_shop']                   = 'OpenBay Pro store; addons, templates and more';
+$_['text_title_shop']                   = 'OpenBay Pro store; addons, templates and more';
 $_['text_tutorials']                    = 'Tutorials';
 $_['text_suggestions']                  = 'Suggestions';
 $_['text_install_success']              = 'Marketplace has been installed';
 $_['text_uninstall_success']            = 'Marketplace has been removed';
 $_['text_error_permission']             = 'You do not have permission to modify the OpenBay Pro extension';
 
-$_['lang_checking_messages']            = 'Checking for messages';
-$_['lang_title_messages']               = 'Messages &amp; notifications';
+$_['text_checking_messages']            = 'Checking for messages';
+$_['text_title_messages']               = 'Messages &amp; notifications';

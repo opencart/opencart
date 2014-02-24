@@ -95,7 +95,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
-		$this->document->setTitle($this->language->get('lang_title'));
+		$this->document->setTitle($this->language->get('text_title'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -115,7 +115,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$data['button_list'] = $this->language->get('button_list');
 
 		$data['text_not_in_catalog'] = $this->language->get('text_not_in_catalog');
-		$data['lang_title'] = $this->language->get('lang_title');
+		$data['text_title'] = $this->language->get('text_title');
 		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['column_image'] = $this->language->get('column_image');
@@ -146,8 +146,8 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$data['tab_required_info'] = $this->language->get('tab_required_info');
 		$data['tab_additional_info'] = $this->language->get('tab_additional_info');
 
-		$data['lang_placeholder_search'] = $this->language->get('lang_placeholder_search');
-		$data['lang_placeholder_condition'] = $this->language->get('lang_placeholder_condition');
+		$data['text_placeholder_search'] = $this->language->get('text_placeholder_search');
+		$data['text_placeholder_condition'] = $this->language->get('text_placeholder_condition');
 
 		$data['error_price'] = $this->language->get('error_price');
 		$data['error_sku'] = $this->language->get('error_sku');
@@ -213,12 +213,12 @@ class ControllerOpenbayAmazonListing extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_amazon'),
+			'text' => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_title'),
+			'text' => $this->language->get('text_title'),
 		);
 
 		$data['header'] = $this->load->controller('common/header');
@@ -332,7 +332,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_amazon'),
+			'text' => $this->language->get('text_amazon'),
 		);
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'),

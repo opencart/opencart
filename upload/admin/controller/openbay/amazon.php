@@ -3,7 +3,7 @@ class ControllerOpenbayAmazon extends Controller {
 	public function stockUpdates() {
 		$data = $this->load->language('openbay/amazon_stockupdates');
 
-		$this->document->setTitle($this->language->get('lang_title'));
+		$this->document->setTitle($this->language->get('text_title'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -23,7 +23,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/stockUpdates&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_stock_updates'),
+			'text'      => $this->language->get('text_stock_updates'),
 		);
 
 		$data['link_overview'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
@@ -97,7 +97,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data = $this->load->language('openbay/amazon_overview');
 
-		$this->document->setTitle($this->language->get('lang_title'));
+		$this->document->setTitle($this->language->get('text_title'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -140,7 +140,7 @@ class ControllerOpenbayAmazon extends Controller {
 	public function subscription() {
 		$data = $this->load->language('openbay/amazon_subscription');
 
-		$this->document->setTitle($this->language->get('lang_title'));
+		$this->document->setTitle($this->language->get('text_title'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -160,7 +160,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/subscription&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_my_account'),
+			'text'      => $this->language->get('text_my_account'),
 		);
 
 		$data['link_overview'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
@@ -217,7 +217,7 @@ class ControllerOpenbayAmazon extends Controller {
 	public function settings() {
 		$data = $this->load->language('openbay/amazon_settings');
 		$this->load->language('openbay/amazon_listing');
-		$this->document->setTitle($this->language->get('lang_title'));
+		$this->document->setTitle($this->language->get('text_title'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -383,7 +383,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 	public function itemLinks() {
 		$data = $this->load->language('openbay/amazon_links');
-		$this->document->setTitle($this->language->get('lang_title'));
+		$this->document->setTitle($this->language->get('text_title'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -427,7 +427,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data = $this->load->language('openbay/amazon_listingsaved');
 
-		$this->document->setTitle($this->language->get('lang_title'));
+		$this->document->setTitle($this->language->get('text_title'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -449,7 +449,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/savedListings&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_saved_listings'),
+			'text'      => $this->language->get('text_saved_listings'),
 		);
 
 		$data['token'] = $this->session->data['token'];

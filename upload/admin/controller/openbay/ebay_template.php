@@ -7,7 +7,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		$this->load->model('openbay/ebay_template');
 
-		$this->document->setTitle($data['lang_title_list']);
+		$this->document->setTitle($data['text_title_list']);
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -44,7 +44,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_heading'),
+			'text' => $this->language->get('text_heading'),
 		);
 
 		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
@@ -61,7 +61,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		$this->load->model('openbay/ebay_template');
 
-		$data['page_title']   = $data['lang_title_list_add'];
+		$data['page_title']   = $data['text_title_list_add'];
 		$data['btn_save']     = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel']       = $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -94,7 +94,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		$this->load->model('openbay/ebay_template');
 
-		$data['page_title']   = $data['lang_title_list_edit'];
+		$data['page_title']   = $data['text_title_list_edit'];
 		$data['btn_save']     = $this->url->link('openbay/ebay_template/edit', 'token=' . $this->session->data['token'], 'SSL');
 		$data['cancel']       = $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -188,7 +188,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		}
 
 		if ($this->request->post['name'] == '') {
-			$this->error['name'] = $this->language->get('lang_error_name');
+			$this->error['name'] = $this->language->get('text_error_name');
 		}
 
 		if ($this->error && !isset($this->error['warning'])) {

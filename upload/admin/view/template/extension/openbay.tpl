@@ -19,15 +19,15 @@
   <?php } ?>
 
   <?php if ($check['mcrypt'] != 1) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $lang_mcrypt_text_false; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_mcrypt_not_enabled; ?></div>
   <?php } ?>
 
   <?php if ($check['mbstring'] != 1) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $lang_mb_text_false; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_mb_not_enabled; ?></div>
   <?php } ?>
 
   <?php if ($check['ftpenabled'] != 1) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $lang_ftp_text_false; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_ftp_not_enabled; ?></div>
   <?php } ?>
 
   <div class="panel panel-default">
@@ -163,7 +163,7 @@ function getOpenbayVersion() {
         }
       },
       failure: function () {
-        $('#openbay_version').html('<?php echo $lang_error_retry; ?><strong><span onclick="getOpenbayVersion();"><?php echo $lang_btn_retry; ?></span></strong>');
+        $('#openbay_version').html('<?php echo $error_failed_to_load; ?><strong><span onclick="getOpenbayVersion();"><?php echo $button_retry; ?></span></strong>');
       },
       error: function (xhr, ajaxOptions, thrownError) {
         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

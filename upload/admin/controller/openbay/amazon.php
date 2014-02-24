@@ -14,11 +14,11 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_openbay'),
+			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_overview'),
+			'text'      => $this->language->get('text_overview'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -108,11 +108,11 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_openbay'),
+			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_overview'),
+			'text'      => $this->language->get('text_overview'),
 		);
 
 		$data['success'] = '';
@@ -151,11 +151,11 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_openbay'),
+			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_overview'),
+			'text'      => $this->language->get('text_overview'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -247,7 +247,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 			$this->model_openbay_amazon->scheduleOrders($settings);
 
-			$this->session->data['success'] = $this->language->get('lang_setttings_updated');
+			$this->session->data['success'] = $this->language->get('text_setttings_updated');
 			$this->response->redirect($this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
@@ -261,27 +261,27 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_openbay'),
+			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_overview'),
+			'text'      => $this->language->get('text_overview'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/settings&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_settings'),
+			'text'      => $this->language->get('heading_title'),
 		);
 
 		$data['marketplace_ids']                  = (isset($settings['openbay_amazon_orders_marketplace_ids']) ? (array)$settings['openbay_amazon_orders_marketplace_ids'] : array() );
 		$data['default_listing_marketplace_ids']  = ( isset($settings['openbay_amazon_default_listing_marketplace_ids']) ? (array)$settings['openbay_amazon_default_listing_marketplace_ids'] : array() );
 
 		$data['marketplaces'] = array(
-			array('name' => $this->language->get('lang_de'), 'id' => 'A1PA6795UKMFR9', 'code' => 'de'),
-			array('name' => $this->language->get('lang_fr'), 'id' => 'A13V1IB3VIYZZH', 'code' => 'fr'),
-			array('name' => $this->language->get('lang_it'), 'id' => 'APJ6JRA9NG5V4', 'code' => 'it'),
-			array('name' => $this->language->get('lang_es'), 'id' => 'A1RKKUPIHCS9HS', 'code' => 'es'),
-			array('name' => $this->language->get('lang_uk'), 'id' => 'A1F83G8C2ARO7P', 'code' => 'uk'),
+			array('name' => $this->language->get('text_de'), 'id' => 'A1PA6795UKMFR9', 'code' => 'de'),
+			array('name' => $this->language->get('text_fr'), 'id' => 'A13V1IB3VIYZZH', 'code' => 'fr'),
+			array('name' => $this->language->get('text_it'), 'id' => 'APJ6JRA9NG5V4', 'code' => 'it'),
+			array('name' => $this->language->get('text_es'), 'id' => 'A1RKKUPIHCS9HS', 'code' => 'es'),
+			array('name' => $this->language->get('text_uk'), 'id' => 'A1F83G8C2ARO7P', 'code' => 'uk'),
 		);
 
 		$data['conditions'] = array(
@@ -315,10 +315,10 @@ class ControllerOpenbayAmazon extends Controller {
 		$canceledStatusId = isset($settings['openbay_amazon_order_status_canceled']) ? $settings['openbay_amazon_order_status_canceled'] : '';
 
 		$amazonOrderStatuses = array(
-			'unshipped' => array('name' => $this->language->get('lang_unshipped'), 'order_status_id' => $unshippedStatusId),
-			'partially_shipped' => array('name' => $this->language->get('lang_partially_shipped'), 'order_status_id' => $partiallyShippedStatusId),
-			'shipped' => array('name' => $this->language->get('lang_shipped'), 'order_status_id' => $shippedStatusId),
-			'canceled' => array('name' => $this->language->get('lang_canceled'), 'order_status_id' => $canceledStatusId),
+			'unshipped' => array('name' => $this->language->get('text_unshipped'), 'order_status_id' => $unshippedStatusId),
+			'partially_shipped' => array('name' => $this->language->get('text_partially_shipped'), 'order_status_id' => $partiallyShippedStatusId),
+			'shipped' => array('name' => $this->language->get('text_shipped'), 'order_status_id' => $shippedStatusId),
+			'canceled' => array('name' => $this->language->get('text_canceled'), 'order_status_id' => $canceledStatusId),
 		);
 
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
@@ -396,16 +396,16 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_openbay'),
+			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_overview'),
+			'text'      => $this->language->get('text_overview'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/itemLinks&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_item_links'),
+			'text'      => $this->language->get('text_item_links'),
 		);
 
 		$data['token'] = $this->session->data['token'];
@@ -440,11 +440,11 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_openbay'),
+			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('lang_overview'),
+			'text'      => $this->language->get('text_overview'),
 		);
 
 		$data['breadcrumbs'][] = array(

@@ -111,9 +111,9 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		$data['button_amazonus_price'] = $this->language->get('button_amazonus_price');
 		$data['button_list'] = $this->language->get('button_list');
 
-		$data['lang_not_in_catalog'] = $this->language->get('lang_not_in_catalog');
+		$data['text_not_in_catalog'] = $this->language->get('text_not_in_catalog');
 		$data['lang_title'] = $this->language->get('lang_title');
-		$data['lang_no_results'] = $this->language->get('lang_no_results');
+		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['column_image'] = $this->language->get('column_image');
 		$data['column_asin'] = $this->language->get('column_asin');
@@ -199,7 +199,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -321,7 +321,7 @@ class ControllerOpenbayAmazonusListing extends Controller{
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(

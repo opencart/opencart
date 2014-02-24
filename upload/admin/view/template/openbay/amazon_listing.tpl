@@ -26,7 +26,7 @@
 
     <div class="box mBottom130">
         <div class="heading">
-            <h1><?php echo $lang_title; ?></h1>
+            <h1><?php echo $text_title; ?></h1>
             <div class="buttons">
                 <a onclick="location = '<?php echo $url_return; ?>';" class="button"><span><?php echo $button_return; ?></span></a>
             </div>
@@ -37,7 +37,7 @@
 
                 <div class="border p10">
                     <p>
-                        <input type="text" name="search_string" placeholder="<?php echo $lang_placeholder_search; ?>" id="search_string" class="width250" />
+                        <input type="text" name="search_string" placeholder="<?php echo $text_placeholder_search; ?>" id="search_string" class="width250" />
                         <a onclick="doSearch();" id="search_submit" class="button"><?php echo $button_search; ?></a>
                         <img src="view/image/loading.gif" id="search_submit_loading" class="displayNone" alt="Loading" />
                     </p>
@@ -55,7 +55,7 @@
                 </div>
 
                 <p class="border p10 mtop5">
-                    <span><?php echo $lang_not_in_catalog; ?></span><a href="<?php echo $url_advanced; ?>" id="create_new" class="button"><?php echo $button_new; ?></a>
+                    <span><?php echo $text_not_in_catalog; ?></span><a href="<?php echo $url_advanced; ?>" id="create_new" class="button"><?php echo $button_new; ?></a>
                 </p>
             </div>
             <div class="search_result displayNone" id="search_result_container">
@@ -129,7 +129,7 @@
                             <tr>
                                 <td><label for="condition_note"><?php echo $entry_condition_note; ?></label></td>
                                 <td>
-                                    <textarea cols="70" rows="15" name="condition_note" id="condition_note" placeholder="<?php echo $lang_placeholder_condition; ?>"></textarea>
+                                    <textarea cols="70" rows="15" name="condition_note" id="condition_note" placeholder="<?php echo $text_placeholder_condition; ?>"></textarea>
                                 </td>
                             </tr>
                             <tr>
@@ -209,7 +209,7 @@ function doSearch(){
                     $('#search_result_container tbody').html(html);
                     $('#search_result_container').css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
                 } else {
-                    $('#search_error').empty().text('<?php echo $lang_no_results; ?>').show();
+                    $('#search_error').empty().text('<?php echo $text_no_results; ?>').show();
                 }
             }
 

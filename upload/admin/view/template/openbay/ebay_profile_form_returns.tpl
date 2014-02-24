@@ -12,14 +12,14 @@
         <div class="heading">
             <h1><?php echo $page_title; ?></h1>
             <div class="buttons">
-                <a onclick="$('#form').submit();" class="button"><span><?php echo $lang_btn_save; ?></span></a>
-                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_btn_cancel; ?></span></a>
+                <a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a>
+                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a>
             </div>
         </div>
         <div class="content">
             <div id="tabs" class="htabs">
-                <a href="#tab-general"><?php echo $lang_tab_general; ?></a>
-                <a href="#tab-returns"><?php echo $lang_tab_returns; ?></a>
+                <a href="#tab-general"><?php echo $tab_general; ?></a>
+                <a href="#tab-returns"><?php echo $text_tab_returns; ?></a>
             </div>
             <form action="<?php echo $btn_save; ?>" method="post" enctype="multipart/form-data" id="form">
                 <input type="hidden" name="type" value="<?php echo $type; ?>" />
@@ -29,18 +29,18 @@
 
                     <table class="form">
                         <tr>
-                            <td><?php echo $lang_profile_default; ?></td>
+                            <td><?php echo $text_profile_default; ?></td>
                             <td>
                                 <input type="hidden" name="default" value="0" />
                                 <input type="checkbox" name="default" value="1" <?php if($default == 1){ echo 'checked="checked"'; } ?> />
                             </td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_profile_name; ?></td>
+                            <td><?php echo $text_profile_name; ?></td>
                             <td><input type="text" name="name" size="80" value="<?php if(isset($name)){ echo $name; } ?>"></td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_profile_desc; ?></td>
+                            <td><?php echo $text_profile_desc; ?></td>
                             <td>
                                 <textarea name="description" cols="40" rows="5"><?php if(isset($description)){ echo $description; } ?></textarea>
                             </td>
@@ -55,7 +55,7 @@
 
                         <?php if(!empty($setting['returns']['accepted'])) { ?>
                             <tr>
-                                <td><label for="returns_accepted"><?php echo $lang_returns_accept; ?></td>
+                                <td><label for="returns_accepted"><?php echo $text_returns_accept; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_accepted'])){ $data['returns_accepted'] = ''; } ?>
 
@@ -72,7 +72,7 @@
 
                         <?php if(!empty($setting['returns']['within'])) { ?>
                             <tr>
-                                <td><label for="returns_within"><?php echo $lang_returns_days; ?></td>
+                                <td><label for="returns_within"><?php echo $text_returns_days; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_within'])){ $data['returns_within'] = ''; } ?>
 
@@ -89,7 +89,7 @@
 
                         <?php if(!empty($setting['returns']['paidby'])) { ?>
                             <tr>
-                                <td><label for="returns_shipping"><?php echo $lang_returns_costs; ?></td>
+                                <td><label for="returns_shipping"><?php echo $text_returns_costs; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_shipping'])){ $data['returns_shipping'] = ''; } ?>
 
@@ -106,7 +106,7 @@
 
                         <?php if(!empty($setting['returns']['refund'])) { ?>
                             <tr>
-                                <td><label for="returns_option"><?php echo $lang_returns_type; ?></td>
+                                <td><label for="returns_option"><?php echo $text_returns_type; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_option'])){ $data['returns_option'] = ''; } ?>
 
@@ -126,7 +126,7 @@
                             <?php if(!isset($data['returns_policy'])){ $data['returns_policy'] = ''; } ?>
 
                             <tr>
-                                <td><label for="returns_policy"><?php echo $lang_returns_inst; ?></td>
+                                <td><label for="returns_policy"><?php echo $text_returns_inst; ?></td>
                                 <td><textarea name="data[returns_policy]" id="returns_policy" maxlength="5000" style="width:400px; height:70px;"><?php echo $data['returns_policy'];?></textarea></td>
                             </tr>
                         <?php }else{ ?>
@@ -135,7 +135,7 @@
 
                         <?php if(!empty($setting['returns']['restocking_fee'])) { ?>
                             <tr>
-                                <td><label for="returns_restocking_fee"><?php echo $lang_returns_restock; ?></td>
+                                <td><label for="returns_restocking_fee"><?php echo $text_returns_restock; ?></td>
                                 <td>
                                     <?php if(!isset($data['returns_restocking_fee'])){ $data['returns_restocking_fee'] = ''; } ?>
 

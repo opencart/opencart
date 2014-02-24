@@ -20,7 +20,7 @@
 
     <div class="box">
         <div class="heading">
-            <h1><?php echo $lang_title; ?></h1>
+            <h1><?php echo $text_title; ?></h1>
             <div class="buttons">
                 <?php if($has_listing_errors) { ?>
                 <a onclick="location='<?php echo $url_remove_errors; ?>'" class="button"><span>Remove error messages</span></a>
@@ -35,7 +35,7 @@
         <div class="content">
 
             <div id="tabs" class="htabs">
-                <a href="#page-main"><?php echo $lang_tab_main; ?></a>
+                <a href="#page-main"><?php echo $text_tab_main; ?></a>
                 <div id="dynamic_tabs"></div>
             </div>
 
@@ -657,11 +657,11 @@ $('.browseNode').live('click', function(){
             }
         },
         failure: function(){
-            alert('<?php echo $lang_error_load_nodes; ?>');
+            alert('<?php echo $text_error_load_nodes; ?>');
             hideGreyScreen('browseNodeForm');
         },
         error: function(){
-            alert('<?php echo $lang_error_load_nodes; ?>');
+            alert('<?php echo $text_error_load_nodes; ?>');
             hideGreyScreen('browseNodeForm');
         }
     });
@@ -706,11 +706,11 @@ $('.nodeSelect').live('change', function(){
             }
         },
         failure: function(){
-            alert('<?php echo $lang_error_load_nodes; ?>');
+            alert('<?php echo $text_error_load_nodes; ?>');
             hideGreyScreen('browseNodeForm');
         },
         error: function(){
-            alert('<?php echo $lang_error_load_nodes; ?>');
+            alert('<?php echo $text_error_load_nodes; ?>');
             hideGreyScreen('browseNodeForm');
         }
     });

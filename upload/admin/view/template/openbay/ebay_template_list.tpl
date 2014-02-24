@@ -13,10 +13,10 @@
     <?php } ?>
     <div class="box">
         <div class="heading">
-            <h1><img src="view/image/product.png" alt="" /> <?php echo $lang_title_list; ?></h1>
+            <h1><img src="view/image/product.png" alt="" /> <?php echo $text_title_list; ?></h1>
             <div class="buttons">
                 <form action="<?php echo $btn_add; ?>" method="post" id="addForm">
-                    <a onclick="$('#addForm').submit();" class="button"><span><?php echo $lang_btn_add; ?></span></a>
+                    <a onclick="$('#addForm').submit();" class="button"><span><?php echo $text_btn_add; ?></span></a>
                 </form>
             </div>
         </div>   
@@ -24,7 +24,7 @@
             <table class="list">
                 <thead>
                     <tr>
-                        <td class="left"><?php echo $lang_template_name; ?></td>
+                        <td class="left"><?php echo $text_template_name; ?></td>
                         <td class="left" width="150"></td>
                     </tr>
                 </thead>
@@ -35,15 +35,15 @@
                             <td class="left"><?php echo $template['name']; ?></td>
                             <td class="right">
                                 <div class="buttons">
-                                    <a href="<?php echo $template['link_edit']; ?>" class="button profileEdit"><?php echo $lang_btn_edit; ?></a>&nbsp;
-                                    <a href="<?php echo $template['link_delete']; ?>" class="button profileDelete"><?php echo $lang_btn_delete; ?></a>
+                                    <a href="<?php echo $template['link_edit']; ?>" class="button profileEdit"><?php echo $text_btn_edit; ?></a>&nbsp;
+                                    <a href="<?php echo $template['link_delete']; ?>" class="button profileDelete"><?php echo $text_btn_delete; ?></a>
                                 </div>
                             </td>
                         </tr>
                         <?php } ?>
                     <?php } else { ?>
                     <tr>
-                        <td class="center" colspan="2"><?php echo $lang_no_results; ?></td>
+                        <td class="center" colspan="2"><?php echo $text_no_results; ?></td>
                     </tr>
                     <?php } ?>
                 </tbody>
@@ -57,7 +57,7 @@
         $('a.profileDelete').click(function(event) {
             event.preventDefault();
             var url = $(this).attr('href');
-            var confirm_box = confirm('<?php echo $lang_confirm_delete; ?>');
+            var confirm_box = confirm('<?php echo $text_confirm_delete; ?>');
             if (confirm_box) {
                 window.location = url;
             }

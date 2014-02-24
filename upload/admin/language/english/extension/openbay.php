@@ -6,13 +6,11 @@ $_['lang_text_manager']         = 'OpenBay Pro manager';
 // Text
 $_['text_install']              = 'Install';
 $_['text_uninstall']            = 'Uninstall';
-$_['lang_text_success']         = 'Success: Settings have been saved';
+$_['text_success_settings']         = 'Success: Settings have been saved';
 $_['lang_text_no_results']      = 'No results found';
 $_['lang_text_manage']          = 'Manage';
 $_['lang_checking_version']     = 'Checking software version';
-$_['lang_btn_retry']            = 'Retry';
-$_['lang_btn_save']             = 'Save';
-$_['lang_btn_cancel']           = 'Cancel';
+$_['button_retry']            = 'Retry';
 $_['lang_btn_update']           = 'Update';
 $_['lang_btn_settings']         = 'Settings';
 $_['lang_btn_patch']            = 'Patch';
@@ -22,8 +20,8 @@ $_['lang_latest']               = 'You are running the latest version';
 $_['text_installed_version']    = 'Installed version of OpenBay Pro: v';
 $_['lang_version_old_1']        = 'Your version is';
 $_['lang_version_old_2']        = 'the latest is';
-$_['lang_no']                   = 'No';
-$_['lang_yes']                  = 'Yes';
+$_['text_no']                   = 'No';
+$_['text_yes']                  = 'Yes';
 $_['lang_language']             = 'API response language';
 $_['lang_getting_messages']     = 'Getting OpenBay Pro messages';
 
@@ -64,12 +62,14 @@ $_['update_okcon']                      = 'Connected to server OK. OpenCart fold
 $_['update_failed_user']                = 'Could not login with that user';
 $_['update_failed_connect']             = 'Could not connect to server';
 $_['update_success']                    = 'Module has been updated (v.%s)';
-$_['text_patch_description']            = "The update tool will make changes to your shop's file system. Make sure you have a backup before using this tool.";
+$_['text_update_description']            = "The update tool will make changes to your shop's file system. Make sure you have a backup before using this tool.";
 
-$_['lang_mcrypt_text_false']            = 'PHP function "mcrypt_encrypt" is not enabled. Contact your hosting provider.';
-$_['lang_mb_text_false']                = 'PHP library "mb strings" is not enabled. Contact your hosting provider.';
-$_['lang_ftp_text_false']               = 'PHP FTP functions are not enabled. Contact your hosting provider.';
-$_['lang_error_oc_version']             = 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
+$_['error_mcrypt_not_enabled']            = 'PHP function "mcrypt_encrypt" is not enabled. Contact your hosting provider.';
+$_['error_mb_not_enabled']                = 'PHP library "mb strings" is not enabled. Contact your hosting provider.';
+$_['error_ftp_not_enabled']               = 'PHP FTP functions are not enabled. Contact your hosting provider.';
+$_['error_oc_version']             = 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
+$_['error_failed_to_load']             		= 'Failed to load, retry?';
+
 $_['text_clear_faq']                    = 'Clear hidden FAQ popups';
 $_['text_clear']                    	= 'Clear';
 $_['text_clear_faq_complete']           = 'Notifications will now show again';

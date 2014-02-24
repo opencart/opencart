@@ -1,8 +1,8 @@
 <?php
 //Headings
-$_['lang_title'] = 'New Amazon listing';
-$_['lang_openbay'] = 'OpenBay Pro';
-$_['lang_amazon'] = 'Amazon';
+$_['text_title'] = 'New Amazon listing';
+$_['text_openbay'] = 'OpenBay Pro';
+$_['text_amazon'] = 'Amazon';
 
 //Buttons
 $_['button_search'] = 'Search';
@@ -28,7 +28,7 @@ $_['text_refurbished'] = 'Refurbished';
 $_['help_sku'] = "Unique product's ID assigned by the merchant";
 $_['help_restock_date'] = "This is the date you will be able to ship any back-ordered items to a customer. This date should not be greater than 30 days from the date listed or orders received may automatically be canceled.";
 $_['help_sale_price'] = "Sale Price must have a start and end date";
-$_['lang_not_in_catalog'] = "Or, if it's not in the catalog&nbsp;&nbsp;&nbsp;";
+$_['text_not_in_catalog'] = "Or, if it's not in the catalog&nbsp;&nbsp;&nbsp;";
 
 //Table columns
 $_['column_image'] = 'Image';
@@ -56,15 +56,15 @@ $_['entry_from'] = 'Date from';
 $_['entry_to'] = 'Date to';
 
 //Form input place holders
-$_['lang_placeholder_search'] = 'Enter product name, UPC, EAN, ISBN or ASIN';
-$_['lang_placeholder_condition'] = 'Use this box to describe the condition of your products.';
+$_['text_placeholder_search'] = 'Enter product name, UPC, EAN, ISBN or ASIN';
+$_['text_placeholder_condition'] = 'Use this box to describe the condition of your products.';
 
 //Tab headers
 $_['item_links_header_text'] = 'Item links';
 $_['quick_listing_header_text'] = 'Quick listing';
 $_['advanced_listing_header_text'] = 'Advanced listing';
 $_['saved_header_text'] = 'Saved listings';
-$_['lang_tab_main'] = 'Main';
+$_['text_tab_main'] = 'Main';
 
 //Tabs
 $_['item_links_tab_text'] = 'Item links';
@@ -157,7 +157,7 @@ $_['button_remove_links'] = "Remove links";
 $_['button_saved_listings'] = "View saved listings";
 
 //Errors
-$_['lang_error_load_nodes'] = 'Unable to load browse nodes';
+$_['text_error_load_nodes'] = 'Unable to load browse nodes';
 $_['text_error_connecting'] = 'Warning: There was problem connecting to Welford Media API servers. Please check your OpenBay Pro Amazon extension settings. If the problem persists, please contact Welford support.';
 $_['error_text_missing'] = 'You must enter some search details';
 $_['error_data_missing'] = 'Required data is missing';
@@ -170,7 +170,7 @@ $_['error_stock'] = 'You cannot list an item with less than 1 item in stock';
 $_['error_sku'] = 'You must enter an SKU for the item';
 $_['error_price'] = 'You must enter a price for the item';
 $_['error_sending_products'] = 'Could not send products for listing. Please contact OpenBay Pro support';
-$_['lang_no_results'] = 'No results found';
+$_['text_no_results'] = 'No results found';
 $_['error_no_products_selected'] = 'No products were selected for listing';
 
 //Messages

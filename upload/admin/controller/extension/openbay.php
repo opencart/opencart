@@ -159,7 +159,7 @@ class ControllerExtensionOpenbay extends Controller {
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
 			$this->model_setting_setting->editSetting('openbaymanager', $this->request->post);
 
-			$this->session->data['success'] = $this->language->get('lang_text_success');
+			$this->session->data['success'] = $this->language->get('text_success_settings');
 
 			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		}
@@ -701,7 +701,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->document->setTitle($this->language->get('lang_title_order_update'));
 
 		if(!isset($this->request->post['selected']) || empty($this->request->post['selected'])) {
-			$this->session->data['error'] = $data['lang_no_orders'];
+			$this->session->data['error'] = $data['text_no_orders'];
 			$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL'));
 		}else{
 			$this->load->model('openbay/order');
@@ -751,7 +751,7 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 
 			if(empty($orders)) {
-				$this->session->data['error'] = $data['lang_no_orders'];
+				$this->session->data['error'] = $data['text_no_orders'];
 				$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL'));
 			}else{
 				$data['orders'] = $orders;
@@ -862,7 +862,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name'      => 'eBay',
 					'status'    => 0,
-					'text'      => $this->language->get('lang_openbay_new'),
+					'text'      => $this->language->get('text_openbay_new'),
 					'href'      => $this->url->link('openbay/openbay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
 					'target'    => ''
 				);
@@ -870,7 +870,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name'      => 'eBay',
 					'status'    => 1,
-					'text'      => $this->language->get('lang_openbay_edit'),
+					'text'      => $this->language->get('text_openbay_edit'),
 					'href'      => $this->url->link('openbay/openbay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
 					'target'    => ''
 				);
@@ -885,7 +885,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name' => 'Amazon EU',
 					'status' => 0,
-					'text' => $this->language->get('lang_openbay_processing'),
+					'text' => $this->language->get('text_openbay_processing'),
 					'href' => '',
 					'target'    => ''
 				);
@@ -893,7 +893,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name' => 'Amazon EU',
 					'status' => 1,
-					'text' => $this->language->get('lang_openbay_edit'),
+					'text' => $this->language->get('text_openbay_edit'),
 					'href' => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
 					'target'    => '',
 				);
@@ -901,7 +901,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name' => 'Amazon EU',
 					'status' => 0,
-					'text' => $this->language->get('lang_openbay_fix'),
+					'text' => $this->language->get('text_openbay_fix'),
 					'href' => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
 					'target'    => '',
 				);
@@ -909,7 +909,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name' => 'Amazon EU',
 					'status' => 0,
-					'text' => $this->language->get('lang_openbay_new'),
+					'text' => $this->language->get('text_openbay_new'),
 					'href' => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
 					'target'    => '',
 				);
@@ -924,7 +924,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name' => 'Amazon US',
 					'status' => 0,
-					'text' => $this->language->get('lang_openbay_processing'),
+					'text' => $this->language->get('text_openbay_processing'),
 					'href' => '',
 					'target'    => '',
 				);
@@ -932,7 +932,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name' => 'Amazon US',
 					'status' => 1,
-					'text' => $this->language->get('lang_openbay_edit'),
+					'text' => $this->language->get('text_openbay_edit'),
 					'href' => $this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
 					'target'    => '',
 				);
@@ -940,7 +940,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name' => 'Amazon US',
 					'status' => 0,
-					'text' => $this->language->get('lang_openbay_fix'),
+					'text' => $this->language->get('text_openbay_fix'),
 					'href' => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
 					'target'    => '',
 				);
@@ -948,7 +948,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$markets[] = array(
 					'name' => 'Amazon US',
 					'status' => 0,
-					'text' => $this->language->get('lang_openbay_new'),
+					'text' => $this->language->get('text_openbay_new'),
 					'href' => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
 					'target'    => '',
 				);
@@ -1150,13 +1150,11 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
 			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
 			'href'      => $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-			'separator' => ' :: '
 		);
 
 		if ($this->config->get('amazon_status')) {
@@ -1287,14 +1285,14 @@ class ControllerExtensionOpenbay extends Controller {
 					$markets[] = array(
 						'name'      => 'eBay',
 						'img'       => HTTPS_SERVER.'view/image/openbay/ebay_nolink.png',
-						'text'      => $this->language->get('lang_openbay_new'),
+						'text'      => $this->language->get('text_openbay_new'),
 						'href'      => $this->url->link('openbay/openbay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else {
 					$markets[] = array(
 						'name'      => 'eBay',
 						'img'       => HTTPS_SERVER.'view/image/openbay/ebay_ok.png',
-						'text'      => $this->language->get('lang_openbay_edit'),
+						'text'      => $this->language->get('text_openbay_edit'),
 						'href'      => $this->url->link('openbay/openbay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				}
@@ -1308,28 +1306,28 @@ class ControllerExtensionOpenbay extends Controller {
 					$markets[] = array(
 						'name'      => 'Amazon EU',
 						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_pending.png',
-						'text'      => $this->language->get('lang_openbay_processing'),
+						'text'      => $this->language->get('text_openbay_processing'),
 						'href'      => '',
 					);
 				} else if ($amazon_status == 'linked' || $amazon_status == 'ok' || $amazon_status == 'saved') {
 					$markets[] = array(
 						'name'      => 'Amazon EU',
 						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_ok.png',
-						'text'      => $this->language->get('lang_openbay_edit'),
+						'text'      => $this->language->get('text_openbay_edit'),
 						'href'      => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else if ($amazon_status == 'error_quick' || $amazon_status == 'error_advanced' || $amazon_status == 'error_few') {
 					$markets[] = array(
 						'name'      => 'Amazon EU',
 						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_error.png',
-						'text'      => $this->language->get('lang_openbay_fix'),
+						'text'      => $this->language->get('text_openbay_fix'),
 						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else {
 					$markets[] = array(
 						'name'      => 'Amazon EU',
 						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_nolink.png',
-						'text'      => $this->language->get('lang_openbay_new'),
+						'text'      => $this->language->get('text_openbay_new'),
 						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				}
@@ -1343,28 +1341,28 @@ class ControllerExtensionOpenbay extends Controller {
 					$markets[] = array(
 						'name'      => 'Amazon US',
 						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_pending.png',
-						'text'      => $this->language->get('lang_openbay_processing'),
+						'text'      => $this->language->get('text_openbay_processing'),
 						'href'      => '',
 					);
 				} else if ($amazonus_status == 'linked' || $amazonus_status == 'ok' || $amazonus_status == 'saved') {
 					$markets[] = array(
 						'name'      => 'Amazon US',
 						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_ok.png',
-						'text'      => $this->language->get('lang_openbay_edit'),
+						'text'      => $this->language->get('text_openbay_edit'),
 						'href'      => $this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else if ($amazonus_status == 'error_quick' || $amazonus_status == 'error_advanced' || $amazonus_status == 'error_few') {
 					$markets[] = array(
 						'name'      => 'Amazon US',
 						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_error.png',
-						'text'      => $this->language->get('lang_openbay_fix'),
+						'text'      => $this->language->get('text_openbay_fix'),
 						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else {
 					$markets[] = array(
 						'name'      => 'Amazon US',
 						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_nolink.png',
-						'text'      => $this->language->get('lang_openbay_new'),
+						'text'      => $this->language->get('text_openbay_new'),
 						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				}

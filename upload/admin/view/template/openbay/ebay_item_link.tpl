@@ -12,9 +12,9 @@
     <div class="box mBottom130">
 
         <div class="heading">
-            <h1><?php echo $lang_heading; ?></h1>
+            <h1><?php echo $text_heading; ?></h1>
             <div class="buttons">
-                <a href="<?php echo $return; ?>" class="button"><span><?php echo $lang_btn_return; ?></span></a>
+                <a href="<?php echo $return; ?>" class="button"><span><?php echo $text_btn_return; ?></span></a>
             </div>
         </div>
 
@@ -22,59 +22,59 @@
 
             <?php if($validation == true) { ?>
 
-            <p><?php echo $lang_link_desc1; ?></p>
-            <p><?php echo $lang_link_desc2; ?></p>
-            <p><?php echo $lang_link_desc3; ?></p>
-            <p><?php echo $lang_link_desc4; ?></p>
+            <p><?php echo $text_link_desc1; ?></p>
+            <p><?php echo $text_link_desc2; ?></p>
+            <p><?php echo $text_link_desc3; ?></p>
+            <p><?php echo $text_link_desc4; ?></p>
 
-            <h2><?php echo $lang_unlinked_items; ?></h2>
-            <p><?php echo $lang_text_unlinked_desc; ?></p>
+            <h2><?php echo $text_unlinked_items; ?></h2>
+            <p><?php echo $text_text_unlinked_desc; ?></p>
 
             <table class="list" cellpadding="2">
                 <thead>
                 <tr>
-                    <td class="left"><?php echo $lang_column_itemId; ?></td>
-                    <td class="left"><?php echo $lang_column_listing_title; ?></td>
-                    <td class="left"><?php echo $lang_column_product_auto; ?></span></td>
-                    <td class="center width100"><?php echo $lang_column_stock_available; ?></td>
-                    <td class="center width100"><?php echo $lang_column_allocated; ?></td>
-                    <td class="center width100"><?php echo $lang_column_ebay_stock; ?></td>
-                    <td class="center width100"><?php echo $lang_column_variants; ?></td>
-                    <td class="center width100"><?php echo $lang_column_action; ?></td>
+                    <td class="left"><?php echo $text_column_itemId; ?></td>
+                    <td class="left"><?php echo $text_column_listing_title; ?></td>
+                    <td class="left"><?php echo $text_column_product_auto; ?></span></td>
+                    <td class="center width100"><?php echo $text_column_stock_available; ?></td>
+                    <td class="center width100"><?php echo $text_column_allocated; ?></td>
+                    <td class="center width100"><?php echo $text_column_ebay_stock; ?></td>
+                    <td class="center width100"><?php echo $text_column_variants; ?></td>
+                    <td class="center width100"><?php echo $text_column_action; ?></td>
                 </tr>
                 </thead>
                 <tbody id="eBayListings">
                 <tr class="filter" id="fetchingEbayItems">
-                    <td class="left" colspan="8"><?php echo $lang_text_unlinked_info; ?></td>
+                    <td class="left" colspan="8"><?php echo $text_text_unlinked_info; ?></td>
                 </tr>
                 </tbody>
             </table>
 
             <div class="buttons">
-                <a onclick="checkUnlinkedItems();" class="button" id="checkUnlinkedItems"><span><?php echo $lang_btn_check_unlinked; ?></span></a>
+                <a onclick="checkUnlinkedItems();" class="button" id="checkUnlinkedItems"><span><?php echo $text_btn_check_unlinked; ?></span></a>
                 <img src="view/image/loading.gif" id="checkUnlinkedItemsLoading" class="displayNone" alt="Loading" />
                 <input type="hidden" name="unlinked_page" id="unlinked_page" value="1" />
             </div>
 
-            <h2><?php echo $lang_linked_items; ?></h2>
-            <p><?php echo $lang_text_linked_desc; ?></p>
+            <h2><?php echo $text_linked_items; ?></h2>
+            <p><?php echo $text_text_linked_desc; ?></p>
 
             <table class="list" cellpadding="2">
                 <thead>
                 <tr>
-                    <td class="left"><?php echo $lang_column_product; ?></td>
-                    <td class="center"><?php echo $lang_column_itemId; ?></td>
-                    <td class="center"><?php echo $lang_column_allocated; ?></td>
-                    <td class="center"><?php echo $lang_column_stock_available; ?></td>
-                    <td class="center"><?php echo $lang_column_ebay_stock; ?></td>
-                    <td class="center"><?php echo $lang_column_variants; ?></td>
-                    <td class="center"><?php echo $lang_column_status; ?></td>
-                    <td class="center"><?php echo $lang_column_action; ?></td>
+                    <td class="left"><?php echo $text_column_product; ?></td>
+                    <td class="center"><?php echo $text_column_itemId; ?></td>
+                    <td class="center"><?php echo $text_column_allocated; ?></td>
+                    <td class="center"><?php echo $text_column_stock_available; ?></td>
+                    <td class="center"><?php echo $text_column_ebay_stock; ?></td>
+                    <td class="center"><?php echo $text_column_variants; ?></td>
+                    <td class="center"><?php echo $text_column_status; ?></td>
+                    <td class="center"><?php echo $text_column_action; ?></td>
                 </tr>
                 </thead>
                 <tr>
                     <td class="left" colspan="8" id="checking_linked_items">
-                        <img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_text_loading_items; ?>
+                        <img src="view/image/loading.gif" alt="Loading" /> <?php echo $text_text_loading_items; ?>
                     </td>
                 </tr>
                 <tbody style="display:none;" id="show_linked_items">
@@ -109,7 +109,7 @@
             <div class="pagination"><?php echo $pagination; ?></div>
 
             <?php }else{ ?>
-            <div class="warning"><?php echo $lang_error_validation; ?></div>
+            <div class="warning"><?php echo $text_error_validation; ?></div>
             <?php } ?>
 
         </div>
@@ -128,7 +128,7 @@ function checkLinkedItems(){
             if(json.data == ''){
                 $('#checking_linked_items').hide();
                 $('.pagination').hide();
-                $('#show_linked_items').html('<tr><td colspan="8"><p><?php echo $lang_ajax_error_listings; ?></p></td></tr>').show();
+                $('#show_linked_items').html('<tr><td colspan="8"><p><?php echo $text_ajax_error_listings; ?></p></td></tr>').show();
             }else{
                 $.each(json.data, function(key, val){
                     key                 = String(key);
@@ -143,16 +143,16 @@ function checkLinkedItems(){
                             if($('#ebay_qty_'+key).val() == $('#store_qty_'+key).val()){
                                 $('#text_status_'+key).text('OK');
                                 $('#row_'+key+' > td').css('background-color', '#E3FFC8');
-                                $('#text_buttons_'+key).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="button"><span><?php echo $lang_btn_edit; ?></span></a>');
+                                $('#text_buttons_'+key).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="button"><span><?php echo $text_btn_edit; ?></span></a>');
                             }else{
                                 $('#text_status_'+key).text('Stock error');
                                 $('#row_'+key+' > td').css('background-color', '#FFD4D4');
-                                $('#text_buttons_'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+storeQty+');" class="button"><span><?php echo $lang_btn_resync; ?></span></a>');
+                                $('#text_buttons_'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+storeQty+');" class="button"><span><?php echo $text_btn_resync; ?></span></a>');
                             }
                         }else{
                             $('#text_status_'+key).text('Listing ended');
                             $('#row_'+key+' > td').css('background-color', '#FFD4D4');
-                            $('#text_buttons_'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="button"><span><?php echo $lang_btn_remove_link; ?></span></a>');
+                            $('#text_buttons_'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="button"><span><?php echo $text_btn_remove_link; ?></span></a>');
                         }
                     }else{
                         var htmlInj = '';
@@ -170,7 +170,7 @@ function checkLinkedItems(){
                         if(val.status == 0){
                             $('#text_status_'+key).text('Listing ended');
                             $('#row_'+key+' > td').css('background-color', '#FFD4D4');
-                            $('#text_buttons_'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="button"><span><?php echo $lang_btn_remove_link; ?></span></a>');
+                            $('#text_buttons_'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="button"><span><?php echo $text_btn_remove_link; ?></span></a>');
                         }
                     }
                 });
@@ -180,10 +180,10 @@ function checkLinkedItems(){
             }
         },
         failure: function(){
-            $('#errorBox').text('<?php echo $lang_ajax_load_error; ?>').fadeIn();
+            $('#errorBox').text('<?php echo $text_ajax_load_error; ?>').fadeIn();
         },
         error: function(){
-            $('#errorBox').text('<?php echo $lang_ajax_load_error; ?>').fadeIn();
+            $('#errorBox').text('<?php echo $text_ajax_load_error; ?>').fadeIn();
         }
     });
 }
@@ -203,7 +203,7 @@ function removeLink(product_id, id) {
 }
 
 function updateLink(itemid, qty, product_id, storeQty){
-    var r = confirm("<?php echo $lang_alert_stock_local; ?>");
+    var r = confirm("<?php echo $text_alert_stock_local; ?>");
     varBtnOld = $('#text_buttons_'+itemid).html();
 
     $('#text_buttons_'+itemid).html('<p class="center"><img src="view/image/loading.gif" alt="Loading" /></p>');
@@ -216,7 +216,7 @@ function updateLink(itemid, qty, product_id, storeQty){
             success: function(json) {
                 if(json.error == false){
                     $('#text_status_'+itemid).text('OK');
-                    $('#text_buttons_'+itemid).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="button"><span><?php echo $lang_btn_edit; ?></span></a>');
+                    $('#text_buttons_'+itemid).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="button"><span><?php echo $text_btn_edit; ?></span></a>');
                     $('#row_'+itemid+' > td').css('background-color', '#E3FFC8');
                     $('#l_'+itemid+'_qtyinput').val(qty);
                     $('#l_'+itemid+'_qty').val(qty);
@@ -231,11 +231,11 @@ function updateLink(itemid, qty, product_id, storeQty){
             },
             failure: function(){
                 $('#text_buttons_'+itemid).html(varBtnOld);
-                alert('<?php echo $lang_ajax_load_error; ?>');
+                alert('<?php echo $text_ajax_load_error; ?>');
             },
             error: function(){
                 $('#text_buttons_'+itemid).html(varBtnOld);
-                alert('<?php echo $lang_ajax_load_error; ?>');
+                alert('<?php echo $text_ajax_load_error; ?>');
             }
         });
     }
@@ -248,12 +248,12 @@ function saveListingLink(id){
     var variants        = $('#l_'+id+'_variants').val();
 
     if(product_id === ''){
-        alert('<?php echo $lang_ajax_error_link; ?>');
+        alert('<?php echo $text_ajax_error_link; ?>');
         return false;
     }
 
     if(qty < 1){
-        alert('<?php echo $lang_ajax_error_link_no_sk; ?>');
+        alert('<?php echo $text_ajax_error_link_no_sk; ?>');
         return false;
     }
 
@@ -316,7 +316,7 @@ function checkUnlinkedItems(){
         success: function(json) {
 
             if(json.data.items === null){
-                $('#eBayListings').append('<tr><td colspan="7"><p><?php echo $lang_ajax_error_listings; ?></p></td></tr>');
+                $('#eBayListings').append('<tr><td colspan="7"><p><?php echo $text_ajax_error_listings; ?></p></td></tr>');
             }else{
                 var htmlInj;
 
@@ -348,7 +348,7 @@ function checkUnlinkedItems(){
                         htmlInj += '<input type="hidden" name="variants" id="l_'+key+'_variants" value="1" />';
                         htmlInj += '<td class="center"><img title="Success" alt="Success" src="view/image/success.png" style="margin-top:3px;"></td>';
                     }
-                    htmlInj += '<td class="center"><a style="display:none;" class="button" onclick="saveListingLink('+key+'); return false;" id="l_'+key+'_saveBtn"><span><?php echo $lang_btn_save; ?></span></a> <img src="view/image/loading.gif" class="displayNone" id="l_'+key+'_saveLoading" alt="Loading" /></td>';
+                    htmlInj += '<td class="center"><a style="display:none;" class="button" onclick="saveListingLink('+key+'); return false;" id="l_'+key+'_saveBtn"><span><?php echo $button_save; ?></span></a> <img src="view/image/loading.gif" class="displayNone" id="l_'+key+'_saveLoading" alt="Loading" /></td>';
                     htmlInj += '</tr>';
 
                     $('#eBayListings').append(htmlInj);
@@ -365,12 +365,12 @@ function checkUnlinkedItems(){
         failure: function(){
             $('#checkUnlinkedItems').hide();
             $('#checkUnlinkedItemsLoading').show();
-            $('#errorBox').text('<?php echo $lang_ajax_load_error; ?>').fadeIn();
+            $('#errorBox').text('<?php echo $text_ajax_load_error; ?>').fadeIn();
         },
         error: function(){
             $('#checkUnlinkedItems').hide();
             $('#checkUnlinkedItemsLoading').show();
-            $('#errorBox').text('<?php echo $lang_ajax_load_error; ?>').fadeIn();
+            $('#errorBox').text('<?php echo $text_ajax_load_error; ?>').fadeIn();
         }
     });
 }

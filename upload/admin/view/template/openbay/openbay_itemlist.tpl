@@ -16,7 +16,7 @@
       <h1><img src="view/image/product.png" alt="" /> <?php echo $heading_title; ?></h1>
       <div class="buttons">
         <?php if ($href_amazon_bulk_list) { ?>
-          <a class="button" href="<?php echo $href_amazon_bulk_list ?>"><?php echo $lang_bulk_amazon_btn ?></a>
+          <a class="button" href="<?php echo $href_amazon_bulk_list ?>"><?php echo $text_bulk_amazon_btn ?></a>
         <?php } ?>
       </div>
     </div>
@@ -154,7 +154,7 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                 <?php } ?></td>
-                <td width="230"><?php echo $lang_markets; ?></td>
+                <td width="230"><?php echo $text_markets; ?></td>
             </tr>
           </thead>
           <tbody>
@@ -299,7 +299,7 @@ function filter() {
 
 <?php  if ($this->config->get('ebay_status') == '1') { ?>
 <script type="text/javascript"><!--
-        $('.buttons').prepend('<a onclick="bulkUpload();" class="button"><span><?php echo $lang_bulk_btn; ?></span></a>');
+        $('.buttons').prepend('<a onclick="bulkUpload();" class="button"><span><?php echo $text_bulk_btn; ?></span></a>');
 
         function bulkUpload() {
             $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $this->request->get['token']; ?>');

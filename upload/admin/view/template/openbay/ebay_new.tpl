@@ -9,22 +9,22 @@
     <div class="box">
 
     <div class="heading">
-        <h1><img src="view/image/information.png" alt="" /> <?php echo $lang_page_title; ?></h1>
-        <div class="buttons"><a onclick="confirmAction('<?php echo $cancel; ?>');" class="button" id="cancel_button"><span><?php echo $lang_cancel; ?></span></a></div>
+        <h1><img src="view/image/information.png" alt="" /> <?php echo $text_page_title; ?></h1>
+        <div class="buttons"><a onclick="confirmAction('<?php echo $cancel; ?>');" class="button" id="cancel_button"><span><?php echo $text_cancel; ?></span></a></div>
     </div>
 
     <div class="content" id="mainForm">
 
         <div id="tabs" class="htabs">
-            <a href="#tab-listing-general"><?php echo $lang_tab_general; ?></a>
-            <a href="#tab-listing-feature"><?php echo $lang_tab_feature; ?></a>
-            <a href="#tab-listing-catalog"><?php echo $lang_tab_ebay_catalog; ?></a>
-            <a href="#tab-listing-description"><?php echo $lang_tab_description; ?></a>
-            <a href="#tab-listing-images"><?php echo $lang_tab_images; ?></a>
-            <a href="#tab-listing-price"><?php echo $lang_tab_price; ?></a>
-            <a href="#tab-listing-payment"><?php echo $lang_tab_payment; ?></a>
-            <a href="#tab-listing-shipping"><?php echo $lang_tab_shipping; ?></a>
-            <a href="#tab-listing-returns"><?php echo $lang_tab_returns; ?></a>
+            <a href="#tab-listing-general"><?php echo $tab_general; ?></a>
+            <a href="#tab-listing-feature"><?php echo $text_tab_feature; ?></a>
+            <a href="#tab-listing-catalog"><?php echo $text_tab_ebay_catalog; ?></a>
+            <a href="#tab-listing-description"><?php echo $text_tab_description; ?></a>
+            <a href="#tab-listing-images"><?php echo $text_tab_images; ?></a>
+            <a href="#tab-listing-price"><?php echo $text_tab_price; ?></a>
+            <a href="#tab-listing-payment"><?php echo $text_tab_payment; ?></a>
+            <a href="#tab-listing-shipping"><?php echo $tab_shipping; ?></a>
+            <a href="#tab-listing-returns"><?php echo $text_tab_returns; ?></a>
         </div>
 
         <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form">
@@ -38,7 +38,7 @@
 
                     <?php if($product['store_cats'] != false) { ?>
                         <tr>
-                            <td><?php echo $lang_shop_category; ?></td>
+                            <td><?php echo $text_shop_category; ?></td>
                             <td>
                                 <select name="eBayStoreCatId" id="eBayStoreCatId">
                                     <?php foreach($product['store_cats'] as $key => $cat){ ?>
@@ -50,18 +50,18 @@
                     <?php } ?>
 
                     <tr>
-                        <td><?php echo $lang_category_suggested; ?><span class="help"><?php echo $lang_category_suggested_help; ?></span></td>
+                        <td><?php echo $text_category_suggested; ?><span class="help"><?php echo $text_category_suggested_help; ?></span></td>
                         <td>
-                            <p id="suggestedLoading" class="displayNone"><img src="view/image/loading.gif" id="imageLoadingSuggestedLoading" alt="Loading" /> <?php echo $lang_category_suggested_check; ?></p>
+                            <p id="suggestedLoading" class="displayNone"><img src="view/image/loading.gif" id="imageLoadingSuggestedLoading" alt="Loading" /> <?php echo $text_category_suggested_check; ?></p>
                             <div id="suggested_cats"></div>
                         </td>
                     </tr>
 
                     <?php if(!empty($product['popular_cats'])){ ?>
                         <tr>
-                            <td><?php echo $lang_category_popular; ?><span class="help"><?php echo $lang_category_popular_help; ?></span></td>
+                            <td><?php echo $text_category_popular; ?><span class="help"><?php echo $text_category_popular_help; ?></span></td>
                             <td>
-                                <p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong><?php echo $lang_none; ?></strong></p>
+                                <p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong><?php echo $text_none; ?></strong></p>
 
                                 <?php foreach($product['popular_cats'] as $cat){ ?>
                                     <p><input type="radio" name="popular" value="<?php echo $cat['CategoryID']; ?>" class="popular_category" /> <?php echo $cat['breadcrumb']; ?></p>
@@ -73,7 +73,7 @@
                     <?php } ?>
 
                     <tr id="cSelectionsRow">
-                        <td><?php echo $lang_category; ?></td>
+                        <td><?php echo $text_category; ?></td>
                         <td>
                             <div id="cSelections">
                                 <select id="catsSelect1" onchange="loadCategories(2);"></select>
@@ -89,7 +89,7 @@
                     </tr>
 
                     <tr id="conditionContainer" class="displayNone">
-                        <td><?php echo $lang_listing_condition; ?></td>
+                        <td><?php echo $text_listing_condition; ?></td>
                         <td>
                             <select name="condition" id="conditionRow" class="displayNone width200"></select>
                             <img id="conditionLoading" src="view/image/loading.gif" />
@@ -97,7 +97,7 @@
                     </tr>
 
                     <tr id="durationContainer" class="displayNone">
-                        <td><?php echo $lang_listing_duration; ?></td>
+                        <td><?php echo $text_listing_duration; ?></td>
                         <td>
                             <select name="auction_duration" id="durationRow" class="displayNone width200"></select>
                             <img id="durationLoading" src="view/image/loading.gif" />
@@ -108,10 +108,10 @@
             </div>
 
             <div id="tab-listing-feature">
-                <p id="showFeatureDivPreload"><?php echo $lang_feature_pretext; ?></p>
+                <p id="showFeatureDivPreload"><?php echo $text_feature_pretext; ?></p>
                 <table class="form" id="showFeatureDiv">
                     <tr>
-                        <td style="vertical-align:top; padding-top:15px;"><?php echo $lang_category_features; ?></td>
+                        <td style="vertical-align:top; padding-top:15px;"><?php echo $text_category_features; ?></td>
                         <td>
                             <img src="view/image/loading.gif" id="featLoading" class="displayNone" />
                             <table class="form" id="featureRow"></table>
@@ -123,7 +123,7 @@
             <div id="tab-listing-catalog">
                 <table class="form">
                     <tr>
-                        <td><?php echo $lang_search_catalog; ?></td>
+                        <td><?php echo $text_search_catalog; ?></td>
                         <td>
                             <div class="buttons">
                                 <input type="text" name="catalog_search" id="catalog_search" value="" />
@@ -133,7 +133,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_image_catalog; ?></td>
+                        <td><?php echo $text_image_catalog; ?></td>
                         <td>
                             <input type="hidden" value="0" name="catalog_image">
                             <input id="catalog_image" type="checkbox" value="1" name="catalog_image">
@@ -147,15 +147,15 @@
             <div id="tab-listing-description">
                 <table class="form">
                     <tr>
-                        <td><?php echo $lang_title; ?></td>
-                        <td><div id="name_highlight"><input type="text" name="name" value="<?php echo $product['name']; ?>" size="85" id="name" /> <span id="name_highlight_msg" class="displayNone"> <?php echo $lang_title_error; ?></span></div></td>
+                        <td><?php echo $text_title; ?></td>
+                        <td><div id="name_highlight"><input type="text" name="name" value="<?php echo $product['name']; ?>" size="85" id="name" /> <span id="name_highlight_msg" class="displayNone"> <?php echo $text_title_error; ?></span></div></td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_subtitle; ?></td>
-                        <td><div id="sub_name_highlight"><input type="text" id="sub_name" name="sub_name" value="" size="85" /> <span id="sub_name_highlight_msg" class="displayNone"> <?php echo $lang_subtitle_help; ?></span></div></td>
+                        <td><?php echo $text_subtitle; ?></td>
+                        <td><div id="sub_name_highlight"><input type="text" id="sub_name" name="sub_name" value="" size="85" /> <span id="sub_name_highlight_msg" class="displayNone"> <?php echo $text_subtitle_help; ?></span></div></td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_description; ?></td>
+                        <td><?php echo $text_description; ?></td>
                         <td><textarea name="description" id="descriptionField"><?php echo $product['description']; ?></textarea></td>
                     </tr>
                 </table>
@@ -164,10 +164,10 @@
             <div id="tab-listing-images">
                 <table class="form">
                     <tr>
-                        <td><?php echo $lang_profile_load; ?></td>
+                        <td><?php echo $text_profile_load; ?></td>
                         <td>
                             <select name="profile_theme" id="profile_theme" class="theme_input">
-                                <option value="def"><?php echo $lang_select; ?></option>
+                                <option value="def"><?php echo $text_select; ?></option>
                                 <?php if(is_array($product['profiles_theme'])) { foreach($product['profiles_theme'] as $profile) { ?>
                                     <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                                 <?php } }?>
@@ -176,7 +176,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_template; ?><span class="help"><a href="http://shop.openbaypro.com/opencart_design_services/opencart_theme_design/ebay_html_template_openbay_pro" target="_BLANK"><?php echo $lang_template_link; ?></a></span></td>
+                        <td><?php echo $text_template; ?><span class="help"><a href="http://shop.openbaypro.com/opencart_design_services/opencart_theme_design/ebay_html_template_openbay_pro" target="_BLANK"><?php echo $text_template_link; ?></a></span></td>
                         <td>
                             <select name="template" id="template_id">
                                 <option value="None">None</option>
@@ -190,45 +190,45 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_image_gallery; ?></td>
+                        <td><?php echo $text_image_gallery; ?></td>
                         <td>
                             <input type="text" name="gallery_height" value="<?php echo $product['defaults']['gallery_height']; ?>" id="gallery_height" />h&nbsp;
                             <input type="text" name="gallery_width" value="<?php echo $product['defaults']['gallery_width']; ?>" id="gallery_width" />w
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_image_thumb; ?></td>
+                        <td><?php echo $text_image_thumb; ?></td>
                         <td>
                             <input type="text" name="thumb_height" value="<?php echo $product['defaults']['thumb_height']; ?>" id="thumb_height" />h&nbsp;
                             <input type="text" name="thumb_width" value="<?php echo $product['defaults']['thumb_width']; ?>" id="thumb_width" />w
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_images_supersize; ?></td>
+                        <td><?php echo $text_images_supersize; ?></td>
                         <td>
                             <input type="hidden" name="gallery_super" value="0" />
                             <input type="checkbox" name="gallery_super" value="1" id="gallery_super" />
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_images_gallery_plus; ?></td>
+                        <td><?php echo $text_images_gallery_plus; ?></td>
                         <td>
                             <input type="hidden" name="gallery_plus" value="0" />
                             <input type="checkbox" name="gallery_plus" value="1" id="gallery_plus" />
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_gallery_select_all; ?></td>
+                        <td><?php echo $text_gallery_select_all; ?></td>
                         <td>
-                            <p><input type="checkbox" name="allTemplateImages" value="1" id="allTemplateImages" style="margin-top:2px;" /> <?php echo $lang_template_images; ?></p>
-                            <p><input type="checkbox" name="allEbayImages" value="1" id="allEbayImages" style="margin-top:2px;" /> <?php echo $lang_ebay_images; ?></p>
+                            <p><input type="checkbox" name="allTemplateImages" value="1" id="allTemplateImages" style="margin-top:2px;" /> <?php echo $text_template_images; ?></p>
+                            <p><input type="checkbox" name="allEbayImages" value="1" id="allEbayImages" style="margin-top:2px;" /> <?php echo $text_ebay_images; ?></p>
                         </td>
                     </tr>
                     <tr>
                         <td colspan="2">
 
-                            <p>* <?php echo $lang_images_text_1; ?></p>
-                            <p>* <?php echo $lang_images_text_2; ?></p>
+                            <p>* <?php echo $text_images_text_1; ?></p>
+                            <p>* <?php echo $text_images_text_2; ?></p>
 
     <?php
                             if(!empty($product['product_images'])){
@@ -237,18 +237,18 @@
     ?>
                                     <div class="border p10 mBottom10 width120 left floatLeft mRight10">
                                     <img src="<?php echo $img['preview']; ?>" />
-                                    <p><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="checkboxTemplateImage" /> <?php echo $lang_template_image; ?></p>
+                                    <p><input type="checkbox" id="imgUrl<?php echo $i; ?>" name="img_tpl[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" class="checkboxTemplateImage" /> <?php echo $text_template_image; ?></p>
                                     <p>
                                         <input type="hidden" name="img[<?php echo $i; ?>]" value="null" />
-                                        <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad(<?php echo $i; ?>)" id="imgChk<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> /> <?php echo $lang_image_ebay; ?>
+                                        <input type="checkbox" class="checkboxEbayImage" onchange="toggleRad(<?php echo $i; ?>)" id="imgChk<?php echo $i; ?>" name="img[<?php echo $i; ?>]" value="<?php echo $img['image']; ?>" <?php echo ( ($i == 0) ? 'checked="checked" ' : ''); ?> /> <?php echo $text_image_ebay; ?>
                                     </p>
-                                    <p id="imgRad<?php echo $i; ?>"<?php echo ( ($i == 0) ? '' : ' class="displayNone"'); ?>><input type="radio" name="main_image"<?php echo (($i == 0) ? ' checked' : ''); ?> value="<?php echo $i; ?>" /> <?php echo $lang_main_image_ebay; ?></p>
+                                    <p id="imgRad<?php echo $i; ?>"<?php echo ( ($i == 0) ? '' : ' class="displayNone"'); ?>><input type="radio" name="main_image"<?php echo (($i == 0) ? ' checked' : ''); ?> value="<?php echo $i; ?>" /> <?php echo $text_main_image_ebay; ?></p>
                                     </div>
     <?php
                                     $i++;
                                 }
                             }else{
-                                echo'<p>'.$lang_images_none.'</p>';
+                                echo'<p>'.$text_images_none.'</p>';
                             }
     ?>
                         </td>
@@ -257,22 +257,22 @@
 
                 <?php if(!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])){ ?>
 
-                <h2><?php echo $lang_option_images; ?></h2>
-                <p><?php echo $lang_option_description; ?></p>
+                <h2><?php echo $text_option_images; ?></h2>
+                <p><?php echo $text_option_description; ?></p>
 
                 <table class="form">
                     <tr>
-                        <td><?php echo $lang_option_images_grp; ?></td>
+                        <td><?php echo $text_option_images_grp; ?></td>
                         <td>
                             <select name="option_image_group" id="option_image_group">
-                                <option value="def">-- <?php echo $lang_select; ?> --</option>
+                                <option value="def">-- <?php echo $text_select; ?> --</option>
                                 <?php foreach($product['option_grp'] as $option_group){ echo'<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
                             </select>
                             <input type="hidden" id="option_image_group_name" name="option_image_group_name" value="" />
                         </td>
                     </tr>
                     <tr class="option_group_img_tr displayNone">
-                        <td><?php echo $lang_option_images_choice; ?></td>
+                        <td><?php echo $text_option_images_choice; ?></td>
                         <td>
                             <?php foreach($product['option_grp'] as $option_group){ ?>
                                 <div id="option_group_img_<?php echo $option_group['option_id']; ?>" class="option_group_img">
@@ -283,7 +283,7 @@
                                                     <h4><?php echo $option_group_choice['name']; ?></h4>
                                                     <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][name]" value="<?php echo $option_group_choice['name']; ?>" />
                                                     <div class="buttons">
-                                                        <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="button cursor"><span><?php echo $lang_add; ?></span></a>
+                                                        <a onclick="addVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>);" class="button cursor"><span><?php echo $text_add; ?></span></a>
                                                     </div>
                                                 </td>
                                                 <td class="center" id="option_images_<?php echo $option_group_choice['product_option_value_id']; ?>">
@@ -291,7 +291,7 @@
                                                         <div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>">
                                                             <img src="<?php echo $option_group_choice['image_thumb']; ?>" />
                                                             <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>" />
-                                                            <p class="textCenter"><a class="cursor" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);"><?php echo $lang_remove; ?></a></p>
+                                                            <p class="textCenter"><a class="cursor" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);"><?php echo $text_remove; ?></a></p>
                                                         </div>
                                                     <?php } ?>
                                                     <div style="clear:both"></div>
@@ -311,10 +311,10 @@
             <div id="tab-listing-price">
                 <table class="form">
                     <tr>
-                        <td><?php echo $lang_profile_load; ?></td>
+                        <td><?php echo $text_profile_load; ?></td>
                         <td>
                             <select name="profile_generic" id="profile_generic">
-                                <option value="def"><?php echo $lang_select; ?></option>
+                                <option value="def"><?php echo $text_select; ?></option>
                                 <?php if(is_array($product['profiles_generic'])){ foreach($product['profiles_generic'] as $profile) { ?>
                                 <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                                 <?php } }?>
@@ -325,18 +325,18 @@
 
                     <?php if(!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])){ ?>
                         <tr>
-                            <td><?php echo $lang_stock_matrix; ?></td>
+                            <td><?php echo $text_stock_matrix; ?></td>
                             <td>
                                 <table class="list m0">
                                     <thead>
                                         <tr>
-                                            <td class="center"><?php echo $lang_stock_col_qty_total; ?></td>
-                                            <td class="center"><?php echo $lang_stock_col_qty; ?></td>
-                                            <td class="center"><?php echo $lang_stock_col_qty_reserve; ?></td>
-                                            <td class="left"><?php echo $lang_stock_col_comb; ?></td>
-                                            <td class="left"><?php echo $lang_price_ex_tax; ?></td>
-                                            <td class="left"><?php echo $lang_price_inc_tax; ?></td>
-                                            <td class="center"><?php echo $lang_stock_col_enabled; ?></td>
+                                            <td class="center"><?php echo $text_stock_col_qty_total; ?></td>
+                                            <td class="center"><?php echo $text_stock_col_qty; ?></td>
+                                            <td class="center"><?php echo $text_stock_col_qty_reserve; ?></td>
+                                            <td class="left"><?php echo $text_stock_col_comb; ?></td>
+                                            <td class="left"><?php echo $text_price_ex_tax; ?></td>
+                                            <td class="left"><?php echo $text_price_inc_tax; ?></td>
+                                            <td class="center"><?php echo $text_stock_col_enabled; ?></td>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -382,7 +382,7 @@
                                                 echo'<td class="left">'.$option['combi'].'</td>';
                                                 echo'<td class="left width100"><input id="varPriceEx_'.$v.'" onkeyup="updateVarPriceFromEx('.$v.');" type="text" name="opt['.$v.'][priceex]" value="'.number_format($option['price'], 2, '.', '').'" style="width:80px;" /></td>';
                                                 echo'<td class="left width100"><input class="varPriceInc" id="varPriceInc_'.$v.'" onkeyup="updateVarPriceFromInc('.$v.');"  type="text" name="opt['.$v.'][price]" value="0" style="width:80px;" /></td>';
-                                                echo'<td class="center width100"'; if($option['active'] != 1){ echo' style="background-color: #CC9933;"';} echo'>'; if($option['active'] == 1){ echo $lang_yes; }else{ echo $lang_no; } echo '</td>';
+                                                echo'<td class="center width100"'; if($option['active'] != 1){ echo' style="background-color: #CC9933;"';} echo'>'; if($option['active'] == 1){ echo $text_yes; }else{ echo $text_no; } echo '</td>';
                                             echo'</tr>';
 
                                             echo'<tr><td colspan="4" class="optSpecifics" id="optSpecifics'.$v.'">';
@@ -396,35 +396,35 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_tax_inc; ?></td>
+                            <td><?php echo $text_tax_inc; ?></td>
                             <td><input type="text" name="tax" id="taxRate" onkeyup="updateVarPrice();" value="<?php echo $product['defaults']['tax']; ?>" class="textRight width50" /> %</td>
                         </tr>
                         <?php }else{ ?>
                         <tr>
-                            <td><?php echo $lang_qty; ?></td>
+                            <td><?php echo $text_qty; ?></td>
                             <td>
                                 <p><input type="text" name="qty[0]" value="<?php echo $product['quantity']; ?>" id="qty_0" class="textRight width50" onkeyup="updateReserveMessage('0', '<?php echo $product['quantity']; ?>');" /></p>
                                 <p>Total in stock: <?php echo $product['quantity']; ?><br/><span id="qty_reserve_0">0</span> will be reserved</p>
                             </td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_price_ex_tax; ?> <span class="help"><?php echo $lang_price_ex_tax_help; ?></span></td>
+                            <td><?php echo $text_price_ex_tax; ?> <span class="help"><?php echo $text_price_ex_tax_help; ?></span></td>
                             <td><p><input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" onkeyup="updatePriceFromEx();" class="textRight width50" /></p></td>
                         </tr>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_price_inc_tax; ?> <span class="help"><?php echo $lang_price_inc_tax_help; ?></span></td>
+                            <td><?php echo $text_price_inc_tax; ?> <span class="help"><?php echo $text_price_inc_tax_help; ?></span></td>
                             <td><p><input type="text" name="price[0]" value="0" id="taxInc" onkeyup="updatePriceFromInc();" class="textRight width50" /></p></td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_tax_inc; ?></td>
+                            <td><?php echo $text_tax_inc; ?></td>
                             <td><input type="text" name="tax" id="taxRate" onkeyup="updatePriceFromEx();" value="<?php echo $product['defaults']['tax']; ?>" class="textRight width50" /> %</td>
                         </tr>
                     <?php } ?>
 
                     <?php if(empty($product['options'])) { ?>
                         <tr>
-                            <td><?php echo $lang_offers; ?></td>
+                            <td><?php echo $text_offers; ?></td>
                             <td>
                                 <input type="hidden" name="bestoffer" value="0" checked/>
                                 <input type="checkbox" name="bestoffer" id="bestoffer" value="1" />
@@ -433,7 +433,7 @@
                     <?php } ?>
 
                     <tr>
-                        <td><?php echo $lang_private; ?></td>
+                        <td><?php echo $text_private; ?></td>
                         <td>
                             <input type="hidden" name="private_listing" value="0" checked/>
                            <input type="checkbox" name="private_listing" id="private_listing" value="1" />
@@ -446,14 +446,14 @@
             <div id="tab-listing-payment">
                 <table class="form">
                     <tr>
-                        <td><?php echo $lang_imediate_payment; ?></td>
+                        <td><?php echo $text_imediate_payment; ?></td>
                         <td>
-                            <p><input type="radio" name="ebay_payment_immediate" value="0" <?php if($product['defaults']['ebay_payment_immediate'] != 1){ echo'checked '; } ?>/> <?php echo $lang_no; ?></p>
-                            <p><input type="radio" name="ebay_payment_immediate" value="1" <?php if($product['defaults']['ebay_payment_immediate'] == 1){ echo'checked '; } ?>/> <?php echo $lang_yes; ?></p>
+                            <p><input type="radio" name="ebay_payment_immediate" value="0" <?php if($product['defaults']['ebay_payment_immediate'] != 1){ echo'checked '; } ?>/> <?php echo $text_no; ?></p>
+                            <p><input type="radio" name="ebay_payment_immediate" value="1" <?php if($product['defaults']['ebay_payment_immediate'] == 1){ echo'checked '; } ?>/> <?php echo $text_yes; ?></p>
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_payment; ?></td>
+                        <td><?php echo $text_payment; ?></td>
                         <td>
     <?php
                         foreach($product['payments'] as $payment){
@@ -461,14 +461,14 @@
                             <p><input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1" <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/><?php echo $payment['local_name']; ?></p>
     <?php
                             if($payment['ebay_name'] == 'PayPal'){
-                                echo'<p><strong>'.$lang_payment_pp_email.'</strong>&nbsp;<input type="text" name="paypal_email" size="46" value="'.$product['defaults']['paypal_address'].'" /></p>';
+                                echo'<p><strong>'.$text_payment_pp_email.'</strong>&nbsp;<input type="text" name="paypal_email" size="46" value="'.$product['defaults']['paypal_address'].'" /></p>';
                             }
                         }
     ?>
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_payment_instruction; ?></td>
+                        <td><?php echo $text_payment_instruction; ?></td>
                         <td><textarea name="payment_instruction" style="width:400px; height:100px;"><?php echo $product['defaults']['payment_instruction']; ?></textarea></td>
                     </tr>
                 </table>
@@ -477,10 +477,10 @@
             <div id="tab-listing-shipping">
                 <table class="form">
                     <tr>
-                        <td><?php echo $lang_profile_load; ?></td>
+                        <td><?php echo $text_profile_load; ?></td>
                         <td>
                             <select name="profile_shipping" id="profile_shipping">
-                                <option value="def"><?php echo $lang_select; ?></option>
+                                <option value="def"><?php echo $text_select; ?></option>
                                 <?php if(is_array($product['profiles_shipping'])){ foreach($product['profiles_shipping'] as $profile) { ?>
                                     <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
                                 <?php } }?>
@@ -489,15 +489,15 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_item_postcode; ?></td>
+                        <td><?php echo $text_item_postcode; ?></td>
                         <td><input type="text" name="postcode" id="postcode" /></td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_item_location ?></td>
+                        <td><?php echo $text_item_location ?></td>
                         <td><input type="text" name="location" id="location" /></td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_despatch_country; ?></td>
+                        <td><?php echo $text_despatch_country; ?></td>
                         <td>
                             <select name="country" id="country">
                                 <?php foreach($setting['countries'] as $country){ ?>
@@ -507,7 +507,7 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_despatch_time; ?></td>
+                        <td><?php echo $text_despatch_time; ?></td>
                         <td>
                             <select name="dispatch_time" id="dispatch_time">
                                 <?php foreach($setting['dispatch_times'] as $dis){ ?>
@@ -517,14 +517,14 @@
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_shipping_in_description; ?></td>
+                        <td><?php echo $text_shipping_in_description; ?></td>
                         <td>
                             <input type="hidden" name="shipping_in_desc" value="0" />
                             <input type="checkbox" name="shipping_in_desc" value="1" id="shipping_in_desc" />
                         </td>
                     </tr>
                     <tr>
-                        <td><?php echo $lang_shipping_getitfast; ?></td>
+                        <td><?php echo $text_shipping_getitfast; ?></td>
                         <td>
                             <input type="hidden" name="get_it_fast" value="0" />
                             <input type="checkbox" name="get_it_fast" value="1" id="get_it_fast" />
@@ -532,18 +532,18 @@
                     </tr>
                     <tr id="shipping_table_rows">
                         <td colspan="2">
-                            <h2 style="border:none;"><?php echo $lang_shipping_national; ?></h2>
-                            <div class="attention displayNone mBottom10" id="maxShippingAlert"><?php echo $lang_shipping_max_national; ?></div>
+                            <h2 style="border:none;"><?php echo $text_shipping_national; ?></h2>
+                            <div class="attention displayNone mBottom10" id="maxShippingAlert"><?php echo $text_shipping_max_national; ?></div>
 
                             <input type="hidden" name="count_national" value="0" id="count_national" />
                             <div id="nationalBtn"></div>
-                            <a class="button" onclick="addShipping('national');"><span><?php echo $lang_add; ?></span></a>
+                            <a class="button" onclick="addShipping('national');"><span><?php echo $text_add; ?></span></a>
 
-                            <h2 style="border:none;"><?php echo $lang_shipping_international; ?></h2>
+                            <h2 style="border:none;"><?php echo $text_shipping_international; ?></h2>
 
                             <input type="hidden" name="count_international" value="0" id="count_international" />
                             <div id="internationalBtn"></div>
-                            <a class="button" onclick="addShipping('international');"><span><?php echo $lang_add; ?></span></a>
+                            <a class="button" onclick="addShipping('international');"><span><?php echo $text_add; ?></span></a>
                         </td>
                     </tr>
                 </table>
@@ -552,10 +552,10 @@
             <div id="tab-listing-returns">
                 <table class="form">
                     <tr>
-                        <td><?php echo $lang_profile_load; ?></td>
+                        <td><?php echo $text_profile_load; ?></td>
                         <td>
                             <select name="profile_return" id="profile_return" class="returns_input">
-                                <option value="def"><?php echo $lang_select; ?></option>
+                                <option value="def"><?php echo $text_select; ?></option>
                                 <?php if(is_array($product['profiles_returns'])){ foreach($product['profiles_returns'] as $profile) { ?>
                                     <option value="<?php echo $profile['ebay_profile_id']; ?>"><?php echo $profile['name']; ?></option>
                                 <?php } } ?>
@@ -565,7 +565,7 @@
                     </tr>
                     <?php if(!empty($setting['returns']['accepted'])) { ?>
                         <tr>
-                            <td><?php echo $lang_return_accepted; ?></td>
+                            <td><?php echo $text_return_accepted; ?></td>
                             <td>
                                 <select name="returns_accepted" id="returns_accepted" class="returns_input">
                                     <?php foreach($setting['returns']['accepted'] as $v) { ?>
@@ -578,7 +578,7 @@
 
                     <?php if(!empty($setting['returns']['within'])) { ?>
                         <tr>
-                            <td><?php echo $lang_return_days; ?></td>
+                            <td><?php echo $text_return_days; ?></td>
                             <td>
                                 <select name="returns_within" id="returns_within" class="returns_input">
                                     <?php foreach($setting['returns']['within'] as $v) { ?>
@@ -591,7 +591,7 @@
 
                     <?php if(!empty($setting['returns']['paidby'])) { ?>
                         <tr>
-                            <td><?php echo $lang_return_scosts; ?></td>
+                            <td><?php echo $text_return_scosts; ?></td>
                             <td>
                                 <select name="returns_shipping" id="returns_shipping" class="returns_input">
                                     <?php foreach($setting['returns']['paidby'] as $v) { ?>
@@ -604,7 +604,7 @@
 
                     <?php if(!empty($setting['returns']['refund'])) { ?>
                         <tr>
-                            <td><?php echo $lang_return_type; ?></td>
+                            <td><?php echo $text_return_type; ?></td>
                             <td>
                                 <select name="returns_option" id="returns_option" class="returns_input">
                                     <?php foreach($setting['returns']['refund'] as $v) { ?>
@@ -617,14 +617,14 @@
 
                     <?php if($setting['returns']['description'] == true) { ?>
                         <tr>
-                            <td><?php echo $lang_return_policy; ?></td>
+                            <td><?php echo $text_return_policy; ?></td>
                             <td><textarea name="return_policy" id="returns_policy" class="returns_input" style="width:400px; height:100px;"></textarea></td>
                         </tr>
                     <?php } ?>
 
                     <?php if(!empty($setting['returns']['restocking_fee'])) { ?>
                         <tr>
-                            <td><?php echo $lang_return_restock; ?></td>
+                            <td><?php echo $text_return_restock; ?></td>
                             <td>
                                 <select name="returns_restocking_fee" id="returns_restocking_fee" class="returns_input">
                                     <?php foreach($setting['returns']['restocking_fee'] as $v) { ?>
@@ -641,7 +641,7 @@
         <table class="form">
             <tr>
                 <td align="right" colspan="2">
-                    <a onclick="ebayVerify();" class="button" id="reviewButton"><span><?php echo $lang_preview; ?></span></a>
+                    <a onclick="ebayVerify();" class="button" id="reviewButton"><span><?php echo $text_preview; ?></span></a>
                     <img src="view/image/loading.gif" id="reviewButtonLoading" class="displayNone" />
                 </td>
             </tr>
@@ -653,43 +653,43 @@
     <div class="content displayNone" id="reviewForm">
         <table class="form" id="reviewFormTable">
           <tr class="listingFees">
-            <td><?php echo $lang_review_costs; ?></td>
+            <td><?php echo $text_review_costs; ?></td>
             <td id="reviewFormTableCosts"></td>
           </tr>
           <tr class="listingFees">
-            <td><?php echo $lang_review_costs_total; ?></td>
+            <td><?php echo $text_review_costs_total; ?></td>
             <td id="reviewFormTableCostsTotal"></td>
           </tr>
           <tr>
             <td></td>
             <td align="right">
-                <a onclick="goToEdit();" class="button" id="editButton"><span><?php echo $lang_review_edit; ?></span></a>&nbsp;&nbsp;&nbsp;<a onclick="eBaySubmit();" class="button" id="submitListing"><span><?php echo $lang_save; ?></span></a><img src="view/image/loading.gif" id="submitListingLoading" class="displayNone" />
+                <a onclick="goToEdit();" class="button" id="editButton"><span><?php echo $text_review_edit; ?></span></a>&nbsp;&nbsp;&nbsp;<a onclick="eBaySubmit();" class="button" id="submitListing"><span><?php echo $text_save; ?></span></a><img src="view/image/loading.gif" id="submitListingLoading" class="displayNone" />
             </td>
           </tr>
           <tr id="previewFrameRow" class="displayNone">
-            <td valign="top"><?php echo $lang_review_preview; ?><span class="help"><?php echo $lang_review_preview_help; ?></span></td>
+            <td valign="top"><?php echo $text_review_preview; ?><span class="help"><?php echo $text_review_preview_help; ?></span></td>
             <td id="previewFrame"></td>
           </tr>
         </table>
     </div>
     <div class="content displayNone" id="doneForm">
-          <h2><?php echo $lang_created_title; ?></h2>
-          <p><?php echo $lang_created_msg; ?>: <span id="itemNumber"></span></p>
+          <h2><?php echo $text_created_title; ?></h2>
+          <p><?php echo $text_created_msg; ?>: <span id="itemNumber"></span></p>
           <div class="buttons mTop10">
-              <a href="" class="button" id="view_button" target="_BLANK"><span><?php echo $lang_view; ?></span></a>
-              <a href="<?php echo $product['edit_link']; ?>" class="button"><span><?php echo $lang_edit; ?></span></a>
-              <a href="<?php echo $cancel; ?>" class="button"><span><?php echo $lang_return; ?></span></a>
+              <a href="" class="button" id="view_button" target="_BLANK"><span><?php echo $text_view; ?></span></a>
+              <a href="<?php echo $product['edit_link']; ?>" class="button"><span><?php echo $text_edit; ?></span></a>
+              <a href="<?php echo $cancel; ?>" class="button"><span><?php echo $text_return; ?></span></a>
           </div>
       </div>
     <div class="content displayNone" id="failedForm">
-          <h2><?php echo $lang_failed_title; ?></h2>
-          <p><?php echo $lang_failed_msg1; ?></p>
+          <h2><?php echo $text_failed_title; ?></h2>
+          <p><?php echo $text_failed_msg1; ?></p>
           <ul>
-              <li><?php echo $lang_failed_li1; ?></li>
-              <li><?php echo $lang_failed_li2; ?></li>
-              <li><?php echo $lang_failed_li3; ?></li>
+              <li><?php echo $text_failed_li1; ?></li>
+              <li><?php echo $text_failed_li2; ?></li>
+              <li><?php echo $text_failed_li3; ?></li>
           </ul>
-          <p><?php echo $lang_failed_contact; ?></p>
+          <p><?php echo $text_failed_contact; ?></p>
       </div>
 
   </div>
@@ -771,7 +771,7 @@
                     var htmlInj = '';
 
                         if(data.data){
-                            htmlInj += '<p><input type="radio" name="suggested" value="" id="suggested_default" checked="checked"/> <strong><?php echo $lang_none; ?></strong></p>';
+                            htmlInj += '<p><input type="radio" name="suggested" value="" id="suggested_default" checked="checked"/> <strong><?php echo $text_none; ?></strong></p>';
 
                             data.data = $.makeArray(data.data);
 
@@ -813,11 +813,11 @@
             },
             failure: function(){
                 $('#suggestedLoading').hide();
-                alert('<?php echo $lang_ajax_noload; ?>');
+                alert('<?php echo $text_ajax_noload; ?>');
             },
             error: function(){
                 $('#suggestedLoading').hide();
-                alert('<?php echo $lang_ajax_noload; ?>');
+                alert('<?php echo $text_ajax_noload; ?>');
             }
         });
     }
@@ -866,7 +866,7 @@
             success: function(data) {
                 if(data.items != null){
                     $('#catsSelect'+level).empty();
-                    $('#catsSelect'+level).append('<option value="">-- <?php echo $lang_select; ?> --</option>');
+                    $('#catsSelect'+level).append('<option value="">-- <?php echo $text_select; ?> --</option>');
 
                     data.cats = $.makeArray(data.cats);
 
@@ -885,7 +885,7 @@
                     if(data.error){
                         alert(data.error);
                         $('#reviewButton').hide();
-                        $('#content').prepend('<div class="warning"><?php echo $lang_ajax_catproblem; ?></div>');
+                        $('#content').prepend('<div class="warning"><?php echo $text_ajax_catproblem; ?></div>');
                         $('#mainForm, .heading').hide();
                     }else{
                         $('#finalCat').val($('#catsSelect'+prevLevel).val());
@@ -938,7 +938,7 @@
                     }
                 }else{
                     if(data.msg == null){
-                        alert('<?php echo $lang_ajax_noload; ?>');
+                        alert('<?php echo $text_ajax_noload; ?>');
                     }else{
                         alert(data.msg);
                     }
@@ -955,12 +955,12 @@
         var cat = $('#finalCat').val();
 
         if(cat <= 0){
-            alert('<?php echo $lang_error_choose_category; ?>');
+            alert('<?php echo $text_error_choose_category; ?>');
             return;
         }
 
         if(qry == ''){
-            alert('<?php echo $lang_error_enter_text; ?>');
+            alert('<?php echo $text_error_enter_text; ?>');
             return;
         }
 
@@ -980,7 +980,7 @@
             success: function(data) {
                 if(data.error == false){
                     if(data.data.productSearchResult.paginationOutput.totalEntries == 0 || data.data.ack == 'Failure'){
-                        $('#showCatalogDiv').html('<p><?php echo $lang_error_no_catalog_data; ?></p>');
+                        $('#showCatalogDiv').html('<p><?php echo $text_error_no_catalog_data; ?></p>');
                     }else{
                         data.data.productSearchResult.products = $.makeArray(data.data.productSearchResult.products);
 
@@ -992,7 +992,7 @@
                     }
                 }else{
                     if(data.msg == null){
-                        alert('<?php echo $lang_ajax_noload; ?>');
+                        alert('<?php echo $text_ajax_noload; ?>');
                     }else{
                         alert(data.msg);
                     }
@@ -1079,7 +1079,7 @@
                             htmlInj2 = '';
 
                             if(("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)){
-                                htmlInj2 += '<option value="">-- <?php echo $lang_select; ?> --</option>';
+                                htmlInj2 += '<option value="">-- <?php echo $text_select; ?> --</option>';
 
                                 val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
 
@@ -1088,10 +1088,10 @@
                                 });
 
                                 if(val.ValidationRules.SelectionMode == 'FreeText'){
-                                    htmlInj2 += '<option value="Other"><?php echo $lang_other; ?></option>';
+                                    htmlInj2 += '<option value="Other"><?php echo $text_other; ?></option>';
                                 }
 
-                                htmlInj += '<tr><td class="ebaySpecificTitle">'+val.Name+'</td><td><select name="feat['+val.Name+']" class="ebaySpecificSelect" id="spec_sel_'+specificCount+'" onchange="toggleSpecOther('+specificCount+');">'+htmlInj2+'</select><span id="spec_'+specificCount+'_other" class="ebaySpecificSpan"><?php echo $lang_other; ?>:&nbsp;<input type="text" name="featother['+val.Name+']" class="ebaySpecificOther" /></span></td></tr>';
+                                htmlInj += '<tr><td class="ebaySpecificTitle">'+val.Name+'</td><td><select name="feat['+val.Name+']" class="ebaySpecificSelect" id="spec_sel_'+specificCount+'" onchange="toggleSpecOther('+specificCount+');">'+htmlInj2+'</select><span id="spec_'+specificCount+'_other" class="ebaySpecificSpan"><?php echo $text_other; ?>:&nbsp;<input type="text" name="featother['+val.Name+']" class="ebaySpecificOther" /></span></td></tr>';
                             }else if(("ValueRecommendation" in val) && (val.ValidationRules.MaxValues > 1)){
                                 htmlInj += '<tr><td class="ebaySpecificTitle">'+val.Name+'</td><td>';
 
@@ -1115,7 +1115,7 @@
                     }
                 }else{
                     if(data.msg == null){
-                        alert('<?php echo $lang_ajax_noload; ?>');
+                        alert('<?php echo $text_ajax_noload; ?>');
                     }else{
                         alert(data.msg);
                     }
@@ -1156,7 +1156,7 @@
                 dataType: 'json',
                 success: function(data) {
                     html = '';
-                    html += '<p class="shipping_' + id + '_' + count + '" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong><?php echo $lang_shipping_service; ?></strong> <label><select name="service_' + id + '[' + count + ']">';
+                    html += '<p class="shipping_' + id + '_' + count + '" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong><?php echo $text_shipping_service; ?></strong> <label><select name="service_' + id + '[' + count + ']">';
 
                     data.svc = $.makeArray(data.svc);
 
@@ -1182,8 +1182,8 @@
                     }
 
 
-                    html += '<p class="shipping_' + id + '_' + count + '"><label><?php echo $lang_shipping_first; ?></label><input type="text" name="price_' + id + '[' + count + ']" style="width:50px;" value="0.00" />';
-                    html += '&nbsp;&nbsp;<label><?php echo $lang_shipping_add; ?></label><input type="text" name="priceadditional_' + id + '[' + count + ']" style="width:50px;" value="0.00" />&nbsp;&nbsp;<a onclick="removeShipping(\'' + id + '\',\'' + count + '\');" class="button"><span><?php echo $lang_btn_remove; ?></span></a></p>';
+                    html += '<p class="shipping_' + id + '_' + count + '"><label><?php echo $text_shipping_first; ?></label><input type="text" name="price_' + id + '[' + count + ']" style="width:50px;" value="0.00" />';
+                    html += '&nbsp;&nbsp;<label><?php echo $text_shipping_add; ?></label><input type="text" name="priceadditional_' + id + '[' + count + ']" style="width:50px;" value="0.00" />&nbsp;&nbsp;<a onclick="removeShipping(\'' + id + '\',\'' + count + '\');" class="button"><span><?php echo $text_btn_remove; ?></span></a></p>';
                     html += '<div style="clear:both;" class="shipping_' + id + '_' + count + '"></div>';
                     $('#'+id+'Btn').append(html);
                 },
@@ -1222,12 +1222,12 @@
             if ($('#imgChk'+main_image).attr('checked')) {
 
             }else{
-                alert('<?php echo $lang_ajax_mainimage; ?>');
+                alert('<?php echo $text_ajax_mainimage; ?>');
                 err = 1;
                 return;
             }
         }else{
-            if (!confirm('<?php echo $lang_ajax_noimages; ?>')){
+            if (!confirm('<?php echo $text_ajax_noimages; ?>')){
                 err = 1;
                 return;
             }
@@ -1235,61 +1235,61 @@
 
         if($('#finalCat').val() == ''){
             err = 1;
-            alert('<?php echo $lang_ajax_error_cat; ?>');
+            alert('<?php echo $text_ajax_error_cat; ?>');
             return;
         }
 
         if($('#auction_duration').val() == ''){
             err = 1;
-            alert('<?php echo $lang_ajax_duration; ?>');
+            alert('<?php echo $text_ajax_duration; ?>');
             return;
         }
 
         if($('#gallery_height').val() == '' || $('#gallery_width').val() == '' || $('#thumb_height').val() == '' || $('#thumb_width').val() == ''){
             err = 1;
-            alert('<?php echo $lang_ajax_image_size; ?>');
+            alert('<?php echo $text_ajax_image_size; ?>');
             return;
         }
 
         if($('#sku').val() == ''){
             err = 1;
-            alert('<?php echo $lang_ajax_error_sku; ?>');
+            alert('<?php echo $text_ajax_error_sku; ?>');
             return;
         }
 
         if($('#name').val() == ''){
             err = 1;
-            alert('<?php echo $lang_ajax_error_name; ?>');
+            alert('<?php echo $text_ajax_error_name; ?>');
             return;
         }
 
         if($('#name').val() == ''){
             err = 1;
-            alert('<?php echo $lang_ajax_error_name_len; ?>');
+            alert('<?php echo $text_ajax_error_name_len; ?>');
             return;
         }
 
         if($('#location').val() == '' && $('#postcode').val() == ''){
             err = 1;
-            alert('<?php echo $lang_ajax_error_loc; ?>');
+            alert('<?php echo $text_ajax_error_loc; ?>');
             return;
         }
 
         if($('#dispatch_time').val() == ''){
             err = 1;
-            alert('<?php echo $lang_ajax_error_time; ?>');
+            alert('<?php echo $text_ajax_error_time; ?>');
             return;
         }
 
         if($('#count_national').val() == 0){
             err = 1;
-            alert('<?php echo $lang_ajax_error_nat_svc; ?>');
+            alert('<?php echo $text_ajax_error_nat_svc; ?>');
             return;
         }
 
         if($('#durationRow').val() == ''){
             err = 1;
-            alert('<?php echo $lang_ajax_error_duration; ?>');
+            alert('<?php echo $text_ajax_error_duration; ?>');
             return;
         }
 
@@ -1301,7 +1301,7 @@
 ?>
             if($('#qty').val() < 1){
                 err = 1;
-                alert('<?php echo $lang_ajax_error_stock; ?>');
+                alert('<?php echo $text_ajax_error_stock; ?>');
                 return;
             }
 <?php
@@ -1742,7 +1742,7 @@
         html += '<div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_'+grp_id+'_'+id+'_'+count+'">';
             html += '<img src="<?php echo $no_image; ?>" id="option_image_img_'+grp_id+'_'+id+'_'+count+'" />';
             html += '<input type="hidden" name="option_image['+grp_id+']['+id+'][images][]" id="option_image_input_'+grp_id+'_'+id+'_'+count+'" value="" />';
-            html += '<p class="textCenter"><a class="cursor" onclick="removeVariationImage('+grp_id+','+id+','+count+');"><?php echo $lang_remove; ?></a></p>';
+            html += '<p class="textCenter"><a class="cursor" onclick="removeVariationImage('+grp_id+','+id+','+count+');"><?php echo $text_remove; ?></a></p>';
         html += '</div>';
 
         $('#option_images_'+id).append(html);
@@ -1751,7 +1751,7 @@
     }
 
     function confirmAction(url){
-	if (confirm("<?php echo $lang_confirm_action; ?>")){
+	if (confirm("<?php echo $text_confirm_action; ?>")){
             window.location = url;
 	}
     }

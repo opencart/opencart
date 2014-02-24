@@ -9,11 +9,11 @@
 
     <div class="box">
         <div class="heading">
-            <h1><?php echo $lang_page_title; ?></h1>
+            <h1><?php echo $text_page_title; ?></h1>
             <div class="buttons">
-                <a class="button" onclick="previewAll()" id="previewBtn"><span><?php echo $lang_preview_all; ?></span></a>
-                <a class="button" style="display:none" onclick="editAll();" id="previewEditBtn"><span><?php echo $lang_edit; ?></span></a>
-                <a class="button" style="display:none" onclick="submitAll();" id="submitBtn"><span><?php echo $lang_submit; ?></span></a>
+                <a class="button" onclick="previewAll()" id="previewBtn"><span><?php echo $text_preview_all; ?></span></a>
+                <a class="button" style="display:none" onclick="editAll();" id="previewEditBtn"><span><?php echo $text_edit; ?></span></a>
+                <a class="button" style="display:none" onclick="submitAll();" id="submitBtn"><span><?php echo $text_submit; ?></span></a>
             </div>
         </div>
         <form id="form">
@@ -31,7 +31,7 @@
                                 <div class="heading">
                                     <div id="p_row_title_<?php echo $i; ?>" style="float:left;" class="displayNone bold m0 p10"></div>
                                     <div id="p_row_buttons_<?php echo $i; ?>" class="buttons right">
-                                        <a class="button" onclick="removeBox('<?php echo $i; ?>')"><span><?php echo $lang_remove; ?></span></a>
+                                        <a class="button" onclick="removeBox('<?php echo $i; ?>')"><span><?php echo $text_remove; ?></span></a>
                                     </div>
                                 </div>
                                 <table class="m0 border borderNoBottom" style="width:100%;" cellpadding="0" cellspacing="0">
@@ -44,15 +44,15 @@
                                     <tr class="p_row_content_<?php echo $i; ?>">
                                         <td class="center width100"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></td>
                                         <td class="left width390" valign="top">
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_title; ?>:</label><input type="text" name="title" class="openbayData_<?php echo $i; ?> width250" value="<?php echo $product['name']; ?>" id="title_<?php echo $i; ?>" /></p>
+                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $text_title; ?>:</label><input type="text" name="title" class="openbayData_<?php echo $i; ?> width250" value="<?php echo $product['name']; ?>" id="title_<?php echo $i; ?>" /></p>
                                             <input type="hidden" name="price_original" id="price_original_<?php echo $i; ?>" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_price; ?>:</label><input id="price_<?php echo $i; ?>" type="text" name="price" class="openbayData_<?php echo $i; ?> width50" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" /></p>
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $lang_stock; ?>:</label><?php echo $product['quantity']; ?></p>
+                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $text_price; ?>:</label><input id="price_<?php echo $i; ?>" type="text" name="price" class="openbayData_<?php echo $i; ?> width50" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" /></p>
+                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $text_stock; ?>:</label><?php echo $product['quantity']; ?></p>
                                             <input type="hidden" name="qty" value="<?php echo $product['quantity']; ?>" class="openbayData_<?php echo $i; ?>" />
 
                                             <div class="buttons right">
-                                                <a class="button" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>" style="display:none;"><span><?php echo $lang_features; ?></span></a>
-                                                <a class="button" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" style="display:none;"><span><?php echo $lang_catalog; ?></span></a>
+                                                <a class="button" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>" style="display:none;"><span><?php echo $text_features; ?></span></a>
+                                                <a class="button" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" style="display:none;"><span><?php echo $text_catalog; ?></span></a>
                                             </div>
 
                                             <div id="featurePage_<?php echo $i; ?>" class="greyScreenBox featurePage">
@@ -70,11 +70,11 @@
                                                     <!-- catalog search area -->
                                                     <table class="form">
                                                         <tr>
-                                                            <td><?php echo $lang_catalog_search; ?>:</td>
+                                                            <td><?php echo $text_catalog_search; ?>:</td>
                                                             <td>
                                                                 <div class="buttons">
                                                                     <input type="text" name="catalog_search" id="catalog_search_<?php echo $i; ?>" value="" />
-                                                                    <a onclick="searchEbayCatalog('<?php echo $i; ?>');" class="button" id="catalog_search_btn_<?php echo $i; ?>"><span><?php echo $lang_search; ?></span></a>
+                                                                    <a onclick="searchEbayCatalog('<?php echo $i; ?>');" class="button" id="catalog_search_btn_<?php echo $i; ?>"><span><?php echo $text_search; ?></span></a>
                                                                     <img src="view/image/loading.gif" id="catalog_search_img_<?php echo $i; ?>" class="displayNone" alt="Loading" />
                                                                 </div>
                                                             </td>
@@ -91,36 +91,36 @@
                                         </td>
                                         <td class="p10">
                                             <p>
-                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $lang_profile_theme; ?></label>
+                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_theme; ?></label>
                                                 <select name="theme_profile" class="width250 openbayData_<?php echo $i; ?>">
                                                     <?php foreach($default['profiles_theme'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_theme_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
                                                 </select>
                                             </p>
                                             <p>
-                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $lang_profile_shipping; ?></label>
+                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_shipping; ?></label>
                                                 <select name="shipping_profile" class="width250 openbayData_<?php echo $i; ?>">
                                                     <?php foreach($default['profiles_shipping'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_shipping_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
                                                 </select>
                                             </p>
                                             <p>
-                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $lang_profile_generic; ?></label>
+                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_generic; ?></label>
                                                 <select name="generic_profile" id="generic_profile_<?php echo $i; ?>" class="width250 openbayData_<?php echo $i; ?>" onchange="genericProfileChange(<?php echo $i; ?>);">
                                                     <?php foreach($default['profiles_generic'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_generic_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
                                                 </select>
                                             </p>
                                             <p>
-                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $lang_profile_returns; ?></label>
+                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_returns; ?></label>
                                                 <select name="return_profile" class="width250 openbayData_<?php echo $i; ?>">
                                                     <?php foreach($default['profiles_returns'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_returns_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
                                                 </select>
                                             </p>
                                             <p id="conditionContainer_<?php echo $i; ?>" class="displayNone">
-                                                <label style="display:inline-block; width:100px;" class="mRight10 bold"><?php echo $lang_condition; ?> </label>
+                                                <label style="display:inline-block; width:100px;" class="mRight10 bold"><?php echo $text_condition; ?> </label>
                                                 <select name="condition" id="conditionRow_<?php echo $i; ?>" class="displayNone width250 openbayData_<?php echo $i; ?>"></select>
                                                 <img id="conditionLoading_<?php echo $i; ?>" src="view/image/loading.gif" alt="Loading" />
                                             </p>
                                             <p id="durationContainer_<?php echo $i; ?>" class="displayNone">
-                                                <label style="display:inline-block; width:100px;" class="mRight10 bold"><?php echo $lang_duration; ?> </label>
+                                                <label style="display:inline-block; width:100px;" class="mRight10 bold"><?php echo $text_duration; ?> </label>
                                                 <select name="duration" id="durationRow_<?php echo $i; ?>" class="displayNone width250 openbayData_<?php echo $i; ?>"></select>
                                                 <img id="durationLoading_<?php echo $i; ?>" src="view/image/loading.gif" alt="Loading" />
                                             </p>
@@ -128,7 +128,7 @@
                                     </tr>
                                     <tr class="p_row_content_<?php echo $i; ?>">
                                         <td colspan="3" style="padding:5px;">
-                                            <p class="bold m0"><?php echo $lang_category; ?> <img src="view/image/loading.gif" id="loadingSuggestedCat_<?php echo $i; ?>" alt="Loading" /></p>
+                                            <p class="bold m0"><?php echo $text_category; ?> <img src="view/image/loading.gif" id="loadingSuggestedCat_<?php echo $i; ?>" alt="Loading" /></p>
 
                                             <div class="left pLeft10" id="suggestedCat_<?php echo $i; ?>"></div>
 
@@ -163,15 +163,15 @@
     </div>
     <div id="greyScreen"></div>
     <div id="loadingPage" class="greyScreenBox">
-        <p class="bold"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_loading; ?></p>
-        <p><?php echo $lang_preparing0; ?> <span id="ajaxCountDoneDisplay">0</span> <?php echo $lang_preparing1; ?> <span id="ajaxCountTotalDisplay">0</span> <?php echo $lang_preparing2; ?> </p>
+        <p class="bold"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $text_loading; ?></p>
+        <p><?php echo $text_preparing0; ?> <span id="ajaxCountDoneDisplay">0</span> <?php echo $text_preparing1; ?> <span id="ajaxCountTotalDisplay">0</span> <?php echo $text_preparing2; ?> </p>
         <div class="buttons">
-            <a class="button" href="index.php?route=extension/openbay/itemList&token=<?php echo $this->request->get['token']; ?>"><span><?php echo $lang_cancel; ?></span></a>
+            <a class="button" href="index.php?route=extension/openbay/itemList&token=<?php echo $this->request->get['token']; ?>"><span><?php echo $text_cancel; ?></span></a>
         </div>
     </div>
     <div id="loadingVerify" class="greyScreenBox">
-        <p class="bold"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_verifying; ?></p>
-        <p><?php echo $lang_processing; ?></p>
+        <p class="bold"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $text_verifying; ?></p>
+        <p><?php echo $text_processing; ?></p>
     </div>
     <div id="previewPage" class="greyScreenBox">
         <div class="bold border p5 previewClose">X</div>
@@ -205,7 +205,7 @@
 
     $(document).keyup(function(e) {
         if (e.keyCode == 27) {
-            alert('<?php echo $lang_esc_key; ?>');
+            alert('<?php echo $text_esc_key; ?>');
             hideGreyScreen();
         }
     });
@@ -474,7 +474,7 @@
                             htmlInj2 = '';
 
                             if(("ValueRecommendation" in val) && (val.ValidationRules.MaxValues == 1)){
-                                htmlInj2 += '<option value="">-- <?php echo $lang_select; ?> --</option>';
+                                htmlInj2 += '<option value="">-- <?php echo $text_select; ?> --</option>';
 
                                 //force an array in case of single element
                                 val.ValueRecommendation = $.makeArray(val.ValueRecommendation);
@@ -484,9 +484,9 @@
                                 });
 
                                 if(val.ValidationRules.SelectionMode == 'FreeText'){
-                                    htmlInj2 += '<option value="Other"><?php echo $lang_other; ?></option>';
+                                    htmlInj2 += '<option value="Other"><?php echo $text_other; ?></option>';
                                 }
-                                htmlInj += '<tr><td class="ebaySpecificTitle left">'+val.Name+'</td><td><select name="feat['+val.Name+']" class="ebaySpecificSelect openbayData_'+id+' left" id="spec_sel_'+specificCount+'" onchange="toggleSpecOther('+specificCount+');">'+htmlInj2+'</select><br /><span id="spec_'+specificCount+'_other" class="ebaySpecificSpan"><p><?php echo $lang_other; ?>:&nbsp;<input type="text" name="featother['+val.Name+']" class="ebaySpecificOther openbayData_'+id+'" /></p></span></td></tr>';
+                                htmlInj += '<tr><td class="ebaySpecificTitle left">'+val.Name+'</td><td><select name="feat['+val.Name+']" class="ebaySpecificSelect openbayData_'+id+' left" id="spec_sel_'+specificCount+'" onchange="toggleSpecOther('+specificCount+');">'+htmlInj2+'</select><br /><span id="spec_'+specificCount+'_other" class="ebaySpecificSpan"><p><?php echo $text_other; ?>:&nbsp;<input type="text" name="featother['+val.Name+']" class="ebaySpecificOther openbayData_'+id+'" /></p></span></td></tr>';
 
                             }else if(("ValueRecommendation" in val) && (val.ValidationRules.MaxValues > 1)){
                                 htmlInj += '<tr><td class="ebaySpecificTitle left">'+val.Name+'</td><td class="left">';
@@ -545,7 +545,7 @@
         var html = '';
 
         if(qry == ''){
-            alert('<?php echo $lang_search_text; ?>');
+            alert('<?php echo $text_search_text; ?>');
         }
 
         $.ajax({
@@ -567,7 +567,7 @@
                 $('#catalog_search_img_'+id).hide();
                 if(data.error == false){
                     if(data.data.productSearchResult.paginationOutput.totalEntries == 0 || data.data.ack == 'Failure'){
-                        $('#catalogDiv_'+id).append('<?php echo $lang_catalog_no_products; ?>');
+                        $('#catalogDiv_'+id).append('<?php echo $text_catalog_no_products; ?>');
                     }else{
                         data.data.productSearchResult.products = $.makeArray(data.data.productSearchResult.products);
 
@@ -580,12 +580,12 @@
             failure: function(){
                 $('#catalog_search_btn_'+id).show();
                 $('#catalog_search_img_'+id).hide();
-                $('#catalogDiv_'+id).append('<?php echo $lang_search_failed; ?>');
+                $('#catalogDiv_'+id).append('<?php echo $text_search_failed; ?>');
             },
             error: function(){
                 $('#catalog_search_btn_'+id).show();
                 $('#catalog_search_img_'+id).hide();
-                $('#catalogDiv_'+id).append('<?php echo $lang_search_failed; ?>');
+                $('#catalogDiv_'+id).append('<?php echo $text_search_failed; ?>');
             }
         });
     }
@@ -697,10 +697,10 @@
                         var currencyCode = '';
 
                         if(document.location.protocol == 'https:') {
-                            $('#p_row_buttons_'+data.i).prepend('<a class="button p_row_buttons_prev" target="_BLANK" href="'+data.preview+'"><?php echo $lang_preview; ?></a>');
+                            $('#p_row_buttons_'+data.i).prepend('<a class="button p_row_buttons_prev" target="_BLANK" href="'+data.preview+'"><?php echo $text_preview; ?></a>');
                         } else {
                             var prevHtml = "previewListing('"+data.preview+"')";
-                            $('#p_row_buttons_'+data.i).prepend('<a class="button p_row_buttons_prev" onclick="'+prevHtml+'"><?php echo $lang_preview; ?></a>');
+                            $('#p_row_buttons_'+data.i).prepend('<a class="button p_row_buttons_prev" onclick="'+prevHtml+'"><?php echo $text_preview; ?></a>');
                         }
 
                         if(data.errors){
@@ -732,18 +732,18 @@
                 },
                 failure: function(){
                     removeCount();
-                    alert('<?php echo $lang_error_reverify; ?>');
+                    alert('<?php echo $text_error_reverify; ?>');
                 },
                 error: function(){
                     removeCount();
-                    alert('<?php echo $lang_error_reverify; ?>');
+                    alert('<?php echo $text_error_reverify; ?>');
                 }
             });
         });
     }
 
     function submitAll(){
-        var confirm_box = confirm('<?php echo $lang_ajax_confirm_listing; ?>');
+        var confirm_box = confirm('<?php echo $text_ajax_confirm_listing; ?>');
         if (confirm_box) {
             var id = '';
             var name = '';
@@ -792,9 +792,9 @@
                                 currencyCode = val.Cur;
                             });
 
-                            $('#p_row_buttons_'+data.i).prepend('<a class="button p_row_buttons_view" href="<?php echo $listing_link; ?>'+data.itemid+'" target="_BLANK"><?php echo $lang_view; ?></a>');
+                            $('#p_row_buttons_'+data.i).prepend('<a class="button p_row_buttons_view" href="<?php echo $listing_link; ?>'+data.itemid+'" target="_BLANK"><?php echo $text_view; ?></a>');
 
-                            msgHtml += '<div class="success" style="margin:5px;"><?php echo $lang_listed; ?>'+data.itemid+'</div>';
+                            msgHtml += '<div class="success" style="margin:5px;"><?php echo $text_listed; ?>'+data.itemid+'</div>';
 
                             $('#p_msg_'+data.i).html(msgHtml);
                         }else{

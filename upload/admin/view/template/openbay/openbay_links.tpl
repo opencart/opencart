@@ -2,9 +2,9 @@
   <table class="list">
     <thead>
     <tr>
-      <td class="left"><?php echo $lang_marketplace; ?></td>
-      <td class="center"><?php echo $lang_status; ?></td>
-      <td class="right"><?php echo $lang_option; ?></td>
+      <td class="left"><?php echo $text_marketplace; ?></td>
+      <td class="center"><?php echo $text_status; ?></td>
+      <td class="right"><?php echo $text_option; ?></td>
     </tr>
     </thead>
     <tfoot>

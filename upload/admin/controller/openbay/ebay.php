@@ -36,7 +36,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -82,11 +82,11 @@ class ControllerOpenbayEbay extends Controller {
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('openbay', $this->request->post);
-			$this->session->data['success'] = $this->language->get('lang_text_success');
+			$this->session->data['success'] = $this->language->get('text_success_settings');
 			$this->response->redirect($this->url->link('openbay/ebay&token=' . $this->session->data['token']));
 		}
 
-		$this->document->setTitle($this->language->get('lang_heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 		$data['breadcrumbs'] = array();
@@ -98,17 +98,17 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay/settings', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_settings'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['action'] = $this->url->link('openbay/ebay/settings', 'token=' . $this->session->data['token'], 'SSL');
@@ -443,12 +443,12 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -633,12 +633,12 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -676,12 +676,12 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -718,12 +718,12 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -758,12 +758,12 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -806,12 +806,12 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -967,7 +967,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['breadcrumbs'][] = array(
 					'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
-					'text' => $this->language->get('lang_ebay'),
+					'text' => $this->language->get('text_ebay'),
 				);
 
 				$data['breadcrumbs'][] = array(
@@ -1404,7 +1404,7 @@ class ControllerOpenbayEbay extends Controller {
 
 							$data['default'] = $product_info;
 						}else{
-							$data['error_fail']['plan'] = sprintf($this->language->get('lang_item_limit'), $this->url->link('openbay/ebay/viewSubscription', 'token=' . $this->session->data['token'], 'SSL'));
+							$data['error_fail']['plan'] = sprintf($this->language->get('text_item_limit'), $this->url->link('openbay/ebay/viewSubscription', 'token=' . $this->session->data['token'], 'SSL'));
 						}
 					}
 				}else{

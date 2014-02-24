@@ -1,8 +1,8 @@
 <?php
 //Headings
-$_['lang_title'] = 'New Amazon US listing';
-$_['lang_openbay'] = 'OpenBay Pro';
-$_['lang_amazonus'] = 'Amazon US';
+$_['text_title'] = 'New Amazon US listing';
+$_['text_openbay'] = 'OpenBay Pro';
+$_['text_amazonus'] = 'Amazon US';
 
 //Buttons
 $_['button_search'] = 'Search';
@@ -26,8 +26,8 @@ $_['text_collectible_acceptable'] = 'Collectible - Acceptable';
 $_['text_refurbished'] = 'Refurbished';
 $_['text_product_sent'] = 'Product was successfully sent to Amazon US.';
 $_['text_product_not_sent'] = 'Product was not sent to Amazon US. Reason: %s';
-$_['lang_no_results'] = 'No results found';
-$_['lang_not_in_catalog'] = 'Or, if its not in the catalog&nbsp;&nbsp;&nbsp;';
+$_['text_no_results'] = 'No results found';
+$_['text_not_in_catalog'] = 'Or, if its not in the catalog&nbsp;&nbsp;&nbsp;';
 
 //Table columns
 $_['column_image'] = 'Image';
@@ -51,8 +51,8 @@ $_['entry_from'] = 'Date from';
 $_['entry_to'] = 'Date to';
 
 //Form placeholders
-$_['lang_placeholder_search'] = 'Enter product name, UPC, EAN, ISBN or ASIN';
-$_['lang_placeholder_condition'] = 'Use this box to describe the condition of your products.';
+$_['text_placeholder_search'] = 'Enter product name, UPC, EAN, ISBN or ASIN';
+$_['text_placeholder_condition'] = 'Use this box to describe the condition of your products.';
 
 //Help
 $_['help_sku'] = "Unique product's ID assigned by the merchant";
@@ -80,7 +80,7 @@ $_['item_links_header_text'] = 'Item links';
 $_['quick_listing_header_text'] = 'Quick listing';
 $_['advanced_listing_header_text'] = 'Advanced listing';
 $_['saved_header_text'] = 'Saved listings';
-$_['lang_tab_main'] = 'Main';
+$_['text_tab_main'] = 'Main';
 
 //Tabs
 $_['item_links_tab_text'] = 'Item links';
@@ -166,7 +166,7 @@ $_['links_sku_empty_warning'] = 'Amazon SKU can not be empty!';
 $_['links_name_empty_warning'] = 'Product name can not be empty!';
 $_['links_product_warning'] = 'Product does not exist. Please use autocomplete values.';
 $_['option_default'] = '-- Select option --';
-$_['lang_error_load_nodes'] = 'Unable to load browse nodes';
+$_['text_error_load_nodes'] = 'Unable to load browse nodes';
 
 //Listing edit page
 $_['text_edit_heading'] = 'Listing overview';

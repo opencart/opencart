@@ -21,7 +21,7 @@
               <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
             <?php } ?>
           </select>
-          <a onclick="$('#form').submit();" class="button"><span><?php echo $lang_btn_status; ?></span></a>
+          <a onclick="$('#form').submit();" class="button"><span><?php echo $text_btn_status; ?></span></a>
         </div>
       </div>
       <div class="content">
@@ -44,7 +44,7 @@
                   <?php } else { ?>
                   <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                   <?php } ?></td>
-                <td class="right"><?php echo $lang_order_channel; ?></td>
+                <td class="right"><?php echo $text_order_channel; ?></td>
                 <td class="left"><?php if ($sort == 'o.date_added') { ?>
                   <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
                   <?php } else { ?>

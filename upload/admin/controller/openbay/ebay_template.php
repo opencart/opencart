@@ -34,12 +34,12 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -66,7 +66,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		$data['cancel']       = $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL');
 
 		if ($this->request->post && $this->templateValidate()) {
-			$this->session->data['success'] = $data['lang_added'];
+			$this->session->data['success'] = $data['text_added'];
 
 			$this->model_openbay_ebay_template->add($this->request->post);
 
@@ -100,7 +100,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 
 		if ($this->request->post && $this->templateValidate()) {
 
-			$this->session->data['success'] = $data['lang_updated'];
+			$this->session->data['success'] = $data['text_updated'];
 
 			$this->model_openbay_ebay_template->edit($this->request->post['template_id'], $this->request->post);
 

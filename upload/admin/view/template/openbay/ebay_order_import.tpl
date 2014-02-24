@@ -8,22 +8,22 @@
 
     <div class="box mBottom130">
         <div class="heading">
-            <h1><?php echo $lang_heading; ?></h1>
+            <h1><?php echo $text_heading; ?></h1>
             <div class="buttons">
-                <a onclick="location = '<?php echo $return; ?>';" class="button"><span><?php echo $lang_btn_return; ?></span></a>
+                <a onclick="location = '<?php echo $return; ?>';" class="button"><span><?php echo $text_btn_return; ?></span></a>
             </div>
         </div>
         <div class="content">
             <?php if($validation === true) { ?>
                 <table  width="100%" cellspacing="0" cellpadding="2" border="0" class="adminlist">
                     <tr class="row0">
-                        <td width="230" height="50" valign="middle"><label><?php echo $lang_sync_pull_orders; ?></label></td>
-                        <td><a onclick="importOrders();" class="button" id="importOrders"><span><?php echo $lang_sync_pull_orders_text; ?></span></a><img src="view/image/loading.gif" id="imageLoadingImportOrders" class="displayNone" alt="Loading" /></td>
+                        <td width="230" height="50" valign="middle"><label><?php echo $text_sync_pull_orders; ?></label></td>
+                        <td><a onclick="importOrders();" class="button" id="importOrders"><span><?php echo $text_sync_pull_orders_text; ?></span></a><img src="view/image/loading.gif" id="imageLoadingImportOrders" class="displayNone" alt="Loading" /></td>
                     </tr>
                 </table>
-                <p><?php echo $lang_sync_pull_notice; ?></p>
+                <p><?php echo $text_sync_pull_notice; ?></p>
             <?php }else{ ?>
-                <div class="warning"><?php echo $lang_error_validation; ?></div>
+                <div class="warning"><?php echo $text_error_validation; ?></div>
             <?php } ?>
         </div>
     </div>
@@ -41,19 +41,19 @@
                 dataType: 'json',
                 success: function(json) {
                     $('#importOrders').show(); $('#imageLoadingImportOrders').hide();
-                    alert('<?php echo $lang_ajax_orders_import; ?>');
+                    alert('<?php echo $text_ajax_orders_import; ?>');
                 },
                 failure: function(){
                     $('#imageLoadingImportOrders').hide();
                     $('#importOrders').show();
 
-                    alert('<?php echo $lang_ajax_load_error; ?>');
+                    alert('<?php echo $text_ajax_load_error; ?>');
                 },
                 error: function(){
                     $('#imageLoadingImportOrders').hide();
                     $('#importOrders').show();
 
-                    alert('<?php echo $lang_ajax_load_error; ?>');
+                    alert('<?php echo $text_ajax_load_error; ?>');
                 }
         });
     }

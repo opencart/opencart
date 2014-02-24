@@ -7,22 +7,22 @@
 
   <div class="box">
     <div class="heading">
-      <h1><?php echo $lang_title;?></h1>
+      <h1><?php echo $text_title;?></h1>
 
       <div class="buttons">
-        <a class="button" onclick="location = '<?php echo $link_overview; ?>';"><span><?php echo $lang_btn_return; ?></span></a>
+        <a class="button" onclick="location = '<?php echo $link_overview; ?>';"><span><?php echo $text_btn_return; ?></span></a>
       </div>
     </div>
 
     <div class="content">
       <table class="form" align="left">
         <tr>
-          <td colspan="2"><h2><?php echo $lang_saved_listings; ?></h2>
+          <td colspan="2"><h2><?php echo $text_saved_listings; ?></h2>
 
-            <p><?php echo $lang_description; ?></p>
+            <p><?php echo $text_description; ?></p>
 
             <div class="buttons">
-              <a id="upload_button" onclick="upload()" class="button"><span><?php echo $lang_btn_upload; ?></span></a>
+              <a id="upload_button" onclick="upload()" class="button"><span><?php echo $text_btn_upload; ?></span></a>
             </div>
           </td>
         </tr>
@@ -30,11 +30,11 @@
       <table class="list" align="left">
         <thead>
         <tr>
-          <td width="22.5%"><?php echo $lang_name_column ;?></td>
-          <td width="22.5%"><?php echo $lang_model_column ;?></td>
-          <td width="22.5%"><?php echo $lang_sku_column ;?></td>
-          <td width="22.5%"><?php echo $lang_amazon_sku_column ;?></td>
-          <td class="center" width="10%"><?php echo $lang_actions_column ;?></td>
+          <td width="22.5%"><?php echo $text_name_column ;?></td>
+          <td width="22.5%"><?php echo $text_model_column ;?></td>
+          <td width="22.5%"><?php echo $text_sku_column ;?></td>
+          <td width="22.5%"><?php echo $text_amazon_sku_column ;?></td>
+          <td class="center" width="10%"><?php echo $text_actions_column ;?></td>
         </tr>
         </thead>
         <tbody>
@@ -45,8 +45,8 @@
           <td class="left"><?php echo $saved_product['product_sku']; ?></td>
           <td class="left"><?php echo $saved_product['amazon_sku']; ?></td>
           <td class="center">
-            <a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $lang_actions_edit; ?>]</a>
-            <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $lang_actions_remove; ?>]</a>
+            <a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $text_actions_edit; ?>]</a>
+            <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $text_actions_remove; ?>]</a>
           </td>
         </tr>
 
@@ -59,7 +59,7 @@
 </div>
 <script type="text/javascript">
   function removeSaved(id, optionVar) {
-    if (!confirm("<?php echo $lang_delete_confirm; ?>")) {
+    if (!confirm("<?php echo $text_delete_confirm; ?>")) {
       return;
     }
     $.ajax({
@@ -95,7 +95,7 @@
           alert('Error. No response from openbay/amazon_product/uploadSaved.');
           return;
         } else if (data['status'] == 'ok') {
-          alert('<?php echo $lang_uploaded_alert; ?>');
+          alert('<?php echo $text_uploaded_alert; ?>');
         } else if (data['error_message'] !== undefined) {
           alert(data['error_message']);
           return;

@@ -7,13 +7,13 @@
   </div>
   <div class="box">
     <div class="heading">
-      <h1><img src="view/image/order.png" alt="" /> <?php echo $lang_confirm_title; ?></h1>
+      <h1><img src="view/image/order.png" alt="" /> <?php echo $text_confirm_title; ?></h1>
       <div class="buttons">
-          <a href="<?php echo $link_cancel; ?>" class="button"><?php echo $lang_cancel; ?></a>
+          <a href="<?php echo $link_cancel; ?>" class="button"><?php echo $text_cancel; ?></a>
       </div>
     </div>
     <div class="content">
-        <div class="attention"><?php echo $lang_confirm_change_text; ?>: <strong><?php echo $status_mapped[$this->request->post['change_order_status_id']]; ?></strong></div>
+        <div class="attention"><?php echo $text_confirm_change_text; ?>: <strong><?php echo $status_mapped[$this->request->post['change_order_status_id']]; ?></strong></div>
       <form action="<?php echo $link_complete; ?>" method="post" enctype="multipart/form-data" id="form">
         <table class="list">
           <thead>
@@ -21,12 +21,12 @@
               <td class="center" width="60"><?php echo $column_order_id; ?></td>
               <td class="left" width="150"><?php echo $column_customer; ?></td>
               <td class="left" width="125"><?php echo $column_status; ?></td>
-              <td class="left" width="60"><?php echo $lang_order_channel; ?></td>
+              <td class="left" width="60"><?php echo $text_order_channel; ?></td>
                 <td class="left"><?php echo $column_date_added; ?></td>
-                <td class="left"><?php echo $lang_column_addtional; ?></td>
-                <td class="left"><?php echo $lang_column_comments; ?></td>
+                <td class="left"><?php echo $text_column_addtional; ?></td>
+                <td class="left"><?php echo $text_column_comments; ?></td>
                 <td class="center">
-                    <?php echo $lang_column_notify; ?>&nbsp;
+                    <?php echo $text_column_notify; ?>&nbsp;
                     <input type="checkbox" name="notify_all" id="notify_all" value="1" onchange="notifyAll();" />
                 </td>
             </tr>
@@ -51,14 +51,14 @@
                         if($this->request->post['change_order_status_id'] == $this->config->get('ebay_status_shipped_id')) {
 ?>
                             <p>
-                                <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>
+                                <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_carrier; ?>:</span>
                                 <select name="carrier[<?php echo $order['order_id']; ?>]">
                                     <?php foreach($market_options['ebay']['carriers'] as $carrier){ ?>
                                         <option <?php echo ($carrier['description'] == $order['shipping_method'] ? ' selected' : ''); ?>><?php echo $carrier['description']; ?></option>
                                     <?php } ?>
                                 </select>
                             </p>
-                            <p><span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_tracking; ?>:</span><input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" class="ebay_tracking_no"></p>
+                            <p><span style="display:block; width:80px; font-weight:bold;"><?php echo $text_tracking; ?>:</span><input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" class="ebay_tracking_no"></p>
 <?php
                         }
                       }
@@ -68,20 +68,20 @@
                         if($this->request->post['change_order_status_id'] == $this->config->get('openbay_amazon_order_status_shipped')) {
 ?>
                         <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>
+                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_carrier; ?>:</span>
                             <select name="carrier[<?php echo $order['order_id']; ?>]" class="amazon_carrier" id="amazon_carrier_<?php echo $order['order_id']; ?>">
                                 <?php foreach($market_options['amazon']['carriers'] as $courier){ ?>
                                     <?php echo '<option'.($courier == $market_options['amazon']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
                                 <?php } ?>
-                                <option value="other"><?php echo $lang_other; ?></option>
+                                <option value="other"><?php echo $text_other; ?></option>
                             </select>
                         </p>
                         <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_other; ?>:</span>
+                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_other; ?>:</span>
                             <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" id="amazon_carrier_<?php echo $order['order_id']; ?>_other">
                         </p>
                         <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_tracking; ?>:</span>
+                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_tracking; ?>:</span>
                             <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="">
                         </p>
 <?php
@@ -92,20 +92,20 @@
                         if($this->request->post['change_order_status_id'] == $this->config->get('openbay_amazonus_order_status_shipped')) {
 ?>
                         <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_carrier; ?>:</span>
+                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_carrier; ?>:</span>
                             <select name="carrier[<?php echo $order['order_id']; ?>]" class="amazonus_carrier" id="amazonus_carrier_<?php echo $order['order_id']; ?>">
                                 <?php foreach($market_options['amazonus']['carriers'] as $courier){ ?>
                                   <?php echo '<option'.($courier == $market_options['amazonus']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
                                 <?php } ?>
-                                <option value="other"><?php echo $lang_other; ?></option>
+                                <option value="other"><?php echo $text_other; ?></option>
                             </select>
                         </p>
                         <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_other; ?>:</span>
+                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_other; ?>:</span>
                             <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" id="amazonus_carrier_<?php echo $order['order_id']; ?>_other">
                         </p>
                         <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $lang_tracking; ?>:</span>
+                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_tracking; ?>:</span>
                             <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="">
                         </p>
 <?php
@@ -125,7 +125,7 @@
 
       </form>
         <div class="buttons right" style="margin-top:20px;">
-            <a onclick="validate();" class="button"><?php echo $lang_update; ?></a>
+            <a onclick="validate();" class="button"><?php echo $text_update; ?></a>
         </div>
     </div>
   </div>
@@ -173,11 +173,11 @@
         });
 
         if(errorAmazonCarrier == true){
-            alert('<?php echo $lang_e_ajax_3; ?>');
+            alert('<?php echo $text_e_ajax_3; ?>');
         }
         
         if(errorAmazonusCarrier == true){
-            alert('<?php echo $lang_e_ajax_3; ?>');
+            alert('<?php echo $text_e_ajax_3; ?>');
         }
 
         if(error == false){

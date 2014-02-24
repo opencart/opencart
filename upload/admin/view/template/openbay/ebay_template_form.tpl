@@ -15,8 +15,8 @@
         <div class="heading">
             <h1><?php echo $page_title; ?></h1>
             <div class="buttons">
-                <a onclick="$('#form').submit();" class="button"><span><?php echo $lang_btn_save; ?></span></a>
-                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_btn_cancel; ?></span></a>
+                <a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a>
+                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a>
             </div>
         </div>
         <div class="content">
@@ -25,11 +25,11 @@
 
                     <table class="form">
                         <tr>
-                            <td><?php echo $lang_template_name; ?></td>
+                            <td><?php echo $text_template_name; ?></td>
                             <td><input type="text" name="name" size="80" value="<?php if(isset($name)){ echo $name; } ?>"></td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_template_html; ?></td>
+                            <td><?php echo $text_template_html; ?></td>
                             <td>
                                 <textarea name="html" cols="100" rows="100" id="code"><?php if(isset($html)){ echo $html; } ?></textarea>
                             </td>

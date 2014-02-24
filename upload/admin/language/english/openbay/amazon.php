@@ -1,15 +1,11 @@
 <?php
 $_['heading_title'] = 'Amazon (EU)';
-$_['lang_heading_title'] = 'OpenBay Pro for Amazon EU';
+$_['text_heading_title'] = 'OpenBay Pro for Amazon EU';
 
 //Settings
 $_['token_text'] = 'Token:';
 $_['enc_string1_text'] = 'Encryption String 1:';
 $_['enc_string2_text'] = 'Encryption String 2:';
-$_['enabled_text'] = 'Enabled:';
-$_['yes_text'] = 'Yes';
-$_['no_text']  = 'No';
-$_['save_text'] = 'Save';
 
 //Orders tab
 $_['order_statuses_text'] = 'Order Statuses';

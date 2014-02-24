@@ -35,12 +35,12 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_openbay'),
+			'text' => $this->language->get('text_openbay'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('lang_ebay'),
+			'text' => $this->language->get('text_ebay'),
 		);
 
 		$data['breadcrumbs'][] = array(
@@ -69,7 +69,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 		if (!isset($this->request->post['step1'])) {
 			if ($this->request->post && $this->profileValidate()) {
-				$this->session->data['success'] = $data['lang_added'];
+				$this->session->data['success'] = $data['text_added'];
 
 				$this->model_openbay_ebay_profile->add($this->request->post);
 
@@ -104,7 +104,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$data['cancel']       = $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL');
 
 		if ($this->request->post && $this->profileValidate()) {
-			$this->session->data['success'] = $data['lang_updated'];
+			$this->session->data['success'] = $data['text_updated'];
 
 			$this->model_openbay_ebay_profile->edit($this->request->post['ebay_profile_id'], $this->request->post);
 
@@ -156,7 +156,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		}
 
 		if (!array_key_exists($type, $data['types'])) {
-			$this->session->data['error'] = $data['lang_no_template'];
+			$this->session->data['error'] = $data['text_no_template'];
 
 			$this->response->redirect($this->url->link('openbay/ebay_profile/profileAll&token=' . $this->session->data['token']));
 		}

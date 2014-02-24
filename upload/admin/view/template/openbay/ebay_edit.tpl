@@ -3,72 +3,72 @@
 <div id="content">
     <div class="box">
         <div class="heading">
-            <h1><?php echo $lang_page_title; ?></h1>
+            <h1><?php echo $text_page_title; ?></h1>
             <div class="buttons">
-                <a href="<?php echo $view_link; ?>" class="button" target="_BLANK"><span><?php echo $lang_view; ?></span></a>
-                <a onclick="endItem();" class="button" id="btn_end_item"><span><?php echo $lang_end; ?></span></a>
-                <a onclick="removeLink();" class="button"><span><?php echo $lang_remove; ?></span></a>
-                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_cancel; ?></span></a>
+                <a href="<?php echo $view_link; ?>" class="button" target="_BLANK"><span><?php echo $text_view; ?></span></a>
+                <a onclick="endItem();" class="button" id="btn_end_item"><span><?php echo $text_end; ?></span></a>
+                <a onclick="removeLink();" class="button"><span><?php echo $text_remove; ?></span></a>
+                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $text_cancel; ?></span></a>
             </div>
         </div>
 
         <div class="content" id="loadingForm">
-            <p class="m3"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $lang_loading; ?></p>
+            <p class="m3"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $text_loading; ?></p>
         </div>
 
         <div class="content displayNone" id="errorForm">
             <div class="warning">
-                <p class="m3"><?php echo $lang_error_loading; ?> <a onclick="load();" class="button"><span><?php echo $lang_retry; ?></span></a></p>
+                <p class="m3"><?php echo $text_error_loading; ?> <a onclick="load();" class="button"><span><?php echo $text_retry; ?></span></a></p>
             </div>
         </div>
 
         <div class="content displayNone" id="mainForm">
-            <div class="success displayNone mBottom5" id="successForm"><?php echo $lang_saved; ?></div>
+            <div class="success displayNone mBottom5" id="successForm"><?php echo $text_saved; ?></div>
             <div class="warning displayNone" id="error_box"></div>
 
             <form method="post" enctype="multipart/form-data" id="form">
                 <table class="form">
                     <input type="hidden" name="itemId" value="" id="itemId" />
                     <tr>
-                        <td><?php echo $lang_tbl_title; ?></td>
+                        <td><?php echo $text_tbl_title; ?></td>
                         <td><input type="text" name="title" value="" id="title" size="85" /></td>
                     </tr>
                     <tr class="stdMatrix">
                         <input type="hidden" name="qty_local" value="0" id="qty_local" />
                         <input type="hidden" name="qty_ebay" value="0" id="qty_ebay" />
                         <input type="hidden" name="variant" value="0" />
-                        <td><?php echo $lang_tbl_price; ?></td>
+                        <td><?php echo $text_tbl_price; ?></td>
                         <td><input type="text" name="price" value="" id="price" size="10" /></td>
                     </tr>
 
                     <tr class="stdMatrix">
-                        <td><?php echo $lang_tbl_qty_instock; ?></td>
+                        <td><?php echo $text_tbl_qty_instock; ?></td>
                         <td id="qty_instock"></td>
                     </tr>
 
                     <tr class="stdMatrix">
-                        <td><?php echo $lang_tbl_qty_listed; ?></td>
+                        <td><?php echo $text_tbl_qty_listed; ?></td>
                         <td id="qty_listed"></td>
                     </tr>
 
                     <tr class="stdMatrix">
-                        <td><?php echo $lang_tbl_qty_reserve; ?></td>
+                        <td><?php echo $text_tbl_qty_reserve; ?></td>
                         <td><input type="text" name="qty_reserve" value="0" id="qty_reserve" class="50" onkeyup="updateReserveMessage();" /></td>
                     </tr>
 
                     <tr id="variantMatrix">
-                        <td><?php echo $lang_stock_matrix_active; ?></td>
+                        <td><?php echo $text_stock_matrix_active; ?></td>
                         <td>
                             <table class="list m0">
                                 <thead>
                                     <tr>
-                                        <td class="center"><?php echo $lang_stock_col_code; ?></td>
-                                        <td class="center"><?php echo $lang_stock_col_qty_total; ?></td>
-                                        <td class="center"><?php echo $lang_stock_col_listed; ?></td>
-                                        <td class="center"><?php echo $lang_stock_col_limit; ?></td>
-                                        <td class="left"><?php echo $lang_stock_col_comb; ?></td>
-                                        <td class="center"><?php echo $lang_stock_col_price; ?></td>
-                                        <td class="center"><?php echo $lang_stock_col_active; ?></td>
+                                        <td class="center"><?php echo $text_stock_col_code; ?></td>
+                                        <td class="center"><?php echo $text_stock_col_qty_total; ?></td>
+                                        <td class="center"><?php echo $text_stock_col_listed; ?></td>
+                                        <td class="center"><?php echo $text_stock_col_limit; ?></td>
+                                        <td class="left"><?php echo $text_stock_col_comb; ?></td>
+                                        <td class="center"><?php echo $text_stock_col_price; ?></td>
+                                        <td class="center"><?php echo $text_stock_col_active; ?></td>
                                     </tr>
                                 </thead>
                                 <tbody id="stdMatrixTbl">
@@ -83,17 +83,17 @@
                     </tr>
 
                     <tr id="variantMatrixInactive" class="displayNone">
-                        <td><?php echo $lang_stock_matrix_inactive; ?></td>
+                        <td><?php echo $text_stock_matrix_inactive; ?></td>
                         <td>
                             <table class="list m0">
                                 <thead>
                                 <tr>
-                                    <td class="center"><?php echo $lang_stock_col_code; ?></td>
-                                    <td class="center"><?php echo $lang_stock_col_qty_total; ?></td>
-                                    <td class="center"><?php echo $lang_stock_col_limit; ?></td>
-                                    <td class="left"><?php echo $lang_stock_col_comb; ?></td>
-                                    <td class="center"><?php echo $lang_stock_col_price; ?></td>
-                                    <td class="center"><?php echo $lang_stock_col_add; ?></td>
+                                    <td class="center"><?php echo $text_stock_col_code; ?></td>
+                                    <td class="center"><?php echo $text_stock_col_qty_total; ?></td>
+                                    <td class="center"><?php echo $text_stock_col_limit; ?></td>
+                                    <td class="left"><?php echo $text_stock_col_comb; ?></td>
+                                    <td class="center"><?php echo $text_stock_col_price; ?></td>
+                                    <td class="center"><?php echo $text_stock_col_add; ?></td>
                                 </tr>
                                 </thead>
                                 <tbody id="stdMatrixInactiveTbl"></tbody>
@@ -102,7 +102,7 @@
                     </tr>
                     <tr>
                         <td align="right" colspan="2">
-                            <a onclick="save();" class="button" id="reviewButton"><span><?php echo $lang_save; ?></span></a>
+                            <a onclick="save();" class="button" id="reviewButton"><span><?php echo $text_save; ?></span></a>
                             <img src="view/image/loading.gif" id="reviewButtonLoading" class="displayNone" alt="Loading" />
                         </td>
                     </tr>
@@ -119,7 +119,7 @@
         var local   = parseInt($('#qty_local').val());
 
         if(reserve > local){
-            alert('<?php echo $lang_error_reserve_size; ?>');
+            alert('<?php echo $text_error_reserve_size; ?>');
             $('#qty_reserve').val(local);
         }
     }
@@ -139,7 +139,7 @@
                     if(data.data.listing.status == 0){
                         $('#form').hide();
                         $('#btn_end_item').hide();
-                        $('#error_box').html('<p><?php echo $lang_error_ended; ?></p>').fadeIn('slow');
+                        $('#error_box').html('<p><?php echo $text_error_ended; ?></p>').fadeIn('slow');
                     }else{
                         $('#title').val(data.data.listing.title);
                         $('#itemId').val(data.data.listing.itemId);
@@ -263,7 +263,7 @@
     }
 
     function removeLink() {
-        var pass = confirm("<?php echo $lang_confirm; ?>");
+        var pass = confirm("<?php echo $text_confirm; ?>");
 
         if (pass == true) {
             var id = $('#itemId').val();
@@ -274,7 +274,7 @@
                     url: 'index.php?route=openbay/ebay/removeItemLink&token=<?php echo $token; ?>&product_id=<?php echo $product_id; ?>',
                     dataType: 'json',
                     success: function() {
-                        alert('<?php echo $lang_alert_removed; ?>');
+                        alert('<?php echo $text_alert_removed; ?>');
                         window.location = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
@@ -286,7 +286,7 @@
     }
 
     function endItem() {
-        var pass = confirm("<?php echo $lang_confirm; ?>");
+        var pass = confirm("<?php echo $text_confirm; ?>");
 
         if (pass == true) {
             var id = $('#itemId').val();
@@ -300,7 +300,7 @@
                         if(data.error == true){
                             alert(data.msg);
                         }else{
-                            alert('<?php echo $lang_alert_ended; ?>');
+                            alert('<?php echo $text_alert_ended; ?>');
                             window.location = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
                         }
                     },

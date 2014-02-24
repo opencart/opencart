@@ -12,14 +12,14 @@
         <div class="heading">
             <h1><?php echo $page_title; ?></h1>
             <div class="buttons">
-                <a onclick="$('#form').submit();" class="button"><span><?php echo $lang_btn_save; ?></span></a>
-                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $lang_btn_cancel; ?></span></a>
+                <a onclick="$('#form').submit();" class="button"><span><?php echo $button_save; ?></span></a>
+                <a onclick="location = '<?php echo $cancel; ?>';" class="button"><span><?php echo $button_cancel; ?></span></a>
             </div>
         </div>
         <div class="content">
             <div id="tabs" class="htabs">
-                <a href="#tab-general"><?php echo $lang_tab_general; ?></a>
-                <a href="#tab-shipping"><?php echo $lang_tab_shipping; ?></a>
+                <a href="#tab-general"><?php echo $tab_general; ?></a>
+                <a href="#tab-shipping"><?php echo $tab_shipping; ?></a>
             </div>
             <form action="<?php echo $btn_save; ?>" method="post" enctype="multipart/form-data" id="form">
                 <input type="hidden" name="type" value="<?php echo $type; ?>" />
@@ -28,18 +28,18 @@
                 <div id="tab-general">
                     <table class="form">
                         <tr>
-                            <td><?php echo $lang_profile_default; ?></td>
+                            <td><?php echo $text_profile_default; ?></td>
                             <td>
                                 <input type="hidden" name="default" value="0" />
                                 <input type="checkbox" name="default" value="1" <?php if($default == 1){ echo 'checked="checked"'; } ?> />
                             </td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_profile_name; ?></td>
+                            <td><?php echo $text_profile_name; ?></td>
                             <td><input type="text" name="name" class="width400" value="<?php if(isset($name)){ echo $name; } ?>"></td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_profile_desc; ?></td>
+                            <td><?php echo $text_profile_desc; ?></td>
                             <td>
                                 <textarea name="description" cols="40" rows="5" class="width400"><?php if(isset($description)){ echo $description; } ?></textarea>
                             </td>
@@ -50,15 +50,15 @@
                 <div id="tab-shipping">
                     <table class="form">
                         <tr>
-                            <td><label><?php echo $lang_shipping_postcode; ?></label></td>
+                            <td><label><?php echo $text_shipping_postcode; ?></label></td>
                             <td><input type="text" name="data[postcode]" id="postcode" class="width100" maxlength="" value="<?php if(isset($data['postcode'])){ echo $data['postcode']; } ?>" /></td>
                         </tr>
                         <tr>
-                            <td><label><?php echo $lang_shipping_location; ?></label></td>
+                            <td><label><?php echo $text_shipping_location; ?></label></td>
                             <td><input type="text" name="data[location]" id="location" class="width100" maxlength="" value="<?php if(isset($data['location'])){ echo $data['location']; } ?>" /></td>
                         </tr>
                         <tr>
-                            <td><label><?php echo $lang_shipping_dispatch_country; ?></label></td>
+                            <td><label><?php echo $text_shipping_dispatch_country; ?></label></td>
                             <td>
                                 <select name="data[country]" id="country" class="width100">
                                     <?php foreach($setting['countries'] as $country){ ?>
@@ -70,7 +70,7 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><label><?php echo $lang_shipping_despatch; ?></label></td>
+                            <td><label><?php echo $text_shipping_despatch; ?></label></td>
                             <td>
                                 <select name="data[dispatch_time]" id="dispatch_time" class="width100">
                                     <?php foreach($setting['dispatch_times'] as $dis){ ?>
@@ -82,14 +82,14 @@
                             </td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_shipping_in_desc; ?></td>
+                            <td><?php echo $text_shipping_in_desc; ?></td>
                             <td>
                                 <input type="hidden" name="data[shipping_in_desc]" value="0" />
                                 <input type="checkbox" name="data[shipping_in_desc]" value="1" id="shipping_in_desc" <?php if(isset($data['shipping_in_desc']) && $data['shipping_in_desc'] == 1){ echo 'checked="checked"'; } ?> />
                             </td>
                         </tr>
                         <tr>
-                            <td><?php echo $lang_shipping_getitfast; ?></td>
+                            <td><?php echo $text_shipping_getitfast; ?></td>
                             <td>
                                 <input type="hidden" name="data[get_it_fast]" value="0" />
                                 <input type="checkbox" name="data[get_it_fast]" value="1" id="get_it_fast" <?php if(isset($data['get_it_fast']) && $data['get_it_fast'] == 1){ echo 'checked="checked"'; } ?> />
@@ -97,22 +97,22 @@
                         </tr>
                         <tr class="shipping_table_rows">
                             <td valign="top">
-                                <label><?php echo $lang_shipping_nat; ?></label>
-                                <p style="text-align:left; margin-right:10px;"><a class="button" onclick="addShipping('national');"><span><?php echo $lang_btn_add; ?></span></a></p>
+                                <label><?php echo $text_shipping_nat; ?></label>
+                                <p style="text-align:left; margin-right:10px;"><a class="button" onclick="addShipping('national');"><span><?php echo $text_btn_add; ?></span></a></p>
                             </td>
                             <td id="nationalBtn">
                                 <input type="hidden" name="data[count_national]" value="<?php echo $data['shipping_national_count']; ?>" id="count_national" />
                                 <?php
                                 if(isset($data['shipping_national']) && is_array($data['shipping_national'])){
                                     foreach($data['shipping_national'] as $key => $service){
-                                        echo'<p class="shipping_national_'.$key.'" style="border-top:1px dotted; margin:0; padding:5px 0;"><label><strong>'.$lang_shipping_service.'</strong><label>';
+                                        echo'<p class="shipping_national_'.$key.'" style="border-top:1px dotted; margin:0; padding:5px 0;"><label><strong>'.$text_shipping_service.'</strong><label>';
 
                                         echo'<input type="hidden" name="data[service_national]['.$key.']" value="'.$service['id'].'" /> '.$service['name'].'</p>';
 
-                                        echo'<p class="shipping_national_'.$key.'"><label>'.$lang_shipping_first.'</label>';
+                                        echo'<p class="shipping_national_'.$key.'"><label>'.$text_shipping_first.'</label>';
                                         echo'<input type="text" name="data[price_national]['.$key.']" style="width:50px;" value="'.$service['price'].'" />';
-                                        echo'&nbsp;&nbsp;<label>'.$lang_shipping_add.'</label>';
-                                        echo'<input type="text" name="data[priceadditional_national]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'national\',\''.$key.'\');" class="button"><span>'.$lang_btn_remove.'</span></a></p>';
+                                        echo'&nbsp;&nbsp;<label>'.$text_shipping_add.'</label>';
+                                        echo'<input type="text" name="data[priceadditional_national]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'national\',\''.$key.'\');" class="button"><span>'.$text_btn_remove.'</span></a></p>';
                                     }
                                 }
                                 ?>
@@ -120,15 +120,15 @@
                         </tr>
                         <tr class="shipping_table_rows">
                             <td valign="top">
-                                <label><?php echo $lang_shipping_intnat; ?></label>
-                                <p style="text-align:left; margin-right:10px;"><a class="button" onclick="addShipping('international');"><span><?php echo $lang_btn_add; ?></span></a></p>
+                                <label><?php echo $text_shipping_intnat; ?></label>
+                                <p style="text-align:left; margin-right:10px;"><a class="button" onclick="addShipping('international');"><span><?php echo $text_btn_add; ?></span></a></p>
                             </td>
                             <td id="internationalBtn">
                                 <input type="hidden" name="data[count_international]" value="<?php echo $data['shipping_international_count']; ?>" id="count_international" />
                                 <?php
                                 if(isset($data['shipping_international']) && is_array($data['shipping_international'])){
                                     foreach($data['shipping_international'] as $key => $service){
-                                        echo'<p class="shipping_international_'.$key.'" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong>'.$lang_shipping_service.'</strong><label>';
+                                        echo'<p class="shipping_international_'.$key.'" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong>'.$text_shipping_service.'</strong><label>';
 
                                         echo'<input type="hidden" name="data[service_international]['.$key.']" value="'.$service['id'].'" /> '.$service['name'].'</p>';
 
@@ -147,10 +147,10 @@
                                         echo'</div>';
 
                                         echo'<div style="clear:both;" class="shipping_international_'.$key.'"></div>';
-                                        echo'<p class="shipping_international_'.$key.'"><label>'.$lang_shipping_first.'</label>';
+                                        echo'<p class="shipping_international_'.$key.'"><label>'.$text_shipping_first.'</label>';
                                         echo'<input type="text" name="data[price_international]['.$key.']" style="width:50px;" value="'.$service['price'].'" />';
-                                        echo'&nbsp;&nbsp;<label>'.$lang_shipping_add.'</label>';
-                                        echo'<input type="text" name="data[priceadditional_international]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'international\',\''.$key.'\');" class="button"><span>'.$lang_btn_remove.'</span></a></p>';
+                                        echo'&nbsp;&nbsp;<label>'.$text_shipping_add.'</label>';
+                                        echo'<input type="text" name="data[priceadditional_international]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'international\',\''.$key.'\');" class="button"><span>'.$text_btn_remove.'</span></a></p>';
                                         echo'<div style="clear:both;"></div>';
                                     }
                                 }
@@ -181,7 +181,7 @@
             dataType: 'json',
             success: function(data) {
                 html = '';
-                html += '<p class="shipping_' + id + '_' + count + '" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong><?php echo $lang_shipping_service; ?></strong> <label><select name="data[service_' + id + '][' + count + ']">';
+                html += '<p class="shipping_' + id + '_' + count + '" style="border-top:1px dotted; margin:0; padding:8px 0;"><label><strong><?php echo $text_shipping_service; ?></strong> <label><select name="data[service_' + id + '][' + count + ']">';
 
                 $.each(data.svc, function(key, val) {
                     html += '<option value="' + val.ShippingService + '">' + val.description + '</option>';
@@ -205,8 +205,8 @@
                 }
 
 
-                html += '<p class="shipping_' + id + '_' + count + '"><label><?php echo $lang_shipping_first; ?></label><input type="text" name="data[price_' + id + '][' + count + ']" style="width:50px;" value="0.00" />';
-                html += '&nbsp;&nbsp;<label><?php echo $lang_shipping_add; ?></label><input type="text" name="data[priceadditional_' + id + '][' + count + ']" style="width:50px;" value="0.00" />&nbsp;&nbsp;<a onclick="removeShipping(\'' + id + '\',\'' + count + '\');" class="button"><span><?php echo $lang_btn_remove; ?></span></a></p>';
+                html += '<p class="shipping_' + id + '_' + count + '"><label><?php echo $text_shipping_first; ?></label><input type="text" name="data[price_' + id + '][' + count + ']" style="width:50px;" value="0.00" />';
+                html += '&nbsp;&nbsp;<label><?php echo $text_shipping_add; ?></label><input type="text" name="data[priceadditional_' + id + '][' + count + ']" style="width:50px;" value="0.00" />&nbsp;&nbsp;<a onclick="removeShipping(\'' + id + '\',\'' + count + '\');" class="button"><span><?php echo $text_btn_remove; ?></span></a></p>';
                 html += '<div style="clear:both;" class="shipping_' + id + '_' + count + '"></div>';
 
                 $('#' + id + 'Btn').append(html);

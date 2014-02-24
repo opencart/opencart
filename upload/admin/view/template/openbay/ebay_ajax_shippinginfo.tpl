@@ -1,9 +1,9 @@
 <div id="openbayInfo">
-  <div class="attention mTop15"><?php echo $lang_ajax_ebay_shipped; ?></div>
+  <div class="attention mTop15"><?php echo $text_ajax_ebay_shipped; ?></div>
   <table class="form">
     <tbody>
     <tr>
-      <td><?php echo $lang_ajax_courier; ?>:</td>
+      <td><?php echo $text_ajax_courier; ?>:</td>
       <td>
         <select name="carrier_id" id="carrier_id" class="openbayData">
           <?php foreach($carriers as $carrier){ ?>
@@ -13,7 +13,7 @@
       </td>
     </tr>
     <tr>
-      <td><?php echo $lang_ajax_tracking; ?>:</td>
+      <td><?php echo $text_ajax_tracking; ?>:</td>
       <td>
         <input class="openbayData" id="tracking_no" type="text" name="tracking_no" value="<?php if(isset($order_info['tracking_no'])){ echo $order_info['tracking_no']; } ?>">
       </td>

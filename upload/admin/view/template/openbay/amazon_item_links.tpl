@@ -6,32 +6,32 @@
 </div>
 <div class="box">
 <div class="heading">
-  <h1><?php echo $lang_title; ?></h1>
+  <h1><?php echo $text_title; ?></h1>
   <div class="buttons">
-    <a class="button" onclick="location = '<?php echo $link_overview; ?>';"><span><?php echo $lang_btn_return; ?></span></a>
+    <a class="button" onclick="location = '<?php echo $link_overview; ?>';"><span><?php echo $text_btn_return; ?></span></a>
   </div>
 </div>
 <div class="content">
   <table class="form">
-    <h2><?php echo $lang_link_items; ?></h2>
+    <h2><?php echo $text_link_items; ?></h2>
     <tbody>
-    <p><?php echo $lang_desc1; ?></p>
+    <p><?php echo $text_desc1; ?></p>
 
-    <p><?php echo $lang_desc2; ?></p>
-    <a class="button" onclick="loadUnlinked(this)"><span><?php echo $lang_load_btn; ?></span></a>
+    <p><?php echo $text_desc2; ?></p>
+    <a class="button" onclick="loadUnlinked(this)"><span><?php echo $text_load_btn; ?></span></a>
     </tbody>
   </table>
   <table align="left" class="list" id="linkListTable">
     <thead id="tableThread1">
     <tr>
-      <td class="center" colspan="3"><?php echo $lang_new_link; ?></td>
+      <td class="center" colspan="3"><?php echo $text_new_link; ?></td>
     </tr>
     </thead>
     <thead id="tableThread2">
     <tr>
-      <td class="right" width="45%"><?php echo $lang_autocomplete_product; ?></td>
-      <td class="left" width="45%"><?php echo $lang_amazon_sku; ?></td>
-      <td class="center" width="10%"><?php echo $lang_action; ?></td>
+      <td class="right" width="45%"><?php echo $text_autocomplete_product; ?></td>
+      <td class="left" width="45%"><?php echo $text_amazon_sku; ?></td>
+      <td class="center" width="10%"><?php echo $text_action; ?></td>
     </tr>
     </thead>
     <tbody id="tableBody">
@@ -43,7 +43,7 @@
         <input id="newAmazonSku" type="text">
       </td>
       <td class="center">
-        <a class="button" id="addNewButton" onclick="addNewLinkAutocomplete()"><span><?php echo $lang_add; ?></span></a>
+        <a class="button" id="addNewButton" onclick="addNewLinkAutocomplete()"><span><?php echo $text_add; ?></span></a>
       </td>
     </tr>
     </tbody>
@@ -51,17 +51,17 @@
   <table align="left" class="list" id="linkListTable">
     <thead>
     <tr>
-      <td class="center" colspan="6"><?php echo $lang_linked_items; ?></td>
+      <td class="center" colspan="6"><?php echo $text_linked_items; ?></td>
     </tr>
     </thead>
     <thead>
     <tr>
-      <td width="18%"><?php echo $lang_name; ?></td>
-      <td width="18%"><?php echo $lang_model; ?></td>
-      <td width="18%"><?php echo $lang_combination; ?></td>
-      <td width="18%"><?php echo $lang_sku; ?></td>
-      <td width="18%"><?php echo $lang_amazon_sku; ?></td>
-      <td class="center" width="10%"><?php echo $lang_action; ?></td>
+      <td width="18%"><?php echo $text_name; ?></td>
+      <td width="18%"><?php echo $text_model; ?></td>
+      <td width="18%"><?php echo $text_combination; ?></td>
+      <td width="18%"><?php echo $text_sku; ?></td>
+      <td width="18%"><?php echo $text_amazon_sku; ?></td>
+      <td class="center" width="10%"><?php echo $text_action; ?></td>
     </tr>
     </thead>
     <tbody id="linkedItems">
@@ -90,7 +90,7 @@ function loadLinks() {
         rows += '<td class="left">' + json[i]['combi'] + '</td>';
         rows += '<td class="left">' + json[i]['sku'] + '</td>';
         rows += '<td class="left">' + json[i]['amazon_sku'] + '</td>';
-        rows += '<td class="center"><a class="button" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\')" ><span><?php echo $lang_remove; ?></span></a></td>';
+        rows += '<td class="center"><a class="button" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\')" ><span><?php echo $text_remove; ?></span></a></td>';
         rows += '</tr>';
       }
       $('#linkedItems').html(rows);
@@ -117,18 +117,18 @@ function loadUnlinked(button) {
     success: function (json) {
       var thread1 = '';
       thread1 += '<tr>';
-      thread1 += '<td class="center" colspan="6"><?php echo $lang_unlinked_items; ?></td>';
+      thread1 += '<td class="center" colspan="6"><?php echo $text_unlinked_items; ?></td>';
       thread1 += '</tr>';
       $('#tableThread1').html(thread1);
 
       var thread2 = '';
       thread2 += '<tr>';
-      thread2 += '<td width="18%"><?php echo $lang_name; ?></td>';
-      thread2 += '<td width="18%"><?php echo $lang_model; ?></td>';
-      thread2 += '<td width="18%"><?php echo $lang_combination; ?></td>';
-      thread2 += '<td width="18%"><?php echo $lang_sku; ?></td>';
-      thread2 += '<td width="18%"><?php echo $lang_amazon_sku; ?></td>';
-      thread2 += '<td class="center" width="10%"><?php echo $lang_action; ?></td>';
+      thread2 += '<td width="18%"><?php echo $text_name; ?></td>';
+      thread2 += '<td width="18%"><?php echo $text_model; ?></td>';
+      thread2 += '<td width="18%"><?php echo $text_combination; ?></td>';
+      thread2 += '<td width="18%"><?php echo $text_sku; ?></td>';
+      thread2 += '<td width="18%"><?php echo $text_amazon_sku; ?></td>';
+      thread2 += '<td class="center" width="10%"><?php echo $text_action; ?></td>';
       $('#tableThread2').html(thread2);
 
       var rows = '';
@@ -142,11 +142,11 @@ function loadUnlinked(button) {
         rows += '<td class="left">';
         rows += '<div class="amazonSkuDiv_' + json[i]['product_id'] + '_' + json[i]['var'] + '">';
         rows += '<input class="amazonSku_' + json[i]['product_id'] + '_' + json[i]['var'] + '"  type="text">';
-        rows += '<a onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')"><img src="view/image/add.png" alt="<?php echo $lang_add_sku_tooltip; ?>" title="<?php echo $lang_add_sku_tooltip; ?>"></a>';
+        rows += '<a onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')"><img src="view/image/add.png" alt="<?php echo $text_add_sku_tooltip; ?>" title="<?php echo $text_add_sku_tooltip; ?>"></a>';
         rows += '</div>';
         rows += '</td>';
 
-        rows += '<td class="center"><a class="button" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')"><span><?php echo $lang_add; ?></span></a></td>';
+        rows += '<td class="center"><a class="button" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')"><span><?php echo $text_add; ?></span></a></td>';
         rows += '</tr>';
       }
 
@@ -229,7 +229,7 @@ function addNewLink(button, product_id, variation) {
     }
   });
   if (errors > 0) {
-    alert('<?php echo $lang_sku_empty_warning; ?>');
+    alert('<?php echo $text_sku_empty_warning; ?>');
     return;
   }
 
@@ -242,17 +242,17 @@ function addNewLink(button, product_id, variation) {
 
 function addNewLinkAutocomplete() {
   if ($('#newProduct').val() == "") {
-    alert('<?php echo $lang_name_empty_warning; ?>');
+    alert('<?php echo $text_name_empty_warning; ?>');
     return;
   }
 
   if ($('#newProductId').attr('label') != $('#newProduct').val()) {
-    alert('<?php echo $lang_product_warning; ?>');
+    alert('<?php echo $text_product_warning; ?>');
     return;
   }
 
   if ($('#newAmazonSku').val() == "") {
-    alert('<?php echo $lang_sku_empty_warning; ?>');
+    alert('<?php echo $text_sku_empty_warning; ?>');
     return;
   }
 

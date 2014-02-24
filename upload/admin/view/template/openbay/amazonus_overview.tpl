@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $lang_heading; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">
@@ -23,7 +23,7 @@
                   <i class="fa fa-square-o fa-stack-2x"></i>
                   <i class="fa fa-wrench fa-stack-1x"></i>
                 </span>
-              <h4><?php echo $lang_heading_settings; ?></h4>
+              <h4><?php echo $text_heading_settings; ?></h4>
             </a>
           </div>
         </div>
@@ -35,7 +35,7 @@
                   <i class="fa fa-user fa-stack-2x"></i>
                   <i class="fa fa-wrench fa-stack-1x"></i>
                 </span>
-              <h4><?php echo $lang_heading_account; ?></h4>
+              <h4><?php echo $text_heading_account; ?></h4>
             </a>
           </div>
         </div>
@@ -46,7 +46,7 @@
                 <i class="fa fa-square-o fa-stack-2x"></i>
                 <i class="fa fa-link fa-stack-1x"></i>
               </span>
-              <h4><?php echo $lang_heading_links; ?></h4>
+              <h4><?php echo $text_heading_links; ?></h4>
             </a>
           </div>
         </div>
@@ -57,7 +57,7 @@
                 <i class="fa fa-square-o fa-stack-2x"></i>
                 <i class="fa fa-list fa-stack-1x"></i>
               </span>
-              <h4><?php echo $lang_heading_bulk_linking; ?></h4>
+              <h4><?php echo $text_heading_bulk_linking; ?></h4>
             </a>
           </div>
         </div>
@@ -68,7 +68,7 @@
                 <i class="fa fa-square-o fa-stack-2x"></i>
                 <i class="fa fa-copy fa-stack-1x"></i>
               </span>
-              <h4><?php echo $lang_heading_bulk_listing; ?></h4>
+              <h4><?php echo $text_heading_bulk_listing; ?></h4>
             </a>
           </div>
         </div>
@@ -79,7 +79,7 @@
                 <i class="fa fa-square-o fa-stack-2x"></i>
                 <i class="fa fa-sitemap fa-stack-1x"></i>
               </span>
-              <h4><?php echo $lang_heading_stock_updates; ?></h4>
+              <h4><?php echo $text_heading_stock_updates; ?></h4>
             </a>
           </div>
         </div>
@@ -90,7 +90,7 @@
               <i class="fa fa-square-o fa-stack-2x"></i>
               <i class="fa fa-save fa-stack-1x"></i>
             </span>
-              <h4><?php echo $lang_heading_saved_listings; ?></h4>
+              <h4><?php echo $text_heading_saved_listings; ?></h4>
             </a>
           </div>
         </div>
@@ -102,7 +102,7 @@
                 <i class="fa fa-square-o fa-stack-2x"></i>
                 <i class="fa fa-star fa-stack-1x"></i>
               </span>
-              <h4><?php echo $lang_heading_register; ?></h4>
+              <h4><?php echo $text_heading_register; ?></h4>
             </a>
           </div>
         </div>

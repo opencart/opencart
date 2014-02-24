@@ -10,14 +10,14 @@
       <div class="pull-right">
         <button type="submit" form="form-openbay-manager" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $lang_text_manager; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_text_manager; ?></h1>
     </div>
     <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-openbay-manager" class="form-horizontal">
         <ul class="nav nav-tabs">
-          <li class="active"><a href="#tab-updates" data-toggle="tab"><?php echo $lang_btn_update; ?></a></li>
-          <li><a href="#tab-settings" data-toggle="tab"><?php echo $lang_btn_settings; ?></a></li>
-          <li><a href="#tab-patch" data-toggle="tab"><?php echo $lang_btn_patch; ?></a></li>
+          <li class="active"><a href="#tab-updates" data-toggle="tab"><?php echo $text_btn_update; ?></a></li>
+          <li><a href="#tab-settings" data-toggle="tab"><?php echo $text_btn_settings; ?></a></li>
+          <li><a href="#tab-patch" data-toggle="tab"><?php echo $text_btn_patch; ?></a></li>
         </ul>
         <div class="tab-content">
           <div class="tab-pane active" id="tab-updates">
@@ -28,7 +28,7 @@
             <input type="hidden" name="openbay_version" value="<?php echo $openbay_version;?>" id="openbay_version" />
             <input type="hidden" name="openbaymanager_show_menu" value="<?php echo $openbaymanager_show_menu;?>" />
 
-            <p><?php echo $text_patch_description; ?></p>
+            <p><?php echo $text_update_description; ?></p>
 
             <div class="form-group">
               <label class="col-sm-2 control-label" for="openbay_ftp_username"><?php echo $field_ftp_user; ?></label>
@@ -96,14 +96,14 @@
             <div class="form-group" id="ftp-test-row">
               <label class="col-sm-2 control-label" for="button-clear-faq"><?php echo $text_test_connection; ?></label>
               <div class="col-sm-10">
-                <a class="btn btn-primary" id="ftp-test" onclick="ftpTest();"><?php echo $lang_btn_test; ?></a>
+                <a class="btn btn-primary" id="ftp-test" onclick="ftpTest();"><?php echo $text_btn_test; ?></a>
                 <div class="btn btn-primary" id="ftp-test-loading" style="display:none;"><i class="fa fa-refresh fa-spin"></i></div>
               </div>
             </div>
             <div class="form-group" id="ftp-update-row" style="display:none;">
               <label class="col-sm-2 control-label" for="ftp-update-module"><?php echo $text_run_update; ?></label>
               <div class="col-sm-10">
-                <a class="btn btn-primary" id="ftp-update-module" onclick="updateModule();"><?php echo $lang_btn_update; ?></a>
+                <a class="btn btn-primary" id="ftp-update-module" onclick="updateModule();"><?php echo $text_btn_update; ?></a>
                 <div class="btn btn-primary" id="ftp-update-module-loading" style="display:none;"><i class="fa fa-refresh fa-spin"></i></div>
               </div>
             </div>
@@ -111,7 +111,7 @@
           </div>
           <div class="tab-pane" id="tab-settings">
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-language"><?php echo $lang_language; ?></label>
+              <label class="col-sm-2 control-label" for="input-language"><?php echo $text_language; ?></label>
               <div class="col-sm-10">
                 <select name="openbay_language" id="input-language" class="form-control">
                   <?php foreach($languages as $key => $language){ ?>

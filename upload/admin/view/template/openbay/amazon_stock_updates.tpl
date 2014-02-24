@@ -14,9 +14,9 @@
 
     <div class="box">
         <div class="heading">
-            <h1><?php echo $lang_title;?></h1>
+            <h1><?php echo $text_title;?></h1>
             <div class="buttons">
-                <a class="button" onclick="location = '<?php echo $link_overview; ?>';" ><span><?php echo $lang_btn_return; ?></span></a>
+                <a class="button" onclick="location = '<?php echo $link_overview; ?>';" ><span><?php echo $text_btn_return; ?></span></a>
             </div>
         </div>
 
@@ -25,9 +25,9 @@
             <table class="form">
                 <tbody>
                     <tr>
-                        <td><?php echo $lang_date_start; ?> <input type="text" value="<?php echo $date_start; ?>" name="filter_date_start" id="date-start" size="12"></td>
-                        <td><?php echo $lang_date_end; ?> <input type="text" value="<?php echo $date_end; ?>" name="filter_date_end" id="date-end" size="12"></td>
-                        <td style="text-align: right;"><a onclick="filter();" class="button"><?php echo $lang_filter_btn; ?></a></td>
+                        <td><?php echo $text_date_start; ?> <input type="text" value="<?php echo $date_start; ?>" name="filter_date_start" id="date-start" size="12"></td>
+                        <td><?php echo $text_date_end; ?> <input type="text" value="<?php echo $date_end; ?>" name="filter_date_end" id="date-end" size="12"></td>
+                        <td style="text-align: right;"><a onclick="filter();" class="button"><?php echo $text_filter_btn; ?></a></td>
                     </tr>
                 </tbody>
             </table>
@@ -35,18 +35,18 @@
             <table class="list">
                 <thead>
                     <tr>
-                        <td class="left"><?php echo $lang_ref; ?></td>
-                        <td class="left"><?php echo $lang_date_requested; ?></td>
-                        <td class="right"><?php echo $lang_date_updated; ?></td>
-                        <td class="right"><?php echo $lang_status; ?></td>
-                        <td class="left"><?php echo $lang_sku; ?></td>
-                        <td class="left"><?php echo $lang_stock; ?></td>
+                        <td class="left"><?php echo $text_ref; ?></td>
+                        <td class="left"><?php echo $text_date_requested; ?></td>
+                        <td class="right"><?php echo $text_date_updated; ?></td>
+                        <td class="right"><?php echo $text_status; ?></td>
+                        <td class="left"><?php echo $text_sku; ?></td>
+                        <td class="left"><?php echo $text_stock; ?></td>
                     </tr>
                 </thead>
                 <tbody>
                     <?php if(empty($tableData)) { ?>
                             <tr>
-                                <td class="center" colspan="6"><?php echo $lang_empty; ?></td>
+                                <td class="center" colspan="6"><?php echo $text_empty; ?></td>
                             </tr>
                     <?php } ?>
                     

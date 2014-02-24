@@ -1,5 +1,5 @@
 <?php
-$_['lang_heading_title']        = 'OpenBay Pro for eBay | Settings';
+$_['lang_heading_title']        = 'eBay marketplace settings';
 $_['lang_openbay']              = 'OpenBay Pro';
 $_['lang_ebay']                 = 'eBay';
 $_['lang_settings']             = 'Settings';
@@ -80,6 +80,7 @@ $_['lang_payment_card']         = 'Cards Accepted';
 $_['lang_payment_desc']         = 'See description (e.g. bank transfer)';
 $_['lang_payment_desc']         = 'See description (e.g. bank transfer)';
 $_['lang_payment_imediate']     = 'Immediate payment required';
+$_['lang_payment_types']     	= 'Payment types';
 $_['lang_tax_listing']          = 'Product tax<span class="help">If you use the rate from listings ensure your items have the correct tax in eBay</span>';
 $_['lang_tax_use_listing']      = 'Use tax rate set in eBay listing';
 $_['lang_tax_use_value']        = 'Use a set value for everything';
@@ -102,7 +103,8 @@ $_['text_listing_7day']             = '7 days';
 $_['text_listing_10day']            = '10 days';
 $_['text_listing_30day']            = '30 days';
 $_['text_listing_gtc']              = 'GTC- Good till cancelled';
-$_['lang_openbay_duration']         = 'Default listing duration<span class="help">GTC is only available is you have an eBay shop.</span>';
+$_['lang_openbay_duration']         = 'Default listing duration';
+$_['lang_openbay_duration_help']    = 'GTC is only available is you have an eBay shop.';
 $_['lang_address_format']           = 'Default address format<span class="help">Only used if the country does not have an address format set-up already.</span>';
 
 $_['lang_api_status']               = 'API connection status';

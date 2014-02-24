@@ -32,7 +32,6 @@
 
         <div class="tab-content">
           <div class="tab-pane active" id="tab-general">
-            <h4><?php echo $lang_legend_api; ?></h4>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="ebay_status"><?php echo $lang_status; ?></label>
               <div class="col-sm-10">
@@ -80,9 +79,9 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $lang_api_other; ?></label>
               <div class="col-sm-10">
-                <h4><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><span class="label label-info"><i class="fa fa-link"></i> <?php echo $lang_obp_token_register; ?></span></a></h4>
-                <h4><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><span class="label label-info"><i class="fa fa-link"></i> <?php echo $lang_obp_token_renew; ?></span></a></h4>
-                <h4><a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><span class="label label-info"><i class="fa fa-link"></i> <?php echo $lang_obp_detail_update; ?></span></a></h4>
+                <h5><a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><span class="label label-default"><i class="fa fa-link"></i> <?php echo $lang_obp_token_register; ?></span></a></h5>
+                <h5><a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><span class="label label-default"><i class="fa fa-link"></i> <?php echo $lang_obp_token_renew; ?></span></a></h5>
+                <h5><a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><span class="label label-default"><i class="fa fa-link"></i> <?php echo $lang_obp_detail_update; ?></span></a></h5>
               </div>
             </div>
           </div>
@@ -451,80 +450,84 @@
                     </table>
                 </div>
           <div class="tab-pane" id="tab-defaults">
-                    <p><?php echo $lang_setting_desc; ?></p>
+            <p><?php echo $lang_setting_desc; ?></p>
 
-                    <table class="form">
-                        <tr>
-                            <td><label><?php echo $lang_openbay_duration; ?></td>
-                            <td>
-                                <select name="ebay_duration" style="width:200px;">
-                                    <?php
-                                    foreach($durations as $key => $duration){
-                                        echo'<option value="'.$key.'"';
-                                        if($key == $ebay_duration){echo ' selected=selected';}
-                                        echo'>'.$duration.'</option>';
-                                    }
-                                    ?>
-                                </select>
-                            </td>
-                        </tr>
-
-                    </table>
-
-                    <br /><br />
-                    <h2><?php echo $lang_legend_payments; ?></h2>
-
-                    <table class="form">
-                        <tr>
-                            <td><label for="ebay_payment_instruction"><?php echo $lang_payment_instruction; ?></td>
-                            <td><textarea name="ebay_payment_instruction" id="ebay_payment_instruction" maxlength="" style="width:400px; height:70px;"><?php echo $ebay_payment_instruction;?></textarea></td>
-                        </tr>
-
-                        <tr class="row3">
-                            <td><label for="ebay_payment_paypal_address"><?php echo $lang_payment_paypal_add; ?></td>
-                            <td><input type="text" name="ebay_payment_paypal_address" id="ebay_payment_paypal_address" style="width:300px" maxlength="" value="<?php echo $ebay_payment_paypal_address;?>" /></td>
-                        </tr>
-
-                        <?php foreach($payment_options as $payment){ ?>
-                        <tr class="row4">
-                            <td><label><?php echo $payment['local_name']; ?></td>
-                            <td>
-                                <input type="hidden" name="ebay_payment_types[<?php echo $payment['ebay_name']; ?>]" value="0" />
-                                <input type="checkbox" name="ebay_payment_types[<?php echo $payment['ebay_name']; ?>]" value="1" <?php if(isset($ebay_payment_types[(string)$payment['ebay_name']]) && $ebay_payment_types[(string)$payment['ebay_name']] == 1) { echo 'checked="checked"'; } ?> />
-                            </td>
-                        </tr>
-                        <?php } ?>
-
-                        <tr class="row4">
-                            <td><label><?php echo $lang_payment_imediate; ?></td>
-                            <td>
-                                <input type="hidden" name="ebay_payment_immediate" value="0" />
-                                <input type="checkbox" name="ebay_payment_immediate" value="1" <?php if ($ebay_payment_immediate) { echo 'checked="checked"'; } ?> />
-                            </td>
-                        </tr>
-
-                        <tr class="row6">
-                            <td><label><?php echo $lang_tax_listing; ?></td>
-                            <td>
-                                <select name="ebay_tax_listing" id="ebay_tax_listing" style="width:200px;">
-                                    <?php if ($ebay_tax_listing) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_tax_use_listing; ?></option>
-                                    <option value="0"><?php echo $lang_tax_use_value; ?></option>
-                                    <?php } else { ?>
-                                    <option value="1"><?php echo $lang_tax_use_listing; ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_tax_use_value; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-
-                        <tr class="row6" id="ebay_tax_listing_preset">
-                            <td><label><?php echo $lang_tax; ?></td>
-                            <td><input type="text" name="tax" id="tax" style="width:30px;" maxlength="" value="<?php echo $tax;?>" /> %</td>
-                        </tr>
-
-                    </table>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay_duration"><?php echo $lang_openbay_duration; ?></label>
+              <div class="col-sm-10">
+                <select name="ebay_duration" id="ebay_duration" class="form-control">
+                  <?php foreach ($durations as $key => $duration) { ?>
+                    <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
+                  <?php } ?>
+                </select>
+                <span class="help-block"><?php echo $lang_openbay_duration_help; ?></span>
+              </div>
+            </div>
+            <h5><?php echo $lang_legend_payments; ?></h5>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay_payment_instruction"><?php echo $lang_payment_instruction; ?></label>
+              <div class="col-sm-10">
+                <textarea name="ebay_payment_instruction" class="form-control" rows="3" id="ebay_payment_instruction"><?php echo $ebay_payment_instruction; ?></textarea>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="ebay_payment_paypal_address"><?php echo $lang_payment_paypal_add; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="ebay_payment_paypal_address" value="<?php echo $ebay_payment_paypal_address;?>" placeholder="<?php echo $lang_payment_paypal_add; ?>" id="ebay_payment_paypal_address" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $lang_payment_types; ?></label>
+              <div class="col-sm-10">
+                <?php foreach($payment_options as $payment){ ?>
+                <div class="checkbox">
+                  <label>
+                    <input type="hidden" name="ebay_payment_types[<?php echo $payment['ebay_name']; ?>]" value="0" />
+                    <input type="checkbox" name="ebay_payment_types[<?php echo $payment['ebay_name']; ?>]" value="1" <?php echo (isset($ebay_payment_types[(string)$payment['ebay_name']]) && $ebay_payment_types[(string)$payment['ebay_name']] == 1 ? 'checked="checked"' : ''); ?> />
+                    <?php echo $payment['local_name']; ?>
+                  </label>
                 </div>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $lang_payment_imediate; ?></label>
+              <div class="col-sm-10">
+                <select name="ebay_payment_immediate" id="ebay_payment_immediate" class="form-control">
+                  <?php if ($ebay_payment_immediate) { ?>
+                    <option value="1" selected="selected"><?php echo $text_yes; ?></option>
+                    <option value="0"><?php echo $text_no; ?></option>
+                  <?php } else { ?>
+                    <option value="1"><?php echo $text_yes; ?></option>
+                    <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $lang_tax_listing; ?></label>
+              <div class="col-sm-10">
+                <select name="ebay_tax_listing" id="ebay_tax_listing" class="form-control">
+                  <?php if ($ebay_tax_listing) { ?>
+                    <option value="1" selected="selected"><?php echo $lang_tax_use_listing; ?></option>
+                    <option value="0"><?php echo $lang_tax_use_value; ?></option>
+                  <?php } else { ?>
+                    <option value="1"><?php echo $lang_tax_use_listing; ?></option>
+                    <option value="0" selected="selected"><?php echo $lang_tax_use_value; ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group" id="ebay_tax_listing_preset">
+              <label class="col-sm-2 control-label" for="tax"><?php echo $lang_tax; ?></label>
+              <div class="col-sm-10">
+                <div class="input-group">
+                  <input type="text" name="tax" value="<?php echo $tax;?>" id="tax" class="form-control" />
+                  <span class="input-group-addon">%</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </form>
     </div>

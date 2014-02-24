@@ -32,7 +32,7 @@
 
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $lang_heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-puzzle-piece fa-lg"></i> <?php echo $text_heading_title; ?></h1>
     </div>
     <div class="panel-body">
       <div class="row">
@@ -42,9 +42,9 @@
               <table class="table table-bordered table-hover">
                 <thead>
                 <tr>
-                  <td class="text-left" width="60%"><?php echo $lang_column_name; ?></td>
-                  <td class="text-center" width="20%"><?php echo $lang_column_status; ?></td>
-                  <td class="text-right" width="20%"><?php echo $lang_column_action; ?></td>
+                  <td class="text-left" width="60%"><?php echo $text_column_name; ?></td>
+                  <td class="text-center" width="20%"><?php echo $text_column_status; ?></td>
+                  <td class="text-right" width="20%"><?php echo $text_column_action; ?></td>
                 </tr>
                 </thead>
                 <tbody>
@@ -66,7 +66,7 @@
                 </tr>
                 <?php } ?><?php } else { ?>
                 <tr>
-                  <td class="text-center" colspan="8"><?php echo $lang_text_no_results; ?></td>
+                  <td class="text-center" colspan="8"><?php echo $text_text_no_results; ?></td>
                 </tr>
                 <?php } ?>
                 </tbody>
@@ -127,12 +127,12 @@
         <div class="col-md-5" style="padding-left:10px;">
           <div id="openbay_version" class="alert alert-info text-left">
             <div id="openbay_version_loading">
-              <i class="fa fa-refresh fa-spin"></i> <?php echo $lang_checking_version; ?>
+              <i class="fa fa-refresh fa-spin"></i> <?php echo $text_checking_version; ?>
             </div>
           </div>
           <div id="openbay_notification" class="alert alert-info text-left">
             <div id="openbay_loading">
-              <i class="fa fa-refresh fa-spin"></i> <?php echo $lang_getting_messages; ?>
+              <i class="fa fa-refresh fa-spin"></i> <?php echo $text_getting_messages; ?>
             </div>
           </div>
         </div>
@@ -146,7 +146,7 @@ var token = "<?php echo $_GET['token']; ?>";
 function getOpenbayVersion() {
   var version = '<?php echo $openbay_version; ?>';
 
-  $('#openbay_version').empty().html('<div id="openbay_version_loading"><i class="fa fa-refresh fa-spin"></i> <?php echo $lang_checking_version; ?></div>');
+  $('#openbay_version').empty().html('<div id="openbay_version_loading"><i class="fa fa-refresh fa-spin"></i> <?php echo $text_checking_version; ?></div>');
 
   setTimeout(function () {
     $.ajax({
@@ -157,9 +157,9 @@ function getOpenbayVersion() {
         $('#openbay_version_loading').hide();
 
         if (version < json.version) {
-          $('#openbay_version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $lang_version_old_1; ?> v.' + version + ', <?php echo $lang_version_old_2; ?> v.' + json.version);
+          $('#openbay_version').removeClass('attention').addClass('alert-warning').append('<i class="fa fa-warning"></i> <?php echo $text_version_old_1; ?> v.' + version + ', <?php echo $text_version_old_2; ?> v.' + json.version);
         } else {
-          $('#openbay_version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $lang_latest; ?> (v.' + version + ')');
+          $('#openbay_version').removeClass('attention').addClass('alert-success').append('<i class="fa fa-check"></i> <?php echo $text_latest; ?> (v.' + version + ')');
         }
       },
       failure: function () {
@@ -173,7 +173,7 @@ function getOpenbayVersion() {
 }
 
 function getOpenbayNotifications() {
-  $('#openbay_notification').empty().html('<div id="openbay_loading"><i class="fa fa-refresh fa-spin"></i> <?php echo $lang_checking_messages; ?></div>');
+  $('#openbay_notification').empty().html('<div id="openbay_loading"><i class="fa fa-refresh fa-spin"></i> <?php echo $text_checking_messages; ?></div>');
 
   setTimeout(function () {
     $.ajax({
@@ -181,7 +181,7 @@ function getOpenbayNotifications() {
       url: 'index.php?route=extension/openbay/getNotifications&token='+token,
       dataType: 'json',
       success: function (json) {
-        html = '<h4><i class="fa fa-info-circle"></i>  <?php echo $lang_title_messages; ?></h4>';
+        html = '<h4><i class="fa fa-info-circle"></i>  <?php echo $text_title_messages; ?></h4>';
         html += '<ul>';
         $.each(json, function (key, val) {
           html += '<li>' + val + '</li>';

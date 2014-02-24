@@ -2,10 +2,10 @@
 class ControllerEbayOpenbay extends Controller {
 	public function inbound() {
 		$encrypted      = $this->request->post;
-		$secret         = $this->config->get('openbaypro_secret');
-		$active         = $this->config->get('openbay_status');
-		$s1             = $this->config->get('openbaypro_string1');
-		$s2             = $this->config->get('openbaypro_string2');
+		$secret         = $this->config->get('ebay_secret');
+		$active         = $this->config->get('ebay_status');
+		$s1             = $this->config->get('ebay_string1');
+		$s2             = $this->config->get('ebay_string2');
 
 		$this->load->model('openbay/ebay_openbay');
 		$this->load->model('openbay/ebay_product');
@@ -85,8 +85,8 @@ class ControllerEbayOpenbay extends Controller {
 		set_time_limit(0);
 
 		$data   = $this->request->post;
-		$secret = $this->config->get('openbaypro_secret');
-		$active = $this->config->get('openbay_status');
+		$secret = $this->config->get('ebay_secret');
+		$active = $this->config->get('ebay_status');
 
 		if(isset($data['secret']) && $secret == $data['secret'] && $active == 1 && isset($data['data'])) {
 			$this->load->model('openbay/ebay_openbay');
@@ -113,17 +113,17 @@ class ControllerEbayOpenbay extends Controller {
 	public function autoSetup() {
 		set_time_limit(0);
 		$this->load->model('setting/setting');
-		$settings = $this->model_setting_setting->getSetting('openbay');
+		$settings = $this->model_setting_setting->getSetting('ebay');
 
 		$this->response->addHeader('Cache-Control: no-cache, must-revalidate');
 		$this->response->addHeader('Expires: Mon, 26 Jul 1997 05:00:00 GMT');
 		$this->response->addHeader('Content-type: application/json; charset=utf-8');
 
 		if(
-			(isset($settings['openbaypro_token']) && !empty($settings['openbaypro_token'])) ||
-			(isset($settings['openbaypro_secret']) && !empty($settings['openbaypro_secret'])) ||
-			(isset($settings['openbaypro_string1']) && !empty($settings['openbaypro_string1'])) ||
-			(isset($settings['openbaypro_string2']) && !empty($settings['openbaypro_string2'])) ||
+			(isset($settings['ebay_token']) && !empty($settings['ebay_token'])) ||
+			(isset($settings['ebay_secret']) && !empty($settings['ebay_secret'])) ||
+			(isset($settings['ebay_string1']) && !empty($settings['ebay_string1'])) ||
+			(isset($settings['ebay_string2']) && !empty($settings['ebay_string2'])) ||
 			!isset($this->request->post['token']) ||
 			!isset($this->request->post['secret']) ||
 			!isset($this->request->post['s1']) ||
@@ -131,11 +131,11 @@ class ControllerEbayOpenbay extends Controller {
 		) {
 			$this->response->setOutput(json_encode(array('msg' => 'fail', 'reason' => 'Tokens are already setup or data missing')));
 		} else {
-			$settings['openbaypro_token']   = $this->request->post['token'];
-			$settings['openbaypro_secret']  = $this->request->post['secret'];
-			$settings['openbaypro_string1'] = $this->request->post['s1'];
-			$settings['openbaypro_string2'] = $this->request->post['s2'];
-			$this->openbay->ebay->editSetting('openbay',$settings);
+			$settings['ebay_token']   = $this->request->post['token'];
+			$settings['ebay_secret']  = $this->request->post['secret'];
+			$settings['ebay_string1'] = $this->request->post['s1'];
+			$settings['ebay_string2'] = $this->request->post['s2'];
+			$this->openbay->ebay->editSetting('ebay',$settings);
 
 			$this->response->setOutput(json_encode(array('msg' => 'ok', 'reason' => 'Auto setup has been completed','version' => (int)$this->config->get('openbay_version'))));
 		}

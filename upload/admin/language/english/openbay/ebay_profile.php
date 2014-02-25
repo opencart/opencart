@@ -64,19 +64,24 @@ $_['text_returns_costs_s']      = 'Seller pays';
 $_['text_returns_restock']      = 'Restocking Fee';
 
 //Template profile
-$_['text_template_choose']      = 'Default template<span class="help">A default template will auto load when listing to save time</span>';
-$_['text_image_gallery']        = 'Gallery image size<span class="help">Pixel size of gallery images that are added to your template.</span>';
-$_['text_image_thumb']          = 'Thumbnail image size<span class="help">Pixel size of thumbnail images that are added to your template.</span>';
+$_['text_template_choose']      = 'Default template';
+$_['text_template_choose_help'] = 'A default template will auto load when listing to save time';
+$_['text_image_gallery']        = 'Gallery image size';
+$_['text_image_gallery_help']   = 'Pixel size of gallery images that are added to your template.';
+$_['text_image_thumb']          = 'Thumbnail image size';
+$_['text_image_thumb_help']     = 'Pixel size of thumbnail images that are added to your template.';
 $_['text_image_super']          = 'Supersize images';
 $_['text_image_gallery_plus']   = 'Gallery plus';
 $_['text_image_all_ebay']       = 'Add all images to eBay';
 $_['text_image_all_template']   = 'Add all images to template';
-$_['text_image_exclude_default']= 'Exclude default image<span class="help">Only for bulk listing feature! Will not include the default product image in theme image list</span>';
+$_['text_image_exclude_default']= 'Exclude default image';
+$_['text_image_exclude_default_help']= 'Only for bulk listing feature! Will not include the default product image in theme image list';
 $_['text_confirm_delete']       = 'Are you sure you want to delete the profile?';
 
 //General profile
 $_['text_general_private']      = 'List items as private auction';
-$_['text_general_price']        = 'Price % modification <span class="help">0 is default, -10 will reduce by 10%, 10 will increase by 10% (only used on bulk listing)</span>';
+$_['text_general_price']        = 'Price % modification';
+$_['text_general_price_help']   = '0 is default, -10 will reduce by 10%, 10 will increase by 10% (only used on bulk listing)';
 
 //Success messages
 $_['text_added']                = 'New profile has been added';

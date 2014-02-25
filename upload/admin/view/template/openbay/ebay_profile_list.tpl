@@ -25,8 +25,8 @@
               <option value="<?php echo $key; ?>"><?php echo $val['name']; ?></option>
             <?php } ?>
           </select>
+          <a data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i></a>
         </form>
-        <a data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i></a>
       </div>
       <h1 class="panel-title"><i class="fa fa-file-text fa-lg"></i> <?php echo $text_title_list; ?></h1>
     </div>

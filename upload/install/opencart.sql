@@ -978,7 +978,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (252, 'Ascension Island (British)', 'AC', 'ASC', '', 0, 1),
 (253, 'Kosovo, Republic of', 'XK', 'UNK', '', 0, 1),
 (254, 'Isle of Man', 'IM', 'IMN', '', 0, 1),
-(255, 'Tristan da Cunha', 'SH', 'SHN', '', 0, 1),
+(255, 'Tristan da Cunha', 'TA', 'SHN', '', 0, 1),
 (256, 'Guernsey', 'GG', 'GGY', '', 0, 1),
 (257, 'Jersey', 'JE', 'JEY', '', 0, 1);
 -- --------------------------------------------------------

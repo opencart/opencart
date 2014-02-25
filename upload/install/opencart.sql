@@ -7639,7 +7639,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (4031, 248, 'BW', 'Western Bahr el-Ghazal', 1),
 (4032, 248, 'EW', 'Western Equatoria', 1),
 
-(4034, 222, 'JEY', 'Jersey', 1),
+
 
 (4036,117,  '0661405', 'Ainaži, Salacgrīvas novads', 1),
 (4037,117,  '0320201', 'Aizkraukle, Aizkraukles novads', 1),

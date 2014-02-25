@@ -24,6 +24,7 @@ $_['text_no']                   = 'No';
 $_['text_yes']                  = 'Yes';
 $_['text_language']             = 'API response language';
 $_['text_getting_messages']     = 'Getting OpenBay Pro messages';
+$_['text_complete']     = 'Complete';
 
 // Column
 $_['text_column_name']          = 'Plugin name';

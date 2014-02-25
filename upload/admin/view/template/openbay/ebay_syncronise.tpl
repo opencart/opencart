@@ -19,24 +19,29 @@
     <div class="panel-body">
       <?php if($validation == true) { ?>
         <p><?php echo $text_sync_desc; ?></p>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="syncCats"><?php echo $text_sync_cats_lbl; ?></label>
-          <div class="col-sm-10">
-            <a class="btn btn-primary" id="syncCats" onclick="syncCats();"><?php echo $text_sync_btn; ?></a>
+        <form id="form-ebay-sync" class="form-horizontal">
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="sync-cats"><?php echo $text_sync_cats_lbl; ?></label>
+            <div class="col-sm-10">
+              <a class="btn btn-primary" id="sync-cats"><?php echo $text_sync_btn; ?></a>
+              <span class="help-block"><?php echo $text_sync_cats_lbl_help; ?></span>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="sync-shop-cats"><?php echo $text_sync_shop_lbl; ?></label>
-          <div class="col-sm-10">
-            <a class="btn btn-primary" id="sync-shop-cats"><?php echo $text_sync_btn; ?></a>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="sync-shop-cats"><?php echo $text_sync_shop_lbl; ?></label>
+            <div class="col-sm-10">
+              <a class="btn btn-primary" id="sync-shop-cats"><?php echo $text_sync_btn; ?></a>
+              <span class="help-block"><?php echo $text_sync_shop_lbl_help; ?></span>
+            </div>
           </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="loadSettings"><?php echo $text_sync_setting_lbl; ?></label>
-          <div class="col-sm-10">
-            <a class="btn btn-primary" id="loadSettings" onclick="loadSettings();"><?php echo $text_sync_btn; ?></a>
+          <div class="form-group">
+            <label class="col-sm-2 control-label" for="load-settings"><?php echo $text_sync_setting_lbl; ?></label>
+            <div class="col-sm-10">
+              <a class="btn btn-primary" id="load-settings"><?php echo $text_sync_btn; ?></a>
+              <span class="help-block"><?php echo $text_sync_setting_lbl_help; ?></span>
+            </div>
           </div>
-        </div>
+        </form>
       <?php }else{ ?>
         <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $text_error_validation; ?>
           <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -46,93 +51,93 @@
 </div>
 
 <script type="text/javascript"><!--
-    $('#sync-shop-cats').bind('click', function() {
-      $.ajax({
-          url: 'index.php?route=openbay/ebay/loadCategories&token=<?php echo $token; ?>',
-          beforeSend: function(){
-            $('#sync-shop-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>');
-            alert('<?php echo $text_ajax_ebay_categories; ?>');
-          },
-          type: 'post',
-          dataType: 'json',
-          success: function(json) {
-            $('#sync-shop-cats').empty().html('<?php echo $text_sync_btn; ?>');
-            alert(json.msg);
-          },
-          failure: function(){
-            $('#sync-shop-cats').empty().html('<?php echo $text_sync_btn; ?>');
-              alert('<?php echo $text_ajax_load_error; ?>');
-          },
-          error: function(){
-            $('#sync-shop-cats').empty().html('<?php echo $text_sync_btn; ?>');
-            alert('<?php echo $text_ajax_load_error; ?>');
-          }
-      });
+  $('#sync-cats').bind('click', function() {
+    $.ajax({
+      url: 'index.php?route=openbay/ebay/loadCategories&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#sync-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+        $("#sync-cats").attr('disabled','disabled');
+        alert('<?php echo $text_ajax_ebay_categories; ?>');
+      },
+      type: 'post',
+      dataType: 'json',
+      success: function(json) {
+        $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
+        alert(json.msg);
+      },
+      failure: function(){
+        $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
+        $("#sync-cats").removeAttr('disabled');
+        alert('<?php echo $text_ajax_load_error; ?>');
+      },
+      error: function(){
+        $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
+        $("#sync-cats").removeAttr('disabled');
+        alert('<?php echo $text_ajax_load_error; ?>');
+      }
     });
+  });
 
-    function loadSettings(){
-        $.ajax({
-            url: 'index.php?route=openbay/ebay/loadSettings&token=<?php echo $token; ?>',
-            beforeSend: function(){
-                $('#loadSettings').hide();
-                $('#imageloadSettings').show();
-            },
-            type: 'post',
-            dataType: 'json',
-            success: function(json) {
-                $('#loadSettings').show(); $('#loadSettings').hide();
+  $('#load-settings').bind('click', function() {
+    $.ajax({
+      url: 'index.php?route=openbay/ebay/loadSettings&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#load-settings').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+        $("#load-settings").attr('disabled','disabled');
+      },
+      type: 'post',
+      dataType: 'json',
+      success: function(json) {
+        $('#load-settings').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
 
-                if(json.error == false){
-                    alert('<?php echo $text_ajax_setting_import; ?>');
-                }else{
-                    alert('<?php echo $text_ajax_setting_import_e; ?>');
-                }
-                $('#imageloadSettings').hide();
-                $('#loadSettings').show();
-            },
-            failure: function(){
-                $('#imageloadSettings').hide();
-                $('#loadSettings').show();
-                alert('<?php echo $text_ajax_load_error; ?>');
-            },
-            error: function(){
-                $('#imageloadSettings').hide();
-                $('#loadSettings').show();
-                alert('<?php echo $text_ajax_load_error; ?>');
-            }
-        });
-    }
+        if(json.error == false){
+            alert('<?php echo $text_ajax_setting_import; ?>');
+        }else{
+            alert('<?php echo $text_ajax_setting_import_e; ?>');
+        }
+      },
+      failure: function(){
+        $('#load-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
+        $("#load-settings").removeAttr('disabled');
+        alert('<?php echo $text_ajax_load_error; ?>');
+      },
+      error: function(){
+        $('#load-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
+        $("#load-settings").removeAttr('disabled');
+        alert('<?php echo $text_ajax_load_error; ?>');
+      }
+    });
+  });
 
-    function syncShopCats(){
-        $.ajax({
-            url: 'index.php?route=openbay/ebay/loadSellerStore&token=<?php echo $token; ?>',
-                beforeSend: function(){
-                    $('#syncShopCats').hide();
-                    $('#imageLoadingShopCats').show();
-                },
-            type: 'post',
-            dataType: 'json',
-            success: function(json) {
-                $('#syncShopCats').show(); $('#imageLoadingShopCats').hide();
+  $('#sync-shop-cats').bind('click', function() {
+    $.ajax({
+      url: 'index.php?route=openbay/ebay/loadSellerStore&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#sync-shop-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+        $("#sync-shop-cats").attr('disabled','disabled');
+      },
+      type: 'post',
+      dataType: 'json',
+      success: function(json) {
+        $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
 
-                if(json.error == 'false'){
-                    alert('<?php echo $text_ajax_cat_import; ?>');
-                }else{
-                    alert(json.msg);
-                }
-            },
-            failure: function(){
-                $('#imageLoadingShopCats').hide();
-                $('#syncShopCats').show();
-                alert('<?php echo $text_ajax_load_error; ?>');
-            },
-            error: function(){
-                $('#imageLoadingShopCats').hide();
-                $('#syncShopCats').show();
-                alert('<?php echo $text_ajax_load_error; ?>');
-            }
-        });
-    }
+        if(json.error == 'false'){
+          alert('<?php echo $text_ajax_cat_import; ?>');
+        }else{
+          alert(json.msg);
+        }
+      },
+      failure: function(){
+        $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
+        $("#sync-shop-cats").removeAttr('disabled');
+        alert('<?php echo $text_ajax_load_error; ?>');
+      },
+      error: function(){
+        $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
+        $("#sync-shop-cats").removeAttr('disabled');
+        alert('<?php echo $text_ajax_load_error; ?>');
+      }
+    });
+  });
 //--></script>
-
 <?php echo $footer; ?>

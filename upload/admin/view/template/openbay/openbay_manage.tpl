@@ -1,18 +1,18 @@
-            <?php echo $header; ?><?php echo $menu; ?>
-            <div id="content">
-              <ul class="breadcrumb">
-                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-                <?php } ?>
-              </ul>
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <div class="pull-right">
-                    <button type="submit" form="form-openbay-manager" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
-                    <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
-                  <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_text_manager; ?></h1>
-                </div>
-                <div class="panel-body">
+<?php echo $header; ?><?php echo $menu; ?>
+<div id="content">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <button type="submit" form="form-openbay-manager" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_text_manager; ?></h1>
+    </div>
+    <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-openbay-manager" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-updates" data-toggle="tab"><?php echo $text_btn_update; ?></a></li>
@@ -187,12 +187,15 @@
         dataType: 'json',
         beforeSend: function(){
           $('#button-patch').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+          $("#button-patch").attr('disabled','disabled');
         },
         success: function() {
-          $('#button-patch').empty().html('<?php echo $text_patch_button; ?>');
+          $('#button-patch').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
           alert('<?php echo $text_patch_complete; ?>');
         },
         error: function (xhr, ajaxOptions, thrownError) {
+          $('#button-patch').empty().html('<?php echo $text_patch_button; ?>');
+          $("#sync-cats").removeAttr('disabled');
           alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
       });
@@ -203,14 +206,17 @@
         url: 'index.php?route=extension/openbay/faqClear&token='+token,
         beforeSend: function(){
           $('#button-clear-faq').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+          $("#button-clear-faq").attr('disabled','disabled');
         },
         type: 'post',
         dataType: 'json',
         success: function(json) {
-          $('#button-clear-faq').empty().html('<?php echo $text_clear; ?>');
+          $('#button-clear-faq').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
           alert('<?php echo $text_clear_faq_complete; ?>');
         },
         error: function (xhr, ajaxOptions, thrownError) {
+          $('#button-clear-faq').empty().html('<?php echo $text_clear; ?>');
+          $("#sync-cats").removeAttr('disabled');
           alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
       });

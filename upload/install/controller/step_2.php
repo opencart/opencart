@@ -38,6 +38,7 @@ class ControllerStep2 extends Controller {
 		$data['text_session'] = $this->language->get('text_session');
 		$data['text_global'] = $this->language->get('text_global');
 		$data['text_mysqli'] = $this->language->get('text_mysqli');
+		$data['text_mysql'] = $this->language->get('text_mysql');
   		$data['text_mpdo'] = $this->language->get('text_mpdo');
 		$data['text_pgsql'] = $this->language->get('text_pgsql');
 		$data['text_gd'] = $this->language->get('text_gd');

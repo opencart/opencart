@@ -32,6 +32,7 @@ $_['text_magic']             = 'Magic Quotes GPC';
 $_['text_upload']            = 'File Uploads';
 $_['text_session']           = 'Session Auto Start';
 $_['text_mysqli']            = 'MySQLi';
+$_['text_mysql']             = 'MySQL';
 $_['text_mpdo']              = 'mPDO';
 $_['text_gd']                = 'GD';
 $_['text_curl']              = 'cURL';

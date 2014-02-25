@@ -54,8 +54,6 @@ $_['text_app_stock_2']          = 'When customer had paid';
 $_['text_created_hours']        = 'New order age limit';
 $_['text_created_hours_help']   = 'Orders are new when younger than this limit (in hours). Default is 72';
 
-$_['text_import_ebay_items']    = 'Import eBay items';
-
 $_['text_import_pending']       = 'Import unpaid orders:';
 $_['text_import_def_id']        = 'Import default status:';
 $_['text_import_paid_id']       = 'Paid status:';

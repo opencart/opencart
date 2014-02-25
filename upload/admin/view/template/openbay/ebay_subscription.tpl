@@ -1,40 +1,39 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-<?php
-        foreach ($breadcrumbs as $breadcrumb) {
-            echo $breadcrumb['separator'] .'<a href="'.$breadcrumb['href'].'">'.$breadcrumb['text'].'</a>';
-        }
-?>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a data-toggle="tooltip" title="<?php echo $text_load; ?>" class="btn" onclick="loadAccount(); loadUsage();"><i class="fa fa-refresh"></i></a>
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
+    <div class="panel-body">
 
-    <div class="box mBottom130">
-        <div class="heading">
-            <h1><?php echo $text_heading; ?></h1>
-            <div class="buttons">
-                <?php if($validation == true) { ?>
-                    <a onclick="loadAccount(); loadUsage();" class="button" id="loadAccount"><span><?php echo $text_load; ?></span></a>
-                    <img src="view/image/loading.gif" class="imageLoadAccount" class="displayNone" alt="Loading" />
-                <?php } ?>
-                <a onclick="location = '<?php echo $return; ?>';" class="button"><span><?php echo $text_btn_return; ?></span></a>
-            </div>
-        </div>
-        <div class="content">
+
+
         <?php if($validation == true) { ?>
-            <h2><?php echo $text_usage_title; ?> <img src="view/image/loading.gif" id="imageLoadUsage" class="displayNone" alt="Loading" /></h2>
+            <h4><?php echo $text_usage_title; ?> <div class="btn btn-primary" id="load_usage_loading"><i class="fa fa-refresh fa-spin"></i></div></h4>
             <div id="usageTable" class="displayNone"></div>
 
-            <h2 class="mTop10"><?php echo $text_subscription_current; ?> <img src="view/image/loading.gif" class="imageLoadAccount" class="displayNone" alt="Loading" /></h2>
+            <h4><?php echo $text_subscription_current; ?> <div class="btn btn-primary hidden load_account_loading"><i class="fa fa-refresh fa-spin"></i></div></h4>
             <table width="100%" cellspacing="0" cellpadding="5" border="0" id="myopenbayplan" class="displayNone border borderNoBottom"></table>
 
-            <h2 class="mTop10"><?php echo $text_subscription_avail; ?> <img src="view/image/loading.gif" class="imageLoadAccount" class="displayNone" alt="Loading" /></h2>
+            <h4><?php echo $text_subscription_avail; ?> <div class="btn btn-primary hidden load_account_loading"><i class="fa fa-refresh fa-spin"></i></div></h4>
             <p><?php echo $text_subscription_avail1; ?></p>
             <p><?php echo $text_subscription_avail2; ?></p>
 
             <table width="100%" cellspacing="0" cellpadding="5" border="0" id="openbayplans" class="displayNone border borderNoBottom"></table>
 
         <?php }else{ ?>
-            <div class="warning"><?php echo $text_error_validation; ?></div>
+          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $text_error_validation; ?>
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+          </div>
         <?php } ?>
     </div>
 </div>
@@ -89,12 +88,12 @@
         dataType: 'json',
         beforeSend: function(){
             $('#loadAccount').hide();
-            $('.imageLoadAccount').show();
+            $('.load_account_loading').show();
             $('#openbayplans').hide();
         },
         success: function(json) {
             $('#loadAccount').show();
-            $('.imageLoadAccount').hide();
+            $('.load_account_loading').hide();
             $('#openbayplans').empty().show();
 
             htmlInj = '';
@@ -132,12 +131,12 @@
             });
         },
         failure: function(){
-            $('.imageLoadAccount').hide();
+            $('.load_account_loading').hide();
             $('#loadAccount').show();
             alert('<?php echo $text_ajax_load_error; ?>');
         },
         error: function(){
-            $('.imageLoadAccount').hide();
+            $('.load_account_loading').hide();
             $('#loadAccount').show();
             alert('<?php echo $text_ajax_load_error; ?>');
         }
@@ -151,20 +150,20 @@
         dataType: 'json',
         beforeSend: function(){
             $('#usageTable').hide();
-            $('#imageLoadUsage').show();
+            $('#load_usage_loading').show();
         },
         success: function(json) {
-            $('#imageLoadUsage').hide();
+            $('#load_usage_loading').hide();
             $('#usageTable').html(json.html).show();
             if(json.lasterror){ alert(json.lastmsg); }
         },
         failure: function(){
-            $('#imageLoadUsage').hide();
+            $('#load_usage_loading').hide();
             $('#usageTable').hide();
             alert('<?php echo $text_ajax_load_error; ?>');
         },
         error: function(){
-            $('#imageLoadUsage').hide();
+            $('#load_usage_loading').hide();
             $('#usageTable').hide();
             alert('<?php echo $text_ajax_load_error; ?>');
         }

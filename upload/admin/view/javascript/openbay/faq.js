@@ -27,17 +27,18 @@ function getFaq(){
             if(data.faq_id){
                 var htmlInj = '';
 
-                htmlInj += '<div id="faqPopupContainer">';
-                htmlInj += '<span id="faqClose" onclick="hideFaq();">X</span>';
-                htmlInj += '<h4>'+data.title+'</h4>';
-                htmlInj += '<p>'+data.message+'</p>';
-                htmlInj += '<p class="buttons">';
-                    htmlInj += '<a class="button" style="float:right;" href="'+data.link+'" target="_BLANK"><span>'+data.faqbtn+'</span></a>';
-                htmlInj += '</p>';
+                htmlInj += '<div class="row">';
+                    htmlInj += '<div class="col-md-5 col-md-offset-7">';
+                        htmlInj += '<div id="faq" class="alert alert-info">';
+                            htmlInj += ' <button type="button" class="close" data-dismiss="alert" onclick="hideFaq();">&times;</button>';
+                            htmlInj += '<h4><i class="fa fa-info-circle"></i> '+data.title+'</h4>';
+                            htmlInj += '<h5>'+data.message+'<label class="label label-info pull-right"><a class="alert-link" href="'+data.link+'" target="_BLANK">'+data.faqbtn+'</a></label></h5>';
+                        htmlInj += '</div>';
+                    htmlInj += '</div>';
                 htmlInj += '</div>';
 
-                $('#content').prepend(htmlInj);
-                $('#faqPopupContainer').fadeIn();
+                //$('#content').prepend(htmlInj);
+                $('#faq').slideDown('slow');
             }
         }
     });
@@ -47,12 +48,12 @@ $(document).ready(function(){
     getFaq();
 });
 
-function hideFaq(){
+$('#faq-close').bind('click', function() {
     var route = $.getUrlVar('route');
     var token = $.getUrlVar('token');
-    
-    $('#faqPopupContainer').fadeOut();
-    
+
+    $('#faq').fadeOut();
+
     $.ajax({
         url: 'index.php?route=extension/openbay/faqDismiss&token='+token+'&qry_route='+route,
         type: 'GET',
@@ -60,4 +61,4 @@ function hideFaq(){
         success: function(data) {}
     });
     return false;
-}
+});

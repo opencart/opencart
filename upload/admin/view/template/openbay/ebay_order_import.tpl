@@ -10,14 +10,14 @@
       <div class="pull-right">
         <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
     <div class="panel-body">
       <?php if($validation === true) { ?>
         <form id="form-ebay-import" class="form-horizontal">
           <p><?php echo $text_sync_pull_notice; ?></p>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="button_import"><?php echo $text_import_ebay_items; ?></label>
+            <label class="col-sm-2 control-label" for="button_import"><?php echo $text_sync_pull_orders; ?></label>
             <div class="col-sm-10">
               <a class="btn btn-primary" id="button_import"><?php echo $text_sync_pull_orders; ?></a>
             </div>

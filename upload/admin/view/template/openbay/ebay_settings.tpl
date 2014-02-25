@@ -5,13 +5,11 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-
   <?php if ($error_warning) { ?>
     <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
       <button type="button" class="close" data-dismiss="alert">&times;</button>
     </div>
   <?php } ?>
-
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
@@ -73,7 +71,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_api_status; ?></label>
               <div class="col-sm-10">
-                <h4><span id="api-status" class="label" style="display:none;"></span></h4>
+                <h4><span id="api-status" class="label hidden"></span></h4>
               </div>
             </div>
             <div class="form-group">
@@ -506,8 +504,7 @@
     </div>
   </div>
 </div>
-
-<script type="text/javascript">
+<script type="text/javascript"><!--
     $('#button-clear-data').bind('click', function() {
       var pass = prompt("<?php echo $text_ajax_dev_enter_pw; ?>", "");
 
@@ -628,5 +625,4 @@
       changeTaxHandler();
     });
 //--></script>
-
 <?php echo $footer; ?>

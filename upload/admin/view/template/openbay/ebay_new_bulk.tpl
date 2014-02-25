@@ -12,8 +12,8 @@
             <h1><?php echo $text_page_title; ?></h1>
             <div class="buttons">
                 <a class="button" onclick="previewAll()" id="previewBtn"><span><?php echo $text_preview_all; ?></span></a>
-                <a class="button" style="display:none" onclick="editAll();" id="previewEditBtn"><span><?php echo $text_edit; ?></span></a>
-                <a class="button" style="display:none" onclick="submitAll();" id="submitBtn"><span><?php echo $text_submit; ?></span></a>
+                <a class="button hidden" onclick="editAll();" id="previewEditBtn"><span><?php echo $text_edit; ?></span></a>
+                <a class="button hidden" onclick="submitAll();" id="submitBtn"><span><?php echo $text_submit; ?></span></a>
             </div>
         </div>
         <form id="form">
@@ -51,8 +51,8 @@
                                             <input type="hidden" name="qty" value="<?php echo $product['quantity']; ?>" class="openbayData_<?php echo $i; ?>" />
 
                                             <div class="buttons right">
-                                                <a class="button" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>" style="display:none;"><span><?php echo $text_features; ?></span></a>
-                                                <a class="button" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" style="display:none;"><span><?php echo $text_catalog; ?></span></a>
+                                                <a class="button hidden" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>"><span><?php echo $text_features; ?></span></a>
+                                                <a class="button hidden" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" ><span><?php echo $text_catalog; ?></span></a>
                                             </div>
 
                                             <div id="featurePage_<?php echo $i; ?>" class="greyScreenBox featurePage">

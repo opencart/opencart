@@ -10,18 +10,18 @@
       <div class="pull-right">
         <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
     <div class="panel-body">
       <?php if($validation === true) { ?>
-        <?php if($imgImport > 0){ ?>
+        <?php if($image_import > 0){ ?>
           <div class="alert alert-danger">
-            <i class="fa fa-exclamation-circle"></i> <?php echo $imgImport; ?> <?php echo $text_import_images_msg1; ?>
-            <a href="<?php echo $imgImportLink; ?>" target="_blank"><?php echo $text_import_images_msg2; ?></a> <?php echo $text_import_images_msg3; ?>
+            <i class="fa fa-exclamation-circle"></i> <?php echo $image_import; ?> <?php echo $text_import_images_msg1; ?>
+            <a href="<?php echo $image_import_link; ?>" target="_blank"><?php echo $text_import_images_msg2; ?></a> <?php echo $text_import_images_msg3; ?>
           </div>
         <?php } ?>
 
-        <?php if($this->config->get('config_maintenance') == 1){ ?>
+        <?php if($maintenance == 1){ ?>
           <div class="alert alert-danger">
             <i class="fa fa-exclamation-circle"></i> <?php echo $text_maintenance_fail; ?>
           </div>

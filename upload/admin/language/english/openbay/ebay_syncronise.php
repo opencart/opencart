@@ -4,7 +4,6 @@ $_['text_page_title']           = 'OpenBay Pro for eBay';
 $_['text_ebay']                 = 'eBay';
 $_['text_heading']              = 'Syncronise';
 $_['text_btn_return']           = 'Return';
-$_['text_legend_ebay_sync']     = 'Sync with eBay';
 $_['text_sync_desc']            = 'You need to sync your store with the latest available shipping options and categories from eBay, this data is only for the options when listing an item to eBay - it will not import categories to your store etc. <br /><strong>You should update these frequently to ensure you always have the latest data from eBay.</strong>';
 $_['text_sync_cats_lbl']        = 'Get main categories<span class="help">This does not import any categories to your store!</span>';
 $_['text_sync_shop_lbl']        = 'Get shop categories<span class="help">This does not import any categories to your store!</span>';

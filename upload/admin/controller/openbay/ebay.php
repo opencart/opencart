@@ -689,11 +689,12 @@ class ControllerOpenbayEbay extends Controller {
 			'text' => $this->language->get('text_heading'),
 		);
 
-		$data['return']           = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
-		$data['validation']       = $this->openbay->ebay->validate();
-		$data['token']            = $this->session->data['token'];
-		$data['imgImport']        = $this->model_openbay_ebay_product->countImportImages();
-		$data['imgImportLink']    = $this->url->link('openbay/ebay/getImportImages', 'token=' . $this->session->data['token'], 'SSL');
+		$data['return'] = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
+		$data['validation'] = $this->openbay->ebay->validate();
+		$data['token'] = $this->session->data['token'];
+		$data['maintenance'] = $this->config->get('config_maintenance');
+		$data['image_import'] = $this->model_openbay_ebay_product->countImportImages();
+		$data['image_import_link'] = $this->url->link('openbay/ebay/getImportImages', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

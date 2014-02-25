@@ -1,8 +1,8 @@
 <?php
+$_['text_heading']                      = 'Order import';
 $_['text_openbay']                      = 'OpenBay Pro';
 $_['text_page_title']                   = 'OpenBay Pro for eBay';
 $_['text_ebay']                         = 'eBay';
-$_['text_heading']                      = 'Order import';
 $_['text_btn_return']                   = 'Return';
 $_['text_sync_orders']                  = 'Orders';
 $_['text_sync_pull_orders']             = 'Pull new orders';

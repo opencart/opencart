@@ -1,18 +1,18 @@
-<?php echo $header; ?><?php echo $menu; ?>
-<div id="content">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      <div class="pull-right">
-        <button type="submit" form="form-openbay-manager" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
-        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
-      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_text_manager; ?></h1>
-    </div>
-    <div class="panel-body">
+            <?php echo $header; ?><?php echo $menu; ?>
+            <div id="content">
+              <ul class="breadcrumb">
+                <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+                <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+                <?php } ?>
+              </ul>
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  <div class="pull-right">
+                    <button type="submit" form="form-openbay-manager" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn" onclick="validateForm(); return false;"><i class="fa fa-check-circle"></i></button>
+                    <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
+                  <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_text_manager; ?></h1>
+                </div>
+                <div class="panel-body">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-openbay-manager" class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-updates" data-toggle="tab"><?php echo $text_btn_update; ?></a></li>
@@ -97,14 +97,14 @@
               <label class="col-sm-2 control-label" for="button-clear-faq"><?php echo $text_test_connection; ?></label>
               <div class="col-sm-10">
                 <a class="btn btn-primary" id="ftp-test" onclick="ftpTest();"><?php echo $text_btn_test; ?></a>
-                <div class="btn btn-primary" id="ftp-test-loading" style="display:none;"><i class="fa fa-refresh fa-spin"></i></div>
+                <div class="btn btn-primary hidden" id="ftp-test-loading"><i class="fa fa-refresh fa-spin"></i></div>
               </div>
             </div>
-            <div class="form-group" id="ftp-update-row" style="display:none;">
+            <div class="form-group hidden" id="ftp-update-row">
               <label class="col-sm-2 control-label" for="ftp-update-module"><?php echo $text_run_update; ?></label>
               <div class="col-sm-10">
                 <a class="btn btn-primary" id="ftp-update-module" onclick="updateModule();"><?php echo $text_btn_update; ?></a>
-                <div class="btn btn-primary" id="ftp-update-module-loading" style="display:none;"><i class="fa fa-refresh fa-spin"></i></div>
+                <div class="btn btn-primary hidden" id="ftp-update-module-loading"><i class="fa fa-refresh fa-spin"></i></div>
               </div>
             </div>
             <div id="updateBox"></div>
@@ -190,7 +190,7 @@
         },
         success: function() {
           $('#button-patch').empty().html('<?php echo $text_patch_button; ?>');
-          alert('<?php echo $text_run_patch_complete; ?>');
+          alert('<?php echo $text_patch_complete; ?>');
         },
         error: function (xhr, ajaxOptions, thrownError) {
           alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

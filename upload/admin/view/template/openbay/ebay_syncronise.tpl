@@ -1,74 +1,74 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-        <?php } ?>
-    </div>
-
-    <?php if ($error_warning) { ?>
-        <div class="warning"><?php echo $error_warning; ?></div>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-
-    <div class="box mBottom130">
-        <div class="heading">
-            <h1><?php echo $text_heading; ?></h1>
-            <div class="buttons">
-                <a onclick="location = '<?php echo $return; ?>';" class="button"><span><?php echo $text_btn_return; ?></span></a>
-            </div>
+  </ul>
+  <?php if ($error_warning) { ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
+      <h1 class="panel-title"><i class="fa fa-refresh fa-lg"></i> <?php echo $text_heading; ?></h1>
+    </div>
+    <div class="panel-body">
+      <?php if($validation == true) { ?>
+        <p><?php echo $text_sync_desc; ?></p>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="syncCats"><?php echo $text_sync_cats_lbl; ?></label>
+          <div class="col-sm-10">
+            <a class="btn btn-primary" id="syncCats" onclick="syncCats();"><?php echo $text_sync_btn; ?></a>
+          </div>
         </div>
-        <div class="content">
-        <?php if($validation == true) { ?>
-            <h2><?php echo $text_legend_ebay_sync; ?></h2>
-            <p><?php echo $text_sync_desc; ?></p>
-
-            <table class="form">
-                <tr>
-                    <td valign="middle"><label for="syncCats"><?php echo $text_sync_cats_lbl; ?></td>
-                    <td><a onclick="syncCats();" class="button" id="syncCats"><span><?php echo $text_sync_btn; ?></span></a><img src="view/image/loading.gif" id="imageLoadingCats" class="displayNone" alt="Loading" /></td>
-                </tr>
-                <tr>
-                    <td valign="middle"><label for="syncShopCats"><?php echo $text_sync_shop_lbl; ?></td>
-                    <td><a onclick="syncShopCats();" class="button" id="syncShopCats"><span><?php echo $text_sync_btn; ?></span></a><img src="view/image/loading.gif" id="imageLoadingShopCats" class="displayNone" alt="Loading" /></td>
-                </tr>
-                <tr>
-                    <td valign="middle"><label for="loadSettings"><?php echo $text_sync_setting_lbl; ?></td>
-                    <td><a onclick="loadSettings();" class="button" id="loadSettings"><span><?php echo $text_sync_btn; ?></span></a><img src="view/image/loading.gif" id="imageloadSettings" class="displayNone" alt="Loading" /></td>
-                </tr>
-            </table>
-        <?php }else{ ?>
-            <div class="warning"><?php echo $text_error_validation; ?></div>
-        <?php } ?>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="sync-shop-cats"><?php echo $text_sync_shop_lbl; ?></label>
+          <div class="col-sm-10">
+            <a class="btn btn-primary" id="sync-shop-cats"><?php echo $text_sync_btn; ?></a>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="col-sm-2 control-label" for="loadSettings"><?php echo $text_sync_setting_lbl; ?></label>
+          <div class="col-sm-10">
+            <a class="btn btn-primary" id="loadSettings" onclick="loadSettings();"><?php echo $text_sync_btn; ?></a>
+          </div>
+        </div>
+      <?php }else{ ?>
+        <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $text_error_validation; ?>
+          <button type="button" class="close" data-dismiss="alert">&times;</button>
+        </div>
+      <?php } ?>
     </div>
 </div>
 
 <script type="text/javascript"><!--
-    function syncCats(){
-        $.ajax({
-            url: 'index.php?route=openbay/ebay/loadCategories&token=<?php echo $token; ?>',
-            beforeSend: function(){
-                $('#syncCats').hide();
-                $('#imageLoadingCats').show();
-                alert('<?php echo $text_ajax_ebay_categories; ?>');
-            },
-            type: 'post',
-            dataType: 'json',
-            success: function(json) {
-                $('#syncCats').show(); $('#imageLoadingCats').hide();
-                alert(json.msg);
-            },
-            failure: function(){
-                $('#imageLoadingCats').hide();
-                $('#syncCats').show();
-                alert('<?php echo $text_ajax_load_error; ?>');
-            },
-            error: function(){
-                $('#imageLoadingCats').hide();
-                $('#syncCats').show();
-                alert('<?php echo $text_ajax_load_error; ?>');
-            }
-        });
-    }
+    $('#sync-shop-cats').bind('click', function() {
+      $.ajax({
+          url: 'index.php?route=openbay/ebay/loadCategories&token=<?php echo $token; ?>',
+          beforeSend: function(){
+            $('#sync-shop-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+            alert('<?php echo $text_ajax_ebay_categories; ?>');
+          },
+          type: 'post',
+          dataType: 'json',
+          success: function(json) {
+            $('#sync-shop-cats').empty().html('<?php echo $text_sync_btn; ?>');
+            alert(json.msg);
+          },
+          failure: function(){
+            $('#sync-shop-cats').empty().html('<?php echo $text_sync_btn; ?>');
+              alert('<?php echo $text_ajax_load_error; ?>');
+          },
+          error: function(){
+            $('#sync-shop-cats').empty().html('<?php echo $text_sync_btn; ?>');
+            alert('<?php echo $text_ajax_load_error; ?>');
+          }
+      });
+    });
 
     function loadSettings(){
         $.ajax({

@@ -14,14 +14,18 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 			unset($this->session->data['error']);
+		} else {
+			$data['error_warning'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
 		}
 
-		$data['btn_add']  = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['insert']  = $this->url->link('openbay/ebay_template/add', 'token=' . $this->session->data['token'], 'SSL');
 		$data['templates'] = $this->model_openbay_ebay_template->getAll();
 		$data['token']    = $this->session->data['token'];
 
@@ -38,7 +42,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_ebay'),
 		);
 
@@ -46,8 +50,6 @@ class ControllerOpenbayEbayTemplate extends Controller {
 			'href' => $this->url->link('openbay/ebay_template/listAll', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_heading'),
 		);
-
-		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -73,10 +75,11 @@ class ControllerOpenbayEbayTemplate extends Controller {
 			$this->response->redirect($this->url->link('openbay/ebay_template/listAll&token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		$this->templateForm();
+		$this->templateForm($data);
 	}
 
 	public function delete() {
+		$this->load->language('openbay/ebay_template');
 		$this->load->model('openbay/ebay_template');
 
 		if (!$this->user->hasPermission('modify', 'openbay/ebay_template')) {
@@ -84,6 +87,8 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		}else{
 			if (isset($this->request->get['template_id'])) {
 				$this->model_openbay_ebay_template->delete($this->request->get['template_id']);
+
+				$this->session->data['success'] = $this->language->get('text_deleted');
 			}
 		}
 		$this->response->redirect($this->url->link('openbay/ebay_template/listAll&token=' . $this->session->data['token'], 'SSL'));
@@ -107,10 +112,10 @@ class ControllerOpenbayEbayTemplate extends Controller {
 			$this->response->redirect($this->url->link('openbay/ebay_template/listAll&token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		$this->templateForm();
+		$this->templateForm($data);
 	}
 
-	public function templateForm() {
+	public function templateForm($data) {
 		$this->load->model('openbay/ebay');
 
 		$data['token'] = $this->session->data['token'];
@@ -144,12 +149,12 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => 'eBay',
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/openbay/listAll', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('openbay/ebay/listAll', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => 'Profiles',
 		);
 
@@ -188,11 +193,7 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		}
 
 		if ($this->request->post['name'] == '') {
-			$this->error['name'] = $this->language->get('text_error_name');
-		}
-
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
+			$this->error['warning'] = $this->language->get('text_error_name');
 		}
 
 		if (!$this->error) {

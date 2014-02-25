@@ -1,68 +1,66 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <?php if ($error_warning) { ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+  <?php if ($success) { ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-code fa-lg"></i> <?php echo $text_title_list; ?></h1>
+    </div>
+    <div class="panel-body">
+      <table class="table table-bordered table-hover">
+        <thead>
+          <tr>
+            <td class="text-left"><?php echo $text_column_name; ?></td>
+            <td class="text-center"><?php echo $text_column_action; ?></td>
+          </tr>
+        </thead>
+        <tbody>
+        <?php if ($templates) { ?>
+          <?php foreach ($templates as $template) { ?>
+            <tr>
+              <td class="text-left"><?php echo $template['name']; ?></td>
+              <td class="text-right">
+                <a href="<?php echo $template['link_edit']; ?>" data-toggle="tooltip" title="<?php echo $text_btn_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a>&nbsp;
+                <a href="<?php echo $template['link_delete']; ?>" data-toggle="tooltip" title="<?php echo $text_btn_delete; ?>" class="btn btn-danger profile-delete"><i class="fa fa-minus-circle"></i></a>
+              </td>
+            </tr>
+          <?php } ?>
+        <?php } else { ?>
+          <tr>
+            <td class="text-center" colspan="2"><?php echo $text_no_results; ?></td>
+          </tr>
         <?php } ?>
+        </tbody>
+      </table>
     </div>
-    <?php if (isset($error_warning)) { ?>
-    <div class="warning" style="margin-bottom:10px;"><?php echo $error_warning; ?></div>
-    <?php } ?>
-    <?php if (isset($success)) { ?>
-    <div class="success" style="margin-bottom:10px;"><?php echo $success; ?></div>
-    <?php } ?>
-    <div class="box">
-        <div class="heading">
-            <h1><img src="view/image/product.png" alt="" /> <?php echo $text_title_list; ?></h1>
-            <div class="buttons">
-                <form action="<?php echo $btn_add; ?>" method="post" id="addForm">
-                    <a onclick="$('#addForm').submit();" class="button"><span><?php echo $text_btn_add; ?></span></a>
-                </form>
-            </div>
-        </div>   
-        <div class="content">
-            <table class="list">
-                <thead>
-                    <tr>
-                        <td class="left"><?php echo $text_template_name; ?></td>
-                        <td class="left" width="150"></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if ($templates) { ?>
-                        <?php foreach ($templates as $template) { ?>
-                        <tr>
-                            <td class="left"><?php echo $template['name']; ?></td>
-                            <td class="right">
-                                <div class="buttons">
-                                    <a href="<?php echo $template['link_edit']; ?>" class="button profileEdit"><?php echo $text_btn_edit; ?></a>&nbsp;
-                                    <a href="<?php echo $template['link_delete']; ?>" class="button profileDelete"><?php echo $text_btn_delete; ?></a>
-                                </div>
-                            </td>
-                        </tr>
-                        <?php } ?>
-                    <?php } else { ?>
-                    <tr>
-                        <td class="center" colspan="2"><?php echo $text_no_results; ?></td>
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>
-        </div>
-    </div>
+  </div>
 </div>
-
 <script type="text/javascript"><!--
-    $(document).ready(function() {
-        $('a.profileDelete').click(function(event) {
-            event.preventDefault();
-            var url = $(this).attr('href');
-            var confirm_box = confirm('<?php echo $text_confirm_delete; ?>');
-            if (confirm_box) {
-                window.location = url;
-            }
-        });
+  $(document).ready(function() {
+    $('a.profile-delete').click(function(event) {
+      event.preventDefault();
+      var url = $(this).attr('href');
+      var confirm_box = confirm('<?php echo $text_confirm_delete; ?>');
+      if (confirm_box) {
+        window.location = url;
+      }
     });
+  });
 //--></script>
-
 <?php echo $footer; ?>

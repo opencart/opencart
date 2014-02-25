@@ -1,4 +1,4 @@
-<div id="tab-openbay" style="display:none;">
+<div id="tab-openbay" class="hidden">
   <table class="list">
     <thead>
     <tr>

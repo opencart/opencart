@@ -663,7 +663,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data = $this->load->language('openbay/ebay_import');
 
-		$this->document->setTitle($this->language->get('text_page_title'));
+		$this->document->setTitle($this->language->get('text_heading'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -706,7 +706,7 @@ class ControllerOpenbayEbay extends Controller {
 	public function viewOrderImport() {
 		$data = $this->load->language('openbay/ebay_orders');
 
-		$this->document->setTitle($this->language->get('text_page_title'));
+		$this->document->setTitle($this->language->get('text_heading'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 

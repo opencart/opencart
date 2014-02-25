@@ -71,7 +71,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_api_status; ?></label>
               <div class="col-sm-10">
-                <h4><span id="api-status" class="label hidden"></span></h4>
+                <h4><span id="api-status" class="label" style="display:none;"></span></h4>
               </div>
             </div>
             <div class="form-group">

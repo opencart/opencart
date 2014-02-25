@@ -14,14 +14,18 @@ class ControllerOpenbayEbayProfile extends Controller {
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 			unset($this->session->data['error']);
+		} else {
+			$data['error_warning'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
 		}
 
-		$data['btn_add']  = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
+		$data['insert']  = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
 		$data['types']    = $this->model_openbay_ebay_profile->getTypes();
 		$data['profiles'] = $this->model_openbay_ebay_profile->getAll();
 		$data['token']    = $this->session->data['token'];
@@ -47,8 +51,6 @@ class ControllerOpenbayEbayProfile extends Controller {
 			'href' => $this->url->link('openbay/ebay_profile/profileAll', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_heading'),
 		);
-
-		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -77,7 +79,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 			}
 		}
 
-		$this->profileForm();
+		$this->profileForm($data);
 	}
 
 	public function delete() {
@@ -111,10 +113,10 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$this->response->redirect($this->url->link('openbay/ebay_profile/profileAll&token=' . $this->session->data['token'], 'SSL'));
 		}
 
-		$this->profileForm();
+		$this->profileForm($data);
 	}
 
-	public function profileForm() {
+	public function profileForm($data) {
 		$this->load->model('openbay/ebay');
 		$this->load->model('openbay/ebay_template');
 
@@ -123,10 +125,10 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$data['templates']                        = $this->model_openbay_ebay_template->getAll();
 		$data['types']                            = $this->model_openbay_ebay_profile->getTypes();
 
-		$setting                                        = array();
-		$setting['dispatch_times']                      = $this->openbay->ebay->getSetting('dispatch_time_max');
-		$setting['countries']                           = $this->openbay->ebay->getSetting('countries');
-		$setting['returns']                             = $this->openbay->ebay->getSetting('returns');
+		$setting                                  = array();
+		$setting['dispatch_times']                = $this->openbay->ebay->getSetting('dispatch_time_max');
+		$setting['countries']                     = $this->openbay->ebay->getSetting('countries');
+		$setting['returns']                       = $this->openbay->ebay->getSetting('returns');
 
 		if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 			$this->session->data['warning'] = $this->language->get('text_error_missing_settings');
@@ -161,7 +163,6 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$this->response->redirect($this->url->link('openbay/ebay_profile/profileAll&token=' . $this->session->data['token']));
 		}
 
-		$this->document->setTitle($data['page_title']);
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -275,13 +276,11 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$data['data']['shipping_international_count']     = $i;
 		}
 
-		$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
-
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('openbay/'.$data['types'][$type]['template'], $data));
+		$this->response->setOutput($this->load->view($data['types'][$type]['template'], $data));
 	}
 
 	public function profileGet(){

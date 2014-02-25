@@ -194,7 +194,7 @@
                 <td class="left"><?php echo $product['status']; ?></td>
                   <td>
                     <?php foreach ($product['markets'] as $market) { ?>
-                      <div class="hidden" id="tooltip<?php echo $product['product_id']; ?>"></div>
+                      <div style="display:none;" id="tooltip<?php echo $product['product_id']; ?>"></div>
                       <?php if ($market['href'] != '') { ?>
                         <a href="<?php echo $market['href']; ?>" title="<?php echo $market['text']; ?>"><img width="45" height="45" style="margin-right:8px;" src="<?php echo $market['img']; ?>" onMouseOut="hideTooltip('tooltip<?php echo $product['product_id']; ?>')" onMouseOver="showTooltip('tooltip<?php echo $product['product_id']; ?>', '<?php echo $market['name']; ?>', '<?php echo $market['text']; ?>')" /></a>
                       <?php } else { ?>

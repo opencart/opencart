@@ -97,14 +97,14 @@
               <label class="col-sm-2 control-label" for="button-clear-faq"><?php echo $text_test_connection; ?></label>
               <div class="col-sm-10">
                 <a class="btn btn-primary" id="ftp-test" onclick="ftpTest();"><?php echo $text_btn_test; ?></a>
-                <div class="btn btn-primary hidden" id="ftp-test-loading"><i class="fa fa-refresh fa-spin"></i></div>
+                <div class="btn btn-primary" style="display:none;" id="ftp-test-loading"><i class="fa fa-refresh fa-spin"></i></div>
               </div>
             </div>
-            <div class="form-group hidden" id="ftp-update-row">
+            <div class="form-group" style="display:none;" id="ftp-update-row">
               <label class="col-sm-2 control-label" for="ftp-update-module"><?php echo $text_run_update; ?></label>
               <div class="col-sm-10">
                 <a class="btn btn-primary" id="ftp-update-module" onclick="updateModule();"><?php echo $text_btn_update; ?></a>
-                <div class="btn btn-primary hidden" id="ftp-update-module-loading"><i class="fa fa-refresh fa-spin"></i></div>
+                <div class="btn btn-primary" style="display:none;" id="ftp-update-module-loading"><i class="fa fa-refresh fa-spin"></i></div>
               </div>
             </div>
             <div id="updateBox"></div>

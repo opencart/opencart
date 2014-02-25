@@ -21,10 +21,10 @@
             <h4><?php echo $text_usage_title; ?> <div class="btn btn-primary" id="load_usage_loading"><i class="fa fa-refresh fa-spin"></i></div></h4>
             <div id="usageTable" class="displayNone"></div>
 
-            <h4><?php echo $text_subscription_current; ?> <div class="btn btn-primary hidden load_account_loading"><i class="fa fa-refresh fa-spin"></i></div></h4>
+            <h4><?php echo $text_subscription_current; ?> <div class="btn btn-primary load_account_loading" style="display:none;"><i class="fa fa-refresh fa-spin"></i></div></h4>
             <table width="100%" cellspacing="0" cellpadding="5" border="0" id="myopenbayplan" class="displayNone border borderNoBottom"></table>
 
-            <h4><?php echo $text_subscription_avail; ?> <div class="btn btn-primary hidden load_account_loading"><i class="fa fa-refresh fa-spin"></i></div></h4>
+            <h4><?php echo $text_subscription_avail; ?> <div class="btn btn-primary load_account_loading" style="display:none;"><i class="fa fa-refresh fa-spin"></i></div></h4>
             <p><?php echo $text_subscription_avail1; ?></p>
             <p><?php echo $text_subscription_avail2; ?></p>
 

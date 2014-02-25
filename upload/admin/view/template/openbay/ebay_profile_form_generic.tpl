@@ -1,3 +1,34 @@
+<?php echo $header; ?><?php echo $menu; ?>
+<div id="content">
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <?php if ($error_warning) { ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i></a>
+        <a data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn" onclick="$('#add-profile-form').submit();"><i class="fa fa-plus-circle"></i></a>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-file-text fa-lg"></i> <?php echo $text_title_list; ?></h1>
+    </div>
+    <div class="panel-body">
+
+
+
+
+
+
+
+
+
+
 <?php echo $header; ?>
 <div id="content">
     <div class="breadcrumb">

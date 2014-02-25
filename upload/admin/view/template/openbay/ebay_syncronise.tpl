@@ -65,15 +65,10 @@
         $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
         alert(json.msg);
       },
-      failure: function(){
+      error: function (xhr, ajaxOptions, thrownError) {
         $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
         $("#sync-cats").removeAttr('disabled');
-        alert('<?php echo $text_ajax_load_error; ?>');
-      },
-      error: function(){
-        $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
-        $("#sync-cats").removeAttr('disabled');
-        alert('<?php echo $text_ajax_load_error; ?>');
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
       }
     });
   });
@@ -96,15 +91,10 @@
             alert('<?php echo $text_ajax_setting_import_e; ?>');
         }
       },
-      failure: function(){
+      error: function (xhr, ajaxOptions, thrownError) {
         $('#load-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
         $("#load-settings").removeAttr('disabled');
-        alert('<?php echo $text_ajax_load_error; ?>');
-      },
-      error: function(){
-        $('#load-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
-        $("#load-settings").removeAttr('disabled');
-        alert('<?php echo $text_ajax_load_error; ?>');
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
       }
     });
   });
@@ -127,15 +117,10 @@
           alert(json.msg);
         }
       },
-      failure: function(){
+      error: function (xhr, ajaxOptions, thrownError) {
         $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
         $("#sync-shop-cats").removeAttr('disabled');
-        alert('<?php echo $text_ajax_load_error; ?>');
-      },
-      error: function(){
-        $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
-        $("#sync-shop-cats").removeAttr('disabled');
-        alert('<?php echo $text_ajax_load_error; ?>');
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
       }
     });
   });

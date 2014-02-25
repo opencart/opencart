@@ -974,7 +974,13 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (248, 'South Sudan', 'SS', 'SSD', '', 0, 1),
 (249, 'St. Barthelemy', 'BL', 'BLM', '', 0, 1),
 (250, 'St. Martin (French part)', 'MF', 'MAF', '', 0, 1),
-(251, 'Canary Islands', 'IC', 'ICA', '', 0, 1);
+(251, 'Canary Islands', 'IC', 'ICA', '', 0, 1),
+(252, 'Ascension Island (British)', 'AC', 'ASC', '', 0, 1),
+(253, 'Kosovo, Republic of', 'XK', 'UNK', '', 0, 1),
+(254, 'Isle of Man', 'IM', 'IMN', '', 0, 1),
+(255, 'Tristan da Cunha', 'SH', 'SHN', '', 0, 1),
+(256, 'Guernsey', 'GG', 'GGY', '', 0, 1),
+(257, 'Jersey', 'JE', 'JEY', '', 0, 1);
 -- --------------------------------------------------------
 
 --
@@ -6652,9 +6658,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3028, 196, 'SO', 'Southern', 1),
 (3029, 196, 'UV', 'Uva', 1),
 (3030, 196, 'WE', 'Western', 1),
-(3031, 197, 'A', 'Ascension', 1),
+
 (3032, 197, 'S', 'Saint Helena', 1),
-(3033, 197, 'T', 'Tristan da Cunha', 1),
+
 (3034, 199, 'ANL', 'A''ali an Nil', 1),
 (3035, 199, 'BAM', 'Al Bahr al Ahmar', 1),
 (3036, 199, 'BRT', 'Al Buhayrat', 1),
@@ -7571,7 +7577,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3969, 101, 'ALB', 'Alborz', 1),
 (3970, 21, 'BRU', 'Brussels-Capital Region', 1),
 (3971, 138, 'AG', 'Aguascalientes', 1),
-(3972, 222, 'IOM', 'Isle of Man', 1),
+
 (3973, 242, '01', 'Andrijevica', 1),
 (3974, 242, '02', 'Bar', 1),
 (3975, 242, '03', 'Berane', 1),
@@ -7618,7 +7624,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (4016, 243, '22', 'Pirot', 1),
 (4017, 243, '23', 'Jablanica', 1),
 (4018, 243, '24', 'Pčinja', 1),
-(4019, 243, 'KM', 'Kosovo', 1),
+
 (4020, 245, 'BO', 'Bonaire', 1),
 (4021, 245, 'SA', 'Saba', 1),
 (4022, 245, 'SE', 'Sint Eustatius', 1),
@@ -7632,7 +7638,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (4030, 248, 'WR', 'Warrap', 1),
 (4031, 248, 'BW', 'Western Bahr el-Ghazal', 1),
 (4032, 248, 'EW', 'Western Equatoria', 1),
-(4033, 222, 'GGY', 'Guernsey', 1),
+
 (4034, 222, 'JEY', 'Jersey', 1),
 
 (4036,117,  '0661405', 'Ainaži, Salacgrīvas novads', 1),

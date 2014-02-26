@@ -63,6 +63,7 @@
               <label class="col-sm-2 control-label" for="name"><?php echo $text_general_price; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="data[price_modify]" id="price_modify" value="<?php echo (isset($data['price_modify']) ? $data['price_modify'] : '0');  ?>" class="form-control" />
+                <span class="help-block"><?php echo $text_general_price_help; ?></span>
               </div>
             </div>
           </div>

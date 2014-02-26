@@ -193,11 +193,11 @@ final class Ebay {
 	}
 
 	public function removeItemByItemId($item_id) {
-		$this->log('removeItemByItemId() - ID: '.(int)$item_id);
+		$this->log('removeItemByItemId() - ID: '.$item_id);
 
-		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = '0' WHERE `ebay_item_id` = '".(int)$item_id."'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = '0' WHERE `ebay_item_id` = '".$this->db->escape($item_id)."'");
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `item_id` = '".(int)$item_id."'");
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `item_id` = '".$this->db->escape($item_id)."'");
 	}
 
 	public function removeItemByProductId($product_id) {

@@ -972,7 +972,6 @@ class ControllerExtensionOpenbay extends Controller {
 		$data = array();
 
 		$data = array_merge($data, $this->load->language('catalog/product'));
-		$data = array_merge($data, $this->load->language('extension/default'));
 		$data = array_merge($data, $this->load->language('openbay/openbay_itemlist'));
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -1208,7 +1207,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$filter_market_id = array_search($filter_marketplace, $amazonus_status);
 		}
 
-		$data = array(
+		$filter = array(
 			'filter_name'	        => $filter_name,
 			'filter_model'	        => $filter_model,
 			'filter_price'	        => $filter_price,
@@ -1228,17 +1227,17 @@ class ControllerExtensionOpenbay extends Controller {
 			'limit'                 => $this->config->get('config_admin_limit')
 		);
 
-		if($this->config->get('ebay_status') != '1' && $data['filter_market_name'] == 'ebay') {
+		if($this->config->get('ebay_status') != '1' && $filter['filter_market_name'] == 'ebay') {
 			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
 
-		if($this->config->get('amazon_status') != '1' && $data['filter_market_name'] == 'amazon') {
+		if($this->config->get('amazon_status') != '1' && $filter['filter_market_name'] == 'amazon') {
 			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
 
-		if($this->config->get('amazonus_status') != '1' && $data['filter_market_name'] == 'amazonus') {
+		if($this->config->get('amazonus_status') != '1' && $filter['filter_market_name'] == 'amazonus') {
 			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
 			return;
 		}
@@ -1249,9 +1248,9 @@ class ControllerExtensionOpenbay extends Controller {
 			'amazonus' => $this->config->get('amazonus_status'),
 		);
 
-		$product_total = $this->model_openbay_openbay->getTotalProducts($data);
+		$product_total = $this->model_openbay_openbay->getTotalProducts($filter);
 
-		$results = $this->model_openbay_openbay->getProducts($data);
+		$results = $this->model_openbay_openbay->getProducts($filter);
 
 		foreach ($results as $result) {
 			$edit = $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL');

@@ -45,11 +45,22 @@
           <div class="col-md-3 text-center">
             <div class="well">
               <a href="<?php echo $links_subscribe; ?>">
-                <span class="fa-stack fa-3x">
-                  <i class="fa fa-square-o fa-stack-2x"></i>
-                  <i class="fa fa-user fa-stack-1x"></i>
-                </span>
-                <h4><?php echo $text_heading_account; ?></h4>
+                  <span class="fa-stack fa-3x">
+                    <i class="fa fa-square-o fa-stack-2x"></i>
+                    <i class="fa fa-user fa-stack-1x"></i>
+                  </span>
+                <h4><?php echo $text_heading_subscription; ?></h4>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="well">
+              <a href="<?php echo $links_usage; ?>">
+                  <span class="fa-stack fa-3x">
+                    <i class="fa fa-square-o fa-stack-2x"></i>
+                    <i class="fa fa-bar-chart-o fa-stack-1x"></i>
+                  </span>
+                <h4><?php echo $text_heading_usage; ?></h4>
               </a>
             </div>
           </div>

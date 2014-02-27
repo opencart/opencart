@@ -226,8 +226,7 @@ $('#add-shipping-international').bind('click', function(){
       $.ajax({
         url: 'index.php?route=openbay/ebay/getShippingService&token=<?php echo $token; ?>&loc=' + loc,
         beforeSend: function(){
-          $('#add-shipping-'+id).empty().html('<i class="fa fa-refresh fa-spin"></i>');
-          $('#add-shipping-'+id).attr('disabled','disabled');
+          $('#add-shipping-'+id).empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
         },
         type: 'GET',
         dataType: 'json',
@@ -286,10 +285,10 @@ $('#add-shipping-international').bind('click', function(){
 
           $('#' + id + '-shipping-options').append(html);
 
-          $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>');
-          $('#add-shipping-'+id).removeAttr('disabled');
+          $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>').removeAttr('disabled');
         },
         error: function (xhr, ajaxOptions, thrownError) {
+          $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>').removeAttr('disabled');
           alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
       });

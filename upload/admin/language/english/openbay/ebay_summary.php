@@ -20,3 +20,4 @@ $_['text_count']                = 'Count';
 $_['text_report_30']            = '30 days';
 $_['text_report_52']            = '52 weeks';
 $_['text_title_dsr']            = 'DSR reports';
+$_['text_failed']               = 'Failed to load';

@@ -55,9 +55,9 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="button_import"><?php echo $text_import_ebay_items; ?></label>
+            <label class="col-sm-2 control-label" for="button-import"><?php echo $text_import_ebay_items; ?></label>
             <div class="col-sm-10">
-              <a class="btn btn-primary" id="button_import"><?php echo $text_import; ?></a>
+              <a class="btn btn-primary" id="button-import"><?php echo $text_import; ?></a>
             </div>
           </div>
         </form>
@@ -71,7 +71,7 @@
 </div>
 
 <script type="text/javascript"><!--
-  $('#button_import').bind('click', function() {
+  $('#button-import').bind('click', function() {
     var answer = confirm("<?php echo $text_ajax_import_confirm;?>");
 
     if (answer) {
@@ -86,21 +86,17 @@
       $.ajax({
         url: 'index.php?route=openbay/ebay/importItems&token=<?php echo $token; ?>&desc='+import_description+'&note='+note_import+'&advanced='+import_advanced+'&categories='+import_categories,
         beforeSend: function(){
-          $('#button_import').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+          $('#button-import').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
         },
         type: 'post',
         dataType: 'json',
         success: function(json) {
-          $('#button_import').empty().html('<?php echo $text_import; ?>');
+          $('#button-import').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
           alert('<?php echo $text_ajax_import_notify; ?>');
         },
-        failure: function() {
-          $('#button_import').empty().html('<?php echo $text_import; ?>');
-          alert('<?php echo $text_ajax_load_error; ?>');
-        },
-        error: function() {
-          $('#button_import').empty().html('<?php echo $text_import; ?>');
-          alert('<?php echo $text_ajax_load_error; ?>');
+        error: function (xhr, ajaxOptions, thrownError) {
+          $('#button-import').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
       });
     } else {

@@ -55,6 +55,7 @@ class ControllerOpenbayEbay extends Controller {
 		$data['links_settings']           = $this->url->link('openbay/ebay/settings', 'token=' . $this->session->data['token'], 'SSL');
 		$data['links_itemlink']           = $this->url->link('openbay/ebay/viewItemLinks', 'token=' . $this->session->data['token'], 'SSL');
 		$data['links_subscribe']          = $this->url->link('openbay/ebay/viewSubscription', 'token=' . $this->session->data['token'], 'SSL');
+		$data['links_usage']          	  = $this->url->link('openbay/ebay/viewUsage', 'token=' . $this->session->data['token'], 'SSL');
 		$data['links_itemimport']         = $this->url->link('openbay/ebay/viewItemImport', 'token=' . $this->session->data['token'], 'SSL');
 		$data['links_orderimport']        = $this->url->link('openbay/ebay/viewOrderImport', 'token=' . $this->session->data['token'], 'SSL');
 		$data['links_usage']              = $this->url->link('openbay/ebay/viewUsage', 'token=' . $this->session->data['token'], 'SSL');
@@ -647,7 +648,6 @@ class ControllerOpenbayEbay extends Controller {
 		);
 
 		$data['return']       = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
-		$data['validation']   = $this->openbay->ebay->validate();
 		$data['token']        = $this->session->data['token'];
 		$data['obp_token']    = $this->config->get('ebay_token');
 
@@ -656,6 +656,46 @@ class ControllerOpenbayEbay extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/ebay_subscription.tpl', $data));
+	}
+
+	public function viewUsage() {
+		$data = $this->load->language('openbay/ebay_usage');
+
+		$this->document->setTitle($this->language->get('text_page_title'));
+		$this->document->addStyle('view/stylesheet/openbay.css');
+		$this->document->addScript('view/javascript/openbay/faq.js');
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_ebay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/ebay/view_usage', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_heading'),
+		);
+
+		$data['return']       = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
+		$data['token']        = $this->session->data['token'];
+		$data['obp_token']    = $this->config->get('ebay_token');
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('openbay/ebay_usage.tpl', $data));
 	}
 
 	public function viewItemImport() {

@@ -1,5 +1,4 @@
 <?php
-// Text
 $_['text_filter'] = 'Filter results';
 $_['text_title'] = 'Title';
 $_['text_stock_range'] = 'Stock range';
@@ -16,7 +15,6 @@ $_['text_description'] = 'Description';
 $_['text_variations'] = 'variations';
 $_['text_variations_stock'] = 'stock';
 
-// Text status options
 $_['text_status_all'] = 'All';
 $_['text_status_ebay_active'] = 'eBay active';
 $_['text_status_ebay_inactive'] = 'eBay not active';
@@ -34,3 +32,21 @@ $_['text_status_amazonus_notlisted'] = 'Amazon US not listed';
 $_['text_status_amazonus_failed'] = 'Amazon US failed';
 $_['text_status_amazonus_linked'] = 'Amazon US linked';
 $_['text_status_amazonus_notlinked'] = 'Amazon US not linked';
+
+$_['text_openbay_new']              = 'Create new listing';
+$_['text_openbay_edit']             = 'View / Edit listing';
+$_['text_openbay_fix']              = 'Fix errors';
+$_['text_openbay_processing']       = 'Processing';
+
+$_['text_amazonus_saved']           = 'Saved (not uploaded)';
+$_['text_amazon_saved']             = 'Saved (not uploaded)';
+
+$_['text_markets']                  = 'Markets';
+$_['text_bulk_btn']                 = 'eBay bulk upload';
+$_['text_bulk_amazon_btn']          = 'Amazon EU bulk upload';
+
+$_['text_marketplace']              = 'Marketplace';
+$_['text_status']                   = 'Status';
+$_['text_option']                   = 'Option';
+$_['text_min']                   = 'Min';
+$_['text_max']                   = 'Max';

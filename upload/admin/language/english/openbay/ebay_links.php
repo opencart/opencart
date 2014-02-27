@@ -33,6 +33,7 @@ $_['text_text_linked_desc']         = 'Linked items are OpenCart items that have
 $_['text_text_unlinked_desc']       = 'Unlinked items are listings on your eBay account that do not link to any of your OpenCart products.';
 $_['text_text_unlinked_info']       = 'Click the check unlinked items button to search your active eBay listings for unlinked items. This may take a long time if you have many eBay listings.';
 $_['text_text_loading_items']       = 'Loading items';
+$_['text_failed']       			= 'Failed to load';
 
 // Tables
 $_['text_column_action']            = 'Action';
@@ -40,8 +41,8 @@ $_['text_column_status']            = 'Status';
 $_['text_column_variants']          = 'Variants';
 $_['text_column_itemId']            = 'eBay item ID';
 $_['text_column_product']           = 'Product';
-$_['text_column_product_auto']      = 'Product<span class="help">(Autocomplete from name)</span>';
-$_['text_column_stock_available']   = 'Local stock<br /><span class="help">Available to sell</span>';
-$_['text_column_listing_title']     = 'Listing title<span class="help">(eBay listing title)</span>';
-$_['text_column_allocated']         = 'Allocated stock<br /><span class="help">Sold but not paid</span>';
-$_['text_column_ebay_stock']        = 'eBay stock<span class="help">On listing</span>';
+$_['text_column_product_auto']      = 'Product name (auto complete)';
+$_['text_column_stock_available']   = 'Shop stock level';
+$_['text_column_listing_title']     = 'eBay listing title';
+$_['text_column_allocated']         = 'Allocated stock';
+$_['text_column_ebay_stock']        = 'eBay stock level';

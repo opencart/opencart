@@ -72,8 +72,7 @@
       type: 'post',
       dataType: 'json',
       beforeSend: function(){
-        $('#load-usage').empty().html('<i class="fa fa-refresh fa-spin"></i>');
-        $("#load-usage").attr('disabled','disabled');
+        $('#load-usage').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
         $('#selling-limits').empty().hide();
         $('.dsr-table').hide();
         $('.data-row').remove();
@@ -125,13 +124,9 @@
               alert(json.lastmsg);
           }
       },
-      failure: function(){
-          $('#load-usage').show();
-          alert('<?php echo $text_ajax_load_error; ?>');
-      },
-      error: function(){
-          $('#load-usage').show();
-          alert('<?php echo $text_ajax_load_error; ?>');
+      error: function (xhr, ajaxOptions, thrownError) {
+        $('#load-usage').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
       }
     });
   }

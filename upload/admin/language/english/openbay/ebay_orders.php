@@ -9,4 +9,4 @@ $_['text_error_validation']             = 'You need to register for your API tok
 $_['text_sync_pull_notice']             = 'This will pull new orders since the last automated check. If you have just installed then it will default to the last 24 hours.';
 $_['text_ajax_orders_import']           = 'Any new orders should appear within a few minutes';
 $_['text_complete']             		= 'Import requested';
-$_['text_failed']               		= 'Failed, retry?';
+$_['text_failed']               		= 'Failed to load';

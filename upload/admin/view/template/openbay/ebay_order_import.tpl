@@ -36,8 +36,7 @@
     $.ajax({
       url: 'index.php?route=openbay/ebay/importOrdersManual&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#button-import').empty().html('<i class="fa fa-refresh fa-spin"></i>');
-        $("#button-import").attr('disabled','disabled');
+        $('#button-import').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',
@@ -46,8 +45,7 @@
         alert('<?php echo $text_ajax_orders_import; ?>');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#button-import').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
-        $("#button-import").removeAttr('disabled');
+        $('#button-import').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
       }
     });

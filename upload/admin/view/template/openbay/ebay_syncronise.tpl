@@ -55,8 +55,7 @@
     $.ajax({
       url: 'index.php?route=openbay/ebay/loadCategories&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#sync-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>');
-        $("#sync-cats").attr('disabled','disabled');
+        $('#sync-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
         alert('<?php echo $text_ajax_ebay_categories; ?>');
       },
       type: 'post',
@@ -66,8 +65,7 @@
         alert(json.msg);
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
-        $("#sync-cats").removeAttr('disabled');
+        $('#sync-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
       }
     });
@@ -77,8 +75,7 @@
     $.ajax({
       url: 'index.php?route=openbay/ebay/loadSettings&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#load-settings').empty().html('<i class="fa fa-refresh fa-spin"></i>');
-        $("#load-settings").attr('disabled','disabled');
+        $('#load-settings').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',
@@ -92,8 +89,7 @@
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#load-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
-        $("#load-settings").removeAttr('disabled');
+        $('#load-settings').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
       }
     });
@@ -103,8 +99,7 @@
     $.ajax({
       url: 'index.php?route=openbay/ebay/loadSellerStore&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#sync-shop-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>');
-        $("#sync-shop-cats").attr('disabled','disabled');
+        $('#sync-shop-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',
@@ -118,8 +113,7 @@
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>');
-        $("#sync-shop-cats").removeAttr('disabled');
+        $('#sync-shop-cats').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
       }
     });

@@ -776,6 +776,11 @@ class ControllerExtensionOpenbay extends Controller {
 				'text' => $data['text_title_order_update'],
 			);
 
+			$data['change_order_status_id'] = $this->request->post['change_order_status_id'];
+			$data['ebay_status_shipped_id'] = $this->config->get('ebay_status_shipped_id');
+			$data['openbay_amazon_order_status_shipped'] = $this->config->get('openbay_amazon_order_status_shipped');
+			$data['openbay_amazonus_order_status_shipped'] = $this->config->get('openbay_amazonus_order_status_shipped');
+
 			$data['header'] = $this->load->controller('common/header');
 			$data['menu'] = $this->load->controller('common/menu');
 			$data['footer'] = $this->load->controller('common/footer');

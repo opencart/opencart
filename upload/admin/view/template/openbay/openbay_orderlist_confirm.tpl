@@ -1,136 +1,135 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
+  </ul>
+  <?php if ($error_warning) { ?>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
-  <div class="box">
-    <div class="heading">
-      <h1><img src="view/image/order.png" alt="" /> <?php echo $text_confirm_title; ?></h1>
-      <div class="buttons">
-          <a href="<?php echo $link_cancel; ?>" class="button"><?php echo $text_cancel; ?></a>
+  <?php } ?>
+  <?php if ($success) { ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
+      <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $text_confirm_title; ?></h1>
     </div>
-    <div class="content">
-        <div class="attention"><?php echo $text_confirm_change_text; ?>: <strong><?php echo $status_mapped[$this->request->post['change_order_status_id']]; ?></strong></div>
-      <form action="<?php echo $link_complete; ?>" method="post" enctype="multipart/form-data" id="form">
-        <table class="list">
+    <div class="panel-body">
+      <div class="alert alert-warning"><?php echo $text_confirm_change_text; ?>: <strong><?php echo $status_mapped[$change_order_status_id]; ?></strong></div>
+      <form action="<?php echo $link_complete; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
+        <table class="table">
           <thead>
             <tr>
-              <td class="center" width="60"><?php echo $column_order_id; ?></td>
-              <td class="left" width="150"><?php echo $column_customer; ?></td>
-              <td class="left" width="125"><?php echo $column_status; ?></td>
-              <td class="left" width="60"><?php echo $text_order_channel; ?></td>
-                <td class="left"><?php echo $column_date_added; ?></td>
-                <td class="left"><?php echo $text_column_addtional; ?></td>
-                <td class="left"><?php echo $text_column_comments; ?></td>
-                <td class="center">
-                    <?php echo $text_column_notify; ?>&nbsp;
-                    <input type="checkbox" name="notify_all" id="notify_all" value="1" onchange="notifyAll();" />
-                </td>
+              <td class="text-center"><?php echo $column_order_id; ?></td>
+              <td class="text-left"><?php echo $column_customer; ?></td>
+              <td class="text-left"><?php echo $column_status; ?></td>
+              <td class="text-left"><?php echo $text_order_channel; ?></td>
+              <td class="text-left"><?php echo $column_date_added; ?></td>
+              <td class="text-left"><?php echo $text_column_addtional; ?></td>
+              <td class="text-left"><?php echo $text_column_comments; ?></td>
+              <td class="text-center"><?php echo $text_column_notify; ?>&nbsp;<input type="checkbox" name="notify_all" id="notify_all" value="1" onchange="notifyAll();" /></td>
             </tr>
           </thead>
           <tbody>
-          <input type="hidden" name="order_status_id" value="<?php echo $this->request->post['change_order_status_id']; ?>"/>
+            <input type="hidden" name="order_status_id" value="<?php echo $change_order_status_id; ?>"/>
             <?php foreach ($orders as $order) { ?>
-                <input type="hidden" name="order_id[]" value="<?php echo $order['order_id']; ?>"/>
-                <input type="hidden" name="old_status[<?php echo $order['order_id']; ?>]" value="<?php echo $order['order_status_id']; ?>"/>
-                <tr>
-                    <td class="center"><?php echo $order['order_id']; ?></td>
-                    <td class="left"><?php echo $order['customer']; ?></td>
-                    <td class="left"><?php echo $order['status']; ?></td>
-                    <td class="left">
-                        <input type="hidden" name="channel[<?php echo $order['order_id']; ?>]" value="<?php echo $order['channel']; ?>"/>
-                        <?php echo $order['channel']; ?>
-                    </td>
-                    <td class="left"><?php echo $order['date_added']; ?></td>
-                    <td class="left">
-<?php
-                      if($order['channel'] == 'eBay') {
-                        if($this->request->post['change_order_status_id'] == $this->config->get('ebay_status_shipped_id')) {
-?>
-                            <p>
-                                <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_carrier; ?>:</span>
-                                <select name="carrier[<?php echo $order['order_id']; ?>]">
-                                    <?php foreach($market_options['ebay']['carriers'] as $carrier){ ?>
-                                        <option <?php echo ($carrier['description'] == $order['shipping_method'] ? ' selected' : ''); ?>><?php echo $carrier['description']; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </p>
-                            <p><span style="display:block; width:80px; font-weight:bold;"><?php echo $text_tracking; ?>:</span><input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" class="ebay_tracking_no"></p>
-<?php
-                        }
-                      }
+              <input type="hidden" name="order_id[]" value="<?php echo $order['order_id']; ?>"/>
+              <input type="hidden" name="old_status[<?php echo $order['order_id']; ?>]" value="<?php echo $order['order_status_id']; ?>"/>
+              <tr>
+                <td class="text-center"><?php echo $order['order_id']; ?></td>
+                <td class="text-left"><?php echo $order['customer']; ?></td>
+                <td class="text-left"><?php echo $order['status']; ?></td>
+                <td class="text-left">
+                  <input type="hidden" name="channel[<?php echo $order['order_id']; ?>]" value="<?php echo $order['channel']; ?>"/>
+                  <?php echo $order['channel']; ?>
+                </td>
+                <td class="text-left"><?php echo $order['date_added']; ?></td>
+                <td class="text-left">
+                  <?php if($order['channel'] == 'eBay') { ?>
+                    <?php if($change_order_status_id == $ebay_status_shipped_id) { ?>
+                      <div class="form-group">
+                        <label class="control-label"><?php echo $text_carrier; ?></label>
+                        <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control">
+                          <?php foreach($market_options['ebay']['carriers'] as $carrier){ ?>
+                            <option <?php echo ($carrier['description'] == $order['shipping_method'] ? ' selected' : ''); ?>><?php echo $carrier['description']; ?></option>
+                          <?php } ?>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label"><?php echo $text_tracking; ?></label>
+                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_tracking; ?>" class="form-control" />
+                      </div>
+                    <?php } ?>
+                  <?php } ?>
 
-                      if($order['channel'] == 'Amazon') {
-                        //shipping info
-                        if($this->request->post['change_order_status_id'] == $this->config->get('openbay_amazon_order_status_shipped')) {
-?>
-                        <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_carrier; ?>:</span>
-                            <select name="carrier[<?php echo $order['order_id']; ?>]" class="amazon_carrier" id="amazon_carrier_<?php echo $order['order_id']; ?>">
-                                <?php foreach($market_options['amazon']['carriers'] as $courier){ ?>
-                                    <?php echo '<option'.($courier == $market_options['amazon']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
-                                <?php } ?>
-                                <option value="other"><?php echo $text_other; ?></option>
-                            </select>
-                        </p>
-                        <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_other; ?>:</span>
-                            <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" id="amazon_carrier_<?php echo $order['order_id']; ?>_other">
-                        </p>
-                        <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_tracking; ?>:</span>
-                            <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="">
-                        </p>
-<?php
-                        }
-                      }
-                      
-                      if($order['channel'] == 'Amazonus') {
-                        if($this->request->post['change_order_status_id'] == $this->config->get('openbay_amazonus_order_status_shipped')) {
-?>
-                        <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_carrier; ?>:</span>
-                            <select name="carrier[<?php echo $order['order_id']; ?>]" class="amazonus_carrier" id="amazonus_carrier_<?php echo $order['order_id']; ?>">
-                                <?php foreach($market_options['amazonus']['carriers'] as $courier){ ?>
-                                  <?php echo '<option'.($courier == $market_options['amazonus']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
-                                <?php } ?>
-                                <option value="other"><?php echo $text_other; ?></option>
-                            </select>
-                        </p>
-                        <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_other; ?>:</span>
-                            <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" id="amazonus_carrier_<?php echo $order['order_id']; ?>_other">
-                        </p>
-                        <p>
-                            <span style="display:block; width:80px; font-weight:bold;"><?php echo $text_tracking; ?>:</span>
-                            <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="">
-                        </p>
-<?php
-                        }
-                      }
-?>
-                    </td>
-                    <td class="left"><textarea name="comments[<?php echo $order['order_id']; ?>]"></textarea></td>
-                    <td class="center">
-                        <input type="hidden" name="notify[<?php echo $order['order_id']; ?>]" value="0"/>
-                        <input type="checkbox" name="notify[<?php echo $order['order_id']; ?>]" class="notify_checkbox" value="1"/>
-                    </td>
-                </tr>
+                  <?php if($order['channel'] == 'Amazon') { ?>
+                    <?php if($change_order_status_id == $openbay_amazon_order_status_shipped) { ?>
+                      <div class="form-group">
+                        <label class="control-label"><?php echo $text_carrier; ?></label>
+                        <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control amazon_carrier" id="amazon_carrier_<?php echo $order['order_id']; ?>">
+                          <?php foreach($market_options['amazon']['carriers'] as $courier){ ?>
+                          <?php echo '<option'.($courier == $market_options['amazon']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
+                          <?php } ?>
+                          <option value="other"><?php echo $text_other; ?></option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label"><?php echo $text_other; ?></label>
+                        <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_other; ?>" class="form-control" id="amazon_carrier_<?php echo $order['order_id']; ?>_other" />
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label"><?php echo $text_tracking; ?></label>
+                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_tracking; ?>" class="form-control" />
+                      </div>
+                    <?php } ?>
+                  <?php } ?>
+
+                  <?php if($order['channel'] == 'Amazonus') { ?>
+                    <?php if($change_order_status_id == $openbay_amazonus_order_status_shipped) { ?>
+                      <div class="form-group">
+                        <label class="control-label"><?php echo $text_carrier; ?></label>
+                        <select name="carrier[<?php echo $order['order_id']; ?>]" class="form-control amazonus_carrier" id="amazonus_carrier_<?php echo $order['order_id']; ?>">
+                          <?php foreach($market_options['amazonus']['carriers'] as $courier){ ?>
+                          <?php echo '<option'.($courier == $market_options['amazonus']['default_carrier'] ? ' selected' : '').'>'.$courier.'</option>'; ?>
+                          <?php } ?>
+                          <option value="other"><?php echo $text_other; ?></option>
+                        </select>
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label"><?php echo $text_other; ?></label>
+                        <input type="text" name="carrier_other[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_other; ?>" class="form-control" id="amazonus_carrier_<?php echo $order['order_id']; ?>_other" />
+                      </div>
+                      <div class="form-group">
+                        <label class="control-label"><?php echo $text_tracking; ?></label>
+                        <input type="text" name="tracking[<?php echo $order['order_id']; ?>]" value="" placeholder="<?php echo $text_tracking; ?>" class="form-control" />
+                      </div>
+                    <?php } ?>
+                  <?php } ?>
+                </td>
+                <td class="text-left"><textarea name="comments[<?php echo $order['order_id']; ?>]" class="form-control" rows="3"></textarea></td>
+                <td class="text-center">
+                  <input type="hidden" name="notify[<?php echo $order['order_id']; ?>]" value="0"/>
+                  <input type="checkbox" name="notify[<?php echo $order['order_id']; ?>]" class="notify_checkbox" value="1"/>
+                </td>
+              </tr>
             <?php } ?>
           </tbody>
         </table>
-
       </form>
-        <div class="buttons right" style="margin-top:20px;">
-            <a onclick="validate();" class="button"><?php echo $text_update; ?></a>
-        </div>
+      <div class="buttons right" style="margin-top:20px;">
+        <a onclick="validate();" class="btn btn-primary"><?php echo $text_update; ?></a>
+      </div>
     </div>
   </div>
 </div>
-
 <script type="text/javascript"><!--
     function notifyAll(){
         var valChecked = $('#notify_all').prop('checked');
@@ -187,5 +186,4 @@
         }
     }
 //--></script>
-
 <?php echo $footer; ?>

@@ -726,7 +726,7 @@ $(document).delegate('#button-reward-add', 'click', function() {
 			$('#button-reward-add').prop('disabled', true);				
 		},
 		complete: function() {
-			$('#button-reward-add i').replaceWith('<i class="fa fa-minus-circle"></i>');
+			$('#button-reward-add i').replaceWith('<i class="fa fa-plus-circle"></i>');
 			$('#button-reward-add').prop('disabled', false);
 		},									
 		success: function(json) {

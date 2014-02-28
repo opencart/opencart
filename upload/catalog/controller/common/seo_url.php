@@ -110,7 +110,7 @@ class ControllerCommonSeoUrl extends Controller {
 		
 			if ($data) {
 				foreach ($data as $key => $value) {
-					$query .= '&' . $key . '=' . $value;
+					$query .= '&' . rawurlencode($key) . '=' . rawurlencode($value);
 				}
 				
 				if ($query) {

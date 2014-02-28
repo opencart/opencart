@@ -540,7 +540,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['orders'] = array();
 
-		$data = array(
+		$filter = array(
 			'filter_order_id'        => $filter_order_id,
 			'filter_customer'	     => $filter_customer,
 			'filter_order_status_id' => $filter_order_status_id,
@@ -551,8 +551,8 @@ class ControllerExtensionOpenbay extends Controller {
 			'limit'                  => $this->config->get('config_admin_limit')
 		);
 
-		$order_total = $this->model_openbay_order->getTotalOrders($data);
-		$results = $this->model_openbay_order->getOrders($data);
+		$order_total = $this->model_openbay_order->getTotalOrders($filter);
+		$results = $this->model_openbay_order->getOrders($filter);
 
 		foreach ($results as $result) {
 			$action = array();
@@ -675,6 +675,8 @@ class ControllerExtensionOpenbay extends Controller {
 		$pagination->url = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($order_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($order_total - $this->config->get('config_limit_admin'))) ? $order_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $order_total, ceil($order_total / $this->config->get('config_limit_admin')));
 
 		$data['filter_order_id'] = $filter_order_id;
 		$data['filter_customer'] = $filter_customer;
@@ -1152,7 +1154,12 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
+			'text' 		=> $this->language->get('text_openbay'),
+			'href' 		=> $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'text'      => $this->language->get('text_manage_items'),
 			'href'      => $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'),
 		);
 
@@ -1283,16 +1290,14 @@ class ControllerExtensionOpenbay extends Controller {
 				if(!array_key_exists($result['product_id'], $activeList)) {
 					$markets[] = array(
 						'name'      => 'eBay',
-						'img'       => HTTPS_SERVER.'view/image/openbay/ebay_nolink.png',
 						'text'      => $this->language->get('text_openbay_new'),
-						'href'      => $this->url->link('openbay/openbay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else {
 					$markets[] = array(
 						'name'      => 'eBay',
-						'img'       => HTTPS_SERVER.'view/image/openbay/ebay_ok.png',
 						'text'      => $this->language->get('text_openbay_edit'),
-						'href'      => $this->url->link('openbay/openbay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+						'href'      => $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				}
 			}
@@ -1304,28 +1309,24 @@ class ControllerExtensionOpenbay extends Controller {
 				if($amazon_status == 'processing') {
 					$markets[] = array(
 						'name'      => 'Amazon EU',
-						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_pending.png',
 						'text'      => $this->language->get('text_openbay_processing'),
 						'href'      => '',
 					);
 				} else if ($amazon_status == 'linked' || $amazon_status == 'ok' || $amazon_status == 'saved') {
 					$markets[] = array(
 						'name'      => 'Amazon EU',
-						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_ok.png',
 						'text'      => $this->language->get('text_openbay_edit'),
 						'href'      => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else if ($amazon_status == 'error_quick' || $amazon_status == 'error_advanced' || $amazon_status == 'error_few') {
 					$markets[] = array(
 						'name'      => 'Amazon EU',
-						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_error.png',
 						'text'      => $this->language->get('text_openbay_fix'),
 						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else {
 					$markets[] = array(
 						'name'      => 'Amazon EU',
-						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_nolink.png',
 						'text'      => $this->language->get('text_openbay_new'),
 						'href'      => $this->url->link('openbay/amazon_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
@@ -1339,28 +1340,24 @@ class ControllerExtensionOpenbay extends Controller {
 				if($amazonus_status == 'processing') {
 					$markets[] = array(
 						'name'      => 'Amazon US',
-						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_pending.png',
 						'text'      => $this->language->get('text_openbay_processing'),
 						'href'      => '',
 					);
 				} else if ($amazonus_status == 'linked' || $amazonus_status == 'ok' || $amazonus_status == 'saved') {
 					$markets[] = array(
 						'name'      => 'Amazon US',
-						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_ok.png',
 						'text'      => $this->language->get('text_openbay_edit'),
 						'href'      => $this->url->link('openbay/amazonus_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else if ($amazonus_status == 'error_quick' || $amazonus_status == 'error_advanced' || $amazonus_status == 'error_few') {
 					$markets[] = array(
 						'name'      => 'Amazon US',
-						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_error.png',
 						'text'      => $this->language->get('text_openbay_fix'),
 						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				} else {
 					$markets[] = array(
 						'name'      => 'Amazon US',
-						'img'       => HTTPS_SERVER.'view/image/openbay/amazon_nolink.png',
 						'text'      => $this->language->get('text_openbay_new'),
 						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
@@ -1539,6 +1536,8 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_total - $this->config->get('config_limit_admin'))) ? $product_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_total, ceil($product_total / $this->config->get('config_limit_admin')));
+
 		$data['filter_name'] = $filter_name;
 		$data['filter_model'] = $filter_model;
 		$data['filter_price'] = $filter_price;
@@ -1554,6 +1553,9 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
+
+		$data['ebay_status'] = $this->config->get('ebay_status');
+		$data['token'] = $this->request->get['token'];
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

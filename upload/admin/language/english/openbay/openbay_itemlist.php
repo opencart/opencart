@@ -50,3 +50,5 @@ $_['text_status']                   = 'Status';
 $_['text_option']                   = 'Option';
 $_['text_min']                   = 'Min';
 $_['text_max']                   = 'Max';
+$_['text_manage_items']                 = 'Manage items';
+$_['text_openbay']                 = 'OpenBay Pro';

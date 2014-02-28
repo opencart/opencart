@@ -1,138 +1,145 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <div class="breadcrumb">
+  <ul class="breadcrumb">
     <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-      <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-  </div>
+  </ul>
   <?php if ($error_warning) { ?>
-    <div class="warning"><?php echo $error_warning; ?></div>
+  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
   <?php if ($success) { ?>
-    <div class="success"><?php echo $success; ?></div>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
   <?php } ?>
-  <form action="<?php echo $link_update; ?>" method="post" enctype="multipart/form-data" id="form">
-    <div class="box">
-      <div class="heading">
-        <h1><img src="view/image/order.png" alt="" /> <?php echo $heading_title; ?></h1>
-        <div class="buttons">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <form action="<?php echo $insert; ?>" method="post" id="order-update-form">
           <select name="change_order_status_id">
             <?php foreach ($order_statuses as $order_status) { ?>
               <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
             <?php } ?>
           </select>
-          <a onclick="$('#form').submit();" class="button"><span><?php echo $text_btn_status; ?></span></a>
-        </div>
+          <a data-toggle="tooltip" title="<?php echo $text_btn_status; ?>" class="btn" onclick="$('#order-update-form').submit();"><i class="fa fa-plus-circle"></i></a>
+        </form>
       </div>
-      <div class="content">
-          <table class="list">
-            <thead>
-              <tr>
-                <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
-                <td class="right"><?php if ($sort == 'o.order_id') { ?>
-                  <a href="<?php echo $sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order_id; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_order; ?>"><?php echo $column_order_id; ?></a>
-                  <?php } ?></td>
-                <td class="left"><?php if ($sort == 'customer') { ?>
-                  <a href="<?php echo $sort_customer; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_customer; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_customer; ?>"><?php echo $column_customer; ?></a>
-                  <?php } ?></td>
-                <td class="left"><?php if ($sort == 'status') { ?>
-                  <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
-                  <?php } ?></td>
-                <td class="right"><?php echo $text_order_channel; ?></td>
-                <td class="left"><?php if ($sort == 'o.date_added') { ?>
-                  <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
-                  <?php } else { ?>
-                  <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
-                  <?php } ?></td>
-                <td class="left"></td>
-                <td class="right"><?php echo $column_action; ?></td>
-              </tr>
-            </thead>
-            <tbody>
-              <tr class="filter">
-                <td></td>
-                <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" size="4" style="text-align: right;" /></td>
-                <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" /></td>
-                <td>
-                  <select name="filter_order_status_id">
-                    <option value="*"></option>
-                    <?php if ($filter_order_status_id == '0') { ?>
-                      <option value="0" selected="selected"><?php echo $text_missing; ?></option>
-                    <?php } else { ?>
-                      <option value="0"><?php echo $text_missing; ?></option>
-                    <?php } ?>
-                    <?php foreach ($order_statuses as $order_status) { ?>
-                      <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
-                      <?php } else { ?>
-                        <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
-                      <?php } ?>
-                    <?php } ?>
-                  </select>
-                </td>
-                <td align="right"></td>
-                <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="date" /></td>
-                <td></td>
-                <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
-              </tr>
-              <?php if ($orders) { ?>
-                <?php foreach ($orders as $order) { ?>
-                <tr>
-                  <td style="text-align: center;"><?php if ($order['selected']) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
-                    <?php } else { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />
-                    <?php } ?></td>
-                  <td class="right"><?php echo $order['order_id']; ?></td>
-                  <td class="left"><?php echo $order['customer']; ?></td>
-                  <td class="left"><?php echo $order['status']; ?></td>
-                  <td class="right"><?php echo $order['channel']; ?></td>
-                  <td class="left"><?php echo $order['date_added']; ?></td>
-                  <td class="left"></td>
-                  <td class="right">
-                    <?php foreach ($order['action'] as $action) { ?>
-                    [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
-                    <?php } ?>
-                  </td>
-                </tr>
-                <?php } ?>
+      <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
+    <div class="panel-body">
+      <table class="table">
+        <thead>
+          <tr>
+            <th width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></th>
+            <th class="text-left"><?php if ($sort == 'o.order_id') { ?>
+              <a href="<?php echo $sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_order_id; ?></a>
               <?php } else { ?>
-              <tr>
-                <td class="center" colspan="8"><?php echo $text_no_results; ?></td>
-              </tr>
-              <?php } ?>
-            </tbody>
-          </table>
-        <div class="pagination"><?php echo $pagination; ?></div>
+              <a href="<?php echo $sort_order; ?>"><?php echo $column_order_id; ?></a>
+              <?php } ?></th>
+            <th class="text-left"><?php if ($sort == 'customer') { ?>
+              <a href="<?php echo $sort_customer; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_customer; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_customer; ?>"><?php echo $column_customer; ?></a>
+              <?php } ?></th>
+            <th class="text-left"><?php if ($sort == 'status') { ?>
+              <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
+              <?php } ?></th>
+            <th class="text-left"><?php echo $text_order_channel; ?></th>
+            <th class="text-left"><?php if ($sort == 'o.date_added') { ?>
+              <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
+              <?php } else { ?>
+              <a href="<?php echo $sort_date_added; ?>"><?php echo $column_date_added; ?></a>
+              <?php } ?></th>
+            <th class="text-left"></th>
+            <th class="text-right"><?php echo $column_action; ?></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr class="filter">
+            <td></td>
+            <td align="right"><input type="text" name="filter_order_id" value="<?php echo $filter_order_id; ?>" class="form-control" /></td>
+            <td><input type="text" name="filter_customer" value="<?php echo $filter_customer; ?>" class="form-control" /></td>
+            <td>
+              <select name="filter_order_status_id" class="form-control">
+                <option value="*"></option>
+                <?php if ($filter_order_status_id == '0') { ?>
+                  <option value="0" selected="selected"><?php echo $text_missing; ?></option>
+                <?php } else { ?>
+                  <option value="0"><?php echo $text_missing; ?></option>
+                <?php } ?>
+                <?php foreach ($order_statuses as $order_status) { ?>
+                  <?php if ($order_status['order_status_id'] == $filter_order_status_id) { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>" selected="selected"><?php echo $order_status['name']; ?></option>
+                  <?php } else { ?>
+                    <option value="<?php echo $order_status['order_status_id']; ?>"><?php echo $order_status['name']; ?></option>
+                  <?php } ?>
+                <?php } ?>
+              </select>
+            </td>
+            <td align="right"></td>
+            <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="form-control" /></td>
+            <td></td>
+            <td align="right"><a onclick="filter();" class="btn btn-primary"><?php echo $button_filter; ?></a></td>
+          </tr>
+          <?php if ($orders) { ?>
+            <?php foreach ($orders as $order) { ?>
+            <tr>
+              <td style="text-align: center;"><?php if ($order['selected']) { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" checked="checked" />
+                <?php } else { ?>
+                <input type="checkbox" name="selected[]" value="<?php echo $order['order_id']; ?>" />
+                <?php } ?></td>
+              <td class="text-left"><?php echo $order['order_id']; ?></td>
+              <td class="text-left"><?php echo $order['customer']; ?></td>
+              <td class="text-left"><?php echo $order['status']; ?></td>
+              <td class="text-left"><?php echo $order['channel']; ?></td>
+              <td class="text-left"><?php echo $order['date_added']; ?></td>
+              <td class="text-left"></td>
+              <td class="text-right">
+                <?php foreach ($order['action'] as $action) { ?>
+                [ <a href="<?php echo $action['href']; ?>"><?php echo $action['text']; ?></a> ]
+                <?php } ?>
+              </td>
+            </tr>
+            <?php } ?>
+          <?php } else { ?>
+          <tr>
+            <td class="text-center" colspan="8"><?php echo $text_no_results; ?></td>
+          </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+      <div class="row">
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
       </div>
     </div>
-  </form>
+  </div>
 </div>
 <script type="text/javascript"><!--
   function filter() {
     url = 'index.php?route=extension/openbay/orderList&token=<?php echo $token; ?>';
-    var filter_order_id = $('input[name=\'filter_order_id\']').attr('value');
+    var filter_order_id = $('input[name=\'filter_order_id\']').val();
     if (filter_order_id) {
       url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
     }
 
-    var filter_customer = $('input[name=\'filter_customer\']').attr('value');
+    var filter_customer = $('input[name=\'filter_customer\']').val();
     if (filter_customer) {
       url += '&filter_customer=' + encodeURIComponent(filter_customer);
     }
 
-    var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
+    var filter_order_status_id = $('select[name=\'filter_order_status_id\']').find(":selected").val();
     if (filter_order_status_id != '*') {
       url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
     }
 
-    var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
+    var filter_date_added = $('input[name=\'filter_date_added\']').val();
     if (filter_date_added) {
       url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
     }

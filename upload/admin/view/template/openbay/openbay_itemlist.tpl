@@ -49,7 +49,7 @@
         </div>
         <div class="col-sm-4">
           <div class="form-group">
-            <label class="control-label" for="filter_status"><?php echo $text_status; ?></label>
+            <label class="control-label" for="filter_marketplace"><?php echo $text_status; ?></label>
             <select name="filter_marketplace" id="filter_marketplace" class="form-control">
               <option value="all" <?php echo (!isset($filter_marketplace) || $filter_marketplace == 'all' ? ' selected' : ''); ?>><?php echo $text_status_all; ?></option>
               <?php if ($marketplace_statuses['ebay']) { ?>
@@ -77,8 +77,8 @@
             </select>
           </div>
           <div class="form-group">
-            <label class="control-label" for="filter_status"><?php echo $text_status; ?></label>
-            <select name="filter_status" id="filter_status" class="form-control">
+            <label class="control-label"><?php echo $text_status; ?></label>
+            <select name="filter_status" class="form-control">
               <option value="*"></option>
               <?php if ($filter_status) { ?>
               <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
@@ -112,10 +112,10 @@
             </div>
             <div class="row">
               <div class="col-sm-6">
-                <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>"  class="form-control" placeholder="<?php echo $text_min; ?>" />
+                <input type="text" name="filter_quantity" value="<?php echo $filter_quantity; ?>" class="form-control" placeholder="<?php echo $text_min; ?>" id="input-quantity" />
               </div>
               <div class="col-sm-6">
-                <input type="text" name="filter_quantity_to" value="<?php echo $filter_quantity_to; ?>"  class="form-control" placeholder="<?php echo $text_max; ?>" />
+                <input type="text" name="filter_quantity_to" value="<?php echo $filter_quantity_to; ?>"  class="form-control" placeholder="<?php echo $text_max; ?>" id="input-quantity-to" />
               </div>
             </div>
           </div>
@@ -151,29 +151,29 @@
         <table class="table">
           <thead>
             <tr>
-              <td width="1" style="text-align: center;"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
-              <td class="center"><?php echo $column_image; ?></td>
-              <td class="left"><?php if ($sort == 'pd.name') { ?>
+              <td width="1" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').attr('checked', this.checked);" /></td>
+              <td class="text-center"><?php echo $column_image; ?></td>
+              <td class="text-left"><?php if ($sort == 'pd.name') { ?>
                 <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
                 <?php } ?></td>
-              <td class="left"><?php if ($sort == 'p.model') { ?>
+              <td class="text-left"><?php if ($sort == 'p.model') { ?>
                 <a href="<?php echo $sort_model; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_model; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_model; ?>"><?php echo $column_model; ?></a>
                 <?php } ?></td>
-              <td class="left"><?php if ($sort == 'p.price') { ?>
+              <td class="text-left"><?php if ($sort == 'p.price') { ?>
                 <a href="<?php echo $sort_price; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_price; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_price; ?>"><?php echo $column_price; ?></a>
                 <?php } ?></td>
-              <td class="right"><?php if ($sort == 'p.quantity') { ?>
+              <td class="text-right"><?php if ($sort == 'p.quantity') { ?>
                 <a href="<?php echo $sort_quantity; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_quantity; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_quantity; ?>"><?php echo $column_quantity; ?></a>
                 <?php } ?></td>
-              <td class="left"><?php if ($sort == 'p.status') { ?>
+              <td class="text-left"><?php if ($sort == 'p.status') { ?>
                 <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                 <?php } else { ?>
                 <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
@@ -185,48 +185,51 @@
             <?php if ($products) { ?>
               <?php foreach ($products as $product) { ?>
                 <tr>
-                <td style="text-align: center;">
-                  <?php if ($product['selected']) { ?>
-                    <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" checked="checked" />
-                  <?php } else { ?>
+                  <td class="text-center">
                     <input type="checkbox" name="selected[]" value="<?php echo $product['product_id']; ?>" />
-                  <?php } ?></td>
-                <td class="center"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" style="padding: 1px; border: 1px solid #DDDDDD;" /></td>
-                <td class="left"><a href="<?php echo $product['edit']; ?>"><?php echo $product['name']; ?></a></td>
-                <td class="left"><?php echo $product['model']; ?></td>
-                <td class="left">
-                  <?php if ($product['special']) { ?>
-                    <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
-                    <span style="color: #b00;"><?php echo $product['special']; ?></span>
-                  <?php } else { ?>
-                    <?php echo $product['price']; ?>
-                  <?php } ?></td>
-                <td class="right">
-                  <?php if ($product['has_option'] == 0) { ?>
-                    <?php if ($product['quantity'] <= 0) { ?>
-                      <span style="color: #FF0000;"><?php echo $product['quantity']; ?></span>
-                    <?php } elseif ($product['quantity'] <= 5) { ?>
-                      <span style="color: #FFA500;"><?php echo $product['quantity']; ?></span>
+                  </td>
+                  <td class="text-center">
+                    <?php if ($product['image']) { ?>
+                      <img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" class="img-thumbnail" />
+                      <?php } else { ?>
+                      <span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>
+                      <?php } ?>
+                  </td>
+                  <td class="text-left"><a href="<?php echo $product['edit']; ?>"><?php echo $product['name']; ?></a></td>
+                  <td class="text-left"><?php echo $product['model']; ?></td>
+                  <td class="text-left">
+                    <?php if ($product['special']) { ?>
+                      <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
+                      <div class="text-danger"><?php echo $product['special']; ?></div>
                     <?php } else { ?>
-                      <span style="color: #008000;"><?php echo $product['quantity']; ?></span>
+                      <?php echo $product['price']; ?>
                     <?php } ?>
-                  <?php } else { ?>
-                      <span style="color: #000000;"><?php echo $product['vCount']; ?> <?php echo $text_variations; ?></span><br />
-                      <span style="color: #000000;"><?php echo $product['vsCount']; ?> <?php echo $text_variations_stock; ?></span>
-                  <?php } ?>
-                </td>
-                <td class="left"><?php echo $product['status']; ?></td>
+                  </td>
+                  <td class="text-right">
+                    <?php if ($product['has_option'] == 0) { ?>
+                      <?php if ($product['quantity'] <= 0) { ?>
+                        <span class="label label-danger"><?php echo $product['quantity']; ?></span>
+                      <?php } elseif ($product['quantity'] <= 5) { ?>
+                        <span class="label label-warning"><?php echo $product['quantity']; ?></span>
+                      <?php } else { ?>
+                        <span class="label label-success"><?php echo $product['quantity']; ?></span>
+                      <?php } ?>
+                    <?php } else { ?>
+                      <span class="label label-info"><?php echo $product['vCount']; ?> <?php echo $text_variations; ?></span><br />
+                      <span class="label label-info"><?php echo $product['vsCount']; ?> <?php echo $text_variations_stock; ?></span>
+                    <?php } ?>
+                  </td>
+                  <td class="text-left"><?php echo $product['status']; ?></td>
                   <td>
                     <?php foreach ($product['markets'] as $market) { ?>
-                      <div style="display:none;" id="tooltip<?php echo $product['product_id']; ?>"></div>
                       <?php if ($market['href'] != '') { ?>
-                        <a href="<?php echo $market['href']; ?>" title="<?php echo $market['text']; ?>"><img width="45" height="45" style="margin-right:8px;" src="<?php echo $market['img']; ?>" onMouseOut="hideTooltip('tooltip<?php echo $product['product_id']; ?>')" onMouseOver="showTooltip('tooltip<?php echo $product['product_id']; ?>', '<?php echo $market['name']; ?>', '<?php echo $market['text']; ?>')" /></a>
+                        <a href="<?php echo $market['href']; ?>" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-primary"><?php echo $market['name']; ?></a>
                       <?php } else { ?>
-                        <img width="45" height="45" style="margin-right:8px;" src="<?php echo $market['img']; ?>" onMouseOut="hideTooltip('tooltip<?php echo $product['product_id']; ?>')" onMouseOver="showTooltip('tooltip<?php echo $product['product_id']; ?>', '<?php echo $market['name']; ?>', '<?php echo $market['text']; ?>')"/>
+                        <a disable="disable" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-warning"><?php echo $market['name']; ?></a>
                       <?php } ?>
                     <?php } ?>
                   </td>
-              </tr>
+                </tr>
               <?php } ?>
             <?php } else { ?>
               <tr>
@@ -236,7 +239,10 @@
           </tbody>
         </table>
       </form>
-      <div class="pagination"><?php echo $pagination; ?></div>
+      <div class="row">
+        <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
+        <div class="col-sm-6 text-right"><?php echo $results; ?></div>
+      </div>
     </div>
   </div>
 </div>
@@ -245,73 +251,73 @@
 function filter() {
     url = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
 
-    var filter_name = $('input[name=\'filter_name\']').attr('value');
+    var filter_name = $('input[name=\'filter_name\']').val();
 
     if (filter_name) {
       url += '&filter_name=' + encodeURIComponent(filter_name);
     }
 
-    var filter_model = $('input[name=\'filter_model\']').attr('value');
+    var filter_model = $('input[name=\'filter_model\']').val();
 
     if (filter_model) {
       url += '&filter_model=' + encodeURIComponent(filter_model);
     }
 
-    var filter_price = $('input[name=\'filter_price\']').attr('value');
+    var filter_price = $('input[name=\'filter_price\']').val();
 
     if (filter_price) {
         url += '&filter_price=' + encodeURIComponent(filter_price);
     }
 
-    var filter_price_to = $('input[name=\'filter_price_to\']').attr('value');
+    var filter_price_to = $('input[name=\'filter_price_to\']').val();
 
     if (filter_price) {
         url += '&filter_price_to=' + encodeURIComponent(filter_price_to);
     }
 
-    var filter_quantity = $('input[name=\'filter_quantity\']').attr('value');
+    var filter_quantity = $('input[name=\'filter_quantity\']').val();
 
     if (filter_quantity) {
         url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
     }
 
-    var filter_quantity_to = $('input[name=\'filter_quantity_to\']').attr('value');
+    var filter_quantity_to = $('input[name=\'filter_quantity_to\']').val();
 
     if (filter_quantity_to) {
         url += '&filter_quantity_to=' + encodeURIComponent(filter_quantity_to);
     }
 
-    var filter_status = $('select[name=\'filter_status\']').attr('value');
+    var filter_status = $('select[name=\'filter_status\']').find(":selected").val();
 
     if (filter_status != '*') {
         url += '&filter_status=' + encodeURIComponent(filter_status);
     }
 
-    var filter_sku = $('input[name=\'filter_sku\']:checked').attr('value');
+    var filter_sku = $('input[name=\'filter_sku\']:checked').val();
 
     if (filter_sku) {
         url += '&filter_sku=' + encodeURIComponent(filter_sku);
     }
 
-    var filter_desc = $('input[name=\'filter_desc\']:checked').attr('value');
+    var filter_desc = $('input[name=\'filter_desc\']:checked').val();
 
     if (filter_desc) {
         url += '&filter_desc=' + encodeURIComponent(filter_desc);
     }
 
-    var filter_category = $('select[name=\'filter_category\']').attr('value');
+    var filter_category = $('select[name=\'filter_category\']').find(":selected").val();
 
     if (filter_category) {
         url += '&filter_category=' + encodeURIComponent(filter_category);
     }
 
-    var filter_manufacturer = $('select[name=\'filter_manufacturer\']').attr('value');
+    var filter_manufacturer = $('select[name=\'filter_manufacturer\']').find(":selected").val();
 
     if (filter_manufacturer) {
         url += '&filter_manufacturer=' + encodeURIComponent(filter_manufacturer);
     }
 
-    var filter_marketplace = $('select[name=\'filter_marketplace\']').attr('value');
+    var filter_marketplace = $('select[name=\'filter_marketplace\']').find(":selected").val();
 
     if (filter_marketplace) {
         url += '&filter_marketplace=' + encodeURIComponent(filter_marketplace);
@@ -321,14 +327,14 @@ function filter() {
 }
 //--></script>
 
-<?php  if ($this->config->get('ebay_status') == '1') { ?>
-<script type="text/javascript"><!--
-        $('.buttons').prepend('<a onclick="bulkUpload();" class="button"><span><?php echo $text_bulk_btn; ?></span></a>');
+<?php  if ($ebay_status == '1') { ?>
+  <script type="text/javascript"><!--
+    $('.buttons').prepend('<a onclick="bulkUpload();" class="button"><span><?php echo $text_bulk_btn; ?></span></a>');
 
-        function bulkUpload() {
-            $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $this->request->get['token']; ?>');
-            $('#form').submit();
-        }
-//--></script>
+    function bulkUpload() {
+      $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $token; ?>');
+      $('#form').submit();
+    }
+  //--></script>
 <?php } ?>
 <?php echo $footer; ?>

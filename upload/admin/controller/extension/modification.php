@@ -54,19 +54,9 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('setting/modification');
 
 		if ($this->validate()) {
-			$this->modification->clear();
-
-			$this->modification->load(DIR_SYSTEM . 'modification.xml');
-
-			$results = $this->model_setting_modification->getModifications();
-
-			foreach ($results as $result) {
-				if ($result['status']) {
-					$this->modification->addModification($result['code']);
-				}
-			}
-
-			$this->modification->write();
+			$this->model_setting_modification->clear();
+			
+			$this->model_setting_modification->refresh();
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -84,7 +74,7 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			//$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getList();
@@ -98,7 +88,7 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('setting/modification');
 
 		if ($this->validate()) {
-			$this->modification->clear();
+			$this->model_setting_modification->clear();
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

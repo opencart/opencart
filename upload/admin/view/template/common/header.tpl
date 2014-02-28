@@ -45,6 +45,7 @@
           <li class="dropdown-header"><?php echo $text_order; ?></li>
           <li><a href="<?php echo $order_status; ?>"><?php echo $text_order_status; ?> <span class="label label-warning pull-right"><?php echo $order_status_total; ?></span></a></li>
           <li><a href="<?php echo $complete_status; ?>"><?php echo $text_complete_status; ?> <span class="label label-success pull-right"><?php echo $complete_status_total; ?></span></a></li>
+          <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?> <span class="label label-danger pull-right"><?php echo $return_total; ?></span></a></li>
           <li class="divider"></li>
           <li class="dropdown-header"><?php echo $text_customer; ?></li>
           <li><a href="<?php echo $online; ?>"><?php echo $text_online; ?> <span class="label label-success pull-right"><?php echo $online_total; ?></span></a></li>
@@ -53,7 +54,6 @@
           <li class="dropdown-header"><?php echo $text_product; ?></li>
           <li><a href=""><?php echo $text_stock; ?> <span class="label label-danger pull-right"><?php echo $product_total; ?></a></li>
           <li><a href="<?php echo $review; ?>"><?php echo $text_review; ?> <span class="label label-danger pull-right"><?php echo $review_total; ?></span></a></li>
-          <li><a href="<?php echo $return; ?>"><?php echo $text_return; ?> <span class="label label-danger pull-right"><?php echo $return_total; ?></span></a></li>
           <li class="divider"></li>
           <li class="dropdown-header"><?php echo $text_affiliate; ?></li>
           <li><a href="<?php echo $affiliate_approval; ?>"><?php echo $text_approval; ?> <span class="label label-danger pull-right"><?php echo $affiliate_total; ?></span></a></li>

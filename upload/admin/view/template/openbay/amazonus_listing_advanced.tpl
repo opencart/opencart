@@ -8,7 +8,7 @@
     <?php if(isset($success)) : ?>
         <div class="success"><?php echo $success; ?></div>
     <?php endif; ?>
-    
+
     <?php if(!empty($errors)) { ?>
     <div class="warning"><ul>
             <?php foreach($errors as $error) : ?>
@@ -92,9 +92,6 @@
 
 <script type="text/javascript"><!--
 $(document).ready(function(){
-
-    $('#tabs a').tabs();
-
     $('#openstock_selector').change(function() {
         redirectOption($('#openstock_selector').attr('value'), 'advanced');
     });
@@ -105,7 +102,7 @@ $(document).ready(function(){
         return;
     <?php } ?>
 
-    $(".fields_advanced :input").live('change', function() {
+    $(".fields_advanced :input").bind('change', function() {
         update_form(this, 'advanced');
     });
 
@@ -209,10 +206,6 @@ function show_form(xml, formType) {
                 $('#dynamic_pages').append(pageHtml);
             }
 
-
-            $('#tabs a').tabs();
-
-
             var categoryName = data['category'];
             fieldsArray[formType] = data['fields'];
 
@@ -255,7 +248,7 @@ function show_form(xml, formType) {
                 }
 
                 row += '<span class="required" id="error_' + fieldsArray[formType][i]['name'] + '"></span>'
-                
+
                 row += '</td>';
                 row += '</tr>';
 
@@ -555,7 +548,7 @@ function validate(formType) {
     if($('.fields_' + formType + ' [name="category"]').attr('value') == undefined) {
         warnings ++;
     }
-    
+
     if(warnings > 0) {
         return false;
     } else {
@@ -621,7 +614,7 @@ var nodeBox = '';
 var nodeString = '';
 var nodeStringSimple = '';
 
-$('.browseNode').live('click', function(){
+$('.browseNode').bind('click', function(){
     var html = '';
 
     nodeBox = $(this).attr("field_name");
@@ -667,7 +660,7 @@ $('.browseNode').live('click', function(){
     });
 });
 
-$('.nodeSelect').live('change', function(){
+$('.nodeSelect').bind('change', function(){
     //called when the root node id is chosen
     var html = '';
     var node = $(this).val();

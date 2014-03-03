@@ -1,8 +1,8 @@
 <?php
-$_['heading_title']                 = 'Amazon marketplace settings';
-
+$_['heading_title']                 = 'Settings';
 $_['text_openbay']                  = 'OpenBay Pro';
-$_['text_overview']                 = 'Amazon Overview';
+$_['text_amazon']                 	= 'Amazon EU';
+
 $_['text_settings']                 = 'Settings';
 $_['text_status']                 	= 'Status';
 $_['text_token']                    = 'Token';

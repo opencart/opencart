@@ -698,8 +698,6 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 
 <script type="text/javascript"><!--
-    $('#tabs a').tabs();
-
     CKEDITOR.replace('description', {
         filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
         filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',

@@ -547,8 +547,8 @@ class ControllerExtensionOpenbay extends Controller {
 			'filter_date_added'      => $filter_date_added,
 			'sort'                   => $sort,
 			'order'                  => $order,
-			'start'                  => ($page - 1) * $this->config->get('config_admin_limit'),
-			'limit'                  => $this->config->get('config_admin_limit')
+			'start'                  => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'                  => $this->config->get('config_limit_admin')
 		);
 
 		$order_total = $this->model_openbay_order->getTotalOrders($filter);
@@ -670,7 +670,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $order_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_admin_limit');
+		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
@@ -1236,8 +1236,8 @@ class ControllerExtensionOpenbay extends Controller {
 			'filter_market_id'      => $filter_market_id,
 			'sort'                  => $sort,
 			'order'                 => $order,
-			'start'                 => ($page - 1) * $this->config->get('config_admin_limit'),
-			'limit'                 => $this->config->get('config_admin_limit')
+			'start'                 => ($page - 1) * $this->config->get('config_limit_admin'),
+			'limit'                 => $this->config->get('config_limit_admin')
 		);
 
 		if($this->config->get('ebay_status') != '1' && $filter['filter_market_name'] == 'ebay') {
@@ -1536,7 +1536,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $product_total;
 		$pagination->page = $page;
-		$pagination->limit = $this->config->get('config_admin_limit');
+		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 

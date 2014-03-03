@@ -27,7 +27,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="amazon_status"><?php echo $text_status; ?></label>
               <div class="col-sm-10">
-                <select name="ebay_status" id="amazon_status" class="form-control">
+                <select name="amazon_status" id="amazon_status" class="form-control">
                   <?php if ($amazon_status) { ?>
                   <option value="1" selected="selected"><?php echo $text_enabled; ?></option>
                   <option value="0"><?php echo $text_disabled; ?></option>
@@ -51,9 +51,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="$openbay_amazon_enc_string2"><?php echo $text_enc_string2; ?></label>
+              <label class="col-sm-2 control-label" for="openbay_amazon_enc_string2"><?php echo $text_enc_string2; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="$openbay_amazon_enc_string2" value="<?php echo $openbay_amazon_enc_string2; ?>" placeholder="<?php echo $text_enc_string2; ?>" id="$openbay_amazon_enc_string2" class="form-control" />
+                <input type="text" name="openbay_amazon_enc_string2" value="<?php echo $openbay_amazon_enc_string2; ?>" placeholder="<?php echo $text_enc_string2; ?>" id="openbay_amazon_enc_string2" class="form-control" />
               </div>
             </div>
             <div class="form-group">

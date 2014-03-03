@@ -5,29 +5,29 @@
         <?php echo $breadcrumb['separator'] ?><a href="<?php echo $breadcrumb['href'] ?>"><?php echo $breadcrumb['text'] ?></a>
         <?php } ?>
     </div>
-    
+
     <?php if (isset($error_warning)) { ?>
-    
+
     <div class="warning">
         <ul>
             <li><?php echo $error_warning ?></li>
         </ul>
     </div>
-    
+
     <?php } ?>
-        
+
     <?php if ($listing_errors) { ?>
-    
+
     <div class="warning">
         <ul>
             <?php foreach ($listing_errors as $listing_error) { ?>
-            
+
             <li><?php echo $listing_error ?></li>
-            
+
             <?php } ?>
         </ul>
     </div>
-    
+
     <?php } ?>
 
     <div class="box mBottom130">
@@ -334,7 +334,5 @@ function validateQuickListing(){
 
 $(document).ready(function() {
     $('.date').datepicker({dateFormat: 'yy-mm-dd'});
-
-    $('#tabs a').tabs();
 });
 </script>

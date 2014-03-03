@@ -1,86 +1,89 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-            <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-        <?php } ?>
-    </div>
-    
-    <?php if(isset($error)) { ?>
-    <div class="warning" style="margin:5px 0px;">
-        <?php echo $error; ?>
-    </div>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-
-    <div class="box">
-        <div class="heading">
-            <h1><?php echo $text_title;?></h1>
-            <div class="buttons">
-                <a class="button" onclick="location = '<?php echo $link_overview; ?>';" ><span><?php echo $text_btn_return; ?></span></a>
-            </div>
-        </div>
-
-        <div class="content">
-            
-            <table class="form">
-                <tbody>
-                    <tr>
-                        <td><?php echo $text_date_start; ?> <input type="text" value="<?php echo $date_start; ?>" name="filter_date_start" id="date-start" size="12"></td>
-                        <td><?php echo $text_date_end; ?> <input type="text" value="<?php echo $date_end; ?>" name="filter_date_end" id="date-end" size="12"></td>
-                        <td style="text-align: right;"><a onclick="filter();" class="button"><?php echo $text_filter_btn; ?></a></td>
-                    </tr>
-                </tbody>
-            </table>
-            
-            <table class="list">
-                <thead>
-                    <tr>
-                        <td class="left"><?php echo $text_ref; ?></td>
-                        <td class="left"><?php echo $text_date_requested; ?></td>
-                        <td class="right"><?php echo $text_date_updated; ?></td>
-                        <td class="right"><?php echo $text_status; ?></td>
-                        <td class="left"><?php echo $text_sku; ?></td>
-                        <td class="left"><?php echo $text_stock; ?></td>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php if(empty($tableData)) { ?>
-                            <tr>
-                                <td class="center" colspan="6"><?php echo $text_empty; ?></td>
-                            </tr>
-                    <?php } ?>
-                    
-                    <?php foreach($tableData as $ref => $row) { ?>
-                    <tr>
-                        <td class="left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $ref; ?></td>
-                        <td class="left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_requested']; ?></td>
-                        <td class="right" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_updated']; ?></td>
-                        <td class="right" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['status']; ?></td>
-                           <?php foreach($row['data'] as $dataRow) { ?>
-                           <tr>
-                                <td class="left"><?php echo $dataRow['sku']; ?></td>
-                                <td class="left"><?php echo $dataRow['stock']; ?></td>
-                           </tr>
-                           <?php } ?>
-                    </tr>
-                    <?php } ?>
-                </tbody>
-            </table>  
-        </div>
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title; ?></h1>
     </div>
+    <div class="panel-body">
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="input-group date">
+              <input type="text" class="form-control" id="input-date-start" data-format="YYYY-MM-DD" placeholder="<?php echo $text_date_start; ?>" value="<?php echo $date_start; ?>" name="filter_date_start">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="input-group date">
+              <input type="text" class="form-control" id="input-date-end" data-format="YYYY-MM-DD" placeholder="<?php echo $text_date_end; ?>" value="<?php echo $date_end; ?>" name="filter_date_end">
+              <span class="input-group-btn">
+                <button type="button" class="btn btn-primary"><i class="fa fa-calendar"></i></button>
+              </span>
+            </div>
+          </div>
+          <div class="col-sm-2 text-right">
+            <a onclick="filter();" class="btn btn-primary"><i class="fa fa-filter"></i> <?php echo $text_filter_btn; ?></a>
+          </div>
+        </div>
+      </div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th class="text-left"><?php echo $text_ref; ?></th>
+            <th class="text-left"><?php echo $text_date_requested; ?></th>
+            <th class="text-right"><?php echo $text_date_updated; ?></th>
+            <th class="text-right"><?php echo $text_status; ?></th>
+            <th class="text-left"><?php echo $text_sku; ?></th>
+            <th class="text-left"><?php echo $text_stock; ?></th>
+          </tr>
+        </thead>
+        <tbody>
+          <?php if (empty($table_data)) { ?>
+            <tr>
+              <td class="text-center" colspan="6"><?php echo $text_empty; ?></td>
+            </tr>
+          <?php } ?>
+          <?php foreach ($table_data as $ref => $row) { ?>
+            <tr>
+              <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $ref; ?></td>
+              <td class="text-left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_requested']; ?></td>
+              <td class="text-right" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_updated']; ?></td>
+              <td class="text-right" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['status']; ?></td>
+              <?php foreach ($row['data'] as $dataRow) { ?>
+                <tr>
+                  <td class="text-left"><?php echo $dataRow['sku']; ?></td>
+                  <td class="text-left"><?php echo $dataRow['stock']; ?></td>
+                </tr>
+              <?php } ?>
+            </tr>
+          <?php } ?>
+        </tbody>
+      </table>
+    </div>
+  </div>
 </div>
 <script type="text/javascript"><!--
 function filter() {
 	url = 'index.php?route=openbay/amazon/stockUpdates&token=<?php echo $token; ?>';
-	
+
 	var filter_date_start = $('input[name=\'filter_date_start\']').attr('value');
-	
+
 	if (filter_date_start) {
 		url += '&filter_date_start=' + encodeURIComponent(filter_date_start);
 	}
 
 	var filter_date_end = $('input[name=\'filter_date_end\']').attr('value');
-	
+
 	if (filter_date_end) {
 		url += '&filter_date_end=' + encodeURIComponent(filter_date_end);
 	}
@@ -92,6 +95,20 @@ function filter() {
 $(document).ready(function() {
 	$('#date-start').datepicker({dateFormat: 'yy-mm-dd'});
 	$('#date-end').datepicker({dateFormat: 'yy-mm-dd'});
+});
+//--></script>
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+  pickTime: false
+});
+
+$('.datetime').datetimepicker({
+  pickDate: true,
+  pickTime: true
+});
+
+$('.time').datetimepicker({
+  pickDate: false
 });
 //--></script>
 <?php echo $footer; ?>

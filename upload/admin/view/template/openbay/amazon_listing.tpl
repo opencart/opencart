@@ -5,7 +5,7 @@
         <?php echo $breadcrumb['separator'] ?><a href="<?php echo $breadcrumb['href'] ?>"><?php echo $breadcrumb['text'] ?></a>
       <?php } ?>
     </div>
-    
+
     <?php if (isset($error_warning)) { ?>
       <div class="warning">
         <ul>
@@ -13,7 +13,7 @@
         </ul>
       </div>
     <?php } ?>
-        
+
     <?php if ($listing_errors) { ?>
       <div class="warning">
         <ul>
@@ -344,7 +344,5 @@ $(document).ready(function() {
     $('.search_container input[name="marketplace"]').change(function(){
         $('form input[name="marketplace"]').val($(this).val());
     });
-
-    $('#tabs a').tabs();
 });
 </script>

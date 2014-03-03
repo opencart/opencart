@@ -1,10 +1,8 @@
 <?php
-
-$_['heading_title'] = 'OpenBay Pro for Amazon | Bulk Listing';
+$_['heading_title'] = 'Bulk Listing';
 
 $_['text_openbay'] = 'OpenBay Pro';
-$_['text_overview'] = 'Amazon Overview';
-$_['text_bulk_listing'] = 'Bulk Listing';
+$_['text_amazon'] = 'Amazon EU';
 $_['text_searching'] = 'Searching';
 $_['text_finished'] = 'Finished';
 $_['text_marketplace'] = 'Marketplace';
@@ -29,6 +27,7 @@ $_['text_collectible_very_good'] = 'Collectible - Very Good';
 $_['text_collectible_good'] = 'Collectible - Good';
 $_['text_collectible_acceptable'] = 'Collectible - Acceptable';
 $_['text_refurbished'] = 'Refurbished';
+$_['text_no_results'] = 'No products found';
 
 $_['column_name'] = 'Name';
 $_['column_image'] = 'Image';
@@ -43,4 +42,5 @@ $_['button_search'] = 'Search';
 
 $_['error_product_sku'] = 'Product must have an SKU';
 $_['error_product_no_searchable_fields'] = 'Product must have ISBN, EAN, UPC or JAN field populated';
-$_['error_bulk_listing_not_allowed'] = 'Bulk listing is not allowed. Your account must be on at least Medium plan';
+$_['error_bulk_listing_not_allowed'] = 'Bulk listing is not allowed with your subscription plan, please upgrade';
+$_['error_select_items'] = 'You must select at least 1 item to search';

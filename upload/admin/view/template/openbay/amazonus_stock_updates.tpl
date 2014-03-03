@@ -47,13 +47,13 @@
         </tr>
         </thead>
         <tbody>
-        <?php if(empty($tableData)) { ?>
+        <?php if(empty($table_data)) { ?>
         <tr>
           <td class="center" colspan="6"><?php echo $text_empty; ?></td>
         </tr>
         <?php } ?>
 
-        <?php foreach($tableData as $ref => $row) { ?>
+        <?php foreach($table_data as $ref => $row) { ?>
         <tr>
           <td class="left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $ref; ?></td>
           <td class="left" rowspan="<?php echo count($row['data']) + 1; ?>"><?php echo $row['date_requested']; ?></td>

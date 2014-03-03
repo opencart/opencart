@@ -12,7 +12,7 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $text_heading; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-dashboard fa-lg"></i> <?php echo $text_overview; ?></h1>
     </div>
     <div class="panel-body">
         <div class="row">
@@ -31,10 +31,10 @@
             <div class="col-md-3 text-center">
               <div class="well">
                 <a href="<?php echo $link_subscription; ?>">
-                    <span class="fa-stack fa-3x">
-                      <i class="fa fa-user fa-stack-2x"></i>
-                      <i class="fa fa-wrench fa-stack-1x"></i>
-                    </span>
+                  <span class="fa-stack fa-3x">
+                    <i class="fa fa-square-o fa-stack-2x"></i>
+                    <i class="fa fa-user fa-stack-1x"></i>
+                  </span>
                   <h4><?php echo $text_heading_account; ?></h4>
                 </a>
               </div>

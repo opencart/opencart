@@ -47,10 +47,10 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$xml = $this->openbay->amazonus->getStockUpdatesStatus($requestArgs);
 		$simpleXmlObj = simplexml_load_string($xml);
-		$data['tableData'] = array();
+		$data['table_data'] = array();
 
 		if($simpleXmlObj !== false) {
-			$tableData = array();
+			$table_data = array();
 
 			foreach($simpleXmlObj->update as $updateNode) {
 				$row = array('date_requested' => (string)$updateNode->date_requested,
@@ -64,10 +64,10 @@ class ControllerOpenbayAmazonus extends Controller {
 						);
 				}
 				$row['data'] = $data;
-				$tableData[(int)$updateNode->ref] = $row;
+				$table_data[(int)$updateNode->ref] = $row;
 			}
 
-			$data['tableData'] = $tableData;
+			$data['table_data'] = $table_data;
 		} else {
 			$data['error'] = 'Could not connect to OpenBay PRO API.';
 		}
@@ -786,8 +786,8 @@ class ControllerOpenbayAmazonus extends Controller {
 
 			$data = array();
 
-			$data['start'] = ($page - 1) * $this->config->get('config_admin_limit');
-			$data['limit'] = $this->config->get('config_admin_limit');
+			$data['start'] = ($page - 1) * $this->config->get('config_limit_admin');
+			$data['limit'] = $this->config->get('config_limit_admin');
 
 			$results = $this->model_openbay_amazonus->getProductSearch($data);
 			$product_total = $this->model_openbay_amazonus->getProductSearchTotal($data);
@@ -843,7 +843,7 @@ class ControllerOpenbayAmazonus extends Controller {
 			$pagination = new Pagination();
 			$pagination->total = $product_total;
 			$pagination->page = $page;
-			$pagination->limit = $this->config->get('config_admin_limit');
+			$pagination->limit = $this->config->get('config_limit_admin');
 			$pagination->text = $this->language->get('text_pagination');
 			$pagination->url = $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
 

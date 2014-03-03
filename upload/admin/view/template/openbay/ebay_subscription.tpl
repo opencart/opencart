@@ -37,7 +37,6 @@
               <p><?php echo $text_subscription_avail2; ?></p>
             </div>
           </div>
-
         </div>
       </div>
     </div>

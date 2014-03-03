@@ -1,12 +1,12 @@
 <?php
-$_['text_title']                    = 'OpenBay Pro for Amazon | Item links';
+$_['text_title']                    = 'Item links';
 $_['text_openbay']                  = 'OpenBay Pro';
-$_['text_overview']                 = 'Amazon Overview';
-$_['text_btn_return']               = 'Return';
+$_['text_amazon']                   = 'Amazon EU';
 $_['text_link_items']               = 'Link items';
 $_['text_item_links']               = 'Item links';
-$_['text_desc1']                    = 'Linking your items will allow for stock control on your Amazon listings.<br /> For each item that is updated the local stock (the stock available in your OpenCart store) will update your Amazon listing';
-$_['text_desc2']                    = 'You can link items manualy by entering Amazon SKU and product name or load all unlinked products and then enter amazon SKUs. (Uploading products from OpenCart to Amazon will automaticaly add links)';
+$_['text_desc1']                    = 'Linking your items will allow for stock control on your Amazon listings.';
+$_['text_desc2'] 					= 'For each item that is updated the local stock (the stock available in your OpenCart store) will update your Amazon listing';
+$_['text_desc3']                    = 'You can link items manually by entering Amazon SKU and product name or load all unlinked products and then enter amazon SKUs. (Uploading products from OpenCart to Amazon will automaticaly add links)';
 $_['text_load_btn']                 = 'Load';
 $_['text_new_link']                 = 'New link';
 $_['text_autocomplete_product']     = 'Product<span class="help">(Auto complete from name)</span>';

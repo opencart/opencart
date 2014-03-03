@@ -1,59 +1,63 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <div class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?><?php echo $breadcrumb['separator']; ?>
-    <a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a><?php } ?>
-  </div>
-
-  <div class="box">
-    <div class="heading">
-      <h1><?php echo $text_title;?></h1>
-
-      <div class="buttons">
-        <a class="button" onclick="location = '<?php echo $link_overview; ?>';"><span><?php echo $text_btn_return; ?></span></a>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $link_overview; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title; ?></h1>
     </div>
-
-    <div class="content">
-      <table class="form" align="left">
-        <tr>
-          <td colspan="2"><h2><?php echo $text_saved_listings; ?></h2>
-
+    <div class="panel-body">
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-12">
             <p><?php echo $text_description; ?></p>
-
-            <div class="buttons">
-              <a id="upload_button" onclick="upload()" class="button"><span><?php echo $text_btn_upload; ?></span></a>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="pull-right">
+              <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?></a>
             </div>
-          </td>
-        </tr>
-      </table>
-      <table class="list" align="left">
+          </div>
+        </div>
+      </div>
+      <table class="table">
         <thead>
-        <tr>
-          <td width="22.5%"><?php echo $text_name_column ;?></td>
-          <td width="22.5%"><?php echo $text_model_column ;?></td>
-          <td width="22.5%"><?php echo $text_sku_column ;?></td>
-          <td width="22.5%"><?php echo $text_amazonus_sku_column ;?></td>
-          <td class="center" width="10%"><?php echo $text_actions_column ;?></td>
-        </tr>
+          <tr>
+            <th><?php echo $text_name_column ;?></th>
+            <th><?php echo $text_model_column ;?></th>
+            <th><?php echo $text_sku_column ;?></th>
+            <th><?php echo $text_amazon_sku_column ;?></th>
+            <th class="text-center"><?php echo $text_actions_column ;?></th>
+          </tr>
         </thead>
         <tbody>
-        <?php foreach($saved_products as $saved_product) : ?>
-        <tr>
-          <td class="left"><?php echo $saved_product['product_name']; ?></td>
-          <td class="left"><?php echo $saved_product['product_model']; ?></td>
-          <td class="left"><?php echo $saved_product['product_sku']; ?></td>
-          <td class="left"><?php echo $saved_product['amazonus_sku']; ?></td>
-          <td class="center">
-            <a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $text_actions_edit; ?>]</a>
-            <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $text_actions_remove; ?>]</a>
-          </td>
-        </tr>
-
-        <?php endforeach; ?>
+          <?php if (!empty($saved_products)) { ?>
+            <?php foreach ($saved_products as $saved_product) { ?>
+              <tr>
+                <td class="text-left"><?php echo $saved_product['product_name']; ?></td>
+                <td class="text-left"><?php echo $saved_product['product_model']; ?></td>
+                <td class="text-left"><?php echo $saved_product['product_sku']; ?></td>
+                <td class="text-left"><?php echo $saved_product['amazon_sku']; ?></td>
+                <td class="text-center">
+                  <a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $text_actions_edit; ?>]</a>
+                  <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $text_actions_remove; ?>]</a>
+                </td>
+              </tr>
+            <?php } ?>
+          <?php } else { ?>
+            <tr>
+              <td colspan="5" class="text-center"><?php echo $text_no_results ;?></td>
+            </tr>
+          <?php } ?>
         </tbody>
       </table>
-
     </div>
   </div>
 </div>
@@ -79,22 +83,13 @@
       url: '<?php echo html_entity_decode($uploadSavedAjax); ?>',
       dataType: 'json',
       beforeSend: function () {
-        $('#upload_button').after('<span class="wait"><img src="view/image/loading.gif" alt="" />&nbsp;<b>Uploading.. Please wait</b></span>');
-        $('#save_button').hide();
-        $('#cancel_button').hide();
-        $('#upload_button').hide();
+        $('#upload_button').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
-        $('.wait').remove();
-        $('#save_button').show();
-        $('#cancel_button').show();
-        $('#upload_button').show();
+        $('#upload_button').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?>').removeAttr('disabled');
       },
       success: function (data) {
-        if (data == null) {
-          alert('Error. No response from openbay/amazonus_product/uploadSaved.');
-          return;
-        } else if (data['status'] == 'ok') {
+        if (data['status'] == 'ok') {
           alert('<?php echo $text_uploaded_alert; ?>');
         } else if (data['error_message'] !== undefined) {
           alert(data['error_message']);
@@ -103,7 +98,6 @@
           alert('Unknown error.');
           return;
         }
-        window.location.href = '<?php echo html_entity_decode($link_overview); ?>';
       },
       error: function (xhr, ajaxOptions, thrownError) {
         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);

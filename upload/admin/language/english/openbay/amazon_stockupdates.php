@@ -1,11 +1,10 @@
 <?php
 //Headings
-$_['text_title']                    = 'OpenBay Pro for Amazon | Stock updates';
+$_['text_title']                    = 'Stock updates';
 
 //Text
-$_['text_stock_updates']            = 'Stock updates';
 $_['text_openbay']                  = 'OpenBay Pro';
-$_['text_overview']                 = 'Amazon Overview';
+$_['text_amazon']                 	= 'Amazon EU';
 $_['text_my_account']               = 'My account';
 $_['text_btn_return']               = 'Cancel';
 

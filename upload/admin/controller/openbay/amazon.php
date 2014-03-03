@@ -1,5 +1,10 @@
 <?php
 class ControllerOpenbayAmazon extends Controller {
+	public function index() {
+		$this->response->redirect($this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'));
+		return;
+	}
+
 	public function stockUpdates() {
 		$data = $this->load->language('openbay/amazon_stockupdates');
 
@@ -9,66 +14,65 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_overview'),
+			'href'      => $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/stockUpdates&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_stock_updates'),
+			'href'      => $this->url->link('openbay/amazon/stockUpdates', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_title'),
 		);
 
 		$data['link_overview'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
 
-		$requestArgs = array();
+		$request_arg = array();
 
 		if (isset($this->request->get['filter_date_start'])) {
-			$requestArgs['date_start'] = date("Y-m-d", strtotime($this->request->get['filter_date_start']));
+			$request_arg['date_start'] = date("Y-m-d", strtotime($this->request->get['filter_date_start']));
 		} else {
-			$requestArgs['date_start'] = date("Y-m-d");
+			$request_arg['date_start'] = date("Y-m-d");
 		}
 
 		if (isset($this->request->get['filter_date_end'])) {
-			$requestArgs['date_end'] = date("Y-m-d", strtotime($this->request->get['filter_date_end']));
+			$request_arg['date_end'] = date("Y-m-d", strtotime($this->request->get['filter_date_end']));
 		} else {
-			$requestArgs['date_end'] = date("Y-m-d");
+			$request_arg['date_end'] = date("Y-m-d");
 		}
 
-		$data['date_start'] = $requestArgs['date_start'];
-		$data['date_end'] = $requestArgs['date_end'];
+		$data['date_start'] = $request_arg['date_start'];
+		$data['date_end'] = $request_arg['date_end'];
 
-		$xml = $this->openbay->amazon->getStockUpdatesStatus($requestArgs);
-		$simpleXmlObj = simplexml_load_string($xml);
-		$data['tableData'] = array();
+		$xml = $this->openbay->amazon->getStockUpdatesStatus($request_arg);
+		$xml_object = simplexml_load_string($xml);
+		$data['table_data'] = array();
 
-		if($simpleXmlObj !== false) {
+		if($xml_object !== false) {
+			$table_data = array();
 
-			$tableData = array();
-
-			foreach($simpleXmlObj->update as $updateNode) {
-				$row = array('date_requested' => (string)$updateNode->date_requested,
-					'date_updated' => (string)$updateNode->date_updated,
-					'status' => (string)$updateNode->status,
+			foreach($xml_object->update as $update_node) {
+				$row = array('date_requested' => (string)$update_node->date_requested,
+					'date_updated' => (string)$update_node->date_updated,
+					'status' => (string)$update_node->status,
 					);
 				$data = array();
-				foreach($updateNode->data->product as $productNode) {
+				foreach($update_node->data->product as $productNode) {
 					$data[] = array('sku' => (string)$productNode->sku,
 						'stock' => (int)$productNode->stock
 						);
 				}
 				$row['data'] = $data;
-				$tableData[(int)$updateNode->ref] = $row;
+				$table_data[(int)$update_node->ref] = $row;
 			}
 
-			$data['tableData'] = $tableData;
+			$data['table_data'] = $table_data;
 
 		} else {
 			$data['error'] = 'Could not connect to OpenBay PRO API.';
@@ -82,11 +86,6 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$this->response->setOutput($this->load->view('openbay/amazon_stock_updates.tpl', $data));
 
-	}
-
-	public function index() {
-		$this->response->redirect($this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'));
-		return;
 	}
 
 	public function overview() {
@@ -103,22 +102,24 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_overview'),
+			'href'      => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_title'),
 		);
 
 		$data['success'] = '';
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
 		}
 
 		$data['validation'] = $this->openbay->amazon->validate();
@@ -146,21 +147,21 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_overview'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/subscription&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_my_account'),
+			'href'      => $this->url->link('openbay/amazon/subscription', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_title'),
 		);
 
 		$data['link_overview'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
@@ -256,20 +257,20 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_overview'),
+			'href'      => $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/settings&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazon/settings', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('heading_title'),
 		);
 
@@ -391,30 +392,30 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_overview'),
+			'href'      => $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/itemLinks&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_item_links'),
+			'href'      => $this->url->link('openbay/amazon/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_title'),
 		);
 
 		$data['token'] = $this->session->data['token'];
 
-		$data['addItemLinkAjax'] = $this->url->link('openbay/amazon/addItemLinkAjax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['removeItemLinkAjax'] = $this->url->link('openbay/amazon/removeItemLinkAjax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['getItemLinksAjax'] = $this->url->link('openbay/amazon/getItemLinksAjax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['getUnlinkedItemsAjax'] = $this->url->link('openbay/amazon/getUnlinkedItemsAjax', 'token=' . $this->session->data['token'], 'SSL');
-		$data['getOpenstockOptionsAjax'] = $this->url->link('openbay/amazon/getOpenstockOptionsAjax', 'token=' . $this->session->data['token'], 'SSL');
+		$data['add_item_link_ajax'] = $this->url->link('openbay/amazon/addItemLinkAjax', 'token=' . $this->session->data['token'], 'SSL');
+		$data['remove_item_link_ajax'] = $this->url->link('openbay/amazon/removeItemLinkAjax', 'token=' . $this->session->data['token'], 'SSL');
+		$data['get_item_links_ajax'] = $this->url->link('openbay/amazon/getItemLinksAjax', 'token=' . $this->session->data['token'], 'SSL');
+		$data['get_unlinked_items_ajax'] = $this->url->link('openbay/amazon/getUnlinkedItemsAjax', 'token=' . $this->session->data['token'], 'SSL');
+		$data['get_openstock_options_ajax'] = $this->url->link('openbay/amazon/getOpenstockOptionsAjax', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -424,7 +425,6 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function savedListings() {
-
 		$data = $this->load->language('openbay/amazon_listingsaved');
 
 		$this->document->setTitle($this->language->get('text_title'));
@@ -435,21 +435,21 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_overview'),
+			'href'      => $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/savedListings&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_saved_listings'),
+			'text'      => $this->language->get('text_title'),
 		);
 
 		$data['token'] = $this->session->data['token'];
@@ -726,7 +726,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('tool/image');
 
-		$data = $this->load->language('openbay/amazon_bulk');
+		$data = $this->load->language('openbay/amazon_bulk_listing');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
@@ -743,12 +743,12 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_overview'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_bulk_listing'),
+			'text'      => $this->language->get('heading_title'),
 		);
 
 		$pingInfo = simplexml_load_string($this->openbay->amazon->callWithResponse('ping/info'));
@@ -802,14 +802,14 @@ class ControllerOpenbayAmazon extends Controller {
 				$page = 1;
 			}
 
-			$data = array();
+			$filter = array();
 
-			$data['filter_marketplace'] = $filter_marketplace;
-			$data['start'] = ($page - 1) * $this->config->get('config_admin_limit');
-			$data['limit'] = $this->config->get('config_admin_limit');
+			$filter['filter_marketplace'] = $filter_marketplace;
+			$filter['start'] = ($page - 1) * $this->config->get('config_limit_admin');
+			$filter['limit'] = $this->config->get('config_limit_admin');
 
-			$results = $this->model_openbay_amazon->getProductSearch($data);
-			$product_total = $this->model_openbay_amazon->getProductSearchTotal($data);
+			$results = $this->model_openbay_amazon->getProductSearch($filter);
+			$product_total = $this->model_openbay_amazon->getProductSearchTotal($filter);
 
 			$data['products'] = array();
 
@@ -861,11 +861,12 @@ class ControllerOpenbayAmazon extends Controller {
 			$pagination = new Pagination();
 			$pagination->total = $product_total;
 			$pagination->page = $page;
-			$pagination->limit = $this->config->get('config_admin_limit');
+			$pagination->limit = $this->config->get('config_limit_admin');
 			$pagination->text = $this->language->get('text_pagination');
 			$pagination->url = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . '&page={page}&filter_marketplace=' . $filter_marketplace, 'SSL');
 
 			$data['pagination'] = $pagination->render();
+			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($product_total - $this->config->get('config_limit_admin'))) ? $product_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $product_total, ceil($product_total / $this->config->get('config_limit_admin')));
 		}
 
 		$data['header'] = $this->load->controller('common/header');
@@ -895,12 +896,12 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_overview'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazon/bulkLinking', 'token=' . $this->session->data['token'], 'SSL'),
-			'text'      => $this->language->get('text_bulk_linking'),
+			'text'      => $this->language->get('heading_title'),
 		);
 
 		$pingInfo = simplexml_load_string($this->openbay->amazon->callWithResponse('ping/info'));
@@ -1000,7 +1001,11 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['marketplaces'] = $marketplaces;
 		$data['marketplace_code'] = $marketplace_code;
 
-		$data['marketplaces_processing'] = $this->config->get('openbay_amazon_processing_listing_reports');
+		$data['marketplaces_processing'] = array();
+		if (is_array($this->config->get('openbay_amazon_processing_listing_reports'))) {
+			$data['marketplaces_processing'] = $this->config->get('openbay_amazon_processing_listing_reports');
+		}
+
 		$data['href_return'] = $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL');
 		$data['href_do_bulk_linking'] = $this->url->link('openbay/amazon/doBulkLinking', 'token=' . $this->session->data['token'], 'SSL');
 		$data['token'] = $this->session->data['token'];

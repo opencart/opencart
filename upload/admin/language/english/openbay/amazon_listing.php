@@ -80,21 +80,22 @@ $_['tab_additional_info'] = 'Additional options';
 //Quick/advanced listing tabs
 $_['quick_listing_description'] = 'Use this method when matching product already exist in Amazon catalogue. Matching is found by Amazon using Standard product id (ASIN, ISBN, UPS, EAN)';
 $_['advanced_listing_description'] = 'Use this method to create new listings on Amazon.';
-$_['listing_row_text'] = 'Listing for product:';
+$_['listing_row_text'] = 'Listing for product';
 $_['already_saved_text'] = 'This product is already in saved listings. Click edit if you want to revise.';
 $_['save_button_text'] = 'Save';
 $_['save_upload_button_text'] = 'Save and upload';
 $_['saved_listings_button_text'] = 'View saved listings';
 $_['cancel_button_text'] = 'Cancel';
 $_['field_required_text'] = 'This field is required!';
-$_['not_saved_text'] = 'Listing was not saved. Check your input.';
-$_['chars_over_limit_text'] = 'characters over limit.';
+$_['not_saved_text'] = 'Listing was not saved. Check you have filled in all fields';
+$_['chars_over_limit_text'] = 'characters over the limit';
 $_['minimum_length_text'] = 'Minimum length is';
 $_['characters_text'] = 'characters';
 $_['delete_confirm_text'] = 'Are you sure?';
 $_['clear_image_text'] = 'Clear';
 $_['browse_image_text'] = 'Browse';
-$_['category_selector_field_text'] = 'Amazon category:';
+$_['category_selector_field_text'] = 'Amazon category';
+$_['text_browse_node'] = 'Choose browse node';
 
 //Item links tab
 $_['item_links_description'] = 'Here you can add and edit product links to already existing Amazon items without listing them from OpenCart. This will allow stock control between enabled marketplaces. If you have openStock installed - this will also allow you to link item options to individual Amazon SKUs. (Uploading products from OpenCart to Amazon will automaticaly add links)';

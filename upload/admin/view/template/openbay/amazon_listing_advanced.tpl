@@ -37,7 +37,7 @@
           <div class="tab-pane active" id="page-main">
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $listing_row_text; ?></label>
-              <div class="col-sm-10">
+              <div class="col-sm-10"><p>
                 <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if(!empty($options)) { echo " : "; } ?></a>
                 <?php if(!empty($options)) { ?>
                   <select id="openstock_selector" name="optionVar" class="form-control">
@@ -47,7 +47,7 @@
                     <?php } ?>
                   </select>
                 <?php }?>
-              </div>
+              </p></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $marketplaces_field_text; ?></label>
@@ -80,28 +80,32 @@
             </table>
           </div>
         </div>
-<!--
-    <div id="greyScreen"></div>
-    <div id="browseNodeForm" class="greyScreenBox nodePage">
-      <div class="bold border p5 previewClose">X</div>
-      <div id="browseNodeFormContent"></div>
-    </div>
--->
+        <div class="modal fade" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel" aria-hidden="true" id="browse-node-modal">
+          <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+              <div class="modal-header">
+                <button aria-hidden="true" data-dismiss="modal" class="close" type="button">×</button>
+                <h4 id="mySmallModalLabel" class="modal-title"><?php echo $text_browse_node; ?></h4>
+              </div>
+              <div class="modal-body">
+                <div id="browse-node-content"></div>
+              </div>
+            </div>
+          </div>
+        </div>
       </form>
     </div>
   </div>
   <div class="well">
     <div class="row">
       <div class="col-md-12 text-right">
-        <a class="btn btn-primary" onclick="validate_and_save('advanced')"><i class="fa fa-save"></i> <?php echo $save_button_text ?></a>
-        <a class="btn btn-primary" onclick="save_and_upload()"><i class="fa fa-cloud-upload"></i> <?php echo $save_upload_button_text ?></a>
-        <a class="btn btn-primary" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy"></i> <?php echo $saved_listings_button_text ?></a>
+        <a class="btn btn-primary" onclick="validate_and_save('advanced')"><i class="fa fa-save fa-lg"></i> <?php echo $save_button_text ?></a>
+        <a class="btn btn-primary" onclick="save_and_upload()"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $save_upload_button_text ?></a>
+        <a class="btn btn-primary" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy fa-lg"></i> <?php echo $saved_listings_button_text ?></a>
       </div>
     </div>
   </div>
 </div>
-
-
 <script type="text/javascript"><!--
 $(document).ready(function(){
     $('#openstock_selector').change(function() {
@@ -392,18 +396,19 @@ function getBrowseNodeField(fieldData) {
 
   output += '<div class="input-group col-md-3">';
   output += '<input ';
+  output += 'id="'+fieldData['name']+'_input" ';
   output += 'type="number" ';
   output += 'min="0" ';
   output += 'accepted="' + fieldData['accepted']['type'] + '" ';
   output += 'field_name="' + fieldData['name'] + '" ';
   output += 'field_type="' + fieldData['type'] + '" ';
   output += 'name="fields[' + fieldData['name'] + ']" ';
-  output += 'class="browseNode form-control" ';
+  output += 'class="form-control" ';
+  output += 'onclick="loadBrowseNode(\''+fieldData['name']+'\');" ';
   output += 'value="' + fieldData['value'] + '">';
-  output += '<span class="input-group-btn">';
-  output += '<button class="btn btn-primary" type="button"><i class="fa fa-sitemap fa-lg"></i></button>';
-  output += '</span>';
+  output += '<span class="input-group-addon"><i class="fa fa-sitemap fa-lg"></i></span>';
   output += '</div>';
+  output += '<span class="label label-info" style="display:none;" id="'+fieldData['name']+'_label"></span>';
 
   return output;
 }
@@ -660,13 +665,13 @@ var nodeBox = '';
 var nodeString = '';
 var nodeStringSimple = '';
 
-$('.browseNode').bind('click', function(){
-    var html = '';
-    var market = $('.marketplace_ids:checked').val();
+function loadBrowseNode(field) {
+  $('#browse-node-modal').modal('toggle');
 
-    nodeBox = $(this).attr("field_name");
-    $('#'+nodeBox+'_text').remove();
-    $(this).val('');
+  var html = '';
+  var market = $('.marketplace_ids:checked').val();
+
+  $('#'+field+'_input').val('');
 
     nodeString = '';
     nodeStringSimple = '';
@@ -677,44 +682,42 @@ $('.browseNode').bind('click', function(){
         data: { marketplaceId: market},
         dataType: 'json',
         beforeSend: function(){
-            $('#browseNodeFormContent').empty();
-            showGreyScreen('browseNodeForm');
+            $('#browse-node-content').empty();
+            $('#'+field+'_label').empty().hide();
         },
         success: function(data) {
             if(data.node.error != true){
-                html += '<select class="nodeSelect mTop20 width250">';
-                html += '<option value=""><?php echo $option_default; ?></option>';
+                html += '<div class="row">';
+                  html += '<div class="input-group col-md-12">';
+                    html += '<p><select class="form-control" id="root-node" onchange="nodeSelect(\'root-node\', \''+field+'\');">';
+                      html += '<option value=""><?php echo $option_default; ?></option>';
+                      $.each(data.children, function(k,v){
+                          html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
+                      });
+                    html += '</select></p>';
+                  html += '</div>';
+                html += '</div>';
 
-                $.each(data.children, function(k,v){
-                    html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
-                });
-
-                html += '</select><br />';
-
-                $('#browseNodeFormContent').html(html);
+                $('#browse-node-content').empty().html(html);
             }else{
-                alert(data.node.error);
-                hideGreyScreen('browseNodeForm');
+              alert(data.node.error);
             }
         },
         failure: function(){
             alert('<?php echo $text_error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
         },
         error: function(){
             alert('<?php echo $text_error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
         }
     });
-});
+}
 
-$('.nodeSelect').bind('change', function(){
+function nodeSelect(field, original_field) {
     //called when the root node id is chosen
     var html = '';
     var market = $('.marketplace_ids:checked').val();
-    var node = $(this).val();
-    var parentNodeName = $(this).find(":selected").text();
-    nodeString += '<h3>'+parentNodeName+' ></h3>';
+    var node = $('#'+field).val();
+    var parentNodeName = $('#'+field).find(":selected").text();
     nodeStringSimple += parentNodeName+' > ';
 
     $.ajax({
@@ -723,45 +726,52 @@ $('.nodeSelect').bind('change', function(){
         data: { marketplaceId: market, node: node},
         dataType: 'json',
         beforeSend: function(){
-            $('#browseNodeFormContent select').remove();
-            $('#browseNodeFormContent').append('<img src="view/image/loading.gif" alt="" />');
+          $('#browse-node-content').empty().html('<a class="btn btn-primary" disabled="disabled"><i class="fa fa-refresh fa-spin"></i> </a>');
         },
         success: function(data) {
-            if(data.node.error != true){
-                if(data.node.final == 0){
-                    html += '<select class="nodeSelect form-control">';
+          if(data.node.error != true){
+            html += '<div class="row">';
+              html += '<div class="col-sm-12 text-left">';
+                html += '<h4>'+nodeStringSimple+'</h4>';
+              html += '</div>';
+            html += '</div>';
+            if(data.node.final == 0){
+              html += '<div class="row">';
+                html += '<div class="input-group col-md-12">';
+                  html += '<p><select class="form-control" id="'+field+'-'+node+'" onchange="nodeSelect(\''+field+'-'+node+'\', \''+original_field+'\');">';
                     html += '<option value=""><?php echo $option_default; ?></option>';
-
                     $.each(data.children, function(k,v){
                         html += '<option value="'+ v.node_id+'">'+ v.name+'</option>';
                     });
-
-                    html += '</select>';
-                }else{
-                    html += '<a onclick="saveNode('+data.node.id+')" class="btn btn-primary"><?php echo $save_button_text; ?></a>';
-                }
-
-                $('#browseNodeFormContent').html(nodeString+html);
+                  html += '</select></p>';
+                html += '</div>';
+              html += '</div>';
             }else{
-                alert(data.node.error);
-                hideGreyScreen('browseNodeForm');
+              html += '<div class="row">';
+                html += '<div class="col-sm-12 text-right">';
+                  html += '<a onclick="saveNode('+data.node.id+', \''+original_field+'\', \''+nodeStringSimple+'\')" class="btn btn-primary"><i class="fa fa-save fa-lg"></i> <?php echo $save_button_text; ?></a>';
+                html += '</div>';
+              html += '</div>';
             }
+
+            $('#browse-node-content').empty().html(html);
+          }else{
+              alert(data.node.error);
+          }
         },
         failure: function(){
             alert('<?php echo $text_error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
         },
         error: function(){
             alert('<?php echo $text_error_load_nodes; ?>');
-            hideGreyScreen('browseNodeForm');
         }
     });
-});
+}
 
-function saveNode(id){
-    $('input[field_name='+nodeBox+']').val(id);
-    $('input[field_name='+nodeBox+']').after('<span id="'+nodeBox+'_text" style="margin-left:15px;">'+nodeStringSimple+'</span>');
-    hideGreyScreen('browseNodeForm');
+function saveNode(id, field, text){
+  $('input[field_name='+field+']').val(id);
+  $('#'+field+'_label').text(text).show();
+  $('#browse-node-modal').modal('toggle');
 }
 //--></script>
 <?php echo $footer; ?>

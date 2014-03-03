@@ -5,7 +5,6 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">

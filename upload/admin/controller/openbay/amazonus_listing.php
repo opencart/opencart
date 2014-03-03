@@ -93,7 +93,6 @@ class ControllerOpenbayAmazonusListing extends Controller{
 		}
 
 		$this->document->setTitle($this->language->get('text_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		if (isset($this->session->data['error'])) {

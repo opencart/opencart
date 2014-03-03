@@ -14,7 +14,7 @@ $(window).resize(function(){
     $('#greyScreen').css("display") == 'block'?showGreyScreen():"";
 });
 
-$('.previewClose').live('click', function(){
+$('.previewClose').bind('click', function(){
     hideGreyScreen();
 });
 

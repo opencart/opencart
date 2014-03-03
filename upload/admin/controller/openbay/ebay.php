@@ -24,7 +24,6 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_overview');
 
 		$this->document->setTitle($this->language->get('text_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -88,7 +87,6 @@ class ControllerOpenbayEbay extends Controller {
 		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 		$data['breadcrumbs'] = array();
 
@@ -432,7 +430,6 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_summary');
 
 		$this->document->setTitle($this->language->get('text_heading'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -622,7 +619,6 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_subscription');
 
 		$this->document->setTitle($this->language->get('text_page_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -662,7 +658,6 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_usage');
 
 		$this->document->setTitle($this->language->get('text_page_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -704,7 +699,6 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_import');
 
 		$this->document->setTitle($this->language->get('text_heading'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -747,7 +741,6 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_orders');
 
 		$this->document->setTitle($this->language->get('text_heading'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -787,7 +780,6 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_syncronise');
 
 		$this->document->setTitle($this->language->get('text_page_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -835,7 +827,6 @@ class ControllerOpenbayEbay extends Controller {
 		$data = $this->load->language('openbay/ebay_links');
 
 		$this->document->setTitle($this->language->get('text_page_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -985,7 +976,6 @@ class ControllerOpenbayEbay extends Controller {
 				$this->load->model('openbay/ebay_product');
 
 				$this->document->setTitle($data['text_page_title']);
-				$this->document->addStyle('view/stylesheet/openbay.css');
 				$this->document->addScript('view/javascript/openbay/faq.js');
 
 				$data['action']       = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
@@ -1166,7 +1156,6 @@ class ControllerOpenbayEbay extends Controller {
 				$this->load->model('openbay/ebay_profile');
 
 				$this->document->setTitle($data['text_page_title']);
-				$this->document->addStyle('view/stylesheet/openbay.css');
 				$this->document->addScript('view/javascript/openbay/faq.js');
 
 				$data['action']   = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
@@ -1453,9 +1442,8 @@ class ControllerOpenbayEbay extends Controller {
 				}
 
 				$this->document->setTitle($data['text_page_title']);
-				$this->document->addStyle('view/stylesheet/openbay.css');
 				$this->document->addScript('view/javascript/openbay/faq.js');
-				$this->document->addScript('view/javascript/openbay/ebay.js');
+				$this->document->addScript('view/javascript/openbay/openbay.js');
 
 				$data['header'] = $this->load->controller('common/header');
 				$data['menu'] = $this->load->controller('common/menu');

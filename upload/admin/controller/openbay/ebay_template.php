@@ -8,7 +8,6 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		$this->load->model('openbay/ebay_template');
 
 		$this->document->setTitle($data['text_title_list']);
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		if (isset($this->session->data['error'])) {
@@ -131,7 +130,6 @@ class ControllerOpenbayEbayTemplate extends Controller {
 		}
 
 		$this->document->setTitle($data['page_title']);
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addStyle('view/stylesheet/codemirror.css');
 		$this->document->addScript('view/javascript/openbay/codemirror.js');
 		$this->document->addScript('view/javascript/openbay/faq.js');

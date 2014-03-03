@@ -7,6 +7,16 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$this->load->model('catalog/product');
 		$this->load->model('localisation/country');
 
+		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->addScript('view/javascript/openbay/faq.js');
+
+		if (isset($this->session->data['error'])) {
+			$data['error_warning'] = $this->session->data['error'];
+			unset($this->session->data['error']);
+		} else {
+			$data['error_warning'] = '';
+		}
+
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -93,17 +103,6 @@ class ControllerOpenbayAmazonListing extends Controller {
 			}
 		} else {
 			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
-		}
-
-		$this->document->setTitle($this->language->get('text_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
-		$this->document->addScript('view/javascript/openbay/faq.js');
-
-		if (isset($this->session->data['error'])) {
-			$data['error_warning'] = $this->session->data['error'];
-			unset($this->session->data['error']);
-		} else {
-			$data['error_warning'] = '';
 		}
 
 		$data['url_return']  = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL');

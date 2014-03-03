@@ -9,7 +9,6 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 		$this->load->model('tool/image');
 
 		$data = $this->load->language('openbay/amazonus_listing');
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/openbay.js');
 		$this->document->setTitle($this->language->get('text_title'));
 

@@ -7,7 +7,6 @@ class ControllerModuleEbaydisplay extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('view/javascript/openbay/faq.js');
-		$this->document->addStyle('view/stylesheet/openbay.css');
 
 		$this->load->model('setting/setting');
 

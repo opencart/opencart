@@ -1,6 +1,7 @@
 <?php
 //Headings
 $_['text_title'] = 'New Amazon listing';
+$_['text_title_advanced'] = 'Advanced listing';
 $_['text_openbay'] = 'OpenBay Pro';
 $_['text_amazon'] = 'Amazon EU';
 

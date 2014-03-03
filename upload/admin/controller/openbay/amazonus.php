@@ -4,7 +4,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data = $this->load->language('openbay/amazonus_stockupdates');
 
 		$this->document->setTitle($this->language->get('text_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -95,7 +94,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data = $this->load->language('openbay/amazonus_overview');
 
 		$this->document->setTitle($this->language->get('text_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -139,7 +137,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data = $this->load->language('openbay/amazonus_subscription');
 
 		$this->document->setTitle($this->language->get('text_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -215,7 +212,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data = $this->load->language('openbay/amazonus_settings');
 		$this->load->language('openbay/amazonus_listing');
 		$this->document->setTitle($this->language->get('text_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$this->load->model('setting/setting');
@@ -383,7 +379,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data = $this->load->language('openbay/amazonus_links');
 
 		$this->document->setTitle($this->language->get('text_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['link_overview'] = $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL');
@@ -426,7 +421,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data = $this->load->language('openbay/amazonus_listingsaved');
 
 		$this->document->setTitle($this->language->get('text_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['link_overview'] = $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL');
@@ -727,7 +721,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data = $this->load->language('openbay/amazonus_bulk');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -863,7 +856,6 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data = $this->load->language('openbay/amazonus_bulk_linking');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();

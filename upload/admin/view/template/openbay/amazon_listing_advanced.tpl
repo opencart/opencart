@@ -1,125 +1,116 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-        <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
-        <?php } ?>
-    </div>
-    <?php if(isset($success)) : ?>
-        <div class="success"><?php echo $success; ?></div>
-    <?php endif; ?>
-
-    <?php if(!empty($errors)) { ?>
-    <div class="warning"><ul>
-            <?php foreach($errors as $error) : ?>
-            <li><?php echo $error['message']; ?></li>
-
-            <?php endforeach; ?>
-        </ul></div>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
-
-    <div class="box">
-        <div class="heading">
-            <h1><?php echo $text_title; ?></h1>
-            <div class="buttons">
-                <?php if($has_listing_errors) { ?>
-                <a onclick="location='<?php echo $url_remove_errors; ?>'" class="button"><span>Remove error messages</span></a>
-                <?php } ?>
-                <a id="save_button" onclick="validate_and_save('advanced')" class="button"><span><?php echo $save_button_text; ?></span></a>
-                <a id="save_button" onclick="save_and_upload()" class="button"><span><?php echo $save_upload_button_text; ?></span></a>
-                <a onclick="location = '<?php echo $saved_listings_url; ?>'" class="button"><span><?php echo $saved_listings_button_text; ?></span></a>
-                <a id="cancel_button" onclick="location = '<?php echo $cancel_url; ?>'" class="button"><span><?php echo $cancel_button_text; ?></span></a>
-
-            </div>
-        </div>
-        <div class="content">
-
-            <div id="tabs" class="htabs">
-                <a href="#page-main"><?php echo $text_tab_main; ?></a>
-                <div id="dynamic_tabs"></div>
-            </div>
-
-            <form method="POST" id="product_form_advanced">
-                <div id="page-main">
-                    <table class="form" align="left">
-                        <tbody>
-                        <tr>
-                            <td style="width: 400px;"><?php echo $listing_row_text; ?></td>
-                            <td>
-                                <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if(!empty($options)) { echo " : "; } ?></a>
-                                <?php if(!empty($options)) { ?>
-                                <select id="openstock_selector" name="optionVar">
-                                    <option></option>
-                                    <?php foreach($options as $option) { ?>
-                                    <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
-                                    <?php } ?>
-                                </select>
-                                <?php }?>
-                            </td>
-                        </tr>
-
-                        <!-- Marketplaces -->
-                        <tr id="marketplaces_advanced">
-                            <td>
-                                <span class="required">* </span><?php echo $marketplaces_field_text; ?><span class="help"><?php echo $marketplaces_help; ?></span>
-                            </td>
-                            <td>
-                                <?php foreach ($marketplaces as $mp) { ?>
-                                <div style="text-align: center; float: left; margin-right: 20px;">
-                                    <label for="adv_marketplace_<?php echo $mp['code'] ?>"><?php echo $mp['name'] ?></label>
-                                    <?php if($saved_marketplaces === false) { ?>
-                                    <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
-                                    <?php } else { ?>
-                                    <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
-                                    <?php } ?>
-                                </div>
-                                <?php } ?>
-                                <span class="required" id="required_marketplaces"></span>
-                            </td>
-                        </tr>
-
-                        <tr>
-                            <td>
-                                <?php echo $category_selector_field_text; ?><br>
-                                <span class="help"></span>
-                            </td>
-                            <td>
-                                <select id="category_selector">
-                                    <option value=""></option>
-                                    <?php foreach($amazon_categories as $category) {  ?>
-                                    <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-                        </tbody>
-                        <input type="hidden" name="upload_after" value="false">
-                        <tbody class="fields_advanced"></tbody>
-                    </table>
-                </div>
-                <div id="dynamic_pages">
-                </div>
-
-                <div id="greyScreen"></div>
-                <div id="browseNodeForm" class="greyScreenBox nodePage">
-                    <div class="bold border p5 previewClose">X</div>
-                    <div id="browseNodeFormContent"></div>
-                </div>
-            </form>
-        </div>
+  </ul>
+  <?php if ($errors) { ?>
+  <div class="alert alert-danger">
+    <ul>
+      <?php foreach ($errors as $listing_error) { ?>
+        <li><i class="fa fa-exclamation-circle"></i> <?php echo $listing_error ?></li>
+      <?php } ?>
+    </ul>
+  </div>
+  <?php } ?>
+  <?php if ($success) { ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?></div>
+  <?php } ?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $cancel_url; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title_advanced; ?></h1>
     </div>
+    <div class="panel-body">
+
+      <ul class="nav nav-tabs" id="tabs">
+        <li class="active"><a href="#page-main" data-toggle="tab"><?php echo $text_tab_main; ?></a></li>
+      </ul>
+
+      <form method="POST" id="product_form_advanced" class="form-horizontal">
+        <input type="hidden" name="upload_after" value="false">
+
+        <div class="tab-content" id="tab-content">
+          <div class="tab-pane active" id="page-main">
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $listing_row_text; ?></label>
+              <div class="col-sm-10">
+                <a href="<?php echo $listing_url; ?>"><?php echo $listing_name; ?><?php if(!empty($options)) { echo " : "; } ?></a>
+                <?php if(!empty($options)) { ?>
+                  <select id="openstock_selector" name="optionVar" class="form-control">
+                    <option></option>
+                    <?php foreach($options as $option) { ?>
+                      <option <?php if ($variation === $option['var']) { echo "selected='selected'";} ?> value="<?php echo  $option['var']?>"><?php echo $option['combi']?></option>
+                    <?php } ?>
+                  </select>
+                <?php }?>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $marketplaces_field_text; ?></label>
+              <div class="col-sm-10" id="marketplaces">
+                <?php foreach ($marketplaces as $mp) { ?>
+                  <label class="radio-inline">
+                    <?php if($saved_marketplaces === false) { ?>
+                    <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $default_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
+                    <?php } else { ?>
+                    <input class="marketplace_ids" id="adv_marketplace_<?php echo $mp['code'] ?>" <?php if (in_array($mp['id'], $saved_marketplaces)) { ?> checked="checked" <?php } ?> type="radio" name="marketplace_ids[]" value="<?php echo $mp['id']; ?>">
+                    <?php } ?>
+                    <?php echo $mp['name'] ?>
+                  </label>
+                <?php } ?>
+              </div>
+            </div>
+            <div class="form-group required">
+              <label class="col-sm-2 control-label" for="category_selector" id="category_selector_label"><?php echo $category_selector_field_text; ?></label>
+              <div class="col-sm-4">
+                <select name="category_selector" id="category_selector" class="form-control">
+                  <option value=""></option>
+                  <?php foreach($amazon_categories as $category) {  ?>
+                  <option <?php if ($edit_product_category == $category["name"]) echo 'selected="selected"'; ?> value="<?php echo $category['template'] ?>"><?php echo $category['friendly_name'] ?></option>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <table class="table">
+            <tbody class="fields_advanced"></tbody>
+            </table>
+          </div>
+        </div>
+<!--
+    <div id="greyScreen"></div>
+    <div id="browseNodeForm" class="greyScreenBox nodePage">
+      <div class="bold border p5 previewClose">X</div>
+      <div id="browseNodeFormContent"></div>
+    </div>
+-->
+      </form>
+    </div>
+  </div>
+  <div class="well">
+    <div class="row">
+      <div class="col-md-12 text-right">
+        <a class="btn btn-primary" onclick="validate_and_save('advanced')"><i class="fa fa-save"></i> <?php echo $save_button_text ?></a>
+        <a class="btn btn-primary" onclick="save_and_upload()"><i class="fa fa-cloud-upload"></i> <?php echo $save_upload_button_text ?></a>
+        <a class="btn btn-primary" href="<?php echo $saved_listings_url; ?>"><i class="fa fa-copy"></i> <?php echo $saved_listings_button_text ?></a>
+      </div>
+    </div>
+  </div>
 </div>
 
 
 <script type="text/javascript"><!--
 $(document).ready(function(){
     $('#openstock_selector').change(function() {
-        redirectOption($('#openstock_selector').attr('value'), 'advanced');
+        redirectOption($('#openstock_selector').val(), 'advanced');
     });
 
     <?php if(empty($amazon_categories)) { ?>
         $("#advanced_table").html("");
-        $(".content").prepend('<div id="warning" class="warning"><?php echo $text_error_connecting; ?></div>');
+        $(".content").prepend('<div id="warning" class="alert alert-danger"><?php echo $text_error_connecting; ?></div>');
         return;
     <?php } ?>
 
@@ -128,12 +119,11 @@ $(document).ready(function(){
     });
 
     $('#category_selector').change(function(){
-
-        var xml = $('#category_selector').attr('value');
+        var xml = $('#category_selector').val();
         if(xml == '') {
             $('.fields_advanced').empty();
-            $('#dynamic_tabs').empty();
-            $('#dynamic_pages').empty()
+            $('.dynamic-tab').remove();
+            $('.dynamic-page').remove();
             return;
         }
         show_form(xml, 'advanced');
@@ -180,20 +170,18 @@ function insertParamToUrl(searchLoc, key, value) {
     }
 }
 
-
 var fieldsArray = new Array();
 
-//formType = 'quick' or 'advanced'
 function show_form(xml, formType) {
     $('.fields_' + formType).empty();
-    $('#dynamic_tabs').empty();
-    $('#dynamic_pages').empty();
+    $('.dynamic-tab').remove();
+    $('.dynamic-page').remove();
 
     var parserURL = '<?php echo html_entity_decode($template_parser_url) ?>';
     var reqUrl = parserURL + '&xml=' + xml;
 
-    if($('#openstock_selector').attr('value') !== undefined) {
-        reqUrl = reqUrl + '&var=' + $('#openstock_selector').attr('value');
+    if($('#openstock_selector').val() !== undefined) {
+        reqUrl = reqUrl + '&var=' + $('#openstock_selector').val();
     }
 
     $.ajax({
@@ -201,11 +189,11 @@ function show_form(xml, formType) {
         data: {},
         dataType: 'json',
         beforeSend: function() {
-            $('#category_selector').attr('disabled', true);
-            $('#category_selector').after('<span class="wait"><img src="view/image/loading.gif" alt="" />&nbsp;</span>');
+            $('#category_selector').attr('disabled', 'disabled');
+            $('#category_selector_label').after('<a class="btn btn-primary wait" disabled="disabled"><i class="fa fa-refresh fa-spin"></i> </a>');
         },
         complete: function() {
-            $('#category_selector').attr('disabled', false);
+            $('#category_selector').removeAttr('disabled');
             $('.wait').remove();
         },
         success: function(data) {
@@ -218,13 +206,14 @@ function show_form(xml, formType) {
                 return;
             }
             for(tab in data['tabs']) {
-                $('#dynamic_tabs').append('<a href="#page-' + data['tabs'][tab]['id'] + '">' + data['tabs'][tab]['name'] + '</a>');
+                $('#tabs').append('<li class="dynamic-tab"><a href="#page-' + data['tabs'][tab]['id'] + '" data-toggle="tab">' + data['tabs'][tab]['name'] + '</a></li>');
 
-                var pageHtml = '<div id="page-' + data['tabs'][tab]['id'] + '"><table class="form" align="left">';
-                pageHtml += '<tbody class="fields_advanced"></tbody>';
-                pageHtml += '</table></div>'
+                var pageHtml = '';
+                pageHtml += '<div id="page-' + data['tabs'][tab]['id'] + '" class="tab-pane dynamic-page">';
+                  pageHtml += '<div class="fields_advanced"></div>';
+                pageHtml += '</div>'
 
-                $('#dynamic_pages').append(pageHtml);
+                $('#tab-content').append(pageHtml);
             }
 
             var categoryName = data['category'];
@@ -233,47 +222,54 @@ function show_form(xml, formType) {
             $('.fields_' + formType).append('<input type="hidden" name="category" value="' + categoryName + '">');
 
             for (i in fieldsArray[formType]) {
-                var row  = "";
-                if (fieldsArray[formType][i]['child']){
-                    row += '<tr class="child_row" display="no" field_index="' + i + '" style="display: none">';
+              var row  = '<div class="form-group';
+
+
+              if(fieldsArray[formType][i]['type'] == 'required') {
+                row += ' required';
+              }
+
+              if (fieldsArray[formType][i]['child']){
+                  row += ' child_row" display="no" field_index="' + i + '" style="display: none">';
+              } else {
+                  row += '">';
+              }
+
+              row += '<label class="col-sm-2 control-label">'+fieldsArray[formType][i]['title']+'</label>';
+              row += '<div class="col-sm-10">';
+
+              row += '<div class="alert alert-danger" id="error_' + fieldsArray[formType][i]['name'] + '" style="display:none;"></div>'
+
+              if(fieldsArray[formType][i]['name'] == "Quantity") {
+                  row += getQuantityField(fieldsArray[formType][i]);
+              } else if(fieldsArray[formType][i]['accepted']['type'] == "integer") {
+                if(fieldsArray[formType][i]['name'] == 'RecommendedBrowseNode' || fieldsArray[formType][i]['name'] == 'RecommendedBrowseNode2'){
+                  row += getBrowseNodeField(fieldsArray[formType][i]);
                 } else {
-                    row += '<tr>';
+                  row += getIntegerField(fieldsArray[formType][i]);
                 }
+              }
+              else if(fieldsArray[formType][i]['accepted']['type'] == "text_area") {
+                  row += getTextAreaField(fieldsArray[formType][i]);
+              }
+              else if(fieldsArray[formType][i]['accepted']['type'] == "select") {
+                  row += getSelectField(fieldsArray[formType][i]);
+              }
+              else if(fieldsArray[formType][i]['accepted']['type'] == "image") {
+                  row += getImageField(fieldsArray[formType][i]);
+              }
+              else {
+                  row += getStringField(fieldsArray[formType][i]);
+              }
 
-                row += '<td>';
-                if(fieldsArray[formType][i]['type'] == 'required') {
-                    row += '<span class="required">* </span>';
-                }
-                row += fieldsArray[formType][i]['title'];
-                row += '<span class="help">' + fieldsArray[formType][i]['definition'] + '</span>';
-                row += '</td>';
-                row += '<td>';
+              if (fieldsArray[formType][i]['definition']) {
+                row += '<span class="help-block">' + fieldsArray[formType][i]['definition'] + '</span>';
+              }
 
+              row += '</div>';
+              row += '</div>';
 
-                if(fieldsArray[formType][i]['name'] == "Quantity") {
-                    row += getQuantityField(fieldsArray[formType][i]);
-                } else if(fieldsArray[formType][i]['accepted']['type'] == "integer") {
-                    row += getIntegerField(fieldsArray[formType][i]);
-                }
-                else if(fieldsArray[formType][i]['accepted']['type'] == "text_area") {
-                    row += getTextAreaField(fieldsArray[formType][i]);
-                }
-                else if(fieldsArray[formType][i]['accepted']['type'] == "select") {
-                    row += getSelectField(fieldsArray[formType][i]);
-                }
-                else if(fieldsArray[formType][i]['accepted']['type'] == "image") {
-                    row += getImageField(fieldsArray[formType][i]);
-                }
-                else {
-                    row += getStringField(fieldsArray[formType][i]);
-                }
-
-                row += '<span class="required" id="error_' + fieldsArray[formType][i]['name'] + '"></span>'
-
-                row += '</td>';
-                row += '</tr>';
-
-                $('#page-' + fieldsArray[formType][i]['tab'] + ' .fields_' + formType).append(row);
+              $('#page-' + fieldsArray[formType][i]['tab'] + ' .fields_' + formType).append(row);
             }
 
             //Emulate changes to populate child fields
@@ -290,7 +286,7 @@ function show_form(xml, formType) {
 //Called when chenge to form was made. Shows child rows bassed on input if needed.
 function update_form(element, formType) {
     var changedFieldName = $(element).attr('field_name');
-    var changedFieldValue = $(element).attr('value');
+    var changedFieldValue = $(element).val();
 
     $('.fields_' + formType + ' .child_row').each(function (i) {
         var index = $(this).attr('field_index');
@@ -370,35 +366,52 @@ function getQuantityField(fieldData) {
     output += 'field_name="' + fieldData['name'] + '" ';
     output += 'field_type="' + fieldData['type'] + '" ';
     output += 'name="fields[' + fieldData['name'] + ']" ';
-    output += 'value="' + fieldData['value'] + '">';
+    output += 'value="' + fieldData['value'] + '" class="form-control">';
 
     return output;
 }
 
 function getIntegerField(fieldData) {
-    var output = "";
+  var output = "";
 
-    output += '<input ';
-    output += 'type="number" ';
-    output += 'min="0" ';
-    output += 'accepted="' + fieldData['accepted']['type'] + '" ';
-    output += 'field_name="' + fieldData['name'] + '" ';
-    output += 'field_type="' + fieldData['type'] + '" ';
-    output += 'name="fields[' + fieldData['name'] + ']" ';
-    if(fieldData['name'] == 'RecommendedBrowseNode' || fieldData['name'] == 'RecommendedBrowseNode2'){
-        output += 'class="browseNode" ';
-    }
-    output += 'value="' + fieldData['value'] + '">';
+  output += '<input ';
+  output += 'type="number" ';
+  output += 'min="0" ';
+  output += 'accepted="' + fieldData['accepted']['type'] + '" ';
+  output += 'field_name="' + fieldData['name'] + '" ';
+  output += 'field_type="' + fieldData['type'] + '" ';
+  output += 'name="fields[' + fieldData['name'] + ']" ';
+  output += 'class="form-control" ';
+  output += 'value="' + fieldData['value'] + '">';
 
-    return output;
+  return output;
+}
+
+function getBrowseNodeField(fieldData) {
+  var output = "";
+
+  output += '<div class="input-group col-md-3">';
+  output += '<input ';
+  output += 'type="number" ';
+  output += 'min="0" ';
+  output += 'accepted="' + fieldData['accepted']['type'] + '" ';
+  output += 'field_name="' + fieldData['name'] + '" ';
+  output += 'field_type="' + fieldData['type'] + '" ';
+  output += 'name="fields[' + fieldData['name'] + ']" ';
+  output += 'class="browseNode form-control" ';
+  output += 'value="' + fieldData['value'] + '">';
+  output += '<span class="input-group-btn">';
+  output += '<button class="btn btn-primary" type="button"><i class="fa fa-sitemap fa-lg"></i></button>';
+  output += '</span>';
+  output += '</div>';
+
+  return output;
 }
 
 function getTextAreaField(fieldData) {
     var output = "";
 
     output += '<textarea ';
-    output += 'rows="5" ';
-    output += 'cols="60" ';
     if('min_length' in fieldData['accepted']) {
         output += 'min_length="'+ fieldData['accepted']['min_length'] + '" ';
     }
@@ -407,7 +420,7 @@ function getTextAreaField(fieldData) {
     }
     output += 'field_name="' + fieldData['name'] + '" ';
     output += 'field_type="' +  fieldData['type'] + '" ';
-    output += 'name="fields[' + fieldData['name'] + ']" class="width400 height250">';
+    output += 'name="fields[' + fieldData['name'] + ']" class="form-control" rows="3">';
     output += fieldData['value'];
     output += '</textarea>';
 
@@ -428,7 +441,7 @@ function getStringField(fieldData) {
     output += 'field_name="' + fieldData['name'] + '" ';
     output += 'field_type="' + fieldData['type'] + '" ';
     output += 'name="fields[' + fieldData['name'] + ']" ';
-    output += 'value="' + fieldData['value'] + '" class="width400">';
+    output += 'value="' + fieldData['value'] + '" class="form-control">';
 
     return output;
 }
@@ -439,7 +452,7 @@ function getSelectField(fieldData) {
     output += '<select ';
     output += 'field_name="' + fieldData['name'] + '" ';
     output += 'field_type="' + fieldData['type'] + '" ';
-    output += 'name="fields[' + fieldData['name'] + ']" class="width250">';
+    output += 'name="fields[' + fieldData['name'] + ']" class="form-control">';
 
     output += '<option></option>';
 
@@ -475,16 +488,16 @@ function image_upload(field, thumb) {
     $('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
 
     $('#dialog').dialog({
-        title: '<?php echo $text_image_manager; ?>',
+        title: '',
         close: function (event, ui) {
-            if ($('#' + field).attr('value')) {
+            if ($('#' + field).val()) {
                 $.ajax({
                     url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).val()),
                     dataType: 'text',
                     success: function(data) {
                         if(data != "") {
                             $('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
-                            var imageUrl = $('#' + field).attr('value');
+                            var imageUrl = $('#' + field).val();
                             $('#' + field).attr('value', '<?php echo HTTPS_CATALOG; ?>image/' + imageUrl);
                         }
                     },
@@ -508,8 +521,8 @@ function validate(formType) {
     }
 
     var warnings = 0;
-
     var mChecked = 0;
+
     $('#marketplaces_' + formType + ' :input').each(function (i) {
         if($(this).attr('checked') == 'checked') {
             mChecked++;
@@ -517,10 +530,10 @@ function validate(formType) {
     });
 
     if(mChecked == 0) {
-        $('#marketplaces_' + formType + ' #required_marketplaces').text('<?php echo $field_required_text ?>');
+        $('#required_marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $field_required_text ?></div>');
         warnings ++;
     } else {
-        $('#marketplaces_' + formType + ' #required_marketplaces').text('');
+        $('#marketplace-alert').remove();
     }
 
     var productIdType;
@@ -528,7 +541,6 @@ function validate(formType) {
     var productIdRequired;
 
     $('.fields_' + formType + ' :input').each(function (i) {
-
         if($(this).parent().parent().attr('display') === "no") {
             return;
         }
@@ -536,7 +548,6 @@ function validate(formType) {
         var field_value = $(this).val();
         var field_name = $(this).attr('field_name');
         var field_type = $(this).attr('field_type');
-
         var min_length = $(this).attr('min_length');
         var max_length = $(this).attr('max_length');
 
@@ -553,19 +564,19 @@ function validate(formType) {
 
         if(field_type == 'required' || field_value !== '') {
             if(field_value === '') {
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $field_required_text ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $field_required_text ?>').show();
                 warnings ++;
             }
             else if (min_length != undefined && field_value.length < min_length) {
-                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $minimum_length_text; ?> ' + min_length + ' <?php echo $characters_text; ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $minimum_length_text; ?> ' + min_length + ' <?php echo $characters_text; ?>').show();
                 warnings ++;
             }
             else if (max_length != undefined && field_value.length > max_length) {
-                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $chars_over_limit_text; ?>');
+                $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $chars_over_limit_text; ?>').show();
                 warnings ++;
             }
             else {
-                $('.fields_' + formType + ' #error_' + field_name).text('');
+                $('.fields_' + formType + ' #error_' + field_name).text('').hide();
             }
         }
     });
@@ -581,7 +592,7 @@ function validate(formType) {
         });
     }
 
-    if($('.fields_' + formType + ' [name="category"]').attr('value') == undefined) {
+    if($('.fields_' + formType + ' [name="category"]').val() == undefined) {
         warnings ++;
     }
 
@@ -592,7 +603,6 @@ function validate(formType) {
     }
 }
 
-//form = 'quick' or 'advanced'
 function validate_and_save(formType) {
     if(validate(formType)) {
         if (formType == 'advanced') {
@@ -719,7 +729,7 @@ $('.nodeSelect').bind('change', function(){
         success: function(data) {
             if(data.node.error != true){
                 if(data.node.final == 0){
-                    html += '<select class="nodeSelect mTop20 width250">';
+                    html += '<select class="nodeSelect form-control">';
                     html += '<option value=""><?php echo $option_default; ?></option>';
 
                     $.each(data.children, function(k,v){
@@ -728,7 +738,7 @@ $('.nodeSelect').bind('change', function(){
 
                     html += '</select>';
                 }else{
-                    html += '<a onclick="saveNode('+data.node.id+')" class="button"><?php echo $save_button_text; ?></a>';
+                    html += '<a onclick="saveNode('+data.node.id+')" class="btn btn-primary"><?php echo $save_button_text; ?></a>';
                 }
 
                 $('#browseNodeFormContent').html(nodeString+html);
@@ -753,6 +763,5 @@ function saveNode(id){
     $('input[field_name='+nodeBox+']').after('<span id="'+nodeBox+'_text" style="margin-left:15px;">'+nodeStringSimple+'</span>');
     hideGreyScreen('browseNodeForm');
 }
-
 //--></script>
 <?php echo $footer; ?>

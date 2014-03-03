@@ -86,8 +86,6 @@
             <input type="hidden" name="product_id" value="<?php echo $product_id ?>" />
             <input type="hidden" name="quantity" value="<?php echo $quantity; ?>" id="quantity" />
 
-
-
             <ul class="nav nav-tabs">
               <li class="active"><a href="#required-info" data-toggle="tab"><?php echo $tab_required_info; ?></a></li>
               <li><a href="#additional-info" data-toggle="tab"><?php echo $tab_additional_info; ?></a></li>

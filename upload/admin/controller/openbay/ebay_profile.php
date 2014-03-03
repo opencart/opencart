@@ -8,7 +8,6 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$this->load->model('openbay/ebay_profile');
 
 		$this->document->setTitle($data['text_title_list']);
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		if (isset($this->session->data['error'])) {
@@ -163,7 +162,6 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$this->response->redirect($this->url->link('openbay/ebay_profile/profileAll&token=' . $this->session->data['token']));
 		}
 
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();

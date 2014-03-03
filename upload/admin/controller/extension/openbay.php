@@ -9,7 +9,6 @@ class ControllerExtensionOpenbay extends Controller {
 		$data = $this->load->language('extension/openbay');
 
 		$this->document->setTitle($this->language->get('text_heading_title'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		$data['breadcrumbs'] = array();
@@ -155,7 +154,6 @@ class ControllerExtensionOpenbay extends Controller {
 		$data = $this->load->language('extension/openbay');
 
 		$this->document->setTitle($this->language->get('text_manager'));
-		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
 		if ($this->request->server['REQUEST_METHOD'] == 'POST') {
@@ -977,7 +975,6 @@ class ControllerExtensionOpenbay extends Controller {
 	public function itemList() {
 		$this->document->addScript('view/javascript/openbay/openbay.js');
 		$this->document->addScript('view/javascript/openbay/faq.js');
-		$this->document->addStyle('view/stylesheet/openbay.css');
 
 		$data = array();
 

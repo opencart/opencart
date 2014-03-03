@@ -8,7 +8,7 @@ $_['text_amazon'] = 'Amazon EU';
 $_['button_search'] = 'Search';
 $_['button_new'] = 'Create new product';
 $_['button_return'] = 'Back to products';
-$_['button_amazon_price'] = "Get Amazon's price";
+$_['button_amazon_price'] = "Get Amazon price";
 $_['button_list'] = "List on Amazon";
 
 //Text
@@ -43,16 +43,17 @@ $_['column_sku'] = 'SKU';
 $_['column_amazon_sku'] = 'Amazon item SKU';
 
 //Form entry
-$_['entry_sku'] = 'SKU:';
-$_['entry_condition'] = 'Condition:';
-$_['entry_condition_note'] = 'Condition Note:';
-$_['entry_price'] = 'Price:';
-$_['entry_sale_price'] = 'Sale Price:';
-$_['entry_quantity'] = 'Quantity:';
-$_['entry_start_selling'] = 'Available from date:';
-$_['entry_restock_date'] = 'Restock Date:';
-$_['entry_country_of_origin'] = 'Country of Origin:';
-$_['entry_release_date'] = 'Release Date:';
+$_['entry_sku'] = 'SKU';
+$_['entry_condition'] = 'Condition';
+$_['entry_condition_note'] = 'Condition Note';
+$_['entry_price'] = 'Price';
+$_['entry_sale_price'] = 'Sale Price';
+$_['entry_sale_date'] = 'Sale date range';
+$_['entry_quantity'] = 'Quantity';
+$_['entry_start_selling'] = 'Available from date';
+$_['entry_restock_date'] = 'Restock Date';
+$_['entry_country_of_origin'] = 'Country of Origin';
+$_['entry_release_date'] = 'Release Date';
 $_['entry_from'] = 'Date from';
 $_['entry_to'] = 'Date to';
 

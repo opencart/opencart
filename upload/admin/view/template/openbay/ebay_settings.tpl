@@ -186,7 +186,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="ebay_created_hours"><?php echo $text_created_hours; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="ebay_created_hours" value="<?php echo $ebay_created_hours;?>" placeholder="<?php echo $text_obp_secret; ?>" id="ebay_created_hours" class="form-control credentials" />
+                <input type="text" name="ebay_created_hours" value="<?php echo $ebay_created_hours;?>" placeholder="<?php echo $text_obp_secret; ?>" id="ebay_created_hours" class="form-control" />
                 <span class="help-block"><?php echo $text_created_hours_help; ?></span>
               </div>
             </div>

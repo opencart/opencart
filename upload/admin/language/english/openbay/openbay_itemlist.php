@@ -42,13 +42,16 @@ $_['text_amazonus_saved']           = 'Saved (not uploaded)';
 $_['text_amazon_saved']             = 'Saved (not uploaded)';
 
 $_['text_markets']                  = 'Markets';
-$_['text_bulk_btn']                 = 'eBay bulk upload';
-$_['text_bulk_amazon_btn']          = 'Amazon EU bulk upload';
+$_['button_amazon_eu_bulk']         = 'Amazon EU bulk upload';
+$_['button_amazon_us_bulk']         = 'Amazon US bulk upload';
+$_['button_ebay_bulk']              = 'eBay bulk upload';
 
 $_['text_marketplace']              = 'Marketplace';
 $_['text_status']                   = 'Status';
 $_['text_option']                   = 'Option';
-$_['text_min']                   = 'Min';
-$_['text_max']                   = 'Max';
-$_['text_manage_items']                 = 'Manage items';
-$_['text_openbay']                 = 'OpenBay Pro';
+$_['text_min']                      = 'Min';
+$_['text_max']                      = 'Max';
+$_['text_manage_items']             = 'Manage items';
+$_['text_openbay']                  = 'OpenBay Pro';
+
+$_['error_select_items']            = 'You must select at least 1 item to bulk list';

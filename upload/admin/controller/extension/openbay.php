@@ -28,6 +28,8 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['check']['mbstring'] = $this->model_openbay_openbay->checkMbstings();
 		$data['check']['ftpenabled'] = $this->model_openbay_openbay->checkFtpenabled();
 		$data['manage_link'] = $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL');
+		$data['product_link'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
+		$data['order_link'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['success'] = '';
 		if (isset($this->session->data['success'])) {
@@ -152,7 +154,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data = $this->load->language('extension/openbay');
 
-		$this->document->setTitle($this->language->get('text_text_manager'));
+		$this->document->setTitle($this->language->get('text_manager'));
 		$this->document->addStyle('view/stylesheet/openbay.css');
 		$this->document->addScript('view/javascript/openbay/faq.js');
 
@@ -262,7 +264,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_text_manage'),
+			'text' => $this->language->get('text_manage'),
 		);
 
 		$data['header'] = $this->load->controller('common/header');
@@ -1170,9 +1172,21 @@ class ControllerExtensionOpenbay extends Controller {
 		);
 
 		if ($this->config->get('amazon_status')) {
-			$data['href_amazon_bulk_list'] = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . $url, 'SSL');
+			$data['link_amazon_eu_bulk'] = $this->url->link('openbay/amazon/bulkListProducts', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
-			$data['href_amazon_bulk_list'] = '';
+			$data['link_amazon_eu_bulk'] = '';
+		}
+
+		if ($this->config->get('amazonus_status')) {
+			$data['link_amazon_us_bulk'] = $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		} else {
+			$data['link_amazon_us_bulk'] = '';
+		}
+
+		if ($this->config->get('ebay_status') == '1') {
+			$data['link_ebay_bulk'] = $this->url->link('openbay/openbay/createBulk', 'token=' . $this->session->data['token'], 'SSL');
+		} else {
+			$data['link_ebay_bulk'] = '';
 		}
 
 		$data['products'] = array();

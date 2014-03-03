@@ -17,15 +17,26 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right">
-        <?php if ($href_amazon_bulk_list) { ?>
-          <a class="btn btn-primary" href="<?php echo $href_amazon_bulk_list ?>"><?php echo $text_bulk_amazon_btn ?></a>
-        <?php } ?>
-      </div>
-      <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $text_manage_items; ?></h1>
     </div>
     <div class="panel-body">
-
+    <?php if ($link_amazon_eu_bulk || $link_amazon_us_bulk || $link_ebay_bulk) { ?>
+      <div class="well" id="bulk-buttons">
+        <div class="row">
+          <div class="col-sm-12 text-right">
+            <?php if ($link_amazon_eu_bulk) { ?>
+            <a class="btn btn-primary" href="<?php echo $link_amazon_eu_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_eu_bulk; ?></a>
+            <?php } ?>
+            <?php if ($link_amazon_us_bulk) { ?>
+            <a class="btn btn-primary" href="<?php echo $link_amazon_us_bulk; ?>"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_amazon_us_bulk ?></a>
+            <?php } ?>
+            <?php  if ($link_ebay_bulk) { ?>
+            <a class="btn btn-primary" id="button-ebay-bulk"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $button_ebay_bulk; ?></a>
+            <?php } ?>
+          </div>
+        </div>
+      </div>
+    <?php } ?>
     <div class="well">
       <div class="row">
         <div class="col-sm-4">
@@ -142,7 +153,7 @@
           </div>
         </div>
         <div class="form-group text-right">
-          <a onclick="filter();" class="btn btn-primary"><?php echo $button_filter; ?></a>
+          <a onclick="filter();" class="btn btn-primary"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
         </div>
       </div>
     </div>
@@ -248,93 +259,92 @@
 </div>
 
 <script type="text/javascript"><!--
-function filter() {
-    url = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
+  function filter() {
+      url = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
 
-    var filter_name = $('input[name=\'filter_name\']').val();
+      var filter_name = $('input[name=\'filter_name\']').val();
 
-    if (filter_name) {
-      url += '&filter_name=' + encodeURIComponent(filter_name);
+      if (filter_name) {
+        url += '&filter_name=' + encodeURIComponent(filter_name);
+      }
+
+      var filter_model = $('input[name=\'filter_model\']').val();
+
+      if (filter_model) {
+        url += '&filter_model=' + encodeURIComponent(filter_model);
+      }
+
+      var filter_price = $('input[name=\'filter_price\']').val();
+
+      if (filter_price) {
+          url += '&filter_price=' + encodeURIComponent(filter_price);
+      }
+
+      var filter_price_to = $('input[name=\'filter_price_to\']').val();
+
+      if (filter_price) {
+          url += '&filter_price_to=' + encodeURIComponent(filter_price_to);
+      }
+
+      var filter_quantity = $('input[name=\'filter_quantity\']').val();
+
+      if (filter_quantity) {
+          url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
+      }
+
+      var filter_quantity_to = $('input[name=\'filter_quantity_to\']').val();
+
+      if (filter_quantity_to) {
+          url += '&filter_quantity_to=' + encodeURIComponent(filter_quantity_to);
+      }
+
+      var filter_status = $('select[name=\'filter_status\']').find(":selected").val();
+
+      if (filter_status != '*') {
+          url += '&filter_status=' + encodeURIComponent(filter_status);
+      }
+
+      var filter_sku = $('input[name=\'filter_sku\']:checked').val();
+
+      if (filter_sku) {
+          url += '&filter_sku=' + encodeURIComponent(filter_sku);
+      }
+
+      var filter_desc = $('input[name=\'filter_desc\']:checked').val();
+
+      if (filter_desc) {
+          url += '&filter_desc=' + encodeURIComponent(filter_desc);
+      }
+
+      var filter_category = $('select[name=\'filter_category\']').find(":selected").val();
+
+      if (filter_category) {
+          url += '&filter_category=' + encodeURIComponent(filter_category);
+      }
+
+      var filter_manufacturer = $('select[name=\'filter_manufacturer\']').find(":selected").val();
+
+      if (filter_manufacturer) {
+          url += '&filter_manufacturer=' + encodeURIComponent(filter_manufacturer);
+      }
+
+      var filter_marketplace = $('select[name=\'filter_marketplace\']').find(":selected").val();
+
+      if (filter_marketplace) {
+          url += '&filter_marketplace=' + encodeURIComponent(filter_marketplace);
+      }
+
+      location = url;
+  }
+
+  $('#button-ebay-bulk').bind('click', function() {
+    var request_data = $('input[name="product_ids[]"]:checked').serialize();
+
+    if (request_data != '') {
+      $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $token; ?>').submit();
+    } else {
+      $('#bulk-buttons').before('<div class="alert alert-danger"><?php echo $error_select_items; ?></div>');
     }
-
-    var filter_model = $('input[name=\'filter_model\']').val();
-
-    if (filter_model) {
-      url += '&filter_model=' + encodeURIComponent(filter_model);
-    }
-
-    var filter_price = $('input[name=\'filter_price\']').val();
-
-    if (filter_price) {
-        url += '&filter_price=' + encodeURIComponent(filter_price);
-    }
-
-    var filter_price_to = $('input[name=\'filter_price_to\']').val();
-
-    if (filter_price) {
-        url += '&filter_price_to=' + encodeURIComponent(filter_price_to);
-    }
-
-    var filter_quantity = $('input[name=\'filter_quantity\']').val();
-
-    if (filter_quantity) {
-        url += '&filter_quantity=' + encodeURIComponent(filter_quantity);
-    }
-
-    var filter_quantity_to = $('input[name=\'filter_quantity_to\']').val();
-
-    if (filter_quantity_to) {
-        url += '&filter_quantity_to=' + encodeURIComponent(filter_quantity_to);
-    }
-
-    var filter_status = $('select[name=\'filter_status\']').find(":selected").val();
-
-    if (filter_status != '*') {
-        url += '&filter_status=' + encodeURIComponent(filter_status);
-    }
-
-    var filter_sku = $('input[name=\'filter_sku\']:checked').val();
-
-    if (filter_sku) {
-        url += '&filter_sku=' + encodeURIComponent(filter_sku);
-    }
-
-    var filter_desc = $('input[name=\'filter_desc\']:checked').val();
-
-    if (filter_desc) {
-        url += '&filter_desc=' + encodeURIComponent(filter_desc);
-    }
-
-    var filter_category = $('select[name=\'filter_category\']').find(":selected").val();
-
-    if (filter_category) {
-        url += '&filter_category=' + encodeURIComponent(filter_category);
-    }
-
-    var filter_manufacturer = $('select[name=\'filter_manufacturer\']').find(":selected").val();
-
-    if (filter_manufacturer) {
-        url += '&filter_manufacturer=' + encodeURIComponent(filter_manufacturer);
-    }
-
-    var filter_marketplace = $('select[name=\'filter_marketplace\']').find(":selected").val();
-
-    if (filter_marketplace) {
-        url += '&filter_marketplace=' + encodeURIComponent(filter_marketplace);
-    }
-
-    location = url;
-}
+  });
 //--></script>
-
-<?php  if ($ebay_status == '1') { ?>
-  <script type="text/javascript"><!--
-    $('.buttons').prepend('<a onclick="bulkUpload();" class="button"><span><?php echo $text_bulk_btn; ?></span></a>');
-
-    function bulkUpload() {
-      $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $token; ?>');
-      $('#form').submit();
-    }
-  //--></script>
-<?php } ?>
 <?php echo $footer; ?>

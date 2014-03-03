@@ -1,14 +1,16 @@
 <?php
 // Heading
 $_['text_heading_title']        = 'OpenBay Pro';
-$_['text_text_manager']         = 'OpenBay Pro manager';
+$_['text_manager']         = 'OpenBay Pro manager';
 
 // Text
 $_['text_install']              = 'Install';
 $_['text_uninstall']            = 'Uninstall';
 $_['text_success_settings']         = 'Success: Settings have been saved';
 $_['text_text_no_results']      = 'No results found';
-$_['text_text_manage']          = 'Manage';
+$_['text_manage']          = 'Manage';
+$_['text_products']          = 'Products';
+$_['text_orders']          = 'Orders';
 $_['text_checking_version']     = 'Checking software version';
 $_['button_retry']            = 'Retry';
 $_['text_btn_update']           = 'Update';
@@ -96,7 +98,6 @@ $_['text_ajax_tracking_msg4']           = 'Please leave courier field empty if y
 $_['text_title_help']                   = 'Need help with OpenBay Pro?';
 $_['text_help']                     	= 'Help';
 $_['text_title_manage']                 = 'Manage OpenBay Pro; updates, settings and more';
-$_['text_manage']                   	= 'Manage';
 $_['text_title_shop']                   = 'OpenBay Pro store; addons, templates and more';
 $_['text_tutorials']                    = 'Tutorials';
 $_['text_suggestions']                  = 'Suggestions';

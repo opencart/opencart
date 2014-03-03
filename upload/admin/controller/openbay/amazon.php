@@ -298,7 +298,7 @@ class ControllerOpenbayAmazon extends Controller {
 			'Refurbished' => $this->language->get('text_refurbished'),
 		);
 
-		$data['is_enabled'] = isset($settings['amazon_status']) ? $settings['amazon_status'] : '';
+		$data['amazon_status'] = isset($settings['amazon_status']) ? $settings['amazon_status'] : '';
 		$data['openbay_amazon_token'] = isset($settings['openbay_amazon_token']) ? $settings['openbay_amazon_token'] : '';
 		$data['openbay_amazon_enc_string1'] = isset($settings['openbay_amazon_enc_string1']) ? $settings['openbay_amazon_enc_string1'] : '';
 		$data['openbay_amazon_enc_string2'] = isset($settings['openbay_amazon_enc_string2']) ? $settings['openbay_amazon_enc_string2'] : '';
@@ -668,7 +668,7 @@ class ControllerOpenbayAmazon extends Controller {
 	public function doBulkSearch() {
 		$this->load->model('catalog/product');
 		$this->load->model('openbay/amazon_listing');
-		$this->load->language('openbay/amazon_bulk');
+		$this->load->language('openbay/amazon_bulk_listing');
 
 		$json = array();
 		$search_data = array();

@@ -76,7 +76,29 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <div class="row">
-                <div class="col-md-3 text-center">
+                <div class="col-md-2 text-center">
+                  <div class="well">
+                    <a href="<?php echo $product_link; ?>">
+                      <span class="fa-stack fa-3x">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-tags fa-stack-1x"></i>
+                      </span>
+                      <h4><?php echo $text_products; ?></h4>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-2 text-center">
+                  <div class="well">
+                    <a href="<?php echo $order_link; ?>">
+                      <span class="fa-stack fa-3x">
+                        <i class="fa fa-square-o fa-stack-2x"></i>
+                        <i class="fa fa-shopping-cart fa-stack-1x"></i>
+                      </span>
+                      <h4><?php echo $text_orders; ?></h4>
+                    </a>
+                  </div>
+                </div>
+                <div class="col-md-2 text-center">
                   <div class="well">
                     <a href="<?php echo $manage_link; ?>">
                       <span class="fa-stack fa-3x">
@@ -87,7 +109,7 @@
                     </a>
                   </div>
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-2 text-center">
                   <div class="well">
                     <a href="http://www.openbaypro.com/help" target="_BLANK">
                       <span class="fa-stack fa-3x">
@@ -98,7 +120,7 @@
                     </a>
                   </div>
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-2 text-center">
                   <div class="well">
                     <a href="http://www.openbaypro.com/tutorials" target="_BLANK">
                       <span class="fa-stack fa-3x">
@@ -109,7 +131,7 @@
                     </a>
                   </div>
                 </div>
-                <div class="col-md-3 text-center">
+                <div class="col-md-2 text-center">
                   <div class="well">
                     <a href="http://www.openbaypro.com/suggestions" target="_BLANK">
                       <span class="fa-stack fa-3x">

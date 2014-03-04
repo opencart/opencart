@@ -440,8 +440,6 @@ class ControllerExtensionInstaller extends Controller {
 					);
 
 					$this->model_setting_modification->addModification($modification_data);
-					
-					$this->model_setting_modification->refresh();
 				} catch(Exception $exception) {
 					$json['error'] = sprintf($this->language->get('error_exception'), $exception->getCode(), $exception->getMessage(), $exception->getFile(), $exception->getLine());
 				}

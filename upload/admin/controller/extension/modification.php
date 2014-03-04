@@ -106,7 +106,7 @@ class ControllerExtensionModification extends Controller {
 					}
 					
 					if ($path) {
-						$files = glob($path);
+						$files = glob($path, GLOB_BRACE);
 						
 						$operations = $file->getElementsByTagName('operation');
 						

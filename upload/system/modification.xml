@@ -9,61 +9,13 @@
   <author>
     <![CDATA[http://www.opencart.com]]>
   </author>
-  <file name="system/engine/action.php">
-    <operation>
-      <search>
-        <![CDATA[include_once($this->file);]]>
+  <file name="system/{engine,library}/*">
+	<operation>
+      <search regex="true">
+        <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
       </search>
       <add position="replace">
-        <![CDATA[include_once(modification($this->file));]]>
-      </add>
-    </operation>
-  </file>
-  <file name="system/engine/loader.php">
-    <operation>
-      <search>
-        <![CDATA[include_once($file)]]>
-      </search>
-      <add position="replace">
-        <![CDATA[include_once(modification($file))]]>
-      </add>
-    </operation>
-    <operation>
-      <search>
-        <![CDATA[require($file)]]>
-      </search>
-      <add position="replace">
-        <![CDATA[require(modification($file))]]>
-      </add>
-    </operation>
-    <operation>
-      <search index="2">
-        <![CDATA[include_once($file)]]>
-      </search>
-      <add position="replace">
-        <![CDATA[include_once(modification($file))]]>
-      </add>
-    </operation>	
-  </file>
-    
-  <file name="system/library/config.php">
-    <operation>
-      <search>
-        <![CDATA[require($file)]]>
-      </search>
-      <add position="replace">
-        <![CDATA[require(modification($file))]]>
-      </add>
-    </operation>
-  </file>
-  
-  <file name="system/library/language.php">
-    <operation>
-      <search>
-        <![CDATA[require($file)]]>
-      </search>
-      <add position="replace">
-        <![CDATA[require(modification($file))]]>
+        <![CDATA[$1$2(modification($3)]]>
       </add>
     </operation>
   </file>

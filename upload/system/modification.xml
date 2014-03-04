@@ -9,7 +9,7 @@
   <author>
     <![CDATA[http://www.opencart.com]]>
   </author>
-  <file name="system/{engine,library}/*">
+  <file name="system/{engine,library}/{action,loader,config,language}*.php">
 	<operation>
       <search regex="true">
         <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>

@@ -185,18 +185,13 @@ class ControllerExtensionModification extends Controller {
 			
 			// Write all modification files
 			foreach ($modification as $key => $value) {
-				echo 'File ' . $key . '<br />';
-				echo $value . '<br />';
-				
-				/*
 				$file = DIR_MODIFICATION . $key;
 	
 				$handle = fopen($file, 'w');
 		
 				fwrite($handle, $value);
 		
-				fclose($handle);
-				*/		
+				fclose($handle);	
 			}
 
 

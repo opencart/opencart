@@ -1,5 +1,7 @@
 <?php
-$_['text_page_title']               = 'eBay listing';
+$_['heading_title']               	= 'New listing';
+$_['text_ebay']               		= 'eBay';
+$_['text_openbay']               	= 'Openbay Pro';
 $_['text_cancel']                   = 'Cancel';
 $_['text_none']                     = 'None';
 $_['text_preview']                  = 'Preview';
@@ -14,9 +16,6 @@ $_['text_confirm_action']           = 'Are you sure?';
 $_['text_return']                   = 'Return to products';
 $_['text_view']                     = 'View listing';
 $_['text_edit']                     = 'Edit';
-
-$_['text_catalog_pretext']          = 'This tab will display any results for items found in the eBay catalog - select your category first.';
-$_['text_feature_pretext']          = 'This tab will display any item features available - select your category first.';
 
 $_['text_ajax_noload']              = 'Sorry, could not connect';
 $_['text_ajax_catproblem']          = 'You must fix your category problem before you can list. Try re-syncing them in the module admin area.';
@@ -49,11 +48,10 @@ $_['text_tab_returns']              = 'Returns';
 $_['text_category']                 = 'Category';
 $_['text_category_suggested']       = 'eBay suggested category';
 $_['text_category_suggested_help']  = 'Based on your title';
-$_['text_category_suggested_check'] = 'Checking suggested categories with eBay, please wait';
 $_['text_category_popular']         = 'Popular Categories';
 $_['text_category_popular_help']    = 'Based on your history';
 $_['text_category_checking']        = 'Checking eBay category requirements, please wait';
-$_['text_category_features']        = 'Item specifics<span class="help">Entering specifics about your item will help buyers narrow down the exact item they need. It may also improve the performance of the product and eBay may score its best match value higher.</span>';
+$_['text_features_help']        	= 'Entering specifics about your item will help buyers narrow down the exact item they need. It may also improve the performance of the product and eBay may score its best match value higher.';
 
 //Description
 $_['text_title']                    = 'Title';

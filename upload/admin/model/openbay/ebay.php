@@ -421,7 +421,7 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getCategory($parent){
-		$this->load->language('openbay/openbay');
+		$this->load->language('openbay/ebay');
 
 		$json = array();
 
@@ -450,7 +450,7 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getSuggestedCategories($qry){
-		$this->load->language('openbay/openbay');
+		$this->load->language('openbay/ebay');
 
 		$response['data']   = $this->openbay->ebay->call('listing/getSuggestedCategories/', array('qry' => $qry));
 		$response['error']  = $this->openbay->ebay->lasterror;

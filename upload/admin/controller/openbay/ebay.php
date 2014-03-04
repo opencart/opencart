@@ -1155,12 +1155,32 @@ class ControllerOpenbayEbay extends Controller {
 				$this->load->model('openbay/ebay_product');
 				$this->load->model('openbay/ebay_profile');
 
-				$this->document->setTitle($data['text_page_title']);
+				$this->document->setTitle($data['heading_title']);
 				$this->document->addScript('view/javascript/openbay/faq.js');
 
 				$data['action']   = $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'], 'SSL');
 				$data['cancel']   = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
 				$data['token']    = $this->session->data['token'];
+
+				$data['breadcrumbs'] = array();
+				$data['breadcrumbs'][] = array(
+					'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+					'text'      => $this->language->get('text_home'),
+				);
+				$data['breadcrumbs'][] = array(
+					'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+					'text'      => $this->language->get('text_openbay'),
+				);
+				$data['breadcrumbs'][] = array(
+					'href'      => $this->url->link('openbay/ebay/overview', 'token=' . $this->session->data['token'], 'SSL'),
+					'text'      => $this->language->get('text_ebay'),
+				);
+
+				$data['breadcrumbs'][] = array(
+					'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'].'&product_id='.$this->request->get['product_id'], 'SSL'),
+					'text'      => $this->language->get('heading_title'),
+				);
+
 				$product_info     = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
 				$setting = array();

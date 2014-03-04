@@ -24,7 +24,6 @@ class ControllerOpenbayAmazon extends Controller {
 			'href'      => $this->url->link('openbay/amazon/overview', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_amazon'),
 		);
-
 		$data['breadcrumbs'][] = array(
 			'href'      => $this->url->link('openbay/amazon/stockUpdates', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_title'),
@@ -61,13 +60,13 @@ class ControllerOpenbayAmazon extends Controller {
 					'date_updated' => (string)$update_node->date_updated,
 					'status' => (string)$update_node->status,
 					);
-				$data = array();
+				$data_items = array();
 				foreach($update_node->data->product as $productNode) {
-					$data[] = array('sku' => (string)$productNode->sku,
+					$data_items[] = array('sku' => (string)$productNode->sku,
 						'stock' => (int)$productNode->stock
 						);
 				}
-				$row['data'] = $data;
+				$row['data'] = $data_items;
 				$table_data[(int)$update_node->ref] = $row;
 			}
 
@@ -348,7 +347,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$this->response->setOutput($this->load->view('openbay/amazon_settings.tpl', $data));
 	}
 
-	private function is_serialized( $data ) {
+	private function is_serialized($data) {
 		// if it isn't a string, it isn't serialized
 		if (!is_string($data)) {
 			return false;

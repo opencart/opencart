@@ -5,7 +5,6 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
@@ -16,7 +15,6 @@
     </div>
     <div class="panel-body">
       <form action="" method="post" enctype="multipart/form-data" id="settings-form" class="form-horizontal">
-
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-settings" data-toggle="tab"><?php echo $text_main_settings; ?></a></li>
           <li><a href="#tab-product" data-toggle="tab"><?php echo $text_listing; ?></a></li>
@@ -69,7 +67,6 @@
               </div>
             </div>
           </div>
-
           <div class="tab-pane" id="tab-product">
             <div class="form-group">
               <label class="col-sm-2 control-label" for="openbay_amazon_listing_tax_added"><?php echo $text_tax_percentage; ?></label>
@@ -109,91 +106,93 @@
               </div>
             </div>
           </div>
-
           <div class="tab-pane" id="tab-orders">
-            <h4><?php echo $text_order_statuses ?></h4>
+            <fieldset>
+              <legend><?php echo $text_order_statuses ?></legend>
 
-            <?php foreach ($amazon_order_statuses as $key => $amazon_order_status) { ?>
+              <?php foreach ($amazon_order_statuses as $key => $amazon_order_status) { ?>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label"><?php echo $amazon_order_status['name'] ?></label>
+                  <div class="col-sm-10">
+                    <select name="openbay_amazon_order_status_<?php echo $key ?>" class="form-control">
+                      <?php foreach ($order_statuses as $order_status) { ?>
+                        <?php if ($amazon_order_status['order_status_id'] == $order_status['order_status_id']) { ?>
+                          <option value="<?php echo $order_status['order_status_id'] ?>" selected="selected"><?php echo $order_status['name'] ?></option>
+                        <?php } else { ?>
+                          <option value="<?php echo $order_status['order_status_id'] ?>"><?php echo $order_status['name'] ?></option>
+                        <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
+              <?php } ?>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_marketplaces ?></legend>
+
+              <?php foreach ($marketplaces as $marketplace) { ?>
+                <div class="form-group">
+                  <label class="col-sm-2 control-label" for="code_<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></label>
+                  <div class="col-sm-10">
+                    <?php if (in_array($marketplace['id'], $marketplace_ids)) { ?>
+                      <?php echo '<input id="code_'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" checked="checked" />'; ?>
+                    <?php } else { ?>
+                      <?php echo '<input id="code_'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" />'; ?>
+                    <?php } ?>
+                  </div>
+                </div>
+              <?php } ?>
+            </fieldset>
+            <fieldset>
+              <legend><?php echo $text_other ?></legend>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $amazon_order_status['name'] ?></label>
+                <label class="col-sm-2 control-label" for="openbay_amazon_order_tax"><?php echo $text_import_tax; ?></label>
                 <div class="col-sm-10">
-                  <select name="openbay_amazon_order_status_<?php echo $key ?>" class="form-control">
-                    <?php foreach ($order_statuses as $order_status) { ?>
-                      <?php if ($amazon_order_status['order_status_id'] == $order_status['order_status_id']) { ?>
-                        <option value="<?php echo $order_status['order_status_id'] ?>" selected="selected"><?php echo $order_status['name'] ?></option>
+                  <div class="input-group col-xs-2">
+                    <input type="text" name="openbay_amazon_order_tax" value="<?php echo $openbay_amazon_order_tax;?>" id="openbay_amazon_order_tax" class="form-control" placeholder="<?php echo $text_import_tax; ?>" />
+                    <span class="input-group-addon">%</span>
+                  </div>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="openbay_amazon_order_customer_group"><?php echo $text_customer_group; ?></label>
+                <div class="col-sm-10">
+                  <select name="openbay_amazon_order_customer_group" id="openbay_amazon_order_customer_group" class="form-control">
+                    <?php foreach($customer_groups as $customer_group) { ?>
+                      <?php if ($openbay_amazon_order_customer_group == $customer_group['customer_group_id']) { ?>
+                        <?php echo '<option value="'.$customer_group['customer_group_id'].'" selected="selected">'.$customer_group['name'].'</option>'; ?>
                       <?php } else { ?>
-                        <option value="<?php echo $order_status['order_status_id'] ?>"><?php echo $order_status['name'] ?></option>
+                        <?php echo '<option value="'.$customer_group['customer_group_id'].'">'.$customer_group['name'].'</option>'; ?>
                       <?php } ?>
                     <?php } ?>
                   </select>
                 </div>
               </div>
-            <?php } ?>
-
-            <h4><?php echo $text_marketplaces ?></h4>
-
-            <?php foreach ($marketplaces as $marketplace) { ?>
               <div class="form-group">
-                <label class="col-sm-2 control-label" for="code_<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></label>
+                <label class="col-sm-2 control-label" for="openbay_amazon_notify_admin"><?php echo $text_admin_notify; ?></label>
                 <div class="col-sm-10">
-                  <?php if (in_array($marketplace['id'], $marketplace_ids)) { ?>
-                    <?php echo '<input id="code_'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" checked="checked" />'; ?>
-                  <?php } else { ?>
-                    <?php echo '<input id="code_'.$marketplace['code'].'" type="checkbox" name="openbay_amazon_orders_marketplace_ids[]" value="'.$marketplace['id'].'" />'; ?>
-                  <?php } ?>
-                </div>
-              </div>
-            <?php } ?>
-
-            <h4><?php echo $text_other ?></h4>
-
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazon_order_tax"><?php echo $text_import_tax; ?></label>
-              <div class="col-sm-10">
-                <div class="input-group col-xs-2">
-                  <input type="text" name="openbay_amazon_order_tax" value="<?php echo $openbay_amazon_order_tax;?>" id="openbay_amazon_order_tax" class="form-control" placeholder="<?php echo $text_import_tax; ?>" />
-                  <span class="input-group-addon">%</span>
-                </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazon_order_customer_group"><?php echo $text_customer_group; ?></label>
-              <div class="col-sm-10">
-                <select name="openbay_amazon_order_customer_group" id="openbay_amazon_order_customer_group" class="form-control">
-                  <?php foreach($customer_groups as $customer_group) { ?>
-                    <?php if ($openbay_amazon_order_customer_group == $customer_group['customer_group_id']) { ?>
-                      <?php echo '<option value="'.$customer_group['customer_group_id'].'" selected="selected">'.$customer_group['name'].'</option>'; ?>
+                  <select name="openbay_amazon_notify_admin" id="openbay_amazon_notify_admin" class="form-control">
+                    <?php if ($openbay_amazon_notify_admin) { ?>
+                    <option value="1" selected="selected"><?php echo $text_yes ?></option>
+                    <option value="0"><?php echo $text_no ?></option>
                     <?php } else { ?>
-                      <?php echo '<option value="'.$customer_group['customer_group_id'].'">'.$customer_group['name'].'</option>'; ?>
+                    <option value="1"><?php echo $text_yes ?></option>
+                    <option value="0" selected="selected"><?php echo $text_no ?></option>
                     <?php } ?>
-                  <?php } ?>
-                </select>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazon_notify_admin"><?php echo $text_admin_notify; ?></label>
-              <div class="col-sm-10">
-                <select name="openbay_amazon_notify_admin" id="openbay_amazon_notify_admin" class="form-control">
-                  <?php if ($openbay_amazon_notify_admin) { ?>
-                  <option value="1" selected="selected"><?php echo $text_yes ?></option>
-                  <option value="0"><?php echo $text_no ?></option>
-                  <?php } else { ?>
-                  <option value="1"><?php echo $text_yes ?></option>
-                  <option value="0" selected="selected"><?php echo $text_no ?></option>
-                  <?php } ?>
-                </select>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="openbay_amazon_default_carrier"><?php echo $text_default_shipping; ?></label>
+                <div class="col-sm-10">
+                  <select name="openbay_amazon_default_carrier" id="openbay_amazon_default_carrier" class="form-control">
+                    <?php foreach($carriers as $carrier) { ?>
+                      <?php echo '<option'.($carrier == $openbay_amazon_default_carrier ? ' selected' : '').'>'.$carrier.'</option>'; ?>
+                    <?php } ?>
+                  </select>
+                </div>
               </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="openbay_amazon_default_carrier"><?php echo $text_default_shipping; ?></label>
-              <div class="col-sm-10">
-                <select name="openbay_amazon_default_carrier" id="openbay_amazon_default_carrier" class="form-control">
-                  <?php foreach($carriers as $carrier) { ?>
-                    <?php echo '<option'.($carrier == $openbay_amazon_default_carrier ? ' selected' : '').'>'.$carrier.'</option>'; ?>
-                  <?php } ?>
-                </select>
-              </div>
-            </div>
+            </fieldset>
           </div>
         </div>
       </form>

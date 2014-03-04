@@ -384,9 +384,12 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 					foreach($template['fields'] as $key => $field) {
 						if($field['accepted']['type'] == 'image') {
-							$template['fields'][$key]['thumb'] = $this->model_tool_image->resize(str_replace(HTTPS_CATALOG . 'image/', '', $field['value']), 100, 100);
-							if(empty($field['thumb'])) {
+							if(empty($field['value'])) {
 								$template['fields'][$key]['thumb'] = '';
+							} else {
+								$img = str_replace(HTTPS_CATALOG . 'image/', '', $field['value']);
+								$template['fields'][$key]['value'] = $img;
+								$template['fields'][$key]['thumb'] = $this->model_tool_image->resize($img, 100, 100);
 							}
 						}
 					}

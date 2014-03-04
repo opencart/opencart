@@ -323,40 +323,18 @@ function update_form(element, formType) {
 }
 
 function getImageField(fieldData) {
-    var output = "";
+  var output = "";
 
-    output += '<input ';
-    output += 'type="hidden" ';
-    output += 'accepted="' + fieldData['accepted']['type'] + '" ';
-    output += 'field_name="' + fieldData['name'] + '" ';
-    output += 'field_type="' + fieldData['type'] + '" ';
-    output += 'id="imagefield_' + fieldData['name'] + '" ';
-    output += 'name="fields[' + fieldData['name'] + ']" ';
-    output += 'value="' + fieldData['value'] + '">';
-
-    output += '<div class="image">';
-    output += '<img height="100" alt="" id="thumb_' + fieldData['name'] + '" ';
-    if(fieldData['value'] === "") {
-        output += 'src="<?php echo $no_image; ?>"';
-    } else if(fieldData['thumb'] !== "") {
-        output += 'src="' + fieldData['thumb'] + '"';
+  output += '<a class="img-thumbnail img-edit" id="thumb-image-'+fieldData['name']+'">';
+    if(fieldData['thumb'] != "") {
+      output += '<img src="'+fieldData['thumb']+'" alt="" title="" />';
     } else {
-        output += 'src="' + fieldData['value'] + '"';
+      output += '<i class="fa fa-camera fa-5x"></i>';
     }
-    output += "/>";
-    output += '<br />';
+  output += "</a>";
+  output += '<input type="hidden" id="input-image-'+fieldData['name']+'" name="fields[' + fieldData['name'] + ']" value="' + fieldData['value'] + '" accepted="' + fieldData['accepted']['type'] + '" field_name="' + fieldData['name'] + '" field_type="' + fieldData['type'] + '">';
 
-    output += '<a onclick="image_upload(\'imagefield_' + fieldData['name'] + '\', \'thumb_' + fieldData['name'] + '\')"><?php echo $browse_image_text; ?></a>';
-    output += '  |  ';
-    output += '<a onclick="cleaImageField(\'' + fieldData['name'] + '\')"><?php echo $clear_image_text; ?></a>';
-    output += "</div>";
-
-    return output;
-}
-
-function cleaImageField(fieldName) {
-    $('#imagefield_' + fieldName).attr('value', '');
-    $('#thumb_' + fieldName).attr('src', '<?php echo $no_image; ?>');
+  return output;
 }
 
 function getQuantityField(fieldData) {
@@ -487,42 +465,7 @@ function getSelectField(fieldData) {
     return output;
 }
 
-function image_upload(field, thumb) {
-    $('#dialog').remove();
-
-    $('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
-
-    $('#dialog').dialog({
-        title: '',
-        close: function (event, ui) {
-            if ($('#' + field).val()) {
-                $.ajax({
-                    url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).val()),
-                    dataType: 'text',
-                    success: function(data) {
-                        if(data != "") {
-                            $('#' + thumb).replaceWith('<img src="' + data + '" alt="" id="' + thumb + '" />');
-                            var imageUrl = $('#' + field).val();
-                            $('#' + field).attr('value', '<?php echo HTTPS_CATALOG; ?>image/' + imageUrl);
-                        }
-                    },
-                    error: function (xhr, ajaxOptions, thrownError) {
-                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                  }
-                });
-            }
-        },
-        bgiframe: false,
-        width: 800,
-        height: 400,
-        resizable: false,
-        modal: false
-    });
-}
-
 function validate(formType) {
-  alert('start validate');
-
   var warnings = 0;
   var mChecked = 0;
   var productIdType;
@@ -530,7 +473,6 @@ function validate(formType) {
   var productIdRequired;
 
   if($('#category_selector').val() == '') {
-    alert('choose cat');
     return false;
   }
 
@@ -602,10 +544,7 @@ function validate(formType) {
 
     if($('.fields_' + formType + ' [name="category"]').val() == undefined) {
         warnings ++;
-      alert('6');
     }
-
-  alert(warnings);
 
     if(warnings > 0) {
         return false;

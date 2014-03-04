@@ -354,6 +354,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$data['column_amazon_sku'] = $this->language->get('column_amazon_sku');
 		$data['button_create_new_listing'] = $this->language->get('button_create_new_listing');
 		$data['button_create_new_listing'] = $this->language->get('button_create_new_listing');
+		$data['text_no_results'] = $this->language->get('text_no_results');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

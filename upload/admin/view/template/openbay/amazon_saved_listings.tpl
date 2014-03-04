@@ -13,16 +13,12 @@
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title; ?></h1>
     </div>
     <div class="panel-body">
+      <div class="alert alert-info"><?php echo $text_description; ?></div>
       <div class="well">
         <div class="row">
           <div class="col-sm-12">
-            <p><?php echo $text_description; ?></p>
-          </div>
-        </div>
-        <div class="row">
-          <div class="col-sm-12">
             <div class="pull-right">
-              <a id="upload_button" onclick="upload()" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?></a>
+              <a id="button-upload" class="btn btn-primary"><i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?></a>
             </div>
           </div>
         </div>
@@ -32,9 +28,9 @@
           <tr>
             <th><?php echo $text_name_column ;?></th>
             <th><?php echo $text_model_column ;?></th>
-            <th><?php echo $text_sku_column ;?></th>
-            <th><?php echo $text_amazon_sku_column ;?></th>
-            <th class="text-center"><?php echo $text_actions_column ;?></th>
+            <th class="text-center"><?php echo $text_sku_column ;?></th>
+            <th class="text-center"><?php echo $text_amazon_sku_column ;?></th>
+            <th class="text-right"><?php echo $text_actions_column ;?></th>
           </tr>
         </thead>
         <tbody>
@@ -43,11 +39,11 @@
               <tr>
                 <td class="text-left"><?php echo $saved_product['product_name']; ?></td>
                 <td class="text-left"><?php echo $saved_product['product_model']; ?></td>
-                <td class="text-left"><?php echo $saved_product['product_sku']; ?></td>
-                <td class="text-left"><?php echo $saved_product['amazon_sku']; ?></td>
-                <td class="text-center">
-                  <a href="<?php echo $saved_product['edit_link']; ?>">[<?php echo $text_actions_edit; ?>]</a>
-                  <a onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>')">[<?php echo $text_actions_remove; ?>]</a>
+                <td class="text-center"><?php echo $saved_product['product_sku']; ?></td>
+                <td class="text-center"><?php echo $saved_product['amazon_sku']; ?></td>
+                <td class="text-right">
+                  <a class="btn btn-primary" href="<?php echo $saved_product['edit_link']; ?>" data-toggle="tooltip" data-original-title="<?php echo $text_actions_edit; ?>"><i class="fa fa-pencil"></i></a>
+                  <a class="btn btn-danger" onclick="removeSaved('<?php echo $saved_product['product_id']; ?>', '<?php echo $saved_product['var']; ?>', this)" data-toggle="tooltip" data-original-title="<?php echo $text_actions_remove; ?>"><i class="fa fa-times-circle"></i></a>
                 </td>
               </tr>
             <?php } ?>
@@ -62,7 +58,7 @@
   </div>
 </div>
 <script type="text/javascript">
-  function removeSaved(id, optionVar) {
+  function removeSaved(id, optionVar, button) {
     if (!confirm("<?php echo $text_delete_confirm; ?>")) {
       return;
     }
@@ -70,6 +66,9 @@
       url: '<?php echo html_entity_decode($deleteSavedAjax); ?>',
       type: 'get',
       data: 'product_id=' + id + '&var=' + optionVar,
+      beforeSend: function () {
+        $(button).empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+      },
       success: function () {
         window.location.href = window.location.href;
       },
@@ -78,7 +77,8 @@
       }
     });
   }
-  function upload() {
+
+  $('#button-upload').bind('click', function() {
     $.ajax({
       url: '<?php echo html_entity_decode($uploadSavedAjax); ?>',
       dataType: 'json',
@@ -103,6 +103,6 @@
         alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
       }
     });
-  }
+  });
 </script>
 <?php echo $footer; ?>

@@ -30,7 +30,6 @@ $_['help_sku'] = "Unique product's ID assigned by the merchant";
 $_['help_restock_date'] = "This is the date you will be able to ship any back-ordered items to a customer. This date should not be greater than 30 days from the date listed or orders received may automatically be canceled.";
 $_['help_sale_price'] = "Sale Price must have a start and end date";
 $_['text_not_in_catalog'] = "Or, if it's not in the catalog&nbsp;&nbsp;&nbsp;";
-$_['text_no_results'] = 'No saved listings';
 
 //Table columns
 $_['column_image'] = 'Image';

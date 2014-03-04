@@ -14,32 +14,31 @@
     </div>
     <div class="panel-body">
       <?php if ($bulk_listing_status) { ?>
-      <form id="bulk-list-form">
-        <div class="well">
-          <h4><?php echo $text_filter_results ?></h4>
-          <div class="row">
-            <div class="col-sm-10">
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="filter_marketplace"><?php echo $text_marketplace; ?></label>
-                <div class="col-sm-10">
-                  <select id="filter_marketplace" name="filter_marketplace" class="form-control">
-                    <?php foreach ($marketplaces as $marketplace) { ?>
-                      <?php if ($filter_marketplace == $marketplace['code']) { ?>
-                        <option selected="selected" value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
-                      <?php } else { ?>
-                        <option value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
-                      <?php } ?>
-                    <?php } ?>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-sm-2 text-right">
-              <a class="btn btn-primary" id="button-filter"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
-              <a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a>
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-12">
+            <div class="form-group">
+              <label class="control-label" for="filter_marketplace"><?php echo $text_marketplace; ?></label>
+              <select id="filter_marketplace" name="filter_marketplace" class="form-control">
+                <?php foreach ($marketplaces as $marketplace) { ?>
+                <?php if ($filter_marketplace == $marketplace['code']) { ?>
+                <option selected="selected" value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
+                <?php } else { ?>
+                <option value="<?php echo $marketplace['code'] ?>"><?php echo $marketplace['name'] ?></option>
+                <?php } ?>
+                <?php } ?>
+              </select>
             </div>
           </div>
         </div>
+        <div class="row">
+          <div class="col-sm-12 text-right">
+            <a class="btn btn-primary" id="button-filter"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
+            <a class="btn btn-primary" id="button-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a>
+          </div>
+        </div>
+      </div>
+      <form id="bulk-list-form" class="form-horizontal">
         <table class="table">
           <thead>
             <tr>

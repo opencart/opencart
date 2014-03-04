@@ -11,7 +11,6 @@ $_['text_fr'] = 'France';
 $_['text_es'] = 'Spain';
 $_['text_it'] = 'Italy';
 $_['text_uk'] = 'United Kingdom';
-$_['text_filter_results'] = 'Filter results';
 $_['text_dont_list'] = 'Do not list';
 $_['text_listing_values'] = 'Listing values';
 $_['text_condition'] = 'Condition';

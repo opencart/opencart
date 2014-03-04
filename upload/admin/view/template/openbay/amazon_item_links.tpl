@@ -14,15 +14,15 @@
     </div>
     <div class="panel-body">
       <form id="product-form">
+        <div class="alert alert-info">
+          <p><?php echo $text_desc1; ?></p>
+          <p><?php echo $text_desc2; ?></p>
+          <p><?php echo $text_desc3; ?></p>
+        </div>
         <div class="well">
           <div class="row">
-            <div class="col-sm-12">
-              <p><?php echo $text_desc1; ?></p>
-              <p><?php echo $text_desc2; ?></p>
-              <p><?php echo $text_desc3; ?></p>
-              <div class="pull-right">
-                <a class="btn btn-primary" id="button-load"><?php echo $text_load_btn; ?></a>
-              </div>
+            <div class="col-sm-12 text-right">
+              <a class="btn btn-primary" id="button-load"><?php echo $text_load_btn; ?></a>
             </div>
           </div>
         </div>
@@ -43,13 +43,13 @@
             <tr>
               <td class="text-right">
                 <input type="hidden" id="new-product-id">
-                <input id="new-product" type="text" class="form-control">
+                <input id="new-product" type="text" class="form-control" autocomplete="off">
               </td>
               <td>
-                <input id="new-amazon-sku" type="text" class="form-control">
+                <input id="new-amazon-sku" type="text" class="form-control" autocomplete="off">
               </td>
               <td class="text-center">
-                <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()"><i class="fa fa-plus-circle"></i> <?php echo $text_add; ?></a>
+                <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $text_add; ?>"><i class="fa fa-plus-circle"></i></a>
               </td>
             </tr>
           </tbody>
@@ -96,7 +96,7 @@
           rows += '<td class="text-left">' + json[i]['combi'] + '</td>';
           rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
           rows += '<td class="text-left">' + json[i]['amazon_sku'] + '</td>';
-          rows += '<td class="text-center"><a class="button" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\')" ><?php echo $text_remove; ?></a></td>';
+          rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $text_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
           rows += '</tr>';
         }
         $('#linked-items').html(rows);
@@ -175,12 +175,10 @@
       async: 'false',
       data: 'product_id=' + encodeURIComponent(product_id) + '&amazon_sku=' + encodeURIComponent(amazon_sku) + '&var=' + encodeURIComponent(variation),
       beforeSend: function () {
-        $(button).after('<span class="wait"><img src="view/image/loading.gif" alt="" /></span>');
-        $(button).hide();
+        $(button).empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
-        $('.wait').remove();
-        $(button).show();
+        $(button).empty().html('<i class="fa fa-plus-circle"></i>').removeAttr('disabled');
       },
       success: function (json) {
         loadLinks();
@@ -198,8 +196,7 @@
       dataType: 'json',
       data: 'amazon_sku=' + encodeURIComponent(amazon_sku),
       beforeSend: function () {
-        $(button).after('<span class="wait"><img src="view/image/loading.gif" alt="" /></span>');
-        $(button).hide();
+        $(button).empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
       },
       success: function (json) {
         //alert(json);
@@ -286,16 +283,15 @@
   }
 
   $('#new-product').autocomplete({
-    delay: 0,
-    source: function (request, response) {
+    'source': function(request, response) {
       $.ajax({
-        url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request.term),
+        url: 'index.php?route=catalog/product/autocomplete&token=d75c08895b700fd60f97d3c6b71a51f3&filter_name=' +  encodeURIComponent(request),
         dataType: 'json',
         success: function (json) {
           response($.map(json, function (item) {
             return {
-              id: item.product_id,
-              label: item.name
+              label: item['name'],
+              value: item['product_id']
             }
           }));
         },
@@ -304,10 +300,11 @@
         }
       });
     },
-    select: function (event, ui) {
-      openstockCheck(ui.item.id);
-      $('#new-product-id').val(ui.item.id);
-      $('#new-product-id').attr('label', ui.item.label);
+    'select': function (item) {
+      $('#new-product-id').val(item['value']);
+      $('#new-product').val(item['label']);
+      $('#new-product-id').attr('label',item['label']);
+      openstockCheck(item['value']);
     }
   });
 

@@ -9,7 +9,6 @@
   <author>
     <![CDATA[http://www.opencart.com]]>
   </author>
-  
   <file name="system/engine/action.php">
     <operation>
       <search>
@@ -20,58 +19,51 @@
       </add>
     </operation>
   </file>
-  
-  
-  <file name="system/engine/front.php">
-    <operation>
-      <search>
-        <![CDATA[$action->getFile()]]>
-      </search>
-      <add position="replace">
-        <![CDATA[modification($action->getFile())]]>
-      </add>
-    </operation>
-  </file>
-  
-  
   <file name="system/engine/loader.php">
     <operation>
-      <search index="2">
-        <![CDATA[$file]]>
+      <search>
+        <![CDATA[include_once($file)]]>
       </search>
       <add position="replace">
-        <![CDATA[modification($file)]]>
+        <![CDATA[include_once(modification($file))]]>
       </add>
     </operation>
     <operation>
-      <search index="4">
-        <![CDATA[$file]]>
+      <search>
+        <![CDATA[require($file)]]>
       </search>
       <add position="replace">
-        <![CDATA[modification($file)]]>
+        <![CDATA[require(modification($file))]]>
       </add>
     </operation>
+    <operation>
+      <search index="2">
+        <![CDATA[include_once($file)]]>
+      </search>
+      <add position="replace">
+        <![CDATA[include_once(modification($file))]]>
+      </add>
+    </operation>	
   </file>
-  
+    
   <file name="system/library/config.php">
     <operation>
-      <search index="3">
-        <![CDATA[$file]]>
+      <search>
+        <![CDATA[require($file)]]>
       </search>
       <add position="replace">
-        <![CDATA[modification($file)]]>
+        <![CDATA[require(modification($file))]]>
       </add>
     </operation>
   </file>
-  
   
   <file name="system/library/language.php">
     <operation>
-      <search index="3">
-        <![CDATA[$file]]>
+      <search>
+        <![CDATA[require($file)]]>
       </search>
       <add position="replace">
-        <![CDATA[modification($file)]]>
+        <![CDATA[require(modification($file))]]>
       </add>
     </operation>
   </file>

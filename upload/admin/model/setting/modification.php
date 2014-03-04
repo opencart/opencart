@@ -92,75 +92,95 @@ class ModelSettingModification extends Model {
 			$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
 			
 			foreach ($files as $file) {
-				$directory = '';
+				$path = '';
 				
+				// Get the full path of the files that are going to be used for modification
 				if (substr($file->getAttribute('name'), 0, 7) == 'catalog') {
-					$directory = DIR_CATALOG . substr($file->getAttribute('name'), 8);
-				} elseif (substr($file->getAttribute('name'), 0, 5) == 'admin') {
-					$directory = DIR_APPLICATION . substr($file->getAttribute('name'), 6);
-				} elseif (substr($file->getAttribute('name'), 0, 6) == 'system') {
-					$directory = DIR_SYSTEM . substr($file->getAttribute('name'), 7);
+					$path = DIR_CATALOG . substr($file->getAttribute('name'), 8);
+				} 
+				
+				if (substr($file->getAttribute('name'), 0, 5) == 'admin') {
+					$path = DIR_APPLICATION . substr($file->getAttribute('name'), 6);
+				} 
+				
+				if (substr($file->getAttribute('name'), 0, 6) == 'system') {
+					$path = DIR_SYSTEM . substr($file->getAttribute('name'), 7);
 				}
 				
-				echo $directory . '<br />';
-				echo $file->getAttribute('name') . '<br />';
-				
-				$files = glob($directory);
-				
-				$operations = $file->getElementsByTagName('operation');
-				
-				if ($files) {
-					foreach ($files as $file) {
-						$modfile = 
-						
-						if (!isset($modification[$file])) {
-							$modification[$file] = file_get_contents($file);
-						}
-						
-						foreach ($operations as $operation) {
-							$search = trim($operation->getElementsByTagName('search')->item(0)->nodeValue);
-							$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
-							$add = trim($operation->getElementsByTagName('add')->item(0)->nodeValue);
-							$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
+				if ($path) {
+					$files = glob($path);
+					
+					$operations = $file->getElementsByTagName('operation');
+					
+					if ($files) {
+						foreach ($files as $file) {
+							// Get the key to be used for the cache modification name.
+							if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
+								$key = 'catalog_' . str_replace('/', '_', substr($file, strlen(DIR_APPLICATION)));
+							}
+							
+							if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
+								$key = 'admin_' . str_replace('/', '_', substr($file, strlen(DIR_APPLICATION)));
+							}
+														
+							if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
+								$key = 'system_' . str_replace('/', '_', substr($file, strlen(DIR_SYSTEM)));
+							}							
+							
+							if (!isset($modification[$key])) {
+								$modification[$key] = file_get_contents($file);
+							}
+							
+							foreach ($operations as $operation) {
+								$search = trim($operation->getElementsByTagName('search')->item(0)->nodeValue);
+								$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
+								$add = trim($operation->getElementsByTagName('add')->item(0)->nodeValue);
+								$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
 								
-							if (!$index) {
-								$index = 1;
+								if (!$index) {
+									$index = 1;
+								}
+								
+								switch ($position) {
+									default:
+									case 'replace':
+										$replace = $add;
+										break;
+									case 'before':
+										$replace = $add . $search;
+										break;
+									case 'after':
+										$replace = $search . $add;
+										break;
+								}
+	
+								
+								//echo 'Search ' . $search . '<br />';
+								//echo 'Replace ' . $replace . '<br />';			
+								//echo 'Position ' . strpos($modification[$file], $search) . '<br />';
+				
+								//echo str_replace('DIR_SYSTEM . \'engine/action.php\'', $replace, $modification[$file]) . '<br />';
+	
+								$i = 0;
+								$pos = -1;
+								$result = array();
+								
+								//$matches = array();
+								
+								//$output = preg_match('/^' . trim($search) . '/', $modification[$key], $matches);
+								
+								//print_r($output);
+								//print_r($matches);
+								
+								while (($pos = strpos($modification[$key], $search, $pos + 1)) !== false) {
+									$result[$i++] = $pos; 
+								}
+								
+								// Only replace the occurance of the string that is equal to the index					
+								if (isset($result[$index - 1])) {
+									$modification[$key] = substr_replace($modification[$key], $replace, $result[$index - 1], strlen($search));
+								}
 							}
-							
-							switch ($position) {
-								default:
-								case 'replace':
-									$replace = $add;
-									break;
-								case 'before':
-									$replace = $add . $search;
-									break;
-								case 'after':
-									$replace = $search . $add;
-									break;
-							}
-
-							//echo 'File ' . $file . '<br />';
-							//echo 'Search ' . $search . '<br />';
-							//echo 'Replace ' . $replace . '<br />';			
-							//echo 'Position ' . strpos($modification[$file], $search) . '<br />';
-			
-							//echo str_replace('DIR_SYSTEM . \'engine/action.php\'', $replace, $modification[$file]) . '<br />';
-
-							$i = 0;
-							$pos = -1;
-							$result = array();
-							
-							while (($pos = strpos($modification[$file], $search, $pos + 1)) !== false) {
-								$result[$i++] = $pos; 
-							}
-							
-							// Only replace the occurance of the string that is equal to the index					
-							if (isset($result[$index - 1])) {
-								$modification[$file] = substr_replace($modification[$file], $replace, $result[$index - 1], strlen($search));
-							}
-
-							//echo $modification[$file] . '<br />';
 						}
 					}
 				}
@@ -169,25 +189,20 @@ class ModelSettingModification extends Model {
 		
 		// Write all modification files
 		foreach ($modification as $key => $value) {
-			if (substr($key, 0, 7) == 'catalog') {
-				$directory = DIR_CATALOG . substr($key, 8);
-			} elseif (substr($key, 0, 5) == 'admin') {
-				$directory = DIR_APPLICATION . substr($key, 6);
-			} elseif (substr($key, 0, 6) == 'system') {
-				$directory = DIR_SYSTEM . substr($key, 7);
-			}			
+			echo 'File ' . $key . '<br />';
+			echo $value . '<br />';
 			
-			$file = DIR_MODIFICATION . str_replace('/', '_', substr($key, strlen($this->directory)));
-			
-			echo $file . '<br>';
 			/*
+			$file = DIR_MODIFICATION . $key;
+
 			$handle = fopen($file, 'w');
 	
 			fwrite($handle, $value);
 	
 			fclose($handle);
-			*/			
+			*/		
 		}
+		
 	}
 	
 	public function clear() {

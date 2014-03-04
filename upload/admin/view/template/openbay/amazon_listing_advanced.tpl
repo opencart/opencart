@@ -521,29 +521,31 @@ function image_upload(field, thumb) {
 }
 
 function validate(formType) {
-    if($('#category_selector').val() == '') {
-        return false;
+  alert('start validate');
+
+  var warnings = 0;
+  var mChecked = 0;
+  var productIdType;
+  var productId;
+  var productIdRequired;
+
+  if($('#category_selector').val() == '') {
+    alert('choose cat');
+    return false;
+  }
+
+  $('.marketplace_ids').each(function (i) {
+    if($(this).attr('checked') == 'checked') {
+      mChecked++;
     }
+  });
 
-    var warnings = 0;
-    var mChecked = 0;
-
-    $('#marketplaces_' + formType + ' :input').each(function (i) {
-        if($(this).attr('checked') == 'checked') {
-            mChecked++;
-        }
-    });
-
-    if(mChecked == 0) {
-        $('#required_marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $field_required_text ?></div>');
-        warnings ++;
-    } else {
-        $('#marketplace-alert').remove();
-    }
-
-    var productIdType;
-    var productId;
-    var productIdRequired;
+  if(mChecked == 0) {
+    $('#required_marketplaces').prepend('<div class="alert alert-danger" id="marketplace-alert"><?php echo $field_required_text ?></div>');
+    warnings ++;
+  } else {
+    $('#marketplace-alert').remove();
+  }
 
     $('.fields_' + formType + ' :input').each(function (i) {
         if($(this).parent().parent().attr('display') === "no") {
@@ -568,19 +570,19 @@ function validate(formType) {
         }
 
         if(field_type == 'required' || field_value !== '') {
-            if(field_value === '') {
+            if (field_value === '') {
+              alert('1');
                 $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $field_required_text ?>').show();
                 warnings ++;
-            }
-            else if (min_length != undefined && field_value.length < min_length) {
+            } else if (min_length != undefined && field_value.length < min_length) {
+              alert('2');
                 $('.fields_' + formType + ' #error_' + field_name).text('<?php echo $minimum_length_text; ?> ' + min_length + ' <?php echo $characters_text; ?>').show();
                 warnings ++;
-            }
-            else if (max_length != undefined && field_value.length > max_length) {
+            } else if (max_length != undefined && field_value.length > max_length) {
+              alert('3');
                 $('.fields_' + formType + ' #error_' + field_name).text((field_value.length - max_length) + ' <?php echo $chars_over_limit_text; ?>').show();
                 warnings ++;
-            }
-            else {
+            } else {
                 $('.fields_' + formType + ' #error_' + field_name).text('').hide();
             }
         }
@@ -592,6 +594,7 @@ function validate(formType) {
             if(field_name === 'Value') {
                 $('.fields_' + formType + ' #error_' + field_name).text('Not valid product ID!');
                 warnings ++;
+              alert('5');
                 return;
             }
         });
@@ -599,7 +602,10 @@ function validate(formType) {
 
     if($('.fields_' + formType + ' [name="category"]').val() == undefined) {
         warnings ++;
+      alert('6');
     }
+
+  alert(warnings);
 
     if(warnings > 0) {
         return false;

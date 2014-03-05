@@ -21,7 +21,7 @@
         <input type="hidden" name="product_id" value="<?php echo $product['product_id']; ?>" />
         <input type="hidden" name="auction_type" value="FixedPriceItem" />
         <input type="hidden" name="attributes" value="<?php echo $product['attributes']; ?>" />
-        
+
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-listing-feature" data-toggle="tab"><?php echo $text_tab_feature; ?></a></li>
@@ -112,36 +112,46 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_search_catalog; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="catalog_search" id="catalog_search" class="form-control col-sm-2" value="" />
-                <a onclick="searchEbayCatalog();" class="btn btn-primary" id="catalog_search_btn"><?php echo $button_search; ?></a>
-                <img src="view/image/loading.gif" id="catalog_search_img" class="displayNone" />
+                <div class="row">
+                  <div class="col-sm-3">
+                    <input type="text" name="catalog_search" id="catalog_search" class="form-control" value="" />
+                  </div>
+                  <div class="col-sm-1">
+                    <a class="btn btn-primary" id="button-catalog-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_image_catalog; ?></label>
+              <label class="col-sm-2 control-label"><?php echo $text_catalog; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" value="0" name="catalog_image">
                 <input id="catalog_image" type="checkbox" value="1" name="catalog_image">
+                <span class="help-block"><?php echo $text_catalog_help; ?></span>
               </div>
             </div>
             <div class="row" id="product-catalog-container"></div>
           </div>
 
           <div id="tab-listing-description" class="tab-pane">
-              <table class="form">
-                  <tr>
-                      <td><?php echo $text_title; ?></td>
-                      <td><div id="name_highlight"><input type="text" name="name" value="<?php echo $product['name']; ?>" size="85" id="name" /> <span id="name_highlight_msg" class="displayNone"> <?php echo $text_title_error; ?></span></div></td>
-                  </tr>
-                  <tr>
-                      <td><?php echo $text_subtitle; ?></td>
-                      <td><div id="sub_name_highlight"><input type="text" id="sub_name" name="sub_name" value="" size="85" /> <span id="sub_name_highlight_msg" class="displayNone"> <?php echo $text_subtitle_help; ?></span></div></td>
-                  </tr>
-                  <tr>
-                      <td><?php echo $text_description; ?></td>
-                      <td><textarea name="description" id="descriptionField"><?php echo $product['description']; ?></textarea></td>
-                  </tr>
-              </table>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $text_title; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="name" value="<?php echo $product['name']; ?>" size="85" id="name" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $text_subtitle; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="sub_name" value="" size="85" id="sub_name" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $text_description; ?></label>
+              <div class="col-sm-10">
+                <textarea name="description" placeholder="<?php echo $entry_description; ?>" id="descriptionField"><?php echo $product['description']; ?></textarea>
+              </div>
+            </div>
           </div>
 
           <div id="tab-listing-images" class="tab-pane">
@@ -632,7 +642,7 @@
       </form>
     </div>
 
-    <div class="content displayNone" id="reviewForm">
+    <div class="content" style="display: none;" id="reviewForm">
         <table class="form" id="reviewFormTable">
           <tr class="listingFees">
             <td><?php echo $text_review_costs; ?></td>
@@ -654,7 +664,7 @@
           </tr>
         </table>
     </div>
-    <div class="content displayNone" id="doneForm">
+    <div class="content" style="display: none;" id="doneForm">
           <h2><?php echo $text_created_title; ?></h2>
           <p><?php echo $text_created_msg; ?>: <span id="itemNumber"></span></p>
           <div class="buttons mTop10">
@@ -663,7 +673,7 @@
               <a href="<?php echo $cancel; ?>" class="button"><span><?php echo $text_return; ?></span></a>
           </div>
       </div>
-    <div class="content displayNone" id="failedForm">
+    <div class="content" style="display: none;" id="failedForm">
           <h2><?php echo $text_failed_title; ?></h2>
           <p><?php echo $text_failed_msg1; ?></p>
           <ul>
@@ -679,6 +689,9 @@
 <script type="text/javascript" src="view/javascript/ckeditor/ckeditor.js"></script>
 
 <script type="text/javascript"><!--
+
+
+<!--
     CKEDITOR.replace('description', {
         filebrowserBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
         filebrowserImageBrowseUrl: 'index.php?route=common/filemanager&token=<?php echo $token; ?>',
@@ -692,40 +705,7 @@
         for ( instance in CKEDITOR.instances )
             CKEDITOR.instances[instance].updateElement();
     }
-
-    function image_upload(field, thumb, container, hidden) {
-        $('#dialog').remove();
-
-        $('#content').prepend('<div id="dialog" style="padding: 3px 0px 0px 0px;"><iframe src="index.php?route=common/filemanager&token=<?php echo $token; ?>&field=' + encodeURIComponent(field) + '" style="padding:0; margin: 0; display: block; width: 100%; height: 100%;" frameborder="no" scrolling="auto"></iframe></div>');
-
-        $('#dialog').dialog({
-            title: 'Image manager',
-            close: function (event, ui) {
-                if ($('#' + field).attr('value')) {
-                    $.ajax({
-                        url: 'index.php?route=common/filemanager/image&token=<?php echo $token; ?>&image=' + encodeURIComponent($('#' + field).attr('value')),
-                        dataType: 'text',
-                        type: 'GET',
-                        success: function(text) {
-                            $('#' + thumb).replaceWith('<img src="' + text + '" alt="" id="' + thumb + '" />');
-                            $('#' + container).show();
-                            $('#' + hidden).val($('#' + field).attr('value'));
-                        },
-                        error: function (xhr, ajaxOptions, thrownError) {
-                        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-                      }
-                    });
-                } else {
-                    $('#' + container).remove();
-                }
-            },
-            bgiframe: false,
-            width: 800,
-            height: 400,
-            resizable: false,
-            modal: false
-        });
-    }
+-->
 
     function updateReserveMessage(elementId, total) {
         var toList = $('#qty_'+elementId).val();
@@ -929,7 +909,7 @@
         });
     }
 
-    function searchEbayCatalog() {
+    $('#button-catalog-search').bind('click', function() {
         var qry = $('#catalog_search').val();
         var cat = $('#finalCat').val();
 
@@ -952,13 +932,13 @@
             data: { categoryId: cat, page: 1,  search: qry },
             beforeSend: function() {
                 $('#product-catalog-container').empty().show();
-                $('#catalog_search_btn').hide();
-                $('#catalog_search_img').show();
+                $('#button-catalog-search').hide();
+                $('#catalog-search-alert').remove();
             },
             success: function(data) {
                 if (data.error == false) {
                     if (data.data.productSearchResult.paginationOutput.totalEntries == 0 || data.data.ack == 'Failure') {
-                        $('#product-catalog-container').html('<div class="alert alert-warning"><?php echo $text_error_no_catalog_data; ?></div>');
+                        $('#product-catalog-container').before('<div class="alert alert-warning" id="catalog-search-alert"><?php echo $text_error_no_catalog_data; ?></div>');
                     } else {
                         data.data.productSearchResult.products = $.makeArray(data.data.productSearchResult.products);
 
@@ -988,14 +968,13 @@
                     }
                 }
 
-                $('#catalog_search_btn').show();
-                $('#catalog_search_img').hide();
+                $('#button-catalog-search').show();
             },
             error: function (xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
         });
-    }
+    });
 
     function listingDuration(data) {
         var lang            = new Array();
@@ -1197,8 +1176,6 @@
     }
 
     $('#review-button').bind('click', function() {
-        CKupdate();
-
         var err = 0;
 
         <!-- is there ebay gallery images to send? -->
@@ -1415,16 +1392,6 @@
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
           }
         });
-    }
-
-    function titleLength() {
-        if ($('#name').val().length > 80) {
-            $('#name_highlight').addClass('warning');
-            $('#name_highlight_msg').show();
-        } else {
-            $('#name_highlight').removeClass('warning');
-            $('#name_highlight_msg').hide();
-        }
     }
 
     function subtitleRefocus() {
@@ -1733,30 +1700,10 @@
     }
 
     function confirmAction(url) {
-	if (confirm("<?php echo $text_confirm_action; ?>")) {
-            window.location = url;
-	}
+      if (confirm("<?php echo $text_confirm_action; ?>")) {
+        window.location = url;
+      }
     }
-
-    $('#sub_name').focus(function() {
-        $('#sub_name_highlight').addClass('attention');
-        $('#sub_name_highlight_msg').show();
-    });
-
-    $('#sub_name').focusout(function() {
-        setTimeout(function() {
-            $('#sub_name_highlight').removeClass('attention');
-            $('#sub_name_highlight_msg').hide();
-        }, 100);
-    });
-
-    $('#name').keyup(function() {
-        titleLength();
-    });
-
-    $('#name').change(function() {
-        titleLength();
-    });
 
     $('#option_image_group').change(function() {
         var option_group_id = $(this).val();
@@ -1776,7 +1723,6 @@
 
     $(document).ready(function() {
         loadCategories(1);
-        titleLength();
         getSuggestedCategories();
         updatePrice();
         updateVarPrice();

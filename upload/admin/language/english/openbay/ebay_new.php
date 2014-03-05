@@ -55,9 +55,7 @@ $_['text_features_help']        	= 'Entering specifics about your item will help
 
 //Description
 $_['text_title']                    = 'Title';
-$_['text_title_error']              = 'Your title must be 80 characters or under';
 $_['text_subtitle']                 = 'Sub title';
-$_['text_subtitle_help']            = 'ebay will charge additional fees for a subtitle - <a href="http://pages.ebay.co.uk/help/sell/seller-fees.html" target="_BLANK" onclick="subtitleRefocus();"> click here for fees</a>';
 $_['text_template']                 = 'Theme';
 $_['text_template_link']            = 'Need a custom theme?';
 $_['text_description']              = 'Description';
@@ -170,7 +168,8 @@ $_['text_option_description']       = 'Variation images can be used to display a
 
 //Product catalog
 $_['text_search_catalog']           = 'Search eBay catalog:';
-$_['text_image_catalog']            = 'Use default image:<span class="help">This will change your main image and will be set to use the eBay catalog image</span>';
+$_['text_catalog']            		= 'Use default image';
+$_['text_catalog_help']             = 'This will change your main image and will be set to use the eBay catalog image';
 
 //Errors
 $_['text_error_choose_category']    = 'You must choose a category';

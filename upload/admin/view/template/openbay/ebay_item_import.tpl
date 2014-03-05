@@ -86,7 +86,7 @@
       $.ajax({
         url: 'index.php?route=openbay/ebay/importItems&token=<?php echo $token; ?>&desc='+import_description+'&note='+note_import+'&advanced='+import_advanced+'&categories='+import_categories,
         beforeSend: function(){
-          $('#button-import').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+          $('#button-import').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
         },
         type: 'post',
         dataType: 'json',

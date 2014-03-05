@@ -194,7 +194,7 @@ function show_form(xml, formType) {
         dataType: 'json',
         beforeSend: function() {
             $('#category_selector').attr('disabled', 'disabled');
-            $('#category_selector_label').after('<a class="btn btn-primary wait" disabled="disabled"><i class="fa fa-refresh fa-spin"></i> </a>');
+            $('#category_selector_label').after('<a class="btn btn-primary wait" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> </a>');
         },
         complete: function() {
             $('#category_selector').removeAttr('disabled');
@@ -671,7 +671,7 @@ function nodeSelect(field, original_field) {
         data: { marketplaceId: market, node: node},
         dataType: 'json',
         beforeSend: function(){
-          $('#browse-node-content').empty().html('<a class="btn btn-primary" disabled="disabled"><i class="fa fa-refresh fa-spin"></i> </a>');
+          $('#browse-node-content').empty().html('<a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> </a>');
         },
         success: function(data) {
           if(data.node.error != true){

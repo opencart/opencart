@@ -8,13 +8,13 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <a data-toggle="tooltip" title="<?php echo $text_load; ?>" class="btn" onclick="loadUsage();"><i class="fa fa-refresh"></i></a>
+        <a data-toggle="tooltip" title="<?php echo $text_load; ?>" class="btn" onclick="loadUsage();"><i class="fa fa-cog fa-lg"></i></a>
         <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a>
       </div>
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
     <div class="panel-body">
-      <h4><div class="btn btn-primary" id="load_usage_loading"><i class="fa fa-refresh fa-spin"></i></div></h4>
+      <h4><div class="btn btn-primary" id="load_usage_loading"><i class="fa fa-cog fa-lg fa-spin"></i></div></h4>
       <div id="usageTable" class="displayNone"></div>
     </div>
 </div>

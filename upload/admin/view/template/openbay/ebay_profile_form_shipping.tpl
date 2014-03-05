@@ -214,87 +214,87 @@ $('#add-shipping-international').bind('click', function(){
 });
 
   function addShipping(id) {
-      if (id == 'national') {
-          var loc = '0';
-      } else {
-          var loc = '1';
-      }
+    if (id == 'national') {
+        var loc = '0';
+    } else {
+        var loc = '1';
+    }
 
-      var count = $('#count_' + id).val();
-      count = parseInt(count);
+    var count = $('#count_' + id).val();
+    count = parseInt(count);
 
-      $.ajax({
-        url: 'index.php?route=openbay/ebay/getShippingService&token=<?php echo $token; ?>&loc=' + loc,
-        beforeSend: function(){
-          $('#add-shipping-'+id).empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
-        },
-        type: 'GET',
-        dataType: 'json',
-        success: function(data) {
-          html = '';
-          html += '<div class="well shipping_' + id + '_' + count + '">';
-            html += '<div class="row form-group">';
-              html += '<div class="col-sm-1 text-right">';
-                html += '<label class="control-label"><?php echo $text_shipping_service; ?><label>';
-              html += '</div>';
-              html += '<div class="col-sm-11">';
-                html += '<select name="data[service_' + id + '][' + count + ']" class="form-control">';
-                  $.each(data.svc, function(key, val) {
-                    html += '<option value="' + val.ShippingService + '">' + val.description + '</option>';
-                  });
-                html += '</select>';
-              html += '</div>';
+    $.ajax({
+      url: 'index.php?route=openbay/ebay/getShippingService&token=<?php echo $token; ?>&loc=' + loc,
+      beforeSend: function(){
+        $('#add-shipping-'+id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
+      type: 'GET',
+      dataType: 'json',
+      success: function(data) {
+        html = '';
+        html += '<div class="well shipping_' + id + '_' + count + '">';
+          html += '<div class="row form-group">';
+            html += '<div class="col-sm-1 text-right">';
+              html += '<label class="control-label"><?php echo $text_shipping_service; ?><label>';
             html += '</div>';
-            if (id == 'international') {
-              html += '<div class="row form-group">';
-                html += '<div class="col-sm-1 text-right">';
-                  html += '<label class="control-label"><?php echo $text_shipping_zones; ?></label>';
-                html += '</div>';
-                html += '<div class="col-sm-10">';
-                  html += '<label class="checkbox-inline">';
-                    html += '<input type="checkbox" name="data[shipto_international][' + count + '][]" value="Worldwide" />';
-                    html += ' <?php echo $text_shipping_worldwide; ?>';
-                  html += '</label>';
-                  <?php foreach($shipping_international_zones as $zone) { ?>
-                    html += '<label class="checkbox-inline">';
-                      html += '<input type="checkbox" name="data[shipto_international][' + count + '][]" value="<?php echo $zone['shipping_location']; ?>" />';
-                      html += ' <?php echo $zone['description']; ?>';
-                    html += '</label>';
-                  <?php } ?>
-                html += '</div>';
-              html += '</div>';
-            }
-            html += '<div class="row form-group">';
-              html += '<div class="col-sm-1 text-right">';
-                html += '<label class="control-label"><?php echo $text_shipping_first; ?></label>';
-              html += '</div>';
-              html += '<div class="col-sm-2">';
-                html += '<input type="text" name="data[price_' + id + '][' + count + ']" class="form-control" value="0.00" class="form-control" />';
-              html += '</div>';
-              html += '<div class="col-sm-1 text-right">';
-                html += '<label class="control-label"><?php echo $text_shipping_add; ?></label>';
-              html += '</div>';
-              html += '<div class="col-sm-2">';
-                html += '<input type="text" name="data[priceadditional_' + id + '][' + count + ']" class="form-control" value="0.00" />';
-              html += '</div>';
-              html += '<div class="col-sm-2">';
-                html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove; ?></a>';
-              html += '</div>';
+            html += '<div class="col-sm-11">';
+              html += '<select name="data[service_' + id + '][' + count + ']" class="form-control">';
+                $.each(data.svc, function(key, val) {
+                  html += '<option value="' + val.ShippingService + '">' + val.description + '</option>';
+                });
+              html += '</select>';
             html += '</div>';
           html += '</div>';
+          if (id == 'international') {
+            html += '<div class="row form-group">';
+              html += '<div class="col-sm-1 text-right">';
+                html += '<label class="control-label"><?php echo $text_shipping_zones; ?></label>';
+              html += '</div>';
+              html += '<div class="col-sm-10">';
+                html += '<label class="checkbox-inline">';
+                  html += '<input type="checkbox" name="data[shipto_international][' + count + '][]" value="Worldwide" />';
+                  html += ' <?php echo $text_shipping_worldwide; ?>';
+                html += '</label>';
+                <?php foreach($shipping_international_zones as $zone) { ?>
+                  html += '<label class="checkbox-inline">';
+                    html += '<input type="checkbox" name="data[shipto_international][' + count + '][]" value="<?php echo $zone['shipping_location']; ?>" />';
+                    html += ' <?php echo $zone['description']; ?>';
+                  html += '</label>';
+                <?php } ?>
+              html += '</div>';
+            html += '</div>';
+          }
+          html += '<div class="row form-group">';
+            html += '<div class="col-sm-1 text-right">';
+              html += '<label class="control-label"><?php echo $text_shipping_first; ?></label>';
+            html += '</div>';
+            html += '<div class="col-sm-2">';
+              html += '<input type="text" name="data[price_' + id + '][' + count + ']" class="form-control" value="0.00" class="form-control" />';
+            html += '</div>';
+            html += '<div class="col-sm-1 text-right">';
+              html += '<label class="control-label"><?php echo $text_shipping_add; ?></label>';
+            html += '</div>';
+            html += '<div class="col-sm-2">';
+              html += '<input type="text" name="data[priceadditional_' + id + '][' + count + ']" class="form-control" value="0.00" />';
+            html += '</div>';
+            html += '<div class="col-sm-2">';
+              html += '<a onclick="removeShipping(\'' + id + '\',\'' + count + '\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove; ?></a>';
+            html += '</div>';
+          html += '</div>';
+        html += '</div>';
 
-          $('#' + id + '-shipping-options').append(html);
+        $('#' + id + '-shipping-options').append(html);
 
-          $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>').removeAttr('disabled');
-        },
-        error: function (xhr, ajaxOptions, thrownError) {
-          $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>').removeAttr('disabled');
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
-        }
-      });
+        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>').removeAttr('disabled');
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>').removeAttr('disabled');
+        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      }
+    });
 
-      $('#count_' + id).val(count + 1);
-    }
+    $('#count_' + id).val(count + 1);
+  }
 
   function removeShipping(id, count) {
     $('.shipping_' + id + '_' + count).remove();

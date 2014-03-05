@@ -70,16 +70,16 @@
                 <div class="row">
                   <div class="col-sm-3">
                     <div class="input-group">
-                      <span class="input-group-addon">Width</span>
+                      <span class="input-group-addon"><?php echo $text_width; ?></span>
                       <input type="text" name="data[ebay_gallery_height]" value="<?php if(isset($data['ebay_gallery_height'])){ echo $data['ebay_gallery_height']; }?>" maxlength="4" class="form-control" />
-                      <span class="input-group-addon">px</span>
+                      <span class="input-group-addon"><?php echo $text_px; ?></span>
                     </div>
                   </div>
                   <div class="col-sm-3">
                     <div class="input-group">
-                      <span class="input-group-addon">Height</span>
+                      <span class="input-group-addon"><?php echo $text_height; ?></span>
                       <input type="text" name="data[ebay_gallery_width]" value="<?php if(isset($data['ebay_gallery_width'])){ echo $data['ebay_gallery_width']; }?>" maxlength="4" class="form-control" />
-                      <span class="input-group-addon">px</span>
+                      <span class="input-group-addon"><?php echo $text_px; ?></span>
                     </div>
                   </div>
                 </div>

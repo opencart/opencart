@@ -113,7 +113,7 @@
       type: 'get',
       dataType: 'json',
       beforeSend: function () {
-        $('#button-load').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+        $('#button-load').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
         $('#button-load').empty().html('<?php echo $text_load_btn; ?>').removeAttr('disabled');
@@ -175,7 +175,7 @@
       async: 'false',
       data: 'product_id=' + encodeURIComponent(product_id) + '&amazon_sku=' + encodeURIComponent(amazon_sku) + '&var=' + encodeURIComponent(variation),
       beforeSend: function () {
-        $(button).empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+        $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
         $(button).empty().html('<i class="fa fa-plus-circle"></i>').removeAttr('disabled');
@@ -196,7 +196,7 @@
       dataType: 'json',
       data: 'amazon_sku=' + encodeURIComponent(amazon_sku),
       beforeSend: function () {
-        $(button).empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+        $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       success: function (json) {
         //alert(json);

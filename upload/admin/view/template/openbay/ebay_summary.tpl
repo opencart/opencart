@@ -72,7 +72,7 @@
       type: 'post',
       dataType: 'json',
       beforeSend: function(){
-        $('#load-usage').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+        $('#load-usage').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
         $('#selling-limits').empty().hide();
         $('.dsr-table').hide();
         $('.data-row').remove();

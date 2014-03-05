@@ -149,12 +149,12 @@
         <div class="col-md-5" style="padding-left:10px;">
           <div id="openbay_version" class="alert alert-info text-left">
             <div id="openbay_version_loading">
-              <i class="fa fa-refresh fa-spin"></i> <?php echo $text_checking_version; ?>
+              <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_version; ?>
             </div>
           </div>
           <div id="openbay_notification" class="alert alert-info text-left">
             <div id="openbay_loading">
-              <i class="fa fa-refresh fa-spin"></i> <?php echo $text_getting_messages; ?>
+              <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_getting_messages; ?>
             </div>
           </div>
         </div>
@@ -168,7 +168,7 @@ var token = "<?php echo $_GET['token']; ?>";
 function getOpenbayVersion() {
   var version = '<?php echo $openbay_version; ?>';
 
-  $('#openbay_version').empty().html('<div id="openbay_version_loading"><i class="fa fa-refresh fa-spin"></i> <?php echo $text_checking_version; ?></div>');
+  $('#openbay_version').empty().html('<div id="openbay_version_loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_version; ?></div>');
 
   setTimeout(function () {
     $.ajax({
@@ -195,7 +195,7 @@ function getOpenbayVersion() {
 }
 
 function getOpenbayNotifications() {
-  $('#openbay_notification').empty().html('<div id="openbay_loading"><i class="fa fa-refresh fa-spin"></i> <?php echo $text_checking_messages; ?></div>');
+  $('#openbay_notification').empty().html('<div id="openbay_loading"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_messages; ?></div>');
 
   setTimeout(function () {
     $.ajax({

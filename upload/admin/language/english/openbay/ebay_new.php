@@ -12,6 +12,8 @@ $_['text_other']                    = 'Other';
 $_['text_select']                   = 'Select';
 $_['text_loading']                  = 'Loading';
 $_['text_confirm_action']           = 'Are you sure?';
+$_['button_service']           		= 'Add service';
+$_['text_paypal']           		= 'PayPal email address ';
 
 $_['text_return']                   = 'Return to products';
 $_['text_view']                     = 'View listing';
@@ -61,16 +63,19 @@ $_['text_template_link']            = 'Need a custom theme?';
 $_['text_description']              = 'Description';
 
 //Images
-$_['text_images_text_1']            = 'eBay images will be uploaded to eBay.<br />Supersize and Gallery plus are also listing enhancements that may cost more to list.';
+$_['text_images_text_1']            = 'eBay images will be uploaded to eBay. Supersize and Gallery plus are also listing enhancements that may cost more to list.';
 $_['text_images_text_2']            = 'Template images will be added to your listing description and hosted from your web site, these are free. (Your listing template must have the {gallery} tag)';
 $_['text_image_gallery']            = 'Gallery image size';
 $_['text_image_thumb']              = 'Thumb image size';
 $_['text_template_image']           = 'Template image';
 $_['text_main_image_ebay']          = 'Main eBay image';
 $_['text_image_ebay']               = 'eBay image';
-$_['text_images_none']              = 'You have no images for this product';
-$_['text_images_supersize']         = 'Supersize images<span class="help">Extra large pictures</span>';
-$_['text_images_gallery_plus']      = 'Gallery plus<span class="help">Large picture in search results</span>';
+$_['text_images_none']              = 'You have no images for this product, you must add images before you can list';
+$_['text_images_supersize']         = 'Supersize images';
+$_['text_images_gallery_plus']      = 'Gallery plus';
+$_['text_width']      				= 'Width';
+$_['text_height']      				= 'Height';
+$_['text_px']      					= 'px';
 
 //Price and details
 $_['text_listing_condition']        = 'Item condition';
@@ -103,10 +108,15 @@ $_['text_payment_pp_email']         = 'PayPal payments email:';
 $_['text_payment_instruction']      = 'Payment instructions';
 
 //Shipping tab
-$_['text_item_postcode']            = 'Postcode/Zip of location<span class="help">A postcode will help eBay choose a correct location for your listing</span>';
-$_['text_item_location']            = 'Town or State of location<span class="help">Entering a town is less reliable than a postcode</span>';
+$_['text_item_postcode']            = 'Postcode/Zip of location';
+$_['text_item_postcode_help']       = 'A postcode will help eBay choose a correct location for your listing';
+$_['text_item_location']            = 'Town or State of location';
+$_['text_item_location_help']       = 'Entering a town is less reliable than a postcode';
 $_['text_despatch_time']            = 'Dispatch time<span class="help">Max days to send</span>';
+$_['text_shipping_desc']  			= 'Freight info in description';
+$_['text_shipping_desc_help']  		= 'US,UK,AU & CA only';
 $_['text_despatch_country']         = 'Dispatch country';
+$_['text_despatch_country_help']    = 'This is the country the item will be sent from';
 $_['text_shipping_national']        = 'Domestic services (national)';
 $_['text_shipping_international']   = 'International services';
 $_['text_service']                  = '<strong>Service</strong>';
@@ -117,6 +127,8 @@ $_['text_shipping_post_ww']         = 'Worldwide';
 $_['text_shipping_post_dm']         = 'Domestic and the following';
 $_['text_shipping_max_national']    = 'For your chosen category, eBay allows a maximum national shipping charge of ';
 $_['text_shipping_getitfast']       = 'Get It Fast!';
+$_['text_shipping_zones']               = 'Ship to zones';
+$_['text_shipping_worldwide']           = 'Worldwide';
 
 //Returns
 $_['text_return_accepted']          = 'Returns accepted?';
@@ -148,10 +160,9 @@ $_['text_failed_li1']               = 'If you are a new eBay seller (or have not
 $_['text_failed_li2']               = 'You may have not subscribed to Selling Manager Pro on eBay - this is a requirement.';
 $_['text_failed_li3']               = 'Your OpenBay Pro account is suspended, please check via your module admin area under the "My Account" tab';
 $_['text_failed_contact']           = 'If this error continues, please contact support after you have ensured the issue is none of the above.';
-$_['text_gallery_select_all']       = 'Select all<span class="help">Tick the box to select all of your images at once.</span>';
+$_['text_gallery_select_all']       = 'Tick the box to select all of your images at once';
 $_['text_template_images']          = 'Template images';
 $_['text_ebay_images']              = 'eBay images';
-$_['text_shipping_in_description']  = 'Freight info in description<span class="help">US,UK,AU & CA only</span>';
 $_['text_profile_load']             = 'Load profile';
 $_['text_shipping_first']           = 'First item: ';
 $_['text_shipping_add']             = 'Additional items: ';

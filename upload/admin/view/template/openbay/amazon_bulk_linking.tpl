@@ -33,7 +33,7 @@
             <div class="col-sm-12">
               <?php if (in_array($marketplace_code, $marketplaces_processing)) { ?>
               <div class="pull-right">
-                <a class="btn btn-primary" disabled="disabled"><i class="fa fa-refresh fa-spin"></i> <?php echo $text_loading; ?></a>
+                <a class="btn btn-primary" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?></a>
               </div>
               <?php } else { ?>
               <div class="pull-right">
@@ -107,7 +107,7 @@
       url: $(this).attr('href'),
       dataType: 'json',
       beforeSend: function () {
-        $('#button-load-listings').empty().html('<i class="fa fa-refresh fa-spin"></i> <?php echo $text_loading; ?>').attr('disabled','disabled');
+        $('#button-load-listings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_loading; ?>').attr('disabled','disabled');
         $('.alert-danger, .alert-success').remove();
       },
       success: function (json) {

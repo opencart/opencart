@@ -14,7 +14,7 @@
     <div class="panel-heading">
       <div class="pull-right">
         <a href="<?php echo $return; ?>" data-toggle="tooltip" title="<?php echo $text_btn_return; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
-      <h1 class="panel-title"><i class="fa fa-refresh fa-lg"></i> <?php echo $text_heading; ?></h1>
+      <h1 class="panel-title"><i class="fa fa-cog fa-lg fa-lg"></i> <?php echo $text_heading; ?></h1>
     </div>
     <div class="panel-body">
       <?php if($validation == true) { ?>
@@ -55,7 +55,7 @@
     $.ajax({
       url: 'index.php?route=openbay/ebay/loadCategories&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#sync-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+        $('#sync-cats').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
         alert('<?php echo $text_ajax_ebay_categories; ?>');
       },
       type: 'post',
@@ -75,7 +75,7 @@
     $.ajax({
       url: 'index.php?route=openbay/ebay/loadSettings&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#load-settings').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+        $('#load-settings').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',
@@ -99,7 +99,7 @@
     $.ajax({
       url: 'index.php?route=openbay/ebay/loadSellerStore&token=<?php echo $token; ?>',
       beforeSend: function(){
-        $('#sync-shop-cats').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+        $('#sync-shop-cats').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       type: 'post',
       dataType: 'json',

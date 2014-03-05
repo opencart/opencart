@@ -78,6 +78,9 @@ $_['text_image_all_template']   = 'Add all images to template';
 $_['text_image_exclude_default']= 'Exclude default image';
 $_['text_image_exclude_default_help']= 'Only for bulk listing feature! Will not include the default product image in theme image list';
 $_['text_confirm_delete']       = 'Are you sure you want to delete the profile?';
+$_['text_width']      			= 'Width';
+$_['text_height']      			= 'Height';
+$_['text_px']      				= 'px';
 
 //General profile
 $_['text_general_private']      = 'List items as private auction';

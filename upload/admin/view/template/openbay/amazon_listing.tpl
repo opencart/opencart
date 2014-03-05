@@ -218,7 +218,7 @@
       dataType: 'json',
       data: {search_string : encodeURIComponent($('#search-string').val()), marketplace: $('input[name="marketplace"]:checked').val()},
       beforeSend: function(){
-          $('#search-submit').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+          $('#search-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
           $('#search-error').hide();
           $('#search-result-container').hide();
           $('#chosen-product').hide();
@@ -277,7 +277,7 @@
         dataType: 'json',
         data: $('form input[name="asin"], form select[name="condition"], form input[name="marketplace"]'),
         beforeSend: function(){
-          $('#button-amazon-price').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+          $('#button-amazon-price').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
           $('#best-price-info-container').hide();
         },
         complete: function() {

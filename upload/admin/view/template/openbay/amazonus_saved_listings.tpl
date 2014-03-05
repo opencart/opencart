@@ -83,7 +83,7 @@
       url: '<?php echo html_entity_decode($uploadSavedAjax); ?>',
       dataType: 'json',
       beforeSend: function () {
-        $('#upload_button').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+        $('#upload_button').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       complete: function () {
         $('#upload_button').empty().html('<i class="fa fa-cloud-upload fa-lg"></i> <?php echo $text_btn_upload; ?>').removeAttr('disabled');

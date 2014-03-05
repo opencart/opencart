@@ -65,7 +65,7 @@
           </thead>
           <tr>
             <td class="text-left" colspan="8" id="checking_linked_items">
-              <a class="btn btn-primary" id="load-usage"><i class="fa fa-refresh fa-spin"></i> <?php echo $text_text_loading_items; ?></a>
+              <a class="btn btn-primary" id="load-usage"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_text_loading_items; ?></a>
             </td>
           </tr>
           <tbody style="display:none;" id="show_linked_items">
@@ -292,7 +292,7 @@
       dataType: 'json',
       beforeSend: function() {
         $('#fetching-ebay-items').hide();
-        $('#check-unlinked-items').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
+        $('#check-unlinked-items').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
       },
       success: function(json) {
         if (json.data.items === null) {

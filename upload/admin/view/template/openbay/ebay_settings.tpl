@@ -525,7 +525,7 @@
           dataType: 'json',
           data: 'pass=' + pass,
           beforeSend: function() {
-            $('#button-clear-data').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+            $('#button-clear-data').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
           },
           success: function(json) {
               setTimeout(function() {
@@ -549,7 +549,7 @@
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
-          $('#button-clear-locks').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+          $('#button-clear-locks').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
         },
         success: function(json) {
           setTimeout(function() {
@@ -570,7 +570,7 @@
         type: 'post',
         dataType: 'json',
         beforeSend: function() {
-          $('#button-repair-links').empty().html('<i class="fa fa-refresh fa-spin"></i>');
+          $('#button-repair-links').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>');
         },
         success: function(json) {
           setTimeout(function() {
@@ -596,7 +596,7 @@
             dataType: 'json',
             data: {token: $('#ebay_token').val(), secret: $('#ebay_secret').val(), string1: $('#ebay_string1').val(), string2: $('#ebay_string2').val()},
             beforeSend: function() {
-              $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-refresh fa-spin"></i> Checking details').show();
+              $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> Checking details').show();
             },
             success: function(data) {
                 if (data.error == false) {

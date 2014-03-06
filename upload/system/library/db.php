@@ -31,4 +31,18 @@ class DB {
 	public function getLastId() {
 		return $this->db->getLastId();
 	}
+
+	public function addColumn($table, $column, $options='') {
+		$query = $this->query("SHOW COLUMNS FROM `" . DB_PREFIX . $table . "` LIKE '" . $column . "'");
+		if (isset($query) && count($query->rows)<1) {
+			return $this->query(trim("alter table " . DB_PREFIX . $table . " ADD " . $column . " " . $options));
+		} else return false;
+	}
+
+	public function dropColumn($table, $column) {
+		$query = $this->query("SHOW COLUMNS FROM `" . DB_PREFIX . $table . "` LIKE '" . $column . "'");
+		if (isset($query) && count($query->rows) > 0) {
+			return $this->query("alter table " . DB_PREFIX . $table . " DROP " . $column);
+		} else return false;
+	}	
 }

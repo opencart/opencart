@@ -4,7 +4,6 @@ $_['text_ebay']               		= 'eBay';
 $_['text_openbay']               	= 'Openbay Pro';
 $_['text_cancel']                   = 'Cancel';
 $_['text_none']                     = 'None';
-$_['text_preview']                  = 'Preview';
 $_['text_pixels']                   = 'Pixels';
 $_['text_add']                      = 'Add';
 $_['text_remove']                   = 'Remove';
@@ -13,13 +12,13 @@ $_['text_select']                   = 'Select';
 $_['text_loading']                  = 'Loading';
 $_['text_confirm_action']           = 'Are you sure?';
 $_['button_service']           		= 'Add service';
+$_['button_save_listing']           = 'Create listing';
 $_['text_paypal']           		= 'PayPal email address ';
 
 $_['text_return']                   = 'Return to products';
 $_['text_view']                     = 'View listing';
 $_['text_edit']                     = 'Edit';
 
-$_['text_ajax_noload']              = 'Sorry, could not connect';
 $_['text_ajax_catproblem']          = 'You must fix your category problem before you can list. Try re-syncing them in the module admin area.';
 $_['text_ajax_item_condition']      = 'Item Condition';
 $_['text_ajax_error_cat']           = 'Please choose an eBay category';
@@ -33,7 +32,7 @@ $_['text_ajax_error_stock']         = 'You must have stock of an item to list it
 $_['text_ajax_error_duration']      = 'Select a listing duration, select category to load these options';
 $_['text_ajax_image_size']          = 'Ensure that you have a gallery and thumb image size';
 $_['text_ajax_duration']            = 'Select a listing duration';
-$_['text_ajax_noimages']            = 'Are you sure that you do not want to add any eBay images?';
+$_['text_ajax_noimages']            = 'Listing must have at least 1 image uploaded to eBay';
 $_['text_ajax_mainimage']           = 'You need to choose a main eBay image from your selection of eBay images';
 
 //Tabs
@@ -145,9 +144,9 @@ $_['text_return_scosts_2']          = 'Seller pays for all return shipping';
 //Review page
 $_['text_review_costs']             = 'Listing costs';
 $_['text_review_costs_total']       = 'Total eBay fees';
-$_['text_review_edit']              = 'Edit listing';
-$_['text_review_preview']           = 'Listing preview';
-$_['text_review_preview_help']      = '(eBay tags not displayed)';
+$_['text_review_edit']              = 'Edit';
+$_['text_preview']             	 	= 'Preview description';
+$_['text_verify']             	 	= 'Verify';
 
 //Created
 $_['text_created_title']            = 'Listing created';
@@ -188,3 +187,6 @@ $_['text_error_enter_text']         = 'Enter search text';
 $_['text_error_no_stock']           = 'You cannot list an item with zero stock';
 $_['text_error_no_catalog_data']    = 'No eBay catalog data was found for your product in eBay';
 $_['text_error_missing_settings']   = 'You cannot list items until you sync the eBay settings';
+$_['text_error_category_load']   	= 'Unable to load categories';
+$_['text_error_features']   		= 'Error loading features';
+$_['text_error_catalog']   			= 'Error loading catalog';

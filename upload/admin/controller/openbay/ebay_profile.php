@@ -42,7 +42,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('text_ebay'),
 		);
 

@@ -1327,6 +1327,25 @@ class ControllerOpenbayEbay extends Controller {
 				$this->load->model('openbay/ebay');
 				$this->load->model('openbay/ebay_profile');
 
+				$data['breadcrumbs'] = array();
+				$data['breadcrumbs'][] = array(
+					'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+					'text'      => $this->language->get('text_home'),
+				);
+				$data['breadcrumbs'][] = array(
+					'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+					'text'      => $this->language->get('text_openbay'),
+				);
+				$data['breadcrumbs'][] = array(
+					'href'      => $this->url->link('openbay/ebay/overview', 'token=' . $this->session->data['token'], 'SSL'),
+					'text'      => $this->language->get('text_ebay'),
+				);
+
+				$data['breadcrumbs'][] = array(
+					'href'      => $this->url->link('openbay/ebay/createBulk', 'token=' . $this->session->data['token'], 'SSL'),
+					'text'      => $this->language->get('text_page_title'),
+				);
+
 				$data['error_warning'] = array();
 
 				$activeList = $this->model_openbay_ebay->getLiveListingArray();
@@ -1471,6 +1490,8 @@ class ControllerOpenbayEbay extends Controller {
 
 				$this->response->setOutput($this->load->view('openbay/ebay_new_bulk.tpl', $data));
 			}else{
+				$this->load->language('openbay/ebay_newbulk');
+				$this->session->data['warning'] = $this->language->get('text_error_no_selection');
 				$this->response->redirect($this->url->link('extension/openbay/itemList&token=' . $this->session->data['token']));
 			}
 		}
@@ -1489,6 +1510,8 @@ class ControllerOpenbayEbay extends Controller {
 
 				if ($item_id == false) { // ensure that the sku is not already listed
 					$data = $this->request->post;
+
+
 
 					if($data['template'] != 'None') {
 						$template = $this->model_openbay_ebay_template->get($data['template']);

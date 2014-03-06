@@ -1,6 +1,8 @@
 <?php
 //Headings
 $_['text_page_title']               = 'Bulk listing';
+$_['text_ebay']               		= 'eBay';
+$_['text_openbay']               	= 'Openbay Pro';
 
 //Buttons
 $_['text_cancel']                   = 'Cancel';
@@ -62,3 +64,4 @@ $_['text_error_stock']              = 'Some items are not in stock and have been
 $_['text_error_no_product']         = 'There is no eligible products selected to use the bulk upload feature';
 $_['text_error_reverify']           = 'There was an error, you should edit and re-verify the items';
 $_['text_error_missing_settings']   = 'You cannot bulk list items until you syncronise your eBay settings';
+$_['text_error_no_selection']   	= 'You must select at least 1 item to list';

@@ -1,189 +1,202 @@
-<?php echo $header; ?>
-
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-    <?php if(!isset($error_fail)){ ?>
-
-    <?php foreach($error_warning as $warning) { ?>
-        <div class="warning mBottom10"><?php echo $warning; ?></div>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
+  </ul>
+  <?php foreach($error_warning as $warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $warning; ?></div>
+  <?php } ?>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a onclick="confirmAction('<?php echo $cancel; ?>');" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_page_title; ?></h1>
+    </div>
+    <div class="panel-body" id="page-listing">
+      <?php if (!isset($error_fail)) { ?>
+        <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
 
-    <div class="box">
-        <div class="heading">
-            <h1><?php echo $text_page_title; ?></h1>
-            <div class="buttons">
-                <a class="button" onclick="previewAll()" id="previewBtn"><span><?php echo $text_preview_all; ?></span></a>
-                <a class="button" style="display:none;" onclick="editAll();" id="previewEditBtn"><span><?php echo $text_edit; ?></span></a>
-                <a class="button" style="display:none;" onclick="submitAll();" id="submitBtn"><span><?php echo $text_submit; ?></span></a>
+          <div class="well">
+            <div class="row">
+              <div class="col-sm-12 text-right">
+                <a class="btn btn-primary" onclick="previewAll()" id="previewBtn"><span><?php echo $text_preview_all; ?></span></a>
+                <a class="btn btn-primary" style="display:none;" onclick="editAll();" id="previewEditBtn"><span><?php echo $text_edit; ?></span></a>
+                <a class="btn btn-primary" style="display:none;" onclick="submitAll();" id="submitBtn"><span><?php echo $text_submit; ?></span></a>
+              </div>
             </div>
-        </div>
-        <form id="form">
-            <table class="list">
-                <tbody>
-                    <tr>
+          </div>
+                  <table class="table">
+                    <tbody>
+                      <tr>
                         <td>
                             <?php if ($products) { ?>
-                            <?php $i = 0; ?>
-                            <?php foreach ($products as $product) { ?>
+                              <?php $i = 0; ?>
+                              <?php foreach ($products as $product) { ?>
 
-                            <div class="box mTop15 listingBox" id="p_row_<?php echo $i; ?>">
-                                <input type="hidden" class="pId openbayData_<?php echo $i; ?>" name="pId" value="<?php echo $i; ?>" />
-                                <input type="hidden" class="openbayData_<?php echo $i; ?>" name="product_id" value="<?php echo $product['product_id']; ?>" />
-                                <div class="heading">
-                                    <div id="p_row_title_<?php echo $i; ?>" style="float:left;" class="displayNone bold m0 p10"></div>
-                                    <div id="p_row_buttons_<?php echo $i; ?>" class="buttons right">
-                                        <a class="button" onclick="removeBox('<?php echo $i; ?>')"><span><?php echo $text_remove; ?></span></a>
-                                    </div>
-                                </div>
-                                <table class="m0 border borderNoBottom" style="width:100%;" cellpadding="0" cellspacing="0">
-                                    <tr id="p_row_msg_<?php echo $i; ?>" class="displayNone">
-                                        <td colspan="3" id="p_msg_<?php echo $i; ?>">
-                                            <img src="view/image/loading.gif" style="margin:10px;" alt="Loading" />
-                                        </td>
-                                    </tr>
+                              <div class="box mTop15 listingBox" id="p_row_<?php echo $i; ?>">
+                                  <input type="hidden" class="pId openbayData_<?php echo $i; ?>" name="pId" value="<?php echo $i; ?>" />
+                                  <input type="hidden" class="openbayData_<?php echo $i; ?>" name="product_id" value="<?php echo $product['product_id']; ?>" />
+                                  <div class="heading">
+                                      <div id="p_row_title_<?php echo $i; ?>" style="float:left;" class="displayNone bold m0 p10"></div>
+                                      <div id="p_row_buttons_<?php echo $i; ?>" class="buttons right">
+                                          <a class="button" onclick="removeBox('<?php echo $i; ?>')"><span><?php echo $text_remove; ?></span></a>
+                                      </div>
+                                  </div>
+                                  <table class="m0 border borderNoBottom" style="width:100%;" cellpadding="0" cellspacing="0">
+                                      <tr id="p_row_msg_<?php echo $i; ?>" class="displayNone">
+                                          <td colspan="3" id="p_msg_<?php echo $i; ?>">
+                                              <img src="view/image/loading.gif" style="margin:10px;" alt="Loading" />
+                                          </td>
+                                      </tr>
 
-                                    <tr class="p_row_content_<?php echo $i; ?>">
-                                        <td class="center width100"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></td>
-                                        <td class="left width390" valign="top">
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $text_title; ?>:</label><input type="text" name="title" class="openbayData_<?php echo $i; ?> width250" value="<?php echo $product['name']; ?>" id="title_<?php echo $i; ?>" /></p>
-                                            <input type="hidden" name="price_original" id="price_original_<?php echo $i; ?>" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $text_price; ?>:</label><input id="price_<?php echo $i; ?>" type="text" name="price" class="openbayData_<?php echo $i; ?> width50" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" /></p>
-                                            <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $text_stock; ?>:</label><?php echo $product['quantity']; ?></p>
-                                            <input type="hidden" name="qty" value="<?php echo $product['quantity']; ?>" class="openbayData_<?php echo $i; ?>" />
+                                      <tr class="p_row_content_<?php echo $i; ?>">
+                                          <td class="center width100"><img src="<?php echo $product['image']; ?>" alt="<?php echo $product['name']; ?>" /></td>
+                                          <td class="left width390" valign="top">
+                                              <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $text_title; ?>:</label><input type="text" name="title" class="openbayData_<?php echo $i; ?> width250" value="<?php echo $product['name']; ?>" id="title_<?php echo $i; ?>" /></p>
+                                              <input type="hidden" name="price_original" id="price_original_<?php echo $i; ?>" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" />
+                                              <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $text_price; ?>:</label><input id="price_<?php echo $i; ?>" type="text" name="price" class="openbayData_<?php echo $i; ?> width50" value="<?php echo number_format($product['price']*(($default['defaults']['tax']/100) + 1), 2, '.', ''); ?>" /></p>
+                                              <p><label style="display:inline-block;" class="width100 mRight10 bold"><?php echo $text_stock; ?>:</label><?php echo $product['quantity']; ?></p>
+                                              <input type="hidden" name="qty" value="<?php echo $product['quantity']; ?>" class="openbayData_<?php echo $i; ?>" />
 
-                                            <div class="buttons right">
-                                                <a class="button" style="display:none;" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>"><span><?php echo $text_features; ?></span></a>
-                                                <a class="button" style="display:none;" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" ><span><?php echo $text_catalog; ?></span></a>
-                                            </div>
+                                              <div class="buttons right">
+                                                  <a class="button" style="display:none;" onclick="showFeatures('<?php echo $i; ?>');" id="editFeature_<?php echo $i; ?>"><span><?php echo $text_features; ?></span></a>
+                                                  <a class="button" style="display:none;" onclick="showCatalog('<?php echo $i; ?>');" id="editCatalog_<?php echo $i; ?>" ><span><?php echo $text_catalog; ?></span></a>
+                                              </div>
 
-                                            <div id="featurePage_<?php echo $i; ?>" class="greyScreenBox featurePage">
-                                                <div class="bold border p5 previewClose">X</div>
-                                                <div class="previewContentScroll">
-                                                    <table class="form" id="featureRow_<?php echo $i; ?>"></table>
-                                                </div>
-                                            </div>
+                                              <div id="featurePage_<?php echo $i; ?>" class="greyScreenBox featurePage">
+                                                  <div class="bold border p5 previewClose">X</div>
+                                                  <div class="previewContentScroll">
+                                                      <table class="form" id="featureRow_<?php echo $i; ?>"></table>
+                                                  </div>
+                                              </div>
 
-                                            <!-- main product catalog popup box -->
-                                            <div id="catalogPage_<?php echo $i; ?>" class="greyScreenBox featurePage">
-                                                <div class="bold border p5 previewClose">X</div>
-                                                <div class="previewContentScroll">
+                                              <!-- main product catalog popup box -->
+                                              <div id="catalogPage_<?php echo $i; ?>" class="greyScreenBox featurePage">
+                                                  <div class="bold border p5 previewClose">X</div>
+                                                  <div class="previewContentScroll">
 
-                                                    <!-- catalog search area -->
-                                                    <table class="form">
-                                                        <tr>
-                                                            <td><?php echo $text_catalog_search; ?>:</td>
-                                                            <td>
-                                                                <div class="buttons">
-                                                                    <input type="text" name="catalog_search" id="catalog_search_<?php echo $i; ?>" value="" />
-                                                                    <a onclick="searchEbayCatalog('<?php echo $i; ?>');" class="button" id="catalog_search_btn_<?php echo $i; ?>"><span><?php echo $text_search; ?></span></a>
-                                                                    <img src="view/image/loading.gif" id="catalog_search_img_<?php echo $i; ?>" class="displayNone" alt="Loading" />
-                                                                </div>
-                                                            </td>
-                                                        </tr>
-                                                    </table>
+                                                      <!-- catalog search area -->
+                                                      <table class="form">
+                                                          <tr>
+                                                              <td><?php echo $text_catalog_search; ?>:</td>
+                                                              <td>
+                                                                  <div class="buttons">
+                                                                      <input type="text" name="catalog_search" id="catalog_search_<?php echo $i; ?>" value="" />
+                                                                      <a onclick="searchEbayCatalog('<?php echo $i; ?>');" class="button" id="catalog_search_btn_<?php echo $i; ?>"><span><?php echo $text_search; ?></span></a>
+                                                                      <img src="view/image/loading.gif" id="catalog_search_img_<?php echo $i; ?>" class="displayNone" alt="Loading" />
+                                                                  </div>
+                                                              </td>
+                                                          </tr>
+                                                      </table>
 
-                                                    <!-- container for the product catalog information -->
-                                                    <div id="catalogDiv_<?php echo $i; ?>"></div>
+                                                      <!-- container for the product catalog information -->
+                                                      <div id="catalogDiv_<?php echo $i; ?>"></div>
 
-                                                    <input type="hidden" class="openbayData_<?php echo $i; ?>" name="catalog_epid" id="catalog_epid_<?php echo $i; ?>" value="0" />
+                                                      <input type="hidden" class="openbayData_<?php echo $i; ?>" name="catalog_epid" id="catalog_epid_<?php echo $i; ?>" value="0" />
 
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="p10">
-                                            <p>
-                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_theme; ?></label>
-                                                <select name="theme_profile" class="width250 openbayData_<?php echo $i; ?>">
-                                                    <?php foreach($default['profiles_theme'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_theme_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
-                                                </select>
-                                            </p>
-                                            <p>
-                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_shipping; ?></label>
-                                                <select name="shipping_profile" class="width250 openbayData_<?php echo $i; ?>">
-                                                    <?php foreach($default['profiles_shipping'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_shipping_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
-                                                </select>
-                                            </p>
-                                            <p>
-                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_generic; ?></label>
-                                                <select name="generic_profile" id="generic_profile_<?php echo $i; ?>" class="width250 openbayData_<?php echo $i; ?>" onchange="genericProfileChange(<?php echo $i; ?>);">
-                                                    <?php foreach($default['profiles_generic'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_generic_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
-                                                </select>
-                                            </p>
-                                            <p>
-                                                <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_returns; ?></label>
-                                                <select name="return_profile" class="width250 openbayData_<?php echo $i; ?>">
-                                                    <?php foreach($default['profiles_returns'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_returns_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
-                                                </select>
-                                            </p>
-                                            <p id="conditionContainer_<?php echo $i; ?>" class="displayNone">
-                                                <label style="display:inline-block; width:100px;" class="mRight10 bold"><?php echo $text_condition; ?> </label>
-                                                <select name="condition" id="conditionRow_<?php echo $i; ?>" class="displayNone width250 openbayData_<?php echo $i; ?>"></select>
-                                                <img id="conditionLoading_<?php echo $i; ?>" src="view/image/loading.gif" alt="Loading" />
-                                            </p>
-                                            <p id="durationContainer_<?php echo $i; ?>" class="displayNone">
-                                                <label style="display:inline-block; width:100px;" class="mRight10 bold"><?php echo $text_duration; ?> </label>
-                                                <select name="duration" id="durationRow_<?php echo $i; ?>" class="displayNone width250 openbayData_<?php echo $i; ?>"></select>
-                                                <img id="durationLoading_<?php echo $i; ?>" src="view/image/loading.gif" alt="Loading" />
-                                            </p>
-                                        </td>
-                                    </tr>
-                                    <tr class="p_row_content_<?php echo $i; ?>">
-                                        <td colspan="3" style="padding:5px;">
-                                            <p class="bold m0"><?php echo $text_category; ?> <img src="view/image/loading.gif" id="loadingSuggestedCat_<?php echo $i; ?>" alt="Loading" /></p>
+                                                  </div>
+                                              </div>
+                                          </td>
+                                          <td class="p10">
+                                              <p>
+                                                  <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_theme; ?></label>
+                                                  <select name="theme_profile" class="width250 openbayData_<?php echo $i; ?>">
+                                                      <?php foreach($default['profiles_theme'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_theme_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
+                                                  </select>
+                                              </p>
+                                              <p>
+                                                  <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_shipping; ?></label>
+                                                  <select name="shipping_profile" class="width250 openbayData_<?php echo $i; ?>">
+                                                      <?php foreach($default['profiles_shipping'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_shipping_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
+                                                  </select>
+                                              </p>
+                                              <p>
+                                                  <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_generic; ?></label>
+                                                  <select name="generic_profile" id="generic_profile_<?php echo $i; ?>" class="width250 openbayData_<?php echo $i; ?>" onchange="genericProfileChange(<?php echo $i; ?>);">
+                                                      <?php foreach($default['profiles_generic'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_generic_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
+                                                  </select>
+                                              </p>
+                                              <p>
+                                                  <label style="display:inline-block;" class="mRight10 bold width100"><?php echo $text_profile_returns; ?></label>
+                                                  <select name="return_profile" class="width250 openbayData_<?php echo $i; ?>">
+                                                      <?php foreach($default['profiles_returns'] as $s){ echo '<option value="'.$s['ebay_profile_id'].'"'.($default['profiles_returns_def'] == $s['ebay_profile_id'] ? ' selected' : '').'>'.$s['name'].'</option>'; } ?>
+                                                  </select>
+                                              </p>
+                                              <p id="conditionContainer_<?php echo $i; ?>" class="displayNone">
+                                                  <label style="display:inline-block; width:100px;" class="mRight10 bold"><?php echo $text_condition; ?> </label>
+                                                  <select name="condition" id="conditionRow_<?php echo $i; ?>" class="displayNone width250 openbayData_<?php echo $i; ?>"></select>
+                                                  <img id="conditionLoading_<?php echo $i; ?>" src="view/image/loading.gif" alt="Loading" />
+                                              </p>
+                                              <p id="durationContainer_<?php echo $i; ?>" class="displayNone">
+                                                  <label style="display:inline-block; width:100px;" class="mRight10 bold"><?php echo $text_duration; ?> </label>
+                                                  <select name="duration" id="durationRow_<?php echo $i; ?>" class="displayNone width250 openbayData_<?php echo $i; ?>"></select>
+                                                  <img id="durationLoading_<?php echo $i; ?>" src="view/image/loading.gif" alt="Loading" />
+                                              </p>
+                                          </td>
+                                      </tr>
+                                      <tr class="p_row_content_<?php echo $i; ?>">
+                                          <td colspan="3" style="padding:5px;">
+                                              <p class="bold m0"><?php echo $text_category; ?> <img src="view/image/loading.gif" id="loadingSuggestedCat_<?php echo $i; ?>" alt="Loading" /></p>
 
-                                            <div class="left pLeft10" id="suggestedCat_<?php echo $i; ?>"></div>
+                                              <div class="left pLeft10" id="suggestedCat_<?php echo $i; ?>"></div>
 
-                                            <div style="clear:both;"></div>
+                                              <div style="clear:both;"></div>
 
-                                            <div id="cSelections_<?php echo $i; ?>" class="displayNone left mTop10 pLeft30">
-                                                <select id="catsSelect1_<?php echo $i; ?>" class="mLeft30" onchange="loadCategories(2, false, <?php echo $i; ?>);"></select>
-                                                <select id="catsSelect2_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(3, false, <?php echo $i; ?> );"></select>
-                                                <select id="catsSelect3_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(4, false, <?php echo $i; ?> );"></select>
-                                                <select id="catsSelect4_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(5, false, <?php echo $i; ?> );"></select>
-                                                <select id="catsSelect5_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(6, false, <?php echo $i; ?> );"></select>
-                                                <select id="catsSelect6_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(7, false, <?php echo $i; ?> );"></select>
-                                                <img src="view/image/loading.gif" id="imageLoading_<?php echo $i; ?>" class="displayNone" alt="Loading" />
-                                            </div>
+                                              <div id="cSelections_<?php echo $i; ?>" class="displayNone left mTop10 pLeft30">
+                                                  <select id="catsSelect1_<?php echo $i; ?>" class="mLeft30" onchange="loadCategories(2, false, <?php echo $i; ?>);"></select>
+                                                  <select id="catsSelect2_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(3, false, <?php echo $i; ?> );"></select>
+                                                  <select id="catsSelect3_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(4, false, <?php echo $i; ?> );"></select>
+                                                  <select id="catsSelect4_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(5, false, <?php echo $i; ?> );"></select>
+                                                  <select id="catsSelect5_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(6, false, <?php echo $i; ?> );"></select>
+                                                  <select id="catsSelect6_<?php echo $i; ?>" class="displayNone mLeft20" onchange="loadCategories(7, false, <?php echo $i; ?> );"></select>
+                                                  <img src="view/image/loading.gif" id="imageLoading_<?php echo $i; ?>" class="displayNone" alt="Loading" />
+                                              </div>
 
-                                            <input type="hidden" name="finalCat" id="finalCat_<?php echo $i; ?>" class="openbayData_<?php echo $i; ?>" />
-                                        </td>
-                                    </tr>
-                                </table>
-                            </div>
-                            <?php $i++; } ?>
+                                              <input type="hidden" name="finalCat" id="finalCat_<?php echo $i; ?>" class="openbayData_<?php echo $i; ?>" />
+                                          </td>
+                                      </tr>
+                                  </table>
+                              </div>
+                              <?php $i++; } ?>
                             <?php } else { ?>
-                    <tr>
-                        <td class="center" colspan="3"><?php echo $text_no_results; ?></td>
-                    </tr>
-            </table>
-            <?php } ?>
-            </td></tr>
-            </tbody>
-            </table>
+                                <tr>
+                                  <td class="center" colspan="3"><?php echo $text_no_results; ?></td>
+                                </tr>
+                              </table>
+                            <?php } ?>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
         </form>
-    </div>
-    <div id="greyScreen"></div>
-    <div id="loadingPage" class="greyScreenBox">
-        <p class="bold"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $text_loading; ?></p>
-        <p><?php echo $text_preparing0; ?> <span id="ajaxCountDoneDisplay">0</span> <?php echo $text_preparing1; ?> <span id="ajaxCountTotalDisplay">0</span> <?php echo $text_preparing2; ?> </p>
-        <div class="buttons">
-            <a class="button" href="index.php?route=extension/openbay/itemList&token=<?php echo $this->request->get['token']; ?>"><span><?php echo $text_cancel; ?></span></a>
+        <div id="greyScreen"></div>
+        <div id="loadingPage" class="greyScreenBox">
+            <p class="bold"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $text_loading; ?></p>
+            <p><?php echo $text_preparing0; ?> <span id="ajaxCountDoneDisplay">0</span> <?php echo $text_preparing1; ?> <span id="ajaxCountTotalDisplay">0</span> <?php echo $text_preparing2; ?> </p>
+            <div class="buttons">
+                <a class="button" href="index.php?route=extension/openbay/itemList&token=<?php echo $this->request->get['token']; ?>"><span><?php echo $text_cancel; ?></span></a>
+            </div>
         </div>
-    </div>
-    <div id="loadingVerify" class="greyScreenBox">
-        <p class="bold"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $text_verifying; ?></p>
-        <p><?php echo $text_processing; ?></p>
-    </div>
-    <div id="previewPage" class="greyScreenBox">
-        <div class="bold border p5 previewClose">X</div>
-        <div class="previewContent">
-            <iframe id="previewContentIframe" frameborder="0" height="100%" width="100%" style="margin-left:auto; margin-right:auto;" scrolling="auto"></iframe>
+        <div id="loadingVerify" class="greyScreenBox">
+            <p class="bold"><img src="view/image/loading.gif" alt="Loading" /> <?php echo $text_verifying; ?></p>
+            <p><?php echo $text_processing; ?></p>
         </div>
-    </div>
-    <?php }else{ ?>
+        <div id="previewPage" class="greyScreenBox">
+          <div class="bold border p5 previewClose">X</div>
+          <div class="previewContent">
+              <iframe id="previewContentIframe" frameborder="0" height="100%" width="100%" style="margin-left:auto; margin-right:auto;" scrolling="auto"></iframe>
+          </div>
+      </div>
+      <?php } else { ?>
         <?php foreach($error_fail as $fail) { ?>
-        <div class="warning mBottom10"><?php echo $fail; ?></div>
-    <?php } ?>
-    <?php } ?>
+          <div class="alert alert-danger"><?php echo $fail; ?></div>
+        <?php } ?>
+      <?php } ?>
+    </div>
+  </div>
 </div>
 
 <input type="hidden" id="totalItems" value="<?php echo $count; ?>" name="totalItems" />
@@ -837,5 +850,4 @@
         modifyPrices(id);
     }
 </script>
-
 <?php echo $footer; ?>

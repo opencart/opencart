@@ -338,7 +338,7 @@
   }
 
   $('#button-ebay-bulk').bind('click', function() {
-    var request_data = $('input[name="product_ids[]"]:checked').serialize();
+    var request_data = $('input[name="selected[]"]:checked').serialize();
 
     if (request_data != '') {
       $('#form').attr('action', 'index.php?route=openbay/ebay/createBulk&token=<?php echo $token; ?>').submit();

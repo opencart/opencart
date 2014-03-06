@@ -1,4 +1,3 @@
-<!-- 1822 lines -->
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
   <ul class="breadcrumb">
@@ -1026,7 +1025,7 @@
             data: { categoryId: cat, page: 1,  search: qry },
             beforeSend: function() {
                 $('#product-catalog-container').empty().show();
-                $('#button-catalog-search').hide();
+                $('#button-catalog-search').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
                 $('#catalog-search-alert').remove();
             },
             success: function(data) {
@@ -1038,17 +1037,23 @@
 
                         $.each(data.data.productSearchResult.products, function(key, val) {
                           html = '<div class="col-sm-3">';
-                          html += '<div class="row">';
-                          html += '<div class="col-sm-1">';
-                          html += '<input type="radio" name="catalog_epid" value="'+val.productIdentifier.ePID+'" />';
-                          html += '</div>';
-                          html += '<div class="col-sm-3">';
-                          html += '<img src="'+val.stockPhotoURL.thumbnail.value+'" />';
-                          html += '</div>';
-                          html += '<div class="col-sm-7">';
-                          html += '<h5>'+val.productDetails.value.text.value+'</h5>';
-                          html += '</div>';
-                          html += '</div>';
+                            html += '<div class="well">';
+                              html += '<div class="row">';
+                                html += '<div class="col-sm-12 text-left"><input type="radio" name="catalog_epid" value="'+val.productIdentifier.ePID+'" /></div>';
+                              html += '</div>';
+                              html += '<div class="row">';
+                                html += '<div class="col-sm-12 text-center" style="height:125px;">';
+                                if (typeof(val.stockPhotoURL) != "undefined" && val.stockPhotoURL !== null) {
+                                  html += '<img class="img-thumbnail" src="'+val.stockPhotoURL.thumbnail.value+'" style="height:96px;"/>';
+                                } else {
+                                  html += '<span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>';
+                                }
+                                html += '</div>';
+                              html += '</div>';
+                              html += '<div class="row">';
+                                html += '<div class="col-sm-12 text-center" style="min-height:70px;">'+val.productDetails.value.text.value+'</div>';
+                              html += '</div>';
+                            html += '</div>';
                           html += '</div>';
 
                           $('#product-catalog-container').append(html);
@@ -1063,6 +1068,9 @@
                 }
 
                 $('#button-catalog-search').show();
+            },
+            complete: function() {
+              $('#button-catalog-search').empty().removeAttr('disabled').html('<i class="fa fa-search"></i> <?php echo $button_search; ?>');
             },
             error: function (xhr, ajaxOptions, thrownError) {
             alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -1449,8 +1457,6 @@
     });
 
   $('#button-save').bind('click', function() {
-      CKupdate();
-
       var hasOptions = "<?php if (!empty($addon['openstock']) && $addon['openstock'] == true && !empty($product['options'])) { echo'yes'; } else { echo 'no'; }?>";
 
       $.ajax({
@@ -1460,7 +1466,6 @@
         data: $("#form").serialize(),
         beforeSend: function() {
           $('#button-save').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
-          $('#page-review').hide();
         },
         success: function(data) {
           if (data.error == true) {
@@ -1476,20 +1481,19 @@
             }
 
             if (data.data.Failed == true) {
-              $('#button-save').show();
-              $('#button-save-loading').hide();
               $('#page-failed').show();
             } else {
-              $('#button-save').show();
-              $('#button-save-loading').hide();
               $('#item-number').text(data.data.ItemID);
-              $('#button-view').attr('href', data.data.viewLink);
+              $('#button-view').attr('href', data.data.viewLink).show();
               $('#page-complete').show();
               $('#cancel_button').hide();
             }
           }
         },
         complete: function () {
+          $('#button-save').show();
+          $('#button-save-loading').hide();
+          $('#page-review').hide();
           $('#button-save').empty().html('<?php echo $button_save_listing; ?>').removeAttr('disabled');
         },
         error: function (xhr, ajaxOptions, thrownError) {

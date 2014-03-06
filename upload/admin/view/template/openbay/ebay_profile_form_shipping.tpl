@@ -138,7 +138,7 @@
                               <input type="text" name="data[priceadditional_national][<?php echo $key; ?>]" class="form-control" value="<?php echo $service['additional']; ?>" />
                             </div>
                             <div class="col-sm-2">
-                              <a onclick="removeShipping('national','<?php echo $key; ?>');" class="button"><span><?php echo $text_btn_remove; ?></span></a>
+                              <a onclick="removeShipping('national','<?php echo $key; ?>');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove; ?></a>
                             </div>
                           </div>
                         </div>
@@ -190,7 +190,7 @@
                           echo'<p class="shipping_international_'.$key.'"><label>'.$text_shipping_first.'</label>';
                           echo'<input type="text" name="data[price_international]['.$key.']" style="width:50px;" value="'.$service['price'].'" />';
                           echo'&nbsp;&nbsp;<label>'.$text_shipping_add.'</label>';
-                          echo'<input type="text" name="data[priceadditional_international]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'international\',\''.$key.'\');" class="button"><span>'.$text_btn_remove.'</span></a></p>';
+                          echo'<input type="text" name="data[priceadditional_international]['.$key.']" style="width:50px;" value="'.$service['additional'].'" />&nbsp;&nbsp;<a onclick="removeShipping(\'international\',\''.$key.'\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> '.$text_btn_remove.'</a></p>';
                           echo'<div style="clear:both;"></div>'; ?>
                         </div>
                       <?php } ?>

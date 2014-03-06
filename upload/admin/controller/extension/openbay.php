@@ -1408,7 +1408,12 @@ class ControllerExtensionOpenbay extends Controller {
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
-			$data['error_warning'] = '';
+			if (isset($this->session->data['warning'])) {
+				$data['error_warning'] = $this->session->data['warning'];
+				unset($this->session->data['warning']);
+			} else {
+				$data['error_warning'] = '';
+			}
 		}
 
 		if (isset($this->session->data['success'])) {

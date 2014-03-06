@@ -381,10 +381,6 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$this->error['name'] = $this->language->get('text_error_name');
 		}
 
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
-		}
-
 		if (!$this->error) {
 			return true;
 		} else {

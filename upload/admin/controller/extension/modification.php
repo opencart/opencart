@@ -161,7 +161,22 @@ class ControllerExtensionModification extends Controller {
 									}
 									
 									if ($regex && $regex == 'true') {
-										$modification[$key] = preg_replace($search, $replace, $modification[$key]);
+										/*
+										Regex does not require index to match items
+										
+										So if, for example, you want to change the 3rd 'foo' to 'bar' on the following line:
+
+										lorem ifoopsum foo lor foor ipsum foo dolor foo
+											   ^1      ^2      ^3         ^4        ^5
+										
+										run: s/\(.\{-}\zsfoo\)\{3}/bar/
+										
+										to get:
+										
+										lorem ifoopsum foo lor barr ipsum foo dolor foo
+											   ^1      ^2      ^3=bar     ^4        ^5
+										*/
+										$modification[$key] = preg_replace($search, $replace, $modification[$key], 1);
 									} else {	
 										$i = 0;
 										$pos = -1;

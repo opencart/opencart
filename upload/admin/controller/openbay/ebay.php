@@ -419,9 +419,33 @@ class ControllerOpenbayEbay extends Controller {
 	}
 
 	public function searchEbayCatalog() {
+		$this->load->language('openbay/ebay');
 		$this->load->model('openbay/ebay_product');
 
-		$json = $this->model_openbay_ebay_product->searchEbayCatalog($this->request->post);
+		$response = $this->model_openbay_ebay_product->searchEbayCatalog($this->request->post['search'], $this->request->post['category_id']);
+
+		if (isset($response['ack'])) {
+			if ($response['ack'] == 'Success') {
+				$json['error'] = false;
+				$json['error_message'] = '';
+
+				$json['results'] = (int)$response['productSearchResult']['paginationOutput']['totalEntries'];
+				$json['page'] = (int)$response['productSearchResult']['paginationOutput']['pageNumber'];
+				$json['page_total'] = (int)$response['productSearchResult']['paginationOutput']['totalPages'];
+				$json['products'] = $response['productSearchResult']['products'];
+			} else {
+				$json['error'] = true;
+
+				if (isset($response['errorMessage']['error']['message'])) {
+					$json['error_message'] = $response['errorMessage']['error']['message'];
+				} else {
+					$json['error_message'] = $this->language->get('error_loading_catalog');
+				}
+			}
+		} else {
+			$json['error'] = true;
+			$json['error_message'] = $this->language->get('error_generic_fail');
+		}
 
 		$this->response->setOutput(json_encode($json));
 	}

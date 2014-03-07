@@ -499,14 +499,14 @@ class ModelOpenbayEbay extends Model{
 	}
 
 	public function getEbayCategorySpecifics($catId){
-	$response['data']   = $this->openbay->ebay->call('listing/getEbayCategorySpecifics/', array('id' => $catId));
+		$response['data']   = $this->openbay->ebay->call('listing/getEbayCategorySpecifics/', array('id' => $catId));
 		$response['error']  = $this->openbay->ebay->lasterror;
 		$response['msg']    = $this->openbay->ebay->lastmsg;
 		return $response;
 	}
 
 	public function getCategoryFeatures($catId){
-	$response['data']   = $this->openbay->ebay->call('listing/getCategoryFeatures/', array('id' => $catId));
+		$response['data']   = $this->openbay->ebay->call('listing/getCategoryFeatures/', array('id' => $catId));
 		$response['error']  = $this->openbay->ebay->lasterror;
 		$response['msg']    = $this->openbay->ebay->lastmsg;
 		return $response;

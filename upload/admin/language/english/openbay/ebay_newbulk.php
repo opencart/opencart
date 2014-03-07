@@ -57,6 +57,7 @@ $_['text_esc_key']                  = 'The splash page has been hidden but may n
 $_['text_loading_categories']       = 'Loading categories';
 $_['text_loading_condition']        = 'Loading product conditions';
 $_['text_loading_duration']         = 'Loading listing durations';
+$_['text_total_fee']         		= 'Total fees';
 
 //Errors
 $_['text_error_ship_profile']       = 'You need to have a default shipping profile set up';

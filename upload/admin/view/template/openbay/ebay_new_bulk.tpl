@@ -21,9 +21,9 @@
           <div class="well">
             <div class="row">
               <div class="col-sm-12 text-right">
-                <a class="btn btn-primary" onclick="previewAll()" id="previewBtn"><?php echo $text_preview_all; ?></a>
-                <a class="btn btn-primary" style="display:none;" onclick="editAll();" id="previewEditBtn"><?php echo $text_edit; ?></a>
-                <a class="btn btn-primary" style="display:none;" onclick="submitAll();" id="submitBtn"><?php echo $text_submit; ?></a>
+                <a class="btn btn-primary" id="button-preview"><?php echo $text_preview_all; ?></a>
+                <a class="btn btn-primary" style="display:none;" id="button-edit"><?php echo $text_edit; ?></a>
+                <a class="btn btn-primary" style="display:none;" id="button-submit"><?php echo $text_submit; ?></a>
               </div>
             </div>
           </div>
@@ -37,7 +37,7 @@
                 <input type="hidden" class="openbayData_<?php echo $i; ?>" name="catalog_epid" id="catalog_epid_<?php echo $i; ?>" value="0" />
                 <div class="row">
                   <div class="col-sm-8">
-                    <div id="p_row_title_<?php echo $i; ?>" style="display:none;"></div>
+                    <h3 id="p_row_title_<?php echo $i; ?>" style="display:none;"></h3>
                   </div>
                   <div class="col-sm-4 form-group" id="p_row_buttons_<?php echo $i; ?>">
                     <a class="btn btn-danger btn-sm pull-right" onclick="removeBox('<?php echo $i; ?>')"><i class="fa fa-minus-circle"></i> <?php echo $text_remove; ?></a>
@@ -50,7 +50,7 @@
                         <i class="fa fa-cog fa-lg fa-spin"></i>
                       </div>
                     </div>
-                    <div class="row">
+                    <div class="row" class="p_row_content_<?php echo $i; ?>">
                       <div class="col-sm-2 text-center">
                         <div class="row">
                           <div class="col-sm-12 form-group">
@@ -105,7 +105,7 @@
                           </div>
                         </div>
                       </div>
-                      <div class="col-sm-5" class="p_row_content_<?php echo $i; ?>">
+                      <div class="col-sm-5">
                         <div class="form-group">
                           <label class="col-sm-2 control-label"><?php echo $text_title; ?></label>
                           <div class="col-sm-10">
@@ -177,7 +177,7 @@
                         </div>
 
                       </div>
-                      <div class="col-sm-5" class="p_row_content_<?php echo $i; ?>">
+                      <div class="col-sm-5">
                         <div class="row">
                           <div class="col-sm-12 form-group">
                             <h4><?php echo $text_category; ?></h4>
@@ -252,7 +252,7 @@
                   <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%" id="loading-bar"></div>
                 </div>
 
-                <p><?php echo $text_preparing0; ?> <span id="ajaxCountDoneDisplay">0</span> <?php echo $text_preparing1; ?> <span id="ajaxCountTotalDisplay">0</span> <?php echo $text_preparing2; ?> </p>
+                <p><?php echo $text_preparing0; ?> <span id="ajax-count-complete-display">0</span> <?php echo $text_preparing1; ?> <span id="ajax-count-total-display">0</span> <?php echo $text_preparing2; ?> </p>
               </div>
             </div>
           </div>
@@ -266,10 +266,10 @@
   </div>
 </div>
 
-<input type="hidden" id="totalItems" value="<?php echo $count; ?>" name="totalItems" />
-<input type="hidden" id="ajaxCount" value="0" />
-<input type="hidden" class="ajaxCountTotal" id="ajaxCountTotal" value="0" />
-<input type="hidden" class="ajaxCountDone" id="ajaxCountDone" value="0" />
+<input type="hidden" id="total-items" value="<?php echo $count; ?>" name="total-items" />
+<input type="hidden" id="ajax-count" value="0" />
+<input type="hidden" id="ajax-count-total" value="0" />
+<input type="hidden" id="ajax-count-complete" value="0" />
 
 <script type="text/javascript">
   $(document).ready(function() {
@@ -280,7 +280,7 @@
         modifyPrices('<?php echo (int)$j; ?>');
     <?php $j++; } ?>
 
-    $('#activeItems').text($('#totalItems').val());
+    $('#activeItems').text($('#total-items').val());
   });
 
   function overlay(screen) {
@@ -288,7 +288,12 @@
   }
 
   function overlayHide() {
-    $('.modal').modal('hide')
+    $('.modal').modal('hide');
+    $('#ajax-count-complete').val(0);
+    $('#ajax-count-complete-display').val(0);
+    $('#ajax-count-total').val(0);
+    $('#ajax-count-total-display').val(0);
+    $('#loading-bar').css('width', '0%');
   }
 
   function modifyPrices(id) {
@@ -324,23 +329,23 @@
   }
 
   function addCount() {
-    var count = parseInt($('#ajaxCount').val()) + 1;
-    $('#ajaxCount').val(count);
-    var count1 = parseInt($('#ajaxCountTotal').val())+1;
-    $('#ajaxCountTotal').val(count1);
-    $('#ajaxCountTotalDisplay').text(count1);
+    var count = parseInt($('#ajax-count').val()) + 1;
+    $('#ajax-count').val(count);
+    var count1 = parseInt($('#ajax-count-total').val())+1;
+    $('#ajax-count-total').val(count1);
+    $('#ajax-count-total-display').text(count1);
   }
 
   function removeCount() {
-      var count = parseInt($('#ajaxCount').val())-1;
-      $('#ajaxCount').val(count);
-      var count1 = parseInt($('#ajaxCountDone').val())+1;
-      $('#ajaxCountDone').val(count1);
-      $('#ajaxCountDoneDisplay').text(count1);
+      var count = parseInt($('#ajax-count').val())-1;
+      $('#ajax-count').val(count);
+      var count1 = parseInt($('#ajax-count-complete').val())+1;
+      $('#ajax-count-complete').val(count1);
+      $('#ajax-count-complete-display').text(count1);
 
       var modifier = 0;
       var current = 0;
-      var total = $('#ajaxCountTotal').val();
+      var total = $('#ajax-count-total').val();
 
       modifier = 100 / total;
       current = parseFloat(modifier * count1);
@@ -359,12 +364,12 @@
           $('#p_row_'+id).remove();
       }, 1000);
 
-      $('#totalItems').val($('#totalItems').val()-1);
+      $('#total-items').val($('#total-items').val()-1);
 
       if ($('.listingBox').length == 1) {
           window.location = "index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>";
       } else {
-          $('#activeItems').text($('#totalItems').val());
+          $('#activeItems').text($('#total-items').val());
       }
   }
 
@@ -660,45 +665,44 @@
             url: 'index.php?route=openbay/ebay/searchEbayCatalog&token=<?php echo $token; ?>',
             type: 'POST',
             dataType: 'json',
-            data: { categoryId: cat, page: 1, search: qry },
+            data: { category_id: cat, page: 1, search: qry },
             beforeSend: function() {
               $('#catalog_search_'+id+'_error').remove();
               $('#catalog_search_btn_'+id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
             },
             success: function(data) {
-                if(data.error == false) {
-                    if (data.data.ack == 'Failure') {
+                    if (data.error == false) {
+                      if (data.results > 0) {
+                        data.products = $.makeArray(data.products);
 
-                    }
-                    if(data.data.productSearchResult.paginationOutput.totalEntries == 0) {
-                        $('#catalogDiv_'+id).append('<div class="alert alert-warning"><?php echo $text_catalog_no_products; ?></div>').show();
-                    } else {
-                        data.data.productSearchResult.products = $.makeArray(data.data.productSearchResult.products);
-
-                        $.each(data.data.productSearchResult.products, function(key, val) {
+                        $.each(data.products, function(key, val) {
                           html = '';
                           html += '<div class="well">';
-                            html += '<div class="row">';
-                              html += '<div class="col-sm-1">';
-                                  html += '<input type="radio" class="openbayData_'+id+'" name="catalog_epid_'+id+'" value="'+val.productIdentifier.ePID+'" />';
-                                html += '</div>';
-                              html += '<div class="col-sm-2 text-center">';
-                              if (typeof(val.stockPhotoURL) != "undefined" && val.stockPhotoURL !== null) {
-                                html += '<img class="img-thumbnail" src="'+val.stockPhotoURL.thumbnail.value+'"/>';
-                              } else {
-                                html += '<span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>';
-                              }
-                              html += '</div>';
-                              html += '<div class="col-sm-9">';
-                                html += '<p>'+val.productDetails.value.text.value+'</p>';
-                              html += '</div>';
-                            html += '</div>';
+                          html += '<div class="row">';
+                          html += '<div class="col-sm-1">';
+                          html += '<input type="radio" class="openbayData_'+id+'" name="catalog_epid_'+id+'" value="'+val.productIdentifier.ePID+'" />';
+                          html += '</div>';
+                          html += '<div class="col-sm-2 text-center">';
+                          if (typeof(val.stockPhotoURL) != "undefined" && val.stockPhotoURL !== null) {
+                            html += '<img class="img-thumbnail" src="'+val.stockPhotoURL.thumbnail.value+'"/>';
+                          } else {
+                            html += '<span class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></span>';
+                          }
+                          html += '</div>';
+                          html += '<div class="col-sm-9">';
+                          html += '<p>'+val.productDetails.value.text.value+'</p>';
+                          html += '</div>';
+                          html += '</div>';
                           html += '</div>';
 
                           $('#catalogDiv_'+id).append(html).show();
                         });
+                      } else {
+                        $('#catalogDiv_'+id).append('<div class="alert alert-warning"><?php echo $text_catalog_no_products; ?></div>').show();
+                      }
+                    } else {
+                      $('#catalogDiv_'+id).append('<div class="alert alert-danger">'+data.error_message+'</div>').show();
                     }
-                }
             },
             complete: function() {
               $('#catalog_search_btn_'+id).empty().html('<i class="fa fa-lg fa-search"></i> <?php echo $text_search; ?>').removeAttr('disabled');
@@ -740,17 +744,17 @@
   function categorySuggestedChange(val, id) {
       $('#cSelections_'+id).hide();
       loadCategories(1, true, id);
-      $('input[name=finalCat]').attr('value', val);
+      $('#finalCat_'+id).val(val);
       getCategoryFeatures(val, id);
   }
 
-  function editAll() {
+  $('#button-edit').bind('click', function() {
       var id = '';
       var name = '';
 
-      $('#previewBtn').show();
-      $('#previewEditBtn').hide();
-      $('#submitBtn').hide();
+      $('#button-preview').show();
+      $('#button-edit').hide();
+      $('#button-submit').hide();
       $('.p_row_buttons_prev').remove();
       $('.p_row_buttons_view').remove();
 
@@ -762,27 +766,26 @@
           $('#p_row_title_'+$(this).val()).text(name).hide();
           $('#p_msg_'+i).empty();
       });
-  }
+  });
 
-  function previewAll() {
+  $('#button-preview').bind('click', function() {
       var id = '';
       var name = '';
       var processedData = '';
 
       overlay('overlay-loading');
 
-      $('.warning').hide();
-      $('#previewBtn').hide();
-      $('#previewEditBtn').show();
-      $('#submitBtn').show();
+      $('#button-preview').hide();
+      $('#button-edit').show();
+      $('#button-submit').show();
 
       $.each($('.pId'), function(i) {
           id = $(this).val();
           name = $('#title_'+$(this).val()).val();
 
-          $('#p_row_msg_'+$(this).val()).show();
-          $('.p_row_content_'+$(this).val()).hide();
-          $('#p_row_title_'+$(this).val()).text(name).show();
+          $('#p_row_msg_'+id).show();
+          $('.p_row_content_'+id).hide();
+          $('#p_row_title_'+id).text(name).show();
 
           $('#catalog_epid_'+id).val($("input[type='radio'][name='catalog_epid_"+id+"']:checked").val());
 
@@ -802,10 +805,9 @@
 
                       $('#p_row_buttons_'+data.i).prepend('<a class="btn btn-primary p_row_buttons_prev" target="_BLANK" href="'+data.preview+'"><?php echo $text_preview; ?></a>');
 
-
                       if(data.errors) {
                           $.each(data.errors, function(k,v) {
-                              msgHtml += '<div class="attention" style="margin:5px;">'+v+'</div>';
+                              msgHtml += '<div class="alert alert-info">'+v+'</div>';
                           });
                       }
 
@@ -816,14 +818,14 @@
                           currencyCode = val.Cur;
                       });
 
-                      msgHtml += '<div class="success" style="margin:5px;">Total fees: '+currencyCode+' '+feeTot+'</div>';
+                      msgHtml += '<div class="alert-alert-success"><?php echo $text_total_fee; ?>'+currencyCode+' '+feeTot+'</div>';
 
                       $('#p_msg_'+data.i).html(msgHtml);
                   } else {
                       var errorHtml = '';
 
                       $.each(data.errors, function(k,v) {
-                          errorHtml += '<div class="warning" style="margin:5px;">'+v+'</div>';
+                          errorHtml += '<div class="alert alert-danger">'+v+'</div>';
                       });
 
                       $('#p_msg_'+data.i).html(errorHtml);
@@ -840,9 +842,9 @@
               }
           });
       });
-  }
+  });
 
-  function submitAll() {
+  $('#button-submit').bind('click', function() {
       var confirm_box = confirm('<?php echo $text_ajax_confirm_listing; ?>');
       if (confirm_box) {
           var id = '';
@@ -853,9 +855,9 @@
 
           $('.warning').hide();
           $('.attention').hide();
-          $('#previewBtn').hide();
-          $('#previewEditBtn').hide();
-          $('#submitBtn').hide();
+          $('#button-preview').hide();
+          $('#button-edit').hide();
+          $('#button-submit').hide();
           $('.p_row_buttons_prev').remove();
 
           $.each($('.pId'), function(i) {
@@ -917,7 +919,7 @@
           });
 
       }
-  }
+  });
 
   function showFeatures(id) {
       overlay('overlay-feature-'+id);

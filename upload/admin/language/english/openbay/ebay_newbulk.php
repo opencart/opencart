@@ -17,6 +17,7 @@ $_['text_submit']                   = 'Submit';
 $_['text_features']                 = 'Edit features';
 $_['text_catalog']                  = 'Select catalog';
 $_['text_catalog_search']           = 'Search catalog';
+$_['text_search_term']           	= 'Search term';
 
 //Form options / text
 $_['text_pixels']                   = 'Pixels';
@@ -38,9 +39,9 @@ $_['text_loading']                  = 'Loading details';
 $_['text_preparing0']               = 'Preparing';
 $_['text_preparing1']               = 'of';
 $_['text_preparing2']               = 'elements';
-$_['text_condition']                = 'Condition:';
-$_['text_duration']                 = 'Duration:';
-$_['text_category']                 = 'Category:';
+$_['text_condition']                = 'Condition';
+$_['text_duration']                 = 'Duration';
+$_['text_category']                 = 'Category';
 $_['text_exists']                   = 'Some items are already listed on eBay so have been removed';
 $_['text_error_count']              = 'You have selected %s items, it may take a while to process your data';
 $_['text_verifying']                = 'Verifying items';
@@ -53,6 +54,9 @@ $_['text_search_text']              = 'Enter some search text';
 $_['text_catalog_no_products']      = 'No catalog items found';
 $_['text_search_failed']            = 'Search failed';
 $_['text_esc_key']                  = 'The splash page has been hidden but may not have finished loading';
+$_['text_loading_categories']       = 'Loading categories';
+$_['text_loading_condition']        = 'Loading product conditions';
+$_['text_loading_duration']         = 'Loading listing durations';
 
 //Errors
 $_['text_error_ship_profile']       = 'You need to have a default shipping profile set up';

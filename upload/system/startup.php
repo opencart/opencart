@@ -48,13 +48,13 @@ if (isset($_SERVER['HTTPS']) && (($_SERVER['HTTPS'] == 'on') || ($_SERVER['HTTPS
 // Modification Override
 function modification($filename) {
 	if (!defined('DIR_CATALOG')) {
-		$file = DIR_MODIFICATION . 'catalog_' . str_replace('/', '_', substr($filename, strlen(DIR_APPLICATION))); 
+		$file = 'DIR_MODIFICATION' . 'catalog_' . str_replace('/', '_', substr($filename, strlen(DIR_APPLICATION))); 
 	} else {
-		$file = DIR_MODIFICATION . 'admin_' .  str_replace('/', '_', substr($filename, strlen(DIR_APPLICATION)));
+		$file = 'DIR_MODIFICATION' . 'admin_' .  str_replace('/', '_', substr($filename, strlen(DIR_APPLICATION)));
 	}
 	
 	if (substr($filename, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
-		$file = DIR_MODIFICATION . 'system_' . str_replace('/', '_', substr($filename, strlen(DIR_SYSTEM)));
+		$file = 'DIR_MODIFICATION' . 'system_' . str_replace('/', '_', substr($filename, strlen(DIR_SYSTEM)));
 	}
 	
 	if (file_exists($file)) {

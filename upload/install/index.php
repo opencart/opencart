@@ -9,6 +9,7 @@ define('HTTP_OPENCART', 'http://' . $_SERVER['HTTP_HOST'] . rtrim(rtrim(dirname(
 // DIR
 define('DIR_APPLICATION', str_replace('\'', '/', realpath(dirname(__FILE__))) . '/');
 define('DIR_SYSTEM', str_replace('\'', '/', realpath(dirname(__FILE__) . '/../')) . '/system/');
+define('DIR_MODIFICATION', str_replace('\'', '/', realpath(dirname(__FILE__) . '/../')) . '/system/modification/');
 define('DIR_OPENCART', str_replace('\'', '/', realpath(DIR_APPLICATION . '../')) . '/');
 define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');

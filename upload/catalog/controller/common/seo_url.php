@@ -9,8 +9,11 @@ class ControllerCommonSeoUrl extends Controller {
 		// Decode URL
 		if (isset($this->request->get['_route_'])) {
 			$parts = explode('/', $this->request->get['_route_']);
-			
-			if (utf8_strlen(end($parts)) == 0) array_pop($parts); // remove any empty arrays from trailing /
+
+			// remove any empty arrays from trailing
+			if (utf8_strlen(end($parts)) == 0) {
+				array_pop($parts);
+			}
 			
 			foreach ($parts as $part) {
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "url_alias WHERE keyword = '" . $this->db->escape($part) . "'");

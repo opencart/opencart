@@ -1,7 +1,7 @@
 <?php
 class ModelPaymentKlarnaInvoice extends Model {
-    public function getMethod($address, $total) {        
-        $this->load->language('payment/klarna_invoice');
+	public function getMethod($address, $total) {
+		$this->load->language('payment/klarna_invoice');
 		
 		$status = true;
 		
@@ -12,7 +12,7 @@ class ModelPaymentKlarnaInvoice extends Model {
 		} elseif (!$klarna_invoice[$address['iso_code_3']]['status']) {
 			$status = false;
 		}
-        
+
 		if ($status) {  
 			$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$klarna_invoice[$address['iso_code_3']]['geo_zone_id'] . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
 			
@@ -40,26 +40,26 @@ class ModelPaymentKlarnaInvoice extends Model {
 				$status = false;
 			}
 		}
-         
-        $method = array();
-        
-        if ($status) {
-            $klarna_fee = $this->config->get('klarna_fee');
 
-            if ($klarna_fee[$address['iso_code_3']]['status'] && $this->cart->getSubTotal() < $klarna_fee[$address['iso_code_3']]['total']) {
-            	$terms = sprintf($this->language->get('text_terms_fee'), $this->currency->format($this->tax->calculate($klarna_fee[$address['iso_code_3']]['fee'], $klarna_fee[$address['iso_code_3']]['tax_class_id']), '', ''), $klarna_invoice[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2']), $this->currency->format($this->tax->calculate($klarna_fee[$address['iso_code_3']]['fee'], $klarna_fee[$address['iso_code_3']]['tax_class_id']), $country_to_currency[$address['iso_code_3']], '', false));
+		$method = array();
+
+		if ($status) {
+			$klarna_fee = $this->config->get('klarna_fee');
+
+			if ($klarna_fee[$address['iso_code_3']]['status'] && $this->cart->getSubTotal() < $klarna_fee[$address['iso_code_3']]['total']) {
+				$terms = sprintf($this->language->get('text_terms_fee'), $this->currency->format($this->tax->calculate($klarna_fee[$address['iso_code_3']]['fee'], $klarna_fee[$address['iso_code_3']]['tax_class_id']), '', ''), $klarna_invoice[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2']), $this->currency->format($this->tax->calculate($klarna_fee[$address['iso_code_3']]['fee'], $klarna_fee[$address['iso_code_3']]['tax_class_id']), $country_to_currency[$address['iso_code_3']], '', false));
 			} else {
-                $terms = sprintf($this->language->get('text_terms_no_fee'), $klarna_invoice[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2']));
-            }
+				$terms = sprintf($this->language->get('text_terms_no_fee'), $klarna_invoice[$address['iso_code_3']]['merchant'], strtolower($address['iso_code_2']));
+			}
 			
-            $method = array(
-                'code'       => 'klarna_invoice',
-                'title'      => $this->language->get('text_title'),
+			$method = array(
+				'code'       => 'klarna_invoice',
+				'title'      => $this->language->get('text_title'),
 				'terms'      => $terms,
-                'sort_order' => $klarna_invoice[$address['iso_code_3']]['sort_order']
-            );
-        }
-        
-        return $method;
-    }
+				'sort_order' => $klarna_invoice[$address['iso_code_3']]['sort_order']
+			);
+		}
+
+		return $method;
+	}
 }

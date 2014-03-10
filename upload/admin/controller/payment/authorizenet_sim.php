@@ -45,7 +45,7 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 
 		$data['tab_general'] = $this->language->get('tab_general');
 
- 		if (isset($this->error['warning'])) {
+		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
@@ -63,22 +63,22 @@ class ControllerPaymentAuthorizeNetSim extends Controller {
 			$data['error_key'] = '';
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_payment'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_payment'),
 			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('payment/authorizenet_sim', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 				
 		$data['action'] = $this->url->link('payment/authorizenet_sim', 'token=' . $this->session->data['token'], 'SSL');
 		

@@ -88,8 +88,7 @@
             $.ajax({
                 url: 'index.php?route=openbay/openbay/importItems&token=<?php echo $token; ?>&desc='+descImport+'&note='+noteImport+'&advanced='+advImport+'&categories='+importCategories,
                 beforeSend: function(){
-                    $('#importItems').hide(); 
-                    $('#imageLoadingImportItems').show();
+                  $('#import-items').empty().html('<i class="fa fa-refresh fa-spin"></i>').attr('disabled','disabled');
                 },
                 type: 'post',
                 dataType: 'json',

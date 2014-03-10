@@ -1,5 +1,7 @@
 Type: Enhancement, New Feature, Bug
 
+10-03-14 - Bug - Fixed notice in eBay profile list page for unset error variable
+10-03-14 - Bug - Fixed type cast value for item id from int to string
 <!--- RELEASE 2214 ---!>
 20-02-14 - Feature - Added new tags for {{ shop_navigation }} and {{ shop_categories }}
 20-02-14 - Bug - Fixed issue with bulk order update page not showing template correctly.

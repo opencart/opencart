@@ -182,7 +182,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 				break;
 
 			case 'boolean':
-				$value = (string) $child->nodeValue;
+				$value = (string)$child->nodeValue;
 
 				if ($value == '0') {
 					$value = false;
@@ -198,7 +198,7 @@ class ControllerPaymentKlarnaInvoice extends Controller {
 			case 'int':
 			case 'i4':
 			case 'i8':
-				$value = (int) $child->nodeValue;
+				$value = (int)$child->nodeValue;
 				break;
 
 			case 'array':

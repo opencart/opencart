@@ -1,7 +1,7 @@
 <?php
 class ModelMarketingMarketing extends Model {
 	public function addMarketing($data) {
-      	$this->db->query("INSERT INTO " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW()");       	
+		$this->db->query("INSERT INTO " . DB_PREFIX . "marketing SET name = '" . $this->db->escape($data['name']) . "', description = '" . $this->db->escape($data['description']) . "', code = '" . $this->db->escape($data['code']) . "', date_added = NOW()");
 	}
 	
 	public function editMarketing($marketing_id, $data) {
@@ -75,7 +75,7 @@ class ModelMarketingMarketing extends Model {
 	}
 
 	public function getTotalMarketings($data = array()) {
-      	$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "marketing";
+		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "marketing";
 		
 		$implode = array();
 		

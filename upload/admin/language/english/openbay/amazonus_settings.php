@@ -1,7 +1,7 @@
 <?php
 $_['heading_title']                 = 'Settings';
 $_['text_openbay']                  = 'OpenBay Pro';
-$_['text_amazon']                 	= 'Amazon EU';
+$_['text_amazon']                 	= 'Amazon US';
 
 $_['text_settings']                 = 'Settings';
 $_['text_status']                 	= 'Status';
@@ -23,12 +23,6 @@ $_['text_other']                    = 'Other';
 $_['text_customer_group']           = 'Customer Group';
 $_['text_customer_group_help']      = 'Select a customer group to assign to imported orders';
 $_['text_marketplaces']             = 'Marketplaces';
-$_['text_markets']                  = 'Select markets from which you would like to import your orders';
-$_['text_de']                       = 'Germany';
-$_['text_fr']                       = 'France';
-$_['text_it']                       = 'Italy';
-$_['text_es']                       = 'Spain';
-$_['text_uk']                       = 'United Kingdom';
 $_['text_setttings_updated']        = 'Settings were successfully updated.';
 $_['text_error_permission']         = 'You do not have access to this module';
 $_['text_main_settings']            = 'API details';
@@ -38,8 +32,6 @@ $_['text_listing']                  = 'Listings';
 $_['text_orders']                   = 'Orders';
 $_['text_tax_percentage']           = 'Percentage added to default product\'s price';
 $_['text_default_condition']        = 'Default product condition type';
-$_['text_default_mp']               = 'Default marketplace';
-$_['text_default_mp_help']          = 'Default marketplace for product listings and lookups';
 $_['text_admin_notify']             = 'Notify admin of new order';
 $_['text_default_shipping']         = 'Default shipping';
 $_['text_default_shipping_help']    = 'Used as the pre-selected option in the bulk order update';

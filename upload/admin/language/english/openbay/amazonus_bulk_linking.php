@@ -1,5 +1,4 @@
 <?php
-
 $_['heading_title'] = 'Bulk Linking';
 
 $_['button_return'] = 'Return';
@@ -7,7 +6,7 @@ $_['button_load'] = 'Load';
 $_['button_link'] = 'Link';
 
 $_['text_openbay'] = 'OpenBay Pro';
-$_['text_overview'] = 'Amazon US Overview';
+$_['text_overview'] = 'Amazon US';
 $_['text_amazon'] = 'Amazon';
 $_['text_local'] = 'Local';
 $_['text_bulk_linking'] = 'Bulk Linking';

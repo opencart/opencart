@@ -1,107 +1,105 @@
-<?php echo $header; ?>
+<?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-<div class="breadcrumb">
-  <?php foreach ($breadcrumbs as $breadcrumb) { ?><?php echo $breadcrumb['separator']; ?>
-  <a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a><?php } ?>
-</div>
-
-<div class="box">
-<div class="heading">
-  <h1><?php echo $text_title; ?></h1>
-
-  <div class="buttons">
-    <a class="button" onclick="location = '<?php echo $link_overview; ?>';"><span><?php echo $text_btn_return; ?></span></a>
+  <ul class="breadcrumb">
+    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+    <?php } ?>
+  </ul>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <div class="pull-right">
+        <a href="<?php echo $href_return; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
+      </div>
+      <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $text_title; ?></h1>
+    </div>
+    <div class="panel-body">
+      <form id="product-form">
+        <div class="alert alert-info">
+          <p><?php echo $text_desc1; ?></p>
+          <p><?php echo $text_desc2; ?></p>
+          <p><?php echo $text_desc3; ?></p>
+        </div>
+        <div class="well">
+          <div class="row">
+            <div class="col-sm-12 text-right">
+              <a class="btn btn-primary" id="button-load"><?php echo $text_load_btn; ?></a>
+            </div>
+          </div>
+        </div>
+        <table class="table">
+          <thead id="table-head-1">
+          <tr>
+            <th class="text-center" colspan="3"><h4><?php echo $text_new_link; ?></h4></th>
+          </tr>
+          </thead>
+          <thead id="table-head-2">
+          <tr>
+            <th class="text-right"><?php echo $text_autocomplete_product; ?></th>
+            <th class="text-left"><?php echo $text_amazon_sku; ?></th>
+            <th class="text-center"><?php echo $text_action; ?></th>
+          </tr>
+          </thead>
+          <tbody id="unlinked-items">
+          <tr>
+            <td class="text-right">
+              <input type="hidden" id="new-product-id">
+              <input id="new-product" type="text" class="form-control" autocomplete="off">
+            </td>
+            <td>
+              <input id="new-amazon-sku" type="text" class="form-control" autocomplete="off">
+            </td>
+            <td class="text-center">
+              <a class="btn btn-primary" id="add-new-button" onclick="addNewLinkAutocomplete()" data-toggle="tooltip" data-original-title="<?php echo $text_add; ?>"><i class="fa fa-plus-circle"></i></a>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+        <table class="table">
+          <thead>
+          <tr>
+            <th class="text-center" colspan="6"><h4><?php echo $text_linked_items; ?></h4></th>
+          </tr>
+          </thead>
+          <thead>
+          <tr>
+            <th><?php echo $text_name; ?></th>
+            <th><?php echo $text_model; ?></th>
+            <th><?php echo $text_combination; ?></th>
+            <th><?php echo $text_sku; ?></th>
+            <th><?php echo $text_amazon_sku; ?></th>
+            <th class="text-center"><?php echo $text_action; ?></th>
+          </tr>
+          </thead>
+          <tbody id="linked-items"></tbody>
+        </table>
+      </form>
+    </div>
   </div>
 </div>
-
-<div class="content">
-  <table class="form">
-    <h2><?php echo $text_link_items; ?></h2>
-    <tbody>
-    <p><?php echo $text_desc1; ?></p>
-
-    <p><?php echo $text_desc2; ?></p>
-    <a class="button" onclick="loadUnlinked(this)"><span><?php echo $text_load_btn; ?></span></a>
-    </tbody>
-  </table>
-
-  <table align="left" class="list" id="linkListTable">
-    <thead id="tableThread1">
-    <tr>
-      <td class="center" colspan="3"><?php echo $text_new_link; ?></td>
-    </tr>
-    </thead>
-    <thead id="tableThread2">
-    <tr>
-      <td class="right" width="45%"><?php echo $text_autocomplete_product; ?></td>
-      <td class="left" width="45%"><?php echo $text_amazonus_sku; ?></td>
-      <td class="center" width="10%"><?php echo $text_action; ?></td>
-    </tr>
-    </thead>
-    <tbody id="tableBody">
-    <tr>
-      <td class="right">
-        <input id="newProduct" type="text"> <input type="hidden" id="newProductId">
-      </td>
-      <td>
-        <input id="newAmazonusSku" type="text">
-      </td>
-      <td class="center">
-        <a class="button" id="addNewButton" onclick="addNewLinkAutocomplete()"><span><?php echo $text_add; ?></span></a>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-
-
-  <table align="left" class="list" id="linkListTable">
-    <thead>
-    <tr>
-      <td class="center" colspan="6"><?php echo $text_linked_items; ?></td>
-    </tr>
-    </thead>
-    <thead>
-    <tr>
-      <td width="18%"><?php echo $text_name; ?></td>
-      <td width="18%"><?php echo $text_model; ?></td>
-      <td width="18%"><?php echo $text_combination; ?></td>
-      <td width="18%"><?php echo $text_sku; ?></td>
-      <td width="18%"><?php echo $text_amazonus_sku; ?></td>
-      <td class="center" width="10%"><?php echo $text_action; ?></td>
-    </tr>
-    </thead>
-    <tbody id="linkedItems">
-    </tbody>
-  </table>
-</div>
-
 <script type="text/javascript"><!--
-
 $(document).ready(function () {
   loadLinks();
 });
 
 function loadLinks() {
   $.ajax({
-    url: '<?php echo html_entity_decode($getItemLinksAjax); ?>',
+    url: '<?php echo html_entity_decode($get_item_links_ajax); ?>',
     type: 'get',
     dataType: 'json',
-    data: 'product_id=' + encodeURIComponent($('#newProductId').val()) + '&amazonus_sku=' + encodeURIComponent($('#newAmazonusSku').val()),
+    data: 'product_id=' + encodeURIComponent($('#new-product-id').val()) + '&amazon_sku=' + encodeURIComponent($('#new-amazon-sku').val()),
     success: function (json) {
-
       var rows = '';
       for (i in json) {
         rows += '<tr>';
-        rows += '<td class="left">' + json[i]['product_name'] + '</td>';
-        rows += '<td class="left">' + json[i]['model'] + '</td>';
-        rows += '<td class="left">' + json[i]['combi'] + '</td>';
-        rows += '<td class="left">' + json[i]['sku'] + '</td>';
-        rows += '<td class="left">' + json[i]['amazonus_sku'] + '</td>';
-        rows += '<td class="center"><a class="button" onclick="removeLink(this, \'' + json[i]['amazonus_sku'] + '\')" ><span><?php echo $text_remove; ?></span></a></td>';
+        rows += '<td class="text-left">' + json[i]['product_name'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['model'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['combi'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['amazon_sku'] + '</td>';
+        rows += '<td class="text-center"><a data-toggle="tooltip" data-original-title="<?php echo $text_remove; ?>" class="btn btn-danger" onclick="removeLink(this, \'' + json[i]['amazon_sku'] + '\');"><i class="fa fa-times-circle"></i></a></td>';
         rows += '</tr>';
       }
-
-      $('#linkedItems').html(rows);
+      $('#linked-items').html(rows);
     },
     error: function (xhr, ajaxOptions, thrownError) {
       alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
@@ -109,82 +107,80 @@ function loadLinks() {
   });
 }
 
-function loadUnlinked(button) {
+$('#button-load').bind('click', function() {
   $.ajax({
-    url: '<?php echo html_entity_decode($getUnlinkedItemsAjax); ?>',
+    url: '<?php echo html_entity_decode($get_unlinked_items_ajax); ?>',
     type: 'get',
     dataType: 'json',
     beforeSend: function () {
-      $(button).after('<span class="wait"><img src="view/image/loading.gif" alt="" /></span>');
-      $(button).hide();
+      $('#button-load').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
     },
     complete: function () {
-      $(".wait").remove();
-      $(button).show();
+      $('#button-load').empty().html('<?php echo $text_load_btn; ?>').removeAttr('disabled');
     },
     success: function (json) {
-
       var thread1 = '';
       thread1 += '<tr>';
-      thread1 += '<td class="center" colspan="6"><?php echo $text_unlinked_items; ?></td>';
+      thread1 += '<td class="text-center" colspan="6"><?php echo $text_unlinked_items; ?></td>';
       thread1 += '</tr>';
-      $('#tableThread1').html(thread1);
+      $('#table-head-1').html(thread1);
 
       var thread2 = '';
       thread2 += '<tr>';
-      thread2 += '<td width="18%"><?php echo $text_name; ?></td>';
-      thread2 += '<td width="18%"><?php echo $text_model; ?></td>';
-      thread2 += '<td width="18%"><?php echo $text_combination; ?></td>';
-      thread2 += '<td width="18%"><?php echo $text_sku; ?></td>';
-      thread2 += '<td width="18%"><?php echo $text_amazonus_sku; ?></td>';
-      thread2 += '<td class="center" width="10%"><?php echo $text_action; ?></td>';
-      $('#tableThread2').html(thread2);
+      thread2 += '<td><?php echo $text_name; ?></td>';
+      thread2 += '<td><?php echo $text_model; ?></td>';
+      thread2 += '<td><?php echo $text_combination; ?></td>';
+      thread2 += '<td><?php echo $text_sku; ?></td>';
+      thread2 += '<td><?php echo $text_amazon_sku; ?></td>';
+      thread2 += '<td class="text-center"><?php echo $text_action; ?></td>';
+      thread2 += '</tr>';
+      $('#table-head-2').html(thread2);
 
       var rows = '';
       for (i in json) {
-        rows += '<tr id="productRow_' + json[i]['product_id'] + '_' + json[i]['var'] + '">';
-        rows += '<td class="left">' + json[i]['product_name'] + '</td>';
-        rows += '<td class="left">' + json[i]['model'] + '</td>';
-        rows += '<td class="left">' + json[i]['combi'] + '</td>';
-        rows += '<td class="left">' + json[i]['sku'] + '</td>';
-
-        rows += '<td class="left">';
-        rows += '<div class="amazonusSkuDiv_' + json[i]['product_id'] + '_' + json[i]['var'] + '">';
-        rows += '<input class="amazonusSku_' + json[i]['product_id'] + '_' + json[i]['var'] + '"  type="text">';
-        rows += '<a onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')"><img src="view/image/add.png" alt="<?php echo $text_add_sku_tooltip; ?>" title="<?php echo $text_add_sku_tooltip; ?>"></a>';
+        rows += '<tr id="product_row_' + json[i]['product_id'] + '_' + json[i]['var'] + '">';
+        rows += '<td class="text-left">' + json[i]['product_name'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['model'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['combi'] + '</td>';
+        rows += '<td class="text-left">' + json[i]['sku'] + '</td>';
+        rows += '<td class="text-left">';
+        rows += '<div class="amazon_sku_div_' + json[i]['product_id'] + '_' + json[i]['var'] + '">';
+        rows += '<div class="row">';
+        rows += '<div class="col-sm-8 form-group">';
+        rows += '<input class="form-control amazon_sku_' + json[i]['product_id'] + '_' + json[i]['var'] + '"  type="text">';
+        rows += '</div>';
+        rows += '<div class="col-sm-4 form-group">';
+        rows += '<a class="btn btn-primary" onclick="addNewSkuField(' + json[i]['product_id'] + ', \'' + json[i]['var'] + '\')"><i class="fa fa-plus-circle"></i> <?php echo $text_add_sku_tooltip; ?></a>';
+        rows += '</div>';
+        rows += '</div>';
         rows += '</div>';
         rows += '</td>';
-
-        rows += '<td class="center"><a class="button" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')"><span><?php echo $text_add; ?></span></a></td>';
+        rows += '<td class="text-center"><a class="btn btn-primary" onclick="addNewLink(this, \'' + json[i]['product_id'] + '\', \'' + json[i]['var'] + '\')"><i class="fa fa-plus-circle"></i> <?php echo $text_add; ?></a></td>';
         rows += '</tr>';
       }
 
-      $('#tableBody').html(rows);
-
+      $('#unlinked-items').html(rows);
     },
     error: function (xhr, ajaxOptions, thrownError) {
       alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
     }
   });
-}
+});
 
-function addLink(button, product_id, amazonus_sku, variation) {
+function addLink(button, product_id, amazon_sku, variation) {
   $.ajax({
-    url: '<?php echo html_entity_decode($addItemLinkAjax); ?>',
+    url: '<?php echo html_entity_decode($add_item_link_ajax); ?>',
     type: 'get',
     dataType: 'json',
     async: 'false',
-    data: 'product_id=' + encodeURIComponent(product_id) + '&amazonus_sku=' + encodeURIComponent(amazonus_sku) + '&var=' + encodeURIComponent(variation),
+    data: 'product_id=' + encodeURIComponent(product_id) + '&amazon_sku=' + encodeURIComponent(amazon_sku) + '&var=' + encodeURIComponent(variation),
     beforeSend: function () {
-      $(button).after('<span class="wait"><img src="view/image/loading.gif" alt="" /></span>');
-      $(button).hide();
+      $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
     },
     complete: function () {
-      $('.wait').remove();
-      $(button).show();
+      $(button).empty().html('<i class="fa fa-plus-circle"></i>').removeAttr('disabled');
     },
     success: function (json) {
-      //alert(json);
       loadLinks();
     },
     error: function (xhr, ajaxOptions, thrownError) {
@@ -193,15 +189,14 @@ function addLink(button, product_id, amazonus_sku, variation) {
   });
 }
 
-function removeLink(button, amazonus_sku) {
+function removeLink(button, amazon_sku) {
   $.ajax({
-    url: '<?php echo html_entity_decode($removeItemLinkAjax); ?>',
+    url: '<?php echo html_entity_decode($remove_item_link_ajax); ?>',
     type: 'get',
     dataType: 'json',
-    data: 'amazonus_sku=' + encodeURIComponent(amazonus_sku),
+    data: 'amazon_sku=' + encodeURIComponent(amazon_sku),
     beforeSend: function () {
-      $(button).after('<span class="wait"><img src="view/image/loading.gif" alt="" /></span>');
-      $(button).hide();
+      $(button).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
     },
     success: function (json) {
       //alert(json);
@@ -214,25 +209,31 @@ function removeLink(button, amazonus_sku) {
 }
 
 function addNewSkuField(product_id, variation) {
-  var newField = '';
-  newField += '<div class="amazonusSkuDiv_' + product_id + '_' + variation + '">';
-  newField += '<input class="amazonusSku_' + product_id + '_' + variation + '"  type="text">';
-  newField += '<a class="removeSkuIcon_' + product_id + '_' + variation + '" onclick="removeSkuField(this, \'' + product_id + '\', \'' + variation + '\')"><img src="view/image/delete.png" alt=""></a>';
-  newField += '</div>';
+  var html = '';
+  html += '<div class="amazon_sku_div_' + product_id + '_' + variation + '">';
+  html += '<div class="row">';
+  html += '<div class="col-sm-8 form-group">';
+  html += '<input class="form-control amazon_sku_' + product_id + '_' + variation + '"  type="text">';
+  html += '</div>';
+  html += '<div class="col-sm-4 form-group">';
+  html += '<a class="btn btn-danger remove_sku_icon_' + product_id + '_' + variation + '" onclick="removeSkuField(this, \'' + product_id + '\', \'' + variation + '\')"><i class="fa fa-minus-circle"></i></a>';
+  html += '</div>';
+  html += '</div>';
+  html += '</div>';
 
-  $(".amazonusSkuDiv_" + product_id + "_" + variation.replace(":", "\\:")).last().after(newField);
+  $(".amazon_sku_div_" + product_id + "_" + variation.replace(":", "\\:")).last().after(html);
 }
 
 function removeSkuField(icon, product_id, variation) {
-  var removeIndex = $('.removeSkuIcon_' + product_id + '_' + variation.replace(':', '\\:')).index($(icon)) + 1;
-  $(".amazonusSkuDiv_" + product_id + "_" + variation.replace(':', '\\:') + ":eq(" + removeIndex + ")").remove();
+  var removeIndex = $('.remove_sku_icon_' + product_id + '_' + variation.replace(':', '\\:')).index($(icon)) + 1;
+  $(".amazon_sku_div_" + product_id + "_" + variation.replace(':', '\\:') + ":eq(" + removeIndex + ")").remove();
 }
 
 function addNewLink(button, product_id, variation) {
   var errors = 0;
 
-  console.log(".amazonusSku_" + product_id + "_" + variation.replace(':', '\\:'));
-  $(".amazonusSku_" + product_id + "_" + variation.replace(':', '\\:')).each(function (index) {
+  console.log(".amazon_sku_" + product_id + "_" + variation.replace(':', '\\:'));
+  $(".amazon_sku_" + product_id + "_" + variation.replace(':', '\\:')).each(function (index) {
     if ($(this).val() == '') {
       errors++;
     }
@@ -242,56 +243,55 @@ function addNewLink(button, product_id, variation) {
     return;
   }
 
-  $(".amazonusSku_" + product_id + "_" + variation.replace(':', '\\:')).each(function (index) {
+  $(".amazon_sku_" + product_id + "_" + variation.replace(':', '\\:')).each(function (index) {
     addLink(button, product_id, $(this).val(), variation);
   });
 
-  $("#productRow_" + product_id + "_" + variation.replace(':', '\\:')).remove();
+  $("#product_row_" + product_id + "_" + variation.replace(':', '\\:')).remove();
 }
 
 function addNewLinkAutocomplete() {
-  if ($('#newProduct').val() == "") {
+  if ($('#new-product').val() == "") {
     alert('<?php echo $text_name_empty_warning; ?>');
     return;
   }
 
-  if ($('#newProductId').attr('label') != $('#newProduct').val()) {
+  if ($('#new-product-id').attr('label') != $('#new-product').val()) {
     alert('<?php echo $text_product_warning; ?>');
     return;
   }
 
-  if ($('#newAmazonusSku').val() == "") {
+  if ($('#new-amazon-sku').val() == "") {
     alert('<?php echo $text_sku_empty_warning; ?>');
     return;
   }
 
-  var product_id = $('#newProductId').val();
-  var amazonus_sku = $('#newAmazonusSku').val();
+  var product_id = $('#new-product-id').val();
+  var amazon_sku = $('#new-amazon-sku').val();
   var variation = '';
-  if ($('#openstockOptionSelector').length != 0) {
-    variation = $('#openstockOptionSelector').val();
+  if ($('#openstock-option-selector').length != 0) {
+    variation = $('#openstock-option-selector').val();
   }
 
-  addLink('#addNewButton', product_id, amazonus_sku, variation);
+  addLink('#add-new-button', product_id, amazon_sku, variation);
 
-  $('#newProduct').val('');
-  $('#newAmazonusSku').val('');
-  $('#newProductId').val('');
-  $('#newProductId').attr('label', '');
-  $('#openstockOptionSelector').remove();
+  $('#new-product').val('');
+  $('#new-amazon-sku').val('');
+  $('#new-product-id').val('');
+  $('#new-product-id').attr('label', '');
+  $('#openstock-option-selector').remove();
 }
 
-$('#newProduct').autocomplete({
-  delay: 0,
-  source: function (request, response) {
+$('#new-product').autocomplete({
+  'source': function(request, response) {
     $.ajax({
-      url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' + encodeURIComponent(request.term),
+      url: 'index.php?route=catalog/product/autocomplete&token=d75c08895b700fd60f97d3c6b71a51f3&filter_name=' +  encodeURIComponent(request),
       dataType: 'json',
       success: function (json) {
         response($.map(json, function (item) {
           return {
-            id: item.product_id,
-            label: item.name
+            label: item['name'],
+            value: item['product_id']
           }
         }));
       },
@@ -300,35 +300,36 @@ $('#newProduct').autocomplete({
       }
     });
   },
-  select: function (event, ui) {
-    openstockCheck(ui.item.id);
-    $('#newProductId').val(ui.item.id);
-    $('#newProductId').attr('label', ui.item.label);
+  'select': function (item) {
+    $('#new-product-id').val(item['value']);
+    $('#new-product').val(item['label']);
+    $('#new-product-id').attr('label',item['label']);
+    openstockCheck(item['value']);
   }
 });
 
 function openstockCheck(product_id) {
   $.ajax({
-    url: '<?php echo html_entity_decode($getOpenstockOptionsAjax); ?>',
+    url: '<?php echo html_entity_decode($get_openstock_options_ajax); ?>',
     dataType: 'json',
     type: 'get',
     data: 'product_id=' + product_id,
     success: function (data) {
       if (!data) {
-        $("#openstockOptionSelector").remove();
+        $("#openstock-option-selector").remove();
         return;
       }
 
-      var optionHtml = '<select id="openstockOptionSelector"><option value=""/>';
+      var optionHtml = '<select id="openstock-option-selector"><option value=""/>';
       for (var i in data) {
         optionHtml += '<option value="' + data[i]['var'] + '">' + data[i]['combi'] + '</option>';
       }
       optionHtml += '</select>';
-      $('#newProduct').after(optionHtml);
+      $('#new-product').after(optionHtml);
     },
     error: function (xhr, ajaxOptions, thrownError) {
       alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
     }
   });
 }
-//--></script> 
+//--></script>

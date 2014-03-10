@@ -164,11 +164,11 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$response = simplexml_load_string($this->openbay->amazon->callWithResponse('plans/getPlans'));
 
-		$plans = array();
+		$data['plans'][] = array();
 
 		if ($response) {
 			foreach ($response->Plan as $plan) {
-				$plans[] = array(
+				$data['plans'][] = array(
 					'title' => (string)$plan->Title,
 					'description' => (string)$plan->Description,
 					'order_frequency' => (string)$plan->OrderFrequency,
@@ -178,8 +178,6 @@ class ControllerOpenbayAmazon extends Controller {
 				);
 			}
 		}
-
-		$data['plans'] = $plans;
 
 		$response = simplexml_load_string($this->openbay->amazon->callWithResponse('plans/getUsersPlans'));
 
@@ -201,8 +199,8 @@ class ControllerOpenbayAmazon extends Controller {
 		}
 
 		$data['user_plan'] = $plan;
-		$data['server'] = $this->openbay->amazon->getServer();
-		$data['token'] = $this->config->get('openbay_amazon_token');
+		$data['link_change_plan'] = $this->openbay->amazon->getServer().'account/changePlan/?token='.$this->config->get('openbay_amazon_token');
+		$data['link_change_seller'] = $this->openbay->amazon->getServer().'account/changeSellerId/?token='.$this->config->get('openbay_amazon_token');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -442,7 +440,7 @@ class ControllerOpenbayAmazon extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazon/savedListings&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazon/savedListings', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_title'),
 		);
 

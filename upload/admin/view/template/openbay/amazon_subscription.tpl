@@ -31,7 +31,7 @@
                   <tbody>
                   <tr>
                     <td class="text-right"><b><?php echo $text_merchantid;?>:</b></td>
-                    <td class="text-left"><?php echo $user_plan['merchant_id'] ?> [ <a href="<?php echo $server ?>account/changeSellerId/?token=<?php echo $token ?>" target="_blank"><?php echo $text_change_merchantid; ?></a> ]</td>
+                    <td class="text-left"><?php echo $user_plan['merchant_id'] ?> [ <a href="<?php echo $link_change_seller; ?>" target="_blank"><?php echo $text_change_merchantid; ?></a> ]</td>
                   </tr>
                   <tr>
                     <td class="text-right"><b><?php echo $text_account_status;?>:</b></td>
@@ -119,7 +119,7 @@
                 </table>
                 <?php if ($token) { ?>
                   <div class="pull-right">
-                    <a href="<?php echo $server; ?>account/changePlan/?token=<?php echo $token; ?>" class="btn btn-primary" target="_blank"><i class="fa fa-arrow-right fa-lg"></i> <?php echo $button_change_plan; ?></a>
+                    <a href="<?php echo $link_change_plan; ?>" class="btn btn-primary" target="_blank"><i class="fa fa-arrow-right fa-lg"></i> <?php echo $button_change_plan; ?></a>
                   </div>
                 <?php } ?>
               </div>

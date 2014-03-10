@@ -8,20 +8,20 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/overview&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_overview'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/stockUpdates&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazonus/stockUpdates', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_stock_updates'),
 		);
 
@@ -98,16 +98,16 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_overview'),
+			'href'      => $this->url->link('openbay/amazonus', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_title'),
 		);
 
 		if (isset($this->session->data['success'])) {
@@ -120,9 +120,9 @@ class ControllerOpenbayAmazonus extends Controller {
 		$data['validation'] = $this->openbay->amazonus->validate();
 		$data['link_settings'] = $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL');
 		$data['link_subscription'] = $this->url->link('openbay/amazonus/subscription', 'token=' . $this->session->data['token'], 'SSL');
-		$data['link_itemlink'] = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
-		$data['link_stockUpdates'] = $this->url->link('openbay/amazonus/stockUpdates', 'token=' . $this->session->data['token'], 'SSL');
-		$data['link_savedListings'] = $this->url->link('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'], 'SSL');
+		$data['link_item_link'] = $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
+		$data['link_stock_updates'] = $this->url->link('openbay/amazonus/stockUpdates', 'token=' . $this->session->data['token'], 'SSL');
+		$data['link_saved_listings'] = $this->url->link('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'], 'SSL');
 		$data['link_bulk_listing'] = $this->url->link('openbay/amazonus/bulkListProducts', 'token=' . $this->session->data['token'], 'SSL');
 		$data['link_bulk_linking'] = $this->url->link('openbay/amazonus/bulkLinking', 'token=' . $this->session->data['token'], 'SSL');
 
@@ -141,19 +141,19 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/overview&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_overview'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/subscription&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazonus/subscription', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_my_account'),
 		);
 
@@ -161,11 +161,11 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$response = simplexml_load_string($this->openbay->amazonus->callWithResponse('plans/getPlans'));
 
-		$plans = array();
+		$data['plans'][] = array();
 
 		if ($response) {
 			foreach ($response->Plan as $plan) {
-				$plans[] = array(
+				$data['plans'][] = array(
 					'title' => (string)$plan->Title,
 					'description' => (string)$plan->Description,
 					'order_frequency' => (string)$plan->OrderFrequency,
@@ -175,8 +175,6 @@ class ControllerOpenbayAmazonus extends Controller {
 				);
 			}
 		}
-
-		$data['plans'] = $plans;
 
 		$response = simplexml_load_string($this->openbay->amazonus->callWithResponse('plans/getUsersPlans'));
 
@@ -198,8 +196,8 @@ class ControllerOpenbayAmazonus extends Controller {
 		}
 
 		$data['user_plan'] = $plan;
-		$data['server'] = $this->openbay->amazonus->getServer();
-		$data['token'] = $this->config->get('openbay_amazonus_token');
+		$data['link_change_plan'] = $this->openbay->amazonus->getServer().'account/changePlan/?token='.$this->config->get('openbay_amazonus_token');
+		$data['link_change_seller'] = $this->openbay->amazonus->getServer().'account/changeSellerId/?token='.$this->config->get('openbay_amazonus_token');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -249,20 +247,20 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_overview'),
+			'href'      => $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/settings&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazonus/settings', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_settings'),
 		);
 
@@ -385,20 +383,20 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/overview&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_overview'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/itemLinks&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('openbay/amazonus/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_item_links'),
 		);
 
@@ -427,21 +425,21 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$data['breadcrumbs'] = array();
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=common/home&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_home'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=extension/openbay&token=' . $this->session->data['token'],
+			'href'      => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 			'text'      => $this->language->get('text_openbay'),
 		);
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/overview&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_overview'),
+			'href'      => $this->url->link('openbay/amazonus/overview', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_amazon'),
 		);
 
 		$data['breadcrumbs'][] = array(
-			'href'      => HTTPS_SERVER . 'index.php?route=openbay/amazonus/savedListings&token=' . $this->session->data['token'],
-			'text'      => $this->language->get('text_saved_listings'),
+			'href'      => $this->url->link('openbay/amazonus/savedListings', 'token=' . $this->session->data['token'], 'SSL'),
+			'text'      => $this->language->get('text_title'),
 		);
 
 		$data['token'] = $this->session->data['token'];

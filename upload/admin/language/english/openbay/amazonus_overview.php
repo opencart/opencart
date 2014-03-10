@@ -1,7 +1,6 @@
 <?php
-$_['text_title'] = 'OpenBay Pro for Amazon US';
-$_['text_heading'] = 'Amazon US dashboard';
-$_['text_overview'] = 'Amazon US dashboard';
+$_['text_title'] = 'Amazon US';
+$_['text_overview'] = 'Dashboard';
 $_['text_openbay'] = 'OpenBay Pro';
 $_['text_heading_settings'] = 'Settings';
 $_['text_heading_account'] = 'Change plan';

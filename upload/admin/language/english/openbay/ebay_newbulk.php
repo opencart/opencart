@@ -14,10 +14,11 @@ $_['text_preview_all']              = 'Verify all';
 $_['text_view']                     = 'View listing';
 $_['text_edit']                     = 'Edit';
 $_['text_submit']                   = 'Submit';
-$_['text_features']                 = 'Edit features';
+$_['text_features']                 = 'Features';
 $_['text_catalog']                  = 'Select catalog';
 $_['text_catalog_search']           = 'Search catalog';
 $_['text_search_term']           	= 'Search term';
+$_['text_close']           			= 'Close';
 
 //Form options / text
 $_['text_pixels']                   = 'Pixels';
@@ -25,10 +26,11 @@ $_['text_other']                    = 'Other';
 $_['text_select']                   = 'Select';
 
 //Profile names
-$_['text_profile_theme']            = 'Theme profile:';
-$_['text_profile_shipping']         = 'Shipping profile:';
-$_['text_profile_returns']          = 'Returns profile:';
-$_['text_profile_generic']          = 'Generic profile:';
+$_['text_profile']            		= 'Profiles';
+$_['text_profile_theme']            = 'Theme profile';
+$_['text_profile_shipping']         = 'Shipping profile';
+$_['text_profile_returns']          = 'Returns profile';
+$_['text_profile_generic']          = 'Generic profile';
 
 //Text
 $_['text_title']                    = 'Title';
@@ -58,6 +60,8 @@ $_['text_loading_categories']       = 'Loading categories';
 $_['text_loading_condition']        = 'Loading product conditions';
 $_['text_loading_duration']         = 'Loading listing durations';
 $_['text_total_fee']         		= 'Total fees';
+$_['text_category_choose']         	= 'Find category';
+$_['text_suggested']         		= 'Suggested categories';
 
 //Errors
 $_['text_error_ship_profile']       = 'You need to have a default shipping profile set up';

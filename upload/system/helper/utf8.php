@@ -3,7 +3,7 @@ function utf8_strlen($string) {
 	return strlen(utf8_decode($string));
 }
 
-function utf8_strpos($string, $needle, $offset = NULL) {
+function utf8_strpos($string, $needle, $offset = null) {
 	if (is_null($offset)) {
 		$data = explode($needle, $string, 2);
 
@@ -29,7 +29,7 @@ function utf8_strpos($string, $needle, $offset = NULL) {
 	}
 }
 
-function utf8_strrpos($string, $needle, $offset = NULL) {
+function utf8_strrpos($string, $needle, $offset = null) {
 	if (is_null($offset)) {
 		$data = explode($needle, $string);
 
@@ -160,7 +160,7 @@ function utf8_substr($string, $offset, $length = null) {
 }
 
 function utf8_strtolower($string) {
-	static $UTF8_UPPER_TO_LOWER = NULL;
+	static $UTF8_UPPER_TO_LOWER = null;
 
 	if (is_null($UTF8_UPPER_TO_LOWER)) {
 		$UTF8_UPPER_TO_LOWER = array(
@@ -398,7 +398,7 @@ function utf8_strtolower($string) {
 }
 
 function utf8_strtoupper($string) {
-	static $UTF8_LOWER_TO_UPPER = NULL;
+	static $UTF8_LOWER_TO_UPPER = null;
 
 	if (is_null($UTF8_LOWER_TO_UPPER)) {
 		$UTF8_LOWER_TO_UPPER = array(
@@ -705,7 +705,7 @@ function utf8_to_unicode($str) {
 				 */
 				trigger_error('utf8_to_unicode: Illegal sequence identifier ' . 'in UTF-8 at byte ' . $i, E_USER_WARNING);
 
-				return FALSE;
+				return false;
 			}
 
 		} else {

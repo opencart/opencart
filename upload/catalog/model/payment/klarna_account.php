@@ -204,7 +204,7 @@ class ModelPaymentKlarnaAccount extends Model {
                 $log = new Log('klarna_account.log');
                 $log->write('Unknown country ' . $country);
                 
-				$amount = NULL;
+				$amount = null;
                 break;
         }
 

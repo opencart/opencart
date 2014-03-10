@@ -638,7 +638,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$log = new Log('klarna.log');
 				$log->write('Unknown country ' . $country);
 
-				$amount = NULL;
+				$amount = null;
 				break;
 		}
 

@@ -288,7 +288,7 @@ case "install":
 		$valid = valid($options);
 		if (!$valid[0]) {
 			echo "FAILED! Following inputs were missing or invalid: ";
-			echo implode(', ',  $valid[1]) . "\n\n";
+			echo implode(', ', $valid[1]) . "\n\n";
 			exit(1);
 		}
 		install($options);

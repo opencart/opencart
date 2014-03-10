@@ -13,27 +13,11 @@ if (!defined('DIR_APPLICATION')) {
 	exit;
 }
 
-// Modification
-require_once(DIR_SYSTEM . 'engine/modification.php');
-$modification = new Modification();
-
 // Startup
-require_once($modification->getFile(DIR_SYSTEM . 'startup.php'));
-
-// Application
-require_once($modification->getFile(DIR_SYSTEM . 'library/customer.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/affiliate.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/currency.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/tax.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/weight.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/length.php'));
-require_once($modification->getFile(DIR_SYSTEM . 'library/cart.php'));
+require_once(DIR_SYSTEM . 'startup.php');
 
 // Registry
 $registry = new Registry();
-
-// Modification
-$registry->set('modification', $modification);
 
 // Loader
 $loader = new Loader($registry);

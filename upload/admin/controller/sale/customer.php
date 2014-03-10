@@ -1262,7 +1262,7 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput($this->load->view('sale/customer_reward.tpl', $data));
 	}
 
-	public function addBanIP() {
+	public function addBanIp() {
 		$this->load->language('sale/customer');
 
 		$json = array();
@@ -1273,7 +1273,7 @@ class ControllerSaleCustomer extends Controller {
 			} else {
 				$this->load->model('sale/customer');
 
-				$this->model_sale_customer->addBanIP($this->request->post['ip']);
+				$this->model_sale_customer->addBanIp($this->request->post['ip']);
 
 				$json['success'] = $this->language->get('text_success');
 			}
@@ -1282,7 +1282,7 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function removeBanIP() {
+	public function removeBanIp() {
 		$this->load->language('sale/customer');
 
 		$json = array();
@@ -1293,7 +1293,7 @@ class ControllerSaleCustomer extends Controller {
 			} else {
 				$this->load->model('sale/customer');
 
-				$this->model_sale_customer->removeBanIP($this->request->post['ip']);
+				$this->model_sale_customer->removeBanIp($this->request->post['ip']);
 
 				$json['success'] = $this->language->get('text_success');
 			}

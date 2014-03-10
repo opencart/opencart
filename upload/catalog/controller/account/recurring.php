@@ -67,7 +67,7 @@ class ControllerAccountRecurring extends Controller {
 					'name'                  => $result['product_name'],
 					'status'                => $result['status'],
 					'created'               => date($this->language->get('date_format_short'), strtotime($result['created'])),
-					'href'                  => $this->url->link('account/recurring/info','recurring_id='.$result['order_recurring_id'],'SSL'),
+					'href'                  => $this->url->link('account/recurring/info', 'recurring_id='.$result['order_recurring_id'], 'SSL'),
 				);
 			}
 		}

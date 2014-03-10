@@ -8,13 +8,13 @@ class ControllerReportCustomerActivity extends Controller {
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
 		} else {
-			$filter_customer = NULL;
+			$filter_customer = null;
 		}		
 		
 		if (isset($this->request->get['filter_ip'])) {
 			$filter_ip = $this->request->get['filter_ip'];
 		} else {
-			$filter_ip = NULL;
+			$filter_ip = null;
 		}
 		
 		if (isset($this->request->get['filter_date_start'])) {

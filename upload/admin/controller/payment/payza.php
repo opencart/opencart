@@ -38,40 +38,40 @@ class ControllerPaymentPayza extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
-  		if (isset($this->error['warning'])) {
+		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
 		}
 
- 		if (isset($this->error['merchant'])) {
+		if (isset($this->error['merchant'])) {
 			$data['error_merchant'] = $this->error['merchant'];
 		} else {
 			$data['error_merchant'] = '';
 		}
 
- 		if (isset($this->error['security'])) {
+		if (isset($this->error['security'])) {
 			$data['error_security'] = $this->error['security'];
 		} else {
 			$data['error_security'] = '';
 		}
 		
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_payment'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_payment'),
 			'href' => $this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('payment/payza', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 				
 		$data['action'] = $this->url->link('payment/payza', 'token=' . $this->session->data['token'], 'SSL');
 		

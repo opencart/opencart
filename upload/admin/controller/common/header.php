@@ -24,13 +24,13 @@ class ControllerCommonHeader extends Controller {
 		$data['text_order'] = $this->language->get('text_order');
 		$data['text_order_status'] = $this->language->get('text_order_status');
 		$data['text_complete_status'] = $this->language->get('text_complete_status');	
+		$data['text_return'] = $this->language->get('text_return');
 		$data['text_customer'] = $this->language->get('text_customer');
 		$data['text_online'] = $this->language->get('text_online');
 		$data['text_approval'] = $this->language->get('text_approval');
 		$data['text_product'] = $this->language->get('text_product');
 		$data['text_stock'] = $this->language->get('text_stock');
 		$data['text_review'] = $this->language->get('text_review');
-		$data['text_return'] = $this->language->get('text_return');
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_store'] = $this->language->get('text_store');
 		$data['text_front'] = $this->language->get('text_front');
@@ -63,7 +63,16 @@ class ControllerCommonHeader extends Controller {
 			
 			$data['complete_status_total'] = $this->model_sale_order->getTotalOrders(array('filter_order_status_id' => $this->config->get('config_complete_status_id')));
 			$data['complete_status'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&filter_order_status_id='.  $this->config->get('config_complete_status_id'), 'SSL');
+
+			// Returns
+			$this->load->model('sale/return');
 			
+			$return_total = $this->model_sale_return->getTotalReturns(array('filter_return_status_id' => $this->config->get('config_return_status_id')));
+			
+			$data['return_total'] = $return_total;
+			
+			$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL');
+						
 			// Customers
 			$this->load->model('report/dashboard');
 			
@@ -95,15 +104,6 @@ class ControllerCommonHeader extends Controller {
 			$data['review_total'] = $review_total;
 			
 			$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . 'filter_status=0', 'SSL');
-			
-			// Returns
-			$this->load->model('sale/return');
-			
-			$return_total = $this->model_sale_return->getTotalReturns();
-			
-			$data['return_total'] = $return_total;
-			
-			$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL');
 
 			// Affliate
 			$this->load->model('marketing/affiliate');

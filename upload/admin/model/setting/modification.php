@@ -66,5 +66,5 @@ class ModelSettingModification extends Model {
       	$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "modification");
 		
 		return $query->row['total'];
-	}		
+	}			
 }

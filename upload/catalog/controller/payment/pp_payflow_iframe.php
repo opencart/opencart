@@ -85,7 +85,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 	}
 
-	public function pp_return() {
+	public function paymentReturn() {
 		$data['url'] = $this->url->link('checkout/success');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_return.tpl')) {
@@ -95,7 +95,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 	}
 
-	public function pp_cancel() {
+	public function paymentCancel() {
 		$data['url'] = $this->url->link('checkout/checkout');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_return.tpl')) {
@@ -105,7 +105,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 	}
 
-	public function pp_error() {
+	public function paymentError() {
 		$data['url'] = $this->url->link('checkout/checkout');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_return.tpl')) {
@@ -115,7 +115,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 	}
 
-	public function pp_post() {
+	public function paymentIpn() {
 		$this->load->model('payment/pp_payflow_iframe');
 		$this->load->model('checkout/order');
 

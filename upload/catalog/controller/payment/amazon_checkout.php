@@ -42,8 +42,8 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
 		$data['amazon_payment'] = $this->url->link('payment/amazon_checkout/payment', '', 'SSL');
-		$data['shipping_quotes'] = $this->url->link('payment/amazon_checkout/shipping_quotes', '', 'SSL');
-		$data['payment_method'] = $this->url->link('payment/amazon_checkout/payment_method', '', 'SSL');
+		$data['shipping_quotes'] = $this->url->link('payment/amazon_checkout/shippingQuotes', '', 'SSL');
+		$data['payment_method'] = $this->url->link('payment/amazon_checkout/paymentMethod', '', 'SSL');
 
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['text_cart'] = $this->language->get('text_cart');
@@ -62,7 +62,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 	}
 
-	public function payment_method() {
+	public function paymentMethod() {
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
 			$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
 		} elseif ($this->config->get('amazon_checkout_mode') == 'live') {
@@ -436,7 +436,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->model_payment_amazon_checkout->setOrderShipping($this->session->data['cba']['order_id'], $data['cba_free_shipping']);
 
 		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
-		$data['process_order'] = $this->url->link('payment/amazon_checkout/process_order', '', 'SSL');
+		$data['process_order'] = $this->url->link('payment/amazon_checkout/processOrder', '', 'SSL');
 
 		foreach ($this->cart->getProducts() as $product) {
 			$option_data = array();
@@ -493,7 +493,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 	}
 
-	public function process_order() {
+	public function processOrder() {
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
 			$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
 		} elseif ($this->config->get('amazon_checkout_mode') == 'live') {
@@ -687,7 +687,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 	}
 
-	public function shipping_quotes() {
+	public function shippingQuotes() {
 		$this->load->model('setting/extension');
 
 		$this->load->library('cba');
@@ -825,7 +825,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function set_shipping() {
+	public function setShipping() {
 		$json = array();
 
 		if (isset($this->request->post['shipping_method'])) {

@@ -1,17 +1,9 @@
 <?php
-/**
-*   i changed class name as mPDO because, give me an error 
-*    
-*    " Fatal error: Cannot redeclare class pdo. If this code worked without the Zend Optimizer+, 
-*      please set zend_optimizerplus.dups_fix=1 in your php.ini "
-*/
-
 final class DBmPDO {
 	private $pdo = null;
 	private $statement = null;
 
 	public function __construct($hostname, $username, $password, $database, $port = "3306") {
-
 		try {
 			$this->pdo = new PDO("mysql:host=".$hostname.";port=".$port.";dbname=".$database, $username, $password, array(PDO::ATTR_PERSISTENT => true));
 		} catch(PDOException $e) {
@@ -89,12 +81,10 @@ final class DBmPDO {
 		}
 	}
 
-	// From http://www.php.net/manual/de/function.mysql-real-escape-string.php#98506
 	public function escape($value) {
-		// Maybe we should use quote for this.
-		$search=array("\\","\0","\n","\r","\x1a","'",'"');
-		$replace=array("\\\\","\\0","\\n","\\r","\Z","\'",'\"');
-		return str_replace($search,$replace,$value);
+		$search = array("\\", "\0", "\n", "\r", "\x1a", "'", '"');
+		$replace = array("\\\\", "\\0", "\\n", "\\r", "\Z", "\'", '\"');
+		return str_replace($search, $replace, $value);
 	}
 
 	public function countAffected() {

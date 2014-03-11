@@ -24,7 +24,7 @@ $_['entry_open']       = 'Opening Times';
 $_['entry_comment']    = 'Comment';
 
 // Help
-$_['help_geocode']     = 'Please enter it in  your store location geocode manually.';
+$_['help_geocode']     = 'Please enter your store location geocode manually.';
 $_['help_open']        = 'Fill in your stores opening times.';
 $_['help_comment']     = 'This field is for any special notes you would like to tell the customer i.e. Store does not accept cheques.';
 

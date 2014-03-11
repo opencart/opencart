@@ -61,6 +61,7 @@ class ControllerModuleCart extends Controller {
 		$data['text_cart'] = $this->language->get('text_cart');
 		$data['text_checkout'] = $this->language->get('text_checkout');
 		$data['text_profile'] = $this->language->get('text_profile');
+		$data['text_loading'] = $this->language->get('text_loading');
 		
 		$data['button_remove'] = $this->language->get('button_remove');
 		

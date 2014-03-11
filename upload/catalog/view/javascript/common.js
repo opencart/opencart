@@ -89,6 +89,29 @@ $(document).ready(function() {
 	
 	// Cart
 	$('#button-cart').on('click', function() {
+		$.ajax({
+			url: 'index.php?route=checkout/cart/add',
+			type: 'post',
+			data: 'product_id=' + product_id + '&quantity=' + quantity,
+			dataType: 'json',
+			success: function(json) {
+				$('.alert, .text-danger').remove();
+				
+				if (json['redirect']) {
+					location = json['redirect'];
+				}
+				
+				if (json['success']) {
+					$('#content').parent().before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
+					
+					$('#cart-total').html(json['total']);
+					
+					$('html, body').animate({ scrollTop: 0 }, 'slow'); 
+				}
+			}
+		});
+	
+			
 		$(this).parent().find('> ul').load('index.php?route=common/header/cart');
 	});
 	

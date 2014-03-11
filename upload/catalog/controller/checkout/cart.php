@@ -218,23 +218,18 @@ class ControllerCheckoutCart extends Controller {
 			
 			// Gift Voucher
 			$data['vouchers'] = array();
-		
-			if (!isset($this->session->data['vouchers'])) {
-				$vouchers = $this->session->data['vouchers'];
-			} else {
-				$vouchers = array();
-			}
 
-			foreach ($vouchers as $key => $voucher) {
-				echo 'hi';
-				$data['vouchers'][] = array(
-					'key'         => $key,
-					'description' => $voucher['description'],
-					'amount'      => $this->currency->format($voucher['amount']),
-					'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)   
-				);
+			if (!empty($this->session->data['vouchers'])) {
+				foreach ($this->session->data['vouchers'] as $key => $voucher) {
+					$data['vouchers'][] = array(
+						'key'         => $key,
+						'description' => $voucher['description'],
+						'amount'      => $this->currency->format($voucher['amount']),
+						'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)   
+					);
+				}
 			}
-						
+			
 			// Totals
 			$this->load->model('setting/extension');
 			

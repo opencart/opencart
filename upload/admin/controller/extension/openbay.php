@@ -423,6 +423,7 @@ class ControllerExtensionOpenbay extends Controller {
 				//if status is shipped
 				if($this->request->get['status_id'] == $this->config->get('openbay_amazon_order_status_shipped')){
 					$this->data['couriers'] = $this->openbay->amazon->getCarriers();
+					$this->data['courier_default'] = $this->config->get('openbay_amazon_default_carrier');
 					$this->template = 'openbay/amazon_ajax_shippinginfo.tpl';
 					$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 				}
@@ -437,6 +438,7 @@ class ControllerExtensionOpenbay extends Controller {
 				//if status is shipped
 				if($this->request->get['status_id'] == $this->config->get('openbay_amazonus_order_status_shipped')){
 					$this->data['couriers'] = $this->openbay->amazonus->getCarriers();
+					$this->data['courier_default'] = $this->config->get('openbay_amazon_default_carrier');
 					$this->template = 'openbay/amazonus_ajax_shippinginfo.tpl';
 					$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 				}

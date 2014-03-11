@@ -8,7 +8,7 @@
           <select name="courier_id" id="courier_id" class="openbayData">
             <option></option>
             <?php foreach($couriers as $courier){ ?>
-              <option <?php if(!$order_info['courier_other'] && $order_info['courier_id'] == $courier) echo "selected"; ?>><?php echo $courier; ?></option>
+              <option <?php if((!$order_info['courier_other'] && $order_info['courier_id'] == $courier) || (!$order_info['courier_other'] && empty($order_info['courier_id']) && $courier_default == $courier)) echo "selected"; ?>><?php echo $courier; ?></option>
             <?php } ?>
           </select>
         </td>

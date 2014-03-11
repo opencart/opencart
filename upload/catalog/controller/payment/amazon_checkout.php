@@ -62,7 +62,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 	}
 
-	public function payment_method() {
+	public function paymentMethod() {
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
 			$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
 		} elseif ($this->config->get('amazon_checkout_mode') == 'live') {
@@ -493,7 +493,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 	}
 
-	public function process_order() {
+	public function processOrder() {
 		if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
 			$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
 		} elseif ($this->config->get('amazon_checkout_mode') == 'live') {
@@ -687,7 +687,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		}
 	}
 
-	public function shipping_quotes() {
+	public function shippingQuotes() {
 		$this->load->model('setting/extension');
 
 		$this->load->library('cba');
@@ -825,7 +825,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function set_shipping() {
+	public function setShipping() {
 		$json = array();
 
 		if (isset($this->request->post['shipping_method'])) {

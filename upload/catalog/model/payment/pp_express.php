@@ -61,14 +61,16 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function createToken($len = 32) {
-		$base='ABCDEFGHKLMNOPQRSTWXYZabcdefghjkmnpqrstwxyz123456789';
-		$max=strlen($base)-1;
-		$activatecode='';
+		$base = 'ABCDEFGHKLMNOPQRSTWXYZabcdefghjkmnpqrstwxyz123456789';
+		$max = strlen($base)-1;
+		$activate_code = '';
 		mt_srand((double)microtime()*1000000);
-		while (strlen($activatecode)<$len+1)
-			$activatecode.=$base{mt_rand(0,$max)};
 
-		return $activatecode;
+		while (strlen($activate_code)<$len+1) {
+			$activate_code .= $base{mt_rand(0, $max)};
+		}
+
+		return $activate_code;
 	}
 
 	public function log($data, $title = null) {

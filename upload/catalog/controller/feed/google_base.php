@@ -4,7 +4,7 @@ class ControllerFeedGoogleBase extends Controller {
 		if ($this->config->get('google_base_status')) { 
 			$output  = '<?xml version="1.0" encoding="UTF-8" ?>';
 			$output .= '<rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">';
-            $output .= '<channel>';
+			$output .= '<channel>';
 			$output .= '<title>' . $this->config->get('config_name') . '</title>'; 
 			$output .= '<description>' . $this->config->get('config_meta_description') . '</description>';
 			$output .= '<link>' . HTTP_SERVER . '</link>';
@@ -41,19 +41,19 @@ class ControllerFeedGoogleBase extends Controller {
 						'GBP'
 					);
 
-                    if (in_array($this->currency->getCode(), $currencies)) {
-                        $currency_code = $this->currency->getCode();
+					if (in_array($this->currency->getCode(), $currencies)) {
+						$currency_code = $this->currency->getCode();
 						$currency_value = $this->currency->getValue();
-                    } else {
-                        $currency_code = 'USD';
+					} else {
+						$currency_code = 'USD';
 						$currency_value = $this->currency->getValue('USD');
-                    }
+					}
 									
 					if ((float)$product['special']) {
-                        $output .= '<g:price>' .  $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
-                    } else {
-                        $output .= '<g:price>' . $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
-                    }
+						$output .= '<g:price>' .  $this->currency->format($this->tax->calculate($product['special'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
+					} else {
+						$output .= '<g:price>' . $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id']), $currency_code, $currency_value, false) . '</g:price>';
+					}
 			   
 					$categories = $this->model_catalog_product->getCategories($product['product_id']);
 					

@@ -290,7 +290,7 @@ class ControllerPaymentPPProIframe extends Controller {
 		$data['action'] = $this->url->link('payment/pp_pro_iframe/doRefund', 'token=' . $this->session->data['token'], 'SSL');
 
 		if (isset($this->request->get['order_id'])) {
-			$data['cancel'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] , 'SSL');
+			$data['cancel'] = $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'], 'SSL');
 		} else {
 			$data['cancel'] = '';
 		}

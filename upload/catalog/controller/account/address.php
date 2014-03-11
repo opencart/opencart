@@ -44,7 +44,7 @@ class ControllerAccountAddress extends Controller {
 				'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
 			);
 
-			$this->model_account_activity->addActivity('address_add',$activity_data);
+			$this->model_account_activity->addActivity('address_add', $activity_data);
 
 			$this->response->redirect($this->url->link('account/address', '', 'SSL'));
 		}

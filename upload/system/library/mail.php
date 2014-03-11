@@ -354,7 +354,7 @@ class Mail {
 				}
 
 				// According to rfc 821 we should not send more than 1000 including the CRLF
-				$message = str_replace("\r\n", "\n",  $header . $message);
+				$message = str_replace("\r\n", "\n", $header . $message);
 				$message = str_replace("\r", "\n", $message);
 				
 				$lines = explode("\n", $message);

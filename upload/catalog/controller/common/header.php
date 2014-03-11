@@ -30,14 +30,13 @@ class ControllerCommonHeader extends Controller {
 			$data['logo'] = $server . 'image/' . $this->config->get('config_logo');
 		} else {
 			$data['logo'] = '';
-		}		
-		
+		}
+						
 		$this->load->language('common/header');
 		
 		$data['text_home'] = $this->language->get('text_home');
 		$data['text_wishlist'] = sprintf($this->language->get('text_wishlist'), (isset($this->session->data['wishlist']) ? count($this->session->data['wishlist']) : 0));
 		$data['text_shopping_cart'] = $this->language->get('text_shopping_cart');
-		$data['text_welcome'] = sprintf($this->language->get('text_welcome'), $this->url->link('account/login', '', 'SSL'), $this->url->link('account/register', '', 'SSL'));
 		$data['text_logged'] = sprintf($this->language->get('text_logged'), $this->url->link('account/account', '', 'SSL'), $this->customer->getFirstName(), $this->url->link('account/logout', '', 'SSL'));
 		$data['text_account'] = $this->language->get('text_account');
     	$data['text_checkout'] = $this->language->get('text_checkout');
@@ -106,9 +105,9 @@ class ControllerCommonHeader extends Controller {
 		
 		$data['language'] = $this->load->controller('module/language');
 		$data['currency'] = $this->load->controller('module/currency');
-		$data['search'] = $this->load->controller('module/search');
+		$data['search'] = $this->load->controller('module/search');				
 		$data['cart'] = $this->load->controller('module/cart');
-		
+				
 		// For page specific css
 		if (isset($this->request->get['route'])) {
 			if (isset($this->request->get['product_id'])) {
@@ -131,5 +130,5 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			return $this->load->view('default/template/common/header.tpl', $data);
 		}
-	} 	
+	}
 }

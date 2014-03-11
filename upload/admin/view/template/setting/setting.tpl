@@ -65,10 +65,9 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-geocode"><?php echo $entry_geocode; ?></label>
+              <label class="col-sm-2 control-label" for="input-geocode"><span data-toggle="tooltip" title="<?php echo $help_geocode; ?>"><?php echo $entry_geocode; ?></span></label>
               <div class="col-sm-10">
-                <input type="text" name="config_geocode" value="<?php echo $config_geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" />
-                <span class="help-block"><?php echo $help_geocode; ?></span></div>
+                <input type="text" name="config_geocode" value="<?php echo $config_geocode; ?>" placeholder="<?php echo $entry_geocode; ?>" id="input-geocode" class="form-control" /></div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
@@ -106,19 +105,17 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-open"><?php echo $entry_open; ?></label>
+              <label class="col-sm-2 control-label" for="input-open"><span data-toggle="tooltip" title="<?php echo $help_open; ?>"><?php echo $entry_open; ?></span></label>
               <div class="col-sm-10">
-                <textarea name="config_open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $config_open; ?></textarea>
-                <span class="help-block"><?php echo $help_open; ?></span></div>
+                <textarea name="config_open" rows="5" placeholder="<?php echo $entry_open; ?>" id="input-open" class="form-control"><?php echo $config_open; ?></textarea></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-comment"><?php echo $entry_comment; ?></label>
+              <label class="col-sm-2 control-label" for="input-comment"><span data-toggle="tooltip" title="<?php echo $help_comment; ?>"><?php echo $entry_comment; ?></span></label>
               <div class="col-sm-10">
-                <textarea name="config_comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $config_comment; ?></textarea>
-                <span class="help-block"><?php echo $help_comment; ?></span></div>
+                <textarea name="config_comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $config_comment; ?></textarea></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_location; ?></label>
+              <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_location; ?>"><?php echo $entry_location; ?></span></label>
               <div class="col-sm-10">
                 <?php foreach ($locations as $location) { ?>
                 <div class="checkbox">
@@ -133,7 +130,7 @@
                   </label>
                 </div>
                 <?php } ?>
-                <span class="help-block"><?php echo $help_location; ?></span></div>
+                </div>
             </div>
           </div>
           <div class="tab-pane" id="tab-store">
@@ -233,7 +230,7 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-currency"><?php echo $entry_currency; ?></label>
+              <label class="col-sm-2 control-label" for="input-currency"><span data-toggle="tooltip" title="<?php echo $help_currency; ?>"><?php echo $entry_currency; ?></span></label>
               <div class="col-sm-10">
                 <select name="config_currency" id="input-currency" class="form-control">
                   <?php foreach ($currencies as $currency) { ?>
@@ -243,11 +240,10 @@
                   <option value="<?php echo $currency['code']; ?>"><?php echo $currency['title']; ?></option>
                   <?php } ?>
                   <?php } ?>
-                </select>
-                <span class="help-block"><?php echo $help_currency; ?></span></div>
+                </select></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $entry_currency_auto; ?></label>
+              <label class="col-sm-2 control-label"><span class="help-block"><?php echo $help_currency_auto; ?><?php echo $entry_currency_auto; ?></span></label>
               <div class="col-sm-10">
                 <label class="radio-inline">
                   <?php if ($config_currency_auto) { ?>
@@ -266,8 +262,7 @@
                   <input type="radio" name="config_currency_auto" value="0" />
                   <?php echo $text_no; ?>
                   <?php } ?>
-                </label>
-                <span class="help-block"><?php echo $help_currency_auto; ?></span></div>
+                </label></div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-length-class"><?php echo $entry_length_class; ?></label>
@@ -302,7 +297,7 @@
             <fieldset>
               <legend><?php echo $text_product; ?></legend>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_product_count; ?></label>
+                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_product_count; ?>"><?php echo $entry_product_count; ?></span></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
                     <?php if ($config_product_count) { ?>
@@ -321,8 +316,7 @@
                     <input type="radio" name="config_product_count" value="0" />
                     <?php echo $text_no; ?>
                     <?php } ?>
-                  </label>
-                  <span class="help-block"><?php echo $help_product_count; ?></span></div>
+                  </label></div>
               </div>
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_product_limit; ?></label>

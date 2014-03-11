@@ -3,9 +3,9 @@
   <div class="btn-group">
     <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
     <?php foreach ($currencies as $currency) { ?>
-    <?php if ($currency['symbol_left'] && $currency['code'] == $currency_code) { ?>
+    <?php if ($currency['symbol_left'] && $currency['code'] == $code) { ?>
     <strong><?php echo $currency['symbol_left']; ?></strong>
-    <?php } elseif ($currency['symbol_right'] && $currency['code'] == $currency_code) { ?>
+    <?php } elseif ($currency['symbol_right'] && $currency['code'] == $code) { ?>
     <strong><?php echo $currency['symbol_right']; ?></strong>
     <?php } ?>
     <?php } ?>
@@ -20,7 +20,7 @@
       <?php } ?>
     </ul>
   </div>
-  <input type="hidden" name="currency_code" value="" />
+  <input type="hidden" name="code" value="" />
   <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
 </form>
 <?php } ?>

@@ -3,7 +3,7 @@
   <div class="btn-group">
     <button class="btn btn-link dropdown-toggle" data-toggle="dropdown">
     <?php foreach ($languages as $language) { ?>
-    <?php if ($language['code'] == $language_code) { ?>
+    <?php if ($language['code'] == $code) { ?>
     <img src="image/flags/<?php echo $language['image']; ?>" alt="<?php echo $language['name']; ?>" title="<?php echo $language['name']; ?>">
     <?php } ?>
     <?php } ?>
@@ -14,7 +14,7 @@
       <?php } ?>
     </ul>
   </div>
-  <input type="hidden" name="language_code" value="" />
+  <input type="hidden" name="code" value="" />
   <input type="hidden" name="redirect" value="<?php echo $redirect; ?>" />
 </form>
 <?php } ?>

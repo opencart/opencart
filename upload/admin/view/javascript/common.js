@@ -93,7 +93,7 @@ $(document).delegate('.img-edit', 'click', function(e) {
 		placement: 'right',
 		trigger: 'click',
 		content: function() {
-			return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-default"><i class="fa fa-trash-o"></i></button>';
+			return '<button type="button" id="button-image" class="btn btn-primary"><i class="fa fa-pencil"></i></button> <button type="button" id="button-clear" class="btn btn-danger"><i class="fa fa-trash-o"></i></button>';
 		}
 	});
 	

@@ -2,7 +2,7 @@
 class ControllerCheckoutCart extends Controller {
 	private $error = array();
 	
-	public function index() {
+	public function index() {		
 		$this->load->language('checkout/cart');
 
 		// Update
@@ -220,12 +220,13 @@ class ControllerCheckoutCart extends Controller {
 			$data['vouchers'] = array();
 		
 			if (!isset($this->session->data['vouchers'])) {
-				$vouchers = $this->session->data['vouchers'] = array();
+				$vouchers = $this->session->data['vouchers'];
 			} else {
 				$vouchers = array();
 			}
 
 			foreach ($vouchers as $key => $voucher) {
+				echo 'hi';
 				$data['vouchers'][] = array(
 					'key'         => $key,
 					'description' => $voucher['description'],
@@ -269,7 +270,6 @@ class ControllerCheckoutCart extends Controller {
 	
 				array_multisort($sort_order, SORT_ASC, $total_data);				
 			}
-			
 			
 			$data['totals'] = array();
 	

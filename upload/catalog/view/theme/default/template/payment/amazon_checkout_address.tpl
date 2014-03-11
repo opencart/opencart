@@ -22,7 +22,7 @@
         $('#amazon-address-widget').before('<div class="warning"><?php echo $error_shipping ?></div>');
       } else {
         $.ajax({
-          url: 'index.php?route=payment/amazon_checkout/set_shipping',
+          url: 'index.php?route=payment/amazon_checkout/setshipping',
           type: 'post',
           data: $('input[name="shipping_method"]:checked'),
           dataType: 'json',

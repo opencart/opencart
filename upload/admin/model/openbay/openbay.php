@@ -554,7 +554,7 @@ class ModelOpenbayOpenbay extends Model {
 		}
 
 		if (isset($data['filter_manufacturer']) && !is_null($data['filter_manufacturer'])) {
-			$sql .= " AND pd.description != '" . (int)$data['filter_manufacturer'] . "'";
+			$sql .= " AND p.manufacturer_id = '" . (int)$data['filter_manufacturer'] . "'";
 		}
 
 		$query = $this->db->query($sql);

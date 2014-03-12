@@ -270,6 +270,8 @@ class ControllerProductProduct extends Controller {
 			$data['reward'] = $product_info['reward'];
 			$data['points'] = $product_info['points'];
 			
+			$data['product'] = $product_info;
+			
 			if ($product_info['quantity'] <= 0) {
 				$data['stock'] = $product_info['stock_status'];
 			} elseif ($this->config->get('config_stock_display')) {
@@ -428,6 +430,7 @@ class ControllerProductProduct extends Controller {
 				}
 							
 				$data['products'][] = array(
+					'data' 	=> $result,
 					'product_id'  => $result['product_id'],
 					'thumb'   	  => $image,
 					'name'    	  => $result['name'],

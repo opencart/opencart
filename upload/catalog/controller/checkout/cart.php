@@ -17,7 +17,7 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['payment_methods']); 
 			unset($this->session->data['reward']);
 			
-			$this->response->redirect($this->url->link('checkout/cart'));  			
+			$this->response->redirect($this->url->link('checkout/cart'));
 		}
        	
 		// Remove
@@ -176,11 +176,11 @@ class ControllerCheckoutCart extends Controller {
 
 				if ($product['recurring']) {
 					$frequencies = array(
-						'day' => $this->language->get('text_day'),
-						'week' => $this->language->get('text_week'),
+						'day'        => $this->language->get('text_day'),
+						'week'       => $this->language->get('text_week'),
 						'semi_month' => $this->language->get('text_semi_month'),
-						'month' => $this->language->get('text_month'),
-						'year' => $this->language->get('text_year'),
+						'month'      => $this->language->get('text_month'),
+						'year'       => $this->language->get('text_year'),
 					);
 
 					if ($product['recurring_trial']) {

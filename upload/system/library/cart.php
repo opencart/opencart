@@ -24,10 +24,11 @@ class Cart {
 				$product = explode(':', $key);
 
 				$product_id = $product[0];
+				
 				$stock = true;
 
 				// Options
-				if (isset($product[1]) && !empty($product[1])) {
+				if (!empty($product[1])) {
 					$options = unserialize(base64_decode($product[1]));
 				} else {
 					$options = array();
@@ -310,9 +311,9 @@ class Cart {
 
 	public function add($product_id, $qty = 1, $option = array(), $profile_id = 0) {
 		if (!$option) {
-			$key .= (int)$product_id;
+			$product['product_id'] = (int)$product_id;
 		}  else {
-			$key .= (int)$product_id . ':' . base64_encode(serialize($option));
+			$product['product_id'] .= (int)$product_id . ':' . base64_encode(serialize($option));
 		}
 
 		if ($profile_id) {

@@ -39,7 +39,6 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			'CURRENCY' => $order_info['currency_code'],
 			'CREATESECURETOKEN' => 'Y',
 			'SECURETOKENID' => $secure_token_id,
-
 			'BILLTOFIRSTNAME' => $order_info['payment_firstname'],
 			'BILLTOLASTNAME' => $order_info['payment_lastname'],
 			'BILLTOSTREET' => trim($order_info['payment_address_1'] . ' ' . $order_info['payment_address_2']),
@@ -49,7 +48,6 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			'BILLTOCOUNTRY' => $payment_country['iso_code_2'],
 		);
 
-		// Does the order have shipping ?
 		if ($shipping_country) {
 			$urlParams['SHIPTOFIRSTNAME'] = $order_info['shipping_firstname'];
 			$urlParams['SHIPTOLASTNAME'] = $order_info['shipping_lastname'];

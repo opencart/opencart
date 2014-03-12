@@ -14,7 +14,6 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function call($data) {
-
 		if ($this->config->get('pp_express_test') == 1) {
 			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
 		} else {
@@ -26,7 +25,7 @@ class ModelPaymentPPExpress extends Model {
 			'PWD' => $this->config->get('pp_express_password'),
 			'SIGNATURE' => $this->config->get('pp_express_signature'),
 			'VERSION' => '65.2',
-			'BUTTONSOURCE' => 'OpenCart_Cart_EC',
+			'BUTTONSOURCE' => 'OpenCart_2.0_EC',
 		);
 
 		$this->log($data, 'Call data');

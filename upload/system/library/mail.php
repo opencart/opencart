@@ -53,27 +53,27 @@ class Mail {
 
 	public function send() {
 		if (!$this->to) {
-			error_log('Error: E-Mail to required!');
+			trigger_error('Error: E-Mail to required!');
 			exit();
 		}
 
 		if (!$this->from) {
-			error_log('Error: E-Mail from required!');
+			trigger_error('Error: E-Mail from required!');
 			exit();
 		}
 
 		if (!$this->sender) {
-			error_log('Error: E-Mail sender required!');
+			trigger_error('Error: E-Mail sender required!');
 			exit();
 		}
 
 		if (!$this->subject) {
-			error_log('Error: E-Mail subject required!');
+			trigger_error('Error: E-Mail subject required!');
 			exit();
 		}
 
 		if ((!$this->text) && (!$this->html)) {
-			error_log('Error: E-Mail message required!');
+			trigger_error('Error: E-Mail message required!');
 			exit();
 		}
 
@@ -158,7 +158,7 @@ class Mail {
 			$handle = fsockopen($this->hostname, $this->port, $errno, $errstr, $this->timeout);
 
 			if (!$handle) {
-				error_log('Error: ' . $errstr . ' (' . $errno . ')');
+				trigger_error('Error: ' . $errstr . ' (' . $errno . ')');
 				exit();
 			} else {
 				if (substr(PHP_OS, 0, 3) != 'WIN') {
@@ -185,7 +185,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 220) {
-						error_log('Error: STARTTLS not accepted from server!');
+						trigger_error('Error: STARTTLS not accepted from server!');
 						exit();
 					}
 				}
@@ -204,7 +204,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 250) {
-						error_log('Error: EHLO not accepted from server!');
+						trigger_error('Error: EHLO not accepted from server!');
 						exit();
 					}
 
@@ -221,7 +221,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 334) {
-						error_log('Error: AUTH LOGIN not accepted from server!');
+						trigger_error('Error: AUTH LOGIN not accepted from server!');
 						exit();
 					}
 
@@ -238,7 +238,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 334) {
-						error_log('Error: Username not accepted from server!');
+						trigger_error('Error: Username not accepted from server!');
 						exit();
 					}
 
@@ -255,7 +255,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 235) {
-						error_log('Error: Password not accepted from server!');
+						trigger_error('Error: Password not accepted from server!');
 						exit();
 					}
 				} else {
@@ -272,7 +272,7 @@ class Mail {
 					}
 
 					if (substr($reply, 0, 3) != 250) {
-						error_log('Error: HELO not accepted from server!');
+						trigger_error('Error: HELO not accepted from server!');
 						exit();
 					}
 				}
@@ -294,7 +294,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 250) {
-					error_log('Error: MAIL FROM not accepted from server!');
+					trigger_error('Error: MAIL FROM not accepted from server!');
 					exit();
 				}
 
@@ -312,7 +312,7 @@ class Mail {
 					}
 
 					if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
-						error_log('Error: RCPT TO not accepted from server!');
+						trigger_error('Error: RCPT TO not accepted from server!');
 						exit();
 					}
 				} else {
@@ -330,7 +330,7 @@ class Mail {
 						}
 
 						if ((substr($reply, 0, 3) != 250) && (substr($reply, 0, 3) != 251)) {
-							error_log('Error: RCPT TO not accepted from server!');
+							trigger_error('Error: RCPT TO not accepted from server!');
 							exit();
 						}
 					}
@@ -349,7 +349,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 354) {
-					error_log('Error: DATA not accepted from server!');
+					trigger_error('Error: DATA not accepted from server!');
 					exit();
 				}
 
@@ -384,7 +384,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 250) {
-					error_log('Error: DATA not accepted from server!');
+					trigger_error('Error: DATA not accepted from server!');
 					exit();
 				}
 				
@@ -401,7 +401,7 @@ class Mail {
 				}
 
 				if (substr($reply, 0, 3) != 221) {
-					error_log('Error: QUIT not accepted from server!');
+					trigger_error('Error: QUIT not accepted from server!');
 					exit();
 				}
 

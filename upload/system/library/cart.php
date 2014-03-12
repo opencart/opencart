@@ -309,16 +309,14 @@ class Cart {
 	}
 
 	public function add($product_id, $qty = 1, $option = array(), $profile_id = 0) {
-		$key = (int)$product_id . ':';
-
-		if ($option) {
-			$key .= base64_encode(serialize($option)) . ':';
+		if (!$option) {
+			$key .= (int)$product_id;
 		}  else {
-			$key .= ':';
+			$key .= (int)$product_id . ':' . base64_encode(serialize($option));
 		}
 
 		if ($profile_id) {
-			$key .= (int)$profile_id;
+			$key .= ':' . (int)$profile_id;
 		}
 
 		if ((int)$qty && ((int)$qty > 0)) {

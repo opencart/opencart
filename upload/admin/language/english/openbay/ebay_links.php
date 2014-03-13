@@ -34,6 +34,7 @@ $_['lang_text_linked_desc']         = 'Linked items are OpenCart items that have
 $_['lang_text_unlinked_desc']       = 'Unlinked items are listings on your eBay account that do not link to any of your OpenCart products.';
 $_['lang_text_unlinked_info']       = 'Click the check unlinked items button to search your active eBay listings for unlinked items. This may take a long time if you have many eBay listings.';
 $_['lang_text_loading_items']       = 'Loading items';
+$_['lang_limit_reached']       		= 'The maximum number of checks per request was reached, click the button to continue searching';
 
 // Tables
 $_['lang_column_action']            = 'Action';

@@ -1322,7 +1322,7 @@ CREATE TABLE `oc_custom_field` (
   `custom_field_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
   `value` text NOT NULL,
-  `storage` varchar(7) NOT NULL,
+  `location` varchar(7) NOT NULL,
   `status` tinyint(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`custom_field_id`)
@@ -1341,7 +1341,6 @@ CREATE TABLE `oc_custom_field` (
 DROP TABLE IF EXISTS `oc_custom_field_customer_group`;
 CREATE TABLE `oc_custom_field_customer_group` (
   `custom_field_id` int(11) NOT NULL,
-  `location` varchar(64) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   `required` tinyint(1) NOT NULL,
   PRIMARY KEY (`custom_field_id`,`customer_group_id`)
@@ -1367,24 +1366,6 @@ CREATE TABLE `oc_custom_field_description` (
 
 --
 -- Dumping data for table `oc_custom_field_description`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_custom_field_location`
---
-
-CREATE TABLE IF NOT EXISTS `oc_custom_field_location` (
-  `custom_field_id` int(11) NOT NULL,
-  `location` varchar(16) NOT NULL,
-  `customer_group_id` int(11) NOT NULL,
-  `required` tinyint(1) NOT NULL,
-  PRIMARY KEY (`custom_field_id`,`location`,`customer_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_custom_field_location`
 --
 
 -- --------------------------------------------------------

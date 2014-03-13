@@ -130,6 +130,7 @@
                 <textarea name="comment" rows="5" placeholder="<?php echo $entry_comment; ?>" id="input-comment" class="form-control"><?php echo $comment; ?></textarea>
                 <span class="help-block"><?php echo $help_comment; ?></span></div>
             </div>
+            <?php if ($locations) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $entry_location; ?></label>
               <div class="col-sm-10">
@@ -148,6 +149,7 @@
                 <?php } ?>
                 <span class="help-block"><?php echo $help_location; ?></span></div>
             </div>
+            <?php } ?>
           </div>
           <div class="tab-pane" id="tab-store">
             <div class="form-group required">

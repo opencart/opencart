@@ -169,7 +169,7 @@ function addToCart(product_id, quantity) {
 
 function removeCart(key) {
     $.ajax({
-        url: 'index.php?route=checkout/cart/remove',
+        url: 'index.php?route=module/cart',
         type: 'post',
         data: 'key=' + key,
         dataType: 'json',

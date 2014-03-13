@@ -1,7 +1,5 @@
 <?php 
 class ControllerCheckoutCart extends Controller {
-	private $error = array();
-	
 	public function index() {		
 		$this->load->language('checkout/cart');
 
@@ -82,9 +80,7 @@ class ControllerCheckoutCart extends Controller {
 			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
 			$data['text_payment_profile'] = $this->language->get('text_payment_profile');
 			
-			if (isset($this->error['warning'])) {
-				$data['error_warning'] = $this->error['warning'];
-			} elseif (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
+			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
       			$data['error_warning'] = $this->language->get('error_stock');		
 			} elseif (isset($this->session->data['error'])) {
 				$data['error_warning'] = $this->session->data['error'];

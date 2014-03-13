@@ -953,7 +953,7 @@ class ControllerOpenbayEbay extends Controller {
 			$filter['qty_max'] = (int)$this->request->post['filter_qty_max'];
 		}
 
-		$data = $this->model_ebay_openbay->loadUnlinked(100, $this->request->get['page'], $filter);
+		$data = $this->model_ebay_openbay->loadUnlinked(200, $this->request->get['page'], $filter);
 
 		if (!empty($data)) {
 			$data['more_pages'] = 1;

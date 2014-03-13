@@ -34,6 +34,7 @@ $_['text_text_unlinked_desc']       = 'Unlinked items are listings on your eBay 
 $_['text_text_unlinked_info']       = 'Click the check unlinked items button to search your active eBay listings for unlinked items. This may take a long time if you have many eBay listings.';
 $_['text_text_loading_items']       = 'Loading items';
 $_['text_failed']       			= 'Failed to load';
+$_['text_limit_reached']       		= 'The maximum number of checks per request was reached, click the button to continue searching';
 
 // Tables
 $_['text_column_action']            = 'Action';

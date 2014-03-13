@@ -303,34 +303,35 @@ class ModelOpenbayEbay extends Model{
 		return $this->openbay->ebay->call('item/getItemsById/', array('item_ids' => $item_ids));
 	}
 
-	public function loadUnlinked($limit = 100, $page = 1, $filter = array()){
-
+	public function loadUnlinked($limit = 200, $page = 1, $filter = array()){
 		$unlinked = array();
-
-		// - continue until no more pages or 10 or more found
+		$current = 1;
+		$stop_flag = 0;
 
 		while(count($unlinked) < 5){
-			$this->openbay->ebay->log('Checking unlinked page: '.$page);
+			if ($current > 5) {
+				$stop_flag = 1;
+				break;
+			} else {
+				$current++;
+			}
 
-			//some products from ebay (100)
-			$response = $this->openbay->ebay->getEbayItemList($limit, $page, $filter);
+			$this->ebay->log('Checking unlinked page: '.$page);
 
-			if($this->openbay->ebay->lasterror == true){
+			$response = $this->ebay->getEbayItemList($limit, $page, $filter);
+
+			if($this->ebay->lasterror == true){
 				break;
 			}
 
-			//loop over these and check if any are not in the db
 			foreach($response['items'] as $itemId => $item){
-				if($this->openbay->ebay->getProductId($itemId, 1) == false){
-					//ebay item ID not in the db
+				if($this->ebay->getProductId($itemId, 1) == false){
 					$unlinked[$itemId] = $item;
 				}
 			}
 
-			$this->openbay->ebay->log('Unlinked count: '.count($unlinked));
+			$this->ebay->log('Unlinked count: '.count($unlinked));
 
-			//if end of the loop and less than 10, request next page
-			//if the last page requested was the max page of results
 			if($response['max_page'] == $page || count($unlinked) >= 5){
 				break;
 			}else{
@@ -340,6 +341,7 @@ class ModelOpenbayEbay extends Model{
 
 		return array(
 			'items' => $unlinked,
+			'break' => $stop_flag,
 			'next_page' => $response['page']+1,
 			'max_page' => $response['max_page']
 		);

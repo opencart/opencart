@@ -328,6 +328,7 @@
       beforeSend: function() {
         $('#fetching-ebay-items').hide();
         $('#check-unlinked-items').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+        $('.alert-warning').remove();
       },
       success: function(json) {
         if (json.data.items === null) {
@@ -381,6 +382,10 @@
           $('#check-unlinked-items').empty().html('<?php echo $text_btn_check_unlinked; ?>').removeAttr('disabled');
         } else {
           $('#check-unlinked-items').hide();
+        }
+
+        if (json.data.break == 1) {
+          $('#check-unlinked-items').before('<div class="alert alert-warning"><?php echo $error_limit_reached; ?></div>');
         }
   
         $('#unlinked_page').val(json.data.next_page);

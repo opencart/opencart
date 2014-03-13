@@ -170,6 +170,23 @@ class Mail {
 						break;
 					}
 				}
+        
+        fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
+
+        $reply = '';
+
+        while ($line = fgets($handle, 515)) {
+          $reply .= $line;
+
+          if (substr($line, 3, 1) == ' ') {
+            break;
+          }
+        }
+
+        if (substr($reply, 0, 3) != 250) {
+          trigger_error('Error: EHLO not accepted from server!');
+          exit();
+        }
 
 				if (substr($this->hostname, 0, 3) == 'tls') {
 					fputs($handle, 'STARTTLS' . "\r\n");
@@ -188,6 +205,8 @@ class Mail {
 						trigger_error('Error: STARTTLS not accepted from server!');
 						exit();
 					}
+          
+          stream_socket_enable_crypto($handle, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 				}
 
 				if (!empty($this->username)  && !empty($this->password)) {

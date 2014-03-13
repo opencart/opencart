@@ -30,9 +30,36 @@
             <h2><?php echo $lang_unlinked_items; ?></h2>
             <p><?php echo $lang_text_unlinked_desc; ?></p>
 
+            <table class="list">
+              <thead>
+              <tr>
+                <td class="left" colspan="6"><?php echo $lang_filter; ?></td>
+              </tr>
+              </thead>
+              <tbody>
+              <tr>
+                <td class="left" style="font-weight:bold;"><?php echo $lang_filter_title; ?></td>
+                <td class="left"><input type="text" size="35" value="" name="filter_title" id="filter_title"></td>
+                <td class="left" style="font-weight:bold;"><?php echo $lang_filter_range; ?></td>
+                <td class="left">
+                  <input type="text" style="text-align: left;" value="" size="8" name="filter_qty_min" id="filter_qty_min"> -
+                  <input type="text" style="text-align: left;" value="" size="8" name="filter_qty_max" id="filter_qty_max">
+                </td>
+                <td class="left" style="font-weight:bold;"><?php echo $lang_filter_var; ?></td>
+                <td class="left">
+                  <select name="filter_variant" id="filter_variant">
+                    <option value="1"><?php echo $text_yes; ?></option>
+                    <option value="0"><?php echo $text_no; ?></option>
+                  </select>
+                </td>
+              </tr>
+              </tbody>
+            </table>
+
             <table class="list" cellpadding="2">
                 <thead>
                 <tr>
+                    <td></td>
                     <td class="left"><?php echo $lang_column_itemId; ?></td>
                     <td class="left"><?php echo $lang_column_listing_title; ?></td>
                     <td class="left"><?php echo $lang_column_product_auto; ?></span></td>
@@ -45,7 +72,7 @@
                 </thead>
                 <tbody id="eBayListings">
                 <tr class="filter" id="fetchingEbayItems">
-                    <td class="left" colspan="8"><?php echo $lang_text_unlinked_info; ?></td>
+                    <td class="left" colspan="9"><?php echo $lang_text_unlinked_info; ?></td>
                 </tr>
                 </tbody>
             </table>
@@ -306,7 +333,8 @@ function checkUnlinkedItems(){
 
     $.ajax({
         url: 'index.php?route=openbay/openbay/loadUnlinked&token=<?php echo $token; ?>&page='+unlinked_page,
-        type: 'get',
+        type: 'POST',
+        data: { 'filter_title' : $('#filter_title').val(), 'filter_qty_min' : $('#filter_qty_min').val(), 'filter_qty_max' : $('#filter_qty_max').val(), 'filter_variant' : $('#filter_variant').val() },
         dataType: 'json',
         beforeSend: function(){
             $('#fetchingEbayItems').hide();
@@ -323,6 +351,11 @@ function checkUnlinkedItems(){
                 $.each(json.data.items, function(key, val){
                     htmlInj = '';
                     htmlInj += '<tr class="listing" id="row'+key+'">';
+                    htmlInj += '<td class="center">';
+                    if (val.img != '') {
+                      htmlInj += '<img src="'+val.img+'" />';
+                    }
+                    htmlInj += '</td>';
                     htmlInj += '<td class="left">'+key+'<input type="hidden" id="l_'+key+'_val" val="'+key+'" /></td>';
                     htmlInj += '<td class="left">'+val.name+'</td>';
                     htmlInj += '<td class="left"><input type="text" class="localName" value="" id="l_'+key+'" /><input type="hidden" id="l_'+key+'_pid" /></td>';

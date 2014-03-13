@@ -1,5 +1,6 @@
 Type: Enhancement, New Feature, Bug
 
+12-03-14 - Enhancement - Added filters to refine unlinked item searching and also thumbnail image to results.
 11-03-14 - Bug - Fixed manufacturer filter on manage items page.
 10-03-14 - Bug - Fixed notice in eBay profile list page for unset error variable
 10-03-14 - Bug - Fixed type cast value for item id from int to string

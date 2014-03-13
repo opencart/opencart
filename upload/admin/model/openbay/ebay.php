@@ -303,7 +303,7 @@ class ModelOpenbayEbay extends Model{
 		return $this->openbay->ebay->call('item/getItemsById/', array('item_ids' => $item_ids));
 	}
 
-	public function loadUnlinked($limit = 100, $page = 1){
+	public function loadUnlinked($limit = 100, $page = 1, $filter = array()){
 
 		$unlinked = array();
 
@@ -314,7 +314,7 @@ class ModelOpenbayEbay extends Model{
 			$this->openbay->ebay->log('Checking unlinked page: '.$page);
 
 			//some products from ebay (100)
-			$response = $this->openbay->ebay->getEbayItemList($limit, $page);
+			$response = $this->openbay->ebay->getEbayItemList($limit, $page, $filter);
 
 			if($this->openbay->ebay->lasterror == true){
 				break;

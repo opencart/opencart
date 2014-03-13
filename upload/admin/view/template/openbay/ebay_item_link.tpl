@@ -1,35 +1,26 @@
 <?php echo $header; ?>
 <div id="content">
-
     <div class="breadcrumb">
         <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <?php echo $breadcrumb['separator']; ?><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a>
         <?php } ?>
     </div>
-
     <div class="warning displayNone" id="errorBox"></div>
-
     <div class="box mBottom130">
-
         <div class="heading">
             <h1><?php echo $lang_heading; ?></h1>
             <div class="buttons">
                 <a href="<?php echo $return; ?>" class="button"><span><?php echo $lang_btn_return; ?></span></a>
             </div>
         </div>
-
         <div class="content">
-
             <?php if($validation == true) { ?>
-
             <p><?php echo $lang_link_desc1; ?></p>
             <p><?php echo $lang_link_desc2; ?></p>
             <p><?php echo $lang_link_desc3; ?></p>
             <p><?php echo $lang_link_desc4; ?></p>
-
             <h2><?php echo $lang_unlinked_items; ?></h2>
             <p><?php echo $lang_text_unlinked_desc; ?></p>
-
             <table class="list">
               <thead>
               <tr>
@@ -55,7 +46,6 @@
               </tr>
               </tbody>
             </table>
-
             <table class="list" cellpadding="2">
                 <thead>
                 <tr>
@@ -76,16 +66,13 @@
                 </tr>
                 </tbody>
             </table>
-
             <div class="buttons">
                 <a onclick="checkUnlinkedItems();" class="button" id="checkUnlinkedItems"><span><?php echo $lang_btn_check_unlinked; ?></span></a>
                 <img src="view/image/loading.gif" id="checkUnlinkedItemsLoading" class="displayNone" alt="Loading" />
                 <input type="hidden" name="unlinked_page" id="unlinked_page" value="1" />
             </div>
-
             <h2><?php echo $lang_linked_items; ?></h2>
             <p><?php echo $lang_text_linked_desc; ?></p>
-
             <table class="list" cellpadding="2">
                 <thead>
                 <tr>
@@ -111,7 +98,6 @@
                 <input type="hidden" name="item_id[]" id="item_id_<?php echo $id; ?>" value="<?php echo $id; ?>" class="item_id"  />
                 <input type="hidden" name="product_id[]" id="product_id_<?php echo $id; ?>" value="<?php echo $item['product_id']; ?>" />
                 <input type="hidden" name="options" id="options_<?php echo $id; ?>" value="<?php echo (int)$item['options']; ?>" />
-
                 <tr id="row_<?php echo $id; ?>" class="refreshRow">
                     <td class="left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
                     <td class="center"><a href="<?php echo $item['link_ebay']; ?>" target="_BLANK"><?php echo $id; ?></a></td>
@@ -132,13 +118,10 @@
                 <?php } ?>
                 </tbody>
             </table>
-
             <div class="pagination"><?php echo $pagination; ?></div>
-
             <?php }else{ ?>
             <div class="warning"><?php echo $lang_error_validation; ?></div>
             <?php } ?>
-
         </div>
     </div>
 </div>
@@ -337,63 +320,65 @@ function checkUnlinkedItems(){
         data: { 'filter_title' : $('#filter_title').val(), 'filter_qty_min' : $('#filter_qty_min').val(), 'filter_qty_max' : $('#filter_qty_max').val(), 'filter_variant' : $('#filter_variant').val() },
         dataType: 'json',
         beforeSend: function(){
-            $('#fetchingEbayItems').hide();
-            $('#checkUnlinkedItems').hide();
-            $('#checkUnlinkedItemsLoading').show();
+          $('#fetchingEbayItems').hide();
+          $('#checkUnlinkedItems').hide();
+          $('#checkUnlinkedItemsLoading').show();
+          $('.attention').remove();
         },
         success: function(json) {
+          if(json.data.items === null){
+            $('#eBayListings').append('<tr><td colspan="7"><p><?php echo $lang_ajax_error_listings; ?></p></td></tr>');
+          }else{
+            var htmlInj;
 
-            if(json.data.items === null){
-                $('#eBayListings').append('<tr><td colspan="7"><p><?php echo $lang_ajax_error_listings; ?></p></td></tr>');
-            }else{
-                var htmlInj;
+            $.each(json.data.items, function(key, val){
+              htmlInj = '';
+              htmlInj += '<tr class="listing" id="row'+key+'">';
+              htmlInj += '<td class="center">';
+              if (val.img != '') {
+                htmlInj += '<img src="'+val.img+'" />';
+              }
+              htmlInj += '</td>';
+              htmlInj += '<td class="left">'+key+'<input type="hidden" id="l_'+key+'_val" val="'+key+'" /></td>';
+              htmlInj += '<td class="left">'+val.name+'</td>';
+              htmlInj += '<td class="left"><input type="text" class="localName" value="" id="l_'+key+'" /><input type="hidden" id="l_'+key+'_pid" /></td>';
 
-                $.each(json.data.items, function(key, val){
-                    htmlInj = '';
-                    htmlInj += '<tr class="listing" id="row'+key+'">';
-                    htmlInj += '<td class="center">';
-                    if (val.img != '') {
-                      htmlInj += '<img src="'+val.img+'" />';
-                    }
-                    htmlInj += '</td>';
-                    htmlInj += '<td class="left">'+key+'<input type="hidden" id="l_'+key+'_val" val="'+key+'" /></td>';
-                    htmlInj += '<td class="left">'+val.name+'</td>';
-                    htmlInj += '<td class="left"><input type="text" class="localName" value="" id="l_'+key+'" /><input type="hidden" id="l_'+key+'_pid" /></td>';
-
-                    if(val.variants == 0){
-                        htmlInj += '<td class="center"><span id="l_'+key+'_qty"></span><input type="hidden" id="l_'+key+'_qtyinput" /></td>';
-                        htmlInj += '<td class="center"><span id="l_'+key+'_allocated"></span><input type="hidden" id="l_'+key+'_allocatedinput" /><input type="hidden" id="l_'+key+'_subtractinput" /></td>';
-                        htmlInj += '<td class="center"><span id="l_'+key+'_qtyebay">'+val.qty+'</span><input type="hidden" id="l_'+key+'_qtyebayinput" value="'+val.qty+'" /></td>';
-                        htmlInj += '<input type="hidden" name="variants" id="l_'+key+'_variants" value="0" />';
-                        htmlInj += '<td class="center"><img title="" alt="" src="view/image/delete.png" style="margin-top:3px;"></td>';
-                    }else{
-                        htmlInj += '<td class="center"><span id="l_'+key+'_qty"></span></td>';
-                        htmlInj += '<td class="center">-</td>';
-                        htmlInj += '<td class="center">';
-                        $.each(val.variants, function(key1, val1){
-                            htmlInj += val1.qty+' x ';
-                            $.each(val1.nv.NameValueList, function(key2, val2){
-                                htmlInj += val2.Value+' > ';
-                            });
-                            htmlInj += '<br />';
-                        });
-                        htmlInj += '</td>';
-                        htmlInj += '<input type="hidden" name="variants" id="l_'+key+'_variants" value="1" />';
-                        htmlInj += '<td class="center"><img title="Success" alt="Success" src="view/image/success.png" style="margin-top:3px;"></td>';
-                    }
-                    htmlInj += '<td class="center"><a style="display:none;" class="button" onclick="saveListingLink('+key+'); return false;" id="l_'+key+'_saveBtn"><span><?php echo $lang_btn_save; ?></span></a> <img src="view/image/loading.gif" class="displayNone" id="l_'+key+'_saveLoading" alt="Loading" /></td>';
-                    htmlInj += '</tr>';
-
-                    $('#eBayListings').append(htmlInj);
+              if(val.variants == 0){
+                htmlInj += '<td class="center"><span id="l_'+key+'_qty"></span><input type="hidden" id="l_'+key+'_qtyinput" /></td>';
+                htmlInj += '<td class="center"><span id="l_'+key+'_allocated"></span><input type="hidden" id="l_'+key+'_allocatedinput" /><input type="hidden" id="l_'+key+'_subtractinput" /></td>';
+                htmlInj += '<td class="center"><span id="l_'+key+'_qtyebay">'+val.qty+'</span><input type="hidden" id="l_'+key+'_qtyebayinput" value="'+val.qty+'" /></td>';
+                htmlInj += '<input type="hidden" name="variants" id="l_'+key+'_variants" value="0" />';
+                htmlInj += '<td class="center"><img title="" alt="" src="view/image/delete.png" style="margin-top:3px;"></td>';
+              }else{
+                htmlInj += '<td class="center"><span id="l_'+key+'_qty"></span></td>';
+                htmlInj += '<td class="center">-</td>';
+                htmlInj += '<td class="center">';
+                $.each(val.variants, function(key1, val1){
+                  htmlInj += val1.qty+' x ';
+                  $.each(val1.nv.NameValueList, function(key2, val2){
+                    htmlInj += val2.Value+' > ';
+                  });
+                  htmlInj += '<br />';
                 });
-            }
+                htmlInj += '</td>';
+                htmlInj += '<input type="hidden" name="variants" id="l_'+key+'_variants" value="1" />';
+                htmlInj += '<td class="center"><img title="" alt="" src="<?php echo HTTPS_SERVER; ?>view/image/success.png" style="margin-top:3px;"></td>';
+              }
+              htmlInj += '<td class="center"><a class="button displayNone" onclick="saveListingLink('+key+'); return false;" id="l_'+key+'_saveBtn"><span><?php echo $lang_btn_save; ?></span></a> <img src="<?php echo HTTPS_SERVER; ?>/view/image/loading.gif" class="displayNone" id="l_'+key+'_saveLoading" /></td>';
+              htmlInj += '</tr>';
 
+              $('#eBayListings').append(htmlInj);
+            });
+          }
 
-            if(json.data.more_pages == 1){
-                $('#checkUnlinkedItems').show();
-            }
-            $('#checkUnlinkedItemsLoading').hide();
-            $('#unlinked_page').val(json.data.next_page);
+          if(json.data.more_pages == 1){
+            $('#checkUnlinkedItems').show();
+          }
+          if (json.data.break == 1) {
+            $('#checkUnlinkedItems').before('<div class="attention" style="margin-bottom:10px;"><?php echo $lang_limit_reached; ?></div>');
+          }
+          $('#checkUnlinkedItemsLoading').hide();
+          $('#unlinked_page').val(json.data.next_page);
         },
         failure: function(){
             $('#checkUnlinkedItems').hide();

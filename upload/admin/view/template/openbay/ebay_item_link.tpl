@@ -19,9 +19,43 @@
     </div>
     <div class="panel-body">
       <p><?php echo $text_text_unlinked_desc; ?></p>
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="form-group">
+              <label class="control-label" for="filter_title"><?php echo $text_filter_title; ?></label>
+              <input type="text" name="filter_title" value="" placeholder="<?php echo $text_filter_title; ?>" id="filter_title" class="form-control" />
+            </div>
+            <div class="form-group">
+              <div class="row">
+                <div class="col-sm-12">
+                  <label class="control-label"><?php echo $text_filter_range; ?></label>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-6">
+                  <input type="text" name="filter_qty_min" value="" class="form-control" placeholder="<?php echo $text_filter_range_from; ?>" id="filter_qty_min" />
+                </div>
+                <div class="col-sm-6">
+                  <input type="text" name="filter_qty_max" value=""  class="form-control" placeholder="<?php echo $text_filter_range_to; ?>" id="filter_qty_max" />
+                </div>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="control-label"><?php echo $text_status; ?></label>
+              <select name="filter_variant" class="form-control" id="filter_variant">
+                <option value="1"><?php echo $text_yes; ?></option>
+                <option value="0"><?php echo $text_no; ?></option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <table class="table">
         <thead>
           <tr>
+            <th class="text-left"></th>
             <th class="text-left"><?php echo $text_column_itemId; ?></th>
             <th class="text-left"><?php echo $text_column_listing_title; ?></th>
             <th class="text-left"><?php echo $text_column_product_auto; ?></th>
@@ -34,7 +68,7 @@
         </thead>
         <tbody id="ebay-listings" style="display:none;">
           <tr id="fetching-ebay-items">
-            <td class="text-center" colspan="8"><?php echo $text_text_unlinked_info; ?></td>
+            <td class="text-center" colspan="9"><?php echo $text_text_unlinked_info; ?></td>
           </tr>
         </tbody>
       </table>
@@ -288,7 +322,8 @@
   
     $.ajax({
       url: 'index.php?route=openbay/ebay/loadUnlinked&token=<?php echo $token; ?>&page='+unlinked_page,
-      type: 'get',
+      type: 'POST',
+      data: { 'filter_title' : $('#filter_title').val(), 'filter_qty_min' : $('#filter_qty_min').val(), 'filter_qty_max' : $('#filter_qty_max').val(), 'filter_variant' : $('#filter_variant').val() },
       dataType: 'json',
       beforeSend: function() {
         $('#fetching-ebay-items').hide();
@@ -303,6 +338,11 @@
           $.each (json.data.items, function(key, val) {
             htmlInj = '';
             htmlInj += '<tr class="listing" id="row'+key+'">';
+            htmlInj += '<td class="text-center">';
+            if (val.img != '') {
+              htmlInj += '<img src="'+val.img+'" />';
+            }
+            htmlInj += '</td>';
             htmlInj += '<td class="text-left">'+key+'<input type="hidden" id="l_'+key+'_val" val="'+key+'" /></td>';
             htmlInj += '<td class="text-left">'+val.name+'</td>';
             htmlInj += '<td class="text-left"><input type="text" class="form-control product-search" placeholder="<?php echo $text_column_product_auto; ?>" value="" id="l_'+key+'" /><input type="hidden" id="l_'+key+'_pid" /></td>';

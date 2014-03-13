@@ -29,4 +29,3 @@ class ModelOpenbayAmazonusPatch extends Model {
 		return true;
 	}
 }
-?>

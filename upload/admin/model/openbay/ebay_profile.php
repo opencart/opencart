@@ -139,4 +139,3 @@ class ModelOpenbayEbayProfile extends Model{
 		$this->db->query("UPDATE `" . DB_PREFIX . "ebay_profile` SET `default` = '0' WHERE `type` = '".(int)$type."'");
 	}
 }
-?>

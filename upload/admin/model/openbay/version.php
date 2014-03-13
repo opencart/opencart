@@ -4,4 +4,3 @@ class ModelOpenbayVersion extends Model {
 		return (int)2157;
 	}
 }
-?>

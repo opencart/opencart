@@ -112,4 +112,3 @@ class ModelOpenbayOrder extends Model {
 		return 'Web';
 	}
 }
-?>

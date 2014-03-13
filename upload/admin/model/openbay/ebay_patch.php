@@ -8,4 +8,3 @@ class ModelOpenbayEbayPatch extends Model {
 		return true;
 	}
 }
-?>

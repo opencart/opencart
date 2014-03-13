@@ -773,4 +773,3 @@ class ModelOpenbayAmazon extends Model {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "setting` WHERE `group` = 'openbay_amazon'");
 	}
 }
-?>

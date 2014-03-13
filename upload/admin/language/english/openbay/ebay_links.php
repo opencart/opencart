@@ -46,3 +46,11 @@ $_['text_column_stock_available']   = 'Shop stock level';
 $_['text_column_listing_title']     = 'eBay listing title';
 $_['text_column_allocated']         = 'Allocated stock';
 $_['text_column_ebay_stock']        = 'eBay stock level';
+
+// Filter
+$_['text_filter']             		= 'Filter results';
+$_['text_filter_title']             = 'Title';
+$_['text_filter_range']             = 'Stock range';
+$_['text_filter_range_from']        = 'Min';
+$_['text_filter_range_to']          = 'Max';
+$_['text_filter_var']             	= 'Include variants';

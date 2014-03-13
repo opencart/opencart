@@ -231,4 +231,3 @@ class ModelOpenbayAmazonListing extends Model {
 		return false;
 	}
 }
-?>

@@ -89,8 +89,6 @@ $(document).ready(function() {
 	
 	// Header Cart button
 	$('#cart').on('show.bs.dropdown', function() {
-		$('#cart > ul').remove()
-		
 		$.ajax({
 			url: 'index.php?route=module/cart/info',
 			dataType: 'html',
@@ -105,7 +103,11 @@ $(document).ready(function() {
 			}
 		});		
 	});
-		
+	
+	$('#cart').on('hide.bs.dropdown', function() {
+		$('#cart > ul').remove()
+	});
+			
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
 	

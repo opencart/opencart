@@ -298,7 +298,7 @@ class ControllerCheckoutCart extends Controller {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/cart.tpl', $data));
 			} else {
 				$this->response->setOutput($this->load->view('default/template/checkout/cart.tpl', $data));
-			}					
+			}
     	} else {
       		$data['heading_title'] = $this->language->get('heading_title');
 

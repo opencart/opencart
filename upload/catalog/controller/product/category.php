@@ -39,12 +39,7 @@ class ControllerProductCategory extends Controller {
 			$limit = $this->config->get('config_product_limit');
 		}
 
-		$data['breadcrumbs'] = array();
-
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-   		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
 
 		if (isset($this->request->get['path'])) {
 			$url = '';
@@ -77,10 +72,7 @@ class ControllerProductCategory extends Controller {
 				$category_info = $this->model_catalog_category->getCategory($path_id);
 
 				if ($category_info) {
-	       			$data['breadcrumbs'][] = array(
-   	    				'text' => $category_info['name'],
-						'href' => $this->url->link('product/category', 'path=' . $path . $url)
-        			);
+					$this->document->addBreadcrumb( $category_info['name'], $this->url->link('product/category', 'path=' . $path . $url) );
 				}
 			}
 		} else {
@@ -135,11 +127,8 @@ class ControllerProductCategory extends Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-
-			$data['breadcrumbs'][] = array(
-				'text' => $category_info['name'],
-				'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'])
-			);
+			
+			$this->document->addBreadcrumb( $category_info['name'], $this->url->link('product/category', 'path=' . $this->request->get['path']) );
 
 			if ($category_info['image']) {
 				$data['thumb'] = $this->model_tool_image->resize($category_info['image'], $this->config->get('config_image_category_width'), $this->config->get('config_image_category_height'));
@@ -373,10 +362,6 @@ class ControllerProductCategory extends Controller {
 
 			$data['continue'] = $this->url->link('common/home');
 		
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');			
 			
@@ -412,10 +397,7 @@ class ControllerProductCategory extends Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('product/category', $url)
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_error'), $this->url->link('product/category', $url) );
 
 			$this->document->setTitle($this->language->get('text_error'));
 
@@ -427,10 +409,6 @@ class ControllerProductCategory extends Controller {
 
       		$data['continue'] = $this->url->link('common/home');
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');			
 			

@@ -13,17 +13,8 @@ class ControllerAccountOrder extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
 
 		$url = '';
 
@@ -31,10 +22,7 @@ class ControllerAccountOrder extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/order', $url, 'SSL')
-		);
+		$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/order', $url, 'SSL') );
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -91,10 +79,6 @@ class ControllerAccountOrder extends Controller {
 
 		$data['continue'] = $this->url->link('account/account', '', 'SSL');
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
@@ -127,17 +111,8 @@ class ControllerAccountOrder extends Controller {
 		if ($order_info) {
 			$this->document->setTitle($this->language->get('text_order'));
 
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home')
-			); 
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', 'SSL')     	
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+			$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
 
 			$url = '';
 
@@ -145,15 +120,8 @@ class ControllerAccountOrder extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/order', $url, 'SSL')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_order'),
-				'href' => $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, 'SSL')
-			);
+			$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/order', $url, 'SSL') );
+			$this->document->addBreadcrumb( $this->language->get('text_order'), $this->url->link('account/order/info', 'order_id=' . $this->request->get['order_id'] . $url, 'SSL') );
 
 			$data['heading_title'] = $this->language->get('text_order');
 
@@ -365,10 +333,6 @@ class ControllerAccountOrder extends Controller {
 
 			$data['continue'] = $this->url->link('account/order', '', 'SSL');
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');;
 
@@ -386,34 +350,13 @@ class ControllerAccountOrder extends Controller {
 
 			$data['button_continue'] = $this->language->get('button_continue');
 
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', 'SSL')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/order', '', 'SSL')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_order'),
-				'href' => $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL')
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+			$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
+			$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/order', '', 'SSL') );
+			$this->document->addBreadcrumb( $this->language->get('text_order'), $this->url->link('account/order/info', 'order_id=' . $order_id, 'SSL') );
 
 			$data['continue'] = $this->url->link('account/order', '', 'SSL');
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');								
 

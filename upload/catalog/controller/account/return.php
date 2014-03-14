@@ -13,17 +13,8 @@ class ControllerAccountReturn extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
 
 		$url = '';
 
@@ -31,10 +22,7 @@ class ControllerAccountReturn extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/return', $url, 'SSL')
-		);
+		$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/return', $url, 'SSL') );
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -86,10 +74,6 @@ class ControllerAccountReturn extends Controller {
 
 		$data['continue'] = $this->url->link('account/account', '', 'SSL');
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
@@ -122,17 +106,8 @@ class ControllerAccountReturn extends Controller {
 		if ($return_info) {
 			$this->document->setTitle($this->language->get('text_return'));
 
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home', '', 'SSL')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', 'SSL')
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+			$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
 
 			$url = '';
 
@@ -140,15 +115,8 @@ class ControllerAccountReturn extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}	
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/return', $url, 'SSL')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_return'),
-				'href' => $this->url->link('account/return/info', 'return_id=' . $this->request->get['return_id'] . $url, 'SSL')
-			);			
+			$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/return', $url, 'SSL') );
+			$this->document->addBreadcrumb( $this->language->get('text_return'), $this->url->link('account/return/info', 'return_id=' . $this->request->get['return_id'] . $url, 'SSL') );
 
 			$data['heading_title'] = $this->language->get('text_return');
 
@@ -207,10 +175,6 @@ class ControllerAccountReturn extends Controller {
 
 			$data['continue'] = $this->url->link('account/return', $url, 'SSL');
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
@@ -222,22 +186,9 @@ class ControllerAccountReturn extends Controller {
 		} else {
 			$this->document->setTitle($this->language->get('text_return'));
 
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/home')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_account'),
-				'href' => $this->url->link('account/account', '', 'SSL')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('account/return', '', 'SSL')
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+			$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
+			$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/return', '', 'SSL') );
 
 			$url = '';
 
@@ -245,10 +196,7 @@ class ControllerAccountReturn extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_return'),
-				'href' => $this->url->link('account/return/info', 'return_id=' . $return_id . $url, 'SSL')
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_return'), $this->url->link('account/return/info', 'return_id=' . $return_id . $url, 'SSL') );
 
 			$data['heading_title'] = $this->language->get('text_return');
 
@@ -258,10 +206,6 @@ class ControllerAccountReturn extends Controller {
 
 			$data['continue'] = $this->url->link('account/return', '', 'SSL');
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
@@ -306,22 +250,9 @@ class ControllerAccountReturn extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/return/insert', '', 'SSL')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
+		$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/return/insert', '', 'SSL') );
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -542,10 +473,6 @@ class ControllerAccountReturn extends Controller {
 
 		$data['back'] = $this->url->link('account/account', '', 'SSL');
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
@@ -561,17 +488,8 @@ class ControllerAccountReturn extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title')); 
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/return', '', 'SSL')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/return', '', 'SSL') );
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -581,10 +499,6 @@ class ControllerAccountReturn extends Controller {
 
 		$data['continue'] = $this->url->link('common/home');
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 

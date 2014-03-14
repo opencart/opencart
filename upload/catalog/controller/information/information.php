@@ -5,12 +5,7 @@ class ControllerInformationInformation extends Controller {
 
 		$this->load->model('catalog/information');
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
 
 		if (isset($this->request->get['information_id'])) {
 			$information_id = (int)$this->request->get['information_id'];
@@ -25,10 +20,7 @@ class ControllerInformationInformation extends Controller {
 			$this->document->setDescription($information_info['meta_description']);
 			$this->document->setKeywords($information_info['meta_keyword']);
 
-			$data['breadcrumbs'][] = array(
-				'text' => $information_info['title'],
-				'href' => $this->url->link('information/information', 'information_id=' .  $information_id)
-			);
+			$this->document->addBreadcrumb( $information_info['title'], $this->url->link('information/information', 'information_id=' .  $information_id) );
 
 			$data['heading_title'] = $information_info['title'];
 
@@ -38,10 +30,6 @@ class ControllerInformationInformation extends Controller {
 
 			$data['continue'] = $this->url->link('common/home');
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 
@@ -51,10 +39,7 @@ class ControllerInformationInformation extends Controller {
 				$this->response->setOutput($this->load->view('default/template/information/information.tpl', $data));
 			}
 		} else {
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('information/information', 'information_id=' . $information_id)
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_error'), $this->url->link('information/information', 'information_id=' .  $information_id) );
 
 			$this->document->setTitle($this->language->get('text_error'));
 
@@ -66,10 +51,6 @@ class ControllerInformationInformation extends Controller {
 
 			$data['continue'] = $this->url->link('common/home');
 
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 

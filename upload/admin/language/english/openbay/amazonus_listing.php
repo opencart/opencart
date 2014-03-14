@@ -167,6 +167,7 @@ $_['links_name_empty_warning'] = 'Product name can not be empty!';
 $_['links_product_warning'] = 'Product does not exist. Please use autocomplete values.';
 $_['option_default'] = '-- Select option --';
 $_['lang_error_load_nodes'] = 'Unable to load browse nodes';
+$_['error_not_searched'] = 'Search for matching items before you try to list. Items must be matched against an Amazon catalog item';
 
 //Listing edit page
 $_['text_edit_heading'] = 'Listing overview';

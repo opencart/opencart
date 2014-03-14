@@ -245,19 +245,19 @@ header h3 small {
 
 /*Modules*/
 .modules {
-	padding: 0 50px 50px 50px;
+	padding: 50px 50px 50px 50px;
 	background: #fff;
 }
 @media (min-width: 992px) {
 	.modules {
-		padding: 0 100px 50px 100px;
+		padding: 50px;
 	}
 }
 .modules h2 {
 	margin: 50px 0;
 }
 .modules .module {
-	margin: 0 0 50px 0;
+	margin: 0px 0 50px 0;
 }
 .modules .thumbnail {
 	margin: 0 25px 0 0;

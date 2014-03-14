@@ -8,6 +8,10 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$server = $this->config->get('config_url');
 		}
+		
+		$data['column_left']	= $this->load->controller('common/column_left');
+		$data['column_right']	= $this->load->controller('common/column_right');
+		$data['content_top']	= $this->load->controller('common/content_top');
 
 		$data['base'] = $server;
 		$data['description'] = $this->document->getDescription();
@@ -19,6 +23,7 @@ class ControllerCommonHeader extends Controller {
 		$data['direction'] = $this->language->get('direction');
 		$data['google_analytics'] = html_entity_decode($this->config->get('config_google_analytics'), ENT_QUOTES, 'UTF-8');
 		$data['name'] = $this->config->get('config_name');
+		$data['breadcrumbs'] = $this->document->getBreadcrumbs();
 		
 		if (is_file(DIR_IMAGE . $this->config->get('config_icon'))) {
 			$data['icon'] = $server . 'image/' . $this->config->get('config_icon');
@@ -124,7 +129,7 @@ class ControllerCommonHeader extends Controller {
 		} else {
 			$data['class'] = 'common-home';
 		}
-						
+		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/common/header.tpl', $data);
 		} else {

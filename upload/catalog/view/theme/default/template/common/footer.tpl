@@ -1,3 +1,10 @@
+			<?php echo $content_bottom; ?>
+		</div> <!-- #content -->
+		
+		<?php echo $column_right; ?>
+	</div> <!-- .row -->
+</div> <!-- .container -->
+
 <footer>
   <div class="container">
     <div class="row">

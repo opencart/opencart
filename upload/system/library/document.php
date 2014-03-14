@@ -6,6 +6,7 @@ class Document {
 	private $links = array();
 	private $styles = array();
 	private $scripts = array();
+	private $breadcrumbs = array();
 
 	public function setTitle($title) {
 		$this->title = $title;
@@ -60,5 +61,16 @@ class Document {
 
 	public function getScripts() {
 		return $this->scripts;
+	}
+    
+    public function addBreadcrumb($text, $href) {
+		$this->breadcrumbs[] = array(
+			'text'      => $text,
+			'href'      => $href
+		);			
+	}
+	
+	public function getBreadcrumbs() {
+		return $this->breadcrumbs;
 	}
 }

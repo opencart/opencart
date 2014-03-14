@@ -130,6 +130,14 @@ class ControllerCommonHeader extends Controller {
 			$data['class'] = 'common-home';
 		}
 		
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+			
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+		
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/header.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/common/header.tpl', $data);
 		} else {

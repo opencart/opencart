@@ -75,12 +75,7 @@ class ControllerProductSearch extends Controller {
 
 		$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
-		$data['breadcrumbs'] = array();
-
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-   		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
 
 		$url = '';
 
@@ -120,10 +115,7 @@ class ControllerProductSearch extends Controller {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('product/search', $url)
-   		);
+		$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('product/search', $url) );
 
 		if (isset($this->request->get['search'])) {
     		$data['heading_title'] = $this->language->get('heading_title') .  ' - ' . $this->request->get['search'];
@@ -441,10 +433,6 @@ class ControllerProductSearch extends Controller {
 		$data['order'] = $order;
 		$data['limit'] = $limit;
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 		

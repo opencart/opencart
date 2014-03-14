@@ -1,9 +1,13 @@
 <?php
 // Heading
-$_['heading_step_1']         = 'Step 1 - License';
-$_['heading_step_2']         = 'Step 2 - Pre-Installation';
-$_['heading_step_3']         = 'Step 3 - Configuration';
-$_['heading_step_4']         = 'Step 4 - Finished!';
+$_['heading_step_1']         = 'License agreement';
+$_['heading_step_1_small']   = 'Please read the OpenCart licence agreement';
+$_['heading_step_2']         = 'Pre-Installation';
+$_['heading_step_2_small']   = 'Check your server is set-up correctly';
+$_['heading_step_3']         = 'Configuration';
+$_['heading_step_3_small']   = 'Enter your database and administration details';
+$_['heading_step_4']         = 'Installation complete';
+$_['heading_step_4_small']   = 'Ready to start selling!';
 
 // Text
 $_['text_license']           = 'License';

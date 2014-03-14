@@ -1,6 +1,18 @@
 <?php echo $header; ?>
 <div class="container">
-  <h1><?php echo $heading_step_2; ?></h1>
+  <header>
+    <div class="row">
+      <div class="col-sm-6">
+        <h1 class="pull-left">2<small>/4</small></h1>
+        <h3><?php echo $heading_step_2; ?><br><small><?php echo $heading_step_2_small; ?></small></h3>
+      </div>
+      <div class="col-sm-6">
+        <div id="logo" class="pull-right hidden-xs">
+          <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" />
+        </div>
+      </div>
+    </div>
+  </header>
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -287,4 +299,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

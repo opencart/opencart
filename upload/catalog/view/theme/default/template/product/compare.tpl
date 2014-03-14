@@ -1,5 +1,11 @@
 <?php echo $header; ?>
-
+  
+  <?php if ($success) { ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
+  
   <h1><?php echo $heading_title; ?></h1>
   <?php if ($products) { ?>
   <table class="table table-bordered">

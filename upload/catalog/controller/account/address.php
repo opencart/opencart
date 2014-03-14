@@ -151,20 +151,9 @@ class ControllerAccountAddress extends Controller {
 	}
 
 	protected function getList() {
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/address', '', 'SSL')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
+		$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/address', '', 'SSL') );
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -238,10 +227,6 @@ class ControllerAccountAddress extends Controller {
 		$data['insert'] = $this->url->link('account/address/insert', '', 'SSL');
 		$data['back'] = $this->url->link('account/account', '', 'SSL');
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
@@ -253,33 +238,14 @@ class ControllerAccountAddress extends Controller {
 	}
 
 	protected function getForm() {
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('account/account', '', 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('account/address', '', 'SSL')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
+		$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/address', '', 'SSL') );
 
 		if (!isset($this->request->get['address_id'])) {
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_edit_address'),
-				'href' => $this->url->link('account/address/insert', '', 'SSL')
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_edit_address'), $this->url->link('account/address/insert', '', 'SSL') );
 		} else {
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_edit_address'),
-				'href' => $this->url->link('account/address/update', 'address_id=' . $this->request->get['address_id'], 'SSL')
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_edit_address'), $this->url->link('account/address/update', 'address_id=' . $this->request->get['address_id'], 'SSL') );
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -477,10 +443,6 @@ class ControllerAccountAddress extends Controller {
 
 		$data['back'] = $this->url->link('account/address', '', 'SSL');
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 

@@ -90,7 +90,7 @@ $_['advanced_listing_tab_text'] = 'Advanced listing';
 $_['saved_tab_text'] = 'Saved listings';
 
 //Errors
-$_['text_error_connecting'] = 'Warning: There was problem connecting to Welford Media API servers. Please check your OpenBay Pro Amazon US extension settings. If the problem persists, please contact Welford support.';
+$_['text_error_connecting'] = 'Warning: There was problem connecting to the API. Please check your OpenBay Pro Amazon extension settings. If the problem persists, please contact support.';
 
 // Quick/advanced listing tabs
 $_['quick_listing_description'] = 'Use this method when matching product already exist in Amazon US catalogue. Matching is found by Amazon US using Standard product id (ASIN, ISBN, UPS, EAN)';
@@ -168,6 +168,7 @@ $_['links_name_empty_warning'] = 'Product name can not be empty!';
 $_['links_product_warning'] = 'Product does not exist. Please use autocomplete values.';
 $_['option_default'] = '-- Select option --';
 $_['text_error_load_nodes'] = 'Unable to load browse nodes';
+$_['error_not_searched'] = 'Search for matching items before you try to list. Items must be matched against an Amazon catalog item';
 
 //Listing edit page
 $_['text_edit_heading'] = 'Listing overview';

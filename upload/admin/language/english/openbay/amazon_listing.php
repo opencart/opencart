@@ -161,7 +161,7 @@ $_['button_saved_listings'] = "View saved listings";
 
 //Errors
 $_['text_error_load_nodes'] = 'Unable to load browse nodes';
-$_['text_error_connecting'] = 'Warning: There was problem connecting to Welford Media API servers. Please check your OpenBay Pro Amazon extension settings. If the problem persists, please contact Welford support.';
+$_['text_error_connecting'] = 'Warning: There was problem connecting to the API. Please check your OpenBay Pro Amazon extension settings. If the problem persists, please contact support.';
 $_['error_text_missing'] = 'You must enter some search details';
 $_['error_data_missing'] = 'Required data is missing';
 $_['error_missing_asin'] = 'ASIN is missing';
@@ -175,6 +175,7 @@ $_['error_price'] = 'You must enter a price for the item';
 $_['error_sending_products'] = 'Could not send products for listing. Please contact OpenBay Pro support';
 $_['text_no_results'] = 'No results found';
 $_['error_no_products_selected'] = 'No products were selected for listing';
+$_['error_not_searched'] = 'Search for matching items before you try to list. Items must be matched against an Amazon catalog item';
 
 //Messages
 $_['text_product_sent'] = 'Product was successfully sent to Amazon.';

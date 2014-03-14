@@ -602,57 +602,64 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function doBulkList() {
-		$this->load->language('openbay/amazon_listing');
-		$this->load->model('openbay/amazon_listing');
+		$this->load->language('amazon/listing');
 
-		$delete_search_results = array();
+		if (empty($this->request->post['products'])) {
+			$json = array(
+				'message' => $this->language->get('error_not_searched'),
+			);
+		} else {
+			$this->load->model('openbay/amazon_listing');
 
-		$bulk_list_products = array();
+			$delete_search_results = array();
 
-		foreach ($this->request->post['products'] as $product_id => $asin) {
-			$delete_search_results[] = $product_id;
+			$bulk_list_products = array();
 
-			if (!empty($asin)) {
-				$bulk_list_products[$product_id] = $asin;
-			}
-		}
+			foreach ($this->request->post['products'] as $product_id => $asin) {
+				$delete_search_results[] = $product_id;
 
-		$status = false;
-
-		if ($bulk_list_products) {
-			$data = array();
-
-			$data['products'] = $bulk_list_products;
-			$data['marketplace'] = $this->request->post['marketplace'];
-
-			if (!empty($this->request->post['start_selling'])) {
-				$data['start_selling'] = $this->request->post['start_selling'];
+				if (!empty($asin)) {
+					$bulk_list_products[$product_id] = $asin;
+				}
 			}
 
-			if (!empty($this->request->post['condition']) && !empty($this->request->post['condition_note'])) {
-				$data['condition'] = $this->request->post['condition'];
-				$data['condition_note'] = $this->request->post['condition_note'];
-			}
+			$status = false;
 
-			$status = $this->model_openbay_amazon_listing->doBulkListing($data);
+			if ($bulk_list_products) {
+				$data = array();
 
-			if ($status) {
-				$message = $this->language->get('text_products_sent');
+				$data['products'] = $bulk_list_products;
+				$data['marketplace'] = $this->request->post['marketplace'];
 
-				if ($delete_search_results) {
-					$this->model_openbay_amazon_listing->deleteSearchResults($this->request->post['marketplace'], $delete_search_results);
+				if (!empty($this->request->post['start_selling'])) {
+					$data['start_selling'] = $this->request->post['start_selling'];
+				}
+
+				if (!empty($this->request->post['condition']) && !empty($this->request->post['condition_note'])) {
+					$data['condition'] = $this->request->post['condition'];
+					$data['condition_note'] = $this->request->post['condition_note'];
+				}
+
+				$status = $this->model_openbay_amazon_listing->doBulkListing($data);
+
+				if ($status) {
+					$message = $this->language->get('text_products_sent');
+
+					if ($delete_search_results) {
+						$this->model_openbay_amazon_listing->deleteSearchResults($this->request->post['marketplace'], $delete_search_results);
+					}
+				} else {
+					$message = $this->language->get('error_sending_products');
 				}
 			} else {
-				$message = $this->language->get('error_sending_products');
+				$message = $this->language->get('error_no_products_selected');
 			}
-		} else {
-			$message = $this->language->get('error_no_products_selected');
-		}
 
-		$json = array(
-			'status' => $status,
-			'message' => $message,
-		);
+			$json = array(
+				'status' => $status,
+				'message' => $message,
+			);
+		}
 
 		$this->response->setOutput(json_encode($json));
 	}

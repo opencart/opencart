@@ -37,17 +37,8 @@ class ControllerCheckoutCart extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
-      	$data['breadcrumbs'] = array();
-
-      	$data['breadcrumbs'][] = array(
-        	'href' => $this->url->link('common/home'),
-        	'text' => $this->language->get('text_home')
-      	); 
-
-      	$data['breadcrumbs'][] = array(
-        	'href' => $this->url->link('checkout/cart'),
-        	'text' => $this->language->get('heading_title')
-      	);
+      	$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+      	$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('checkout/cart') );
 			
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
       		$data['heading_title'] = $this->language->get('heading_title');
@@ -283,13 +274,10 @@ class ControllerCheckoutCart extends Controller {
 			$data['voucher'] = $this->load->controller('module/voucher');
 			$data['reward'] = $this->load->controller('module/reward');
 			$data['shipping'] = $this->load->controller('module/shipping');
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
-								
+			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/cart.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/cart.tpl', $data));
 			} else {
@@ -306,10 +294,6 @@ class ControllerCheckoutCart extends Controller {
 
 			unset($this->session->data['success']);
 			
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 					

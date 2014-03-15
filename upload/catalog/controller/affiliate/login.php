@@ -32,22 +32,9 @@ class ControllerAffiliateLogin extends Controller {
 			} 
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_account'),
-			'href' => $this->url->link('affiliate/account', '', 'SSL')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_login'),
-			'href' => $this->url->link('affiliate/login', '', 'SSL')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('affiliate/account', '', 'SSL') );
+		$this->document->addBreadcrumb( $this->language->get('text_login'), $this->url->link('affiliate/login', '', 'SSL') );
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -104,10 +91,6 @@ class ControllerAffiliateLogin extends Controller {
 			$data['password'] = '';
 		}
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 

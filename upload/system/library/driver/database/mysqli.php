@@ -19,7 +19,7 @@ final class DBMySQLi {
 			if (isset($query->num_rows)) {
 				$data = array();
 
-				while ($row = $query->fetch_array()) {
+				while ($row = $query->fetch_assoc()) {
 					$data[] = $row;
 				}
 

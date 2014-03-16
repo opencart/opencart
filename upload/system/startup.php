@@ -54,7 +54,7 @@ function modification($filename) {
 	}
 	
 	if (substr($filename, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
-		$file = DIR_MODIFICATION . 'system_' . str_replace('/', '_', substr($filename, strlen(DIR_APPLICATION)));
+		$file = DIR_MODIFICATION . 'system_' . str_replace('/', '_', substr($filename, strlen(DIR_SYSTEM)));
 	}
 	
 	if (file_exists($file)) {

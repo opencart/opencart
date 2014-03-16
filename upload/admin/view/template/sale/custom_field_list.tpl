@@ -39,7 +39,11 @@
                   <?php } else { ?>
                   <a href="<?php echo $sort_type; ?>"><?php echo $column_type; ?></a>
                   <?php } ?></td>
-                <td class="text-left"><?php echo $column_location; ?></td>
+                <td class="text-left"><?php if ($sort == 'cf.location') { ?>
+                  <a href="<?php echo $sort_location; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_location; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_location; ?>"><?php echo $column_location; ?></a>
+                  <?php } ?></td>
                 <td class="text-right"><?php if ($sort == 'cf.sort_order') { ?>
                   <a href="<?php echo $sort_sort_order; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
                   <?php } else { ?>
@@ -59,7 +63,7 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $custom_field['name']; ?></td>
                 <td class="text-left"><?php echo $custom_field['type']; ?></td>
-                <td class="text-left"><?php echo $custom_field['storage']; ?></td>
+                <td class="text-left"><?php echo $custom_field['location']; ?></td>
                 <td class="text-right"><?php echo $custom_field['sort_order']; ?></td>
                 <td class="text-right"><a href="<?php echo $custom_field['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>

@@ -3,7 +3,7 @@ $(document).ready(function() {
 	$('#currency a').on('click', function(e) {
 		e.preventDefault();
 		
-		$('#currency input[name=\'currency_code\']').attr('value', $(this).attr('href'));
+		$('#currency input[name=\'code\']').attr('value', $(this).attr('href'));
 	
 		$('#currency').submit();
 	});	
@@ -12,7 +12,7 @@ $(document).ready(function() {
 	$('#language a').on('click', function(e) {
 		e.preventDefault();
 		
-		$('#language input[name=\'language_code\']').attr('value', $(this).attr('href'));
+		$('#language input[name=\'code\']').attr('value', $(this).attr('href'));
 	
 		$('#language').submit();
 	});	
@@ -21,10 +21,10 @@ $(document).ready(function() {
     $('#search input[name=\'search\']').parent().find('button').on('click', function() {
         url = $('base').attr('href') + 'index.php?route=product/search';
         
-		var search = $('header input[name=\'search\']').val();
+		var value = $('header input[name=\'search\']').val();
 		         
-        if (search) {
-            url += '&search=' + encodeURIComponent(search);
+        if (value) {
+            url += '&search=' + encodeURIComponent(value);
         }
         
         location = url;
@@ -87,8 +87,34 @@ $(document).ready(function() {
 		$('#grid-view').trigger('click');
 	}
 	
+	// Header Cart button
+	$('#cart').on('show.bs.dropdown', function() {
+		$.ajax({
+			url: 'index.php?route=module/cart/info',
+			dataType: 'html',
+			beforeSend: function() {
+				$('#cart > button').button('loading');
+			},      
+			complete: function() {
+				$('#cart > button').button('reset');
+			},					
+			success: function(html) {
+				$('#cart > button').after(html);
+			}
+		});		
+	});
+	
+	$('#cart').on('hide.bs.dropdown', function() {
+		$('#cart > ul').remove()
+	});
+			
 	// tooltips on hover
 	$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	
+	// Makes tooltips work on ajax generated content
+	$(document).ajaxStop(function() {
+		$('[data-toggle=\'tooltip\']').tooltip({container: 'body'});
+	});	
 });
 
 function getURLVar(key) {
@@ -114,7 +140,7 @@ function getURLVar(key) {
         }
     }
 } 
-
+	
 function addToCart(product_id, quantity) {
     quantity = typeof(quantity) != 'undefined' ? quantity : 1;
 
@@ -141,7 +167,47 @@ function addToCart(product_id, quantity) {
     });
 }
 
-function addToWishList(product_id) {
+function removeCart(key) {
+    $.ajax({
+        url: 'index.php?route=module/cart',
+        type: 'post',
+        data: 'key=' + key,
+        dataType: 'json',
+        success: function(json) {
+        	$('#cart-total').html(json['total']);
+			
+			if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
+				location = 'index.php?route=checkout/cart';
+			} else {
+				$('#cart').load('index.php?route=module/cart/info');
+			}			
+		}
+    });	
+}
+
+function addVoucher() {
+	
+}
+
+function removeVoucher(key) {
+    $.ajax({
+        url: 'index.php?route=account/voucher/remove',
+        type: 'post',
+        data: 'key=' + key,
+        dataType: 'json',
+        success: function(json) {
+        	$('#cart-total').html(json['total']);
+			
+			if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
+				location = 'index.php?route=checkout/cart';
+			} else {
+				$('#cart').load('index.php?route=module/cart');
+			}			
+		}
+    });		
+}
+
+function addWishList(product_id) {
     $.ajax({
         url: 'index.php?route=account/wishlist/add',
         type: 'post',
@@ -161,7 +227,7 @@ function addToWishList(product_id) {
     });
 }
 
-function addToCompare(product_id) { 
+function addCompare(product_id) { 
     $.ajax({
         url: 'index.php?route=product/compare/add',
         type: 'post',

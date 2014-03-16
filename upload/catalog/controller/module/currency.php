@@ -1,19 +1,6 @@
 <?php  
 class ControllerModuleCurrency extends Controller {
 	public function index() {
-		if (isset($this->request->post['currency_code'])) {
-      		$this->currency->set($this->request->post['currency_code']);
-			
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			
-			if (isset($this->request->post['redirect'])) {
-				$this->response->redirect($this->request->post['redirect']);
-			} else {
-				$this->response->redirect($this->url->link('common/home'));
-			}
-   		}
-		
 		$this->load->language('module/currency');
 		
     	$data['text_currency'] = $this->language->get('text_currency');
@@ -24,9 +11,9 @@ class ControllerModuleCurrency extends Controller {
 			$connection = 'NONSSL';
 		}
 		
-		$data['action'] = $this->url->link('module/currency', '', $connection);
+		$data['action'] = $this->url->link('module/currency/currency', '', $connection);
 		
-		$data['currency_code'] = $this->currency->getCode(); 
+		$data['code'] = $this->currency->getCode(); 
 		
 		$this->load->model('localisation/currency');
 		 
@@ -70,5 +57,20 @@ class ControllerModuleCurrency extends Controller {
 		} else {
 			return $this->load->view('default/template/module/currency.tpl', $data);
 		}
+	}
+	
+	public function currency() {
+		if (isset($this->request->post['code'])) {
+      		$this->currency->set($this->request->post['code']);
+			
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+   		}
+		
+		if (isset($this->request->post['redirect'])) {
+			$this->response->redirect($this->request->post['redirect']);
+		} else {
+			$this->response->redirect($this->url->link('common/home'));
+		}		
 	}
 }

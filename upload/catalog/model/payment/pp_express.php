@@ -14,7 +14,6 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function call($data) {
-
 		if ($this->config->get('pp_express_test') == 1) {
 			$api_endpoint = 'https://api-3t.sandbox.paypal.com/nvp';
 		} else {
@@ -26,7 +25,7 @@ class ModelPaymentPPExpress extends Model {
 			'PWD' => $this->config->get('pp_express_password'),
 			'SIGNATURE' => $this->config->get('pp_express_signature'),
 			'VERSION' => '65.2',
-			'BUTTONSOURCE' => 'OpenCart_Cart_EC',
+			'BUTTONSOURCE' => 'OpenCart_2.0_EC',
 		);
 
 		$this->log($data, 'Call data');
@@ -61,14 +60,16 @@ class ModelPaymentPPExpress extends Model {
 	}
 
 	public function createToken($len = 32) {
-		$base='ABCDEFGHKLMNOPQRSTWXYZabcdefghjkmnpqrstwxyz123456789';
-		$max=strlen($base)-1;
-		$activatecode='';
+		$base = 'ABCDEFGHKLMNOPQRSTWXYZabcdefghjkmnpqrstwxyz123456789';
+		$max = strlen($base)-1;
+		$activate_code = '';
 		mt_srand((double)microtime()*1000000);
-		while (strlen($activatecode)<$len+1)
-			$activatecode.=$base{mt_rand(0,$max)};
 
-		return $activatecode;
+		while (strlen($activate_code)<$len+1) {
+			$activate_code .= $base{mt_rand(0, $max)};
+		}
+
+		return $activate_code;
 	}
 
 	public function log($data, $title = null) {

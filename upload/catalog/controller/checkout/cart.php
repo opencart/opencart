@@ -1,8 +1,6 @@
 <?php 
 class ControllerCheckoutCart extends Controller {
-	private $error = array();
-	
-	public function index() {
+	public function index() {		
 		$this->load->language('checkout/cart');
 
 		// Update
@@ -17,7 +15,7 @@ class ControllerCheckoutCart extends Controller {
 			unset($this->session->data['payment_methods']); 
 			unset($this->session->data['reward']);
 			
-			$this->response->redirect($this->url->link('checkout/cart'));  			
+			$this->response->redirect($this->url->link('checkout/cart'));
 		}
        	
 		// Remove
@@ -82,9 +80,7 @@ class ControllerCheckoutCart extends Controller {
 			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
 			$data['text_payment_profile'] = $this->language->get('text_payment_profile');
 			
-			if (isset($this->error['warning'])) {
-				$data['error_warning'] = $this->error['warning'];
-			} elseif (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
+			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
       			$data['error_warning'] = $this->language->get('error_stock');		
 			} elseif (isset($this->session->data['error'])) {
 				$data['error_warning'] = $this->session->data['error'];
@@ -176,11 +172,11 @@ class ControllerCheckoutCart extends Controller {
 
 				if ($product['recurring']) {
 					$frequencies = array(
-						'day' => $this->language->get('text_day'),
-						'week' => $this->language->get('text_week'),
+						'day'        => $this->language->get('text_day'),
+						'week'       => $this->language->get('text_week'),
 						'semi_month' => $this->language->get('text_semi_month'),
-						'month' => $this->language->get('text_month'),
-						'year' => $this->language->get('text_year'),
+						'month'      => $this->language->get('text_month'),
+						'year'       => $this->language->get('text_year'),
 					);
 
 					if ($product['recurring_trial']) {
@@ -218,22 +214,18 @@ class ControllerCheckoutCart extends Controller {
 			
 			// Gift Voucher
 			$data['vouchers'] = array();
-		
-			if (!isset($this->session->data['vouchers'])) {
-				$vouchers = $this->session->data['vouchers'] = array();
-			} else {
-				$vouchers = array();
-			}
 
-			foreach ($vouchers as $key => $voucher) {
-				$data['vouchers'][] = array(
-					'key'         => $key,
-					'description' => $voucher['description'],
-					'amount'      => $this->currency->format($voucher['amount']),
-					'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)   
-				);
+			if (!empty($this->session->data['vouchers'])) {
+				foreach ($this->session->data['vouchers'] as $key => $voucher) {
+					$data['vouchers'][] = array(
+						'key'         => $key,
+						'description' => $voucher['description'],
+						'amount'      => $this->currency->format($voucher['amount']),
+						'remove'      => $this->url->link('checkout/cart', 'remove=' . $key)   
+					);
+				}
 			}
-						
+			
 			// Totals
 			$this->load->model('setting/extension');
 			
@@ -270,7 +262,6 @@ class ControllerCheckoutCart extends Controller {
 				array_multisort($sort_order, SORT_ASC, $total_data);				
 			}
 			
-			
 			$data['totals'] = array();
 	
 			foreach ($total_data as $total) {
@@ -303,7 +294,7 @@ class ControllerCheckoutCart extends Controller {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/cart.tpl', $data));
 			} else {
 				$this->response->setOutput($this->load->view('default/template/checkout/cart.tpl', $data));
-			}					
+			}
     	} else {
       		$data['heading_title'] = $this->language->get('heading_title');
 

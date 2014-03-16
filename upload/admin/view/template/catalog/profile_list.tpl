@@ -17,8 +17,8 @@
   <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
-      <div class="pull-right"> <a href="<?php echo $insert; ?>" class="btn btn-primary"><i class="fa fa-plus"></i> <?php echo $button_insert; ?></a>
-        <button type="submit" form="form-profile-list" formaction="<?php echo $copy; ?>" class="btn btn-default"><i class="fa fa-copy"></i> <?php echo $button_copy; ?></button>
+      <div class="pull-right"><a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a>
+        <button type="submit" form="form-profile-list" formaction="<?php echo $copy; ?>" data-toggle="tooltip" title="<?php echo $button_copy; ?>" class="btn"><i class="fa fa-copy"></i></button>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-profile-list').submit() : false;"><i class="fa fa-times-circle"></i></button>
       </div>
       <h1 class="panel-title"><i class="fa fa-list"></i> <?php echo $heading_title; ?></h1>

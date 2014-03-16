@@ -188,7 +188,7 @@ class ControllerSaleOrder extends Controller {
 		);
 
 		$data['invoice'] = $this->url->link('sale/order/invoice', 'token=' . $this->session->data['token'], 'SSL');
-		$data['picklist'] = $this->url->link('sale/order/picklist', 'token=' . $this->session->data['token'], 'SSL');
+		$data['shipping'] = $this->url->link('sale/order/shipping', 'token=' . $this->session->data['token'], 'SSL');
 		$data['insert'] = $this->url->link('sale/order/insert', 'token=' . $this->session->data['token'], 'SSL');
 		$data['delete'] = $this->url->link('sale/order/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
@@ -248,7 +248,7 @@ class ControllerSaleOrder extends Controller {
 		$data['entry_date_modified'] = $this->language->get('entry_date_modified');
 
 		$data['button_invoice'] = $this->language->get('button_invoice');
-		$data['button_picklist'] = $this->language->get('button_picklist');
+		$data['button_shipping'] = $this->language->get('button_shipping');
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
@@ -2453,10 +2453,10 @@ class ControllerSaleOrder extends Controller {
 		$this->response->setOutput($this->load->view('sale/order_invoice.tpl', $data));
 	}
 
-	public function picklist() {
+	public function shipping() {
 		$this->load->language('sale/order');
 
-		$data['title'] = $this->language->get('text_picklist');
+		$data['title'] = $this->language->get('text_shipping');
 
 		if ($this->request->server['HTTPS']) {
 			$data['base'] = HTTPS_SERVER;
@@ -2467,7 +2467,7 @@ class ControllerSaleOrder extends Controller {
 		$data['direction'] = $this->language->get('direction');
 		$data['lang'] = $this->language->get('code');
 
-		$data['text_picklist'] = $this->language->get('text_picklist');
+		$data['text_shipping'] = $this->language->get('text_shipping');
 
 		$data['text_order_detail'] = $this->language->get('text_order_detail');
 		$data['text_order_id'] = $this->language->get('text_order_id');
@@ -2630,6 +2630,6 @@ class ControllerSaleOrder extends Controller {
 			}
 		}
 
-		$this->response->setOutput($this->load->view('sale/order_picklist.tpl', $data));
+		$this->response->setOutput($this->load->view('sale/order_shipping.tpl', $data));
 	}	
 }

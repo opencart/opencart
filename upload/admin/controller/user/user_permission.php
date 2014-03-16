@@ -6,7 +6,7 @@ class ControllerUserUserPermission extends Controller {
 		$this->load->language('user/user_group');
  
 		$this->document->setTitle($this->language->get('heading_title'));
- 		
+
 		$this->load->model('user/user_group');
 		
 		$this->getList();
@@ -84,7 +84,7 @@ class ControllerUserUserPermission extends Controller {
 		$this->load->model('user/user_group');
 		
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-      		foreach ($this->request->post['selected'] as $user_group_id) {
+			foreach ($this->request->post['selected'] as $user_group_id) {
 				$this->model_user_user_group->deleteUserGroup($user_group_id);	
 			}
 						
@@ -143,17 +143,17 @@ class ControllerUserUserPermission extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 			
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL')
-   		);
+		);
 							
 		$data['insert'] = $this->url->link('user/user_permission/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		$data['delete'] = $this->url->link('user/user_permission/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
@@ -191,7 +191,7 @@ class ControllerUserUserPermission extends Controller {
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
  
- 		if (isset($this->error['warning'])) {
+		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
@@ -253,7 +253,7 @@ class ControllerUserUserPermission extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 		
 		$this->response->setOutput($this->load->view('user/user_group_list.tpl', $data));
- 	}
+	}
 
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -268,13 +268,13 @@ class ControllerUserUserPermission extends Controller {
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
- 		if (isset($this->error['warning'])) {
+		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];
 		} else {
 			$data['error_warning'] = '';
 		}
 		
- 		if (isset($this->error['name'])) {
+		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
 		} else {
 			$data['error_name'] = '';
@@ -294,17 +294,17 @@ class ControllerUserUserPermission extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 		
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL')
-   		);
+		);
 			
 		if (!isset($this->request->get['user_group_id'])) {
 			$data['action'] = $this->url->link('user/user_permission/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
@@ -312,7 +312,7 @@ class ControllerUserUserPermission extends Controller {
 			$data['action'] = $this->url->link('user/user_permission/update', 'token=' . $this->session->data['token'] . '&user_group_id=' . $this->request->get['user_group_id'] . $url, 'SSL');
 		}
 		  
-    	$data['cancel'] = $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['cancel'] = $this->url->link('user/user_permission', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['user_group_id']) && $this->request->server['REQUEST_METHOD'] != 'POST') {
 			$user_group_info = $this->model_user_user_group->getUserGroup($this->request->get['user_group_id']);
@@ -394,7 +394,7 @@ class ControllerUserUserPermission extends Controller {
 		}
 		
 		$this->load->model('user/user');
-      	
+
 		foreach ($this->request->post['selected'] as $user_group_id) {
 			$user_total = $this->model_user_user->getTotalUsersByGroupId($user_group_id);
 

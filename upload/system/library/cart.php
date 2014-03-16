@@ -3,7 +3,6 @@ class Cart {
 	private $config;
 	private $db;
 	private $data = array();
-	private $data_recurring = array();
 	
 	public function __construct($registry) {
 		$this->config = $registry->get('config');
@@ -21,21 +20,22 @@ class Cart {
 	public function getProducts() {
 		if (!$this->data) {
 			foreach ($this->session->data['cart'] as $key => $quantity) {
-				$product = explode(':', $key);
+				$product = unserialize(base64_decode($key));
 
-				$product_id = $product[0];
+				$product_id = $product['product_id'];
+				
 				$stock = true;
 
 				// Options
-				if (isset($product[1]) && !empty($product[1])) {
-					$options = unserialize(base64_decode($product[1]));
+				if (!empty($product['option'])) {
+					$options = $product['option'];
 				} else {
 					$options = array();
 				}
 
 				// Profile
-				if (!empty($product[2])) {
-					$profile_id = $product[2];
+				if (!empty($product['profile_id'])) {
+					$profile_id = $product['profile_id'];
 				} else {
 					$profile_id = 0;
 				}
@@ -232,7 +232,7 @@ class Cart {
 					$profile_name = '';
 
 					if ($profile_id) {
-						$profile_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "profile` `p` JOIN `" . DB_PREFIX . "product_profile` `pp` ON `pp`.`profile_id` = `p`.`profile_id` AND `pp`.`product_id` = " . (int) $product_query->row['product_id'] . " JOIN `" . DB_PREFIX . "profile_description` `pd` ON `pd`.`profile_id` = `p`.`profile_id` AND `pd`.`language_id` = " . (int) $this->config->get('config_language_id') . " WHERE `pp`.`profile_id` = " . (int) $profile_id . " AND `status` = 1 AND `pp`.`customer_group_id` = " . (int)$this->config->get('config_customer_group_id'))->row;
+						$profile_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "profile` `p` JOIN `" . DB_PREFIX . "product_profile` `pp` ON `pp`.`profile_id` = `p`.`profile_id` AND `pp`.`product_id` = " . (int)$product_query->row['product_id'] . " JOIN `" . DB_PREFIX . "profile_description` `pd` ON `pd`.`profile_id` = `p`.`profile_id` AND `pd`.`language_id` = " . (int)$this->config->get('config_language_id') . " WHERE `pp`.`profile_id` = " . (int)$profile_id . " AND `status` = 1 AND `pp`.`customer_group_id` = " . (int)$this->config->get('config_customer_group_id'))->row;
 
 						if ($profile_info) {
 							$profile_name = $profile_info['name'];
@@ -309,50 +309,49 @@ class Cart {
 	}
 
 	public function add($product_id, $qty = 1, $option = array(), $profile_id = 0) {
-		$key = (int) $product_id . ':';
-
+		$this->data = array();
+		
+		$product['product_id'] = (int)$product_id;
+		
 		if ($option) {
-			$key .= base64_encode(serialize($option)) . ':';
-		}  else {
-			$key .= ':';
+			$product['option'] = $option;
 		}
 
 		if ($profile_id) {
-			$key .= (int) $profile_id;
+			$product['profile_id'] = (int)$profile_id;
 		}
 
-		if ((int) $qty && ((int) $qty > 0)) {
+		$key = base64_encode(serialize($product));
+
+		if ((int)$qty && ((int)$qty > 0)) {
 			if (!isset($this->session->data['cart'][$key])) {
-				$this->session->data['cart'][$key] = (int) $qty;
+				$this->session->data['cart'][$key] = (int)$qty;
 			} else {
-				$this->session->data['cart'][$key] += (int) $qty;
+				$this->session->data['cart'][$key] += (int)$qty;
 			}
 		}
-
-		$this->data = array();
 	}
 
 	public function update($key, $qty) {
+		$this->data = array();
+		
 		if ((int)$qty && ((int)$qty > 0)) {
 			$this->session->data['cart'][$key] = (int)$qty;
 		} else {
 			$this->remove($key);
 		}
-
-		$this->data = array();
 	}
 
 	public function remove($key) {
-		if (isset($this->session->data['cart'][$key])) {
-			unset($this->session->data['cart'][$key]);
-		}
-
 		$this->data = array();
+		
+		unset($this->session->data['cart'][$key]);
 	}
 
 	public function clear() {
-		$this->session->data['cart'] = array();
 		$this->data = array();
+		
+		$this->session->data['cart'] = array();
 	}
 
 	public function getWeight() {

@@ -673,9 +673,9 @@ class ControllerCheckoutManual extends Controller {
 			}
 			
 			
-			if () {
+			//if () {
 				
-			}
+			//}
 			
 			// Reset everything			
 			$this->cart->clear();

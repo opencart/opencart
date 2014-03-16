@@ -25,7 +25,7 @@ $_['entry_sort_order']       = 'Sort Order';
 $_['entry_layout']           = 'Layout Override';
 
 // Help
-$_['help_keyword']           = 'Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.';
+$_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
 $_['help_bottom']            = 'Display in the bottom footer.';
 
 // Error 

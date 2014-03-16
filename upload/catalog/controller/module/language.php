@@ -1,16 +1,6 @@
 <?php  
 class ControllerModuleLanguage extends Controller {
 	public function index() {
-		if (isset($this->request->post['language_code'])) {
-			$this->session->data['language'] = $this->request->post['language_code'];
-		
-			if (isset($this->request->post['redirect'])) {
-				$this->response->redirect($this->request->post['redirect']);
-			} else {
-				$this->response->redirect($this->url->link('common/home'));
-			}
-    	}		
-		
 		$this->load->language('module/language');
 		
 		$data['text_language'] = $this->language->get('text_language');
@@ -23,7 +13,7 @@ class ControllerModuleLanguage extends Controller {
 			
 		$data['action'] = $this->url->link('module/language', '', $connection);
 
-		$data['language_code'] = $this->session->data['language'];
+		$data['code'] = $this->session->data['language'];
 		
 		$this->load->model('localisation/language');
 		
@@ -66,5 +56,17 @@ class ControllerModuleLanguage extends Controller {
 		} else {
 			return $this->load->view('default/template/module/language.tpl', $data);
 		}
+	}
+	
+	public function language() {
+		if (isset($this->request->post['code'])) {
+			$this->session->data['language'] = $this->request->post['code'];
+    	}
+		
+		if (isset($this->request->post['redirect'])) {
+			$this->response->redirect($this->request->post['redirect']);
+		} else {
+			$this->response->redirect($this->url->link('common/home'));
+		}			
 	}
 }

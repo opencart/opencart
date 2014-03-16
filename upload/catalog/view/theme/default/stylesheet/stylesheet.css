@@ -655,6 +655,11 @@ h2.price {
 .flexslider .slides img {
 	width: inherit;
 }
+.slides {
+	padding: 0;
+	margin:0;
+	list-style: none;
+}
 .slides li {
 	text-align: center;
 }

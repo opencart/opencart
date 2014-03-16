@@ -16,11 +16,7 @@ $_['text_date']             = 'Date';
 $_['text_datetime']         = 'Date &amp; Time';
 $_['text_time']             = 'Time';
 $_['text_account']          = 'Account';
-$_['text_register']         = 'Registration';
-$_['text_edit']             = 'Account Edit';
 $_['text_address']          = 'Address';
-$_['text_payment_address']  = 'Payment Address';
-$_['text_shipping_address'] = 'Shipping Address';
 
 // Column
 $_['column_name']           = 'Custom Field Name';

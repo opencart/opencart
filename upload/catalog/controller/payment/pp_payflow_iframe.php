@@ -39,7 +39,6 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			'CURRENCY' => $order_info['currency_code'],
 			'CREATESECURETOKEN' => 'Y',
 			'SECURETOKENID' => $secure_token_id,
-
 			'BILLTOFIRSTNAME' => $order_info['payment_firstname'],
 			'BILLTOLASTNAME' => $order_info['payment_lastname'],
 			'BILLTOSTREET' => trim($order_info['payment_address_1'] . ' ' . $order_info['payment_address_2']),
@@ -49,7 +48,6 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			'BILLTOCOUNTRY' => $payment_country['iso_code_2'],
 		);
 
-		// Does the order have shipping ?
 		if ($shipping_country) {
 			$urlParams['SHIPTOFIRSTNAME'] = $order_info['shipping_firstname'];
 			$urlParams['SHIPTOLASTNAME'] = $order_info['shipping_lastname'];
@@ -85,7 +83,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 	}
 
-	public function pp_return() {
+	public function paymentReturn() {
 		$data['url'] = $this->url->link('checkout/success');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_return.tpl')) {
@@ -95,7 +93,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 	}
 
-	public function pp_cancel() {
+	public function paymentCancel() {
 		$data['url'] = $this->url->link('checkout/checkout');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_return.tpl')) {
@@ -105,7 +103,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 	}
 
-	public function pp_error() {
+	public function paymentError() {
 		$data['url'] = $this->url->link('checkout/checkout');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/pp_payflow_iframe_return.tpl')) {
@@ -115,7 +113,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 	}
 
-	public function pp_post() {
+	public function paymentIpn() {
 		$this->load->model('payment/pp_payflow_iframe');
 		$this->load->model('checkout/order');
 

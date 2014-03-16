@@ -18,7 +18,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-order" formaction="<?php echo $picklist; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_picklist; ?>" class="btn"><i class="fa fa-truck"></i></button>
+        <button type="submit" form="form-order" formaction="<?php echo $shipping; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_shipping; ?>" class="btn"><i class="fa fa-truck"></i></button>
         <button type="submit" form="form-order" formaction="<?php echo $invoice; ?>" formtarget="_blank" data-toggle="tooltip" title="<?php echo $button_invoice; ?>" class="btn"><i class="fa fa-print"></i></button>
         <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-order').submit() : false;"><i class="fa fa-times-circle"></i></button>

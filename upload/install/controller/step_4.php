@@ -9,11 +9,36 @@ class ControllerStep4 extends Controller {
 		$data['text_license'] = $this->language->get('text_license');
 		$data['text_installation'] = $this->language->get('text_installation');
 		$data['text_configuration'] = $this->language->get('text_configuration');
-		$data['text_finished'] = $this->language->get('text_finished');	
-		$data['text_congratulation'] = $this->language->get('text_congratulation');	
-		$data['text_forget'] = $this->language->get('text_forget');	
-		$data['text_shop'] = $this->language->get('text_shop');	
+		$data['text_finished'] = $this->language->get('text_finished');
+		$data['text_congratulation'] = $this->language->get('text_congratulation');
+		$data['text_forget'] = $this->language->get('text_forget');
+		$data['text_shop'] = $this->language->get('text_shop');
 		$data['text_login'] = $this->language->get('text_login');
+
+		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_store'] = $this->language->get('text_store');
+		$data['text_mail_list'] = $this->language->get('text_mail_list');
+		$data['text_mail_list_small'] = $this->language->get('text_mail_list_small');
+		$data['text_openbay'] = $this->language->get('text_openbay');
+		$data['text_maxmind'] = $this->language->get('text_maxmind');
+		$data['text_more_info'] = $this->language->get('text_more_info');
+		$data['text_facebook'] = $this->language->get('text_facebook');
+		$data['text_facebook_info'] = $this->language->get('text_facebook_info');
+		$data['text_facebook_link'] = $this->language->get('text_facebook_link');
+		$data['text_forum'] = $this->language->get('text_forum');
+		$data['text_forum_info'] = $this->language->get('text_forum_info');
+		$data['text_forum_link'] = $this->language->get('text_forum_link');
+		$data['text_commercial'] = $this->language->get('text_commercial');
+		$data['text_commercial_info'] = $this->language->get('text_commercial_info');
+		$data['text_commercial_link'] = $this->language->get('text_commercial_link');
+		$data['text_view'] = $this->language->get('text_view');
+		$data['text_download'] = $this->language->get('text_download');
+		$data['text_downloads'] = $this->language->get('text_downloads');
+		$data['text_price'] = $this->language->get('text_price');
+		$data['text_view'] = $this->language->get('text_view');
+
+		$data['button_join'] = $this->language->get('button_join');
+		$data['button_setup'] = $this->language->get('button_setup');
 
 		$languages = array();
 

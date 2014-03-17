@@ -13,6 +13,9 @@
         </div>
       </div>
   </header>
+  <?php if ($success) { ?>
+    <div class="alert alert-success"><?php echo $success; ?></div>
+  <?php } ?>
   <div class="alert alert-danger"><?php echo $text_forget; ?></div>
   <div class="visit">
     <div class="row">
@@ -59,7 +62,7 @@
       <div class="col-sm-6 text-center">
         <img src="view/image/maxmind.gif">
         <p><?php echo $text_maxmind; ?> <a href="http://www.maxmind.com/?utm_source=opencart_install&utm_medium=referral&utm_campaign=opencart_install"><?php echo $text_more_info; ?></a></p>
-        <a class="btn btn-primary" href="#"><?php echo $button_setup; ?></a>
+        <a class="btn btn-primary" href="<?php echo $link_maxmind; ?>"><?php echo $button_setup; ?></a>
       </div>
     </div>
   </div>
@@ -107,7 +110,7 @@ function searchExtensions() {
     },
     success: function(json) {
       $.each (json.extensions, function(key, val) {
-        html += '<div class="col-sm-6 module">';
+        html = '<div class="col-sm-6 module">';
           html += '<a class="thumbnail pull-left" href="'+val.href+'"><img src="'+val.image+'"></a>';
           html += '<h5>'+val.name+'</h5>';
           html += '<p>'+val.price+' <a target="_BLANK" href="'+val.href+'"><?php echo $text_view; ?></a></p>';
@@ -141,7 +144,7 @@ function searchLanguages() {
     },
     success: function(json) {
       if (json.extension != '') {
-        html += '<div class="row">';
+        html = '<div class="row">';
           html += '<div class="col-sm-12">';
             html += '<img class="img-rounded" src="'+json.extension.image+'">';
             html += '<h3>'+json.extension.name+'<br><small><?php echo $text_downloads; ?>: '+json.extension.downloaded+', <?php echo $text_price; ?>: '+json.extension.price+'</small></h3>';

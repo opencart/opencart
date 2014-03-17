@@ -48,6 +48,10 @@ $registry->set('language', $language);
 $document = new Document();
 $registry->set('document', $document);
 
+// Session
+$session = new Session();
+$registry->set('session', $session);
+
 // Upgrade
 $upgrade = false;
 

@@ -40,6 +40,16 @@ class ControllerStep4 extends Controller {
 		$data['button_join'] = $this->language->get('button_join');
 		$data['button_setup'] = $this->language->get('button_setup');
 
+		$data['link_maxmind'] = $this->url->link('maxmind');
+
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
 		$languages = array();
 
 		if (isset($_SERVER['HTTP_ACCEPT_LANGUAGE'])) {

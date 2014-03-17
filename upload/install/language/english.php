@@ -8,6 +8,8 @@ $_['heading_step_3']         = 'Configuration';
 $_['heading_step_3_small']   = 'Enter your database and administration details';
 $_['heading_step_4']         = 'Installation complete';
 $_['heading_step_4_small']   = 'Ready to start selling!';
+$_['heading_maxmind']        = 'MaxMind';
+$_['heading_maxmind_small']  = 'Fraud detection service. ';
 
 // Text
 $_['text_license']           = 'License';
@@ -76,6 +78,15 @@ $_['text_downloads']   		 = 'Downloads';
 $_['text_price']   		 	 = 'Price';
 $_['text_view']   		     = 'View details';
 
+// Maxmind
+$_['text_maxmind_success']   = 'MaxMind fraud service has been installed';
+$_['text_maxmind_top']   	 = 'If you don\'t have a license key you can';
+$_['text_maxmind_link']   	 = 'sign up here';
+$_['text_maxmind_risk_help'] = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';
+$_['text_maxmind_fraud_help'] = 'Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.';
+$_['error_key'] 			 = 'Maxmind licence key required';
+$_['error_score'] 			 = 'A score between 0 and 100 is accepted';
+
 // Entry
 $_['entry_db_driver']        = 'DB Driver';
 $_['entry_db_hostname']      = 'Hostname';
@@ -86,6 +97,9 @@ $_['entry_db_prefix']        = 'Prefix';
 $_['entry_username']         = 'Username';
 $_['entry_password']         = 'Password';
 $_['entry_email']            = 'E-Mail';
+$_['entry_licence_key']      = 'License Key';
+$_['entry_risk']      		 = 'Risk score';
+$_['entry_fraud_status']     = 'Fraud Order Status';
 
 // Buttons
 $_['button_continue']        = 'Continue';

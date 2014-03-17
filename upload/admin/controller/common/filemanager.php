@@ -27,7 +27,19 @@ class ControllerCommonFileManager extends Controller {
 		$this->load->model('tool/image');
 
 		// Get all directories and files and merge them
-		$images = array_merge(glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR), glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE));
+		$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
+		
+		if (!$directories){
+			$directories = array();
+		}
+		
+		$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
+		
+		if (!$files){
+			$files = array();
+		}		
+		
+		$images = array_merge($directories, $files);
 
 		// Get total number of files and directories
 		$image_total = count($images);

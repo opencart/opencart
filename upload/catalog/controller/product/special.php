@@ -34,12 +34,7 @@ class ControllerProductSpecial extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 		$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
-		$data['breadcrumbs'] = array();
-
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-   		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
 
 		$url = '';
 		
@@ -58,11 +53,8 @@ class ControllerProductSpecial extends Controller {
 		if (isset($this->request->get['limit'])) {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
-					
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('product/special', $url)
-   		);
+		
+		$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('product/special', $url) );
 		
     	$data['heading_title'] = $this->language->get('heading_title');
    
@@ -82,6 +74,7 @@ class ControllerProductSpecial extends Controller {
 		$data['button_compare'] = $this->language->get('button_compare');
 		$data['button_list'] = $this->language->get('button_list');
 		$data['button_grid'] = $this->language->get('button_grid');
+		$data['button_continue'] = $this->language->get('button_continue');
 		
 		$data['compare'] = $this->url->link('product/compare');
 		
@@ -258,10 +251,6 @@ class ControllerProductSpecial extends Controller {
 		$data['order'] = $order;
 		$data['limit'] = $limit;
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 		

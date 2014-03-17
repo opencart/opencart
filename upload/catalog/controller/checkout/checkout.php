@@ -32,23 +32,10 @@ class ControllerCheckoutCheckout extends Controller {
 			$this->document->addScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js');
 		}
 		
-		$data['breadcrumbs'] = array();
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_cart'), $this->url->link('checkout/cart') );
+		$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('checkout/checkout', '', 'SSL') );
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-      	); 
-
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_cart'),
-			'href' => $this->url->link('checkout/cart')
-      	);
-		
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('checkout/checkout', '', 'SSL')
-      	);
-					
 	    $data['heading_title'] = $this->language->get('heading_title');
 		
 		$data['text_checkout_option'] = $this->language->get('text_checkout_option');
@@ -78,11 +65,7 @@ class ControllerCheckoutCheckout extends Controller {
 		}
 		
 		$data['shipping_required'] = $this->cart->hasShipping();	
-		
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
+
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 				

@@ -4,13 +4,8 @@ class ControllerProductProduct extends Controller {
 	
 	public function index() { 
 		$this->load->language('product/product');
-	
-		$data['breadcrumbs'] = array();
 
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
 		
 		$this->load->model('catalog/category');	
 		
@@ -31,10 +26,7 @@ class ControllerProductProduct extends Controller {
 				$category_info = $this->model_catalog_category->getCategory($path_id);
 				
 				if ($category_info) {
-					$data['breadcrumbs'][] = array(
-						'text' => $category_info['name'],
-						'href' => $this->url->link('product/category', 'path=' . $path)
-					);
+					$this->document->addBreadcrumb( $category_info['name'], $this->url->link('product/category', 'path=' . $path) );
 				}
 			}
 			
@@ -59,10 +51,10 @@ class ControllerProductProduct extends Controller {
 				if (isset($this->request->get['limit'])) {
 					$url .= '&limit=' . $this->request->get['limit'];
 				}
-										
-				$data['breadcrumbs'][] = array(
-					'text' => $category_info['name'],
-					'href' => $this->url->link('product/category', 'path=' . $this->request->get['path'].$url)
+				
+				$this->document->addBreadcrumb(
+					$category_info['name'], 
+					$this->url->link('product/category', 'path=' . $this->request->get['path'].$url) 
 				);
 			}
 		}
@@ -70,10 +62,7 @@ class ControllerProductProduct extends Controller {
 		$this->load->model('catalog/manufacturer');	
 		
 		if (isset($this->request->get['manufacturer_id'])) {
-			$data['breadcrumbs'][] = array( 
-				'text' => $this->language->get('text_brand'),
-				'href' => $this->url->link('product/manufacturer')
-			);	
+			$this->document->addBreadcrumb( $this->language->get('text_brand'), $this->url->link('product/manufacturer') );
 	
 			$url = '';
 			
@@ -95,10 +84,10 @@ class ControllerProductProduct extends Controller {
 							
 			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
 
-			if ($manufacturer_info) {	
-				$data['breadcrumbs'][] = array(
-					'text' => $manufacturer_info['name'],
-					'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
+			if ($manufacturer_info) {
+				$this->document->addBreadcrumb( 
+					$manufacturer_info['name'], 
+					$this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
 				);
 			}
 		}
@@ -141,11 +130,8 @@ class ControllerProductProduct extends Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-												
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_search'),
-				'href' => $this->url->link('product/search', $url)
-			); 	
+			
+			$this->document->addBreadcrumb( $this->language->get('text_search'), $this->url->link('product/search', $url) );
 		}
 		
 		if (isset($this->request->get['product_id'])) {
@@ -208,11 +194,8 @@ class ControllerProductProduct extends Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-																		
-			$data['breadcrumbs'][] = array(
-				'text' => $product_info['name'],
-				'href' => $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id'])
-			);			
+			
+			$this->document->addBreadcrumb( $product_info['name'], $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id']) );
 			
 			$this->document->setTitle($product_info['meta_title']);
 			$this->document->setDescription($product_info['meta_description']);
@@ -460,8 +443,6 @@ class ControllerProductProduct extends Controller {
 						
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');			
 			
@@ -520,11 +501,8 @@ class ControllerProductProduct extends Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-														
-      		$data['breadcrumbs'][] = array(
-        		'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('product/product', $url . '&product_id=' . $product_id)
-      		);			
+					
+			$this->document->addBreadcrumb( $this->language->get('text_error'), $this->url->link('product/product', $url . '&product_id=' . $product_id) );
 		
       		$this->document->setTitle($this->language->get('text_error'));
 
@@ -536,10 +514,6 @@ class ControllerProductProduct extends Controller {
 
       		$data['continue'] = $this->url->link('common/home');
 			
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');			
 			

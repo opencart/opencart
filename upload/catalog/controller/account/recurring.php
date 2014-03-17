@@ -19,22 +19,9 @@ class ControllerAccountRecurring extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('account/recurring', $url, 'SSL'),
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+			$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
+			$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/recurring', $url, 'SSL') );
 
 		$data['heading_title'] = $this->language->get('heading_title');
 		$data['column_created'] = $this->language->get('column_created');
@@ -92,10 +79,6 @@ class ControllerAccountRecurring extends Controller {
 
 		$data['continue'] = $this->url->link('account/account', '', 'SSL');
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 
@@ -169,17 +152,8 @@ class ControllerAccountRecurring extends Controller {
 
 			$this->document->setTitle($this->language->get('text_recurring'));
 
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_home'),
-				'href'      => $this->url->link('common/home'),
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_account'),
-				'href'      => $this->url->link('account/account', '', 'SSL'),
-			);
+			$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+			$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
 
 			$url = '';
 
@@ -187,15 +161,8 @@ class ControllerAccountRecurring extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('heading_title'),
-				'href'      => $this->url->link('account/recurring', $url, 'SSL'),
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text'      => $this->language->get('text_recurring'),
-				'href'      => $this->url->link('account/recurring/info', 'recurring_id=' . $this->request->get['recurring_id'] . $url, 'SSL'),
-			);
+			$this->document->addBreadcrumb( $this->language->get('heading_title'), $this->url->link('account/recurring', $url, 'SSL') );
+			$this->document->addBreadcrumb( $this->language->get('text_recurring'), $this->url->link('account/recurring/info', 'recurring_id=' . $this->request->get['recurring_id'] . $url, 'SSL') );
 
 			$data['heading_title'] = $this->language->get('text_recurring');
 
@@ -219,10 +186,7 @@ class ControllerAccountRecurring extends Controller {
 			$data['profile'] = $profile;
 
 			$data['buttons'] = $this->load->controller('payment/' . $profile['payment_code'].'/recurringButtons');
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 

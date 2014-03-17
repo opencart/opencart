@@ -16,17 +16,8 @@ class ControllerProductManufacturer extends Controller {
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
-		$data['breadcrumbs'] = array();
-
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-      	);
-
-		$data['breadcrumbs'][] = array(
-			'text' => $this->language->get('text_brand'),
-			'href' => $this->url->link('product/manufacturer')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_brand'), $this->url->link('product/manufacturer') );
 
 		$data['categories'] = array();
 
@@ -51,10 +42,6 @@ class ControllerProductManufacturer extends Controller {
 
 		$data['continue'] = $this->url->link('common/home');
 		
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 		
@@ -104,17 +91,8 @@ class ControllerProductManufacturer extends Controller {
 			$limit = $this->config->get('config_product_limit');
 		}
 
-		$data['breadcrumbs'] = array();
-
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
-			'href' => $this->url->link('common/home')
-   		);
-
-		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_brand'),
-			'href' => $this->url->link('product/manufacturer')
-   		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_brand'), $this->url->link('product/manufacturer') );
 
 		$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($manufacturer_id);
 
@@ -141,10 +119,10 @@ class ControllerProductManufacturer extends Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
-			$data['breadcrumbs'][] = array(
-       			'text' => $manufacturer_info['name'],
-				'href' => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
-   			);
+			$this->document->addBreadcrumb( 
+				$manufacturer_info['name'], 
+				$this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url)
+			);
 
 			$data['heading_title'] = $manufacturer_info['name'];
 
@@ -344,10 +322,6 @@ class ControllerProductManufacturer extends Controller {
 
 			$data['continue'] = $this->url->link('common/home');
 			
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
 			$data['footer'] = $this->load->controller('common/footer');
 			$data['header'] = $this->load->controller('common/header');
 					
@@ -378,11 +352,8 @@ class ControllerProductManufacturer extends Controller {
 			if (isset($this->request->get['limit'])) {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_error'),
-				'href' => $this->url->link('product/category', $url)
-			);
+			
+			$this->document->addBreadcrumb( $this->language->get('text_error'), $this->url->link('product/manufacturer/info', $url) );
 
 			$this->document->setTitle($this->language->get('text_error'));
 
@@ -393,13 +364,9 @@ class ControllerProductManufacturer extends Controller {
       		$data['button_continue'] = $this->language->get('button_continue');
 
       		$data['continue'] = $this->url->link('common/home');
-			
-			$data['header'] = $this->load->controller('common/header');
+
 			$data['footer'] = $this->load->controller('common/footer');
-			$data['column_left'] = $this->load->controller('common/column_left');
-			$data['column_right'] = $this->load->controller('common/column_right');
-			$data['content_top'] = $this->load->controller('common/content_top');
-			$data['content_bottom'] = $this->load->controller('common/content_bottom');
+			$data['header'] = $this->load->controller('common/header');
 			
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/error/not_found.tpl')) {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/error/not_found.tpl', $data));

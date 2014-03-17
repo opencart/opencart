@@ -33,25 +33,9 @@ class ControllerAccountEdit extends Controller {
 			$this->response->redirect($this->url->link('account/account', '', 'SSL'));
 		}
 
-		$data['breadcrumbs'] = array();
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),     	
-			'separator' => false
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),        	
-			'separator' => $this->language->get('text_separator')
-		);
-
-		$data['breadcrumbs'][] = array(
-			'text'      => $this->language->get('text_edit'),
-			'href'      => $this->url->link('account/edit', '', 'SSL'),       	
-			'separator' => $this->language->get('text_separator')
-		);
+		$this->document->addBreadcrumb( $this->language->get('text_home'), $this->url->link('common/home') );
+		$this->document->addBreadcrumb( $this->language->get('text_account'), $this->url->link('account/account', '', 'SSL') );
+		$this->document->addBreadcrumb( $this->language->get('text_edit'), $this->url->link('account/edit', '', 'SSL') );
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -155,10 +139,6 @@ class ControllerAccountEdit extends Controller {
 
 		$data['back'] = $this->url->link('account/account', '', 'SSL');
 
-		$data['column_left'] = $this->load->controller('common/column_left');
-		$data['column_right'] = $this->load->controller('common/column_right');
-		$data['content_top'] = $this->load->controller('common/content_top');
-		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
 

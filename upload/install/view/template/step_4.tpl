@@ -57,7 +57,7 @@
       <div class="col-sm-6 text-center">
         <img src="view/image/openbay_pro.gif">
         <p><?php echo $text_openbay; ?> <a href="http://www.openbaypro.com/?utm_source=opencart_install&utm_medium=referral&utm_campaign=opencart_install"><?php echo $text_more_info; ?></a></p>
-        <a class="btn btn-primary" href="#"><?php echo $button_setup; ?></a>
+        <a class="btn btn-primary" href="<?php echo $link_openbay; ?>"><?php echo $button_setup; ?></a>
       </div>
       <div class="col-sm-6 text-center">
         <img src="view/image/maxmind.gif">

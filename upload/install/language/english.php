@@ -9,7 +9,9 @@ $_['heading_step_3_small']   = 'Enter your database and administration details';
 $_['heading_step_4']         = 'Installation complete';
 $_['heading_step_4_small']   = 'Ready to start selling!';
 $_['heading_maxmind']        = 'MaxMind';
-$_['heading_maxmind_small']  = 'Fraud detection service. ';
+$_['heading_maxmind_small']  = 'Fraud detection service.';
+$_['heading_openbay']        = 'OpenBay Pro';
+$_['heading_openbay_small']  = 'Multi marketplace integration';
 
 // Text
 $_['text_license']           = 'License';

@@ -785,7 +785,7 @@ final class Ebay {
 	public function getProductStockLevel($productId, $sku = '') {
 		$this->log('getProductStockLevel() - ID: '.$productId.', SKU: '.$sku);
 
-		if($sku == '') {
+		if($sku == '' || $sku == null){
 			$qry = $this->db->query("SELECT `quantity`, `status` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".$productId."' LIMIT 1");
 
 			return array('quantity' => (int)$qry->row['quantity'], 'status' => ($qry->row['status']));

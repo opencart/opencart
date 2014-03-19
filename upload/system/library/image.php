@@ -226,5 +226,7 @@ class Image {
 		}
 
 		imagefilledrectangle($this->image, 0, 0, $width, $height, $background);
+		$this->info['width']  = $width;
+		$this->info['height'] = $height;
 	}
 }

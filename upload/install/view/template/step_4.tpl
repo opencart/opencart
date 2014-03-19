@@ -111,7 +111,7 @@ function searchExtensions() {
     success: function(json) {
       $.each (json.extensions, function(key, val) {
         html = '<div class="col-sm-6 module">';
-          html += '<a class="thumbnail pull-left" href="'+val.href+'"><img src="'+val.image+'"></a>';
+          html += '<a class="thumbnail pull-left" href="'+val.href+'"><img src="'+val.image+'" alt="'+val.name+'"></a>';
           html += '<h5>'+val.name+'</h5>';
           html += '<p>'+val.price+' <a target="_BLANK" href="'+val.href+'"><?php echo $text_view; ?></a></p>';
           html += '<div class="clearfix"></div>';

@@ -1,5 +1,5 @@
 <?php echo $header; ?>
-<div class="container">
+<div class="container" xmlns="http://www.w3.org/1999/html">
   <header>
     <div class="row">
       <div class="col-sm-6">
@@ -14,24 +14,26 @@
   </header>
   <div class="row">
     <div class="col-sm-12">
-      <div class="core-modules">
-        <div class="row">
-          <div class="col-sm-6 text-center">
-            <img src="view/image/ebay.png">
-            <p>eBay is a multi-billion dollar market place that allows business or private sellers to auction and retail goods online. Available to sellers worldwide.</p>
-            <a href="https://account.openbaypro.com/ebay/apiRegister" class="btn btn-primary">Register</a>
-          </div>
-          <div class="col-sm-6 text-center">
-            <img src="view/image/amazon.png">
-            <p>Amazon Marketplace a fixed-price online marketplace allowing sellers to offer new and used items alongside Amazon's regular retail service.</p>
-            <a href="https://account.openbaypro.com/ebay/apiRegister" class="btn btn-primary">Register EU</a>
-            <a href="https://account.openbaypro.com/ebay/apiRegister" class="btn btn-primary">Register USA</a>
+      <form>
+        <fieldset class="core-modules">
+            <div class="row">
+              <div class="col-sm-6 text-center">
+                <img src="view/image/ebay.png">
+                <p><?php echo $text_ebay_about; ?></p>
+                <a href="https://account.openbaypro.com/ebay/apiRegister?utm_source=opencart_install&utm_medium=register_button&utm_campaign=opencart_install" class="btn btn-primary" target="_blank"><?php echo $button_register; ?></a>
+              </div>
+              <div class="col-sm-6 text-center">
+                <img src="view/image/amazon.png">
+                <p><?php echo $text_amazon_about; ?></p>
+                <a href="https://account.openbaypro.com/amazon/apiRegister?utm_source=opencart_install&utm_medium=register_button&utm_campaign=opencart_install" class="btn btn-primary" target="_blank"><?php echo $button_register_eu; ?></a>
+                <a href="https://account.openbaypro.com/amazonus/apiRegister?utm_source=opencart_install&utm_medium=register_button&utm_campaign=opencart_install" class="btn btn-primary" target="_blank"><?php echo $button_register_us; ?></a>
+              </div>
+            </div>
+        </fieldset>
+        <div class="buttons">
+          <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
         </div>
-      </div>
-      <p class="text-center"><a href="http://www.openbaypro.com/features.php" target="_blank">Features</a> | <a href="http://www.openbaypro.com/plans.php" target="_blank">Fees</a> | <a href="http://help.welfordmedia.co.uk/" target="_blank">Support</a></p>
-    </div>
-    <div class="buttons">
-      <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>
+      </form>
     </div>
   </div>
 </div>

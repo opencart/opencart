@@ -79,15 +79,13 @@ $_['text_download']   		 = 'Download';
 $_['text_downloads']   		 = 'Downloads';
 $_['text_price']   		 	 = 'Price';
 $_['text_view']   		     = 'View details';
-
-// Maxmind
 $_['text_maxmind_success']   = 'MaxMind fraud service has been installed';
 $_['text_maxmind_top']   	 = 'If you don\'t have a license key you can';
 $_['text_maxmind_link']   	 = 'sign up here';
 $_['text_maxmind_risk_help'] = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';
 $_['text_maxmind_fraud_help'] = 'Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.';
-$_['error_key'] 			 = 'Maxmind licence key required';
-$_['error_score'] 			 = 'A score between 0 and 100 is accepted';
+$_['text_ebay_about']	 	 = 'eBay is a multi-billion dollar market place that allows business or private sellers to auction and retail goods online. Available to sellers worldwide.';
+$_['text_amazon_about']	 	 = 'Amazon Marketplace a fixed-price online marketplace allowing sellers to offer new and used items alongside Amazon\'s regular retail service.';
 
 // Entry
 $_['entry_db_driver']        = 'DB Driver';
@@ -103,11 +101,18 @@ $_['entry_licence_key']      = 'License Key';
 $_['entry_risk']      		 = 'Risk score';
 $_['entry_fraud_status']     = 'Fraud Order Status';
 
+// Error
+$_['error_key'] 			 = 'Maxmind licence key required';
+$_['error_score'] 			 = 'A score between 0 and 100 is accepted';
+
 // Buttons
 $_['button_continue']        = 'Continue';
 $_['button_back']            = 'Back';
 $_['button_join']            = 'Join here';
 $_['button_setup']           = 'Set-up now';
+$_['button_register']        = 'Register';
+$_['button_register_eu']     = 'Register Europe';
+$_['button_register_us']     = 'Register USA';
 
 $_['text_terms'] = '<h3>GNU GENERAL PUBLIC LICENSE</h3>
         <p>Version 3, 29 June 2007</p>

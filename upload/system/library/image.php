@@ -83,20 +83,41 @@ class Image {
 		$ypos = (int)(($height - $new_height) / 2);
 
 		$image_old = $this->image;
-		$this->image = imagecreatetruecolor($width, $height);
-
-		if (isset($this->info['mime']) && $this->info['mime'] == 'image/png') {
-			imagealphablending($this->image, false);
-			imagesavealpha($this->image, true);
-			$background = imagecolorallocatealpha($this->image, 255, 255, 255, 127);
-			imagecolortransparent($this->image, $background);
-		} else {
-			$background = imagecolorallocate($this->image, 255, 255, 255);
-		}
-
-		imagefilledrectangle($this->image, 0, 0, $width, $height, $background);
+		$this->clear_img($width, $height);
 
 		imagecopyresampled($this->image, $image_old, $xpos, $ypos, 0, 0, $new_width, $new_height, $this->info['width'], $this->info['height']);
+		imagedestroy($image_old);
+
+		$this->info['width']  = $width;
+		$this->info['height'] = $height;
+	}
+
+	public function resize_and_crop($width, $height) {
+		if (!$this->info['width'] || !$this->info['height']) {
+			return;
+		}
+
+		$scale_w = $width / $this->info['width'];
+		$scale_h = $height / $this->info['height'];
+
+		if ($scale_w > $scale_h) {
+			$src_x = 0;
+			$src_y = ($this->info['height'] - $height/$scale_w) / 2; 
+
+			$src_w = $this->info['width'];
+			$src_h = round($height / $scale_w);
+		} else {
+			$src_x = ($this->info['width'] - $width/$scale_h) /2;
+			$src_y = 0;
+
+			$src_w = round($width / $scale_h);
+			$src_h = $this->info['height'];
+		}
+
+		$image_old = $this->image;
+		$this->clear_img($width, $height);
+
+		imagecopyresampled($this->image, $image_old, 0, 0, $src_x, $src_y, $width, $height, $src_w, $src_h);
 		imagedestroy($image_old);
 
 		$this->info['width']  = $width;
@@ -190,5 +211,20 @@ class Image {
 		$b = hexdec($b);
 
 		return array($r, $g, $b);
+	}
+
+	private function clear_img($width, $height, $bgRed = 255, $bgGreen = 255, $bgBlue = 255, $bgAlpha = 127) {
+		$this->image = imagecreatetruecolor($width, $height);
+
+		if (isset($this->info['mime']) && $this->info['mime'] == 'image/png') {		
+			imagealphablending($this->image, false);
+			imagesavealpha($this->image, true);
+			$background = imagecolorallocatealpha($this->image, $bgRed, $bgGreen, $bgBlue, $bgAlpha);
+			imagecolortransparent($this->image, $background);
+		} else {
+			$background = imagecolorallocate($this->image, $bgRed, $bgGreen, $bgBlue);
+		}
+
+		imagefilledrectangle($this->image, 0, 0, $width, $height, $background);
 	}
 }

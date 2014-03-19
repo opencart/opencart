@@ -1021,16 +1021,32 @@ final class Ebay {
 			foreach ($qry->rows as $img) {
 				$this->log('Image: '.$img['name']);
 
-				$handle = @fopen($img['image_original'],'r');
+				//check if the supersize version exists
+				$img_large = str_replace(array('$_1.JPG', '$_01.JPG'), '$_57.JPG', $img['image_original']);
 
-				if($handle !== false) {
-					if(!@copy($img['image_original'], $img['image_new'])) {
-						$this->log('getImages() - FAILED COPY: '.$img['image_original']);
+				//if not get the one supplied
+				$ch = curl_init($img_large);
+				curl_setopt($ch, CURLOPT_NOBODY, true);
+				curl_exec($ch);
+				$header_response = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+				curl_close($ch);
+
+				if ($header_response == 200) {
+					$img_used = $img_large;
+				} else {
+					$img_used = $img['image_original'];
+				}
+
+				$handle = @fopen($img_used,'r');
+
+				if($handle !== false){
+					if(!@copy($img_used, $img['image_new'])){
+						$this->log('getImages() - FAILED COPY: '.$img_used);
 					}else{
-						$this->log('getImages() - Copy OK : '.$img['image_original']);
+						$this->log('getImages() - Copy OK : '.$img_used);
 					}
 				}else{
-					$this->log('getImages() - URL not found : '.$img['image_original']);
+					$this->log('getImages() - URL not found : '.$img_used);
 				}
 
 				if($img['imgcount'] == 0) {

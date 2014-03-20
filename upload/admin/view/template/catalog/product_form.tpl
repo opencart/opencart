@@ -709,7 +709,7 @@
                   <?php $discount_row = 0; ?>
                   <?php foreach ($product_discounts as $product_discount) { ?>
                   <tr id="discount-row<?php echo $discount_row; ?>">
-                    <td class="text-left"><select name="product_discount[<?php echo $discount_row; ?>][customer_group_id]" class="form-control">
+                    <td class="text-left"s><select name="product_discount[<?php echo $discount_row; ?>][customer_group_id]" class="form-control">
                         <?php foreach ($customer_groups as $customer_group) { ?>
                         <?php if ($customer_group['customer_group_id'] == $product_discount['customer_group_id']) { ?>
                         <option value="<?php echo $customer_group['customer_group_id']; ?>" selected="selected"><?php echo $customer_group['name']; ?></option>

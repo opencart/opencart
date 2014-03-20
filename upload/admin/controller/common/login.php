@@ -67,10 +67,7 @@ class ControllerCommonLogin extends Controller {
 			$route = $this->request->get['route'];
 
 			unset($this->request->get['route']);
-
-			if (isset($this->request->get['token'])) {
-				unset($this->request->get['token']);
-			}
+			unset($this->request->get['token']);
 
 			$url = '';
 

@@ -42,8 +42,8 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
 		$data['amazon_payment'] = $this->url->link('payment/amazon_checkout/payment', '', 'SSL');
-		$data['shipping_quotes'] = $this->url->link('payment/amazon_checkout/shippingQuotes', '', 'SSL');
-		$data['payment_method'] = $this->url->link('payment/amazon_checkout/paymentMethod', '', 'SSL');
+		$data['shipping_quotes'] = $this->url->link('payment/amazon_checkout/shippingquotes', '', 'SSL');
+		$data['payment_method'] = $this->url->link('payment/amazon_checkout/paymentmethod', '', 'SSL');
 
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['text_cart'] = $this->language->get('text_cart');
@@ -436,7 +436,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->model_payment_amazon_checkout->setOrderShipping($this->session->data['cba']['order_id'], $data['cba_free_shipping']);
 
 		$data['merchant_id'] = $this->config->get('amazon_checkout_merchant_id');
-		$data['process_order'] = $this->url->link('payment/amazon_checkout/processOrder', '', 'SSL');
+		$data['process_order'] = $this->url->link('payment/amazon_checkout/processorder', '', 'SSL');
 
 		foreach ($this->cart->getProducts() as $product) {
 			$option_data = array();

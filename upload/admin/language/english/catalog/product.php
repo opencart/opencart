@@ -87,16 +87,16 @@ $_['entry_profile']          = 'Profile:';
 $_['entry_recurring']        = 'Recurring billing:';
 $_['entry_recurring_price']  = 'Recurring price:';
 $_['entry_recurring_freq']   = 'Recurring frequency:';
-$_['entry_recurring_cycle']  = 'Recurring cycles:<span class="help">How often its billed, must be 1 or more</span>';
+$_['entry_recurring_cycle']  = 'Recurring cycles:<span class="help">How often it\'s billed, must be 1 or more</span>';
 $_['entry_recurring_length'] = 'Recurring length:<span class="help">0 = until cancelled</span>';
 $_['entry_trial']            = 'Trial period:';
 $_['entry_trial_price']      = 'Trial recurring price:';
 $_['entry_trial_freq']       = 'Trial recurring frequency:';
-$_['entry_trial_cycle']      = 'Trial recurring cycles:<span class="help">How often its billed, must be 1 or more</span>';
+$_['entry_trial_cycle']      = 'Trial recurring cycles:<span class="help">How often it\'s billed, must be 1 or more</span>';
 $_['entry_trial_length']     = 'Trial recurring length:';
 
 // Help
-$_['help_keyword']           = 'Do not use spaces instead replace spaces with - and make sure the keyword is globally unique.';
+$_['help_keyword']           = 'Do not use spaces, instead replace spaces with - and make sure the keyword is globally unique.';
 $_['help_sku']               = 'Stock Keeping Unit';
 $_['help_upc']               = 'Universal Product Code';
 $_['help_ean']               = 'European Article Number';

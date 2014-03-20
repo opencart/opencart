@@ -85,7 +85,8 @@
             </div>
           </div>
         </fieldset>
-        <fieldset>
+        
+               <fieldset>
           <legend><?php echo $text_your_address; ?></legend>
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-company"><?php echo $entry_company; ?></label>
@@ -157,6 +158,8 @@
             </div>
           </div>
         </fieldset>
+        
+        
         <fieldset>
           <legend><?php echo $text_your_password; ?></legend>
           <div class="form-group required">

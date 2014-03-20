@@ -50,7 +50,7 @@ $('#button-quote').on('click', function() {
 			$('#button-quote').button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();      
+			$('.alert, .text-danger').remove();      
 		
 			if (json['error']) {
 				if (json['error']['warning']) {
@@ -60,15 +60,15 @@ $('#button-quote').on('click', function() {
 				}  
 		
 				if (json['error']['country']) {
-					$('select[name=\'country_id\']').after('<div class="text-danger">' + json['error']['country'] + '</div>');
+					$('select[name=\'country_id\']').after('<span class="text-danger">' + json['error']['country'] + '</span>');
 				}  
 		
 				if (json['error']['zone']) {
-					$('select[name=\'zone_id\']').after('<div class="text-danger">' + json['error']['zone'] + '</div>');
+					$('select[name=\'zone_id\']').after('<span class="text-danger">' + json['error']['zone'] + '</span>');
 				}
 		
 				if (json['error']['postcode']) {
-					$('input[name=\'postcode\']').after('<div class="text-danger">' + json['error']['postcode'] + '</div>');
+					$('input[name=\'postcode\']').after('<span class="text-danger">' + json['error']['postcode'] + '</span>');
 				}              
 			}
 

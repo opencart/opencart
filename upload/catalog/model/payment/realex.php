@@ -21,6 +21,7 @@ class ModelPaymentRealex extends Model {
 			$method_data = array(
 				'code'       => 'realex',
 				'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('realex_sort_order')
 			);
 		}

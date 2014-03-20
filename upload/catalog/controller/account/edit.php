@@ -149,28 +149,25 @@ class ControllerAccountEdit extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
-
+		
 		// Custom Fields
+		$this->load->model('account/custom_field');
+		
 		if (isset($this->request->post['custom_field'])) {
-			$custom_field_info = $this->request->post['custom_field'];		
-		} elseif (!empty($customer_info)) {
-			$custom_field_info = unserialize($customer_info['custom_field']);
+			$custom_field_info = $this->request->post['custom_field'];
 		} else {
 			$custom_field_info = array();
-		}		
-
-		$this->load->model('account/custom_field');
+		}	
 
 		$data['custom_fields'] = array();
 
-		// If a post request then get a list of all fields that should have been posted for validation checking.
-		$custom_fields = $this->model_account_custom_field->getCustomFields('account', $this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['type'] == 'checkbox') {
 				$value = array();
 			} else {
-				$value = '';
+				$value = $custom_field['value'];
 			}
 
 			$data['custom_fields'][] = array(
@@ -178,8 +175,7 @@ class ControllerAccountEdit extends Controller {
 				'custom_field_value' => $custom_field['custom_field_value'],
 				'name'               => $custom_field['name'],
 				'type'               => $custom_field['type'],
-				'value'              => isset($custom_field_info[$custom_field['custom_field_id']]) ? $custom_field_info[$custom_field['custom_field_id']] : $value,
-				'required'           => $custom_field['required'],
+				'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value,
 				'sort_order'         => $custom_field['sort_order']
 			);
 		}

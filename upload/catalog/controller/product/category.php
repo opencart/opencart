@@ -94,7 +94,6 @@ class ControllerProductCategory extends Controller {
 			$this->document->setDescription($category_info['meta_description']);
 			$this->document->setKeywords($category_info['meta_keyword']);
 			$this->document->addLink($this->url->link('product/category', 'path=' . $this->request->get['path']), 'canonical');
-			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
 			$data['heading_title'] = $category_info['name'];
 

@@ -151,7 +151,34 @@ class ControllerAccountEdit extends Controller {
 		}
 		
 		// Custom Fields
-		$data['custom_field'] = $this->load->controller('account/custom_field');
+		$this->load->model('account/custom_field');
+		
+		if (isset($this->request->post['custom_field'])) {
+			$custom_field_info = $this->request->post['custom_field'];
+		} else {
+			$custom_field_info = array();
+		}	
+
+		$data['custom_fields'] = array();
+
+		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
+
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['type'] == 'checkbox') {
+				$value = array();
+			} else {
+				$value = $custom_field['value'];
+			}
+
+			$data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field['custom_field_value'],
+				'name'               => $custom_field['name'],
+				'type'               => $custom_field['type'],
+				'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value,
+				'sort_order'         => $custom_field['sort_order']
+			);
+		}
 
 		$data['back'] = $this->url->link('account/account', '', 'SSL');
 

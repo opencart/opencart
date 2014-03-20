@@ -2,38 +2,6 @@
 class ControllerCheckoutCart extends Controller {
 	public function index() {		
 		$this->load->language('checkout/cart');
-
-		// Update
-		if (!empty($this->request->post['quantity'])) {
-			foreach ($this->request->post['quantity'] as $key => $value) {
-				$this->cart->update($key, $value);
-			}
-			
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']); 
-			unset($this->session->data['reward']);
-			
-			$this->response->redirect($this->url->link('checkout/cart'));
-		}
-       	
-		// Remove
-		if (isset($this->request->get['remove'])) {
-			$this->cart->remove($this->request->get['remove']);
-			
-			unset($this->session->data['vouchers'][$this->request->get['remove']]);
-			
-			$this->session->data['success'] = $this->language->get('text_remove');
-		
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']); 
-			unset($this->session->data['reward']);  
-								
-			$this->response->redirect($this->url->link('checkout/cart'));
-		}
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -52,6 +20,9 @@ class ControllerCheckoutCart extends Controller {
     	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
       		$data['heading_title'] = $this->language->get('heading_title');
 			
+			$data['text_recurring'] = $this->language->get('text_recurring');
+			$data['text_length'] = $this->language->get('text_length');
+			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
 			$data['text_next'] = $this->language->get('text_next');
 			$data['text_next_choice'] = $this->language->get('text_next_choice');
 			
@@ -64,21 +35,8 @@ class ControllerCheckoutCart extends Controller {
 			
 			$data['button_update'] = $this->language->get('button_update');
 			$data['button_remove'] = $this->language->get('button_remove');
-			
       		$data['button_shopping'] = $this->language->get('button_shopping');
       		$data['button_checkout'] = $this->language->get('button_checkout');
-
-			$data['text_until_cancelled'] = $this->language->get('text_until_cancelled');
-			$data['text_freq_day'] = $this->language->get('text_freq_day');
-			$data['text_freq_week'] = $this->language->get('text_freq_week');
-			$data['text_freq_month'] = $this->language->get('text_freq_month');
-			$data['text_freq_bi_month'] = $this->language->get('text_freq_bi_month');
-			$data['text_freq_year'] = $this->language->get('text_freq_year');
-			$data['text_trial'] = $this->language->get('text_trial');
-			$data['text_recurring'] = $this->language->get('text_recurring');
-			$data['text_length'] = $this->language->get('text_length');
-			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
-			$data['text_payment_profile'] = $this->language->get('text_payment_profile');
 			
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
       			$data['error_warning'] = $this->language->get('error_stock');		
@@ -205,7 +163,6 @@ class ControllerCheckoutCart extends Controller {
 					'price'               => $price,
 					'total'               => $total,
 					'href'                => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-					'remove'              => $this->url->link('checkout/cart', 'remove=' . $product['key']),
 					'recurring'           => $product['recurring'],
 					'profile_name'        => $product['profile_name'],
 					'profile_description' => $profile_description,
@@ -430,5 +387,89 @@ class ControllerCheckoutCart extends Controller {
 		}
 		
 		$this->response->setOutput(json_encode($json));		
+	}
+	
+	public function update() {
+		$this->load->language('checkout/cart');
+		
+		$json = array();		
+		
+		// Update
+		if (!empty($this->request->post['quantity'])) {
+			foreach ($this->request->post['quantity'] as $key => $value) {
+				$this->cart->update($key, $value);
+			}
+			
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']); 
+			unset($this->session->data['reward']);
+			
+			$this->response->redirect($this->url->link('checkout/cart'));
+		}	
+		
+		$this->response->setOutput(json_encode($json));			
+	}
+	
+	public function remove() {
+		$this->load->language('checkout/cart');
+		
+		$json = array();
+       	
+		// Remove
+		if (isset($this->request->get['remove'])) {
+			$this->cart->remove($this->request->get['remove']);
+			
+			unset($this->session->data['vouchers'][$this->request->get['remove']]);
+			
+			$this->session->data['success'] = $this->language->get('text_remove');
+		
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+			unset($this->session->data['payment_method']);
+			unset($this->session->data['payment_methods']); 
+			unset($this->session->data['reward']);  
+				
+			// Totals
+			$this->load->model('setting/extension');
+			
+			$total_data = array();					
+			$total = 0;
+			$taxes = $this->cart->getTaxes();
+			
+			// Display prices
+			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+				$sort_order = array(); 
+				
+				$results = $this->model_setting_extension->getExtensions('total');
+				
+				foreach ($results as $key => $value) {
+					$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
+				}
+				
+				array_multisort($sort_order, SORT_ASC, $results);
+				
+				foreach ($results as $result) {
+					if ($this->config->get($result['code'] . '_status')) {
+						$this->load->model('total/' . $result['code']);
+			
+						$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+					}
+				}
+				
+				$sort_order = array(); 
+			  
+				foreach ($total_data as $key => $value) {
+					$sort_order[$key] = $value['sort_order'];
+				}
+	
+				array_multisort($sort_order, SORT_ASC, $total_data);								
+			}
+			
+			$json['total'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+		}
+		
+		$this->response->setOutput(json_encode($json));			
 	}
 }

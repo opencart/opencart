@@ -652,54 +652,63 @@
             <div class="well">
               <div class="row form-group">
                 <div class="col-sm-3">
-                  <label class="control-label">Unit</label>
-                  <select name="package[unit]" class="form-control">
-                    <option value="English">English</option>
-                    <option value="Metric">Metric</option>
+                  <label class="control-label"><?php echo $text_unit; ?></label>
+                  <select name="package[unit]" class="form-control" id="measure-unit">
+                    <option value="English"><?php echo $text_unit_english; ?></option>
+                    <option value="Metric"><?php echo $text_unit_metric; ?></option>
                   </select>
                 </div>
                 <div class="col-sm-6">
                   <div class="row">
                     <div class="col-sm-6">
-                      <label class="control-label">Weight major</label>
+                      <label class="control-label"><?php echo $text_weight_major; ?></label>
                       <div class="input-group col-xs-12">
-                        <input type="text" name="package[weight_major]" class="form-control">
-                        <span class="input-group-addon" id="weight-major">Kg</span>
+                        <input type="text" name="package[weight_major]" class="form-control" value="<?php echo $product['weight_major']; ?>">
+                        <span class="input-group-addon" id="weight-major-text">Kg</span>
                       </div>
                     </div>
                     <div class="col-sm-6">
-                      <label class="control-label">Weight minor</label>
+                      <label class="control-label"><?php echo $text_weight_minor; ?></label>
                       <div class="input-group col-xs-12">
-                        <input type="text" name="package[weight_minor]" class="form-control">
-                        <span class="input-group-addon" id="weight-minor">g</span>
+                        <input type="text" name="package[weight_minor]" class="form-control" value="<?php echo $product['weight_minor']; ?>">
+                        <span class="input-group-addon" id="weight-minor-text">g</span>
                       </div>
                     </div>
                   </div>
                 </div>
                 <div class="col-sm-3">
-                  <label class="control-label">Package type</label>
+                  <label class="control-label"><?php echo $text_package; ?></label>
                   <select name="package[package]" class="form-control">
                   </select>
                 </div>
               </div>
               <div class="row form-group">
                 <div class="col-sm-3">
-                  <label class="control-label">Depth</label>
-                  <input type="text" name="package[depth]" class="form-control">
+                  <label class="control-label"><?php echo $text_depth; ?></label>
+                  <div class="input-group col-xs-12">
+                    <input type="text" name="package[depth]" class="form-control" value="<?php echo $product['height']; ?>">
+                    <span class="input-group-addon size-unit-text">cm</span>
+                  </div>
                 </div>
                 <div class="col-sm-3">
-                  <label class="control-label">Length</label>
-                  <input type="text" name="package[length]" class="form-control">
+                  <label class="control-label"><?php echo $text_length; ?></label>
+                  <div class="input-group col-xs-12">
+                    <input type="text" name="package[length]" class="form-control" value="<?php echo $product['length']; ?>">
+                    <span class="input-group-addon size-unit-text">cm</span>
+                  </div>
                 </div>
                 <div class="col-sm-3">
-                  <label class="control-label">Width</label>
-                  <input type="text" name="package[width]" class="form-control">
+                  <label class="control-label"><?php echo $text_width; ?></label>
+                  <div class="input-group col-xs-12">
+                    <input type="text" name="package[width]" class="form-control" value="<?php echo $product['width']; ?>">
+                    <span class="input-group-addon size-unit-text">cm</span>
+                  </div>
                 </div>
                 <div class="col-sm-3">
-                  <label class="control-label">Iregular shape</label>
+                  <label class="control-label"><?php echo $text_shape; ?></label>
                   <select name="package[irregular]" class="form-control">
-                    <option value="1">Yes</option>
-                    <option value="0">NO</option>
+                    <option value="0"><?php echo $text_no; ?></option>
+                    <option value="1"><?php echo $text_yes; ?></option>
                   </select>
                 </div>
               </div>
@@ -1857,5 +1866,19 @@
           profileThemeUpdate();
       <?php } ?>
   });
+
+$('#measure-unit').bind('change', function() {
+  var unit_type = $('#measure-unit').val();
+
+  if (unit_type == 'English') {
+    $('.size-unit-text').text('inches');
+    $('#weight-major-text').text('Lbs');
+    $('#weight-minor-text').text('Oz');
+  } else {
+    $('.size-unit-text').text('cm');
+    $('#weight-major-text').text('Kgs');
+    $('#weight-minor-text').text('Grams');
+  }
+});
 //--></script>
 <?php echo $footer; ?>

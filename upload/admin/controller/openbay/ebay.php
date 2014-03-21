@@ -1346,6 +1346,10 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 
+				$weight_parts = explode('.', $product_info['weight']);
+				$product_info['weight_major'] = $weight_parts[0];
+				$product_info['weight_minor'] = $weight_parts[1];
+
 				$data['product'] = $product_info;
 
 				$data['header'] = $this->load->controller('common/header');
@@ -1553,8 +1557,6 @@ class ControllerOpenbayEbay extends Controller {
 
 				if ($item_id == false) { // ensure that the sku is not already listed
 					$data = $this->request->post;
-
-
 
 					if($data['template'] != 'None') {
 						$template = $this->model_openbay_ebay_template->get($data['template']);

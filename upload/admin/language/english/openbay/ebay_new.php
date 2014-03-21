@@ -126,8 +126,18 @@ $_['text_shipping_post_ww']         = 'Worldwide';
 $_['text_shipping_post_dm']         = 'Domestic and the following';
 $_['text_shipping_max_national']    = 'For your chosen category, eBay allows a maximum national shipping charge of ';
 $_['text_shipping_getitfast']       = 'Get It Fast!';
-$_['text_shipping_zones']               = 'Ship to zones';
-$_['text_shipping_worldwide']           = 'Worldwide';
+$_['text_shipping_zones']           = 'Ship to zones';
+$_['text_shipping_worldwide']       = 'Worldwide';
+$_['text_unit']       				= 'Unit';
+$_['text_unit_english']       		= 'English';
+$_['text_unit_metric']       		= 'Metric';
+$_['text_weight_major']       		= 'Weight major';
+$_['text_weight_minor']       		= 'Weight minor';
+$_['text_package']       			= 'Package type';
+$_['text_shape']       				= 'Irregular shape';
+$_['text_width']       				= 'Width';
+$_['text_length']       			= 'Length';
+$_['text_depth']       				= 'Depth / Height';
 
 //Returns
 $_['text_return_accepted']          = 'Returns accepted?';

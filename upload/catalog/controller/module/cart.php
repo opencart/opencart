@@ -40,6 +40,7 @@ class ControllerModuleCart extends Controller {
 		}
 		
 		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/cart_button.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/module/cart_button.tpl', $data);

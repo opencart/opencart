@@ -28,6 +28,9 @@ class ControllerAccountAddress extends Controller {
 		$this->load->language('account/address');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		$this->load->model('account/address');
 
@@ -62,6 +65,9 @@ class ControllerAccountAddress extends Controller {
 		$this->load->language('account/address');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		$this->load->model('account/address');
 
@@ -441,7 +447,7 @@ class ControllerAccountAddress extends Controller {
 			$data['default'] = false;
 		}
 
-		// Custom Fields
+		// Custom fields
 		if (isset($this->request->post['custom_field'])) {
 			$custom_field_info = $this->request->post['custom_field'];		
 		} elseif (isset($address_info)) {
@@ -524,7 +530,7 @@ class ControllerAccountAddress extends Controller {
 			$this->error['zone'] = $this->language->get('error_zone');
 		}
 
-		// Custom Field Validation
+		// Custom field validation
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields('address', $this->config->get('config_customer_group_id'));

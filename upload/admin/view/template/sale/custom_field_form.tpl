@@ -223,36 +223,33 @@ $('select[name=\'type\']').on('change', function() {
 		$('#display-value').show();
 	}
 	
-	$('input[name=\'value\']').attr('type', 'text');
-	
 	if (this.value == 'date') {
-		 $('input[name=\'value\']').attr('type', 'date');
+		$('#display-value > div').html('<div class="input-group date"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="<?php echo $entry_value; ?>" data-format="YYYY-MM-DD" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>');
 	} else if (this.value == 'time') {
-		$('input[name=\'value\']').attr('type', 'time');
+		$('#display-value > div').html('<div class="input-group time"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="<?php echo $entry_value; ?>" data-format="HH:mm" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>');
 	} else if (this.value == 'datetime') {
-		$('input[name=\'value\']').attr('type', 'datetime-local');
+		$('#display-value > div').html('<div class="input-group datetime"><input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="<?php echo $entry_value; ?>" data-format="YYYY-MM-DD HH:mm" id="input-value" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div>');
+	} else if (this.value == 'textarea') {
+		$('#display-value > div').html('<textarea name="value" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control">' + $('#input-value').val() + '</textarea>');
+	} else {
+		$('#display-value > div').html('<input type="text" name="value" value="' + $('#input-value').val() + '" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />');
 	}
+	
+	$('.date').datetimepicker({
+		pickTime: false
+	});
+	
+	$('.time').datetimepicker({
+		pickDate: false
+	});	
+		
+	$('.datetime').datetimepicker({
+		pickDate: true,
+		pickTime: true
+	});
 });
 
 $('select[name=\'type\']').trigger('change');
-
-$('select[name=\'storage\']').on('change', function() {
-	if (this.value == 'account') {
-		$('#account').show();
-		
-		$('#address, #shipping_address, #payment_address').hide();
-		
-		$('input[name*=\'address\']').prop('checked', false);
-	} else {
-		$('#address, #shipping_address, #payment_address').show();
-		
-		$('#account').hide();
-		
-		$('input[name*=\'account\']').prop('checked', false);
-	}
-});
-
-$('select[name=\'storage\']').trigger('change');
 
 var custom_field_value_row = <?php echo $custom_field_value_row; ?>;
 
@@ -273,5 +270,5 @@ function addCustomFieldValue() {
 	
 	custom_field_value_row++;
 }
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

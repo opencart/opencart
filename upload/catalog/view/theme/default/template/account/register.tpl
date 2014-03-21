@@ -501,13 +501,13 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 
+$('.time').datetimepicker({
+	pickDate: false
+});
+
 $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
-});
-
-$('.time').datetimepicker({
-	pickDate: false
 });
 //--></script>
 <?php echo $footer; ?>

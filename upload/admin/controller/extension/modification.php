@@ -114,7 +114,7 @@ class ControllerExtensionModification extends Controller {
 							foreach ($files as $file) {
 								// Get the key to be used for the modification cache filename.
 								if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
-									$key = 'catalog_' . str_replace('/', '_', substr($file, strlen(DIR_APPLICATION)));
+									$key = 'catalog_' . str_replace('/', '_', substr($file, strlen(DIR_CATALOG)));
 								}
 								
 								if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
@@ -176,7 +176,7 @@ class ControllerExtensionModification extends Controller {
 										lorem ifoopsum foo lor barr ipsum foo dolor foo
 											   ^1      ^2      ^3=bar     ^4        ^5
 										*/
-										$modification[$key] = preg_replace($search, $replace, $modification[$key], 1);
+										$modification[$key] = preg_replace($search, $replace, $modification[$key]);
 									} else {	
 										$i = 0;
 										$pos = -1;

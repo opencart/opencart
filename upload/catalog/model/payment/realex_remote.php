@@ -21,6 +21,7 @@ class ModelPaymentRealexRemote extends Model {
 			$method_data = array(
 				'code'       => 'realex_remote',
 				'title'      => $this->language->get('text_title'),
+				'terms'      => '',
 				'sort_order' => $this->config->get('realex_remote_sort_order')
 			);
 		}

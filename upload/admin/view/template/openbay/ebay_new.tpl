@@ -649,6 +649,61 @@
                 </div>
               </div>
             </div>
+            <div class="well">
+              <div class="row form-group">
+                <div class="col-sm-3">
+                  <label class="control-label">Unit</label>
+                  <select name="package[unit]" class="form-control">
+                    <option value="English">English</option>
+                    <option value="Metric">Metric</option>
+                  </select>
+                </div>
+                <div class="col-sm-6">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <label class="control-label">Weight major</label>
+                      <div class="input-group col-xs-12">
+                        <input type="text" name="package[weight_major]" class="form-control">
+                        <span class="input-group-addon" id="weight-major">Kg</span>
+                      </div>
+                    </div>
+                    <div class="col-sm-6">
+                      <label class="control-label">Weight minor</label>
+                      <div class="input-group col-xs-12">
+                        <input type="text" name="package[weight_minor]" class="form-control">
+                        <span class="input-group-addon" id="weight-minor">g</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-sm-3">
+                  <label class="control-label">Package type</label>
+                  <select name="package[package]" class="form-control">
+                  </select>
+                </div>
+              </div>
+              <div class="row form-group">
+                <div class="col-sm-3">
+                  <label class="control-label">Depth</label>
+                  <input type="text" name="package[depth]" class="form-control">
+                </div>
+                <div class="col-sm-3">
+                  <label class="control-label">Length</label>
+                  <input type="text" name="package[length]" class="form-control">
+                </div>
+                <div class="col-sm-3">
+                  <label class="control-label">Width</label>
+                  <input type="text" name="package[width]" class="form-control">
+                </div>
+                <div class="col-sm-3">
+                  <label class="control-label">Iregular shape</label>
+                  <select name="package[irregular]" class="form-control">
+                    <option value="1">Yes</option>
+                    <option value="0">NO</option>
+                  </select>
+                </div>
+              </div>
+            </div>
           </div>
 
           <div id="tab-listing-returns" class="tab-pane">

@@ -316,15 +316,6 @@ class ControllerOpenbayEbayProfile extends Controller {
 					'cod_surcharge' => isset($profile_info['data']['cod_surcharge_national'][$key]) ? $profile_info['data']['cod_surcharge_national'][$key] : ''
 				);
 			}
-
-			$payment_types = $this->config->get('ebay_payment_types');
-			$return['cod_surcharge'] = 0;
-
-			foreach($payment_types as $payment) {
-				if ($payment['ebay_name'] == 'COD') {
-					$return['cod_surcharge'] = 1;
-				}
-			}
 		}
 
 		$shipping_national          = $national;
@@ -351,9 +342,19 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$tmp                            = '';
 
 		if(is_array($shipping_national)){
+			$payment_types = $this->config->get('ebay_payment_types');
+			$return['cod_surcharge'] = 0;
+
+			foreach($payment_types as $payment) {
+				if ($payment['ebay_name'] == 'COD') {
+					$cod_surcharge = 1;
+				}
+			}
+
 			foreach($shipping_national as $key => $service){
 				$shipping_data = array();
 				$shipping_data['key'] = $key;
+				$shipping_data['cod_surcharge'] = $cod_surcharge;
 				$shipping_data['service'] = $service;
 				$shipping_data['text_shipping_service'] = $this->language->get('text_shipping_service');
 				$shipping_data['text_shipping_first'] = $this->language->get('text_shipping_first');

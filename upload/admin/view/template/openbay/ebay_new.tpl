@@ -676,11 +676,16 @@
                     </div>
                   </div>
                 </div>
-                <div class="col-sm-3">
-                  <label class="control-label"><?php echo $text_package; ?></label>
-                  <select name="package[package]" class="form-control">
-                  </select>
-                </div>
+                <?php if (!empty($settings['package_types'])) { ?>
+                  <div class="col-sm-3">
+                    <label class="control-label"><?php echo $text_package; ?></label>
+                    <select name="package[package]" class="form-control">
+                      <?php foreach ($settings['package_types'] as $package) { ?>
+                        <?php echo '<option value="' . $package['code'] . '"'.($package['default'] == 1 ? ' selected' : '').'>' . $package['description'] . '</option>'; ?>
+                      <?php } ?>
+                    </select>
+                  </div>
+                <?php } ?>
               </div>
               <div class="row form-group">
                 <div class="col-sm-3">

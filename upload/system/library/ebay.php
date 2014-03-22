@@ -1359,6 +1359,21 @@ final class Ebay {
 			} else {
 				$this->log('No returns set!');
 			}
+
+			//package sizes
+			if (isset($response['package_type'])) {
+				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'package_type' LIMIT 1");
+
+				if ($qry->num_rows > 0) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['package_type'])) . "', `last_updated`  = now() WHERE `key` = 'package_type' LIMIT 1");
+					$this->log('Updated returns info in to ebay_setting_option table');
+				} else {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'package_type', `data` = '" . $this->db->escape(serialize($response['package_type'])) . "', `last_updated`  = now()");
+					$this->log('Inserted package_type info in to ebay_setting_option table');
+				}
+			} else {
+				$this->log('No package_type set!');
+			}
 		}
 
 		return array('msg' => $this->lastmsg, 'error' => $this->lasterror);

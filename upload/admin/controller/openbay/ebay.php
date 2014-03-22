@@ -1236,6 +1236,8 @@ class ControllerOpenbayEbay extends Controller {
 
 				$setting['returns'] = $this->openbay->ebay->getSetting('returns');
 
+				$setting['package_types'] = $this->openbay->ebay->getSetting('package_type');
+
 				if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 					$this->session->data['warning'] = $this->language->get('text_error_missing_settings');
 					$this->response->redirect($this->url->link('openbay/ebay/viewSync&token=' . $this->session->data['token'], 'SSL'));
@@ -1329,7 +1331,7 @@ class ControllerOpenbayEbay extends Controller {
 				$product_info['defaults']['ebay_payment_types']     = $this->config->get('ebay_payment_types');
 				$product_info['defaults']['paypal_address']         = $this->config->get('ebay_payment_paypal_address');
 				$product_info['defaults']['payment_instruction']    = $this->config->get('ebay_payment_instruction');
-				$product_info['defaults']['ebay_payment_immediate']      = $this->config->get('ebay_payment_immediate');
+				$product_info['defaults']['ebay_payment_immediate'] = $this->config->get('ebay_payment_immediate');
 
 				$product_info['defaults']['gallery_height']         = '400';
 				$product_info['defaults']['gallery_width']          = '400';

@@ -5,7 +5,7 @@ class ModelOpenbayEbayProfile extends Model{
 			$this->clearDefault($data['type']);
 		}
 
-		$qry = $this->db->query("
+		$this->db->query("
 			INSERT INTO
 				`" . DB_PREFIX . "ebay_profile`
 			SET
@@ -24,7 +24,7 @@ class ModelOpenbayEbayProfile extends Model{
 			$this->clearDefault($data['type']);
 		}
 
-		$qry = $this->db->query("
+		$this->db->query("
 			UPDATE
 				`" . DB_PREFIX . "ebay_profile`
 			SET
@@ -56,8 +56,7 @@ class ModelOpenbayEbayProfile extends Model{
 				`ebay_profile_id` = '".(int)$id."'
 			LIMIT 1");
 
-		if($qry->num_rows)
-		{
+		if($qry->num_rows) {
 			$row                = $qry->row;
 			$row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/edit&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];
 			$row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/delete&token=' . $this->session->data['token'].'&ebay_profile_id='.$row['ebay_profile_id'];

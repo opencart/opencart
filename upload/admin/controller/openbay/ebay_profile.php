@@ -245,7 +245,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 							'price' => $profile_info['data']['price_national'][$key],
 							'additional' => $profile_info['data']['priceadditional_national'][$key],
 							'name' => $this->model_openbay_ebay->getShippingServiceName('0', $service),
-							'cod_surcharge' => $profile_info['data']['cod_surcharge_national'][$key]
+							'cod_surcharge' => isset($profile_info['data']['cod_surcharge_national'][$key]) ? $profile_info['data']['cod_surcharge_national'][$key] : ''
 						);
 						$i++;
 					}

@@ -1373,7 +1373,7 @@
           html += '</div>';
         html += '</div>';
         if (id == 'national') {
-          <?php if ($defaults['cod_surcharge'] == 1) { ?>
+          <?php if ($product['defaults']['cod_surcharge'] == 1) { ?>
             html += '<div class="row form-group">';
               html += '<div class="col-sm-2">';
                 html += '<label class="control-label"><?php echo $text_cod_surcharge; ?></label>';

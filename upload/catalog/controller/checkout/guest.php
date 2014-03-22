@@ -130,14 +130,6 @@ class ControllerCheckoutGuest extends Controller {
 		
 		$data['countries'] = $this->model_localisation_country->getCountries();
 		
-		$data['shipping_required'] = $this->cart->hasShipping();
-		
-		if (isset($this->session->data['guest']['shipping_address'])) {
-			$data['shipping_address'] = $this->session->data['guest']['shipping_address'];			
-		} else {
-			$data['shipping_address'] = true;
-		}	
-				
 		// Custom Fields
 		$this->load->model('account/custom_field');
 		
@@ -167,7 +159,15 @@ class ControllerCheckoutGuest extends Controller {
 				'sort_order'         => $custom_field['sort_order']
 			);
 		}
-				
+		
+		$data['shipping_required'] = $this->cart->hasShipping();
+		
+		if (isset($this->session->data['guest']['shipping_address'])) {
+			$data['shipping_address'] = $this->session->data['guest']['shipping_address'];			
+		} else {
+			$data['shipping_address'] = true;
+		}	
+						
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/guest.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/guest.tpl', $data));
 		} else {

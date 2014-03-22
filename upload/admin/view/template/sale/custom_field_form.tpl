@@ -33,6 +33,23 @@
           </div>
         </div>
         <div class="form-group">
+          <label class="col-sm-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
+          <div class="col-sm-10">
+            <select name="location" id="input-location" class="form-control">
+              <?php if ($location == 'account') { ?>
+              <option value="account" selected="selected"><?php echo $text_account; ?></option>
+              <?php } else { ?>
+              <option value="account"><?php echo $text_account; ?></option>
+              <?php } ?>
+              <?php if ($location == 'address') { ?>
+              <option value="address" selected="selected"><?php echo $text_address; ?></option>
+              <?php } else { ?>
+              <option value="address"><?php echo $text_address; ?></option>
+              <?php } ?>
+            </select>
+          </div>
+        </div>
+        <div class="form-group">
           <label class="col-sm-2 control-label" for="input-type"><?php echo $entry_type; ?></label>
           <div class="col-sm-10">
             <select name="type" id="input-type" class="form-control">
@@ -96,23 +113,6 @@
           <label class="col-sm-2 control-label" for="input-value"><?php echo $entry_value; ?></label>
           <div class="col-sm-10">
             <input type="text" name="value" value="<?php echo $value; ?>" placeholder="<?php echo $entry_value; ?>" id="input-value" class="form-control" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-location"><?php echo $entry_location; ?></label>
-          <div class="col-sm-10">
-            <select name="location" id="input-location" class="form-control">
-              <?php if ($location == 'account') { ?>
-              <option value="account" selected="selected"><?php echo $text_account; ?></option>
-              <?php } else { ?>
-              <option value="account"><?php echo $text_account; ?></option>
-              <?php } ?>
-              <?php if ($location == 'address') { ?>
-              <option value="address" selected="selected"><?php echo $text_address; ?></option>
-              <?php } else { ?>
-              <option value="address"><?php echo $text_address; ?></option>
-              <?php } ?>
-            </select>
           </div>
         </div>
         <div class="form-group">
@@ -270,5 +270,5 @@ function addCustomFieldValue() {
 	
 	custom_field_value_row++;
 }
-//--></script>
+//--></script> 
 <?php echo $footer; ?>

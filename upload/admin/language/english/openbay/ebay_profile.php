@@ -25,8 +25,8 @@ $_['text_profile_desc']         = 'Description';
 $_['text_profile_action']       = 'Action';
 
 //Tabs
-$_['tab_shipping']         = 'Shipping';
-$_['tab_general']          = 'General';
+$_['tab_shipping']         		= 'Shipping';
+$_['tab_general']          		= 'General';
 $_['text_tab_returns']          = 'Returns';
 $_['text_tab_template']         = 'Template';
 $_['text_tab_gallery']          = 'Gallery';
@@ -47,6 +47,7 @@ $_['text_shipping_in_desc']             = 'Freight info in description<span clas
 $_['text_shipping_getitfast']           = 'Get It Fast!';
 $_['text_shipping_zones']               = 'Ship to zones';
 $_['text_shipping_worldwide']           = 'Worldwide';
+$_['text_cod_surcharge']           		= 'Cash on delivery surcharge';
 
 //Returns profile
 $_['text_returns_accept']       = 'Returns accepted';

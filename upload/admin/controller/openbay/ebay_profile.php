@@ -231,7 +231,6 @@ class ControllerOpenbayEbayProfile extends Controller {
 		}
 
 		if ($type == 0) {
-
 			$i = 0;
 			$j = 0;
 
@@ -245,7 +244,8 @@ class ControllerOpenbayEbayProfile extends Controller {
 							'id' => $service,
 							'price' => $profile_info['data']['price_national'][$key],
 							'additional' => $profile_info['data']['priceadditional_national'][$key],
-							'name' => $this->model_openbay_ebay->getShippingServiceName('0', $service)
+							'name' => $this->model_openbay_ebay->getShippingServiceName('0', $service),
+							'cod_surcharge' => $profile_info['data']['cod_surcharge_national'][$key]
 						);
 						$i++;
 					}
@@ -274,6 +274,15 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$data['data']['shipping_national_count']     = $i;
 			$data['data']['shipping_international']      = $international;
 			$data['data']['shipping_international_count']= $j;
+
+			$payment_types = $this->model_openbay_ebay->getPaymentTypes();
+			$data['cod_surcharge'] = 0;
+
+			foreach($payment_types as $payment) {
+				if ($payment['ebay_name'] == 'COD') {
+					$data['cod_surcharge'] = 1;
+				}
+			}
 		}
 
 		$this->document->setTitle($data['page_title']);
@@ -303,8 +312,18 @@ class ControllerOpenbayEbayProfile extends Controller {
 					'id'            => $service,
 					'price'         => $profile_info['data']['price_national'][$key],
 					'additional'    => $profile_info['data']['priceadditional_national'][$key],
-					'name'          => $this->model_openbay_ebay->getShippingServiceName('0', $service)
+					'name'          => $this->model_openbay_ebay->getShippingServiceName('0', $service),
+					'cod_surcharge' => $profile_info['data']['cod_surcharge_national'][$key]
 				);
+			}
+
+			$payment_types = $this->config->get('ebay_payment_types');
+			$return['cod_surcharge'] = 0;
+
+			foreach($payment_types as $payment) {
+				if ($payment['ebay_name'] == 'COD') {
+					$return['cod_surcharge'] = 1;
+				}
 			}
 		}
 
@@ -340,6 +359,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 				$shipping_data['text_shipping_first'] = $this->language->get('text_shipping_first');
 				$shipping_data['text_btn_remove'] = $this->language->get('text_btn_remove');
 				$shipping_data['text_shipping_add'] = $this->language->get('text_shipping_add');
+				$shipping_data['text_cod_surcharge'] = $this->language->get('text_cod_surcharge');
 
 				$tmp .= $this->load->view('openbay/ebay_profile_shipping_national.tpl', $shipping_data);
 			}

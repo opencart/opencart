@@ -1318,6 +1318,14 @@ class ControllerOpenbayEbay extends Controller {
 				$product_info['templates']                          = $this->model_openbay_ebay_template->getAll();
 				$product_info['store_cats']                         = $this->model_openbay_ebay->getSellerStoreCategories();
 
+				$product_info['defaults']['cod_surcharge'] = 0;
+
+				foreach($product_info['payments'] as $payment) {
+					if ($payment['ebay_name'] == 'COD') {
+						$product_info['defaults']['cod_surcharge'] = 1;
+					}
+				}
+
 				$product_info['defaults']['ebay_payment_types']     = $this->config->get('ebay_payment_types');
 				$product_info['defaults']['paypal_address']         = $this->config->get('ebay_payment_paypal_address');
 				$product_info['defaults']['payment_instruction']    = $this->config->get('ebay_payment_instruction');

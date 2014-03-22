@@ -1367,6 +1367,18 @@
             html += '<div class="col-sm-2"><a onclick="removeShipping(\'' + id + '\',\'' + count + '\');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_remove; ?></a></div>';
           html += '</div>';
         html += '</div>';
+        if (id == 'national') {
+          <?php if ($defaults['cod_surcharge'] == 1) { ?>
+            html += '<div class="row form-group">';
+              html += '<div class="col-sm-2">';
+                html += '<label class="control-label"><?php echo $text_cod_surcharge; ?></label>';
+              html += '</div>';
+              html += '<div class="col-sm-10">';
+                html += '<input type="text" name="cod_surcharge_national[' + count + ']" class="form-control" value="0.00" />';
+              html += '</div>';
+            html += '</div>';
+          <?php } ?>
+        }
 
         $('#' + id + '-shipping-options').append(html);
         $('#count_' + id).val(count);

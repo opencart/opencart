@@ -343,7 +343,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 
 		if(is_array($shipping_national)){
 			$payment_types = $this->config->get('ebay_payment_types');
-			$return['cod_surcharge'] = 0;
+			$cod_surcharge = 0;
 
 			foreach($payment_types as $payment) {
 				if ($payment['ebay_name'] == 'COD') {

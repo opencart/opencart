@@ -147,19 +147,6 @@ class ControllerExtensionModification extends Controller {
 										$index = 1;
 									}								
 									
-									switch ($position) {
-										default:
-										case 'replace':
-											$replace = $add;
-											break;
-										case 'before':
-											$replace = $add . $search;
-											break;
-										case 'after':
-											$replace = $search . $add;
-											break;
-									}
-									
 									if ($regex && $regex == 'true') {
 										/*
 										Regex does not require index to match items
@@ -176,8 +163,34 @@ class ControllerExtensionModification extends Controller {
 										lorem ifoopsum foo lor barr ipsum foo dolor foo
 											   ^1      ^2      ^3=bar     ^4        ^5
 										*/
+										switch ($position) {
+											default:
+											case 'replace':
+												$replace = $add;
+												break;
+											case 'before':
+												$replace = $add . '$0';
+												break;
+											case 'after':
+												$replace = '$0' . $add;
+												break;
+										}
+										
 										$modification[$key] = preg_replace($search, $replace, $modification[$key], 1);
-									} else {	
+									} else {
+										switch ($position) {
+											default:
+											case 'replace':
+												$replace = $add;
+												break;
+											case 'before':
+												$replace = $add . $search;
+												break;
+											case 'after':
+												$replace = $search . $add;
+												break;
+										}
+										
 										$i = 0;
 										$pos = -1;
 										$result = array();

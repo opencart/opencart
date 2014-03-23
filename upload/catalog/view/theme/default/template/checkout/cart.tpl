@@ -76,7 +76,7 @@
                     <input type="text" name="quantity[<?php echo $product['key']; ?>]" value="<?php echo $product['quantity']; ?>" size="1" class="form-control" />
                     <span class="input-group-btn">
                     <button type="submit" data-toggle="tooltip" title="<?php echo $button_update; ?>" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-                    <a href="<?php echo $product['remove']; ?>" title="<?php echo $button_remove; ?>" data-toggle="tooltip" class="btn btn-danger"><i class="fa fa-times-circle"></i></a></span></div></td>
+                    <button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="cart.remove('<?php echo $product['key']; ?>');"><i class="fa fa-times-circle"></i></button></span></div></td>
                 <td class="text-right"><?php echo $product['price']; ?></td>
                 <td class="text-right"><?php echo $product['total']; ?></td>
               </tr>
@@ -88,7 +88,7 @@
                 <td class="text-left"></td>
                 <td class="text-left"><div class="input-group btn-block" style="max-width: 200px;">
                     <input type="text" name="" value="1" size="1" disabled="disabled" class="form-control" />
-                    <span class="input-group-btn"><a href="<?php echo $vouchers['remove']; ?>" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-times-circle"></i></a></span></div></td>
+                    <span class="input-group-btn"><button type="button" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger" onclick="voucher.remove('<?php echo $vouchers['key']; ?>');"><i class="fa fa-times-circle"></i></button></span></div></td>
                 <td class="text-right"><?php echo $vouchers['amount']; ?></td>
                 <td class="text-right"><?php echo $vouchers['amount']; ?></td>
               </tr>

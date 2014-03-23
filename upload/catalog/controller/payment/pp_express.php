@@ -566,26 +566,32 @@ class ControllerPaymentPPExpress extends Controller {
 						}
 					}
 
-					$sort_order = array();
+					if (!empty($quote_data)) {
+						$sort_order = array();
 
-					foreach ($quote_data as $key => $value) {
-						$sort_order[$key] = $value['sort_order'];
+						foreach ($quote_data as $key => $value) {
+							$sort_order[$key] = $value['sort_order'];
+						}
+
+						array_multisort($sort_order, SORT_ASC, $quote_data);
+
+						$this->session->data['shipping_methods'] = $quote_data;
+						$data['shipping_methods'] = $quote_data;
+
+						if(!isset($this->session->data['shipping_method'])) {
+							//default the shipping to the very first option.
+							$key1 = key($quote_data);
+							$key2 = key($quote_data[$key1]['quote']);
+							$this->session->data['shipping_method'] = $quote_data[$key1]['quote'][$key2];
+						}
+
+						$data['code'] = $this->session->data['shipping_method']['code'];
+						$data['action_shipping'] = $this->url->link('payment/pp_express/shipping', '', 'SSL');
+					} else {
+						unset($this->session->data['shipping_methods']);
+						unset($this->session->data['shipping_method']);
+						$this->data['error_no_shipping'] = $this->language->get('error_no_shipping');
 					}
-
-					array_multisort($sort_order, SORT_ASC, $quote_data);
-
-					$this->session->data['shipping_methods'] = $quote_data;
-					$data['shipping_methods'] = $quote_data;
-
-					if(!isset($this->session->data['shipping_method'])) {
-						//default the shipping to the very first option.
-						$key1 = key($quote_data);
-						$key2 = key($quote_data[$key1]['quote']);
-						$this->session->data['shipping_method'] = $quote_data[$key1]['quote'][$key2];
-					}
-
-					$data['code'] = $this->session->data['shipping_method']['code'];
-					$data['action_shipping'] = $this->url->link('payment/pp_express/shipping', '', 'SSL');
 				} else {
 					unset($this->session->data['shipping_methods']);
 					unset($this->session->data['shipping_method']);

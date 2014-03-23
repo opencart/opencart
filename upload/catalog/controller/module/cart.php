@@ -50,12 +50,6 @@ class ControllerModuleCart extends Controller {
 	}	
 	
 	public function info() {
-      	if (isset($this->request->get['remove'])) {
-          	$this->cart->remove($this->request->get['remove']);
-			
-			unset($this->session->data['vouchers'][$this->request->get['remove']]);
-      	}
-			
 		$this->load->language('module/cart');
 
 		$data['text_empty'] = $this->language->get('text_empty');

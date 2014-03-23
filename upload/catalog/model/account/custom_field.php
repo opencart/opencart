@@ -1,15 +1,15 @@
 <?php
 class ModelAccountCustomField extends Model {
-	public function getCustomFields($location, $customer_group_id = '') {
+	public function getCustomFields($customer_group_id = '') {
 		$custom_field_data = array();
 		
-		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field_location` cfl LEFT JOIN `" . DB_PREFIX . "custom_field` cf ON (cfl.custom_field_id = cf.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) WHERE cfl.location = '" . $this->db->escape($location) . "'"; 
+		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_customer_group` cfcg ON (cf.custom_field_id = cfcg.custom_field_id) WHERE cfd.language_id = '" . (int)$this->config->get('config_language_id') . "'"; 
 		
 		if ($customer_group_id) { 
-			$sql .= " AND cfl.customer_group_id = '" . (int)$customer_group_id . "'";
+			$sql .= " AND cfcg.customer_group_id = '" . (int)$customer_group_id . "'";
 		}
 		
-		$sql .= " AND cfd.language_id = '" . (int)$this->config->get('config_language_id') . "' ORDER BY cf.sort_order ASC";
+		$sql .= " ORDER BY cf.sort_order ASC";
 		
 		$custom_field_query = $this->db->query($sql);
 		
@@ -33,7 +33,7 @@ class ModelAccountCustomField extends Model {
 				'name'               => $custom_field['name'],
 				'type'               => $custom_field['type'],
 				'value'              => $custom_field['value'],
-				'storage'            => $custom_field['storage'],
+				'location'           => $custom_field['location'],
 				'required'           => $custom_field['required'] > 0 ? true : false,
 				'sort_order'         => $custom_field['sort_order']
 			);

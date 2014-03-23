@@ -89,7 +89,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 				
 		$data['custom_fields'] = array();
 		
-		$custom_fields = $this->model_account_custom_field->getCustomFields('shipping_address', $this->session->data['guest']['customer_group_id']);
+		$custom_fields = $this->model_account_custom_field->getCustomFields($this->session->data['guest']['customer_group_id']);
 		
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') { 
@@ -105,8 +105,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 					'name'               => $custom_field['name'],
 					'type'               => $custom_field['type'],
 					'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value,
-					'required'           => $custom_field['required'],
-					'sort_order'         => $custom_field['sort_order']
+					'required'           => $custom_field['required']
 				);
 			}
 		}
@@ -171,10 +170,10 @@ class ControllerCheckoutGuestShipping extends Controller {
 				$json['error']['zone'] = $this->language->get('error_zone');
 			}
 			
-			// Custom Field Validation
+			// Custom field validation
 			$this->load->model('account/custom_field');
 			
-			$custom_fields = $this->model_account_custom_field->getCustomFields('shipping_address', $this->session->data['guest']['customer_group_id']);
+			$custom_fields = $this->model_account_custom_field->getCustomFields($this->session->data['guest']['customer_group_id']);
 			
 			foreach ($custom_fields as $custom_field) {
 				if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
@@ -221,6 +220,12 @@ class ControllerCheckoutGuestShipping extends Controller {
 				$this->session->data['shipping_address']['zone'] = '';
 				$this->session->data['shipping_address']['zone_code'] = '';
 			}
+			
+			if (isset($this->request->post['custom_field'])){
+				$this->session->data['shipping_address']['custom_field'] = $this->request->post['custom_field'];
+			} else {
+				$this->session->data['shipping_address']['custom_field'] = array();
+			}			
 			
 			unset($this->session->data['shipping_method']);	
 			unset($this->session->data['shipping_methods']);

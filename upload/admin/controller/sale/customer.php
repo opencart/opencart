@@ -600,7 +600,8 @@ class ControllerSaleCustomer extends Controller {
 		$data['column_total'] = $this->language->get('column_total');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');
-
+		
+		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
 		$data['entry_email'] = $this->language->get('entry_email');
@@ -609,7 +610,6 @@ class ControllerSaleCustomer extends Controller {
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
 		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
-		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_company'] = $this->language->get('entry_company');
 		$data['entry_address_1'] = $this->language->get('entry_address_1');
@@ -794,7 +794,19 @@ class ControllerSaleCustomer extends Controller {
 		if (isset($this->request->get['customer_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
 			$customer_info = $this->model_sale_customer->getCustomer($this->request->get['customer_id']);
 		}
+		
+		$this->load->model('sale/customer_group');
 
+		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
+
+		if (isset($this->request->post['customer_group_id'])) {
+			$data['customer_group_id'] = $this->request->post['customer_group_id'];
+		} elseif (!empty($customer_info)) {
+			$data['customer_group_id'] = $customer_info['customer_group_id'];
+		} else {
+			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
+		}
+		
 		if (isset($this->request->post['firstname'])) {
 			$data['firstname'] = $this->request->post['firstname'];
 		} elseif (!empty($customer_info)) { 
@@ -841,18 +853,6 @@ class ControllerSaleCustomer extends Controller {
 			$data['newsletter'] = $customer_info['newsletter'];
 		} else {
 			$data['newsletter'] = '';
-		}
-
-		$this->load->model('sale/customer_group');
-
-		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
-
-		if (isset($this->request->post['customer_group_id'])) {
-			$data['customer_group_id'] = $this->request->post['customer_group_id'];
-		} elseif (!empty($customer_info)) {
-			$data['customer_group_id'] = $customer_info['customer_group_id'];
-		} else {
-			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
 
 		if (isset($this->request->post['status'])) {

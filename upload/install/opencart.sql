@@ -1110,6 +1110,7 @@ INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbo
 DROP TABLE IF EXISTS `oc_customer`;
 CREATE TABLE `oc_customer` (
   `customer_id` int(11) NOT NULL AUTO_INCREMENT,
+  `customer_group_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
@@ -1122,7 +1123,6 @@ CREATE TABLE `oc_customer` (
   `wishlist` text,
   `newsletter` tinyint(1) NOT NULL DEFAULT '0',
   `address_id` int(11) NOT NULL DEFAULT '0',
-  `customer_group_id` int(11) NOT NULL,
   `custom_field` text NOT NULL,
   `ip` varchar(40) NOT NULL,
   `status` tinyint(1) NOT NULL,

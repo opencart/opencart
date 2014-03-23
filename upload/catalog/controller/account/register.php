@@ -404,7 +404,7 @@ class ControllerAccountRegister extends Controller {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}		
 
-		// Custom Field Validation
+		// Custom field validation
 		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields($customer_group_id);

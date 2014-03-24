@@ -96,7 +96,6 @@ class ModelOpenbayEbay extends Model{
 					  `ShippingCategory` varchar(100) NOT NULL,
 					  `ShippingTimeMin` int(11) NOT NULL,
 					  `ShippingTimeMax` int(11) NOT NULL,
-					  `site` int(11) NOT NULL,
 					  PRIMARY KEY (`ebay_shipping_id`)
 					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
@@ -464,15 +463,15 @@ class ModelOpenbayEbay extends Model{
 		return $response;
 	}
 
-	public function getShippingService($loc){
+	public function getShippingService($loc, $type){
 		$json   = array();
-		$sql    = "SELECT * FROM `" . DB_PREFIX . "ebay_shipping` WHERE `InternationalService` = '".$loc."' AND `site` = '3' AND `ValidForSellingFlow` = '1'";
+		$sql    = "SELECT * FROM `" . DB_PREFIX . "ebay_shipping` WHERE `InternationalService` = '".$loc."' AND `ValidForSellingFlow` = '1' AND `ServiceType` LIKE '%".$this->db->escape($type)."%'";
 		$qry    = $this->db->query($sql);
 
 		if($qry->num_rows){
-			$json['svc'] = array();
+			$json['service'] = array();
 			foreach($qry->rows as $row){
-				$json['svc'][] = $row;
+				$json['service'][$row['ShippingService']] = $row;
 			}
 		}
 

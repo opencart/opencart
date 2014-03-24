@@ -1265,12 +1265,11 @@ final class Ebay {
 							`InternationalService`      = '" . $this->db->escape($service['InternationalService']) . "',
 							`ShippingService`           = '" . $this->db->escape((string)$service['ShippingService']) . "' ,
 							`ShippingServiceID`         = '" . (int)$service['ShippingServiceID'] . "',
-							`ServiceType`               = '" . $this->db->escape((string)$service['ServiceType']) . "' ,
+							`ServiceType`               = '" . $this->db->escape(strtolower(implode(',', $service['ServiceType']))) . "' ,
 							`ValidForSellingFlow`       = '" . $this->db->escape((string)$service['ValidForSellingFlow']) . "',
 							`ShippingCategory`          = '" . $this->db->escape((string)$service['ShippingCategory']) . "' ,
 							`ShippingTimeMin`           = '" . $min . "',
-							`ShippingTimeMax`           = '" . $max . "',
-							`site`                      = '3'
+							`ShippingTimeMax`           = '" . $max . "'
 					");
 				}
 				$this->log('Populated ebay_shipping table');
@@ -1373,6 +1372,36 @@ final class Ebay {
 				}
 			} else {
 				$this->log('No package_type set!');
+			}
+
+			//vat enabled
+			if (isset($response['vat_enabled'])) {
+				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'vat_enabled' LIMIT 1");
+
+				if ($qry->num_rows > 0) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . (int)$response['package_type'] . "', `last_updated`  = now() WHERE `key` = 'vat_enabled' LIMIT 1");
+					$this->log('Updated vat_enabled in to ebay_setting_option table');
+				} else {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'vat_enabled', `data` = '" . (int)$response['package_type'] . "', `last_updated`  = now()");
+					$this->log('Inserted vat_enabled info in to ebay_setting_option table');
+				}
+			} else {
+				$this->log('No vat_enabled set!');
+			}
+
+			//shipping types
+			if (isset($response['shipping_types'])) {
+				$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = 'shipping_types' LIMIT 1");
+
+				if ($qry->num_rows > 0) {
+					$this->db->query("UPDATE `" . DB_PREFIX . "ebay_setting_option` SET `data` = '" . $this->db->escape(serialize($response['shipping_types'])) . "', `last_updated`  = now() WHERE `key` = 'shipping_types' LIMIT 1");
+					$this->log('Updated shipping_types info in to ebay_setting_option table');
+				} else {
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_setting_option` SET `key` = 'shipping_types', `data` = '" . $this->db->escape(serialize($response['shipping_types'])) . "', `last_updated`  = now()");
+					$this->log('Inserted shipping_types info in to ebay_setting_option table');
+				}
+			} else {
+				$this->log('No shipping_types set!');
 			}
 		}
 

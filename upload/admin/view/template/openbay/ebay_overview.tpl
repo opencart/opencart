@@ -36,7 +36,7 @@
               <a href="<?php echo $links_sync; ?>">
                 <span class="fa-stack fa-3x">
                   <i class="fa fa-square-o fa-stack-2x"></i>
-                  <i class="fa fa-cog fa-lg fa-stack-1x"></i>
+                  <i class="fa fa-cog fa-stack-1x"></i>
                 </span>
                 <h4><?php echo $text_heading_sync; ?></h4>
               </a>

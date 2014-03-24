@@ -397,7 +397,7 @@ class ControllerOpenbayEbay extends Controller {
 	public function getShippingService() {
 		$this->load->model('openbay/ebay');
 
-		$json = $this->model_openbay_ebay->getShippingService($this->request->get['loc']);
+		$json = $this->model_openbay_ebay->getShippingService($this->request->get['loc'], $this->request->get['type']);
 
 		$this->response->setOutput(json_encode($json));
 	}
@@ -1224,7 +1224,7 @@ class ControllerOpenbayEbay extends Controller {
 					'text'      => $this->language->get('heading_title'),
 				);
 
-				$product_info     = $this->model_catalog_product->getProduct($this->request->get['product_id']);
+				$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
 				$setting = array();
 

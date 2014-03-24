@@ -596,7 +596,6 @@
               <div class="col-sm-10">
                 <input type="hidden" name="shipping_in_desc" value="0" />
                 <input type="checkbox" name="shipping_in_desc" value="1" id="shipping_in_desc" />
-                <span class="help-block"><?php echo $text_shipping_desc_help; ?></span>
               </div>
             </div>
             <div class="form-group">
@@ -814,7 +813,6 @@
         </div>
       </form>
     </div>
-
     <div class="panel-body" style="display: none;" id="page-review">
       <div class="alert alert-info" id="listing-fee-container"></div>
       <div class="well">
@@ -1349,8 +1347,8 @@
             html += '<div class="col-sm-1 text-right"><label class="control-label"><?php echo $text_shipping_service; ?><label></div>';
             html += '<div class="col-sm-11">';
               html += '<select name="service_' + id + '[' + count + ']" class="form-control">';
-              $.each(data.svc, function(key, val) {
-                html += '<option value="' + val.ShippingService + '">' + val.description + '</option>';
+              $.each(data.service, function(key, val) {
+                html += '<option value="' + key + '">' + val.description + '</option>';
               });
               html += '</select>';
             html += '</div>';

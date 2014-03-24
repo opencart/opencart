@@ -455,20 +455,22 @@
                 <label class="col-sm-2 control-label"><?php echo $text_qty; ?></label>
                 <div class="col-sm-10">
                   <input type="text" name="qty[0]" id="qty_0" value="<?php echo $product['quantity']; ?>" class="form-control" onkeyup="updateReserveMessage('0', '<?php echo $product['quantity']; ?>');" />
-                  <span class="help-block">Total in stock: <?php echo $product['quantity']; ?><br/><span id="qty_reserve_0">0</span> will be reserved</span>
+                  <span class="help-block"><?php echo $text_qty_help; ?></span>
+                  <span class="help-block"><?php echo $text_stock_col_qty_total; ?>: <?php echo $product['quantity']; ?><br/><span id="qty_reserve_0">0</span> <?php echo $text_stock_reserved; ?></span>
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_price_ex_tax; ?></label>
+                <label class="col-sm-2 control-label"><?php echo $text_price; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromEx();" />
+                  <div class="input-group col-xs-4">
+                    <input type="text" name="price_no_tax[0]" id="taxEx" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromEx();" />
+                    <span class="input-group-addon"><?php echo $text_price_ex_tax; ?></span>
+                  </div>
                   <span class="help-block"><?php echo $text_price_ex_tax_help; ?></span>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_price_inc_tax; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="price[0]" id="taxInc" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromInc();" />
+                  <div class="input-group col-xs-4">
+                    <input type="text" name="price[0]" id="taxInc" value="<?php echo number_format($product['price'], 2, '.', ''); ?>" class="form-control" onkeyup="updatePriceFromInc();" />
+                    <span class="input-group-addon"><?php echo $text_price_inc_tax; ?></span>
+                  </div>
                   <span class="help-block"><?php echo $text_price_inc_tax_help; ?></span>
                 </div>
               </div>

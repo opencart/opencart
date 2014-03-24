@@ -342,12 +342,14 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$tmp                            = '';
 
 		if(is_array($shipping_national)){
-			$payment_types = $this->config->get('ebay_payment_types');
+			$payment_types = $this->model_openbay_ebay->getPaymentTypes();
 			$cod_surcharge = 0;
 
-			foreach($payment_types as $payment) {
-				if ($payment['ebay_name'] == 'COD') {
-					$cod_surcharge = 1;
+			if (!empty($payment_types)) {
+				foreach($payment_types as $payment) {
+					if ($payment['ebay_name'] == 'COD') {
+						$cod_surcharge = 1;
+					}
 				}
 			}
 

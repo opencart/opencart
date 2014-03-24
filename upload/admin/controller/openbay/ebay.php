@@ -1628,7 +1628,7 @@ class ControllerOpenbayEbay extends Controller {
 				$profile_generic            = $this->model_openbay_ebay_profile->get($post['generic_profile']);
 
 				$payments                   = $this->model_openbay_ebay->getPaymentTypes();
-				$paymentsAccepted           = $this->config->get('ebay_payment_types');
+				$payments_accepted          = $this->config->get('ebay_payment_types');
 				$product_info               = $this->model_catalog_product->getProduct($post['product_id']);
 
 				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$post['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -1708,7 +1708,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['payments'] = array();
 				foreach($payments as $payment) {
-					if($paymentsAccepted[$payment['ebay_name']] == 1) {
+					if($payments_accepted[$payment['ebay_name']] == 1) {
 						$data['payments'][$payment['ebay_name']] = 1;
 					}
 				}
@@ -1837,7 +1837,7 @@ class ControllerOpenbayEbay extends Controller {
 				$profile_template           = $this->model_openbay_ebay_profile->get($post['theme_profile']);
 				$profile_generic            = $this->model_openbay_ebay_profile->get($post['generic_profile']);
 				$payments                   = $this->model_openbay_ebay->getPaymentTypes();
-				$paymentsAccepted           = $this->config->get('ebay_payment_types');
+				$payments_accepted           = $this->config->get('ebay_payment_types');
 				$product_info               = $this->model_catalog_product->getProduct($post['product_id']);
 
 				$query = $this->db->query("SELECT DISTINCT *, pd.name AS name, p.image, m.name AS manufacturer, (SELECT wcd.unit FROM " . DB_PREFIX . "weight_class_description wcd WHERE p.weight_class_id = wcd.weight_class_id AND wcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS weight_class, (SELECT lcd.unit FROM " . DB_PREFIX . "length_class_description lcd WHERE p.length_class_id = lcd.length_class_id AND lcd.language_id = '" . (int)$this->config->get('config_language_id') . "') AS length_class, p.sort_order FROM " . DB_PREFIX . "product p LEFT JOIN " . DB_PREFIX . "product_description pd ON (p.product_id = pd.product_id) LEFT JOIN " . DB_PREFIX . "product_to_store p2s ON (p.product_id = p2s.product_id) LEFT JOIN " . DB_PREFIX . "manufacturer m ON (p.manufacturer_id = m.manufacturer_id) WHERE p.product_id = '" . (int)$post['product_id'] . "' AND pd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
@@ -1917,7 +1917,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['payments'] = array();
 				foreach($payments as $payment) {
-					if($paymentsAccepted[$payment['ebay_name']] == 1) {
+					if($payments_accepted[$payment['ebay_name']] == 1) {
 						$data['payments'][$payment['ebay_name']] = 1;
 					}
 				}

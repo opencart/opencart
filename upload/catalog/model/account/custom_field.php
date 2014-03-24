@@ -3,7 +3,13 @@ class ModelAccountCustomField extends Model {
 	public function getCustomFields($customer_group_id = '') {
 		$custom_field_data = array();
 		
-		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id) LEFT JOIN `" . DB_PREFIX . "custom_field_customer_group` cfcg ON (cf.custom_field_id = cfcg.custom_field_id) WHERE cfd.language_id = '" . (int)$this->config->get('config_language_id') . "'"; 
+		$sql = "SELECT * FROM `" . DB_PREFIX . "custom_field` cf LEFT JOIN `" . DB_PREFIX . "custom_field_description` cfd ON (cf.custom_field_id = cfd.custom_field_id)"; 
+		
+		if ($customer_group_id) { 
+			$sql .= " LEFT JOIN `" . DB_PREFIX . "custom_field_customer_group` cfcg ON (cf.custom_field_id = cfcg.custom_field_id)";
+		}
+		
+		$sql .= " WHERE cfd.language_id = '" . (int)$this->config->get('config_language_id') . "'";
 		
 		if ($customer_group_id) { 
 			$sql .= " AND cfcg.customer_group_id = '" . (int)$customer_group_id . "'";
@@ -26,7 +32,7 @@ class ModelAccountCustomField extends Model {
 					);
 				}
 			}
-			
+						
 			$custom_field_data[] = array(
 				'custom_field_id'    => $custom_field['custom_field_id'],
 				'custom_field_value' => $custom_field_value_data,
@@ -34,7 +40,7 @@ class ModelAccountCustomField extends Model {
 				'type'               => $custom_field['type'],
 				'value'              => $custom_field['value'],
 				'location'           => $custom_field['location'],
-				'required'           => $custom_field['required'] > 0 ? true : false,
+				'required'           => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true,
 				'sort_order'         => $custom_field['sort_order']
 			);
 		}

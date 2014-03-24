@@ -1308,10 +1308,10 @@
             if (typeof data.data.country !== undefined && data.data.country) {
               $('#country').val(data.data.country);
             }
-            $('#national-shipping-options').html(data.html.national);
-            $('#international-shipping-options').html(data.html.international);
-            $('#count_international').val(data.html.international_count);
-            $('#count_national').val(data.html.national_count);
+            $('#national-shipping-options').html(data.html.national_flat);
+            $('#international-shipping-options').html(data.html.international_flat);
+            $('#count_international').val(data.html.international_flat_count);
+            $('#count_national').val(data.html.national_flat_count);
             $('#profile-shipping-loading').hide();
           }, 1000);
         },

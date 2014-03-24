@@ -125,9 +125,9 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$data['types']                            = $this->model_openbay_ebay_profile->getTypes();
 
 		$setting                                  = array();
+		$setting['returns']                       = $this->openbay->ebay->getSetting('returns');
 		$setting['dispatch_times']                = $this->openbay->ebay->getSetting('dispatch_time_max');
 		$setting['countries']                     = $this->openbay->ebay->getSetting('countries');
-		$setting['returns']                       = $this->openbay->ebay->getSetting('returns');
 		$setting['shipping_types'] 				  = $this->openbay->ebay->getSetting('shipping_types');
 
 		if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
@@ -260,6 +260,11 @@ class ControllerOpenbayEbayProfile extends Controller {
 			if (!isset($data['data']['international']['shipping_type'])) {
 				$data['data']['international']['shipping_type'] = 'flat';
 			}
+
+			$data['html_national_flat']         		= $this->load->view('openbay/ebay_profile_shipping_national_flat.tpl', $data);
+			$data['html_international_flat']         	= $this->load->view('openbay/ebay_profile_shipping_international_flat.tpl', $data);
+			$data['html_national_calculated']         	= $this->load->view('openbay/ebay_profile_shipping_national_calculated.tpl', $data);
+			$data['html_international_calculated']		= $this->load->view('openbay/ebay_profile_shipping_international_calculated.tpl', $data);
 		}
 
 		$this->document->setTitle($data['page_title']);
@@ -277,97 +282,55 @@ class ControllerOpenbayEbayProfile extends Controller {
 		$this->load->language('openbay/ebay_profile');
 
 		$profile_info = $this->model_openbay_ebay_profile->get($this->request->get['ebay_profile_id']);
-		$zones = $this->model_openbay_ebay->getShippingLocations();
+		$data = array();
 
-		$national = array();
+		if ($profile_info['type'] == 0) {
+			$data['data'] = $profile_info['data'];
+			$data['data']['national']['calculated']['types'] = $this->model_openbay_ebay->getShippingService('national', 'calculated');
+			$data['data']['international']['calculated']['types'] = $this->model_openbay_ebay->getShippingService('international', 'calculated');
+			$data['data']['national']['flat']['types'] = $this->model_openbay_ebay->getShippingService('national', 'flat');
+			$data['data']['international']['flat']['types'] = $this->model_openbay_ebay->getShippingService('international', 'flat');
 
-		$i = 0;
-		if (isset($profile_info['data']['service_national']) && is_array($profile_info['data']['service_national'])) {
-			foreach ($profile_info['data']['service_national'] as $key => $service) {
-				$i++;
-				$national[$i] = array(
-					'id'            => $service,
-					'price'         => $profile_info['data']['price_national'][$key],
-					'additional'    => $profile_info['data']['price_additional_national'][$key],
-					'name'          => $this->model_openbay_ebay->getShippingServiceName('0', $service),
-					'cod_surcharge' => isset($profile_info['data']['cod_surcharge_national'][$key]) ? $profile_info['data']['cod_surcharge_national'][$key] : ''
-				);
-			}
-		}
+			$data['data']['national']['calculated']['count']	= isset($data['data']['national']['calculated']['service_id']) ? max(array_keys($data['data']['national']['calculated']['service_id']))+1 : 0;
+			$data['data']['national']['flat']['count']	= isset($data['data']['national']['flat']['service_id']) ? max(array_keys($data['data']['national']['flat']['service_id']))+1 : 0;
+			$data['data']['international']['calculated']['count']	= isset($data['data']['international']['calculated']['service_id']) ? max(array_keys($data['data']['international']['calculated']['service_id']))+1 : 0;
+			$data['data']['international']['flat']['count']	= isset($data['data']['international']['flat']['service_id']) ? max(array_keys($data['data']['international']['flat']['service_id']))+1 : 0;
 
-		$shipping_national          = $national;
-		$shipping_national_count    = $i;
-		$international              = array();
+			$data['zones'] = $this->model_openbay_ebay->getShippingLocations();
 
-		$i = 0;
-		if (isset($profile_info['data']['service_international']) && is_array($profile_info['data']['service_international'])) {
-			foreach ($profile_info['data']['service_international'] as $key => $service) {
-				$i++;
-				$international[$i] = array(
-					'id'            => $service,
-					'price'         => $profile_info['data']['price_international'][$key],
-					'additional'    => $profile_info['data']['price_additionalzones_international'][$key],
-					'name'          => $this->model_openbay_ebay->getShippingServiceName('1', $service),
-					'shipto'        => $profile_info['data']['shipto_international'][$key]
-				);
-			}
-		}
+			$data['text_shipping_service'] = $this->language->get('text_shipping_service');
+			$data['text_shipping_first'] = $this->language->get('text_shipping_first');
+			$data['text_btn_remove'] = $this->language->get('text_btn_remove');
+			$data['text_shipping_zones'] = $this->language->get('text_shipping_zones');
+			$data['text_shipping_worldwide'] = $this->language->get('text_shipping_worldwide');
+			$data['text_shipping_add'] = $this->language->get('text_shipping_add');
+			$data['text_cod_surcharge'] = $this->language->get('text_cod_surcharge');
 
-		$shipping_international         = $international;
-		$shipping_international_count   = $i;
-		$return                         = array();
-		$tmp                            = '';
-
-		if(is_array($shipping_national)){
 			$payment_types = $this->model_openbay_ebay->getPaymentTypes();
-			$cod_surcharge = 0;
+			$data['cod_surcharge'] = 0;
 
 			if (!empty($payment_types)) {
 				foreach($payment_types as $payment) {
 					if ($payment['ebay_name'] == 'COD') {
-						$cod_surcharge = 1;
+						$data['cod_surcharge'] = 1;
 					}
 				}
 			}
 
-			foreach($shipping_national as $key => $service){
-				$shipping_data = array();
-				$shipping_data['key'] = $key;
-				$shipping_data['cod_surcharge'] = $cod_surcharge;
-				$shipping_data['service'] = $service;
-				$shipping_data['text_shipping_service'] = $this->language->get('text_shipping_service');
-				$shipping_data['text_shipping_first'] = $this->language->get('text_shipping_first');
-				$shipping_data['text_btn_remove'] = $this->language->get('text_btn_remove');
-				$shipping_data['text_shipping_add'] = $this->language->get('text_shipping_add');
-				$shipping_data['text_cod_surcharge'] = $this->language->get('text_cod_surcharge');
+			$return['national_flat_count']   			= (int)$data['data']['national']['flat']['count'];
+			$return['national_flat']         			= $this->load->view('openbay/ebay_profile_shipping_national_flat.tpl', $data);
 
-				$tmp .= $this->load->view('openbay/ebay_profile_shipping_national.tpl', $shipping_data);
-			}
+			$return['international_flat_count']   		= (int)$data['data']['international']['flat']['count'];
+			$return['international_flat']         		= $this->load->view('openbay/ebay_profile_shipping_international_flat.tpl', $data);
+
+			$return['national_calculated_count']   		= (int)$data['data']['national']['calculated']['count'];
+			$return['national_calculated']         		= $this->load->view('openbay/ebay_profile_shipping_national_calculated.tpl', $data);
+
+			$return['international_calculated_count']   = (int)$data['data']['international']['flat']['count'];
+			$return['international_calculated']         = $this->load->view('openbay/ebay_profile_shipping_international_calculated.tpl', $data);
+
+			$profile_info['html']           			= $return;
 		}
-
-		$return['national_count']   = (int)$shipping_national_count;
-		$return['national']         = $tmp;
-		$tmp                        = '';
-
-		if(is_array($shipping_international)) {
-			foreach($shipping_international as $key => $service){
-				$shipping_data = array();
-				$shipping_data['key'] = $key;
-				$shipping_data['service'] = $service;
-				$shipping_data['zones'] = $zones;
-				$shipping_data['text_shipping_service'] = $this->language->get('text_shipping_service');
-				$shipping_data['text_shipping_first'] = $this->language->get('text_shipping_first');
-				$shipping_data['text_btn_remove'] = $this->language->get('text_btn_remove');
-				$shipping_data['text_shipping_zones'] = $this->language->get('text_shipping_zones');
-				$shipping_data['text_shipping_worldwide'] = $this->language->get('text_shipping_worldwide');
-				$shipping_data['text_shipping_add'] = $this->language->get('text_shipping_add');
-
-				$tmp .= $this->load->view('openbay/ebay_profile_shipping_international.tpl', $shipping_data);
-			}
-		}
-		$return['international_count']  = (int)$shipping_international_count;
-		$return['international']        = $tmp;
-		$profile_info['html']           = $return;
 
 		$this->response->setOutput(json_encode($profile_info));
 	}

@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_vendor" value="<?php echo $pp_payflow_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="entry-vender" class="form-control"/>
             <?php if (isset($error['vendor'])) { ?>
-            <span class="text-danger"><?php echo $error['vendor']; ?></span>
+            <div class="text-danger"><?php echo $error['vendor']; ?></div>
             <?php } ?>
             <span class="help-block"><?php echo $entry_vendor_help; ?></span></div>
         </div>
@@ -34,7 +34,7 @@
             <input type="text" name="pp_payflow_user" value="<?php echo $pp_payflow_user; ?>" placeholder="<?php echo $entry_user; ?>" id="entry-user" class="form-control"/>
             <span class="help-block"><?php echo $entry_user_help; ?></span>
             <?php if (isset($error['user'])) { ?>
-            <span class="text-danger"><?php echo $error['user']; ?></span>
+            <div class="text-danger"><?php echo $error['user']; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -43,7 +43,7 @@
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_password" value="<?php echo $pp_payflow_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control"/>
             <?php if (isset($error['password'])) { ?>
-            <span class="text-danger"><?php echo $error['password']; ?></span>
+            <div class="text-danger"><?php echo $error['password']; ?></div>
             <?php } ?>
             <span class="help-block"><?php echo $entry_password_help; ?></span></div>
         </div>
@@ -53,7 +53,7 @@
             <input type="text" name="pp_payflow_partner" value="<?php echo $pp_payflow_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="entry-partner" class="form-control"/>
             <span class="help-block"><?php echo $entry_partner_help; ?></span>
             <?php if (isset($error['partner'])) { ?>
-            <span class="text-danger"><?php echo $error['partner']; ?></span>
+            <div class="text-danger"><?php echo $error['partner']; ?></div>
             <?php } ?>
           </div>
         </div>

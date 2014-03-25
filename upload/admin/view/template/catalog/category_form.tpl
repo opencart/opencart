@@ -39,7 +39,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="category_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_name[$language['language_id']])) { ?>
-                    <span class="text-danger"><?php echo $error_name[$language['language_id']]; ?></span>
+                    <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
                     <?php } ?>
                   </div>
                 </div>
@@ -54,7 +54,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="category_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($category_description[$language['language_id']]) ? $category_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_meta_title[$language['language_id']])) { ?>
-                    <span class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></span>
+                    <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
                     <?php } ?>
                   </div>
                 </div>

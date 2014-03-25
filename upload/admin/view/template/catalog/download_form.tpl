@@ -27,7 +27,7 @@
               <input type="text" name="download_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($download_description[$language['language_id']]) ? $download_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
             </div>
             <?php if (isset($error_name[$language['language_id']])) { ?>
-            <span class="text-danger"><?php echo $error_name[$language['language_id']]; ?></span>
+            <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>
@@ -42,7 +42,7 @@
               </span></div>
             <span class="help-block"><?php echo $help_filename; ?></span>
             <?php if ($error_filename) { ?>
-            <span class="text-danger"><?php echo $error_filename; ?></span>
+            <div class="text-danger"><?php echo $error_filename; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -52,7 +52,7 @@
             <input type="text" name="mask" value="<?php echo $mask; ?>" placeholder="<?php echo $entry_mask; ?>" id="input-mask" class="form-control" />
             <span class="help-block"><?php echo $help_mask; ?></span>
             <?php if ($error_mask) { ?>
-            <span class="text-danger"><?php echo $error_mask; ?></span>
+            <div class="text-danger"><?php echo $error_mask; ?></div>
             <?php } ?>
           </div>
         </div>

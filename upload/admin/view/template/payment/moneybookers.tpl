@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="moneybookers_email" value="<?php echo $moneybookers_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
             <?php if ($error_email) { ?>
-            <span class="text-danger"><?php echo $error_email; ?></span>
+            <div class="text-danger"><?php echo $error_email; ?></div>
             <?php } ?>
           </div>
         </div>

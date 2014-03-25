@@ -51,7 +51,7 @@
               <td class="text-left"><input type="text" name="carousel_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
                 <input type="text" name="carousel_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                 <?php if (isset($error_image[$module_row])) { ?>
-                <span class="text-danger"><?php echo $error_image[$module_row]; ?></span>
+                <div class="text-danger"><?php echo $error_image[$module_row]; ?></div>
                 <?php } ?></td>
               <td class="text-left"><select name="carousel_module[<?php echo $module_row; ?>][layout_id]" class="form-control">
                   <?php foreach ($layouts as $layout) { ?>

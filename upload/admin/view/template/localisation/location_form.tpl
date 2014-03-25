@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
             <?php if ($error_name) { ?>
-            <span class="text-danger"><?php echo $error_name; ?></span>
+            <div class="text-danger"><?php echo $error_name; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <textarea type="text" name="address" placeholder="<?php echo $entry_address; ?>" rows="5" id="input-address" class="form-control"><?php echo $address; ?></textarea>
             <?php if ($error_address) { ?>
-            <span class="text-danger"><?php echo $error_address; ?></span>
+            <div class="text-danger"><?php echo $error_address; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -48,7 +48,7 @@
           <div class="col-sm-10">
             <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
             <?php if ($error_telephone) { ?>
-            <span class="text-danger"><?php echo $error_telephone; ?></span>
+            <div class="text-danger"><?php echo $error_telephone; ?></div>
             <?php  } ?>
           </div>
         </div>

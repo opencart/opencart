@@ -33,7 +33,7 @@
               <div class="col-sm-10">
                 <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
                 <?php if ($error_firstname) { ?>
-                <span class="text-danger"><?php echo $error_firstname; ?></span>
+                <div class="text-danger"><?php echo $error_firstname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -42,7 +42,7 @@
               <div class="col-sm-10">
                 <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
                 <?php if ($error_lastname) { ?>
-                <span class="text-danger"><?php echo $error_lastname; ?></span>
+                <div class="text-danger"><?php echo $error_lastname; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -51,7 +51,7 @@
               <div class="col-sm-10">
                 <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
                 <?php if ($error_email) { ?>
-                <span class="text-danger"><?php echo $error_email; ?></span>
+                <div class="text-danger"><?php echo $error_email; ?></div>
                 <?php  } ?>
               </div>
             </div>
@@ -60,7 +60,7 @@
               <div class="col-sm-10">
                 <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
                 <?php if ($error_telephone) { ?>
-                <span class="text-danger"><?php echo $error_telephone; ?></span>
+                <div class="text-danger"><?php echo $error_telephone; ?></div>
                 <?php  } ?>
               </div>
             </div>
@@ -87,7 +87,7 @@
               <div class="col-sm-10">
                 <input type="text" name="address_1" value="<?php echo $address_1; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1" class="form-control" />
                 <?php if ($error_address_1) { ?>
-                <span class="text-danger"><?php echo $error_address_1; ?></span>
+                <div class="text-danger"><?php echo $error_address_1; ?></div>
                 <?php  } ?>
               </div>
             </div>
@@ -102,7 +102,7 @@
               <div class="col-sm-10">
                 <input type="text" name="city" value="<?php echo $city; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city" class="form-control" />
                 <?php if ($error_city) { ?>
-                <span class="text-danger"><?php echo $error_city ?></span>
+                <div class="text-danger"><?php echo $error_city ?></div>
                 <?php  } ?>
               </div>
             </div>
@@ -111,7 +111,7 @@
               <div class="col-sm-10">
                 <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-postcode" class="form-control" />
                 <?php if ($error_postcode) { ?>
-                <span class="text-danger"><?php echo $error_postcode ?></span>
+                <div class="text-danger"><?php echo $error_postcode ?></div>
                 <?php  } ?>
               </div>
             </div>
@@ -129,7 +129,7 @@
                   <?php } ?>
                 </select>
                 <?php if ($error_country) { ?>
-                <span class="text-danger"><?php echo $error_country; ?></span>
+                <div class="text-danger"><?php echo $error_country; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -139,7 +139,7 @@
                 <select name="zone_id" id="input-zone" class="form-control">
                 </select>
                 <?php if ($error_zone) { ?>
-                <span class="text-danger"><?php echo $error_zone; ?></span>
+                <div class="text-danger"><?php echo $error_zone; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -149,7 +149,7 @@
                 <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
                 <span class="help-block"><?php echo $help_code; ?></span>
                 <?php if ($error_code) { ?>
-                <span class="text-danger"><?php echo $error_code; ?></span>
+                <div class="text-danger"><?php echo $error_code; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -158,7 +158,7 @@
               <div class="col-sm-10">
                 <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" autocomplete="off" id="input-password" class="form-control"  />
                 <?php if ($error_password) { ?>
-                <span class="text-danger"><?php echo $error_password; ?></span>
+                <div class="text-danger"><?php echo $error_password; ?></div>
                 <?php  } ?>
               </div>
             </div>
@@ -167,7 +167,7 @@
               <div class="col-sm-10">
                 <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" autocomplete="off" id="input-confirm" class="form-control" />
                 <?php if ($error_confirm) { ?>
-                <span class="text-danger"><?php echo $error_confirm; ?></span>
+                <div class="text-danger"><?php echo $error_confirm; ?></div>
                 <?php  } ?>
               </div>
             </div>

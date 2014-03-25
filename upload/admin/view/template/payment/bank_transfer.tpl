@@ -27,7 +27,7 @@
               <textarea name="bank_transfer_bank<?php echo $language['language_id']; ?>" cols="80" rows="10" placeholder="<?php echo $entry_bank; ?>" id="input-bank<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset(${'bank_transfer_bank' . $language['language_id']}) ? ${'bank_transfer_bank' . $language['language_id']} : ''; ?></textarea>
             </div>
             <?php if (isset(${'error_bank' . $language['language_id']})) { ?>
-            <span class="text-danger"><?php echo ${'error_bank' . $language['language_id']}; ?></span>
+            <div class="text-danger"><?php echo ${'error_bank' . $language['language_id']}; ?></div>
             <?php } ?>
           </div>
         </div>

@@ -39,7 +39,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="profile_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($profile_description[$language['language_id']]) ? $profile_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="profile_description[<?php echo $language['language_id']; ?>][name]" class="form-control"/>
                     <?php if (isset($error_name[$language['language_id']])) { ?>
-                    <span class="text-danger"><?php echo $error_name[$language['language_id']]; ?></span>
+                    <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
                     <?php } ?>
                   </div>
                 </div>

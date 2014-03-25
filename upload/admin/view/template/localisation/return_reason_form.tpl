@@ -27,7 +27,7 @@
               <input type="text" name="return_reason[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($return_reason[$language['language_id']]) ? $return_reason[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" class="form-control" />
             </div>
             <?php if (isset($error_name[$language['language_id']])) { ?>
-            <span class="text-danger"><?php echo $error_name[$language['language_id']]; ?></span>
+            <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>

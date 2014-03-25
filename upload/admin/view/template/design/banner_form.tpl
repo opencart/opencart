@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
             <?php if ($error_name) { ?>
-            <span class="text-danger"><?php echo $error_name; ?></span>
+            <div class="text-danger"><?php echo $error_name; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -61,7 +61,7 @@
                   <input type="text" name="banner_image[<?php echo $image_row; ?>][banner_image_description][<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($banner_image['banner_image_description'][$language['language_id']]) ? $banner_image['banner_image_description'][$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" class="form-control" />
                 </div>
                 <?php if (isset($error_banner_image[$image_row][$language['language_id']])) { ?>
-                <span class="text-danger"><?php echo $error_banner_image[$image_row][$language['language_id']]; ?></span>
+                <div class="text-danger"><?php echo $error_banner_image[$image_row][$language['language_id']]; ?></div>
                 <?php } ?>
                 <?php } ?></td>
               <td class="text-left"><input type="text" name="banner_image[<?php echo $image_row; ?>][link]" value="<?php echo $banner_image['link']; ?>" placeholder="<?php echo $entry_link; ?>" class="form-control" /></td>

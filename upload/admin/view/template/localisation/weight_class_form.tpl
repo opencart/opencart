@@ -27,7 +27,7 @@
               <input type="text" name="weight_class_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($weight_class_description[$language['language_id']]) ? $weight_class_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" class="form-control" />
             </div>
             <?php if (isset($error_title[$language['language_id']])) { ?>
-            <span class="text-danger"><?php echo $error_title[$language['language_id']]; ?></span>
+            <div class="text-danger"><?php echo $error_title[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>
@@ -40,7 +40,7 @@
               <input type="text" name="weight_class_description[<?php echo $language['language_id']; ?>][unit]" value="<?php echo isset($weight_class_description[$language['language_id']]) ? $weight_class_description[$language['language_id']]['unit'] : ''; ?>" placeholder="<?php echo $entry_unit; ?>" class="form-control" />
             </div>
             <?php if (isset($error_unit[$language['language_id']])) { ?>
-            <span class="text-danger"><?php echo $error_unit[$language['language_id']]; ?></span>
+            <div class="text-danger"><?php echo $error_unit[$language['language_id']]; ?></div>
             <?php } ?>
             <?php } ?>
           </div>

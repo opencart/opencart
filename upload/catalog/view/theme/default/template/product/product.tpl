@@ -453,7 +453,7 @@ $('#button-cart').on('click', function() {
                 }
 
 				if (json['error']['profile']) {
-					$('select[name=\'profile_id\']').after('<span class="text-danger">' + json['error']['profile'] + '</span>');
+					$('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
 				}
             } 
             

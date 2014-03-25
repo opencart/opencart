@@ -215,11 +215,11 @@ function send(url) {
 				}
 				
 				if (json['error']['subject']) {
-					$('input[name=\'subject\']').after('<span class="text-danger">' + json['error']['subject'] + '</span>');
+					$('input[name=\'subject\']').after('<div class="text-danger">' + json['error']['subject'] + '</div>');
 				}	
 				
 				if (json['error']['message']) {
-					$('textarea[name=\'message\']').parent().append('<span class="text-danger">' + json['error']['message'] + '</span>');
+					$('textarea[name=\'message\']').parent().append('<div class="text-danger">' + json['error']['message'] + '</div>');
 				}									
 			}			
 			

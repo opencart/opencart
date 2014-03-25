@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="paymate_username" value="<?php echo $paymate_username; ?>" placeholder="<?php echo $entry_username; ?>" id="input-username" class="form-control" />
             <?php if ($error_username) { ?>
-            <span class="text-danger"><?php echo $error_username; ?></span>
+            <div class="text-danger"><?php echo $error_username; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -34,7 +34,7 @@
             <input type="text" name="paymate_password" value="<?php echo $paymate_password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" />
             <span class="help-block"><?php echo $help_password; ?></span>
             <?php if ($error_password) { ?>
-            <span class="text-danger"><?php echo $error_password; ?></span>
+            <div class="text-danger"><?php echo $error_password; ?></div>
             <?php } ?>
           </div>
         </div>

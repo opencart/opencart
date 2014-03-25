@@ -32,7 +32,7 @@
               <div class="col-sm-10">
                 <input type="text" name="pp_express_username" value="<?php echo $pp_express_username; ?>" placeholder="<?php echo $entry_username; ?>" id="entry-username" class="form-control" />
                 <?php if (isset($error['username'])) { ?>
-                <span class="text-danger"><?php echo $error['username']; ?></span>
+                <div class="text-danger"><?php echo $error['username']; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -41,7 +41,7 @@
               <div class="col-sm-10">
                 <input type="text" name="pp_express_password" value="<?php echo $pp_express_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control" />
                 <?php if (isset($error['password'])) { ?>
-                <span class="text-danger"><?php echo $error['password']; ?></span>
+                <div class="text-danger"><?php echo $error['password']; ?></div>
                 <?php } ?>
               </div>
             </div>
@@ -50,7 +50,7 @@
               <div class="col-sm-10">
                 <input type="text" name="pp_express_signature" value="<?php echo $pp_express_signature; ?>" placeholder="<?php echo $entry_signature; ?>" id="entry-signature" class="form-control" />
                 <?php if (isset($error['signature'])) { ?>
-                <span class="text-danger"><?php echo $error['signature']; ?></span>
+                <div class="text-danger"><?php echo $error['signature']; ?></div>
                 <?php } ?>
               </div>
             </div>

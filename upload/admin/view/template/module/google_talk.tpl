@@ -25,7 +25,7 @@
             <textarea name="google_talk_code" rows="5" id="input-code" class="form-control"><?php echo $google_talk_code; ?></textarea>
             <span class="help-block"><?php echo $help_code; ?></span>
             <?php if ($error_code) { ?>
-            <span class="text-danger"><?php echo $error_code; ?></span>
+            <div class="text-danger"><?php echo $error_code; ?></div>
             <?php } ?>
           </div>
         </div>

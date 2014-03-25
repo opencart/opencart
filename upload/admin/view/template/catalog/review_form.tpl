@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" class="form-control" />
             <?php if ($error_author) { ?>
-            <span class="text-danger"><?php echo $error_author; ?></span>
+            <div class="text-danger"><?php echo $error_author; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -35,7 +35,7 @@
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
             <span class="help-block"><?php echo $help_product; ?></span>
             <?php if ($error_product) { ?>
-            <span class="text-danger"><?php echo $error_product; ?></span>
+            <div class="text-danger"><?php echo $error_product; ?></div>
             <?php } ?>
           </div>
         </div>

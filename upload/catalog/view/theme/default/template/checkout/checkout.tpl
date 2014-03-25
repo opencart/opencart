@@ -222,9 +222,9 @@ $(document).delegate('#button-register', 'click', function() {
                 
 				for (i in json['error']) {
 					if ($('#input-payment-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-payment-' + i.replace('_', '-')).parent().after('<span class="text-danger">' + json['error'][i] + '</span>');
+                   		$('#input-payment-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-payment-' + i.replace('_', '-')).after('<span class="text-danger">' + json['error'][i] + '</span>');
+						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
 					}
 				}
             } else {
@@ -348,9 +348,9 @@ $(document).delegate('#button-payment-address', 'click', function() {
                                 
 				for (i in json['error']) {
  					if ($('#input-payment-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-payment-' + i.replace('_', '-')).parent().after('<span class="text-danger">' + json['error'][i] + '</span>');
+                   		$('#input-payment-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-payment-' + i.replace('_', '-')).after('<span class="text-danger">' + json['error'][i] + '</span>');
+						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
 					}					
 				}
             } else {
@@ -435,9 +435,9 @@ $(document).delegate('#button-shipping-address', 'click', function() {
   				
 				for (i in json['error']) {
 					if ($('#input-shipping-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-shipping-' + i.replace('_', '-')).parent().after('<span class="text-danger">' + json['error'][i] + '</span>');
+                   		$('#input-shipping-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-shipping-' + i.replace('_', '-')).after('<span class="text-danger">' + json['error'][i] + '</span>');
+						$('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
 					}					
 				}
             } else {
@@ -513,9 +513,9 @@ $(document).delegate('#button-guest', 'click', function() {
                                 
 				for (i in json['error']) {
 					if ($('#input-payment-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-payment-' + i.replace('_', '-')).parent().after('<span class="text-danger">' + json['error'][i] + '</span>');
+                   		$('#input-payment-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-payment-' + i.replace('_', '-')).after('<span class="text-danger">' + json['error'][i] + '</span>');
+						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
 					}					
 				}
             } else {
@@ -625,9 +625,9 @@ $(document).delegate('#button-guest-shipping', 'click', function() {
                                 
 				for (i in json['error']) {
 					if ($('#input-shipping-' + i.replace('_', '-')).parent().hasClass('input-group')) {
-                   		$('#input-shipping-' + i.replace('_', '-')).parent().after('<span class="text-danger">' + json['error'][i] + '</span>');
+                   		$('#input-shipping-' + i.replace('_', '-')).parent().after('<div class="text-danger">' + json['error'][i] + '</div>');
 					} else {
-						$('#input-shipping-' + i.replace('_', '-')).after('<span class="text-danger">' + json['error'][i] + '</span>');
+						$('#input-shipping-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error'][i] + '</div>');
 					}					
 				}
             } else {

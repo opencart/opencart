@@ -58,7 +58,6 @@ $_['text_features_help']        	= 'Entering specifics about your item will help
 $_['text_title']                    = 'Title';
 $_['text_subtitle']                 = 'Sub title';
 $_['text_template']                 = 'Theme';
-$_['text_template_link']            = 'Need a custom theme?';
 $_['text_description']              = 'Description';
 
 //Images
@@ -103,7 +102,8 @@ $_['text_price_inc_tax']            = 'Including tax';
 $_['text_price_inc_tax_help']       = 'This value is sent to eBay and is the price users will pay.';
 $_['text_tax_inc']                  = 'Tax included';
 $_['text_offers']                   = 'Allow buyers to make offers';
-$_['text_private']                  = 'Private auction<br />(hide buyer usernames)';
+$_['text_private']                  = 'Private listing';
+$_['text_private_help']             = 'Hide buyer usernames';
 $_['text_imediate_payment']         = 'Immediate payment required?';
 $_['text_payment']                  = 'Payments accepted';
 $_['text_payment_pp_email']         = 'PayPal payments email:';

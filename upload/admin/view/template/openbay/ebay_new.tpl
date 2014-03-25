@@ -142,9 +142,11 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_catalog; ?></label>
               <div class="col-sm-10">
-                <input type="hidden" value="0" name="catalog_image">
-                <input id="catalog-image" type="checkbox" value="1" name="catalog_image">
-                <span class="help-block"><?php echo $text_catalog_help; ?></span>
+                <span class="help-block">
+                  <input type="hidden" value="0" name="catalog_image">
+                  <input id="catalog-image" type="checkbox" value="1" name="catalog_image">
+                   - <?php echo $text_catalog_help; ?>
+                </span>
               </div>
             </div>
             <div class="row" id="product-catalog-container"></div>
@@ -166,30 +168,32 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_description; ?></label>
               <div class="col-sm-10">
-                <textarea name="description" id="descriptionField"><?php echo $product['description']; ?></textarea>
+                <textarea name="description" id="description-field"><?php echo $product['description']; ?></textarea>
               </div>
             </div>
           </div>
 
           <div id="tab-listing-images" class="tab-pane">
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-theme-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
-              <div class="col-sm-10">
-                <select name="profile_theme" id="profile-theme-input" class="form-control">
-                  <option value="def"><?php echo $text_select; ?></option>
-                  <?php if (is_array($product['profiles_theme'])) { ?>
-                  <?php foreach ($product['profiles_theme'] as $profile) { ?>
-                  <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                  <?php } ?>
-                  <?php } ?>
-                </select>
+            <div class="well well-lg">
+              <div class="row">
+                <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?></label>
+                <div class="col-sm-10">
+                  <div class="input-group">
+                    <span class="input-group-addon" id="profile-theme-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <select name="profile_theme" id="profile-theme-input" class="form-control">
+                      <option value="def"><?php echo $text_select; ?></option>
+                      <?php if (is_array($product['profiles_theme'])) { ?>
+                        <?php foreach ($product['profiles_theme'] as $profile) { ?>
+                          <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                        <?php } ?>
+                      <?php } ?>
+                    </select>
+                  </div>
+                </div>
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label">
-                <?php echo $text_template; ?>
-                <br /><a href="http://shop.openbaypro.com/opencart_design_services/opencart_theme_design/ebay_html_template_openbay_pro" target="_BLANK"><?php echo $text_template_link; ?></a>
-              </label>
+              <label class="col-sm-2 control-label"><?php echo $text_template; ?></label>
               <div class="col-sm-10">
                 <select name="template" id="template_id" class="form-control">
                   <option value="None">None</option>
@@ -357,15 +361,17 @@
           </div>
 
           <div id="tab-listing-price" class="tab-pane">
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
-              <div class="col-sm-10">
-                <select name="profile_generic" id="profile-generic-input" class="form-control">
-                  <option value="def"><?php echo $text_select; ?></option>
-                  <?php if (is_array($product['profiles_generic'])) { foreach($product['profiles_generic'] as $profile) { ?>
-                  <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                  <?php } }?>
-                </select>
+            <div class="well well-lg">
+              <div class="row">
+                <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                <div class="col-sm-10">
+                  <select name="profile_generic" id="profile-generic-input" class="form-control">
+                    <option value="def"><?php echo $text_select; ?></option>
+                    <?php if (is_array($product['profiles_generic'])) { foreach($product['profiles_generic'] as $profile) { ?>
+                    <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                    <?php } }?>
+                  </select>
+                </div>
               </div>
             </div>
 
@@ -496,8 +502,11 @@
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_private; ?></label>
               <div class="col-sm-10">
-                <input type="hidden" name="private_listing" value="0" />
-                <input type="checkbox" name="private_listing" value="1" id="private_listing" />
+                <span class="help-block">
+                  <input type="hidden" name="private_listing" value="0" />
+                  <input type="checkbox" name="private_listing" value="1" id="private_listing" />
+                   - <?php echo $text_private_help; ?>
+                </span>
               </div>
             </div>
           </div>
@@ -545,15 +554,17 @@
           </div>
 
           <div id="tab-listing-shipping" class="tab-pane">
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
-              <div class="col-sm-10">
-                <select name="profile_shipping" id="profile-shipping-input" class="form-control">
-                  <option value="def"><?php echo $text_select; ?></option>
-                  <?php if (is_array($product['profiles_shipping'])) { foreach($product['profiles_shipping'] as $profile) { ?>
-                    <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                  <?php } }?>
-                </select>
+            <div class="well well-lg">
+              <div class="row">
+                <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                <div class="col-sm-10">
+                  <select name="profile_shipping" id="profile-shipping-input" class="form-control">
+                    <option value="def"><?php echo $text_select; ?></option>
+                    <?php if (is_array($product['profiles_shipping'])) { foreach($product['profiles_shipping'] as $profile) { ?>
+                      <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                    <?php } }?>
+                  </select>
+                </div>
               </div>
             </div>
             <div class="form-group">
@@ -810,15 +821,17 @@
           </div>
 
           <div id="tab-listing-returns" class="tab-pane">
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
-              <div class="col-sm-10">
-                <select name="profile_return" id="profile-return-input" class="form-control">
-                  <option value="def"><?php echo $text_select; ?></option>
-                  <?php if (is_array($product['profiles_returns'])) { foreach($product['profiles_returns'] as $profile) { ?>
-                  <option value="<?php echo $profile['ebay_profile_id']; ?>"><?php echo $profile['name']; ?></option>
-                  <?php } } ?>
-                </select>
+            <div class="well well-lg">
+              <div class="row">
+                <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
+                <div class="col-sm-10">
+                  <select name="profile_return" id="profile-return-input" class="form-control">
+                    <option value="def"><?php echo $text_select; ?></option>
+                    <?php if (is_array($product['profiles_returns'])) { foreach($product['profiles_returns'] as $profile) { ?>
+                    <option value="<?php echo $profile['ebay_profile_id']; ?>"><?php echo $profile['name']; ?></option>
+                    <?php } } ?>
+                  </select>
+                </div>
               </div>
             </div>
             <?php if (!empty($setting['returns']['accepted'])) { ?>
@@ -1846,7 +1859,8 @@
 
   function profileThemeUpdate() {
   if ($('#profile-theme-input').val() != 'def') {
-      $('#profile-theme-loading').show();
+      $('#profile-theme-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+      $('#profile-theme-input').attr('disabled', 'disabled');
 
       $.ajax({
           type:'GET',
@@ -1885,7 +1899,8 @@
                       $('#template_id').val(data.data.ebay_template_id);
                   }
 
-                  $('#profile-theme-loading').hide();
+                  $('#profile-theme-icon').html('<i class="fa fa-lg fa-file-text"></i>');
+                $('#profile-theme-input').removeAttr('disabled');
               }, 1000);
           },
           error: function (xhr, ajaxOptions, thrownError) {

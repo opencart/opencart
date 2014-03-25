@@ -1215,7 +1215,7 @@ class ControllerOpenbayEbay extends Controller {
 					'text'      => $this->language->get('text_openbay'),
 				);
 				$data['breadcrumbs'][] = array(
-					'href'      => $this->url->link('openbay/ebay/overview', 'token=' . $this->session->data['token'], 'SSL'),
+					'href'      => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
 					'text'      => $this->language->get('text_ebay'),
 				);
 
@@ -1235,8 +1235,8 @@ class ControllerOpenbayEbay extends Controller {
 				if(is_array($setting['countries'])) { ksort($setting['countries']); }
 
 				$setting['returns'] = $this->openbay->ebay->getSetting('returns');
-
 				$setting['package_types'] = $this->openbay->ebay->getSetting('package_type');
+				$setting['shipping_types'] = $this->openbay->ebay->getSetting('shipping_types');
 
 				if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 					$this->session->data['warning'] = $this->language->get('text_error_missing_settings');

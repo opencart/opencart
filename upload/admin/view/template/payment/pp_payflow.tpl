@@ -24,36 +24,38 @@
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_vendor" value="<?php echo $pp_payflow_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="entry-vender" class="form-control"/>
             <?php if (isset($error['vendor'])) { ?>
-            <div class="text-danger"><?php echo $error['vendor']; ?></div>
+            <span class="text-danger"><?php echo $error['vendor']; ?></span>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_vendor_help; ?></span> </div>
+            <span class="help-block"><?php echo $entry_vendor_help; ?></span></div>
         </div>
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="entry-user"><?php echo $entry_user; ?></label>
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_user" value="<?php echo $pp_payflow_user; ?>" placeholder="<?php echo $entry_user; ?>" id="entry-user" class="form-control"/>
+            <span class="help-block"><?php echo $entry_user_help; ?></span>
             <?php if (isset($error['user'])) { ?>
-            <div class="text-danger"><?php echo $error['user']; ?></div>
+            <span class="text-danger"><?php echo $error['user']; ?></span>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_user_help; ?></span> </div>
+          </div>
         </div>
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="entry-password"><?php echo $entry_password; ?></label>
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_password" value="<?php echo $pp_payflow_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control"/>
             <?php if (isset($error['password'])) { ?>
-            <div class="text-danger"><?php echo $error['password']; ?></div>
+            <span class="text-danger"><?php echo $error['password']; ?></span>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_password_help; ?></span> </div>
+            <span class="help-block"><?php echo $entry_password_help; ?></span></div>
         </div>
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="entry-partner"><?php echo $entry_partner; ?></label>
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_partner" value="<?php echo $pp_payflow_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="entry-partner" class="form-control"/>
+            <span class="help-block"><?php echo $entry_partner_help; ?></span>
             <?php if (isset($error['partner'])) { ?>
-            <div class="text-danger"><?php echo $error['partner']; ?></div>
+            <span class="text-danger"><?php echo $error['partner']; ?></span>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_partner_help; ?></span> </div>
+          </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-live-demo"><?php echo $entry_test; ?></label>

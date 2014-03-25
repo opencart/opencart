@@ -47,7 +47,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="product_description[<?php echo $language['language_id']; ?>][name]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['name'] : ''; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_name[$language['language_id']])) { ?>
-                    <div class="text-danger"><?php echo $error_name[$language['language_id']]; ?></div>
+                    <span class="text-danger"><?php echo $error_name[$language['language_id']]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -62,7 +62,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="product_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($product_description[$language['language_id']]) ? $product_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_meta_title[$language['language_id']])) { ?>
-                    <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
+                    <span class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -94,7 +94,7 @@
               <div class="col-sm-10">
                 <input type="text" name="model" value="<?php echo $model; ?>" placeholder="<?php echo $entry_model; ?>" id="input-model" class="form-control" />
                 <?php if ($error_model) { ?>
-                <div class="text-danger"><?php echo $error_model; ?></div>
+                <span class="text-danger"><?php echo $error_model; ?></span>
                 <?php } ?>
               </div>
             </div>

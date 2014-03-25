@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="nochex_email" value="<?php echo $nochex_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" />
             <?php if ($error_email) { ?>
-            <div class="text-danger"><?php echo $error_email; ?></div>
+            <span class="text-danger"><?php echo $error_email; ?></span>
             <?php } ?>
           </div>
         </div>
@@ -50,7 +50,7 @@
           <div class="col-sm-10">
             <input type="text" name="nochex_merchant" value="<?php echo $nochex_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
             <?php if ($error_merchant) { ?>
-            <div class="text-danger"><?php echo $error_merchant; ?></div>
+            <span class="text-danger"><?php echo $error_merchant; ?></span>
             <?php } ?>
           </div>
         </div>

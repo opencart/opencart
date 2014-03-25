@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="cheque_payable" value="<?php echo $cheque_payable; ?>" placeholder="<?php echo $entry_payable; ?>" id="input-payable" class="form-control" />
             <?php if ($error_payable) { ?>
-            <div class="text-danger"><?php echo $error_payable; ?></div>
+            <span class="text-danger"><?php echo $error_payable; ?></span>
             <?php } ?>
           </div>
         </div>

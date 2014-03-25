@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="paypoint_merchant" value="<?php echo $paypoint_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
             <?php if ($error_merchant) { ?>
-            <div class="text-danger"><?php echo $error_merchant; ?></div>
+            <span class="text-danger"><?php echo $error_merchant; ?></span>
             <?php } ?>
           </div>
         </div>

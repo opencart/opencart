@@ -32,7 +32,7 @@
               <div class="col-sm-10">
                 <input type="text" name="pp_express_username" value="<?php echo $pp_express_username; ?>" placeholder="<?php echo $entry_username; ?>" id="entry-username" class="form-control" />
                 <?php if (isset($error['username'])) { ?>
-                <div class="text-danger"><?php echo $error['username']; ?></div>
+                <span class="text-danger"><?php echo $error['username']; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -41,7 +41,7 @@
               <div class="col-sm-10">
                 <input type="text" name="pp_express_password" value="<?php echo $pp_express_password; ?>" placeholder="<?php echo $entry_password; ?>" id="entry-password" class="form-control" />
                 <?php if (isset($error['password'])) { ?>
-                <div class="text-danger"><?php echo $error['password']; ?></div>
+                <span class="text-danger"><?php echo $error['password']; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -50,7 +50,7 @@
               <div class="col-sm-10">
                 <input type="text" name="pp_express_signature" value="<?php echo $pp_express_signature; ?>" placeholder="<?php echo $entry_signature; ?>" id="entry-signature" class="form-control" />
                 <?php if (isset($error['signature'])) { ?>
-                <div class="text-danger"><?php echo $error['signature']; ?></div>
+                <span class="text-danger"><?php echo $error['signature']; ?></span>
                 <?php } ?>
               </div>
             </div>
@@ -60,7 +60,7 @@
                 <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
                   <input type="text" value="<?php echo $text_ipn_url; ?>" class="form-control" />
                 </div>
-                <span class="help-block"><?php echo $text_ipn_help; ?></span> </div>
+                <span class="help-block"><?php echo $text_ipn_help; ?></span></div>
             </div>
           </div>
           <div class="tab-pane" id="tab-general">

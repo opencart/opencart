@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="authorizenet_aim_login" value="<?php echo $authorizenet_aim_login; ?>" placeholder="<?php echo $entry_login; ?>" id="input-login" class="form-control" />
             <?php if ($error_login) { ?>
-            <div class="text-danger"><?php echo $error_login; ?></div>
+            <span class="text-danger"><?php echo $error_login; ?></span>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <input type="text" name="authorizenet_aim_key" value="<?php echo $authorizenet_aim_key; ?>" placeholder="<?php echo $entry_key; ?>" id="input-key" class="form-control" />
             <?php if ($error_key) { ?>
-            <div class="text-danger"><?php echo $error_key; ?></div>
+            <span class="text-danger"><?php echo $error_key; ?></span>
             <?php } ?>
           </div>
         </div>

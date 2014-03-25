@@ -120,7 +120,7 @@
                 <td class="text-left"><?php echo $product['model']; ?></td>
                 <td class="text-left"><?php if ($product['special']) { ?>
                   <span style="text-decoration: line-through;"><?php echo $product['price']; ?></span><br/>
-                  <div class="text-danger"><?php echo $product['special']; ?></div>
+                  <span class="text-danger"><?php echo $product['special']; ?></span>
                   <?php } else { ?>
                   <?php echo $product['price']; ?>
                   <?php } ?></td>

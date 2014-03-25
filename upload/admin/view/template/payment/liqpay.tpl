@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="liqpay_merchant" value="<?php echo $liqpay_merchant; ?>" placeholder="<?php echo $entry_merchant; ?>" id="input-merchant" class="form-control" />
             <?php if ($error_merchant) { ?>
-            <div class="text-danger"><?php echo $error_merchant; ?></div>
+            <span class="text-danger"><?php echo $error_merchant; ?></span>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <input type="text" name="liqpay_signature" value="<?php echo $liqpay_signature; ?>" placeholder="<?php echo $entry_signature; ?>" id="input-signature" class="form-control" />
             <?php if ($error_signature) { ?>
-            <div class="text-danger"><?php echo $error_signature; ?></div>
+            <span class="text-danger"><?php echo $error_signature; ?></span>
             <?php } ?>
           </div>
         </div>

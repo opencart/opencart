@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="author" value="<?php echo $author; ?>" placeholder="<?php echo $entry_author; ?>" id="input-author" class="form-control" />
             <?php if ($error_author) { ?>
-            <div class="text-danger"><?php echo $error_author; ?></div>
+            <span class="text-danger"><?php echo $error_author; ?></span>
             <?php } ?>
           </div>
         </div>
@@ -35,7 +35,7 @@
             <input type="hidden" name="product_id" value="<?php echo $product_id; ?>" />
             <span class="help-block"><?php echo $help_product; ?></span>
             <?php if ($error_product) { ?>
-            <div class="text-danger"><?php echo $error_product; ?></div>
+            <span class="text-danger"><?php echo $error_product; ?></span>
             <?php } ?>
           </div>
         </div>
@@ -44,7 +44,7 @@
           <div class="col-sm-10">
             <textarea name="text" cols="60" rows="8" placeholder="<?php echo $entry_text; ?>" id="input-text" class="form-control"><?php echo $text; ?></textarea>
             <?php if ($error_text) { ?>
-            <div class="text-danger"><?php echo $error_text; ?></div>
+            <dspan class="text-danger"><?php echo $error_text; ?></span>
             <?php } ?>
           </div>
         </div>

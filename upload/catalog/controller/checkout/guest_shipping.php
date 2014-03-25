@@ -89,7 +89,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 				
 		$data['custom_fields'] = array();
 		
-		$custom_fields = $this->model_account_custom_field->getCustomFields($this->session->data['guest']['customer_group_id']);
+		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->session->data['guest']['customer_group_id']);
 		
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['location'] == 'address') { 
@@ -173,7 +173,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 			
-			$custom_fields = $this->model_account_custom_field->getCustomFields($this->session->data['guest']['customer_group_id']);
+			$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->session->data['guest']['customer_group_id']);
 			
 			foreach ($custom_fields as $custom_field) {
 				if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {

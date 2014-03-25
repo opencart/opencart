@@ -39,7 +39,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="information_description[<?php echo $language['language_id']; ?>][title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['title'] : ''; ?>" placeholder="<?php echo $entry_title; ?>" id="input-title<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_title[$language['language_id']])) { ?>
-                    <div class="text-danger"><?php echo $error_title[$language['language_id']]; ?></div>
+                    <span class="text-danger"><?php echo $error_title[$language['language_id']]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -48,7 +48,7 @@
                   <div class="col-sm-10">
                     <textarea name="information_description[<?php echo $language['language_id']; ?>][description]" placeholder="<?php echo $entry_description; ?>" id="input-description<?php echo $language['language_id']; ?>" class="form-control"><?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['description'] : ''; ?></textarea>
                     <?php if (isset($error_description[$language['language_id']])) { ?>
-                    <div class="text-danger"><?php echo $error_description[$language['language_id']]; ?></div>
+                    <span class="text-danger"><?php echo $error_description[$language['language_id']]; ?></span>
                     <?php } ?>
                   </div>
                 </div>
@@ -57,7 +57,7 @@
                   <div class="col-sm-10">
                     <input type="text" name="information_description[<?php echo $language['language_id']; ?>][meta_title]" value="<?php echo isset($information_description[$language['language_id']]) ? $information_description[$language['language_id']]['meta_title'] : ''; ?>" placeholder="<?php echo $entry_meta_title; ?>" id="input-meta-title<?php echo $language['language_id']; ?>" class="form-control" />
                     <?php if (isset($error_meta_title[$language['language_id']])) { ?>
-                    <div class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></div>
+                    <span class="text-danger"><?php echo $error_meta_title[$language['language_id']]; ?></span>
                     <?php } ?>
                   </div>
                 </div>

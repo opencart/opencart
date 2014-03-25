@@ -24,7 +24,7 @@
           <div class="col-sm-10">
             <input type="text" name="name" value="<?php echo $name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
             <?php if ($error_name) { ?>
-            <div class="text-danger"><?php echo $error_name; ?></div>
+            <span class="text-danger"><?php echo $error_name; ?></span>
             <?php } ?>
           </div>
         </div>
@@ -33,7 +33,7 @@
           <div class="col-sm-10">
             <input type="text" name="description" value="<?php echo $description; ?>" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control" />
             <?php if ($error_description) { ?>
-            <div class="text-danger"><?php echo $error_description; ?></div>
+            <span class="text-danger"><?php echo $error_description; ?></span>
             <?php } ?>
           </div>
         </div>

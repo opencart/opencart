@@ -47,7 +47,7 @@
               <td class="text-left"><input type="text" name="slideshow_module[<?php echo $module_row; ?>][width]" value="<?php echo $module['width']; ?>" placeholder="<?php echo $entry_width; ?>" class="form-control" />
                 <input type="text" name="slideshow_module[<?php echo $module_row; ?>][height]" value="<?php echo $module['height']; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                 <?php if (isset($error_dimension[$module_row])) { ?>
-                <div class="text-danger"><?php echo $error_dimension[$module_row]; ?></div>
+                <span class="text-danger"><?php echo $error_dimension[$module_row]; ?></span>
                 <?php } ?></td>
               <td class="text-left"><select name="slideshow_module[<?php echo $module_row; ?>][layout_id]" class="form-control">
                   <?php foreach ($layouts as $layout) { ?>

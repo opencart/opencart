@@ -89,14 +89,6 @@
                 <input type="checkbox" name="data[get_it_fast]" value="1" id="get_it_fast" <?php if(isset($data['get_it_fast']) && $data['get_it_fast'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
-            <!--
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_shipping_handling; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="data[handling_cost]" value="<?php if(isset($data['handling_cost'])){ echo $data['handling_cost']; } ?>" placeholder="<?php echo $text_shipping_handling; ?>" class="form-control" />
-              </div>
-            </div>
-            -->
             <?php if ($cod_surcharge == 1) { ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_cod; ?></label>
@@ -139,6 +131,12 @@
             </div>
 
             <div id="national-container-calculated" style="display:none;" class="shipping-national-container">
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="data[national][calculated][handling_fee]" id="national-handling-fee" class="form-control" value="<?php echo $data['national']['calculated']['handling_fee']; ?>" />
+                </div>
+              </div>
               <div class="form-group">
                 <div class="col-sm-2">
                   <div class="row">
@@ -205,6 +203,12 @@
             </div>
 
             <div id="international-container-calculated" style="display:none;" class="shipping-international-container">
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="data[international][calculated][handling_fee]" id="national-handling-fee" class="form-control" value="<?php echo $data['international']['calculated']['handling_fee']; ?>" />
+                </div>
+              </div>
               <div class="form-group">
                 <div class="col-sm-2">
                   <div class="row">

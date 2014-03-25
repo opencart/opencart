@@ -234,9 +234,9 @@
                   <td>
                     <?php foreach ($product['markets'] as $market) { ?>
                       <?php if ($market['href'] != '') { ?>
-                        <a href="<?php echo $market['href']; ?>" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-primary"><?php echo $market['name']; ?></a>
+                        <a href="<?php echo $market['href']; ?>" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-primary btn-block btn-sm"><?php echo $market['name']; ?></a>
                       <?php } else { ?>
-                        <a disable="disable" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-warning"><?php echo $market['name']; ?></a>
+                        <a disable="disable" data-toggle="tooltip" title="<?php echo $market['text']; ?>" class="btn btn-warning btn-block btn-sm"><?php echo $market['name']; ?></a>
                       <?php } ?>
                     <?php } ?>
                   </td>

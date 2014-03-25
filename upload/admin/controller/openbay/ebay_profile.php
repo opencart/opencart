@@ -60,6 +60,7 @@ class ControllerOpenbayEbayProfile extends Controller {
 	}
 
 	public function add() {
+
 		$data = $this->load->language('openbay/ebay_profile');
 
 		$this->load->model('openbay/ebay_profile');
@@ -318,6 +319,8 @@ class ControllerOpenbayEbayProfile extends Controller {
 			}
 			$return['national']['type'] 				= $data['data']['national']['shipping_type'];
 			$return['international']['type'] 			= $data['data']['international']['shipping_type'];
+
+
 
 			$return['national_flat_count']   			= (int)$data['data']['national']['flat']['count'];
 			$return['national_flat']         			= $this->load->view('openbay/ebay_profile_shipping_national_flat.tpl', $data);

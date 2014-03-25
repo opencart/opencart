@@ -54,6 +54,8 @@ $_['text_shipping_calculated']          = 'Calculated';
 $_['text_shipping_freight']          	= 'Freight';
 $_['text_shipping_handling']          	= 'Handling fee';
 $_['text_shipping_cod']           		= 'Cash on delivery fee';
+$_['text_shipping_handling_nat']    	= 'Handling fee (national)';
+$_['text_shipping_handling_int']    	= 'Handling fee (international)';
 
 //Returns profile
 $_['text_returns_accept']       		= 'Returns accepted';

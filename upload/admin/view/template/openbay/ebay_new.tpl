@@ -365,12 +365,15 @@
               <div class="row">
                 <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-generic-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                 <div class="col-sm-10">
-                  <select name="profile_generic" id="profile-generic-input" class="form-control">
-                    <option value="def"><?php echo $text_select; ?></option>
-                    <?php if (is_array($product['profiles_generic'])) { foreach($product['profiles_generic'] as $profile) { ?>
-                    <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                    <?php } }?>
-                  </select>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="profile-generic-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <select name="profile_generic" id="profile-generic-input" class="form-control">
+                      <option value="def"><?php echo $text_select; ?></option>
+                      <?php if (is_array($product['profiles_generic'])) { foreach($product['profiles_generic'] as $profile) { ?>
+                      <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                      <?php } }?>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
@@ -527,7 +530,9 @@
                   <?php if ($payment['ebay_name'] == 'PayPal') { ?>
                     <?php $paypal = true; ?>
                   <?php } else { ?>
-                    <p><input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1" <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/> - <?php echo $payment['local_name']; ?></p>
+                    <p><input type="checkbox" name="payments[<?php echo $payment['ebay_name']; ?>]" value="1"
+                      <?php echo ($product['defaults']['ebay_payment_types'][$payment['ebay_name']] == 1 ? 'checked="checked" ' : ''); ?>/> -
+                      <?php echo $payment['local_name']; ?></p>
                   <?php } ?>
                 <?php } ?>
               </div>
@@ -558,12 +563,15 @@
               <div class="row">
                 <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-shipping-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                 <div class="col-sm-10">
-                  <select name="profile_shipping" id="profile-shipping-input" class="form-control">
-                    <option value="def"><?php echo $text_select; ?></option>
-                    <?php if (is_array($product['profiles_shipping'])) { foreach($product['profiles_shipping'] as $profile) { ?>
-                      <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
-                    <?php } }?>
-                  </select>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="profile-shipping-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <select name="profile_shipping" id="profile-shipping-input" class="form-control">
+                      <option value="def"><?php echo $text_select; ?></option>
+                      <?php if (is_array($product['profiles_shipping'])) { foreach($product['profiles_shipping'] as $profile) { ?>
+                        <?php echo '<option value="'.$profile['ebay_profile_id'].'">'.$profile['name'].'</option>'; ?>
+                      <?php } }?>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
@@ -825,12 +833,15 @@
               <div class="row">
                 <label class="col-sm-2 control-label"><?php echo $text_profile_load; ?><br /><span id="profile-returns-loading" style="display: none;"><a class="btn btn-info" disabled="disabled"><i class="fa fa-cog fa-lg fa-spin"></i></a></span></label>
                 <div class="col-sm-10">
-                  <select name="profile_return" id="profile-return-input" class="form-control">
-                    <option value="def"><?php echo $text_select; ?></option>
-                    <?php if (is_array($product['profiles_returns'])) { foreach($product['profiles_returns'] as $profile) { ?>
-                    <option value="<?php echo $profile['ebay_profile_id']; ?>"><?php echo $profile['name']; ?></option>
-                    <?php } } ?>
-                  </select>
+                  <div class="input-group">
+                    <span class="input-group-addon" id="profile-return-icon"><i class="fa fa-lg fa-file-text"></i></span>
+                    <select name="profile_return" id="profile-return-input" class="form-control">
+                      <option value="def"><?php echo $text_select; ?></option>
+                      <?php if (is_array($product['profiles_returns'])) { foreach($product['profiles_returns'] as $profile) { ?>
+                      <option value="<?php echo $profile['ebay_profile_id']; ?>"><?php echo $profile['name']; ?></option>
+                      <?php } } ?>
+                    </select>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1404,7 +1415,8 @@
 
   function profileShippingUpdate() {
     if ($('#profile-shipping-input').val() != 'def') {
-      $('#profile-shipping-loading').show();
+      $('#profile-shipping-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+      $('#profile-shipping-input').attr('disabled', 'disabled');
 
       $.ajax({
         type:'GET',
@@ -1415,6 +1427,8 @@
             $('#location').val(data.data.location);
             $('#postcode').val(data.data.postcode);
             $('#dispatch_time').val(data.data.dispatch_time);
+            $('#national-handling-fee').val(data.data.national.calculated.handling_fee);
+            $('#international-handling-fee').val(data.data.international.calculated.handling_fee);
             if (data.data.get_it_fast == 1) {
               $('#get_it_fast').prop('checked', true);
             } else {
@@ -1427,7 +1441,8 @@
             $('#options-international-flat').html(data.html.international_flat);
             $('#options-national-calculated').html(data.html.national_calculated);
             $('#options-international-calculated').html(data.html.international_calculated);
-            $('#profile-shipping-loading').hide();
+            $('#profile-shipping-icon').html('<i class="fa fa-lg fa-file-text"></i>');
+            $('#profile-shipping-input').removeAttr('disabled');
             $('#shipping-type-national').val(data.html.national.type);
             $('#shipping-type-international').val(data.html.international.type);
             changeNationalType();
@@ -1820,7 +1835,8 @@
 
   function profileReturnUpdate() {
       if ($('#profile-return-input').val() != 'def') {
-          $('#profile-returns-loading').show();
+        $('#profile-return-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+        $('#profile-return-input').attr('disabled', 'disabled');
 
           $.ajax({
               type:'GET',
@@ -1847,7 +1863,8 @@
                           $('#returns_restocking_fee').val(data.data.returns_restocking_fee);
                       }
 
-                      $('#profile-returns-loading').hide();
+                    $('#profile-return-icon').html('<i class="fa fa-lg fa-file-text"></i>');
+                    $('#profile-return-input').removeAttr('disabled');
                   }, 1000);
               },
               error: function (xhr, ajaxOptions, thrownError) {
@@ -1912,7 +1929,8 @@
 
   function profileGenericUpdate() {
       if ($('#profile-generic-input').val() != 'def') {
-          $('#profile-generic-loading').show();
+          $('#profile-generic-icon').html('<i class="fa fa-cog fa-lg fa-spin"></i>');
+          $('#profile-generic-input').attr('disabled', 'disabled');
 
           $.ajax({
               type:'GET',
@@ -1926,7 +1944,8 @@
                           $('#private_listing').removeAttr('checked');
                       }
 
-                      $('#profile-generic-loading').hide();
+                    $('#profile-generic-icon').html('<i class="fa fa-lg fa-file-text"></i>');
+                    $('#profile-generic-input').removeAttr('disabled');
                   }, 1000);
               },
               error: function (xhr, ajaxOptions, thrownError) {

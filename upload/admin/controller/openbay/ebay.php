@@ -1235,7 +1235,7 @@ class ControllerOpenbayEbay extends Controller {
 				if(is_array($setting['countries'])) { ksort($setting['countries']); }
 
 				$setting['returns'] = $this->openbay->ebay->getSetting('returns');
-				$setting['package_types'] = $this->openbay->ebay->getSetting('package_type');
+				$setting['package_type'] = $this->openbay->ebay->getSetting('package_type');
 				$setting['shipping_types'] = $this->openbay->ebay->getSetting('shipping_types');
 
 				if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){

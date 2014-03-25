@@ -346,24 +346,6 @@ class ControllerOpenbayEbayProfile extends Controller {
 			$this->error['name'] = $this->language->get('text_error_name');
 		}
 
-		if (isset($this->request->post['data']['national']['shipping_type'])) {
-			if ($this->request->post['data']['national']['shipping_type'] == 'flat' && isset($this->request->post['data']['national']['calculated'])) {
-				unset($this->request->post['data']['national']['calculated']);
-			}
-			if ($this->request->post['data']['national']['shipping_type'] == 'calculated' && isset($this->request->post['data']['national']['flat'])) {
-				unset($this->request->post['data']['national']['flat']);
-			}
-		}
-
-		if (isset($this->request->post['data']['international']['shipping_type'])) {
-			if ($this->request->post['data']['international']['shipping_type'] == 'flat' && isset($this->request->post['data']['international']['calculated'])) {
-				unset($this->request->post['data']['international']['calculated']);
-			}
-			if ($this->request->post['data']['international']['shipping_type'] == 'calculated' && isset($this->request->post['data']['international']['flat'])) {
-				unset($this->request->post['data']['international']['flat']);
-			}
-		}
-
 		if (!$this->error) {
 			return true;
 		} else {

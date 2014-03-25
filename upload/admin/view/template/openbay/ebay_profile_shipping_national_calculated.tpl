@@ -19,16 +19,6 @@
       <a onclick="removeShipping('national','<?php echo $key; ?>', 'calculated');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove; ?></a>
     </div>
   </div>
-  <?php if ($cod_surcharge == 1) { ?>
-  <div class="row">
-    <div class="col-sm-1 text-right">
-      <label class="control-label"><?php echo $text_cod_surcharge; ?></label>
-    </div>
-    <div class="col-sm-11">
-      <input type="text" name="data[national][calculated][cod_surcharge][<?php echo $key; ?>]" class="form-control" value="<?php echo $data['national']['calculated']['cod_surcharge'][$key]; ?>" />
-    </div>
-  </div>
-  <?php } ?>
 </div>
 <?php } ?>
 <?php } ?>

@@ -89,6 +89,22 @@
                 <input type="checkbox" name="data[get_it_fast]" value="1" id="get_it_fast" <?php if(isset($data['get_it_fast']) && $data['get_it_fast'] == 1){ echo 'checked="checked"'; } ?> />
               </div>
             </div>
+            <!--
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $text_shipping_handling; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="data[handling_cost]" value="<?php if(isset($data['handling_cost'])){ echo $data['handling_cost']; } ?>" placeholder="<?php echo $text_shipping_handling; ?>" class="form-control" />
+              </div>
+            </div>
+            -->
+            <?php if ($cod_surcharge == 1) { ?>
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $text_shipping_cod; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="data[cod_cost]" value="<?php if(isset($data['cod_cost'])){ echo $data['cod_cost']; } ?>" placeholder="<?php echo $text_shipping_cod; ?>" class="form-control" />
+              </div>
+            </div>
+            <?php } ?>
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_type_nat; ?></label>
               <div class="col-sm-10">
@@ -116,9 +132,7 @@
                 </div>
                 <div class="col-sm-10">
                   <div class="row">
-                    <div class="col-sm-12" id="options-national-flat">
-                      <?php echo $html_national_flat; ?>
-                    </div>
+                    <div class="col-sm-12" id="options-national-flat"><?php echo $html_national_flat; ?></div>
                   </div>
                 </div>
               </div>
@@ -140,9 +154,7 @@
                 </div>
                 <div class="col-sm-10">
                   <div class="row">
-                    <div class="col-sm-12" id="options-national-calculated">
-                      <?php echo $html_national_calculated; ?>
-                    </div>
+                    <div class="col-sm-12" id="options-national-calculated"><?php echo $html_national_calculated; ?></div>
                   </div>
                 </div>
               </div>
@@ -153,7 +165,7 @@
                 <label class="col-sm-2 control-label"><?php echo $text_shipping_in_desc; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="data[national][freight][in_description]" value="0" />
-                  <input type="checkbox" name="data[national][freight][in_description]" value="1" id="shipping_in_desc" <?php if(isset($data['shipping_in_desc']) && $data['shipping_in_desc'] == 1){ echo 'checked="checked"'; } ?> />
+                  <input type="checkbox" name="data[national][freight][in_description]" value="1" <?php if(isset($data['national']['freight']['in_description']) && $data['national']['freight']['in_description'] == 1){ echo 'checked="checked"'; } ?> />
                 </div>
               </div>
             </div>
@@ -164,7 +176,6 @@
                 <select name="data[international][shipping_type]" class="form-control" id="shipping-type-international">
                   <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
                   <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
-                  <?php echo $setting['shipping_types']['freight'] == 1 ? '<option value="freight"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'freight' ? ' selected' : '').'>'.$text_shipping_freight.'</option>' : ''; ?>
                 </select>
               </div>
             </div>
@@ -213,16 +224,6 @@
                       <?php echo $html_international_calculated; ?>
                     </div>
                   </div>
-                </div>
-              </div>
-            </div>
-
-            <div id="international-container-freight" style="display:none;" class="shipping-international-container">
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_shipping_in_desc; ?></label>
-                <div class="col-sm-10">
-                  <input type="hidden" name="data[international][freight][in_description]" value="0" />
-                  <input type="checkbox" name="data[international][freight][in_description]" value="1" <?php if(isset($data['shipping_in_desc']) && $data['shipping_in_desc'] == 1){ echo 'checked="checked"'; } ?> />
                 </div>
               </div>
             </div>

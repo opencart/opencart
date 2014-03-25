@@ -47,12 +47,13 @@ $_['text_shipping_in_desc']             = 'Freight info in description';
 $_['text_shipping_getitfast']           = 'Get It Fast!';
 $_['text_shipping_zones']               = 'Ship to zones';
 $_['text_shipping_worldwide']           = 'Worldwide';
-$_['text_cod_surcharge']           		= 'Cash on delivery surcharge';
 $_['text_shipping_type_nat']           	= 'National shipping type';
 $_['text_shipping_type_int']           	= 'International shipping type';
 $_['text_shipping_flat']           		= 'Flat rate';
 $_['text_shipping_calculated']          = 'Calculated';
 $_['text_shipping_freight']          	= 'Freight';
+$_['text_shipping_handling']          	= 'Handling fee';
+$_['text_shipping_cod']           		= 'Cash on delivery fee';
 
 //Returns profile
 $_['text_returns_accept']       		= 'Returns accepted';

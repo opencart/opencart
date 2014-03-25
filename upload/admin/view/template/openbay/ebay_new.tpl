@@ -598,6 +598,22 @@
                 <input type="checkbox" name="get_it_fast" value="1" id="get_it_fast" />
               </div>
             </div>
+            <!--
+            <div class="form-group">
+              <label class="col-sm-2 control-label"><?php echo $text_shipping_handling; ?></label>
+              <div class="col-sm-10">
+                <input type="text" name="handling_fee" id="handling_fee" class="form-control" />
+              </div>
+            </div>
+            -->
+            <?php if ($cod_surcharge == 1) { ?>
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_shipping_cod; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="cod_fee" id="cod_fee" class="form-control" />
+                </div>
+              </div>
+            <?php } ?>
 
             <div class="form-group">
               <label class="col-sm-2 control-label"><?php echo $text_shipping_type_nat; ?></label>
@@ -659,7 +675,7 @@
                 <label class="col-sm-2 control-label"><?php echo $text_shipping_in_desc; ?></label>
                 <div class="col-sm-10">
                   <input type="hidden" name="data[national][freight][in_description]" value="0" />
-                  <input type="checkbox" name="data[national][freight][in_description]" value="1" id="shipping_in_desc" <?php if(isset($data['shipping_in_desc']) && $data['shipping_in_desc'] == 1){ echo 'checked="checked"'; } ?> />
+                  <input type="checkbox" name="data[national][freight][in_description]" value="1" />
                 </div>
               </div>
             </div>
@@ -670,7 +686,6 @@
                 <select name="data[international][shipping_type]" class="form-control" id="shipping-type-international">
                   <?php echo $setting['shipping_types']['flat'] == 1 ? '<option value="flat"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'flat' ? ' selected' : '').'>'.$text_shipping_flat.'</option>' : ''; ?>
                   <?php echo $setting['shipping_types']['calculated'] == 1 ? '<option value="calculated"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'calculated' ? ' selected' : '').'>'.$text_shipping_calculated.'</option>' : ''; ?>
-                  <?php echo $setting['shipping_types']['freight'] == 1 ? '<option value="freight"'.(isset($data['international']['shipping_type']) && $data['international']['shipping_type'] == 'freight' ? ' selected' : '').'>'.$text_shipping_freight.'</option>' : ''; ?>
                 </select>
               </div>
             </div>
@@ -719,16 +734,6 @@
               </div>
             </div>
 
-            <div id="international-container-freight" style="display:none;" class="shipping-international-container">
-              <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $text_shipping_in_desc; ?></label>
-                <div class="col-sm-10">
-                  <input type="hidden" name="data[international][freight][in_description]" value="0" />
-                  <input type="checkbox" name="data[international][freight][in_description]" value="1" <?php if(isset($data['shipping_in_desc']) && $data['shipping_in_desc'] == 1){ echo 'checked="checked"'; } ?> />
-                </div>
-              </div>
-            </div>
-
             <div class="well">
               <div class="row form-group">
                 <div class="col-sm-3">
@@ -756,12 +761,12 @@
                     </div>
                   </div>
                 </div>
-                <?php if (!empty($settings['package_types'])) { ?>
+                <?php if (!empty($setting['package_type'])) { ?>
                   <div class="col-sm-3">
                     <label class="control-label"><?php echo $text_package; ?></label>
                     <select name="package[package]" class="form-control">
-                      <?php foreach ($settings['package_types'] as $package) { ?>
-                        <?php echo '<option value="' . $package['code'] . '"'.($package['default'] == 1 ? ' selected' : '').'>' . $package['description'] . '</option>'; ?>
+                      <?php foreach ($setting['package_type'] as $package) { ?>
+                        <?php echo '<option value="' . $package['code'] . '"'.($package['default'] == 1 ? ' selected="selected"' : '').'>' . $package['description'] . '</option>'; ?>
                       <?php } ?>
                     </select>
                   </div>
@@ -1393,14 +1398,6 @@
             $('#location').val(data.data.location);
             $('#postcode').val(data.data.postcode);
             $('#dispatch_time').val(data.data.dispatch_time);
-            $('#shipping_in_desc').prop('checked', false);
-            if (data.data.shipping_in_desc == 1) {
-              $('#shipping_in_desc').prop('checked', true);
-              $('#shipping_table_rows').hide();
-            } else {
-              $('#shipping_in_desc').prop('checked', false);
-              $('#shipping_table_rows').show();
-            }
             if (data.data.get_it_fast == 1) {
               $('#get_it_fast').prop('checked', true);
             } else {
@@ -1789,14 +1786,6 @@
       $('.checkboxEbayImage').prop('checked', 'checked');
     } else {
       $('.checkboxEbayImage').removeAttr('checked');
-    }
-  });
-
-  $('#shipping_in_desc').bind('change', function() {
-    if ($('#shipping_in_desc').is(':checked')) {
-      $('#shipping_table_rows').hide();
-    } else {
-      $('#shipping_table_rows').show();
     }
   });
 

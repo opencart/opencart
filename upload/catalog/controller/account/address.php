@@ -456,7 +456,7 @@ class ControllerAccountAddress extends Controller {
 		$custom_fields = $this->model_account_custom_field->getCustomFields($this->config->get('config_customer_group_id'));
 
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['location'] == 'address') { 
+			if ($custom_field['location'] == 'address') {
 				if ($custom_field['type'] == 'checkbox') {
 					$value = array();
 				} else {

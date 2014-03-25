@@ -38,7 +38,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_shop_category; ?></label>
                 <div class="col-sm-10">
-                  <select name="eBayStoreCatId" id="eBayStoreCatId" class="form-control">
+                  <select name="eBayStoreCatId" class="form-control">
                     <?php foreach($product['store_cats'] as $key => $cat) { ?>
                     <option value="<?php echo $key; ?>"><?php echo $cat; ?></option>
                     <?php } ?>
@@ -52,7 +52,7 @@
               <div class="col-sm-10">
                 <p><input type="radio" name="popular" value="" id="popular_default" checked /> <strong><?php echo $text_none; ?></strong></p>
                 <?php foreach($product['popular_cats'] as $cat) { ?>
-                <p><input type="radio" name="popular" value="<?php echo $cat['CategoryID']; ?>" class="popular_category" /> <?php echo $cat['breadcrumb']; ?></p>
+                <p><input type="radio" name="popular" value="<?php echo $cat['CategoryID']; ?>" class="popular-category" /> <?php echo $cat['breadcrumb']; ?></p>
                 <?php } ?>
               </div>
             </div>
@@ -70,35 +70,35 @@
               <div class="col-sm-10">
                 <div class="row form-group">
                   <div class="col-sm-12">
-                    <select id="catsSelect1" class="form-control" onchange="loadCategories(2);"></select>
+                    <select id="category-select-1" class="form-control" onchange="loadCategories(2);"></select>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-sm-12">
-                    <select id="catsSelect2" class="form-control" onchange="loadCategories(3);" style="display:none;"></select>
+                    <select id="category-select-2" class="form-control" onchange="loadCategories(3);" style="display:none;"></select>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-sm-12">
-                    <select id="catsSelect3" class="form-control" onchange="loadCategories(4);" style="display:none;"></select>
+                    <select id="category-select-3" class="form-control" onchange="loadCategories(4);" style="display:none;"></select>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-sm-12">
-                    <select id="catsSelect4" class="form-control" onchange="loadCategories(5);" style="display:none;"></select>
+                    <select id="category-select-4" class="form-control" onchange="loadCategories(5);" style="display:none;"></select>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-sm-12">
-                    <select id="catsSelect5" class="form-control" onchange="loadCategories(6);" style="display:none;"></select>
+                    <select id="category-select-5" class="form-control" onchange="loadCategories(6);" style="display:none;"></select>
                   </div>
                 </div>
                 <div class="row form-group">
                   <div class="col-sm-12">
-                    <select id="catsSelect6" class="form-control" onchange="loadCategories(7);" style="display:none;"></select>
+                    <select id="category-select-6" class="form-control" onchange="loadCategories(7);" style="display:none;"></select>
                   </div>
                 </div>
-                <input type="hidden" name="finalCat" id="finalCat" />
+                <input type="hidden" name="finalCat" id="final-category" />
               </div>
             </div>
             <div class="form-group" id="condition-container" style="display: none;">
@@ -131,7 +131,7 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-3">
-                    <input type="text" name="catalog_search" id="catalog_search" class="form-control" value="" />
+                    <input type="text" name="catalog_search" id="catalog-search" class="form-control" value="" />
                   </div>
                   <div class="col-sm-1">
                     <a class="btn btn-primary" id="button-catalog-search"><i class="fa fa-search"></i> <?php echo $button_search; ?></a>
@@ -143,7 +143,7 @@
               <label class="col-sm-2 control-label"><?php echo $text_catalog; ?></label>
               <div class="col-sm-10">
                 <input type="hidden" value="0" name="catalog_image">
-                <input id="catalog_image" type="checkbox" value="1" name="catalog_image">
+                <input id="catalog-image" type="checkbox" value="1" name="catalog_image">
                 <span class="help-block"><?php echo $text_catalog_help; ?></span>
               </div>
             </div>
@@ -314,14 +314,14 @@
                               <option value="def">-- <?php echo $text_select; ?> --</option>
                               <?php foreach($product['option_grp'] as $option_group) { echo'<option value="'.$option_group['option_id'].'">'.$option_group['name'].'</option>'; } ?>
                           </select>
-                          <input type="hidden" id="option_image_group_name" name="option_image_group_name" value="" />
+                          <input type="hidden" id="option-image-group-name" name="option-image-group-name" value="" />
                       </td>
                   </tr>
-                  <tr class="option_group_img_tr displayNone">
+                  <tr class="option-group-img-tr displayNone">
                       <td><?php echo $text_option_images_choice; ?></td>
                       <td>
                           <?php foreach($product['option_grp'] as $option_group) { ?>
-                              <div id="option_group_img_<?php echo $option_group['option_id']; ?>" class="option_group_img">
+                              <div id="option-group-img-<?php echo $option_group['option_id']; ?>" class="option-group-img">
                                   <table class="form">
                                       <?php foreach($option_group['product_option_value'] as $option_group_choice) { ?>
                                           <tr>
@@ -337,7 +337,7 @@
                                                       <div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_<?php echo $option_group['option_id']; ?>_<?php echo $option_group_choice['product_option_value_id']; ?>_<?php echo $x; ?>">
                                                           <img src="<?php echo $option_group_choice['image_thumb']; ?>" />
                                                           <input type="hidden" name="option_image[<?php echo $option_group['option_id']; ?>][<?php echo $option_group_choice['product_option_value_id']; ?>][images][]" value="<?php echo $option_group_choice['image']; ?>" />
-                                                          <p class="textCenter"><a class="cursor" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);"><?php echo $text_remove; ?></a></p>
+                                                          <p class="text-center"><a class="cursor" onclick="removeVariationImage(<?php echo $option_group['option_id']; ?>, <?php echo $option_group_choice['product_option_value_id']; ?>, <?php echo $x; ?>);"><?php echo $text_remove; ?></a></p>
                                                       </div>
                                                   <?php } ?>
                                                   <div style="clear:both"></div>
@@ -425,7 +425,7 @@
                                           echo'<tr>';
                                               echo'<input type="hidden" name="varPriceExCount" class="varPriceExCount" value="'.$v.'" />';
                                               echo'<td class="center width50">'.$option['stock'].'</td>';
-                                              echo'<td class="center width50"><input id="qty_'.$v.'" type="text" name="opt['.$v.'][qty]" value="'.$option['stock'].'" onkeyup="updateReserveMessage('.$v.', '.$option['stock'].');" class="width50 textCenter"/></td>';
+                                              echo'<td class="center width50"><input id="qty_'.$v.'" type="text" name="opt['.$v.'][qty]" value="'.$option['stock'].'" onkeyup="updateReserveMessage('.$v.', '.$option['stock'].');" class="width50 text-center"/></td>';
                                               echo'<td class="center width50" id="qty_reserve_'.$v.'">0</td>';
                                               echo'<td class="left">'.$option['combi'].'</td>';
                                               echo'<td class="left width100"><input id="varPriceEx_'.$v.'" onkeyup="updateVarPriceFromEx('.$v.');" type="text" name="opt['.$v.'][priceex]" value="'.number_format($option['price'], 2, '.', '').'" style="width:80px;" /></td>';
@@ -598,15 +598,7 @@
                 <input type="checkbox" name="get_it_fast" value="1" id="get_it_fast" />
               </div>
             </div>
-            <!--
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_shipping_handling; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="handling_fee" id="handling_fee" class="form-control" />
-              </div>
-            </div>
-            -->
-            <?php if ($cod_surcharge == 1) { ?>
+            <?php if ($product['defaults']['cod_surcharge'] == 1) { ?>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $text_shipping_cod; ?></label>
                 <div class="col-sm-10">
@@ -649,6 +641,12 @@
             </div>
 
             <div id="national-container-calculated" style="display:none;" class="shipping-national-container">
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_nat; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="data[national][calculated][handling_fee]" id="national-handling-fee" class="form-control" />
+                </div>
+              </div>
               <div class="form-group">
                 <div class="col-sm-2">
                   <div class="row">
@@ -713,6 +711,12 @@
             </div>
 
             <div id="international-container-calculated" style="display:none;" class="shipping-international-container">
+              <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $text_shipping_handling_int; ?></label>
+                <div class="col-sm-10">
+                  <input type="text" name="data[international][calculated][handling_fee]" id="international-handling-fee" class="form-control" />
+                </div>
+              </div>
               <div class="form-group">
                 <div class="col-sm-2">
                   <div class="row">
@@ -1001,7 +1005,7 @@
                     $('#popular_default').prop('checked', true);
                   });
 
-                  $('.popular_category').bind('click', function() {
+                  $('.popular-category').bind('click', function() {
                     $('#category-selections-row').hide();
                     $('input[name=suggested]').removeAttr('checked');
                     $('#suggested_default').prop('checked', true);
@@ -1030,13 +1034,13 @@
 
   function categoryFavChange(id) {
         loadCategories(1, true);
-        $('input[name=finalCat]').attr('value', id);
+        $('#final-category').val(id);
         getCategoryFeatures(id);
     }
 
   function categorySuggestedChange(id) {
         loadCategories(1, true);
-        $('input[name=finalCat]').attr('value', id);
+        $('#final-category').val(id);
         getCategoryFeatures(id);
     }
 
@@ -1050,14 +1054,14 @@
             var parent = '';
         } else {
             var prevLevel = level - 1;
-            var parent = $('#catsSelect'+prevLevel).val();
+            var parent = $('#category-select-'+prevLevel).val();
             $('#popular_default').attr('checked', true);
         }
 
         var countI = level;
 
         while(countI <= 6) {
-            $('#catsSelect'+countI).hide().empty();
+            $('#category-select-'+countI).hide().empty();
             countI++;
         }
 
@@ -1070,22 +1074,22 @@
             },
             success: function(data) {
                 if (data.items != null) {
-                    $('#catsSelect'+level).empty();
-                    $('#catsSelect'+level).append('<option value="">-- <?php echo $text_select; ?> --</option>');
+                    $('#category-select-'+level).empty();
+                    $('#category-select-'+level).append('<option value="">-- <?php echo $text_select; ?> --</option>');
 
                     data.cats = $.makeArray(data.cats);
 
                     $.each(data.cats, function(key, val) {
                         if (val.CategoryID != parent) {
-                            $('#catsSelect'+level).append('<option value="'+val.CategoryID+'">'+val.CategoryName+'</option>');
+                            $('#category-select-'+level).append('<option value="'+val.CategoryID+'">'+val.CategoryName+'</option>');
                         }
                     });
 
                     if (skip != true) {
-                        $('#finalCat').val('');
+                        $('#final-category').val('');
                     }
 
-                    $('#catsSelect'+level).show();
+                    $('#category-select-'+level).show();
                 } else {
                     if (data.error) {
                         alert(data.error);
@@ -1093,8 +1097,8 @@
                         $('#content').prepend('<div class="alert alert-warning"><?php echo $text_ajax_catproblem; ?></div>');
                         $('#page-listing, .heading').hide();
                     } else {
-                        $('#finalCat').val($('#catsSelect'+prevLevel).val());
-                        getCategoryFeatures($('#catsSelect'+prevLevel).val());
+                        $('#final-category').val($('#category-select-'+prevLevel).val());
+                        getCategoryFeatures($('#category-select-'+prevLevel).val());
                     }
                 }
                 $('#category-loading').hide();
@@ -1156,8 +1160,8 @@
     }
 
   $('#button-catalog-search').bind('click', function() {
-        var qry = $('#catalog_search').val();
-        var cat = $('#finalCat').val();
+        var qry = $('#catalog-search').val();
+        var cat = $('#final-category').val();
 
         if (cat <= 0) {
             alert('<?php echo $text_error_choose_category; ?>');
@@ -1527,7 +1531,7 @@
       err = 1;
     }
 
-    if ($('#finalCat').val() == '') {
+    if ($('#final-category').val() == '') {
       $('#page-listing').prepend('<div class="alert alert-warning listing-error"><?php echo $text_ajax_error_cat; ?></div>');
       err = 1;
     }
@@ -1933,7 +1937,7 @@
       html += '<div class="border p10 mBottom10 width100 left floatLeft mRight10" id="option_image_'+grp_id+'_'+id+'_'+count+'">';
           html += '<img src="<?php echo $no_image; ?>" id="option_image_img_'+grp_id+'_'+id+'_'+count+'" />';
           html += '<input type="hidden" name="option_image['+grp_id+']['+id+'][images][]" id="option_image_input_'+grp_id+'_'+id+'_'+count+'" value="" />';
-          html += '<p class="textCenter"><a class="cursor" onclick="removeVariationImage('+grp_id+','+id+','+count+');"><?php echo $text_remove; ?></a></p>';
+          html += '<p class="text-center"><a class="cursor" onclick="removeVariationImage('+grp_id+','+id+','+count+');"><?php echo $text_remove; ?></a></p>';
       html += '</div>';
 
       $('#option_images_'+id).append(html);
@@ -1948,15 +1952,15 @@
   }
 
   $('#option_image_group').change(function() {
-    $('.option_group_img').hide();
+    $('.option-group-img').hide();
 
     if ($(this).val() != 'def') {
-      $('.option_group_img_tr').show();
-      $('#option_group_img_'+$(this).val()).show();
-      $('#option_image_group_name').val($(this).find("option:selected").text());
+      $('.option-group-img-tr').show();
+      $('#option-group-img-'+$(this).val()).show();
+      $('#option-image-group-name').val($(this).find("option:selected").text());
     } else {
-      $('#option_image_group_name').val('');
-      $('.option_group_img_tr').hide();
+      $('#option-image-group-name').val('');
+      $('.option-group-img-tr').hide();
     }
   });
 

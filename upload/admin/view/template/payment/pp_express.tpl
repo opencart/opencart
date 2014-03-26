@@ -60,7 +60,7 @@
                 <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
                   <input type="text" value="<?php echo $text_ipn_url; ?>" class="form-control" />
                 </div>
-                <span class="help-block"><?php echo $text_ipn_help; ?></span> </div>
+                <span class="help-block"><?php echo $text_ipn_help; ?></span></div>
             </div>
           </div>
           <div class="tab-pane" id="tab-general">

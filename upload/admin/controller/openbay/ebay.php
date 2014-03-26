@@ -960,7 +960,7 @@ class ControllerOpenbayEbay extends Controller {
 			$filter['qty_max'] = (int)$this->request->post['filter_qty_max'];
 		}
 
-		$data = $this->model_ebay_openbay->loadUnlinked(200, $this->request->get['page'], $filter);
+		$data = $this->model_openbay_ebay->loadUnlinked(200, $this->request->get['page'], $filter);
 
 		if (!empty($data)) {
 			$data['more_pages'] = 1;
@@ -1072,7 +1072,7 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('openbay/ebay_product');
 		$this->load->model('tool/image');
 
-		$item_id        = $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
+		$item_id = $this->openbay->ebay->getEbayItemId($this->request->get['product_id']);
 
 		if (!empty($item_id)) {
 			$listings   = $this->openbay->ebay->getEbayListing($item_id);

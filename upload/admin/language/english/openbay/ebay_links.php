@@ -35,6 +35,8 @@ $_['text_text_unlinked_info']       = 'Click the check unlinked items button to 
 $_['text_text_loading_items']       = 'Loading items';
 $_['text_failed']       			= 'Failed to load';
 $_['text_limit_reached']       		= 'The maximum number of checks per request was reached, click the button to continue searching';
+$_['text_stock_error']       		= 'Stock error';
+$_['text_listing_ended']       		= 'Listing ended';
 
 // Tables
 $_['text_column_action']            = 'Action';

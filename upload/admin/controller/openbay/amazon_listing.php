@@ -234,6 +234,27 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$this->load->model('openbay/amazon');
 		$this->load->language('openbay/amazon_listing');
 
+		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->addScript('view/javascript/openbay/faq.js');
+
+		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_amazon'),
+		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'),
+			'text' => $this->language->get('text_edit_heading'),
+		);
+
 		$url = '';
 
 		if (isset($this->request->get['filter_name'])) {
@@ -321,24 +342,6 @@ class ControllerOpenbayAmazonListing extends Controller {
 		$data['url_saved_listings']  = $this->url->link('openbay/amazon/savedListings', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL');
 
 		$data['token'] = $this->session->data['token'];
-
-		$data['breadcrumbs'] = array();
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_home'),
-		);
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_openbay'),
-		);
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazon', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_amazon'),
-		);
-		$data['breadcrumbs'][] = array(
-			'href' => $this->url->link('openbay/amazon_listing/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id . $url, 'SSL'),
-			'text' => $this->language->get('text_edit_heading'),
-		);
 
 		$data['text_edit_heading'] = $this->language->get('text_edit_heading');
 		$data['text_product_links'] = $this->language->get('text_product_links');

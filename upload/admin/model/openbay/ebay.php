@@ -315,21 +315,21 @@ class ModelOpenbayEbay extends Model{
 				$current++;
 			}
 
-			$this->ebay->log('Checking unlinked page: '.$page);
+			$this->openbay->ebay->log('Checking unlinked page: '.$page);
 
-			$response = $this->ebay->getEbayItemList($limit, $page, $filter);
+			$response = $this->openbay->ebay->getEbayItemList($limit, $page, $filter);
 
-			if($this->ebay->lasterror == true){
+			if($this->openbay->ebay->lasterror == true){
 				break;
 			}
 
 			foreach($response['items'] as $itemId => $item){
-				if($this->ebay->getProductId($itemId, 1) == false){
+				if($this->openbay->ebay->getProductId($itemId, 1) == false){
 					$unlinked[$itemId] = $item;
 				}
 			}
 
-			$this->ebay->log('Unlinked count: '.count($unlinked));
+			$this->openbay->ebay->log('Unlinked count: '.count($unlinked));
 
 			if($response['max_page'] == $page || count($unlinked) >= 5){
 				break;

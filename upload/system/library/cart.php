@@ -78,7 +78,7 @@ class Cart {
 									if ($option_value_query->row['subtract'] && (!$option_value_query->row['quantity'] || ($option_value_query->row['quantity'] < $quantity))) {
 										$stock = false;
 									}
-
+									
 									$option_data[] = array(
 										'product_option_id'       => $product_option_id,
 										'product_option_value_id' => $value,
@@ -232,21 +232,36 @@ class Cart {
 					$profile_name = '';
 
 					if ($profile_id) {
-						$profile_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "profile` `p` JOIN `" . DB_PREFIX . "product_profile` `pp` ON `pp`.`profile_id` = `p`.`profile_id` AND `pp`.`product_id` = " . (int)$product_query->row['product_id'] . " JOIN `" . DB_PREFIX . "profile_description` `pd` ON `pd`.`profile_id` = `p`.`profile_id` AND `pd`.`language_id` = " . (int)$this->config->get('config_language_id') . " WHERE `pp`.`profile_id` = " . (int)$profile_id . " AND `status` = 1 AND `pp`.`customer_group_id` = " . (int)$this->config->get('config_customer_group_id'))->row;
+						$profile_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "profile` `p` JOIN `" . DB_PREFIX . "product_profile` `pp` ON `pp`.`profile_id` = `p`.`profile_id` AND `pp`.`product_id` = " . (int)$product_query->row['product_id'] . " JOIN `" . DB_PREFIX . "profile_description` `pd` ON `pd`.`profile_id` = `p`.`profile_id` AND `pd`.`language_id` = " . (int)$this->config->get('config_language_id') . " WHERE `pp`.`profile_id` = " . (int)$profile_id . " AND `status` = 1 AND `pp`.`customer_group_id` = " . (int)$this->config->get('config_customer_group_id'));
 
-						if ($profile_info) {
-							$profile_name = $profile_info['name'];
-
+						if ($profile_query->num_rows) {
+							$profile_name = $profile_query->row['name'];
+							
+							$recurring = array(
+								'profile_id'      => $profile_id,
+								'name'            => $profile_name,
+								'recurring'       => $recurring,
+								'frequency'       => $recurring_frequency,
+								'price'           => $recurring_price,
+								'cycle'           => $recurring_cycle,
+								'duration'        => $recurring_duration,
+								'trial'           => $recurring_trial_status,
+								'trial_frequency' => $recurring_trial_frequency,
+								'trial_price'     => $recurring_trial_price,
+								'trial_cycle'     => $recurring_trial_cycle,
+								'trial_duration'  => $recurring_trial_duration
+							);
+							
 							$recurring = true;
-							$recurring_frequency = $profile_info['frequency'];
-							$recurring_price = $profile_info['price'];
-							$recurring_cycle = $profile_info['cycle'];
-							$recurring_duration = $profile_info['duration'];
-							$recurring_trial_frequency = $profile_info['trial_frequency'];
-							$recurring_trial_status = $profile_info['trial_status'];
-							$recurring_trial_price = $profile_info['trial_price'];
-							$recurring_trial_cycle = $profile_info['trial_cycle'];
-							$recurring_trial_duration = $profile_info['trial_duration'];
+							$recurring_frequency = $profile_query->row['frequency'];
+							$recurring_price = $profile_query->row['price'];
+							$recurring_cycle = $profile_query->row['cycle'];
+							$recurring_duration = $profile_query->row['duration'];
+							$recurring_trial_frequency = $profile_query->row['trial_frequency'];
+							$recurring_trial_status = $profile_query->row['trial_status'];
+							$recurring_trial_price = $profile_query->row['trial_price'];
+							$recurring_trial_cycle = $profile_query->row['trial_cycle'];
+							$recurring_trial_duration = $profile_query->row['trial_duration'];
 						}
 					}
 

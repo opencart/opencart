@@ -147,7 +147,7 @@ if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_AC
 					$locale = strtolower(str_replace('_', '-', $locale));
 					if ($locale === $browser_locale) {
 						$detect = $key;
-						break 2;
+						break 3;
 					}
 				}
 			}

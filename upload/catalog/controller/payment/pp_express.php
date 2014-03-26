@@ -312,17 +312,17 @@ class ControllerPaymentPPExpress extends Controller {
 					$country_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE']) . "' AND `status` = '1' LIMIT 1")->row;
 					$zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `name` = '" . $this->db->escape($result['PAYMENTREQUEST_0_SHIPTOSTATE']) . "' AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "'")->row;
 
-					$address_data= array(
-						'firstname' => $shipping_first_name,
-						'lastname' => $shipping_last_name,
-						'company' => '',
+					$address_data = array(
+						'firstname'  => $shipping_first_name,
+						'lastname'   => $shipping_last_name,
+						'company'    => '',
 						'company_id' => '',
-						'tax_id' => '',
-						'address_1' => $result['PAYMENTREQUEST_0_SHIPTOSTREET'],
-						'address_2' => (isset($result['PAYMENTREQUEST_0_SHIPTOSTREET2']) ? $result['PAYMENTREQUEST_0_SHIPTOSTREET2'] : ''),
-						'postcode' => $result['PAYMENTREQUEST_0_SHIPTOZIP'],
-						'city' => $result['PAYMENTREQUEST_0_SHIPTOCITY'],
-						'zone_id' => (isset($zone_info['zone_id']) ? $zone_info['zone_id'] : 0),
+						'tax_id'     => '',
+						'address_1'  => $result['PAYMENTREQUEST_0_SHIPTOSTREET'],
+						'address_2'  => (isset($result['PAYMENTREQUEST_0_SHIPTOSTREET2']) ? $result['PAYMENTREQUEST_0_SHIPTOSTREET2'] : ''),
+						'postcode'   => $result['PAYMENTREQUEST_0_SHIPTOZIP'],
+						'city'       => $result['PAYMENTREQUEST_0_SHIPTOCITY'],
+						'zone_id'    => (isset($zone_info['zone_id']) ? $zone_info['zone_id'] : 0),
 						'country_id' => (isset($country_info['country_id']) ? $country_info['country_id'] : 0),
 					);
 
@@ -405,21 +405,21 @@ class ControllerPaymentPPExpress extends Controller {
 			}
 		}
 
-		$data['button_shipping'] = $this->language->get('express_button_shipping');
-		$data['button_confirm'] = $this->language->get('express_button_confirm');
+		$data['text_trial'] = $this->language->get('text_trial');
+		$data['text_recurring'] = $this->language->get('text_recurring');
+		$data['text_length'] = $this->language->get('text_length');
+		$data['text_recurring_item'] = $this->language->get('text_recurring_item');
+		$data['text_payment_profile'] = $this->language->get('text_payment_profile');
+		$data['text_until_cancelled'] = $this->language->get('text_until_cancelled');
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_model'] = $this->language->get('column_model');
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
-		$data['text_until_cancelled'] = $this->language->get('text_until_cancelled');
-
-		$data['text_trial'] = $this->language->get('text_trial');
-		$data['text_recurring'] = $this->language->get('text_recurring');
-		$data['text_length'] = $this->language->get('text_length');
-		$data['text_recurring_item'] = $this->language->get('text_recurring_item');
-		$data['text_payment_profile'] = $this->language->get('text_payment_profile');
+		
+		$data['button_shipping'] = $this->language->get('express_button_shipping');
+		$data['button_confirm'] = $this->language->get('express_button_confirm');		
 
 		if (isset($this->request->post['next'])) {
 			$data['next'] = $this->request->post['next'];
@@ -485,24 +485,24 @@ class ControllerPaymentPPExpress extends Controller {
 
 			if ($product['recurring']) {
 				$frequencies = array(
-					'day' => $this->language->get('text_day'),
-					'week' => $this->language->get('text_week'),
+					'day'        => $this->language->get('text_day'),
+					'week'       => $this->language->get('text_week'),
 					'semi_month' => $this->language->get('text_semi_month'),
-					'month' => $this->language->get('text_month'),
-					'year' => $this->language->get('text_year'),
+					'month'      => $this->language->get('text_month'),
+					'year'       => $this->language->get('text_year'),
 				);
 
-				if ($product['recurring_trial']) {
-						$recurring_price = $this->currency->format($this->tax->calculate($product['recurring_trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
-						$profile_description = sprintf($this->language->get('text_trial_description'), $recurring_price, $product['recurring_trial_cycle'], $frequencies[$product['recurring_trial_frequency']], $product['recurring_trial_duration']) . ' ';
+				if ($product['recurring']['trial']) {
+						$recurring_price = $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
+						$profile_description = sprintf($this->language->get('text_trial_description'), $recurring_price, $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
 					}
 
-					$recurring_price = $this->currency->format($this->tax->calculate($product['recurring_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
+					$recurring_price = $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
 
-					if ($product['recurring_duration']) {
-						$profile_description .= sprintf($this->language->get('text_payment_description'), $recurring_price, $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
+					if ($product['recurring']['duration']) {
+						$profile_description .= sprintf($this->language->get('text_payment_description'), $recurring_price, $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 					} else {
-						$profile_description .= sprintf($this->language->get('text_payment_until_canceled_description'), $recurring_price, $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
+						$profile_description .= sprintf($this->language->get('text_payment_until_canceled_description'), $recurring_price, $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 					}
 			}
 
@@ -1114,72 +1114,71 @@ class ControllerPaymentPPExpress extends Controller {
 
 				//add transaction to paypal transaction table
 				$paypal_transaction_data = array(
-					'paypal_order_id' => $paypal_order_id,
-					'transaction_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
+					'paypal_order_id'       => $paypal_order_id,
+					'transaction_id'        => $result['PAYMENTINFO_0_TRANSACTIONID'],
 					'parent_transaction_id' => '',
-					'note' => '',
-					'msgsubid' => '',
-					'receipt_id' => (isset($result['PAYMENTINFO_0_RECEIPTID']) ? $result['PAYMENTINFO_0_RECEIPTID'] : ''),
-					'payment_type' => $result['PAYMENTINFO_0_PAYMENTTYPE'],
-					'payment_status' => $result['PAYMENTINFO_0_PAYMENTSTATUS'],
-					'pending_reason' => $result['PAYMENTINFO_0_PENDINGREASON'],
-					'transaction_entity' => ($this->config->get('pp_express_method') == 'Sale' ? 'payment' : 'auth'),
-					'amount' => $result['PAYMENTINFO_0_AMT'],
-					'debug_data' => json_encode($result),
+					'note'                  => '',
+					'msgsubid'              => '',
+					'receipt_id'            => (isset($result['PAYMENTINFO_0_RECEIPTID']) ? $result['PAYMENTINFO_0_RECEIPTID'] : ''),
+					'payment_type'          => $result['PAYMENTINFO_0_PAYMENTTYPE'],
+					'payment_status'        => $result['PAYMENTINFO_0_PAYMENTSTATUS'],
+					'pending_reason'        => $result['PAYMENTINFO_0_PENDINGREASON'],
+					'transaction_entity'    => ($this->config->get('pp_express_method') == 'Sale' ? 'payment' : 'auth'),
+					'amount'                => $result['PAYMENTINFO_0_AMT'],
+					'debug_data'            => json_encode($result),
 				);
 				$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
 				$recurring_products = $this->cart->getRecurringProducts();
 
 				//loop through any products that are recurring items
-				if(!empty($recurring_products)) {
-
+				if ($recurring_products) {
 					$this->language->load('payment/pp_express');
 
 					$this->load->model('checkout/recurring');
 
 					$billing_period = array(
-						'day' => 'Day',
-						'week' => 'Week',
+						'day'        => 'Day',
+						'week'       => 'Week',
 						'semi_month' => 'SemiMonth',
-						'month' => 'Month',
-						'year' => 'Year'
+						'month'      => 'Month',
+						'year'       => 'Year'
 					);
 
 					foreach($recurring_products as $item) {
 						$data = array(
-							'METHOD' => 'CreateRecurringPaymentsProfile',
-							'TOKEN' => $this->session->data['paypal']['token'],
-							'PROFILESTARTDATE' => gmdate("Y-m-d\TH:i:s\Z", mktime(gmdate("H"), gmdate("i")+5, gmdate("s"), gmdate("m"), gmdate("d"), gmdate("y"))),
-							'BILLINGPERIOD' => $billing_period[$item['recurring_frequency']],
-							'BILLINGFREQUENCY' => $item['recurring_cycle'],
-							'TOTALBILLINGCYCLES' => $item['recurring_duration'],
-							'AMT' => $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
-							'CURRENCYCODE' => $this->currency->getCode(),
+							'METHOD'             => 'CreateRecurringPaymentsProfile',
+							'TOKEN'              => $this->session->data['paypal']['token'],
+							'PROFILESTARTDATE'   => gmdate("Y-m-d\TH:i:s\Z", mktime(gmdate("H"), gmdate("i")+5, gmdate("s"), gmdate("m"), gmdate("d"), gmdate("y"))),
+							'BILLINGPERIOD'      => $billing_period[$item['recurring']['frequency']],
+							'BILLINGFREQUENCY'   => $item['recurring']['cycle'],
+							'TOTALBILLINGCYCLES' => $item['recurring']['duration'],
+							'AMT'                => $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
+							'CURRENCYCODE'       => $this->currency->getCode(),
 						);
 
 						//trial information
-						if($item['recurring_trial'] == 1) {
+						if($item['recurring']['trial']) {
 							$data_trial = array(
-								'TRIALBILLINGPERIOD' => $billing_period[$item['recurring_trial_frequency']],
-								'TRIALBILLINGFREQUENCY' => $item['recurring_trial_cycle'],
-								'TRIALTOTALBILLINGCYCLES' => $item['recurring_trial_duration'],
-								'TRIALAMT' => $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
+								'TRIALBILLINGPERIOD' => $billing_period[$item['recurring']['trial_frequency']],
+								'TRIALBILLINGFREQUENCY' => $item['recurring']['trial_cycle'],
+								'TRIALTOTALBILLINGCYCLES' => $item['recurring']['trial_duration'],
+								'TRIALAMT' => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
 							);
 
-							$trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'].' '.$this->currency->getCode();
-							$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring_trial_cycle'], $item['recurring_trial_frequency'], $item['recurring_trial_duration']);
+							$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'].' '.$this->currency->getCode();
+							$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 
 							$data = array_merge($data, $data_trial);
 						} else {
 							$trial_text = '';
 						}
 
-						$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'].' '.$this->currency->getCode();
-						$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring_cycle'], $item['recurring_frequency']);
+						$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'].' '.$this->currency->getCode();
+						$recurring_description = $trial_text . sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
-						if($item['recurring_duration'] > 0) {
-							$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring_duration']);
+						if($item['recurring']['duration'] > 0) {
+							$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
 						}
 
 						//create new profile and set to pending status as no payment has been made yet.
@@ -1190,11 +1189,10 @@ class ControllerPaymentPPExpress extends Controller {
 
 						$result = $this->model_payment_pp_express->call($data);
 
-						if(isset($result['PROFILEID'])) {
+						if (isset($result['PROFILEID'])) {
 							$this->model_checkout_recurring->addReference($recurring_id, $result['PROFILEID']);
 						} else {
 							// there was an error creating the profile, need to log and also alert admin / user
-
 
 						}
 					}
@@ -1307,10 +1305,11 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data = array(
 			'METHOD' => 'GetExpressCheckoutDetails',
-			'TOKEN' => $this->session->data['paypal']['token'],
+			'TOKEN'  => $this->session->data['paypal']['token'],
 		);
 
 		$result = $this->model_payment_pp_express->call($data);
+		
 		$this->session->data['paypal']['payerid'] = $result['PAYERID'];
 		$this->session->data['paypal']['result'] = $result;
 
@@ -1367,80 +1366,80 @@ class ControllerPaymentPPExpress extends Controller {
 
 			//add order to paypal table
 			$paypal_order_data = array(
-				'order_id' => $order_id,
-				'capture_status' => ($this->config->get('pp_express_method') == 'Sale' ? 'Complete' : 'NotComplete'),
-				'currency_code' => $result['PAYMENTINFO_0_CURRENCYCODE'],
+				'order_id'         => $order_id,
+				'capture_status'   => ($this->config->get('pp_express_method') == 'Sale' ? 'Complete' : 'NotComplete'),
+				'currency_code'    => $result['PAYMENTINFO_0_CURRENCYCODE'],
 				'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
-				'total' => $result['PAYMENTINFO_0_AMT'],
+				'total'            => $result['PAYMENTINFO_0_AMT'],
 			);
+			
 			$paypal_order_id = $this->model_payment_pp_express->addOrder($paypal_order_data);
 
 			//add transaction to paypal transaction table
 			$paypal_transaction_data = array(
-				'paypal_order_id' => $paypal_order_id,
-				'transaction_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
+				'paypal_order_id'       => $paypal_order_id,
+				'transaction_id'        => $result['PAYMENTINFO_0_TRANSACTIONID'],
 				'parent_transaction_id' => '',
-				'note' => '',
-				'msgsubid' => '',
-				'receipt_id' => (isset($result['PAYMENTINFO_0_RECEIPTID']) ? $result['PAYMENTINFO_0_RECEIPTID'] : ''),
-				'payment_type' => $result['PAYMENTINFO_0_PAYMENTTYPE'],
-				'payment_status' => $result['PAYMENTINFO_0_PAYMENTSTATUS'],
-				'pending_reason' => $result['PAYMENTINFO_0_PENDINGREASON'],
-				'transaction_entity' => ($this->config->get('pp_express_method') == 'Sale' ? 'payment' : 'auth'),
-				'amount' => $result['PAYMENTINFO_0_AMT'],
-				'debug_data' => json_encode($result),
+				'note'                  => '',
+				'msgsubid'              => '',
+				'receipt_id'            => (isset($result['PAYMENTINFO_0_RECEIPTID']) ? $result['PAYMENTINFO_0_RECEIPTID'] : ''),
+				'payment_type'          => $result['PAYMENTINFO_0_PAYMENTTYPE'],
+				'payment_status'        => $result['PAYMENTINFO_0_PAYMENTSTATUS'],
+				'pending_reason'        => $result['PAYMENTINFO_0_PENDINGREASON'],
+				'transaction_entity'    => ($this->config->get('pp_express_method') == 'Sale' ? 'payment' : 'auth'),
+				'amount'                => $result['PAYMENTINFO_0_AMT'],
+				'debug_data'            => json_encode($result),
 			);
 			$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
 			$recurring_products = $this->cart->getRecurringProducts();
 
 			//loop through any products that are recurring items
-			if(!empty($recurring_products)) {
-
+			if ($recurring_products) {
 				$this->load->model('checkout/recurring');
 
 				$billing_period = array(
-					'day' => 'Day',
-					'week' => 'Week',
+					'day'        => 'Day',
+					'week'       => 'Week',
 					'semi_month' => 'SemiMonth',
-					'month' => 'Month',
-					'year' => 'Year'
+					'month'      => 'Month',
+					'year'       => 'Year'
 				);
 
-				foreach($recurring_products as $item) {
+				foreach ($recurring_products as $item) {
 					$data = array(
-						'METHOD' => 'CreateRecurringPaymentsProfile',
-						'TOKEN' => $this->session->data['paypal']['token'],
-						'PROFILESTARTDATE' => gmdate("Y-m-d\TH:i:s\Z", mktime(gmdate("H"), gmdate("i")+5, gmdate("s"), gmdate("m"), gmdate("d"), gmdate("y"))),
-						'BILLINGPERIOD' => $billing_period[$item['recurring_frequency']],
-						'BILLINGFREQUENCY' => $item['recurring_cycle'],
-						'TOTALBILLINGCYCLES' => $item['recurring_duration'],
-						'AMT' => $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
-						'CURRENCYCODE' => $this->currency->getCode(),
+						'METHOD'             => 'CreateRecurringPaymentsProfile',
+						'TOKEN'              => $this->session->data['paypal']['token'],
+						'PROFILESTARTDATE'   => gmdate("Y-m-d\TH:i:s\Z", mktime(gmdate('H'), gmdate('i') + 5, gmdate('s'), gmdate('m'), gmdate('d'), gmdate('y'))),
+						'BILLINGPERIOD'      => $billing_period[$item['recurring']['frequency']],
+						'BILLINGFREQUENCY'   => $item['recurring']['cycle'],
+						'TOTALBILLINGCYCLES' => $item['recurring']['duration'],
+						'AMT'                => $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
+						'CURRENCYCODE'       => $this->currency->getCode(),
 					);
 
 					//trial information
-					if($item['recurring_trial'] == 1) {
+					if($item['recurring']['trial'] == 1) {
 						$data_trial = array(
-							'TRIALBILLINGPERIOD' => $billing_period[$item['recurring_trial_frequency']],
-							'TRIALBILLINGFREQUENCY' => $item['recurring_trial_cycle'],
-							'TRIALTOTALBILLINGCYCLES' => $item['recurring_trial_duration'],
-							'TRIALAMT' => $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
+							'TRIALBILLINGPERIOD'      => $billing_period[$item['recurring']['trial_frequency']],
+							'TRIALBILLINGFREQUENCY'   => $item['recurring']['trial_cycle'],
+							'TRIALTOTALBILLINGCYCLES' => $item['recurring']['trial_duration'],
+							'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
 						);
 
-						$trial_amt = $this->currency->format($this->tax->calculate($item['recurring_trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'].' '.$this->currency->getCode();
-						$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring_trial_cycle'], $item['recurring_trial_frequency'], $item['recurring_trial_duration']);
+						$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'].' '.$this->currency->getCode();
+						$trial_text =  sprintf($this->language->get('text_trial'), $trial_amt, $item['recurring']['trial_cycle'], $item['recurring']['trial_frequency'], $item['recurring']['trial_duration']);
 
 						$data = array_merge($data, $data_trial);
 					} else {
 						$trial_text = '';
 					}
 
-					$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'].' '.$this->currency->getCode();
-					$recurring_description = $trial_text.sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring_cycle'], $item['recurring_frequency']);
+					$recurring_amt = $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false)  * $item['quantity'].' '.$this->currency->getCode();
+					$recurring_description = $trial_text.sprintf($this->language->get('text_recurring'), $recurring_amt, $item['recurring']['cycle'], $item['recurring']['frequency']);
 
-					if($item['recurring_duration'] > 0) {
-						$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring_duration']);
+					if ($item['recurring']['duration'] > 0) {
+						$recurring_description .= sprintf($this->language->get('text_length'), $item['recurring']['duration']);
 					}
 
 					//create new profile and set to pending status as no payment has been made yet.
@@ -1455,7 +1454,6 @@ class ControllerPaymentPPExpress extends Controller {
 						$this->model_checkout_recurring->addReference($recurring_id, $result['PROFILEID']);
 					} else {
 						// there was an error creating the profile, need to log and also alert admin / user
-
 
 					}
 				}
@@ -1474,6 +1472,7 @@ class ControllerPaymentPPExpress extends Controller {
 					if ($this->session->data['paypal_redirect_count'] == 2) {
 						$this->session->data['paypal_redirect_count'] = 0;
 						$this->session->data['error'] = $this->language->get('error_too_many_failures');
+						
 						$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 					} else {
 						$this->session->data['paypal_redirect_count']++;
@@ -1563,7 +1562,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$this->model_payment_pp_express->log(array('request' => $request,'response' => $response), 'IPN data');
 
-		if ( (string)$response == "VERIFIED" )  {
+		if ((string)$response == "VERIFIED")  {
 
 			$this->log->write((isset($this->request->post['transaction_entity']) ? $this->request->post['transaction_entity'] : ''));
 

@@ -126,7 +126,7 @@ class ControllerCheckoutCart extends Controller {
 					$total = false;
 				}
 
-				$profile_description = '';
+				$recurring = '';
 
 				if ($product['recurring']) {
 					$frequencies = array(
@@ -137,17 +137,14 @@ class ControllerCheckoutCart extends Controller {
 						'year'       => $this->language->get('text_year'),
 					);
 
-					if ($product['recurring_trial']) {
-						$recurring_price = $this->currency->format($this->tax->calculate($product['recurring_trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
-						$profile_description = sprintf($this->language->get('text_trial_description'), $recurring_price, $product['recurring_trial_cycle'], $frequencies[$product['recurring_trial_frequency']], $product['recurring_trial_duration']) . ' ';
+					if ($product['recurring']['trial']) {
+						$profile_description = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring_trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring_trial_cycle'], $frequencies[$product['recurring_trial_frequency']], $product['recurring_trial_duration']) . ' ';
 					}
 
-					$recurring_price = $this->currency->format($this->tax->calculate($product['recurring_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
-
 					if ($product['recurring_duration']) {
-						$profile_description .= sprintf($this->language->get('text_payment_description'), $recurring_price, $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
+						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
 					} else {
-						$profile_description .= sprintf($this->language->get('text_payment_until_canceled_description'), $recurring_price, $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
+						$recurring .= sprintf($this->language->get('text_payment_until_canceled_description'), $this->currency->format($this->tax->calculate($product['recurring_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
 					}
 				}
 
@@ -163,9 +160,7 @@ class ControllerCheckoutCart extends Controller {
 					'price'               => $price,
 					'total'               => $total,
 					'href'                => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-					'recurring'           => $product['recurring'],
-					'profile_name'        => $product['profile_name'],
-					'profile_description' => $profile_description,
+					'recurring'           => $recurring
 				);
 			}
 			

@@ -236,7 +236,7 @@ class Cart {
 							'trial_duration'  => $profile_query->row['trial_duration']
 						);
 					} else {
-						$recurring = array();
+						$recurring = false;
 					}
 					
 					$this->data[$key] = array(

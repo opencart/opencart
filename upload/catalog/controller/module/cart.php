@@ -103,17 +103,17 @@ class ControllerModuleCart extends Controller {
 			}
 													
 			$data['products'][] = array(
-				'key'      => $product['key'],
-				'thumb'    => $image,
-				'name'     => $product['name'],
-				'model'    => $product['model'], 
-				'option'   => $option_data,
-				'quantity' => $product['quantity'],
-				'price'    => $price,	
-				'total'    => $total,	
-				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-				'recurring'=> $product['recurring'],
-				'profile'  => $product['profile_name'],
+				'key'       => $product['key'],
+				'thumb'     => $image,
+				'name'      => $product['name'],
+				'model'     => $product['model'], 
+				'option'    => $option_data,
+				'quantity'  => $product['quantity'],
+				'price'     => $price,	
+				'total'     => $total,	
+				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id']),
+				'recurring' => $product['recurring'],
+				'profile'   => $product['profile_name'],
 			);
 		}
 		

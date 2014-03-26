@@ -24,8 +24,6 @@ CREATE TABLE `oc_product_profile` (
 
 CREATE TABLE `oc_profile` (
   `profile_id` int(11) NOT NULL AUTO_INCREMENT,
-  `sort_order` int(11) NOT NULL,
-  `status` tinyint(4) NOT NULL,
   `price` decimal(10,4) NOT NULL,
   `frequency` enum('day','week','semi_month','month','year') NOT NULL,
   `duration` int(10) unsigned NOT NULL,
@@ -35,6 +33,8 @@ CREATE TABLE `oc_profile` (
   `trial_frequency` enum('day','week','semi_month','month','year') NOT NULL,
   `trial_duration` int(10) unsigned NOT NULL,
   `trial_cycle` int(10) unsigned NOT NULL,
+  `status` tinyint(4) NOT NULL,
+  `sort_order` int(11) NOT NULL
   PRIMARY KEY (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2083,7 +2083,6 @@ CREATE TABLE `oc_order` (
   `email` varchar(96) NOT NULL,
   `telephone` varchar(32) NOT NULL,
   `fax` varchar(32) NOT NULL,
-  `custom_field` text NOT NULL,
   `payment_firstname` varchar(32) NOT NULL,
   `payment_lastname` varchar(32) NOT NULL,
   `payment_company` varchar(40) NOT NULL,  
@@ -2096,7 +2095,6 @@ CREATE TABLE `oc_order` (
   `payment_zone` varchar(128) NOT NULL,
   `payment_zone_id` int(11) NOT NULL,
   `payment_address_format` text NOT NULL,
-  `payment_custom_field` text NOT NULL,
   `payment_method` varchar(128) NOT NULL,
   `payment_code` varchar(128) NOT NULL,
   `shipping_firstname` varchar(32) NOT NULL,
@@ -2111,7 +2109,6 @@ CREATE TABLE `oc_order` (
   `shipping_zone` varchar(128) NOT NULL,
   `shipping_zone_id` int(11) NOT NULL,
   `shipping_address_format` text NOT NULL,
-  `shipping_custom_field` text NOT NULL,
   `shipping_method` varchar(128) NOT NULL,
   `shipping_code` varchar(128) NOT NULL,  
   `comment` text NOT NULL,
@@ -2136,6 +2133,28 @@ CREATE TABLE `oc_order` (
 
 --
 -- Dumping data for table `oc_order`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_order_custom_field`
+--
+
+DROP TABLE IF EXISTS `oc_order_custom_field`;
+CREATE TABLE `oc_order_custom_field` (
+  `order_custom_field_id` int(11) NOT NULL AUTO_INCREMENT,
+  `order_id` int(11) NOT NULL,
+  `custom_field_id` int(11) NOT NULL,
+  `custom_field_value_id` int(11) NOT NULL,
+  `name` varchar(255) NOT NULL,
+  `value` text NOT NULL,
+  `type` varchar(32) NOT NULL,
+  PRIMARY KEY (`order_custom_field_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_order_custom_field`
 --
 
 -- --------------------------------------------------------

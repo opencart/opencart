@@ -13,7 +13,7 @@
         - <small><?php echo $option['name']; ?> <?php echo $option['value']; ?></small><br />
         <?php } ?>
         <?php if ($product['recurring']) { ?>
-        - <small><?php echo $text_profile; ?> <?php echo $product['profile']; ?></small><br />
+        - <small><?php echo $text_profile; ?> <?php echo $product['recurring']; ?></small><br />
         <?php } ?>
         <?php } ?></td>
       <td class="text-right">x <?php echo $product['quantity']; ?></td>

@@ -136,12 +136,19 @@ if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_AC
 	$browser_languages = explode(',', $request->server['HTTP_ACCEPT_LANGUAGE']);
 	
 	foreach ($browser_languages as $browser_language) {
+		$pieces = explode(';', $browser_language);
+		$browser_locale = $pieces[0];
 		foreach ($languages as $key => $value) {
 			if ($value['status']) {
-				$locale = explode(',', $value['locale']);
-
-				if (in_array($browser_language, $locale)) {
-					$detect = $key;
+				$locales = explode(',', $value['locale']);
+				
+				foreach ($locales as $locale) {
+					$browser_locale = strtolower(str_replace('_', '-', $browser_locale));
+					$locale = strtolower(str_replace('_', '-', $locale));
+					if ($locale === $browser_locale) {
+						$detect = $key;
+						break 2;
+					}
 				}
 			}
 		}

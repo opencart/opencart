@@ -183,7 +183,7 @@ class ControllerAccountEdit extends Controller {
 					'custom_field_value' => $custom_field['custom_field_value'],
 					'name'               => $custom_field['name'],
 					'type'               => $custom_field['type'],
-					'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value,
+					'value'              => isset($custom_field_info[$custom_field['custom_field_id']]) ? $custom_field_info[$custom_field['custom_field_id']] : $value,
 					'required'           => $custom_field['required']
 				);
 			}

@@ -125,7 +125,7 @@ class ModelAccountAddress extends Model {
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => unserialize($address_query->row['custom_field'])
+				'custom_field'   => unserialize($result['custom_field'])
 
 			);
 		}		

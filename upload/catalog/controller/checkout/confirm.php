@@ -103,7 +103,7 @@ class ControllerCheckoutConfirm extends Controller {
 			if ($this->customer->isLogged()) {
 				$this->load->model('account/customer');
 				
-				$customer_info = $this->model_customer_customer->getCustomer($this->customer->getId());
+				$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
 				
 				$order_data['customer_id'] = $this->customer->getId();
 				$order_data['customer_group_id'] = $customer_info['customer_group_id'];

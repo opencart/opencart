@@ -101,14 +101,18 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 			
 			if ($this->customer->isLogged()) {
+				$this->load->model('account/customer');
+				
+				$customer_info = $this->model_customer_customer->getCustomer($this->customer->getId());
+				
 				$order_data['customer_id'] = $this->customer->getId();
-				$order_data['customer_group_id'] = $this->customer->getGroupId();
-				$order_data['firstname'] = $this->customer->getFirstName();
-				$order_data['lastname'] = $this->customer->getLastName();
-				$order_data['email'] = $this->customer->getEmail();
-				$order_data['telephone'] = $this->customer->getTelephone();
-				$order_data['fax'] = $this->customer->getFax();
-				$order_data['custom_field'] = '';
+				$order_data['customer_group_id'] = $customer_info['customer_group_id'];
+				$order_data['firstname'] = $customer_info['firstname'];
+				$order_data['lastname'] = $customer_info['lastname'];
+				$order_data['email'] = $customer_info['email'];
+				$order_data['telephone'] = $customer_info['telephone'];
+				$order_data['fax'] = $customer_info['fax'];
+				$order_data['custom_field'] = unserialize($customer_info['custom_field']);
 			} elseif (isset($this->session->data['guest'])) {
 				$order_data['customer_id'] = 0;
 				$order_data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];

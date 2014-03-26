@@ -445,7 +445,7 @@ class ControllerAccountAddress extends Controller {
 		if (isset($this->request->post['custom_field'])) {
 			$custom_field_info = $this->request->post['custom_field'];		
 		} elseif (isset($address_info)) {
-			$custom_field_info = unserialize($address_info['custom_field']);
+			$custom_field_info = $address_info['custom_field'];
 		} else {
 			$custom_field_info = array();
 		}

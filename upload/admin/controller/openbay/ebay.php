@@ -258,6 +258,12 @@ class ControllerOpenbayEbay extends Controller {
 			$data['ebay_duration'] = $this->config->get('ebay_duration');
 		}
 
+		if (isset($this->request->post['ebay_measurement'])) {
+			$data['ebay_measurement'] = $this->request->post['ebay_measurement'];
+		} else {
+			$data['ebay_measurement'] = $this->config->get('ebay_measurement');
+		}
+
 		if (isset($this->request->post['ebay_default_addressformat'])) {
 			$data['ebay_default_addressformat'] = $this->request->post['ebay_default_addressformat'];
 		} else {
@@ -346,6 +352,7 @@ class ControllerOpenbayEbay extends Controller {
 
 		$data['api_server']       = $this->openbay->ebay->getApiServer();
 		$data['order_statuses']   = $this->model_localisation_order_status->getOrderStatuses();
+		$data['measurement_types'] = $this->openbay->ebay->getSetting('measurement_types');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -1237,6 +1244,7 @@ class ControllerOpenbayEbay extends Controller {
 				$setting['returns'] = $this->openbay->ebay->getSetting('returns');
 				$setting['package_type'] = $this->openbay->ebay->getSetting('package_type');
 				$setting['shipping_types'] = $this->openbay->ebay->getSetting('shipping_types');
+				$setting['measurement_types'] = $this->openbay->ebay->getSetting('measurement_types');
 
 				if(empty($setting['dispatch_times']) || empty($setting['countries']) || empty($setting['returns'])){
 					$this->session->data['warning'] = $this->language->get('text_error_missing_settings');
@@ -1338,6 +1346,8 @@ class ControllerOpenbayEbay extends Controller {
 				$product_info['defaults']['thumb_height']           = '100';
 				$product_info['defaults']['thumb_width']            = '100';
 
+
+				$product_info['defaults']['ebay_measurement'] = $this->config->get('ebay_measurement');
 
 				$product_info['defaults']['listing_duration'] = $this->config->get('ebay_duration');
 				if ($product_info['defaults']['listing_duration'] == '') {

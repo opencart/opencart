@@ -762,8 +762,9 @@
                 <div class="col-sm-3">
                   <label class="control-label"><?php echo $text_unit; ?></label>
                   <select name="package[unit]" class="form-control" id="measure-unit">
-                    <option value="English"><?php echo $text_unit_english; ?></option>
-                    <option value="Metric"><?php echo $text_unit_metric; ?></option>
+                    <?php foreach ($setting['measurement_types'] as $measurement_key => $measurement_value) { ?>
+                      <?php echo '<option value="' . $measurement_key . '"'.($product['defaults']['ebay_measurement'] == $measurement_key ? ' selected="selected"' : '').'>' . $measurement_value . '</option>'; ?>
+                    <?php } ?>
                   </select>
                 </div>
                 <div class="col-sm-6">
@@ -772,14 +773,14 @@
                       <label class="control-label"><?php echo $text_weight_major; ?></label>
                       <div class="input-group col-xs-12">
                         <input type="text" name="package[weight_major]" class="form-control" value="<?php echo $product['weight_major']; ?>">
-                        <span class="input-group-addon" id="weight-major-text">Kg</span>
+                        <span class="input-group-addon" id="weight-major-text"></span>
                       </div>
                     </div>
                     <div class="col-sm-6">
                       <label class="control-label"><?php echo $text_weight_minor; ?></label>
                       <div class="input-group col-xs-12">
                         <input type="text" name="package[weight_minor]" class="form-control" value="<?php echo $product['weight_minor']; ?>">
-                        <span class="input-group-addon" id="weight-minor-text">g</span>
+                        <span class="input-group-addon" id="weight-minor-text"></span>
                       </div>
                     </div>
                   </div>
@@ -800,21 +801,21 @@
                   <label class="control-label"><?php echo $text_depth; ?></label>
                   <div class="input-group col-xs-12">
                     <input type="text" name="package[depth]" class="form-control" value="<?php echo $product['height']; ?>">
-                    <span class="input-group-addon size-unit-text">cm</span>
+                    <span class="input-group-addon size-unit-text"></span>
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <label class="control-label"><?php echo $text_length; ?></label>
                   <div class="input-group col-xs-12">
                     <input type="text" name="package[length]" class="form-control" value="<?php echo $product['length']; ?>">
-                    <span class="input-group-addon size-unit-text">cm</span>
+                    <span class="input-group-addon size-unit-text"></span>
                   </div>
                 </div>
                 <div class="col-sm-3">
                   <label class="control-label"><?php echo $text_width; ?></label>
                   <div class="input-group col-xs-12">
                     <input type="text" name="package[width]" class="form-control" value="<?php echo $product['width']; ?>">
-                    <span class="input-group-addon size-unit-text">cm</span>
+                    <span class="input-group-addon size-unit-text"></span>
                   </div>
                 </div>
                 <div class="col-sm-3">
@@ -2005,6 +2006,7 @@
     updateVarPrice();
     changeNationalType();
     changeInternationalType();
+    updateUnit();
 
       <?php if ($product['profiles_returns_def'] > 0) { ?>
           $('#profile-return-input').val(<?php echo $product['profiles_returns_def']; ?>);
@@ -2027,18 +2029,22 @@
       <?php } ?>
   });
 
-$('#measure-unit').bind('change', function() {
-  var unit_type = $('#measure-unit').val();
+  $('#measure-unit').bind('change', function() {
+    updateUnit();
+  });
 
-  if (unit_type == 'English') {
-    $('.size-unit-text').text('inches');
-    $('#weight-major-text').text('Lbs');
-    $('#weight-minor-text').text('Oz');
-  } else {
-    $('.size-unit-text').text('cm');
-    $('#weight-major-text').text('Kgs');
-    $('#weight-minor-text').text('Grams');
+  function updateUnit() {
+    var unit_type = $('#measure-unit').val();
+
+    if (unit_type == 'English') {
+      $('.size-unit-text').text('inches');
+      $('#weight-major-text').text('Lbs');
+      $('#weight-minor-text').text('Oz');
+    } else {
+      $('.size-unit-text').text('cm');
+      $('#weight-major-text').text('Kgs');
+      $('#weight-minor-text').text('Grams');
+    }
   }
-});
 //--></script>
 <?php echo $footer; ?>

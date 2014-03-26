@@ -430,10 +430,20 @@
                 <div class="col-sm-10">
                   <select name="ebay_duration" id="ebay_duration" class="form-control">
                     <?php foreach ($durations as $key => $duration) { ?>
-                      <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
+                    <?php echo'<option value="'.$key.'"'.($key == $ebay_duration ? ' selected=selected' : '').'>'.$duration.'</option>'; ?>
                     <?php } ?>
                   </select>
                   <span class="help-block"><?php echo $text_openbay_duration_help; ?></span>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-sm-2 control-label" for="ebay_duration"><?php echo $text_openbay_measurement; ?></label>
+                <div class="col-sm-10">
+                  <select name="ebay_measurement" id="ebay_measurement" class="form-control">
+                    <?php foreach ($measurement_types as $key => $type) { ?>
+                    <?php echo'<option value="'.$key.'"'.($key == $ebay_measurement ? ' selected=selected' : '').'>'.$type.'</option>'; ?>
+                    <?php } ?>
+                  </select>
                 </div>
               </div>
             </fieldset>

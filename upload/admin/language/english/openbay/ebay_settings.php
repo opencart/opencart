@@ -107,6 +107,7 @@ $_['text_listing_30day']            = '30 days';
 $_['text_listing_gtc']              = 'GTC- Good till cancelled';
 $_['text_openbay_duration']         = 'Default listing duration';
 $_['text_openbay_duration_help']    = 'GTC is only available is you have an eBay shop.';
+$_['text_openbay_measurement']    	= 'Measurement system';
 $_['text_address_format']           = 'Default address format';
 $_['text_address_format_help']      = 'Only used if the country does not have an address format set-up already.';
 

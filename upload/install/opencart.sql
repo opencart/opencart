@@ -3385,6 +3385,26 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_upload`
+--
+
+DROP TABLE IF EXISTS `oc_upload`;
+CREATE TABLE `oc_upload` (
+  `upload_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) NOT NULL,
+  `filename` varchar(255) NOT NULL,
+  `code` varchar(255) NOT NULL,
+  `date_added` datetime NOT NULL,
+  PRIMARY KEY (`upload_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_upload`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_url_alias`
 --
 

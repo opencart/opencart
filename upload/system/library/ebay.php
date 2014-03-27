@@ -155,7 +155,7 @@ final class Ebay {
 	}
 
 	public function getSetting($key) {
-		$qry = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = '".$key."' LIMIT 1");
+		$qry = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "ebay_setting_option` WHERE `key` = '".$this->db->escape($key)."' LIMIT 1");
 
 		if($qry->num_rows > 0) {
 			return unserialize($qry->row['data']);
@@ -167,7 +167,7 @@ final class Ebay {
 	public function getEbayItemId($product_id) {
 		$this->log('getEbayItemId() - Product ID: '.$product_id);
 
-		$qry = $this->db->query("SELECT `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '".$product_id."' AND `status` = '1' LIMIT 1");
+		$qry = $this->db->query("SELECT `ebay_item_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '".(int)$product_id."' AND `status` = '1' LIMIT 1");
 
 		if(!$qry->num_rows) {
 			$this->log('No link found - getEbayItemId()');
@@ -786,11 +786,11 @@ final class Ebay {
 		$this->log('getProductStockLevel() - ID: '.$productId.', SKU: '.$sku);
 
 		if($sku == '' || $sku == null){
-			$qry = $this->db->query("SELECT `quantity`, `status` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".$productId."' LIMIT 1");
+			$qry = $this->db->query("SELECT `quantity`, `status` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".(int)$productId."' LIMIT 1");
 
 			return array('quantity' => (int)$qry->row['quantity'], 'status' => ($qry->row['status']));
 		}else{
-			$qry = $this->db->query("SELECT `stock`, `active` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '".$productId."' AND `var` = '".$this->db->escape($sku)."' LIMIT 1");
+			$qry = $this->db->query("SELECT `stock`, `active` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '".(int)$productId."' AND `var` = '".$this->db->escape($sku)."' LIMIT 1");
 
 			return array('quantity' => (int)$qry->row['stock'], 'status' => ($qry->row['active']));
 		}
@@ -981,7 +981,7 @@ final class Ebay {
 			$status_sql = ' AND `status` = 1';
 		}
 
-		$qry = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `ebay_item_id` = '".$ebay_item."'".$status_sql." LIMIT 1");
+		$qry = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "ebay_listing` WHERE `ebay_item_id` = '".$this->db->escape($ebay_item)."'".$status_sql." LIMIT 1");
 
 		if(!$qry->num_rows) {
 			return false;
@@ -991,7 +991,7 @@ final class Ebay {
 	}
 
 	public function getProductIdFromKey($key) {
-		$qry = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "ebay_listing_pending` WHERE `key` = '".$key."' LIMIT 1");
+		$qry = $this->db->query("SELECT `product_id` FROM `" . DB_PREFIX . "ebay_listing_pending` WHERE `key` = '".$this->db->escape($key)."' LIMIT 1");
 
 		if(!$qry->num_rows) {
 			return false;
@@ -1009,7 +1009,7 @@ final class Ebay {
 	}
 
 	public function getAllocatedStock($product_id) {
-		$qry = $this->db->query("SELECT SUM(`qty`) AS `total` FROM `" . DB_PREFIX . "ebay_transaction` WHERE `product_id` = '".$product_id."' AND `order_id` = '0' LIMIT 1");
+		$qry = $this->db->query("SELECT SUM(`qty`) AS `total` FROM `" . DB_PREFIX . "ebay_transaction` WHERE `product_id` = '".(int)$product_id."' AND `order_id` = '0' LIMIT 1");
 		return (int)$qry->row['total'];
 	}
 
@@ -1050,12 +1050,12 @@ final class Ebay {
 				}
 
 				if($img['imgcount'] == 0) {
-					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = 'data/".$img['name']."' WHERE `product_id` = '".$img['product_id']."' LIMIT 1");
+					$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `image` = 'data/".$this->db->escape($img['name'])."' WHERE `product_id` = '".(int)$img['product_id']."' LIMIT 1");
 				}else{
-					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_image` SET `product_id` = '".$img['product_id']."', `image` = 'data/".$img['name']."', `sort_order` = '".$img['imgcount']."'");
+					$this->db->query("INSERT INTO `" . DB_PREFIX . "product_image` SET `product_id` = '".(int)$img['product_id']."', `image` = 'data/".$this->db->escape($img['name'])."', `sort_order` = '".$(int)img['imgcount']."'");
 				}
 
-				$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_image_import` WHERE `id` = '".$img['id']."' LIMIT 1");
+				$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_image_import` WHERE `id` = '".(int)$img['id']."' LIMIT 1");
 			}
 		}
 	}
@@ -1090,7 +1090,7 @@ final class Ebay {
 	public function addReserve($data, $item_id, $variant) {
 		if($variant == 1) {
 			foreach($data['opt'] as $variation) {
-				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '".(int)$data['product_id']."' AND `var` = '".$variation['sku']."' LIMIT 1");
+				$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '".(int)$data['product_id']."' AND `var` = '".$this->db->escape($variation['sku'])."' LIMIT 1");
 
 				if($query->row['stock'] != $variation['qty']) {
 					$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_stock_reserve` SET `product_id` = '".(int)$data['product_id']."', `item_id` = '".$this->db->escape($item_id)."', `variant_id` = '".$this->db->escape($variation['sku'])."', `reserve` = '".(int)$variation['qty']."'");
@@ -1381,22 +1381,22 @@ final class Ebay {
 
 				if(!empty($store['settings']['categories'])) {
 					foreach($store['settings']['categories'] as $cat1) {
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_store_category` SET `CategoryID` = '".$cat1['id']."', `CategoryName` = '".$this->db->escape($cat1['name'])."'");
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_store_category` SET `CategoryID` = '".$this->db->escape($cat1['id'])."', `CategoryName` = '".$this->db->escape($cat1['name'])."'");
 						$id1 = $this->db->getLastId();
 
 						if(!empty($cat1['children'])) {
 							foreach($cat1['children'] as $cat2) {
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_store_category` SET `CategoryID` = '".$cat2['id']."', `CategoryName` = '".$this->db->escape($cat2['name'])."', `parent_id` = '".$id1."'");
+								$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_store_category` SET `CategoryID` = '".$this->db->escape($cat2['id'])."', `CategoryName` = '".$this->db->escape($cat2['name'])."', `parent_id` = '".$this->db->escape($id1)."'");
 								$id2 = $this->db->getLastId();
 
 								if(!empty($cat2['children'])) {
 									foreach($cat2['children'] as $cat3) {
-										$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_store_category` SET `CategoryID` = '".$cat3['id']."', `CategoryName` = '".$this->db->escape($cat3['name'])."', `parent_id` = '".$id2."'");
+										$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_store_category` SET `CategoryID` = '".$this->db->escape($cat3['id'])."', `CategoryName` = '".$this->db->escape($cat3['name'])."', `parent_id` = '".$this->db->escape($id2)."'");
 										$id3 = $this->db->getLastId();
 
 										if(!empty($cat3['children'])) {
 											foreach($cat3['children'] as $cat4) {
-												$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_store_category` SET `CategoryID` = '".$cat4['id']."', `CategoryName` = '".$this->db->escape($cat4['name'])."', `parent_id` = '".$id3."'");
+												$this->db->query("INSERT INTO `" . DB_PREFIX . "ebay_store_category` SET `CategoryID` = '".$this->db->escape($cat4['id'])."', `CategoryName` = '".$this->db->escape($cat4['name'])."', `parent_id` = '".$this->db->escape($id3)."'");
 												$id4 = $this->db->getLastId();
 											}
 										}

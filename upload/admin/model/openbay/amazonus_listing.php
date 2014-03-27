@@ -37,9 +37,7 @@ class ModelOpenbayAmazonusListing extends Model {
 	}
 
 	public function getProductByAsin($asin) {
-		$data = array(
-			'asin' => $asin,
-		);
+		$data = array('asin' => $asin);
 
 		$results = json_decode($this->openbay->amazonus->callWithResponse('productv3/getProduct', $data), 1);
 
@@ -95,13 +93,7 @@ class ModelOpenbayAmazonusListing extends Model {
 		$response = (array)$response;
 
 		if ($response['status'] === 1) {
-			$this->db->query("
-			REPLACE INTO `" . DB_PREFIX . "amazonus_product`
-			SET `product_id` = " . (int)$data['product_id'] . ",
-				`status` = 'uploaded',
-				`version` = 3,
-				`var` = ''
-		");
+			$this->db->query(" REPLACE INTO `" . DB_PREFIX . "amazonus_product` SET `product_id` = " . (int)$data['product_id'] . ", `status` = 'uploaded', `version` = 3, `var` = '" . isset($data['var']) ? $this->db->escape($data['var']) : '' . "'");
 		}
 
 		return $response;

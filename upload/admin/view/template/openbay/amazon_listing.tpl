@@ -90,13 +90,18 @@
 
                     <div id="required-info">
                         <table class="form">
+                          <?php if (!empty($options)) { ?>
                             <tr>
-                                <td><label for="quantity"><?php echo $entry_quantity; ?></label></td>
-                                <td>
-                                    <?php echo $quantity ?>
-                                    <input type="hidden" name="quantity" id="quantity" value="<?php echo $quantity ?>" />
-                                </td>
+                              <td><label for="openstock_selector"><?php echo $entry_option; ?></label></td>
+                              <td>
+                                <select id="openstock_selector" name="option_variant">
+                                  <?php foreach($options as $option) { ?>
+                                  <option value="<?php echo  $option['var']?>" <?php if (in_array($option['var'], $options_active)) { ' disabled'; } ?>><?php echo $option['combi']; ?></option>
+                                  <?php } ?>
+                                </select>
+                              </td>
                             </tr>
+                          <?php }?>
                             <tr>
                                 <td><span class="required">*</span> <label for="sku"><?php echo $entry_sku; ?></label><br /><span class="help"><?php echo $help_sku ?></span></td>
                                 <td><input type="text" name="sku" id="sku" value="<?php echo $sku ?>" class="width200" /></td>
@@ -317,11 +322,6 @@ function listProduct(asin) {
 
 function validateQuickListing(){
     var error = false;
-
-    if($('#quantity').val() < 1){
-        alert('<?php echo $error_stock; ?>');
-        error = true;
-    }
 
     if($('#price').val() == '' || $('#price').val() == 0){
         alert('<?php echo $error_price; ?>');

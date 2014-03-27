@@ -255,10 +255,12 @@ class ModelOpenbayEbay extends Model{
 			`p`.`sku`,
 			`p`.`model`,
 			`p`.`quantity`,
-			`pd`.name
+			`pd`.`name`,
+			`esr`.`reserve`
 		FROM `" . DB_PREFIX . "ebay_listing` `el`
 		LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
 		LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)
+		LEFT JOIN `" . DB_PREFIX . "ebay_stock_reserve` `esr` ON (`esr`.`product_id` = `p`.`product_id`)
 		WHERE `el`.`status` = '1'
 		AND `pd`.`language_id` = '" . (int)$this->config->get('config_language_id') . "'";
 

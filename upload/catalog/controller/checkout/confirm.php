@@ -112,7 +112,25 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['email'] = $customer_info['email'];
 				$order_data['telephone'] = $customer_info['telephone'];
 				$order_data['fax'] = $customer_info['fax'];
-				$order_data['custom_field'] = unserialize($customer_info['custom_field']);
+				
+				$this->load->model('account/custom_field');
+				
+				$custom_fields = unserialize($customer_info['custom_field']);
+				
+				foreach ($custom_fields as $key => $value) {
+					$custom_field_info = $this->model_account_custom_field->getCustomField($key);
+					
+					if ($custom_field_info) {
+						$order_data['custom_field'][] = array(
+							'custom_field_id' => $key,
+							'name'            => $custom_field_info['name'],
+							'value'           => $value,
+							'type'            => $custom_field_info['type'],
+							'location'        => 'account'
+						);
+					}
+				}				
+				
 			} elseif (isset($this->session->data['guest'])) {
 				$order_data['customer_id'] = 0;
 				$order_data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
@@ -121,7 +139,23 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['email'] = $this->session->data['guest']['email'];
 				$order_data['telephone'] = $this->session->data['guest']['telephone'];
 				$order_data['fax'] = $this->session->data['guest']['fax'];
-				$order_data['custom_field'] = $this->session->data['guest']['custom_field'];
+				$order_data['custom_field'] = array();
+				
+				$this->load->model('account/custom_field');
+				
+				foreach ($this->session->data['guest']['custom_field'] as $key => $value) {
+					$custom_field_info = $this->model_account_custom_field->getCustomField($key);
+					
+					if ($custom_field_info) {
+						$order_data['custom_field'][] = array(
+							'custom_field_id' => $key,
+							'name'            => $custom_field_info['name'],
+							'value'           => $value,
+							'type'            => $custom_field_info['type'],
+							'location'        => 'account'
+						);
+					}
+				}				
 			}
 			
 			$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];

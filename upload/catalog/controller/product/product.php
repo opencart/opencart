@@ -781,8 +781,11 @@ class ControllerProductProduct extends Controller {
 			
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 			
+			$code = sha1(uniqid(mt_rand(), true));
+		
+
 			// Hide the uploaded file name so people can not link to it directly.
-			$json['file'] = $file;
+			$json['file'] = addUpload();$file;
 						
 			$json['success'] = $this->language->get('text_upload');
 		}	

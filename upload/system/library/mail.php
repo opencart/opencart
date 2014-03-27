@@ -165,7 +165,7 @@ class Mail {
 					socket_set_timeout($handle, $this->timeout, 0);
 				}
 
-				while ($line = fgets($handle, 515)) {
+				while ($line = fgets($handle, 515) and $line === false) {
 					if (substr($line, 3, 1) == ' ') {
 						break;
 					}

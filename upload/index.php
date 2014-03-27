@@ -142,6 +142,8 @@ if (isset($request->server['HTTP_ACCEPT_LANGUAGE']) && $request->server['HTTP_AC
 
 				if (in_array($browser_language, $locale)) {
 					$detect = $key;
+					
+					break 2;
 				}
 			}
 		}

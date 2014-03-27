@@ -193,7 +193,7 @@ class Mail {
 					
 					$reply = '';
 
-					while ($line = fgets($handle, 515) and $line === false) {
+					while ($line = fgets($handle, 515)) {
 						$reply .= $line;
 
 						if (substr($line, 3, 1) == ' ') {

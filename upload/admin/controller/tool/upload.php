@@ -170,8 +170,15 @@ class ControllerToolUpload extends Controller {
 		$data['column_filename'] = $this->language->get('column_filename');
 		$data['column_date_added'] = $this->language->get('column_date_added');
 		$data['column_action'] = $this->language->get('column_action');		
-
+		
+		$data['entry_name'] = $this->language->get('entry_name');
+		$data['entry_filename'] = $this->language->get('entry_filename');
+		$data['entry_date_added'] = $this->language->get('entry_date_added');
+		
 		$data['button_delete'] = $this->language->get('button_delete');
+		$data['button_filter'] = $this->language->get('button_filter');
+
+		$data['token'] = $this->session->data['token'];
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

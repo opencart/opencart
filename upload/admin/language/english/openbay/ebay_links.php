@@ -45,10 +45,11 @@ $_['text_column_variants']          = 'Variants';
 $_['text_column_itemId']            = 'eBay item ID';
 $_['text_column_product']           = 'Product';
 $_['text_column_product_auto']      = 'Product name (auto complete)';
-$_['text_column_stock_available']   = 'Shop stock level';
 $_['text_column_listing_title']     = 'eBay listing title';
 $_['text_column_allocated']         = 'Allocated stock';
-$_['text_column_ebay_stock']        = 'eBay stock level';
+$_['text_column_ebay_stock']        = 'eBay stock';
+$_['text_column_stock_available']   = 'Shop stock';
+$_['text_column_stock_reserve']   	= 'Reserve level';
 
 // Filter
 $_['text_filter']             		= 'Filter results';

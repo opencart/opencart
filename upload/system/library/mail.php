@@ -95,8 +95,8 @@ class Mail {
 		}
 
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $this->newline;
-		$header .= 'From: ' . '=?UTF-8?B?' . base64_encode($this->sender) . '?=' . '<' . $this->from . '>' . $this->newline;
-		$header .= 'Reply-To: ' . '=?UTF-8?B?' . base64_encode($this->sender) . '?=' . '<' . $this->from . '>' . $this->newline;
+		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
 		$header .= 'Return-Path: ' . $this->from . $this->newline;
 		$header .= 'X-Mailer: PHP/' . phpversion() . $this->newline;
 		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . $this->newline . $this->newline;
@@ -206,7 +206,7 @@ class Mail {
 						exit();
 					}
           
-          stream_socket_enable_crypto($handle, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+          			stream_socket_enable_crypto($handle, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 				}
 
 				if (!empty($this->username)  && !empty($this->password)) {

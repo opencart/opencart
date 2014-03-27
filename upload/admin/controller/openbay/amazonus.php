@@ -68,7 +68,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 			$data['table_data'] = $table_data;
 		} else {
-			$data['error'] = 'Could not connect to OpenBay PRO API.';
+			$data['error'] = 'Could not connect to OpenBay PRO API . ';
 		}
 
 		$data['token'] = $this->session->data['token'];
@@ -196,8 +196,8 @@ class ControllerOpenbayAmazonus extends Controller {
 		}
 
 		$data['user_plan'] = $plan;
-		$data['link_change_plan'] = $this->openbay->amazonus->getServer().'account/changePlan/?token='.$this->config->get('openbay_amazonus_token');
-		$data['link_change_seller'] = $this->openbay->amazonus->getServer().'account/changeSellerId/?token='.$this->config->get('openbay_amazonus_token');
+		$data['link_change_plan'] = $this->openbay->amazonus->getServer() . 'account/changePlan/?token=' . $this->config->get('openbay_amazonus_token');
+		$data['link_change_seller'] = $this->openbay->amazonus->getServer() . 'account/changeSellerId/?token=' . $this->config->get('openbay_amazonus_token');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -547,7 +547,7 @@ class ControllerOpenbayAmazonus extends Controller {
 				$logger->write('Updating quantities with data: ' . print_r($quantityData, true));
 				$this->openbay->amazonus->updateQuantities($quantityData);
 			} else {
-				$logger->write('No quantity data will be posted.');
+				$logger->write('No quantity data will be posted . ');
 			}
 		} else {
 			$this->openbay->amazonus->putStockUpdateBulk(array($product_id));

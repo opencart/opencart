@@ -57,7 +57,7 @@ class ModelOpenbayAmazon extends Model {
 		foreach($dataArray['fields'] as $key => $field) {
 			if($field['accepted']['type'] == 'image') {
 				if(!empty($field['value'])) {
-					$dataArray['fields'][$key]['value'] = HTTPS_CATALOG . 'image/'.$field['value'];
+					$dataArray['fields'][$key]['value'] = HTTPS_CATALOG . 'image/' . $field['value'];
 				}
 			}
 		}
@@ -642,7 +642,7 @@ class ModelOpenbayAmazon extends Model {
 				'quantity' => $row['quantity'],
 				'amazon_sku' => $row['amazon_sku'],
 				'amazon_quantity' => $row['amazon_quantity'],
-				'amazon_price' => number_format($row['amazon_price'], 2, '.', ''),
+				'amazon_price' => number_format($row['amazon_price'], 2, ' . ', ''),
 				'asin' => $row['asin'],
 				'combination' => $row['combination'],
 			);

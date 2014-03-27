@@ -146,7 +146,7 @@ class ControllerAmazonusOrder extends Controller {
 			$customer_id = $customer_info['customer_id'];
 		} else {
 			/* Add a new customer */
-			$customerData = array(
+			$customer_data = array(
 				'firstname' => (string)$orderXml->Shipping->Name,
 				'lastname' => '',
 				'email' => (string)$orderXml->Payment->Email,
@@ -160,15 +160,15 @@ class ControllerAmazonusOrder extends Controller {
 
 			$this->db->query("
 				INSERT INTO " . DB_PREFIX . "customer
-				SET firstname = '" . $this->db->escape($customerData['firstname']) . "',
-					lastname = '" . $this->db->escape($customerData['lastname']) . "',
-					email = '" . $this->db->escape($customerData['email']) . "',
-					telephone = '" . $this->db->escape($customerData['telephone']) . "',
-					fax = '" . $this->db->escape($customerData['fax']) . "',
-					newsletter = '" . (int)$customerData['newsletter'] . "',
-					customer_group_id = '" . (int)$customerData['customer_group_id'] . "',
+				SET firstname = '" . $this->db->escape($customer_data['firstname']) . "',
+					lastname = '" . $this->db->escape($customer_data['lastname']) . "',
+					email = '" . $this->db->escape($customer_data['email']) . "',
+					telephone = '" . $this->db->escape($customer_data['telephone']) . "',
+					fax = '" . $this->db->escape($customer_data['fax']) . "',
+					newsletter = '" . (int)$customer_data['newsletter'] . "',
+					customer_group_id = '" . (int)$customer_data['customer_group_id'] . "',
 					password = '',
-					status = '" . (int)$customerData['status'] . "',
+					status = '" . (int)$customer_data['status'] . "',
 					date_added = NOW()");
 
 			$customer_id = $this->db->getLastId();

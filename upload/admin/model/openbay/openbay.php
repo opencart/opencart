@@ -33,7 +33,7 @@ class ModelOpenbayOpenbay extends Model {
 					@ftp_chdir($connection, $data['rootpath']);
 				}
 
-				$directory_list = ftp_nlist($connection, ".");
+				$directory_list = ftp_nlist($connection, " . ");
 
 				$folders = array();
 				foreach ($directory_list as $key => $list) {
@@ -446,7 +446,7 @@ class ModelOpenbayOpenbay extends Model {
 	}
 
 	public function writeUpdateLog($data) {
-		$file = DIR_LOGS . 'openbay_update_' . date('Y_m_d_G_i_s') . '.log';
+		$file = DIR_LOGS . 'openbay_update_' . date('Y_m_d_G_i_s') . ' . log';
 
 		$handle = fopen($file, 'w+');
 		fwrite($handle, "** Update started: " . date('Y-m-d G:i:s') . " **" . "\n");

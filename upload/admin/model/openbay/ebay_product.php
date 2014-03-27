@@ -62,11 +62,11 @@ class ModelOpenbayEbayProduct extends Model {
 
 		//loop over products and if count is more than 1, update all older entries to 0
 		foreach($sql->rows as $row){
-			$sql2 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '".(int)$row['product_id']."' AND `status` = 1 ORDER BY `ebay_listing_id` DESC");
+			$sql2 = $this->db->query("SELECT * FROM `" . DB_PREFIX . "ebay_listing` WHERE `product_id` = '" . (int)$row['product_id'] . "' AND `status` = 1 ORDER BY `ebay_listing_id` DESC");
 
 			if($sql2->num_rows > 1){
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = 0  WHERE `product_id` = '".(int)$row['product_id']."'");
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = 1  WHERE `ebay_listing_id` = '".(int)$sql2->row['ebay_listing_id']."'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = 0  WHERE `product_id` = '" . (int)$row['product_id'] . "'");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_listing` SET `status` = 1  WHERE `ebay_listing_id` = '" . (int)$sql2->row['ebay_listing_id'] . "'");
 			}
 		}
 	}

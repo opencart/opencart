@@ -1,68 +1,44 @@
 <?php
 class ModelOpenbayAmazonusProduct extends Model {
-	public function setStatus($insertionId, $statusString) {
-		$this->db->query("
-			UPDATE `" . DB_PREFIX . "amazonus_product`
-			SET `status` = '" . $statusString . "'
-			WHERE `insertion_id` = '" . $this->db->escape($insertionId) . "'
-			");
+	public function setStatus($insertion_id, $status_string) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazonus_product` SET `status` = '" . $status_string . "' WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
 	}
 
-	public function getProductRows($insertionId) {
-		return $this->db->query("
-			SELECT * FROM `" . DB_PREFIX . "amazonus_product`
-			WHERE `insertion_id` = '" . $this->db->escape($insertionId) . "'
-			")->rows;
+	public function getProductRows($insertion_id) {
+		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_product` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->rows;
 	}
 
-	public function getProduct($insertionId) {
-		return $this->db->query("
-			SELECT * FROM `" . DB_PREFIX . "amazonus_product`
-			WHERE `insertion_id` = '" . $this->db->escape($insertionId) . "'
-			")->row;
+	public function getProduct($insertion_id) {
+		return $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazonus_product` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->row;
 	}
 
 	public function linkItems(array $data) {
-		foreach($data as $amazonusSku => $productId) {
-			$varRow = $this->db->query("SELECT `var` FROM `" . DB_PREFIX . "amazonus_product`
-				WHERE `sku` = '" . $amazonusSku . "' AND `product_id` = '" . (int)$productId . "'")->row;
+		foreach($data as $amazonusSku => $product_id) {
+			$varRow = $this->db->query("SELECT `var` FROM `" . DB_PREFIX . "amazonus_product` WHERE `sku` = '" . $amazonusSku . "' AND `product_id` = '" . (int)$product_id . "'")->row;
 			$var = isset($varRow['var']) ? $varRow['var'] : '';
-			$this->linkProduct($amazonusSku, $productId, $var);
+			$this->linkProduct($amazonusSku, $product_id, $var);
 		}
 	}
 
 	public function insertError($data) {
-		$this->db->query("
-			INSERT INTO `" . DB_PREFIX . "amazonus_product_error`
-			SET `sku` = '" . $this->db->escape($data['sku']) . "',
-				`error_code` = '" . (int)$data['error_code'] . "',
-				`message` = '" . $this->db->escape($data['message']) . "',
-				`insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'
-				");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_product_error` SET `sku` = '" . $this->db->escape($data['sku']) . "', `error_code` = '" . (int)$data['error_code'] . "', `message` = '" . $this->db->escape($data['message']) . "', `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
 
-		$this->db->query("
-			UPDATE `" . DB_PREFIX . "amazonus_product`
-			SET `status` = 'error'
-			WHERE `sku` = '" . $this->db->escape($data['sku']) . "' AND `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'
-			");
+		$this->db->query("UPDATE `" . DB_PREFIX . "amazonus_product` SET `status` = 'error' WHERE `sku` = '" . $this->db->escape($data['sku']) . "' AND `insertion_id` = '" . $this->db->escape($data['insertion_id']) . "'");
 	 }
 
-	public function deleteErrors($insertionId) {
-		 $this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_error` WHERE `insertion_id` = '" . $this->db->escape($insertionId) . "'");
+	public function deleteErrors($insertion_id) {
+		 $this->db->query("DELETE FROM `" . DB_PREFIX . "amazonus_product_error` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'");
 	 }
 
-	public function setSubmitError($insertionId, $message) {
-		$skuRows = $this->db->query("SELECT `sku`
-			FROM `" . DB_PREFIX . "amazonus_product`
-			WHERE `insertion_id` = '" . $this->db->escape($insertionId) . "'
-			")->rows;
+	public function setSubmitError($insertion_id, $message) {
+		$skuRows = $this->db->query("SELECT `sku` FROM `" . DB_PREFIX . "amazonus_product` WHERE `insertion_id` = '" . $this->db->escape($insertion_id) . "'")->rows;
 
 		foreach($skuRows as $skuRow) {
 			$data = array(
 				'sku' => $skuRow['sku'],
 				'error_code' => '0',
 				'message' => $message,
-				'insertion_id' => $insertionId
+				'insertion_id' => $insertion_id
 			);
 			$this->insertError($data);
 		}
@@ -71,9 +47,7 @@ class ModelOpenbayAmazonusProduct extends Model {
 	public function linkProduct($amazonus_sku, $product_id, $var = '') {
 		$count = $this->db->query("SELECT COUNT(*) as 'count' FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "' AND `var` = '" . $this->db->escape($var) . "' LIMIT 1")->row;
 		if($count['count'] == 0) {
-			$this->db->query(
-				"INSERT INTO `" . DB_PREFIX . "amazonus_product_link`
-				SET `product_id` = '" . (int)$product_id . "', `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "', `var` = '" . $this->db->escape($var) . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "amazonus_product_link` SET `product_id` = '" . (int)$product_id . "', `amazonus_sku` = '" . $this->db->escape($amazonus_sku) . "', `var` = '" . $this->db->escape($var) . "'");
 		}
 	}
 
@@ -115,14 +89,7 @@ class ModelOpenbayAmazonusProduct extends Model {
 
 			$data = json_encode($result['results']);
 
-			$this->db->query("
-				UPDATE " . DB_PREFIX . "amazonus_product_search
-				SET matches = " . (int)$resultsFound . ",
-					`data` = '" . $this->db->escape($data) . "',
-					`status` = 'finished'
-				WHERE product_id = " . (int)$result['product_id'] . "
-				LIMIT 1
-			");
+			$this->db->query("UPDATE " . DB_PREFIX . "amazonus_product_search SET matches = " . (int)$resultsFound . ", `data` = '" . $this->db->escape($data) . "', `status` = 'finished' WHERE product_id = " . (int)$result['product_id'] . " LIMIT 1");
 		}
 	}
 

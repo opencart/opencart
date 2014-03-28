@@ -1,5 +1,6 @@
 Type: Enhancement, New Feature, Bug
 
+28-03-14 - Bug - Fixed OpenStock options loading for variant items when linking an Amazon item with the quick link feature.
 27-03-14 - Bug - Added reserve stock level column on eBay linked item page. Stock status now shows correctly for linked items using a reserve level.
 19-03-14 - Enhancement - Added check for supersize version of an image during the product import.
 14-03-14 - Enhancement - Added error message if users try to bulk list items without searching the Amazon catalog first.

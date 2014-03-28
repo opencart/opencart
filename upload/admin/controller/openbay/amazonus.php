@@ -549,8 +549,6 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function getOpenstockOptionsAjax() {
-
-
 		$options = array();
 		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
 			$this->load->model('openstock/openstock');

@@ -502,16 +502,16 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function getOpenstockOptionsAjax() {
-		$options = array();
+		$json = array();
 		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
 			$this->load->model('openstock/openstock');
 			$this->load->model('tool/image');
-			$options = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
+			$json = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
 		}
-		if(empty($options)) {
-			$options = false;
+		if(empty($json)) {
+			$json = false;
 		}
-		$this->response->setOutput(json_encode($options));
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function addItemLinkAjax() {

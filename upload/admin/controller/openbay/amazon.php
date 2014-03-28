@@ -505,13 +505,13 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function getOpenstockOptionsAjax() {
-		$options = array();
+		$json = array();
 		if($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
 			$this->load->model('openstock/openstock');
 			$this->load->model('tool/image');
 			$json = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
 		}
-		if(empty($options)) {
+		if(empty($json)) {
 			$json = false;
 		}
 		$this->response->setOutput(json_encode($json));

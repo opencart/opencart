@@ -386,7 +386,7 @@ class Amazonus {
 	public function getLinkedSkus($productId, $var='') {
 		return $this->db->query("SELECT `amazonus_sku`
 			FROM `" . DB_PREFIX . "amazonus_product_link`
-			WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $var . "'
+			WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $this->db->escape($var) . "'
 			")->rows;
 	}
 

@@ -108,47 +108,47 @@ class ModelOpenbayEbayProduct extends Model {
 					}else{
 						$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '0', `status` = '1', `top` = '1'");
 						$id1 = $this->db->getLastId();
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '".$this->db->escape($key2)."', `language_id` = '".(int)$this->config->get('config_language_id')."', `category_id` = '".$id1."'");
-						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '".$id1."', `store_id` = '0'");
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '".$this->db->escape($key2)."', `language_id` = '".(int)$this->config->get('config_language_id')."', `category_id` = '".$this->db->escape($id1)."'");
+						$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '".$this->db->escape($id1)."', `store_id` = '0'");
 					}
 
 					if(!empty($cat2)) {
 						foreach($cat2 as $key3=>$cat3) {
-							$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '".$id1."' AND `" . DB_PREFIX . "category_description`.`name` = '".$this->db->escape($key3)."' LIMIT 1");
+							$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '".$this->db->escape($id1)."' AND `" . DB_PREFIX . "category_description`.`name` = '".$this->db->escape($key3)."' LIMIT 1");
 
 							if($qry->num_rows != 0) {
 								$id2 = $qry->row['category_id'];
 							}else{
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '".$id1."', `status` = '1', `top` = '1'");
+								$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '".$this->db->escape($id1)."', `status` = '1', `top` = '1'");
 								$id2 = $this->db->getLastId();
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '".$this->db->escape($key3)."', `language_id` = '".(int)$this->config->get('config_language_id')."', `category_id` = '".$id2."'");
-								$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '".$id2."', `store_id` = '0'");
+								$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '".$this->db->escape($key3)."', `language_id` = '".(int)$this->config->get('config_language_id')."', `category_id` = '".$this->db->escape($id2)."'");
+								$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '".$this->db->escape($id2)."', `store_id` = '0'");
 							}
 
 							if(!empty($cat3)) {
 								foreach($cat3 as $key4=>$cat4) {
-									$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '".$id2."' AND `" . DB_PREFIX . "category_description`.`name` = '".$this->db->escape($key4)."' LIMIT 1");
+									$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '".$this->db->escape($id3)."' AND `" . DB_PREFIX . "category_description`.`name` = '".$this->db->escape($key4)."' LIMIT 1");
 
 									if($qry->num_rows != 0) {
 										$id3 = $qry->row['category_id'];
 									}else{
-										$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '".$id2."', `status` = '1', `top` = '1'");
+										$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '".$this->db->escape($id2)."', `status` = '1', `top` = '1'");
 										$id3 = $this->db->getLastId();
-										$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '".$this->db->escape($key4)."', `language_id` = '".(int)$this->config->get('config_language_id')."', `category_id` = '".$id3."'");
-										$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '".$id3."', `store_id` = '0'");
+										$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '".$this->db->escape($key4)."', `language_id` = '".(int)$this->config->get('config_language_id')."', `category_id` = '".$this->db->escape($id3)."'");
+										$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '".$this->db->escape($id3)."', `store_id` = '0'");
 									}
 
 									if(!empty($cat4)) {
 										foreach($cat4 as $key5=>$cat5) {
-											$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '".$id3."' AND `" . DB_PREFIX . "category_description`.`name` = '".$this->db->escape($key5)."' LIMIT 1");
+											$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "category`, `" . DB_PREFIX . "category_description` WHERE `" . DB_PREFIX . "category`.`parent_id` = '".$this->db->escape($id4)."' AND `" . DB_PREFIX . "category_description`.`name` = '".$this->db->escape($key5)."' LIMIT 1");
 
 											if($qry->num_rows != 0) {
 												$id4 = $qry->row['category_id'];
 											}else{
-												$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '".$id3."', `status` = '1', `top` = '1'");
+												$this->db->query("INSERT INTO `" . DB_PREFIX . "category` SET `parent_id` = '".$this->db->escape($id3)."', `status` = '1', `top` = '1'");
 												$id4 = $this->db->getLastId();
-												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '".$this->db->escape($key5)."', `language_id` = '".(int)$this->config->get('config_language_id')."', `category_id` = '".$id4."'");
-												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '".$id4."', `store_id` = '0'");
+												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_description` SET `name` = '".$this->db->escape($key5)."', `language_id` = '".(int)$this->config->get('config_language_id')."', `category_id` = '".$this->db->escape($id4)."'");
+												$this->db->query("INSERT INTO `" . DB_PREFIX . "category_to_store` SET `category_id` = '".$this->db->escape($id4)."', `store_id` = '0'");
 											}
 
 											$catLink[$key1.':'.$key2.':'.$key3.':'.$key4.':'.$key5] = $id4;
@@ -237,10 +237,10 @@ class ModelOpenbayEbayProduct extends Model {
 
 				$this->db->query("
 					INSERT INTO `" . DB_PREFIX . "product` SET
-						`quantity`              = '".$item['Quantity']."',
-						`manufacturer_id`       = '".$manufacturer_id."',
+						`quantity`              = '".$this->db->escape($item['Quantity'])."',
+						`manufacturer_id`       = '".$this->db->escape($manufacturer_id)."',
 						`stock_status_id`       = '6',
-						`price`                 = '".$net_price."',
+						`price`                 = '".$this->db->escape($net_price)."',
 						`tax_class_id`          = '9',
 						`location`              = '".$this->db->escape(isset($item['note']) ? $item['note'] : '')."',
 						`mpn`              		= '".$this->db->escape(isset($item['advanced']['brand']['mpn']) ? $item['advanced']['brand']['mpn'] : '')."',
@@ -250,11 +250,11 @@ class ModelOpenbayEbayProduct extends Model {
 						`ean`              		= '".$this->db->escape(isset($item['advanced']['ean']) ? $item['advanced']['ean'] : '')."',
 						`upc`              		= '".$this->db->escape(isset($item['advanced']['upc']) ? $item['advanced']['upc'] : '')."',
 						`weight`       			= '".(double)$weight."',
-						`weight_class_id`       = '".$weight_class_id."',
+						`weight_class_id`       = '".$this->db->escape($weight_class_id)."',
 						`length`       			= '".(double)$length."',
 						`width`       			= '".(double)$width."',
 						`height`       			= '".(double)$height."',
-						`length_class_id`       = '".$length_class_id."',
+						`length_class_id`       = '".$this->db->escape($length_class_id)."',
 						`subtract`              = '1',
 						`minimum`               = '1',
 						`status`                = '1',
@@ -436,7 +436,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 		$qry_sort = $this->db->query("SELECT * FROM `" . DB_PREFIX . "option` WHERE `option_id` = '".$option_id."' LIMIT 1");
 
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `language_id` = '".(int)$this->config->get('config_language_id')."', `name` = '".$this->db->escape($name)."', `option_id` = '".$option_id."'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_description` SET `language_id` = '".(int)$this->config->get('config_language_id')."', `name` = '".$this->db->escape($name)."', `option_id` = '".$this->db->escape($option_id)."'");
 
 		$this->openbay->ebay->log('No option found, creating: "'.$name.' / '.$option_id.'" with sort order of "'.$qry_sort->row['sort_order'].'"');
 		return array('id' => (int)$option_id, 'sort' => (int)$qry_sort->row['sort_order']);
@@ -464,9 +464,9 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	private function createOptionValue($name, $option_id) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value` SET `option_id` = '".$option_id."', `sort_order` = IFNULL((select `sort` FROM (SELECT (MAX(`sort_order`)+1) AS `sort` FROM `" . DB_PREFIX . "option_value`) AS `i`),0)");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value` SET `option_id` = '".$this->db->escape($option_id)."', `sort_order` = IFNULL((select `sort` FROM (SELECT (MAX(`sort_order`)+1) AS `sort` FROM `" . DB_PREFIX . "option_value`) AS `i`),0)");
 		$id = $this->db->getLastId();
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `language_id` = '".(int)$this->config->get('config_language_id')."', `name` = '".$this->db->escape($name)."', `option_id` = '".$option_id."', `option_value_id` = '".$id."'");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "option_value_description` SET `language_id` = '".(int)$this->config->get('config_language_id')."', `name` = '".$this->db->escape($name)."', `option_id` = '".$this->db->escape($option_id)."', `option_value_id` = '".$id."'");
 		return array('id' => (int)$id);
 	}
 
@@ -512,13 +512,13 @@ class ModelOpenbayEbayProduct extends Model {
 		$this->db->query("
 			INSERT INTO `" . DB_PREFIX . "product_option_relation`
 			SET
-				`product_id`    = '".$data['product_id']."',
-				`var`           = '".$data['var']."',
-				`stock`         = '".$data['stock']."',
-				`sku`           = '".$data['sku']."',
+				`product_id`    = '".$this->db->escape($data['product_id'])."',
+				`var`           = '".$this->db->escape($data['var'])."',
+				`stock`         = '".$this->db->escape($data['stock'])."',
+				`sku`           = '".$this->db->escape($data['sku'])."',
 				`active`        = '1',
 				`subtract`      = '1',
-				`price`         = '".$data['price']."'
+				`price`         = '".$this->db->escape($data['price'])."'
 		");
 
 		return array('id' => $this->db->getLastId());
@@ -607,7 +607,7 @@ class ModelOpenbayEbayProduct extends Model {
 			WHERE `ad`.`name` = '".$this->db->escape(htmlspecialchars($name, ENT_COMPAT))."'
 			AND `ad`.`language_id` = '".(int)$this->config->get('config_language_id')."'
 			AND `a`.`attribute_id` = `ad`.`attribute_id`
-			AND `a`.`attribute_group_id` = '".$groupId."'
+			AND `a`.`attribute_group_id` = '".$this->db->escape($groupId)."'
 			LIMIT 1
 		");
 

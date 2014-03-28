@@ -452,7 +452,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 			   `payment_address_format`   = '" . $address_format . "',
 			   `total`                    = '" . (double)$order->order->total . "',
 			   `date_modified`            = NOW()
-		   WHERE `order_id` = '".$order_id."'
+		   WHERE `order_id` = '".$this->db->escape($order_id)."'
 		   ");
 
 		$totalTax = 0;
@@ -558,7 +558,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 		/** get the iso2 code from the data and pull out the correct country for the details. */
 		if(!empty($order->address->iso2)){
-			$country_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '".$order->address->iso2."'");
+			$country_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '".$this->db->escape($order->address->iso2)."'");
 		}
 
 		if(!empty($country_qry->num_rows)){
@@ -576,7 +576,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET
 								`firstname`             = '" . $this->db->escape($name_parts['firstname']) . "',
 								`lastname`              = '" . $this->db->escape($name_parts['surname']) . "',
-								`telephone`             = '" . str_replace(array(' ', '+', '-'), '', $order->address->phone)."',
+								`telephone`             = '" . str_replace(array(' ', '+', '-'), '', $this->db->escape($order->address->phone))."',
 								`status`                = '1'
 							 WHERE `customer_id`        = '" . (int)$user['id'] . "'");
 		}else{
@@ -585,7 +585,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 								`firstname`             = '" . $this->db->escape($name_parts['firstname']) . "',
 								`lastname`              = '" . $this->db->escape($name_parts['surname']) . "',
 								`email`                 = '" . $this->db->escape($user['email']) . "',
-								`telephone`             = '" . str_replace(array(' ', '+', '-'), '', $order->address->phone)."',
+								`telephone`             = '" . str_replace(array(' ', '+', '-'), '', $this->db->escape($order->address->phone))."',
 								`password`              = '" . $this->db->escape(md5($order->user->userid)) . "',
 								`newsletter`            = '0',
 								`customer_group_id`     = '" . (int)$this->config->get('openbay_def_customer_grp') . "',

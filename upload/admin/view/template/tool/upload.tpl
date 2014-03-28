@@ -30,10 +30,6 @@
               <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
               <input type="text" name="filter_name" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
             </div>
-            <div class="form-group">
-              <label class="control-label" for="input-filename"><?php echo $entry_filename; ?></label>
-              <input type="text" name="filter_filename" value="<?php echo $filter_filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
-            </div>
           </div>
           <div class="col-sm-6">
             <div class="form-group">
@@ -84,7 +80,7 @@
                 <td class="text-left"><?php echo $upload['name']; ?></td>
                 <td class="text-left"><?php echo $upload['filename']; ?></td>
                 <td class="text-right"><?php echo $upload['date_added']; ?></td>
-                <td class="text-right"><a href="<?php echo $upload['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                <td class="text-right"><a href="<?php echo $upload['download']; ?>" data-toggle="tooltip" title="<?php echo $button_download; ?>" class="btn btn-info"><i class="fa fa-download"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

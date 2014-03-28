@@ -234,19 +234,13 @@ class ControllerCheckoutConfirm extends Controller {
 				$option_data = array();
 	
 				foreach ($product['option'] as $option) {
-					if ($option['type'] != 'file') {
-						$value = $option['value'];	
-					} else {
-						$value = $this->encryption->decrypt($option['value']);
-					}	
-					
 					$option_data[] = array(
 						'product_option_id'       => $option['product_option_id'],
 						'product_option_value_id' => $option['product_option_value_id'],
 						'option_id'               => $option['option_id'],
 						'option_value_id'         => $option['option_value_id'],								   
 						'name'                    => $option['name'],
-						'value'                   => $value,
+						'value'                   => $option['value'],
 						'type'                    => $option['type']
 					);					
 				}
@@ -365,6 +359,8 @@ class ControllerCheckoutConfirm extends Controller {
 			$data['column_price'] = $this->language->get('column_price');
 			$data['column_total'] = $this->language->get('column_total');
 
+			$this->load->model('tool/upload');
+		
 			$data['products'] = array();
 
 			foreach ($this->cart->getProducts() as $product) {
@@ -374,9 +370,13 @@ class ControllerCheckoutConfirm extends Controller {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
-						$filename = $this->encryption->decrypt($option['value']);
-
-						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}
 					}
 
 					$option_data[] = array(

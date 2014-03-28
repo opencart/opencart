@@ -280,6 +280,7 @@ class ControllerAccountOrder extends Controller {
 			$data['shipping_method'] = $order_info['shipping_method'];
 			
 			$this->load->model('catalog/product');
+			$this->load->model('tool/upload');
 
 			// Products
 			$data['products'] = array();
@@ -295,7 +296,13 @@ class ControllerAccountOrder extends Controller {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
-						$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}						
 					}
 
 					$option_data[] = array(

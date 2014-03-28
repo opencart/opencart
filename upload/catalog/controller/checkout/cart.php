@@ -71,6 +71,7 @@ class ControllerCheckoutCart extends Controller {
 			}
 						 
 			$this->load->model('tool/image');
+			$this->load->model('tool/upload');
 			
       		$data['products'] = array();
 			
@@ -101,9 +102,13 @@ class ControllerCheckoutCart extends Controller {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
-						$filename = $this->encryption->decrypt($option['value']);
-
-						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}
 					}
 
 					$option_data[] = array(

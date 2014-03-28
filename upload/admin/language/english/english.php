@@ -47,6 +47,7 @@ $_['button_remove']                 = 'Remove';
 $_['button_refresh']                = 'Refresh';
 $_['button_backup']                 = 'Backup';
 $_['button_restore']                = 'Restore';
+$_['button_download']               = 'Download';
 $_['button_repair']                 = 'Repair';
 $_['button_upload']                 = 'Upload';
 $_['button_submit']                 = 'Submit';

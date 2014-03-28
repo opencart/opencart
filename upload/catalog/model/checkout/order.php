@@ -470,6 +470,8 @@ class ModelCheckoutOrder extends Model {
 		
 			$data['shipping_address'] = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 			
+			$this->load->model('tool/upload');
+			
 			// Products
 			$data['products'] = array();
 				
@@ -482,7 +484,13 @@ class ModelCheckoutOrder extends Model {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
-						$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}						
 					}
 					
 					$option_data[] = array(
@@ -548,7 +556,19 @@ class ModelCheckoutOrder extends Model {
 					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . $product['order_product_id'] . "'");
 
 					foreach ($order_option_query->rows as $option) {
-						$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($option['value']) > 20 ? utf8_substr($option['value'], 0, 20) . '..' : $option['value']) . "\n";
+						if ($option['type'] != 'file') {
+							$value = $option['value'];
+						} else {
+							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+							
+							if ($upload_info) {
+								$value = $upload_info['name'];
+							} else {
+								$value = '';
+							}
+						}
+						
+						$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($value) > 20 ? utf8_substr($value, 0, 20) . '..' : $value) . "\n";
 					}
 				}
 

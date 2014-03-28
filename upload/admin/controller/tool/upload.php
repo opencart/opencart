@@ -21,6 +21,13 @@ class ControllerToolUpload extends Controller {
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $upload_id) {
+				// Remove file before deleting DB record.
+				$upload_info = $this->model_tool_upload->getUpload($upload_id);
+				
+				if ($upload_info && is_file(DIR_DOWNLOAD . $upload_info['filename'])) {
+					unlink(DIR_DOWNLOAD . $upload_info['filename']);
+				}				
+				
 				$this->model_tool_upload->deleteUpload($upload_id);
 			}
 
@@ -30,10 +37,6 @@ class ControllerToolUpload extends Controller {
 			
 			if (isset($this->request->get['filter_name'])) {
 				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_filename'])) {
-				$url .= '&filter_filename=' . urlencode(html_entity_decode($this->request->get['filter_filename'], ENT_QUOTES, 'UTF-8'));
 			}
 
 			if (isset($this->request->get['filter_date_added'])) {
@@ -65,12 +68,6 @@ class ControllerToolUpload extends Controller {
 			$filter_name = null;
 		}
 
-		if (isset($this->request->get['filter_filename'])) {
-			$filter_filename = $this->request->get['filter_filename'];
-		} else {
-			$filter_filename = null;
-		}
-
 		if (isset($this->request->get['filter_date_added'])) {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
@@ -99,10 +96,6 @@ class ControllerToolUpload extends Controller {
 			
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
-		}
-
-		if (isset($this->request->get['filter_filename'])) {
-			$url .= '&filter_filename=' . urlencode(html_entity_decode($this->request->get['filter_filename'], ENT_QUOTES, 'UTF-8'));
 		}
 
 		if (isset($this->request->get['filter_date_added'])) {
@@ -139,7 +132,6 @@ class ControllerToolUpload extends Controller {
 
 		$filter_data = array(
 			'filter_name'	    => $filter_name, 
-			'filter_filename'	=> $filter_filename,
 			'filter_date_added'	=> $filter_date_added,
 			'sort'              => $sort,
 			'order'             => $order,
@@ -155,9 +147,9 @@ class ControllerToolUpload extends Controller {
 			$data['uploads'][] = array(
 				'upload_id'  => $result['upload_id'],
 				'name'       => $result['name'],
-				'filename'   => $result['upload_group'],
-				'date_added' => $result['date_added'],
-				'edit'       => $this->url->link('tool/upload/update', 'token=' . $this->session->data['token'] . '&upload_id=' . $result['upload_id'] . $url, 'SSL')
+				'filename'   => $result['filename'],
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
+				'download'   => $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $result['code'] . $url, 'SSL')
 			);
 		}	
 
@@ -172,9 +164,9 @@ class ControllerToolUpload extends Controller {
 		$data['column_action'] = $this->language->get('column_action');		
 		
 		$data['entry_name'] = $this->language->get('entry_name');
-		$data['entry_filename'] = $this->language->get('entry_filename');
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
 		
+		$data['button_download'] = $this->language->get('button_download');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
 
@@ -222,10 +214,6 @@ class ControllerToolUpload extends Controller {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
 
-		if (isset($this->request->get['filter_filename'])) {
-			$url .= '&filter_filename=' . urlencode(html_entity_decode($this->request->get['filter_filename'], ENT_QUOTES, 'UTF-8'));
-		}
-
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
@@ -249,7 +237,6 @@ class ControllerToolUpload extends Controller {
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($upload_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($upload_total - $this->config->get('config_limit_admin'))) ? $upload_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $upload_total, $upload_total, ceil($upload_total / $this->config->get('config_limit_admin')));
 		
 		$data['filter_name'] = $filter_name;
-		$data['filter_filename'] = $filter_filename;
 		$data['filter_date_added'] = $filter_date_added;
 
 		$data['sort'] = $sort;
@@ -269,4 +256,67 @@ class ControllerToolUpload extends Controller {
 
 		return !$this->error;
 	}
+
+	public function download() {
+		$this->load->model('tool/upload');
+		
+		if (isset($this->request->get['code'])) {
+			$code = $this->request->get['code'];
+		} else {
+			$code = 0;
+		}
+
+		$upload_info = $this->model_tool_upload->getUploadByCode($code);
+
+		if ($upload_info) {
+			$file = DIR_DOWNLOAD . $upload_info['filename'];
+			$mask = basename($upload_info['name']);
+
+			if (!headers_sent()) {
+				if (is_file($file)) {
+					header('Content-Type: application/octet-stream');
+					header('Content-Description: File Transfer');
+					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
+					header('Content-Transfer-Encoding: binary');
+					header('Expires: 0');
+					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
+					header('Pragma: public');
+					header('Content-Length: ' . filesize($file));
+
+					readfile($file, 'rb');
+					exit;
+				} else {
+					exit('Error: Could not find file ' . $file . '!');
+				}
+			} else {
+				exit('Error: Headers already sent out!');
+			}
+		} else {
+			$this->load->language('error/not_found');
+
+			$this->document->setTitle($this->language->get('heading_title'));
+
+			$data['heading_title'] = $this->language->get('heading_title');
+
+			$data['text_not_found'] = $this->language->get('text_not_found');
+
+			$data['breadcrumbs'] = array();
+
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_home'),
+				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('heading_title'),
+				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
+			);
+
+			$data['header'] = $this->load->controller('common/header');
+			$data['menu'] = $this->load->controller('common/menu');
+			$data['footer'] = $this->load->controller('common/footer');
+
+			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
+		}	
+	}	
 }

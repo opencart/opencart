@@ -60,6 +60,7 @@ class ControllerModuleCart extends Controller {
 		$data['button_remove'] = $this->language->get('button_remove');
 		
 		$this->load->model('tool/image');
+		$this->load->model('tool/upload');
 		
 		$data['products'] = array();
 			
@@ -76,9 +77,13 @@ class ControllerModuleCart extends Controller {
 				if ($option['type'] != 'file') {
 					$value = $option['value'];	
 				} else {
-					$filename = $this->encryption->decrypt($option['value']);
+					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 					
-					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+					if ($upload_info) {
+						$value = $upload_info['name'];
+					} else {
+						$value = '';
+					}
 				}				
 				
 				$option_data[] = array(								   

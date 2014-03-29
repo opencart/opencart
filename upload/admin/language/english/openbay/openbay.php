@@ -14,4 +14,5 @@ $_['text_disabled']         = 'Disabled';
 //Messages
 $_['error_category_nosuggestions']      = 'Could not load any suggested categories';
 $_['lang_text_success']                 = 'You have saved your changes to the eBay extension';
+$_['lang_error_retry']          		= 'Could not connect to the OpenBay server. ';
 ?>

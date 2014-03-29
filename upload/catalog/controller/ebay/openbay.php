@@ -151,4 +151,21 @@ class ControllerEbayOpenbay extends Controller {
 			$this->response->setOutput(json_encode($this->openbay->ebay->loadSellerStore()));
 		}
 	}
+
+	public function testfile() {
+		/*
+		// Commented out by default, only used for debug during support request
+		$post = $this->request->post;
+		$postSize   = ini_get('post_max_size');
+		$postSize   = (int)str_replace(array('M','m','Mb','MB'), '', $postSize);
+
+		$response = array();
+		$response['php_postsize'] = $postSize;
+		$response['string1_length'] = strlen($post['string1']);
+		$response['string1_text'] = $post['string1'];
+		$response['string2_length'] = isset($post['string2']) ? strlen($post['string2']) : '';
+
+		echo json_encode($response);
+		*/
+	}
 }

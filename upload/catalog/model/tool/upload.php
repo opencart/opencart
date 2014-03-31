@@ -8,7 +8,7 @@ class ModelToolUpload extends Model {
 		return $code;
 	}
 	
-	public function getUploadByCode($upload_id) {
+	public function getUploadById($upload_id) {
 		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE upload_id = '" . (int)$upload_id . "'");
 		
 		return $query->row;

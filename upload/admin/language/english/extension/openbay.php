@@ -1,7 +1,7 @@
 <?php
-// Heading 
-$_['lang_heading_title']        = 'OpenBay Pro'; 
-$_['lang_text_manager']         = 'OpenBay Pro manager'; 
+// Heading
+$_['lang_heading_title']        = 'OpenBay Pro';
+$_['lang_text_manager']         = 'OpenBay Pro manager';
 
 // Text
 $_['text_install']              = 'Install';
@@ -113,4 +113,5 @@ $_['lang_pod_shop']                     = 'Store';
 
 $_['lang_checking_messages']            = 'Checking for messages';
 $_['lang_title_messages']               = 'Messages &amp; notifications';
+$_['lang_error_retry']          		= 'Could not connect to the OpenBay server. ';
 ?>

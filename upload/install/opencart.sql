@@ -34,7 +34,7 @@ CREATE TABLE `oc_profile` (
   `trial_duration` int(10) unsigned NOT NULL,
   `trial_cycle` int(10) unsigned NOT NULL,
   `status` tinyint(4) NOT NULL,
-  `sort_order` int(11) NOT NULL
+  `sort_order` int(11) NOT NULL,
   PRIMARY KEY (`profile_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2150,7 +2150,7 @@ CREATE TABLE `oc_order_custom_field` (
   `name` varchar(255) NOT NULL,
   `value` text NOT NULL,
   `type` varchar(32) NOT NULL,
-  `location` varchar(16) NOT NULL
+  `location` varchar(16) NOT NULL,
   PRIMARY KEY (`order_custom_field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

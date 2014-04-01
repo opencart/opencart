@@ -708,11 +708,11 @@ class ModelOpenbayEbayProduct extends Model {
 	}
 
 	public function resize($filename, $width, $height, $type = "") {
-		if (!file_exists(DIR_IMAGE . 'data/' . md5($filename).'.jpg')) {
-			copy($filename, DIR_IMAGE . 'data/' . md5($filename).'.jpg');
+		if (!file_exists(DIR_IMAGE . 'catalog/' . md5($filename).'.jpg')) {
+			copy($filename, DIR_IMAGE . 'catalog/' . md5($filename).'.jpg');
 		}
 
-		$old_image = DIR_IMAGE . 'data/' . md5($filename).'.jpg';
+		$old_image = DIR_IMAGE . 'catalog/' . md5($filename).'.jpg';
 		$new_image = 'cache/ebaydisplay/' . md5($filename) . '-' . $width . 'x' . $height . $type .'.jpg';
 
 		if (!file_exists(DIR_IMAGE . $new_image)) {

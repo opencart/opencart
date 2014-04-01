@@ -51,7 +51,7 @@
                     <td>
                       <select name="ebaydisplay_module_site">
                         <?php foreach($ebay_sites as $id => $site) { ?>
-                        <option value="<?php echo $id; ?>" <?php echo $id == $ebaydisplay_module_site ? ' selected' : ''><?php echo $site; ?></option>
+                        <option value="<?php echo $id; ?>" <?php echo $id == $ebaydisplay_module_site ? ' selected' : ''; ?>><?php echo $site; ?></option>
                         <?php } ?>
                       </select>
                     </td>

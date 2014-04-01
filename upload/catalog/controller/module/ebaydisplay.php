@@ -12,14 +12,14 @@ class ControllerModuleEbaydisplay extends Controller {
 		$products = $this->cache->get('ebaydisplay.'.md5(serialize($setting)));
 
 		if(!$products){
-			$products = $this->model_ebay_product->getDisplayProducts();
+			$products = $this->model_openbay_ebay_product->getDisplayProducts();
 			$this->cache->set('ebaydisplay.'.md5(serialize($setting)), $products);
 		}
 
 		foreach ($products['products'] as $product) {
 
 			if(isset($product['pictures'][0])){
-				$image = $this->model_ebay_product->resize($product['pictures'][0], $setting['image_width'], $setting['image_height']);
+				$image = $this->model_openbay_ebay_product->resize($product['pictures'][0], $setting['image_width'], $setting['image_height']);
 			}else{
 				$image = '';
 			}

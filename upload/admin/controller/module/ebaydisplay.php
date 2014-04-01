@@ -124,6 +124,29 @@ class ControllerModuleEbaydisplay extends Controller {
 		}else{
 			$this->data['ebaydisplay_module_sort'] = 'StartTimeNewest';
 		}
+		if (isset($this->request->post['ebaydisplay_module_site'])) {
+			$this->data['ebaydisplay_module_site'] = $this->request->post['ebaydisplay_module_site'];
+		} elseif ($this->config->get('ebaydisplay_module_sort')) {
+			$this->data['ebaydisplay_module_site'] = $this->config->get('ebaydisplay_module_site');
+		}else{
+			$this->data['ebaydisplay_module_site'] = 3;
+		}
+
+		$this->data['ebay_sites'] = array(
+			0 => 'USA',
+			3 => 'UK',
+			15 => 'Australia',
+			2 => 'Canada (English)',
+			71 => 'France',
+			77 => 'Germany',
+			101 => 'Italy',
+			186 => 'Spain',
+			205 => 'Ireland',
+			16 => 'Austria',
+			146 => 'Netherlands',
+			23 => 'Belgium (French)',
+			123 => 'Belgium (Dutch)',
+		);
 
 		$this->load->model('design/layout');
 

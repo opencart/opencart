@@ -171,24 +171,24 @@
       </div>
     </div>
     <?php } ?>
-    <?php if ($custom_field['type'] == 'datetime') { ?>
-    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
-      <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-      <div class="col-sm-10">
-        <div class="input-group datetime">
-          <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-          <span class="input-group-btn">
-          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-          </span></div>
-      </div>
-    </div>
-    <?php } ?>
     <?php if ($custom_field['type'] == 'time') { ?>
     <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
       <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
       <div class="col-sm-10">
         <div class="input-group time">
           <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+          <span class="input-group-btn">
+          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+          </span></div>
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'datetime') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
+      <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <div class="input-group datetime">
+          <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
           <span class="input-group-btn">
           <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
           </span></div>
@@ -301,5 +301,19 @@ $('#collapse-shipping-address button[id^=\'button-shipping-custom-field\']').on(
 			}
 		});
 	});
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
+
+$('.time').datetimepicker({
+	pickDate: false
+});
+
+$('.datetime').datetimepicker({
+	pickDate: true,
+	pickTime: true
 });
 //--></script>

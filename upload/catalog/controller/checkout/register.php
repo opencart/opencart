@@ -5,6 +5,7 @@ class ControllerCheckoutRegister extends Controller {
 		
 		$data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');
 		$data['text_your_details'] = $this->language->get('text_your_details');
+		$data['text_your_address'] = $this->language->get('text_your_address');
 		$data['text_your_password'] = $this->language->get('text_your_password');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
@@ -17,7 +18,12 @@ class ControllerCheckoutRegister extends Controller {
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
 		$data['entry_fax'] = $this->language->get('entry_fax');
 		$data['entry_company'] = $this->language->get('entry_company');
-		
+		$data['entry_address_1'] = $this->language->get('entry_address_1');
+		$data['entry_address_2'] = $this->language->get('entry_address_2');
+		$data['entry_postcode'] = $this->language->get('entry_postcode');
+		$data['entry_city'] = $this->language->get('entry_city');
+		$data['entry_country'] = $this->language->get('entry_country');
+		$data['entry_zone'] = $this->language->get('entry_zone');
 		$data['entry_newsletter'] = sprintf($this->language->get('entry_newsletter'), $this->config->get('config_name'));
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
@@ -64,6 +70,24 @@ class ControllerCheckoutRegister extends Controller {
 
 		$data['countries'] = $this->model_localisation_country->getCountries();
 
+		// Custom Fields
+		$this->load->model('account/custom_field');
+
+		$data['custom_fields'] = array();
+
+		$custom_fields = $this->model_account_custom_field->getCustomFields();
+
+		foreach ($custom_fields as $custom_field) {
+			$data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field['custom_field_value'],
+				'name'               => $custom_field['name'],
+				'location'           => $custom_field['location'],
+				'type'               => $custom_field['type'],
+				'value'              => $custom_field['value']
+			);
+		}	
+
 		if ($this->config->get('config_account_id')) {
 			$this->load->model('catalog/information');
 
@@ -79,24 +103,6 @@ class ControllerCheckoutRegister extends Controller {
 		}
 
 		$data['shipping_required'] = $this->cart->hasShipping();
-
-		// Custom Fields
-		$this->load->model('account/custom_field');
-
-		$data['custom_fields'] = array();
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
-
-		foreach ($custom_fields as $custom_field) {
-			$data['custom_fields'][] = array(
-				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $custom_field['custom_field_value'],
-				'name'               => $custom_field['name'],
-				'type'               => $custom_field['type'],
-				'value'              => $custom_field['value'],
-				'sort_order'         => $custom_field['sort_order']
-			);
-		}			
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/register.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/register.tpl', $data));
@@ -211,13 +217,13 @@ class ControllerCheckoutRegister extends Controller {
 				$customer_group_id = $this->config->get('config_customer_group_id');
 			}
 
-			// Custom Field Validation
+			// Custom field validation
 			$this->load->model('account/custom_field');
 
-			$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($customer_group_id);
 
 			foreach ($custom_fields as $custom_field) {
-				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 					$json['error']['custom_field' . $custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 				}
 			}	

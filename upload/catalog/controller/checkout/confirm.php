@@ -101,13 +101,36 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 			
 			if ($this->customer->isLogged()) {
+				$this->load->model('account/customer');
+				
+				$customer_info = $this->model_account_customer->getCustomer($this->customer->getId());
+				
 				$order_data['customer_id'] = $this->customer->getId();
-				$order_data['customer_group_id'] = $this->customer->getGroupId();
-				$order_data['firstname'] = $this->customer->getFirstName();
-				$order_data['lastname'] = $this->customer->getLastName();
-				$order_data['email'] = $this->customer->getEmail();
-				$order_data['telephone'] = $this->customer->getTelephone();
-				$order_data['fax'] = $this->customer->getFax();
+				$order_data['customer_group_id'] = $customer_info['customer_group_id'];
+				$order_data['firstname'] = $customer_info['firstname'];
+				$order_data['lastname'] = $customer_info['lastname'];
+				$order_data['email'] = $customer_info['email'];
+				$order_data['telephone'] = $customer_info['telephone'];
+				$order_data['fax'] = $customer_info['fax'];
+				
+				$this->load->model('account/custom_field');
+				
+				$custom_fields = unserialize($customer_info['custom_field']);
+				
+				foreach ($custom_fields as $key => $value) {
+					$custom_field_info = $this->model_account_custom_field->getCustomField($key);
+					
+					if ($custom_field_info) {
+						$order_data['custom_field'][] = array(
+							'custom_field_id' => $key,
+							'name'            => $custom_field_info['name'],
+							'value'           => $value,
+							'type'            => $custom_field_info['type'],
+							'location'        => 'account'
+						);
+					}
+				}				
+				
 			} elseif (isset($this->session->data['guest'])) {
 				$order_data['customer_id'] = 0;
 				$order_data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
@@ -116,6 +139,23 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['email'] = $this->session->data['guest']['email'];
 				$order_data['telephone'] = $this->session->data['guest']['telephone'];
 				$order_data['fax'] = $this->session->data['guest']['fax'];
+				$order_data['custom_field'] = array();
+				
+				$this->load->model('account/custom_field');
+				
+				foreach ($this->session->data['guest']['custom_field'] as $key => $value) {
+					$custom_field_info = $this->model_account_custom_field->getCustomField($key);
+					
+					if ($custom_field_info) {
+						$order_data['custom_field'][] = array(
+							'custom_field_id' => $key,
+							'name'            => $custom_field_info['name'],
+							'value'           => $value,
+							'type'            => $custom_field_info['type'],
+							'location'        => 'account'
+						);
+					}
+				}				
 			}
 			
 			$order_data['payment_firstname'] = $this->session->data['payment_address']['firstname'];
@@ -130,7 +170,8 @@ class ControllerCheckoutConfirm extends Controller {
 			$order_data['payment_country'] = $this->session->data['payment_address']['country'];
 			$order_data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
 			$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
-		
+			$order_data['payment_custom_field'] = $this->session->data['payment_address']['custom_field'];
+			
 			if (isset($this->session->data['payment_method']['title'])) {
 				$order_data['payment_method'] = $this->session->data['payment_method']['title'];
 			} else {
@@ -156,6 +197,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['shipping_country'] = $this->session->data['shipping_address']['country'];
 				$order_data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
+				$order_data['shipping_custom_field'] = $this->session->data['shipping_address']['custom_field'];
 			
 				if (isset($this->session->data['shipping_method']['title'])) {
 					$order_data['shipping_method'] = $this->session->data['shipping_method']['title'];
@@ -181,6 +223,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['shipping_country'] = '';
 				$order_data['shipping_country_id'] = '';
 				$order_data['shipping_address_format'] = '';
+				$order_data['shipping_custom_field'] = array();
 				$order_data['shipping_method'] = '';
 				$order_data['shipping_code'] = '';
 			}
@@ -191,19 +234,13 @@ class ControllerCheckoutConfirm extends Controller {
 				$option_data = array();
 	
 				foreach ($product['option'] as $option) {
-					if ($option['type'] != 'file') {
-						$value = $option['value'];	
-					} else {
-						$value = $this->encryption->decrypt($option['value']);
-					}	
-					
 					$option_data[] = array(
 						'product_option_id'       => $option['product_option_id'],
 						'product_option_value_id' => $option['product_option_value_id'],
 						'option_id'               => $option['option_id'],
 						'option_value_id'         => $option['option_value_id'],								   
 						'name'                    => $option['name'],
-						'value'                   => $value,
+						'value'                   => $option['value'],
 						'type'                    => $option['type']
 					);					
 				}
@@ -313,17 +350,17 @@ class ControllerCheckoutConfirm extends Controller {
 			
 			$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
 			
-			// View data
+			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
+			$data['text_payment_profile'] = $this->language->get('text_payment_profile');
+			
 			$data['column_name'] = $this->language->get('column_name');
 			$data['column_model'] = $this->language->get('column_model');
 			$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_price'] = $this->language->get('column_price');
 			$data['column_total'] = $this->language->get('column_total');
 
-
-			$data['text_recurring_item'] = $this->language->get('text_recurring_item');
-			$data['text_payment_profile'] = $this->language->get('text_payment_profile');
-
+			$this->load->model('tool/upload');
+		
 			$data['products'] = array();
 
 			foreach ($this->cart->getProducts() as $product) {
@@ -333,9 +370,13 @@ class ControllerCheckoutConfirm extends Controller {
 					if ($option['type'] != 'file') {
 						$value = $option['value'];
 					} else {
-						$filename = $this->encryption->decrypt($option['value']);
-
-						$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						
+						if ($upload_info) {
+							$value = $upload_info['name'];
+						} else {
+							$value = '';
+						}
 					}
 
 					$option_data[] = array(
@@ -344,46 +385,40 @@ class ControllerCheckoutConfirm extends Controller {
 					);
 				}
 
-
-				$profile_description = '';
+				$recurring = '';
 
 				if ($product['recurring']) {
 					$frequencies = array(
-						'day' => $this->language->get('text_day'),
-						'week' => $this->language->get('text_week'),
+						'day'        => $this->language->get('text_day'),
+						'week'       => $this->language->get('text_week'),
 						'semi_month' => $this->language->get('text_semi_month'),
-						'month' => $this->language->get('text_month'),
-						'year' => $this->language->get('text_year'),
+						'month'      => $this->language->get('text_month'),
+						'year'       => $this->language->get('text_year'),
 					);
 
 					if ($product['recurring_trial']) {
-						$recurring_price = $this->currency->format($this->tax->calculate($product['recurring_trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
-						$profile_description = sprintf($this->language->get('text_trial_description'), $recurring_price, $product['recurring_trial_cycle'], $frequencies[$product['recurring_trial_frequency']], $product['recurring_trial_duration']) . ' ';
+						$recurring = sprintf($this->language->get('text_trial_description'), $this->currency->format($this->tax->calculate($product['recurring']['trial_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['trial_cycle'], $frequencies[$product['recurring']['trial_frequency']], $product['recurring']['trial_duration']) . ' ';
 					}
 
-					$recurring_price = $this->currency->format($this->tax->calculate($product['recurring_price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax')));
-
 					if ($product['recurring_duration']) {
-						$profile_description .= sprintf($this->language->get('text_payment_description'), $recurring_price, $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
+						$recurring .= sprintf($this->language->get('text_payment_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 					} else {
-						$profile_description .= sprintf($this->language->get('text_payment_until_canceled_description'), $recurring_price, $product['recurring_cycle'], $frequencies[$product['recurring_frequency']], $product['recurring_duration']);
+						$recurring .= sprintf($this->language->get('text_payment_until_canceled_description'), $this->currency->format($this->tax->calculate($product['recurring']['price'] * $product['quantity'], $product['tax_class_id'], $this->config->get('config_tax'))), $product['recurring']['cycle'], $frequencies[$product['recurring']['frequency']], $product['recurring']['duration']);
 					}
 				}
 
 				$data['products'][] = array(
-					'key'                 => $product['key'],
-					'product_id'          => $product['product_id'],
-					'name'                => $product['name'],
-					'model'               => $product['model'],
-					'option'              => $option_data,
-					'quantity'            => $product['quantity'],
-					'subtract'            => $product['subtract'],
-					'price'               => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-					'total'               => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
-					'href'                => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-					'recurring'           => $product['recurring'],
-					'profile_name'        => $product['profile_name'],
-					'profile_description' => $profile_description,
+					'key'        => $product['key'],
+					'product_id' => $product['product_id'],
+					'name'       => $product['name'],
+					'model'      => $product['model'],
+					'option'     => $option_data,
+					'recurring'  => $recurring,
+					'quantity'   => $product['quantity'],
+					'subtract'   => $product['subtract'],
+					'price'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
+					'total'      => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
+					'href'       => $this->url->link('product/product', 'product_id=' . $product['product_id']),
 				);
 			}
 

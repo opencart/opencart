@@ -515,24 +515,24 @@
                       </div>
                     </div>
                     <?php } ?>
-                    <?php if ($product_option['type'] == 'datetime') { ?>
-                    <div class="form-group">
-                      <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
-                      <div class="col-sm-10">
-                        <div class="input-group datetime">
-                          <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-format="YYYY-MM-DD HH:mm" id="input-value<?php echo $option_row; ?>" class="form-control" />
-                          <span class="input-group-btn">
-                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                          </span></div>
-                      </div>
-                    </div>
-                    <?php } ?>
                     <?php if ($product_option['type'] == 'time') { ?>
                     <div class="form-group">
                       <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
                       <div class="col-sm-10">
                         <div class="input-group time">
                           <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-format="HH:mm" id="input-value<?php echo $option_row; ?>" class="form-control" />
+                          <span class="input-group-btn">
+                          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+                          </span></div>
+                      </div>
+                    </div>
+                    <?php } ?>                    
+                    <?php if ($product_option['type'] == 'datetime') { ?>
+                    <div class="form-group">
+                      <label class="col-sm-2 control-label" for="input-value<?php echo $option_row; ?>"><?php echo $entry_option_value; ?></label>
+                      <div class="col-sm-10">
+                        <div class="input-group datetime">
+                          <input type="text" name="product_option[<?php echo $option_row; ?>][value]" value="<?php echo $product_option['value']; ?>" placeholder="<?php echo $entry_option_value; ?>" data-format="YYYY-MM-DD HH:mm" id="input-value<?php echo $option_row; ?>" class="form-control" />
                           <span class="input-group-btn">
                           <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                           </span></div>
@@ -1180,17 +1180,17 @@ $('input[name=\'option\']').autocomplete({
 			html += '	</div>';
 		}
 		
-		if (item['type'] == 'datetime') {
-			html += '	<div class="form-group">';
-			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
-			html += '	  <div class="col-sm-10"><div class="input-group datetime"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-format="YYYY-MM-DD HH:mm" id="input-value' + option_row + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
-			html += '	</div>';
-		}
-		
 		if (item['type'] == 'time') {
 			html += '	<div class="form-group">';
 			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
 			html += '	  <div class="col-sm-10"><div class="input-group time"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-format="HH:mm" id="input-value' + option_row + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
+			html += '	</div>';
+		}
+				
+		if (item['type'] == 'datetime') {
+			html += '	<div class="form-group">';
+			html += '	  <label class="col-sm-2 control-label" for="input-value' + option_row + '"><?php echo $entry_option_value; ?></label>';
+			html += '	  <div class="col-sm-10"><div class="input-group datetime"><input type="text" name="product_option[' + option_row + '][value]" value="" placeholder="<?php echo $entry_option_value; ?>" data-format="YYYY-MM-DD HH:mm" id="input-value' + option_row + '" class="form-control" /><span class="input-group-btn"><button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button></span></div></div>';
 			html += '	</div>';
 		}
 			
@@ -1239,15 +1239,15 @@ $('input[name=\'option\']').autocomplete({
 			pickTime: false
 		});
 		
-		$('.datetime').datetimepicker({
-			pickDate: true,
-			pickTime: true
-		});
-		
 		$('.time').datetimepicker({
 			pickDate: false
 		});
 		
+		$('.datetime').datetimepicker({
+			pickDate: true,
+			pickTime: true
+		});
+				
 		option_row++;
 	}	
 });
@@ -1391,13 +1391,13 @@ $('.date').datetimepicker({
 	pickTime: false
 });
 
+$('.time').datetimepicker({
+	pickDate: false
+});
+
 $('.datetime').datetimepicker({
 	pickDate: true,
 	pickTime: true
-});
-
-$('.time').datetimepicker({
-	pickDate: false
 });
 //--></script> 
 <script type="text/javascript"><!--

@@ -39,6 +39,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_layout'] = $this->language->get('text_layout');
 		$data['text_localisation'] = $this->language->get('text_localisation');
 		$data['text_location'] = $this->language->get('text_location');
+		$data['text_maintance'] = $this->language->get('text_maintance');
 		$data['text_marketing'] = $this->language->get('text_marketing');
 		$data['text_modification'] = $this->language->get('text_modification');
 		$data['text_manufacturer'] = $this->language->get('text_manufacturer');
@@ -80,6 +81,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_tax_class'] = $this->language->get('text_tax_class');
 		$data['text_tax_rate'] = $this->language->get('text_tax_rate');
 		$data['text_total'] = $this->language->get('text_total');
+		$data['text_upload'] = $this->language->get('text_upload');
 		$data['text_tracking'] = $this->language->get('text_tracking');
 		$data['text_user'] = $this->language->get('text_user');
 		$data['text_user_group'] = $this->language->get('text_user_group');
@@ -173,6 +175,7 @@ class ControllerCommonMenu extends Controller {
 			$data['tax_class'] = $this->url->link('localisation/tax_class', 'token=' . $this->session->data['token'], 'SSL');
 			$data['tax_rate'] = $this->url->link('localisation/tax_rate', 'token=' . $this->session->data['token'], 'SSL');
 			$data['total'] = $this->url->link('extension/total', 'token=' . $this->session->data['token'], 'SSL');
+			$data['upload'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'], 'SSL');
 			$data['user'] = $this->url->link('user/user', 'token=' . $this->session->data['token'], 'SSL');
 			$data['user_group'] = $this->url->link('user/user_permission', 'token=' . $this->session->data['token'], 'SSL');
 			$data['voucher'] = $this->url->link('sale/voucher', 'token=' . $this->session->data['token'], 'SSL');

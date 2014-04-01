@@ -10,6 +10,10 @@ class ControllerAccountRegister extends Controller {
 		$this->load->language('account/register');
 
 		$this->document->setTitle($this->language->get('heading_title'));
+		
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
 
 		$this->load->model('account/customer');
 
@@ -165,11 +169,11 @@ class ControllerAccountRegister extends Controller {
 
 		$data['action'] = $this->url->link('account/register', '', 'SSL');
 
-		$this->load->model('account/customer_group');
-
 		$data['customer_groups'] = array();
 
 		if (is_array($this->config->get('config_customer_group_display'))) {
+			$this->load->model('account/customer_group');
+			
 			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
 
 			foreach ($customer_groups as $customer_group) {
@@ -277,8 +281,9 @@ class ControllerAccountRegister extends Controller {
 		}	
 
 		$data['custom_fields'] = array();
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields('register');
+		
+		// Customer Group
+		$custom_fields = $this->model_account_custom_field->getCustomFields();
 
 		foreach ($custom_fields as $custom_field) {
 			if ($custom_field['type'] == 'checkbox') {
@@ -291,9 +296,9 @@ class ControllerAccountRegister extends Controller {
 				'custom_field_id'    => $custom_field['custom_field_id'],
 				'custom_field_value' => $custom_field['custom_field_value'],
 				'name'               => $custom_field['name'],
+				'location'           => $custom_field['location'],
 				'type'               => $custom_field['type'],
-				'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value,
-				'sort_order'         => $custom_field['sort_order']
+				'value'              => isset($custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']] : $value
 			);
 		}
 
@@ -401,13 +406,13 @@ class ControllerAccountRegister extends Controller {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}		
 
-		// Custom Field Validation
+		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($customer_group_id);
 
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
 				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 			}
 		}
@@ -420,6 +425,7 @@ class ControllerAccountRegister extends Controller {
 			$this->error['confirm'] = $this->language->get('error_confirm');
 		}
 
+		// Agree to terms
 		if ($this->config->get('config_account_id')) {
 			$this->load->model('catalog/information');
 
@@ -432,4 +438,28 @@ class ControllerAccountRegister extends Controller {
 
 		return !$this->error;
 	}
+	
+	public function custom_field() {
+		$json = array();
+
+		$this->load->model('account/custom_field');
+
+		// Customer Group
+		if (isset($this->request->get['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->get['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+			$customer_group_id = $this->request->get['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+
+		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($customer_group_id);
+
+		foreach ($custom_fields as $custom_field) {
+			$json[] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'required'        => $custom_field['required']
+			);
+		}
+
+		$this->response->setOutput(json_encode($json));
+	}	
 }

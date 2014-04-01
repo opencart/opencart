@@ -453,7 +453,7 @@ $('#button-cart').on('click', function() {
                 }
 
 				if (json['error']['profile']) {
-					$('select[name=\'profile_id\']').after('<span class="text-danger">' + json['error']['profile'] + '</span>');
+					$('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
 				}
             } 
             
@@ -516,7 +516,7 @@ $('button[id^=\'button-upload\']').on('click', function() {
 				if (json['success']) {
 					alert(json['success']);
 					
-					$(node).parent().find('input[name^=\'option\']').attr('value', json['file']);
+					$(node).parent().find('input[name^=\'option\']').attr('value', json['code']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {

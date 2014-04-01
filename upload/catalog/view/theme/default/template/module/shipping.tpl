@@ -60,15 +60,15 @@ $('#button-quote').on('click', function() {
 				}  
 		
 				if (json['error']['country']) {
-					$('select[name=\'country_id\']').after('<span class="text-danger">' + json['error']['country'] + '</span>');
+					$('select[name=\'country_id\']').after('<div class="text-danger">' + json['error']['country'] + '</div>');
 				}  
 		
 				if (json['error']['zone']) {
-					$('select[name=\'zone_id\']').after('<span class="text-danger">' + json['error']['zone'] + '</span>');
+					$('select[name=\'zone_id\']').after('<div class="text-danger">' + json['error']['zone'] + '</div>');
 				}
 		
 				if (json['error']['postcode']) {
-					$('input[name=\'postcode\']').after('<span class="text-danger">' + json['error']['postcode'] + '</span>');
+					$('input[name=\'postcode\']').after('<div class="text-danger">' + json['error']['postcode'] + '</div>');
 				}              
 			}
 

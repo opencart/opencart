@@ -121,7 +121,6 @@ class ControllerProductManufacturer extends Controller {
 		if ($manufacturer_info) {
 			$this->document->setTitle($manufacturer_info['name']);
 			$this->document->addLink($this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id']), 'canonical');
-			$this->document->addScript('catalog/view/javascript/jquery/jquery.total-storage.min.js');
 
 			$url = '';
 

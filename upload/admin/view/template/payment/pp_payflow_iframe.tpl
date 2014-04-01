@@ -23,10 +23,11 @@
           <label class="col-sm-2 control-label" for="entry-vender"><?php echo $entry_vendor; ?></label>
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_iframe_vendor" value="<?php echo $pp_payflow_iframe_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="entry-vender" class="form-control"/>
+            <span class="help-block"><?php echo $entry_vendor_help; ?></span>
             <?php if (isset($error['vendor'])) { ?>
             <div class="text-danger"><?php echo $error['vendor']; ?></div>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_vendor_help; ?></span> </div>
+          </div>
         </div>
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="entry-user"><?php echo $entry_user; ?></label>

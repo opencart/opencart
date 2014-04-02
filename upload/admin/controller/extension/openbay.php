@@ -104,7 +104,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'access', 'openbay/' . $this->request->get['extension']);
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'openbay/' . $this->request->get['extension']);
 
-			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '. php');
+			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
 
 			$class = 'ControllerOpenbay' . str_replace('_', '', $this->request->get['extension']);
 			$class = new $class($this->registry);

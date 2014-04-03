@@ -54,7 +54,9 @@ class ControllerCheckoutConfirm extends Controller {
 		}
 						
 		if (!$redirect) {
-			$total_data = array();
+			$order_data = array();
+			
+			$order_data['totals'] = array();
 			$total = 0;
 			$taxes = $this->cart->getTaxes();
 			 
@@ -74,21 +76,19 @@ class ControllerCheckoutConfirm extends Controller {
 				if ($this->config->get($result['code'] . '_status')) {
 					$this->load->model('total/' . $result['code']);
 		
-					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
+					$this->{'model_total_' . $result['code']}->getTotal($order_data['totals'], $total, $taxes);
 				}
 			}
 			
 			$sort_order = array(); 
 		  
-			foreach ($total_data as $key => $value) {
+			foreach ($order_data['totals'] as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 	
-			array_multisort($sort_order, SORT_ASC, $total_data);
+			array_multisort($sort_order, SORT_ASC, $order_data['totals']);
 	
 			$this->load->language('checkout/checkout');
-			
-			$order_data = array();
 			
 			$order_data['invoice_prefix'] = $this->config->get('config_invoice_prefix');
 			$order_data['store_id'] = $this->config->get('config_store_id');
@@ -99,7 +99,9 @@ class ControllerCheckoutConfirm extends Controller {
 			} else {
 				$order_data['store_url'] = HTTP_SERVER;	
 			}
-			
+
+			$order_data['custom_field'] = array();
+						
 			if ($this->customer->isLogged()) {
 				$this->load->model('account/customer');
 				
@@ -113,24 +115,15 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['telephone'] = $customer_info['telephone'];
 				$order_data['fax'] = $customer_info['fax'];
 				
-				$this->load->model('account/custom_field');
-				
 				$custom_fields = unserialize($customer_info['custom_field']);
 				
-				foreach ($custom_fields as $key => $value) {
-					$custom_field_info = $this->model_account_custom_field->getCustomField($key);
-					
-					if ($custom_field_info) {
-						$order_data['custom_field'][] = array(
-							'custom_field_id' => $key,
-							'name'            => $custom_field_info['name'],
-							'value'           => $value,
-							'type'            => $custom_field_info['type'],
-							'location'        => 'account'
-						);
-					}
-				}				
-				
+				foreach ($custom_fields as $custom_field_id => $value) {
+					$order_data['custom_field'][] = array(
+						'custom_field_id' => $custom_field_id,
+						'value'           => $value,
+						'location'        => 'account'
+					);
+				}
 			} elseif (isset($this->session->data['guest'])) {
 				$order_data['customer_id'] = 0;
 				$order_data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
@@ -141,20 +134,14 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['fax'] = $this->session->data['guest']['fax'];
 				$order_data['custom_field'] = array();
 				
-				$this->load->model('account/custom_field');
+				$custom_fields = $this->session->data['guest']['custom_field'];
 				
-				foreach ($this->session->data['guest']['custom_field'] as $key => $value) {
-					$custom_field_info = $this->model_account_custom_field->getCustomField($key);
-					
-					if ($custom_field_info) {
-						$order_data['custom_field'][] = array(
-							'custom_field_id' => $key,
-							'name'            => $custom_field_info['name'],
-							'value'           => $value,
-							'type'            => $custom_field_info['type'],
-							'location'        => 'account'
-						);
-					}
+				foreach ($custom_fields as $custom_field_id => $value) {
+					$order_data['custom_field'][] = array(
+						'custom_field_id' => $custom_field_id,
+						'value'           => $value,
+						'location'        => 'account'
+					);
 				}				
 			}
 			
@@ -170,8 +157,17 @@ class ControllerCheckoutConfirm extends Controller {
 			$order_data['payment_country'] = $this->session->data['payment_address']['country'];
 			$order_data['payment_country_id'] = $this->session->data['payment_address']['country_id'];
 			$order_data['payment_address_format'] = $this->session->data['payment_address']['address_format'];
-			$order_data['payment_custom_field'] = $this->session->data['payment_address']['custom_field'];
+				
+			$custom_fields = $this->session->data['payment_address']['custom_field'];
 			
+			foreach ($custom_fields as $custom_field_id => $value) {
+				$order_data['custom_field'][] = array(
+					'custom_field_id' => $custom_field_id,
+					'value'           => $value,
+					'location'        => 'payment_address'
+				);
+			}	
+							
 			if (isset($this->session->data['payment_method']['title'])) {
 				$order_data['payment_method'] = $this->session->data['payment_method']['title'];
 			} else {
@@ -197,7 +193,15 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['shipping_country'] = $this->session->data['shipping_address']['country'];
 				$order_data['shipping_country_id'] = $this->session->data['shipping_address']['country_id'];
 				$order_data['shipping_address_format'] = $this->session->data['shipping_address']['address_format'];
-				$order_data['shipping_custom_field'] = $this->session->data['shipping_address']['custom_field'];
+				$custom_fields = $this->session->data['shipping_address']['custom_field'];
+				
+				foreach ($custom_fields as $custom_field_id => $value) {
+					$order_data['custom_field'][] = array(
+						'custom_field_id' => $custom_field_id,
+						'value'           => $value,
+						'location'        => 'shipping_address'
+					);
+				}	
 			
 				if (isset($this->session->data['shipping_method']['title'])) {
 					$order_data['shipping_method'] = $this->session->data['shipping_method']['title'];
@@ -209,7 +213,7 @@ class ControllerCheckoutConfirm extends Controller {
 					$order_data['shipping_code'] = $this->session->data['shipping_method']['code'];
 				} else {
 					$order_data['shipping_code'] = '';
-				}				
+				}
 			} else {
 				$order_data['shipping_firstname'] = '';
 				$order_data['shipping_lastname'] = '';	
@@ -228,7 +232,7 @@ class ControllerCheckoutConfirm extends Controller {
 				$order_data['shipping_code'] = '';
 			}
 			
-			$product_data = array();
+			$order_data['products'] = array();
 		
 			foreach ($this->cart->getProducts() as $product) {
 				$option_data = array();
@@ -245,7 +249,7 @@ class ControllerCheckoutConfirm extends Controller {
 					);					
 				}
 	 
-				$product_data[] = array(
+				$order_data['products'][] = array(
 					'product_id' => $product['product_id'],
 					'name'       => $product['name'],
 					'model'      => $product['model'],
@@ -261,11 +265,11 @@ class ControllerCheckoutConfirm extends Controller {
 			}
 			
 			// Gift Voucher
-			$voucher_data = array();
+			$order_data['vouchers'] = array();
 			
 			if (!empty($this->session->data['vouchers'])) {
 				foreach ($this->session->data['vouchers'] as $voucher) {
-					$voucher_data[] = array(
+					$order_data['vouchers'][] = array(
 						'description'      => $voucher['description'],
 						'code'             => substr(md5(mt_rand()), 0, 10),
 						'to_name'          => $voucher['to_name'],
@@ -278,10 +282,7 @@ class ControllerCheckoutConfirm extends Controller {
 					);
 				}
 			}  
-						
-			$order_data['products'] = $product_data;
-			$order_data['vouchers'] = $voucher_data;
-			$order_data['totals'] = $total_data;
+			
 			$order_data['comment'] = $this->session->data['comment'];
 			$order_data['total'] = $total;
 			

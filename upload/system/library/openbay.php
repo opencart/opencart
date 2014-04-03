@@ -14,34 +14,33 @@ final class Openbay {
 		return $this->registry->get($name);
 	}
 
-	public function orderNew($orderId) {
+	public function orderNew($order_id) {
 		/**
 		 * Once and order has been imported from external marketplace and
 		 * and order_id has been created, this method should be called.
 		 *
-		 * $src is the variable controlling where the order has been created.
 		 */
 
 		// eBay Module
 		if ($this->config->get('openbay_status') == 1) {
-			$this->ebay->orderNew($orderId);
+			$this->ebay->orderNew($order_id);
 		}
 
 		// Amazon EU Module
 		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->orderNew($orderId);
+			$this->amazon->orderNew($order_id);
 		}
 
 		// Amazon US Module
 		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->orderNew($orderId);
+			$this->amazonus->orderNew($order_id);
 		}
 
 		/**
 		 * If a 3rd party module needs to be notified about a new order
 		 * so it can update the stock then they should add a method to their
 		 * application here with the order id so they can get the info about it.
-		 * i.e. $this->mylibraryfile->newOrderMethod($orderId);
+		 * i.e. $this->mylibraryfile->newOrderMethod($order_id);
 		 */
 	}
 
@@ -168,6 +167,7 @@ final class Openbay {
 	public function getTaxRate($class_id) {
 		$rates = $this->getTaxRates($class_id);
 		$percentage = 0.00;
+
 		foreach($rates as $rate) {
 			if($rate['type'] == 'P') {
 				$percentage += $rate['rate'];
@@ -188,7 +188,6 @@ final class Openbay {
 	}
 
 	public function newOrderAdminNotify($order_id, $order_status_id) {
-
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 

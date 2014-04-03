@@ -25,4 +25,4 @@ You should follow the instruction before you create a issue.
 
 ## License
 
-[GNU General Public License version 3 (GPLv3)](https://github.com/opencart/opencart/blob/master/license.txt)
+[Public domain](https://github.com/opencart/opencart/blob/master/license.txt)

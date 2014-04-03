@@ -111,11 +111,17 @@ final class Tax {
 		
 		if (isset($this->tax_rates[$tax_class_id])) {
 			foreach ($this->tax_rates[$tax_class_id] as $tax_rate) {
-				if (isset($tax_rate_data[$tax_rate['tax_rate_id']])) {
+				
+				/*Just curious, why to check if tax_rate_id already exist in tax_rate_data because against each 
+				call to getRates() method, tax_rates will be traversed only once for the parameter tax_class_id. 
+				There is no way that tax_rate_data will already have a value against any Tax_rate_id. 
+				Hope I am able to tell my point. */ 
+				/*if (isset($tax_rate_data[$tax_rate['tax_rate_id']])) {
 					$amount = $tax_rate_data[$tax_rate['tax_rate_id']]['amount'];
 				} else {
 					$amount = 0;
-				}
+				}*/
+				$amount = 0; //this should suffice
 	
 				if ($tax_rate['type'] == 'F') {
 					$amount += $tax_rate['rate'];

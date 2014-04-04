@@ -264,8 +264,8 @@ class ModelPaymentPPExpress extends Model {
 			}
 		}
 
-		$data['PAYMENTREQUEST_0_ITEMAMT'] = number_format($item_total, 2);
-		$data['PAYMENTREQUEST_0_AMT'] = number_format($item_total, 2);
+		$data['PAYMENTREQUEST_0_ITEMAMT'] = number_format($value, 2, '.', '');
+		$data['PAYMENTREQUEST_0_AMT'] = number_format($value, 2, '.', '');
 
 		$z = 0;
 

@@ -55,6 +55,6 @@ if (extension_loaded('mbstring')) {
 		$string = strtolower($string);
 		$string = utf8_encode($string);
 			
-		return mb_strtolower($string);
+		return $string;
 	}	
 }

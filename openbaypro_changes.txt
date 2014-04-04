@@ -1,5 +1,7 @@
 Type: Enhancement, New Feature, Bug
 
+<!--- RELEASE 2334 ---!>
+28-03-14 - Bug - Fixed addonLoad method reference in Amazon.
 <!--- RELEASE 2333 ---!>
 03-04-14 - Enhancement - Added marketplave notifier when new order is added through the admin area to handle stock changes
 01-04-14 - Bug - Fixed eBay display module to have settings for the site ID. This resolves the eBay updates where it needs to match the seller country.

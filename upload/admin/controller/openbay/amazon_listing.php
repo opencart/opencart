@@ -95,7 +95,7 @@ class ControllerOpenbayAmazonListing extends Controller {
 				$this->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 			}
 
-			if($this->amazon->addonLoad('openstock') == true) {
+			if($this->openbay->addonLoad('openstock') == true) {
 				$this->load->model('openstock/openstock');
 				$this->load->model('tool/image');
 				$this->data['options'] = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);

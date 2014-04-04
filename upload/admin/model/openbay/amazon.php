@@ -532,7 +532,7 @@ class ModelOpenbayAmazon extends Model {
 			$return[$row['amazon_sku']] = $row['quantity'];
 		}
 
-		$this->amazon->updateQuantities($return);
+		$this->openbay->amazon->updateQuantities($return);
 	}
 
 	public function deleteListingReports($marketplace) {

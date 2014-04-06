@@ -1084,7 +1084,7 @@ $('#option').delegate('button[id^=\'button-upload\']', 'click', function() {
 				if (json['success']) {
 					alert(json['success']);
 					
-					$(node).parent().find('input[name^=\'option\']').attr('value', json['file']);
+					$(node).parent().find('input[name^=\'option\']').attr('value', json['code']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {

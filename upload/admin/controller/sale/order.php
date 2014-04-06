@@ -1544,6 +1544,8 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_zone_code'] = $order_info['shipping_zone_code'];
 			$data['shipping_country'] = $order_info['shipping_country'];
 
+			$this->load->model('tool/upload');
+
 			$data['products'] = array();
 
 			$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
@@ -1561,12 +1563,16 @@ class ControllerSaleOrder extends Controller {
 							'type'  => $option['type']
 						);
 					} else {
-						$option_data[] = array(
-							'name'  => $option['name'],
-							'value' => utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.')),
-							'type'  => $option['type'],
-							'href'  => $this->url->link('sale/order/download', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . '&order_option_id=' . $option['order_option_id'], 'SSL')
-						);						
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						
+						if ($upload_info) {
+							$option_data[] = array(
+								'name'  => $option['name'],
+								'value' => $upload_info['name'],
+								'type'  => $option['type'],
+								'href'  => $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $upload_info['code'], 'SSL')
+							);							
+						}						
 					}
 				}
 
@@ -2096,69 +2102,6 @@ class ControllerSaleOrder extends Controller {
 		$this->response->setOutput($this->load->view('sale/order_history.tpl', $data));
 	}
 
-	public function download() {
-		$this->load->model('sale/order');
-
-		if (isset($this->request->get['order_option_id'])) {
-			$order_option_id = $this->request->get['order_option_id'];
-		} else {
-			$order_option_id = 0;
-		}
-
-		$option_info = $this->model_sale_order->getOrderOption($this->request->get['order_id'], $order_option_id);
-
-		if ($option_info && $option_info['type'] == 'file') {
-			$file = DIR_DOWNLOAD . $option_info['value'];
-			$mask = basename(utf8_substr($option_info['value'], 0, utf8_strrpos($option_info['value'], '.')));
-
-			if (!headers_sent()) {
-				if (is_file($file)) {
-					header('Content-Type: application/octet-stream');
-					header('Content-Description: File Transfer');
-					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
-					header('Content-Transfer-Encoding: binary');
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-					header('Pragma: public');
-					header('Content-Length: ' . filesize($file));
-
-					readfile($file, 'rb');
-					exit;
-				} else {
-					exit('Error: Could not find file ' . $file . '!');
-				}
-			} else {
-				exit('Error: Headers already sent out!');
-			}
-		} else {
-			$this->load->language('error/not_found');
-
-			$this->document->setTitle($this->language->get('heading_title'));
-
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_not_found'] = $this->language->get('text_not_found');
-
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
-			);
-
-			$data['header'] = $this->load->controller('common/header');
-			$data['menu'] = $this->load->controller('common/menu');
-			$data['footer'] = $this->load->controller('common/footer');
-
-			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
-		}	
-	}
-
 	public function upload() {
 		$this->load->language('sale/order');
 
@@ -2221,8 +2164,11 @@ class ControllerSaleOrder extends Controller {
 			$file = $filename . '.' . md5(mt_rand());
 
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
-
-			$json['file'] = $file;
+			
+			// Hide the uploaded file name so people can not link to it directly.
+			$this->load->model('tool/upload');
+			
+			$json['code'] = $this->model_tool_upload->addUpload($filename, $file);
 
 			$json['success'] = $this->language->get('text_upload');
 		}
@@ -2372,6 +2318,8 @@ class ControllerSaleOrder extends Controller {
 
 				$shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
+				$this->load->model('tool/upload');
+
 				$product_data = array();
 
 				$products = $this->model_sale_order->getOrderProducts($order_id);
@@ -2385,7 +2333,13 @@ class ControllerSaleOrder extends Controller {
 						if ($option['type'] != 'file') {
 							$value = $option['value'];
 						} else {
-							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
+							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+							
+							if ($upload_info) {
+								$value = $upload_info['name'];						
+							} else {
+								$value = '';
+							}						
 						}
 
 						$option_data[] = array(
@@ -2571,6 +2525,8 @@ class ControllerSaleOrder extends Controller {
 
 				$shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
+				$this->load->model('tool/upload');
+
 				$product_data = array();
 
 				$products = $this->model_sale_order->getOrderProducts($order_id);
@@ -2586,7 +2542,13 @@ class ControllerSaleOrder extends Controller {
 						if ($option['type'] != 'file') {
 							$value = $option['value'];
 						} else {
-							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
+							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+							
+							if ($upload_info) {
+								$value = $upload_info['name'];						
+							} else {
+								$value = '';
+							} 							
 						}
 
 						$option_data[] = array(

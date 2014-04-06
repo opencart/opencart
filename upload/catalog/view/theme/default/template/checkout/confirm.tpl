@@ -20,8 +20,8 @@
 
         <?php if($product['recurring']) { ?>
           <br />
-          <span class="label label-info"><?php echo $text_recurring_item; ?></span>
-          <small><?php echo $product['profile_description']; ?></small>
+          <span class="label label-info"><?php echo $text_recurring; ?></span>
+          <small><?php echo $product['recurring']; ?></small>
         <?php } ?>
       </td>
       <td class="text-left"><?php echo $product['model']; ?></td>

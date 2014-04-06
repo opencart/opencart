@@ -50,7 +50,7 @@ $('#button-quote').on('click', function() {
 			$('#button-quote').button('reset');
 		},
 		success: function(json) {
-			$('.alert').remove();      
+			$('.alert, .text-danger').remove();      
 		
 			if (json['error']) {
 				if (json['error']['warning']) {

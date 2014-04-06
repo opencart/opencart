@@ -50,12 +50,6 @@ class ControllerModuleCart extends Controller {
 	}	
 	
 	public function info() {
-      	if (isset($this->request->get['remove'])) {
-          	$this->cart->remove($this->request->get['remove']);
-			
-			unset($this->session->data['vouchers'][$this->request->get['remove']]);
-      	}
-			
 		$this->load->language('module/cart');
 
 		$data['text_empty'] = $this->language->get('text_empty');
@@ -66,6 +60,7 @@ class ControllerModuleCart extends Controller {
 		$data['button_remove'] = $this->language->get('button_remove');
 		
 		$this->load->model('tool/image');
+		$this->load->model('tool/upload');
 		
 		$data['products'] = array();
 			
@@ -82,9 +77,13 @@ class ControllerModuleCart extends Controller {
 				if ($option['type'] != 'file') {
 					$value = $option['value'];	
 				} else {
-					$filename = $this->encryption->decrypt($option['value']);
+					$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
 					
-					$value = utf8_substr($filename, 0, utf8_strrpos($filename, '.'));
+					if ($upload_info) {
+						$value = $upload_info['name'];
+					} else {
+						$value = '';
+					}
 				}				
 				
 				$option_data[] = array(								   
@@ -109,17 +108,16 @@ class ControllerModuleCart extends Controller {
 			}
 													
 			$data['products'][] = array(
-				'key'      => $product['key'],
-				'thumb'    => $image,
-				'name'     => $product['name'],
-				'model'    => $product['model'], 
-				'option'   => $option_data,
-				'quantity' => $product['quantity'],
-				'price'    => $price,	
-				'total'    => $total,	
-				'href'     => $this->url->link('product/product', 'product_id=' . $product['product_id']),
-				'recurring'=> $product['recurring'],
-				'profile'  => $product['profile_name'],
+				'key'       => $product['key'],
+				'thumb'     => $image,
+				'name'      => $product['name'],
+				'model'     => $product['model'], 
+				'option'    => $option_data,
+				'recurring' => ($product['recurring'] ? $product['recurring']['name'] : ''),
+				'quantity'  => $product['quantity'],
+				'price'     => $price,	
+				'total'     => $total,	
+				'href'      => $this->url->link('product/product', 'product_id=' . $product['product_id'])
 			);
 		}
 		

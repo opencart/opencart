@@ -122,7 +122,7 @@ class ModelReportAffiliate extends Model {
 		$implode = array();
 		
 		if (!empty($data['filter_affiliate'])) {
-			$implode[] = "CONCAT(a.firstname, ' ', c.lastname) LIKE '" . $this->db->escape($data['filter_affiliate']) . "'";
+			$implode[] = "CONCAT(a.firstname, ' ', a.lastname) LIKE '" . $this->db->escape($data['filter_affiliate']) . "'";
 		}	
 			
 		if (!empty($data['filter_ip'])) {

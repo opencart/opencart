@@ -46,6 +46,7 @@ $_['text_gd']                = 'GD';
 $_['text_curl']              = 'cURL';
 $_['text_mcrypt']            = 'mCrypt';
 $_['text_zip']               = 'ZIP';
+$_['text_mbstring']          = 'mbstring';
 $_['text_on']                = 'On';
 $_['text_off']               = 'Off';
 $_['text_writable']          = 'Writable';

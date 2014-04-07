@@ -7,14 +7,14 @@ if (extension_loaded('mbstring')) {
 	}
 	
 	function utf8_strpos($string, $needle, $offset = 0) {
-		return mb_strpos($string, $needle, $offset, 'UTF-8');	
+		return mb_strpos($string, $needle, $offset);	
 	}
 	
 	function utf8_strrpos($string, $needle, $offset = 0) {
 		return mb_strrpos($string, $needle, $offset);
 	}
 	
-	function utf8_substr($string, $offset, $length = 0) {
+	function utf8_substr($string, $offset, $length = null) {
 		return mb_substr($string, $offset, $length);
 	}	
 	
@@ -26,20 +26,22 @@ if (extension_loaded('mbstring')) {
 		return mb_strtolower($string);
 	}
 } elseif (function_exists('iconv')) {
+	iconv_set_encoding('internal_encoding', 'UTF-8');
+	
 	function utf8_strlen($string) {
 		return iconv_strlen($string);
 	}
 	
 	function utf8_strpos($string, $needle, $offset = 0) {
-		return iconv_strpos($string, $needle, $offset, 'UTF-8');	
+		return iconv_strpos($string, $needle, $offset);	
 	}
 	
 	function utf8_strrpos($string, $needle, $offset = 0) {
 		return iconv_strrpos($string, $needle, $offset);
 	}
 	
-	function utf8_substr($string, $offset, $length = 0) {
-		return iconv_substr($string, $offset, $length);
+	function utf8_substr($string, $offset, $length = null) {
+		return iconv_substr($string, $offset,  is_null($length) ? iconv_strlen($string) : $length);
 	}
 
 	function utf8_strtoupper($string) {	

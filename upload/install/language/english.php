@@ -1,9 +1,17 @@
 <?php
 // Heading
-$_['heading_step_1']         = 'Step 1 - License';
-$_['heading_step_2']         = 'Step 2 - Pre-Installation';
-$_['heading_step_3']         = 'Step 3 - Configuration';
-$_['heading_step_4']         = 'Step 4 - Finished!';
+$_['heading_step_1']         = 'License agreement';
+$_['heading_step_1_small']   = 'Please read the OpenCart licence agreement';
+$_['heading_step_2']         = 'Pre-Installation';
+$_['heading_step_2_small']   = 'Check your server is set-up correctly';
+$_['heading_step_3']         = 'Configuration';
+$_['heading_step_3_small']   = 'Enter your database and administration details';
+$_['heading_step_4']         = 'Installation complete';
+$_['heading_step_4_small']   = 'Ready to start selling!';
+$_['heading_maxmind']        = 'MaxMind';
+$_['heading_maxmind_small']  = 'Fraud detection service.';
+$_['heading_openbay']        = 'OpenBay Pro';
+$_['heading_openbay_small']  = 'Multi marketplace integration';
 
 // Text
 $_['text_license']           = 'License';
@@ -38,6 +46,7 @@ $_['text_gd']                = 'GD';
 $_['text_curl']              = 'cURL';
 $_['text_mcrypt']            = 'mCrypt';
 $_['text_zip']               = 'ZIP';
+$_['text_mbstring']          = 'mbstring';
 $_['text_on']                = 'On';
 $_['text_off']               = 'Off';
 $_['text_writable']          = 'Writable';
@@ -49,7 +58,35 @@ $_['text_login']             = 'Login to your Administration';
 $_['text_project']           = 'Project Homepage';
 $_['text_documentation']     = 'Documentation';
 $_['text_support']           = 'Support Forums';
-$_['text_footer']            = 'Copyright © 2012 OpenCart - All rights reserved';
+$_['text_footer']            = 'Copyright © 2014 OpenCart - All rights reserved';
+$_['text_loading']           = 'Loading modules...';
+$_['text_store']             = 'visit the extensions store';
+$_['text_mail_list']         = 'Join the mailing list';
+$_['text_mail_list_small']   = 'Stay informed of OpenCart updates and events.';
+$_['text_openbay']   		 = 'OpenBay Pro gives merchants the ability to link their store with 3rd party markets like eBay and Amazon. Import orders, list items and handle shipping information direct from OpenCart...';
+$_['text_maxmind']   		 = 'MaxMind provides merchants the ability to identify risky transactions quickly, reducing the risk of fraud and minimises the time spent reviewing orders by giving a risk score for each one...';
+$_['text_more_info']   		 = 'More information';
+$_['text_facebook']   		 = 'Like us on Facebook';
+$_['text_facebook_info']     = 'Tell us how much you like OpenCart!';
+$_['text_facebook_link']     = 'Visit our Facebook page';
+$_['text_forum']    	 	 = 'Community forums';
+$_['text_forum_info']    	 = 'Get help from other OpenCart users';
+$_['text_forum_link']    	 = 'Visit our forums';
+$_['text_commercial']    	 = 'Commercial support';
+$_['text_commercial_info']   = 'Development services from OpenCart partners';
+$_['text_commercial_link']   = 'Visit our partner page';
+$_['text_view']   		     = 'View details';
+$_['text_download']   		 = 'Download';
+$_['text_downloads']   		 = 'Downloads';
+$_['text_price']   		 	 = 'Price';
+$_['text_view']   		     = 'View details';
+$_['text_maxmind_success']   = 'MaxMind fraud service has been installed';
+$_['text_maxmind_top']   	 = 'If you don\'t have a license key you can';
+$_['text_maxmind_link']   	 = 'sign up here';
+$_['text_maxmind_risk_help'] = 'The higher the score the more likely the order is fraudulent. Set a score between 0 - 100.';
+$_['text_maxmind_fraud_help'] = 'Orders over your set score will be assigned this order status and will not be allowed to reach the complete status automatically.';
+$_['text_ebay_about']	 	 = 'eBay is a multi-billion dollar market place that allows business or private sellers to auction and retail goods online. Available to sellers worldwide.';
+$_['text_amazon_about']	 	 = 'Amazon Marketplace a fixed-price online marketplace allowing sellers to offer new and used items alongside Amazon\'s regular retail service.';
 
 // Entry
 $_['entry_db_driver']        = 'DB Driver';
@@ -61,15 +98,22 @@ $_['entry_db_prefix']        = 'Prefix';
 $_['entry_username']         = 'Username';
 $_['entry_password']         = 'Password';
 $_['entry_email']            = 'E-Mail';
+$_['entry_licence_key']      = 'License Key';
+$_['entry_risk']      		 = 'Risk score';
+$_['entry_fraud_status']     = 'Fraud Order Status';
+
+// Error
+$_['error_key'] 			 = 'Maxmind licence key required';
+$_['error_score'] 			 = 'A score between 0 and 100 is accepted';
 
 // Buttons
 $_['button_continue']        = 'Continue';
 $_['button_back']            = 'Back';
-
-
-// Error
-
-
+$_['button_join']            = 'Join here';
+$_['button_setup']           = 'Set-up now';
+$_['button_register']        = 'Register';
+$_['button_register_eu']     = 'Register Europe';
+$_['button_register_us']     = 'Register USA';
 
 $_['text_terms'] = '<h3>GNU GENERAL PUBLIC LICENSE</h3>
         <p>Version 3, 29 June 2007</p>
@@ -600,17 +644,17 @@ $_['text_terms'] = '<h3>GNU GENERAL PUBLIC LICENSE</h3>
           the &ldquo;copyright&rdquo; line and a pointer to where the full notice is found.</p>
         <pre>&lt;one line to give the program\'s name and a brief idea of what it does.&gt;
     Copyright (C) &lt;year&gt;  &lt;name of author&gt;
- 
+
     This program is free software: you can redistribute it and/or modify
     it under the terms of the GNU General Public License as published by
     the Free Software Foundation, either version 3 of the License, or
     (at your option) any later version.
- 
+
     This program is distributed in the hope that it will be useful,
     but WITHOUT ANY WARRANTY; without even the implied warranty of
     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
     GNU General Public License for more details.
- 
+
     You should have received a copy of the GNU General Public License
     along with this program.  If not, see &lt;http://www.gnu.org/licenses/&gt;.
 </pre>

@@ -164,7 +164,7 @@ class ControllerOpenbayAmazon extends Controller {
 
 		$response = simplexml_load_string($this->openbay->amazon->callWithResponse('plans/getPlans'));
 
-		$data['plans'][] = array();
+		$data['plans'] = array();
 
 		if ($response) {
 			foreach ($response->Plan as $plan) {

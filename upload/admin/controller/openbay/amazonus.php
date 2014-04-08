@@ -161,7 +161,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$response = simplexml_load_string($this->openbay->amazonus->callWithResponse('plans/getPlans'));
 
-		$data['plans'][] = array();
+		$data['plans'] = array();
 
 		if ($response) {
 			foreach ($response->Plan as $plan) {

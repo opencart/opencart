@@ -275,7 +275,7 @@ class ModelSaleOrder extends Model {
 		// Remove used reward points
 		$this->load->model('sale/customer');
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "cutomer_reward WHERE order_id = '" . (int)$order_id  . "' and points < 0");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id  . "' and points < 0");
 
 		// Get the total
 		$total = 0;

@@ -31,79 +31,26 @@ class ModelCheckoutOrder extends Model {
 			$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` WHERE custom_field = '" . (int)$custom_field['custom_field_id'] . "'");
 			
 			if ($custom_field_query->num_rows) {
-				
-				
-				
-				
 				if ($custom_field_query->row['type'] == 'select' || $custom_field_query->row['type'] == 'radio') {
 					$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field['custom_field_id'] . "' AND cfv.custom_field_value_id = '" . (int)$custom_field['value'] . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 
 					if ($custom_field_value_query->num_rows) {
-						
-						
-						$this->db->query("INSERT INTO " . DB_PREFIX . "order_custom_field SET order_id = '" . (int)$order_id . "', custom_field_id = '" . (int)$custom_field['custom_field_id'] . "', custom_field_value_id = '" . (int)$custom_field['value'] . "', name = '" . $this->db->escape($custom_field['name']) . "', value = '" . $this->db->escape($custom_field_value_query->row['name']) . "', type = '" . $this->db->escape($custom_field_query->row['type']) . "', location = '" . $this->db->escape($custom_field['location']) . "'");
-					
-					
+						$this->db->query("INSERT INTO " . DB_PREFIX . "order_custom_field SET order_id = '" . (int)$order_id . "', custom_field_id = '" . (int)$custom_field['custom_field_id'] . "', custom_field_value_id = '" . (int)$custom_field['value'] . "', name = '" . $this->db->escape($custom_field_query->row['name']) . "', value = '" . $this->db->escape($custom_field_value_query->row['name']) . "', type = '" . $this->db->escape($custom_field_query->row['type']) . "', location = '" . $this->db->escape($custom_field['location']) . "'");
 					}
 				} elseif ($custom_field_query->row['type'] == 'checkbox' && is_array($custom_field['value'])) {
-					
-					
-					
 					foreach ($custom_field['value'] as $value) {
-						$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field['custom_field_id'] . "' AND cfv.custom_field_value_id = '" . (int)$custom_field['value'] . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+						$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field['custom_field_id'] . "' AND cfv.custom_field_value_id = '" . (int)$value . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
 	
 						if ($custom_field_value_query->num_rows) {
-							$this->db->query("INSERT INTO " . DB_PREFIX . "order_custom_field SET order_id = '" . (int)$order_id . "', custom_field_id = '" . (int)$custom_field['custom_field_id'] . "', custom_field_value_id = '" . (int)$value . "', name = '" . $this->db->escape($custom_field['name']) . "', value = '" . $this->db->escape($custom_field['value']) . "', type = '" . $this->db->escape($custom_field['type']) . "', location = '" . $this->db->escape($custom_field['location']) . "'");
+							$this->db->query("INSERT INTO " . DB_PREFIX . "order_custom_field SET order_id = '" . (int)$order_id . "', custom_field_id = '" . (int)$custom_field['custom_field_id'] . "', custom_field_value_id = '" . (int)$value . "', name = '" . $this->db->escape($custom_field_query->row['name']) . "', value = '" . $this->db->escape($custom_field_value_query->row['name']) . "', type = '" . $this->db->escape($custom_field_query->row['type']) . "', location = '" . $this->db->escape($custom_field['location']) . "'");
 						}
 					}
-				
 				} elseif ($custom_field_query->row['type'] == 'text' || $custom_field_query->row['type'] == 'textarea' || $custom_field_query->row['type'] == 'file' || $custom_field_query->row['type'] == 'date' || $custom_field_query->row['type'] == 'datetime' || $custom_field_query->row['type'] == 'time') {
-					
-					
-					
-					
-					$this->db->query("INSERT INTO " . DB_PREFIX . "order_custom_field SET order_id = '" . (int)$order_id . "', custom_field_id = '" . (int)$custom_field['custom_field_id'] . "', custom_field_value_id = '" . (int)$custom_field['custom_field_value_id'] . "', name = '" . $this->db->escape($custom_field['name']) . "', value = '" . $this->db->escape($custom_field['value']) . "', type = '" . $this->db->escape($custom_field['type']) . "', location = '" . $this->db->escape($custom_field['location']) . "'");
+					$this->db->query("INSERT INTO " . DB_PREFIX . "order_custom_field SET order_id = '" . (int)$order_id . "', custom_field_id = '" . (int)$custom_field['custom_field_id'] . "', name = '" . $this->db->escape($custom_field_query->row['name']) . "', value = '" . $this->db->escape($custom_field['value']) . "', type = '" . $this->db->escape($custom_field_query->row['type']) . "', location = '" . $this->db->escape($custom_field['location']) . "'");
 				}
-			
 			}
-		
-		
-		
 		}
-			
-		/*	
-		$this->load->model('account/custom_field');
-		
-		foreach ($custom_fields as $key => $value) {
-			$custom_field_info = $this->model_account_custom_field->getCustomField($key);
-			
-			if ($custom_field_info) {
-				if ($custom_field_info['type'] == 'select' || $custom_field_info['type'] == 'radio') { {
-					$custom_field_value_info = $this->model_account_custom_field->getCustomFieldValue($key);
-					
-					if ($custom_field_value_info) {
-						$order_data['custom_field'][] = array(
-							'custom_field_id'       => $key,
-							'custom_field_value_id' => $custom_field_value_info['custom_field_value_id'],
-							'name'                  => $custom_field_info['name'],
-							'value'                 => $value,
-							'type'                  => $custom_field_info['type'],
-							'location'              => 'account'
-						);								
-					}
-				} elseif ($custom_field_info['type'] == 'checkbox' && is_array($value)) {
-				
-				
-				} elseif ($custom_field_info['type'] == 'text' || $custom_field_info['type'] == 'textarea' || $custom_field_info['type'] == 'file' || $custom_field_info['type'] == 'date' || $option_query->row['type'] == 'datetime' || $custom_field_info['type'] == 'time') {
-				
-				
-				}
-			}
-		}				
-		
-		print_r($order_data['custom_field']);
-		*/
-								
+
 		return $order_id;
 	}
 	

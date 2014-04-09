@@ -1266,7 +1266,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					$('input[name=\'to_name\']').attr('value', '');
 					$('input[name=\'to_email\']').attr('value', '');	
 					$('textarea[name=\'message\']').attr('value', '');	
-					$('input[name=\'amount\']').attr('value', '');
+					$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
 				}
 				
 				// Shipping Method	
@@ -1304,7 +1304,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				$('input[name=\'to_name\']').val('');
 				$('input[name=\'to_email\']').val('');	
 				$('textarea[name=\'message\']').val('');	
-				$('input[name=\'amount\']').val('25.00');								
+				$('input[name=\'amount\']').val('<?php echo addslashes($voucher_min); ?>');								
 			}
 
 			if (json['success']) {

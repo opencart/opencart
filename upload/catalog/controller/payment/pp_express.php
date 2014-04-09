@@ -337,6 +337,10 @@ class ControllerPaymentPPExpress extends Controller {
 					$this->session->data['shipping_zone_id'] = $address_data['zone_id'];
 					$this->session->data['shipping_postcode'] = $address_data['postcode'];
 				}
+			} else {
+				$this->session->data['payment_address_id'] = '';
+				$this->session->data['payment_country_id'] = '';
+				$this->session->data['payment_zone_id'] = '';
 			}
 		}
 
@@ -762,10 +766,6 @@ class ControllerPaymentPPExpress extends Controller {
 			$payment_address = $this->session->data['guest']['payment'];
 		}
 
-		if (empty($payment_address)) {
-			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
-		}
-
 		// Validate if payment method has been set.
 		if (!isset($this->session->data['payment_method'])) {
 			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
@@ -866,20 +866,20 @@ class ControllerPaymentPPExpress extends Controller {
 				$payment_address = $this->session->data['guest']['payment'];
 			}
 
-			$data['payment_firstname'] = $payment_address['firstname'];
-			$data['payment_lastname'] = $payment_address['lastname'];
-			$data['payment_company'] = $payment_address['company'];
-			$data['payment_company_id'] = $payment_address['company_id'];
-			$data['payment_tax_id'] = $payment_address['tax_id'];
-			$data['payment_address_1'] = $payment_address['address_1'];
-			$data['payment_address_2'] = $payment_address['address_2'];
-			$data['payment_city'] = $payment_address['city'];
-			$data['payment_postcode'] = $payment_address['postcode'];
-			$data['payment_zone'] = $payment_address['zone'];
-			$data['payment_zone_id'] = $payment_address['zone_id'];
-			$data['payment_country'] = $payment_address['country'];
-			$data['payment_country_id'] = $payment_address['country_id'];
-			$data['payment_address_format'] = $payment_address['address_format'];
+			$data['payment_firstname'] = isset($payment_address['firstname']) ? $payment_address['firstname'] : '';
+			$data['payment_lastname'] = isset($payment_address['lastname']) ? $payment_address['lastname'] : '';
+			$data['payment_company'] = isset($payment_address['company']) ? $payment_address['company'] : '';
+			$data['payment_company_id'] = isset($payment_address['company_id']) ? $payment_address['company_id'] : '';
+			$data['payment_tax_id'] = isset($payment_address['tax_id']) ? $payment_address['tax_id'] : '';
+			$data['payment_address_1'] = isset($payment_address['address_1']) ? $payment_address['address_1'] : '';
+			$data['payment_address_2'] = isset($payment_address['address_2']) ? $payment_address['address_2'] : '';
+			$data['payment_city'] = isset($payment_address['city']) ? $payment_address['city'] : '';
+			$data['payment_postcode'] = isset($payment_address['postcode']) ? $payment_address['postcode'] : '';
+			$data['payment_zone'] = isset($payment_address['zone']) ? $payment_address['zone'] : '';
+			$data['payment_zone_id'] = isset($payment_address['zone_id']) ? $payment_address['zone_id'] : '';
+			$data['payment_country'] = isset($payment_address['country']) ? $payment_address['country'] : '';
+			$data['payment_country_id'] = isset($payment_address['country_id']) ? $payment_address['country_id'] : '';
+			$data['payment_address_format'] = isset($payment_address['address_format']) ? $payment_address['address_format'] : '';
 
 			$data['payment_method'] = '';
 			if (isset($this->session->data['payment_method']['title'])) {

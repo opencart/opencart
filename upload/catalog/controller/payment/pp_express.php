@@ -224,7 +224,7 @@ class ControllerPaymentPPExpress extends Controller {
 					$returned_shipping_zone = '';
 				}
 
-				$zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `name` = '" . $this->db->escape($returned_shipping_zone) . "' AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "'")->row;
+				$zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE (`name` = '" . $this->db->escape($returned_shipping_zone) . "' OR `code` = '" . $this->db->escape($returned_shipping_zone) . "') AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "' LIMIT 1")->row;
 
 				if ($zone_info) {
 					$this->session->data['guest']['shipping']['zone'] = $zone_info['name'];

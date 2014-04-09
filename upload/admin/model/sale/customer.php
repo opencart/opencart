@@ -473,12 +473,18 @@ class ModelSaleCustomer extends Model {
 		return $query->row['total'];
 	}
 
-	public function getIpsByCustomerId($customer_id) {
+	public function getIps($customer_id) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$customer_id . "'");
 
 		return $query->rows;
 	}	
+	
+	public function getTotalIps($customer_id) {
+		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$customer_id . "'");
 
+		return $query->row['total'];
+	}	
+	
 	public function getTotalCustomersByIp($ip) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($ip) . "'");
 

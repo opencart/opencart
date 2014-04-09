@@ -27,6 +27,20 @@ class ModelCheckoutOrder extends Model {
 		}
 		
 		// Custom Fields
+		$data['custom_fields'] = array();
+
+		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->config->get('config_customer_group_id'));
+
+		foreach ($custom_fields as $custom_field) {
+			
+			if ($custom_field_query->row['type'] == 'select' || $custom_field_query->row['type'] == 'radio') {
+				$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field['custom_field_id'] . "' AND cfv.custom_field_value_id = '" . (int)$custom_field['value'] . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
+			
+			
+
+		}
+		
+		
 		foreach ($data['custom_field'] as $custom_field) {
 			$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` WHERE custom_field = '" . (int)$custom_field['custom_field_id'] . "'");
 			

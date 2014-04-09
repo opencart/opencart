@@ -1179,12 +1179,12 @@ class ControllerCatalogProduct extends Controller {
 		$data['product_specials'] = array();
 
 		foreach ($product_specials as $product_special) {
-			$data['product_discounts'][] = array(
+			$data['product_specials'][] = array(
 				'customer_group_id' => $product_special['customer_group_id'],
 				'priority'          => $product_special['priority'],
 				'price'             => $product_special['price'],
-				'date_start'        => ($product_special['date_start'] != '0000-00-00' ? $product_discount['date_start'] : ''),
-				'date_end'          => ($product_special['date_end'] != '0000-00-00' ? $product_discount['date_end'] :  '')
+				'date_start'        => ($product_special['date_start'] != '0000-00-00' ? $product_special['date_start'] : ''),
+				'date_end'          => ($product_special['date_end'] != '0000-00-00' ? $product_special['date_end'] :  '')
 			);
 		}
 

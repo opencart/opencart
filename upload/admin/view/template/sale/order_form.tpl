@@ -469,7 +469,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-amount"><?php echo $entry_amount; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="amount" value="25.00" id="input-amount" class="form-control" />
+                  <input type="text" name="amount" value="<?php echo $voucher_min; ?>" id="input-amount" class="form-control" />
                 </div>
               </div>
             </fieldset>
@@ -1175,11 +1175,11 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('#button-product i, #button-voucher i, #button-update i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-product, #button-voucher , #button-update').prop('disabled', true);
+			$('#button-product, #button-voucher, #button-update').prop('disabled', true);
 		},	
 		complete: function() {
 			$('#button-product i, #button-voucher i, #button-update i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-product, #button-voucher , #button-update').prop('disabled', false);
+			$('#button-product, #button-voucher, #button-update').prop('disabled', false);
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
@@ -1266,7 +1266,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					$('input[name=\'to_name\']').attr('value', '');
 					$('input[name=\'to_email\']').attr('value', '');	
 					$('textarea[name=\'message\']').attr('value', '');	
-					$('input[name=\'amount\']').attr('value', '25.00');
+					$('input[name=\'amount\']').attr('value', '<?php echo addslashes($voucher_min); ?>');
 				}
 				
 				// Shipping Method	
@@ -1304,7 +1304,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 				$('input[name=\'to_name\']').val('');
 				$('input[name=\'to_email\']').val('');	
 				$('textarea[name=\'message\']').val('');	
-				$('input[name=\'amount\']').val('25.00');								
+				$('input[name=\'amount\']').val('<?php echo addslashes($voucher_min); ?>');								
 			}
 
 			if (json['success']) {

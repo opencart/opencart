@@ -20,7 +20,6 @@ class ControllerPaymentPPExpress extends Controller {
 
 	public function express() {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$this->log->write('No product redirect');
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
@@ -98,7 +97,7 @@ class ControllerPaymentPPExpress extends Controller {
 			 * used on the cart or checkout pages - need to be added?
 			 * If PayPal debug log is off then still log error to normal error log.
 			 */
-			if($this->config->get('pp_express_debug')) {
+			if($this->config->get('pp_express_debug') == 1) {
 				$this->log->write(serialize($result));
 			}
 
@@ -224,7 +223,7 @@ class ControllerPaymentPPExpress extends Controller {
 					$returned_shipping_zone = '';
 				}
 
-				$zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE `name` = '" . $this->db->escape($returned_shipping_zone) . "' AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "'")->row;
+				$zone_info = $this->db->query("SELECT * FROM `" . DB_PREFIX . "zone` WHERE (`name` = '" . $this->db->escape($returned_shipping_zone) . "' OR `code` = '" . $this->db->escape($returned_shipping_zone) . "') AND `status` = '1' AND `country_id` = '" . (int)$country_info['country_id'] . "' LIMIT 1")->row;
 
 				if ($zone_info) {
 					$this->session->data['guest']['shipping']['zone'] = $zone_info['name'];
@@ -337,6 +336,10 @@ class ControllerPaymentPPExpress extends Controller {
 					$this->session->data['shipping_zone_id'] = $address_data['zone_id'];
 					$this->session->data['shipping_postcode'] = $address_data['postcode'];
 				}
+			} else {
+				$this->session->data['payment_address_id'] = '';
+				$this->session->data['payment_country_id'] = '';
+				$this->session->data['payment_zone_id'] = '';
 			}
 		}
 
@@ -762,10 +765,6 @@ class ControllerPaymentPPExpress extends Controller {
 			$payment_address = $this->session->data['guest']['payment'];
 		}
 
-		if (empty($payment_address)) {
-			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
-		}
-
 		// Validate if payment method has been set.
 		if (!isset($this->session->data['payment_method'])) {
 			$redirect = $this->url->link('checkout/checkout', '', 'SSL');
@@ -866,20 +865,20 @@ class ControllerPaymentPPExpress extends Controller {
 				$payment_address = $this->session->data['guest']['payment'];
 			}
 
-			$data['payment_firstname'] = $payment_address['firstname'];
-			$data['payment_lastname'] = $payment_address['lastname'];
-			$data['payment_company'] = $payment_address['company'];
-			$data['payment_company_id'] = $payment_address['company_id'];
-			$data['payment_tax_id'] = $payment_address['tax_id'];
-			$data['payment_address_1'] = $payment_address['address_1'];
-			$data['payment_address_2'] = $payment_address['address_2'];
-			$data['payment_city'] = $payment_address['city'];
-			$data['payment_postcode'] = $payment_address['postcode'];
-			$data['payment_zone'] = $payment_address['zone'];
-			$data['payment_zone_id'] = $payment_address['zone_id'];
-			$data['payment_country'] = $payment_address['country'];
-			$data['payment_country_id'] = $payment_address['country_id'];
-			$data['payment_address_format'] = $payment_address['address_format'];
+			$data['payment_firstname'] = isset($payment_address['firstname']) ? $payment_address['firstname'] : '';
+			$data['payment_lastname'] = isset($payment_address['lastname']) ? $payment_address['lastname'] : '';
+			$data['payment_company'] = isset($payment_address['company']) ? $payment_address['company'] : '';
+			$data['payment_company_id'] = isset($payment_address['company_id']) ? $payment_address['company_id'] : '';
+			$data['payment_tax_id'] = isset($payment_address['tax_id']) ? $payment_address['tax_id'] : '';
+			$data['payment_address_1'] = isset($payment_address['address_1']) ? $payment_address['address_1'] : '';
+			$data['payment_address_2'] = isset($payment_address['address_2']) ? $payment_address['address_2'] : '';
+			$data['payment_city'] = isset($payment_address['city']) ? $payment_address['city'] : '';
+			$data['payment_postcode'] = isset($payment_address['postcode']) ? $payment_address['postcode'] : '';
+			$data['payment_zone'] = isset($payment_address['zone']) ? $payment_address['zone'] : '';
+			$data['payment_zone_id'] = isset($payment_address['zone_id']) ? $payment_address['zone_id'] : '';
+			$data['payment_country'] = isset($payment_address['country']) ? $payment_address['country'] : '';
+			$data['payment_country_id'] = isset($payment_address['country_id']) ? $payment_address['country_id'] : '';
+			$data['payment_address_format'] = isset($payment_address['address_format']) ? $payment_address['address_format'] : '';
 
 			$data['payment_method'] = '';
 			if (isset($this->session->data['payment_method']['title'])) {
@@ -1279,7 +1278,7 @@ class ControllerPaymentPPExpress extends Controller {
 			 * used on the cart or checkout pages - need to be added?
 			 * If PayPal debug log is off then still log error to normal error log.
 			 */
-			if($this->config->get('pp_express_debug') == 0) {
+			if($this->config->get('pp_express_debug') == 1) {
 				$this->log->write(serialize($result));
 			}
 
@@ -1564,7 +1563,9 @@ class ControllerPaymentPPExpress extends Controller {
 
 		if ((string)$response == "VERIFIED")  {
 
-			$this->log->write((isset($this->request->post['transaction_entity']) ? $this->request->post['transaction_entity'] : ''));
+			if($this->config->get('pp_express_debug') == 1) {
+				$this->log->write((isset($this->request->post['transaction_entity']) ? $this->request->post['transaction_entity'] : ''));
+			}
 
 			if(isset($this->request->post['txn_id'])) {
 				$transaction = $this->model_payment_pp_express->getTransactionRow($this->request->post['txn_id']);
@@ -1580,7 +1581,9 @@ class ControllerPaymentPPExpress extends Controller {
 
 			if($transaction) {
 				//transaction exists, check for cleared payment or updates etc
-				$this->log->write('Transaction exists');
+				if($this->config->get('pp_express_debug') == 1) {
+					$this->log->write('Transaction exists');
+				}
 
 				//if the transaction is pending but the new status is completed
 				if($transaction['payment_status'] != $this->request->post['payment_status']) {
@@ -1592,9 +1595,14 @@ class ControllerPaymentPPExpress extends Controller {
 					$this->db->query("UPDATE `" . DB_PREFIX . "paypal_order_transaction` SET `pending_reason` = '" . $this->request->post['pending_reason'] . "' WHERE `transaction_id` = '" . $this->db->escape($transaction['transaction_id']) . "' LIMIT 1");
 				}
 			} else {
-				$this->log->write('Transaction does not exist');
+				if($this->config->get('pp_express_debug') == 1) {
+					$this->log->write('Transaction does not exist');
+				}
+
 				if($parent_transaction) {
-					$this->log->write('Parent transaction exists');
+					if($this->config->get('pp_express_debug') == 1) {
+						$this->log->write('Parent transaction exists');
+					}
 					//parent transaction exists
 
 					//insert new related transaction
@@ -1634,9 +1642,11 @@ class ControllerPaymentPPExpress extends Controller {
 						$refunded = number_format($this->model_payment_pp_express->totalRefundedOrder($parent_transaction['paypal_order_id']), 2);
 						$remaining = number_format($parent_transaction['amount'] - $captured + $refunded, 2);
 
-						$this->log->write('Captured: '.$captured);
-						$this->log->write('Refunded: '.$refunded);
-						$this->log->write('Remaining: '.$remaining);
+						if($this->config->get('pp_express_debug') == 1) {
+							$this->log->write('Captured: '.$captured);
+							$this->log->write('Refunded: '.$refunded);
+							$this->log->write('Remaining: '.$remaining);
+						}
 
 						if($remaining > 0.00) {
 							$transaction = array(
@@ -1662,7 +1672,9 @@ class ControllerPaymentPPExpress extends Controller {
 
 				} else {
 					//parent transaction doesn't exists, need to investigate?
-					$this->log->write('Parent transaction not found');
+					if($this->config->get('pp_express_debug') == 1) {
+						$this->log->write('Parent transaction not found');
+					}
 				}
 			}
 
@@ -1785,7 +1797,9 @@ class ControllerPaymentPPExpress extends Controller {
 		}elseif( (string)$response == "INVALID" ) {
 			$this->model_payment_pp_express->log(array('IPN was invalid'), 'IPN fail');
 		} else {
-			$this->log->write('string unknown ');
+			if($this->config->get('pp_express_debug') == 1) {
+				$this->log->write('string unknown ');
+			}
 		}
 
 		header("HTTP/1.1 200 Ok");

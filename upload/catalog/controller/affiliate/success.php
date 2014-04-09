@@ -24,7 +24,7 @@ class ControllerAffiliateSuccess extends Controller {
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		if (!$this->config('config_affiliate_approval')) {
+		if (!$this->config-get('config_affiliate_approval')) {
 			$data['text_message'] = sprintf($this->language->get('text_message'), $this->config->get('config_name'), $this->url->link('information/contact'));
 		} else {
 			$data['text_message'] = sprintf($this->language->get('text_approval'), $this->config->get('config_name'), $this->url->link('information/contact'));

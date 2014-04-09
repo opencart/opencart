@@ -437,7 +437,7 @@ class ControllerCheckoutConfirm extends Controller {
 						
 			$data['totals'] = array();
 	
-			foreach ($total_data as $total) {
+			foreach ($order_data['totals'] as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],
 					'text'  => $this->currency->format($total['value']),

@@ -175,7 +175,9 @@ class ModelLocalisationLanguage extends Model {
 
 		foreach ($query->rows as $voucher_theme) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "voucher_theme_description SET voucher_theme_id = '" . (int)$voucher_theme['voucher_theme_id'] . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($voucher_theme['name']) . "'");
-		}	
+		}
+		
+		$this->cache->delete('voucher_theme');
 				
 		// Weight Class
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "weight_class_description WHERE language_id = '" . (int)$this->config->get('config_language_id') . "'");

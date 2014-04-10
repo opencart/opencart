@@ -2,8 +2,6 @@
 // Version
 define('VERSION', '1.5.6.2');
 
-/* Testing non-beta */
-
 // Configuration
 if (file_exists('config.php')) {
 	require_once('config.php');

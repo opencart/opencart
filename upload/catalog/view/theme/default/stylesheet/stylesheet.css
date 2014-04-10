@@ -8,9 +8,6 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	color: #444;
 }
-a {
-	color: #23a1d1;
-}
 /* default font size */
 .fa {
 	font-size: 14px;

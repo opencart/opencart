@@ -454,7 +454,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			$data['text_payment_profile'] = $this->language->get('text_payment_profile');
-			$data['profiles'] = $this->model_catalog_product->getProfiles($product_info['product_id']);
+			$data['profiles'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 			
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 						

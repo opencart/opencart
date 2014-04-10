@@ -169,7 +169,7 @@ class ControllerExtensionModification extends Controller {
 		
 							$search_node = $operation_node->getElementsByTagName('search')->item(0);
 							$search_node_position = ($search_node->getAttribute('position')) ? $search_node->getAttribute('position') : 'replace';
-							$search_node_indexes = $this->vqmodGetIndexes($search_node->getAttribute('index'));
+							$search_node_index = $search_node->getAttribute('index');
 							$search_node_offset = ($search_node->getAttribute('offset')) ? $search_node->getAttribute('offset') : '0';
 							$search_node_regex = ($search_node->getAttribute('regex')) ? $search_node->getAttribute('regex') : 'false';
 							$search_node_trim = ($search_node->getAttribute('trim') == 'false') ? 'false' : 'true';
@@ -182,6 +182,22 @@ class ControllerExtensionModification extends Controller {
 							$index_count = 0;
 							$tmp = explode("\n", $modification[$file]);
 							$line_max = count($tmp) - 1;
+		
+							if ($search_node_index) {
+								$tmp = explode(',', $search_node_index);
+								
+								foreach ($tmp as $k => $v) {
+									if (!is_int($v)) {
+										unset($k);
+									}
+								}
+								
+								$tmp = array_unique($tmp);
+								
+								$search_node_indexes = empty($tmp) ? false : $tmp;
+							} else {
+								$search_node_indexes = false;
+							}			
 		
 							// apply the next search and add operation to the file content
 							switch ($search_node_position) {
@@ -328,7 +344,7 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			//$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getList();

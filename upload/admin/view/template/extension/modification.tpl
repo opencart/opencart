@@ -48,6 +48,11 @@
                       <?php } else { ?>
                       <a href="<?php echo $sort_author; ?>"><?php echo $column_author; ?></a>
                       <?php } ?></td>
+                    <td class="text-left"><?php if ($sort == 'version') { ?>
+                      <a href="<?php echo $sort_version; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_version; ?></a>
+                      <?php } else { ?>
+                      <a href="<?php echo $sort_version; ?>"><?php echo $column_version; ?></a>
+                      <?php } ?></td>                      
                     <td class="text-left"><?php if ($sort == 'status') { ?>
                       <a href="<?php echo $sort_status; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_status; ?></a>
                       <?php } else { ?>
@@ -72,6 +77,7 @@
                       <?php } ?></td>
                     <td class="text-left"><?php echo $modification['name']; ?></td>
                     <td class="text-left"><?php echo $modification['author']; ?></td>
+                    <td class="text-left"><?php echo $modification['version']; ?></td>
                     <td class="text-left"><?php echo $modification['status']; ?></td>
                     <td class="text-left"><?php echo $modification['date_added']; ?></td>
                     <td class="text-right"><?php if ($modification['link']) { ?>

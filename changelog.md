@@ -3,7 +3,7 @@
 ## v1.5.6.2 (10th April 2014)
 #### Bugs fixed
 - **PayPal Express Checkout** Added error handling if no shipping options for weight based shipping are found (201004c7dcbec43d17477a099fc8522f56537c00)
-- **PayPal Express Checkout** Fixed message when cart totals do not match order amounts (1bf9db4306223760ba00a1a6bd8524cb1f96128b)
+- **PayPal Express Checkout** Fixed message when cart totals do not match order amounts [1bf9db4306223760ba00a1a6bd8524cb1f96128b]
 - **PayPal Express Checkout** Fixed state issue, changed variable from PAYMENTREQUEST_0_SHIPTOCOUNTRYCODE to PAYMENTREQUEST_0_SHIPTOSTATE (ff2705e21aa3062db53a4a39e5651d231af20e9c)
 - **PayPal Express Checkout** Added fix for to allow for download only items and PayPal guest checkout. Guest checkout with no shipping option will not return any address data for the checkout so exceptions for no payment address data have been handled (0a94a4073743cced97e0944d702425c7c57cf866)
 - Fix for from and mail-to mail headers (03bc37b4303bc3a9e9b6d9d34d604f0126aa61d1)

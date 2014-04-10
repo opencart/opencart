@@ -633,10 +633,11 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				$amount = 89.0;
 				break;
 			case 'DEU':
-			case 'NLD':
 				$amount = 6.95;
 				break;
-
+			case 'NLD':
+				$amount = 5.0;
+				break;
 			default:
 				$log = new Log('klarna.log');
 				$log->write('Unknown country ' . $country);

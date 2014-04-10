@@ -1,6 +1,6 @@
 <?php
 // Version
-define('VERSION', '1.5.6.1');
+define('VERSION', '1.5.6.2');
 
 /* Testing non-beta */
 

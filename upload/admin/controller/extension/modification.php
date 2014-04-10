@@ -114,33 +114,69 @@ class ControllerExtensionModification extends Controller {
 				}
 		
 				foreach ($file_nodes as $file_node) {
-					$path = '';
+					// Files
+					$files = array();
 					
-					// Get the full path of the files that are going to be used for modification
-					if (substr($file->getAttribute('name'), 0, 7) == 'catalog') {
-						$path = DIR_CATALOG . substr($file->getAttribute('name'), 8);
-					} 
+					$files_1 = explode(',', $file_node->getAttribute('name'));
 					
-					if (substr($file->getAttribute('name'), 0, 5) == 'admin') {
-						$path = DIR_APPLICATION . substr($file->getAttribute('name'), 6);
-					} 
-					
-					if (substr($file->getAttribute('name'), 0, 6) == 'system') {
-						$path = DIR_SYSTEM . substr($file->getAttribute('name'), 7);
-					}
-										
-					$files = glob($path . $file_node->getAttribute('name'));
-					
-					if ($files === false) {
-						$files = array();
+					foreach ($files_1 as $file_1) {
+						$path = '';
+						
+						// Get the full path of the files that are going to be used for modification
+						if ($file_node->getAttribute('path')) {
+							if (substr($file_node->getAttribute('path'), 0, 7) == 'catalog') {
+								$path = DIR_CATALOG . substr($file_node->getAttribute('path'), 8);
+							} 
+							
+							if (substr($file_node->getAttribute('path'), 0, 5) == 'admin') {
+								$path = DIR_APPLICATION . substr($file_node->getAttribute('path'), 6);
+							} 
+							
+							if (substr($file_node->getAttribute('path'), 0, 6) == 'system') {
+								$path = DIR_SYSTEM . substr($file_node->getAttribute('path'), 7);
+							}							
+						} else {
+							if (substr($file_1, 0, 7) == 'catalog') {
+								$path = DIR_CATALOG . substr($file_1, 8);
+							} 
+							
+							if (substr($file_1, 0, 5) == 'admin') {
+								$path = DIR_APPLICATION . substr($file_1, 6);
+							} 
+							
+							if (substr($file_node->getAttribute('path'), 0, 6) == 'system') {
+								$path = DIR_SYSTEM . substr($file_1, 7);
+							}						
+						}
+						
+						$files_2 = glob($path . $file_1);
+						
+						if ($files_2) {
+							foreach ($files_2 as $file_2) {
+								$files[] = $file_2;
+							}
+						}
 					}
 					
 					$operation_nodes = $file_node->getElementsByTagName('operation');
 					$file_node_error = $file_node->getAttribute('error');
 		
 					foreach ($files as $file) {
-						if (!isset($modification[$file])) {
-							$modification[$file] = file_get_contents($file);
+						// Get the key to be used for the modification cache filename.
+						if (substr($file, 0, strlen(DIR_CATALOG)) == DIR_CATALOG) {
+							$key = 'catalog_' . str_replace('/', '_', substr($file, strlen(DIR_APPLICATION)));
+						}
+
+						if (substr($file, 0, strlen(DIR_APPLICATION)) == DIR_APPLICATION) {
+							$key = 'admin_' . str_replace('/', '_', substr($file, strlen(DIR_APPLICATION)));
+						}
+
+						if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
+							$key = 'system_' . str_replace('/', '_', substr($file, strlen(DIR_SYSTEM)));
+						}							
+
+						if (!isset($modification[$key])) {
+							$modification[$key] = file_get_contents($file);
 						}
 		
 						foreach ($operation_nodes as $operation_node) {
@@ -157,7 +193,7 @@ class ControllerExtensionModification extends Controller {
 								$ignoreif_node_value = trim($ignoreif_node_value->nodeValue);
 								
 								if ($ignoreif_node_regex == 'true') {
-									if (preg_match($ignoreif_node_value, $modification[$file])) {
+									if (preg_match($ignoreif_node_value, $modification[$key])) {
 										continue;
 									}
 								} else {
@@ -180,7 +216,7 @@ class ControllerExtensionModification extends Controller {
 							$add_node_value = ($add_node_trim == 'true') ? trim($add_node->nodeValue) : $add_node->nodeValue;
 		
 							$index_count = 0;
-							$tmp = explode("\n", $modification[$file]);
+							$tmp = explode("\n", $modification[$key]);
 							$line_max = count($tmp) - 1;
 		
 							if ($search_node_index) {
@@ -311,7 +347,7 @@ class ControllerExtensionModification extends Controller {
 		
 							ksort($tmp);
 							
-							$modification[$file] = implode("\n", $tmp);
+							$modification[$key] = implode("\n", $tmp);
 						} // end of $operation_nodes
 					} // end of $files
 				} // end of $file_nodes
@@ -344,7 +380,7 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		//	$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getList();

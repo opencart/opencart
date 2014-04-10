@@ -167,30 +167,30 @@ class Cart {
 
 					$price = $product_query->row['price'];
 
-					// Product Discounts
-					$discount_quantity = 0;
-
-					foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
-						$product_2 = explode(':', $key_2);
-
-						if ($product_2[0] == $product_id) {
-							$discount_quantity += $quantity_2;
-						}
-					}
-
-					$product_discount_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_discount WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND quantity <= '" . (int)$discount_quantity . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) ORDER BY quantity DESC, priority ASC, price ASC LIMIT 1");
-
-					if ($product_discount_query->num_rows) {
-						$price = $product_discount_query->row['price'];
-					}
-
 					// Product Specials
 					$product_special_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_special WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) ORDER BY priority ASC, price ASC LIMIT 1");
 
 					if ($product_special_query->num_rows) {
 						$price = $product_special_query->row['price'];
+					} else {
+						// Product Discounts
+						$discount_quantity = 0;
+	
+						foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
+							$product_2 = explode(':', $key_2);
+	
+							if ($product_2[0] == $product_id) {
+								$discount_quantity += $quantity_2;
+							}
+						}
+	
+						$product_discount_query = $this->db->query("SELECT price FROM " . DB_PREFIX . "product_discount WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "' AND quantity <= '" . (int)$discount_quantity . "' AND ((date_start = '0000-00-00' OR date_start < NOW()) AND (date_end = '0000-00-00' OR date_end > NOW())) ORDER BY quantity DESC, priority ASC, price ASC LIMIT 1");
+	
+						if ($product_discount_query->num_rows) {
+							$price = $product_discount_query->row['price'];
+						}
 					}
-
+	
 					// Reward Points
 					$product_reward_query = $this->db->query("SELECT points FROM " . DB_PREFIX . "product_reward WHERE product_id = '" . (int)$product_id . "' AND customer_group_id = '" . (int)$this->config->get('config_customer_group_id') . "'");
 

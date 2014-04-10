@@ -1,10 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <modification>
-	<id>VQMOD CORE FOR OPENCART - DO NOT REMOVE</id>
-	<version>1.4.x and 1.5.x</version>
-	<vqmver required="true">2.4.0</vqmver>
-	<author>vqmod.com</author>	
-	
   <name>
     <![CDATA[Modification Default]]>
   </name>
@@ -14,7 +9,7 @@
   <author>
     <![CDATA[http://www.opencart.com]]>
   </author>
-  <file path="system/{engine,library}/{action,loader,config,language}*.php">
+  <file name="system/{engine,library}/{action,loader,config,language}*.php">
 	<operation>
       <search regex="true">
         <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
@@ -24,6 +19,4 @@
       </add>
     </operation>
   </file>
-  
-  
 </modification>

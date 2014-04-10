@@ -109,7 +109,7 @@ class ControllerExtensionInstaller extends Controller {
 			}
 
 			// If zip file copy it to the temp directory
-			if (strrchr($this->request->files['file']['name'], '.') == '.zip') {
+			if (strrchr($this->request->files['file']['name'], '.') == '.vqmod.zip') {
 				$file = DIR_DOWNLOAD . $path . '/upload.zip';
 
 				move_uploaded_file($this->request->files['file']['tmp_name'], $file);

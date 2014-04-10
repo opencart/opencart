@@ -46,6 +46,7 @@ class ControllerExtensionModification extends Controller {
 		$this->getList();
 	}
 
+	/* A big thanks to Qphoria and mhcwebdesign for this part of the code! */
 	public function refresh() {
 		$this->load->language('extension/modification');
 
@@ -54,6 +55,9 @@ class ControllerExtensionModification extends Controller {
 		$this->load->model('setting/modification');
 
 		if ($this->validate()) {
+			// Log
+			$log = new Log('vqmod.log');
+
 			// Clear all modification files
 			$files = glob(DIR_MODIFICATION . '{*.php,*.tpl}', GLOB_BRACE);
 
@@ -100,9 +104,10 @@ class ControllerExtensionModification extends Controller {
 					
 					if (strtolower($version_check) == 'true') {
 						if (version_compare($version, $vqmver->nodeValue, '<')) {
-							$this->vqmodLogWrite("Modification::write - VQMOD VERSION '" . $vqmver->nodeValue . "' OR ABOVE REQUIRED, XML FILE HAS BEEN SKIPPED");
-							$this->vqmodLogWrite("  modification id = '$modification_id'");
-							$this->vqmodLogWrite("");
+							$message  = 'Modification::write - VQMOD VERSION \'' . $vqmver->nodeValue . '\' OR ABOVE REQUIRED, XML FILE HAS BEEN SKIPPED' . "\n";
+							$message .= 'Modification ID = \'' . $modification_id . '\'' . "\n";
+							
+							$log->write($message);
 							return;
 						}
 					}
@@ -172,7 +177,7 @@ class ControllerExtensionModification extends Controller {
 		
 							$add_node = $operation_node->getElementsByTagName('add')->item(0);
 							$add_node_trim = ($add_node->getAttribute('trim') == 'false') ? 'false' : 'true';
-							$add_node_value = ($add_node_trim=='true') ? trim($add_node->nodeValue) : $add_node->nodeValue;
+							$add_node_value = ($add_node_trim == 'true') ? trim($add_node->nodeValue) : $add_node->nodeValue;
 		
 							$index_count = 0;
 							$tmp = explode("\n", $modification[$file]);
@@ -198,11 +203,13 @@ class ControllerExtensionModification extends Controller {
 									foreach ($tmp as $line_num => $line) {
 										if (strlen($search_node_value) == 0) {
 											if ($operation_node_error == 'log' || $operation_node_error == 'abort') {
-												$this->vqmodLogWrite("Modification::write - EMPTY SEARCH CONTENT ERROR:");
-												$this->vqmodLogWrite("  modification id = '$modification_id'");
-												$this->vqmodLogWrite("  file name = '".$file_node->getAttribute('name')."'");
-												$this->vqmodLogWrite("");
+												$message  = 'Modification::write - EMPTY SEARCH CONTENT ERROR:' . "\n";
+												$message .= 'Modification ID = \'' . $modification_id . '\'' . "\n";
+												$message .= 'Filename = \'' . $file_node->getAttribute('name') . '\'' . "\n";
+												
+												$log->write($message);
 											}
+											
 											break;
 										}
 		
@@ -211,11 +218,12 @@ class ControllerExtensionModification extends Controller {
 											
 											if ($pos === false) {
 												if ($operation_node_error == 'log' || $operation_node_error == 'abort') {
-													$this->vqmodLogWrite("Modification::write - INVALID REGEX ERROR:");
-													$this->vqmodLogWrite("  modification id = '$modification_id'");
-													$this->vqmodLogWrite("  file name = '".$file_node->getAttribute('name')."'");
-													$this->vqmodLogWrite("  search = '$search_node_value'");
-													$this->vqmodLogWrite("");
+													$message  = 'Modification::write - INVALID REGEX ERROR:' . "\n";
+													$message .= 'Modification ID = \'' . $modification_id . '\'' . "\n";
+													$message .= 'Filename = \'' . $file_node->getAttribute('name') . '\'' . "\n";
+													$message .= 'Search = \'' . $search_node_value . '\'' . "\n";
+													
+													$log->write($message);
 												}
 												continue 2; // continue with next operation_node
 											} elseif ($pos == 0) {
@@ -270,15 +278,16 @@ class ControllerExtensionModification extends Controller {
 										$skip_text = ($operation_node_error == 'skip' || $operation_node_error == 'log') ? '(SKIPPED)' : '(ABORTING MOD)';
 										
 										if ($operation_node_error == 'log' || $operation_node_error) {
-											$this->vqmodLogWrite("Modification::write - SEARCH NOT FOUND $skip_text:");
-											$this->vqmodLogWrite("  modification id = '$modification_id'");
-											$this->vqmodLogWrite("  file name = '".$file_node->getAttribute('name')."'");
-											$this->vqmodLogWrite("  search = '$search_node_value'");
-											$this->vqmodLogWrite("");
+											$message  = 'Modification::write - SEARCH NOT FOUND ' . $skip_text . ':' . "\n";
+											$message .= 'Modification ID = \'' . $modification_id . '\'' . "\n";
+											$message .= 'Filename = \'' . $file_node->getAttribute('name') . '\'' . "\n";
+											$message .= 'Search = \'' . $search_node_value . '\'' . "\n";
+											
+											$log->write($message);
 										}
 		
 										if ($operation_node_error == 'abort') {
-											return; // skip this XML file
+											break 2; // skip this XML file
 										}
 									}
 									break;
@@ -291,9 +300,6 @@ class ControllerExtensionModification extends Controller {
 					} // end of $files
 				} // end of $file_nodes
 			}
-	
-
-			
 			
 			// Write all modification files
 			foreach ($modification as $key => $value) {
@@ -305,7 +311,6 @@ class ControllerExtensionModification extends Controller {
 		
 				fclose($handle);	
 			}
-
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -431,6 +436,38 @@ class ControllerExtensionModification extends Controller {
 			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
+		$this->getList();
+	}
+
+	public function clearlog() {
+		$this->load->language('extension/modification');
+		
+		if ($this->validate()) {
+			$file = DIR_LOGS . 'vqmod.log';
+	
+			$handle = fopen($file, 'w+'); 
+	
+			fclose($handle); 		
+	
+			$this->session->data['success'] = $this->language->get('text_success');
+				
+			$url = '';
+	
+			if (isset($this->request->get['sort'])) {
+				$url .= '&sort=' . $this->request->get['sort'];
+			}
+	
+			if (isset($this->request->get['order'])) {
+				$url .= '&order=' . $this->request->get['order'];
+			}
+	
+			if (isset($this->request->get['page'])) {
+				$url .= '&page=' . $this->request->get['page'];
+			}
+				
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));		
+		}
+		
 		$this->getList();
 	}
 
@@ -606,7 +643,7 @@ class ControllerExtensionModification extends Controller {
 			$data['log'] = '';
 		}
 
-		$data['clear'] = $this->url->link('payment/klarna_account/clear', 'token=' . $this->session->data['token'], 'SSL');
+		$data['clear_log'] = $this->url->link('extension/modification/clearlog', 'token=' . $this->session->data['token'], 'SSL');
 		
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

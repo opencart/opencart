@@ -155,7 +155,7 @@
                         <h2><?php echo $lang_other ?></h2>
                         <tr>
                             <td>
-                                <label for="openbay_amazon_order_tax"><?php echo $lang_import_tax ?></label>
+                                <label><?php echo $lang_import_tax ?></label>
                             </td>
                             <td>
                                 <input class="width120" type="text" name="openbay_amazon_order_tax" value="<?php echo $openbay_amazon_order_tax ?>" />%
@@ -163,7 +163,7 @@
                         </tr>
                         <tr>
                             <td>
-                                <label for="customer_group_input"><?php echo $lang_customer_group ?></label><br />
+                                <label><?php echo $lang_customer_group; ?></label><br />
                                 <span class="help"><?php echo $lang_customer_group_help ?></span>
                             </td>
                             <td>
@@ -178,20 +178,33 @@
                                 </select>
                             </td>
                         </tr>
-                        <tr>
-                            <td><?php echo $lang_admin_notify ?></td>
-                            <td>
-                                <select class="width100" name="openbay_amazon_notify_admin">
-                                    <?php if ($openbay_amazon_notify_admin) { ?>
-                                    <option value="1" selected="selected"><?php echo $lang_yes ?></option>
-                                    <option value="0"><?php echo $lang_no ?></option>
-                                    <?php } else { ?>
-                                    <option value="1"><?php echo $lang_yes ?></option>
-                                    <option value="0" selected="selected"><?php echo $lang_no ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
+                      <tr>
+                        <td><?php echo $lang_admin_notify; ?></td>
+                        <td>
+                          <select class="width100" name="openbay_amazon_notify_admin">
+                            <?php if ($openbay_amazon_notify_admin) { ?>
+                            <option value="1" selected="selected"><?php echo $lang_yes ?></option>
+                            <option value="0"><?php echo $lang_no ?></option>
+                            <?php } else { ?>
+                            <option value="1"><?php echo $lang_yes ?></option>
+                            <option value="0" selected="selected"><?php echo $lang_no ?></option>
+                            <?php } ?>
+                          </select>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td>
+                          <?php echo $lang_default_shipping; ?>
+                          <span class="help"><?php echo $lang_default_shipping_help; ?></span>
+                        </td>
+                        <td>
+                          <select class="width120" name="openbay_amazon_default_carrier">
+                            <?php foreach($carriers as $carrier) { ?>
+                              <?php echo '<option'.($carrier == $openbay_amazon_default_carrier ? ' selected' : '').'>'.$carrier.'</option>'; ?>
+                            <?php } ?>
+                          </select>
+                        </td>
+                      </tr>
                     </table>
                 </div>
             </form>

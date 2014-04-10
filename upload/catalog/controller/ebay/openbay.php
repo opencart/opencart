@@ -7,9 +7,9 @@ class ControllerEbayOpenbay extends Controller {
 		$s1             = $this->config->get('openbaypro_string1');
 		$s2             = $this->config->get('openbaypro_string2');
 
-		$this->load->model('ebay/openbay');
-		$this->load->model('ebay/product');
-		$this->load->model('ebay/order');
+		$this->load->model('openbay/ebay_openbay');
+		$this->load->model('openbay/ebay_product');
+		$this->load->model('openbay/ebay_order');
 
 		if(empty($encrypted)) {
 			$this->response->setOutput(json_encode(array('msg' => 'error 002')));
@@ -24,7 +24,7 @@ class ControllerEbayOpenbay extends Controller {
 
 					if($product_id != false) {
 						$this->openbay->ebay->log('eBay item link found with internal product');
-						$rules = $this->model_ebay_product->getRelistRule($data['itemId']);
+						$rules = $this->model_openbay_ebay_product->getRelistRule($data['itemId']);
 
 						if(!empty($rules)) {
 							$this->openbay->ebay->log('Item is due to be automatically relisted');
@@ -57,22 +57,22 @@ class ControllerEbayOpenbay extends Controller {
 
 				if($data['action'] == 'newOrder') {
 					$this->openbay->ebay->log('Action: newOrder / Order data from polling');
-					$this->model_ebay_openbay->importOrders($data['data2']);
+					$this->model_openbay_ebay_openbay->importOrders($data['data2']);
 					$this->response->setOutput(json_encode(array('msg' => 'ok')));
 				}
 
 				if($data['action'] == 'notificationOrder') {
 					$this->openbay->ebay->log('Action: notificationOrder / Order data from notification');
-					$this->model_ebay_openbay->importOrders($data['data']);
+					$this->model_openbay_ebay_openbay->importOrders($data['data']);
 					$this->response->setOutput(json_encode(array('msg' => 'ok')));
 				}
 
 				if($data['action'] == 'outputLog') {
-					$this->model_ebay_openbay->outputLog();
+					$this->model_openbay_ebay_openbay->outputLog();
 				}
 
 				if($data['action'] == 'updateLog') {
-					$this->model_ebay_openbay->updateLog();
+					$this->model_openbay_ebay_openbay->updateLog();
 				}
 			} else {
 				$this->openbay->ebay->log('Secret incorrect or module not active.');
@@ -89,9 +89,9 @@ class ControllerEbayOpenbay extends Controller {
 		$active = $this->config->get('openbay_status');
 
 		if(isset($data['secret']) && $secret == $data['secret'] && $active == 1 && isset($data['data'])) {
-			$this->load->model('ebay/openbay');
-			$this->load->model('ebay/product');
-			$this->model_ebay_product->importItems($data);
+			$this->load->model('openbay/ebay_openbay');
+			$this->load->model('openbay/ebay_product');
+			$this->model_openbay_ebay_product->importItems($data);
 			$this->response->setOutput(json_encode(array('msg' => 'ok', 'error' => false)));
 		} else {
 			$this->response->setOutput(json_encode(array('msg' => 'Auth failed', 'error' => true)));
@@ -150,6 +150,23 @@ class ControllerEbayOpenbay extends Controller {
 		}elseif($this->request->post['process'] == 'store') {
 			$this->response->setOutput(json_encode($this->openbay->ebay->loadSellerStore()));
 		}
+	}
+
+	public function testfile() {
+		/*
+		// Commented out by default, only used for debug during support request
+		$post = $this->request->post;
+		$postSize   = ini_get('post_max_size');
+		$postSize   = (int)str_replace(array('M','m','Mb','MB'), '', $postSize);
+
+		$response = array();
+		$response['php_postsize'] = $postSize;
+		$response['string1_length'] = strlen($post['string1']);
+		$response['string1_text'] = $post['string1'];
+		$response['string2_length'] = isset($post['string2']) ? strlen($post['string2']) : '';
+
+		echo json_encode($response);
+		*/
 	}
 }
 ?>

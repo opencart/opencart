@@ -5,7 +5,7 @@ class ControllerAmazonusSearch extends Controller {
 			return;
 		}
 
-		$this->load->model('amazonus/product');
+		$this->load->model('openbay/amazonus_product');
 
 		$logger = new Log('amazonus.log');
 		$logger->write('amazonus/search - started');
@@ -30,7 +30,7 @@ class ControllerAmazonusSearch extends Controller {
 
 		$json = json_decode($decrypted, 1);
 
-		$this->model_amazonus_product->updateSearch($json);
+		$this->model_openbay_amazonus_product->updateSearch($json);
 	}
 }
 ?>

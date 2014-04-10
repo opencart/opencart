@@ -255,7 +255,10 @@
                 }
 
                 $('#form').hide();
-            }
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          }
         });
     }
 
@@ -273,7 +276,10 @@
                     success: function() {
                         alert('<?php echo $lang_alert_removed; ?>');
                         window.location = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
-                    }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                  }
                 });
             }
         }
@@ -297,7 +303,10 @@
                             alert('<?php echo $lang_alert_ended; ?>');
                             window.location = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
                         }
-                    }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                  }
                 });
             }
         }

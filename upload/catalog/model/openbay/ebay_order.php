@@ -1,5 +1,5 @@
 <?php
-class ModelEbayOrder extends Model{
+class ModelOpenbayEbayOrder extends Model{
 	public function addOrderLine($data, $order_id, $created) {
 		$orderLine      = $this->getOrderLine($data['txn_id'], $data['item_id']);
 
@@ -48,12 +48,12 @@ class ModelEbayOrder extends Model{
 
 			if($orderLine['smp_id'] != $data['smp_id']) {
 				$this->openbay->ebay->log('addOrderLine() - SMP ID for orderLine has changed from "'.$orderLine['smp_id'].'" to "'.$data['smp_id'].'"');
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `smp_id` = '".$data['smp_id']."', `modified` = now() WHERE `txn_id` = '".$this->db->escape((string)$data['txn_id'])."' AND `item_id` = '".$this->db->escape((string)$data['item_id'])."' LIMIT 1");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `smp_id` = '".$this->db->escape($data['smp_id'])."', `modified` = now() WHERE `txn_id` = '".$this->db->escape((string)$data['txn_id'])."' AND `item_id` = '".$this->db->escape((string)$data['item_id'])."' LIMIT 1");
 			}
 
 			if($orderLine['containing_order_id'] != $data['containing_order_id']) {
 				$this->openbay->ebay->log('addOrderLine() - Containing order ID for orderLine has changed from "'.$orderLine['containing_order_id'].'" to "'.$data['containing_order_id'].'"');
-				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `containing_order_id` = '".$data['containing_order_id']."', `modified` = now() WHERE `txn_id` = '".$this->db->escape((string)$data['txn_id'])."' AND `item_id` = '".$this->db->escape((string)$data['item_id'])."' LIMIT 1");
+				$this->db->query("UPDATE `" . DB_PREFIX . "ebay_transaction` SET `containing_order_id` = '".$this->db->escape($data['containing_order_id'])."', `modified` = now() WHERE `txn_id` = '".$this->db->escape((string)$data['txn_id'])."' AND `item_id` = '".$this->db->escape((string)$data['item_id'])."' LIMIT 1");
 			}
 		}
 		$this->openbay->ebay->log('addOrderLine() - Done');
@@ -63,7 +63,7 @@ class ModelEbayOrder extends Model{
 		$this->openbay->ebay->log('Adding order lines');
 
 		foreach($order->txn as $txn) {
-			$this->model_ebay_order->addOrderLine(array(
+			$this->model_openbay_ebay_order->addOrderLine(array(
 				'txn_id'                => (string)$txn->item->txn,
 				'item_id'               => (string)$txn->item->id,
 				'containing_order_id'   => (string)$order->order->id,
@@ -152,7 +152,7 @@ class ModelEbayOrder extends Model{
 		 * This is a depreciated method of getting order Id's and will be removed in the future.
 		 */
 		if($order_id == 0) {
-			$query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "order_history` WHERE `comment` = '[eBay Import:" . $smp_id . "]' LIMIT 1");
+			$query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "order_history` WHERE `comment` = '[eBay Import:" . $this->db->escape($smp_id) . "]' LIMIT 1");
 
 			if($query->num_rows > 0) {
 				$this->openbay->ebay->log('find() (depreciated) - Found: '.$query->row['order_id']);
@@ -475,7 +475,7 @@ class ModelEbayOrder extends Model{
 				foreach ($order_product_query->rows as $product) {
 					$text .= $product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 
-					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . $product['order_product_id'] . "'");
+					$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . $this->db->escape($product['order_product_id']) . "'");
 
 					foreach ($order_option_query->rows as $option) {
 						$text .= chr(9) . '-' . $option['name'] . ' ' . (utf8_strlen($option['value']) > 20 ? utf8_substr($option['value'], 0, 20) . '..' : $option['value']) . "\n";

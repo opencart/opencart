@@ -8,8 +8,8 @@ class ControllerAmazonOrder extends Controller {
 		$this->load->library('log');
 		$this->load->library('amazon');
 		$this->load->model('checkout/order');
-		$this->load->model('amazon/order');
-		$this->language->load('amazon/order');
+		$this->load->model('openbay/amazon_order');
+		$this->language->load('openbay/amazon_order');
 
 		$logger = new Log('amazon.log');
 		$logger->write('amazon/order - started');
@@ -35,11 +35,11 @@ class ControllerAmazonOrder extends Controller {
 		$amazonOrderStatus = trim(strtolower((string)$orderXml->Status));
 
 		$amazonOrderId = (string)$orderXml->AmazonOrderId;
-		$orderStatus = $this->model_amazon_order->getMappedStatus((string)$orderXml->Status);
+		$orderStatus = $this->model_openbay_amazon_order->getMappedStatus((string)$orderXml->Status);
 
 		$logger->write('Received order ' . $amazonOrderId);
 
-		$orderId = $this->model_amazon_order->getOrderId($amazonOrderId);
+		$orderId = $this->model_openbay_amazon_order->getOrderId($amazonOrderId);
 
 		// If the order already exists on opencart, ignore it.
 		if ($orderId) {
@@ -109,8 +109,8 @@ class ControllerAmazonOrder extends Controller {
 				continue;
 			}
 
-			$productId = $this->model_amazon_order->getProductId((string)$item->Sku);
-			$productVar = $this->model_amazon_order->getProductVar((string)$item->Sku);
+			$productId = $this->model_openbay_amazon_order->getProductId((string)$item->Sku);
+			$productVar = $this->model_openbay_amazon_order->getProductVar((string)$item->Sku);
 
 			$products[] = array(
 				'product_id' => $productId,
@@ -125,7 +125,7 @@ class ControllerAmazonOrder extends Controller {
 				'total' => sprintf('%.4f', $totalPrice - $taxTotal),
 				'tax' => $taxTotal / (int)$item->Ordered,
 				'reward' => '0',
-				'option' => $this->model_amazon_order->getProductOptionsByVar($productVar),
+				'option' => $this->model_openbay_amazon_order->getProductOptionsByVar($productVar),
 				'download' => array(),
 			);
 
@@ -201,10 +201,10 @@ class ControllerAmazonOrder extends Controller {
 			'shipping_address_2' => $addressLine2,
 			'shipping_city' => (string)$orderXml->Shipping->City,
 			'shipping_postcode' => (string)$orderXml->Shipping->PostCode,
-			'shipping_country' => $this->model_amazon_order->getCountryName((string)$orderXml->Shipping->CountryCode),
-			'shipping_country_id' => $this->model_amazon_order->getCountryId((string)$orderXml->Shipping->CountryCode),
+			'shipping_country' => $this->model_openbay_amazon_order->getCountryName((string)$orderXml->Shipping->CountryCode),
+			'shipping_country_id' => $this->model_openbay_amazon_order->getCountryId((string)$orderXml->Shipping->CountryCode),
 			'shipping_zone' => (string)$orderXml->Shipping->State,
-			'shipping_zone_id' => $this->model_amazon_order->getZoneId((string)$orderXml->Shipping->State),
+			'shipping_zone_id' => $this->model_openbay_amazon_order->getZoneId((string)$orderXml->Shipping->State),
 			'shipping_address_format' => '',
 			'shipping_method' => (string)$orderXml->Shipping->Type,
 			'shipping_code' => 'amazon.' . (string)$orderXml->Shipping->Type,
@@ -215,10 +215,10 @@ class ControllerAmazonOrder extends Controller {
 			'payment_address_2' => $addressLine2,
 			'payment_city' => (string)$orderXml->Shipping->City,
 			'payment_postcode' => (string)$orderXml->Shipping->PostCode,
-			'payment_country' => $this->model_amazon_order->getCountryName((string)$orderXml->Shipping->CountryCode),
-			'payment_country_id' => $this->model_amazon_order->getCountryId((string)$orderXml->Shipping->CountryCode),
+			'payment_country' => $this->model_openbay_amazon_order->getCountryName((string)$orderXml->Shipping->CountryCode),
+			'payment_country_id' => $this->model_openbay_amazon_order->getCountryId((string)$orderXml->Shipping->CountryCode),
 			'payment_zone' => (string)$orderXml->Shipping->State,
-			'payment_zone_id' => $this->model_amazon_order->getZoneId((string)$orderXml->Shipping->State),
+			'payment_zone_id' => $this->model_openbay_amazon_order->getZoneId((string)$orderXml->Shipping->State),
 			'payment_address_format' => '',
 			'payment_method' => $this->language->get('paid_on_amazon_text'),
 			'payment_code' => 'amazon.amazon',
@@ -299,13 +299,13 @@ class ControllerAmazonOrder extends Controller {
 
 		$orderId = $this->model_checkout_order->$addOrderMethod($order);
 
-		$this->model_amazon_order->updateOrderStatus($orderId, $orderStatus);
-		$this->model_amazon_order->addAmazonOrder($orderId, $amazonOrderId);
-		$this->model_amazon_order->addAmazonOrderProducts($orderId, $productMapping);
+		$this->model_openbay_amazon_order->updateOrderStatus($orderId, $orderStatus);
+		$this->model_openbay_amazon_order->addAmazonOrder($orderId, $amazonOrderId);
+		$this->model_openbay_amazon_order->addAmazonOrderProducts($orderId, $productMapping);
 
 		foreach($products as $product) {
 			if($product['product_id'] != 0) {
-				$this->model_amazon_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
+				$this->model_openbay_amazon_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
 			}
 		}
 
@@ -316,7 +316,7 @@ class ControllerAmazonOrder extends Controller {
 		$this->openbay->orderNew($orderId);
 		$logger->write("Openbay notified");
 
-		$this->model_amazon_order->acknowledgeOrder($orderId);
+		$this->model_openbay_amazon_order->acknowledgeOrder($orderId);
 
 		if($this->config->get('openbay_amazon_notify_admin') == 1){
 			$this->openbay->newOrderAdminNotify($orderId, $orderStatus);

@@ -473,7 +473,10 @@ function image_upload(field, thumb) {
                             var imageUrl = $('#' + field).attr('value');
                             $('#' + field).attr('value', '<?php echo HTTPS_CATALOG; ?>image/' + imageUrl);
                         }
-                    }
+                    },
+                    error: function (xhr, ajaxOptions, thrownError) {
+                    alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                  }
                 });
             }
         },
@@ -620,7 +623,6 @@ var nodeStringSimple = '';
 
 $('.browseNode').live('click', function(){
     var html = '';
-    var market = $('.marketplace_ids:checked').val();
 
     nodeBox = $(this).attr("field_name");
     $('#'+nodeBox+'_text').remove();
@@ -632,7 +634,6 @@ $('.browseNode').live('click', function(){
     $.ajax({
         url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
         type: 'POST',
-        data: { marketplaceId: market},
         dataType: 'json',
         beforeSend: function(){
             $('#browseNodeFormContent').empty();
@@ -669,7 +670,6 @@ $('.browseNode').live('click', function(){
 $('.nodeSelect').live('change', function(){
     //called when the root node id is chosen
     var html = '';
-    var market = $('.marketplace_ids:checked').val();
     var node = $(this).val();
     var parentNodeName = $(this).find(":selected").text();
     nodeString += '<h3>'+parentNodeName+' ></h3>';
@@ -678,7 +678,7 @@ $('.nodeSelect').live('change', function(){
     $.ajax({
         url: 'index.php?route=openbay/amazonus_listing/getBrowseNodes&token=<?php echo $token; ?>',
         type: 'POST',
-        data: { marketplaceId: market, node: node},
+        data: { node: node},
         dataType: 'json',
         beforeSend: function(){
             $('#browseNodeFormContent select').remove();

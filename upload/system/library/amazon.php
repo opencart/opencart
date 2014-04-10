@@ -26,8 +26,8 @@ class Amazon {
 
 		/* Is called from front-end? */
 		if (!defined('HTTPS_CATALOG')) {
-			$this->load->model('amazon/order');
-			$amazonOrderId = $this->model_amazon_order->getAmazonOrderId($orderId);
+			$this->load->model('openbay/amazon_order');
+			$amazonOrderId = $this->model_openbay_amazon_order->getAmazonOrderId($orderId);
 
 			$this->load->library('log');
 			$logger = new Log('amazon_stocks.log');
@@ -114,8 +114,8 @@ class Amazon {
 		$log->write("Order's $amazonOrderId status changed to $orderStatusString");
 
 
-		$this->load->model('amazon/amazon');
-		$amazonOrderProducts = $this->model_amazon_amazon->getAmazonOrderedProducts($orderId);
+		$this->load->model('openbay/amazon');
+		$amazonOrderProducts = $this->model_openbay_amazon->getAmazonOrderedProducts($orderId);
 
 
 		$requestNode = new SimpleXMLElement('<Request/>');
@@ -145,7 +145,7 @@ class Amazon {
 		$doc->loadXML($requestNode->asXML());
 		$doc->formatOutput = true;
 
-		$this->model_amazon_amazon->updateAmazonOrderTracking($orderId, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
+		$this->model_openbay_amazon->updateAmazonOrderTracking($orderId, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
 		$response = $this->callWithResponse('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");
@@ -384,7 +384,7 @@ class Amazon {
 	}
 
 	public function getLinkedSkus($productId, $var='') {
-		return $this->db->query("SELECT `amazon_sku` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $var . "'")->rows;
+		return $this->db->query("SELECT `amazon_sku` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
 	}
 
 	public function getOrderdProducts($orderId) {
@@ -397,43 +397,43 @@ class Amazon {
 	}
 
 	public function osProducts($order_id){
-		$order_product_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_product WHERE order_id = '" . (int)$order_id . "'");
+		$order_product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = '" . (int)$order_id . "'");
 
 		$passArray = array();
 		foreach ($order_product_query->rows as $order_product) {
-			$product_query = $this->db->query("
-				SELECT *
-				FROM " . DB_PREFIX . "product
-				WHERE `product_id` = '" . (int)$order_product['product_id'] . "'
-				LIMIT 1");
+			$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".(int)$order_product['product_id']."' LIMIT 1");
 
-			if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
-				$pOption_query = $this->db->query("
-						SELECT `" . DB_PREFIX . "order_option`.`product_option_value_id`
-						FROM `" . DB_PREFIX . "order_option`, `" . DB_PREFIX . "product_option`, `" . DB_PREFIX . "option`
-						WHERE `" . DB_PREFIX . "order_option`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
-						AND `" . DB_PREFIX . "order_option`.`order_id` = '" . (int)$order_id . "'
-						AND `" . DB_PREFIX . "order_option`.`product_option_id` = `" . DB_PREFIX . "product_option`.`product_option_id`
-						AND `" . DB_PREFIX . "product_option`.`option_id` = `" . DB_PREFIX . "option`.`option_id`
-						AND ((`" . DB_PREFIX . "option`.`type` = 'radio') OR (`" . DB_PREFIX . "option`.`type` = 'select'))
-						ORDER BY `" . DB_PREFIX . "order_option`.`order_option_id`
+			if (!empty($product_query->row)) {
+				if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
+					$pOption_query = $this->db->query("
+						SELECT `oo`.`product_option_value_id`
+						FROM `" . DB_PREFIX . "order_option` `oo`
+							LEFT JOIN `" . DB_PREFIX . "product_option_value` `pov` ON (`pov`.`product_option_value_id` = `oo`.`product_option_value_id`)
+							LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `pov`.`option_id`)
+						WHERE `oo`.`order_product_id` = '" . (int)$order_product['order_product_id'] . "'
+						AND `oo`.`order_id` = '" . (int)$order_id . "'
+						AND ((`o`.`type` = 'radio') OR (`o`.`type` = 'select') OR (`o`.`type` = 'image'))
+						ORDER BY `oo`.`order_option_id`
 						ASC");
 
-				if ($pOption_query->num_rows != 0) {
-					$pOptions = array();
-					foreach ($pOption_query->rows as $pOptionRow) {
-						$pOptions[] = $pOptionRow['product_option_value_id'];
-					}
+					if ($pOption_query->num_rows != 0) {
+						$pOptions = array();
+						foreach ($pOption_query->rows as $pOptionRow) {
+							$pOptions[] = $pOptionRow['product_option_value_id'];
+						}
 
-					$var = implode(':', $pOptions);
-					$qtyLeftRow = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
-					if(empty($qtyLeftRow)) {
-						$qtyLeftRow['stock'] = 0;
+						$var = implode(':', $pOptions);
+						$qtyLeftRow = $this->db->query("SELECT `stock` FROM `" . DB_PREFIX . "product_option_relation` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' AND `var` = '" . $this->db->escape($var) . "'")->row;
+
+						if(empty($qtyLeftRow)) {
+							$qtyLeftRow['stock'] = 0;
+						}
+
+						$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $qtyLeftRow['stock'], 'var' => $var);
 					}
-					$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $qtyLeftRow['stock'], 'var' => $var);
+				} else {
+					$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
 				}
-			} else {
-				$passArray[] = array('pid' => $order_product['product_id'], 'qty_left' => $product_query->row['quantity'], 'var' => '');
 			}
 		}
 

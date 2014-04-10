@@ -11,8 +11,8 @@
   <?php if ($success) { ?>
     <div class="success"><?php echo $success; ?></div>
   <?php } ?>
-  <div class="box">
-    <form action="<?php echo $link_update; ?>" method="post" enctype="multipart/form-data" id="form">
+  <form action="<?php echo $link_update; ?>" method="post" enctype="multipart/form-data" id="form">
+    <div class="box">
       <div class="heading">
         <h1><img src="view/image/order.png" alt="" /> <?php echo $heading_title; ?></h1>
         <div class="buttons">
@@ -111,39 +111,34 @@
           </table>
         <div class="pagination"><?php echo $pagination; ?></div>
       </div>
-    </form>
-  </div>
+    </div>
+  </form>
 </div>
 <script type="text/javascript"><!--
-function filter() {
-	url = 'index.php?route=extension/openbay/orderList&token=<?php echo $token; ?>';
-	
-	var filter_order_id = $('input[name=\'filter_order_id\']').attr('value');
-	
-	if (filter_order_id) {
-		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
-	}
-	
-	var filter_customer = $('input[name=\'filter_customer\']').attr('value');
-	
-	if (filter_customer) {
-		url += '&filter_customer=' + encodeURIComponent(filter_customer);
-	}
-	
-	var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
-	
-	if (filter_order_status_id != '*') {
-		url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
-	}
-	
-	var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
-	
-	if (filter_date_added) {
-		url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
-	}
-				
-	location = url;
-}
+  function filter() {
+    url = 'index.php?route=extension/openbay/orderList&token=<?php echo $token; ?>';
+    var filter_order_id = $('input[name=\'filter_order_id\']').attr('value');
+    if (filter_order_id) {
+      url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
+    }
+
+    var filter_customer = $('input[name=\'filter_customer\']').attr('value');
+    if (filter_customer) {
+      url += '&filter_customer=' + encodeURIComponent(filter_customer);
+    }
+
+    var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
+    if (filter_order_status_id != '*') {
+      url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+    }
+
+    var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');
+    if (filter_date_added) {
+      url += '&filter_date_added=' + encodeURIComponent(filter_date_added);
+    }
+
+    location = url;
+  }
 //--></script>
 <script type="text/javascript"><!--
   $(document).ready(function() {
@@ -151,11 +146,11 @@ function filter() {
   });
 //--></script>
 <script type="text/javascript"><!--
-    $('#form input').keydown(function(e) {
-	if (e.keyCode == 13) {
-		filter();
-	}
-});
+  $('#form input').keydown(function(e) {
+    if (e.keyCode == 13) {
+      filter();
+    }
+  });
 //--></script>
 <script type="text/javascript"><!--
     $.widget('custom.catcomplete', $.ui.autocomplete, {
@@ -188,6 +183,9 @@ function filter() {
                             value: item.customer_id
                         }
                     }));
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });
         },

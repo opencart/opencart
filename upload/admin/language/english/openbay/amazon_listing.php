@@ -54,6 +54,7 @@ $_['entry_country_of_origin'] = 'Country of Origin:';
 $_['entry_release_date'] = 'Release Date:';
 $_['entry_from'] = 'Date from';
 $_['entry_to'] = 'Date to';
+$_['entry_option'] = 'Variant';
 
 //Form input place holders
 $_['lang_placeholder_search'] = 'Enter product name, UPC, EAN, ISBN or ASIN';
@@ -166,12 +167,12 @@ $_['error_marketplace_missing'] = 'Please select a marketplace';
 $_['error_condition_missing'] = "Please select condition";
 $_['error_fetch'] = 'Could not get the data';
 $_['error_amazon_price'] = 'Could not get the price from Amazon';
-$_['error_stock'] = 'You cannot list an item with less than 1 item in stock';
 $_['error_sku'] = 'You must enter an SKU for the item';
 $_['error_price'] = 'You must enter a price for the item';
 $_['error_sending_products'] = 'Could not send products for listing. Please contact OpenBay Pro support';
 $_['lang_no_results'] = 'No results found';
 $_['error_no_products_selected'] = 'No products were selected for listing';
+$_['error_not_searched'] = 'Search for matching items before you try to list. Items must be matched against an Amazon catalog item';
 
 //Messages
 $_['text_product_sent'] = 'Product was successfully sent to Amazon.';

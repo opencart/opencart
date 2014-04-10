@@ -292,10 +292,13 @@ class ControllerOpenbayAmazonProduct extends Controller {
 	}
 
 	public function uploadSavedAjax() {
+
+
 		ob_start();
-		$result = json_encode($this->uploadSaved());
+		$json = json_encode($this->uploadSaved());
 		ob_clean();
-		$this->response->setOutput($result);
+
+		$this->response->setOutput($json);
 	}
 
 	private function uploadSaved() {
@@ -352,12 +355,14 @@ class ControllerOpenbayAmazonProduct extends Controller {
 	}
 
 	public function parseTemplateAjax() {
+
+
 		$this->load->model('tool/image');
 		$this->load->library('amazon');
 		$this->load->library('log');
 		$log = new Log('amazon_product.log');
 
-		$result = array();
+		$json = array();
 
 		if(isset($this->request->get['xml'])) {
 			$request = array('template' => $this->request->get['xml'], 'version' => 2);
@@ -382,7 +387,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 						}
 					}
 
-					$result = array(
+					$json = array(
 						"category" => $template['category'],
 						"fields" => $template['fields'],
 						"tabs" => $template['tabs']
@@ -390,9 +395,9 @@ class ControllerOpenbayAmazonProduct extends Controller {
 				} else {
 					$json_decoded = json_decode($response);
 					if ($json_decoded) {
-						$result = $json_decoded;
+						$json = $json_decoded;
 					} else {
-						$result = array('status' => 'error');
+						$json = array('status' => 'error');
 						$log->write("admin/openbay/amazon_product/parseTemplateAjax failed to parse template response: " . $response);
 					}
 				}
@@ -401,7 +406,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			}
 		}
 
-		$this->response->setOutput(json_encode($result));
+		$this->response->setOutput(json_encode($json));
 
 	}
 

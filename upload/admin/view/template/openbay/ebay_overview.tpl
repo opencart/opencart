@@ -52,20 +52,12 @@
                         <img src="view/image/openbay/openbay_icon12.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_profile; ?></h3>
                     </div>
-
                     <div class="openbayPod" onclick="location='<?php echo $links_template; ?>'">
                         <img src="view/image/openbay/openbay_icon12.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_template; ?></h3>
                     </div>
-
-                <!--
-                    <div class="openbayPod" onclick="location=''">
-                        <img src="view/image/openbay/openbay_icon4.png" title="" alt="" border="0" />
-                        <h3><?php echo $lang_heading_ebayacc; ?></h3>
-                    </div>
-                    -->
                 <?php }else{ ?>
-                    <a class="openbayPod" href="https://uk.openbaypro.com/account/live/register.php" target="_BLANK">
+                    <a class="openbayPod" href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK">
                         <img src="view/image/openbay/openbay_icon2.png" title="" alt="" border="0" />
                         <h3><?php echo $lang_heading_register; ?></h3>
                     </a>

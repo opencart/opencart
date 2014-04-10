@@ -49,6 +49,7 @@ $_['entry_country_of_origin'] = 'Country of Origin:';
 $_['entry_release_date'] = 'Release Date:';
 $_['entry_from'] = 'Date from';
 $_['entry_to'] = 'Date to';
+$_['entry_option'] = 'Variant';
 
 //Form placeholders
 $_['lang_placeholder_search'] = 'Enter product name, UPC, EAN, ISBN or ASIN';
@@ -67,7 +68,6 @@ $_['error_marketplace_missing'] = 'Please select a marketplace';
 $_['error_condition_missing'] = "Please select condition";
 $_['error_fetch'] = 'Could not get the data';
 $_['error_amazonus_price'] = 'Could not get the price from Amazon US';
-$_['error_stock'] = 'You cannot list an item with less than 1 item in stock';
 $_['error_sku'] = 'You must enter an SKU for the item';
 $_['error_price'] = 'You must enter a price for the item';
 
@@ -167,6 +167,7 @@ $_['links_name_empty_warning'] = 'Product name can not be empty!';
 $_['links_product_warning'] = 'Product does not exist. Please use autocomplete values.';
 $_['option_default'] = '-- Select option --';
 $_['lang_error_load_nodes'] = 'Unable to load browse nodes';
+$_['error_not_searched'] = 'Search for matching items before you try to list. Items must be matched against an Amazon catalog item';
 
 //Listing edit page
 $_['text_edit_heading'] = 'Listing overview';

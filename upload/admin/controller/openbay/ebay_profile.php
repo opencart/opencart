@@ -21,11 +21,15 @@ class ControllerOpenbayEbayProfile extends Controller {
 		if (isset($this->session->data['error'])) {
 			$this->data['error_warning'] = $this->session->data['error'];
 			unset($this->session->data['error']);
+		} else {
+			$this->data['error_warning'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
 			$this->data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
+		} else {
+			$this->data['success'] = '';
 		}
 
 		$this->data['btn_add']  = $this->url->link('openbay/ebay_profile/add', 'token=' . $this->session->data['token'], 'SSL');
@@ -295,6 +299,8 @@ class ControllerOpenbayEbayProfile extends Controller {
 	}
 
 	public function profileGet(){
+
+
 		$this->load->model('openbay/ebay_profile');
 		$this->load->model('openbay/ebay');
 		$this->load->language('openbay/ebay_profile');

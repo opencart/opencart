@@ -46,6 +46,7 @@ $_['lang_obp_string2']          = 'Encryption string 2';
 $_['lang_app_setting_msg']      = 'Your application settings allow you to configure the way OpenBay Pro works and integrates with your system.';
 $_['lang_app_end_ebay']         = 'End items?<span class="help">If items sell out, should the listing be ended on eBay?</span>';
 $_['lang_app_relist_ebay']      = 'Relist when back in stock?<span class="help">If an item link existed before it will relist previous item if back in stock</span>';
+$_['lang_app_nostock_ebay']     = 'Disable product when no stock?<span class="help">When the item sells out it then disables the product in OpenCart</span>';
 $_['lang_app_logging']          = 'Enable logging';
 $_['lang_app_currency']         = 'Default currency';
 $_['lang_app_currency_msg']     = 'Based on currencies from your store';
@@ -66,9 +67,10 @@ $_['lang_import_cancelled_id']  = 'Cancelled status:';
 $_['lang_import_refund_id']     = 'Refunded status:';
 $_['lang_import_part_refund_id']= 'Partially Refunded status:';
 
-$_['lang_developer']            = 'Developer';
+$_['lang_developer']            = 'Developer / support';
 $_['lang_developer_desc']       = 'You should not use this area unless instructed to do so.'; 
 $_['lang_developer_empty']      = 'Empty ALL data?'; 
+$_['lang_developer_locks']      = 'Remove order locks?';
 $_['lang_setting_desc']         = 'Default settings are used to pre-set many eBay listing options. All defaults can be changed on the listing page for each item.';
 $_['lang_payment_instruction']  = 'Payment instructions';
 $_['lang_payment_paypal']       = 'PayPal Accepted';
@@ -102,11 +104,6 @@ $_['lang_listing_30day']            = '30 days';
 $_['lang_listing_gtc']              = 'GTC- Good till cancelled';
 $_['lang_openbay_duration']         = 'Default listing duration<span class="help">GTC is only available is you have an eBay shop.</span>';
 $_['lang_address_format']           = 'Default address format<span class="help">Only used if the country does not have an address format set-up already.</span>';
-
-$_['lang_legend_stock_rep']         = 'Stock reports';
-$_['lang_desc_stock_rep']           = 'Sends an email to store administrators periodically about the status of linked items. This feature is only available on some subscription plans.';
-$_['lang_stock_reports']            = 'Send reports';
-$_['lang_stock_summary']            = 'Send full report<span class="help">If disabled only a summary will be sent</span>';
 
 $_['lang_api_status']               = 'API connection status';
 $_['lang_api_checking']             = 'Checking';

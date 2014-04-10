@@ -9,7 +9,7 @@ class ControllerAmazonProduct extends Controller {
 		ob_start();
 
 		$this->load->library('amazon');
-		$this->load->model('amazon/product');
+		$this->load->model('openbay/amazon_product');
 		$this->load->library('log');
 		$logger = new Log('amazon_product.log');
 
@@ -42,23 +42,23 @@ class ControllerAmazonProduct extends Controller {
 
 		if($status == "submit_error") {
 			$message = 'Product was not submited to amazon properly. Please try again or contact OpenBay.';
-			$this->model_amazon_product->setSubmitError($decodedData['insertion_id'], $message);
+			$this->model_openbay_amazon_product->setSubmitError($decodedData['insertion_id'], $message);
 		} else {
 			$status = (array)$status;
 			if($status['successful'] == 1) {
-				$this->model_amazon_product->setStatus($decodedData['insertion_id'], 'ok');
-				$insertionProduct = $this->model_amazon_product->getProduct($decodedData['insertion_id']);
-				$this->model_amazon_product->linkProduct($insertionProduct['sku'], $insertionProduct['product_id'], $insertionProduct['var']);
-				$this->model_amazon_product->deleteErrors($decodedData['insertion_id']);
+				$this->model_openbay_amazon_product->setStatus($decodedData['insertion_id'], 'ok');
+				$insertionProduct = $this->model_openbay_amazon_product->getProduct($decodedData['insertion_id']);
+				$this->model_openbay_amazon_product->linkProduct($insertionProduct['sku'], $insertionProduct['product_id'], $insertionProduct['var']);
+				$this->model_openbay_amazon_product->deleteErrors($decodedData['insertion_id']);
 
 				$quantityData = array(
-					$insertionProduct['sku'] => $this->model_amazon_product->getProductQuantity($insertionProduct['product_id'], $insertionProduct['var'])
+					$insertionProduct['sku'] => $this->model_openbay_amazon_product->getProductQuantity($insertionProduct['product_id'], $insertionProduct['var'])
 				);
 				$logger->write('Updating quantity with data: ' . print_r($quantityData, true));
 				$logger->write('Response: ' . print_r($this->openbay->amazon->updateQuantities($quantityData), true));
 			} else {
 				$msg = 'Product was not accepted by amazon. Please try again or contact OpenBay.';
-				$this->model_amazon_product->setSubmitError($decodedData['insertion_id'], $msg);
+				$this->model_openbay_amazon_product->setSubmitError($decodedData['insertion_id'], $msg);
 
 				if(isset($decodedData['error_details'])) {
 					foreach($decodedData['error_details'] as $error) {
@@ -69,7 +69,7 @@ class ControllerAmazonProduct extends Controller {
 							'message' => $error['message'],
 							'insertion_id' => $decodedData['insertion_id']
 						);
-						$this->model_amazon_product->insertError($error_data);
+						$this->model_openbay_amazon_product->insertError($error_data);
 					}
 				}
 			}

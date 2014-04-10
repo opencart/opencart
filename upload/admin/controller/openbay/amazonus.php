@@ -327,6 +327,9 @@ class ControllerOpenbayAmazonus extends Controller {
 		$this->data['openbay_amazonus_default_listing_marketplace'] = isset($settings['openbay_amazonus_default_listing_marketplace']) ? $settings['openbay_amazonus_default_listing_marketplace'] : '';
 		$this->data['openbay_amazonus_listing_default_condition'] = isset($settings['openbay_amazonus_listing_default_condition']) ? $settings['openbay_amazonus_listing_default_condition'] : '';
 
+		$this->data['carriers'] = $this->openbay->amazonus->getCarriers();
+		$this->data['openbay_amazonus_default_carrier'] = isset($settings['openbay_amazonus_default_carrier']) ? $settings['openbay_amazonus_default_carrier'] : '';
+
 		$unshippedStatusId = isset($settings['openbay_amazonus_order_status_unshipped']) ? $settings['openbay_amazonus_order_status_unshipped'] : '';
 		$partiallyShippedStatusId = isset($settings['openbay_amazonus_order_status_partially_shipped']) ? $settings['openbay_amazonus_order_status_partially_shipped'] : '';
 		$shippedStatusId = isset($settings['openbay_amazonus_order_status_shipped']) ? $settings['openbay_amazonus_order_status_shipped'] : '';
@@ -559,6 +562,8 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function addItemLinkAjax() {
+
+
 		if(isset($this->request->get['product_id']) && isset($this->request->get['amazonus_sku'])) {
 			$amazonus_sku = $this->request->get['amazonus_sku'];
 			$product_id = $this->request->get['product_id'];
@@ -603,6 +608,8 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function removeItemLinkAjax() {
+
+
 		if(isset($this->request->get['amazonus_sku'])) {
 			$amazonus_sku = $this->request->get['amazonus_sku'];
 		} else {
@@ -619,6 +626,8 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function getItemLinksAjax() {
+
+
 		$this->load->model('openbay/amazonus');
 		$this->load->model('catalog/product');
 
@@ -628,6 +637,8 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function getUnlinkedItemsAjax() {
+
+
 		$this->load->model('openbay/amazonus');
 		$this->load->model('catalog/product');
 
@@ -646,61 +657,70 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function doBulkList() {
-		$this->load->language('openbay/amazonus_listing');
-		$this->load->model('openbay/amazonus_listing');
+		$this->load->language('amazonus/listing');
 
-		$delete_search_results = array();
+		if (empty($this->request->post['products'])) {
+			$json = array(
+				'message' => $this->language->get('error_not_searched'),
+			);
+		} else {
+			$this->load->model('openbay/amazonus_listing');
 
-		$bulk_list_products = array();
+			$delete_search_results = array();
 
-		foreach ($this->request->post['products'] as $product_id => $asin) {
-			$delete_search_results[] = $product_id;
+			$bulk_list_products = array();
 
-			if (!empty($asin)) {
-				$bulk_list_products[$product_id] = $asin;
-			}
-		}
+			foreach ($this->request->post['products'] as $product_id => $asin) {
+				$delete_search_results[] = $product_id;
 
-		$status = false;
-
-		if ($bulk_list_products) {
-			$data = array();
-
-			$data['products'] = $bulk_list_products;
-
-			if (!empty($this->request->post['start_selling'])) {
-				$data['start_selling'] = $this->request->post['start_selling'];
+				if (!empty($asin)) {
+					$bulk_list_products[$product_id] = $asin;
+				}
 			}
 
-			if (!empty($this->request->post['condition']) && !empty($this->request->post['condition_note'])) {
-				$data['condition'] = $this->request->post['condition'];
-				$data['condition_note'] = $this->request->post['condition_note'];
-			}
+			$status = false;
 
-			$status = $this->model_openbay_amazonus_listing->doBulkListing($data);
+			if ($bulk_list_products) {
+				$data = array();
 
-			if ($status) {
-				$message = $this->language->get('text_products_sent');
+				$data['products'] = $bulk_list_products;
 
-				if ($delete_search_results) {
-					$this->model_openbay_amazonus_listing->deleteSearchResults($delete_search_results);
+				if (!empty($this->request->post['start_selling'])) {
+					$data['start_selling'] = $this->request->post['start_selling'];
+				}
+
+				if (!empty($this->request->post['condition']) && !empty($this->request->post['condition_note'])) {
+					$data['condition'] = $this->request->post['condition'];
+					$data['condition_note'] = $this->request->post['condition_note'];
+				}
+
+				$status = $this->model_openbay_amazonus_listing->doBulkListing($data);
+
+				if ($status) {
+					$message = $this->language->get('text_products_sent');
+
+					if ($delete_search_results) {
+						$this->model_openbay_amazonus_listing->deleteSearchResults($delete_search_results);
+					}
+				} else {
+					$message = $this->language->get('error_sending_products');
 				}
 			} else {
-				$message = $this->language->get('error_sending_products');
+				$message = $this->language->get('error_no_products_selected');
 			}
-		} else {
-			$message = $this->language->get('error_no_products_selected');
-		}
 
-		$json = array(
-			'status' => $status,
-			'message' => $message,
-		);
+			$json = array(
+				'status' => $status,
+				'message' => $message,
+			);
+		}
 
 		$this->response->setOutput(json_encode($json));
 	}
 
 	public function doBulkSearch() {
+
+
 		$this->load->model('catalog/product');
 		$this->load->model('openbay/amazonus_listing');
 		$this->load->language('openbay/amazonus_bulk');
@@ -946,7 +966,30 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$this->data['bulk_linking_status'] = $bulk_linking_status;
 
-		$results = $this->model_openbay_amazonus->getUnlinkedItemsFromReport();
+		$total_linked = $this->model_openbay_amazonus->getTotalUnlinkedItemsFromReport();
+
+		if(isset($this->request->get['linked_item_page'])){
+			$linked_item_page = (int)$this->request->get['linked_item_page'];
+		}else{
+			$linked_item_page = 1;
+		}
+
+		if(isset($this->request->get['linked_item_limit'])){
+			$linked_item_limit = (int)$this->request->get['linked_item_limit'];
+		}else{
+			$linked_item_limit = 25;
+		}
+
+		$pagination = new Pagination();
+		$pagination->total = $total_linked;
+		$pagination->page = $linked_item_page;
+		$pagination->limit = $linked_item_limit;
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->link('openbay/amazonus/bulkLinking', 'token=' . $this->session->data['token'] . '&linked_item_page={page}', 'SSL');
+
+		$this->data['pagination'] = $pagination->render();
+
+		$results = $this->model_openbay_amazonus->getUnlinkedItemsFromReport($linked_item_limit, $linked_item_page);
 
 		$products = array();
 
@@ -979,6 +1022,8 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function loadListingReport() {
+
+
 		$this->load->model('openbay/amazonus');
 		$this->load->model('setting/setting');
 		$this->load->language('openbay/amazonus_bulk_linking');

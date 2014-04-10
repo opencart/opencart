@@ -5,7 +5,7 @@ class ControllerAmazonListingReport extends Controller {
 			return;
 		}
 
-		$this->load->model('amazon/product');
+		$this->load->model('openbay/amazon_product');
 
 		$logger = new Log('amazon.log');
 		$logger->write('amazon/listing_reports - started');
@@ -43,10 +43,10 @@ class ControllerAmazonListingReport extends Controller {
 		}
 
 		if ($data) {
-			$this->model_amazon_product->addListingReport($data);
+			$this->model_openbay_amazon_product->addListingReport($data);
 		}
 
-		$this->model_amazon_product->removeListingReportLock($request['marketplace']);
+		$this->model_openbay_amazon_product->removeListingReportLock($request['marketplace']);
 
 		$logger->write('amazon/listing_reports - Finished');
 	}

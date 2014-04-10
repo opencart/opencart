@@ -173,6 +173,9 @@
 
                 $('#ftpTest').show();
                 $('#imageFtpTest').hide();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     }
@@ -190,6 +193,9 @@
                 alert('<?php echo $lang_patch_applied; ?>');
                 $('#runPatch').show();
                 $('#imageRunPatch').hide();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     }
@@ -210,6 +216,9 @@
                 $('#openbay_version').val(json.version);
                 $('#moduleUpdate').show();
                 $('#imageModuleUpdate').hide();
+            },
+            error: function (xhr, ajaxOptions, thrownError) {
+              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
             }
         });
     }

@@ -1,5 +1,5 @@
 <?php
-class ModelAmazonusProduct extends Model {
+class ModelOpenbayAmazonusProduct extends Model {
 	public function setStatus($insertionId, $statusString) {
 		$this->db->query("
 			UPDATE `" . DB_PREFIX . "amazonus_product`

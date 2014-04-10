@@ -23,6 +23,7 @@ $_['lang_ajax_load_error']          = 'Sorry, could not get a response. Try late
 $_['lang_ajax_error_link']          = 'The product link is not value';
 $_['lang_ajax_error_link_no_sk']    = 'A link cannot be created for an out of stock item. End the item manually on eBay.';
 $_['lang_ajax_loaded_ok']           = 'Items have been loaded ok';
+$_['lang_ajax_not_subtract']        = 'This product is set not to subtract stock in OpenCart.';
 
 // Text
 $_['lang_link_desc1']               = 'Linking your items will allow for stock control on your eBay listings.';
@@ -33,6 +34,7 @@ $_['lang_text_linked_desc']         = 'Linked items are OpenCart items that have
 $_['lang_text_unlinked_desc']       = 'Unlinked items are listings on your eBay account that do not link to any of your OpenCart products.';
 $_['lang_text_unlinked_info']       = 'Click the check unlinked items button to search your active eBay listings for unlinked items. This may take a long time if you have many eBay listings.';
 $_['lang_text_loading_items']       = 'Loading items';
+$_['lang_limit_reached']       		= 'The maximum number of checks per request was reached, click the button to continue searching';
 
 // Tables
 $_['lang_column_action']            = 'Action';
@@ -45,4 +47,11 @@ $_['lang_column_stock_available']   = 'Local stock<br /><span class="help">Avail
 $_['lang_column_listing_title']     = 'Listing title<span class="help">(eBay listing title)</span>';
 $_['lang_column_allocated']         = 'Allocated stock<br /><span class="help">Sold but not paid</span>';
 $_['lang_column_ebay_stock']        = 'eBay stock<span class="help">On listing</span>';
+$_['lang_column_stock_reserve']   	= 'Reserve stock';
+
+// Filter
+$_['lang_filter']             		= 'Filter results';
+$_['lang_filter_title']             = 'Title';
+$_['lang_filter_range']             = 'Stock range';
+$_['lang_filter_var']             	= 'Include variants';
 ?>

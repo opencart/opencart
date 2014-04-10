@@ -299,6 +299,8 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function ftpTestConnection() {
+
+
 		$this->load->model('openbay/openbay');
 
 		$data = $this->model_openbay_openbay->ftpTestConnection();
@@ -307,25 +309,33 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function ftpUpdateModule() {
+
+
 		$this->load->model('openbay/openbay');
 
 		$data = $this->model_openbay_openbay->ftpUpdateModule();
 
-		return $this->response->setOutput(json_encode($data));
+		$this->response->setOutput(json_encode($data));
 	}
 
 	public function getNotifications() {
+
+
 		$this->load->model('openbay/openbay');
 		$this->response->setOutput(json_encode($this->model_openbay_openbay->getNotifications()));
 	}
 
 	public function getVersion() {
-		sleep(1); // give the data some "feel" that its not in our system
+
+		sleep(1);
+
 		$this->load->model('openbay/openbay');
 		$this->response->setOutput(json_encode($this->model_openbay_openbay->getVersion()));
 	}
 
 	public function runPatch() {
+
+
 		$this->load->model('openbay/ebay_patch');
 		$this->load->model('openbay/amazon_patch');
 		$this->load->model('openbay/amazonus_patch');
@@ -352,10 +362,16 @@ class ControllerExtensionOpenbay extends Controller {
 		}
 
 		sleep(1);
-		return $this->response->setOutput(json_encode(array('msg' => 'ok')));
+
+		$json = array();
+		$json['msg'] = 'ok';
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function faqGet(){
+
+
 		$this->load->model('openbay/openbay');
 		$this->load->language('extension/openbay');
 
@@ -365,15 +381,23 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function faqDismiss(){
+
+
 		$this->load->model('openbay/openbay');
 		$this->response->setOutput(json_encode($this->model_openbay_openbay->faqDismiss($this->request->get['qry_route'])));
 	}
 
 	public function faqClear(){
+
+
 		$this->load->model('openbay/openbay');
 		$this->model_openbay_openbay->faqClear();
 		sleep(1);
-		$this->response->setOutput(json_encode(array('error' => false)));
+
+		$json = array();
+		$json['msg'] = 'ok';
+
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function ajaxOrderInfo(){
@@ -399,6 +423,7 @@ class ControllerExtensionOpenbay extends Controller {
 				//if status is shipped
 				if($this->request->get['status_id'] == $this->config->get('openbay_amazon_order_status_shipped')){
 					$this->data['couriers'] = $this->openbay->amazon->getCarriers();
+					$this->data['courier_default'] = $this->config->get('openbay_amazon_default_carrier');
 					$this->template = 'openbay/amazon_ajax_shippinginfo.tpl';
 					$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 				}
@@ -413,6 +438,7 @@ class ControllerExtensionOpenbay extends Controller {
 				//if status is shipped
 				if($this->request->get['status_id'] == $this->config->get('openbay_amazonus_order_status_shipped')){
 					$this->data['couriers'] = $this->openbay->amazonus->getCarriers();
+					$this->data['courier_default'] = $this->config->get('openbay_amazon_default_carrier');
 					$this->template = 'openbay/amazonus_ajax_shippinginfo.tpl';
 					$this->response->setOutput($this->render(true), $this->config->get('config_compression'));
 				}
@@ -756,6 +782,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 			if ($this->config->get('amazon_status') == 1) {
 				$this->data['market_options']['amazon']['carriers'] = $this->openbay->amazon->getCarriers();
+				$this->data['market_options']['amazon']['default_carrier'] = $this->config->get('openbay_amazon_default_carrier');
 			}
 
 			if ($this->config->get('amazonus_status') == 1) {

@@ -273,10 +273,13 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 	}
 
 	public function uploadSavedAjax() {
+
+
 		ob_start();
-		$result = json_encode($this->uploadSaved());
+		$json = json_encode($this->uploadSaved());
 		ob_clean();
-		$this->response->setOutput($result);
+
+		$this->response->setOutput($json);
 	}
 
 	private function uploadSaved() {
@@ -333,6 +336,8 @@ class ControllerOpenbayAmazonusProduct extends Controller{
 	}
 
 	public function parseTemplateAjax() {
+
+
 		$this->load->model('tool/image');
 		$this->load->library('amazonus');
 		$this->load->library('log');

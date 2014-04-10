@@ -7,8 +7,8 @@ class ControllerAmazonListing extends Controller {
 
 		$this->load->library('log');
 		$this->load->library('amazon');
-		$this->load->model('amazon/listing');
-		$this->load->model('amazon/product');
+		$this->load->model('openbay/amazon_listing');
+		$this->load->model('openbay/amazon_product');
 
 		$logger = new Log('amazon_listing.log');
 		$logger->write('amazon/listing - started');
@@ -35,12 +35,12 @@ class ControllerAmazonListing extends Controller {
 
 		if ($data['status']) {
 			$logger->write("Updating " . $data['product_id'] . ' from ' . $data['marketplace'] . ' as successful');
-			$this->model_amazon_listing->listingSuccessful($data['product_id'], $data['marketplace']);
-			$this->model_amazon_product->linkProduct($data['sku'], $data['product_id']);
+			$this->model_openbay_amazon_listing->listingSuccessful($data['product_id'], $data['marketplace']);
+			$this->model_openbay_amazon_product->linkProduct($data['sku'], $data['product_id']);
 			$logger->write("Updated successfully");
 		} else {
 			$logger->write("Updating " . $data['product_id'] . ' from ' . $data['marketplace'] . ' as failed');
-			$this->model_amazon_listing->listingFailed($data['product_id'], $data['marketplace'], $data['messages']);
+			$this->model_openbay_amazon_listing->listingFailed($data['product_id'], $data['marketplace'], $data['messages']);
 			$logger->write("Updated successfully");
 		}
 	}

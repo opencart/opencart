@@ -8,8 +8,8 @@ class ControllerAmazonusOrder extends Controller {
 		$this->load->library('log');
 		$this->load->library('amazonus');
 		$this->load->model('checkout/order');
-		$this->load->model('amazonus/order');
-		$this->language->load('amazonus/order');
+		$this->load->model('openbay/amazonus_order');
+		$this->language->load('openbay/amazonus_order');
 
 		$logger = new Log('amazonus.log');
 		$logger->write('amazonus/order - started');
@@ -35,11 +35,11 @@ class ControllerAmazonusOrder extends Controller {
 		$amazonusOrderStatus = trim(strtolower((string)$orderXml->Status));
 
 		$amazonusOrderId = (string)$orderXml->AmazonOrderId;
-		$orderStatus = $this->model_amazonus_order->getMappedStatus((string)$orderXml->Status);
+		$orderStatus = $this->model_openbay_amazonus_order->getMappedStatus((string)$orderXml->Status);
 
 		$logger->write('Received order ' . $amazonusOrderId);
 
-		$orderId = $this->model_amazonus_order->getOrderId($amazonusOrderId);
+		$orderId = $this->model_openbay_amazonus_order->getOrderId($amazonusOrderId);
 
 		// If the order already exists on opencart, ignore it.
 		if ($orderId) {
@@ -109,8 +109,8 @@ class ControllerAmazonusOrder extends Controller {
 				continue;
 			}
 
-			$productId = $this->model_amazonus_order->getProductId((string)$item->Sku);
-			$productVar = $this->model_amazonus_order->getProductVar((string)$item->Sku);
+			$productId = $this->model_openbay_amazonus_order->getProductId((string)$item->Sku);
+			$productVar = $this->model_openbay_amazonus_order->getProductVar((string)$item->Sku);
 
 			$products[] = array(
 				'product_id' => $productId,
@@ -125,7 +125,7 @@ class ControllerAmazonusOrder extends Controller {
 				'total' => sprintf('%.4f', $totalPrice - $taxTotal),
 				'tax' => $taxTotal / (int)$item->Ordered,
 				'reward' => '0',
-				'option' => $this->model_amazonus_order->getProductOptionsByVar($productVar),
+				'option' => $this->model_openbay_amazonus_order->getProductOptionsByVar($productVar),
 				'download' => array(),
 			);
 
@@ -201,10 +201,10 @@ class ControllerAmazonusOrder extends Controller {
 			'shipping_address_2' => $addressLine2,
 			'shipping_city' => (string)$orderXml->Shipping->City,
 			'shipping_postcode' => (string)$orderXml->Shipping->PostCode,
-			'shipping_country' => $this->model_amazonus_order->getCountryName((string)$orderXml->Shipping->CountryCode),
-			'shipping_country_id' => $this->model_amazonus_order->getCountryId((string)$orderXml->Shipping->CountryCode),
+			'shipping_country' => $this->model_openbay_amazonus_order->getCountryName((string)$orderXml->Shipping->CountryCode),
+			'shipping_country_id' => $this->model_openbay_amazonus_order->getCountryId((string)$orderXml->Shipping->CountryCode),
 			'shipping_zone' => (string)$orderXml->Shipping->State,
-			'shipping_zone_id' => $this->model_amazonus_order->getZoneId((string)$orderXml->Shipping->State),
+			'shipping_zone_id' => $this->model_openbay_amazonus_order->getZoneId((string)$orderXml->Shipping->State),
 			'shipping_address_format' => '',
 			'shipping_method' => (string)$orderXml->Shipping->Type,
 			'shipping_code' => 'amazonus.' . (string)$orderXml->Shipping->Type,
@@ -215,10 +215,10 @@ class ControllerAmazonusOrder extends Controller {
 			'payment_address_2' => $addressLine2,
 			'payment_city' => (string)$orderXml->Shipping->City,
 			'payment_postcode' => (string)$orderXml->Shipping->PostCode,
-			'payment_country' => $this->model_amazonus_order->getCountryName((string)$orderXml->Shipping->CountryCode),
-			'payment_country_id' => $this->model_amazonus_order->getCountryId((string)$orderXml->Shipping->CountryCode),
+			'payment_country' => $this->model_openbay_amazonus_order->getCountryName((string)$orderXml->Shipping->CountryCode),
+			'payment_country_id' => $this->model_openbay_amazonus_order->getCountryId((string)$orderXml->Shipping->CountryCode),
 			'payment_zone' => (string)$orderXml->Shipping->State,
-			'payment_zone_id' => $this->model_amazonus_order->getZoneId((string)$orderXml->Shipping->State),
+			'payment_zone_id' => $this->model_openbay_amazonus_order->getZoneId((string)$orderXml->Shipping->State),
 			'payment_address_format' => '',
 			'payment_method' => $this->language->get('paid_on_amazonus_text'),
 			'payment_code' => 'amazonus.amazonus',
@@ -299,13 +299,13 @@ class ControllerAmazonusOrder extends Controller {
 
 		$orderId = $this->model_checkout_order->$addOrderMethod($order);
 
-		$this->model_amazonus_order->updateOrderStatus($orderId, $orderStatus);
-		$this->model_amazonus_order->addAmazonusOrder($orderId, $amazonusOrderId);
-		$this->model_amazonus_order->addAmazonusOrderProducts($orderId, $productMapping);
+		$this->model_openbay_amazonus_order->updateOrderStatus($orderId, $orderStatus);
+		$this->model_openbay_amazonus_order->addAmazonusOrder($orderId, $amazonusOrderId);
+		$this->model_openbay_amazonus_order->addAmazonusOrderProducts($orderId, $productMapping);
 
 		foreach($products as $product) {
 			if($product['product_id'] != 0) {
-				$this->model_amazonus_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
+				$this->model_openbay_amazonus_order->decreaseProductQuantity($product['product_id'], $product['quantity'], $product['var']);
 			}
 		}
 
@@ -316,7 +316,7 @@ class ControllerAmazonusOrder extends Controller {
 		$this->openbay->orderNew($orderId);
 		$logger->write("Openbay notified");
 
-		$this->model_amazonus_order->acknowledgeOrder($orderId);
+		$this->model_openbay_amazonus_order->acknowledgeOrder($orderId);
 
 		//send an email to the administrator about the sale
 		if($this->config->get('openbay_amazonus_notify_admin') == 1){

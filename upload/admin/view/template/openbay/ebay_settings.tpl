@@ -49,9 +49,9 @@
                         <tr>
                             <td><p><label for="openbaypro_token"><?php echo $lang_obp_token; ?></p></td>
                             <td>
-                                <p><img src="view/image/lock.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://uk.openbaypro.com/account/live/register.php" target="_BLANK"><?php echo $lang_obp_token_register; ?></a></p>
-                                <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://uk.openbaypro.com/account/live/renew.php" target="_BLANK"><?php echo $lang_obp_token_renew; ?></a></p>
-                                <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://uk.openbaypro.com/account/live/update.php" target="_BLANK"><?php echo $lang_obp_detail_update; ?></a></p>
+                                <p><img src="view/image/lock.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://account.openbaypro.com/ebay/apiRegister/" target="_BLANK"><?php echo $lang_obp_token_register; ?></a></p>
+                                <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="https://account.openbaypro.com/ebay/apiRenew/" target="_BLANK"><?php echo $lang_obp_token_renew; ?></a></p>
+                                <p><img src="view/image/lock-open.png" style="margin-bottom:-3px;" alt="Loading" />&nbsp;<a href="http://account.openbaypro.com/ebay/apiUpdate/" target="_BLANK"><?php echo $lang_obp_detail_update; ?></a></p>
                                 <p><input type="text" name="openbaypro_token" id="openbaypro_token" style="width:300px;" maxlength="" value="<?php echo $openbaypro_token;?>" class="credentials" /></p>
                             </td>
                         </tr>
@@ -104,6 +104,20 @@
                             <td>
                                 <select name="openbaypro_relistitems" style="width:200px;">
                                     <?php if ($openbaypro_relistitems) { ?>
+                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
+                                        <option value="0"><?php echo $lang_no; ?></option>
+                                    <?php } else { ?>
+                                        <option value="1"><?php echo $lang_yes; ?></option>
+                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
+                                    <?php } ?>
+                                </select>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><?php echo $lang_app_nostock_ebay; ?></td>
+                            <td>
+                                <select name="ebay_disable_nostock" style="width:200px;">
+                                    <?php if ($ebay_disable_nostock) { ?>
                                         <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
                                         <option value="0"><?php echo $lang_no; ?></option>
                                     <?php } else { ?>
@@ -294,38 +308,6 @@
                     </table>
                     <br /><br />
 
-                    <h2><?php echo $lang_legend_stock_rep; ?></h2>
-                    <p><?php echo $lang_desc_stock_rep; ?></p>
-                    <table class="form">
-                        <tr>
-                            <td><?php echo $lang_stock_reports; ?></td>
-                            <td>
-                                <select name="openbaypro_stock_report" style="width:200px;">
-                                    <?php if ($openbaypro_stock_report) { ?>
-                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                        <option value="0"><?php echo $lang_no; ?></option>
-                                    <?php } else { ?>
-                                        <option value="1"><?php echo $lang_yes; ?></option>
-                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><?php echo $lang_stock_summary; ?></td>
-                            <td>
-                                <select name="openbaypro_stock_report_summary" style="width:200px;">
-                                    <?php if ($openbaypro_stock_report_summary) { ?>
-                                        <option value="1" selected="selected"><?php echo $lang_yes; ?></option>
-                                        <option value="0"><?php echo $lang_no; ?></option>
-                                    <?php } else { ?>
-                                        <option value="1"><?php echo $lang_yes; ?></option>
-                                        <option value="0" selected="selected"><?php echo $lang_no; ?></option>
-                                    <?php } ?>
-                                </select>
-                            </td>
-                        </tr>
-                    </table><br /><br />
                     <h2><?php echo $lang_legend_default_import; ?></h2>
                     <table class="form">
                         <tr>
@@ -440,22 +422,27 @@
                     <h2><?php echo $lang_developer; ?></h2>
                     <p><?php echo $lang_developer_desc; ?></p>
                     <table class="form">
-
-                        <tr>
-                            <td><label><?php echo $lang_developer_empty; ?></td>
-                            <td>
-                                <a onclick="devClearData();" class="button" id="devClearData"><span><?php echo $lang_clear; ?></span></a>
-                                <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageDevClearData" class="displayNone"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td><label><?php echo $lang_developer_repairlinks; ?></td>
-                            <td>
-                                <a onclick="repairLinks();" class="button" id="repairLinks"><span><?php echo $lang_update; ?></span></a>
-                                <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageRepairLinks" class="displayNone"/>
-                            </td>
-                        </tr>
-
+                      <tr>
+                        <td><label><?php echo $lang_developer_empty; ?></td>
+                        <td>
+                          <a onclick="devClearData();" class="button" id="devClearData"><span><?php echo $lang_clear; ?></span></a>
+                          <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageDevClearData" class="displayNone"/>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label><?php echo $lang_developer_locks; ?></td>
+                        <td>
+                          <a onclick="removeLocks();" class="button" id="removeLocks"><span><?php echo $lang_clear; ?></span></a>
+                          <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageRemoveLocks" class="displayNone"/>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td><label><?php echo $lang_developer_repairlinks; ?></td>
+                        <td>
+                          <a onclick="repairLinks();" class="button" id="repairLinks"><span><?php echo $lang_update; ?></span></a>
+                          <img src="<?php echo HTTPS_SERVER; ?>view/image/loading.gif" id="imageRepairLinks" class="displayNone"/>
+                        </td>
+                      </tr>
                     </table>
                 </div>
 
@@ -559,6 +546,9 @@
                         $('#imageDevClearData').hide();
                         $('#devClearData').show();
                     }, 500);
+                },
+                error: function (xhr, ajaxOptions, thrownError) {
+                  alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
                 }
             });
         } else {
@@ -569,22 +559,47 @@
     }
 
     function repairLinks() {
-            $.ajax({
-                url: 'index.php?route=openbay/openbay/repairLinks&token=<?php echo $token; ?>',
-                type: 'post',
-                dataType: 'json',
-                beforeSend: function() {
-                    $('#repairLinks').hide();
-                    $('#imageRepairLinks').show();
-                },
-                success: function(json) {
-                    setTimeout(function() {
-                        alert(json.msg);
-                        $('#imageRepairLinks').hide();
-                        $('#repairLinks').show();
-                    }, 500);
-                }
-            });
+      $.ajax({
+        url: 'index.php?route=openbay/openbay/repairLinks&token=<?php echo $token; ?>',
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function() {
+          $('#repairLinks').hide();
+          $('#imageRepairLinks').show();
+        },
+        success: function(json) {
+          setTimeout(function() {
+            alert(json.msg);
+            $('#imageRepairLinks').hide();
+            $('#repairLinks').show();
+          }, 500);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
+    }
+
+    function removeLocks() {
+      $.ajax({
+        url: 'index.php?route=openbay/openbay/deleteAllLocks&token=<?php echo $token; ?>',
+        type: 'post',
+        dataType: 'json',
+        beforeSend: function() {
+          $('#removeLocks').hide();
+          $('#imageRemoveLocks').show();
+        },
+        success: function(json) {
+          setTimeout(function() {
+            alert(json.msg);
+            $('#removeLocks').show();
+            $('#imageRemoveLocks').hide();
+          }, 500);
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
+      });
     }
 
     function validateForm() {

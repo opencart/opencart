@@ -1,33 +1,27 @@
 <?php echo $header; ?>
 <div id="content">
     <div class="breadcrumb">
-        <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+      <?php foreach ($breadcrumbs as $breadcrumb) { ?>
         <?php echo $breadcrumb['separator'] ?><a href="<?php echo $breadcrumb['href'] ?>"><?php echo $breadcrumb['text'] ?></a>
-        <?php } ?>
+      <?php } ?>
     </div>
     
     <?php if (isset($error_warning)) { ?>
-    
-    <div class="warning">
+      <div class="warning">
         <ul>
-            <li><?php echo $error_warning ?></li>
+          <li><?php echo $error_warning ?></li>
         </ul>
-    </div>
-    
+      </div>
     <?php } ?>
         
     <?php if ($listing_errors) { ?>
-    
-    <div class="warning">
+      <div class="warning">
         <ul>
-            <?php foreach ($listing_errors as $listing_error) { ?>
-            
+          <?php foreach ($listing_errors as $listing_error) { ?>
             <li><?php echo $listing_error ?></li>
-            
-            <?php } ?>
+          <?php } ?>
         </ul>
-    </div>
-    
+      </div>
     <?php } ?>
 
     <div class="box mBottom130">
@@ -39,19 +33,17 @@
         </div>
         <div class="content">
             <div class="search_container">
-                <div class="warning m10 displayNone" id="search_error"></div>
-
-                <div class="border p10">
-                    <p>
-                        <input type="text" name="search_string" placeholder="<?php echo $lang_placeholder_search; ?>" id="search_string" class="width250" />
-                        <a onclick="doSearch();" id="search_submit" class="button"><?php echo $button_search; ?></a>
-                        <img src="view/image/loading.gif" id="search_submit_loading" class="displayNone" alt="Loading" />
-                    </p>
-                </div>
-
-                <p class="border p10 mtop5">
-                    <span><?php echo $lang_not_in_catalog; ?></span><a href="<?php echo $url_advanced; ?>" id="create_new" class="button"><?php echo $button_new; ?></a>
+              <div class="warning m10 displayNone" id="search_error"></div>
+              <div class="border p10">
+                <p>
+                  <input type="text" name="search_string" placeholder="<?php echo $lang_placeholder_search; ?>" id="search_string" class="width250" />
+                  <a onclick="doSearch();" id="search_submit" class="button"><?php echo $button_search; ?></a>
+                  <img src="view/image/loading.gif" id="search_submit_loading" class="displayNone" alt="Loading" />
                 </p>
+              </div>
+              <p class="border p10 mtop5">
+                <span><?php echo $lang_not_in_catalog; ?></span><a href="<?php echo $url_advanced; ?>" id="create_new" class="button"><?php echo $button_new; ?></a>
+              </p>
             </div>
             <div class="search_result displayNone" id="search_result_container">
                 <table class="list">
@@ -84,13 +76,18 @@
 
                     <div id="required-info">
                         <table class="form">
+                          <?php if (!empty($options)) { ?>
                             <tr>
-                                <td><label for="quantity"><?php echo $entry_quantity; ?></label></td>
-                                <td>
-                                    <?php echo $quantity ?>
-                                    <input type="hidden" name="quantity" id="quantity" value="<?php echo $quantity ?>" />
-                                </td>
+                              <td><label for="openstock_selector"><?php echo $entry_option; ?></label></td>
+                              <td>
+                                <select id="openstock_selector" name="option_variant">
+                                  <?php foreach($options as $option) { ?>
+                                  <option value="<?php echo  $option['var']?>" <?php if (in_array($option['var'], $options_active)) { ' disabled'; } ?>><?php echo $option['combi']; ?></option>
+                                  <?php } ?>
+                                </select>
+                              </td>
                             </tr>
+                          <?php }?>
                             <tr>
                                 <td><span class="required">*</span> <label for="sku"><?php echo $entry_sku; ?></label><br /><span class="help"><?php echo $help_sku ?></span></td>
                                 <td><input type="text" name="sku" id="sku" value="<?php echo $sku ?>" class="width200" /></td>
@@ -250,11 +247,8 @@ function getProduct(asin){
 
             $('#chosen_product_preview').html(html).css('opacity', 0).slideDown('slow').animate({ opacity: 1 },{ queue: false, duration: 'slow' });
         },
-        error: function(){
-            alert('error');
-        },
-        failure: function(){
-            alert('failure');
+        error: function (xhr, ajaxOptions, thrownError) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
     });
 }
@@ -314,11 +308,6 @@ function listProduct(asin) {
 
 function validateQuickListing(){
     var error = false;
-
-    if($('#quantity').val() < 1){
-        alert('<?php echo $error_stock; ?>');
-        error = true;
-    }
 
     if($('#price').val() == '' || $('#price').val() == 0){
         alert('<?php echo $error_price; ?>');

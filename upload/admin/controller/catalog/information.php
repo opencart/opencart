@@ -472,6 +472,10 @@ class ControllerCatalogInformation extends Controller {
 				$this->error['warning'] = $this->language->get('error_affiliate');
 			}
 
+			if ($this->config->get('config_return_id') == $information_id) {
+				$this->error['warning'] = $this->language->get('error_return');
+			}
+
 			$store_total = $this->model_setting_store->getTotalStoresByInformationId($information_id);
 
 			if ($store_total) {

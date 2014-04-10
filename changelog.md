@@ -14,6 +14,7 @@
 * **PayPal Express Checkout** Updated SQL check for zone information to include code and title, covers differences between data response for different country formats [**view**](https://github.com/opencart/opencart/commit/395d4cc04c26b12dfa9a427142a9890876ceecf7)
 * Cookies changed to HttpOnly [**view**](https://github.com/opencart/opencart/commit/53c376abb238a5d0bb14aa5e1a39f0601a4c6b9f)
 * Changed UTF8 helper functions to new code [**view**](https://github.com/opencart/opencart/commit/d55aa27958895ed4f3141d4cffc94c7589aae48c)
+* Updated OpenBay Pro to latest v2334 [**view**](https://github.com/opencart/opencart/pull/1327)
 
 #### Added
 * New checks during install to check for iconv function or mbstring extension as used by UTF8 helper [**view**](https://github.com/opencart/opencart/commit/8f4a58899e5ca0316b3e3be49a1171ccf3b0db26)

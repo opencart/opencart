@@ -1240,12 +1240,6 @@
                 <span class="help-block"><?php echo $help_mail_protocol; ?></span></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-mail-parameter"><?php echo $entry_mail_parameter; ?></label>
-              <div class="col-sm-10">
-                <input type="text" name="config_mail[parameter]" value="<?php echo $config_mail_parameter; ?>" placeholder="<?php echo $entry_mail_parameter; ?>" id="input-mail-parameter" class="form-control" />
-                <span class="help-block"><?php echo $help_mail_parameter; ?></span> </div>
-            </div>
-            <div class="form-group">
               <label class="col-sm-2 control-label" for="input-smtp-host"><?php echo $entry_smtp_hostname; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="config_mail[smtp_hostname]" value="<?php echo $config_smtp_hostname; ?>" placeholder="<?php echo $entry_smtp_hostname; ?>" id="input-smtp-host" class="form-control" />
@@ -1260,7 +1254,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-smtp-password"><?php echo $entry_smtp_password; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_mail[smtp_password]" value="<?php echo $config_smtp_password; ?>" placeholder="<?php echo $entry_smtp_password; ?>" id="input-smtp-password" class="form-control" />
+                <input type="password" name="config_mail[smtp_password]" value="<?php echo $config_smtp_password; ?>" placeholder="<?php echo $entry_smtp_password; ?>" id="input-smtp-password" class="form-control" />
               </div>
             </div>
             <div class="form-group">
@@ -1273,6 +1267,28 @@
               <label class="col-sm-2 control-label" for="input-smtp-timeout"><?php echo $entry_smtp_timeout; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="config_mail[smtp_timeout]" value="<?php echo $config_smtp_timeout; ?>" placeholder="<?php echo $entry_smtp_timeout; ?>" id="input-smtp-timeout" class="form-control" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-smtp-secure"><?php echo $entry_smtp_secure; ?></label>
+              <div class="col-sm-10">
+                <select name="config_mail[smtp_secure]" id="input-smtp-secure" class="form-control">
+                  <?php if ($config_smtp_secure == 'tls') { ?>
+                  <option value="tls" selected="selected">TLS</option>
+                  <?php } else { ?>
+                  <option value="tls">TLS</option>
+                  <?php } ?>
+                  <?php if ($config_smtp_secure == 'ssl') { ?>
+                  <option value="ssl" selected="selected">SSL</option>
+                  <?php } else { ?>
+                  <option value="ssl">SSL</option>
+                  <?php } ?>
+                  <?php if ($config_smtp_secure == '') { ?>
+                  <option value="" selected="selected">None</option>
+                  <?php } else { ?>
+                  <option value="">None</option>
+                  <?php } ?>
+                </select>
               </div>
             </div>
             <div class="form-group">

@@ -844,13 +844,6 @@ class ControllerSaleCustomer extends Controller {
 		// Custom Fields
 		$this->load->model('sale/custom_field');
 		
-		if (isset($this->request->post['custom_field'])) {
-			$custom_field_info = $this->request->post['custom_field'];
-		} elseif (!empty($customer_info)) {
-			$custom_field_info = unserialize($customer_info['custom_field']);		
-		} else {
-			$custom_field_info = array();
-		}
 
 		$data['custom_fields'] = array();
 		
@@ -872,7 +865,15 @@ class ControllerSaleCustomer extends Controller {
 				'type'               => $custom_field['type'],
 				'value'              => isset($custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']] : $value
 			);
-		}		
+		}	
+		
+		if (isset($this->request->post['custom_field'])) {
+			$data['customer_custom_field'] = $this->request->post['custom_field'];
+		} elseif (!empty($customer_info)) {
+			$data['customer_custom_field'] = unserialize($customer_info['custom_field']);		
+		} else {
+			$data['customer_custom_field'] = array();
+		}
 
 		if (isset($this->request->post['newsletter'])) {
 			$data['newsletter'] = $this->request->post['newsletter'];
@@ -921,8 +922,6 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['address_id'] = '';
 		}
-
-
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

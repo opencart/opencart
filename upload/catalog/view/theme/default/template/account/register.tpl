@@ -209,11 +209,13 @@
             <select name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-              <?php if ($custom_field_value['custom_field_value_id'] == $custom_field['value']) { ?>
+              
+              <?php if ($custom_field_value['custom_field_value_id'] == $custom_field_value[$custom_field['custom_field_id']]) { ?>
               <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>" selected="selected"><?php echo $custom_field_value['name']; ?></option>
               <?php } else { ?>
               <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
               <?php } ?>
+              
               <?php } ?>
             </select>
             <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>

@@ -3135,7 +3135,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (27, 0, 'coupon', 'coupon_sort_order', '4', 0),
 (28, 0, 'coupon', 'coupon_status', '1', 0),
 (29, 0, 'config', 'config_order_mail', '0', 0),
-(30, 0, 'config', 'config_mail', 'a:7:{s:8:"protocol";s:4:"mail";s:13:"smtp_hostname";s:14:"smtp.gmail.com";s:13:"smtp_username";s:24:"";s:13:"smtp_password";s:15:"";s:9:"smtp_port";s:2:"25";s:12:"smtp_timeout";s:1:"5";s:11:"smtp_secure";s:3:"tls";}', 0),
+(30, 0, 'config', 'config_mail', 'a:7:{s:8:"protocol";s:4:"mail";s:13:"smtp_hostname";s:0:"";s:13:"smtp_username";s:0:"";s:13:"smtp_password";s:0:"";s:9:"smtp_port";s:2:"25";s:12:"smtp_timeout";s:1:"5";s:11:"smtp_secure";s:3:"tls";}', 0),
 (34, 0, 'flat', 'flat_sort_order', '1', 0),
 (35, 0, 'flat', 'flat_status', '1', 0),
 (36, 0, 'flat', 'flat_geo_zone_id', '0', 0),

@@ -17,8 +17,8 @@ class ControllerModuleVoucher extends Controller {
 			} else {
 				$data['voucher'] = '';
 			}
-			
-			if ($this->request->get['redirect']) {
+
+			if (isset($this->request->get['redirect']) && !empty($this->request->get['redirect'])) {
 				$data['redirect'] = $this->request->get['redirect'];
 			} else {
 				$data['redirect'] = $this->url->link('checkout/cart');

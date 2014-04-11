@@ -592,14 +592,8 @@ class ControllerSaleCustomer extends Controller {
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
-		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
 		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
-
-		$data['column_ip'] = $this->language->get('column_ip');
-		$data['column_total'] = $this->language->get('column_total');
-		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');
 		
 		$data['entry_customer_group'] = $this->language->get('entry_customer_group');
 		$data['entry_firstname'] = $this->language->get('entry_firstname');
@@ -846,6 +840,39 @@ class ControllerSaleCustomer extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
+		
+		// Custom Fields
+		$this->load->model('sale/custom_field');
+		
+		if (isset($this->request->post['custom_field'])) {
+			$custom_field_info = $this->request->post['custom_field'];
+		} elseif (!empty($customer_info)) {
+			$custom_field_info = unserialize($customer_info['custom_field']);		
+		} else {
+			$custom_field_info = array();
+		}
+
+		$data['custom_fields'] = array();
+		
+		// Customer Group
+		$custom_fields = $this->model_sale_custom_field->getCustomFields();
+
+		foreach ($custom_fields as $custom_field) {
+			if ($custom_field['type'] == 'checkbox') {
+				$value = array();
+			} else {
+				$value = $custom_field['value'];
+			}
+
+			$data['custom_fields'][] = array(
+				'custom_field_id'    => $custom_field['custom_field_id'],
+				'custom_field_value' => $custom_field['custom_field_value'],
+				'name'               => $custom_field['name'],
+				'location'           => $custom_field['location'],
+				'type'               => $custom_field['type'],
+				'value'              => isset($custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']] : $value
+			);
+		}		
 
 		if (isset($this->request->post['newsletter'])) {
 			$data['newsletter'] = $this->request->post['newsletter'];
@@ -895,23 +922,7 @@ class ControllerSaleCustomer extends Controller {
 			$data['address_id'] = '';
 		}
 
-		$data['ips'] = array();
 
-		if (!empty($customer_info)) {
-			$results = $this->model_sale_customer->getIpsByCustomerId($this->request->get['customer_id']);
-
-			foreach ($results as $result) {
-				$ban_ip_total = $this->model_sale_customer->getTotalBanIpsByIp($result['ip']);
-
-				$data['ips'][] = array(
-					'ip'         => $result['ip'],
-					'total'      => $this->model_sale_customer->getTotalCustomersByIp($result['ip']),
-					'date_added' => date('d/m/y', strtotime($result['date_added'])),
-					'filter_ip'  => $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL'),
-					'ban_ip'     => $ban_ip_total
-				);
-			}
-		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -952,7 +963,18 @@ class ControllerSaleCustomer extends Controller {
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
+		
+		// Custom field validation
+		$this->load->model('account/custom_field');
 
+		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->request->post['customer_group_id']);
+
+		foreach ($custom_fields as $custom_field) {
+			if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+			}
+		}
+		
 		if ($this->request->post['password'] || (!isset($this->request->get['customer_id']))) {
 			if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
 				$this->error['password'] = $this->language->get('error_password');
@@ -995,7 +1017,13 @@ class ControllerSaleCustomer extends Controller {
 
 				if (!isset($value['zone_id']) || $value['zone_id'] == '') {
 					$this->error['address_zone'][$key] = $this->language->get('error_zone');
-				}	
+				}
+				
+				foreach ($custom_fields as $custom_field) {
+					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+						$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					}
+				}					
 			}
 		}
 
@@ -1125,17 +1153,17 @@ class ControllerSaleCustomer extends Controller {
 			);
 		}
 
-		$transaction_total = $this->model_sale_customer->getTotalHistories($this->request->get['customer_id']);
+		$history_total = $this->model_sale_customer->getTotalHistories($this->request->get['customer_id']);
 
 		$pagination = new Pagination();
-		$pagination->total = $transaction_total;
+		$pagination->total = $history_total;
 		$pagination->page = $page;
 		$pagination->limit = 10;
 		$pagination->url = $this->url->link('sale/customer/history', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($transaction_total - $this->config->get('config_limit_admin'))) ? $transaction_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $transaction_total, ceil($transaction_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
 		$this->response->setOutput($this->load->view('sale/customer_history.tpl', $data));
 	}
@@ -1196,7 +1224,7 @@ class ControllerSaleCustomer extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($transaction_total - $this->config->get('config_limit_admin'))) ? $transaction_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $transaction_total, ceil($transaction_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($transaction_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($transaction_total - 10)) ? $transaction_total : ((($page - 1) * 10) + 10), $transaction_total, ceil($transaction_total / 10));
 
 		$this->response->setOutput($this->load->view('sale/customer_transaction.tpl', $data));
 	}
@@ -1257,11 +1285,62 @@ class ControllerSaleCustomer extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($reward_total - $this->config->get('config_limit_admin'))) ? $reward_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $reward_total, ceil($reward_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($reward_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($reward_total - 10)) ? $reward_total : ((($page - 1) * 10) + 10), $reward_total, ceil($reward_total / 10));
 
 		$this->response->setOutput($this->load->view('sale/customer_reward.tpl', $data));
 	}
 
+	public function ip() {
+		$this->load->language('sale/customer');
+
+		$this->load->model('sale/customer');
+
+		$data['text_no_results'] = $this->language->get('text_no_results');
+		$data['text_add_ban_ip'] = $this->language->get('text_add_ban_ip');
+		$data['text_remove_ban_ip'] = $this->language->get('text_remove_ban_ip');
+
+		$data['column_ip'] = $this->language->get('column_ip');
+		$data['column_total'] = $this->language->get('column_total');
+		$data['column_date_added'] = $this->language->get('column_date_added');
+		$data['column_action'] = $this->language->get('column_action');
+
+		if (isset($this->request->get['page'])) {
+			$page = $this->request->get['page'];
+		} else {
+			$page = 1;
+		}  
+
+		$data['ips'] = array();
+
+		$results = $this->model_sale_customer->getIps($this->request->get['customer_id'], ($page - 1) * 10, 10);
+
+		foreach ($results as $result) {
+			$ban_ip_total = $this->model_sale_customer->getTotalBanIpsByIp($result['ip']);
+
+			$data['ips'][] = array(
+				'ip'         => $result['ip'],
+				'total'      => $this->model_sale_customer->getTotalCustomersByIp($result['ip']),
+				'date_added' => date('d/m/y', strtotime($result['date_added'])),
+				'filter_ip'  => $this->url->link('sale/customer', 'token=' . $this->session->data['token'] . '&filter_ip=' . $result['ip'], 'SSL'),
+				'ban_ip'     => $ban_ip_total
+			);
+		}
+
+		$ip_total = $this->model_sale_customer->getTotalIps($this->request->get['customer_id']);
+
+		$pagination = new Pagination();
+		$pagination->total = $ip_total;
+		$pagination->page = $page;
+		$pagination->limit = 10;
+		$pagination->url = $this->url->link('sale/customer/ip', 'token=' . $this->session->data['token'] . '&customer_id=' . $this->request->get['customer_id'] . '&page={page}', 'SSL');
+
+		$data['pagination'] = $pagination->render();
+
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($ip_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($ip_total - 10)) ? $ip_total : ((($page - 1) * 10) + 10), $ip_total, ceil($ip_total / 10));
+
+		$this->response->setOutput($this->load->view('sale/customer_ip.tpl', $data));
+	}
+		
 	public function addBanIp() {
 		$this->load->language('sale/customer');
 

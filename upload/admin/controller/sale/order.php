@@ -1006,6 +1006,8 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['order_vouchers'] = array();
 		}
+		
+		$data['voucher_min'] = $this->config->get('config_voucher_min');
 
 		$this->load->model('sale/voucher_theme');
 

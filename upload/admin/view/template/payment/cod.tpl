@@ -10,7 +10,6 @@
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
-  <?php echo $header; ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">

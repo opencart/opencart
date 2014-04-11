@@ -3,7 +3,13 @@ class ModelToolUpload extends Model {
 	public function deleteUpload($upload_id) {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "upload WHERE upload_id = '" . (int)$upload_id . "'");
 	}
+	
+	public function getUpload($upload_id) {
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "upload` WHERE upload_id = '" . (int)$upload_id . "'");
 		
+		return $query->row;
+	}
+			
 	public function getUploadByCode($code) {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "upload WHERE code = '" . $this->db->escape($code) . "'");
 		

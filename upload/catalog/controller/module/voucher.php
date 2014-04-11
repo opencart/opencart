@@ -18,6 +18,12 @@ class ControllerModuleVoucher extends Controller {
 				$data['voucher'] = '';
 			}
 			
+			if ($this->request->get['redirect']) {
+				$data['redirect'] = $this->request->get['redirect'];
+			} else {
+				$data['redirect'] = $this->url->link('checkout/cart');
+			}
+						
 			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/voucher.tpl')) {
 				return $this->load->view($this->config->get('config_template') . '/template/module/voucher.tpl', $data);
 			} else {
@@ -46,7 +52,7 @@ class ControllerModuleVoucher extends Controller {
 				
 			$this->session->data['success'] = $this->language->get('text_success');
 				
-			$json['redirect'] = $this->url->link($this->request->post['redirect']);
+			$json['redirect'] = $this->url->link('checkout/cart');
 		} else {
 			$json['error'] = $this->language->get('error_voucher');
 		}

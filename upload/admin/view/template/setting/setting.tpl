@@ -570,7 +570,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_customer_price; ?>s</label>
+                <label class="col-sm-2 control-label"><?php echo $entry_customer_price; ?></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
                     <?php if ($config_customer_price) { ?>
@@ -1563,10 +1563,10 @@ $('select[name=\'config_template\']').on('change', function() {
 		dataType: 'html',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
-		},		
+		},
 		complete: function() {
 			$('.fa-spinner').remove();
-		},			
+		},
 		success: function(html) {
 			$('#template').attr('src', html);
 		},
@@ -1577,7 +1577,7 @@ $('select[name=\'config_template\']').on('change', function() {
 });
 
 $('select[name=\'config_template\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
@@ -1585,27 +1585,27 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'config_country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
-		},		
+		},
 		complete: function() {
 			$('.fa-spinner').remove();
-		},			
+		},
 		success: function(json) {
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
 	      				html += ' selected="selected"';
 	    			}
-	
+
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-			
+
 			$('select[name=\'config_zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1615,5 +1615,5 @@ $('select[name=\'config_country_id\']').on('change', function() {
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

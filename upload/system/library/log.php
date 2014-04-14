@@ -11,7 +11,7 @@ class Log {
 		
 		$handle = fopen($file, 'a+'); 
 		
-		fwrite($handle, date('Y-m-d G:i:s') . ' - ' . $message . "\n");
+		fwrite($handle, date('Y-m-d G:i:s') . ' - ' . print_r($message, true)  . "\n");
 			
 		fclose($handle); 
 	}

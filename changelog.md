@@ -1,5 +1,15 @@
 # OpenCart change log
 
+## v1.5.6.3 (Pending)
+#### Bugs fixed
+* Image manager issue where the thumbnails failed to load.
+* PayPal Express totals calculation, fixed incorrect variable names.
+
+#### Changes
+* Allow arrays to be written to the log file.
+
+#### Added
+
 ## v1.5.6.2 (10th April 2014)
 #### Bugs fixed
 - **PayPal Express Checkout** Added error handling if no shipping options for weight based shipping are found [**view**](https://github.com/opencart/opencart/commit/201004c7dcbec43d17477a099fc8522f56537c00)

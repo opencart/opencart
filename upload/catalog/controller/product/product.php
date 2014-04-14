@@ -1,19 +1,19 @@
-<?php  
+<?php
 class ControllerProductProduct extends Controller {
-	private $error = array(); 
+	private $error = array();
 
-	public function index() { 
+	public function index() {
 		$this->language->load('product/product');
 
 		$this->data['breadcrumbs'] = array();
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),			
+			'href'      => $this->url->link('common/home'),
 			'separator' => false
 		);
 
-		$this->load->model('catalog/category');	
+		$this->load->model('catalog/category');
 
 		if (isset($this->request->get['path'])) {
 			$path = '';
@@ -43,16 +43,16 @@ class ControllerProductProduct extends Controller {
 			// Set the last category breadcrumb
 			$category_info = $this->model_catalog_category->getCategory($category_id);
 
-			if ($category_info) {			
+			if ($category_info) {
 				$url = '';
 
 				if (isset($this->request->get['sort'])) {
 					$url .= '&sort=' . $this->request->get['sort'];
-				}	
+				}
 
 				if (isset($this->request->get['order'])) {
 					$url .= '&order=' . $this->request->get['order'];
-				}	
+				}
 
 				if (isset($this->request->get['page'])) {
 					$url .= '&page=' . $this->request->get['page'];
@@ -70,24 +70,24 @@ class ControllerProductProduct extends Controller {
 			}
 		}
 
-		$this->load->model('catalog/manufacturer');	
+		$this->load->model('catalog/manufacturer');
 
 		if (isset($this->request->get['manufacturer_id'])) {
-			$this->data['breadcrumbs'][] = array( 
+			$this->data['breadcrumbs'][] = array(
 				'text'      => $this->language->get('text_brand'),
 				'href'      => $this->url->link('product/manufacturer'),
 				'separator' => $this->language->get('text_separator')
-			);	
+			);
 
 			$url = '';
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
-			}	
+			}
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
@@ -99,10 +99,10 @@ class ControllerProductProduct extends Controller {
 
 			$manufacturer_info = $this->model_catalog_manufacturer->getManufacturer($this->request->get['manufacturer_id']);
 
-			if ($manufacturer_info) {	
+			if ($manufacturer_info) {
 				$this->data['breadcrumbs'][] = array(
 					'text'	    => $manufacturer_info['name'],
-					'href'	    => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url),					
+					'href'	    => $this->url->link('product/manufacturer/info', 'manufacturer_id=' . $this->request->get['manufacturer_id'] . $url),
 					'separator' => $this->language->get('text_separator')
 				);
 			}
@@ -125,7 +125,7 @@ class ControllerProductProduct extends Controller {
 
 			if (isset($this->request->get['category_id'])) {
 				$url .= '&category_id=' . $this->request->get['category_id'];
-			}	
+			}
 
 			if (isset($this->request->get['sub_category'])) {
 				$url .= '&sub_category=' . $this->request->get['sub_category'];
@@ -133,7 +133,7 @@ class ControllerProductProduct extends Controller {
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
@@ -151,7 +151,7 @@ class ControllerProductProduct extends Controller {
 				'text'      => $this->language->get('text_search'),
 				'href'      => $this->url->link('product/search', $url),
 				'separator' => $this->language->get('text_separator')
-			); 	
+			);
 		}
 
 		if (isset($this->request->get['product_id'])) {
@@ -177,7 +177,7 @@ class ControllerProductProduct extends Controller {
 
 			if (isset($this->request->get['manufacturer_id'])) {
 				$url .= '&manufacturer_id=' . $this->request->get['manufacturer_id'];
-			}			
+			}
 
 			if (isset($this->request->get['search'])) {
 				$url .= '&search=' . $this->request->get['search'];
@@ -189,7 +189,7 @@ class ControllerProductProduct extends Controller {
 
 			if (isset($this->request->get['description'])) {
 				$url .= '&description=' . $this->request->get['description'];
-			}	
+			}
 
 			if (isset($this->request->get['category_id'])) {
 				$url .= '&category_id=' . $this->request->get['category_id'];
@@ -197,15 +197,15 @@ class ControllerProductProduct extends Controller {
 
 			if (isset($this->request->get['sub_category'])) {
 				$url .= '&sub_category=' . $this->request->get['sub_category'];
-			}	
+			}
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
-			}	
+			}
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
@@ -219,7 +219,7 @@ class ControllerProductProduct extends Controller {
 				'text'      => $product_info['name'],
 				'href'      => $this->url->link('product/product', $url . '&product_id=' . $this->request->get['product_id']),
 				'separator' => $this->language->get('text_separator')
-			);			
+			);
 
 			$this->document->setTitle($product_info['name']);
 			$this->document->setDescription($product_info['meta_description']);
@@ -235,7 +235,7 @@ class ControllerProductProduct extends Controller {
 			$this->data['text_manufacturer'] = $this->language->get('text_manufacturer');
 			$this->data['text_model'] = $this->language->get('text_model');
 			$this->data['text_reward'] = $this->language->get('text_reward');
-			$this->data['text_points'] = $this->language->get('text_points');	
+			$this->data['text_points'] = $this->language->get('text_points');
 			$this->data['text_discount'] = $this->language->get('text_discount');
 			$this->data['text_stock'] = $this->language->get('text_stock');
 			$this->data['text_price'] = $this->language->get('text_price');
@@ -260,7 +260,7 @@ class ControllerProductProduct extends Controller {
 
 			$this->data['button_cart'] = $this->language->get('button_cart');
 			$this->data['button_wishlist'] = $this->language->get('button_wishlist');
-			$this->data['button_compare'] = $this->language->get('button_compare');			
+			$this->data['button_compare'] = $this->language->get('button_compare');
 			$this->data['button_upload'] = $this->language->get('button_upload');
 			$this->data['button_continue'] = $this->language->get('button_continue');
 
@@ -309,7 +309,7 @@ class ControllerProductProduct extends Controller {
 					'popup' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_popup_width'), $this->config->get('config_image_popup_height')),
 					'thumb' => $this->model_tool_image->resize($result['image'], $this->config->get('config_image_additional_width'), $this->config->get('config_image_additional_height'))
 				);
-			}	
+			}
 
 			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
 				$this->data['price'] = $this->currency->format($this->tax->calculate($product_info['price'], $product_info['tax_class_id'], $this->config->get('config_tax')));
@@ -331,7 +331,7 @@ class ControllerProductProduct extends Controller {
 
 			$discounts = $this->model_catalog_product->getProductDiscounts($this->request->get['product_id']);
 
-			$this->data['discounts'] = array(); 
+			$this->data['discounts'] = array();
 
 			foreach ($discounts as $discount) {
 				$this->data['discounts'][] = array(
@@ -342,8 +342,8 @@ class ControllerProductProduct extends Controller {
 
 			$this->data['options'] = array();
 
-			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) { 
-				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') { 
+			foreach ($this->model_catalog_product->getProductOptions($this->request->get['product_id']) as $option) {
+				if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'checkbox' || $option['type'] == 'image') {
 					$option_value_data = array();
 
 					foreach ($option['option_value'] as $option_value) {
@@ -372,7 +372,7 @@ class ControllerProductProduct extends Controller {
 						'type'              => $option['type'],
 						'option_value'      => $option_value_data,
 						'required'          => $option['required']
-					);					
+					);
 				} elseif ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
 					$this->data['options'][] = array(
 						'product_option_id' => $option['product_option_id'],
@@ -381,7 +381,7 @@ class ControllerProductProduct extends Controller {
 						'type'              => $option['type'],
 						'option_value'      => $option['option_value'],
 						'required'          => $option['required']
-					);						
+					);
 				}
 			}
 
@@ -436,11 +436,11 @@ class ControllerProductProduct extends Controller {
 					'reviews'    => sprintf($this->language->get('text_reviews'), (int)$result['reviews']),
 					'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
-			}	
+			}
 
 			$this->data['tags'] = array();
 
-			if ($product_info['tag']) {		
+			if ($product_info['tag']) {
 				$tags = explode(',', $product_info['tag']);
 
 				foreach ($tags as $tag) {
@@ -481,15 +481,15 @@ class ControllerProductProduct extends Controller {
 
 			if (isset($this->request->get['filter'])) {
 				$url .= '&filter=' . $this->request->get['filter'];
-			}	
+			}
 
 			if (isset($this->request->get['manufacturer_id'])) {
 				$url .= '&manufacturer_id=' . $this->request->get['manufacturer_id'];
-			}			
+			}
 
 			if (isset($this->request->get['search'])) {
 				$url .= '&search=' . $this->request->get['search'];
-			}	
+			}
 
 			if (isset($this->request->get['tag'])) {
 				$url .= '&tag=' . $this->request->get['tag'];
@@ -505,15 +505,15 @@ class ControllerProductProduct extends Controller {
 
 			if (isset($this->request->get['sub_category'])) {
 				$url .= '&sub_category=' . $this->request->get['sub_category'];
-			}	
+			}
 
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
-			}	
+			}
 
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
-			}	
+			}
 
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
@@ -572,7 +572,7 @@ class ControllerProductProduct extends Controller {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
-		}  
+		}
 
 		$this->data['reviews'] = array();
 
@@ -593,7 +593,7 @@ class ControllerProductProduct extends Controller {
 		$pagination = new Pagination();
 		$pagination->total = $review_total;
 		$pagination->page = $page;
-		$pagination->limit = 5; 
+		$pagination->limit = 5;
 		$pagination->text = $this->language->get('text_pagination');
 		$pagination->url = $this->url->link('product/product/review', 'product_id=' . $this->request->get['product_id'] . '&page={page}');
 
@@ -737,7 +737,7 @@ class ControllerProductProduct extends Controller {
 				$json['error'] = $this->language->get('error_filetype');
 			}
 
-			// Allowed file mime types		
+			// Allowed file mime types
 			$allowed = array();
 
 			$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
@@ -747,6 +747,13 @@ class ControllerProductProduct extends Controller {
 			}
 
 			if (!in_array($this->request->files['file']['type'], $allowed)) {
+				$json['error'] = $this->language->get('error_filetype');
+			}
+
+			// Check to see if any PHP files are trying to be uploaded
+			$content = file_get_contents($this->request->files['file']['tmp_name']);
+
+			if (preg_match('/\<\?/i', $content) && !in_array('php', $allowed)) {
 				$json['error'] = $this->language->get('error_filetype');
 			}
 
@@ -766,9 +773,9 @@ class ControllerProductProduct extends Controller {
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 
 			$json['success'] = $this->language->get('text_upload');
-		}	
+		}
 
-		$this->response->setOutput(json_encode($json));		
+		$this->response->setOutput(json_encode($json));
 	}
 }
 ?>

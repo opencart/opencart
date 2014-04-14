@@ -1,5 +1,5 @@
-<?php  
-class ControllerCatalogDownload extends Controller {  
+<?php
+class ControllerCatalogDownload extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -147,7 +147,7 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => false
 		);
 
@@ -158,7 +158,7 @@ class ControllerCatalogDownload extends Controller {
 		);
 
 		$this->data['insert'] = $this->url->link('catalog/download/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$this->data['delete'] = $this->url->link('catalog/download/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$this->data['delete'] = $this->url->link('catalog/download/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$this->data['downloads'] = array();
 
@@ -188,7 +188,7 @@ class ControllerCatalogDownload extends Controller {
 				'selected'    => isset($this->request->post['selected']) && in_array($result['download_id'], $this->request->post['selected']),
 				'action'      => $action
 			);
-		}	
+		}
 
 		$this->data['heading_title'] = $this->language->get('heading_title');
 
@@ -196,7 +196,7 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->data['column_name'] = $this->language->get('column_name');
 		$this->data['column_remaining'] = $this->language->get('column_remaining');
-		$this->data['column_action'] = $this->language->get('column_action');		
+		$this->data['column_action'] = $this->language->get('column_action');
 
 		$this->data['button_insert'] = $this->language->get('button_insert');
 		$this->data['button_delete'] = $this->language->get('button_delete');
@@ -322,7 +322,7 @@ class ControllerCatalogDownload extends Controller {
 
 		$this->data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('heading_title'),
-			'href'      => $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'),      		
+			'href'      => $this->url->link('catalog/download', 'token=' . $this->session->data['token'] . $url, 'SSL'),
 			'separator' => ' :: '
 		);
 
@@ -356,7 +356,7 @@ class ControllerCatalogDownload extends Controller {
 			$this->data['download_description'] = $this->model_catalog_download->getDownloadDescriptions($this->request->get['download_id']);
 		} else {
 			$this->data['download_description'] = array();
-		}   
+		}
 
 		if (isset($this->request->post['filename'])) {
 			$this->data['filename'] = $this->request->post['filename'];
@@ -394,7 +394,7 @@ class ControllerCatalogDownload extends Controller {
 			'common/footer'
 		);
 
-		$this->response->setOutput($this->render());	
+		$this->response->setOutput($this->render());
 	}
 
 	protected function validateForm() {
@@ -410,7 +410,7 @@ class ControllerCatalogDownload extends Controller {
 
 		if ((utf8_strlen($this->request->post['filename']) < 3) || (utf8_strlen($this->request->post['filename']) > 128)) {
 			$this->error['filename'] = $this->language->get('error_filename');
-		}	
+		}
 
 		if (!file_exists(DIR_DOWNLOAD . $this->request->post['filename']) && !is_file(DIR_DOWNLOAD . $this->request->post['filename'])) {
 			$this->error['filename'] = $this->language->get('error_exists');
@@ -418,7 +418,7 @@ class ControllerCatalogDownload extends Controller {
 
 		if ((utf8_strlen($this->request->post['mask']) < 3) || (utf8_strlen($this->request->post['mask']) > 128)) {
 			$this->error['mask'] = $this->language->get('error_mask');
-		}	
+		}
 
 		if (!$this->error) {
 			return true;
@@ -439,14 +439,14 @@ class ControllerCatalogDownload extends Controller {
 
 			if ($product_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_product'), $product_total);
-			}	
-		}	
+			}
+		}
 
 		if (!$this->error) {
 			return true;
 		} else {
 			return false;
-		} 
+		}
 	}
 
 	public function upload() {
@@ -458,13 +458,13 @@ class ControllerCatalogDownload extends Controller {
 			$json['error'] = $this->language->get('error_permission');
 		}
 
-		if (!isset($json['error'])) {	
+		if (!isset($json['error'])) {
 			if (!empty($this->request->files['file']['name'])) {
 				$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
 
 				if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 128)) {
 					$json['error'] = $this->language->get('error_filename');
-				}	  	
+				}
 
 				// Allowed file extension types
 				$allowed = array();
@@ -477,9 +477,9 @@ class ControllerCatalogDownload extends Controller {
 
 				if (!in_array(substr(strrchr($filename, '.'), 1), $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
-				}	
+				}
 
-				// Allowed file mime types		
+				// Allowed file mime types
 				$allowed = array();
 
 				$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
@@ -492,8 +492,11 @@ class ControllerCatalogDownload extends Controller {
 					$json['error'] = $this->language->get('error_filetype');
 				}
 
-				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
-					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
+				// Check to see if any PHP files are trying to be uploaded
+				$content = file_get_contents($this->request->files['file']['tmp_name']);
+
+				if (preg_match('/\<\?/i', $content) && !in_array('php', $allowed)) {
+					$json['error'] = $this->language->get('error_filetype');
 				}
 
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
@@ -515,7 +518,7 @@ class ControllerCatalogDownload extends Controller {
 			}
 
 			$json['success'] = $this->language->get('text_upload');
-		}	
+		}
 
 		$this->response->setOutput(json_encode($json));
 	}
@@ -536,10 +539,10 @@ class ControllerCatalogDownload extends Controller {
 
 			foreach ($results as $result) {
 				$json[] = array(
-					'download_id' => $result['download_id'], 
+					'download_id' => $result['download_id'],
 					'name'        => strip_tags(html_entity_decode($result['name'], ENT_QUOTES, 'UTF-8'))
 				);
-			}		
+			}
 		}
 
 		$sort_order = array();
@@ -551,6 +554,6 @@ class ControllerCatalogDownload extends Controller {
 		array_multisort($sort_order, SORT_ASC, $json);
 
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }
 ?>

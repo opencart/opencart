@@ -7,6 +7,7 @@
 
 #### Changes
 * Allow arrays to be written to the log file.
+* Check uploaded files for php content, reduce the risk of image files containing php and running on insecure servers.
 
 #### Added
 

@@ -432,7 +432,7 @@ class ControllerCatalogDownload extends Controller {
 		}
 
 		if (!$json) {
-			if (!empty($this->request->files['file']['name'])) {
+			if (!empty($this->request->files['file']['name']) && is_file($this->request->files['file']['tmp_name'])) {
 				// Sanitize the filename
 				$filename = basename(html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8'));
 
@@ -472,7 +472,7 @@ class ControllerCatalogDownload extends Controller {
 				}
 				
 				// Check to see if any PHP files are trying to be uploaded
-				$content = file_get_contents($this->request->files['image']['tmp_name']);
+				$content = file_get_contents($this->request->files['file']['tmp_name']);
 						
 				if (preg_match('/\<\?php/i', $content)) {
 					$json['error'] = $this->language->get('error_filetype');

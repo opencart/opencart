@@ -274,20 +274,22 @@ class ControllerAccountRegister extends Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 
-		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
-
-		if (isset($this->request->post['customer_custom_field'])) {
-			$data['customer_custom_field'] = $this->request->post['customer_custom_field'];
-		} else {
-			$data['customer_custom_field'] = array();
-		}
+		$data['custom_fields'] = array();
 		
-		if (isset($this->request->post['address_custom_field'])) {
-			$data['address_custom_field'] = $this->request->post['address_custom_field'];
-		} else {
-			$data['address_custom_field'] = array();
+		$custom_fields = $this->model_account_custom_field->getCustomFields();
+
+		foreach ($custom_fields as $custom_field) {
+			$data['custom_fields'][] = $custom_field;
+			
+			if (isset($this->request->post[$custom_field['location'] . '_custom_field'])) {
+				$data['custom_field'][$custom_field['custom_field_id']] = $this->request->post[$custom_field['location'] . '_custom_field'];
+			} elseif ($custom_field['type'] == 'checkbox') {
+				$data['custom_field'][$custom_field['custom_field_id']] = array();
+			} else {
+				$data['custom_field'][$custom_field['location']][$custom_field['custom_field_id']] = '';
+			}
 		}
-				
+	
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
 		} else {

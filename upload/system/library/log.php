@@ -12,6 +12,6 @@ class Log {
 	}
 
 	public function write($message) {
-		fwrite($this->filehandle, date('Y-m-d G:i:s') . ' - ' . $message . "\n");
+		fwrite($this->filehandle, date('Y-m-d G:i:s') . ' - ' . print_r($message, true) . "\n");
 	}
 }

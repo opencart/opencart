@@ -74,7 +74,7 @@
       </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
-        <input type="text" name="postcode" value="" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
+        <input type="text" name="postcode" value="<?php echo $postcode; ?>" placeholder="<?php echo $entry_postcode; ?>" id="input-payment-postcode" class="form-control" />
       </div>
       <div class="form-group required">
         <label class="control-label" for="input-payment-country"><?php echo $entry_country; ?></label>

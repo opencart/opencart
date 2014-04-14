@@ -48,20 +48,20 @@ class ControllerCheckoutRegister extends Controller {
 
 		$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 
-		if (isset($this->session->data['shipping_addess']['postcode'])) {
-			$data['postcode'] = $this->session->data['shipping_addess']['postcode'];		
+		if (isset($this->session->data['shipping_address']['postcode'])) {
+			$data['postcode'] = $this->session->data['shipping_address']['postcode'];		
 		} else {
 			$data['postcode'] = '';
 		}
 
-		if (isset($this->session->data['shipping_addess']['country_id'])) {
-			$data['country_id'] = $this->session->data['shipping_addess']['country_id'];		
+		if (isset($this->session->data['shipping_address']['country_id'])) {
+			$data['country_id'] = $this->session->data['shipping_address']['country_id'];		
 		} else {	
 			$data['country_id'] = $this->config->get('config_country_id');
 		}
 
-		if (isset($this->session->data['shipping_addess']['zone_id'])) {
-			$data['zone_id'] = $this->session->data['shipping_addess']['zone_id'];			
+		if (isset($this->session->data['shipping_address']['zone_id'])) {
+			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];			
 		} else {
 			$data['zone_id'] = '';
 		}

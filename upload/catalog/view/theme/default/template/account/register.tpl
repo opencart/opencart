@@ -206,7 +206,7 @@
         <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field sort-<?php echo $custom_field['sort_order']; ?>">
           <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
           <div class="col-sm-10">
-            <select name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
+            <select name="<?php echo $custom_field['location']; ?>_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
               
@@ -231,7 +231,8 @@
             <div id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>">
               <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
               <div class="radio">
-                <?php if ($custom_field_value['custom_field_value_id'] == $custom_field['value']) { ?>
+               
+                 <?php if ($custom_field_value['custom_field_value_id'] == $custom_field['value']) { ?>
                 <label>
                   <input type="radio" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                   <?php echo $custom_field_value['name']; ?></label>

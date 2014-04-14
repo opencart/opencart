@@ -103,9 +103,7 @@
             </div>
           </div>
           <div class="form-group">
-            <label class="col-sm-2 control-label" for="input-address-2" for="input-address-2">
-            <?php echo $entry_address_2; ?>
-            </label>
+            <label class="col-sm-2 control-label" for="input-address-2"><?php echo $entry_address_2; ?></label>
             <div class="col-sm-10">
               <input type="text" name="address_2" value="<?php echo $address_2; ?>" placeholder="<?php echo $entry_address_2; ?>" id="input-address-2" class="form-control" />
             </div>
@@ -201,7 +199,13 @@
             </div>
           </div>
         </fieldset>
-        <?php foreach ($custom_fields as $custom_field) { ?>
+        
+        
+        <?php foreach ($custom_fields as $custom_fields) { ?>
+        
+        
+        
+        
         <?php if ($custom_field['type'] == 'select') { ?>
         <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field sort-<?php echo $custom_field['sort_order']; ?>">
           <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -209,13 +213,11 @@
             <select name="<?php echo $custom_field['location']; ?>_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-              
               <?php if ($custom_field_value['custom_field_value_id'] == $custom_field_value[$custom_field['custom_field_id']]) { ?>
               <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>" selected="selected"><?php echo $custom_field_value['name']; ?></option>
               <?php } else { ?>
               <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
               <?php } ?>
-              
               <?php } ?>
             </select>
             <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
@@ -224,6 +226,9 @@
           </div>
         </div>
         <?php } ?>
+        
+        
+        
         <?php if ($custom_field['type'] == 'radio') { ?>
         <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
           <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -231,8 +236,7 @@
             <div id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>">
               <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
               <div class="radio">
-               
-                 <?php if ($custom_field_value['custom_field_value_id'] == $custom_field['value']) { ?>
+                <?php if ($custom_field_value['custom_field_value_id'] == $custom_field['location'][$custom_field['custom_field_id']]) { ?>
                 <label>
                   <input type="radio" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                   <?php echo $custom_field_value['name']; ?></label>
@@ -250,6 +254,8 @@
           </div>
         </div>
         <?php } ?>
+        
+        
         <?php if ($custom_field['type'] == 'checkbox') { ?>
         <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
           <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -275,6 +281,8 @@
           </div>
         </div>
         <?php } ?>
+        
+        
         <?php if ($custom_field['type'] == 'text') { ?>
         <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
           <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -286,6 +294,7 @@
           </div>
         </div>
         <?php } ?>
+        
         <?php if ($custom_field['type'] == 'textarea') { ?>
         <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
           <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -297,6 +306,8 @@
           </div>
         </div>
         <?php } ?>
+        
+        
         <?php if ($custom_field['type'] == 'file') { ?>
         <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
           <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>

@@ -1,14 +1,14 @@
 # OpenCart change log
 
-## v1.5.6.3 (Pending)
+## v1.5.6.3 (15th April 2014)
 #### Bugs fixed
-* Image manager issue where the thumbnails failed to load.
-* PayPal Express totals calculation, fixed incorrect variable names.
-* Fixed report for coupons to search the history table instead for start/end filters
+* Image manager issue where the thumbnails failed to load [**view**](https://github.com/opencart/opencart/commit/b84978b5ca6683d4c62951256ef25f68a685ce92)
+* PayPal Express totals calculation, fixed incorrect variable names [**view**](https://github.com/opencart/opencart/commit/78c4e9ac0f8fe51c69a1ddc1fb443dae2a5934f7)
+* Fixed report for coupons to search the history table instead for start/end filters [**view**](https://github.com/opencart/opencart/commit/580ed0482f804a37e13fcab5363a38a76ce4feb9)
 
 #### Changes
-* Allow arrays to be written to the log file.
-* Check uploaded files for php content, reduce the risk of image files containing php and running on insecure servers.
+* Allow arrays to be written to the log file [**view**](https://github.com/opencart/opencart/commit/1e430128cd055498666fd5a2be2267b933a4b2c8)
+* Check uploaded files for php content, reduce the risk of image files containing php and running on insecure servers [**view**](https://github.com/opencart/opencart/commit/c11ef46681b2c2d87b6c3fd7b1394f53b6b72e45)
 
 #### Added
 

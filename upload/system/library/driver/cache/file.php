@@ -5,12 +5,10 @@ class CacheFile {
 	public function __construct($expire = 3600) {
 		$this->expire = $expire;
 		
-		$files = glob(DIR_CACHE . 'cache.*');
-
-		if ($files) {			
+		if (rand(1,100) <= 30 && $files = glob(DIR_CACHE . 'cache.*')) {
 			foreach ($files as $file) {
 				$time = substr(strrchr($file, '.'), 1);
-
+	
 				if ($time < time()) {
 					if (file_exists($file)) {
 						unlink($file);
@@ -39,11 +37,7 @@ class CacheFile {
 
 		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
 
-		$handle = fopen($file, 'w');
-
-		fwrite($handle, serialize($value));
-
-		fclose($handle);
+		file_put_contents($file, serialize($value), LOCK_EX);
 	}
 
 	public function delete($key) {

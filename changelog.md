@@ -4,6 +4,7 @@
 #### Bugs fixed
 * Image manager issue where the thumbnails failed to load.
 * PayPal Express totals calculation, fixed incorrect variable names.
+* Fixed report for coupons to search the history table instead for start/end filters
 
 #### Changes
 * Allow arrays to be written to the log file.

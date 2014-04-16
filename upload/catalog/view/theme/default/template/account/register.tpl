@@ -200,20 +200,20 @@
           </div>
         </fieldset>
         
+        <?php if (!empty($custom_fields)) { ?>
+        <fieldset class="custom-field-set">
+          <legend><?php echo $text_other_info; ?></legend>
+        <?php foreach ($custom_fields as $custom_field) { ?>
         
-        <?php foreach ($custom_fields as $custom_fields) { ?>
-        
-        
-        
-        
+
         <?php if ($custom_field['type'] == 'select') { ?>
         <div id="custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field sort-<?php echo $custom_field['sort_order']; ?>">
           <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
           <div class="col-sm-10">
-            <select name="<?php echo $custom_field['location']; ?>_custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
+            <select name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
               <option value=""><?php echo $text_select; ?></option>
               <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
-              <?php if ($custom_field_value['custom_field_value_id'] == $custom_field_value[$custom_field['custom_field_id']]) { ?>
+              <?php if ($custom_field_value['custom_field_value_id'] == $custom_field['value']) { ?>
               <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>" selected="selected"><?php echo $custom_field_value['name']; ?></option>
               <?php } else { ?>
               <option value="<?php echo $custom_field_value['custom_field_value_id']; ?>"><?php echo $custom_field_value['name']; ?></option>
@@ -236,7 +236,7 @@
             <div id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>">
               <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
               <div class="radio">
-                <?php if ($custom_field_value['custom_field_value_id'] == $custom_field['location'][$custom_field['custom_field_id']]) { ?>
+                <?php if ($custom_field_value['custom_field_value_id'] == $custom_field['value']) { ?>
                 <label>
                   <input type="radio" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                   <?php echo $custom_field_value['name']; ?></label>
@@ -366,6 +366,8 @@
         </div>
         <?php } ?>
         <?php } ?>
+        </fieldset>
+		<?php } ?>
         <?php if ($text_agree) { ?>
         <div class="buttons">
           <div class="pull-right"><?php echo $text_agree; ?>
@@ -439,9 +441,11 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 		url: 'index.php?route=account/register/custom_field&customer_group_id=' + this.value,
 		dataType: 'json',	
 		success: function(json) {
+			$('.custom-field-set').hide();
 			$('.custom-field').hide();
 			$('.custom-field').removeClass('required');
 			
+			if (json.length > 0) $('.custom-field-set').show();
 			for (i = 0; i < json.length; i++) {
 				custom_field = json[i];
 				

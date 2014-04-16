@@ -64,6 +64,7 @@ class ControllerAccountRegister extends Controller {
 		$data['text_your_address'] = $this->language->get('text_your_address');
 		$data['text_your_password'] = $this->language->get('text_your_password');
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
+		$data['text_other_info'] = $this->language->get('text_other_info');
 		$data['text_yes'] = $this->language->get('text_yes');
 		$data['text_no'] = $this->language->get('text_no');
 		$data['text_select'] = $this->language->get('text_select');
@@ -279,15 +280,13 @@ class ControllerAccountRegister extends Controller {
 		$custom_fields = $this->model_account_custom_field->getCustomFields();
 
 		foreach ($custom_fields as $custom_field) {
-			$data['custom_fields'][] = $custom_field;
-			
-			if (isset($this->request->post[$custom_field['location'] . '_custom_field'])) {
-				$data['custom_field'][$custom_field['custom_field_id']] = $this->request->post[$custom_field['location'] . '_custom_field'];
-			} elseif ($custom_field['type'] == 'checkbox') {
-				$data['custom_field'][$custom_field['custom_field_id']] = array();
+			if (isset($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+				$custom_field['value'] = $this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']];
 			} else {
-				$data['custom_field'][$custom_field['location']][$custom_field['custom_field_id']] = '';
+				$custom_field['value'] = $custom_field['type'] == 'checkbox' ? array() : '';
 			}
+			
+			$data['custom_fields'][] = $custom_field;
 		}
 	
 		if (isset($this->request->post['password'])) {

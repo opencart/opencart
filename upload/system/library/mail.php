@@ -85,9 +85,7 @@ class Mail {
 
 		$boundary = '----=_NextPart_' . md5(time());
 
-		$header = '';
-
-		$header .= 'MIME-Version: 1.0' . $this->newline;
+		$header = 'MIME-Version: 1.0' . $this->newline;
 
 		if ($this->protocol != 'mail') {
 			$header .= 'To: ' . $to . $this->newline;
@@ -173,22 +171,22 @@ class Mail {
 					}
 				}
         
-        fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
+				fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
+				
+				$reply = '';
+				
+				while ($line = fgets($handle, 515)) {
+					$reply .= $line;
+					
+					if (substr($line, 3, 1) == ' ') {
+						break;
+					}
+				}
 
-        $reply = '';
-
-        while ($line = fgets($handle, 515)) {
-          $reply .= $line;
-
-          if (substr($line, 3, 1) == ' ') {
-            break;
-          }
-        }
-
-        if (substr($reply, 0, 3) != 250) {
-          trigger_error('Error: EHLO not accepted from server!');
-          exit();
-        }
+				if (substr($reply, 0, 3) != 250) {
+					trigger_error('Error: EHLO not accepted from server!');
+					exit();
+				}
 
 				if ($is_tls) {
 					fputs($handle, 'STARTTLS' . "\r\n");

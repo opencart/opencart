@@ -1,5 +1,14 @@
 # OpenCart change log
 
+## v1.5.6.4 (Pending)
+#### Bugs fixed
+* Fixed issue with images containing the <? (used in xml etc) string in the source and not uploading. Now only checks long php tag.
+* Fixed language string for "error_file_type" in admin filemanger/upload method
+
+#### Changes
+
+#### Added
+
 ## v1.5.6.3 (15th April 2014)
 #### Bugs fixed
 * Image manager issue where the thumbnails failed to load [**view**](https://github.com/opencart/opencart/commit/b84978b5ca6683d4c62951256ef25f68a685ce92)

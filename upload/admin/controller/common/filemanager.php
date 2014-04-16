@@ -465,8 +465,8 @@ class ControllerCommonFileManager extends Controller {
 				// Check to see if any PHP files are trying to be uploaded
 				$content = file_get_contents($this->request->files['image']['tmp_name']);
 
-				if (preg_match('/\<\?/i', $content)) {
-					$json['error'] = $this->language->get('error_filetype');
+				if (preg_match('/\<\?php/i', $content)) {
+					$json['error'] = $this->language->get('error_file_type');
 				}
 
 				if ($this->request->files['image']['error'] != UPLOAD_ERR_OK) {

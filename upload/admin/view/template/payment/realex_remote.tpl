@@ -1,16 +1,19 @@
 <?php echo $header; ?><?php echo $menu; ?>
-  <div id="content">
-    <div class="container">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+<div id="content">
+  <div class="container">
+    <ul class="breadcrumb">
+      <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+      <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
     <?php } ?>
-  </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
+    <div class="alert alert-warning">
+      <i class="fa fa-exclamation-circle"></i> <?php echo $text_ip_message; ?>
+    </div>
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="pull-right">
@@ -354,7 +357,7 @@
       </div>
     </div>
   </div>
-  </div>
+</div>
 <script type="text/javascript"><!--
 $('#tabs a:first').tab('show');
 //--></script>

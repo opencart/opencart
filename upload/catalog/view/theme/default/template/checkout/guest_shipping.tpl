@@ -64,6 +64,8 @@
     </div>
   </div>
   <?php foreach ($custom_fields as $custom_field) { ?>
+  
+  
   <?php if ($custom_field['type'] == 'select') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -81,6 +83,8 @@
     </div>
   </div>
   <?php } ?>
+  
+  
   <?php if ($custom_field['type'] == 'radio') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -103,6 +107,8 @@
     </div>
   </div>
   <?php } ?>
+  
+  
   <?php if ($custom_field['type'] == 'checkbox') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -125,6 +131,8 @@
     </div>
   </div>
   <?php } ?>
+  
+  
   <?php if ($custom_field['type'] == 'text') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -133,6 +141,8 @@
     </div>
   </div>
   <?php } ?>
+  
+  
   <?php if ($custom_field['type'] == 'textarea') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -141,6 +151,8 @@
     </div>
   </div>
   <?php } ?>
+  
+  
   <?php if ($custom_field['type'] == 'file') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
@@ -150,6 +162,8 @@
     </div>
   </div>
   <?php } ?>
+  
+  
   <?php if ($custom_field['type'] == 'date') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -162,6 +176,8 @@
     </div>
   </div>
   <?php } ?>
+  
+  
   <?php if ($custom_field['type'] == 'time') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -174,6 +190,8 @@
     </div>
   </div>
   <?php } ?>
+  
+  
   <?php if ($custom_field['type'] == 'datetime') { ?>
   <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
     <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -186,6 +204,8 @@
     </div>
   </div>
   <?php } ?>
+  
+  
   <?php } ?>
   <div class="buttons">
     <div class="pull-right">

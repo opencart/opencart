@@ -96,6 +96,8 @@
       </div>
     </fieldset>
     <?php foreach ($custom_fields as $custom_field) { ?>
+    
+    
     <?php if ($custom_field['type'] == 'select') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -107,6 +109,7 @@
       </select>
     </div>
     <?php } ?>
+    
     <?php if ($custom_field['type'] == 'radio') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label"><?php echo $custom_field['name']; ?></label>
@@ -121,6 +124,7 @@
       </div>
     </div>
     <?php } ?>
+    
     <?php if ($custom_field['type'] == 'checkbox') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label"><?php echo $custom_field['name']; ?></label>
@@ -135,18 +139,21 @@
       </div>
     </div>
     <?php } ?>
+    
     <?php if ($custom_field['type'] == 'text') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
       <input type="text" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
     </div>
     <?php } ?>
+    
     <?php if ($custom_field['type'] == 'textarea') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
       <textarea name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo $custom_field['value']; ?></textarea>
     </div>
     <?php } ?>
+    
     <?php if ($custom_field['type'] == 'file') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label"><?php echo $custom_field['name']; ?></label>
@@ -154,6 +161,7 @@
       <input type="hidden" name="custom_field[<?php echo $custom_field['location']; ?>][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
     </div>
     <?php } ?>
+    
     <?php if ($custom_field['type'] == 'date') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -164,6 +172,7 @@
         </span></div>
     </div>
     <?php } ?>
+    
     <?php if ($custom_field['type'] == 'time') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -174,6 +183,7 @@
         </span></div>
     </div>
     <?php } ?>
+    
     <?php if ($custom_field['type'] == 'datetime') { ?>
     <div id="payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-group custom-field">
       <label class="control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
@@ -184,6 +194,7 @@
         </span></div>
     </div>
     <?php } ?>
+    
     <?php } ?>
   </div>
 </div>

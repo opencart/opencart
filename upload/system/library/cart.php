@@ -171,9 +171,9 @@ class Cart {
 					$discount_quantity = 0;
 
 					foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
-						$product_2 = explode(':', $key_2);
-
-						if ($product_2[0] == $product_id) {
+						$product_2 = unserialize(base64_decode($key_2));
+						
+						if ($product_2['product_id'] == $product_id) {
 							$discount_quantity += $quantity_2;
 						}
 					}

@@ -89,7 +89,7 @@
         <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
           <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
           <div class="col-sm-10">
-            <div id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>">
+            <div>
               <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
               <div class="radio">
                 <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $account_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -114,7 +114,7 @@
         <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
           <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
           <div class="col-sm-10">
-            <div id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>">
+            <div>
               <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
               <div class="checkbox">
                 <?php if (isset($account_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $account_custom_field[$custom_field['custom_field_id']])) { ?>

@@ -162,7 +162,7 @@
           <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
           <div class="col-sm-10">
             <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-            <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['location']][$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['location']][$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
+            <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['location']][$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['location']][$custom_field['custom_field_id']] : ''); ?>" />
             <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
             <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
             <?php } ?>
@@ -255,13 +255,13 @@ $('button[id^=\'button-custom-field\']').on('click', function() {
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$(node).parent().find('input[name^=\'custom_field\']').after('<div class="text-danger">' + json['error'] + '</div>');
+					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
 							
 				if (json['success']) {
 					alert(json['success']);
 					
-					$(node).parent().find('input[name^=\'custom_field\']').attr('value', json['file']);
+					$(node).parent().find('input').attr('value', json['file']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {

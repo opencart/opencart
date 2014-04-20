@@ -29,7 +29,7 @@ class ModelCheckoutOrder extends Model {
 		// Custom Fields
 		$data['custom_fields'] = array();
 
-		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->config->get('config_customer_group_id'));
+		$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->config->get('config_customer_group_id')));
 
 		foreach ($custom_fields as $custom_field) {
 			

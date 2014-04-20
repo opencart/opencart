@@ -945,7 +945,7 @@ class ControllerSaleCustomer extends Controller {
 		// Custom field validation
 		$this->load->model('account/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->request->post['customer_group_id']);
+		$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->request->post['customer_group_id']));
 
 		foreach ($custom_fields as $custom_field) {
 			if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
@@ -1413,6 +1413,42 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}		
 
+	public function custom_field() {
+		$json = array();
+
+		$this->load->model('sale/custom_field');
+
+		// Customer Group
+		if (isset($this->request->get['customer_group_id'])) {
+			$customer_group_id = $this->request->get['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+
+		$custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
+
+		foreach ($custom_fields as $custom_field) {
+			$json[] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
+			);
+		}
+
+		$this->response->setOutput(json_encode($json));
+	}	
+	
+	public function address() {
+		$json = array();
+
+		if (!empty($this->request->get['address_id'])) {
+			$this->load->model('sale/customer');
+
+			$json = $this->model_sale_customer->getAddress($this->request->get['address_id']);
+		}
+
+		$this->response->setOutput(json_encode($json));		
+	}
+
 	public function country() {
 		$json = array();
 
@@ -1436,17 +1472,6 @@ class ControllerSaleCustomer extends Controller {
 		}
 
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function address() {
-		$json = array();
-
-		if (!empty($this->request->get['address_id'])) {
-			$this->load->model('sale/customer');
-
-			$json = $this->model_sale_customer->getAddress($this->request->get['address_id']);
-		}
-
-		$this->response->setOutput(json_encode($json));		
-	}
+	}	
+	
 }

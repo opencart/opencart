@@ -51,7 +51,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 		
-		$data['custom_fields'] = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->config->get('config_customer_group_id'));
+		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->config->get('config_customer_group_id')));
 	
 		if (isset($this->session->data['payment_address']['custom_field'])) {
 			$data['payment_address_custom_field'] = $this->session->data['payment_address']['custom_field'];
@@ -155,7 +155,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 				// Custom field validation
 				$this->load->model('account/custom_field');
 				
-				$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->config->get('config_customer_group_id'));
+				$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->config->get('config_customer_group_id')));
 				
 				foreach ($custom_fields as $custom_field) {
 					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {

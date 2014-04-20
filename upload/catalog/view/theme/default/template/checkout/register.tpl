@@ -239,8 +239,6 @@ $('#collapse-payment-address input[name=\'customer_group_id\']').on('change', fu
 				
 				if (custom_field['required']) {
 					$('#payment-custom-field' + custom_field['custom_field_id']).addClass('required');
-				} else {
-					$('#payment-custom-field' + custom_field['custom_field_id']).removeClass('required');
 				}
 			}
 		},

@@ -433,8 +433,6 @@ $('input[name=\'customer_group_id\']').on('change', function() {
 				
 				if (custom_field['required']) {
 					$('#custom-field' + custom_field['custom_field_id']).addClass('required');
-				} else {
-					$('#custom-field' + custom_field['custom_field_id']).removeClass('required');
 				}
 			}
 			

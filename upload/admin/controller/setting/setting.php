@@ -198,6 +198,7 @@ class ControllerSettingSetting extends Controller {
 		$data['help_ftp_root'] = $this->language->get('help_ftp_root');
 		$data['help_mail_protocol'] = $this->language->get('help_mail_protocol');
 		$data['help_mail_parameter'] = $this->language->get('help_mail_parameter');
+		$data['help_mail_smtp_hostname'] = $this->language->get('help_mail_smtp_hostname');
 		$data['help_mail_alert'] = $this->language->get('help_mail_alert');
 		$data['help_fraud_detection'] = $this->language->get('help_fraud_detection');
 		$data['help_fraud_score'] = $this->language->get('help_fraud_score');

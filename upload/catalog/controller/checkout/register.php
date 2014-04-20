@@ -73,20 +73,7 @@ class ControllerCheckoutRegister extends Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 
-		$data['custom_fields'] = array();
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields();
-
-		foreach ($custom_fields as $custom_field) {
-			$data['custom_fields'][] = array(
-				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $custom_field['custom_field_value'],
-				'name'               => $custom_field['name'],
-				'location'           => $custom_field['location'],
-				'type'               => $custom_field['type'],
-				'value'              => $custom_field['value']
-			);
-		}	
+		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
 
 		if ($this->config->get('config_account_id')) {
 			$this->load->model('catalog/information');
@@ -220,7 +207,7 @@ class ControllerCheckoutRegister extends Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 
-			$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
 
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {

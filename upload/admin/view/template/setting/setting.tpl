@@ -1249,6 +1249,7 @@
               <label class="col-sm-2 control-label" for="input-smtp-host"><?php echo $entry_smtp_hostname; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="config_mail[smtp_hostname]" value="<?php echo $config_smtp_hostname; ?>" placeholder="<?php echo $entry_smtp_hostname; ?>" id="input-smtp-host" class="form-control" />
+                <span class="help-block"><?php echo $help_mail_smtp_hostname; ?></span>
               </div>
             </div>
             <div class="form-group">

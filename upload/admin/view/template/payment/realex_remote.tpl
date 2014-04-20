@@ -1,21 +1,24 @@
 <?php echo $header; ?><?php echo $menu; ?>
-  <div id="content">
-    <div class="container">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+<div id="content">
+  <div class="container">
+    <ul class="breadcrumb">
+      <?php foreach ($breadcrumbs as $breadcrumb) { ?>
+      <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
+      <?php } ?>
+    </ul>
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
     <?php } ?>
-  </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
+    <div class="alert alert-warning">
+      <i class="fa fa-exclamation-circle"></i> <?php echo $text_ip_message; ?>
+    </div>
     <div class="panel panel-default">
       <div class="panel-heading">
         <div class="pull-right">
-          <button type="submit" form="form-realex" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-          <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a>
+          <button type="submit" form="form-realex" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
+          <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a>
         </div>
         <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
       </div>
@@ -144,37 +147,37 @@
                     <td class="text-left"><?php echo $text_card_visa; ?></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[visa][enabled]" value="1" <?php if (isset($realex_remote_account['visa']['enabled']) && $realex_remote_account['visa']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[visa][default]" value="1" <?php if (isset($realex_remote_account['visa']['default']) && $realex_remote_account['visa']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                    <td class="text-right"><input type="text" name="realex_remote_account[visa][merchant_id]" value="<?php echo isset($realex_remote_account['visa']['merchant_id']) ? $realex_remote_account['visa']['merchant_id'] : ''; ?>" placeholder="<?php echo $entry_merchant_id; ?>" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="realex_remote_account[visa][merchant_id]" value="<?php echo isset($realex_remote_account['visa']['merchant_id']) ? $realex_remote_account['visa']['merchant_id'] : ''; ?>" placeholder="<?php echo $text_subaccount; ?>" class="form-control" /></td>
                   </tr>
                   <tr>
                     <td class="text-left"><?php echo $text_card_master; ?></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[mc][enabled]" value="1" <?php if (isset($realex_remote_account['mc']['enabled']) && $realex_remote_account['mc']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[mc][default]" value="1" <?php if (isset($realex_remote_account['mc']['default']) && $realex_remote_account['mc']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                    <td class="text-right"><input type="text" name="realex_remote_account[mc][merchant_id]" value="<?php echo isset($realex_remote_account['mc']['merchant_id']) ? $realex_remote_account['mc']['merchant_id'] : ''; ?>" placeholder="<?php echo $entry_merchant_id; ?>" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="realex_remote_account[mc][merchant_id]" value="<?php echo isset($realex_remote_account['mc']['merchant_id']) ? $realex_remote_account['mc']['merchant_id'] : ''; ?>" placeholder="<?php echo $text_subaccount; ?>" class="form-control" /></td>
                   </tr>
                   <tr>
                     <td class="text-left"><?php echo $text_card_amex; ?></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[amex][enabled]" value="1" <?php if (isset($realex_remote_account['amex']['enabled']) && $realex_remote_account['amex']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[amex][default]" value="1" <?php if (isset($realex_remote_account['amex']['default']) && $realex_remote_account['amex']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                    <td class="text-right"><input type="text" name="realex_remote_account[amex][merchant_id]" value="<?php echo isset($realex_remote_account['amex']['merchant_id']) ? $realex_remote_account['amex']['merchant_id'] : ''; ?>" placeholder="<?php echo $entry_merchant_id; ?>" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="realex_remote_account[amex][merchant_id]" value="<?php echo isset($realex_remote_account['amex']['merchant_id']) ? $realex_remote_account['amex']['merchant_id'] : ''; ?>" placeholder="<?php echo $text_subaccount; ?>" class="form-control" /></td>
                   </tr>
                   <tr>
                     <td class="text-left"><?php echo $text_card_switch; ?></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[switch][enabled]" value="1" <?php if (isset($realex_remote_account['switch']['enabled']) && $realex_remote_account['switch']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[switch][default]" value="1" <?php if (isset($realex_remote_account['switch']['default']) && $realex_remote_account['switch']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                    <td class="text-right"><input type="text" name="realex_remote_account[switch][merchant_id]" value="<?php echo isset($realex_remote_account['switch']['merchant_id']) ? $realex_remote_account['switch']['merchant_id'] : ''; ?>" placeholder="<?php echo $entry_merchant_id; ?>" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="realex_remote_account[switch][merchant_id]" value="<?php echo isset($realex_remote_account['switch']['merchant_id']) ? $realex_remote_account['switch']['merchant_id'] : ''; ?>" placeholder="<?php echo $text_subaccount; ?>" class="form-control" /></td>
                   </tr>
                   <tr>
                     <td class="text-left"><?php echo $text_card_laser; ?></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[laser][enabled]" value="1" <?php if (isset($realex_remote_account['laser']['enabled']) && $realex_remote_account['laser']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[laser][default]" value="1" <?php if (isset($realex_remote_account['laser']['default']) && $realex_remote_account['laser']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                    <td class="text-right"><input type="text" name="realex_remote_account[laser][merchant_id]" value="<?php echo isset($realex_remote_account['laser']['merchant_id']) ? $realex_remote_account['laser']['merchant_id'] : ''; ?>" placeholder="<?php echo $entry_merchant_id; ?>" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="realex_remote_account[laser][merchant_id]" value="<?php echo isset($realex_remote_account['laser']['merchant_id']) ? $realex_remote_account['laser']['merchant_id'] : ''; ?>" placeholder="<?php echo $text_subaccount; ?>" class="form-control" /></td>
                   </tr>
                   <tr>
                     <td class="text-left"><?php echo $text_card_diners; ?></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[diners][enabled]" value="1" <?php if (isset($realex_remote_account['diners']['enabled']) && $realex_remote_account['diners']['enabled'] == 1) { echo 'checked="checked" '; } ?>/></td>
                     <td class="text-center"><input type="checkbox" name="realex_remote_account[diners][default]" value="1" <?php if (isset($realex_remote_account['diners']['default']) && $realex_remote_account['diners']['default'] == 1) { echo 'checked="checked" '; } ?>/></td>
-                    <td class="text-right"><input type="text" name="realex_remote_account[diners][merchant_id]" value="<?php echo isset($realex_remote_account['diners']['merchant_id']) ? $realex_remote_account['diners']['merchant_id'] : ''; ?>" placeholder="<?php echo $entry_merchant_id; ?>" class="form-control" /></td>
+                    <td class="text-right"><input type="text" name="realex_remote_account[diners][merchant_id]" value="<?php echo isset($realex_remote_account['diners']['merchant_id']) ? $realex_remote_account['diners']['merchant_id'] : ''; ?>" placeholder="<?php echo $text_subaccount; ?>" class="form-control" /></td>
                   </tr>
                   </tbody>
                 </table>
@@ -354,7 +357,7 @@
       </div>
     </div>
   </div>
-  </div>
+</div>
 <script type="text/javascript"><!--
 $('#tabs a:first').tab('show');
 //--></script>

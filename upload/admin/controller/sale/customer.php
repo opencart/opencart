@@ -844,37 +844,16 @@ class ControllerSaleCustomer extends Controller {
 		// Custom Fields
 		$this->load->model('sale/custom_field');
 		
-
-		$data['custom_fields'] = array();
-		
-		// Customer Group
-		$custom_fields = $this->model_sale_custom_field->getCustomFields();
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['type'] == 'checkbox') {
-				$value = array();
-			} else {
-				$value = $custom_field['value'];
-			}
-
-			$data['custom_fields'][] = array(
-				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $custom_field['custom_field_value'],
-				'name'               => $custom_field['name'],
-				'location'           => $custom_field['location'],
-				'type'               => $custom_field['type'],
-				'value'              => isset($custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['location']][$custom_field['custom_field_id']] : $value
-			);
-		}	
+		$data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
 		
 		if (isset($this->request->post['custom_field'])) {
-			$data['customer_custom_field'] = $this->request->post['custom_field'];
+			$data['account_custom_field'] = $this->request->post['custom_field'];
 		} elseif (!empty($customer_info)) {
-			$data['customer_custom_field'] = unserialize($customer_info['custom_field']);		
+			$data['account_custom_field'] = unserialize($customer_info['custom_field']);		
 		} else {
-			$data['customer_custom_field'] = array();
-		}
-
+			$data['account_custom_field'] = array();
+		}		
+		
 		if (isset($this->request->post['newsletter'])) {
 			$data['newsletter'] = $this->request->post['newsletter'];
 		} elseif (!empty($customer_info)) {
@@ -964,9 +943,9 @@ class ControllerSaleCustomer extends Controller {
 		}
 		
 		// Custom field validation
-		$this->load->model('account/custom_field');
+		$this->load->model('sale/custom_field');
 
-		$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($this->request->post['customer_group_id']);
+		$custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $this->request->post['customer_group_id']));
 
 		foreach ($custom_fields as $custom_field) {
 			if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
@@ -1434,6 +1413,42 @@ class ControllerSaleCustomer extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}		
 
+	public function custom_field() {
+		$json = array();
+
+		$this->load->model('sale/custom_field');
+
+		// Customer Group
+		if (isset($this->request->get['customer_group_id'])) {
+			$customer_group_id = $this->request->get['customer_group_id'];
+		} else {
+			$customer_group_id = $this->config->get('config_customer_group_id');
+		}
+
+		$custom_fields = $this->model_sale_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
+
+		foreach ($custom_fields as $custom_field) {
+			$json[] = array(
+				'custom_field_id' => $custom_field['custom_field_id'],
+				'required'        => empty($custom_field['required']) || $custom_field['required'] == 0 ? false : true
+			);
+		}
+
+		$this->response->setOutput(json_encode($json));
+	}	
+	
+	public function address() {
+		$json = array();
+
+		if (!empty($this->request->get['address_id'])) {
+			$this->load->model('sale/customer');
+
+			$json = $this->model_sale_customer->getAddress($this->request->get['address_id']);
+		}
+
+		$this->response->setOutput(json_encode($json));		
+	}
+
 	public function country() {
 		$json = array();
 
@@ -1457,17 +1472,6 @@ class ControllerSaleCustomer extends Controller {
 		}
 
 		$this->response->setOutput(json_encode($json));
-	}
-
-	public function address() {
-		$json = array();
-
-		if (!empty($this->request->get['address_id'])) {
-			$this->load->model('sale/customer');
-
-			$json = $this->model_sale_customer->getAddress($this->request->get['address_id']);
-		}
-
-		$this->response->setOutput(json_encode($json));		
-	}
+	}	
+	
 }

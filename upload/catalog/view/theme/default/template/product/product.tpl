@@ -510,13 +510,13 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$(node).parent().find('input[name^=\'option\']').after('<div class="text-danger">' + json['error'] + '</div>');
+					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
 							
 				if (json['success']) {
 					alert(json['success']);
 					
-					$(node).parent().find('input[name^=\'option\']').attr('value', json['code']);
+					$(node).parent().find('input').attr('value', json['code']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {

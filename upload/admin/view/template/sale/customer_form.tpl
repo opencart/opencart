@@ -335,8 +335,8 @@
                         <label class="col-sm-2 control-label" for="input-firstname<?php echo $address_row; ?>"><?php echo $entry_firstname; ?></label>
                         <div class="col-sm-10">
                           <input type="text" name="address[<?php echo $address_row; ?>][firstname]" value="<?php echo $address['firstname']; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname<?php echo $address_row; ?>" class="form-control" />
-                          <?php if (isset($error_address_firstname[$address_row])) { ?>
-                          <div class="text-danger"><?php echo $error_address_firstname[$address_row]; ?></div>
+                          <?php if (isset($error_address[$address_row]['firstname'])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['firstname']; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -344,8 +344,8 @@
                         <label class="col-sm-2 control-label" for="input-lastname<?php echo $address_row; ?>"><?php echo $entry_lastname; ?></label>
                         <div class="col-sm-10">
                           <input type="text" name="address[<?php echo $address_row; ?>][lastname]" value="<?php echo $address['lastname']; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname<?php echo $address_row; ?>" class="form-control" />
-                          <?php if (isset($error_address_lastname[$address_row])) { ?>
-                          <div class="text-danger"><?php echo $error_address_lastname[$address_row]; ?></div>
+                          <?php if (isset($error_address[$address_row]['lastname'])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['lastname']; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -359,8 +359,8 @@
                         <label class="col-sm-2 control-label" for="input-address-1<?php echo $address_row; ?>"><?php echo $entry_address_1; ?></label>
                         <div class="col-sm-10">
                           <input type="text" name="address[<?php echo $address_row; ?>][address_1]" value="<?php echo $address['address_1']; ?>" placeholder="<?php echo $entry_address_1; ?>" id="input-address-1<?php echo $address_row; ?>" class="form-control" />
-                          <?php if (isset($error_address_address_1[$address_row])) { ?>
-                          <div class="text-danger"><?php echo $error_address_address_1[$address_row]; ?></div>
+                          <?php if (isset($error_address[$address_row]['address_1'])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['address_1']; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -374,8 +374,8 @@
                         <label class="col-sm-2 control-label" for="input-city<?php echo $address_row; ?>"><?php echo $entry_city; ?></label>
                         <div class="col-sm-10">
                           <input type="text" name="address[<?php echo $address_row; ?>][city]" value="<?php echo $address['city']; ?>" placeholder="<?php echo $entry_city; ?>" id="input-city<?php echo $address_row; ?>" class="form-control" />
-                          <?php if (isset($error_address_city[$address_row])) { ?>
-                          <div class="text-danger"><?php echo $error_address_city[$address_row]; ?></div>
+                          <?php if (isset($error_address[$address_row]['city'])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['city']; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -398,8 +398,8 @@
                             <?php } ?>
                             <?php } ?>
                           </select>
-                          <?php if (isset($error_address_country[$address_row])) { ?>
-                          <div class="text-danger"><?php echo $error_address_country[$address_row]; ?></div>
+                          <?php if (isset($error_address[$address_row]['country'])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['country']; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -408,8 +408,8 @@
                         <div class="col-sm-10">
                           <select name="address[<?php echo $address_row; ?>][zone_id]" id="input-zone<?php echo $address_row; ?>" class="form-control">
                           </select>
-                          <?php if (isset($error_address_zone[$address_row])) { ?>
-                          <div class="text-danger"><?php echo $error_address_zone[$address_row]; ?></div>
+                          <?php if (isset($error_address[$address_row]['zone'])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['zone']; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -431,8 +431,8 @@
                             <?php } ?>
                             <?php } ?>
                           </select>
-                          <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                          <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -457,8 +457,8 @@
                             </div>
                             <?php } ?>
                           </div>
-                          <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                          <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -483,8 +483,8 @@
                             </div>
                             <?php } ?>
                           </div>
-                          <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                          <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -495,8 +495,8 @@
                         <label class="col-sm-2 control-label" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                         <div class="col-sm-10">
                           <input type="text" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                          <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                          <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -507,8 +507,8 @@
                         <label class="col-sm-2 control-label" for="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
                         <div class="col-sm-10">
                           <textarea name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
-                          <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                          <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -520,8 +520,8 @@
                         <div class="col-sm-10">
                           <button type="button" id="button-address<?php echo $address_row; ?>-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
                           <input type="hidden" name="address[<?php echo $address_row; ?>][custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($address['custom_field'][$custom_field['custom_field_id']]) ? $address['custom_field'][$custom_field['custom_field_id']] : ''); ?>" />
-                          <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                          <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -536,8 +536,8 @@
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
-                          <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                          <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -552,8 +552,8 @@
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
-                          <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                          <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
                         </div>
                       </div>
@@ -568,8 +568,8 @@
                             <span class="input-group-btn">
                             <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                             </span></div>
-                          <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                          <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
+                          <?php if (isset($error_address[$address_row]['custom_field'][$custom_field['custom_field_id']])) { ?>
+                          <div class="text-danger"><?php echo $error_address[$address_row]['custom_field'][$custom_field['custom_field_id']]; ?></div>
                           <?php } ?>
                         </div>
                       </div>

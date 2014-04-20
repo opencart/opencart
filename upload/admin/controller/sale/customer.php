@@ -685,46 +685,10 @@ class ControllerSaleCustomer extends Controller {
 			$data['error_confirm'] = '';
 		}
 
-		if (isset($this->error['address_firstname'])) {
-			$data['error_address_firstname'] = $this->error['address_firstname'];
+		if (isset($this->error['address'])) {
+			$data['error_address'] = $this->error['address'];
 		} else {
-			$data['error_address_firstname'] = '';
-		}
-
-		if (isset($this->error['address_lastname'])) {
-			$data['error_address_lastname'] = $this->error['address_lastname'];
-		} else {
-			$data['error_address_lastname'] = '';
-		}
-
-		if (isset($this->error['address_address_1'])) {
-			$data['error_address_address_1'] = $this->error['address_address_1'];
-		} else {
-			$data['error_address_address_1'] = '';
-		}
-
-		if (isset($this->error['address_city'])) {
-			$data['error_address_city'] = $this->error['address_city'];
-		} else {
-			$data['error_address_city'] = '';
-		}
-
-		if (isset($this->error['address_postcode'])) {
-			$data['error_address_postcode'] = $this->error['address_postcode'];
-		} else {
-			$data['error_address_postcode'] = '';
-		}
-
-		if (isset($this->error['address_country'])) {
-			$data['error_address_country'] = $this->error['address_country'];
-		} else {
-			$data['error_address_country'] = '';
-		}
-
-		if (isset($this->error['address_zone'])) {
-			$data['error_address_zone'] = $this->error['address_zone'];
-		} else {
-			$data['error_address_zone'] = '';
+			$data['error_address'] = '';
 		}
 
 		$url = '';
@@ -966,19 +930,19 @@ class ControllerSaleCustomer extends Controller {
 		if (isset($this->request->post['address'])) {
 			foreach ($this->request->post['address'] as $key => $value) {
 				if ((utf8_strlen($value['firstname']) < 1) || (utf8_strlen($value['firstname']) > 32)) {
-					$this->error['address_firstname'][$key] = $this->language->get('error_firstname');
+					$this->error['address'][$key]['firstname'] = $this->language->get('error_firstname');
 				}
 
 				if ((utf8_strlen($value['lastname']) < 1) || (utf8_strlen($value['lastname']) > 32)) {
-					$this->error['address_lastname'][$key] = $this->language->get('error_lastname');
+					$this->error['address'][$key]['lastname'] = $this->language->get('error_lastname');
 				}	
 
 				if ((utf8_strlen($value['address_1']) < 3) || (utf8_strlen($value['address_1']) > 128)) {
-					$this->error['address_address_1'][$key] = $this->language->get('error_address_1');
+					$this->error['address'][$key]['address_1'] = $this->language->get('error_address_1');
 				}
 
 				if ((utf8_strlen($value['city']) < 2) || (utf8_strlen($value['city']) > 128)) {
-					$this->error['address_city'][$key] = $this->language->get('error_city');
+					$this->error['address'][$key]['city'] = $this->language->get('error_city');
 				} 
 
 				$this->load->model('localisation/country');
@@ -986,20 +950,20 @@ class ControllerSaleCustomer extends Controller {
 				$country_info = $this->model_localisation_country->getCountry($value['country_id']);
 
 				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($value['postcode']) < 2 || utf8_strlen($value['postcode']) > 10)) {
-					$this->error['address_postcode'][$key] = $this->language->get('error_postcode');
+					$this->error['address'][$key]['postcode'] = $this->language->get('error_postcode');
 				}
 
 				if ($value['country_id'] == '') {
-					$this->error['address_country'][$key] = $this->language->get('error_country');
+					$this->error['address'][$key]['country'] = $this->language->get('error_country');
 				}
 
 				if (!isset($value['zone_id']) || $value['zone_id'] == '') {
-					$this->error['address_zone'][$key] = $this->language->get('error_zone');
+					$this->error['address'][$key]['zone'] = $this->language->get('error_zone');
 				}
-				
+
 				foreach ($custom_fields as $custom_field) {
-					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
-						$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($value['custom_field'][$custom_field['custom_field_id']])) {
+						$this->error['address'][$key]['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					}
 				}					
 			}

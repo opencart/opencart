@@ -162,7 +162,7 @@ class ControllerPaymentPPStandard extends Controller {
 								$this->log->write('PP_STANDARD :: TOTAL PAID MISMATCH! ' . $this->request->post['mc_gross']);
 							}
 						}
-					break;
+						break;
 					case 'Denied':
 						$order_status_id = $this->config->get('pp_standard_denied_status_id');
 						break;

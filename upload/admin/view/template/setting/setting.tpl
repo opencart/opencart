@@ -245,7 +245,7 @@
                 </select></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><span class="help-block"><?php echo $help_currency_auto; ?><?php echo $entry_currency_auto; ?></span></label>
+              <label class="col-sm-2 control-label"><span><?php echo $entry_currency_auto; ?></span></label>
               <div class="col-sm-10">
                 <label class="radio-inline">
                   <?php if ($config_currency_auto) { ?>
@@ -264,7 +264,9 @@
                   <input type="radio" name="config_currency_auto" value="0" />
                   <?php echo $text_no; ?>
                   <?php } ?>
-                </label></div>
+                </label>
+                <span class="help-block"><?php echo $help_currency_auto; ?></span>
+              </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-length-class"><?php echo $entry_length_class; ?></label>
@@ -299,7 +301,7 @@
             <fieldset>
               <legend><?php echo $text_product; ?></legend>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_product_count; ?>"><?php echo $entry_product_count; ?></span></label>
+                <label class="col-sm-2 control-label"><span><?php echo $entry_product_count; ?></span></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
                     <?php if ($config_product_count) { ?>
@@ -318,7 +320,9 @@
                     <input type="radio" name="config_product_count" value="0" />
                     <?php echo $text_no; ?>
                     <?php } ?>
-                  </label></div>
+                  </label>
+                  <span class="help-block"><?php echo $help_product_count; ?></span>
+                </div>
               </div>
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_product_limit; ?></label>

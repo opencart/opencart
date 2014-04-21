@@ -4,6 +4,7 @@
 #### Bugs fixed
 * Fixed issue with images containing the <? (used in xml etc) string in the source and not uploading. Now only checks long php tag.
 * Fixed language string for "error_file_type" in admin filemanger/upload method
+* Fixed upgrade issues caused by PHP consider 0 equal to null
 
 #### Changes
 

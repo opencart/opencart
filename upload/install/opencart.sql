@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.3.9
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jul 16, 2011 at 05:01 PM
--- Server version: 5.1.36
--- PHP Version: 5.3.4
-
 -- --------------------------------------------------------
 
 --
@@ -14,6 +5,8 @@
 --
 
 -- --------------------------------------------------------
+
+SET sql_mode = '';
 
 CREATE TABLE `oc_product_profile` (
   `product_id` int(11) NOT NULL,
@@ -107,7 +100,7 @@ CREATE TABLE `oc_address` (
   `lastname` varchar(32) NOT NULL,
   `company` varchar(32) NOT NULL,
   `company_id` varchar(32) NOT NULL,
-  `tax_id` varchar(32) NOT NULL,    
+  `tax_id` varchar(32) NOT NULL,
   `address_1` varchar(128) NOT NULL,
   `address_2` varchar(128) NOT NULL,
   `city` varchar(128) NOT NULL,
@@ -1994,7 +1987,7 @@ CREATE TABLE `oc_order` (
   `payment_lastname` varchar(32) NOT NULL,
   `payment_company` varchar(32) NOT NULL,
   `payment_company_id` varchar(32) NOT NULL,
-  `payment_tax_id` varchar(32) NOT NULL,    
+  `payment_tax_id` varchar(32) NOT NULL,
   `payment_address_1` varchar(128) NOT NULL,
   `payment_address_2` varchar(128) NOT NULL,
   `payment_city` varchar(128) NOT NULL,
@@ -2019,7 +2012,7 @@ CREATE TABLE `oc_order` (
   `shipping_zone_id` int(11) NOT NULL,
   `shipping_address_format` text NOT NULL,
   `shipping_method` varchar(128) NOT NULL,
-  `shipping_code` varchar(128) NOT NULL,  
+  `shipping_code` varchar(128) NOT NULL,
   `comment` text NOT NULL,
   `total` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `order_status_id` int(11) NOT NULL DEFAULT '0',

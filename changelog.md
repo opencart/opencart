@@ -8,8 +8,11 @@
 * Updated SQL query in getTotalEmailsByProductsOrdered and getEmailsByProductsOrdered to use the limits in the correct method
 
 #### Changes
+* Updated SQL mode in install SQL file and MySQLi adapter to accommodate servers that have strict mode enabled by default.
+* Removed Amazon payments xls file from system folder as it can be downloaded online and has no place in the code framework.
 
 #### Added
+* Nothing
 
 ## v1.5.6.3 (15th April 2014)
 #### Bugs fixed
@@ -22,6 +25,7 @@
 * Check uploaded files for php content, reduce the risk of image files containing php and running on insecure servers [**view**](https://github.com/opencart/opencart/commit/c11ef46681b2c2d87b6c3fd7b1394f53b6b72e45)
 
 #### Added
+* Nothing
 
 ## v1.5.6.2 (10th April 2014)
 #### Bugs fixed

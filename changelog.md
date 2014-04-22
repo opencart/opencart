@@ -2,9 +2,10 @@
 
 ## v1.5.6.4 (Pending)
 #### Bugs fixed
-* Fixed issue with images containing the <? (used in xml etc) string in the source and not uploading. Now only checks long php tag.
-* Fixed language string for "error_file_type" in admin filemanger/upload method
-* Fixed upgrade issues caused by PHP consider 0 equal to null
+* Fixed issue with images containing the <? (used in xml etc) string in the source and not uploading. Now only checks long php tag [**view**](https://github.com/opencart/opencart/commit/b04cbbcc40308c47e2d77460358b6450e9ee0e5b)
+* Fixed language string for "error_file_type" in admin filemanger/upload method [**view**](https://github.com/opencart/opencart/commit/b04cbbcc40308c47e2d77460358b6450e9ee0e5b)
+* Fixed upgrade issues caused by PHP consider 0 equal to null [**view**](https://github.com/opencart/opencart/commit/d6d5473e4d69e9f9f0679e3445899a3bc37a86f1)
+* Updated SQL query in getTotalEmailsByProductsOrdered and getEmailsByProductsOrdered to use the limits in the correct method
 
 #### Changes
 

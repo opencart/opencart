@@ -10,6 +10,7 @@
 #### Changes
 * Updated SQL mode in install SQL file and MySQLi adapter to accommodate servers that have strict mode enabled by default.
 * Removed Amazon payments xls file from system folder as it can be downloaded online and has no place in the code framework.
+* Improved currency update method to include curl timeouts, to handle occasional timeout issues.
 
 #### Added
 * Nothing

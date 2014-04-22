@@ -1,6 +1,7 @@
 <?php
 class ModelToolImage extends Model {
-	public function resize($filename, $width, $height) {
+
+	public function resize($filename, $width, $height, $type = "") {
 		if (!is_file(DIR_IMAGE . $filename)) {
 			return;
 		} 
@@ -8,7 +9,7 @@ class ModelToolImage extends Model {
 		$extension = pathinfo($filename, PATHINFO_EXTENSION);
 		
 		$old_image = $filename;
-		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height .'.' . $extension;
+		$new_image = 'cache/' . utf8_substr($filename, 0, utf8_strrpos($filename, '.')) . '-' . $width . 'x' . $height . $type . '.' . $extension;
 		
 		if (!is_file(DIR_IMAGE . $new_image) || (filectime(DIR_IMAGE . $old_image) > filectime(DIR_IMAGE . $new_image))) {
 			$path = '';
@@ -27,7 +28,13 @@ class ModelToolImage extends Model {
 
 			if ($width_orig != $width || $height_orig != $height) {
 				$image = new Image(DIR_IMAGE . $old_image);
-				$image->resize($width, $height);
+
+				if ($type === "resize_and_crop") {
+					$image->resize_and_crop($width, $height);
+				} else {
+					$image->resize($width, $height);
+				}
+
 				$image->save(DIR_IMAGE . $new_image);
 			} else {
 				copy(DIR_IMAGE . $old_image, DIR_IMAGE . $new_image);

@@ -1,12 +1,3 @@
--- phpMyAdmin SQL Dump
--- version 3.3.9
--- http://www.phpmyadmin.net
---
--- Host: localhost
--- Generation Time: Jul 16, 2011 at 05:01 PM
--- Server version: 5.1.36
--- PHP Version: 5.3.4
-
 -- --------------------------------------------------------
 
 --
@@ -14,6 +5,8 @@
 --
 
 -- --------------------------------------------------------
+
+SET sql_mode = '';
 
 CREATE TABLE `oc_product_profile` (
   `product_id` int(11) NOT NULL,
@@ -119,7 +112,6 @@ CREATE TABLE `oc_address` (
 --
 -- Dumping data for table `oc_address`
 --
-
 
 -- --------------------------------------------------------
 

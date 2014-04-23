@@ -1,16 +1,16 @@
 # OpenCart change log
 
-## v1.5.6.4 (Pending)
+## v1.5.6.4 (23rd April 2014)
 #### Bugs fixed
 * Fixed issue with images containing the <? (used in xml etc) string in the source and not uploading. Now only checks long php tag [**view**](https://github.com/opencart/opencart/commit/b04cbbcc40308c47e2d77460358b6450e9ee0e5b)
 * Fixed language string for "error_file_type" in admin filemanger/upload method [**view**](https://github.com/opencart/opencart/commit/b04cbbcc40308c47e2d77460358b6450e9ee0e5b)
 * Fixed upgrade issues caused by PHP consider 0 equal to null [**view**](https://github.com/opencart/opencart/commit/d6d5473e4d69e9f9f0679e3445899a3bc37a86f1)
-* Updated SQL query in getTotalEmailsByProductsOrdered and getEmailsByProductsOrdered to use the limits in the correct method
+* Updated SQL query in getTotalEmailsByProductsOrdered and getEmailsByProductsOrdered to use the limits in the correct method [**view**](https://github.com/opencart/opencart/commit/c5feafce559c81a44ab11315365750ed9b4a0cb1)
 
 #### Changes
-* Updated SQL mode in install SQL file and MySQLi adapter to accommodate servers that have strict mode enabled by default.
-* Removed Amazon payments xls file from system folder as it can be downloaded online and has no place in the code framework.
-* Improved currency update method to include curl timeouts, to handle occasional timeout issues.
+* Updated SQL mode in install SQL file and MySQLi adapter to accommodate servers that have strict mode enabled by default [**view**](https://github.com/opencart/opencart/commit/70298dd3c21430935659745436fe1f8709483718)
+* Removed Amazon payments xls file from system folder as it can be downloaded online and has no place in the code framework [**view**](https://github.com/opencart/opencart/commit/70298dd3c21430935659745436fe1f8709483718)
+* Improved currency update method to include curl timeouts, to handle occasional timeout issues [**view**](https://github.com/opencart/opencart/commit/bda066fdbde486107337ca1069bcba0dabecc67f)
 
 #### Added
 * Nothing

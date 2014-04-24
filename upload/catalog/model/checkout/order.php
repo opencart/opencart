@@ -35,7 +35,7 @@ class ModelCheckoutOrder extends Model {
 			
 			if ($custom_field_query->row['type'] == 'select' || $custom_field_query->row['type'] == 'radio') {
 				$custom_field_value_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "custom_field_value cfv LEFT JOIN " . DB_PREFIX . "custom_field_value_description cfvd ON (cfv.custom_field_value_id = cfvd.custom_field_value_id) WHERE cfv.custom_field_id = '" . (int)$custom_field['custom_field_id'] . "' AND cfv.custom_field_value_id = '" . (int)$custom_field['value'] . "' AND cfvd.language_id = '" . (int)$this->config->get('config_language_id') . "'");
-			
+			}
 			
 
 		}

@@ -737,7 +737,20 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
-
+		
+		// Custom Fields
+		$this->load->model('sale/custom_field');
+		
+		$data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
+		
+		if (isset($this->request->post['custom_field'])) {
+			$data['account_custom_field'] = $this->request->post['custom_field'];
+		} elseif (!empty($order_info)) {
+			$data['account_custom_field'] = unserialize($order_info['custom_field']);		
+		} else {
+			$data['account_custom_field'] = array();
+		}
+				
 		if (isset($this->request->post['affiliate_id'])) {
 			$data['affiliate_id'] = $this->request->post['affiliate_id'];
 		} elseif (!empty($order_info)) {
@@ -839,6 +852,10 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['payment_postcode'] = '';
 		}
+		
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();															
 
 		if (isset($this->request->post['payment_country_id'])) {
 			$data['payment_country_id'] = $this->request->post['payment_country_id'];
@@ -855,7 +872,15 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['payment_zone_id'] = '';
 		}
-
+		
+		if (isset($this->request->post['payment_custom_field'])) {
+			$data['payment_custom_field'] = $this->request->post['payment_custom_field'];
+		} elseif (!empty($order_info)) {
+			$data['payment_custom_field'] = $order_info['payment_custom_field'];
+		} else {
+			$data['payment_custom_field'] = '';
+		}
+		
 		if (isset($this->request->post['payment_method'])) {
 			$data['payment_method'] = $this->request->post['payment_method'];
 		} elseif (!empty($order_info)) {
@@ -943,11 +968,15 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['shipping_zone_id'] = '';
 		}
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();															
-
+		
+		if (isset($this->request->post['shipping_custom_field'])) {
+			$data['shipping_custom_field'] = $this->request->post['shipping_custom_field'];
+		} elseif (!empty($order_info)) {
+			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
+		} else {
+			$data['shipping_custom_field'] = '';
+		}
+		
 		if (isset($this->request->post['shipping_method'])) {
 			$data['shipping_method'] = $this->request->post['shipping_method'];
 		} elseif (!empty($order_info)) {

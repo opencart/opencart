@@ -182,6 +182,12 @@ class ControllerExtensionModification extends Controller {
 										*/
 										$modification[$key] = preg_replace($search, $replace, $modification[$key], 1);
 									} else {	
+									
+									
+									
+									
+									
+									
 										$i = 0;
 										$pos = -1;
 										$result = array();

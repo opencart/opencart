@@ -1,5 +1,15 @@
 # OpenCart change log
 
+## v1.5.6.5 (Pending)
+#### Bugs fixed
+* Updated SQL in admin/model/sale/order.php to fix date_modified filter. Fixes #1371
+
+#### Changes
+* Nothing
+
+#### Added
+* Nothing
+
 ## v1.5.6.4 (23rd April 2014)
 #### Bugs fixed
 * Fixed issue with images containing the <? (used in xml etc) string in the source and not uploading. Now only checks long php tag [**view**](https://github.com/opencart/opencart/commit/b04cbbcc40308c47e2d77460358b6450e9ee0e5b)

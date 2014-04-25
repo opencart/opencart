@@ -3,6 +3,7 @@
 ## v1.5.6.5 (Pending)
 #### Bugs fixed
 * Updated SQL in admin/model/sale/order.php to fix date_modified filter. Fixes #1371
+* Change settitle to setTitle in error/not_found.php
 
 #### Changes
 * Nothing

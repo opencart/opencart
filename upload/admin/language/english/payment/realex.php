@@ -1,7 +1,7 @@
 <?php
 // Heading
 $_['heading_title']= 'Realex Redirect';
-$_['text_realex'] = '<img src="view/image/payment/realex.png" alt="Realex" title="Realex" style="border: 1px solid #EEEEEE;" />';
+$_['text_realex'] = '<a target="_BLANK" href="http://www.realexpayments.co.uk/partner-refer?id=opencart"><img src="view/image/payment/realex.png" alt="Realex" title="Realex" style="border: 1px solid #EEEEEE;" /></a>';
 
 // Config tabs
 $_['tab_account'] = 'API info';

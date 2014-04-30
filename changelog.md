@@ -6,7 +6,7 @@
 * Change settitle to setTitle in error/not_found.php
 
 #### Changes
-* Nothing
+* Removed duplicate DELETE SQL query for product attributes REF: #1379
 
 #### Added
 * Nothing

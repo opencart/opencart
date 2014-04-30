@@ -302,21 +302,6 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$this->model_payment_amazon_checkout->uninstall();
 	}
 
-	public function template() {
-		$file = DIR_SYSTEM . 'AmazonOrderAdjustmentTemplate.xls';
-
-		header('Content-Type: application/octet-stream');
-		header('Content-Description: File Transfer');
-		header('Content-Disposition: attachment; filename=AmazonOrderAdjustmentTemplate.xls');
-		header('Content-Transfer-Encoding: binary');
-		header('Expires: 0');
-		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-		header('Pragma: public');
-		header('Content-Length: ' . filesize($file));
-
-		readfile($file, 'rb');
-	}
-
 	public function uploadOrderAdjustment() {
 		$this->language->load('payment/amazon_checkout');
 

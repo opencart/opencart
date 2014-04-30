@@ -18,7 +18,7 @@
 
       if ($('input[name="addressSelected"]').val() == '0') {
         $('#amazon-address-widget').before('<div class="warning"><?php echo $error_shipping_address ?></div>');
-      } else if($('input[name="shipping_method"]:checked').length == 0) {
+      } else if ($('input[name="shipping_method"]:checked').length == 0) {
         $('#amazon-address-widget').before('<div class="warning"><?php echo $error_shipping ?></div>');
       } else {
         $.ajax({
@@ -50,7 +50,7 @@
 
           if (data.error) {
             $('#amazon-address-widget').before('<div class="warning">' + data.error + '</div>');
-          } elseif (data.quotes) {
+          } else if (data.quotes) {
             var html = '';
             html += '<table class="radio">';
 

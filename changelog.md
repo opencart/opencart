@@ -7,6 +7,8 @@
 
 #### Changes
 * Removed duplicate DELETE SQL query for product attributes REF: #1379
+* Small coding standard improvement (spacing on if and else if statements) in Amazon Payments FE template
+* Updated link to download location for Amazon Payments adjustment file as it was removed from the source.
 
 #### Added
 * Nothing

@@ -424,7 +424,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$this->data['column_total'] = $this->language->get('column_total');
 
 			$this->data['help_adjustment'] = $this->language->get('help_adjustment');
-			$this->data['text_download'] = sprintf($this->language->get('text_download'), $this->url->link('payment/amazon_checkout/template', 'token=' . $this->session->data['token'], 'SSL'));
+			$this->data['text_download'] = sprintf($this->language->get('text_download'), 'https://sellercentral-europe.amazon.com/gp/transactions/uploadAdjustments.html');
 
 			$this->data['amazon_order_id'] = $amazon_order_info['amazon_order_id'];
 

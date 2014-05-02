@@ -206,7 +206,7 @@ class Mail {
 						exit();
 					}
           
-          			stream_socket_enable_crypto($handle, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+          			stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 				}
 
 				if (!empty($this->smtp_username)  && !empty($this->smtp_password)) {

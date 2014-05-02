@@ -40,3 +40,11 @@
 # /upload/backup.install/*
 # /upload/install/*
 
+
+# Ignore all vendor files included by composer and the lock file
+/tests/vendor/*
+/tests/composer.lock
+
+
+
+

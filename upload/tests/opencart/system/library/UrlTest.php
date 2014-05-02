@@ -29,6 +29,7 @@ class UrlTest extends OpenCartTest {
 		$urlAction->execute($this->registry);
 		
         $link = $this->url->link('product/product', 'product_id=1');
+		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'product_id=1'");
         $this->assertEquals(HTTPS_SERVER . 'product-1', $link, "Could not construct URL's alias");
     }
     

@@ -1,0 +1,9 @@
+* Installing the testing framework
+
+navigate to the tests/ folder and run 
+composer update
+
+To run the tests:
+vendor/bin/phpunit --bootstrap opencart/bootstrap.php opencart
+
+Settings of the database used for testing are in opencart/bootstrap.php. The database is deleted and recreated for each test case.

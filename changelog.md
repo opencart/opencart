@@ -4,6 +4,7 @@
 #### Bugs fixed
 * Updated SQL in admin/model/sale/order.php to fix date_modified filter. Fixes #1371
 * Change settitle to setTitle in error/not_found.php
+* Fixed issue in Amazon Payments where tax lines where passed as products if cart had different tax rates.
 
 #### Changes
 * Removed duplicate DELETE SQL query for product attributes REF: #1379

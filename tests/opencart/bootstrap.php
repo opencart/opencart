@@ -1,6 +1,7 @@
 <?php
 
 define('OC_ROOT', __DIR__ . '/../../upload/');
+define('SQL_FILE', OC_ROOT . 'install/opencart.sql');
 
 define('HTTP_SERVER', 'http://opencart.welfordlocal.co.uk/');
 

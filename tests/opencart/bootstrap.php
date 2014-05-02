@@ -1,6 +1,6 @@
 <?php
 
-define('OC_ROOT', __DIR__ . '/../../');
+define('OC_ROOT', __DIR__ . '/../../upload/');
 
 define('HTTP_SERVER', 'http://opencart.welfordlocal.co.uk/');
 

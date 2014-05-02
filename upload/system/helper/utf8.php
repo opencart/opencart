@@ -277,7 +277,7 @@ if (extension_loaded('mbstring')) {
 			return false;
 		}
 	 
-		for ($i = 0; $i < count($unicode); $i++){
+		for ($i = 0; $i < count($unicode); $i++) {
 			if (isset($upper_to_lower[$unicode[$i]])) {
 				$unicode[$i] = $upper_to_lower[$unicode[$i]];
 			}
@@ -513,7 +513,7 @@ if (extension_loaded('mbstring')) {
 			return false;
 		}
 		
-		for ($i = 0; $i < count($unicode); $i++){
+		for ($i = 0; $i < count($unicode); $i++) {
 			if (isset($lower_to_upper[$unicode[$i]])) {
 				$unicode[$i] = $lower_to_upper[$unicode[$i]];
 			}
@@ -559,8 +559,8 @@ if (extension_loaded('mbstring')) {
     function unicode_to_utf8($unicode) {
 		$string = '';
 		
-		for ($i = 0; $i < count($unicode); $i++){
-			if ($unicode[$i] < 128){
+		for ($i = 0; $i < count($unicode); $i++) {
+			if ($unicode[$i] < 128) {
 			   $string .= chr($unicode[$i]);
 			}		
 			

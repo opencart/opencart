@@ -266,10 +266,10 @@ class ControllerExtensionInstaller extends Controller {
 
 			$path = array($directory . '*');
 
-			while(count($path) != 0) {
+			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach(glob($next) as $file) {
+				foreach (glob($next) as $file) {
 					if (is_dir($file)) {
 						$path[] = $file . '/*';
 					}
@@ -350,7 +350,7 @@ class ControllerExtensionInstaller extends Controller {
 				try {	
 					$sql = '';
 
-					foreach($lines as $line) {
+					foreach ($lines as $line) {
 						if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
 							$sql .= $line;
 
@@ -496,10 +496,10 @@ class ControllerExtensionInstaller extends Controller {
 
 			$path = array($directory . '*');
 
-			while(count($path) != 0) {
+			while (count($path) != 0) {
 				$next = array_shift($path);
 
-				foreach(glob($next) as $file) {
+				foreach (glob($next) as $file) {
 					if (is_dir($file)) {
 						$path[] = $file . '/*';
 					}
@@ -542,16 +542,16 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$json) {
 			$directories = glob(DIR_DOWNLOAD . 'temp-*', GLOB_ONLYDIR);
 
-			foreach($directories as $directory) {
+			foreach ($directories as $directory) {
 				// Get a list of files ready to upload
 				$files = array();
 
 				$path = array($directory . '*');
 
-				while(count($path) != 0) {
+				while (count($path) != 0) {
 					$next = array_shift($path);
 
-					foreach(glob($next) as $file) {
+					foreach (glob($next) as $file) {
 						if (is_dir($file)) {
 							$path[] = $file . '/*';
 						}

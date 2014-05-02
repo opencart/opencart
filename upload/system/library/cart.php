@@ -274,7 +274,7 @@ class Cart {
 		return $this->data;
 	}
 
-	public function getRecurringProducts(){
+	public function getRecurringProducts() {
 		$recurring_products = array();
 
 		foreach ($this->getProducts() as $key => $value) {
@@ -400,7 +400,7 @@ class Cart {
 		return count($this->session->data['cart']);
 	}
 
-	public function hasRecurringProducts(){
+	public function hasRecurringProducts() {
 		return count($this->getRecurringProducts());
 	}
 

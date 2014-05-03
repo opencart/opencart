@@ -200,7 +200,7 @@ class ControllerCheckoutGuestShipping extends Controller {
 				$this->session->data['shipping_address']['zone_code'] = '';
 			}
 			
-			if (isset($this->request->post['custom_field'])){
+			if (isset($this->request->post['custom_field'])) {
 				$this->session->data['shipping_address']['custom_field'] = $this->request->post['custom_field'];
 			} else {
 				$this->session->data['shipping_address']['custom_field'] = array();

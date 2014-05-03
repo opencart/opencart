@@ -291,7 +291,7 @@ class ControllerCheckoutConfirm extends Controller {
 			
 			if (!empty($this->request->server['HTTP_X_FORWARDED_FOR'])) {
 				$order_data['forwarded_ip'] = $this->request->server['HTTP_X_FORWARDED_FOR'];	
-			} elseif(!empty($this->request->server['HTTP_CLIENT_IP'])) {
+			} elseif (!empty($this->request->server['HTTP_CLIENT_IP'])) {
 				$order_data['forwarded_ip'] = $this->request->server['HTTP_CLIENT_IP'];	
 			} else {
 				$order_data['forwarded_ip'] = '';

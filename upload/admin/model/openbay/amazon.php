@@ -670,20 +670,22 @@ class ModelOpenbayAmazon extends Model {
 	public function install() {
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order` (
-			  `order_id` int(11) NOT NULL ,
-			  `amazon_order_id` char(19) NOT NULL ,
-			  `courier_id` varchar(255) NOT NULL ,
-			  `courier_other` tinyint(1) NOT NULL,
-			  `tracking_no` varchar(255) NOT NULL ,
-			  PRIMARY KEY (`order_id`, `amazon_order_id`)
-		) DEFAULT COLLATE=utf8_general_ci;");
+				`order_id` int(11) NOT NULL,
+				`amazon_order_id` char(19) NOT NULL,
+				`courier_id` varchar(255) NOT NULL,
+				`courier_other` tinyint(1) NOT NULL,
+				`tracking_no` varchar(255) NOT NULL,
+				PRIMARY KEY (`order_id`, `amazon_order_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_order_product` (
 				`order_product_id` int(11) NOT NULL ,
 				`amazon_order_item_id` varchar(255) NOT NULL,
 				PRIMARY KEY(`order_product_id`, `amazon_order_item_id`)
-		);");
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_unshipped` (
@@ -691,52 +693,57 @@ class ModelOpenbayAmazon extends Model {
 				`product_id` int(11) NOT NULL,
 				`quantity` int(11) NOT NULL DEFAULT '0',
 				PRIMARY KEY (`order_id`,`product_id`)
-			) DEFAULT COLLATE=utf8_general_ci;;");
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product` (
-		  `version` int(11) NOT NULL DEFAULT 2,
-		  `product_id`  int(11) NOT NULL ,
-		  `category`  varchar(255) NOT NULL ,
-		  `sku`  varchar(255) NOT NULL ,
-		  `insertion_id` varchar(255) NOT NULL ,
-		  `data`  text NOT NULL ,
-		  `status` enum('saved','uploaded','ok','error') NOT NULL ,
-		  `price`  decimal(15,4) NOT NULL COMMENT 'Price on Amazon' ,
-		  `var` char(100) NOT NULL DEFAULT '',
-		  `marketplaces` text NOT NULL ,
-		  `messages` text NOT NULL,
-		  PRIMARY KEY (`product_id`, `var`)
-		);");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product` (
+				`version` int(11) NOT NULL DEFAULT 2,
+				`product_id`  int(11) NOT NULL ,
+				`category`  varchar(255) NOT NULL ,
+				`sku`  varchar(255) NOT NULL ,
+				`insertion_id` varchar(255) NOT NULL ,
+				`data`  text NOT NULL ,
+				`status` enum('saved','uploaded','ok','error') NOT NULL ,
+				`price`  decimal(15,4) NOT NULL COMMENT 'Price on Amazon' ,
+				`var` char(100) NOT NULL DEFAULT '',
+				`marketplaces` text NOT NULL ,
+				`messages` text NOT NULL,
+				 PRIMARY KEY (`product_id`, `var`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_error` (
-		  `error_id` int(11) NOT NULL AUTO_INCREMENT,
-		  `sku` varchar(255) NOT NULL ,
-		  `insertion_id` varchar(255) NOT NULL ,
-		  `error_code` int(11) NOT NULL ,
-		  `message` text NOT NULL ,
-		  PRIMARY KEY (`error_id`)
-		);");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_error` (
+				`error_id` int(11) NOT NULL AUTO_INCREMENT,
+				`sku` varchar(255) NOT NULL,
+				`insertion_id` varchar(255) NOT NULL,
+				`error_code` int(11) NOT NULL,
+				`message` text NOT NULL,
+				PRIMARY KEY (`error_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_link` (
-		  `id` int(11) NOT NULL AUTO_INCREMENT,
-		  `amazon_sku` varchar(255) NOT NULL,
-		  `var` char(100) NOT NULL DEFAULT '',
-		  `product_id` int(11) NOT NULL,
-		  PRIMARY KEY (`id`)
-		) DEFAULT COLLATE=utf8_general_ci;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_link` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`amazon_sku` varchar(255) NOT NULL,
+				`var` char(100) NOT NULL DEFAULT '',
+				`product_id` int(11) NOT NULL,
+				PRIMARY KEY (`id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-		CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_search` (
-			`product_id` int(11) NOT NULL,
-			`marketplace` enum('uk','de','es','it','fr') NOT NULL,
-			`status` enum('searching','finished') NOT NULL,
-			`matches` int(11) DEFAULT NULL,
-			`data` text,
-			PRIMARY KEY (`product_id`,`marketplace`)
-		) DEFAULT COLLATE=utf8_general_ci;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_product_search` (
+				`product_id` int(11) NOT NULL,
+				`marketplace` enum('uk','de','es','it','fr') NOT NULL,
+				`status` enum('searching','finished') NOT NULL,
+				`matches` int(11) DEFAULT NULL,
+				`data` text,
+				PRIMARY KEY (`product_id`,`marketplace`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
 			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "amazon_listing_report` (
@@ -746,7 +753,8 @@ class ModelOpenbayAmazon extends Model {
 				`asin` varchar(255) NOT NULL,
 				`price` decimal(10,4) NOT NULL,
 				PRIMARY KEY (`marketplace`,`sku`)
-			) DEFAULT COLLATE=utf8_general_ci;");
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 	}
 
 	public function uninstall() {

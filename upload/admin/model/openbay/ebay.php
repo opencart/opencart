@@ -44,171 +44,187 @@ class ModelOpenbayEbay extends Model{
 		$this->model_setting_setting->editSetting('openbay',$value);
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_category` (
-					  `ebay_category_id` int(11) NOT NULL AUTO_INCREMENT,
-					  `CategoryID` int(11) NOT NULL,
-					  `CategoryParentID` int(11) NOT NULL,
-					  `CategoryLevel` smallint(6) NOT NULL,
-					  `CategoryName` char(100) NOT NULL,
-					  `BestOfferEnabled` tinyint(1) NOT NULL,
-					  `AutoPayEnabled` tinyint(1) NOT NULL,
-					  PRIMARY KEY (`ebay_category_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_category` (
+				`ebay_category_id` int(11) NOT NULL AUTO_INCREMENT,
+				`CategoryID` int(11) NOT NULL,
+				`CategoryParentID` int(11) NOT NULL,
+				`CategoryLevel` smallint(6) NOT NULL,
+				`CategoryName` char(100) NOT NULL,
+				`BestOfferEnabled` tinyint(1) NOT NULL,
+				`AutoPayEnabled` tinyint(1) NOT NULL,
+				PRIMARY KEY (`ebay_category_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_category_history` (
-					  `ebay_category_history_id` int(11) NOT NULL AUTO_INCREMENT,
-					  `CategoryID` int(11) NOT NULL,
-					  `breadcrumb` varchar(255) NOT NULL,
-					  `used` int(6) NOT NULL,
-					  PRIMARY KEY (`ebay_category_history_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_category_history` (
+				`ebay_category_history_id` int(11) NOT NULL AUTO_INCREMENT,
+				`CategoryID` int(11) NOT NULL,
+				`breadcrumb` varchar(255) NOT NULL,
+				`used` int(6) NOT NULL,
+				PRIMARY KEY (`ebay_category_history_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_listing` (
-					  `ebay_listing_id` int(11) NOT NULL AUTO_INCREMENT,
-					  `ebay_item_id` char(100) NOT NULL,
-					  `product_id` int(11) NOT NULL,
-					  `variant` int(11) NOT NULL,
-					  `status` SMALLINT(3) NOT NULL DEFAULT '1',
-					  PRIMARY KEY (`ebay_listing_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
-;
-		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_listing_pending` (
-					  `ebay_listing_pending_id` int(11) NOT NULL AUTO_INCREMENT,
-					  `ebay_item_id` char(25) NOT NULL,
-					  `product_id` int(11) NOT NULL,
-					  `key` char(50) NOT NULL,
-					  `variant` int(11) NOT NULL,
-					  PRIMARY KEY (`ebay_listing_pending_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_listing` (
+				`ebay_listing_id` int(11) NOT NULL AUTO_INCREMENT,
+				`ebay_item_id` char(100) NOT NULL,
+				`product_id` int(11) NOT NULL,
+				`variant` int(11) NOT NULL,
+				`status` SMALLINT(3) NOT NULL DEFAULT '1',
+				PRIMARY KEY (`ebay_listing_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_shipping` (
-					  `ebay_shipping_id` int(11) NOT NULL AUTO_INCREMENT,
-					  `description` varchar(100) NOT NULL,
-					  `InternationalService` tinyint(4) NOT NULL,
-					  `ShippingService` varchar(100) NOT NULL,
-					  `ShippingServiceID` int(11) NOT NULL,
-					  `ServiceType` varchar(100) NOT NULL,
-					  `ValidForSellingFlow` tinyint(4) NOT NULL,
-					  `ShippingCategory` varchar(100) NOT NULL,
-					  `ShippingTimeMin` int(11) NOT NULL,
-					  `ShippingTimeMax` int(11) NOT NULL,
-					  `site` int(11) NOT NULL,
-					  PRIMARY KEY (`ebay_shipping_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_listing_pending` (
+				`ebay_listing_pending_id` int(11) NOT NULL AUTO_INCREMENT,
+				`ebay_item_id` char(25) NOT NULL,
+				`product_id` int(11) NOT NULL,
+				`key` char(50) NOT NULL,
+				`variant` int(11) NOT NULL,
+				PRIMARY KEY (`ebay_listing_pending_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_shipping_location` (
-					  `ebay_shipping_id` int(11) NOT NULL AUTO_INCREMENT,
-					  `description` varchar(100) NOT NULL,
-					  `detail_version` varchar(100) NOT NULL,
-					  `shipping_location` varchar(100) NOT NULL,
-					  `update_time` varchar(100) NOT NULL,
-					  PRIMARY KEY (`ebay_shipping_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_shipping` (
+				`ebay_shipping_id` int(11) NOT NULL AUTO_INCREMENT,
+				`description` varchar(100) NOT NULL,
+				`InternationalService` tinyint(4) NOT NULL,
+				`ShippingService` varchar(100) NOT NULL,
+				`ShippingServiceID` int(11) NOT NULL,
+				`ServiceType` varchar(100) NOT NULL,
+				`ValidForSellingFlow` tinyint(4) NOT NULL,
+				`ShippingCategory` varchar(100) NOT NULL,
+				`ShippingTimeMin` int(11) NOT NULL,
+				`ShippingTimeMax` int(11) NOT NULL,
+				`site` int(11) NOT NULL,
+				PRIMARY KEY (`ebay_shipping_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_payment_method` (
-					  `ebay_payment_method_id` int(11) NOT NULL AUTO_INCREMENT,
-					  `ebay_name` char(50) NOT NULL,
-					  `local_name` char(50) NOT NULL,
-					  PRIMARY KEY (`ebay_payment_method_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=5;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_shipping_location` (
+				`ebay_shipping_id` int(11) NOT NULL AUTO_INCREMENT,
+				`description` varchar(100) NOT NULL,
+				`detail_version` varchar(100) NOT NULL,
+				`shipping_location` varchar(100) NOT NULL,
+				`update_time` varchar(100) NOT NULL,
+				PRIMARY KEY (`ebay_shipping_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_transaction` (
-						`ebay_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
-						`order_id` int(11) NOT NULL,
-						`product_id` int(11) NOT NULL,
-						`sku` varchar(100) NOT NULL,
-						`txn_id` varchar(100) NOT NULL,
-						`item_id` varchar(100) NOT NULL,
-						`containing_order_id` varchar(100) NOT NULL,
-						`order_line_id` varchar(100) NOT NULL,
-						`qty` int(11) NOT NULL,
-						`smp_id` int(11) NOT NULL,
-						`created` DATETIME NOT NULL,
-						`modified` DATETIME NOT NULL,
-					PRIMARY KEY (`ebay_transaction_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_payment_method` (
+				`ebay_payment_method_id` int(11) NOT NULL AUTO_INCREMENT,
+				`ebay_name` char(50) NOT NULL,
+				`local_name` char(50) NOT NULL,
+				PRIMARY KEY (`ebay_payment_method_id`)
+			) DEFAULT COLLATE=utf8_general_ci AUTO_INCREMENT=5;
+		");
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_order` (
-					  `ebay_order_id` int(11) NOT NULL AUTO_INCREMENT,
-					  `parent_ebay_order_id` int(11) NOT NULL,
-					  `order_id` int(11) NOT NULL,
-					  `smp_id` int(11) NOT NULL,
-					  `tracking_no` varchar(100) NOT NULL,
-					  `carrier_id` varchar(100) NOT NULL,
-					  PRIMARY KEY (`ebay_order_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_transaction` (
+				`ebay_transaction_id` int(11) NOT NULL AUTO_INCREMENT,
+				`order_id` int(11) NOT NULL,
+				`product_id` int(11) NOT NULL,
+				`sku` varchar(100) NOT NULL,
+				`txn_id` varchar(100) NOT NULL,
+				`item_id` varchar(100) NOT NULL,
+				`containing_order_id` varchar(100) NOT NULL,
+				`order_line_id` varchar(100) NOT NULL,
+				`qty` int(11) NOT NULL,
+				`smp_id` int(11) NOT NULL,
+				`created` DATETIME NOT NULL,
+				`modified` DATETIME NOT NULL,
+				PRIMARY KEY (`ebay_transaction_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_profile` (
-						`ebay_profile_id` int(11) NOT NULL AUTO_INCREMENT,
-						`name` varchar(100) NOT NULL,
-						`description` text NOT NULL,
-						`type` int(11) NOT NULL,
-						`default` TINYINT(1) NOT NULL,
-						`data` text NOT NULL,
-						PRIMARY KEY (`ebay_profile_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_order` (
+				`ebay_order_id` int(11) NOT NULL AUTO_INCREMENT,
+				`parent_ebay_order_id` int(11) NOT NULL,
+				`order_id` int(11) NOT NULL,
+				`smp_id` int(11) NOT NULL,
+				`tracking_no` varchar(100) NOT NULL,
+				`carrier_id` varchar(100) NOT NULL,
+				PRIMARY KEY (`ebay_order_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_setting_option` (
-					`ebay_setting_option_id` INT(11) NOT NULL AUTO_INCREMENT,
-					`key` VARCHAR(100) NOT NULL,
-					`last_updated` DATETIME NOT NULL,
-					`data` TEXT NOT NULL,
-					PRIMARY KEY (`ebay_setting_option_id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_profile` (
+				`ebay_profile_id` int(11) NOT NULL AUTO_INCREMENT,
+				`name` varchar(100) NOT NULL,
+				`description` text NOT NULL,
+				`type` int(11) NOT NULL,
+				`default` TINYINT(1) NOT NULL,
+				`data` text NOT NULL,
+				PRIMARY KEY (`ebay_profile_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-				CREATE TABLE IF NOT EXISTS `".DB_PREFIX."ebay_image_import` (
-				  `id` int(11) NOT NULL AUTO_INCREMENT,
-				  `image_original` text NOT NULL,
-				  `image_new` text NOT NULL,
-				  `name` text NOT NULL,
-				  `product_id` int(11) NOT NULL,
-				  `imgcount` int(11) NOT NULL,
-				  PRIMARY KEY (`id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_setting_option` (
+				`ebay_setting_option_id` INT(11) NOT NULL AUTO_INCREMENT,
+				`key` VARCHAR(100) NOT NULL,
+				`last_updated` DATETIME NOT NULL,
+				`data` TEXT NOT NULL,
+				PRIMARY KEY (`ebay_setting_option_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_shipping_location_exclude` (
-					`ebay_shipping_exclude_id` int(11) NOT NULL AUTO_INCREMENT,
-					`description` varchar(100) NOT NULL,
-					`location` varchar(100) NOT NULL,
-					`region` varchar(100) NOT NULL,
-					PRIMARY KEY (`ebay_shipping_exclude_id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+			CREATE TABLE IF NOT EXISTS `".DB_PREFIX."ebay_image_import` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`image_original` text NOT NULL,
+				`image_new` text NOT NULL,
+				`name` text NOT NULL,
+				`product_id` int(11) NOT NULL,
+				`imgcount` int(11) NOT NULL,
+				PRIMARY KEY (`id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-				CREATE TABLE IF NOT EXISTS `".DB_PREFIX."ebay_stock_reserve` (
-				  `id` int(11) NOT NULL AUTO_INCREMENT,
-				  `product_id` int(11) NOT NULL,
-				  `variant_id` varchar(100) NOT NULL,
-				  `item_id` varchar(100) NOT NULL,
-				  `reserve` int(11) NOT NULL,
-				  PRIMARY KEY (`id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
+			CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "ebay_shipping_location_exclude` (
+				`ebay_shipping_exclude_id` int(11) NOT NULL AUTO_INCREMENT,
+				`description` varchar(100) NOT NULL,
+				`location` varchar(100) NOT NULL,
+				`region` varchar(100) NOT NULL,
+				PRIMARY KEY (`ebay_shipping_exclude_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-				CREATE TABLE IF NOT EXISTS `".DB_PREFIX."ebay_order_lock` (
-				  `smp_id` int(11) NOT NULL,
-				  PRIMARY KEY (`smp_id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
+			CREATE TABLE IF NOT EXISTS `".DB_PREFIX."ebay_stock_reserve` (
+				`id` int(11) NOT NULL AUTO_INCREMENT,
+				`product_id` int(11) NOT NULL,
+				`variant_id` varchar(100) NOT NULL,
+				`item_id` varchar(100) NOT NULL,
+				`reserve` int(11) NOT NULL,
+				PRIMARY KEY (`id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 
 		$this->db->query("
-				CREATE TABLE IF NOT EXISTS `".DB_PREFIX."ebay_template` (
-				  `template_id` INT(11) NOT NULL AUTO_INCREMENT,
-				  `name` VARCHAR(100) NOT NULL,
-				  `html` MEDIUMTEXT NOT NULL,
-				  PRIMARY KEY (`template_id`)
-				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
+			CREATE TABLE IF NOT EXISTS `".DB_PREFIX."ebay_order_lock` (
+				`smp_id` int(11) NOT NULL,
+				PRIMARY KEY (`smp_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
+
+		$this->db->query("
+			CREATE TABLE IF NOT EXISTS `".DB_PREFIX."ebay_template` (
+				`template_id` INT(11) NOT NULL AUTO_INCREMENT,
+				`name` VARCHAR(100) NOT NULL,
+				`html` MEDIUMTEXT NOT NULL,
+				PRIMARY KEY (`template_id`)
+			) DEFAULT COLLATE=utf8_general_ci;
+		");
 	}
 
 	public function uninstall(){

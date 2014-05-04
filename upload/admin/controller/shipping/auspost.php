@@ -55,19 +55,19 @@ class ControllerShippingAusPost extends Controller {
 		$data['breadcrumbs'] = array();
 		
 		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
 		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_shipping'),
+			'text' => $this->language->get('text_shipping'),
 			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
 		);
 		
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 		
 		$data['action'] = $this->url->link('shipping/auspost', 'token=' . $this->session->data['token'], 'SSL');
 		
@@ -138,7 +138,7 @@ class ControllerShippingAusPost extends Controller {
 		} else {
 			$data['auspost_sort_order'] = $this->config->get('auspost_sort_order');
 		}  
-		                             
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');

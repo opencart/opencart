@@ -440,7 +440,7 @@ class ControllerCatalogInformation extends Controller {
 				$this->error['description'][$language_id] = $this->language->get('error_description');
 			}
 
-			if ((utf8_strlen($value['meta_title']) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
+			if ((utf8_strlen($value['meta_title']) < 3) || (utf8_strlen($value['meta_title']) > 255)) {
 				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}
@@ -470,6 +470,10 @@ class ControllerCatalogInformation extends Controller {
 
 			if ($this->config->get('config_affiliate_id') == $information_id) {
 				$this->error['warning'] = $this->language->get('error_affiliate');
+			}
+
+			if ($this->config->get('config_return_id') == $information_id) {
+				$this->error['warning'] = $this->language->get('error_return');
 			}
 
 			$store_total = $this->model_setting_store->getTotalStoresByInformationId($information_id);

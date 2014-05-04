@@ -1,6 +1,18 @@
 <?php echo $header; ?>
 <div class="container">
-  <h1><?php echo $heading_step_2; ?></h1>
+  <header>
+    <div class="row">
+      <div class="col-sm-6">
+        <h1 class="pull-left">2<small>/4</small></h1>
+        <h3><?php echo $heading_step_2; ?><br><small><?php echo $heading_step_2_small; ?></small></h3>
+      </div>
+      <div class="col-sm-6">
+        <div id="logo" class="pull-right hidden-xs">
+          <img src="view/image/logo.png" alt="OpenCart" title="OpenCart" />
+        </div>
+      </div>
+    </div>
+  </header>
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
@@ -29,7 +41,8 @@
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $text_global; ?></td>
@@ -37,13 +50,15 @@
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
                 <td><?php echo $text_off; ?></td>
                 <td class="text-center"><?php if (!$register_globals) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $text_magic; ?></td>
@@ -51,13 +66,15 @@
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
                 <td><?php echo $text_off; ?></td>
                 <td class="text-center"><?php if (!$magic_quotes_gpc) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $text_upload; ?></td>
@@ -65,13 +82,15 @@
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($file_uploads) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $text_session; ?></td>
@@ -79,13 +98,15 @@
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
                 <td><?php echo $text_off; ?></td>
                 <td class="text-center"><?php if (!$session_auto_start) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -108,13 +129,15 @@
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($mysql) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $text_gd; ?></td>
@@ -122,13 +145,15 @@
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($gd) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $text_curl; ?></td>
@@ -136,13 +161,15 @@
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($curl) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $text_mcrypt; ?></td>
@@ -150,13 +177,15 @@
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($mcrypt_encrypt) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $text_zip; ?></td>
@@ -164,14 +193,36 @@
                   <?php echo $text_on; ?>
                   <?php } else { ?>
                   <?php echo $text_off; ?>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
                 <td><?php echo $text_on; ?></td>
                 <td class="text-center"><?php if ($zlib) { ?>
                   <span class="text-success"><i class="fa fa-check-circle"></i></span>
                   <?php } else { ?>
                   <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
+              <?php if (!$iconv) { ?>
+              <tr>
+                <td><?php echo $text_mbstring; ?></td>
+                <td>
+                  <?php if ($mbstring) { ?>
+                  <?php echo $text_on; ?>
+                  <?php } else { ?>
+                  <?php echo $text_off; ?>
+                  <?php } ?>
+                </td>
+                <td><?php echo $text_on; ?></td>
+                <td class="text-center">
+                  <?php if ($mbstring) { ?>
+                  <span class="text-success"><i class="fa fa-check-circle"></i></span>
+                  <?php } else { ?>
+                  <span class="text-danger"><i class="fa fa-minus-circle"></i></span>
+                  <?php } ?>
+                </td>
+              </tr>
+              <?php } ?>
             </tbody>
           </table>
         </fieldset>
@@ -193,7 +244,8 @@
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
                   <?php } else { ?>
                   <span class="text-success"><?php echo $text_writable; ?></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $config_admin; ?></td>
@@ -203,7 +255,8 @@
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
                   <?php } else { ?>
                   <span class="text-success"><?php echo $text_writable; ?></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -224,7 +277,8 @@
                   <span class="text-success"><?php echo $text_writable; ?></span>
                   <?php } else { ?>
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $logs . '/'; ?></td>
@@ -232,7 +286,8 @@
                   <span class="text-success"><?php echo $text_writable; ?></span>
                   <?php } else { ?>
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $download . '/'; ?></td>
@@ -240,7 +295,8 @@
                   <span class="text-success"><?php echo $text_writable; ?></span>
                   <?php } else { ?>
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $image . '/'; ?></td>
@@ -248,7 +304,8 @@
                   <span class="text-success"><?php echo $text_writable; ?></span>
                   <?php } else { ?>
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $image_cache . '/'; ?></td>
@@ -256,7 +313,8 @@
                   <span class="text-success"><?php echo $text_writable; ?></span>
                   <?php } else { ?>
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
               <tr>
                 <td><?php echo $image_data . '/'; ?></td>
@@ -264,7 +322,8 @@
                   <span class="text-success"><?php echo $text_writable; ?></span>
                   <?php } else { ?>
                   <span class="text-danger"><?php echo $text_unwritable; ?></span>
-                  <?php } ?></td>
+                  <?php } ?>
+                </td>
               </tr>
             </tbody>
           </table>
@@ -287,4 +346,4 @@
     </div>
   </div>
 </div>
-<?php echo $footer; ?> 
+<?php echo $footer; ?>

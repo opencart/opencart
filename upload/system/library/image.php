@@ -27,7 +27,7 @@ class Image {
 		$mime = $this->info['mime'];
 
 		if ($mime == 'image/gif') {
-			return imagecreatefromgif($image);
+			return imagecreatefromgif ($image);
 		} elseif ($mime == 'image/png') {
 			return imagecreatefrompng($image);
 		} elseif ($mime == 'image/jpeg') {
@@ -43,10 +43,10 @@ class Image {
 		if (is_resource($this->image)) {
 			if ($extension == 'jpeg' || $extension == 'jpg') {
 				imagejpeg($this->image, $file, $quality);
-			} elseif($extension == 'png') {
+			} elseif ($extension == 'png') {
 				imagepng($this->image, $file);
-			} elseif($extension == 'gif') {
-				imagegif($this->image, $file);
+			} elseif ($extension == 'gif') {
+				imagegif ($this->image, $file);
 			}
 
 			imagedestroy($this->image);

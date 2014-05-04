@@ -304,7 +304,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$refunded = number_format($this->model_payment_pp_pro_iframe->totalRefundedTransaction($this->request->get['transaction_id']), 2);
 
-		if($refunded != 0.00) {
+		if ($refunded != 0.00) {
 			$data['refund_available'] = number_format($data['amount_original'] + $refunded, 2);
 			$data['attention'] = $this->language->get('text_current_refunds').': '.$data['refund_available'];
 		} else {
@@ -314,7 +314,7 @@ class ControllerPaymentPPProIframe extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		if(isset($this->session->data['error'])) {
+		if (isset($this->session->data['error'])) {
 			$data['error'] = $this->session->data['error'];
 			unset($this->session->data['error']);
 		} else {
@@ -601,18 +601,17 @@ class ControllerPaymentPPProIframe extends Controller {
 
 	public function capture() {
 		$this->load->language('payment/pp_pro_iframe');
-		/**
+		/*
 		 * used to capture authorised payments
-		 *
 		 * capture can be full or partial amounts
 		 */
-		if(isset($this->request->post['order_id']) && $this->request->post['amount'] > 0 && isset($this->request->post['order_id']) && isset($this->request->post['complete'])) {
+		if (isset($this->request->post['order_id']) && $this->request->post['amount'] > 0 && isset($this->request->post['order_id']) && isset($this->request->post['complete'])) {
 
 			$this->load->model('payment/pp_pro_iframe');
 
 			$paypal_order = $this->model_payment_pp_pro_iframe->getOrder($this->request->post['order_id']);
 
-			if($this->request->post['complete'] == 1) {
+			if ($this->request->post['complete'] == 1) {
 				$complete = 'Complete';
 			} else {
 				$complete = 'NotComplete';
@@ -654,7 +653,7 @@ class ControllerPaymentPPProIframe extends Controller {
 				$json['failed_transaction']['created'] = date("Y-m-d H:i:s");
 
 				$json['msg'] = $this->language->get('error_timeout');
-			} else if(isset($result['ACK']) && $result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
+			} else if (isset($result['ACK']) && $result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
 				$transaction['transaction_id'] = $result['TRANSACTIONID'];
 				$transaction['payment_type'] = $result['PAYMENTTYPE'];
 				$transaction['payment_status'] = $result['PAYMENTSTATUS'];
@@ -674,14 +673,14 @@ class ControllerPaymentPPProIframe extends Controller {
 				$transaction['remaining'] = number_format($paypal_order['total'] - $captured, 2);
 
 				$transaction['status'] = 0;
-				if($transaction['remaining'] == 0.00) {
+				if ($transaction['remaining'] == 0.00) {
 					$transaction['status'] = 1;
 					$this->model_payment_pp_pro_iframe->updateOrder('Complete', $this->request->post['order_id']);
 				}
 
 				$transaction['void'] = '';
 
-				if($this->request->post['complete'] == 1 && $transaction['remaining'] > 0) {
+				if ($this->request->post['complete'] == 1 && $transaction['remaining'] > 0) {
 					$transaction['void'] = array(
 						'paypal_iframe_order_id' => $paypal_order['paypal_iframe_order_id'],
 						'transaction_id' => '',

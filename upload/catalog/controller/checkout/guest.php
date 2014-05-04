@@ -133,33 +133,14 @@ class ControllerCheckoutGuest extends Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 		
+		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
+		
 		if (isset($this->session->data['guest']['custom_field'])) {
-			$custom_field_info = $this->session->data['guest']['custom_field'];
+			$data['guest_custom_field'] = $this->session->data['guest']['custom_field'] + $this->session->data['payment_address']['custom_field'];
 		} else {
-			$custom_field_info = array();
-		}	
-		
-		$data['custom_fields'] = array();
-				
-		$custom_fields = $this->model_account_custom_field->getCustomFields();
-		
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['type'] == 'checkbox') {
-				$value = array();
-			} else {
-				$value = $custom_field['value'];
-			}			
-			
-			$data['custom_fields'][] = array(
-				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $custom_field['custom_field_value'],
-				'name'               => $custom_field['name'],
-				'location'           => $custom_field['location'],
-				'type'               => $custom_field['type'],
-				'value'              => isset($custom_field_info['custom_field'][$custom_field['custom_field_id']]) ? $custom_field_info['custom_field'][$custom_field['custom_field_id']] : $value
-			);
+			$data['guest_custom_field'] = array();
 		}
-		
+				
 		$data['shipping_required'] = $this->cart->hasShipping();
 		
 		if (isset($this->session->data['guest']['shipping_address'])) {
@@ -246,7 +227,7 @@ class ControllerCheckoutGuest extends Controller {
 			// Custom field validation
 			$this->load->model('account/custom_field');
 			
-			$custom_fields = $this->model_account_custom_field->getCustomFieldsByCustomerGroupId($customer_group_id);
+			$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
 			
 			foreach ($custom_fields as $custom_field) {
 				if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
@@ -265,7 +246,7 @@ class ControllerCheckoutGuest extends Controller {
 			$this->session->data['guest']['telephone'] = $this->request->post['telephone'];
 			$this->session->data['guest']['fax'] = $this->request->post['fax'];
 			
-			if (isset($this->request->post['custom_field']['account'])){
+			if (isset($this->request->post['custom_field']['account'])) {
 				$this->session->data['guest']['custom_field'] = $this->request->post['custom_field']['account'];
 			} else {
 				$this->session->data['guest']['custom_field'] = array();
@@ -297,7 +278,7 @@ class ControllerCheckoutGuest extends Controller {
 				$this->session->data['payment_address']['address_format'] = '';
 			}
 			
-			if (isset($this->request->post['custom_field']['address'])){
+			if (isset($this->request->post['custom_field']['address'])) {
 				$this->session->data['payment_address']['custom_field'] = $this->request->post['custom_field']['address'];
 			} else {
 				$this->session->data['payment_address']['custom_field'] = array();
@@ -353,7 +334,7 @@ class ControllerCheckoutGuest extends Controller {
 					$this->session->data['shipping_address']['zone_code'] = '';
 				}
 				
-				if (isset($this->request->post['custom_field']['address'])){
+				if (isset($this->request->post['custom_field']['address'])) {
 					$this->session->data['shipping_address']['custom_field'] = $this->request->post['custom_field']['address'];
 				} else {
 					$this->session->data['shipping_address']['custom_field'] = array();

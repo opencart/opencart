@@ -1,4 +1,9 @@
 <?php echo $header; ?>
+<header>
+  <div class="container">
+    <div id="logo"><img src="view/image/logo.png" alt="OpenCart" title="OpenCart" /></div>
+  </div>
+</header>
 <div class="container">
   <h1>Upgrade - Complete!</h1>
   <div id="column-right">

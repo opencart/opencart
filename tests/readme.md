@@ -1,13 +1,14 @@
 ## Requirements:
-* GIT
-* Composer
-* Command line
+* [GIT](http://git-scm.com/)
+* [Composer](https://getcomposer.org/download/)
+* A bit of command line knowledge
 
 ## Instructions
-* Download and extract OpenCart inside project root
-* Go to command line, change directory to tests folder (extracted inside the opencart zip)
-* Type in the command line: composer update
+* Download and unzip OpenCart with the [test suite included](https://github.com/opencart/opencart/archive/2.0-testing-suite.zip)
+* Go to your command line (Windows > Run > Cmd), Shell, Or my personal flavourite now - Git Bash here
+* Change directory to /tests folder (extracted inside the opencart zip)
+* Type in the command line: composer update (this will create you a vendor folder and download all dependencies)
 * Composer will now pull in all of the required externals/dependencies
 * Go to bootstrap.php (inside /tests/opencart) and update database's connection settings.
 * DO NOT EVER USE A PRODUCTION DATABASE AS TABLES WILL BE DROPPED AND RE-CREATED!
-* run: vendor\bin\phpunit --bootstrap opencart\bootstrap.php opencart
+* run: vendor\bin\phpunit --bootstrap opencart\bootstrap.php opencart OR use the run.bat file (for us Windows guys!)

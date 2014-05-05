@@ -48,6 +48,7 @@ class ControllerInformationContact extends Controller {
 		$data['entry_captcha'] = $this->language->get('entry_captcha');
 
 		$data['button_map'] = $this->language->get('button_map');
+		$data['button_continue'] = $this->language->get('button_continue');
 
 		if (isset($this->error['name'])) {
 			$data['error_name'] = $this->error['name'];
@@ -73,8 +74,6 @@ class ControllerInformationContact extends Controller {
 			$data['error_captcha'] = '';
 		}	
 
-		$data['button_continue'] = $this->language->get('button_continue');
-
 		$data['action'] = $this->url->link('information/contact');
 
 		$this->load->model('tool/image');
@@ -90,7 +89,7 @@ class ControllerInformationContact extends Controller {
 		$data['geocode'] = $this->config->get('config_geocode');
 		$data['telephone'] = $this->config->get('config_telephone');
 		$data['fax'] = $this->config->get('config_fax');
-		$data['open'] = $this->config->get('config_open');
+		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = $this->config->get('config_comment');
 
 		$data['locations'] = array();

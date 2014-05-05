@@ -266,7 +266,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		if (isset($this->request->post['pp_express_logo']) && file_exists(DIR_IMAGE . $this->request->post['pp_express_logo'])) {
 			$data['thumb'] = $this->model_tool_image->resize($this->request->post['pp_express_logo'], 750, 90);
-		}elseif(($logo != '') && file_exists(DIR_IMAGE . $logo)) {
+		} elseif (($logo != '') && file_exists(DIR_IMAGE . $logo)) {
 			$data['thumb'] = $this->model_tool_image->resize($logo, 750, 90);
 		} else {
 			$data['thumb'] = $this->model_tool_image->resize('no_image.jpg', 750, 90);
@@ -410,13 +410,13 @@ class ControllerPaymentPPExpress extends Controller {
 		 *
 		 * capture can be full or partial amounts
 		 */
-		if(isset($this->request->post['order_id']) && $this->request->post['amount'] > 0 && isset($this->request->post['order_id']) && isset($this->request->post['complete'])) {
+		if (isset($this->request->post['order_id']) && $this->request->post['amount'] > 0 && isset($this->request->post['order_id']) && isset($this->request->post['complete'])) {
 
 			$this->load->model('payment/pp_express');
 
 			$paypal_order = $this->model_payment_pp_express->getOrder($this->request->post['order_id']);
 
-			if($this->request->post['complete'] == 1) {
+			if ($this->request->post['complete'] == 1) {
 				$complete = 'Complete';
 			} else {
 				$complete = 'NotComplete';
@@ -458,7 +458,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$json['failed_transaction']['created'] = date("Y-m-d H:i:s");
 
 				$json['msg'] = $this->language->get('error_timeout');
-			} else if(isset($result['ACK']) && $result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
+			} else if (isset($result['ACK']) && $result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
 				$transaction['transaction_id'] = $result['TRANSACTIONID'];
 				$transaction['payment_type'] = $result['PAYMENTTYPE'];
 				$transaction['payment_status'] = $result['PAYMENTSTATUS'];
@@ -478,14 +478,14 @@ class ControllerPaymentPPExpress extends Controller {
 				$transaction['remaining'] = number_format($paypal_order['total'] - $captured, 2);
 
 				$transaction['status'] = 0;
-				if($transaction['remaining'] == 0.00) {
+				if ($transaction['remaining'] == 0.00) {
 					$transaction['status'] = 1;
 					$this->model_payment_pp_express->updateOrder('Complete', $this->request->post['order_id']);
 				}
 
 				$transaction['void'] = '';
 
-				if($this->request->post['complete'] == 1 && $transaction['remaining'] > 0) {
+				if ($this->request->post['complete'] == 1 && $transaction['remaining'] > 0) {
 					$transaction['void'] = array(
 						'paypal_order_id' => $paypal_order['paypal_order_id'],
 						'transaction_id' => '',
@@ -526,7 +526,7 @@ class ControllerPaymentPPExpress extends Controller {
 		/**
 		 * used to void an authorised payment
 		 */
-		if(isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
+		if (isset($this->request->post['order_id']) && $this->request->post['order_id'] != '') {
 			$this->load->model('payment/pp_express');
 
 			$paypal_order = $this->model_payment_pp_express->getOrder($this->request->post['order_id']);
@@ -537,7 +537,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 			$result = $this->model_payment_pp_express->call($call_data);
 
-			if($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
+			if ($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning') {
 				$transaction = array(
 					'paypal_order_id' => $paypal_order['paypal_order_id'],
 					'transaction_id' => '',
@@ -619,7 +619,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$refunded = number_format($this->model_payment_pp_express->totalRefundedTransaction($this->request->get['transaction_id']), 2);
 
-		if($refunded != 0.00) {
+		if ($refunded != 0.00) {
 			$data['refund_available'] = number_format($data['amount_original'] + $refunded, 2);
 			$data['attention'] = $this->language->get('text_current_refunds').': '.$data['refund_available'];
 		} else {
@@ -629,7 +629,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		if(isset($this->session->data['error'])) {
+		if (isset($this->session->data['error'])) {
 			$data['error'] = $this->session->data['error'];
 			unset($this->session->data['error']);
 		} else {
@@ -649,12 +649,12 @@ class ControllerPaymentPPExpress extends Controller {
 		 *
 		 * refund can be full or partial
 		 */
-		if(isset($this->request->post['transaction_id']) && isset($this->request->post['refund_full'])) {
+		if (isset($this->request->post['transaction_id']) && isset($this->request->post['refund_full'])) {
 
 			$this->load->model('payment/pp_express');
 			$this->load->language('payment/pp_express_refund');
 
-			if($this->request->post['refund_full'] == 0 && $this->request->post['amount'] == 0) {
+			if ($this->request->post['refund_full'] == 0 && $this->request->post['amount'] == 0) {
 				$this->session->data['error'] = $this->language->get('error_partial_amt');
 			} else {
 				$order_id = $this->model_payment_pp_express->getOrderId($this->request->post['transaction_id']);
@@ -916,7 +916,7 @@ class ControllerPaymentPPExpress extends Controller {
 		/**
 		 * used to search for transactions from a user account
 		 */
-		if(isset($this->request->post['date_start'])) {
+		if (isset($this->request->post['date_start'])) {
 
 			$this->load->model('payment/pp_express');
 
@@ -924,74 +924,74 @@ class ControllerPaymentPPExpress extends Controller {
 			$call_data['METHOD'] = 'TransactionSearch';
 			$call_data['STARTDATE'] = gmdate($this->request->post['date_start']."\TH:i:s\Z");
 
-			if(!empty($this->request->post['date_end'])) {
+			if (!empty($this->request->post['date_end'])) {
 				$call_data['ENDDATE'] = gmdate($this->request->post['date_end']."\TH:i:s\Z");
 			}
 
-			if(!empty($this->request->post['transaction_class'])) {
+			if (!empty($this->request->post['transaction_class'])) {
 				$call_data['TRANSACTIONCLASS'] = $this->request->post['transaction_class'];
 			}
 
-			if(!empty($this->request->post['status'])) {
+			if (!empty($this->request->post['status'])) {
 				$call_data['STATUS'] = $this->request->post['status'];
 			}
 
-			if(!empty($this->request->post['buyer_email'])) {
+			if (!empty($this->request->post['buyer_email'])) {
 				$call_data['EMAIL'] = $this->request->post['buyer_email'];
 			}
 
-			if(!empty($this->request->post['merchant_email'])) {
+			if (!empty($this->request->post['merchant_email'])) {
 				$call_data['RECEIVER'] = $this->request->post['merchant_email'];
 			}
 
-			if(!empty($this->request->post['receipt_id'])) {
+			if (!empty($this->request->post['receipt_id'])) {
 				$call_data['RECEIPTID'] = $this->request->post['receipt_id'];
 			}
 
-			if(!empty($this->request->post['transaction_id'])) {
+			if (!empty($this->request->post['transaction_id'])) {
 				$call_data['TRANSACTIONID'] = $this->request->post['transaction_id'];
 			}
 
-			if(!empty($this->request->post['invoice_number'])) {
+			if (!empty($this->request->post['invoice_number'])) {
 				$call_data['INVNUM'] = $this->request->post['invoice_number'];
 			}
 
-			if(!empty($this->request->post['auction_item_number'])) {
+			if (!empty($this->request->post['auction_item_number'])) {
 				$call_data['AUCTIONITEMNUMBER'] = $this->request->post['auction_item_number'];
 			}
 
-			if(!empty($this->request->post['amount'])) {
+			if (!empty($this->request->post['amount'])) {
 				$call_data['AMT'] = number_format($this->request->post['amount'], 2);
 				$call_data['CURRENCYCODE'] = $this->request->post['currency_code'];
 			}
 
-			if(!empty($this->request->post['profile_id'])) {
+			if (!empty($this->request->post['profile_id'])) {
 				$call_data['PROFILEID'] = $this->request->post['profile_id'];
 			}
 
-			if(!empty($this->request->post['name_salutation'])) {
+			if (!empty($this->request->post['name_salutation'])) {
 				$call_data['SALUTATION'] = $this->request->post['name_salutation'];
 			}
 
-			if(!empty($this->request->post['name_first'])) {
+			if (!empty($this->request->post['name_first'])) {
 				$call_data['FIRSTNAME'] = $this->request->post['name_first'];
 			}
 
-			if(!empty($this->request->post['name_middle'])) {
+			if (!empty($this->request->post['name_middle'])) {
 				$call_data['MIDDLENAME'] = $this->request->post['name_middle'];
 			}
 
-			if(!empty($this->request->post['name_last'])) {
+			if (!empty($this->request->post['name_last'])) {
 				$call_data['LASTNAME'] = $this->request->post['name_last'];
 			}
 
-			if(!empty($this->request->post['name_suffix'])) {
+			if (!empty($this->request->post['name_suffix'])) {
 				$call_data['SUFFIX'] = $this->request->post['name_suffix'];
 			}
 
 			$result = $this->model_payment_pp_express->call($call_data);
 
-			if($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning' && $result['ACK'] != 'Warning') {
+			if ($result['ACK'] != 'Failure' && $result['ACK'] != 'FailureWithWarning' && $result['ACK'] != 'Warning') {
 				$response['error'] = false;
 				$response['result'] = $this->formatRows($result);
 			} else {
@@ -1128,8 +1128,8 @@ class ControllerPaymentPPExpress extends Controller {
 
 		foreach($data as $k=>$v) {
 			$elements = preg_split("/(\d+)/", $k, -1, PREG_SPLIT_NO_EMPTY | PREG_SPLIT_DELIM_CAPTURE);
-			if(isset($elements[1]) && isset($elements[0])) {
-				if($elements[0] == 'L_TIMESTAMP') {
+			if (isset($elements[1]) && isset($elements[0])) {
+				if ($elements[0] == 'L_TIMESTAMP') {
 					$v = str_replace('T', ' ', $v);
 					$v = str_replace('Z', '', $v);
 				}
@@ -1149,11 +1149,11 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$profile = $this->model_sale_recurring->getProfile($this->request->get['order_recurring_id']);
 
-		if($profile && !empty($profile['profile_reference'])) {
+		if ($profile && !empty($profile['profile_reference'])) {
 
 			$result = $this->model_payment_pp_express->recurringCancel($profile['profile_reference']);
 
-			if(isset($result['PROFILEID'])) {
+			if (isset($result['PROFILEID'])) {
 				$this->db->query("INSERT INTO `" . DB_PREFIX . "order_recurring_transaction` SET `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "', `created` = NOW(), `type` = '5'");
 				$this->db->query("UPDATE `" . DB_PREFIX . "order_recurring` SET `status` = 4 WHERE `order_recurring_id` = '" . (int)$profile['order_recurring_id'] . "' LIMIT 1");
 

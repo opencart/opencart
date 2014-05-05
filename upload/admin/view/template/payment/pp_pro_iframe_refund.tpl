@@ -55,12 +55,12 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-    function refundAmount(){
+    function refundAmount() {
         var valChecked = $('#refund_full').prop('checked');
 
-        if(valChecked == true){
+        if (valChecked == true) {
             $('#partial_amount_row').hide();
-        }else{
+        } else {
             $('#partial_amount_row').show();
         }
     }

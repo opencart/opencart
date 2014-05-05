@@ -554,7 +554,7 @@ class ControllerMarketingCoupon extends Controller {
 		if ($coupon_info) {
 			if (!isset($this->request->get['coupon_id'])) {
 				$this->error['warning'] = $this->language->get('error_exists');
-			} elseif ($coupon_info['coupon_id'] != $this->request->get['coupon_id'])  {
+			} elseif ($coupon_info['coupon_id'] != $this->request->get['coupon_id']) {
 				$this->error['warning'] = $this->language->get('error_exists');
 			}
 		}

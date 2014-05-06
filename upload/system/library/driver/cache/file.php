@@ -1,60 +1,62 @@
 <?php
-class CacheFile { 
-	private $expire; 
-	
-	public function __construct($expire = 3600) {
-		$this->expire = $expire;
-		
-		$files = glob(DIR_CACHE . 'cache.*');
 
-		if ($files) {			
-			foreach ($files as $file) {
-				$time = substr(strrchr($file, '.'), 1);
+class CacheFile {
+    private $expire;
 
-				if ($time < time()) {
-					if (file_exists($file)) {
-						unlink($file);
-					}
-				}
-			}
-		}
-	}
-	
-	public function get($key) {
-		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
+    public function __construct($expire = 3600, $probability = 25)
+    {
+        $this->expire = $expire;
+        $this->purgeExpired($probability);
+    }
 
-		if ($files) {
-			$handle = fopen($files[0], 'r');
+    public function get($key)
+    {
+        $files = glob($this->getPath($key) . '.*');
 
-			$cache = fread($handle, filesize($files[0]));
-			
-			fclose($handle);
-		
-			return unserialize($cache);
-		}
-	}
+        if ($files && substr(strrchr($files[0], '.'), 1) > time()) {
+            return unserialize(file_get_contents($files[0]));
+        }
 
-	public function set($key, $value) {
-		$this->delete($key);
+        return null;
+    }
 
-		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
+    public function set($key, $value, $expire = null)
+    {
+        $this->delete($key);
 
-		$handle = fopen($file, 'w');
+        if (null === $expire) {
+            $expire = $this->expire;
+        }
 
-		fwrite($handle, serialize($value));
+        $file = $this->getPath($key) . '.' . (time() + $expire);
 
-		fclose($handle);
-	}
+        file_put_contents($file, serialize($value), LOCK_EX);
+    }
 
-	public function delete($key) {
-		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
+    public function delete($key = '')
+    {
+        $files = glob($this->getPath($key) . '.*');
 
-		if ($files) {
-			foreach ($files as $file) {
-				if (file_exists($file)) {
-					unlink($file);
-				}
-			}
-		}
-	}
+        if ($files) {
+            foreach ($files as $file) {
+                unlink($file);
+            }
+        }
+    }
+
+    private function purgeExpired($probability)
+    {
+        if (rand(0,100) < $probability && $files = glob(DIR_CACHE . 'cache.*')) {
+            foreach ($files as $file) {
+                if (substr(strrchr($file, '.'), 1) < time()) {
+                    unlink($file);
+                }
+            }
+        }
+    }
+
+    private function getPath($key)
+    {
+        return DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key);
+    }
 }

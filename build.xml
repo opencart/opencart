@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="OpenCart" default="tests/build" basedir=".">
+<project name="OpenCart" default="tests" basedir=".">
  <property name="source" value="upload"/>
   
  <target name="clean" description="Cleanup build artifacts">
-  <delete dir="${basedir}/tests/build/docs"/>
-  <delete dir="${basedir}/tests/build/logs"/>
-  <delete dir="${basedir}/tests/build/testresults"/>
+  <delete dir="${basedir}/tests/docs"/>
+  <delete dir="${basedir}/tests/logs"/>
+  <delete dir="${basedir}/tests/testresults"/>
  </target>
 
  <target name="prepare" depends="clean" description="Prepare for build">
-  <mkdir dir="${basedir}/tests/build"/>
-  <mkdir dir="${basedir}/tests/build/docs"/>
-  <mkdir dir="${basedir}/tests/build/logs"/>
-  <mkdir dir="${basedir}/tests/build/testresults"/>
+  <mkdir dir="${basedir}/tests/docs"/>
+  <mkdir dir="${basedir}/tests/logs"/>
+  <mkdir dir="${basedir}/tests/testresults"/>
  </target>
   
  <target name="lint" description="Perform syntax check of source code files">
@@ -28,14 +27,14 @@
  <target name="phploc" description="Measure project size using PHPLOC">
   <exec executable="phploc">
    <arg value="--log-csv" />
-   <arg value="${basedir}/tests/build/logs/phploc.csv" />
+   <arg value="${basedir}/tests/logs/phploc.csv" />
    <arg path="${basedir}/upload" />
   </exec>
  </target>
  
  <target name="phpcs" description="Generate checkstyle.xml using PHP_CodeSniffer">
   <exec executable="phpcs">
-   <arg line="--report=checkstyle --report-file=${basedir}/tests/build/logs/checkstyle.xml --standard=tests/build/phpcs.xml --extensions=php ${source}/" />
+   <arg line="--report=checkstyle --report-file=${basedir}/tests/logs/checkstyle.xml --standard=tests/phpcs.xml --extensions=php ${source}/" />
   </exec>
  </target>
  

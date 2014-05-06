@@ -167,7 +167,11 @@ class CatalogModelCheckoutOrderTest extends OpenCartTest {
 		$this->assertEquals(2, $numRows);
 	}
 	
+	// The following three tests should be completed when custom fields are implemented
+	
 	public function testGetOrder() {
+		$this->markTestIncomplete();
+		
 		$orderData = $this->getOrderArray();
 		
 		$this->model_checkout_order->addOrder($orderData);
@@ -180,6 +184,8 @@ class CatalogModelCheckoutOrderTest extends OpenCartTest {
 	}
 	
 	public function testConfirm() {
+		$this->markTestIncomplete();
+		
 		$orderData = $this->getOrderArray();
 		
 		$orderId = $this->model_checkout_order->addOrder($orderData);
@@ -188,6 +194,8 @@ class CatalogModelCheckoutOrderTest extends OpenCartTest {
 	}
 
 	public function testUpdate() {
+		$this->markTestIncomplete();
+		
 		$orderData = $this->getOrderArray();
 		
 		$orderId = $this->model_checkout_order->addOrder($orderData);

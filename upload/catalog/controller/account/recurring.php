@@ -125,14 +125,14 @@ class ControllerAccountRecurring extends Controller {
 		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 			unset($this->session->data['error']);
-		}else{
+		} else {
 			$data['error_warning'] = '';
 		}
 
 		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
-		}else{
+		} else {
 			$data['success'] = '';
 		}
 

@@ -522,12 +522,12 @@ if (extension_loaded('mbstring')) {
 		return unicode_to_utf8($unicode);
 	}
 	
-    function utf8_to_unicode($string) {
+	function utf8_to_unicode($string) {
 		$unicode = array();
 		
 		for ($i = 0; $i < strlen($string); $i++) {
 			$chr = ord($string[$i]);
-	 		
+
 			if ($chr >= 0 && $chr <= 127) {
 				$unicode[] = (ord($string[$i]) * pow(64, 0));
 			}
@@ -543,7 +543,7 @@ if (extension_loaded('mbstring')) {
 			if ($chr >= 240 && $chr <= 247) {
 				$unicode[] = ((ord($string[$i]) - 240) * pow(64, 3) + (ord($string[$i + 1]) - 128) * pow(64, 2) + (ord($string[$i + 2]) - 128) * pow(64, 1) + (ord($string[$i + 3]) - 128) * pow(64, 0));       
 			}
-     		
+
 			if ($chr >= 248 && $chr <= 251) {
 				$unicode[] = ((ord($string[$i]) - 248) * pow(64, 4) + (ord($string[$i + 1]) - 128) * pow(64, 3) + (ord($string[$i + 2]) - 128) * pow(64, 2) + (ord($string[$i + 3]) - 128) * pow(64, 1) + (ord($string[$i + 4]) - 128) * pow(64, 0)); 
 			}
@@ -552,11 +552,11 @@ if (extension_loaded('mbstring')) {
 				$unicode[] = ((ord($string[$i]) - 252) * pow(64, 5) + (ord($string[$i + 1]) - 128) * pow(64, 4) + (ord($string[$i + 2]) - 128) * pow(64, 3) + (ord($string[$i + 3]) - 128) * pow(64, 2) + (ord($string[$i + 4]) - 128) * pow(64, 1) + (ord($string[$i + 5]) - 128) * pow(64, 0));
 			}
 		}
-        
-        return $unicode;
-    }
+
+		return $unicode;
+	}
 	
-    function unicode_to_utf8($unicode) {
+	function unicode_to_utf8($unicode) {
 		$string = '';
 		
 		for ($i = 0; $i < count($unicode); $i++) {
@@ -587,5 +587,5 @@ if (extension_loaded('mbstring')) {
 		}
 		
 		return $string;
-    }
+	}
 }

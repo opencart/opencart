@@ -5,20 +5,20 @@ class ControllerCheckoutCart extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title'));
 
-      	$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-      	$data['breadcrumbs'][] = array(
-        	'href' => $this->url->link('common/home'),
-        	'text' => $this->language->get('text_home')
-      	); 
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home'),
+			'text' => $this->language->get('text_home')
+		);
 
-      	$data['breadcrumbs'][] = array(
-        	'href' => $this->url->link('checkout/cart'),
-        	'text' => $this->language->get('heading_title')
-      	);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('checkout/cart'),
+			'text' => $this->language->get('heading_title')
+		);
 			
-    	if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
-      		$data['heading_title'] = $this->language->get('heading_title');
+		if ($this->cart->hasProducts() || !empty($this->session->data['vouchers'])) {
+			$data['heading_title'] = $this->language->get('heading_title');
 			
 			$data['text_recurring'] = $this->language->get('text_recurring');
 			$data['text_length'] = $this->language->get('text_length');
@@ -27,19 +27,19 @@ class ControllerCheckoutCart extends Controller {
 			$data['text_next_choice'] = $this->language->get('text_next_choice');
 			
 			$data['column_image'] = $this->language->get('column_image');
-      		$data['column_name'] = $this->language->get('column_name');
-      		$data['column_model'] = $this->language->get('column_model');
-      		$data['column_quantity'] = $this->language->get('column_quantity');
+			$data['column_name'] = $this->language->get('column_name');
+			$data['column_model'] = $this->language->get('column_model');
+			$data['column_quantity'] = $this->language->get('column_quantity');
 			$data['column_price'] = $this->language->get('column_price');
-      		$data['column_total'] = $this->language->get('column_total');
+			$data['column_total'] = $this->language->get('column_total');
 			
 			$data['button_update'] = $this->language->get('button_update');
 			$data['button_remove'] = $this->language->get('button_remove');
-      		$data['button_shopping'] = $this->language->get('button_shopping');
-      		$data['button_checkout'] = $this->language->get('button_checkout');
+			$data['button_shopping'] = $this->language->get('button_shopping');
+			$data['button_checkout'] = $this->language->get('button_checkout');
 			
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-      			$data['error_warning'] = $this->language->get('error_stock');		
+				$data['error_warning'] = $this->language->get('error_stock');
 			} elseif (isset($this->session->data['error'])) {
 				$data['error_warning'] = $this->session->data['error'];
 				
@@ -73,7 +73,7 @@ class ControllerCheckoutCart extends Controller {
 			$this->load->model('tool/image');
 			$this->load->model('tool/upload');
 			
-      		$data['products'] = array();
+			$data['products'] = array();
 			
 			$products = $this->cart->getProducts();
 
@@ -252,14 +252,14 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$this->response->setOutput($this->load->view('default/template/checkout/cart.tpl', $data));
 			}
-    	} else {
-      		$data['heading_title'] = $this->language->get('heading_title');
+		} else {
+			$data['heading_title'] = $this->language->get('heading_title');
 
-      		$data['text_error'] = $this->language->get('text_empty');
+			$data['text_error'] = $this->language->get('text_empty');
 
-      		$data['button_continue'] = $this->language->get('button_continue');
+			$data['button_continue'] = $this->language->get('button_continue');
 			
-      		$data['continue'] = $this->url->link('common/home');
+			$data['continue'] = $this->url->link('common/home');
 
 			unset($this->session->data['success']);
 			
@@ -275,8 +275,8 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
 			}			
-    	}
-  	}
+		}
+	}
 								
 	public function add() {
 		$this->load->language('checkout/cart');
@@ -299,7 +299,7 @@ class ControllerCheckoutCart extends Controller {
 			} else {
 				$quantity = 1;
 			}
- 														
+
 			if (isset($this->request->post['option'])) {
 				$option = array_filter($this->request->post['option']);
 			} else {
@@ -416,7 +416,7 @@ class ControllerCheckoutCart extends Controller {
 		$this->load->language('checkout/cart');
 		
 		$json = array();
-       	
+
 		// Remove
 		if (isset($this->request->post['key'])) {
 			$this->cart->remove($this->request->post['key']);

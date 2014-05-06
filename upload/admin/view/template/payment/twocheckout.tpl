@@ -68,7 +68,7 @@
               <?php if ($twocheckout_display) { ?>
               <input type="radio" name="twocheckout_display" value="1" checked="checked" />
               <?php echo $text_yes; ?>
-              <?php }else{ ?>
+              <?php } else { ?>
               <input type="radio" name="twocheckout_display" value="1" />
               <?php echo $text_yes; ?>
               <?php } ?>
@@ -77,7 +77,7 @@
               <?php if (!$twocheckout_display) { ?>
               <input type="radio" name="twocheckout_display" value="0" checked="checked" />
               <?php echo $text_no; ?>
-              <?php }else{ ?>
+              <?php } else { ?>
               <input type="radio" name="twocheckout_display" value="0" />
               <?php echo $text_no; ?>
               <?php } ?>

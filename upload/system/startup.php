@@ -72,7 +72,6 @@ function autoload($class) {
 		include(modification($file));
 	} else {
 		trigger_error('Error: Could not load class ' . $class . '.php!');
-		exit();
 	}
 }
 

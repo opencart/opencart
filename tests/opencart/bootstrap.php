@@ -25,8 +25,3 @@ define('DIR_DOWNLOAD', OC_ROOT . 'system/download/');
 define('DIR_MODIFICATION', OC_ROOT . 'system/modification/');
 define('DIR_LOGS', OC_ROOT . 'system/logs/');
 
-function error_handler($errno, $errstr, $errfile, $errline ) {
-    throw new ErrorException($errstr, 0, $errno, $errfile, $errline);
-}
-
-set_error_handler("error_handler");

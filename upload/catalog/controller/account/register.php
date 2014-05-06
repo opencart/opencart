@@ -28,7 +28,7 @@ class ControllerAccountRegister extends Controller {
 			$this->load->model('account/activity');
 			
 			$activity_data = array(
-				'customer_id' => $customer_id,
+				'customer_id' => $this->customer->getId(),
 				'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
 			);
 			

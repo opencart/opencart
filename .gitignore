@@ -42,8 +42,8 @@
 
 
 # Ignore all vendor files included by composer and the lock file
-/tests/vendor/*
-/tests/composer.lock
+/tests/phpunit/vendor/*
+/tests/phpunit/composer.lock
 
 
 

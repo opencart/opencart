@@ -46,7 +46,7 @@ class CatalogModelCheckoutOrderTest extends OpenCartTest {
 			'email' => '',
 			'telephone' => '',
 			'fax' => '',
-			'custom_field' => serialize(array()),
+			'custom_field' => array(),
 			'payment_firstname' => '',
 			'payment_lastname' => '',
 			'payment_company' => '',

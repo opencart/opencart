@@ -48,7 +48,7 @@ class CatalogModelAccountAddressTest extends OpenCartTest {
 		
 		$addressId = $this->model_account_address->addAddress($address);
 		
-		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "address LIMIT")->row;
+		$result = $this->db->query("SELECT * FROM " . DB_PREFIX . "address")->row;
 		
 		foreach ($address as $key => $value) {
 			$this->assertEquals($value, $address[$key]);

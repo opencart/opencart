@@ -60,7 +60,7 @@ class ControllerAccountRecurring extends Controller {
 
 		$data['profiles'] = array();
 
-		if($results){
+		if ($results) {
 			foreach ($results as $result) {
 				$data['profiles'][] = array(
 					'id'                    => $result['order_recurring_id'],
@@ -122,17 +122,17 @@ class ControllerAccountRecurring extends Controller {
 			$this->response->redirect($this->url->link('account/login', '', 'SSL'));
 		}
 
-		if(isset($this->session->data['error'])){
+		if (isset($this->session->data['error'])) {
 			$data['error_warning'] = $this->session->data['error'];
 			unset($this->session->data['error']);
-		}else{
+		} else {
 			$data['error_warning'] = '';
 		}
 
-		if(isset($this->session->data['success'])){
+		if (isset($this->session->data['success'])) {
 			$data['success'] = $this->session->data['success'];
 			unset($this->session->data['success']);
-		}else{
+		} else {
 			$data['success'] = '';
 		}
 

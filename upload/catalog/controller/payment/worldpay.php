@@ -9,7 +9,7 @@ class ControllerPaymentWorldPay extends Controller {
 
 		if (!$this->config->get('worldpay_test')) {
 			$data['action'] = 'https://secure.worldpay.com/wcc/purchase';
-		}else{
+		} else {
 			$data['action'] = 'https://secure-test.worldpay.com/wcc/purchase';
 		}
 

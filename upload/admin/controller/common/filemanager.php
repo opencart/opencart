@@ -29,14 +29,14 @@ class ControllerCommonFileManager extends Controller {
 		// Get directories
 		$directories = glob($directory . '/' . $filter_name . '*', GLOB_ONLYDIR);
 		
-		if (!$directories){
+		if (!$directories) {
 			$directories = array();
 		}
 		
 		// Get files
 		$files = glob($directory . '/' . $filter_name . '*.{jpg,jpeg,png,gif,JPG,JPEG,PNG,GIF}', GLOB_BRACE);
 		
-		if (!$files){
+		if (!$files) {
 			$files = array();
 		}		
 		
@@ -393,10 +393,10 @@ class ControllerCommonFileManager extends Controller {
 					$path = array($path . '*');
 
 					// While the path array is still populated keep looping through
-					while(count($path) != 0) {
+					while (count($path) != 0) {
 						$next = array_shift($path);
 
-						foreach(glob($next) as $file) {
+						foreach (glob($next) as $file) {
 							// If directory add to path array 
 							if (is_dir($file)) {
 								$path[] = $file . '/*';
@@ -416,7 +416,7 @@ class ControllerCommonFileManager extends Controller {
 							unlink($file);
 
 						// If directory use the remove directory function
-						} elseif(is_dir($file)) {
+						} elseif (is_dir($file)) {
 							rmdir($file);        
 						} 
 					}                                

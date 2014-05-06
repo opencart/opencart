@@ -76,22 +76,22 @@ class ControllerShippingRoyalMail extends Controller {
 			$data['error_warning'] = '';
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_shipping'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_shipping'),
 			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 		
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('shipping/royal_mail', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 		
 		$data['action'] = $this->url->link('shipping/royal_mail', 'token=' . $this->session->data['token'], 'SSL');
 		

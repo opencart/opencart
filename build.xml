@@ -9,6 +9,7 @@
  </target>
 
  <target name="prepare" depends="clean" description="Prepare for build">
+  <mkdir dir="${basedir}/tests/build"/>
   <mkdir dir="${basedir}/tests/build/docs"/>
   <mkdir dir="${basedir}/tests/build/logs"/>
   <mkdir dir="${basedir}/tests/build/testresults"/>

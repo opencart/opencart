@@ -1,10 +1,10 @@
-<?php  
+<?php
 class ControllerModuleAccount extends Controller {
 	public function index() {
 		$this->load->language('module/account');
-		
+
     	$data['heading_title'] = $this->language->get('heading_title');
-    	
+
 		$data['text_register'] = $this->language->get('text_register');
     	$data['text_login'] = $this->language->get('text_login');
 		$data['text_logout'] = $this->language->get('text_logout');
@@ -21,7 +21,7 @@ class ControllerModuleAccount extends Controller {
 		$data['text_transaction'] = $this->language->get('text_transaction');
 		$data['text_newsletter'] = $this->language->get('text_newsletter');
 		$data['text_recurring'] = $this->language->get('text_recurring');
-		
+
 		$data['logged'] = $this->customer->isLogged();
 		$data['register'] = $this->url->link('account/register', '', 'SSL');
     	$data['login'] = $this->url->link('account/login', '', 'SSL');

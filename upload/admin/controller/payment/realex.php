@@ -1,6 +1,6 @@
-<?php 
+<?php
 class ControllerPaymentRealex extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->load->language('payment/realex');
@@ -518,11 +518,11 @@ class ControllerPaymentRealex extends Controller {
 		if (!$this->request->post['realex_demo_url']) {
 			$this->error['error_demo_url'] = $this->language->get('error_demo_url');
 		}
-		
+
 		if (!$this->error) {
 			return true;
 		} else {
 			return false;
-		}	
+		}
 	}
 }

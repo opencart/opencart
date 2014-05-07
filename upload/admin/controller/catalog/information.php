@@ -1,5 +1,5 @@
 <?php
-class ControllerCatalogInformation extends Controller { 
+class ControllerCatalogInformation extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -156,7 +156,7 @@ class ControllerCatalogInformation extends Controller {
 		);
 
 		$data['insert'] = $this->url->link('catalog/information/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('catalog/information/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['delete'] = $this->url->link('catalog/information/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['informations'] = array();
 
@@ -178,7 +178,7 @@ class ControllerCatalogInformation extends Controller {
 				'sort_order'     => $result['sort_order'],
 				'edit'           => $this->url->link('catalog/information/update', 'token=' . $this->session->data['token'] . '&information_id=' . $result['information_id'] . $url, 'SSL')
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -187,7 +187,7 @@ class ControllerCatalogInformation extends Controller {
 
 		$data['column_title'] = $this->language->get('column_title');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');		
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -309,7 +309,7 @@ class ControllerCatalogInformation extends Controller {
 			$data['error_meta_title'] = $this->error['meta_title'];
 		} else {
 			$data['error_meta_title'] = array();
-		}	
+		}
 
 		$url = '';
 
@@ -373,7 +373,7 @@ class ControllerCatalogInformation extends Controller {
 			$data['information_store'] = $this->model_catalog_information->getInformationStores($this->request->get['information_id']);
 		} else {
 			$data['information_store'] = array(0);
-		}		
+		}
 
 		if (isset($this->request->post['keyword'])) {
 			$data['keyword'] = $this->request->post['keyword'];

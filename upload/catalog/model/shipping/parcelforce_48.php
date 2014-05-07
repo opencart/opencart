@@ -2,9 +2,9 @@
 class ModelShippingParcelforce48 extends Model {
 	function getQuote($address) {
 		$this->load->language('shipping/parcelforce_48');
-		
+
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "zone_to_geo_zone WHERE geo_zone_id = '" . (int)$this->config->get('parcelforce_48_geo_zone_id') . "' AND country_id = '" . (int)$address['country_id'] . "' AND (zone_id = '" . (int)$address['zone_id'] . "' OR zone_id = '0')");
-	
+
 		if (!$this->config->get('parcelforce_48_geo_zone_id')) {
 			$status = true;
 		} elseif ($query->num_rows) {
@@ -12,59 +12,59 @@ class ModelShippingParcelforce48 extends Model {
 		} else {
 			$status = false;
 		}
-		
+
 		$method_data = array();
-	
+
 		if ($status) {
 			$cost = 0;
 			$weight = $this->cart->getWeight();
 			$sub_total = $this->cart->getSubTotal();
-			
+
 			$rates = explode(',', $this->config->get('parcelforce_48_rate'));
-			
+
 			foreach ($rates as $rate) {
   				$data = explode(':', $rate);
-  					
+
 				if ($data[0] >= $weight) {
 					if (isset($data[1])) {
     					$cost = $data[1];
 					}
-					
+
    					break;
   				}
 			}
 
 			$rates = explode(',', $this->config->get('parcelforce_48_insurance'));
-			
+
 			foreach ($rates as $rate) {
   				$data = explode(':', $rate);
-  				
+
 				if ($data[0] >= $sub_total) {
 					if (isset($data[1])) {
     					$insurance = $data[1];
 					}
-					
-   					break; 
+
+   					break;
   				}
 			}
-			
+
 			$quote_data = array();
-			
+
 			if ((float)$cost) {
 				$text = $this->language->get('text_description');
-			
+
 				if ($this->config->get('parcelforce_48_display_weight')) {
 					$text .= ' (' . $this->language->get('text_weight') . ' ' . $this->weight->format($weight, $this->config->get('config_weight_class_id')) . ')';
 				}
-			
+
 				if ($this->config->get('parcelforce_48_display_insurance') && (float)$insurance) {
 					$text .= ' (' . $this->language->get('text_insurance') . ' ' . $this->currency->format($insurance) . ')';
-				}		
+				}
 
 				if ($this->config->get('parcelforce_48_display_time')) {
 					$text .= ' (' . $this->language->get('text_time') . ')';
-				}	
-				
+				}
+
       			$quote_data['parcelforce_48'] = array(
         			'code'         => 'parcelforce_48.parcelforce_48',
         			'title'        => $text,
@@ -82,7 +82,7 @@ class ModelShippingParcelforce48 extends Model {
       			);
 			}
 		}
-	
+
 		return $method_data;
 	}
 }

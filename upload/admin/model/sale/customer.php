@@ -79,23 +79,23 @@ class ModelSaleCustomer extends Model {
 
 		if (isset($data['filter_newsletter']) && $data['filter_newsletter'] !== null) {
 			$implode[] = "c.newsletter = '" . (int)$data['filter_newsletter'] . "'";
-		}	
+		}
 
 		if (!empty($data['filter_customer_group_id'])) {
 			$implode[] = "c.customer_group_id = '" . (int)$data['filter_customer_group_id'] . "'";
-		}	
+		}
 
 		if (!empty($data['filter_ip'])) {
 			$implode[] = "c.customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
-		}	
+		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
 			$implode[] = "c.status = '" . (int)$data['filter_status'] . "'";
-		}	
+		}
 
 		if (isset($data['filter_approved']) && $data['filter_approved'] !== null) {
 			$implode[] = "c.approved = '" . (int)$data['filter_approved'] . "'";
-		}	
+		}
 
 		if (!empty($data['filter_date_added'])) {
 			$implode[] = "DATE(c.date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
@@ -113,12 +113,12 @@ class ModelSaleCustomer extends Model {
 			'c.approved',
 			'c.ip',
 			'c.date_added'
-		);	
+		);
 
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
-			$sql .= " ORDER BY " . $data['sort'];	
+			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY name";	
+			$sql .= " ORDER BY name";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {
@@ -130,18 +130,18 @@ class ModelSaleCustomer extends Model {
 		if (isset($data['start']) || isset($data['limit'])) {
 			if ($data['start'] < 0) {
 				$data['start'] = 0;
-			}			
+			}
 
 			if ($data['limit'] < 1) {
 				$data['limit'] = 20;
-			}	
+			}
 
 			$sql .= " LIMIT " . (int)$data['start'] . "," . (int)$data['limit'];
-		}		
+		}
 
 		$query = $this->db->query($sql);
 
-		return $query->rows;	
+		return $query->rows;
 	}
 
 	public function approve($customer_id) {
@@ -171,14 +171,14 @@ class ModelSaleCustomer extends Model {
 			$message .= $this->language->get('text_approve_thanks') . "\n";
 			$message .= $store_name;
 
-			$mail = new Mail($this->config->get('config_mail'));					
+			$mail = new Mail($this->config->get('config_mail'));
 			$mail->setTo($customer_info['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($store_name);
 			$mail->setSubject(sprintf($this->language->get('text_approve_subject'), $store_name));
 			$mail->setText(html_entity_decode($message, ENT_QUOTES, 'UTF-8'));
 			$mail->send();
-		}		
+		}
 	}
 
 	public function getAddress($address_id) {
@@ -195,7 +195,7 @@ class ModelSaleCustomer extends Model {
 			} else {
 				$country = '';
 				$iso_code_2 = '';
-				$iso_code_3 = '';	
+				$iso_code_3 = '';
 				$address_format = '';
 			}
 
@@ -207,7 +207,7 @@ class ModelSaleCustomer extends Model {
 			} else {
 				$zone = '';
 				$zone_code = '';
-			}		
+			}
 
 			return array(
 				'address_id'     => $address_query->row['address_id'],
@@ -223,7 +223,7 @@ class ModelSaleCustomer extends Model {
 				'zone'           => $zone,
 				'zone_code'      => $zone_code,
 				'country_id'     => $address_query->row['country_id'],
-				'country'        => $country,	
+				'country'        => $country,
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
@@ -243,10 +243,10 @@ class ModelSaleCustomer extends Model {
 			if ($address_info) {
 				$address_data[$result['address_id']] = $address_info;
 			}
-		}		
+		}
 
 		return $address_data;
-	}	
+	}
 
 	public function getTotalCustomers($data = array()) {
 		$sql = "SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer";
@@ -267,19 +267,19 @@ class ModelSaleCustomer extends Model {
 
 		if (!empty($data['filter_customer_group_id'])) {
 			$implode[] = "customer_group_id = '" . (int)$data['filter_customer_group_id'] . "'";
-		}	
+		}
 
 		if (!empty($data['filter_ip'])) {
 			$implode[] = "customer_id IN (SELECT customer_id FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($data['filter_ip']) . "')";
-		}	
+		}
 
 		if (isset($data['filter_status']) && $data['filter_status'] !== null) {
 			$implode[] = "status = '" . (int)$data['filter_status'] . "'";
-		}			
+		}
 
 		if (isset($data['filter_approved']) && $data['filter_approved'] !== null) {
 			$implode[] = "approved = '" . (int)$data['filter_approved'] . "'";
-		}		
+		}
 
 		if (!empty($data['filter_date_added'])) {
 			$implode[] = "DATE(date_added) = DATE('" . $this->db->escape($data['filter_date_added']) . "')";
@@ -310,7 +310,7 @@ class ModelSaleCustomer extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "address WHERE country_id = '" . (int)$country_id . "'");
 
 		return $query->row['total'];
-	}	
+	}
 
 	public function getTotalAddressesByZoneId($zone_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "address WHERE zone_id = '" . (int)$zone_id . "'");
@@ -326,32 +326,32 @@ class ModelSaleCustomer extends Model {
 
 	public function addHistory($customer_id, $comment) {
 		$this->db->query("INSERT INTO " . DB_PREFIX . "customer_history SET customer_id = '" . (int)$customer_id . "', comment = '" . $this->db->escape(strip_tags($comment)) . "', date_added = NOW()");
-	}	
+	}
 
-	public function getHistories($customer_id, $start = 0, $limit = 10) { 
+	public function getHistories($customer_id, $start = 0, $limit = 10) {
 		if ($start < 0) {
 			$start = 0;
 		}
 
 		if ($limit < 1) {
 			$limit = 10;
-		}	
+		}
 
 		$query = $this->db->query("SELECT comment, date_added FROM " . DB_PREFIX . "customer_history WHERE customer_id = '" . (int)$customer_id . "' ORDER BY date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
 
 		return $query->rows;
-	}	
+	}
 
 	public function getTotalHistories($customer_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_history WHERE customer_id = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
-	}	
+	}
 
 	public function addTransaction($customer_id, $description = '', $amount = '', $order_id = 0) {
 		$customer_info = $this->getCustomer($customer_id);
 
-		if ($customer_info) { 
+		if ($customer_info) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_transaction SET customer_id = '" . (int)$customer_id . "', order_id = '" . (int)$order_id . "', description = '" . $this->db->escape($description) . "', amount = '" . (float)$amount . "', date_added = NOW()");
 
 			$this->load->language('mail/customer');
@@ -364,7 +364,7 @@ class ModelSaleCustomer extends Model {
 				$store_name = $store_info['name'];
 			} else {
 				$store_name = $this->config->get('config_name');
-			}	
+			}
 
 			$message  = sprintf($this->language->get('text_transaction_received'), $this->currency->format($amount, $this->config->get('config_currency'))) . "\n\n";
 			$message .= sprintf($this->language->get('text_transaction_total'), $this->currency->format($this->getTransactionTotal($customer_id)));
@@ -390,7 +390,7 @@ class ModelSaleCustomer extends Model {
 
 		if ($limit < 1) {
 			$limit = 10;
-		}	
+		}
 
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_transaction WHERE customer_id = '" . (int)$customer_id . "' ORDER BY date_added DESC LIMIT " . (int)$start . "," . (int)$limit);
 
@@ -413,12 +413,12 @@ class ModelSaleCustomer extends Model {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_transaction WHERE order_id = '" . (int)$order_id . "'");
 
 		return $query->row['total'];
-	}	
+	}
 
 	public function addReward($customer_id, $description = '', $points = '', $order_id = 0) {
 		$customer_info = $this->getCustomer($customer_id);
 
-		if ($customer_info) { 
+		if ($customer_info) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "customer_reward SET customer_id = '" . (int)$customer_id . "', order_id = '" . (int)$order_id . "', points = '" . (int)$points . "', description = '" . $this->db->escape($description) . "', date_added = NOW()");
 
 			$this->load->language('mail/customer');
@@ -466,7 +466,7 @@ class ModelSaleCustomer extends Model {
 		$query = $this->db->query("SELECT SUM(points) AS total FROM " . DB_PREFIX . "customer_reward WHERE customer_id = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
-	}		
+	}
 
 	public function getTotalCustomerRewardsByOrderId($order_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id . "'");
@@ -478,14 +478,14 @@ class ModelSaleCustomer extends Model {
 		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$customer_id . "'");
 
 		return $query->rows;
-	}	
-	
+	}
+
 	public function getTotalIps($customer_id) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$customer_id . "'");
 
 		return $query->row['total'];
-	}	
-	
+	}
+
 	public function getTotalCustomersByIp($ip) {
 		$query = $this->db->query("SELECT COUNT(*) AS total FROM " . DB_PREFIX . "customer_ip WHERE ip = '" . $this->db->escape($ip) . "'");
 

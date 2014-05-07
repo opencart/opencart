@@ -1,5 +1,5 @@
-<?php 
-class ControllerSaleVoucherTheme extends Controller { 
+<?php
+class ControllerSaleVoucherTheme extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -156,7 +156,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		);
 
 		$data['insert'] = $this->url->link('sale/voucher_theme/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('sale/voucher_theme/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['delete'] = $this->url->link('sale/voucher_theme/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['voucher_themes'] = array();
 
@@ -177,7 +177,7 @@ class ControllerSaleVoucherTheme extends Controller {
 				'name'             => $result['name'],
 				'edit'             => $this->url->link('sale/voucher_theme/update', 'token=' . $this->session->data['token'] . '&voucher_theme_id=' . $result['voucher_theme_id'] . $url, 'SSL')
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -185,7 +185,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_name'] = $this->language->get('column_name');
-		$data['column_action'] = $this->language->get('column_action');		
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -356,7 +356,7 @@ class ControllerSaleVoucherTheme extends Controller {
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('sale/voucher_theme_form.tpl', $data));	
+		$this->response->setOutput($this->load->view('sale/voucher_theme_form.tpl', $data));
 	}
 
 	protected function validateForm() {
@@ -389,7 +389,7 @@ class ControllerSaleVoucherTheme extends Controller {
 
 			if ($voucher_total) {
 				$this->error['warning'] = sprintf($this->language->get('error_voucher'), $voucher_total);
-			}  
+			}
 		}
 
 		return !$this->error;

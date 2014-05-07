@@ -1,4 +1,4 @@
-<?php    
+<?php
 class ControllerMarketingMarketing extends Controller {
 	private $error = array();
 
@@ -511,6 +511,6 @@ class ControllerMarketingMarketing extends Controller {
 			$this->error['warning'] = $this->language->get('error_permission');
 		}
 
-		return !$this->error;  
+		return !$this->error;
 	}
 }

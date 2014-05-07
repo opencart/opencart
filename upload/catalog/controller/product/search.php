@@ -426,7 +426,7 @@ class ControllerProductSearch extends Controller {
 			$pagination->url = $this->url->link('product/search', $url . '&page={page}');
 
 			$data['pagination'] = $pagination->render();
-			
+
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($product_total) ? (($page - 1) * $limit) + 1 : 0, ((($page - 1) * $limit) > ($product_total - $limit)) ? $product_total : ((($page - 1) * $limit) + $limit), $product_total, ceil($product_total / $limit));
 		}
 
@@ -445,7 +445,7 @@ class ControllerProductSearch extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/product/search.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/product/search.tpl', $data));
 		} else {

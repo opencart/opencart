@@ -8,6 +8,7 @@
 
 SET sql_mode = '';
 
+DROP TABLE IF EXISTS `oc_product_profile`;
 CREATE TABLE `oc_product_profile` (
   `product_id` int(11) NOT NULL,
   `profile_id` int(11) NOT NULL,
@@ -15,6 +16,7 @@ CREATE TABLE `oc_product_profile` (
   PRIMARY KEY (`product_id`,`profile_id`,`customer_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+DROP TABLE IF EXISTS `oc_profile`;
 CREATE TABLE `oc_profile` (
   `profile_id` int(11) NOT NULL AUTO_INCREMENT,
   `price` decimal(10,4) NOT NULL,
@@ -32,6 +34,7 @@ CREATE TABLE `oc_profile` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
+DROP TABLE IF EXISTS `oc_profile_description`;
 CREATE TABLE `oc_profile_description` (
   `profile_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,

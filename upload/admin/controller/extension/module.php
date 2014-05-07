@@ -37,7 +37,7 @@ class ControllerExtensionModule extends Controller {
 			if (method_exists($class, 'install')) {
 				$class->install();
 			}
-						
+
 			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
@@ -51,7 +51,7 @@ class ControllerExtensionModule extends Controller {
 
 		$this->load->model('setting/extension');
 
-		if ($this->validate()) {		
+		if ($this->validate()) {
 			$this->model_setting_extension->uninstall('module', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
@@ -68,8 +68,8 @@ class ControllerExtensionModule extends Controller {
 			if (method_exists($class, 'uninstall')) {
 				$class->uninstall();
 			}
-				
-			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));	
+
+			$this->response->redirect($this->url->link('extension/module', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
 		$this->getList();

@@ -68,22 +68,22 @@ class ControllerExtensionModification extends Controller {
 					}
 				}
 			}
-			
+
 			// Begin
 			$xml = array();
-			
+
 			// Load the default modification XML
 			$xml[] = file_get_contents(DIR_SYSTEM . 'modification.xml');
-	
+
 			// Get the default modification file
 			$results = $this->model_setting_modification->getModifications();
-	
+
 			foreach ($results as $result) {
 				if ($result['status']) {
 					$xml[] = $result['code'];
 				}
 			}
-			
+
 			$modification = array();
 
 			foreach ($xml as $xml) {
@@ -91,7 +91,7 @@ class ControllerExtensionModification extends Controller {
 				$dom->preserveWhiteSpace = false;
 				$dom->loadXml($xml);
 
-				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');		
+				$files = $dom->getElementsByTagName('modification')->item(0)->getElementsByTagName('file');
 
 				foreach ($files as $file) {
 					$path = '';
@@ -99,11 +99,11 @@ class ControllerExtensionModification extends Controller {
 					// Get the full path of the files that are going to be used for modification
 					if (substr($file->getAttribute('name'), 0, 7) == 'catalog') {
 						$path = DIR_CATALOG . substr($file->getAttribute('name'), 8);
-					} 
+					}
 
 					if (substr($file->getAttribute('name'), 0, 5) == 'admin') {
 						$path = DIR_APPLICATION . substr($file->getAttribute('name'), 6);
-					} 
+					}
 
 					if (substr($file->getAttribute('name'), 0, 6) == 'system') {
 						$path = DIR_SYSTEM . substr($file->getAttribute('name'), 7);
@@ -127,7 +127,7 @@ class ControllerExtensionModification extends Controller {
 
 								if (substr($file, 0, strlen(DIR_SYSTEM)) == DIR_SYSTEM) {
 									$key = 'system_' . str_replace('/', '_', substr($file, strlen(DIR_SYSTEM)));
-								}							
+								}
 
 								if (!isset($modification[$key])) {
 									$modification[$key] = file_get_contents($file);
@@ -149,7 +149,7 @@ class ControllerExtensionModification extends Controller {
 									// Index
 									if (!$index) {
 										$index = 1;
-									}								
+									}
 
 									switch ($position) {
 										default:
@@ -167,39 +167,39 @@ class ControllerExtensionModification extends Controller {
 									if ($regex && $regex == 'true') {
 										/*
 										Regex does not require index to match items
-										
+
 										So if, for example, you want to change the 3rd 'foo' to 'bar' on the following line:
 
 										lorem ifoopsum foo lor foor ipsum foo dolor foo
 											   ^1      ^2      ^3         ^4        ^5
-										
+
 										run: s/\(.\{-}\zsfoo\)\{3}/bar/
-										
+
 										to get:
-										
+
 										lorem ifoopsum foo lor barr ipsum foo dolor foo
 											   ^1      ^2      ^3=bar     ^4        ^5
 										*/
 										$modification[$key] = preg_replace($search, $replace, $modification[$key], 1);
-									} else {	
-									
-									
-									
-									
-									
-									
+									} else {
+
+
+
+
+
+
 										$i = 0;
 										$pos = -1;
 										$result = array();
 
 										while (($pos = strpos($modification[$key], $search, $pos + 1)) !== false) {
-											$result[$i++] = $pos; 
+											$result[$i++] = $pos;
 										}
 
-										// Only replace the occurance of the string that is equal to the index					
+										// Only replace the occurance of the string that is equal to the index
 										if (isset($result[$index - 1])) {
 											$modification[$key] = substr_replace($modification[$key], $replace, $result[$index - 1], strlen($search));
-										}								
+										}
 									}
 								}
 							}
@@ -207,16 +207,16 @@ class ControllerExtensionModification extends Controller {
 					}
 				}
 			}
-			
+
 			// Write all modification files
 			foreach ($modification as $key => $value) {
 				$file = DIR_MODIFICATION . $key;
-	
+
 				$handle = fopen($file, 'w');
-		
+
 				fwrite($handle, $value);
-		
-				fclose($handle);	
+
+				fclose($handle);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -259,7 +259,7 @@ class ControllerExtensionModification extends Controller {
 					}
 				}
 			}
-			
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
@@ -287,7 +287,7 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/modification');		
+		$this->load->model('setting/modification');
 
 		if (isset($this->request->get['modification_id']) && $this->validate()) {
 			$this->model_setting_modification->enableModification($this->request->get['modification_id']);
@@ -319,7 +319,7 @@ class ControllerExtensionModification extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		$this->load->model('setting/modification');		
+		$this->load->model('setting/modification');
 
 		if (isset($this->request->get['modification_id']) && $this->validate()) {
 			$this->model_setting_modification->disableModification($this->request->get['modification_id']);
@@ -348,33 +348,33 @@ class ControllerExtensionModification extends Controller {
 
 	public function clearlog() {
 		$this->load->language('extension/modification');
-		
+
 		if ($this->validate()) {
 			$file = DIR_LOGS . 'vqmod.log';
-	
-			$handle = fopen($file, 'w+'); 
-	
-			fclose($handle); 		
-	
+
+			$handle = fopen($file, 'w+');
+
+			fclose($handle);
+
 			$this->session->data['success'] = $this->language->get('text_success');
-				
+
 			$url = '';
-	
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
-	
+
 			if (isset($this->request->get['order'])) {
 				$url .= '&order=' . $this->request->get['order'];
 			}
-	
+
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-				
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));		
+
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
-		
+
 		$this->getList();
 	}
 
@@ -424,8 +424,8 @@ class ControllerExtensionModification extends Controller {
 		);
 
 		$data['refresh'] = $this->url->link('extension/modification/refresh', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, 'SSL');				
-		$data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['clear'] = $this->url->link('extension/modification/clear', 'token=' . $this->session->data['token'] . $url, 'SSL');
+		$data['delete'] = $this->url->link('extension/modification/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['modifications'] = array();
 
@@ -453,7 +453,7 @@ class ControllerExtensionModification extends Controller {
 				'disable'         => $this->url->link('extension/modification/disable', 'token=' . $this->session->data['token'] . '&modification_id=' . $result['modification_id'], 'SSL'),
 				'enabled'         => $result['status'],
 			);
-		}			
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -540,7 +540,7 @@ class ControllerExtensionModification extends Controller {
 
 		$data['sort'] = $sort;
 		$data['order'] = $order;
-		
+
 		// Log
 		$file = DIR_LOGS . 'vqmod.log';
 
@@ -551,7 +551,7 @@ class ControllerExtensionModification extends Controller {
 		}
 
 		$data['clear_log'] = $this->url->link('extension/modification/clearlog', 'token=' . $this->session->data['token'], 'SSL');
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');

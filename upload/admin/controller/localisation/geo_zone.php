@@ -1,5 +1,5 @@
 <?php
-class ControllerLocalisationGeoZone extends Controller { 
+class ControllerLocalisationGeoZone extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -119,7 +119,7 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		if (isset($this->request->get['order'])) {
 			$order = $this->request->get['order'];
-		} else { 
+		} else {
 			$order = 'ASC';
 		}
 
@@ -187,7 +187,7 @@ class ControllerLocalisationGeoZone extends Controller {
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_description'] = $this->language->get('column_description');
-		$data['column_action'] = $this->language->get('column_action');	
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -355,7 +355,7 @@ class ControllerLocalisationGeoZone extends Controller {
 			$data['zone_to_geo_zones'] = $this->model_localisation_geo_zone->getZoneToGeoZones($this->request->get['geo_zone_id']);
 		} else {
 			$data['zone_to_geo_zones'] = array();
-		}		
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -416,5 +416,5 @@ class ControllerLocalisationGeoZone extends Controller {
 		}
 
 		$this->response->setOutput($output);
-	} 		
+	}
 }

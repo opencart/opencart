@@ -2,9 +2,9 @@
 // Heading
 $_['heading_title']      = 'LIQPAY';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
-$_['text_success']       = 'Success: You have modified LIQPAY account details!';   
+$_['text_success']       = 'Success: You have modified LIQPAY account details!';
 $_['text_pay']           = 'LIQPAY';
 $_['text_card']          = 'Credit Card';
 

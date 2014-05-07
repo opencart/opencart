@@ -1,6 +1,6 @@
 <?php
 class ControllerLocalisationWeightClass extends Controller {
-	private $error = array();  
+	private $error = array();
 
 	public function index() {
 		$this->load->language('localisation/weight_class');
@@ -189,7 +189,7 @@ class ControllerLocalisationWeightClass extends Controller {
 		$data['column_title'] = $this->language->get('column_title');
 		$data['column_unit'] = $this->language->get('column_unit');
 		$data['column_value'] = $this->language->get('column_value');
-		$data['column_action'] = $this->language->get('column_action');	
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -283,13 +283,13 @@ class ControllerLocalisationWeightClass extends Controller {
 			$data['error_title'] = $this->error['title'];
 		} else {
 			$data['error_title'] = array();
-		}	
+		}
 
 		if (isset($this->error['unit'])) {
 			$data['error_unit'] = $this->error['unit'];
 		} else {
 			$data['error_unit'] = array();
-		}	
+		}
 
 		$url = '';
 
@@ -319,7 +319,7 @@ class ControllerLocalisationWeightClass extends Controller {
 
 		if (!isset($this->request->get['weight_class_id'])) {
 			$data['action'] = $this->url->link('localisation/weight_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		} else { 
+		} else {
 			$data['action'] = $this->url->link('localisation/weight_class/update', 'token=' . $this->session->data['token'] . '&weight_class_id=' . $this->request->get['weight_class_id'] . $url, 'SSL');
 		}
 
@@ -339,7 +339,7 @@ class ControllerLocalisationWeightClass extends Controller {
 			$data['weight_class_description'] = $this->model_localisation_weight_class->getWeightClassDescriptions($this->request->get['weight_class_id']);
 		} else {
 			$data['weight_class_description'] = array();
-		}	
+		}
 
 		if (isset($this->request->post['value'])) {
 			$data['value'] = $this->request->post['value'];
@@ -394,5 +394,5 @@ class ControllerLocalisationWeightClass extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 }

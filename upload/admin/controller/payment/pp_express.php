@@ -1014,11 +1014,13 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['transaction'] = $this->model_payment_pp_express->getTransaction($this->request->get['transaction_id']);
 		$data['lines'] = $this->formatRows($data['transaction']);
 		$data['view_link'] = $this->url->link('payment/pp_express/viewTransaction', 'token=' . $this->session->data['token'], 'SSL');
+		$data['cancel'] = $this->url->link('payment/pp_express/search', 'token=' . $this->session->data['token'], 'SSL');
 		$data['token'] = $this->session->data['token'];
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['heading_title'] = $this->language->get('heading_title');
+		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['text_product_lines'] = $this->language->get('text_product_lines');
 		$data['text_ebay_txn_id'] = $this->language->get('text_ebay_txn_id');
 		$data['text_name'] = $this->language->get('text_name');

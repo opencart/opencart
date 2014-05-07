@@ -6,12 +6,22 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
 
 			if ((empty($allowed_ips) || in_array($this->request->server['REMOTE_ADDR'], $allowed_ips)) && $this->cart->hasProducts()
 					&& (!isset($this->session->data['vouchers']) || empty($this->session->data['vouchers'])) && !$this->cart->hasRecurringProducts()) {
-
+				
 				if ($this->config->get('amazon_checkout_mode') == 'sandbox') {
-					$this->document->addScript('https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js');
+					if ($this->config->get('amazon_checkout_marketplace') == 'uk') {  
+						$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/sandbox/PaymentWidgets.js';
+					} elseif ($this->config->get('amazon_checkout_marketplace') == 'de') {
+						$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/de/sandbox/PaymentWidgets.js';
+					}
 				} elseif ($this->config->get('amazon_checkout_mode') == 'live') {
-					$this->document->addScript('https://static-eu.payments-amazon.com/cba/js/gb/PaymentWidgets.js');
+					if ($this->config->get('amazon_checkout_marketplace') == 'uk') {
+						$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/gb/PaymentWidgets.js';
+					} elseif ($this->config->get('amazon_checkout_marketplace') == 'de') {
+						$amazon_payment_js = 'https://static-eu.payments-amazon.com/cba/js/de/PaymentWidgets.js';
+					}
 				}
+
+				$this->document->addScript($amazon_payment_js);
 
 				$data['amazon_checkout'] = $this->url->link('payment/amazon_checkout/address', '', 'SSL');
 				$data['amazon_checkout_status'] = true;

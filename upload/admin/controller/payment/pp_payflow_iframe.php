@@ -1,6 +1,6 @@
-<?php 
+<?php
 class ControllerPaymentPPPayflowIframe extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->load->language('payment/pp_payflow_iframe');
@@ -10,7 +10,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$this->load->model('setting/setting');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$this->model_setting_setting->editSetting('pp_payflow_iframe', $this->request->post);				
+			$this->model_setting_setting->editSetting('pp_payflow_iframe', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -76,7 +76,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),       		
+			'href'      => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
 			'separator' => false
 		);
 
@@ -135,7 +135,7 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		if (isset($this->request->post['pp_payflow_iframe_total'])) {
 			$data['pp_payflow_iframe_total'] = $this->request->post['pp_payflow_iframe_total'];
 		} else {
-			$data['pp_payflow_iframe_total'] = $this->config->get('pp_payflow_iframe_total'); 
+			$data['pp_payflow_iframe_total'] = $this->config->get('pp_payflow_iframe_total');
 		}
 
 		$this->load->model('localisation/order_status');
@@ -150,8 +150,8 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		if (isset($this->request->post['pp_payflow_iframe_geo_zone_id'])) {
 			$data['pp_payflow_iframe_geo_zone_id'] = $this->request->post['pp_payflow_iframe_geo_zone_id'];
 		} else {
-			$data['pp_payflow_iframe_geo_zone_id'] = $this->config->get('pp_payflow_iframe_geo_zone_id'); 
-		} 
+			$data['pp_payflow_iframe_geo_zone_id'] = $this->config->get('pp_payflow_iframe_geo_zone_id');
+		}
 
 		$this->load->model('localisation/geo_zone');
 

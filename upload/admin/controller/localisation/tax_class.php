@@ -9,7 +9,7 @@ class ControllerLocalisationTaxClass extends Controller {
 
 		$this->load->model('localisation/tax_class');
 
-		$this->getList(); 
+		$this->getList();
 	}
 
 	public function insert() {
@@ -156,7 +156,7 @@ class ControllerLocalisationTaxClass extends Controller {
 		);
 
 		$data['insert'] = $this->url->link('localisation/tax_class/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('localisation/tax_class/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');		
+		$data['delete'] = $this->url->link('localisation/tax_class/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['tax_classes'] = array();
 
@@ -175,7 +175,7 @@ class ControllerLocalisationTaxClass extends Controller {
 			$data['tax_classes'][] = array(
 				'tax_class_id' => $result['tax_class_id'],
 				'title'        => $result['title'],
-				'edit'         => $this->url->link('localisation/tax_class/update', 'token=' . $this->session->data['token'] . '&tax_class_id=' . $result['tax_class_id'] . $url, 'SSL')				
+				'edit'         => $this->url->link('localisation/tax_class/update', 'token=' . $this->session->data['token'] . '&tax_class_id=' . $result['tax_class_id'] . $url, 'SSL')
 			);
 		}
 
@@ -185,7 +185,7 @@ class ControllerLocalisationTaxClass extends Controller {
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
 		$data['column_title'] = $this->language->get('column_title');
-		$data['column_action'] = $this->language->get('column_action');	
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -258,9 +258,9 @@ class ControllerLocalisationTaxClass extends Controller {
 	protected function getForm() {
 		$data['heading_title'] = $this->language->get('heading_title');
 
-		$data['text_shipping'] = $this->language->get('text_shipping');	
-		$data['text_payment'] = $this->language->get('text_payment');	
-		$data['text_store'] = $this->language->get('text_store');	
+		$data['text_shipping'] = $this->language->get('text_shipping');
+		$data['text_payment'] = $this->language->get('text_payment');
+		$data['text_store'] = $this->language->get('text_store');
 
 		$data['entry_title'] = $this->language->get('entry_title');
 		$data['entry_description'] = $this->language->get('entry_description');
@@ -396,5 +396,5 @@ class ControllerLocalisationTaxClass extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 }

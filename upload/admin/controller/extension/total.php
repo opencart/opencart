@@ -19,7 +19,7 @@ class ControllerExtensionTotal extends Controller {
 
 		$this->load->model('setting/extension');
 
-		if ($this->validate()) {				
+		if ($this->validate()) {
 			$this->model_setting_extension->install('total', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
@@ -42,7 +42,7 @@ class ControllerExtensionTotal extends Controller {
 
 		$this->load->model('setting/extension');
 
-		if ($this->validate()) {			
+		if ($this->validate()) {
 			$this->model_setting_extension->uninstall('total', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
@@ -55,7 +55,7 @@ class ControllerExtensionTotal extends Controller {
 		}
 
 		$this->getList();
-	}	
+	}
 
 	public function getList() {
 		$data['breadcrumbs'] = array();

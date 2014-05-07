@@ -8,8 +8,8 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {			
-			$this->model_setting_setting->editSetting('amazon_checkout_layout', $this->request->post);		
+		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			$this->model_setting_setting->editSetting('amazon_checkout_layout', $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -21,7 +21,7 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
 		$data['text_enabled'] = $this->language->get('text_enabled');
 		$data['text_disabled'] = $this->language->get('text_disabled');
 		$data['text_content_top'] = $this->language->get('text_content_top');
-		$data['text_content_bottom'] = $this->language->get('text_content_bottom');		
+		$data['text_content_bottom'] = $this->language->get('text_content_bottom');
 		$data['text_column_left'] = $this->language->get('text_column_left');
 		$data['text_column_right'] = $this->language->get('text_column_right');
 
@@ -69,9 +69,9 @@ class ControllerModuleAmazonCheckoutLayout extends Controller {
 
 		if (isset($this->request->post['amazon_checkout_layout_module'])) {
 			$data['modules'] = $this->request->post['amazon_checkout_layout_module'];
-		} elseif ($this->config->get('amazon_checkout_layout_module')) { 
+		} elseif ($this->config->get('amazon_checkout_layout_module')) {
 			$data['modules'] = $this->config->get('amazon_checkout_layout_module');
-		}		
+		}
 
 		$data['layouts'] = $this->model_design_layout->getLayouts();
 

@@ -1,6 +1,6 @@
-<?php 
+<?php
 class ControllerPaymentPPExpress extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->load->language('payment/pp_express');
@@ -334,7 +334,7 @@ class ControllerPaymentPPExpress extends Controller {
 			return true;
 		} else {
 			return false;
-		}	
+		}
 	}
 
 	public function resend() {

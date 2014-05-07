@@ -1,8 +1,8 @@
-<?php 
+<?php
 class ControllerCommonMenu extends Controller {
-	public function index() {	
+	public function index() {
 		$this->load->language('common/menu');
-		
+
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_affiliate_activity'] = $this->language->get('text_affiliate_activity');
 		$data['text_attribute'] = $this->language->get('text_attribute');
@@ -15,7 +15,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_contact'] = $this->language->get('text_contact');
 		$data['text_country'] = $this->language->get('text_country');
 		$data['text_coupon'] = $this->language->get('text_coupon');
-		$data['text_currency'] = $this->language->get('text_currency');			
+		$data['text_currency'] = $this->language->get('text_currency');
 		$data['text_customer'] = $this->language->get('text_customer');
 		$data['text_customer_group'] = $this->language->get('text_customer_group');
 		$data['text_customer_field'] = $this->language->get('text_customer_field');
@@ -71,8 +71,8 @@ class ControllerCommonMenu extends Controller {
 		$data['text_return_action'] = $this->language->get('text_return_action');
 		$data['text_return_reason'] = $this->language->get('text_return_reason');
 		$data['text_return_status'] = $this->language->get('text_return_status');
-		$data['text_search'] = $this->language->get('text_search'); 
-		$data['text_shipping'] = $this->language->get('text_shipping');		
+		$data['text_search'] = $this->language->get('text_search');
+		$data['text_shipping'] = $this->language->get('text_shipping');
 		$data['text_setting'] = $this->language->get('text_setting');
 		$data['text_stock_status'] = $this->language->get('text_stock_status');
 		$data['text_system'] = $this->language->get('text_system');
@@ -92,10 +92,10 @@ class ControllerCommonMenu extends Controller {
 		$data['text_zone'] = $this->language->get('text_zone');
 		$data['text_recurring_profile'] = $this->language->get('text_recurring_profile');
 		$data['text_product_profile'] = $this->language->get('text_product_profile');
-		
+
 		if (!isset($this->request->get['token']) || !isset($this->session->data['token']) && ($this->request->get['token'] != $this->session->data['token'])) {
 			$data['logged'] = false;
-			
+
 			$data['home'] = $this->url->link('common/dashboard', '', 'SSL');
 		} else {
 			$data['logged'] = true;
@@ -118,8 +118,8 @@ class ControllerCommonMenu extends Controller {
 			$data['custom_field'] = $this->url->link('sale/custom_field', 'token=' . $this->session->data['token'], 'SSL');
 			$data['download'] = $this->url->link('catalog/download', 'token=' . $this->session->data['token'], 'SSL');
 			$data['error_log'] = $this->url->link('tool/error_log', 'token=' . $this->session->data['token'], 'SSL');
-			$data['feed'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');	
-			$data['filter'] = $this->url->link('catalog/filter', 'token=' . $this->session->data['token'], 'SSL');			
+			$data['feed'] = $this->url->link('extension/feed', 'token=' . $this->session->data['token'], 'SSL');
+			$data['filter'] = $this->url->link('catalog/filter', 'token=' . $this->session->data['token'], 'SSL');
 			$data['geo_zone'] = $this->url->link('localisation/geo_zone', 'token=' . $this->session->data['token'], 'SSL');
 			$data['information'] = $this->url->link('catalog/information', 'token=' . $this->session->data['token'], 'SSL');
 			$data['installer'] = $this->url->link('extension/installer', 'token=' . $this->session->data['token'], 'SSL');
@@ -155,7 +155,7 @@ class ControllerCommonMenu extends Controller {
 			$data['return'] = $this->url->link('sale/return', 'token=' . $this->session->data['token'], 'SSL');
 			$data['return_action'] = $this->url->link('localisation/return_action', 'token=' . $this->session->data['token'], 'SSL');
 			$data['return_reason'] = $this->url->link('localisation/return_reason', 'token=' . $this->session->data['token'], 'SSL');
-			$data['return_status'] = $this->url->link('localisation/return_status', 'token=' . $this->session->data['token'], 'SSL');			
+			$data['return_status'] = $this->url->link('localisation/return_status', 'token=' . $this->session->data['token'], 'SSL');
 			$data['shipping'] = $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL');
 			$data['setting'] = $this->url->link('setting/store', 'token=' . $this->session->data['token'], 'SSL');
 			$data['stock_status'] = $this->url->link('localisation/stock_status', 'token=' . $this->session->data['token'], 'SSL');
@@ -173,7 +173,7 @@ class ControllerCommonMenu extends Controller {
 			$data['product_profile'] = $this->url->link('catalog/profile', 'token=' . $this->session->data['token'], 'SSL');
 			$data['recurring_profile'] = $this->url->link('sale/recurring', 'token=' . $this->session->data['token'], 'SSL');
 		}
-		
+
 		return $this->load->view('common/menu.tpl', $data);
 	}
 }

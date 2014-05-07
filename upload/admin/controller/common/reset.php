@@ -37,7 +37,7 @@ class ControllerCommonReset extends Controller {
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_home'),
 				'href' => $this->url->link('common/dashboard')
-			); 
+			);
 
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('text_reset'),
@@ -54,13 +54,13 @@ class ControllerCommonReset extends Controller {
 			$data['button_save'] = $this->language->get('button_save');
 			$data['button_cancel'] = $this->language->get('button_cancel');
 
-			if (isset($this->error['password'])) { 
+			if (isset($this->error['password'])) {
 				$data['error_password'] = $this->error['password'];
 			} else {
 				$data['error_password'] = '';
 			}
 
-			if (isset($this->error['confirm'])) { 
+			if (isset($this->error['confirm'])) {
 				$data['error_confirm'] = $this->error['confirm'];
 			} else {
 				$data['error_confirm'] = '';
@@ -85,7 +85,7 @@ class ControllerCommonReset extends Controller {
 			$data['header'] = $this->load->controller('common/header');
 			$data['footer'] = $this->load->controller('common/footer');
 
-			$this->response->setOutput($this->load->view('common/reset.tpl', $data));						
+			$this->response->setOutput($this->load->view('common/reset.tpl', $data));
 		} else {
 			$this->load->model('setting/setting');
 

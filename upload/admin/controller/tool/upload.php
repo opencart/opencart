@@ -1,5 +1,5 @@
-<?php 
-class ControllerToolUpload extends Controller { 
+<?php
+class ControllerToolUpload extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -23,18 +23,18 @@ class ControllerToolUpload extends Controller {
 			foreach ($this->request->post['selected'] as $upload_id) {
 				// Remove file before deleting DB record.
 				$upload_info = $this->model_tool_upload->getUpload($upload_id);
-				
+
 				if ($upload_info && is_file(DIR_DOWNLOAD . $upload_info['filename'])) {
 					unlink(DIR_DOWNLOAD . $upload_info['filename']);
-				}				
-				
+				}
+
 				$this->model_tool_upload->deleteUpload($upload_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['filter_name'])) {
 				$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 			}
@@ -42,7 +42,7 @@ class ControllerToolUpload extends Controller {
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 			}
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -72,8 +72,8 @@ class ControllerToolUpload extends Controller {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
 			$filter_date_added = null;
-		}		
-		
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -93,7 +93,7 @@ class ControllerToolUpload extends Controller {
 		}
 
 		$url = '';
-			
+
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -101,7 +101,7 @@ class ControllerToolUpload extends Controller {
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
-			
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -126,12 +126,12 @@ class ControllerToolUpload extends Controller {
 			'href' => $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		$data['delete'] = $this->url->link('tool/upload/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['delete'] = $this->url->link('tool/upload/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['uploads'] = array();
 
 		$filter_data = array(
-			'filter_name'	    => $filter_name, 
+			'filter_name'	    => $filter_name,
 			'filter_date_added'	=> $filter_date_added,
 			'sort'              => $sort,
 			'order'             => $order,
@@ -151,7 +151,7 @@ class ControllerToolUpload extends Controller {
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'download'   => $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $result['code'] . $url, 'SSL')
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -161,11 +161,11 @@ class ControllerToolUpload extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_filename'] = $this->language->get('column_filename');
 		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');		
-		
+		$data['column_action'] = $this->language->get('column_action');
+
 		$data['entry_name'] = $this->language->get('entry_name');
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
-		
+
 		$data['button_download'] = $this->language->get('button_download');
 		$data['button_delete'] = $this->language->get('button_delete');
 		$data['button_filter'] = $this->language->get('button_filter');
@@ -209,7 +209,7 @@ class ControllerToolUpload extends Controller {
 		$data['sort_date_added'] = $this->url->link('tool/upload', 'token=' . $this->session->data['token'] . '&sort=date_added' . $url, 'SSL');
 
 		$url = '';
-			
+
 		if (isset($this->request->get['filter_name'])) {
 			$url .= '&filter_name=' . urlencode(html_entity_decode($this->request->get['filter_name'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -217,7 +217,7 @@ class ControllerToolUpload extends Controller {
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
-			
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -235,7 +235,7 @@ class ControllerToolUpload extends Controller {
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($upload_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($upload_total - $this->config->get('config_limit_admin'))) ? $upload_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $upload_total, $upload_total, ceil($upload_total / $this->config->get('config_limit_admin')));
-		
+
 		$data['filter_name'] = $filter_name;
 		$data['filter_date_added'] = $filter_date_added;
 
@@ -259,7 +259,7 @@ class ControllerToolUpload extends Controller {
 
 	public function download() {
 		$this->load->model('tool/upload');
-		
+
 		if (isset($this->request->get['code'])) {
 			$code = $this->request->get['code'];
 		} else {
@@ -317,6 +317,6 @@ class ControllerToolUpload extends Controller {
 			$data['footer'] = $this->load->controller('common/footer');
 
 			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
-		}	
-	}	
+		}
+	}
 }

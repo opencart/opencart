@@ -19,7 +19,7 @@ class ControllerExtensionShipping extends Controller {
 
 		$this->load->model('setting/extension');
 
-		if ($this->validate()) {		
+		if ($this->validate()) {
 			$this->model_setting_extension->install('shipping', $this->request->get['extension']);
 
 			$this->load->model('user/user_group');
@@ -28,7 +28,7 @@ class ControllerExtensionShipping extends Controller {
 			$this->model_user_user_group->addPermission($this->user->getId(), 'modify', 'shipping/' . $this->request->get['extension']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-			
+
 			require_once(DIR_APPLICATION . 'controller/shipping/' . $this->request->get['extension'] . '.php');
 
 			$class = 'ControllerShipping' . str_replace('_', '', $this->request->get['extension']);
@@ -51,7 +51,7 @@ class ControllerExtensionShipping extends Controller {
 
 		$this->load->model('setting/extension');
 
-		if ($this->validate()) {	
+		if ($this->validate()) {
 			$this->model_setting_extension->uninstall('shipping', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
@@ -59,7 +59,7 @@ class ControllerExtensionShipping extends Controller {
 			$this->model_setting_setting->deleteSetting($this->request->get['extension']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-			
+
 			require_once(DIR_APPLICATION . 'controller/shipping/' . $this->request->get['extension'] . '.php');
 
 			$class = 'ControllerShipping' . str_replace('_', '', $this->request->get['extension']);

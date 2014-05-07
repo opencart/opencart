@@ -1,6 +1,6 @@
-<?php 
+<?php
 class ControllerLocalisationZone extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->load->language('localisation/zone');
@@ -52,7 +52,7 @@ class ControllerLocalisationZone extends Controller {
 		$this->load->model('localisation/zone');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_localisation_zone->editZone($this->request->get['zone_id'], $this->request->post);			
+			$this->model_localisation_zone->editZone($this->request->get['zone_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -86,7 +86,7 @@ class ControllerLocalisationZone extends Controller {
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $zone_id) {
 				$this->model_localisation_zone->deleteZone($zone_id);
-			}			
+			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -189,7 +189,7 @@ class ControllerLocalisationZone extends Controller {
 		$data['column_country'] = $this->language->get('column_country');
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_code'] = $this->language->get('column_code');
-		$data['column_action'] = $this->language->get('column_action');	
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');

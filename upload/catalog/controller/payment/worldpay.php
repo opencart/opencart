@@ -61,7 +61,7 @@ class ControllerPaymentWorldPay extends Controller {
 		$data['text_failure'] = $this->language->get('text_failure');
 		$data['text_failure_wait'] = sprintf($this->language->get('text_failure_wait'), $this->url->link('checkout/checkout', '', 'SSL'));
 
-		if (isset($this->request->post['transStatus']) && $this->request->post['transStatus'] == 'Y') { 
+		if (isset($this->request->post['transStatus']) && $this->request->post['transStatus'] == 'Y') {
 			$this->load->model('checkout/order');
 
 			// If returned successful but callbackPW doesn't match, set order to pendind and record reason
@@ -87,23 +87,23 @@ class ControllerPaymentWorldPay extends Controller {
 
 			if (isset($this->request->post['AVS'])) {
 				$message .= 'AVS: ' . $this->request->post['AVS'] . "\n";
-			}	
+			}
 
 			if (isset($this->request->post['rawAuthCode'])) {
 				$message .= 'rawAuthCode: ' . $this->request->post['rawAuthCode'] . "\n";
-			}	
+			}
 
 			if (isset($this->request->post['authMode'])) {
 				$message .= 'authMode: ' . $this->request->post['authMode'] . "\n";
-			}	
+			}
 
 			if (isset($this->request->post['rawAuthMessage'])) {
 				$message .= 'rawAuthMessage: ' . $this->request->post['rawAuthMessage'] . "\n";
-			}	
+			}
 
 			if (isset($this->request->post['wafMerchMessage'])) {
 				$message .= 'wafMerchMessage: ' . $this->request->post['wafMerchMessage'] . "\n";
-			}				
+			}
 
 			$this->model_checkout_order->update($this->request->post['cartId'], $this->config->get('worldpay_order_status_id'), $message, false);
 
@@ -113,7 +113,7 @@ class ControllerPaymentWorldPay extends Controller {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/worldpay_success.tpl', $data));
 			} else {
 				$this->response->setOutput($this->load->view('default/template/payment/worldpay_success.tpl', $data));
-			}				
+			}
 		} else {
 			$data['continue'] = $this->url->link('checkout/cart');
 
@@ -121,7 +121,7 @@ class ControllerPaymentWorldPay extends Controller {
 				$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/payment/worldpay_failure.tpl', $data));
 			} else {
 				$this->response->setOutput($this->load->view('default/template/payment/worldpay_failure.tpl', $data));
-			}					
+			}
 		}
 	}
 }

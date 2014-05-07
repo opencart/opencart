@@ -64,6 +64,17 @@
     </properties>
   </rule>
   
+     <!-- There MUST NOT be trailing whitespace at the end of non-blank lines. -->
+ <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.StartFile">
+  <severity>0</severity>
+ </rule>
+ <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EndFile">
+  <severity>0</severity>
+ </rule>
+ <rule ref="Squiz.WhiteSpace.SuperfluousWhitespace.EmptyLines">
+  <severity>0</severity>
+ </rule>
+  
   <exclude-pattern>*/tests/*</exclude-pattern>
 <!--
   <rule ref="Generic.Functions.OpeningBraceAfterIf"/>

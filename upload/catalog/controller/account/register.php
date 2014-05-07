@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ControllerAccountRegister extends Controller {
 	private $error = array();
 
@@ -10,7 +10,7 @@ class ControllerAccountRegister extends Controller {
 		$this->load->language('account/register');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-		
+
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
@@ -23,15 +23,15 @@ class ControllerAccountRegister extends Controller {
 			$this->customer->login($this->request->post['email'], $this->request->post['password']);
 
 			unset($this->session->data['guest']);
-			
+
 			// Add to activity log
 			$this->load->model('account/activity');
-			
+
 			$activity_data = array(
 				'customer_id' => $this->customer->getId(),
 				'name'        => $this->request->post['firstname'] . ' ' . $this->request->post['lastname']
 			);
-			
+
 			$this->model_account_activity->addActivity('register', $activity_data);
 
 			$this->response->redirect($this->url->link('account/success'));
@@ -41,19 +41,19 @@ class ControllerAccountRegister extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),        	
+			'href'      => $this->url->link('common/home'),
 			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),      	
+			'href'      => $this->url->link('account/account', '', 'SSL'),
 			'separator' => $this->language->get('text_separator')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_register'),
-			'href'      => $this->url->link('account/register', '', 'SSL'),      	
+			'href'      => $this->url->link('account/register', '', 'SSL'),
 			'separator' => $this->language->get('text_separator')
 		);
 
@@ -81,7 +81,7 @@ class ControllerAccountRegister extends Controller {
 		$data['entry_postcode'] = $this->language->get('entry_postcode');
 		$data['entry_city'] = $this->language->get('entry_city');
 		$data['entry_country'] = $this->language->get('entry_country');
-		$data['entry_zone'] = $this->language->get('entry_zone');		
+		$data['entry_zone'] = $this->language->get('entry_zone');
 		$data['entry_newsletter'] = $this->language->get('entry_newsletter');
 		$data['entry_password'] = $this->language->get('entry_password');
 		$data['entry_confirm'] = $this->language->get('entry_confirm');
@@ -99,13 +99,13 @@ class ControllerAccountRegister extends Controller {
 			$data['error_firstname'] = $this->error['firstname'];
 		} else {
 			$data['error_firstname'] = '';
-		}	
+		}
 
 		if (isset($this->error['lastname'])) {
 			$data['error_lastname'] = $this->error['lastname'];
 		} else {
 			$data['error_lastname'] = '';
-		}		
+		}
 
 		if (isset($this->error['email'])) {
 			$data['error_email'] = $this->error['email'];
@@ -118,7 +118,7 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$data['error_telephone'] = '';
 		}
-	
+
 		if (isset($this->error['address_1'])) {
 			$data['error_address_1'] = $this->error['address_1'];
 		} else {
@@ -148,13 +148,13 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$data['error_zone'] = '';
 		}
-				
+
 		if (isset($this->error['custom_field'])) {
 			$data['error_custom_field'] = $this->error['custom_field'];
 		} else {
 			$data['error_custom_field'] = array();
 		}
-		
+
 		if (isset($this->error['password'])) {
 			$data['error_password'] = $this->error['password'];
 		} else {
@@ -173,7 +173,7 @@ class ControllerAccountRegister extends Controller {
 
 		if (is_array($this->config->get('config_customer_group_display'))) {
 			$this->load->model('account/customer_group');
-			
+
 			$customer_groups = $this->model_account_customer_group->getCustomerGroups();
 
 			foreach ($customer_groups as $customer_group) {
@@ -188,7 +188,7 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
-		
+
 		if (isset($this->request->post['firstname'])) {
 			$data['firstname'] = $this->request->post['firstname'];
 		} else {
@@ -218,13 +218,13 @@ class ControllerAccountRegister extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
-		
+
 		if (isset($this->request->post['company'])) {
 			$data['company'] = $this->request->post['company'];
 		} else {
 			$data['company'] = '';
 		}
-		
+
 		if (isset($this->request->post['address_1'])) {
 			$data['address_1'] = $this->request->post['address_1'];
 		} else {
@@ -240,7 +240,7 @@ class ControllerAccountRegister extends Controller {
 		if (isset($this->request->post['postcode'])) {
 			$data['postcode'] = $this->request->post['postcode'];
 		} elseif (isset($this->session->data['shipping_address']['postcode'])) {
-			$data['postcode'] = $this->session->data['shipping_address']['postcode'];		
+			$data['postcode'] = $this->session->data['shipping_address']['postcode'];
 		} else {
 			$data['postcode'] = '';
 		}
@@ -254,15 +254,15 @@ class ControllerAccountRegister extends Controller {
 		if (isset($this->request->post['country_id'])) {
 			$data['country_id'] = $this->request->post['country_id'];
 		} elseif (isset($this->session->data['shipping_address']['country_id'])) {
-			$data['country_id'] = $this->session->data['shipping_address']['country_id'];	
-		} else {	
+			$data['country_id'] = $this->session->data['shipping_address']['country_id'];
+		} else {
 			$data['country_id'] = $this->config->get('config_country_id');
 		}
 
 		if (isset($this->request->post['zone_id'])) {
 			$data['zone_id'] = $this->request->post['zone_id'];
 		} elseif (isset($this->session->data['shipping_address']['zone_id'])) {
-			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];			
+			$data['zone_id'] = $this->session->data['shipping_address']['zone_id'];
 		} else {
 			$data['zone_id'] = '';
 		}
@@ -275,13 +275,13 @@ class ControllerAccountRegister extends Controller {
 		$this->load->model('account/custom_field');
 
 		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields();
-		
+
 		if (isset($this->request->post['custom_field'])) {
 			$data['register_custom_field'] = $this->request->post['custom_field']['account'] + $this->request->post['custom_field']['address'];
 		} else {
 			$data['register_custom_field'] = array();
 		}
-	
+
 		if (isset($this->request->post['password'])) {
 			$data['password'] = $this->request->post['password'];
 		} else {
@@ -298,7 +298,7 @@ class ControllerAccountRegister extends Controller {
 			$data['newsletter'] = $this->request->post['newsletter'];
 		} else {
 			$data['newsletter'] = '';
-		}	
+		}
 
 		if ($this->config->get('config_account_id')) {
 			$this->load->model('catalog/information');
@@ -331,7 +331,7 @@ class ControllerAccountRegister extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/register.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/account/register.tpl', $data));
-		}		
+		}
 	}
 
 	public function validate() {
@@ -378,13 +378,13 @@ class ControllerAccountRegister extends Controller {
 		if (!isset($this->request->post['zone_id']) || $this->request->post['zone_id'] == '') {
 			$this->error['zone'] = $this->language->get('error_zone');
 		}
-		
+
 		// Customer Group
 		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
 			$customer_group_id = $this->request->post['customer_group_id'];
 		} else {
 			$customer_group_id = $this->config->get('config_customer_group_id');
-		}		
+		}
 
 		// Custom field validation
 		$this->load->model('account/custom_field');
@@ -396,7 +396,7 @@ class ControllerAccountRegister extends Controller {
 				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 			}
 		}
-		
+
 		if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
 			$this->error['password'] = $this->language->get('error_password');
 		}
@@ -418,7 +418,7 @@ class ControllerAccountRegister extends Controller {
 
 		return !$this->error;
 	}
-	
+
 	public function custom_field() {
 		$json = array();
 
@@ -441,5 +441,5 @@ class ControllerAccountRegister extends Controller {
 		}
 
 		$this->response->setOutput(json_encode($json));
-	}	
+	}
 }

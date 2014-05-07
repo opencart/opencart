@@ -78,7 +78,7 @@ class ControllerPaymentNochex extends Controller {
 		if (isset($this->request->get['method']) && $this->request->get['method'] == 'decline') {
 			$this->session->data['error'] = $this->language->get('error_declined');
 
-			$this->response->redirect($this->url->link('checkout/cart')); 
+			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
 		if (isset($this->request->post['order_id'])) {

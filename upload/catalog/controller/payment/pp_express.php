@@ -420,9 +420,9 @@ class ControllerPaymentPPExpress extends Controller {
 		$data['column_quantity'] = $this->language->get('column_quantity');
 		$data['column_price'] = $this->language->get('column_price');
 		$data['column_total'] = $this->language->get('column_total');
-		
+
 		$data['button_shipping'] = $this->language->get('express_button_shipping');
-		$data['button_confirm'] = $this->language->get('express_button_confirm');		
+		$data['button_confirm'] = $this->language->get('express_button_confirm');
 
 		if (isset($this->request->post['next'])) {
 			$data['next'] = $this->request->post['next'];
@@ -1308,7 +1308,7 @@ class ControllerPaymentPPExpress extends Controller {
 		);
 
 		$result = $this->model_payment_pp_express->call($data);
-		
+
 		$this->session->data['paypal']['payerid'] = $result['PAYERID'];
 		$this->session->data['paypal']['result'] = $result;
 
@@ -1371,7 +1371,7 @@ class ControllerPaymentPPExpress extends Controller {
 				'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
 				'total'            => $result['PAYMENTINFO_0_AMT'],
 			);
-			
+
 			$paypal_order_id = $this->model_payment_pp_express->addOrder($paypal_order_data);
 
 			//add transaction to paypal transaction table
@@ -1471,7 +1471,7 @@ class ControllerPaymentPPExpress extends Controller {
 					if ($this->session->data['paypal_redirect_count'] == 2) {
 						$this->session->data['paypal_redirect_count'] = 0;
 						$this->session->data['error'] = $this->language->get('error_too_many_failures');
-						
+
 						$this->response->redirect($this->url->link('checkout/checkout', '', 'SSL'));
 					} else {
 						$this->session->data['paypal_redirect_count']++;

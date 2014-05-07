@@ -1,14 +1,14 @@
-<?php 
+<?php
 class ControllerAffiliateLogout extends Controller {
 	public function index() {
 		if ($this->affiliate->isLogged()) {
 			$this->affiliate->logout();
-			
+
 			$this->response->redirect($this->url->link('affiliate/logout', '', 'SSL'));
 		}
- 
+
 		$this->load->language('affiliate/logout');
-		
+
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
@@ -22,12 +22,12 @@ class ControllerAffiliateLogout extends Controller {
 			'text' => $this->language->get('text_account'),
 			'href' => $this->url->link('affiliate/account', '', 'SSL')
 		);
-		
+
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_logout'),
 			'href' => $this->url->link('affiliate/logout', '', 'SSL')
 		);
-		
+
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_message'] = $this->language->get('text_message');
@@ -42,7 +42,7 @@ class ControllerAffiliateLogout extends Controller {
 		$data['content_bottom'] = $this->load->controller('common/content_bottom');
 		$data['footer'] = $this->load->controller('common/footer');
 		$data['header'] = $this->load->controller('common/header');
-						
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/success.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/common/success.tpl', $data));
 		} else {

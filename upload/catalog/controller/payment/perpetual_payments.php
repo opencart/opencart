@@ -2,37 +2,37 @@
 class ControllerPaymentPerpetualPayments extends Controller {
 	public function index() {
     	$this->load->language('payment/perpetual_payments');
-		
-		$data['text_credit_card'] = $this->language->get('text_credit_card');		
+
+		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
-		
+
 		$data['entry_cc_number'] = $this->language->get('entry_cc_number');
 		$data['entry_cc_start_date'] = $this->language->get('entry_cc_start_date');
 		$data['entry_cc_expire_date'] = $this->language->get('entry_cc_expire_date');
 		$data['entry_cc_cvv2'] = $this->language->get('entry_cc_cvv2');
 		$data['entry_cc_issue'] = $this->language->get('entry_cc_issue');
-		
-		$data['help_start_date'] = $this->language->get('help_start_date');		
+
+		$data['help_start_date'] = $this->language->get('help_start_date');
 		$data['help_issue'] = $this->language->get('help_issue');
-		
+
 		$data['button_confirm'] = $this->language->get('button_confirm');
-	
+
 		$data['months'] = array();
-		
+
 		for ($i = 1; $i <= 12; $i++) {
 			$data['months'][] = array(
-				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)), 
+				'text'  => strftime('%B', mktime(0, 0, 0, $i, 1, 2000)),
 				'value' => sprintf('%02d', $i)
 			);
 		}
-		
+
 		$today = getdate();
-		
+
 		$data['year_valid'] = array();
-		
-		for ($i = $today['year'] - 10; $i < $today['year'] + 1; $i++) {	
+
+		for ($i = $today['year'] - 10; $i < $today['year'] + 1; $i++) {
 			$data['year_valid'][] = array(
-				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)), 
+				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
 				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
 			);
 		}
@@ -42,22 +42,22 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		for ($i = $today['year']; $i < $today['year'] + 11; $i++) {
 			$data['year_expire'][] = array(
 				'text'  => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)),
-				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i)) 
+				'value' => strftime('%Y', mktime(0, 0, 0, 1, 1, $i))
 			);
 		}
-		
+
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/payment/perpetual_payments.tpl')) {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/perpetual_payments.tpl', $data);
 		} else {
 			return $this->load->view('default/template/payment/perpetual_payments.tpl', $data);
-		}	
+		}
 	}
 
 	public function send() {
 		$this->load->language('payment/perpetual_payments');
-		
+
 		$this->load->model('checkout/order');
-		
+
 		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$payment_data = array(
@@ -83,7 +83,7 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		);
 
 		$curl = curl_init('https://secure.voice-pay.com/gateway/remote');
-		
+
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
@@ -94,21 +94,21 @@ class ControllerPaymentPerpetualPayments extends Controller {
         curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($payment_data));
 
 		$response = curl_exec($curl);
- 		
+
 		curl_close($curl);
-		
+
 		if ($response) {
 			$data = explode('|', $response);
-			
+
 			if (isset($data[0]) && $data[0] == 'A') {
 				$this->model_checkout_order->confirm($this->session->data['order_id'], $this->config->get('config_order_status_id'));
-				
+
 				$message = '';
-				
+
 				if (isset($data[1])) {
 					$message .= $this->language->get('text_transaction') . ' ' . $data[1] . "\n";
 				}
-				
+
 				if (isset($data[2])) {
 					if ($data[2] == '232') {
 						$message .= $this->language->get('text_avs') . ' ' . $this->language->get('text_avs_full_match') . "\n";
@@ -116,19 +116,19 @@ class ControllerPaymentPerpetualPayments extends Controller {
 						$message .= $this->language->get('text_avs') . ' ' . $this->language->get('text_avs_not_match') . "\n";
 					}
 				}
-				
+
 				if (isset($data[3])) {
 					$message .= $this->language->get('text_authorisation') . ' ' . $data[3] . "\n";
 				}
-				
+
 				$this->model_checkout_order->update($this->session->data['order_id'], $this->config->get('perpetual_payments_order_status_id'), $message, false);
-					
+
 				$json['redirect'] = $this->url->link('checkout/success');
 			} else {
 				$json['error'] = end($data);
 			}
 		}
-		
+
 		$this->response->setOutput(json_encode($json));
 	}
 }

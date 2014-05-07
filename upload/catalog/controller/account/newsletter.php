@@ -1,5 +1,5 @@
-<?php 
-class ControllerAccountNewsletter extends Controller {  
+<?php
+class ControllerAccountNewsletter extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {
 			$this->session->data['redirect'] = $this->url->link('account/newsletter', '', 'SSL');
@@ -65,6 +65,6 @@ class ControllerAccountNewsletter extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/account/newsletter.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/account/newsletter.tpl', $data));
-		}			
+		}
 	}
 }

@@ -26,7 +26,7 @@ class ControllerAffiliateForgotten extends Controller {
 			$message .= $this->language->get('text_password') . "\n\n";
 			$message .= $password;
 
-			$mail = new Mail($this->config->get('config_mail'));		
+			$mail = new Mail($this->config->get('config_mail'));
 			$mail->setTo($this->request->post['email']);
 			$mail->setFrom($this->config->get('config_email'));
 			$mail->setSender($this->config->get('config_name'));
@@ -101,7 +101,7 @@ class ControllerAffiliateForgotten extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/affiliate/forgotten.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/affiliate/forgotten.tpl', $data));
-		}		
+		}
 	}
 
 	protected function validate() {

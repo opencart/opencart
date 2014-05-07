@@ -194,11 +194,11 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				$this->load->model('total/' . $code);
 
 				$total_count_before = count($total_data);
-				
+
 				$this->{'model_total_' . $code}->getTotal($total_data, $total, $taxes);
-				
+
 				$total_count_after = count($total_data);
-				
+
 				for ($i = $total_count_before; $i < $total_count_after; $i++) {
 					$total_data[$i]['code'] = $code;
 				}

@@ -8,13 +8,13 @@ class ControllerPaymentSagepay extends Controller {
 		if ($this->config->get('sagepay_test') == 'live') {
 			$data['action'] = 'https://live.sagepay.com/gateway/service/vspform-register.vsp';
 		} elseif ($this->config->get('sagepay_test') == 'test') {
-			$data['action'] = 'https://test.sagepay.com/gateway/service/vspform-register.vsp';		
+			$data['action'] = 'https://test.sagepay.com/gateway/service/vspform-register.vsp';
 		} elseif ($this->config->get('sagepay_test') == 'sim') {
 			$data['action'] = 'https://test.sagepay.com/simulator/vspformgateway.asp';
 		}
 
 		$vendor = $this->config->get('sagepay_vendor');
-		$password = $this->config->get('sagepay_password');		
+		$password = $this->config->get('sagepay_password');
 
 		$this->load->model('checkout/order');
 
@@ -33,7 +33,7 @@ class ControllerPaymentSagepay extends Controller {
 		$payment_data['CustomerName'] = html_entity_decode($order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
 		$payment_data['SendEMail'] = '1';
 		$payment_data['CustomerEMail'] = $order_info['email'];
-		$payment_data['VendorEMail'] = $this->config->get('config_email');  
+		$payment_data['VendorEMail'] = $this->config->get('config_email');
 
 		$payment_data['BillingFirstnames'] = $order_info['payment_firstname'];
 		$payment_data['BillingSurname'] = $order_info['payment_lastname'];
@@ -88,7 +88,7 @@ class ControllerPaymentSagepay extends Controller {
 				$payment_data['DeliveryState'] = $order_info['payment_zone_code'];
 			}
 
-			$payment_data['DeliveryPhone'] = $order_info['telephone'];			
+			$payment_data['DeliveryPhone'] = $order_info['telephone'];
 		}
 
 		$payment_data['AllowGiftAid'] = '0';
@@ -114,13 +114,13 @@ class ControllerPaymentSagepay extends Controller {
 			return $this->load->view($this->config->get('config_template') . '/template/payment/sagepay.tpl', $data);
 		} else {
 			return $this->load->view('default/template/payment/sagepay.tpl', $data);
-		}		
+		}
 	}
 
 	public function success() {
 		if (isset($this->request->get['crypt'])) {
 			$string = base64_decode(str_replace(' ', '+', $this->request->get['crypt']));
-			$password = $this->config->get('sagepay_password');	
+			$password = $this->config->get('sagepay_password');
 
 			$output = utf8_encode($this->simpleXor($string, $password));
 
@@ -133,7 +133,7 @@ class ControllerPaymentSagepay extends Controller {
 
 				$message = '';
 
-				if (isset($data['VPSTxId'])) { 
+				if (isset($data['VPSTxId'])) {
 					$message .= 'VPSTxId: ' . $data['VPSTxId'] . "\n";
 				}
 
@@ -182,7 +182,7 @@ class ControllerPaymentSagepay extends Controller {
 				$this->response->redirect($this->url->link('checkout/success'));
 			}
 		}
-	}	 
+	}
 
 	protected function simpleXor($string, $password) {
 		$data = array();
@@ -197,7 +197,7 @@ class ControllerPaymentSagepay extends Controller {
 			$output .= chr(ord(substr($string, $i, 1)) ^ ($data[$i % strlen($password)]));
 		}
 
-		return $output;		
+		return $output;
 	}
 
 	protected function getToken($string) {
@@ -220,7 +220,7 @@ class ControllerPaymentSagepay extends Controller {
 			'Last4Digits',
 			'PayerStatus',
 			'CardType'
-		);		
+		);
 
 		$output = array();
 		$data = array();
@@ -245,10 +245,10 @@ class ControllerPaymentSagepay extends Controller {
 				$length = $data[$i+1]['start'] - $data[$i]['start'] - strlen($data[$i]['token']) - 2;
 
 				$output[$data[$i]['token']] = substr($string, $start, $length);
-			}      
+			}
 
 		}
 
 		return $output;
-	}	
+	}
 }

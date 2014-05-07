@@ -39,26 +39,15 @@ class ControllerModuleCart extends Controller {
 			array_multisort($sort_order, SORT_ASC, $total_data);								
 		}
 		
-		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
-		$data['text_loading'] = $this->language->get('text_loading');
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/cart_button.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/cart_button.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/cart_button.tpl', $data);
-		}		
-	}	
-	
-	public function info() {
-		$this->load->language('module/cart');
-
 		$data['text_empty'] = $this->language->get('text_empty');
 		$data['text_cart'] = $this->language->get('text_cart');
 		$data['text_checkout'] = $this->language->get('text_checkout');
 		$data['text_profile'] = $this->language->get('text_profile');
-		
+		$data['text_items'] = sprintf($this->language->get('text_items'), $this->cart->countProducts() + (isset($this->session->data['vouchers']) ? count($this->session->data['vouchers']) : 0), $this->currency->format($total));
+		$data['text_loading'] = $this->language->get('text_loading');
+
 		$data['button_remove'] = $this->language->get('button_remove');
-		
+
 		$this->load->model('tool/image');
 		$this->load->model('tool/upload');
 		
@@ -133,42 +122,6 @@ class ControllerModuleCart extends Controller {
 				);
 			}
 		}
-
-		// Totals
-		$this->load->model('setting/extension');
-		
-		$total_data = array();					
-		$total = 0;
-		$taxes = $this->cart->getTaxes();
-		
-		// Display prices
-		if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-			$sort_order = array(); 
-			
-			$results = $this->model_setting_extension->getExtensions('total');
-			
-			foreach ($results as $key => $value) {
-				$sort_order[$key] = $this->config->get($value['code'] . '_sort_order');
-			}
-			
-			array_multisort($sort_order, SORT_ASC, $results);
-			
-			foreach ($results as $result) {
-				if ($this->config->get($result['code'] . '_status')) {
-					$this->load->model('total/' . $result['code']);
-		
-					$this->{'model_total_' . $result['code']}->getTotal($total_data, $total, $taxes);
-				}
-			}
-			
-			$sort_order = array(); 
-		  
-			foreach ($total_data as $key => $value) {
-				$sort_order[$key] = $value['sort_order'];
-			}
-
-			array_multisort($sort_order, SORT_ASC, $total_data);			
-		}
 		
 		$data['totals'] = array();
 
@@ -181,11 +134,15 @@ class ControllerModuleCart extends Controller {
 					
 		$data['cart'] = $this->url->link('checkout/cart');
 		$data['checkout'] = $this->url->link('checkout/checkout', '', 'SSL');		
-		
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/cart_info.tpl')) {
-			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/module/cart_info.tpl', $data));
+
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/cart.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/module/cart.tpl', $data);
 		} else {
-			$this->response->setOutput($this->load->view('default/template/module/cart_info.tpl', $data));
-		}			
-	}		
+			return $this->load->view('default/template/module/cart.tpl', $data);
+		}		
+	}	
+	
+	public function info() {
+		$this->response->setOutput($this->index());	
+	}
 }

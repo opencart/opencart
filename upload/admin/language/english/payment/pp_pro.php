@@ -2,7 +2,7 @@
 // Heading
 $_['heading_title']      = 'PayPal Pro';
 
-// Text 
+// Text
 $_['text_payment']       = 'Payment';
 $_['text_success']       = 'Success: You have modified PayPal Website Payment Pro Checkout account details!';
 $_['text_pp_pro']        = '<a target="_BLANK" href="https://www.paypal.com/uk/mrb/pal=V4T754QB63XXL"><img src="view/image/payment/paypal.png" alt="PayPal Website Payment Pro" title="PayPal Website Payment Pro iFrame" style="border: 1px solid #EEEEEE;" /></a>';
@@ -25,6 +25,6 @@ $_['entry_sort_order']   = 'Sort Order';
 
 // Error
 $_['error_permission']   = 'Warning: You do not have permission to modify payment PayPal Website Payment Pro Checkout!';
-$_['error_username']     = 'API Username Required!'; 
-$_['error_password']     = 'API Password Required!'; 
+$_['error_username']     = 'API Username Required!';
+$_['error_password']     = 'API Password Required!';
 $_['error_signature']    = 'API Signature Required!';

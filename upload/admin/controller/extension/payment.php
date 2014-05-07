@@ -35,7 +35,7 @@ class ControllerExtensionPayment extends Controller {
 			if (method_exists($class, 'install')) {
 				$class->install();
 			}
-			
+
 			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
 		}
 
@@ -49,7 +49,7 @@ class ControllerExtensionPayment extends Controller {
 
 		$this->load->model('setting/extension');
 
-		if ($this->validate()) {		
+		if ($this->validate()) {
 			$this->model_setting_extension->uninstall('payment', $this->request->get['extension']);
 
 			$this->load->model('setting/setting');
@@ -64,13 +64,13 @@ class ControllerExtensionPayment extends Controller {
 			if (method_exists($class, 'uninstall')) {
 				$class->uninstall();
 			}
-				
+
 			$this->session->data['success'] = $this->language->get('text_success');
 
-			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));	
-		}		
+			$this->response->redirect($this->url->link('extension/payment', 'token=' . $this->session->data['token'], 'SSL'));
+		}
 
-		$this->getList();	
+		$this->getList();
 	}
 
 	public function getList() {

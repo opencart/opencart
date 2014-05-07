@@ -1,6 +1,6 @@
 <?php
 class ControllerLocalisationLengthClass extends Controller {
-	private $error = array();  
+	private $error = array();
 
 	public function index() {
 		$this->load->language('localisation/length_class');
@@ -189,7 +189,7 @@ class ControllerLocalisationLengthClass extends Controller {
 		$data['column_title'] = $this->language->get('column_title');
 		$data['column_unit'] = $this->language->get('column_unit');
 		$data['column_value'] = $this->language->get('column_value');
-		$data['column_action'] = $this->language->get('column_action');	
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -337,7 +337,7 @@ class ControllerLocalisationLengthClass extends Controller {
 			$data['length_class_description'] = $this->model_localisation_length_class->getLengthClassDescriptions($this->request->get['length_class_id']);
 		} else {
 			$data['length_class_description'] = array();
-		}	
+		}
 
 		if (isset($this->request->post['value'])) {
 			$data['value'] = $this->request->post['value'];
@@ -345,7 +345,7 @@ class ControllerLocalisationLengthClass extends Controller {
 			$data['value'] = $length_class_info['value'];
 		} else {
 			$data['value'] = '';
-		}			
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -392,5 +392,5 @@ class ControllerLocalisationLengthClass extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 }

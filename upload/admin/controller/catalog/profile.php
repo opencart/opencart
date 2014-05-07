@@ -1,11 +1,11 @@
-<?php 
+<?php
 class ControllerCatalogProfile extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->language->load('catalog/profile');
 
-		$this->document->setTitle($this->language->get('heading_title')); 
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('catalog/profile');
 

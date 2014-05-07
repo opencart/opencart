@@ -10,7 +10,7 @@ class ControllerCatalogReview extends Controller {
 		$this->load->model('catalog/review');
 
 		$this->getList();
-	} 
+	}
 
 	public function insert() {
 		$this->load->language('catalog/review');
@@ -25,23 +25,23 @@ class ControllerCatalogReview extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-		
+
 			if (isset($this->request->get['filter_product'])) {
 				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 			}
-	
+
 			if (isset($this->request->get['filter_author'])) {
 				$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
 			}
-	
+
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
-	
+
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 			}
-		
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -73,23 +73,23 @@ class ControllerCatalogReview extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-		
+
 			if (isset($this->request->get['filter_product'])) {
 				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 			}
-	
+
 			if (isset($this->request->get['filter_author'])) {
 				$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
 			}
-	
+
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
-	
+
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 			}
-		
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -108,7 +108,7 @@ class ControllerCatalogReview extends Controller {
 		$this->getForm();
 	}
 
-	public function delete() { 
+	public function delete() {
 		$this->load->language('catalog/review');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -123,23 +123,23 @@ class ControllerCatalogReview extends Controller {
 			$this->session->data['success'] = $this->language->get('text_success');
 
 			$url = '';
-			
+
 			if (isset($this->request->get['filter_product'])) {
 				$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 			}
-	
+
 			if (isset($this->request->get['filter_author'])) {
 				$url .= '&filter_author=' . urlencode(html_entity_decode($this->request->get['filter_author'], ENT_QUOTES, 'UTF-8'));
 			}
-	
+
 			if (isset($this->request->get['filter_status'])) {
 				$url .= '&filter_status=' . $this->request->get['filter_status'];
 			}
-	
+
 			if (isset($this->request->get['filter_date_added'])) {
 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 			}
-			
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -176,13 +176,13 @@ class ControllerCatalogReview extends Controller {
 		} else {
 			$filter_status = null;
 		}
-		
+
 		if (isset($this->request->get['filter_date_added'])) {
 			$filter_date_added = $this->request->get['filter_date_added'];
 		} else {
 			$filter_date_added = null;
-		}		
-		
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -218,7 +218,7 @@ class ControllerCatalogReview extends Controller {
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
-		
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -244,14 +244,14 @@ class ControllerCatalogReview extends Controller {
 		);
 
 		$data['insert'] = $this->url->link('catalog/review/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('catalog/review/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['delete'] = $this->url->link('catalog/review/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['reviews'] = array();
 
 		$filter_data = array(
-			'filter_product'    => $filter_product, 
-			'filter_author'     => $filter_author, 
-			'filter_status'     => $filter_status, 
+			'filter_product'    => $filter_product,
+			'filter_author'     => $filter_author,
+			'filter_status'     => $filter_status,
 			'filter_date_added' => $filter_date_added,
 			'sort'              => $sort,
 			'order'             => $order,
@@ -273,7 +273,7 @@ class ControllerCatalogReview extends Controller {
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'edit'       => $this->url->link('catalog/review/update', 'token=' . $this->session->data['token'] . '&review_id=' . $result['review_id'] . $url, 'SSL')
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -287,14 +287,14 @@ class ControllerCatalogReview extends Controller {
 		$data['column_rating'] = $this->language->get('column_rating');
 		$data['column_status'] = $this->language->get('column_status');
 		$data['column_date_added'] = $this->language->get('column_date_added');
-		$data['column_action'] = $this->language->get('column_action');		
-		
+		$data['column_action'] = $this->language->get('column_action');
+
 		$data['entry_product'] = $this->language->get('entry_product');
 		$data['entry_author'] = $this->language->get('entry_author');
 		$data['entry_rating'] = $this->language->get('entry_rating');
 		$data['entry_status'] = $this->language->get('entry_status');
 		$data['entry_date_added'] = $this->language->get('entry_date_added');
-		
+
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
 		$data['button_delete'] = $this->language->get('button_delete');
@@ -341,7 +341,7 @@ class ControllerCatalogReview extends Controller {
 		$data['sort_date_added'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&sort=r.date_added' . $url, 'SSL');
 
 		$url = '';
-		
+
 		if (isset($this->request->get['filter_product'])) {
 			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -357,7 +357,7 @@ class ControllerCatalogReview extends Controller {
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
-		
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -375,12 +375,12 @@ class ControllerCatalogReview extends Controller {
 		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($review_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($review_total - $this->config->get('config_limit_admin'))) ? $review_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $review_total, ceil($review_total / $this->config->get('config_limit_admin')));
-		
+
 		$data['filter_product'] = $filter_product;
 		$data['filter_author'] = $filter_author;
 		$data['filter_status'] = $filter_status;
 		$data['filter_date_added'] = $filter_date_added;
-		
+
 		$data['sort'] = $sort;
 		$data['order'] = $order;
 
@@ -439,7 +439,7 @@ class ControllerCatalogReview extends Controller {
 		}
 
 		$url = '';
-		
+
 		if (isset($this->request->get['filter_product'])) {
 			$url .= '&filter_product=' . urlencode(html_entity_decode($this->request->get['filter_product'], ENT_QUOTES, 'UTF-8'));
 		}
@@ -455,7 +455,7 @@ class ControllerCatalogReview extends Controller {
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
-		
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -480,7 +480,7 @@ class ControllerCatalogReview extends Controller {
 			'href' => $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		if (!isset($this->request->get['review_id'])) { 
+		if (!isset($this->request->get['review_id'])) {
 			$data['action'] = $this->url->link('catalog/review/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
 			$data['action'] = $this->url->link('catalog/review/update', 'token=' . $this->session->data['token'] . '&review_id=' . $this->request->get['review_id'] . $url, 'SSL');
@@ -581,5 +581,5 @@ class ControllerCatalogReview extends Controller {
 		}
 
 		return !$this->error;
-	}	
+	}
 }

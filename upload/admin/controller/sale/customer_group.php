@@ -76,7 +76,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		$this->getForm();
 	}
 
-	public function delete() { 
+	public function delete() {
 		$this->load->language('sale/customer_group');
 
 		$this->document->setTitle($this->language->get('heading_title'));
@@ -85,7 +85,7 @@ class ControllerSaleCustomerGroup extends Controller {
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
 			foreach ($this->request->post['selected'] as $customer_group_id) {
-				$this->model_sale_customer_group->deleteCustomerGroup($customer_group_id);	
+				$this->model_sale_customer_group->deleteCustomerGroup($customer_group_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -137,7 +137,7 @@ class ControllerSaleCustomerGroup extends Controller {
 
 		if (isset($this->request->get['order'])) {
 			$url .= '&order=' . $this->request->get['order'];
-		}	
+		}
 
 		if (isset($this->request->get['page'])) {
 			$url .= '&page=' . $this->request->get['page'];
@@ -156,7 +156,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		);
 
 		$data['insert'] = $this->url->link('sale/customer_group/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('sale/customer_group/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['delete'] = $this->url->link('sale/customer_group/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['customer_groups'] = array();
 
@@ -178,7 +178,7 @@ class ControllerSaleCustomerGroup extends Controller {
 				'sort_order'        => $result['sort_order'],
 				'edit'              => $this->url->link('sale/customer_group/update', 'token=' . $this->session->data['token'] . '&customer_group_id=' . $result['customer_group_id'] . $url, 'SSL')
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -244,11 +244,11 @@ class ControllerSaleCustomerGroup extends Controller {
 		$pagination->limit = $this->config->get('config_limit_admin');
 		$pagination->url = $this->url->link('sale/customer_group', 'token=' . $this->session->data['token'] . $url . '&page={page}', 'SSL');
 
-		$data['pagination'] = $pagination->render();				
+		$data['pagination'] = $pagination->render();
 
 		$data['results'] = sprintf($this->language->get('text_pagination'), ($customer_group_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($customer_group_total - $this->config->get('config_limit_admin'))) ? $customer_group_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $customer_group_total, ceil($customer_group_total / $this->config->get('config_limit_admin')));
 
-		$data['sort'] = $sort; 
+		$data['sort'] = $sort;
 		$data['order'] = $order;
 
 		$data['header'] = $this->load->controller('common/header');
@@ -334,7 +334,7 @@ class ControllerSaleCustomerGroup extends Controller {
 			$data['customer_group_description'] = $this->model_sale_customer_group->getCustomerGroupDescriptions($this->request->get['customer_group_id']);
 		} else {
 			$data['customer_group_description'] = array();
-		}	
+		}
 
 		if (isset($this->request->post['approval'])) {
 			$data['approval'] = $this->request->post['approval'];
@@ -342,7 +342,7 @@ class ControllerSaleCustomerGroup extends Controller {
 			$data['approval'] = $customer_group_info['approval'];
 		} else {
 			$data['approval'] = '';
-		}	
+		}
 
 		if (isset($this->request->post['sort_order'])) {
 			$data['sort_order'] = $this->request->post['sort_order'];
@@ -350,13 +350,13 @@ class ControllerSaleCustomerGroup extends Controller {
 			$data['sort_order'] = $customer_group_info['sort_order'];
 		} else {
 			$data['sort_order'] = '';
-		}	
+		}
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('sale/customer_group_form.tpl', $data)); 
+		$this->response->setOutput($this->load->view('sale/customer_group_form.tpl', $data));
 	}
 
 	protected function validateForm() {
@@ -384,7 +384,7 @@ class ControllerSaleCustomerGroup extends Controller {
 		foreach ($this->request->post['selected'] as $customer_group_id) {
 			if ($this->config->get('config_customer_group_id') == $customer_group_id) {
 				$this->error['warning'] = $this->language->get('error_default');
-			}  
+			}
 
 			$store_total = $this->model_setting_store->getTotalStoresByCustomerGroupId($customer_group_id);
 

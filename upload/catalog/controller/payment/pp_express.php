@@ -20,6 +20,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 	public function express() {
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$this->log->write('No product redirect');
 			$this->response->redirect($this->url->link('checkout/cart'));
 		}
 
@@ -218,7 +219,7 @@ class ControllerPaymentPPExpress extends Controller {
 				}
 
 				if (isset($result['PAYMENTREQUEST_0_SHIPTOSTATE'])) {
-					$returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOSTATE'];
+ 					$returned_shipping_zone = $result['PAYMENTREQUEST_0_SHIPTOSTATE'];
 				} else {
 					$returned_shipping_zone = '';
 				}
@@ -655,7 +656,7 @@ class ControllerPaymentPPExpress extends Controller {
 		/**
 		 * Payment methods
 		 */
-		if ($this->customer->isLogged()) {
+		if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
 			$this->load->model('account/address');
 			$payment_address = $this->model_account_address->getAddress($this->session->data['payment_address_id']);
 		} elseif (isset($this->session->data['guest'])) {
@@ -843,7 +844,7 @@ class ControllerPaymentPPExpress extends Controller {
 				$data['store_url'] = HTTP_SERVER;
 			}
 
-			if ($this->customer->isLogged()) {
+			if ($this->customer->isLogged() && isset($this->session->data['payment_address_id'])) {
 				$data['customer_id'] = $this->customer->getId();
 				$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 				$data['firstname'] = $this->customer->getFirstName();

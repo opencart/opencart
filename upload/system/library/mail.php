@@ -16,13 +16,13 @@ class Mail {
 	public $newline = "\n";
 	public $verp = false;
 	public $parameter = '';
-	
+
 	public function __construct($config = array()) {
 		foreach ($config as $key => $value) {
 			$this->$key = $value;
 		}
 	}
-	
+
 	public function setTo($to) {
 		$this->to = html_entity_decode($to, ENT_QUOTES, 'UTF-8');
 	}
@@ -170,14 +170,14 @@ class Mail {
 						break;
 					}
 				}
-        
+
 				fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
-				
+
 				$reply = '';
-				
+
 				while ($line = fgets($handle, 515)) {
 					$reply .= $line;
-					
+
 					if (substr($line, 3, 1) == ' ') {
 						break;
 					}
@@ -190,7 +190,7 @@ class Mail {
 
 				if ($is_tls) {
 					fputs($handle, 'STARTTLS' . "\r\n");
-					
+
 					$reply = '';
 
 					while ($line = fgets($handle, 515)) {
@@ -205,8 +205,8 @@ class Mail {
 						trigger_error('Error: STARTTLS not accepted from server!');
 						exit();
 					}
-          
-          			stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+
+					stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 				}
 
 				if (!empty($this->smtp_username)  && !empty($this->smtp_password)) {
@@ -375,12 +375,12 @@ class Mail {
 				// According to rfc 821 we should not send more than 1000 including the CRLF
 				$message = str_replace("\r\n", "\n", $header . $message);
 				$message = str_replace("\r", "\n", $message);
-				
+
 				$lines = explode("\n", $message);
-				
+
 				foreach ($lines as $line) {
 					$results = str_split($line, 998);
-					
+
 					foreach ($results as $result) {
 						if (substr(PHP_OS, 0, 3) != 'WIN') {
 							fputs($handle, $result . "\r\n");
@@ -406,7 +406,7 @@ class Mail {
 					trigger_error('Error: DATA not accepted from server!');
 					exit();
 				}
-				
+
 				fputs($handle, 'QUIT' . "\r\n");
 
 				$reply = '';

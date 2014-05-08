@@ -11,7 +11,7 @@ class CBA {
 		$this->setMerchantId($merchant_id);
 		$this->setAccessKey($access_key);
 		$this->setSecretKey($secret_key);
-		$this->setMarketplace($marketplace); 
+		$this->setMarketplace($marketplace);
 	}
 
 	public function scheduleReports() {
@@ -278,12 +278,12 @@ class CBA {
 
 	public function orderShipped($order) {
 		$xml = '<?xml version="1.0"?>
-<AmazonEnvelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="amzn-envelope.xsd"> 
-  <Header> 
+<AmazonEnvelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="amzn-envelope.xsd">
+  <Header>
 	<DocumentVersion>1.01</DocumentVersion>
 	<MerchantIdentifier>' . $this->getMerchantId() . '</MerchantIdentifier>
   </Header>
-  <MessageType>OrderFulfillment</MessageType> 
+  <MessageType>OrderFulfillment</MessageType>
   <Message>
 	<MessageID>1</MessageID>
 	<OrderFulfillment>
@@ -582,7 +582,7 @@ class CBA {
 	public function setMode($mode) {
 		$this->mode = $mode;
 	}
-	
+
 	public function getMarketplace() {
 		return $this->marketplace;
 	}

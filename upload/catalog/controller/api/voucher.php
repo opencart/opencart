@@ -1,6 +1,6 @@
 <?php
 class ControllerApiVoucher extends Controller {
-	public function voucher() {
+	public function index() {
 		$this->load->language('module/voucher');
 		
 		$json = array();

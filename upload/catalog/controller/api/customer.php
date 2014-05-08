@@ -12,7 +12,7 @@ class ControllerApiCustomer extends Controller {
 		
 	}
 	
-	public function listd() {
+	public function list() {
 		
 	}
 	

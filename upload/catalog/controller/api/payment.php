@@ -1,6 +1,6 @@
 <?php
 class ControllerApiPayment extends Controller {
-	public function payment() {
+	public function index() {
 		if (isset($this->session->data['payment_address'])) {
 			// Totals
 			$total_data = array();					

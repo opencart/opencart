@@ -8,7 +8,7 @@ class Log {
 	}
 
 	public function __destruct() {
-		fclose($this->filehandle); 
+		fclose($this->filehandle);
 	}
 
 	public function write($message) {

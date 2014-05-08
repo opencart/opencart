@@ -44,37 +44,37 @@ class ControllerCheckoutSuccess extends Controller {
 
 		$data['breadcrumbs'] = array();
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
-      	);
+		);
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_basket'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_basket'),
 			'href' => $this->url->link('checkout/cart')
-      	);
+		);
 
 		$data['breadcrumbs'][] = array(
 			'text' => $this->language->get('text_checkout'),
 			'href' => $this->url->link('checkout/checkout', '', 'SSL')
 		);
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_success'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_success'),
 			'href' => $this->url->link('checkout/success')
-      	);
+		);
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
 		if ($this->customer->isLogged()) {
-    		$data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('account/account', '', 'SSL'), $this->url->link('account/order', '', 'SSL'), $this->url->link('account/download', '', 'SSL'), $this->url->link('information/contact'));
+			$data['text_message'] = sprintf($this->language->get('text_customer'), $this->url->link('account/account', '', 'SSL'), $this->url->link('account/order', '', 'SSL'), $this->url->link('account/download', '', 'SSL'), $this->url->link('information/contact'));
 		} else {
-    		$data['text_message'] = sprintf($this->language->get('text_guest'), $this->url->link('information/contact'));
+			$data['text_message'] = sprintf($this->language->get('text_guest'), $this->url->link('information/contact'));
 		}
 
-    	$data['button_continue'] = $this->language->get('button_continue');
+		$data['button_continue'] = $this->language->get('button_continue');
 
-    	$data['continue'] = $this->url->link('common/home');
+		$data['continue'] = $this->url->link('common/home');
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -88,5 +88,5 @@ class ControllerCheckoutSuccess extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/common/success.tpl', $data));
 		}
-  	}
+	}
 }

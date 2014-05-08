@@ -429,14 +429,14 @@ class ControllerProductProduct extends Controller {
 
 				$data['products'][] = array(
 					'product_id'  => $result['product_id'],
-					'thumb'   	  => $image,
-					'name'    	  => $result['name'],
+					'thumb'       => $image,
+					'name'        => $result['name'],
 					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
-					'price'   	  => $price,
-					'special' 	  => $special,
+					'price'       => $price,
+					'special'     => $special,
 					'tax'         => $tax,
 					'rating'      => $rating,
-					'href'    	  => $this->url->link('product/product', 'product_id=' . $result['product_id'])
+					'href'        => $this->url->link('product/product', 'product_id=' . $result['product_id'])
 				);
 			}
 
@@ -521,20 +521,20 @@ class ControllerProductProduct extends Controller {
 				$url .= '&limit=' . $this->request->get['limit'];
 			}
 
-      		$data['breadcrumbs'][] = array(
-        		'text' => $this->language->get('text_error'),
+			$data['breadcrumbs'][] = array(
+				'text' => $this->language->get('text_error'),
 				'href' => $this->url->link('product/product', $url . '&product_id=' . $product_id)
-      		);
+			);
 
-      		$this->document->setTitle($this->language->get('text_error'));
+			$this->document->setTitle($this->language->get('text_error'));
 
-      		$data['heading_title'] = $this->language->get('text_error');
+			$data['heading_title'] = $this->language->get('text_error');
 
-      		$data['text_error'] = $this->language->get('text_error');
+			$data['text_error'] = $this->language->get('text_error');
 
-      		$data['button_continue'] = $this->language->get('button_continue');
+			$data['button_continue'] = $this->language->get('button_continue');
 
-      		$data['continue'] = $this->url->link('common/home');
+			$data['continue'] = $this->url->link('common/home');
 
 			$data['column_left'] = $this->load->controller('common/column_left');
 			$data['column_right'] = $this->load->controller('common/column_right');
@@ -548,11 +548,11 @@ class ControllerProductProduct extends Controller {
 			} else {
 				$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
 			}
-    	}
-  	}
+		}
+	}
 
 	public function review() {
-    	$this->load->language('product/product');
+		$this->load->language('product/product');
 
 		$this->load->model('catalog/review');
 
@@ -571,13 +571,13 @@ class ControllerProductProduct extends Controller {
 		$results = $this->model_catalog_review->getReviewsByProductId($this->request->get['product_id'], ($page - 1) * 5, 5);
 
 		foreach ($results as $result) {
-        	$data['reviews'][] = array(
-        		'author'     => $result['author'],
+			$data['reviews'][] = array(
+				'author'     => $result['author'],
 				'text'       => $result['text'],
 				'rating'     => (int)$result['rating'],
-        		'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
-        	);
-      	}
+				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added']))
+			);
+		}
 
 		$pagination = new Pagination();
 		$pagination->total = $review_total;
@@ -627,11 +627,11 @@ class ControllerProductProduct extends Controller {
 
 			if (!$json) {
 				$frequencies = array(
-					'day' => $this->language->get('text_day'),
-					'week' => $this->language->get('text_week'),
+					'day'        => $this->language->get('text_day'),
+					'week'       => $this->language->get('text_week'),
 					'semi_month' => $this->language->get('text_semi_month'),
-					'month' => $this->language->get('text_month'),
-					'year' => $this->language->get('text_year'),
+					'month'      => $this->language->get('text_month'),
+					'year'       => $this->language->get('text_year'),
 				);
 
 				if ($profile_info['trial_status'] == 1) {
@@ -701,8 +701,8 @@ class ControllerProductProduct extends Controller {
 
 			// Validate the filename length
 			if ((utf8_strlen($filename) < 3) || (utf8_strlen($filename) > 64)) {
-        		$json['error'] = $this->language->get('error_filename');
-	  		}
+				$json['error'] = $this->language->get('error_filename');
+			}
 
 			// Allowed file extension types
 			$allowed = array();
@@ -717,10 +717,10 @@ class ControllerProductProduct extends Controller {
 
 			if (!in_array(strtolower(substr(strrchr($filename, '.'), 1)), $allowed)) {
 				$json['error'] = $this->language->get('error_filetype');
-       		}
+			}
 
 			// Allowed file mime types
-		    $allowed = array();
+			$allowed = array();
 
 			$mime_allowed = preg_replace('~\r?\n~', "\n", $this->config->get('config_file_mime_allowed'));
 

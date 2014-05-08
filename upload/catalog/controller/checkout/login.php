@@ -13,7 +13,7 @@ class ControllerCheckoutLogin extends Controller {
 		$data['text_i_am_returning_customer'] = $this->language->get('text_i_am_returning_customer');
 		$data['text_register_account'] = $this->language->get('text_register_account');
 		$data['text_forgotten'] = $this->language->get('text_forgotten');
- 		$data['text_loading'] = $this->language->get('text_loading');
+		$data['text_loading'] = $this->language->get('text_loading');
 
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_password'] = $this->language->get('entry_password');

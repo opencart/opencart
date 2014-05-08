@@ -5,7 +5,7 @@ class ControllerPaymentMoneybookers extends Controller {
 
 		$this->load->language('payment/moneybookers');
 
-    	$data['button_confirm'] = $this->language->get('button_confirm');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$data['action'] = 'https://www.moneybookers.com/app/payment.pl?p=OpenCart';
 
@@ -13,32 +13,32 @@ class ControllerPaymentMoneybookers extends Controller {
 		$data['platform'] = '31974336';
 		$data['description'] = $this->config->get('config_name');
 		$data['transaction_id'] = $this->session->data['order_id'];
-        $data['return_url'] = $this->url->link('checkout/success');
+		$data['return_url'] = $this->url->link('checkout/success');
 		$data['cancel_url'] = $this->url->link('checkout/checkout', '', 'SSL');
 		$data['status_url'] = $this->url->link('payment/moneybookers/callback');
 		$data['language'] = $this->session->data['language'];
 		$data['logo'] = $this->config->get('config_url') . 'image/' . $this->config->get('config_logo');
 
-        $order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
+		$order_info = $this->model_checkout_order->getOrder($this->session->data['order_id']);
 
 		$data['pay_from_email'] = $order_info['email'];
 		$data['firstname'] = $order_info['payment_firstname'];
-        $data['lastname'] = $order_info['payment_lastname'];
-        $data['address'] = $order_info['payment_address_1'];
-        $data['address2'] = $order_info['payment_address_2'];
-        $data['phone_number'] = $order_info['telephone'];
+		$data['lastname'] = $order_info['payment_lastname'];
+		$data['address'] = $order_info['payment_address_1'];
+		$data['address2'] = $order_info['payment_address_2'];
+		$data['phone_number'] = $order_info['telephone'];
 		$data['postal_code'] = $order_info['payment_postcode'];
-        $data['city'] = $order_info['payment_city'];
-        $data['state'] = $order_info['payment_zone'];
+		$data['city'] = $order_info['payment_city'];
+		$data['state'] = $order_info['payment_zone'];
 		$data['country'] = $order_info['payment_iso_code_3'];
 		$data['amount'] = $this->currency->format($order_info['total'], $order_info['currency_code'], $order_info['currency_value'], false);
-        $data['currency'] = $order_info['currency_code'];
+		$data['currency'] = $order_info['currency_code'];
 
 		$products = '';
 
 		foreach ($this->cart->getProducts() as $product) {
-    		$products .= $product['quantity'] . ' x ' . $product['name'] . ', ';
-    	}
+			$products .= $product['quantity'] . ' x ' . $product['name'] . ', ';
+		}
 
 		$data['detail1_text'] = $products;
 

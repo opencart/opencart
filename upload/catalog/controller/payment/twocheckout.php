@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentTwoCheckout extends Controller {
 	public function index() {
-    	$data['button_confirm'] = $this->language->get('button_confirm');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$this->load->model('checkout/order');
 
@@ -52,7 +52,7 @@ class ControllerPaymentTwoCheckout extends Controller {
 				'name'        => $product['name'],
 				'description' => $product['name'],
 				'quantity'    => $product['quantity'],
-				'price'		  => $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value'], false)
+				'price'       => $this->currency->format($product['price'], $order_info['currency_code'], $order_info['currency_value'], false)
 			);
 		}
 

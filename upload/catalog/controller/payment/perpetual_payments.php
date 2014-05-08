@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPerpetualPayments extends Controller {
 	public function index() {
-    	$this->load->language('payment/perpetual_payments');
+		$this->load->language('payment/perpetual_payments');
 
 		$data['text_credit_card'] = $this->language->get('text_credit_card');
 		$data['text_loading'] = $this->language->get('text_loading');
@@ -70,8 +70,8 @@ class ControllerPaymentPerpetualPayments extends Controller {
 			'cust_name'     => $order_info['payment_firstname'] . ' ' . $order_info['payment_lastname'],
 			'cust_address'  => $order_info['payment_address_1'] . ' ' . $order_info['payment_city'],
 			'cust_country'  => $order_info['payment_iso_code_2'],
-			'cust_postcode'	=> $order_info['payment_postcode'],
-			'cust_tel'	 	=> $order_info['telephone'],
+			'cust_postcode' => $order_info['payment_postcode'],
+			'cust_tel'      => $order_info['telephone'],
 			'cust_ip'       => $this->request->server['REMOTE_ADDR'],
 			'cust_email'    => $order_info['email'],
 			'tran_ref'      => $order_info['order_id'],
@@ -88,10 +88,10 @@ class ControllerPaymentPerpetualPayments extends Controller {
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
 		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
-        curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-        curl_setopt($curl, CURLOPT_POST, 1);
-        curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($payment_data));
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 1);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, http_build_query($payment_data));
 
 		$response = curl_exec($curl);
 

@@ -61,8 +61,8 @@ class ControllerCommonContentTop extends Controller {
 		$sort_order = array();
 
 		foreach ($module_data as $key => $value) {
-      		$sort_order[$key] = $value['sort_order'];
-    	}
+			$sort_order[$key] = $value['sort_order'];
+		}
 
 		array_multisort($sort_order, SORT_ASC, $module_data);
 

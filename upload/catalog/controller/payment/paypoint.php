@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPaypoint extends Controller {
 	public function index() {
-    	$data['button_confirm'] = $this->language->get('button_confirm');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		$this->load->model('checkout/order');
 

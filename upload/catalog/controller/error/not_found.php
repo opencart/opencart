@@ -9,10 +9,10 @@ class ControllerErrorNotFound extends Controller {
 
 		$data['breadcrumbs'] = array();
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
-      	);
+		);
 
 		if (isset($this->request->get['route'])) {
 			$url_data = $this->request->get;
@@ -35,10 +35,10 @@ class ControllerErrorNotFound extends Controller {
 				$connection = 'NONSSL';
 			}
 
-       		$data['breadcrumbs'][] = array(
+			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
 				'href' => $this->url->link($route, $url, $connection)
-      		);
+			);
 		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
@@ -63,5 +63,5 @@ class ControllerErrorNotFound extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/error/not_found.tpl', $data));
 		}
-  	}
+	}
 }

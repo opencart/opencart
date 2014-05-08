@@ -1,6 +1,6 @@
 <?php
 class ControllerCheckoutShippingMethod extends Controller {
-  	public function index() {
+	public function index() {
 		$this->load->language('checkout/checkout');
 
 		if (isset($this->session->data['shipping_address'])) {
@@ -74,7 +74,7 @@ class ControllerCheckoutShippingMethod extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/checkout/shipping_method.tpl', $data));
 		}
-  	}
+	}
 
 	public function save() {
 		$this->load->language('checkout/checkout');

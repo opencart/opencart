@@ -1,7 +1,7 @@
 <?php
 class ControllerProductSpecial extends Controller {
 	public function index() {
-    	$this->load->language('product/special');
+		$this->load->language('product/special');
 
 		$this->load->model('catalog/product');
 
@@ -19,7 +19,7 @@ class ControllerProductSpecial extends Controller {
 			$order = 'ASC';
 		}
 
-  		if (isset($this->request->get['page'])) {
+		if (isset($this->request->get['page'])) {
 			$page = $this->request->get['page'];
 		} else {
 			$page = 1;
@@ -35,10 +35,10 @@ class ControllerProductSpecial extends Controller {
 
 		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
-   		);
+		);
 
 		$url = '';
 
@@ -58,12 +58,12 @@ class ControllerProductSpecial extends Controller {
 			$url .= '&limit=' . $this->request->get['limit'];
 		}
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('product/special', $url)
-   		);
+		);
 
-    	$data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_empty'] = $this->language->get('text_empty');
 		$data['text_quantity'] = $this->language->get('text_quantity');
@@ -269,5 +269,5 @@ class ControllerProductSpecial extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/product/special.tpl', $data));
 		}
-  	}
+	}
 }

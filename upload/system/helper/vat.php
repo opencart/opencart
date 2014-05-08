@@ -44,7 +44,7 @@ function vat_validation($prefix, $number) {
 
 		if (preg_match('/\binvalid VAT number\b/i', $response)) {
 			return 'invalid';
-		} 
+		}
 	} else {
 		return 'unknown';
 	}

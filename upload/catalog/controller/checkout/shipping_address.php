@@ -70,7 +70,7 @@ class ControllerCheckoutShippingAddress extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/checkout/shipping_address.tpl', $data));
 		}
-  	}
+	}
 
 	public function save() {
 		$this->load->language('checkout/checkout');

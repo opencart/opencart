@@ -1,9 +1,9 @@
 <?php
 class ControllerReportCustomerOnline extends Controller {
-  	public function index() {
+	public function index() {
 		$this->load->language('report/customer_online');
 
-    	$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['filter_ip'])) {
 			$filter_ip = $this->request->get['filter_ip'];

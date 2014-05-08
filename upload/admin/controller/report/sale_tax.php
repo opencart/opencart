@@ -59,15 +59,15 @@ class ControllerReportSaleTax extends Controller {
 
 		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('report/sale_tax', 'token=' . $this->session->data['token'] . $url, 'SSL')
-   		);
+		);
 
 		$this->load->model('report/sale');
 
@@ -98,7 +98,7 @@ class ControllerReportSaleTax extends Controller {
 			);
 		}
 
- 		$data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');

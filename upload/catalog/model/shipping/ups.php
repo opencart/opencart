@@ -168,13 +168,13 @@ class ModelShippingUps extends Model {
 			$xml .= '			</PackagingType>';
 
 			$xml .= '		    <Dimensions>';
-    		$xml .= '				<UnitOfMeasurement>';
-    		$xml .= '					<Code>' . $length_code . '</Code>';
-    		$xml .= '				</UnitOfMeasurement>';
-    		$xml .= '				<Length>' . $length . '</Length>';
-    		$xml .= '				<Width>' . $width . '</Width>';
-    		$xml .= '				<Height>' . $height . '</Height>';
-    		$xml .= '			</Dimensions>';
+			$xml .= '				<UnitOfMeasurement>';
+			$xml .= '					<Code>' . $length_code . '</Code>';
+			$xml .= '				</UnitOfMeasurement>';
+			$xml .= '				<Length>' . $length . '</Length>';
+			$xml .= '				<Width>' . $width . '</Width>';
+			$xml .= '				<Height>' . $height . '</Height>';
+			$xml .= '			</Dimensions>';
 
 			$xml .= '			<PackageWeight>';
 			$xml .= '				<UnitOfMeasurement>';

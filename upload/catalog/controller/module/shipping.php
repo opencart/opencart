@@ -206,7 +206,7 @@ class ControllerModuleShipping extends Controller {
 
 		$this->load->model('localisation/country');
 
-    	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
 
 		if ($country_info) {
 			$this->load->model('localisation/zone');

@@ -17,7 +17,7 @@ class ModelInstall extends Model {
 			foreach($lines as $line) {
 				if ($line && (substr($line, 0, 2) != '--') && (substr($line, 0, 1) != '#')) {
 					$sql .= $line;
-  
+
 					if (preg_match('/;\s*$/', $line)) {
 						$sql = str_replace("DROP TABLE IF EXISTS `oc_", "DROP TABLE IF EXISTS `" . $data['db_prefix'], $sql);
 						$sql = str_replace("CREATE TABLE `oc_", "CREATE TABLE `" . $data['db_prefix'], $sql);

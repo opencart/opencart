@@ -64,7 +64,7 @@ class ControllerCheckoutPaymentAddress extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/checkout/payment_address.tpl', $data));
 		}
-  	}
+	}
 
 	public function save() {
 		$this->load->language('checkout/checkout');

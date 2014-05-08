@@ -23,29 +23,29 @@ class ModelShippingParcelforce48 extends Model {
 			$rates = explode(',', $this->config->get('parcelforce_48_rate'));
 
 			foreach ($rates as $rate) {
-  				$data = explode(':', $rate);
+				$data = explode(':', $rate);
 
 				if ($data[0] >= $weight) {
 					if (isset($data[1])) {
-    					$cost = $data[1];
+						$cost = $data[1];
 					}
 
-   					break;
-  				}
+					break;
+				}
 			}
 
 			$rates = explode(',', $this->config->get('parcelforce_48_insurance'));
 
 			foreach ($rates as $rate) {
-  				$data = explode(':', $rate);
+				$data = explode(':', $rate);
 
 				if ($data[0] >= $sub_total) {
 					if (isset($data[1])) {
-    					$insurance = $data[1];
+						$insurance = $data[1];
 					}
 
-   					break;
-  				}
+					break;
+				}
 			}
 
 			$quote_data = array();
@@ -65,21 +65,21 @@ class ModelShippingParcelforce48 extends Model {
 					$text .= ' (' . $this->language->get('text_time') . ')';
 				}
 
-      			$quote_data['parcelforce_48'] = array(
-        			'code'         => 'parcelforce_48.parcelforce_48',
-        			'title'        => $text,
-        			'cost'         => $cost,
-        			'tax_class_id' => $this->config->get('parcelforce_48_tax_class_id'),
+				$quote_data['parcelforce_48'] = array(
+					'code'         => 'parcelforce_48.parcelforce_48',
+					'title'        => $text,
+					'cost'         => $cost,
+					'tax_class_id' => $this->config->get('parcelforce_48_tax_class_id'),
 					'text'         => $this->currency->format($this->tax->calculate($cost, $this->config->get('parcelforce_48_tax_class_id'), $this->config->get('config_tax')))
-      			);
+				);
 
-      			$method_data = array(
-        			'code'       => 'parcelforce_48',
-        			'title'      => $this->language->get('text_title'),
-        			'quote'      => $quote_data,
+				$method_data = array(
+					'code'       => 'parcelforce_48',
+					'title'      => $this->language->get('text_title'),
+					'quote'      => $quote_data,
 					'sort_order' => $this->config->get('parcelforce_48_sort_order'),
-        			'error'      => false
-      			);
+					'error'      => false
+				);
 			}
 		}
 

@@ -1,7 +1,7 @@
 <?php
 class ControllerCheckoutGuest extends Controller {
-  	public function index() {
-    	$this->load->language('checkout/checkout');
+	public function index() {
+		$this->load->language('checkout/checkout');
 
 		$data['text_select'] = $this->language->get('text_select');
 		$data['text_none'] = $this->language->get('text_none');
@@ -43,7 +43,7 @@ class ControllerCheckoutGuest extends Controller {
 		}
 
 		if (isset($this->session->data['guest']['customer_group_id'])) {
-    		$data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
+			$data['customer_group_id'] = $this->session->data['guest']['customer_group_id'];
 		} else {
 			$data['customer_group_id'] = $this->config->get('config_customer_group_id');
 		}
@@ -154,10 +154,10 @@ class ControllerCheckoutGuest extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/checkout/guest.tpl', $data));
 		}
-  	}
+	}
 
 	public function save() {
-    	$this->load->language('checkout/checkout');
+		$this->load->language('checkout/checkout');
 
 		$json = array();
 

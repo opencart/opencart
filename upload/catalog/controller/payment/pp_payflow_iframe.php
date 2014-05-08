@@ -33,19 +33,19 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		$payment_zone = $this->model_localisation_zone->getZone($order_info['payment_zone_id']);
 
 		$urlParams = array(
-			'TENDER' => 'C',
-			'TRXTYPE' => $transaction_type,
-			'AMT' => $this->currency->format($order_info['total'], $order_info['currency_code'], false, false),
-			'CURRENCY' => $order_info['currency_code'],
+			'TENDER'            => 'C',
+			'TRXTYPE'           => $transaction_type,
+			'AMT'               => $this->currency->format($order_info['total'], $order_info['currency_code'], false, false),
+			'CURRENCY'          => $order_info['currency_code'],
 			'CREATESECURETOKEN' => 'Y',
-			'SECURETOKENID' => $secure_token_id,
-			'BILLTOFIRSTNAME' => $order_info['payment_firstname'],
-			'BILLTOLASTNAME' => $order_info['payment_lastname'],
-			'BILLTOSTREET' => trim($order_info['payment_address_1'] . ' ' . $order_info['payment_address_2']),
-			'BILLTOCITY' => $order_info['payment_city'],
-			'BILLTOSTATE' => $payment_zone['code'],
-			'BILLTOZIP' => $order_info['payment_postcode'],
-			'BILLTOCOUNTRY' => $payment_country['iso_code_2'],
+			'SECURETOKENID'     => $secure_token_id,
+			'BILLTOFIRSTNAME'   => $order_info['payment_firstname'],
+			'BILLTOLASTNAME'    => $order_info['payment_lastname'],
+			'BILLTOSTREET'      => trim($order_info['payment_address_1'] . ' ' . $order_info['payment_address_2']),
+			'BILLTOCITY'        => $order_info['payment_city'],
+			'BILLTOSTATE'       => $payment_zone['code'],
+			'BILLTOZIP'         => $order_info['payment_postcode'],
+			'BILLTOCOUNTRY'     => $payment_country['iso_code_2'],
 		);
 
 		if ($shipping_country) {
@@ -67,9 +67,9 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 		}
 
 		$iframe_params = array(
-			'MODE' => $mode,
+			'MODE'          => $mode,
 			'SECURETOKENID' => $secure_token_id,
-			'SECURETOKEN' => $secure_token,
+			'SECURETOKEN'   => $secure_token,
 		);
 
 		$data['iframe_url'] = $payflow_url . '?' . http_build_query($iframe_params, '', "&");
@@ -125,9 +125,9 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 			$order_info = $this->model_checkout_order->getOrder($order_id);
 
 			$urlParams = array(
-				'TENDER' => 'C',
+				'TENDER'  => 'C',
 				'TRXTYPE' => 'I',
-				'ORIGID' => $this->request->post['PNREF'],
+				'ORIGID'  => $this->request->post['PNREF'],
 			);
 
 			$response_params = $this->model_payment_pp_payflow_iframe->call($urlParams);
@@ -142,19 +142,19 @@ class ControllerPaymentPPPayflowIframe extends Controller {
 				}
 
 				$data = array(
-					'secure_token_id' => $this->request->post['SECURETOKENID'],
+					'secure_token_id'       => $this->request->post['SECURETOKENID'],
 					'transaction_reference' => $this->request->post['PNREF'],
-					'transaction_type' => $this->request->post['TYPE'],
-					'complete' => $complete,
+					'transaction_type'      => $this->request->post['TYPE'],
+					'complete'              => $complete,
 				);
 
 				$this->model_payment_pp_payflow_iframe->updateOrder($data);
 
 				$data = array(
-					'order_id' => $order_id,
-					'type' => $this->request->post['TYPE'],
+					'order_id'              => $order_id,
+					'type'                  => $this->request->post['TYPE'],
 					'transaction_reference' => $this->request->post['PNREF'],
-					'amount' => $this->request->post['AMT'],
+					'amount'                => $this->request->post['AMT'],
 				);
 
 				$this->model_payment_pp_payflow_iframe->addTransaction($data);

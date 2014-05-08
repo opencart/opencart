@@ -3,8 +3,8 @@ class ControllerCheckoutCheckout extends Controller {
 	public function index() {
 		// Validate cart has products and has stock.
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-	  		$this->response->redirect($this->url->link('checkout/cart'));
-    	}
+			$this->response->redirect($this->url->link('checkout/cart'));
+		}
 
 		// Validate minimum quantity requirments.
 		$products = $this->cart->getProducts();
@@ -38,22 +38,22 @@ class ControllerCheckoutCheckout extends Controller {
 
 		$data['breadcrumbs'] = array();
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/home')
-      	);
+		);
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('text_cart'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_cart'),
 			'href' => $this->url->link('checkout/cart')
-      	);
+		);
 
-      	$data['breadcrumbs'][] = array(
-        	'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('checkout/checkout', '', 'SSL')
-      	);
+		);
 
-	    $data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_checkout_option'] = $this->language->get('text_checkout_option');
 		$data['text_checkout_account'] = $this->language->get('text_checkout_account');
@@ -92,14 +92,14 @@ class ControllerCheckoutCheckout extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/checkout/checkout.tpl', $data));
 		}
-  	}
+	}
 
 	public function country() {
 		$json = array();
 
 		$this->load->model('localisation/country');
 
-    	$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
+		$country_info = $this->model_localisation_country->getCountry($this->request->get['country_id']);
 
 		if ($country_info) {
 			$this->load->model('localisation/zone');

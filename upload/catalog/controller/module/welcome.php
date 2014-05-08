@@ -3,7 +3,7 @@ class ControllerModuleWelcome extends Controller {
 	public function index($setting) {
 		$this->load->language('module/welcome');
 
-    	$data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
+		$data['heading_title'] = sprintf($this->language->get('heading_title'), $this->config->get('config_name'));
 
 		$data['message'] = html_entity_decode($setting['description'][$this->config->get('config_language_id')], ENT_QUOTES, 'UTF-8');
 

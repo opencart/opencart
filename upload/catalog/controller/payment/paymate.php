@@ -1,7 +1,7 @@
 <?php
 class ControllerPaymentPaymate extends Controller {
 	public function index() {
-    	$data['button_confirm'] = $this->language->get('button_confirm');
+		$data['button_confirm'] = $this->language->get('button_confirm');
 
 		if (!$this->config->get('paymate_test')) {
 			$data['action'] = 'https://www.paymate.com/PayMate/ExpressPayment';

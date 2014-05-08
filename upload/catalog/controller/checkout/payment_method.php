@@ -1,6 +1,6 @@
 <?php
 class ControllerCheckoutPaymentMethod extends Controller {
-  	public function index() {
+	public function index() {
 		$this->load->language('checkout/checkout');
 
 		if (isset($this->session->data['payment_address'])) {
@@ -126,7 +126,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/checkout/payment_method.tpl', $data));
 		}
-  	}
+	}
 
 	public function save() {
 		$this->load->language('checkout/checkout');

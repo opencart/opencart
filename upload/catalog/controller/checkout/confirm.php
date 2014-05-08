@@ -416,5 +416,5 @@ class ControllerCheckoutConfirm extends Controller {
 		} else {
 			$this->response->setOutput($this->load->view('default/template/checkout/confirm.tpl', $data));
 		}
-  	}
+	}
 }

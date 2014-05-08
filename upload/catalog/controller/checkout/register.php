@@ -1,6 +1,6 @@
 <?php
 class ControllerCheckoutRegister extends Controller {
-  	public function index() {
+	public function index() {
 		$this->load->language('checkout/checkout');
 
 		$data['text_checkout_payment_address'] = $this->language->get('text_checkout_payment_address');

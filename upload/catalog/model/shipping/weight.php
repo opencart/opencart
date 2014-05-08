@@ -1,6 +1,6 @@
 <?php
 class ModelShippingWeight extends Model {
-  	public function getQuote($address) {
+	public function getQuote($address) {
 		$this->load->language('shipping/weight');
 
 		$quote_data = array();
@@ -53,15 +53,15 @@ class ModelShippingWeight extends Model {
 		$method_data = array();
 
 		if ($quote_data) {
-      		$method_data = array(
-        		'code'       => 'weight',
-        		'title'      => $this->language->get('text_title'),
-        		'quote'      => $quote_data,
+			$method_data = array(
+				'code'       => 'weight',
+				'title'      => $this->language->get('text_title'),
+				'quote'      => $quote_data,
 				'sort_order' => $this->config->get('weight_sort_order'),
-        		'error'      => false
-      		);
+				'error'      => false
+			);
 		}
 
 		return $method_data;
-  	}
+	}
 }

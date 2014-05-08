@@ -1,9 +1,9 @@
 <?php
 class ControllerReportCustomerActivity extends Controller {
-  	public function index() {
+	public function index() {
 		$this->load->language('report/customer_activity');
 
-    	$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['filter_customer'])) {
 			$filter_customer = $this->request->get['filter_customer'];
@@ -57,17 +57,17 @@ class ControllerReportCustomerActivity extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
-       		'text' => $this->language->get('text_home')
-   		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home')
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'href' => $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-       		'text' => $this->language->get('heading_title')
-   		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('report/customer_activity', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'text' => $this->language->get('heading_title')
+		);
 
 		$this->load->model('report/customer');
 
@@ -99,14 +99,14 @@ class ControllerReportCustomerActivity extends Controller {
 				$this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=', 'SSL')
 			);
 
-      		$data['activities'][] = array(
+			$data['activities'][] = array(
 				'comment'    => str_replace($find, $replace, $comment),
 				'ip'         => $result['ip'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
 		}
 
- 		$data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -162,5 +162,5 @@ class ControllerReportCustomerActivity extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('report/customer_activity.tpl', $data));
-  	}
+	}
 }

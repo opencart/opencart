@@ -354,7 +354,7 @@ class ModelCatalogProduct extends Model {
 				'value'                => $product_option['value'],
 				'required'             => $product_option['required']
 			);
-      	}
+		}
 
 		return $product_option_data;
 	}

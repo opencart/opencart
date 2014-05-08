@@ -57,17 +57,17 @@ class ControllerReportSaleOrder extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-   		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('report/sale_order', 'token=' . $this->session->data['token'] . $url, 'SSL')
-   		);
+		);
 
 		$this->load->model('report/sale');
 
@@ -105,7 +105,7 @@ class ControllerReportSaleOrder extends Controller {
 
 		$data['column_date_start'] = $this->language->get('column_date_start');
 		$data['column_date_end'] = $this->language->get('column_date_end');
-    	$data['column_orders'] = $this->language->get('column_orders');
+		$data['column_orders'] = $this->language->get('column_orders');
 		$data['column_products'] = $this->language->get('column_products');
 		$data['column_tax'] = $this->language->get('column_tax');
 		$data['column_total'] = $this->language->get('column_total');

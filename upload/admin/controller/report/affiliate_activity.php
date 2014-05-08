@@ -1,9 +1,9 @@
 <?php
 class ControllerReportAffiliateActivity extends Controller {
-  	public function index() {
+	public function index() {
 		$this->load->language('report/affiliate_activity');
 
-    	$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (isset($this->request->get['filter_affiliate'])) {
 			$filter_affiliate = $this->request->get['filter_affiliate'];
@@ -57,17 +57,17 @@ class ControllerReportAffiliateActivity extends Controller {
 			$url .= '&page=' . $this->request->get['page'];
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
-       		'text' => $this->language->get('text_home')
-   		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home')
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'href' => $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'] . $url, 'SSL'),
-       		'text' => $this->language->get('heading_title')
-   		);
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('report/affiliate_activity', 'token=' . $this->session->data['token'] . $url, 'SSL'),
+			'text' => $this->language->get('heading_title')
+		);
 
 		$this->load->model('report/affiliate');
 
@@ -89,14 +89,14 @@ class ControllerReportAffiliateActivity extends Controller {
 		foreach ($results as $result) {
 			$comment = vsprintf($this->language->get('text_' . $result['key']), unserialize($result['data']));
 
-      		$data['activities'][] = array(
+			$data['activities'][] = array(
 				'comment'    => str_replace('affiliate_id=', $this->url->link('marketing/affiliate/update', 'token=' . $this->session->data['token'] . '&affiliate_id=', 'SSL'), $comment),
 				'ip'         => $result['ip'],
 				'date_added' => date($this->language->get('datetime_format'), strtotime($result['date_added']))
 			);
 		}
 
- 		$data['heading_title'] = $this->language->get('heading_title');
+		$data['heading_title'] = $this->language->get('heading_title');
 
 		$data['text_no_results'] = $this->language->get('text_no_results');
 		$data['text_confirm'] = $this->language->get('text_confirm');
@@ -152,5 +152,5 @@ class ControllerReportAffiliateActivity extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('report/affiliate_activity.tpl', $data));
-  	}
+	}
 }

@@ -4,9 +4,9 @@ define('VERSION', '2.0');
 // Set your config info here
 define('DB_TEST_DRIVER', 'mysqli');
 define('DB_TEST_HOSTNAME', 'localhost');
-define('DB_TEST_USERNAME', '');
+define('DB_TEST_USERNAME', 'root');
 define('DB_TEST_PASSWORD', '');
-define('DB_TEST_DATABASE', '');
+define('DB_TEST_DATABASE', 'test5');
 define('DB_TEST_PREFIX', 'oc_');
 
 define('ADMIN_USERNAME', 'admin');

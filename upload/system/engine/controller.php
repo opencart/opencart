@@ -1,6 +1,6 @@
 <?php
 abstract class Controller {
-	protected $registry;	
+	protected $registry;
 	protected $data;
 
 	public function __construct($registry) {

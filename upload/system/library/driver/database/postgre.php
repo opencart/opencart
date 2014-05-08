@@ -10,7 +10,7 @@ final class DBPostgre {
 		if (!mysql_select_db($database, $this->link)) {
 			trigger_error('Error: Could not connect to database ' . $database);
 		}
-		
+
 		pg_query($this->link, "SET CLIENT_ENCODING TO 'UTF8'");
 	}
 
@@ -38,7 +38,7 @@ final class DBPostgre {
 
 				unset($data);
 
-				return $query;	
+				return $query;
 			} else {
 				return true;
 			}
@@ -60,7 +60,7 @@ final class DBPostgre {
 		$query = $this->query("SELECT LASTVAL() AS `id`");
 
 		return $query->row['id'];
-	}	
+	}
 
 	public function __destruct() {
 		pg_close($this->link);

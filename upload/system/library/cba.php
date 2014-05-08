@@ -11,7 +11,7 @@ class CBA {
 		$this->setMerchantId($merchant_id);
 		$this->setAccessKey($access_key);
 		$this->setSecretKey($secret_key);
-		$this->setMarketplace($marketplace);
+		$this->setMarketplace($marketplace); 
 	}
 
 	public function scheduleReports() {
@@ -277,29 +277,33 @@ class CBA {
 	}
 
 	public function orderShipped($order) {
-		$xml  = '<?xml version="1.0"?>';
-		$xml .= '<AmazonEnvelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="amzn-envelope.xsd">';
-		$xml .= '	<Header>';
-		$xml .= '		<DocumentVersion>1.01</DocumentVersion>';
-		$xml .= '		<MerchantIdentifier>' . $this->getMerchantId() . '</MerchantIdentifier>';
-		$xml .= '	</Header>';
-		$xml .= '	<MessageType>OrderFulfillment</MessageType>';
-		$xml .= '	<Message>';
-		$xml .= '		<MessageID>1</MessageID>';
-		$xml .= '		<OrderFulfillment>';
-		$xml .= '			<AmazonOrderID>' . $order['amazon_order_id'] . '</AmazonOrderID>';
-		$xml .= '			<FulfillmentDate>' . date('c') . '</FulfillmentDate>';
+		$xml = '<?xml version="1.0"?>
+<AmazonEnvelope xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="amzn-envelope.xsd"> 
+  <Header> 
+	<DocumentVersion>1.01</DocumentVersion>
+	<MerchantIdentifier>' . $this->getMerchantId() . '</MerchantIdentifier>
+  </Header>
+  <MessageType>OrderFulfillment</MessageType> 
+  <Message>
+	<MessageID>1</MessageID>
+	<OrderFulfillment>
+	  <AmazonOrderID>' . $order['amazon_order_id'] . '</AmazonOrderID>
+	  <FulfillmentDate>' . date('c') . '</FulfillmentDate>
+';
 
 		foreach ($order['products'] as $product) {
-			$xml .= '			<Item>';
-			$xml .= '				<AmazonOrderItemCode>' . $product['amazon_order_item_code'] . '</AmazonOrderItemCode>';
-			$xml .= '				<Quantity>' . $product['quantity'] . '</Quantity>';
-			$xml .= '			</Item>';
+			$xml .= '
+	  <Item>
+		<AmazonOrderItemCode>' . $product['amazon_order_item_code'] . '</AmazonOrderItemCode>
+		<Quantity>' . $product['quantity'] . '</Quantity>
+	  </Item>
+';
 		}
 
-		$xml .= '		</OrderFulfillment>';
-		$xml .= '	</Message>';
-		$xml .= '</AmazonEnvelope>';
+		$xml .= '
+	</OrderFulfillment>
+  </Message>
+</AmazonEnvelope>';
 
 		$headers = array(
 			'Content-Type: text/xml',
@@ -578,7 +582,7 @@ class CBA {
 	public function setMode($mode) {
 		$this->mode = $mode;
 	}
-
+	
 	public function getMarketplace() {
 		return $this->marketplace;
 	}

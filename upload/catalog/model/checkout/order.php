@@ -29,6 +29,9 @@ class ModelCheckoutOrder extends Model {
 		// Custom Fields
 		$data['custom_fields'] = array();
 
+		// Ensure the correct module is loaded before we start messing with custom fields.
+		$this->load->model('account/custom_field');
+
 		$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->config->get('config_customer_group_id')));
 
 		foreach ($custom_fields as $custom_field) {
@@ -40,8 +43,7 @@ class ModelCheckoutOrder extends Model {
 
 		}
 
-
-		foreach ($data['custom_field'] as $custom_field) {
+		foreach ($custom_fields as $custom_field) {
 			$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` WHERE custom_field = '" . (int)$custom_field['custom_field_id'] . "'");
 
 			if ($custom_field_query->num_rows) {

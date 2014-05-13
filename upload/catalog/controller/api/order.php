@@ -6,7 +6,6 @@ class ControllerApiOrder extends Controller {
 		$json = array();
 		
 		$keys = array(
-			'store_id'
 			'customer_id'
 			'customer_group_id'			
 			'firstname'
@@ -50,27 +49,20 @@ class ControllerApiOrder extends Controller {
 			'shipping_code'
 			'comment'
 			
-			'affiliate_id
-			'commission
+			'affiliate_id'
+			'commission'
 			
-			'currency_code
+			'currency_code'
 			
-			'language_id
-
-			
-		);
-			
+			'language_id'
 			'product'
 			
-			foreach () {
-				
-			}
 			
+			'coupon'
+			'voucher'
+			'reward'
+		);
 			
-			
-			if () {
-				
-			}
 			
 			// Customer Details
 			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
@@ -118,7 +110,7 @@ class ControllerApiOrder extends Controller {
 				$json['error']['payment_zone'] = $this->language->get('error_zone');
 			}
 			
-			
+			if ($this->cart->hasShipping()) {
 				// Shipping address
 				if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
 					$json['error']['shipping']['firstname'] = $this->language->get('error_firstname');
@@ -160,16 +152,6 @@ class ControllerApiOrder extends Controller {
 					$json['error']['shipping']['postcode'] = $this->language->get('error_postcode');
 				}			
 			
-			
-			
-			
-			// Settings
-			$this->load->model('setting/setting');
-			
-			$settings = $this->model_setting_setting->getSetting('config', $this->request->post['store_id']);
-			
-			foreach ($settings as $key => $value) {
-				$this->config->set($key, $value);
 			}
 			
     		// Customer

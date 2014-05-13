@@ -10,8 +10,8 @@
     <![CDATA[http://www.opencart.com]]>
   </author>
   <file name="system/{engine,library}/{action,loader,config,language}*.php">
-	<operation>
-      <search regex="true">
+	<operation type="regex">
+      <search>
         <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
       </search>
       <add position="replace">
@@ -19,4 +19,14 @@
       </add>
     </operation>
   </file>
+  <file name="catalog/controller/common/home.php">
+	<operation>
+      <search>
+        <![CDATA[$data['column_left'] = $this->load->controller('common/column_left');]]>
+      </search>
+      <add position="replace">
+        <![CDATA[test123]]>
+      </add>
+    </operation>
+  </file>  
 </modification>

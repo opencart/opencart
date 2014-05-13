@@ -1,4 +1,76 @@
 <?php
+/**
+ * Modifcation XML Documentation
+ * 
+ * 
+ * Start of the modifcation tag
+ * <modification>
+ * 
+ * Tag: name
+ * Description: Name of the modification 
+ * Example:
+ *   
+ * <name>
+ *   <![CDATA[Modification Default]]>
+ * </name>
+ *   
+ * 
+ * TAG: version
+ * Description: Version Extension Version This is used for when you are uploading  
+ * Example:
+ *   
+ * <version>
+ *   <![CDATA[1.0]]>
+ * </version>
+ *   
+ *   
+ * TAG: <author>
+ * Description:  Author of the extension 
+ *   
+ *   
+ * TAG: Link
+ * Description: Link to the authors web site
+ * Example:
+ * 
+ * <link>
+ *   <![CDATA[http://www.opencart.com]]>
+ * </link>  
+ *   
+ *   
+ * TAG: file   
+ * Description: System uses PHP function glob with the BRACE flag
+ * http://hk1.php.net/manual/en/function.glob.php
+ * Example:  
+ * 
+  *  <file name="system/{engine,library}/{action,loader,config,language}*.php">
+ 
+ 
+ 
+ * Attributes name	
+
+	
+ * TAG: <operation>   
+ 
+ Because search and replace are different from regex	
+	
+ *  	<operation type="regex">
+  *      <search>
+ *         <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
+ *        </search>
+ *       <add position="replace">
+ *         <![CDATA[$1$2(modification($3)]]>
+ *      </add>
+ *     </operation>
+  
+  
+  <regex>
+  
+  
+  
+  </file>
+
+ */
+ 
 class ControllerExtensionModification extends Controller {
 	private $error = array();
 
@@ -46,7 +118,6 @@ class ControllerExtensionModification extends Controller {
 		$this->getList();
 	}
 
-	/* A big thanks to Qphoria and mhcwebdesign for this part of the code! */
 	public function refresh() {
 		$this->load->language('extension/modification');
 
@@ -111,7 +182,7 @@ class ControllerExtensionModification extends Controller {
 
 					if ($path) {
 						$files = glob($path, GLOB_BRACE);
-
+						
 						$operations = $file->getElementsByTagName('operation');
 
 						if ($files) {
@@ -132,74 +203,89 @@ class ControllerExtensionModification extends Controller {
 								if (!isset($modification[$key])) {
 									$modification[$key] = file_get_contents($file);
 								}
-
+	
 								foreach ($operations as $operation) {
-									$search = $operation->getElementsByTagName('search')->item(0)->textContent;
-									$regex = $operation->getElementsByTagName('search')->item(0)->getAttribute('regex');
-									$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
-									$index = $operation->getElementsByTagName('search')->item(0)->getAttribute('index');
-									$add = $operation->getElementsByTagName('add')->item(0)->textContent;
-									$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-
-									// Trim
-									if (!$trim || $trim == 'true') {
-										$search = trim($search);
-									}
-
-									// Index
-									if (!$index) {
-										$index = 1;
-									}
-
-									switch ($position) {
-										default:
-										case 'replace':
-											$replace = $add;
-											break;
-										case 'before':
-											$replace = $add . $search;
-											break;
-										case 'after':
-											$replace = $search . $add;
-											break;
-									}
-
-									if ($regex && $regex == 'true') {
+									$type = $operation->getAttribute('type');
+									
+									// Search and replace
+									if ($type != 'regex') {
+										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
+										$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
+										$offset = $operation->getElementsByTagName('search')->item(0)->getAttribute('offset');
+										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
+										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
+										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
+									
+										// Trim
+										if (!$trim || $trim == 'true') {
+											$search = trim($search);
+										}
+	
+										switch ($position) {
+											default:
+											case 'replace':
+												$replace = $add;
+												break;
+											case 'before':
+												$replace = $add . $search;
+												break;
+											case 'after':
+												$replace = $search . $add;
+												break;
+										}
+	
+										$i = 0;
+										$pos = -1;
+										$match = array();
+										
+										// Create an array of all the start postions of all the matched code 
+										while (($pos = strpos($modification[$key], $search, $pos + 1)) !== false) {
+											$match[$i++] = $pos;
+										}
+										
+										// Offset
+										if (!$offset) {
+											$offset = 0;
+										}
+																				
+										// Limit
+										if (!$limit) {
+											$limit = count($match);
+										}	
+																							
+										// Only replace the occurance of the string that is equal to the between the offset and limit
+										if (isset($match[$offset]) && isset($match[$limit - 1])) {
+											for ($i = $offset; $i < $limit; $i++) {
+												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
+												
+											}
+										}
+									} else {
+										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
+										$replace = $operation->getElementsByTagName('add')->item(0)->textContent;									
+										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
+										
+										// Limit
+										if (!$limit) {
+											$limit = -1;
+										}
+										
 										/*
-										Regex does not require index to match items
-
+										Regex does not require offset to match items
+	
 										So if, for example, you want to change the 3rd 'foo' to 'bar' on the following line:
-
+	
 										lorem ifoopsum foo lor foor ipsum foo dolor foo
 											   ^1      ^2      ^3         ^4        ^5
-
+	
 										run: s/\(.\{-}\zsfoo\)\{3}/bar/
-
+	
 										to get:
-
+	
 										lorem ifoopsum foo lor barr ipsum foo dolor foo
 											   ^1      ^2      ^3=bar     ^4        ^5
 										*/
-										$modification[$key] = preg_replace($search, $replace, $modification[$key], 1);
-									} else {
-
-
-
-
-
-
-										$i = 0;
-										$pos = -1;
-										$result = array();
-
-										while (($pos = strpos($modification[$key], $search, $pos + 1)) !== false) {
-											$result[$i++] = $pos;
-										}
-
-										// Only replace the occurance of the string that is equal to the index
-										if (isset($result[$index - 1])) {
-											$modification[$key] = substr_replace($modification[$key], $replace, $result[$index - 1], strlen($search));
-										}
+										$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);							
 									}
 								}
 							}
@@ -235,7 +321,7 @@ class ControllerExtensionModification extends Controller {
 				$url .= '&page=' . $this->request->get['page'];
 			}
 
-			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+		//	$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getList();

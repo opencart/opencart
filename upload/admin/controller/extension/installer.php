@@ -255,7 +255,7 @@ class ControllerExtensionInstaller extends Controller {
 		}
 
 		$directory = DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . '/upload/';
-		//echo $directory;
+
 		if (!is_dir($directory)) {
 			$json['error'] = $this->language->get('error_directory');
 		}
@@ -397,7 +397,7 @@ class ControllerExtensionInstaller extends Controller {
 				try {
 					$dom = new DOMDocument('1.0', 'UTF-8');
 					$dom->loadXml($xml);
-
+					
 					$name = $dom->getElementsByTagName('name')->item(0);
 
 					if ($name) {

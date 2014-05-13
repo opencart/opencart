@@ -596,7 +596,7 @@ class ControllerPaymentPPExpress extends Controller {
 					} else {
 						unset($this->session->data['shipping_methods']);
 						unset($this->session->data['shipping_method']);
-						$this->data['error_no_shipping'] = $this->language->get('error_no_shipping');
+						$data['error_no_shipping'] = $this->language->get('error_no_shipping');
 					}
 				} else {
 					unset($this->session->data['shipping_methods']);

@@ -107,9 +107,10 @@ class ControllerExtensionInstaller extends Controller {
 					$json['error'] = $this->language->get('error_file');
 				}
 			}
-
-			// If zip file copy it to the temp directory
-			if (strrchr($this->request->files['file']['name'], '.') == '.vqmod.zip') {
+                        
+            // If zip file copy it to the temp directory
+                        $allowedFiles = (strrchr($this->request->files['file']['name'], '-') == '-module.zip' || strrchr($this->request->files['file']['name'], '.') == '.vqmod.zip');
+			if ($allowedFiles) {
 				$file = DIR_DOWNLOAD . $path . '/upload.zip';
 
 				move_uploaded_file($this->request->files['file']['tmp_name'], $file);
@@ -230,10 +231,10 @@ class ControllerExtensionInstaller extends Controller {
 		if (!$json) {
 			// Unzip the files
 			$zip = new ZipArchive();
-
-			if ($zip->open($file)) {
-				$zip->extractTo(DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']));
-				$zip->close();
+                        
+			if ($zip->open($file)) {                                                                
+				$zip->extractTo(DIR_DOWNLOAD . str_replace(array('../', '..\\', '..'), '', $this->request->post['path']) . DIRECTORY_SEPARATOR . 'upload');
+                                $zip->close();
 			} else {
 				$json['error'] = $this->language->get('error_unzip');
 			}
@@ -242,7 +243,7 @@ class ControllerExtensionInstaller extends Controller {
 			unlink($file);
 		}
 
-		$this->response->setOutput(json_encode($json));
+		$this->response->setOutput(json_encode($json));                
 	}
 
 	public function ftp() {
@@ -581,5 +582,5 @@ class ControllerExtensionInstaller extends Controller {
 		}
 
 		$this->response->setOutput(json_encode($json));
-	}
+	}              
 }

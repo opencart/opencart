@@ -56,7 +56,7 @@ class ModelOpenbayEbayProfile extends Model{
 			foreach ($qry->rows as $row) {
 				$row['link_edit']   = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/edit&token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'];
 				$row['link_delete'] = HTTPS_SERVER . 'index.php?route=openbay/ebay_profile/delete&token=' . $this->session->data['token'] . '&ebay_profile_id=' . $row['ebay_profile_id'];
-				$row['data']        = unserialize($row['data']);
+				$row['data']        = !empty($row['data']) ? unserialize($row['data']) : array();
 				$profiles[]         = $row;
 			}
 

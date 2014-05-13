@@ -398,7 +398,7 @@ class ControllerExtensionInstaller extends Controller {
 					$dom = new DOMDocument('1.0', 'UTF-8');
 					$dom->loadXml($xml);
 
-					$name = $dom->getElementsByTagName('id')->item(0);
+					$name = $dom->getElementsByTagName('name')->item(0);
 
 					if ($name) {
 						$name = $name->nodeValue;

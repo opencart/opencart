@@ -1,76 +1,9 @@
 <?php
 /**
- * Modifcation XML Documentation
+ * Modifcation XML Documentation can be found here:
  * 
- * 
- * Start of the modifcation tag
- * <modification>
- * 
- * Tag: name
- * Description: Name of the modification 
- * Example:
- *   
- * <name>
- *   <![CDATA[Modification Default]]>
- * </name>
- *   
- * 
- * TAG: version
- * Description: Version Extension Version This is used for when you are uploading  
- * Example:
- *   
- * <version>
- *   <![CDATA[1.0]]>
- * </version>
- *   
- *   
- * TAG: <author>
- * Description:  Author of the extension 
- *   
- *   
- * TAG: Link
- * Description: Link to the authors web site
- * Example:
- * 
- * <link>
- *   <![CDATA[http://www.opencart.com]]>
- * </link>  
- *   
- *   
- * TAG: file   
- * Description: System uses PHP function glob with the BRACE flag
- * http://hk1.php.net/manual/en/function.glob.php
- * Example:  
- * 
-  *  <file name="system/{engine,library}/{action,loader,config,language}*.php">
- 
- 
- 
- * Attributes name	
-
-	
- * TAG: <operation>   
- 
- Because search and replace are different from regex	
-	
- *  	<operation type="regex">
-  *      <search>
- *         <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
- *        </search>
- *       <add position="replace">
- *         <![CDATA[$1$2(modification($3)]]>
- *      </add>
- *     </operation>
-  
-  
-  <regex>
-  
-  
-  
-  </file>
-
+ * https://github.com/opencart/opencart/wiki/Modification-System
  */
- 
 class ControllerExtensionModification extends Controller {
 	private $error = array();
 
@@ -168,16 +101,16 @@ class ControllerExtensionModification extends Controller {
 					$path = '';
 
 					// Get the full path of the files that are going to be used for modification
-					if (substr($file->getAttribute('name'), 0, 7) == 'catalog') {
-						$path = DIR_CATALOG . substr($file->getAttribute('name'), 8);
+					if (substr($file->getAttribute('path'), 0, 7) == 'catalog') {
+						$path = DIR_CATALOG . substr($file->getAttribute('path'), 8);
 					}
 
-					if (substr($file->getAttribute('name'), 0, 5) == 'admin') {
-						$path = DIR_APPLICATION . substr($file->getAttribute('name'), 6);
+					if (substr($file->getAttribute('path'), 0, 5) == 'admin') {
+						$path = DIR_APPLICATION . substr($file->getAttribute('path'), 6);
 					}
 
-					if (substr($file->getAttribute('name'), 0, 6) == 'system') {
-						$path = DIR_SYSTEM . substr($file->getAttribute('name'), 7);
+					if (substr($file->getAttribute('path'), 0, 6) == 'system') {
+						$path = DIR_SYSTEM . substr($file->getAttribute('path'), 7);
 					}
 
 					if ($path) {
@@ -205,17 +138,15 @@ class ControllerExtensionModification extends Controller {
 								}
 	
 								foreach ($operations as $operation) {
-									$type = $operation->getElementsByTagName('search')->item(0)->getAttribute('type');
-									
 									// Search and replace
-									if ($type != 'regex') {
+									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
-										$offset = $operation->getElementsByTagName('search')->item(0)->getAttribute('offset');
-										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
 										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
 										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
-									
+										$offset = $operation->getElementsByTagName('search')->item(0)->getAttribute('offset');
+										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
+																			
 										// Trim
 										if (!$trim || $trim == 'true') {
 											$search = trim($search);
@@ -271,21 +202,6 @@ class ControllerExtensionModification extends Controller {
 											$limit = -1;
 										}
 										
-										/*
-										Regex does not require offset to match items
-	
-										So if, for example, you want to change the 3rd 'foo' to 'bar' on the following line:
-	
-										lorem ifoopsum foo lor foor ipsum foo dolor foo
-											   ^1      ^2      ^3         ^4        ^5
-	
-										run: s/\(.\{-}\zsfoo\)\{3}/bar/
-	
-										to get:
-	
-										lorem ifoopsum foo lor barr ipsum foo dolor foo
-											   ^1      ^2      ^3=bar     ^4        ^5
-										*/
 										$modification[$key] = preg_replace($search, $replace, $modification[$key], $limit);							
 									}
 								}

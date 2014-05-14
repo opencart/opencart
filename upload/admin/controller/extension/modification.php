@@ -142,11 +142,11 @@ class ControllerExtensionModification extends Controller {
 									if ($operation->getElementsByTagName('search')->item(0)->getAttribute('regex') != 'true') {
 										$search = $operation->getElementsByTagName('search')->item(0)->textContent;
 										$trim = $operation->getElementsByTagName('search')->item(0)->getAttribute('trim');
-										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
-										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
 										$offset = $operation->getElementsByTagName('search')->item(0)->getAttribute('offset');
 										$limit = $operation->getElementsByTagName('search')->item(0)->getAttribute('limit');
-																			
+										$add = $operation->getElementsByTagName('add')->item(0)->textContent;
+										$position = $operation->getElementsByTagName('add')->item(0)->getAttribute('position');
+									
 										// Trim
 										if (!$trim || $trim == 'true') {
 											$search = trim($search);

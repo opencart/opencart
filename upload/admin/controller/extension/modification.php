@@ -205,7 +205,7 @@ class ControllerExtensionModification extends Controller {
 								}
 	
 								foreach ($operations as $operation) {
-									$type = $operation->getAttribute('type');
+									$type = $operation->getElementsByTagName('search')->item(0)->getAttribute('type');
 									
 									// Search and replace
 									if ($type != 'regex') {
@@ -251,13 +251,14 @@ class ControllerExtensionModification extends Controller {
 										// Limit
 										if (!$limit) {
 											$limit = count($match);
+										} else {
+											$limit = $limit + $offset;
 										}	
 																							
 										// Only replace the occurance of the string that is equal to the between the offset and limit
 										if (isset($match[$offset]) && isset($match[$limit - 1])) {
 											for ($i = $offset; $i < $limit; $i++) {
 												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
-												
 											}
 										}
 									} else {
@@ -320,8 +321,8 @@ class ControllerExtensionModification extends Controller {
 			if (isset($this->request->get['page'])) {
 				$url .= '&page=' . $this->request->get['page'];
 			}
-
-		//	$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
+			
+			$this->response->redirect($this->url->link('extension/modification', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 
 		$this->getList();

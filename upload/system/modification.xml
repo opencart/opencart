@@ -10,8 +10,8 @@
     <![CDATA[http://www.opencart.com]]>
   </author>
   <file name="system/{engine,library}/{action,loader,config,language}*.php">
-	<operation type="regex">
-      <search>
+	<operation>
+      <search type="regex">
         <![CDATA[~(require|include)(_once)?\(([^)]+)~]]>
       </search>
       <add position="replace">

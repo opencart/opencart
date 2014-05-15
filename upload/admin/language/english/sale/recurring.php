@@ -40,11 +40,11 @@ $_['entry_type'] = 'Type';
 $_['entry_action'] = 'Action';
 $_['entry_email'] = 'Email';
 $_['entry_profile_description'] = "Profile's description";
-$_['entry_product'] = "Product";
-$_['entry_quantity'] = "Quantity";
-$_['entry_amount'] = "Amount";
-$_['entry_profile'] = "Profile";
-$_['entry_payment_type'] = "Payment method";
+$_['entry_product'] = 'Product';
+$_['entry_quantity'] = 'Quantity';
+$_['entry_amount'] = 'Amount';
+$_['entry_profile'] = 'Profile';
+$_['entry_payment_type'] = 'Payment method';
 
 // Error / Success
 $_['error_not_cancelled'] = 'Error: %s';

@@ -138,15 +138,18 @@ function getURLVar(key) {
 // Cart add remove functions	
 var cart = {
 	'add': function(product_id, quantity) {
-		quantity = typeof(quantity) != 'undefined' ? quantity : 1;
-	
 		$.ajax({
 			url: 'index.php?route=checkout/cart/add',
 			type: 'post',
-			data: 'product_id=' + product_id + '&quantity=' + quantity,
+			data: 'product_id=' + product_id + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
+			beforeSend: function() {
+				$('#cart > button').button('loading');
+			},      
 			success: function(json) {
 				$('.alert, .text-danger').remove();
+				
+				$('#cart > button').button('reset');
 				
 				if (json['redirect']) {
 					location = json['redirect'];
@@ -168,9 +171,14 @@ var cart = {
 		$.ajax({
 			url: 'index.php?route=checkout/cart/update',
 			type: 'post',
-			data: 'key=' + key + '&quantity=' + quantity,
+			data: 'key=' + key + '&quantity=' + (typeof(quantity) != 'undefined' ? quantity : 1),
 			dataType: 'json',
+			beforeSend: function() {
+				$('#cart > button').button('loading');
+			},      
 			success: function(json) {
+				$('#cart > button').button('reset');
+				
 				$('#cart-total').html(json['total']);
 				
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
@@ -187,14 +195,19 @@ var cart = {
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
+			beforeSend: function() {
+				$('#cart > button').button('loading');
+			},      			
 			success: function(json) {
+				$('#cart > button').button('reset');
+				
 				$('#cart-total').html(json['total']);
 				
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
 					$('#cart > ul').load('index.php?route=module/cart/info');
-				}			
+				}
 			}
 		});			
 	}
@@ -210,6 +223,12 @@ var voucher = {
 			type: 'post',
 			data: 'key=' + key,
 			dataType: 'json',
+			beforeSend: function() {
+				$('#cart > button').button('loading');
+			},      
+			complete: function() {
+				$('#cart > button').button('reset');
+			},			
 			success: function(json) {
 				$('#cart-total').html(json['total']);
 				

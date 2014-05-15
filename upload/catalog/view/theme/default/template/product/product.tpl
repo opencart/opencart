@@ -103,7 +103,7 @@
                   <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
                   <div class="col-sm-10">
                     <input type="text" name="captcha" value="" id="input-captcha" class="form-control" />
-                    <img src="index.php?route=product/product/captcha" alt="" id="captcha" /></div>
+                    <img src="index.php?route=tool/captcha" alt="" id="captcha" /></div>
                 </div>
                 <div class="buttons">
                   <div class="pull-right">
@@ -453,7 +453,7 @@ $('#button-cart').on('click', function() {
                 }
 
 				if (json['error']['profile']) {
-					$('select[name=\'profile_id\']').after('<span class="text-danger">' + json['error']['profile'] + '</span>');
+					$('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
 				}
             } 
             
@@ -510,13 +510,13 @@ $('button[id^=\'button-upload\']').on('click', function() {
 			},		
 			success: function(json) {
 				if (json['error']) {
-					$(node).parent().find('input[name^=\'option\']').after('<div class="text-danger">' + json['error'] + '</div>');
+					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
 							
 				if (json['success']) {
 					alert(json['success']);
 					
-					$(node).parent().find('input[name^=\'option\']').attr('value', json['file']);
+					$(node).parent().find('input').attr('value', json['code']);
 				}
 			},			
 			error: function(xhr, ajaxOptions, thrownError) {

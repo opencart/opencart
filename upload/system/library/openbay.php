@@ -94,7 +94,6 @@ final class Openbay {
 	}
 
 	public function testDbColumn($table, $column) {
-		//check profile table for default column
 		$res = $this->db->query("SHOW COLUMNS FROM `".DB_PREFIX.$table."` LIKE '".$column."'");
 		if($res->num_rows != 0) {
 			return true;
@@ -216,7 +215,7 @@ final class Openbay {
 		foreach ($order_product_query->rows as $product) {
 			$text .= $product['quantity'] . 'x ' . $product['name'] . ' (' . $product['model'] . ') ' . html_entity_decode($this->currency->format($product['total'] + ($this->config->get('config_tax') ? ($product['tax'] * $product['quantity']) : 0), $order_info['currency_code'], $order_info['currency_value']), ENT_NOQUOTES, 'UTF-8') . "\n";
 
-			$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . $product['order_product_id'] . "'");
+			$order_option_query = $this->db->query("SELECT * FROM " . DB_PREFIX . "order_option WHERE order_id = '" . (int)$order_id . "' AND order_product_id = '" . (int)$product['order_product_id'] . "'");
 
 			foreach ($order_option_query->rows as $option) {
 				if ($option['type'] != 'file') {
@@ -410,4 +409,3 @@ final class Openbay {
 		return $product_option_data;
 	}
 }
-?>

@@ -39,8 +39,7 @@
       </div>
     </div>
     <hr>
-    <p><?php echo $powered; ?>
-    <p> 
+    <p><?php echo $powered; ?></p> 
   </div>
 </footer>
 

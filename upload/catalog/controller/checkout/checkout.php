@@ -27,6 +27,10 @@ class ControllerCheckoutCheckout extends Controller {
 		
 		$this->document->setTitle($this->language->get('heading_title')); 
 		
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
+		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
+		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
+		
 		// Required by klarna
 		if ($this->config->get('klarna_account') || $this->config->get('klarna_invoice')) {
 			$this->document->addScript('http://cdn.klarna.com/public/kitt/toc/v1.0/js/klarna.terms.min.js');
@@ -67,9 +71,6 @@ class ControllerCheckoutCheckout extends Controller {
 		}
 		
 		$data['logged'] = $this->customer->isLogged();
-		if (isset($this->request->get['quickconfirm'])) {
-			$data['quickconfirm'] = $this->request->get['quickconfirm'];
-		}
 		
 		if (isset($this->session->data['account'])) {
 			$data['account'] = $this->session->data['account'];
@@ -130,7 +131,7 @@ class ControllerCheckoutCheckout extends Controller {
 			$customer_group_id = $this->config->get('config_customer_group_id');
 		}
 		
-		$custom_fields = $this->model_account_custom_field->getCustomFields('register', $customer_group_id);
+		$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
 
 		foreach ($custom_fields as $custom_field) {
 			$json[] = array(

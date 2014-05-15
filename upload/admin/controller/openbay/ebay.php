@@ -883,7 +883,7 @@ class ControllerOpenbayEbay extends Controller {
 		);
 
 		$data['return']       = $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL');
-		$data['edit_url']     = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'].'&product_id=', 'SSL');
+		$data['edit_url']     = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=', 'SSL');
 		$data['validation']   = $this->openbay->ebay->validate();
 		$data['token']        = $this->session->data['token'];
 
@@ -1227,7 +1227,7 @@ class ControllerOpenbayEbay extends Controller {
 				);
 
 				$data['breadcrumbs'][] = array(
-					'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'].'&product_id='.$this->request->get['product_id'], 'SSL'),
+					'href'      => $this->url->link('openbay/ebay/create', 'token=' . $this->session->data['token'] . '&product_id=' . $this->request->get['product_id'], 'SSL'),
 					'text'      => $this->language->get('heading_title'),
 				);
 
@@ -1366,7 +1366,7 @@ class ControllerOpenbayEbay extends Controller {
 
 				$data['no_image'] = $this->model_tool_image->resize('no_image.jpg', 100, 100);
 
-				$weight_parts = explode('.', $product_info['weight']);
+				$weight_parts = explode(' . ', $product_info['weight']);
 				$product_info['weight_major'] = $weight_parts[0];
 				$product_info['weight_minor'] = $weight_parts[1];
 

@@ -25,55 +25,57 @@ class ControllerModuleLatest extends Controller {
 		);
 
 		$results = $this->model_catalog_product->getProducts($filter_data);
-
-		foreach ($results as $result) {
-			if ($result['image']) {
-				$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
-			} else {
-				$image = $this->model_tool_image->resize('placeholder.png', $setting['image_width'], $setting['image_height']);
-			}
-						
-			if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
-				$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
-			} else {
-				$price = false;
-			}
-					
-			if ((float)$result['special']) {
-				$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
-			} else {
-				$special = false;
-			}
-			
-			if ($this->config->get('config_tax')) {
-				$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
-			} else {
-				$tax = false;
-			}
+		
+		if ($results) {
+			foreach ($results as $result) {
+				if ($result['image']) {
+					$image = $this->model_tool_image->resize($result['image'], $setting['image_width'], $setting['image_height']);
+				} else {
+					$image = $this->model_tool_image->resize('placeholder.png', $setting['image_width'], $setting['image_height']);
+				}
 							
-			if ($this->config->get('config_review_status')) {
-				$rating = $result['rating'];
-			} else {
-				$rating = false;
+				if (($this->config->get('config_customer_price') && $this->customer->isLogged()) || !$this->config->get('config_customer_price')) {
+					$price = $this->currency->format($this->tax->calculate($result['price'], $result['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$price = false;
+				}
+						
+				if ((float)$result['special']) {
+					$special = $this->currency->format($this->tax->calculate($result['special'], $result['tax_class_id'], $this->config->get('config_tax')));
+				} else {
+					$special = false;
+				}
+				
+				if ($this->config->get('config_tax')) {
+					$tax = $this->currency->format((float)$result['special'] ? $result['special'] : $result['price']);
+				} else {
+					$tax = false;
+				}
+								
+				if ($this->config->get('config_review_status')) {
+					$rating = $result['rating'];
+				} else {
+					$rating = false;
+				}
+				
+				$data['products'][] = array(
+					'product_id' => $result['product_id'],
+					'thumb'   	 => $image,
+					'name'    	 => $result['name'],
+					'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
+					'price'   	 => $price,
+					'special' 	 => $special,
+					'tax'        => $tax,
+					'rating'     => $rating,
+					'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id']),
+				);
 			}
-			
-			$data['products'][] = array(
-				'product_id' => $result['product_id'],
-				'thumb'   	 => $image,
-				'name'    	 => $result['name'],
-				'description' => utf8_substr(strip_tags(html_entity_decode($result['description'], ENT_QUOTES, 'UTF-8')), 0, $this->config->get('config_product_description_length')) . '..',
-				'price'   	 => $price,
-				'special' 	 => $special,
-				'tax'        => $tax,
-				'rating'     => $rating,
-				'href'    	 => $this->url->link('product/product', 'product_id=' . $result['product_id']),
-			);
-		}
-
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/latest.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/latest.tpl', $data);
-		} else {
-			return $this->load->view('default/template/module/latest.tpl', $data);
+	
+			if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/latest.tpl')) {
+				return $this->load->view($this->config->get('config_template') . '/template/module/latest.tpl', $data);
+			} else {
+				return $this->load->view('default/template/module/latest.tpl', $data);
+			}
 		}
 	}
 }

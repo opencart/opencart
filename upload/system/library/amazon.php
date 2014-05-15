@@ -362,8 +362,7 @@ class Amazon {
 		foreach($productIdArray as $productId) {
 			$amazonRows = $this->getLinkedSkus($productId);
 			foreach($amazonRows as $amazonRow) {
-				$productRow = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product`
-					WHERE `product_id` = '" . (int)$productId . "'")->row;
+				$productRow = $this->db->query("SELECT `quantity`, `status` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$productId . "'")->row;
 
 				if(!empty($productRow)) {
 					if($endInactive && $productRow['status'] == '0') {
@@ -384,16 +383,11 @@ class Amazon {
 	}
 
 	public function getLinkedSkus($productId, $var='') {
-		return $this->db->query("SELECT `amazon_sku` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $var . "'")->rows;
+		return $this->db->query("SELECT `amazon_sku` FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
 	}
 
 	public function getOrderdProducts($orderId) {
-		return $this->db->query("SELECT `op`.`product_id`, `p`.`quantity` as `quantity_left`
-			FROM `" . DB_PREFIX . "order_product` as `op`
-			LEFT JOIN `" . DB_PREFIX . "product` as `p`
-			ON `p`.`product_id` = `op`.`product_id`
-			WHERE `op`.`order_id` = '" . (int)$orderId . "'
-			")->rows;
+		return $this->db->query("SELECT `op`.`product_id`, `p`.`quantity` as `quantity_left` FROM `" . DB_PREFIX . "order_product` as `op` LEFT JOIN `" . DB_PREFIX . "product` as `p` ON `p`.`product_id` = `op`.`product_id` WHERE `op`.`order_id` = '" . (int)$orderId . "'")->rows;
 	}
 
 	public function osProducts($order_id){
@@ -401,7 +395,7 @@ class Amazon {
 
 		$passArray = array();
 		foreach ($order_product_query->rows as $order_product) {
-			$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".(int)$order_product['product_id']."' LIMIT 1");
+			$product_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$order_product['product_id'] . "' LIMIT 1");
 
 			if (!empty($product_query->row)) {
 				if (isset($product_query->row['has_option']) && ($product_query->row['has_option'] == 1)) {
@@ -461,8 +455,8 @@ class Amazon {
 		 */
 	}
 
-	public function getOrder($orderId) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_order` WHERE `order_id` = '".(int)$orderId."' LIMIT 1");
+	public function getOrder($order_id) {
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "amazon_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
 		if($qry->num_rows > 0){
 			return $qry->row;
@@ -577,4 +571,3 @@ class Amazon {
 		}
 	}
 }
-?>

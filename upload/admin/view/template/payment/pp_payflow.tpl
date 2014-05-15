@@ -13,8 +13,8 @@
   <div class="page-header">
     <div class="container">
       <div class="pull-right">
-        <button type="submit" form="form-pp-payflow" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a> </div>
+        <button type="submit" form="form-pp-payflow" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a> </div>
       <h1 class="panel-title"><i class="fa fa-credit-card fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
@@ -26,16 +26,17 @@
             <?php if (isset($error['vendor'])) { ?>
             <div class="text-danger"><?php echo $error['vendor']; ?></div>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_vendor_help; ?></span> </div>
+            <span class="help-block"><?php echo $entry_vendor_help; ?></span></div>
         </div>
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="entry-user"><?php echo $entry_user; ?></label>
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_user" value="<?php echo $pp_payflow_user; ?>" placeholder="<?php echo $entry_user; ?>" id="entry-user" class="form-control"/>
+            <span class="help-block"><?php echo $entry_user_help; ?></span>
             <?php if (isset($error['user'])) { ?>
             <div class="text-danger"><?php echo $error['user']; ?></div>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_user_help; ?></span> </div>
+          </div>
         </div>
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="entry-password"><?php echo $entry_password; ?></label>
@@ -44,16 +45,17 @@
             <?php if (isset($error['password'])) { ?>
             <div class="text-danger"><?php echo $error['password']; ?></div>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_password_help; ?></span> </div>
+            <span class="help-block"><?php echo $entry_password_help; ?></span></div>
         </div>
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="entry-partner"><?php echo $entry_partner; ?></label>
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_partner" value="<?php echo $pp_payflow_partner; ?>" placeholder="<?php echo $entry_partner; ?>" id="entry-partner" class="form-control"/>
+            <span class="help-block"><?php echo $entry_partner_help; ?></span>
             <?php if (isset($error['partner'])) { ?>
             <div class="text-danger"><?php echo $error['partner']; ?></div>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_partner_help; ?></span> </div>
+          </div>
         </div>
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-live-demo"><?php echo $entry_test; ?></label>

@@ -230,16 +230,16 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$currency = $this->model_localisation_currency->getCurrencyByCode($this->config->get('openbay_def_currency'));
 
 		if($this->config->get('openbaypro_create_date') == 1){
-			$createdDateObj     = new DateTime((string)$order->order->created);
+			$created_dateObj     = new DateTime((string)$order->order->created);
 			$offset             = ($this->config->get('openbaypro_time_offset') != '' ? (int)$this->config->get('openbaypro_time_offset') : (int)0);
-			$createdDateObj->modify($offset . ' hour');
-			$createdDate        = $createdDateObj->format('Y-m-d H:i:s');
+			$created_dateObj->modify($offset . ' hour');
+			$created_date        = $created_dateObj->format('Y-m-d H:i:s');
 		}else{
-			$createdDate = date("Y-m-d H:i:s");
+			$created_date = date("Y-m-d H:i:s");
 			$offset = 0;
 		}
 
-		$this->openbay->ebay->log('create() - Order date: '.$createdDate);
+		$this->openbay->ebay->log('create() - Order date: '.$created_date);
 		$this->openbay->ebay->log('create() - Original date: '.(string)$order->order->created);
 		$this->openbay->ebay->log('create() - Offset: '.$offset);
 		$this->openbay->ebay->log('create() - Server time: '.date("Y-m-d H:i:s"));
@@ -258,7 +258,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 		   `currency_code`            = '" . $this->db->escape($currency['code']) . "',
 		   `currency_value`           = '" . (double)$currency['value'] . "',
 		   `ip`                       = '',
-		   `date_added`               = '" . $createdDate . "',
+		   `date_added`               = '" . $this->db->escape($created_date) . "',
 		   `date_modified`            = NOW(),
 		   `customer_id`              = 0
 		");
@@ -353,8 +353,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 									LEFT JOIN `" . DB_PREFIX . "option_value_description` `ovd` ON (`ovd`.`option_value_id` = `ov`.`option_value_id`)
 									LEFT JOIN `" . DB_PREFIX . "option_description` `od` ON (`ov`.`option_id` = `od`.`option_id`)
 									LEFT JOIN `" . DB_PREFIX . "option` `o` ON (`o`.`option_id` = `od`.`option_id`)
-									WHERE `pv`.`product_option_value_id` = '".(int)$part."'
-									AND `pv`.`product_id` = '".(int)$product_id."'";
+									WHERE `pv`.`product_option_value_id` = '" . (int)$part . "'
+									AND `pv`.`product_id` = '" . (int)$product_id . "'";
 							$option_qry = $this->db->query($sql);
 
 							if(!empty($option_qry->row)){
@@ -452,7 +452,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 			   `payment_address_format`   = '" . $address_format . "',
 			   `total`                    = '" . (double)$order->order->total . "',
 			   `date_modified`            = NOW()
-		   WHERE `order_id` = '".$order_id."'
+		   WHERE `order_id` = '" . $order_id . "'
 		   ");
 
 		$totalTax = 0;
@@ -558,7 +558,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 
 		/** get the iso2 code from the data and pull out the correct country for the details. */
 		if(!empty($order->address->iso2)){
-			$country_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '".$order->address->iso2."'");
+			$country_qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "country` WHERE `iso_code_2` = '" . $this->db->escape($order->address->iso2) . "'");
 		}
 
 		if(!empty($country_qry->num_rows)){
@@ -576,7 +576,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$this->db->query("UPDATE `" . DB_PREFIX . "customer` SET
 								`firstname`             = '" . $this->db->escape($name_parts['firstname']) . "',
 								`lastname`              = '" . $this->db->escape($name_parts['surname']) . "',
-								`telephone`             = '" . str_replace(array(' ', '+', '-'), '', $order->address->phone)."',
+								`telephone`             = '" . $this->db->escape(str_replace(array(' ', '+', '-'), '', $order->address->phone)) . "',
 								`status`                = '1'
 							 WHERE `customer_id`        = '" . (int)$user['id'] . "'");
 		}else{
@@ -585,7 +585,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 								`firstname`             = '" . $this->db->escape($name_parts['firstname']) . "',
 								`lastname`              = '" . $this->db->escape($name_parts['surname']) . "',
 								`email`                 = '" . $this->db->escape($user['email']) . "',
-								`telephone`             = '" . str_replace(array(' ', '+', '-'), '', $order->address->phone)."',
+								`telephone`             = '" . $this->db->escape(str_replace(array(' ', '+', '-'), '', $order->address->phone)) . "',
 								`password`              = '" . $this->db->escape(md5($order->user->userid)) . "',
 								`newsletter`            = '0',
 								`customer_group_id`     = '" . (int)$this->config->get('openbay_def_customer_grp') . "',
@@ -601,7 +601,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 	private function externalApplicationNotify($order_id) {
 		/* This is used by the Mosaic Fullfilment solutions @ www.mosaic-fs.co.uk */
 		if ($this->openbay->addonLoad('mosaic') && !$this->mosaic->isOrderAdded($order_id)) {
-			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_code` = 'ebay.STD' WHERE `order_id` = '".(int)$order_id."' LIMIT 1");
+			$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `shipping_code` = 'ebay.STD' WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 			$this->mosaic->sendOrder($order_id, 'PP', '');
 			$this->openbay->ebay->log('Mosaic module has been notified about order ID: '.$order_id);
 		}
@@ -618,11 +618,11 @@ class ModelOpenbayEbayOpenbay extends Model{
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Cache-Control: private',false);
 		header('Content-Type: application/force-download');
-		header('Content-Length: ' . filesize(DIR_LOGS."ebaylog.log"));
+		header('Content-Length: ' . filesize(DIR_LOGS . "ebaylog.log"));
 		header('Content-Disposition: attachment; filename="ebaylog.log"');
 		header('Content-Transfer-Encoding: binary');
 		header('Connection: close');
-		readfile(DIR_LOGS."ebaylog.log");
+		readfile(DIR_LOGS . "ebaylog.log");
 		exit();
 	}
 
@@ -632,11 +632,11 @@ class ModelOpenbayEbayOpenbay extends Model{
 		header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
 		header('Cache-Control: private',false);
 		header('Content-Type: application/force-download');
-		header('Content-Length: ' . filesize(DIR_LOGS."update.log"));
+		header('Content-Length: ' . filesize(DIR_LOGS . "update.log"));
 		header('Content-Disposition: attachment; filename="update.log"');
 		header('Content-Transfer-Encoding: binary');
 		header('Connection: close');
-		readfile(DIR_LOGS."update.log");
+		readfile(DIR_LOGS . "update.log");
 		exit();
 	}
 }

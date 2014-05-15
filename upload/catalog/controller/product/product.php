@@ -454,7 +454,7 @@ class ControllerProductProduct extends Controller {
 			}
 
 			$data['text_payment_profile'] = $this->language->get('text_payment_profile');
-			$data['profiles'] = $this->model_catalog_product->getProfiles($product_info['product_id']);
+			$data['profiles'] = $this->model_catalog_product->getProfiles($this->request->get['product_id']);
 			
 			$this->model_catalog_product->updateViewed($this->request->get['product_id']);
 						
@@ -690,46 +690,12 @@ class ControllerProductProduct extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 	
-	public function captcha() {
-		$this->session->data['captcha'] = substr(sha1(mt_rand()), 17, 6);
-		
-		$image = imagecreatetruecolor(150, 35);
-
-		$width = imagesx($image); 
-		$height = imagesy($image);
-
-		$black = imagecolorallocate($image, 0, 0, 0); 
-		$white = imagecolorallocate($image, 255, 255, 255); 
-		$red = imagecolorallocatealpha($image, 255, 0, 0, 75); 
-		$green = imagecolorallocatealpha($image, 0, 255, 0, 75); 
-		$blue = imagecolorallocatealpha($image, 0, 0, 255, 75); 
-
-		imagefilledrectangle($image, 0, 0, $width, $height, $white); 
-
-		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $red); 
-		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $green); 
-		imagefilledellipse($image, ceil(rand(5, 145)), ceil(rand(0, 35)), 30, 30, $blue); 
-
-		imagefilledrectangle($image, 0, 0, $width, 0, $black); 
-		imagefilledrectangle($image, $width - 1, 0, $width - 1, $height - 1, $black); 
-		imagefilledrectangle($image, 0, 0, 0, $height - 1, $black); 
-		imagefilledrectangle($image, 0, $height - 1, $width, $height - 1, $black); 
-
-		imagestring($image, 10, intval(($width - (strlen($this->session->data['captcha']) * 9)) / 2), intval(($height - 15) / 2), $this->session->data['captcha'], $black);
-
-		header('Content-type: image/jpeg');
-
-		imagejpeg($image);
-
-		imagedestroy($image);
-	}
-	
 	public function upload() {
 		$this->load->language('product/product');
 		
 		$json = array();
 		
-		if (!empty($this->request->files['file']['name'])) {
+		if (!empty($this->request->files['file']['name']) && is_file($this->request->files['file']['tmp_name'])) {
 			// Sanitize the filename
 			$filename = basename(preg_replace('/[^a-zA-Z0-9\.\-\s+]/', '', html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8')));
 			
@@ -768,6 +734,13 @@ class ControllerProductProduct extends Controller {
 				$json['error'] = $this->language->get('error_filetype');
 			}
 			
+			// Check to see if any PHP files are trying to be uploaded
+			$content = file_get_contents($this->request->files['file']['tmp_name']);
+					
+			if (preg_match('/\<\?php/i', $content)) {
+				$json['error'] = $this->language->get('error_filetype');
+			}	
+						
 			// Return any upload error				
 			if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 				$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
@@ -782,7 +755,9 @@ class ControllerProductProduct extends Controller {
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
 			
 			// Hide the uploaded file name so people can not link to it directly.
-			$json['file'] = $file;
+			$this->load->model('tool/upload');
+			
+			$json['code'] = $this->model_tool_upload->addUpload($filename, $file);
 						
 			$json['success'] = $this->language->get('text_upload');
 		}	

@@ -150,22 +150,22 @@ class ControllerShippingUPS extends Controller {
 			$data['error_dimension'] = '';
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_shipping'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_shipping'),
 			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 		
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('shipping/ups', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 		
 		$data['action'] = $this->url->link('shipping/ups', 'token=' . $this->session->data['token'], 'SSL');
 		
@@ -780,7 +780,7 @@ class ControllerShippingUPS extends Controller {
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 		
- 		$this->response->setOutput($this->load->view('shipping/ups.tpl', $data));
+		$this->response->setOutput($this->load->view('shipping/ups.tpl', $data));
 	}
 	
 	protected function validate() {

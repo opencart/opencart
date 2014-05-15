@@ -57,28 +57,14 @@ class ControllerCheckoutShippingAddress extends Controller {
 		// Custom Fields
 		$this->load->model('account/custom_field');
 		
-		$data['custom_fields'] = array();
-		
-		$custom_fields = $this->model_account_custom_field->getCustomFields('shipping_address', $this->config->get('config_customer_group_id'));
-		
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['type'] == 'checkbox') {
-				$value = array();
-			} else {
-				$value = '';
-			}
-						
-			$data['custom_fields'][] = array(
-				'custom_field_id'    => $custom_field['custom_field_id'],
-				'custom_field_value' => $custom_field['custom_field_value'],
-				'name'               => $custom_field['name'],
-				'type'               => $custom_field['type'],
-				'value'              => $value,
-				'required'           => $custom_field['required'],
-				'sort_order'         => $custom_field['sort_order']
-			);
-		}
-		
+		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->config->get('config_customer_group_id')));
+
+		if (isset($this->session->data['shipping_address']['custom_field'])) {
+			$data['shipping_address_custom_field'] = $this->session->data['shipping_address']['custom_field'];
+		} else {
+			$data['shipping_address_custom_field'] = array();
+		}	
+				
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/checkout/shipping_address.tpl')) {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/checkout/shipping_address.tpl', $data));
 		} else {
@@ -177,13 +163,13 @@ class ControllerCheckoutShippingAddress extends Controller {
 					$json['error']['zone'] = $this->language->get('error_zone');
 				}
 				
-				// Custom Field Validation
+				// Custom field validation
 				$this->load->model('account/custom_field');
 				
-				$custom_fields = $this->model_account_custom_field->getCustomFields('shipping_address', $this->config->get('config_customer_group_id'));
+				$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->config->get('config_customer_group_id')));
 				
 				foreach ($custom_fields as $custom_field) {
-					if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					if (($custom_field['location'] == 'address') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 						$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 					}
 				}				

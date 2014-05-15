@@ -314,14 +314,14 @@ class ControllerOpenbayAmazonProduct extends Controller {
 		$this->load->model('openbay/amazon');
 		$logger = new Log('amazon_product.log');
 
-		$logger->write('Uploading process started.');
+		$logger->write('Uploading process started . ');
 
 		$savedProducts = $this->model_openbay_amazon->getSavedProductsData();
 
 		if(empty($savedProducts)) {
-			$logger->write('No saved listings found. Uploading canceled.');
+			$logger->write('No saved listings found. Uploading canceled . ');
 			$result['status'] = 'error';
-			$result['error_message'] = 'No saved listings. Nothing to upload. Aborting.';
+			$result['error_message'] = 'No saved listings. Nothing to upload. Aborting . ';
 			return $result;
 		}
 
@@ -354,7 +354,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		if(!isset($result['status'])) {
 			$result['status'] = 'ok';
-			$logger->write('Uploading process completed successfully.');
+			$logger->write('Uploading process completed successfully . ');
 		} else {
 			$logger->write('Uploading process failed with message: ' . $result['error_message']);
 		}
@@ -429,7 +429,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 
 		$tax_added = isset($openbay_settings['openbay_amazon_listing_tax_added']) ? $openbay_settings['openbay_amazon_listing_tax_added'] : 0;
 		$default_condition =  isset($openbay_settings['openbay_amazon_listing_default_condition']) ? $openbay_settings['openbay_amazon_listing_default_condition'] : '';
-		$product_info['price'] = number_format($product_info['price'] + $tax_added / 100 * $product_info['price'], 2, '.', '');
+		$product_info['price'] = number_format($product_info['price'] + $tax_added / 100 * $product_info['price'], 2, ' . ', '');
 
 		$defaults = array(
 			'sku' => $product_info['sku'],
@@ -439,7 +439,7 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			'description' => $product_info['description'],
 			'mainimage' => $product_info['image'],
 			'currency' => $this->config->get('config_currency'),
-			'shippingweight' => number_format($product_info['weight'], 2, '.', ''),
+			'shippingweight' => number_format($product_info['weight'], 2, ' . ', ''),
 			'conditiontype' => $default_condition,
 		);
 
@@ -492,8 +492,8 @@ class ControllerOpenbayAmazonProduct extends Controller {
 			if($option != null) {
 				$defaults['sku'] = $option['sku'];
 				$defaults['quantity'] = $option['stock'];
-				$defaults['standardprice'] = number_format($option['price'] + $tax_added / 100 * $option['price'], 2, '.', '');
-				$defaults['shippingweight'] = number_format($option['weight'], 2, '.', '');
+				$defaults['standardprice'] = number_format($option['price'] + $tax_added / 100 * $option['price'], 2, ' . ', '');
+				$defaults['shippingweight'] = number_format($option['weight'], 2, ' . ', '');
 
 				if(!empty($option['image'])) {
 					$defaults['mainimage'] = HTTPS_CATALOG . 'image/' . $option['image'];

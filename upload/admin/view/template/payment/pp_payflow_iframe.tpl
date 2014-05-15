@@ -13,8 +13,8 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-pp-payflow-iframe" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a> </div>
+        <button type="submit" form="form-pp-payflow-iframe" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a> </div>
       <h1 class="panel-title"><i class="fa fa-credit-card fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
@@ -23,10 +23,11 @@
           <label class="col-sm-2 control-label" for="entry-vender"><?php echo $entry_vendor; ?></label>
           <div class="col-sm-10">
             <input type="text" name="pp_payflow_iframe_vendor" value="<?php echo $pp_payflow_iframe_vendor; ?>" placeholder="<?php echo $entry_vendor; ?>" id="entry-vender" class="form-control"/>
+            <span class="help-block"><?php echo $entry_vendor_help; ?></span>
             <?php if (isset($error['vendor'])) { ?>
             <div class="text-danger"><?php echo $error['vendor']; ?></div>
             <?php } ?>
-            <span class="help-block"><?php echo $entry_vendor_help; ?></span> </div>
+          </div>
         </div>
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="entry-user"><?php echo $entry_user; ?></label>

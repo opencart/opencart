@@ -155,7 +155,7 @@
       <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
       <div class="col-sm-10">
         <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-        <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
+        <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="" />
       </div>
     </div>
     <?php } ?>
@@ -171,22 +171,24 @@
       </div>
     </div>
     <?php } ?>
-    <?php if ($custom_field['type'] == 'datetime') { ?>
-    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
-      <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
-      <div class="col-sm-10">
-        <div class="input-group datetime"><input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" /><span class="input-group-btn">
-                <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
-                </span></div>
-      </div>
-    </div>
-    <?php } ?>
     <?php if ($custom_field['type'] == 'time') { ?>
     <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
       <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
       <div class="col-sm-10">
         <div class="input-group time">
           <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+          <span class="input-group-btn">
+          <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
+          </span></div>
+      </div>
+    </div>
+    <?php } ?>
+    <?php if ($custom_field['type'] == 'datetime') { ?>
+    <div class="form-group<?php echo ($custom_field['required'] ? ' required' : ''); ?> custom-field">
+      <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
+      <div class="col-sm-10">
+        <div class="input-group datetime">
+          <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field['value']; ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
           <span class="input-group-btn">
           <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
           </span></div>
@@ -299,5 +301,19 @@ $('#collapse-payment-address button[id^=\'button-payment-custom-field\']').on('c
 			}
 		});
 	});
+});
+//--></script> 
+<script type="text/javascript"><!--
+$('.date').datetimepicker({
+	pickTime: false
+});
+
+$('.time').datetimepicker({
+	pickDate: false
+});
+
+$('.datetime').datetimepicker({
+	pickDate: true,
+	pickTime: true
 });
 //--></script>

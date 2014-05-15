@@ -3,7 +3,7 @@ class ControllerModuleOpenbay extends Controller {
 	private $error = array();
 
 	public function index() {
-		$this->language->load('module/openbay');
+		$this->load->language('module/openbay');
 
 		$this->document->setTitle($this->language->get('heading_title'));
 

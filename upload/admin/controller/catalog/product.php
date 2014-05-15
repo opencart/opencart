@@ -1180,12 +1180,12 @@ class ControllerCatalogProduct extends Controller {
 		$data['product_specials'] = array();
 
 		foreach ($product_specials as $product_special) {
-			$data['product_discounts'][] = array(
+			$data['product_specials'][] = array(
 				'customer_group_id' => $product_special['customer_group_id'],
 				'priority'          => $product_special['priority'],
 				'price'             => $product_special['price'],
-				'date_start'        => ($product_special['date_start'] != '0000-00-00' ? $product_discount['date_start'] : ''),
-				'date_end'          => ($product_special['date_end'] != '0000-00-00' ? $product_discount['date_end'] :  '')
+				'date_start'        => ($product_special['date_start'] != '0000-00-00' ? $product_special['date_start'] : ''),
+				'date_end'          => ($product_special['date_end'] != '0000-00-00' ? $product_special['date_end'] :  '')
 			);
 		}
 
@@ -1320,11 +1320,11 @@ class ControllerCatalogProduct extends Controller {
 		}
 
 		foreach ($this->request->post['product_description'] as $language_id => $value) {
-			if ((utf8_strlen($value['name']) < 1) || (utf8_strlen($value['name']) > 255)) {
+			if ((utf8_strlen($value['name']) < 3) || (utf8_strlen($value['name']) > 255)) {
 				$this->error['name'][$language_id] = $this->language->get('error_name');
 			}
 
-			if ((utf8_strlen($value['meta_title']) < 1) || (utf8_strlen($value['meta_title']) > 255)) {
+			if ((utf8_strlen($value['meta_title']) < 3) || (utf8_strlen($value['meta_title']) > 255)) {
 				$this->error['meta_title'][$language_id] = $this->language->get('error_meta_title');
 			}
 		}

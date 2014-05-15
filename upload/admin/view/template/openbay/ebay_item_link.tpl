@@ -91,6 +91,7 @@
               <th class="text-center"><?php echo $text_column_itemId; ?></th>
               <th class="text-center"><?php echo $text_column_allocated; ?></th>
               <th class="text-center"><?php echo $text_column_stock_available; ?></th>
+              <th class="text-center"><?php echo $text_column_stock_reserve; ?></th>
               <th class="text-center"><?php echo $text_column_ebay_stock; ?></th>
               <th class="text-center"><?php echo $text_column_variants; ?></th>
               <th class="text-center"><?php echo $text_column_status; ?></th>
@@ -106,6 +107,7 @@
             <?php foreach ($linked_items as $id => $item) { ?>
               <input type="hidden" name="ebay_qty_<?php echo $id; ?>" value="" id="ebay-qty-<?php echo $id; ?>" />
               <input type="hidden" name="store_qty_<?php echo $id; ?>" value="<?php echo $item['qty']; ?>" id="store-qty-<?php echo $id; ?>" />
+              <input type="hidden" name="reserve_qty_<?php echo $id; ?>" value="<?php echo $item['reserve']; ?>" id="reserve-qty-<?php echo $id; ?>" />
               <input type="hidden" name="item_id[]" id="item-id-<?php echo $id; ?>" value="<?php echo $id; ?>" class="item-id"  />
               <input type="hidden" name="product_id[]" id="product-id-<?php echo $id; ?>" value="<?php echo $item['product_id']; ?>" />
               <input type="hidden" name="options" id="options-<?php echo $id; ?>" value="<?php echo (int)$item['options']; ?>" />
@@ -116,6 +118,7 @@
                 <?php if ($item['options'] == 0) { ?>
                   <td class="text-center"><?php echo $item['allocated']; ?></td>
                   <td class="text-center"><?php echo $item['qty']; ?></td>
+                  <td class="text-center"><?php echo $item['reserve']; ?></td>
                   <td id="text-qty-<?php echo $id; ?>" class="text-center"></td>
                   <td class="text-center"><i class="fa fa-times-circle text-danger"></i></td>
                 <?php } else { ?>
@@ -150,27 +153,28 @@
               $.each (json.data, function(key, val) {
                 key                 = String(key);
                 var product_id      = $('#product-id-'+key).val();
-                var store_qty        = $('#store-qty-'+key).val();
-                var html_inj         = '';
+                var store_qty       = $('#store-qty-'+key).val();
+                var reserve_qty     = $('#reserve-qty-'+key).val();
+                var html_inj        = '';
   
                 if (val.variants == 0) {
                   $('#text-qty-'+key).text(val.qty);
                   $('#ebay-qty-'+key).val(val.qty);
   
                   if (val.status == 1) {
-                    if ($('#ebay-qty-'+key).val() == $('#store-qty-'+key).val()) {
+                    if (val.qty == store_qty || val.qty == reserve_qty) {
                       $('#text-status-'+key).text('OK');
                       $('#row-'+key+' > td').css('background-color', '#E3FFC8');
                       $('#text-buttons-'+key).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><span><?php echo $text_btn_edit; ?></span></a>');
                     } else {
                       $('#text-status-'+key).text('<?php echo $text_stock_error; ?>');
                       $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                      $('#text-buttons-'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+store_qty+');" class="btn btn-primary"><span><?php echo $text_btn_resync; ?></a>');
+                      $('#text-buttons-'+key).html('<a onclick="updateLink('+key+','+val.qty+','+product_id+', '+store_qty+', '+reserve_qty+');" class="btn btn-primary"><span><?php echo $text_btn_resync; ?></a>');
                     }
                   } else {
                     $('#text-status-'+key).text('<?php echo $text_listing_ended; ?>');
                     $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove_link; ?></a>');
+                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $text_btn_remove_link; ?></a>');
                   }
                 } else {
                   $.each (val.variants, function(key1, val1) {
@@ -186,7 +190,7 @@
                   if (val.status == 0) {
                     $('#text-status-'+key).text('<?php echo $text_listing_ended; ?>');
                     $('#row-'+key+' > td').css('background-color', '#FFD4D4');
-                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $text_btn_remove_link; ?></a>');
+                    $('#text-buttons-'+key).html('<a onclick="removeLink('+product_id+', '+key+');" class="btn btn-danger"><i class="fa fa-minus-circle fa-lg"></i> <?php echo $text_btn_remove_link; ?></a>');
                   }
                 }
               });
@@ -203,7 +207,7 @@
           }
       });
   }
-  
+
   function removeLink(product_id, id) {
       $.ajax({
           type: 'GET',
@@ -218,11 +222,11 @@
       });
   }
   
-  function updateLink(itemid, qty, product_id, store_qty) {
+  function updateLink(item_id, qty, product_id, store_qty, reserve_qty) {
       var r = confirm("<?php echo $text_alert_stock_local; ?>");
-      varBtnOld = $('#text-buttons-'+itemid).html();
+      var button_old = $('#text-buttons-'+item_id).html();
   
-      $('#text-buttons-'+itemid).html('<p class="center"><img src="view/image/loading.gif" alt="Loading" /></p>');
+      $('#text-buttons-'+item_id).html('<p class="text-center"><i class="fa fa-cog fa-lg fa-spin"></i></p>');
   
       if (r == true) {
           $.ajax({
@@ -231,26 +235,28 @@
               dataType: 'json',
               success: function(json) {
                   if (json.error == false) {
-                      $('#text-status-'+itemid).text('OK');
-                      $('#text-buttons-'+itemid).html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><span><?php echo $text_btn_edit; ?></span></a>');
-                      $('#row-'+itemid+' > td').css('background-color', '#E3FFC8');
-                      $('#l-'+itemid+'-qty-input').val(qty);
-                      $('#l-'+itemid+'-qty').val(qty);
-                      $('#text-qty-'+itemid).text(store_qty);
-                      $('#text-buttons-'+itemid).empty();
-                  }
-  
-                  if (json.error == true) {
-                      $('#text-buttons-'+itemid).html(varBtnOld);
+                      $('#text-status-'+item_id).text('OK');
+                      $('#text-buttons-'+item_id).empty().html('<a href="<?php echo $edit_url; ?>'+product_id+'" class="btn btn-primary"><?php echo $text_btn_edit; ?></a>');
+                      $('#row-'+item_id+' > td').css('background-color', '#E3FFC8');
+                      $('#l-'+item_id+'-qty-input').val(qty);
+                      $('#l-'+item_id+'-qty').val(qty);
+                      if (reserve_qty > 0) {
+                        $('#text-qty-'+item_id).text(reserve_qty);
+                      } else {
+                        $('#text-qty-'+item_id).text(store_qty);
+                      }
+                      $('#reserve-qty-'+item_id).text(reserve_qty);
+                  } else {
+                      $('#text-buttons-'+item_id).html(button_old);
                       alert(json.msg);
                   }
               },
               failure: function() {
-                  $('#text-buttons-'+itemid).html(varBtnOld);
+                  $('#text-buttons-'+item_id).html(button_old);
                   alert('<?php echo $text_ajax_load_error; ?>');
               },
               error: function() {
-                  $('#text-buttons-'+itemid).html(varBtnOld);
+                  $('#text-buttons-'+item_id).html(button_old);
                   alert('<?php echo $text_ajax_load_error; ?>');
               }
           });

@@ -68,7 +68,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 			$data['table_data'] = $table_data;
 		} else {
-			$data['error'] = 'Could not connect to OpenBay PRO API.';
+			$data['error'] = 'Could not connect to OpenBay PRO API . ';
 		}
 
 		$data['token'] = $this->session->data['token'];
@@ -161,7 +161,7 @@ class ControllerOpenbayAmazonus extends Controller {
 
 		$response = simplexml_load_string($this->openbay->amazonus->callWithResponse('plans/getPlans'));
 
-		$data['plans'][] = array();
+		$data['plans'] = array();
 
 		if ($response) {
 			foreach ($response->Plan as $plan) {
@@ -196,8 +196,8 @@ class ControllerOpenbayAmazonus extends Controller {
 		}
 
 		$data['user_plan'] = $plan;
-		$data['link_change_plan'] = $this->openbay->amazonus->getServer().'account/changePlan/?token='.$this->config->get('openbay_amazonus_token');
-		$data['link_change_seller'] = $this->openbay->amazonus->getServer().'account/changeSellerId/?token='.$this->config->get('openbay_amazonus_token');
+		$data['link_change_plan'] = $this->openbay->amazonus->getServer() . 'account/changePlan/?token=' . $this->config->get('openbay_amazonus_token');
+		$data['link_change_seller'] = $this->openbay->amazonus->getServer() . 'account/changeSellerId/?token=' . $this->config->get('openbay_amazonus_token');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -502,16 +502,16 @@ class ControllerOpenbayAmazonus extends Controller {
 	}
 
 	public function getOpenstockOptionsAjax() {
-		$options = array();
+		$json = array();
 		if ($this->openbay->addonLoad('openstock') && isset($this->request->get['product_id'])) {
 			$this->load->model('openstock/openstock');
 			$this->load->model('tool/image');
-			$options = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
+			$json = $this->model_openstock_openstock->getProductOptionStocks($this->request->get['product_id']);
 		}
-		if(empty($options)) {
-			$options = false;
+		if(empty($json)) {
+			$json = false;
 		}
-		$this->response->setOutput(json_encode($options));
+		$this->response->setOutput(json_encode($json));
 	}
 
 	public function addItemLinkAjax() {
@@ -547,7 +547,7 @@ class ControllerOpenbayAmazonus extends Controller {
 				$logger->write('Updating quantities with data: ' . print_r($quantityData, true));
 				$this->openbay->amazonus->updateQuantities($quantityData);
 			} else {
-				$logger->write('No quantity data will be posted.');
+				$logger->write('No quantity data will be posted . ');
 			}
 		} else {
 			$this->openbay->amazonus->putStockUpdateBulk(array($product_id));

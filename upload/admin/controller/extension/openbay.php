@@ -45,7 +45,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$extensions = $this->model_setting_extension->getInstalled('openbay');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/openbay/' . $value . '.php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/openbay/' . $value . ' . php')) {
 				$this->model_setting_extension->uninstall('openbay', $value);
 				unset($extensions[$key]);
 			}
@@ -56,7 +56,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$markets = array('ebay', 'amazon', 'amazonus');
 
 		foreach ($markets as $market) {
-			$extension = basename($market, '.php');
+			$extension = basename($market, ' . php');
 
 			$this->load->language('openbay/' . $extension);
 
@@ -129,7 +129,7 @@ class ControllerExtensionOpenbay extends Controller {
 		} else {
 			$this->session->data['success'] = $this->language->get('text_uninstall_success');
 
-			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . '.php');
+			require_once(DIR_APPLICATION . 'controller/openbay/' . $this->request->get['extension'] . ' . php');
 
 			$this->load->model('setting/extension');
 			$this->load->model('setting/setting');
@@ -850,7 +850,7 @@ class ControllerExtensionOpenbay extends Controller {
 			$i++;
 		}
 
-		$this->session->data['success'] = $i.' '. $data['text_confirmed'] .' '.$status_mapped[$this->request->post['order_status_id']];
+		$this->session->data['success'] = $i.' ' . $data['text_confirmed'] . ' ' . $status_mapped[$this->request->post['order_status_id']];
 
 		$this->response->redirect($this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL'));
 	}

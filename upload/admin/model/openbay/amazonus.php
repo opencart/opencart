@@ -625,7 +625,7 @@ class ModelOpenbayAmazonus extends Model {
 				'quantity' => $row['quantity'],
 				'amazon_sku' => $row['amazon_sku'],
 				'amazon_quantity' => $row['amazon_quantity'],
-				'amazon_price' => number_format($row['amazon_price'], 2, '.', ''),
+				'amazon_price' => number_format($row['amazon_price'], 2, ' . ', ''),
 				'asin' => $row['asin'],
 				'combination' => $row['combination'],
 			);

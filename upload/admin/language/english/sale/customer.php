@@ -25,13 +25,13 @@ $_['column_total']          = 'Total Accounts';
 $_['column_action']         = 'Action';
 
 // Entry
+$_['entry_customer_group']  = 'Customer Group';
 $_['entry_firstname']       = 'First Name';
 $_['entry_lastname']        = 'Last Name';
 $_['entry_email']           = 'E-Mail';
 $_['entry_telephone']       = 'Telephone';
 $_['entry_fax']             = 'Fax';
 $_['entry_newsletter']      = 'Newsletter';
-$_['entry_customer_group']  = 'Customer Group';
 $_['entry_status']          = 'Status';
 $_['entry_password']        = 'Password';
 $_['entry_confirm']         = 'Confirm';
@@ -70,3 +70,4 @@ $_['error_city']            = 'City must be between 2 and 128 characters!';
 $_['error_postcode']        = 'Postcode must be between 2 and 10 characters for this country!';
 $_['error_country']         = 'Please select a country!';
 $_['error_zone']            = 'Please select a region / state!';
+$_['error_custom_field']    = '%s required!';

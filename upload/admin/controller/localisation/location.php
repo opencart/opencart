@@ -84,7 +84,7 @@ class ControllerLocalisationLocation extends Controller {
 		$this->load->model('localisation/location');
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach($this->request->post['selected'] as $location_id) {
+			foreach ($this->request->post['selected'] as $location_id) {
 				$this->model_localisation_location->deleteLocation($location_id);
 			}
 
@@ -172,7 +172,7 @@ class ControllerLocalisationLocation extends Controller {
 
 		$results = $this->model_localisation_location->getLocations($filter_data);
 
-		foreach($results as $result) {
+		foreach ($results as $result) {
 			$data['location'][] =   array(
 				'location_id' => $result['location_id'],
 				'name'        => $result['name'],

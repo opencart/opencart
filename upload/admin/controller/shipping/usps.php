@@ -101,13 +101,13 @@ class ControllerShippingUsps extends Controller {
 			$data['error_warning'] = '';
 		}
 
- 		if (isset($this->error['user_id'])) {
+		if (isset($this->error['user_id'])) {
 			$data['error_user_id'] = $this->error['user_id'];
 		} else {
 			$data['error_user_id'] = '';
 		}
 
- 		if (isset($this->error['postcode'])) {
+		if (isset($this->error['postcode'])) {
 			$data['error_postcode'] = $this->error['postcode'];
 		} else {
 			$data['error_postcode'] = '';
@@ -119,22 +119,22 @@ class ControllerShippingUsps extends Controller {
 			$data['error_dimension'] = '';
 		}
 
-  		$data['breadcrumbs'] = array();
+		$data['breadcrumbs'] = array();
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_home'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_home'),
 			'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('text_shipping'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('text_shipping'),
 			'href' => $this->url->link('extension/shipping', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
-   		$data['breadcrumbs'][] = array(
-       		'text' => $this->language->get('heading_title'),
+		$data['breadcrumbs'][] = array(
+			'text' => $this->language->get('heading_title'),
 			'href' => $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL')
-   		);
+		);
 
 		$data['action'] = $this->url->link('shipping/usps', 'token=' . $this->session->data['token'], 'SSL');
 

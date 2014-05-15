@@ -737,7 +737,20 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
-
+		
+		// Custom Fields
+		$this->load->model('sale/custom_field');
+		
+		$data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
+		
+		if (isset($this->request->post['custom_field'])) {
+			$data['account_custom_field'] = $this->request->post['custom_field'];
+		} elseif (!empty($order_info)) {
+			$data['account_custom_field'] = unserialize($order_info['custom_field']);		
+		} else {
+			$data['account_custom_field'] = array();
+		}
+				
 		if (isset($this->request->post['affiliate_id'])) {
 			$data['affiliate_id'] = $this->request->post['affiliate_id'];
 		} elseif (!empty($order_info)) {
@@ -839,6 +852,10 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['payment_postcode'] = '';
 		}
+		
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();															
 
 		if (isset($this->request->post['payment_country_id'])) {
 			$data['payment_country_id'] = $this->request->post['payment_country_id'];
@@ -855,7 +872,15 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['payment_zone_id'] = '';
 		}
-
+		
+		if (isset($this->request->post['payment_custom_field'])) {
+			$data['payment_custom_field'] = $this->request->post['payment_custom_field'];
+		} elseif (!empty($order_info)) {
+			$data['payment_custom_field'] = $order_info['payment_custom_field'];
+		} else {
+			$data['payment_custom_field'] = '';
+		}
+		
 		if (isset($this->request->post['payment_method'])) {
 			$data['payment_method'] = $this->request->post['payment_method'];
 		} elseif (!empty($order_info)) {
@@ -943,11 +968,15 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['shipping_zone_id'] = '';
 		}
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();															
-
+		
+		if (isset($this->request->post['shipping_custom_field'])) {
+			$data['shipping_custom_field'] = $this->request->post['shipping_custom_field'];
+		} elseif (!empty($order_info)) {
+			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
+		} else {
+			$data['shipping_custom_field'] = '';
+		}
+		
 		if (isset($this->request->post['shipping_method'])) {
 			$data['shipping_method'] = $this->request->post['shipping_method'];
 		} elseif (!empty($order_info)) {
@@ -1006,6 +1035,8 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['order_vouchers'] = array();
 		}
+		
+		$data['voucher_min'] = $this->config->get('config_voucher_min');
 
 		$this->load->model('sale/voucher_theme');
 
@@ -1544,6 +1575,8 @@ class ControllerSaleOrder extends Controller {
 			$data['shipping_zone_code'] = $order_info['shipping_zone_code'];
 			$data['shipping_country'] = $order_info['shipping_country'];
 
+			$this->load->model('tool/upload');
+
 			$data['products'] = array();
 
 			$products = $this->model_sale_order->getOrderProducts($this->request->get['order_id']);
@@ -1561,12 +1594,16 @@ class ControllerSaleOrder extends Controller {
 							'type'  => $option['type']
 						);
 					} else {
-						$option_data[] = array(
-							'name'  => $option['name'],
-							'value' => utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.')),
-							'type'  => $option['type'],
-							'href'  => $this->url->link('sale/order/download', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . '&order_option_id=' . $option['order_option_id'], 'SSL')
-						);						
+						$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+						
+						if ($upload_info) {
+							$option_data[] = array(
+								'name'  => $option['name'],
+								'value' => $upload_info['name'],
+								'type'  => $option['type'],
+								'href'  => $this->url->link('tool/upload/download', 'token=' . $this->session->data['token'] . '&code=' . $upload_info['code'], 'SSL')
+							);							
+						}						
 					}
 				}
 
@@ -2091,72 +2128,9 @@ class ControllerSaleOrder extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($history_total - $this->config->get('config_limit_admin'))) ? $history_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $history_total, ceil($history_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
 		$this->response->setOutput($this->load->view('sale/order_history.tpl', $data));
-	}
-
-	public function download() {
-		$this->load->model('sale/order');
-
-		if (isset($this->request->get['order_option_id'])) {
-			$order_option_id = $this->request->get['order_option_id'];
-		} else {
-			$order_option_id = 0;
-		}
-
-		$option_info = $this->model_sale_order->getOrderOption($this->request->get['order_id'], $order_option_id);
-
-		if ($option_info && $option_info['type'] == 'file') {
-			$file = DIR_DOWNLOAD . $option_info['value'];
-			$mask = basename(utf8_substr($option_info['value'], 0, utf8_strrpos($option_info['value'], '.')));
-
-			if (!headers_sent()) {
-				if (is_file($file)) {
-					header('Content-Type: application/octet-stream');
-					header('Content-Description: File Transfer');
-					header('Content-Disposition: attachment; filename="' . ($mask ? $mask : basename($file)) . '"');
-					header('Content-Transfer-Encoding: binary');
-					header('Expires: 0');
-					header('Cache-Control: must-revalidate, post-check=0, pre-check=0');
-					header('Pragma: public');
-					header('Content-Length: ' . filesize($file));
-
-					readfile($file, 'rb');
-					exit;
-				} else {
-					exit('Error: Could not find file ' . $file . '!');
-				}
-			} else {
-				exit('Error: Headers already sent out!');
-			}
-		} else {
-			$this->load->language('error/not_found');
-
-			$this->document->setTitle($this->language->get('heading_title'));
-
-			$data['heading_title'] = $this->language->get('heading_title');
-
-			$data['text_not_found'] = $this->language->get('text_not_found');
-
-			$data['breadcrumbs'] = array();
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('text_home'),
-				'href' => $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL')
-			);
-
-			$data['breadcrumbs'][] = array(
-				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link('error/not_found', 'token=' . $this->session->data['token'], 'SSL')
-			);
-
-			$data['header'] = $this->load->controller('common/header');
-			$data['menu'] = $this->load->controller('common/menu');
-			$data['footer'] = $this->load->controller('common/footer');
-
-			$this->response->setOutput($this->load->view('error/not_found.tpl', $data));
-		}	
 	}
 
 	public function upload() {
@@ -2170,7 +2144,7 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		if (!$json) {
-			if (!empty($this->request->files['file']['name'])) {
+			if (!empty($this->request->files['file']['name']) && is_file($this->request->files['file']['tmp_name'])) {
 				// Sanitize the filename
 				$filename = html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8');
 
@@ -2207,7 +2181,14 @@ class ControllerSaleOrder extends Controller {
 				if (!in_array($this->request->files['file']['type'], $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}
-
+				
+				// Check to see if any PHP files are trying to be uploaded
+				$content = file_get_contents($this->request->files['file']['tmp_name']);
+						
+				if (preg_match('/\<\?php/i', $content)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}	
+			
 				// Return any upload error			
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);
@@ -2221,8 +2202,11 @@ class ControllerSaleOrder extends Controller {
 			$file = $filename . '.' . md5(mt_rand());
 
 			move_uploaded_file($this->request->files['file']['tmp_name'], DIR_DOWNLOAD . $file);
-
-			$json['file'] = $file;
+			
+			// Hide the uploaded file name so people can not link to it directly.
+			$this->load->model('tool/upload');
+			
+			$json['code'] = $this->model_tool_upload->addUpload($filename, $file);
 
 			$json['success'] = $this->language->get('text_upload');
 		}
@@ -2372,6 +2356,8 @@ class ControllerSaleOrder extends Controller {
 
 				$shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
+				$this->load->model('tool/upload');
+
 				$product_data = array();
 
 				$products = $this->model_sale_order->getOrderProducts($order_id);
@@ -2385,7 +2371,13 @@ class ControllerSaleOrder extends Controller {
 						if ($option['type'] != 'file') {
 							$value = $option['value'];
 						} else {
-							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
+							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+							
+							if ($upload_info) {
+								$value = $upload_info['name'];						
+							} else {
+								$value = '';
+							}						
 						}
 
 						$option_data[] = array(
@@ -2571,6 +2563,8 @@ class ControllerSaleOrder extends Controller {
 
 				$shipping_address = str_replace(array("\r\n", "\r", "\n"), '<br />', preg_replace(array("/\s\s+/", "/\r\r+/", "/\n\n+/"), '<br />', trim(str_replace($find, $replace, $format))));
 
+				$this->load->model('tool/upload');
+
 				$product_data = array();
 
 				$products = $this->model_sale_order->getOrderProducts($order_id);
@@ -2586,7 +2580,13 @@ class ControllerSaleOrder extends Controller {
 						if ($option['type'] != 'file') {
 							$value = $option['value'];
 						} else {
-							$value = utf8_substr($option['value'], 0, utf8_strrpos($option['value'], '.'));
+							$upload_info = $this->model_tool_upload->getUploadByCode($option['value']);
+							
+							if ($upload_info) {
+								$value = $upload_info['name'];						
+							} else {
+								$value = '';
+							} 							
 						}
 
 						$option_data[] = array(

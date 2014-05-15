@@ -85,9 +85,7 @@ class Mail {
 
 		$boundary = '----=_NextPart_' . md5(time());
 
-		$header = '';
-
-		$header .= 'MIME-Version: 1.0' . $this->newline;
+		$header = 'MIME-Version: 1.0' . $this->newline;
 
 		if ($this->protocol != 'mail') {
 			$header .= 'To: ' . $to . $this->newline;
@@ -95,8 +93,8 @@ class Mail {
 		}
 
 		$header .= 'Date: ' . date('D, d M Y H:i:s O') . $this->newline;
-		$header .= 'From: ' . '=?UTF-8?B?' . base64_encode($this->sender) . '?=' . '<' . $this->from . '>' . $this->newline;
-		$header .= 'Reply-To: ' . '=?UTF-8?B?' . base64_encode($this->sender) . '?=' . '<' . $this->from . '>' . $this->newline;
+		$header .= 'From: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
+		$header .= 'Reply-To: =?UTF-8?B?' . base64_encode($this->sender) . '?=' . ' <' . $this->from . '>' . $this->newline;
 		$header .= 'Return-Path: ' . $this->from . $this->newline;
 		$header .= 'X-Mailer: PHP/' . phpversion() . $this->newline;
 		$header .= 'Content-Type: multipart/related; boundary="' . $boundary . '"' . $this->newline . $this->newline;
@@ -155,14 +153,16 @@ class Mail {
 				mail($to, '=?UTF-8?B?' . base64_encode($this->subject) . '?=', $message, $header);
 			}
 		} elseif ($this->protocol == 'smtp') {
-			$handle = fsockopen($this->hostname, $this->port, $errno, $errstr, $this->timeout);
+			$is_tls = substr($this->smtp_hostname, 0, 3) == 'tls';
+			$hostname = $is_tls ? substr($this->smtp_hostname, 6) : $this->smtp_hostname;
+			$handle = fsockopen($hostname, $this->smtp_port, $errno, $errstr, $this->smtp_timeout);
 
 			if (!$handle) {
 				trigger_error('Error: ' . $errstr . ' (' . $errno . ')');
 				exit();
 			} else {
 				if (substr(PHP_OS, 0, 3) != 'WIN') {
-					socket_set_timeout($handle, $this->timeout, 0);
+					socket_set_timeout($handle, $this->smtp_timeout, 0);
 				}
 
 				while ($line = fgets($handle, 515)) {
@@ -171,24 +171,24 @@ class Mail {
 					}
 				}
         
-        fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
+				fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
+				
+				$reply = '';
+				
+				while ($line = fgets($handle, 515)) {
+					$reply .= $line;
+					
+					if (substr($line, 3, 1) == ' ') {
+						break;
+					}
+				}
 
-        $reply = '';
+				if (substr($reply, 0, 3) != 250) {
+					trigger_error('Error: EHLO not accepted from server!');
+					exit();
+				}
 
-        while ($line = fgets($handle, 515)) {
-          $reply .= $line;
-
-          if (substr($line, 3, 1) == ' ') {
-            break;
-          }
-        }
-
-        if (substr($reply, 0, 3) != 250) {
-          trigger_error('Error: EHLO not accepted from server!');
-          exit();
-        }
-
-				if (substr($this->hostname, 0, 3) == 'tls') {
+				if ($is_tls) {
 					fputs($handle, 'STARTTLS' . "\r\n");
 					
 					$reply = '';
@@ -206,10 +206,10 @@ class Mail {
 						exit();
 					}
           
-          stream_socket_enable_crypto($handle, TRUE, STREAM_CRYPTO_METHOD_TLS_CLIENT);
+          			stream_socket_enable_crypto($handle, true, STREAM_CRYPTO_METHOD_TLS_CLIENT);
 				}
 
-				if (!empty($this->username)  && !empty($this->password)) {
+				if (!empty($this->smtp_username)  && !empty($this->smtp_password)) {
 					fputs($handle, 'EHLO ' . getenv('SERVER_NAME') . "\r\n");
 
 					$reply = '';
@@ -244,7 +244,7 @@ class Mail {
 						exit();
 					}
 
-					fputs($handle, base64_encode($this->username) . "\r\n");
+					fputs($handle, base64_encode($this->smtp_username) . "\r\n");
 
 					$reply = '';
 
@@ -261,7 +261,7 @@ class Mail {
 						exit();
 					}
 
-					fputs($handle, base64_encode($this->password) . "\r\n");
+					fputs($handle, base64_encode($this->smtp_password) . "\r\n");
 
 					$reply = '';
 

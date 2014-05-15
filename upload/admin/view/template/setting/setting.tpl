@@ -245,7 +245,7 @@
                 </select></div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label"><span class="help-block"><?php echo $help_currency_auto; ?><?php echo $entry_currency_auto; ?></span></label>
+              <label class="col-sm-2 control-label"><span><?php echo $entry_currency_auto; ?></span></label>
               <div class="col-sm-10">
                 <label class="radio-inline">
                   <?php if ($config_currency_auto) { ?>
@@ -264,7 +264,9 @@
                   <input type="radio" name="config_currency_auto" value="0" />
                   <?php echo $text_no; ?>
                   <?php } ?>
-                </label></div>
+                </label>
+                <span class="help-block"><?php echo $help_currency_auto; ?></span>
+              </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-length-class"><?php echo $entry_length_class; ?></label>
@@ -299,7 +301,7 @@
             <fieldset>
               <legend><?php echo $text_product; ?></legend>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><span data-toggle="tooltip" title="<?php echo $help_product_count; ?>"><?php echo $entry_product_count; ?></span></label>
+                <label class="col-sm-2 control-label"><span><?php echo $entry_product_count; ?></span></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
                     <?php if ($config_product_count) { ?>
@@ -318,7 +320,9 @@
                     <input type="radio" name="config_product_count" value="0" />
                     <?php echo $text_no; ?>
                     <?php } ?>
-                  </label></div>
+                  </label>
+                  <span class="help-block"><?php echo $help_product_count; ?></span>
+                </div>
               </div>
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_product_limit; ?></label>
@@ -570,7 +574,7 @@
                 </div>
               </div>
               <div class="form-group">
-                <label class="col-sm-2 control-label"><?php echo $entry_customer_price; ?>s</label>
+                <label class="col-sm-2 control-label"><?php echo $entry_customer_price; ?></label>
                 <div class="col-sm-10">
                   <label class="radio-inline">
                     <?php if ($config_customer_price) { ?>
@@ -1249,6 +1253,7 @@
               <label class="col-sm-2 control-label" for="input-smtp-host"><?php echo $entry_smtp_hostname; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="config_mail[smtp_hostname]" value="<?php echo $config_smtp_hostname; ?>" placeholder="<?php echo $entry_smtp_hostname; ?>" id="input-smtp-host" class="form-control" />
+                <span class="help-block"><?php echo $help_mail_smtp_hostname; ?></span>
               </div>
             </div>
             <div class="form-group">
@@ -1563,10 +1568,10 @@ $('select[name=\'config_template\']').on('change', function() {
 		dataType: 'html',
 		beforeSend: function() {
 			$('select[name=\'country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
-		},		
+		},
 		complete: function() {
 			$('.fa-spinner').remove();
-		},			
+		},
 		success: function(html) {
 			$('#template').attr('src', html);
 		},
@@ -1577,7 +1582,7 @@ $('select[name=\'config_template\']').on('change', function() {
 });
 
 $('select[name=\'config_template\']').trigger('change');
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('select[name=\'config_country_id\']').on('change', function() {
 	$.ajax({
@@ -1585,27 +1590,27 @@ $('select[name=\'config_country_id\']').on('change', function() {
 		dataType: 'json',
 		beforeSend: function() {
 			$('select[name=\'config_country_id\']').after(' <i class="fa fa-spinner fa-spin"></i>');
-		},		
+		},
 		complete: function() {
 			$('.fa-spinner').remove();
-		},			
+		},
 		success: function(json) {
 			html = '<option value=""><?php echo $text_select; ?></option>';
-			
+
 			if (json['zone'] != '') {
 				for (i = 0; i < json['zone'].length; i++) {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
-	    			
+
 					if (json['zone'][i]['zone_id'] == '<?php echo $config_zone_id; ?>') {
 	      				html += ' selected="selected"';
 	    			}
-	
+
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}
 			} else {
 				html += '<option value="0" selected="selected"><?php echo $text_none; ?></option>';
 			}
-			
+
 			$('select[name=\'config_zone_id\']').html(html);
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
@@ -1615,5 +1620,5 @@ $('select[name=\'config_country_id\']').on('change', function() {
 });
 
 $('select[name=\'config_country_id\']').trigger('change');
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

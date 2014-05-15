@@ -13,8 +13,8 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-ppexpress" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a> <a href="<?php echo $search; ?>" class="btn btn-info"><i class="fa fa-search"></i> <?php echo $button_search; ?></a> </div>
+        <button type="submit" form="form-ppexpress" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a> <a href="<?php echo $search; ?>" data-toggle="tooltip" title="<?php echo $button_search; ?>" class="btn"><i class="fa fa-search"></i></a> </div>
       <h1 class="panel-title"><i class="fa fa-credit-card fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
@@ -60,7 +60,7 @@
                 <div class="input-group"> <span class="input-group-addon"><i class="fa fa-link"></i></span>
                   <input type="text" value="<?php echo $text_ipn_url; ?>" class="form-control" />
                 </div>
-                <span class="help-block"><?php echo $text_ipn_help; ?></span> </div>
+                <span class="help-block"><?php echo $text_ipn_help; ?></span></div>
             </div>
           </div>
           <div class="tab-pane" id="tab-general">

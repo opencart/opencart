@@ -88,36 +88,35 @@
               <div class="panel-body">
                 <table class="table">
                   <thead>
-                  <tr>
-                    <td class="text-right"><?php echo $text_name; ?></td>
-                    <td class="text-left"><?php echo $text_description; ?></td>
-                    <td class="text-left"><?php echo $text_order_frequency; ?></td>
-                    <td class="text-left"><?php echo $text_product_listings; ?></td>
-                    <td class="text-left"><?php echo $text_bulk_listing; ?></td>
-                    <td class="text-left"><?php echo $text_price; ?></td>
-                  </tr>
+                    <tr>
+                      <td class="text-right"><?php echo $text_name; ?></td>
+                      <td class="text-left"><?php echo $text_description; ?></td>
+                      <td class="text-left"><?php echo $text_order_frequency; ?></td>
+                      <td class="text-left"><?php echo $text_product_listings; ?></td>
+                      <td class="text-left"><?php echo $text_bulk_listing; ?></td>
+                      <td class="text-left"><?php echo $text_price; ?></td>
+                    </tr>
                   </thead>
-
                   <tbody>
-                  <?php foreach ($plans as $plan) { ?>
-                  <tr>
-                    <td class="text-right"><?php echo $plan['title']; ?></td>
-                    <td class="text-left"><?php echo $plan['description']; ?></td>
-                    <td class="text-left"><?php echo $plan['order_frequency']; ?></td>
-                    <td class="text-left"><?php echo $plan['product_listings']; ?></td>
-                    <td class="text-left">
-                      <?php if ($plan['bulk_listing']) { ?>
-                        <?php echo $text_allowed; ?>
-                      <?php } else { ?>
-                        <?php echo $text_not_allowed; ?>
-                      <?php } ?>
-                    </td>
-                    <td class="text-left">&pound;<?php echo $plan['price'] ?></td>
-                  </tr>
-                  <?php } ?>
+                    <?php foreach ($plans as $plan) { ?>
+                    <tr>
+                      <td class="text-right"><?php echo $plan['title']; ?></td>
+                      <td class="text-left"><?php echo $plan['description']; ?></td>
+                      <td class="text-left"><?php echo $plan['order_frequency']; ?></td>
+                      <td class="text-left"><?php echo $plan['product_listings']; ?></td>
+                      <td class="text-left">
+                        <?php if ($plan['bulk_listing']) { ?>
+                          <?php echo $text_allowed; ?>
+                        <?php } else { ?>
+                          <?php echo $text_not_allowed; ?>
+                        <?php } ?>
+                      </td>
+                      <td class="text-left">&pound;<?php echo $plan['price'] ?></td>
+                    </tr>
+                    <?php } ?>
                   </tbody>
                 </table>
-                <?php if ($token) { ?>
+                <?php if ($link_change_plan) { ?>
                   <div class="pull-right">
                     <a href="<?php echo $link_change_plan; ?>" class="btn btn-primary" target="_blank"><i class="fa fa-arrow-right fa-lg"></i> <?php echo $button_change_plan; ?></a>
                   </div>

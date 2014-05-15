@@ -46,7 +46,7 @@ class ModelOpenbayEbayProduct extends Model {
 
 		$this->openbay->ebay->log('Data unserialized');
 
-		if ($options['cat'] == 1) {
+		if ($options['cat'] == 1 || !isset($options['cat'])) {
 			$itemCountLoop = 0;
 			foreach($newData1 as $item) {
 				$itemCountLoop++;
@@ -325,7 +325,7 @@ class ModelOpenbayEbayProduct extends Model {
 				$this->openbay->ebay->createLink($product_id, $item['ItemID'], $variant);
 
 				//Insert product/category link
-				if ($options['cat'] == 1) {
+				if ($options['cat'] == 1 || !isset($options['cat'])) {
 					$this->createCategoryLink($product_id, $catLink[$item['CategoryName']]);
 				}
 

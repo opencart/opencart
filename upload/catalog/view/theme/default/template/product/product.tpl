@@ -462,7 +462,8 @@ $('#button-cart').on('click', function() {
                     
                 $('#cart-total').html(json['total']);
                 
-                $('html, body').animate({ scrollTop: 0 }, 'slow'); 
+                $('#cart').load('index.php?route=module/cart/info');
+                $('html, body').animate({ scrollTop: 0 }, 'slow');
             }   
         }
     });

@@ -28,6 +28,7 @@ class ModelCheckoutOrder extends Model {
 
 		// Custom Fields
 		$data['custom_fields'] = array();
+		$this->load->model('account/custom_field');
 
 		$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->config->get('config_customer_group_id')));
 

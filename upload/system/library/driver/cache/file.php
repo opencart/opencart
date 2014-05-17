@@ -24,13 +24,13 @@ class CacheFile {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
 		if ($files) {
-			$handle = fopen($files[0], 'r');
-
-			$cache = fread($handle, filesize($files[0]));
-
-			fclose($handle);
-
-			return unserialize($cache);
+			$data = file_get_contents($files[0]);
+			
+			if ($data !== False) {
+				return unserialize($data);
+			} else {
+				return false;
+			}
 		}
 	}
 
@@ -39,11 +39,7 @@ class CacheFile {
 
 		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
 
-		$handle = fopen($file, 'w');
-
-		fwrite($handle, serialize($value));
-
-		fclose($handle);
+		file_put_contents($file, serialize($value), LOCK_EX);
 	}
 
 	public function delete($key) {

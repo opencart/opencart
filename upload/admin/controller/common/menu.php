@@ -5,6 +5,7 @@ class ControllerCommonMenu extends Controller {
 
 		$data['text_affiliate'] = $this->language->get('text_affiliate');
 		$data['text_affiliate_activity'] = $this->language->get('text_affiliate_activity');
+		$data['text_api'] = $this->language->get('text_api');
 		$data['text_attribute'] = $this->language->get('text_attribute');
 		$data['text_attribute_group'] = $this->language->get('text_attribute_group');
 		$data['text_backup'] = $this->language->get('text_backup');
@@ -102,6 +103,7 @@ class ControllerCommonMenu extends Controller {
 
 			$data['home'] = $this->url->link('common/dashboard', 'token=' . $this->session->data['token'], 'SSL');
 			$data['affiliate'] = $this->url->link('marketing/affiliate', 'token=' . $this->session->data['token'], 'SSL');
+			$data['api'] = $this->url->link('user/api', 'token=' . $this->session->data['token'], 'SSL');
 			$data['attribute'] = $this->url->link('catalog/attribute', 'token=' . $this->session->data['token'], 'SSL');
 			$data['attribute_group'] = $this->url->link('catalog/attribute_group', 'token=' . $this->session->data['token'], 'SSL');
 			$data['backup'] = $this->url->link('tool/backup', 'token=' . $this->session->data['token'], 'SSL');

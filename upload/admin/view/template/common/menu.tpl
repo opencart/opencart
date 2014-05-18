@@ -84,6 +84,7 @@
           <ul>
             <li><a href="<?php echo $user; ?>"><?php echo $text_user; ?></a></li>
             <li><a href="<?php echo $user_group; ?>"><?php echo $text_user_group; ?></a></li>
+            <li><a href="<?php echo $api; ?>"><?php echo $text_api; ?></a></li>
           </ul>
         </li>
         <li><a class="parent"><?php echo $text_localisation; ?></a>

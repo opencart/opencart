@@ -203,6 +203,25 @@ CREATE TABLE `oc_affiliate_transaction` (
 -- Dumping data for table `oc_affiliate_transaction`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_api`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_api` (
+  `api_id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` int(64) NOT NULL,
+  `key` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modififed` datetime NOT NULL,
+  PRIMARY KEY (`api_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=uutf8_general_ci;
+
+--
+-- Dumping data for table `oc_api`
+--
 
 -- --------------------------------------------------------
 

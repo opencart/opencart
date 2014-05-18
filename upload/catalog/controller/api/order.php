@@ -13,8 +13,7 @@ class ControllerApiOrder extends Controller {
 			'email'
 			'telephone'
 			'fax'
-			'custom_field
-			
+			'custom_field'
 			'payment_firstname'
 			'payment_lastname'
 			'payment_company'
@@ -30,7 +29,6 @@ class ControllerApiOrder extends Controller {
 			'payment_custom_field'
 			'payment_method'
 			'payment_code'
-			
 			'shipping_firstname'
 			'shipping_lastname'
 			'shipping_company'
@@ -45,134 +43,19 @@ class ControllerApiOrder extends Controller {
 			'shipping_zone'
 			'shipping_zone_id'
 			'shipping_address_format'
+			'shipping_custom_field'
 			'shipping_method'
 			'shipping_code'
 			'comment'
-			
 			'affiliate_id'
 			'commission'
-			
 			'currency_code'
-			
 			'language_id'
 			'product'
-			
-			
 			'coupon'
 			'voucher'
 			'reward'
 		);
-			
-			
-			// Customer Details
-			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-				$json['error']['customer']['firstname'] = $this->language->get('error_firstname');
-			}
-	
-			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-				$json['error']['customer']['lastname'] = $this->language->get('error_lastname');
-			}
-	
-			if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
-				$json['error']['customer']['email'] = $this->language->get('error_email');
-			}
-			
-			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-				$json['error']['customer']['telephone'] = $this->language->get('error_telephone');
-			}
-			
-			
-			
-			
-
-			// Payment address
-			if ((utf8_strlen($this->request->post['payment_firstname']) < 1) || (utf8_strlen($this->request->post['payment_firstname']) > 32)) {
-				$json['error']['payment_firstname'] = $this->language->get('error_firstname');
-			}
-	
-			if ((utf8_strlen($this->request->post['payment_lastname']) < 1) || (utf8_strlen($this->request->post['payment_lastname']) > 32)) {
-				$json['error']['payment_lastname'] = $this->language->get('error_lastname');
-			}
-	
-			if ((utf8_strlen($this->request->post['payment_address_1']) < 3) || (utf8_strlen($this->request->post['payment_address_1']) > 128)) {
-				$json['error']['payment_address_1'] = $this->language->get('error_address_1');
-			}
-	
-			if ((utf8_strlen($this->request->post['payment_city']) < 3) || (utf8_strlen($this->request->post['payment_city']) > 128)) {
-				$json['error']['payment_city'] = $this->language->get('error_city');
-			}
-			
-			if ($this->request->post['payment_country_id'] == '') {
-				$json['error']['payment_country'] = $this->language->get('error_country');
-			}
-			
-			if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
-				$json['error']['payment_zone'] = $this->language->get('error_zone');
-			}
-			
-			if ($this->cart->hasShipping()) {
-				// Shipping address
-				if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
-					$json['error']['shipping']['firstname'] = $this->language->get('error_firstname');
-				}
-		
-				if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['shipping_lastname']) > 32)) {
-					$json['error']['shipping']['lastname'] = $this->language->get('error_lastname');
-				}
-				
-				if ((utf8_strlen($this->request->post['shipping_address_1']) < 3) || (utf8_strlen($this->request->post['shipping_address_1']) > 128)) {
-					$json['error']['shipping']['address_1'] = $this->language->get('error_address_1');
-				}
-		
-				if ((utf8_strlen($this->request->post['shipping_city']) < 3) || (utf8_strlen($this->request->post['shipping_city']) > 128)) {
-					$json['error']['shipping']['city'] = $this->language->get('error_city');
-				}
-				
-				$this->load->model('localisation/country');
-				
-				$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
-				
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
-					$json['error']['shipping']['postcode'] = $this->language->get('error_postcode');
-				}
-		
-				if ($this->request->post['shipping_country_id'] == '') {
-					$json['error']['shipping']['country'] = $this->language->get('error_country');
-				}
-				
-				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
-					$json['error']['shipping']['zone'] = $this->language->get('error_zone');
-				}
-							
-				$this->load->model('localisation/country');
-				
-				$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
-				
-				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
-					$json['error']['shipping']['postcode'] = $this->language->get('error_postcode');
-				}			
-			
-			}
-			
-    		// Customer
-			if ($this->request->post['customer_id']) {
-				$this->load->model('account/customer');
-
-				$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
-
-				if ($customer_info) {
-					$this->customer->login($customer_info['email'], '', true);
-					$this->cart->clear();
-				} else {
-					$json['error']['warning'] = $this->language->get('error_customer');
-				}
-			} else {
-				// Customer Group
-				$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
-			}
-
-
-			
 			// Products
 			$this->load->model('catalog/product');
 			
@@ -231,7 +114,117 @@ class ControllerApiOrder extends Controller {
 				} else {
 					$json['error']['product']['store'] = $this->language->get('error_store');
 				}
+			}			
+			
+			// Customer Details
+			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+				$json['error']['customer']['firstname'] = $this->language->get('error_firstname');
 			}
+	
+			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+				$json['error']['customer']['lastname'] = $this->language->get('error_lastname');
+			}
+	
+			if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
+				$json['error']['customer']['email'] = $this->language->get('error_email');
+			}
+			
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$json['error']['customer']['telephone'] = $this->language->get('error_telephone');
+			}
+			
+			
+			
+			
+
+			// Payment address
+			if ((utf8_strlen($this->request->post['payment_firstname']) < 1) || (utf8_strlen($this->request->post['payment_firstname']) > 32)) {
+				$json['error']['payment_firstname'] = $this->language->get('error_firstname');
+			}
+	
+			if ((utf8_strlen($this->request->post['payment_lastname']) < 1) || (utf8_strlen($this->request->post['payment_lastname']) > 32)) {
+				$json['error']['payment_lastname'] = $this->language->get('error_lastname');
+			}
+	
+			if ((utf8_strlen($this->request->post['payment_address_1']) < 3) || (utf8_strlen($this->request->post['payment_address_1']) > 128)) {
+				$json['error']['payment_address_1'] = $this->language->get('error_address_1');
+			}
+	
+			if ((utf8_strlen($this->request->post['payment_city']) < 3) || (utf8_strlen($this->request->post['payment_city']) > 128)) {
+				$json['error']['payment_city'] = $this->language->get('error_city');
+			}
+
+			$this->load->model('localisation/country');
+			
+			$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
+			
+			if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['payment_postcode']) < 2 || utf8_strlen($this->request->post['payment_postcode']) > 10)) {
+				$json['error']['payment_postcode'] = $this->language->get('error_postcode');
+			}
+							
+			if ($this->request->post['payment_country_id'] == '') {
+				$json['error']['payment_country'] = $this->language->get('error_country');
+			}
+			
+			if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
+				$json['error']['payment_zone'] = $this->language->get('error_zone');
+			}
+			
+			// Shipping address
+			if ($this->cart->hasShipping()) {
+				if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
+					$json['error']['shipping']['firstname'] = $this->language->get('error_firstname');
+				}
+		
+				if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['shipping_lastname']) > 32)) {
+					$json['error']['shipping']['lastname'] = $this->language->get('error_lastname');
+				}
+				
+				if ((utf8_strlen($this->request->post['shipping_address_1']) < 3) || (utf8_strlen($this->request->post['shipping_address_1']) > 128)) {
+					$json['error']['shipping']['address_1'] = $this->language->get('error_address_1');
+				}
+		
+				if ((utf8_strlen($this->request->post['shipping_city']) < 3) || (utf8_strlen($this->request->post['shipping_city']) > 128)) {
+					$json['error']['shipping']['city'] = $this->language->get('error_city');
+				}
+				
+				$this->load->model('localisation/country');
+				
+				$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
+				
+				if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
+					$json['error']['shipping']['postcode'] = $this->language->get('error_postcode');
+				}
+		
+				if ($this->request->post['shipping_country_id'] == '') {
+					$json['error']['shipping']['country'] = $this->language->get('error_country');
+				}
+				
+				if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
+					$json['error']['shipping']['zone'] = $this->language->get('error_zone');
+				}
+			}
+			
+    		// Customer
+			if ($this->request->post['customer_id']) {
+				$this->load->model('account/customer');
+
+				$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
+
+				if ($customer_info) {
+					$this->customer->login($customer_info['email'], '', true);
+					$this->cart->clear();
+				} else {
+					$json['error']['warning'] = $this->language->get('error_customer');
+				}
+			} else {
+				// Customer Group
+				$this->config->set('config_customer_group_id', $this->request->post['customer_group_id']);
+			}
+
+
+			
+
 			
 			// Stock
 			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
@@ -396,10 +389,6 @@ class ControllerApiOrder extends Controller {
 			}
 						
 			$this->load->model('setting/extension');
-			
-			$this->load->model('localisation/country');
-		
-			$this->load->model('localisation/zone');
 			
 			
 			// Remove coupon, vouchers reward points history
@@ -664,7 +653,7 @@ class ControllerApiOrder extends Controller {
 		
 	}
 	
-	function delete() {
+	public function delete() {
 		$order_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "order` WHERE order_status_id > '0' AND order_id = '" . (int)$order_id . "'");
 
 		if ($order_query->num_rows) {

@@ -1,11 +1,11 @@
 <?php
 class ModelUserApi extends Model {
 	public function addApi($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
 	}
 
 	public function editApi($api_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET name = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE api_id = '" . (int)$api_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE api_id = '" . (int)$api_id . "'");
 	}
 
 	public function deleteApi($api_id) {
@@ -18,11 +18,11 @@ class ModelUserApi extends Model {
 		return $query->row;
 	}
 
-	public function geApis($data = array()) {
+	public function getApis($data = array()) {
 		$sql = "SELECT * FROM `" . DB_PREFIX . "api`";
 
 		$sort_data = array(
-			'name',
+			'username',
 			'status',
 			'date_added',
 			'date_modified'
@@ -31,7 +31,7 @@ class ModelUserApi extends Model {
 		if (isset($data['sort']) && in_array($data['sort'], $sort_data)) {
 			$sql .= " ORDER BY " . $data['sort'];
 		} else {
-			$sql .= " ORDER BY name";
+			$sql .= " ORDER BY username";
 		}
 
 		if (isset($data['order']) && ($data['order'] == 'DESC')) {

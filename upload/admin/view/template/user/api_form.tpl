@@ -13,12 +13,12 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-user" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
+        <button type="submit" form="form-api" data-toggle="tooltip" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-user" class="form-horizontal">
+      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-api" class="form-horizontal">
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-username"><?php echo $entry_username; ?></label>
           <div class="col-sm-10">
@@ -28,71 +28,17 @@
             <?php } ?>
           </div>
         </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-user-group"><?php echo $entry_user_group; ?></label>
-          <div class="col-sm-10">
-            <select name="user_group_id" id="input-user-group" class="form-control">
-              <?php foreach ($user_groups as $user_group) { ?>
-              <?php if ($user_group['user_group_id'] == $user_group_id) { ?>
-              <option value="<?php echo $user_group['user_group_id']; ?>" selected="selected"><?php echo $user_group['name']; ?></option>
-              <?php } else { ?>
-              <option value="<?php echo $user_group['user_group_id']; ?>"><?php echo $user_group['name']; ?></option>
-              <?php } ?>
-              <?php } ?>
-            </select>
-          </div>
-        </div>
         <div class="form-group required">
-          <label class="col-sm-2 control-label" for="input-firstname"><?php echo $entry_firstname; ?></label>
+          <label class="col-sm-2 control-label" for="input-key"><?php echo $entry_key; ?></label>
           <div class="col-sm-10">
-            <input type="text" name="firstname" value="<?php echo $firstname; ?>" placeholder="<?php echo $entry_firstname; ?>" id="input-firstname" class="form-control" />
-            <?php if ($error_firstname) { ?>
-            <div class="text-danger"><?php echo $error_firstname; ?></div>
+            <div class="input-group"> <span class="input-group-addon">
+              <button type="button" id="button-generate" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
+              </span>
+              <textarea name="key" placeholder="<?php echo $entry_key; ?>" rows="5" id="input-key" class="form-control"><?php echo $key; ?></textarea>
+            </div>
+            <?php if ($error_key) { ?>
+            <div class="text-danger"><?php echo $error_key; ?></div>
             <?php } ?>
-          </div>
-        </div>
-        <div class="form-group required">
-          <label class="col-sm-2 control-label" for="input-lastname"><?php echo $entry_lastname; ?></label>
-          <div class="col-sm-10">
-            <input type="text" name="lastname" value="<?php echo $lastname; ?>" placeholder="<?php echo $entry_lastname; ?>" id="input-lastname" class="form-control" />
-            <?php if ($error_lastname) { ?>
-            <div class="text-danger"><?php echo $error_lastname; ?></div>
-            <?php } ?>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
-          <div class="col-sm-10">
-            <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
-          <div class="col-sm-10">
-            <?php if ($thumb) { ?>
-            <a href="" id="thumb-image" class="img-thumbnail img-edit"><img src="<?php echo $thumb; ?>" alt="" title="" /></a>
-            <?php } else { ?>
-            <a href="" id="thumb-image" class="img-thumbnail img-edit"><i class="fa fa-camera fa-5x"></i></a>
-            <?php } ?>
-            <input type="hidden" name="image" value="<?php echo $image; ?>" id="input-image" />
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
-          <div class="col-sm-10">
-            <input type="password" name="password" value="<?php echo $password; ?>" placeholder="<?php echo $entry_password; ?>" id="input-password" class="form-control" autocomplete="off" />
-            <?php if ($error_password) { ?>
-            <div class="text-danger"><?php echo $error_password; ?></div>
-            <?php  } ?>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="col-sm-2 control-label" for="input-confirm"><?php echo $entry_confirm; ?></label>
-          <div class="col-sm-10">
-            <input type="password" name="confirm" value="<?php echo $confirm; ?>" placeholder="<?php echo $entry_confirm; ?>" id="input-confirm" class="form-control" />
-            <?php if ($error_confirm) { ?>
-            <div class="text-danger"><?php echo $error_confirm; ?></div>
-            <?php  } ?>
           </div>
         </div>
         <div class="form-group">
@@ -113,4 +59,17 @@
     </div>
   </div>
 </div>
+<script type="text/javascript"><!--
+$('#button-generate').on('click', function() {
+	rand = '';
+	
+	string = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+	for (i = 0; i < 256; i++) {
+		rand += string[Math.floor(Math.random() * (string.length - 1))];
+	}
+	
+	$('#input-key').val(rand);
+});
+//--></script> 
 <?php echo $footer; ?> 

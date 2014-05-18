@@ -18,18 +18,18 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right"><a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a>
-        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-user').submit() : false;"><i class="fa fa-times-circle"></i></button>
+        <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-api').submit() : false;"><i class="fa fa-times-circle"></i></button>
       </div>
       <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
-      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-user">
+      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-api">
         <div class="table-responsive">
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
                 <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                <td class="text-left"><?php if ($sort == 'username') { ?>
+                <td class="text-left"><?php if ($sort == 'name') { ?>
                   <a href="<?php echo $sort_username; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_username; ?></a>
                   <?php } else { ?>
                   <a href="<?php echo $sort_username; ?>"><?php echo $column_username; ?></a>
@@ -48,18 +48,18 @@
               </tr>
             </thead>
             <tbody>
-              <?php if ($users) { ?>
-              <?php foreach ($users as $user) { ?>
+              <?php if ($apis) { ?>
+              <?php foreach ($apis as $api) { ?>
               <tr>
-                <td class="text-center"><?php if (in_array($user['user_id'], $selected)) { ?>
-                  <input type="checkbox" name="selected[]" value="<?php echo $user['user_id']; ?>" checked="checked" />
+                <td class="text-center"><?php if (in_array($api['api_id'], $selected)) { ?>
+                  <input type="checkbox" name="selected[]" value="<?php echo $api['api_id']; ?>" checked="checked" />
                   <?php } else { ?>
-                  <input type="checkbox" name="selected[]" value="<?php echo $user['user_id']; ?>" />
+                  <input type="checkbox" name="selected[]" value="<?php echo $api['api_id']; ?>" />
                   <?php } ?></td>
-                <td class="text-left"><?php echo $user['username']; ?></td>
-                <td class="text-left"><?php echo $user['status']; ?></td>
-                <td class="text-left"><?php echo $user['date_added']; ?></td>
-                <td class="text-right"><a href="<?php echo $user['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
+                <td class="text-left"><?php echo $api['username']; ?></td>
+                <td class="text-left"><?php echo $api['status']; ?></td>
+                <td class="text-left"><?php echo $api['date_added']; ?></td>
+                <td class="text-right"><a href="<?php echo $api['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

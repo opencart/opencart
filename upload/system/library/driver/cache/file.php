@@ -23,23 +23,28 @@ class CacheFile {
 	public function get($key) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
-		if ($files) {
-			$data = file_get_contents($files[0]);
+		if ($files) {			
+			$file_handle = fopen($files[0], 'r');
+			flock($file_handle, LOCK_SH);
+			$data = fread($file_handle, filesize($files[0]));
+			flock($file_handle, LOCK_UN);
+			fclose($file_handle);
 			
-			if ($data !== False) {
-				return unserialize($data);
-			} else {
-				return false;
-			}
+			return unserialize($data);
 		}
+		
+		return false;
 	}
 
 	public function set($key, $value) {
-		$this->delete($key);
-
 		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
-
-		file_put_contents($file, serialize($value), LOCK_EX);
+		
+		$fileHandle = fopen($file, 'w');
+		flock($fileHandle, LOCK_EX);
+		fwrite($fileHandle, serialize($value));
+		fflush($fileHandle);
+		flock($fileHandle, LOCK_UN);
+		fclose($fileHandle);
 	}
 
 	public function delete($key) {

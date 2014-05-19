@@ -39,12 +39,12 @@ class CacheFile {
 	public function set($key, $value) {
 		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
 		
-		$fileHandle = fopen($file, 'w');
-		flock($fileHandle, LOCK_EX);
-		fwrite($fileHandle, serialize($value));
-		fflush($fileHandle);
-		flock($fileHandle, LOCK_UN);
-		fclose($fileHandle);
+		$file_handle = fopen($file, 'w');
+		flock($file_handle, LOCK_EX);
+		fwrite($file_handle, serialize($value));
+		fflush($file_handle);
+		flock($file_handle, LOCK_UN);
+		fclose($file_handle);
 	}
 
 	public function delete($key) {

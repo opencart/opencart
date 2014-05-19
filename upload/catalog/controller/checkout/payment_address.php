@@ -178,7 +178,8 @@ class ControllerCheckoutPaymentAddress extends Controller {
 						'customer_id' => $this->customer->getId(),
 						'name'        => $this->customer->getFirstName() . ' ' . $this->customer->getLastName()
 					);
-
+					
+					$this->load->model('account/activity');
 					$this->model_account_activity->addActivity('address_add', $activity_data);
 				}
 			}

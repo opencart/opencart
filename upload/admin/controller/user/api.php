@@ -274,6 +274,7 @@ class ControllerUserApi extends Controller {
 
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
+		$data['button_generate'] = $this->language->get('button_generate');
 
 		if (isset($this->error['warning'])) {
 			$data['error_warning'] = $this->error['warning'];

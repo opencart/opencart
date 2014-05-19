@@ -31,11 +31,9 @@
         <div class="form-group required">
           <label class="col-sm-2 control-label" for="input-key"><?php echo $entry_key; ?></label>
           <div class="col-sm-10">
-            <div class="input-group"> <span class="input-group-addon">
-              <button type="button" id="button-generate" class="btn btn-primary"><i class="fa fa-refresh"></i></button>
-              </span>
-              <textarea name="key" placeholder="<?php echo $entry_key; ?>" rows="5" id="input-key" class="form-control"><?php echo $key; ?></textarea>
-            </div>
+            <textarea name="key" placeholder="<?php echo $entry_key; ?>" rows="5" id="input-key" class="form-control"><?php echo $key; ?></textarea>
+            <br />
+            <button type="button" id="button-generate" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_generate; ?></button>
             <?php if ($error_key) { ?>
             <div class="text-danger"><?php echo $error_key; ?></div>
             <?php } ?>

@@ -1,5 +1,13 @@
 <?php
 class ControllerApiOrder extends Controller {
+	public function setShippingAddress() {
+		$json = array();
+		
+		
+		
+		
+	}
+	
 	public function addOrder() {
 		$this->load->language('api/order');
 		
@@ -7,16 +15,16 @@ class ControllerApiOrder extends Controller {
 		
 		$keys = array(
 			'customer_id'
-			'customer_group_id'			
-			'firstname'
-			'lastname'
-			'email'
-			'telephone'
-			'fax'
-			'custom_field'
-			'payment_firstname'
-			'payment_lastname'
-			'payment_company'
+			'customer_group_id',			
+			'firstname',
+			'lastname',
+			'email',
+			'telephone',
+			'fax',
+			'custom_field',
+			'payment_firstname',
+			'payment_lastname',
+			'payment_company',
 			'payment_address_1'
 			'payment_address_2'
 			'payment_city'
@@ -56,32 +64,37 @@ class ControllerApiOrder extends Controller {
 			'voucher'
 			'reward'
 		);
-			// Products
-			$this->load->model('catalog/product');
+		
+		foreach ($this->request->post as $key => $value) {
 			
-			if (isset($this->request->post['order_product'])) {
-				foreach ($this->request->post['order_product'] as $order_product) {
-					$product_info = $this->model_catalog_product->getProduct($order_product['product_id']);
-				
-					if ($product_info) {	
-						$option_data = array();
-						
-						if (isset($order_product['order_option'])) {
-							foreach ($order_product['order_option'] as $option) {
-								if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { 
-									$option_data[$option['product_option_id']] = $option['product_option_value_id'];
-								} elseif ($option['type'] == 'checkbox') {
-									$option_data[$option['product_option_id']][] = $option['product_option_value_id'];
-								} elseif ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
-									$option_data[$option['product_option_id']] = $option['value'];						
-								}
+		}
+		
+		// Products
+		$this->load->model('catalog/product');
+		
+		if (isset($this->request->post['order_product'])) {
+			foreach ($this->request->post['order_product'] as $order_product) {
+				$product_info = $this->model_catalog_product->getProduct($order_product['product_id']);
+			
+				if ($product_info) {	
+					$option_data = array();
+					
+					if (isset($order_product['order_option'])) {
+						foreach ($order_product['order_option'] as $option) {
+							if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { 
+								$option_data[$option['product_option_id']] = $option['product_option_value_id'];
+							} elseif ($option['type'] == 'checkbox') {
+								$option_data[$option['product_option_id']][] = $option['product_option_value_id'];
+							} elseif ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') {
+								$option_data[$option['product_option_id']] = $option['value'];						
 							}
 						}
-															
-						$this->cart->add($order_product['product_id'], $order_product['quantity'], $option_data);
 					}
+														
+					$this->cart->add($order_product['product_id'], $order_product['quantity'], $option_data);
 				}
 			}
+		}
 			
 			// Add new product
 			if (isset($this->request->post['product_id'])) {

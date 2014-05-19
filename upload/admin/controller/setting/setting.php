@@ -1330,7 +1330,7 @@ class ControllerSettingSetting extends Controller {
 		}
 
 		if (!$this->request->post['config_error_filename']) {
-			$this->error['error_filename'] = $this->language->get('error_error_filename');
+			$this->error['error_error_filename'] = $this->language->get('error_error_filename');
 		}
 
 		if (!$this->request->post['config_product_limit']) {

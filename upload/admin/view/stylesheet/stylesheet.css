@@ -4,8 +4,9 @@ html, body {
 	padding: 0;
 }
 body {
-	font-family: "Arial", Gadget, sans-serif;
-	font-size: 12px;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 13px;
 	color: #333333;
 }
 h1, h2, h3, h4, h5, h6, p {
@@ -405,6 +406,7 @@ label.control-label {
 input.form-control, select.form-control {
 	height: 31px;
 }
+/*
 .btn {
 	font-size: 13px;
 	border-radius: 4px;
@@ -434,36 +436,7 @@ input.form-control, select.form-control {
 .btn-group > .btn-lg {
 	font-size: 15px;
 }
-.btn-default {
-	background-color: #F1F3F6;
-	border-bottom: 1px solid #DBE1E8;
-	color: #333333;
-}
-.btn-primary {
-	background-color: #7ABCE7;
-	border-bottom: 1px solid #3498DB;
-	text-shadow: 0 -1px #3498DB;
-}
-.btn-warning {
-	background-color: #F7BE64;
-	border-bottom: 1px solid #F39C12;
-	text-shadow: 0 -1px #F39C12;
-}
-.btn-danger {
-	background-color: #EF8A80;
-	border-bottom: 1px solid #E74C3C;
-	text-shadow: 0 -1px #E74C3C;
-}
-.btn-success {
-	background-color: #AAD178;
-	border-bottom: 1px solid #7DB831;
-	text-shadow: 0 -1px #7DB831;
-}
-.btn-info {
-	background-color: #6AD2EB;
-	border-bottom: 1px solid #1BBAE1;
-	text-shadow: 0 -1px #1BBAE1;
-}
+*/
 .table thead > tr > td, .table tbody > tr > td {
 	vertical-align: middle;
 }

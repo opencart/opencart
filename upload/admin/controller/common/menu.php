@@ -40,7 +40,7 @@ class ControllerCommonMenu extends Controller {
 		$data['text_layout'] = $this->language->get('text_layout');
 		$data['text_localisation'] = $this->language->get('text_localisation');
 		$data['text_location'] = $this->language->get('text_location');
-		$data['text_maintance'] = $this->language->get('text_maintance');
+		$data['text_maintenance'] = $this->language->get('text_maintenance');
 		$data['text_marketing'] = $this->language->get('text_marketing');
 		$data['text_modification'] = $this->language->get('text_modification');
 		$data['text_manufacturer'] = $this->language->get('text_manufacturer');

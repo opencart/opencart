@@ -114,7 +114,7 @@
             <li><a href="<?php echo $weight_class; ?>"><?php echo $text_weight_class; ?></a></li>
           </ul>
         </li>
-        <li><a class="parent"><?php echo $text_maintance; ?></a>
+        <li><a class="parent"><?php echo $text_maintenance; ?></a>
           <ul>
             <li><a href="<?php echo $error_log; ?>"><?php echo $text_error_log; ?></a></li>
             <li><a href="<?php echo $upload; ?>"><?php echo $text_upload; ?></a></li>

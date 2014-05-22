@@ -82,47 +82,10 @@ class ControllerSaleOrder extends Controller {
 		$this->getList();
 	}
 	
-	public function api() {
-		$this->load->model('setting/store');
-		
-		if ($this->request->post['store_id']) {
-			
-		} else {
-				
-		}
-		
-		$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
-		
-		if ($store_info) {
-			$url = $store_info['url'];
-		} else {
-			$url = HTTP_CATALOG;	
-		}
-		
-		// Make curl request
-		$curl = curl_init($url . 'index.php?route=' . $this->request->get['call']);
-				
-				
-		curl_setopt($curl, CURLOPT_PORT, 443);
-		curl_setopt($curl, CURLOPT_HEADER, 0);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 0);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $this->request->post);
-
-		$response = curl_exec($curl);
-
-		curl_close($curl);
-
-		if (!$response) {
-			$this->log->write(curl_error($curl) . '(' . curl_errno($curl) . ')');
-		}	
-	}
 	
 	public function paymentMethods() {
 		$this->load->language('sale/order');
+
 		
 		$json = array();
 		
@@ -137,55 +100,73 @@ class ControllerSaleOrder extends Controller {
 		// Add tocart
 		if (isset($this->request->post['order_product'])) {
 			foreach ($this->request->post['order_product'] as $product) {
-				$curl->post($url . 'index.php?route=api/cart/add', $product);
+				$response = $curl->post($url . 'index.php?route=api/cart/add', $product);
 			
-				if () {
+				if ($response['']) {
 					
 					break;	
 				}
 			}
 		}
 		
-		// Coupon
-		
-		// Voucher
-		
-		// Reward Points
-		
-		
-				
 		// Payment Address
 		$this->load->library('curl');
 		
 		$curl = new Curl();
 		
 		$payment_address = array(
-			'address_id'   => $this->request->post['address_id'],
-			'firstname'    => $this->request->post['firstname'],
-			'lastname'     => $this->request->post['lastname'],
-			'company'      => $this->request->post['company'],
-			'address_1'    => $this->request->post['address_1'],
-			'address_2'    => $this->request->post['address_2'],
-			'postcode'     => $this->request->post['postcode'],
-			'city'         => $this->request->post['city'],
-			'zone_id'      => $this->request->post['zone_id'],
-			'country_id'   => $this->request->post['country_id'],
-			'custom_field' => $this->request->post['custom_field']
+			'address_id'   => $this->request->post['payment_address_id'],
+			'firstname'    => $this->request->post['payment_firstname'],
+			'lastname'     => $this->request->post['payment_lastname'],
+			'company'      => $this->request->post['payment_company'],
+			'address_1'    => $this->request->post['payment_address_1'],
+			'address_2'    => $this->request->post['payment_address_2'],
+			'postcode'     => $this->request->post['payment_postcode'],
+			'city'         => $this->request->post['payment_city'],
+			'zone_id'      => $this->request->post['payment_zone_id'],
+			'country_id'   => $this->request->post['payment_country_id'],
+			'custom_field' => $this->request->post['payment_custom_field']
 		);
 		
-		// Shipping Address
+		$response = $curl->post($url . 'index.php?route=api/order/setpaymentaddress', $payment_address);
 		
-		$json = $curl->post($url . 'index.php?route=api/order/setpaymentaddress', $payment_address);
+		// Shipping Address
+		$shipping_address = array(
+			'address_id'   => $this->request->post['shipping_address_id'],
+			'firstname'    => $this->request->post['payment_firstname'],
+			'lastname'     => $this->request->post['payment_lastname'],
+			'company'      => $this->request->post['payment_company'],
+			'address_1'    => $this->request->post['payment_address_1'],
+			'address_2'    => $this->request->post['payment_address_2'],
+			'postcode'     => $this->request->post['payment_postcode'],
+			'city'         => $this->request->post['payment_city'],
+			'zone_id'      => $this->request->post['payment_zone_id'],
+			'country_id'   => $this->request->post['payment_country_id'],
+			'custom_field' => $this->request->post['payment_custom_field']
+		);		
+		
+		$response = $curl->post($url . 'index.php?route=api/order/setshippingaddress', $payment_address);
+		
+		// Coupon
+		$curl->post($url . 'index.php?route=api/coupon',  $this->request->post);
+		
+		// Voucher
+		$curl->post($url . 'index.php?route=api/voucher',  $this->request->post);
+		
+		// Reward Points
+		$curl->post($url . 'index.php?route=api/reward', $this->request->post);
+		
+		
 		
 		if (isset($json['error'])) {
-				
+			$json['error'] = '';
 		}		
 		
-
+		$json = $curl->get($url . 'index.php?route=api/payment/methods');
 		
 		$curl->close();
 		
-		$curl->get($url . 'index.php?route=api/payment/methods');
+		
 		
 		$this->response->setOutput(json_encode($json));	
 	}
@@ -201,4 +182,34 @@ class ControllerSaleOrder extends Controller {
 	public function addOrder() {
 		
 	}
+	
+	public function editOrder() {
+		
+	}
+	
+	private function api($url, $data) {
+		
+		
+		// Make curl request
+		$curl = curl_init($url);
+				
+		
+		curl_setopt($curl, CURLOPT_USERPWD, 'username:password');				
+		curl_setopt($curl, CURLOPT_PORT, 443);
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 0);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
+
+		$response = curl_exec($curl);
+
+		curl_close($curl);
+
+		if (!$response) {
+			$this->log->write(curl_error($curl) . '(' . curl_errno($curl) . ')');
+		}	
+	}	
 }

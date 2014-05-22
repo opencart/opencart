@@ -217,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `oc_api` (
   `date_added` datetime NOT NULL,
   `date_modififed` datetime NOT NULL,
   PRIMARY KEY (`api_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=uutf8_general_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_api`

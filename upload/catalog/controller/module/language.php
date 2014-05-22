@@ -11,7 +11,7 @@ class ControllerModuleLanguage extends Controller {
 			$connection = 'NONSSL';
 		}
 
-		$data['action'] = $this->url->link('module/language', '', $connection);
+		$data['action'] = $this->url->link('module/language/language', '', $connection);
 
 		$data['code'] = $this->session->data['language'];
 

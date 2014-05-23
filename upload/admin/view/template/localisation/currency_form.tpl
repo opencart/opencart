@@ -53,7 +53,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-decimal-place"><?php echo $entry_decimal_place; ?></label>
           <div class="col-sm-10">
-            <input type="text" name="decimal_place" value="<?php echo $decimal_place; ?>" placeholder="<?php echo $entry_decimal_place; ?>" id="input-decimal-place" class="form-control" />
+            <input type="number" name="decimal_place" value="<?php echo $decimal_place; ?>" placeholder="<?php echo $entry_decimal_place; ?>" id="input-decimal-place" class="form-control" />
           </div>
         </div>
         <div class="form-group">

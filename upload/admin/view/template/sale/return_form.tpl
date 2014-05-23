@@ -28,7 +28,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-order-id"><?php echo $entry_order_id; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="order_id" value="<?php echo $order_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
+                <input type="number" name="order_id" value="<?php echo $order_id; ?>" placeholder="<?php echo $entry_order_id; ?>" id="input-order-id" class="form-control" />
                 <?php if ($error_order_id) { ?>
                 <div class="text-danger"><?php echo $error_order_id; ?></div>
                 <?php } ?>
@@ -70,7 +70,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+                <input type="email" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
                 <?php if ($error_email) { ?>
                 <div class="text-danger"><?php echo $error_email; ?></div>
                 <?php  } ?>
@@ -79,7 +79,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
+                <input type="tel" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
                 <?php if ($error_telephone) { ?>
                 <div class="text-danger"><?php echo $error_telephone; ?></div>
                 <?php  } ?>
@@ -107,7 +107,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="quantity" value="<?php echo $quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
+                <input type="number" name="quantity" value="<?php echo $quantity; ?>" placeholder="<?php echo $entry_quantity; ?>" id="input-quantity" class="form-control" />
               </div>
             </div>
             <div class="form-group">

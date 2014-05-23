@@ -168,13 +168,13 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-uses-total"><?php echo $entry_uses_total; ?> </label>
               <div class="col-sm-10">
-                <input type="text" name="uses_total" value="<?php echo $uses_total; ?>" placeholder="<?php echo $entry_uses_total; ?>" id="input-uses-total" class="form-control" />
+                <input type="number" name="uses_total" value="<?php echo $uses_total; ?>" placeholder="<?php echo $entry_uses_total; ?>" id="input-uses-total" class="form-control" />
                 <span class="help-block"><?php echo $help_uses_total; ?></span> </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-uses-customer"><?php echo $entry_uses_customer; ?> </label>
               <div class="col-sm-10">
-                <input type="text" name="uses_customer" value="<?php echo $uses_customer; ?>" placeholder="<?php echo $entry_uses_customer; ?>" id="input-uses-customer" class="form-control" />
+                <input type="number" name="uses_customer" value="<?php echo $uses_customer; ?>" placeholder="<?php echo $entry_uses_customer; ?>" id="input-uses-customer" class="form-control" />
                 <span class="help-block"><?php echo $help_uses_customer; ?></span> </div>
             </div>
             <div class="form-group">

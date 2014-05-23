@@ -13,7 +13,7 @@
         </div>
         <div class="col-sm-7">
           <div class="input-group">
-            <input type="text" name="search" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_search; ?>" class="form-control">
+            <input type="search" name="search" value="<?php echo $filter_name; ?>" placeholder="<?php echo $entry_search; ?>" class="form-control">
             <span class="input-group-btn">
             <button type="button" title="<?php echo $button_search; ?>" id="button-search" class="btn btn-primary"><i class="fa fa-search"></i></button>
             </span></div>

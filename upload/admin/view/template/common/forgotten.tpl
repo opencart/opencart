@@ -20,7 +20,7 @@
         <div class="form-group">
           <label class="col-sm-3 control-label" for="input-email"><?php echo $entry_email; ?></label>
           <div class="col-sm-9">
-            <input type="text" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />
+            <input type="email" name="email" value="<?php echo $email; ?>" id="input-email" class="form-control" />
           </div>
         </div>
         <button type="submit" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_reset; ?></button>

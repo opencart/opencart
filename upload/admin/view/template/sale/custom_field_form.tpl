@@ -172,7 +172,7 @@
         <div class="form-group">
           <label class="col-sm-2 control-label" for="input-sort-order"><?php echo $entry_sort_order; ?></label>
           <div class="col-sm-10">
-            <input type="text" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
+            <input type="number" name="sort_order" value="<?php echo $sort_order; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" />
           </div>
         </div>
         <table id="custom-field-value" class="table table-striped table-bordered table-hover">
@@ -196,7 +196,7 @@
                 <div class="text-danger"><?php echo $error_custom_field_value[$custom_field_value_row][$language['language_id']]; ?></div>
                 <?php } ?>
                 <?php } ?></td>
-              <td class="text-right"><input type="text" name="custom_field_value[<?php echo $custom_field_value_row; ?>][sort_order]" value="<?php echo $custom_field_value['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
+              <td class="text-right"><input type="number" name="custom_field_value[<?php echo $custom_field_value_row; ?>][sort_order]" value="<?php echo $custom_field_value['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>
               <td class="text-left"><button onclick="$('#custom-field-value-row<?php echo $custom_field_value_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
             </tr>
             <?php $custom_field_value_row++; ?>
@@ -255,14 +255,14 @@ var custom_field_value_row = <?php echo $custom_field_value_row; ?>;
 
 function addCustomFieldValue() {
 	html  = '<tr id="custom-field-value-row' + custom_field_value_row + '">';	
-    html += '  <td class="text-left"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
+    	html += '  <td class="text-left"><input type="hidden" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_id]" value="" />';
 	<?php foreach ($languages as $language) { ?>
 	html += '    <div class="input-group">';
 	html += '      <span class="input-group-addon"><img src="view/image/flags/<?php echo $language['image']; ?>" title="<?php echo $language['name']; ?>" /></span><input type="text" name="custom_field_value[' + custom_field_value_row + '][custom_field_value_description][<?php echo $language['language_id']; ?>][name]" value="" placeholder="<?php echo $entry_custom_value; ?>" class="form-control" />';
-    html += '    </div>';
+    	html += '    </div>';
 	<?php } ?>
 	html += '  </td>';
-	html += '  <td class="text-right"><input type="text" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
+	html += '  <td class="text-right"><input type="number" name="custom_field_value[' + custom_field_value_row + '][sort_order]" value="" placeholder="<?php echo $entry_sort_order; ?>" class="form-control" /></td>';
 	html += '  <td class="text-left"><button type="button" onclick="$(\'#custom-field-value-row' + custom_field_value_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
 	html += '</tr>';	
 	

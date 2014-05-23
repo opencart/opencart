@@ -72,7 +72,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_email" value="<?php echo $config_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+                <input type="email" name="config_email" value="<?php echo $config_email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
                 <?php if ($error_email) { ?>
                 <div class="text-danger"><?php echo $error_email; ?></div>
                 <?php } ?>
@@ -81,7 +81,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_telephone" value="<?php echo $config_telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
+                <input type="tel" name="config_telephone" value="<?php echo $config_telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
                 <?php if ($error_telephone) { ?>
                 <div class="text-danger"><?php echo $error_telephone; ?></div>
                 <?php } ?>
@@ -90,7 +90,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_fax" value="<?php echo $config_fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
+                <input type="tel" name="config_fax" value="<?php echo $config_fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
               </div>
             </div>
             <div class="form-group">
@@ -327,7 +327,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-catalog-limit"><?php echo $entry_product_limit; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_product_limit" value="<?php echo $config_product_limit; ?>" placeholder="<?php echo $entry_product_limit; ?>" id="input-catalog-limit" class="form-control" />
+                  <input type="number" name="config_product_limit" value="<?php echo $config_product_limit; ?>" placeholder="<?php echo $entry_product_limit; ?>" id="input-catalog-limit" class="form-control" />
                   <span class="help-block"><?php echo $help_product_limit; ?></span>
                   <?php if ($error_product_limit) { ?>
                   <div class="text-danger"><?php echo $error_product_limit; ?></div>
@@ -337,7 +337,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-list-description-limit"><?php echo $entry_product_description_length; ?> </label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_product_description_length" value="<?php echo $config_product_description_length; ?>" placeholder="<?php echo $entry_product_description_length; ?>" id="input-list-description-limit" class="form-control" />
+                  <input type="number" name="config_product_description_length" value="<?php echo $config_product_description_length; ?>" placeholder="<?php echo $entry_product_description_length; ?>" id="input-list-description-limit" class="form-control" />
                   <span class="help-block"><?php echo $help_product_description_length; ?></span>
                   <?php if ($error_product_description_length) { ?>
                   <div class="text-danger"><?php echo $error_product_description_length; ?></div>
@@ -347,7 +347,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-admin-limit"><?php echo $entry_limit_admin; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_limit_admin" value="<?php echo $config_limit_admin; ?>" placeholder="<?php echo $entry_limit_admin; ?>" id="input-admin-limit" class="form-control" />
+                  <input type="number" name="config_limit_admin" value="<?php echo $config_limit_admin; ?>" placeholder="<?php echo $entry_limit_admin; ?>" id="input-admin-limit" class="form-control" />
                   <span class="help-block"><?php echo $help_limit_admin; ?></span>
                   <?php if ($error_limit_admin) { ?>
                   <div class="text-danger"><?php echo $error_limit_admin; ?></div>
@@ -701,7 +701,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-order-edit"><?php echo $entry_order_edit; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="config_order_edit" value="<?php echo $config_order_edit; ?>" placeholder="<?php echo $entry_order_edit; ?>" id="input-order-edit" class="form-control" />
+                  <input type="number" name="config_order_edit" value="<?php echo $config_order_edit; ?>" placeholder="<?php echo $entry_order_edit; ?>" id="input-order-edit" class="form-control" />
                   <span class="help-block"><?php echo $help_order_edit; ?></span> </div>
               </div>
               <div class="form-group">
@@ -1002,10 +1002,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-category-width" class="form-control" />
+                    <input type="number" name="config_image_category_width" value="<?php echo $config_image_category_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-category-width" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_category_height" value="<?php echo $config_image_category_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_category) { ?>
@@ -1018,10 +1018,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-thumb-width" class="form-control" />
+                    <input type="number" name="config_image_thumb_width" value="<?php echo $config_image_thumb_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-thumb-width" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_thumb_height" value="<?php echo $config_image_thumb_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_thumb) { ?>
@@ -1034,10 +1034,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-popup-width" class="form-control" />
+                    <input type="number" name="config_image_popup_width" value="<?php echo $config_image_popup_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-popup-width" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_popup_height" value="<?php echo $config_image_popup_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_popup) { ?>
@@ -1050,10 +1050,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-product-width" class="form-control" />
+                    <input type="number" name="config_image_product_width" value="<?php echo $config_image_product_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-product-width" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_product_height" value="<?php echo $config_image_product_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_product) { ?>
@@ -1066,10 +1066,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-additional-width" class="form-control" />
+                    <input type="number" name="config_image_additional_width" value="<?php echo $config_image_additional_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-additional-width" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_additional_height" value="<?php echo $config_image_additional_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_additional) { ?>
@@ -1082,10 +1082,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-related" class="form-control" />
+                    <input type="number" name="config_image_related_width" value="<?php echo $config_image_related_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-related" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_related_height" value="<?php echo $config_image_related_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_related) { ?>
@@ -1098,10 +1098,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-compare" class="form-control" />
+                    <input type="number" name="config_image_compare_width" value="<?php echo $config_image_compare_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-compare" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_compare_height" value="<?php echo $config_image_compare_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_compare) { ?>
@@ -1114,10 +1114,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-wishlist" class="form-control" />
+                    <input type="number" name="config_image_wishlist_width" value="<?php echo $config_image_wishlist_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-wishlist" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_wishlist_height" value="<?php echo $config_image_wishlist_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_wishlist) { ?>
@@ -1130,10 +1130,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-cart" class="form-control" />
+                    <input type="number" name="config_image_cart_width" value="<?php echo $config_image_cart_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-cart" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_cart_height" value="<?php echo $config_image_cart_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_cart) { ?>
@@ -1146,10 +1146,10 @@
               <div class="col-sm-10">
                 <div class="row">
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_location_width" value="<?php echo $config_image_location_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-location" class="form-control" />
+                    <input type="number" name="config_image_location_width" value="<?php echo $config_image_location_width; ?>" placeholder="<?php echo $entry_width; ?>" id="input-image-location" class="form-control" />
                   </div>
                   <div class="col-sm-6">
-                    <input type="text" name="config_image_location_height" value="<?php echo $config_image_location_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
+                    <input type="number" name="config_image_location_height" value="<?php echo $config_image_location_height; ?>" placeholder="<?php echo $entry_height; ?>" class="form-control" />
                   </div>
                 </div>
                 <?php if ($error_image_location) { ?>
@@ -1171,7 +1171,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-ftp-port"><?php echo $entry_ftp_port; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_ftp_port" value="<?php echo $config_ftp_port; ?>" placeholder="<?php echo $entry_ftp_port; ?>" id="input-ftp-port" class="form-control" />
+                <input type="number" name="config_ftp_port" value="<?php echo $config_ftp_port; ?>" placeholder="<?php echo $entry_ftp_port; ?>" id="input-ftp-port" class="form-control" />
                 <?php if ($error_ftp_port) { ?>
                 <div class="text-danger"><?php echo $error_ftp_port; ?></div>
                 <?php } ?>
@@ -1271,13 +1271,13 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-smtp-port"><?php echo $entry_smtp_port; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_mail[smtp_port]" value="<?php echo $config_smtp_port; ?>" placeholder="<?php echo $entry_smtp_port; ?>" id="input-smtp-port" class="form-control" />
+                <input type="number" name="config_mail[smtp_port]" value="<?php echo $config_smtp_port; ?>" placeholder="<?php echo $entry_smtp_port; ?>" id="input-smtp-port" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-smtp-timeout"><?php echo $entry_smtp_timeout; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_mail[smtp_timeout]" value="<?php echo $config_smtp_timeout; ?>" placeholder="<?php echo $entry_smtp_timeout; ?>" id="input-smtp-timeout" class="form-control" />
+                <input type="number" name="config_mail[smtp_timeout]" value="<?php echo $config_smtp_timeout; ?>" placeholder="<?php echo $entry_smtp_timeout; ?>" id="input-smtp-timeout" class="form-control" />
               </div>
             </div>
             <div class="form-group">
@@ -1320,7 +1320,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-fraud-score"><?php echo $entry_fraud_score; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_fraud_score" value="<?php echo $config_fraud_score; ?>" placeholder="<?php echo $entry_fraud_score; ?>" id="input-fraud-score" class="form-control" />
+                <input type="number" name="config_fraud_score" min="0" max="100" value="<?php echo $config_fraud_score; ?>" placeholder="<?php echo $entry_fraud_score; ?>" id="input-fraud-score" class="form-control" />
                 <span class="help-block"><?php echo $help_fraud_score; ?></span> </div>
             </div>
             <div class="form-group">
@@ -1417,7 +1417,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-image-file-size"><?php echo $entry_image_file_size; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_image_file_size" value="<?php echo $config_image_file_size; ?>" placeholder="<?php echo $entry_image_file_size; ?>" id="input-image-file-size" class="form-control" />
+                <input type="number" name="config_image_file_size" value="<?php echo $config_image_file_size; ?>" placeholder="<?php echo $entry_image_file_size; ?>" id="input-image-file-size" class="form-control" />
                 <span class="help-block"><?php echo $help_image_file_size; ?></span> </div>
             </div>
             <div class="form-group">
@@ -1491,7 +1491,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-compression"><?php echo $entry_compression; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="config_compression" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="form-control" />
+                <input type="number" name="config_compression" min="0" max="9" value="<?php echo $config_compression; ?>" placeholder="<?php echo $entry_compression; ?>" id="input-compression" class="form-control" />
                 <span class="help-block"><?php echo $help_compression; ?></span></div>
             </div>
             <div class="form-group">

@@ -49,7 +49,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
+                <input type="email" name="email" value="<?php echo $email; ?>" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
                 <?php if ($error_email) { ?>
                 <div class="text-danger"><?php echo $error_email; ?></div>
                 <?php  } ?>
@@ -58,7 +58,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-telephone"><?php echo $entry_telephone; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
+                <input type="tel" name="telephone" value="<?php echo $telephone; ?>" placeholder="<?php echo $entry_telephone; ?>" id="input-telephone" class="form-control" />
                 <?php if ($error_telephone) { ?>
                 <div class="text-danger"><?php echo $error_telephone; ?></div>
                 <?php  } ?>
@@ -67,7 +67,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
+                <input type="tel" name="fax" value="<?php echo $fax; ?>" placeholder="<?php echo $entry_fax; ?>" id="input-fax" class="form-control" />
               </div>
             </div>
             <div class="form-group">
@@ -79,7 +79,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-website"><?php echo $entry_website; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="website" value="<?php echo $website; ?>" placeholder="<?php echo $entry_website; ?>" id="input-website" class="form-control" />
+                <input type="url" name="website" value="<?php echo $website; ?>" placeholder="<?php echo $entry_website; ?>" id="input-website" class="form-control" />
               </div>
             </div>            
             <div class="form-group required">
@@ -331,8 +331,8 @@ $('select[name=\'country_id\']').on('change', function() {
         			html += '<option value="' + json['zone'][i]['zone_id'] + '"';
 	    			
 					if (json['zone'][i]['zone_id'] == '<?php echo $zone_id; ?>') {
-	      				html += ' selected="selected"';
-	    			}
+	      					html += ' selected="selected"';
+	    				}
 	
 	    			html += '>' + json['zone'][i]['name'] + '</option>';
 				}

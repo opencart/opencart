@@ -183,12 +183,12 @@ class ControllerExtensionModification extends Controller {
 										if (!$limit) {
 											$limit = count($match);
 										} else {
-											$limit = $limit + $offset;
+											$limit = $offset + $limit;
 										}	
 																							
 										// Only replace the occurance of the string that is equal to the between the offset and limit
-										if (isset($match[$offset]) && isset($match[$limit - 1])) {
-											for ($i = $offset; $i < $limit; $i++) {
+										for ($i = $offset; $i < $limit; $i++) {
+											if (isset($match[$i])) {
 												$modification[$key] = substr_replace($modification[$key], $replace, $match[$i], strlen($search));
 											}
 										}

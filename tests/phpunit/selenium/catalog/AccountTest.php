@@ -20,6 +20,23 @@ class CatalogAccountTest extends OpenCartSeleniumTest {
 		$db->query("DELETE FROM " . DB_PREFIX . "address");
 	}
 	
+	public function testNewsletterSubscription() {
+		$this->doRegistration();
+
+		$this->url("index.php?route=account/newsletter");
+		$this->byCssSelector('input[value="1"]')->click();
+		$this->byCssSelector('input[value="Continue"]')->click();
+		$this->url("index.php?route=account/newsletter");
+		$element = $this->byCssSelector('input[value="1"]');
+		$this->assertEquals('true', $element->attribute('checked'));
+		
+		$this->byCssSelector('input[value="0"]')->click();
+		$this->byCssSelector('input[value="Continue"]')->click();
+		$this->url("index.php?route=account/newsletter");
+		$element = $this->byCssSelector('input[value="0"]');
+		$this->assertEquals('true', $element->attribute('checked'));
+	}
+	
 	public function testAddAddress() {
 		$this->doRegistration();
 		$this->url("index.php?route=account/address/insert");

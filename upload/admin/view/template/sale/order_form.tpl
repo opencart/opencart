@@ -87,7 +87,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-customer-email"><?php echo $entry_email; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="email" value="<?php echo $email; ?>" id="input-customer-email" class="form-control" />
+                <input type="email" name="email" value="<?php echo $email; ?>" id="input-customer-email" class="form-control" />
                 <?php if ($error_email) { ?>
                 <div class="text-danger"><?php echo $error_email; ?></div>
                 <?php } ?>
@@ -96,7 +96,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-customer-telephone"><?php echo $entry_telephone; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-customer-telephone" class="form-control" />
+                <input type="tel" name="telephone" value="<?php echo $telephone; ?>" id="input-customer-telephone" class="form-control" />
                 <?php if ($error_telephone) { ?>
                 <div class="text-danger"><?php echo $error_telephone; ?></div>
                 <?php } ?>
@@ -105,7 +105,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-customer-fax"><?php echo $entry_fax; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="fax" value="<?php echo $fax; ?>" id="input-customer-fax" class="form-control" />
+                <input type="tel" name="fax" value="<?php echo $fax; ?>" id="input-customer-fax" class="form-control" />
               </div>
             </div>
             <?php foreach ($custom_fields as $custom_field) { ?>
@@ -828,7 +828,7 @@
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-quantity"><?php echo $entry_quantity; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="quantity" value="1" id="input-quantity" class="form-control" />
+                  <input type="number" name="quantity" value="1" id="input-quantity" class="form-control" />
                 </div>
               </div>
               <div id="option"></div>
@@ -894,7 +894,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-to-email"><?php echo $entry_to_email; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="to_email" value="" id="input-to-email" class="form-control" />
+                  <input type="email" name="to_email" value="" id="input-to-email" class="form-control" />
                 </div>
               </div>
               <div class="form-group required">
@@ -906,7 +906,7 @@
               <div class="form-group required">
                 <label class="col-sm-2 control-label" for="input-from-email"><?php echo $entry_from_email; ?></label>
                 <div class="col-sm-10">
-                  <input type="text" name="from_email" value="" id="input-from-email" class="form-control" />
+                  <input type="email" name="from_email" value="" id="input-from-email" class="form-control" />
                 </div>
               </div>
               <div class="form-group required">

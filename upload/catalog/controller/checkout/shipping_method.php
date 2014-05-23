@@ -140,14 +140,12 @@ class ControllerCheckoutShippingMethod extends Controller {
 
 				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {			
 					$json['error']['warning'] = $this->language->get('error_shipping');
+				} else {
+					$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
 				}
 			}
 
 			if (!$json) {
-				$shipping = explode('.', $this->request->post['shipping_method']);
-
-				$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-
 				$this->session->data['comment'] = strip_tags($this->request->post['comment']);
 			}							
 		}

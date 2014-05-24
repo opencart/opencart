@@ -43,7 +43,7 @@ class ControllerModuleCurrency extends Controller {
 				$url = '&' . urldecode(http_build_query($url_data, '', '&'));
 			}
 
-			$data['redirect'] = $this->url->link($route, $url, $connection);
+			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
 		}
 
 		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/currency.tpl')) {

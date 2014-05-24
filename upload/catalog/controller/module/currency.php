@@ -5,13 +5,7 @@ class ControllerModuleCurrency extends Controller {
 
 		$data['text_currency'] = $this->language->get('text_currency');
 
-		if ($this->request->server['HTTPS']) {
-			$connection = 'SSL';
-		} else {
-			$connection = 'NONSSL';
-		}
-
-		$data['action'] = $this->url->link('module/currency/currency', '', $connection);
+		$data['action'] = $this->url->link('module/currency/currency', '', $this->request->server['HTTPS']);
 
 		$data['code'] = $this->currency->getCode();
 

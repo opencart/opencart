@@ -29,15 +29,9 @@ class ControllerErrorNotFound extends Controller {
 				$url = '&' . urldecode(http_build_query($url_data, '', '&'));
 			}
 
-			if ($this->request->server['HTTPS']) {
-				$connection = 'SSL';
-			} else {
-				$connection = 'NONSSL';
-			}
-
 			$data['breadcrumbs'][] = array(
 				'text' => $this->language->get('heading_title'),
-				'href' => $this->url->link($route, $url, $connection)
+				'href' => $this->url->link($route, $url, $this->request->server['HTTPS'])
 			);
 		}
 

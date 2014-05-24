@@ -162,30 +162,28 @@ class ControllerCheckoutPaymentMethod extends Controller {
 			}
 		}
 
-		if (!$json) {
-			if (!isset($this->request->post['payment_method'])) {
-				$json['error']['warning'] = $this->language->get('error_payment');
-			} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-				$json['error']['warning'] = $this->language->get('error_payment');
-			}
-
-			if ($this->config->get('config_checkout_id')) {
-				$this->load->model('catalog/information');
-
-				$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
-
-				if ($information_info && !isset($this->request->post['agree'])) {
-					$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
-				}
-			}
-
-			if (!$json) {
-				$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
-
-				$this->session->data['comment'] = strip_tags($this->request->post['comment']);
-			}
+		if (!isset($this->request->post['payment_method'])) {
+			$json['error']['warning'] = $this->language->get('error_payment');
+		} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+			$json['error']['warning'] = $this->language->get('error_payment');
 		}
 
+		if ($this->config->get('config_checkout_id')) {
+			$this->load->model('catalog/information');
+
+			$information_info = $this->model_catalog_information->getInformation($this->config->get('config_checkout_id'));
+
+			if ($information_info && !isset($this->request->post['agree'])) {
+				$json['error']['warning'] = sprintf($this->language->get('error_agree'), $information_info['title']);
+			}
+		}
+			
+		if (!$json) {
+			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
+
+			$this->session->data['comment'] = strip_tags($this->request->post['comment']);
+		}
+			
 		$this->response->setOutput(json_encode($json));
 	}
 }

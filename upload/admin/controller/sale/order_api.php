@@ -84,9 +84,16 @@ class ControllerSaleOrder extends Controller {
 	
 	
 	public function paymentMethods() {
+
+	}
+	
+	public function shippingMethods() {
+		
+	}
+	
+	public function calculate() {
 		$this->load->language('sale/order');
 
-		
 		$json = array();
 		
 		$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
@@ -97,23 +104,70 @@ class ControllerSaleOrder extends Controller {
 			$url = HTTP_CATALOG;
 		}
 		
+		$this->load->library('curl');
+		
+		$curl = new Curl();
+				
 		// Add tocart
 		if (isset($this->request->post['order_product'])) {
-			foreach ($this->request->post['order_product'] as $product) {
-				$response = $curl->post($url . 'index.php?route=api/cart/add', $product);
+			foreach ($this->request->post['order_product'] as $order_product) {
+				$response = $curl->post($url . 'index.php?route=api/cart/add', $order_product);
 			
-				if ($response['']) {
+				if ($response['error']) {
+					$json['error']['coupon'] = $response['error'];
 					
 					break;	
 				}
 			}
 		}
 		
-		// Payment Address
-		$this->load->library('curl');
+		// Voucher
+		if (isset($this->request->post['order_voucher'])) {
+			foreach ($this->request->post['order_voucher'] as $order_voucher) {
+				$response = $curl->post($url . 'index.php?route=api/voucher/add', $order_voucher);
+			
+				if ($response['error']) {
+					$json['error']['coupon'] = $response['error'];
+					break;	
+				}
+			}
+		}
 		
-		$curl = new Curl();
+		// Coupon
+		if ($this->request->post['coupon']) {
+			$response = $curl->post($url . 'index.php?route=api/coupon',  $this->request->post);
+			
+			if ($response['error']) {
+				$json['error']['coupon'] = $response['error'];
+			}			
+		}
 		
+		// Voucher
+		if ($this->request->post['voucher']) {
+			$response = $curl->post($url . 'index.php?route=api/voucher',  $this->request->post);
+		
+			if ($response['error']) {
+				$json['error']['voucher'] = $response['error'];
+			}				
+		}
+		
+		// Reward Points
+		if ($this->request->post['reward']) {
+			$response = $curl->post($url . 'index.php?route=api/reward', $this->request->post);
+		
+			if ($response['error']) {
+				$json['error']['reward'] = $response['error'];
+			}		
+		}
+		
+		// Set Customer Details
+		$response = $curl->post($url . 'index.php?route=api/order/setpaymentaddress', $this->request->post);
+		
+		if ($response['error']) {
+			$json['error'] = $response['error'];
+		}		
+				
+		// Set Payment Address
 		$payment_address = array(
 			'address_id'   => $this->request->post['payment_address_id'],
 			'firstname'    => $this->request->post['payment_firstname'],
@@ -130,53 +184,70 @@ class ControllerSaleOrder extends Controller {
 		
 		$response = $curl->post($url . 'index.php?route=api/order/setpaymentaddress', $payment_address);
 		
+		if ($response['error']) {
+			$json['error']['payment'] = $response['error'];
+		}
+		
 		// Shipping Address
 		$shipping_address = array(
 			'address_id'   => $this->request->post['shipping_address_id'],
-			'firstname'    => $this->request->post['payment_firstname'],
-			'lastname'     => $this->request->post['payment_lastname'],
-			'company'      => $this->request->post['payment_company'],
-			'address_1'    => $this->request->post['payment_address_1'],
-			'address_2'    => $this->request->post['payment_address_2'],
-			'postcode'     => $this->request->post['payment_postcode'],
-			'city'         => $this->request->post['payment_city'],
-			'zone_id'      => $this->request->post['payment_zone_id'],
-			'country_id'   => $this->request->post['payment_country_id'],
-			'custom_field' => $this->request->post['payment_custom_field']
+			'firstname'    => $this->request->post['shipping_firstname'],
+			'lastname'     => $this->request->post['shipping_lastname'],
+			'company'      => $this->request->post['shipping_company'],
+			'address_1'    => $this->request->post['shipping_address_1'],
+			'address_2'    => $this->request->post['shipping_address_2'],
+			'postcode'     => $this->request->post['shipping_postcode'],
+			'city'         => $this->request->post['shipping_city'],
+			'zone_id'      => $this->request->post['shipping_zone_id'],
+			'country_id'   => $this->request->post['shipping_country_id'],
+			'custom_field' => $this->request->post['shipping_custom_field']
 		);		
 		
 		$response = $curl->post($url . 'index.php?route=api/order/setshippingaddress', $payment_address);
 		
-		// Coupon
-		$curl->post($url . 'index.php?route=api/coupon',  $this->request->post);
+		if ($response['error']) {
+			$json['error']['payment'] = $response['error'];
+		}
 		
-		// Voucher
-		$curl->post($url . 'index.php?route=api/voucher',  $this->request->post);
+		// Get Shipping Methods		
+		$response = $curl->post($url . 'index.php?route=api/order/getshippingmethods');
 		
-		// Reward Points
-		$curl->post($url . 'index.php?route=api/reward', $this->request->post);
+		if ($response['error']) {
+			$json['error']['shipping'] = $response['error'];
+		} else {
+			$json['shipping_methods'] = $response;
+		}
 		
+		// Set Shipping Method
+		$response = $curl->post($url . 'index.php?route=api/order/setshippingmethod');
 		
+		if ($response['error']) {
+			$json['error']['payment'] = $response['error'];
+		}
 		
-		if (isset($json['error'])) {
-			$json['error'] = '';
-		}		
+		// Get Payment Methods		
+		$response = $curl->post($url . 'index.php?route=api/order/getpaymentmethods');
 		
-		$json = $curl->get($url . 'index.php?route=api/payment/methods');
+		if ($response['error']) {
+			$json['error']['payment'] = $response['error'];
+		}
+		
+		// Set Shipping Methods	
+		$response = $curl->post($url . 'index.php?route=api/order/setpaymentmethod');
+		
+		if ($response['error']) {
+			$json['error']['shipping'] = $response['error'];
+		}
+		
+		// Get Products
+		$response = $curl->get($url . 'index.php?route=api/order/getProducts');
+		
+		// Get Order Totals
+		$response = $curl->get($url . 'index.php?route=api/order/getTotals');
 		
 		$curl->close();
 		
-		
-		
-		$this->response->setOutput(json_encode($json));	
-	}
-	
-	public function shippingMethods() {
-		
-	}
-	
-	public function calculate() {
-		
+		$this->response->setOutput(json_encode($json));			
 	}
 	
 	public function addOrder() {

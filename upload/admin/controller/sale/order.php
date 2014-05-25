@@ -2699,8 +2699,5 @@ class ControllerSaleOrder extends Controller {
 		if (!$response) {
 			$this->log->write(curl_error($curl) . '(' . curl_errno($curl) . ')');
 		}	
-		
-
-		}
 	}
 }

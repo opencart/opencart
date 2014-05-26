@@ -27,4 +27,12 @@ class ControllerApiVoucher extends Controller {
 		
 		$this->response->setOutput(json_encode($json));		
 	}
+	
+	public function add() {
+		
+	}
+	
+	public function remove() {
+		
+	}
 }

@@ -158,14 +158,7 @@ class ControllerSaleOrder extends Controller {
 			if ($response['error']) {
 				$json['error']['reward'] = $response['error'];
 			}		
-		}
-		
-		// Set Customer Details
-		$response = $curl->post($url . 'index.php?route=api/order/setpaymentaddress', $this->request->post);
-		
-		if ($response['error']) {
-			$json['error'] = $response['error'];
-		}		
+		}	
 				
 		// Set Payment Address
 		$payment_address = array(
@@ -244,6 +237,13 @@ class ControllerSaleOrder extends Controller {
 		
 		// Get Order Totals
 		$response = $curl->get($url . 'index.php?route=api/order/getTotals');
+
+		// Set Customer Details
+		$response = $curl->post($url . 'index.php?route=api/order/add', $this->request->post);
+		
+		if ($response['error']) {
+			$json['error'] = $response['error'];
+		}	
 		
 		$curl->close();
 		

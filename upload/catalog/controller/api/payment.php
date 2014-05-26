@@ -1,6 +1,12 @@
 <?php
 class ControllerApiPayment extends Controller {
 	public function index() {
+		
+		// Validate if payment address has been set.
+		if (!isset($this->session->data['payment_address'])) {
+			$json['error'] = $this->url->link('checkout/checkout', '', 'SSL');
+		}		
+		
 		if (isset($this->session->data['payment_address'])) {
 			// Totals
 			$total_data = array();					

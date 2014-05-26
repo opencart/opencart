@@ -202,81 +202,81 @@ class ControllerApiOrder extends Controller {
 		$this->load->language('api/order');
 		
 		$json = array();
-		
-		
-		
-		/*
-		$keys = array(
-			'customer_id'
-			'customer_group_id',			
-			'firstname',
-			'lastname',
-			'email',
-			'telephone',
-			'fax',
-			'custom_field',
-			'payment_firstname',
-			'payment_lastname',
-			'payment_company',
-			'payment_address_1'
-			'payment_address_2'
-			'payment_city'
-			'payment_postcode'
-			'payment_country'
-			'payment_country_id'
-			'payment_zone'
-			'payment_zone_id'
-			'payment_address_format'
-			'payment_custom_field'
-			'payment_method'
-			'payment_code'
-			'shipping_firstname'
-			'shipping_lastname'
-			'shipping_company'
-			'shipping_address_1'
-			'shipping_address_2'
-			'shipping_city'
-			'shipping_postcode'
-			'shipping_city'
-			'shipping_postcode'
-			'shipping_country'
-			'shipping_country_id'
-			'shipping_zone'
-			'shipping_zone_id'
-			'shipping_address_format'
-			'shipping_custom_field'
-			'shipping_method'
-			'shipping_code'
-			'comment'
-			'affiliate_id'
-			'commission'
-			'currency_code'
-			'language_id'
-			'product'
-			'coupon'
-			'voucher'
-			'reward'
-		);
-		
-		foreach ($this->request->post as $key => $value) {
-			
-		}
-		*/
-			
+						
+		// Customer
+		if ($this->request->post['customer_id']) {
+			$this->load->model('account/customer');
 
+			$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
+
+			if (!$customer_info) {
+				$json['error']['warning'] = $this->language->get('error_customer');
+			}
+		}
+		
+		// Validate customer info
+		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+			$json['error']['firstname'] = $this->language->get('error_firstname');
+		}
+
+		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+			$json['error']['lastname'] = $this->language->get('error_lastname');
+		}
+
+		if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
+			$json['error']['email'] = $this->language->get('error_email');
+		}
+
+		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+			$json['error']['telephone'] = $this->language->get('error_telephone');
+		}		
+
+		// Validate payment address
+		if (!isset($this->session->data['payment_address'])) {
+			$json['error'] = $this->url->link('checkout/checkout', '', 'SSL');
+		}		
+
+		// Validate shipping address
+		if (!isset($this->session->data['shipping_address'])) {
+			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+		}
+		
+		
+		
+		
+		
+		if (!$json) {
+			// Customer Group
+			$this->config->set('config_customer_group_id', );
+		
+			// Tax
+			if ($this->cart->hasShipping()) {
+				$this->tax->setShippingAddress($this->request->post['shipping_country_id'], $this->request->post['shipping_zone_id']);
+			} else {
+				$this->tax->setShippingAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));
+			}
 			
-			// Reset everything			
-			$this->cart->clear();
-			$this->customer->logout();
+			$this->tax->setPaymentAddress($this->request->post['payment_country_id'], $this->request->post['payment_zone_id']);				
+			$this->tax->setStoreAddress($this->config->get('config_country_id'), $this->config->get('config_zone_id'));	
 			
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-			unset($this->session->data['payment_method']);
-			unset($this->session->data['payment_methods']);
-			unset($this->session->data['coupon']);
-			unset($this->session->data['reward']);
-			unset($this->session->data['voucher']);
-			unset($this->session->data['vouchers']);
+			
+			$order_data = array();
+			
+			$order_data['customer_id'] = $this->request->post['customer_id'];
+			$order_data['customer_group_id'] = $this->request->post['customer_group_id'];
+			$order_data['firstname'] = $this->session->data['guest']['firstname'];
+			$order_data['lastname'] = $this->session->data['guest']['lastname'];
+			$order_data['email'] = $this->session->data['guest']['email'];
+			$order_data['telephone'] = $this->session->data['guest']['telephone'];
+			$order_data['fax'] = $this->session->data['guest']['fax'];
+			$order_data['custom_field'] = $this->session->data['guest']['custom_field'];
+		
+		
+		
+		
+		}
+
+
 
 	
 		$this->response->setOutput(json_encode($json));	
@@ -313,10 +313,6 @@ class ControllerApiOrder extends Controller {
 	}
 	
 	public function confirm() {
-		
-	}
-	
-	public function delete() {
 		
 	}
 }

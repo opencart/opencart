@@ -297,7 +297,7 @@
               </div>
             </div>
             <div class="text-right">
-              <button id="button-transaction" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_transaction_add; ?></button>
+              <button id="button-transaction" data-toggle="tooltip" title="<?php echo $button_transaction_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button>
             </div>
           </div>
           <?php } ?>

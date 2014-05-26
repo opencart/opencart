@@ -205,7 +205,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="text-left"><button type="button" onclick="addCustomFieldValue();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_custom_field_value_add; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addCustomFieldValue();" data-toggle="tooltip" title="<?php echo $button_custom_field_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
             </tr>
           </tfoot>
         </table>

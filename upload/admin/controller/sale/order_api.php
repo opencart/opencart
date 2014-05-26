@@ -265,7 +265,6 @@ class ControllerSaleOrder extends Controller {
 		$curl = curl_init($url);
 				
 		
-		curl_setopt($curl, CURLOPT_USERPWD, 'username:password');				
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_HEADER, 0);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);

@@ -68,7 +68,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="text-left"><a onclick="addFilterRow();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_filter_add; ?></a></td>
+              <td class="text-left"><a onclick="addFilterRow();" data-toggle="tooltip" title="<?php echo $button_filter_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a></td>
             </tr>
           </tfoot>
         </table>

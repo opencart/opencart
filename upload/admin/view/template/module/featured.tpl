@@ -105,7 +105,7 @@
           <tfoot>
             <tr>
               <td colspan="6"></td>
-              <td class="text-left"><button type="button" onclick="addModule();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_module_add; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addModule();" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
             </tr>
           </tfoot>
         </table>

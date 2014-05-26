@@ -434,7 +434,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2"></td>
-                    <td class="text-left"><button type="button" onclick="addAttribute();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_attribute_add; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addAttribute();" data-toggle="tooltip" title="<?php echo $button_attribute_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -624,7 +624,7 @@
                         <tfoot>
                           <tr>
                             <td colspan="6"></td>
-                            <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_option_value_add; ?></button></td>
+                            <td class="text-left"><button type="button" onclick="addOptionValue('<?php echo $option_row; ?>');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                           </tr>
                         </tfoot>
                       </table>
@@ -677,14 +677,14 @@
                         <?php } ?>
                         <?php } ?>
                       </select></td>
-                    <td class="text-left"><button type="button" onclick="$('#profile-row<?php echo $profile_count; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></button></td>
+                    <td class="text-left"><button type="button" onclick="$('#profile-row<?php echo $profile_count; ?>').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   <?php } ?>
                 </tbody>
                 <tfoot>
                   <tr>
                     <td colspan="2"></td>
-                    <td class="text-left"><button type="button" onclick="addProfile()" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_add_profile; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addProfile()" data-toggle="tooltip" title="<?php echo $button_add_profile; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -738,7 +738,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="6"></td>
-                    <td class="text-left"><button type="button" onclick="addDiscount();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_discount_add; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addDiscount();" data-toggle="tooltip" title="<?php echo $button_discount_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -790,7 +790,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="5"></td>
-                    <td class="text-left"><button type="button" onclick="addSpecial();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_special_add; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addSpecial();" data-toggle="tooltip" title="<?php echo $button_special_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -836,7 +836,7 @@
                 <tfoot>
                   <tr>
                     <td colspan="2"></td>
-                    <td class="text-left"><button type="button" onclick="addImage();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_image_add; ?></button></td>
+                    <td class="text-left"><button type="button" onclick="addImage();" data-toggle="tooltip" title="<?php echo $button_image_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
                   </tr>
                 </tfoot>
               </table>
@@ -1211,7 +1211,7 @@ $('input[name=\'option\']').autocomplete({
 			html += '    <tfoot>';
 			html += '      <tr>';
 			html += '        <td colspan="6"></td>';
-			html += '        <td class="text-left"><button type="button" onclick="addOptionValue(' + option_row + ');" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_option_value_add; ?></button></td>';
+			html += '        <td class="text-left"><button type="button" onclick="addOptionValue(' + option_row + ');" data-toggle="tooltip" title="<?php echo $button_option_value_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>';
 			html += '      </tr>';
 			html += '    </tfoot>';
 			html += '  </table>';
@@ -1377,7 +1377,7 @@ function addProfile() {
 	html += '    <select>';
 	html += '  </td>';
 	html += '  <td class="left">';
-	html += '    <a onclick="$(\'#profile-row' + profile_count + '\').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-trash-o"></i></a>';
+	html += '    <a onclick="$(\'#profile-row' + profile_count + '\').remove()" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a>';
 	html += '  </td>';
 	html += '</tr>';
 	

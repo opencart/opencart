@@ -2397,7 +2397,7 @@ CREATE TABLE `oc_product` (
   `upc` varchar(12) NOT NULL,
   `ean` varchar(14) NOT NULL,
   `jan` varchar(13) NOT NULL,
-  `isbn` varchar(13) NOT NULL,
+  `isbn` varchar(17) NOT NULL,
   `mpn` varchar(64) NOT NULL,
   `location` varchar(128) NOT NULL,
   `quantity` int(4) NOT NULL DEFAULT '0',

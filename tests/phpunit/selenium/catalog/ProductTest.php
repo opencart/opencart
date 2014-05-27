@@ -11,6 +11,23 @@ class CatalogProductTest extends OpenCartSeleniumTest {
 		$this->setBrowserUrl(HTTP_SERVER);
 	}
 	
+	public function testSearch() {
+		$this->url('index.php?route=common/home');
+		$this->byCssSelector('input[name="search"]')->click();
+		$this->keys('Apple');
+		
+		$this->byCssSelector('i.fa-search')->click();
+		
+		$this->waitUntil(function() {
+			if (strpos($this->url(), 'product/search') !== False) {
+				return true;
+			}
+		}, 3000);
+		
+		$element = $this->byCssSelector('div.caption a');
+		$this->assertTrue(strpos($element->attribute('href'), 'product_id=42') !== False);
+	}
+	
 	public function testAddToCartButton() {
 		$this->url('index.php?route=product/product&product_id=43');
 		$this->clickOnElement('button-cart');

@@ -93,7 +93,7 @@ class ModelOpenbayAmazonusListing extends Model {
 		$response = (array)$response;
 
 		if ($response['status'] === 1) {
-			$this->db->query(" REPLACE INTO `" . DB_PREFIX . "amazonus_product` SET `product_id` = " . (int)$data['product_id'] . ", `status` = 'uploaded', `version` = 3, `var` = '" . isset($data['var']) ? $this->db->escape($data['var']) : '' . "'");
+			$this->db->query("REPLACE INTO `" . DB_PREFIX . "amazonus_product` SET `product_id` = " . (int)$data['product_id'] . ", `status` = 'uploaded', `version` = 3, `var` = '" . $this->db->escape(isset($data['var']) ? $data['var'] : '') . "'");
 		}
 
 		return $response;

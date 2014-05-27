@@ -658,7 +658,7 @@ class ControllerOpenbayAmazon extends Controller {
 	}
 
 	public function doBulkList() {
-		$this->load->language('amazon/listing');
+		$this->load->language('openbay/amazon_listing');
 
 		if (empty($this->request->post['products'])) {
 			$json = array(

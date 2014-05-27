@@ -97,6 +97,8 @@ class ControllerApiOrder extends Controller {
 				'custom_field'   => unserialize($this->request->post['custom_field'])
 			);
 		}
+		
+		$this->response->setOutput(json_encode($json));	
 	}
 	
 	public function setPaymentAddress() {
@@ -195,13 +197,20 @@ class ControllerApiOrder extends Controller {
 				'address_format' => $address_format,
 				'custom_field'   => unserialize($this->request->post['custom_field'])
 			);
-		}	
+		}
+		
+		$this->response->setOutput(json_encode($json));		
 	}
-	
+		
 	public function addOrder() {
 		$this->load->language('api/order');
 		
 		$json = array();
+				
+		// Cart
+		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
+			$json['error']['warning'] = $this->url->link('checkout/cart');
+		}
 						
 		// Customer
 		if ($this->request->post['customer_id']) {
@@ -214,7 +223,6 @@ class ControllerApiOrder extends Controller {
 			}
 		}
 		
-		// Validate customer info
 		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 			$json['error']['firstname'] = $this->language->get('error_firstname');
 		}
@@ -231,23 +239,43 @@ class ControllerApiOrder extends Controller {
 			$json['error']['telephone'] = $this->language->get('error_telephone');
 		}		
 
-		// Validate payment address
+		// Payment Address
 		if (!isset($this->session->data['payment_address'])) {
-			$json['error'] = $this->url->link('checkout/checkout', '', 'SSL');
-		}		
-
-		// Validate shipping address
-		if (!isset($this->session->data['shipping_address'])) {
-			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
+			$json['error']['warning'] = $this->language->get('error_payment_address');
+		}	
+			
+		// Payment Method
+		if (!isset($this->request->post['payment_method'])) {
+			$json['error']['warning'] = $this->language->get('error_payment_method');
+		} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+			$json['error']['warning'] = $this->language->get('error_payment_method');
 		}
+
+		// Shipping
+		if ($this->cart->hasShipping()) {
+			// Shipping Address
+			if (!isset($this->session->data['shipping_address'])) {
+				$json['error']['warning'] = $this->language->get('error_shipping_address');
+			}
 		
+			// Shipping Method
+			if (!isset($this->request->post['shipping_method'])) {
+				$json['error']['warning'] = $this->language->get('error_shipping_method');
+			} else {
+				$shipping = explode('.', $this->request->post['shipping_method']);
+	
+				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+					$json['error']['warning'] = $this->language->get('error_shipping_method');
+				}
+			}
+		}
 		
 		
 		
 		
 		if (!$json) {
 			// Customer Group
-			$this->config->set('config_customer_group_id', );
+			// $this->config->set('config_customer_group_id', );
 		
 			// Tax
 			if ($this->cart->hasShipping()) {
@@ -282,25 +310,29 @@ class ControllerApiOrder extends Controller {
 		$this->response->setOutput(json_encode($json));	
 	}		
 	
+	public function calculate() {
+		
+	}
+	
 	public function editOrder() {
-			// Add the coupon, vouchers and reward points back
-			if (isset($this->request->get['order_id'])) {
-				$this->load->model('account/order');
+		// Add the coupon, vouchers and reward points back
+		if (isset($this->request->get['order_id'])) {
+			$this->load->model('account/order');
+			
+			$order_info = $this->model_account_order->getOrder($this->request->get['order_id']);
+			
+			if ($order_info) {
+				$order_totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
 				
-				$order_info = $this->model_account_order->getOrder($this->request->get['order_id']);
-				
-				if ($order_info) {
-					$order_totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
+				foreach ($order_totals as $order_total) {
+					$this->load->model('total/' . $order_total['code']);
 					
-					foreach ($order_totals as $order_total) {
-						$this->load->model('total/' . $order_total['code']);
-						
-						if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
-							$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
-						}
+					if (method_exists($this->{'model_total_' . $order_total['code']}, 'confirm')) {
+						$this->{'model_total_' . $order_total['code']}->confirm($order_info, $order_total);
 					}
 				}
 			}
+		}
 					
 	}
 	
@@ -311,6 +343,8 @@ class ControllerApiOrder extends Controller {
 	public function getOrder() {
 		
 	}
+	
+
 	
 	public function confirm() {
 		

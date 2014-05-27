@@ -1,6 +1,7 @@
 <?php
 class ControllerApiPayment extends Controller {
 	public function index() {
+		$json = array();
 		
 		// Validate if payment address has been set.
 		if (!isset($this->session->data['payment_address'])) {
@@ -71,6 +72,8 @@ class ControllerApiPayment extends Controller {
 			array_multisort($sort_order, SORT_ASC, $method_data);			
 			
 			$this->session->data['payment_methods'] = $method_data;
-		}	
+		}
+		
+		$this->response->setOutput(json_encode($json));		
 	}
 }

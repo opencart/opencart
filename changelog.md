@@ -5,8 +5,6 @@
 * Updated SQL in admin/model/sale/order.php to fix date_modified filter. Fixes #1371
 * Change settitle to setTitle in error/not_found.php
 * Fixed issue in Amazon Payments where tax lines where passed as products if cart had different tax rates.
-* Fixed the usage of ternary operator in Amazon EU and Amazon US
-* Correct language file is loaded during bulk listing in Amazon EU and Amazon US modules.
 
 #### Changes
 * Removed duplicate DELETE SQL query for product attributes REF: #1379

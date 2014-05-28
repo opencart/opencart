@@ -220,6 +220,12 @@ class ControllerSaleOrder extends Controller {
 			$filter_date_modified = null;
 		}
 
+		if (isset($this->request->get['filter_channel'])) {
+			$filter_channel = $this->request->get['filter_channel'];
+		} else {
+			$filter_channel = null;
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -264,6 +270,10 @@ class ControllerSaleOrder extends Controller {
 			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
 		}
 
+		if (isset($this->request->get['filter_channel'])) {
+			$url .= '&filter_channel=' . $this->request->get['filter_channel'];
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -303,6 +313,7 @@ class ControllerSaleOrder extends Controller {
 			'filter_total'           => $filter_total,
 			'filter_date_added'      => $filter_date_added,
 			'filter_date_modified'   => $filter_date_modified,
+			'filter_channel'         => $filter_channel,
 			'sort'                   => $sort,
 			'order'                  => $order,
 			'start'                  => ($page - 1) * $this->config->get('config_admin_limit'),
@@ -332,6 +343,7 @@ class ControllerSaleOrder extends Controller {
 				'order_id'      => $result['order_id'],
 				'customer'      => $result['customer'],
 				'status'        => $result['status'],
+				'channel'       => $this->language->get('text_' . $result['channel']),
 				'total'         => $this->currency->format($result['total'], $result['currency_code'], $result['currency_value']),
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
@@ -352,6 +364,7 @@ class ControllerSaleOrder extends Controller {
 		$this->data['column_date_added'] = $this->language->get('column_date_added');
 		$this->data['column_date_modified'] = $this->language->get('column_date_modified');
 		$this->data['column_action'] = $this->language->get('column_action');
+		$this->data['column_channel'] = $this->language->get('column_channel');
 
 		$this->data['button_invoice'] = $this->language->get('button_invoice');
 		$this->data['button_insert'] = $this->language->get('button_insert');
@@ -400,6 +413,10 @@ class ControllerSaleOrder extends Controller {
 			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
 		}
 
+		if (isset($this->request->get['filter_channel'])) {
+			$url .= '&filter_channel=' . $this->request->get['filter_channel'];
+		}
+
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
 		} else {
@@ -416,6 +433,7 @@ class ControllerSaleOrder extends Controller {
 		$this->data['sort_total'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.total' . $url, 'SSL');
 		$this->data['sort_date_added'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_added' . $url, 'SSL');
 		$this->data['sort_date_modified'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=o.date_modified' . $url, 'SSL');
+		$this->data['sort_channel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . '&sort=channel' . $url, 'SSL');
 
 		$url = '';
 
@@ -443,6 +461,10 @@ class ControllerSaleOrder extends Controller {
 			$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
 		}
 
+		if (isset($this->request->get['filter_channel'])) {
+			$url .= '&filter_channel=' . $this->request->get['filter_channel'];
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$url .= '&sort=' . $this->request->get['sort'];
 		}
@@ -466,6 +488,35 @@ class ControllerSaleOrder extends Controller {
 		$this->data['filter_total'] = $filter_total;
 		$this->data['filter_date_added'] = $filter_date_added;
 		$this->data['filter_date_modified'] = $filter_date_modified;
+		$this->data['filter_channel'] = $filter_channel;
+		
+		$this->data['channels'] = array();
+		
+		$this->data['channels'][] = array(
+			'module' => 'opencart',
+			'title' => $this->language->get('text_opencart'),
+		);
+
+		if ($this->config->get('openbay_status')) {
+			$this->data['channels'][] = array(
+				'module' => 'ebay',
+				'title' => $this->language->get('text_ebay'),
+			);
+		}
+		
+		if ($this->config->get('amazon_status')) {
+			$this->data['channels'][] = array(
+				'module' => 'amazon',
+				'title' => $this->language->get('text_amazon'),
+			);
+		}
+		
+		if ($this->config->get('amazonus_status')) {
+			$this->data['channels'][] = array(
+				'module' => 'amazonus',
+				'title' => $this->language->get('text_amazonus'),
+			);
+		}
 
 		$this->load->model('localisation/order_status');
 
@@ -1446,6 +1497,7 @@ class ControllerSaleOrder extends Controller {
 			$this->data['text_queries_remaining'] = $this->language->get('text_queries_remaining');
 			$this->data['text_maxmind_id'] = $this->language->get('text_maxmind_id');
 			$this->data['text_error'] = $this->language->get('text_error');
+			$this->data['text_channel'] = $this->language->get('text_channel');
 
 			$this->data['column_product'] = $this->language->get('column_product');
 			$this->data['column_model'] = $this->language->get('column_model');
@@ -1499,6 +1551,10 @@ class ControllerSaleOrder extends Controller {
 				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
 			}
 
+			if (isset($this->request->get['filter_channel'])) {
+				$url .= '&filter_channel=' . $this->request->get['filter_channel'];
+			}
+
 			if (isset($this->request->get['sort'])) {
 				$url .= '&sort=' . $this->request->get['sort'];
 			}
@@ -1535,6 +1591,8 @@ class ControllerSaleOrder extends Controller {
 			} else {
 				$this->data['invoice_no'] = '';
 			}
+			
+			$this->data['channel'] = $this->language->get('text_' . $order_info['channel']);
 
 			$this->data['amazon_order_id'] = $order_info['amazon_order_id'];
 			$this->data['store_name'] = $order_info['store_name'];

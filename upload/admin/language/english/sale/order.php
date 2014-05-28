@@ -117,6 +117,11 @@ $_['text_risk_score']                         = 'Risk Score:<br /><span class="h
 $_['text_queries_remaining']                  = 'Queries Remaining:<br /><span class="help">Number of queries remaining in your account, can be used to alert you when you may need to add more queries to your account.</span>';
 $_['text_maxmind_id']                         = 'Maxmind ID:<br /><span class="help">Unique identifier, used to reference transactions when reporting fraudulent activity back to MaxMind. This reporting will help MaxMind improve its service to you and will enable a planned feature to customize the fraud scoring formula based on your chargeback history.</span>';
 $_['text_error']                              = 'Error:<br /><span class="help">Returns an error string with a warning message or a reason why the request failed.</span>';
+$_['text_ebay']                               = 'eBay';
+$_['text_amazon']                             = 'Amazon EU';
+$_['text_amazonus']                           = 'Amazon US';
+$_['text_opencart']                           = 'OpenCart';
+$_['text_channel']                            = 'Channel:';
 
 // Column
 $_['column_order_id']                         = 'Order ID';
@@ -135,6 +140,7 @@ $_['column_remaining']                        = 'Remaining Downloads';
 $_['column_comment']                          = 'Comment';
 $_['column_notify']                           = 'Customer Notified';
 $_['column_action']                           = 'Action';
+$_['column_channel']                          = 'Channel';
 
 // Entry
 $_['entry_store']                             = 'Store:';

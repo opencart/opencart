@@ -151,7 +151,8 @@ class ModelOpenbayEbay extends Model{
 				`smp_id` int(11) NOT NULL,
 				`tracking_no` varchar(100) NOT NULL,
 				`carrier_id` varchar(100) NOT NULL,
-				PRIMARY KEY (`ebay_order_id`)
+				PRIMARY KEY (`ebay_order_id`),
+				INDEX(order_id)
 			) DEFAULT COLLATE=utf8_general_ci;
 		");
 

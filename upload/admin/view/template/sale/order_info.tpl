@@ -26,6 +26,10 @@
             <td><?php echo $text_order_id; ?></td>
             <td>#<?php echo $order_id; ?></td>
           </tr>
+          <tr>
+            <td><?php echo $text_channel ?></td>
+            <td><?php echo $channel ?></td>
+          </tr>
           <?php if (!empty($amazon_order_id)) { ?>
           
           <tr>

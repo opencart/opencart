@@ -14,7 +14,7 @@
 * Updated link to download location for Amazon Payments adjustment file as it was removed from the source.
 
 #### Added
-* Nothing
+* Shows orders' channels on the list of orders page.
 
 ## v1.5.6.4 (23rd April 2014)
 #### Bugs fixed

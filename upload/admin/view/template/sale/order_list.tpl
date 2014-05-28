@@ -42,6 +42,11 @@
                 <?php } else { ?>
                 <a href="<?php echo $sort_total; ?>"><?php echo $column_total; ?></a>
                 <?php } ?></td>
+              <td class="right"><?php if ($sort == 'channel') { ?>
+                <a href="<?php echo $sort_channel; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_channel; ?></a>
+                <?php } else { ?>
+                <a href="<?php echo $sort_channel; ?>"><?php echo $column_channel; ?></a>
+                <?php } ?></td>
               <td class="left"><?php if ($sort == 'o.date_added') { ?>
                 <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
                 <?php } else { ?>
@@ -76,6 +81,16 @@
                   <?php } ?>
                 </select></td>
               <td align="right"><input type="text" name="filter_total" value="<?php echo $filter_total; ?>" size="4" style="text-align: right;" /></td>
+              <td align="right"><select name="filter_channel">
+                <option value=""></option>
+                <?php foreach ($channels as $channel) { ?>
+                  <?php if ($channel['module'] == $filter_channel) { ?>
+                    <option value="<?php echo $channel['module'] ?>" selected="selected"><?php echo $channel['title'] ?></option>
+                  <?php } else {  ?>
+                    <option value="<?php echo $channel['module'] ?>"><?php echo $channel['title'] ?></option>
+                  <?php } ?>
+                <?php } ?>
+                </select></td>
               <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="date" /></td>
               <td><input type="text" name="filter_date_modified" value="<?php echo $filter_date_modified; ?>" size="12" class="date" /></td>
               <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
@@ -92,6 +107,7 @@
               <td class="left"><?php echo $order['customer']; ?></td>
               <td class="left"><?php echo $order['status']; ?></td>
               <td class="right"><?php echo $order['total']; ?></td>
+              <td class="right"><?php echo $order['channel']; ?></td>
               <td class="left"><?php echo $order['date_added']; ?></td>
               <td class="left"><?php echo $order['date_modified']; ?></td>
               <td class="right"><?php foreach ($order['action'] as $action) { ?>
@@ -101,7 +117,7 @@
             <?php } ?>
             <?php } else { ?>
             <tr>
-              <td class="center" colspan="8"><?php echo $text_no_results; ?></td>
+              <td class="center" colspan="9"><?php echo $text_no_results; ?></td>
             </tr>
             <?php } ?>
           </tbody>
@@ -150,6 +166,12 @@ function filter() {
 	if (filter_date_modified) {
 		url += '&filter_date_modified=' + encodeURIComponent(filter_date_modified);
 	}
+	
+	var filter_channel = $('select[name=\'filter_channel\']').attr('value');
+	
+	if (filter_channel != '*') {
+		url += '&filter_channel=' + encodeURIComponent(filter_channel);
+	}	
 				
 	location = url;
 }

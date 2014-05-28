@@ -9,7 +9,7 @@
     <div class="heading">
       <h1><img src="view/image/order.png" alt="" /> <?php echo $lang_confirm_title; ?></h1>
       <div class="buttons">
-          <a href="<?php echo $link_cancel; ?>" class="button"><?php echo $lang_cancel; ?></a>
+          <a href="<?php echo $cancel; ?>" class="button"><?php echo $button_cancel; ?></a>
       </div>
     </div>
     <div class="content">

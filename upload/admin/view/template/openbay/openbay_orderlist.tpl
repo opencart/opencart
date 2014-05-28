@@ -44,7 +44,11 @@
                   <?php } else { ?>
                   <a href="<?php echo $sort_status; ?>"><?php echo $column_status; ?></a>
                   <?php } ?></td>
-                <td class="right"><?php echo $lang_order_channel; ?></td>
+                <td class="right"><?php if ($sort == 'channel') { ?>
+                  <a href="<?php echo $sort_channel; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_channel; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_channel; ?>"><?php echo $column_channel; ?></a>
+                  <?php } ?></td>
                 <td class="left"><?php if ($sort == 'o.date_added') { ?>
                   <a href="<?php echo $sort_date_added; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_date_added; ?></a>
                   <?php } else { ?>
@@ -76,7 +80,16 @@
                     <?php } ?>
                   </select>
                 </td>
-                <td align="right"></td>
+                <td align="right"><select name="filter_channel">
+                <option value=""></option>
+                <?php foreach ($channels as $channel) { ?>
+                  <?php if ($channel['module'] == $filter_channel) { ?>
+                    <option value="<?php echo $channel['module'] ?>" selected="selected"><?php echo $channel['title'] ?></option>
+                  <?php } else {  ?>
+                    <option value="<?php echo $channel['module'] ?>"><?php echo $channel['title'] ?></option>
+                  <?php } ?>
+                <?php } ?>
+                </select></td>
                 <td><input type="text" name="filter_date_added" value="<?php echo $filter_date_added; ?>" size="12" class="date" /></td>
                 <td></td>
                 <td align="right"><a onclick="filter();" class="button"><?php echo $button_filter; ?></a></td>
@@ -130,6 +143,12 @@
     var filter_order_status_id = $('select[name=\'filter_order_status_id\']').attr('value');
     if (filter_order_status_id != '*') {
       url += '&filter_order_status_id=' + encodeURIComponent(filter_order_status_id);
+    }
+
+    var filter_channel = $('select[name=\'filter_channel\']').attr('value');
+
+    if (filter_channel != '') {
+      url += '&filter_channel=' + encodeURIComponent(filter_channel);
     }
 
     var filter_date_added = $('input[name=\'filter_date_added\']').attr('value');

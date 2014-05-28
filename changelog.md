@@ -14,7 +14,7 @@
 * Updated link to download location for Amazon Payments adjustment file as it was removed from the source.
 
 #### Added
-* Nothing
+* Authorize.net solution ID to payment gateway
 
 ## v1.5.6.4 (23rd April 2014)
 #### Bugs fixed

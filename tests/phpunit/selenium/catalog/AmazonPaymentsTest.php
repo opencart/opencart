@@ -14,6 +14,11 @@ class CatalogAmazonPaymentsTest extends OpenCartSeleniumTest {
 	
 	public function setUpPage() {
 		if (!$this->moduleInstalled) {
+			$db = new DB(DB_DRIVER, DB_HOSTNAME, DB_USERNAME, DB_PASSWORD, DB_DATABASE);
+			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "order_amazon");
+			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "order_amazon_product");
+			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "order_amazon_report");
+			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "order_total_tax");
 
 			$this->url("admin/");
 
@@ -60,7 +65,7 @@ class CatalogAmazonPaymentsTest extends OpenCartSeleniumTest {
 			$this->byCssSelector('#amazon_checkout_order_shipped_status option[value="3"]')->click();
 			$this->byCssSelector('#amazon_checkout_order_canceled_status option[value="7"]')->click();
 			
-			$this->byCssSelector('i.fa-check-circle')->click();
+			$this->byCssSelector('.pull-right button.btn')->click();
 			
 			// Adding the Cart Layout
 			$this->waitToAppearAndClick('#system a');
@@ -89,16 +94,80 @@ class CatalogAmazonPaymentsTest extends OpenCartSeleniumTest {
 			$this->waitToLoad('Amazon Payments button'); 
 			$this->byCssSelector('.fa-plus-circle')->click();
 			
+			for ($i = 1; ; $i++) {
+				$element = $this->byCssSelector('select[name="amazon_checkout_layout_module[0][layout_id]"] option:nth-child(' . $i . ')');
+				
+				if ($element->text() == 'Cart') {
+					$element->click();
+					break;
+				}
+			}
 			
-			$this->waitToLoad('Modules');
-			
-			$this->byCssSelector('.table-bordered tbody tr:nth-child(3) td:last-child a.btn-primary')->click();
-			
-			$this->byCssSelector('button.btn-primary')->click();
+			$this->byCssSelector('button[title="Save"]')->click();
 		}
 	}
 	
 	public function testOneProduct() {
+		$this->url('index.php?route=product/product&product_id=43');
+		$this->clickOnElement('button-cart');
+		
+		$this->url('index.php?route=checkout/cart');
+		$this->waitToLoad('Shopping Cart');
+		
+		$this->clickOnElement('CBAWidgets0');
+
+		$windowHandles = $this->windowHandles();
+		
+		$this->window($windowHandles[1]);
+		
+		$this->waitToLoad("Amazon Payments", 5000);
+		
+		$this->clickOnElement('ap_email');
+		$this->keys(AMAZON_PAYMENTS_USERNAME);
+		
+		$this->clickOnElement('ap_password');
+		$this->keys(AMAZON_PAYMENTS_PASSWORD);
+		
+		$this->clickOnElement('signInSubmit');
+		
+		$this->window($windowHandles[0]);
+		
+		$this->waitToLoad('Amazon Payments'); 
+		
+		// Address' Page
+		sleep(3);
+		
+		$this->frame('CBAWidgets0IFrame');
+		
+		$this->byCssSelector('.cba-v2-widget-list div:nth-child(' . AMAZON_PAYMENTS_ADDRESS_POSITION . ')')->click();
+		
+		sleep(3);
+		
+		$this->window($windowHandles[0]);
+		
+		$this->byCssSelector("#continue-button")->click();
+		
+		sleep(3);
+		// Payment method's page
+		$this->frame('CBAWidgets0IFrame');
+		
+		$this->byCssSelector('.cba-v2-widget-list div:nth-child(' . AMAZON_PAYMENTS_CARDS_POSITION . ')')->click();
+		
+		sleep(3);
+		
+		$this->window($windowHandles[0]);
+		
+		$this->byCssSelector("#continue-button")->click();
+		
+		sleep(3);
+		
+		$this->byCssSelector("#confirm-button")->click();
+		
+		sleep(3);
+		
+		$element = $this->byCssSelector('h2');
+		
+		$this->assertEquals('Your Order Has Been Processed!', $element->text());
 		
 	}
 	
@@ -116,7 +185,7 @@ class CatalogAmazonPaymentsTest extends OpenCartSeleniumTest {
 	
 	private function waitToLoad($title, $timeout = 3000) {
 		$this->waitUntil(function() use ($title) {
-			if ($this->title() == $title) {
+			if (strpos($this->title(), $title) !== false) {
 				return true;
 			}
 		}, $timeout);

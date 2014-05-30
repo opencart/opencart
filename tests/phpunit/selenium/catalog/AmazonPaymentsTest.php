@@ -19,6 +19,7 @@ class CatalogAmazonPaymentsTest extends OpenCartSeleniumTest {
 			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "order_amazon_product");
 			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "order_amazon_report");
 			$db->query("DROP TABLE IF EXISTS " . DB_PREFIX . "order_total_tax");
+			$db->query("DELETE l, lr FROM " . DB_PREFIX . "layout l, " . DB_PREFIX . "layout_route lr WHERE l.layout_id = lr.layout_id AND l.`name` = 'Cart'");
 
 			$this->url("admin/");
 
@@ -170,25 +171,4 @@ class CatalogAmazonPaymentsTest extends OpenCartSeleniumTest {
 		$this->assertEquals('Your Order Has Been Processed!', $element->text());
 		
 	}
-	
-	private function waitToAppearAndClick($cssSelector, $timeout = 3000) {
-		$this->waitUntil(function() use ($cssSelector) {
-			$element = $this->byCssSelector($cssSelector);
-			
-			if ($element->displayed()) {
-				return true;
-			}
-		}, $timeout);
-		
-		$this->byCssSelector($cssSelector)->click();
-	}
-	
-	private function waitToLoad($title, $timeout = 3000) {
-		$this->waitUntil(function() use ($title) {
-			if (strpos($this->title(), $title) !== false) {
-				return true;
-			}
-		}, $timeout);
-	}
-	
 }

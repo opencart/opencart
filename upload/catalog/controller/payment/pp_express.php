@@ -69,7 +69,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'METHOD'             => 'SetExpressCheckout',
 			'MAXAMT'             => $max_amount,
 			'RETURNURL'          => $this->url->link('payment/pp_express/expressReturn', '', 'SSL'),
-			'CANCELURL'          => $this->url->link('checkout/cart'),
+			'CANCELURL'          => $this->url->link('checkout/cart', '', 'SSL'),
 			'REQCONFIRMSHIPPING' => 0,
 			'NOSHIPPING'         => $shipping,
 			'ALLOWNOTE'          => $this->config->get('pp_express_allow_note'),
@@ -81,7 +81,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'PAYFLOWCOLOR'       => $this->config->get('pp_express_page_colour'),
 			'CHANNELTYPE'        => 'Merchant',
 		);
-
+		
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());
 
 		$result = $this->model_payment_pp_express->call($data);

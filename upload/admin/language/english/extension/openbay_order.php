@@ -19,4 +19,11 @@ $_['lang_e_ajax_1']             = 'A play order is missing a refund message!';
 $_['lang_e_ajax_2']             = 'A play order is missing tracking info!';
 $_['lang_e_ajax_3']             = 'An Amazon order is missing an "Other Carrier" entry!';
 $_['lang_title_order_update']   = 'Bulk order update';
+
+$_['text_web']                  = 'Web';
+$_['text_ebay']                 = 'eBay';
+$_['text_amazon']               = 'Amazon EU';
+$_['text_amazonus']             = 'Amazon US';
+
+$_['column_channel']            = 'Channel';
 ?>

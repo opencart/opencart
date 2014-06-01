@@ -16,6 +16,8 @@ class ModelDesignBanner extends Model {
 				}
 			}
 		}
+		
+		return $banner_id;
 	}
 
 	public function editBanner($banner_id, $data) {

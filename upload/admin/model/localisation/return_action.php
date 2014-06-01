@@ -12,7 +12,6 @@ class ModelLocalisationReturnAction extends Model {
 		}
 
 		$this->cache->delete('return_action');
-		return isset($return_action_id) ? $return_action_id : 0;
 	}
 
 	public function editReturnAction($return_action_id, $data) {

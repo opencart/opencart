@@ -2,6 +2,8 @@
 class ModelUserApi extends Model {
 	public function addApi($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
+		$api_id = $this->db->getLastId();
+		return $api_id;
 	}
 
 	public function editApi($api_id, $data) {

@@ -10,6 +10,8 @@ class ModelDesignLayout extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "layout_route SET layout_id = '" . (int)$layout_id . "', store_id = '" . (int)$layout_route['store_id'] . "', route = '" . $this->db->escape($layout_route['route']) . "'");
 			}
 		}
+		
+		return $layout_id;
 	}
 
 	public function editLayout($layout_id, $data) {

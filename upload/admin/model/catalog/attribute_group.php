@@ -8,6 +8,7 @@ class ModelCatalogAttributeGroup extends Model {
 		foreach ($data['attribute_group_description'] as $language_id => $value) {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "attribute_group_description SET attribute_group_id = '" . (int)$attribute_group_id . "', language_id = '" . (int)$language_id . "', name = '" . $this->db->escape($value['name']) . "'");
 		}
+		return $attribute_group_id;
 	}
 
 	public function editAttributeGroup($attribute_group_id, $data) {

@@ -20,6 +20,7 @@ class ModelCatalogOption extends Model {
 				}
 			}
 		}
+		return $option_id;
 	}
 
 	public function editOption($option_id, $data) {

@@ -129,6 +129,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 	public function confirm() {
 		$this->load->model('setting/extension');
 		$this->load->model('account/address');
+		$this->load->model('account/custom_field');
 		$this->load->model('payment/amazon_checkout');
 		$this->load->library('cba');
 		$this->load->language('checkout/checkout');
@@ -901,9 +902,9 @@ class ControllerPaymentAmazonCheckout extends Controller {
 
 			$this->session->data['cba']['shipping_method'] = $this->session->data['cba']['shipping_methods'][$shipping_method[0]]['quote'][$shipping_method[1]];
 
-			$json['redirect'] = $this->url->link('payment/amazon_checkout/payment_method', '', 'SSL');
+			$json['redirect'] = $this->url->link('payment/amazon_checkout/paymentMethod', '', 'SSL');
 		} else {
-			$json['redirect'] = $this->url->link('payment/amazon_checkout/payment_method', '', 'SSL');
+			$json['redirect'] = $this->url->link('payment/amazon_checkout/paymentMethod', '', 'SSL');
 		}
 
 		$this->response->setOutput(json_encode($json));

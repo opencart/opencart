@@ -13,3 +13,14 @@ define('AMAZON_PAYMENTS_SELLER_ID', '');
 define('AMAZON_PAYMENTS_ACCESS_KEY', '');
 define('AMAZON_PAYMENTS_ACCESS_SECRET', '');
 define('AMAZON_PAYMENTS_COUNTRY', '');
+define('AMAZON_PAYMENTS_USERNAME', '');
+define('AMAZON_PAYMENTS_PASSWORD', '');
+define('AMAZON_PAYMENTS_ADDRESS_POSITION', 1);
+define('AMAZON_PAYMENTS_CARDS_POSITION', 1);
+
+// Settings for PayPal Express Checkout's Selenium tests
+define('PP_EXPRESS_API_USERNAME', '');
+define('PP_EXPRESS_API_PASSWORD', '');
+define('PP_EXPRESS_API_SIGNATURE', '');
+define('PP_EXPRESS_USERNAME', '');
+define('PP_EXPRESS_PASSWORD', '');

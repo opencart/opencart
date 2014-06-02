@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-body" style="text-align: right;"><a href="<?php echo $payment_url; ?>" title="PayPal Express Checkout" style="text-decoration:none;">
+  <div class="panel-body" style="text-align: right;"><a href="<?php echo $payment_url; ?>" title="PayPal Express Checkout" style="text-decoration:none;" class="pp-express-button">
     <?php if($is_mobile == true) { ?>
     <img src="catalog/view/theme/default/image/paypal_express_mobile.png" style="margin:10px; float:right;" alt="PayPal Express Checkout" title="PayPal Express Checkout" />
     <?php }else{ ?>

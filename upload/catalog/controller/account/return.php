@@ -279,6 +279,8 @@ class ControllerAccountReturn extends Controller {
 		$this->load->model('account/return');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
+			unset($this->session->data['captcha']);
+			
 			$return_id = $this->model_account_return->addReturn($this->request->post);
 
 			// Add to activity log
@@ -515,12 +517,6 @@ class ControllerAccountReturn extends Controller {
 			$data['comment'] = $this->request->post['comment'];
 		} else {
 			$data['comment'] = '';
-		}
-
-		if (isset($this->request->post['captcha'])) {
-			$data['captcha'] = $this->request->post['captcha'];
-		} else {
-			$data['captcha'] = '';
 		}
 
 		if ($this->config->get('config_return_id')) {

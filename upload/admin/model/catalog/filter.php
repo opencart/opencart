@@ -20,6 +20,7 @@ class ModelCatalogFilter extends Model {
 				}
 			}
 		}
+		return $filter_group_id;
 	}
 
 	public function editFilter($filter_group_id, $data) {

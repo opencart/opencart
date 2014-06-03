@@ -28,6 +28,7 @@ class ModelCatalogInformation extends Model {
 		}
 
 		$this->cache->delete('information');
+		return $information_id;
 	}
 
 	public function editInformation($information_id, $data) {

@@ -52,6 +52,7 @@ class ModelCatalogCategory extends Model {
 		}
 
 		$this->cache->delete('category');
+		return $category_id;
 	}
 
 	public function editCategory($category_id, $data) {

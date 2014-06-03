@@ -2,6 +2,8 @@
 class ModelSaleCustomerBanIp extends Model {
 	public function addCustomerBanIp($data) {
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "customer_ban_ip` SET `ip` = '" . $this->db->escape($data['ip']) . "'");
+		$customer_ban_ip_id = $this->db->getLastId();
+		return $customer_ban_ip_id;
 	}
 
 	public function editCustomerBanIp($customer_ban_ip_id, $data) {

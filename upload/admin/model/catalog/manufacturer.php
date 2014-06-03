@@ -20,6 +20,7 @@ class ModelCatalogManufacturer extends Model {
 		}
 
 		$this->cache->delete('manufacturer');
+		return $manufacturer_id;
 	}
 
 	public function editManufacturer($manufacturer_id, $data) {

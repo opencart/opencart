@@ -16,6 +16,8 @@ class ModelMarketingCoupon extends Model {
 				$this->db->query("INSERT INTO " . DB_PREFIX . "coupon_category SET coupon_id = '" . (int)$coupon_id . "', category_id = '" . (int)$category_id . "'");
 			}
 		}
+		
+		return $coupon_id;
 	}
 
 	public function editCoupon($coupon_id, $data) {

@@ -16,6 +16,8 @@ class ModelSaleCustomer extends Model {
 				}
 			}
 		}
+		
+		return $customer_id;
 	}
 
 	public function editCustomer($customer_id, $data) {

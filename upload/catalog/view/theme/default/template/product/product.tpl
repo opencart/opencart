@@ -552,6 +552,8 @@ $('#button-review').on('click', function() {
         },
         complete: function() {
             $('#button-review').button('reset');
+            $('#captcha').attr('src', 'index.php?route=tool/captcha');
+            $('input[name=\'captcha\']').val('');
         },
         success: function(json) {
 			$('.alert-success, .alert-danger').remove();

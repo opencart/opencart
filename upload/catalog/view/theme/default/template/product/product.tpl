@@ -476,6 +476,8 @@ $('#button-review').bind('click', function() {
 		complete: function() {
 			$('#button-review').attr('disabled', false);
 			$('.attention').remove();
+			$('#captcha').attr('src', 'index.php?route=product/product/captcha');
+			$('input[name=\'captcha\']').val('');
 		},
 		success: function(data) {
 			if (data['error']) {

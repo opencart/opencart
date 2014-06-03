@@ -7,6 +7,7 @@
 * Fixed issue in Amazon Payments where tax lines where passed as products if cart had different tax rates.
 * Fixed the usage of ternary operator in Amazon EU and Amazon US
 * Correct language file is loaded during bulk listing in Amazon EU and Amazon US modules.
+* Fixed the implementation of captchas.
 
 #### Changes
 * Removed duplicate DELETE SQL query for product attributes REF: #1379

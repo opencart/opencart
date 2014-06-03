@@ -30,6 +30,7 @@
   <input type="hidden" name="x_customer_ip" value="<?php echo $x_customer_ip; ?>" />
   <input type="hidden" name="x_email" value="<?php echo $x_email; ?>" />
   <input type="hidden" name="x_relay_response" value="<?php echo $x_relay_response; ?>" />
+  <input type="hidden" name="x_solution_id" value="A1000015" />
   <div class="buttons">
     <div class="right">
       <input type="submit" value="<?php echo $button_confirm; ?>" class="button" />

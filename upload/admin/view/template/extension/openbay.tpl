@@ -6,28 +6,16 @@
     <?php } ?>
   </ul>
 
-  <?php if ($error) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-
   <?php if ($success) { ?>
   <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
 
-  <?php if ($check['mcrypt'] != 1) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_mcrypt_not_enabled; ?></div>
-  <?php } ?>
-
-  <?php if ($check['mbstring'] != 1) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_mb_not_enabled; ?></div>
-  <?php } ?>
-
-  <?php if ($check['ftpenabled'] != 1) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_ftp_not_enabled; ?></div>
+  <?php if (!empty($error)) { ?>
+    <?php foreach($error as $error_message) { ?>
+      <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_message; ?></div>
+    <?php } ?>
   <?php } ?>
 
   <div class="panel panel-default">

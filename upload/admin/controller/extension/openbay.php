@@ -23,9 +23,6 @@ class ControllerExtensionOpenbay extends Controller {
 			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
 		);
 
-		$data['check']['mcrypt'] = $this->model_openbay_openbay->checkMcrypt();
-		$data['check']['mbstring'] = $this->model_openbay_openbay->checkMbstings();
-		$data['check']['ftpenabled'] = $this->model_openbay_openbay->checkFtpenabled();
 		$data['manage_link'] = $this->url->link('extension/openbay/manage', 'token=' . $this->session->data['token'], 'SSL');
 		$data['product_link'] = $this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL');
 		$data['order_link'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL');
@@ -36,9 +33,10 @@ class ControllerExtensionOpenbay extends Controller {
 			unset($this->session->data['success']);
 		}
 
-		$data['error'] = '';
+		$data['error'] = $this->model_openbay_openbay->requirementTest();
+
 		if (isset($this->session->data['error'])) {
-			$data['error'] = $this->session->data['error'];
+			$data['error'][] = $this->session->data['error'];
 			unset($this->session->data['error']);
 		}
 
@@ -59,8 +57,6 @@ class ControllerExtensionOpenbay extends Controller {
 			$extension = basename($market, ' . php');
 
 			$this->load->language('openbay/' . $extension);
-
-			$action = array();
 
 			$data['extensions'][] = array(
 				'name' => $this->language->get('heading_title'),

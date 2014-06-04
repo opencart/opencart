@@ -350,28 +350,28 @@ class ModelOpenbayOpenbay extends Model {
 		}
 	}
 
-	public function checkMcrypt() {
-		if (function_exists('mcrypt_encrypt')) {
-			return true;
-		} else {
-			return false;
-		}
-	}
+	public function requirementTest() {
+		$error = array();
 
-	public function checkMbstings() {
-		if (function_exists('mb_detect_encoding')) {
-			return true;
-		} else {
-			return false;
+		if (!function_exists('mcrypt_encrypt')) {
+			$error[] = $this->language->get('lang_error_mcrypt');
 		}
-	}
 
-	public function checkFtpenabled() {
-		if (function_exists('ftp_connect')) {
-			return true;
-		} else {
-			return false;
+		if (!function_exists('mb_detect_encoding')) {
+			$error[] = $this->language->get('lang_error_mbstring');
 		}
+
+		if (!function_exists('ftp_connect')) {
+			$error[] = $this->language->get('lang_error_ftpconnect');
+		}
+
+		$root_directory = preg_replace('/catalog\/$/', '', DIR_CATALOG);
+
+		if (file_exists($root_directory.'/vqmod/xml/ebay.xml') || file_exists($root_directory.'/vqmod/xml/amazon.xml') || file_exists($root_directory.'/vqmod/xml/amazonus.xml') || file_exists($root_directory.'/vqmod/xml/play.xml') || file_exists($root_directory.'/vqmod/xml/openbay.xml')) {
+			$error[] = $this->language->get('lang_error_vqmod');
+		}
+
+		return $error;
 	}
 
 	private function call($call, array $post = null, array $options = array(), $content_type = 'json') {

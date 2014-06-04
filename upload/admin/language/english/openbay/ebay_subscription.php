@@ -1,0 +1,22 @@
+<?php
+$_['text_heading']              = 'Subscription';
+$_['text_openbay']              = 'OpenBay Pro';
+$_['text_ebay']                 = 'eBay';
+$_['text_page_title']           = 'OpenBay Pro for eBay';
+$_['text_btn_return']           = 'Return';
+$_['text_load']                 = 'Refresh';
+$_['text_subscription_current'] = 'Current plan';
+$_['text_subscription_avail']   = 'Available plans';
+$_['text_subscription_avail1']  = 'Changing plans will be immediate and unused calls will not be credited.';
+$_['text_subscription_avail2']  = 'To downgrade to the basic plan please cancel your active subscription in PayPal.';
+$_['text_ajax_acc_load_plan']   = 'PayPal subscription ID: ';
+$_['text_ajax_acc_load_plan2']  = ', you should cancel ALL other subscriptions from us';
+$_['text_ajax_acc_load_text1']  = 'Plan name';
+$_['text_ajax_acc_load_text2']  = 'Call limit';
+$_['text_ajax_acc_load_text3']  = 'Price (p/month)';
+$_['text_ajax_acc_load_text4']  = 'Description';
+$_['text_ajax_acc_load_text5']  = 'Current plan';
+$_['text_ajax_acc_load_text6']  = 'Change to plan';
+$_['text_ajax_load_error']      = 'Sorry, could not get a response. Try later.';
+$_['text_load_my_plan']         = 'Loading your plan';
+$_['text_load_plans']           = 'Loading available plans';

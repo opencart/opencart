@@ -1,0 +1,20 @@
+<?php
+$_['text_openbay']              = 'OpenBay Pro';
+$_['text_page_title']           = 'OpenBay Pro for eBay';
+$_['text_ebay']                 = 'eBay';
+$_['text_complete']             = 'Complete';
+$_['text_failed']               = 'Failed to load';
+$_['text_heading']              = 'Syncronise';
+$_['text_btn_return']           = 'Return';
+$_['text_sync_desc']            = 'Sync your store with the latest available shipping and categories options from eBay, this data is only for the options when listing an item to eBay - it will not import categories to your store etc.';
+$_['text_sync_cats_lbl']        = 'Get main eBay categories';
+$_['text_sync_cats_lbl_help']   = 'This does not import any categories to your store!';
+$_['text_sync_shop_lbl']        = 'Get you shop categories';
+$_['text_sync_shop_lbl_help']   = 'This does not import any categories to your store!';
+$_['text_sync_setting_lbl']     = 'Get settings';
+$_['text_sync_setting_lbl_help']= 'This imports available payment types, shipping, locations and more.';
+$_['text_sync_btn']             = 'Update';
+$_['text_ajax_ebay_categories'] = 'This may take a while, wait 5 minutes before you do anything else.';
+$_['text_ajax_cat_import']      = 'Your eBay shop categories have been imported.';
+$_['text_ajax_setting_import']  = 'Your settings have been imported.';
+$_['text_ajax_setting_import_e']= 'There was an error loading the settings.';

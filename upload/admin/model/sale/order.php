@@ -278,7 +278,7 @@ class ModelSaleOrder extends Model {
 		// Remove used reward points
 		$this->load->model('sale/customer');
 
-		$this->db->query("DELETE FROM " . DB_PREFIX . "cutomer_reward WHERE order_id = '" . (int)$order_id  . "' and points < 0");
+		$this->db->query("DELETE FROM " . DB_PREFIX . "customer_reward WHERE order_id = '" . (int)$order_id  . "' and points < 0");
 
 		// Get the total
 		$total = 0;
@@ -469,9 +469,10 @@ class ModelSaleOrder extends Model {
 				'customer_group_id'       => $order_query->row['customer_group_id'],
 				'firstname'               => $order_query->row['firstname'],
 				'lastname'                => $order_query->row['lastname'],
+				'email'                   => $order_query->row['email'],
 				'telephone'               => $order_query->row['telephone'],
 				'fax'                     => $order_query->row['fax'],
-				'email'                   => $order_query->row['email'],
+				'custom_field'            => unserialize($order_query->row['custom_field']),
 				'payment_firstname'       => $order_query->row['payment_firstname'],
 				'payment_lastname'        => $order_query->row['payment_lastname'],
 				'payment_company'         => $order_query->row['payment_company'],
@@ -487,6 +488,7 @@ class ModelSaleOrder extends Model {
 				'payment_iso_code_2'      => $payment_iso_code_2,
 				'payment_iso_code_3'      => $payment_iso_code_3,
 				'payment_address_format'  => $order_query->row['payment_address_format'],
+				'payment_custom_field'    => unserialize($order_query->row['payment_custom_field']),
 				'payment_method'          => $order_query->row['payment_method'],
 				'payment_code'            => $order_query->row['payment_code'],				
 				'shipping_firstname'      => $order_query->row['shipping_firstname'],
@@ -504,6 +506,7 @@ class ModelSaleOrder extends Model {
 				'shipping_iso_code_2'     => $shipping_iso_code_2,
 				'shipping_iso_code_3'     => $shipping_iso_code_3,
 				'shipping_address_format' => $order_query->row['shipping_address_format'],
+				'shipping_custom_field'   => unserialize($order_query->row['shipping_custom_field']),
 				'shipping_method'         => $order_query->row['shipping_method'],
 				'shipping_code'           => $order_query->row['shipping_code'],
 				'comment'                 => $order_query->row['comment'],

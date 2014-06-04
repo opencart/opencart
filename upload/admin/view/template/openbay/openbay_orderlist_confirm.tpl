@@ -5,16 +5,6 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
@@ -70,7 +60,8 @@
                     <?php } ?>
                   <?php } ?>
 
-                  <?php if($order['channel'] == 'Amazon') { ?>
+                  <?php if($order['channel'] == 'Amazon EU') { ?>
+                  <a href="openbay_orderlist_confirm.tpl"></a>
                     <?php if($change_order_status_id == $openbay_amazon_order_status_shipped) { ?>
                       <div class="form-group">
                         <label class="control-label"><?php echo $text_carrier; ?></label>
@@ -92,7 +83,7 @@
                     <?php } ?>
                   <?php } ?>
 
-                  <?php if($order['channel'] == 'Amazonus') { ?>
+                  <?php if($order['channel'] == 'Amazon US') { ?>
                     <?php if($change_order_status_id == $openbay_amazonus_order_status_shipped) { ?>
                       <div class="form-group">
                         <label class="control-label"><?php echo $text_carrier; ?></label>

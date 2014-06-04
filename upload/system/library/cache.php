@@ -2,7 +2,7 @@
 class Cache { 
 	private $cache;
 	
-	public function __construct($driver, $expire = 3600){
+	public function __construct($driver, $expire = 3600) {
 		$file = dirname(__FILE__) . '/driver/cache/' . $driver . '.php';
 		
 		if (file_exists($file)) {
@@ -16,7 +16,7 @@ class Cache {
 		}
 	}
 	
-	public function get($key){
+	public function get($key) {
 		return $this->cache->get($key);
 	}
 	

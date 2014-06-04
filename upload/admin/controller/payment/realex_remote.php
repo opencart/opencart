@@ -46,6 +46,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		$data['text_settle_delayed'] = $this->language->get('text_settle_delayed');
 		$data['text_settle_auto'] = $this->language->get('text_settle_auto');
 		$data['text_settle_multi'] = $this->language->get('text_settle_multi');
+		$data['text_ip_message'] = $this->language->get('text_ip_message');
 
 		$data['entry_merchant_id'] = $this->language->get('entry_merchant_id');
 		$data['entry_secret'] = $this->language->get('entry_secret');

@@ -1,6 +1,6 @@
 <?php
 class CacheFile { 
-	private $expire = 3600; 
+	private $expire; 
 	
 	public function __construct($expire = 3600) {
 		$this->expire = $expire;

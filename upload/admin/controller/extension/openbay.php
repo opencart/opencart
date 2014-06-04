@@ -473,6 +473,12 @@ class ControllerExtensionOpenbay extends Controller {
 			$filter_date_added = null;
 		}
 
+		if (isset($this->request->get['filter_channel'])) {
+			$filter_channel = $this->request->get['filter_channel'];
+		} else {
+			$filter_channel = null;
+		}
+
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
@@ -507,6 +513,10 @@ class ControllerExtensionOpenbay extends Controller {
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		}
+
+		if (isset($this->request->get['filter_channel'])) {
+			$url .= '&filter_channel=' . $this->request->get['filter_channel'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -545,6 +555,7 @@ class ControllerExtensionOpenbay extends Controller {
 			'filter_customer'	     => $filter_customer,
 			'filter_order_status_id' => $filter_order_status_id,
 			'filter_date_added'      => $filter_date_added,
+			'filter_channel'         => $filter_channel,
 			'sort'                   => $sort,
 			'order'                  => $order,
 			'start'                  => ($page - 1) * $this->config->get('config_limit_admin'),
@@ -568,6 +579,8 @@ class ControllerExtensionOpenbay extends Controller {
 					'href' => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
 				);
 			}
+			
+			$channel = $this->language->get('text_' . $result['channel']);
 
 			$data['orders'][] = array(
 				'order_id'      => $result['order_id'],
@@ -576,7 +589,35 @@ class ControllerExtensionOpenbay extends Controller {
 				'date_added'    => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
 				'selected'      => isset($this->request->post['selected']) && in_array($result['order_id'], $this->request->post['selected']),
 				'action'        => $action,
-				'channel'       => $this->model_openbay_order->findOrderChannel($result['order_id'])
+				'channel'       => $channel,
+			);
+		}
+		
+		$data['channels'] = array();
+
+		$data['channels'][] = array(
+			'module' => 'web',
+			'title' => $this->language->get('text_web'),
+		);
+
+		if ($this->config->get('ebay_status')) {
+			$data['channels'][] = array(
+				'module' => 'ebay',
+				'title' => $this->language->get('text_ebay'),
+			);
+		}
+
+		if ($this->config->get('amazon_status')) {
+			$data['channels'][] = array(
+				'module' => 'amazon',
+				'title' => $this->language->get('text_amazon'),
+			);
+		}
+
+		if ($this->config->get('amazonus_status')) {
+			$data['channels'][] = array(
+				'module' => 'amazonus',
+				'title' => $this->language->get('text_amazonus'),
 			);
 		}
 
@@ -625,6 +666,10 @@ class ControllerExtensionOpenbay extends Controller {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
 		}
 
+		if (isset($this->request->get['filter_channel'])) {
+			$url .= '&filter_channel=' . $this->request->get['filter_channel'];
+		}
+
 		if ($order == 'ASC') {
 			$url .= '&order=DESC';
 		} else {
@@ -639,7 +684,8 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['sort_customer'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . '&sort=customer' . $url, 'SSL');
 		$data['sort_status'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . '&sort=status' . $url, 'SSL');
 		$data['sort_date_added'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . '&sort=o.date_added' . $url, 'SSL');
-		$data['link_update'] = $this->url->link('extension/openbay/orderListUpdate', 'token=' . $this->session->data['token'] . '&sort=o.date_added' . $url, 'SSL');
+		$data['sort_channel'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . '&sort=channel' . $url, 'SSL');
+		$data['link_update'] = $this->url->link('extension/openbay/orderListUpdate', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$url = '';
 
@@ -657,6 +703,10 @@ class ControllerExtensionOpenbay extends Controller {
 
 		if (isset($this->request->get['filter_date_added'])) {
 			$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+		}
+
+		if (isset($this->request->get['filter_channel'])) {
+			$url .= '&filter_channel=' . $this->request->get['filter_channel'];
 		}
 
 		if (isset($this->request->get['sort'])) {
@@ -682,6 +732,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$data['filter_customer'] = $filter_customer;
 		$data['filter_order_status_id'] = $filter_order_status_id;
 		$data['filter_date_added'] = $filter_date_added;
+		$data['filter_channel'] = $filter_channel;
 
 		$this->load->model('localisation/order_status');
 
@@ -698,8 +749,7 @@ class ControllerExtensionOpenbay extends Controller {
 	}
 
 	public function orderListUpdate() {
-		$data = $this->load->language('extension/openbay_order');
-
+		$data = $this->load->language('openbay/openbay_order');
 		$this->document->setTitle($this->language->get('text_title_order_update'));
 
 		if(!isset($this->request->post['selected']) || empty($this->request->post['selected'])) {
@@ -715,7 +765,6 @@ class ControllerExtensionOpenbay extends Controller {
 			$data['column_date_added'] = $this->language->get('column_date_added');
 			$data['heading_title'] = $this->language->get('heading_title');
 
-			$data['link_cancel'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'], 'SSL');
 			$data['link_complete'] = $this->url->link('extension/openbay/orderListComplete', 'token=' . $this->session->data['token'], 'SSL');
 
 			$data['market_options'] = array();
@@ -747,7 +796,7 @@ class ControllerExtensionOpenbay extends Controller {
 				$order = $this->model_openbay_order->getOrder($order_id);
 
 				if($order['order_status_id'] != $this->request->post['change_order_status_id']) {
-					$order['channel'] = $this->model_openbay_order->findOrderChannel($order_id);
+					$order['channel'] = $this->language->get('text_' . $order['channel']);
 					$orders[] = $order;
 				}
 			}
@@ -785,6 +834,43 @@ class ControllerExtensionOpenbay extends Controller {
 			$data['menu'] = $this->load->controller('common/menu');
 			$data['footer'] = $this->load->controller('common/footer');
 
+			$url = '';
+ 
+ 			if (isset($this->request->get['filter_order_id'])) {
+ 				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
+ 			}
+ 
+ 			if (isset($this->request->get['filter_customer'])) {
+ 				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
+ 			}
+ 
+ 			if (isset($this->request->get['filter_order_status_id'])) {
+ 				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
+ 			}
+ 
+ 			if (isset($this->request->get['filter_channel'])) {
+ 				$url .= '&filter_channel=' . $this->request->get['filter_channel'];
+ 			}
+ 
+ 			if (isset($this->request->get['filter_date_added'])) {
+ 				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
+ 			}
+ 
+ 			if (isset($this->request->get['sort'])) {
+ 				$url .= '&sort=' . $this->request->get['sort'];
+ 			}
+ 
+ 			if (isset($this->request->get['order'])) {
+ 				$url .= '&order=' . $this->request->get['order'];
+ 			}
+ 
+ 			if (isset($this->request->get['page'])) {
+ 				$url .= '&page=' . $this->request->get['page'];
+ 			}
+ 			
+ 			$data['cancel'] = $this->url->link('extension/openbay/orderList', 'token=' . $this->session->data['token'] . $url, 'SSL');
+ 			$data['button_cancel'] = $this->language->get('button_cancel');
+			
 			$this->response->setOutput($this->load->view('openbay/openbay_orderlist_confirm.tpl', $data));
 		}
 	}

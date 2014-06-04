@@ -737,7 +737,20 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['fax'] = '';
 		}
-
+		
+		// Custom Fields
+		$this->load->model('sale/custom_field');
+		
+		$data['custom_fields'] = $this->model_sale_custom_field->getCustomFields();
+		
+		if (isset($this->request->post['custom_field'])) {
+			$data['account_custom_field'] = $this->request->post['custom_field'];
+		} elseif (!empty($order_info)) {
+			$data['account_custom_field'] = unserialize($order_info['custom_field']);		
+		} else {
+			$data['account_custom_field'] = array();
+		}
+				
 		if (isset($this->request->post['affiliate_id'])) {
 			$data['affiliate_id'] = $this->request->post['affiliate_id'];
 		} elseif (!empty($order_info)) {
@@ -839,6 +852,10 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['payment_postcode'] = '';
 		}
+		
+		$this->load->model('localisation/country');
+
+		$data['countries'] = $this->model_localisation_country->getCountries();															
 
 		if (isset($this->request->post['payment_country_id'])) {
 			$data['payment_country_id'] = $this->request->post['payment_country_id'];
@@ -855,7 +872,15 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['payment_zone_id'] = '';
 		}
-
+		
+		if (isset($this->request->post['payment_custom_field'])) {
+			$data['payment_custom_field'] = $this->request->post['payment_custom_field'];
+		} elseif (!empty($order_info)) {
+			$data['payment_custom_field'] = $order_info['payment_custom_field'];
+		} else {
+			$data['payment_custom_field'] = '';
+		}
+		
 		if (isset($this->request->post['payment_method'])) {
 			$data['payment_method'] = $this->request->post['payment_method'];
 		} elseif (!empty($order_info)) {
@@ -943,11 +968,15 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['shipping_zone_id'] = '';
 		}
-
-		$this->load->model('localisation/country');
-
-		$data['countries'] = $this->model_localisation_country->getCountries();															
-
+		
+		if (isset($this->request->post['shipping_custom_field'])) {
+			$data['shipping_custom_field'] = $this->request->post['shipping_custom_field'];
+		} elseif (!empty($order_info)) {
+			$data['shipping_custom_field'] = $order_info['shipping_custom_field'];
+		} else {
+			$data['shipping_custom_field'] = '';
+		}
+		
 		if (isset($this->request->post['shipping_method'])) {
 			$data['shipping_method'] = $this->request->post['shipping_method'];
 		} elseif (!empty($order_info)) {
@@ -1006,6 +1035,8 @@ class ControllerSaleOrder extends Controller {
 		} else {
 			$data['order_vouchers'] = array();
 		}
+		
+		$data['voucher_min'] = $this->config->get('config_voucher_min');
 
 		$this->load->model('sale/voucher_theme');
 
@@ -2097,7 +2128,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['pagination'] = $pagination->render();
 
-		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * $this->config->get('config_limit_admin')) + 1 : 0, ((($page - 1) * $this->config->get('config_limit_admin')) > ($history_total - $this->config->get('config_limit_admin'))) ? $history_total : ((($page - 1) * $this->config->get('config_limit_admin')) + $this->config->get('config_limit_admin')), $history_total, ceil($history_total / $this->config->get('config_limit_admin')));
+		$data['results'] = sprintf($this->language->get('text_pagination'), ($history_total) ? (($page - 1) * 10) + 1 : 0, ((($page - 1) * 10) > ($history_total - 10)) ? $history_total : ((($page - 1) * 10) + 10), $history_total, ceil($history_total / 10));
 
 		$this->response->setOutput($this->load->view('sale/order_history.tpl', $data));
 	}
@@ -2113,7 +2144,7 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		if (!$json) {
-			if (!empty($this->request->files['file']['name'])) {
+			if (!empty($this->request->files['file']['name']) && is_file($this->request->files['file']['tmp_name'])) {
 				// Sanitize the filename
 				$filename = html_entity_decode($this->request->files['file']['name'], ENT_QUOTES, 'UTF-8');
 
@@ -2150,7 +2181,14 @@ class ControllerSaleOrder extends Controller {
 				if (!in_array($this->request->files['file']['type'], $allowed)) {
 					$json['error'] = $this->language->get('error_filetype');
 				}
-
+				
+				// Check to see if any PHP files are trying to be uploaded
+				$content = file_get_contents($this->request->files['file']['tmp_name']);
+						
+				if (preg_match('/\<\?php/i', $content)) {
+					$json['error'] = $this->language->get('error_filetype');
+				}	
+			
 				// Return any upload error			
 				if ($this->request->files['file']['error'] != UPLOAD_ERR_OK) {
 					$json['error'] = $this->language->get('error_upload_' . $this->request->files['file']['error']);

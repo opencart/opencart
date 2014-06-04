@@ -1,7 +1,7 @@
 <?php
 // Heading
 $_['heading_title']= 'Realex Remote';
-$_['text_realex_remote'] = '<img src="view/image/payment/realex.png" alt="Realex" title="Realex" style="border: 1px solid #EEEEEE;" />';
+$_['text_realex_remote'] = '<a target="_BLANK" href="http://www.realexpayments.co.uk/partner-refer?id=opencart"><img src="view/image/payment/realex.png" alt="Realex" title="Realex" style="border: 1px solid #EEEEEE;" /></a>';
 
 // Config tabs
 $_['tab_account'] = 'API info';
@@ -40,6 +40,7 @@ $_['text_void_ok'] = 'Void was successful, order status updated to voided';
 $_['text_settle_auto'] = 'Auto';
 $_['text_settle_delayed'] = 'Delayed';
 $_['text_settle_multi'] = 'Multi';
+$_['text_ip_message'] = 'You must supply your server IP address to your Realex account manager before going live';
 
 // Entry
 $_['entry_merchant_id'] = 'Merchant ID';

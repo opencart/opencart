@@ -134,7 +134,7 @@ $('input[name=\'product\']').autocomplete({
 		
 		$('#featured-product').append('<div id="featured-product' + item['value'] + '"><i class="fa fa-minus-circle"></i> ' + item['label'] + '<input type="hidden" value="' + item['value'] + '" /></div>');	
 	
-		data = $.map($('#featured-product input'), function(element){
+		data = $.map($('#featured-product input'), function(element) {
 			return $(element).attr('value');
 		});
 						
@@ -145,7 +145,7 @@ $('input[name=\'product\']').autocomplete({
 $('#featured-product').delegate('.fa-minus-circle', 'click', function() {
 	$(this).parent().remove();
 
-	data = $.map($('#featured-product input'), function(element){
+	data = $.map($('#featured-product input'), function(element) {
 		return $(element).attr('value');
 	});
 					

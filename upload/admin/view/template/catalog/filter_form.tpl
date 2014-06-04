@@ -60,7 +60,7 @@
                 <?php } ?>
                 <?php } ?></td>
               <td class="text-right"><input type="text" name="filter[<?php echo $filter_row; ?>][sort_order]" value="<?php echo $filter['sort_order']; ?>" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" /></td>
-              <td class="text-left"><button type="button" onclick="$('#filter-row<?php echo $filter_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>
+              <td class="text-left"><button type="button" onclick="$('#filter-row<?php echo $filter_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
             </tr>
             <?php $filter_row++; ?>
             <?php } ?>
@@ -68,7 +68,7 @@
           <tfoot>
             <tr>
               <td colspan="2"></td>
-              <td class="text-left"><a onclick="addFilterRow();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_filter_add; ?></a></td>
+              <td class="text-left"><a onclick="addFilterRow();" data-toggle="tooltip" title="<?php echo $button_filter_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></a></td>
             </tr>
           </tfoot>
         </table>
@@ -89,7 +89,7 @@ function addFilterRow() {
 	<?php } ?>
 	html += '  </td>';
 	html += '  <td class="text-right"><input type="text" name="filter[' + filter_row + '][sort_order]" value="" value="" placeholder="<?php echo $entry_sort_order; ?>" id="input-sort-order" class="form-control" /></td>';
-	html += '  <td class="text-left"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></button></td>';
+	html += '  <td class="text-left"><button type="button" onclick="$(\'#filter-row' + filter_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 	html += '</tr>';	
 	
 	$('#filter tbody').append(html);

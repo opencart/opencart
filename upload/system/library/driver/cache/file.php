@@ -1,13 +1,13 @@
 <?php
-class CacheFile { 
-	private $expire; 
-	
+class CacheFile {
+	private $expire;
+
 	public function __construct($expire = 3600) {
 		$this->expire = $expire;
-		
+
 		$files = glob(DIR_CACHE . 'cache.*');
 
-		if ($files) {			
+		if ($files) {
 			foreach ($files as $file) {
 				$time = substr(strrchr($file, '.'), 1);
 
@@ -19,31 +19,32 @@ class CacheFile {
 			}
 		}
 	}
-	
+
 	public function get($key) {
 		$files = glob(DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.*');
 
-		if ($files) {
-			$handle = fopen($files[0], 'r');
-
-			$cache = fread($handle, filesize($files[0]));
+		if ($files) {			
+			$file_handle = fopen($files[0], 'r');
+			flock($file_handle, LOCK_SH);
+			$data = fread($file_handle, filesize($files[0]));
+			flock($file_handle, LOCK_UN);
+			fclose($file_handle);
 			
-			fclose($handle);
-		
-			return unserialize($cache);
+			return unserialize($data);
 		}
+		
+		return false;
 	}
 
 	public function set($key, $value) {
-		$this->delete($key);
-
 		$file = DIR_CACHE . 'cache.' . preg_replace('/[^A-Z0-9\._-]/i', '', $key) . '.' . (time() + $this->expire);
-
-		$handle = fopen($file, 'w');
-
-		fwrite($handle, serialize($value));
-
-		fclose($handle);
+		
+		$file_handle = fopen($file, 'w');
+		flock($file_handle, LOCK_EX);
+		fwrite($file_handle, serialize($value));
+		fflush($file_handle);
+		flock($file_handle, LOCK_UN);
+		fclose($file_handle);
 	}
 
 	public function delete($key) {

@@ -105,6 +105,15 @@ $_['entry_fraud_status']     = 'Fraud Order Status';
 // Error
 $_['error_key'] 			 = 'Maxmind licence key required';
 $_['error_score'] 			 = 'A score between 0 and 100 is accepted';
+$_['error_db_hostname'] 	 = 'Hostname required!';
+$_['error_db_username'] 	 = 'Username required!';
+$_['error_db_database']		 = 'Database Name required!';
+$_['error_db_prefix'] 		 = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and underscores';
+$_['error_db_connect'] 		 = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+$_['error_username'] 		 = 'Username required!';
+$_['error_password'] 		 = 'Password required!';
+$_['error_email'] 			 = 'Invalid E-Mail!';
+$_['error_config'] 			 = 'Error: Could not write to config.php please check you have set the correct permissions on: ';
 
 // Buttons
 $_['button_continue']        = 'Continue';

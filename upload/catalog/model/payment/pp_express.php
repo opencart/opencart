@@ -178,9 +178,9 @@ class ModelPaymentPPExpress extends Model {
 			$data['L_PAYMENTREQUEST_0_NAME' . $i] = $item['name'];
 			$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $item['model'];
 			$data['L_PAYMENTREQUEST_0_AMT' . $i] = $item_price;
-			
+
 			$item_total += number_format($item_price * $item['quantity'], 2);
-			
+
 			$data['L_PAYMENTREQUEST_0_QTY' . $i] = $item['quantity'];
 
 			$data['L_PAYMENTREQUEST_0_ITEMURL' . $i] = $this->url->link('product/product', 'product_id=' . $item['product_id']);
@@ -257,25 +257,25 @@ class ModelPaymentPPExpress extends Model {
 			if (!in_array($total_row['code'], array('total', 'sub_total'))) {
 				if ($total_row['value'] != 0) {
 					$item_price = $this->currency->format($total_row['value'], false, false, false);
-					
+
 					$data['L_PAYMENTREQUEST_0_NUMBER' . $i] = $total_row['code'];
 					$data['L_PAYMENTREQUEST_0_NAME' . $i] = $total_row['title'];
 					$data['L_PAYMENTREQUEST_0_AMT' . $i] = $this->currency->format($total_row['value'], false, false, false);
 					$data['L_PAYMENTREQUEST_0_QTY' . $i] = 1;
-					
+
 					$item_total = number_format($item_total + $item_price, 2);
 					$i++;
 				}
 			}
 		}
 
-		$data['PAYMENTREQUEST_0_ITEMAMT'] = number_format($item_total, 2);
-		$data['PAYMENTREQUEST_0_AMT'] = number_format($item_total, 2);
+		$data['PAYMENTREQUEST_0_ITEMAMT'] = number_format($item_total, 2, '.', '');
+		$data['PAYMENTREQUEST_0_AMT'] = number_format($item_total, 2, '.', '');
 
 		$z = 0;
 
 		$recurring_products = $this->cart->getRecurringProducts();
-		
+
 		if ($recurring_products) {
 			$this->language->load('payment/pp_express');
 

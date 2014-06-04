@@ -29,8 +29,16 @@
             <thead>
               <tr>
                 <td style="width: 1px;" class="text-center"><input type="checkbox" onclick="$('input[name*=\'selected\']').prop('checked', this.checked);" /></td>
-                <td class="text-left"><?php echo $column_name; ?></td>
-                <td class="text-right"><?php echo $column_sort_order; ?></td>
+                <td class="text-left"><?php if ($sort == 'name') { ?>
+                  <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_name; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_name; ?>"><?php echo $column_name; ?></a>
+                  <?php } ?></td>
+                <td class="text-right"><?php if ($sort == 'sort_order') { ?>
+                  <a href="<?php echo $sort_name; ?>" class="<?php echo strtolower($order); ?>"><?php echo $column_sort_order; ?></a>
+                  <?php } else { ?>
+                  <a href="<?php echo $sort_name; ?>"><?php echo $column_sort_order; ?></a>
+                  <?php } ?></td>
                 <td class="text-right"><?php echo $column_action; ?></td>
               </tr>
             </thead>
@@ -45,7 +53,7 @@
                   <?php } ?></td>
                 <td class="text-left"><?php echo $category['name']; ?></td>
                 <td class="text-right"><?php echo $category['sort_order']; ?></td>
-                <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-warning"><i class="fa fa-wrench"></i></a></td>
+                <td class="text-right"><a href="<?php echo $category['edit']; ?>" data-toggle="tooltip" title="<?php echo $button_edit; ?>" class="btn btn-primary"><i class="fa fa-pencil"></i></a></td>
               </tr>
               <?php } ?>
               <?php } else { ?>

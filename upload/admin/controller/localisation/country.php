@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ControllerLocalisationCountry extends Controller {
 	private $error = array();
 
@@ -189,7 +189,7 @@ class ControllerLocalisationCountry extends Controller {
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_iso_code_2'] = $this->language->get('column_iso_code_2');
 		$data['column_iso_code_3'] = $this->language->get('column_iso_code_3');
-		$data['column_action'] = $this->language->get('column_action');	
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -319,7 +319,7 @@ class ControllerLocalisationCountry extends Controller {
 			'href' => $this->url->link('localisation/country', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		if (!isset($this->request->get['country_id'])) { 
+		if (!isset($this->request->get['country_id'])) {
 			$data['action'] = $this->url->link('localisation/country/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
 		} else {
 			$data['action'] = $this->url->link('localisation/country/update', 'token=' . $this->session->data['token'] . '&country_id=' . $this->request->get['country_id'] . $url, 'SSL');

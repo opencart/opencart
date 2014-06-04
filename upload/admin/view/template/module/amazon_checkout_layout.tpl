@@ -13,8 +13,8 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="submit" form="form-cba-layout" class="btn btn-primary"><i class="fa fa-check"></i> <?php echo $button_save; ?></button>
-        <a href="<?php echo $cancel; ?>" class="btn btn-danger"><i class="fa fa-times"></i> <?php echo $button_cancel; ?></a> </div>
+        <button type="submit" form="form-cba-layout" title="<?php echo $button_save; ?>" class="btn"><i class="fa fa-check-circle"></i></button>
+        <a href="<?php echo $cancel; ?>" data-toggle="tooltip" title="<?php echo $button_cancel; ?>" class="btn"><i class="fa fa-reply"></i></a></div>
       <h1 class="panel-title"><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
@@ -74,7 +74,7 @@
                   <?php } ?>
                 </select></td>
               <td class="text-right"><input placeholder="<?php echo $entry_sort_order; ?>" type="text" name="amazon_checkout_layout_module[<?php echo $module_row; ?>][sort_order]" value="<?php echo $module['sort_order']; ?>" size="3" class="form-control" /></td>
-              <td class="text-left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></a></td>
+              <td class="text-left"><a onclick="$('#module-row<?php echo $module_row; ?>').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a></td>
             </tr>
           </tbody>
           <?php $module_row++; ?>
@@ -82,7 +82,7 @@
           <tfoot>
             <tr>
               <td colspan="4"></td>
-              <td class="text-left"><button type="button" onclick="addModule();" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_module_add; ?></button></td>
+              <td class="text-left"><button type="button" onclick="addModule();" data-toggle="tooltip" title="<?php echo $button_module_add; ?>" class="btn btn-primary"><i class="fa fa-plus-circle"></i></button></td>
             </tr>
           </tfoot>
         </table>
@@ -112,7 +112,7 @@ function addModule() {
     html += '      <option value="0"><?php echo $text_disabled; ?></option>';
     html += '    </select></td>';
 	html += '    <td class="right"><input placeholder="<?php echo $entry_sort_order; ?>" type="text" name="amazon_checkout_layout_module[' + module_row + '][sort_order]" value="" size="3" class="form-control" /></td>';
-	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" class="btn btn-danger"><i class="fa fa-minus-circle"></i> <?php echo $button_remove; ?></a></td>';
+	html += '    <td class="left"><a onclick="$(\'#module-row' + module_row + '\').remove();" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></a></td>';
 	html += '  </tr>';
 	html += '</tbody>';
 	

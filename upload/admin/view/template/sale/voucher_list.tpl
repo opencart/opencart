@@ -18,7 +18,7 @@
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
-        <button type="button" id="button-send" class="btn btn-default"><i class="fa fa-envelope"></i> <?php echo $button_send; ?></button>
+        <button type="button" id="button-send" data-toggle="tooltip" title="<?php echo $button_send; ?>" class="btn"><i class="fa fa-envelope"></i></button>
         <a href="<?php echo $insert; ?>" data-toggle="tooltip" title="<?php echo $button_insert; ?>" class="btn"><i class="fa fa-plus-circle"></i></a>
         <button type="button" data-toggle="tooltip" title="<?php echo $button_delete; ?>" class="btn" onclick="confirm('<?php echo $text_confirm; ?>') ? $('#form-voucher').submit() : false;"><i class="fa fa-times-circle"></i></button>
       </div>

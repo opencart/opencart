@@ -2,6 +2,7 @@
 // Text
 $_['text_affiliate']                   = 'Affiliates';
 $_['text_affiliate_activity']          = 'Affiliate Activity';
+$_['text_api']                         = 'Api';
 $_['text_attribute']                   = 'Attributes';
 $_['text_attribute_group']             = 'Attribute Groups';
 $_['text_backup']                      = 'Backup / Restore';
@@ -31,7 +32,7 @@ $_['text_localisation']                = 'Localisation';
 $_['text_location']                    = 'Store Location';
 $_['text_contact']                     = 'Mail';
 $_['text_marketing']                   = 'Marketing';
-$_['text_maintance']                   = 'Maintance';
+$_['text_maintenance']                 = 'Maintenance';
 $_['text_modification']                = 'Modifications';
 $_['text_manufacturer']                = 'Manufacturers';
 $_['text_module']                      = 'Modules';
@@ -95,4 +96,3 @@ $_['text_openbay_report_price']        = 'Pricing report';
 $_['text_openbay_order_import']        = 'Order import';
 $_['text_paypal_manage']               = 'PayPal';
 $_['text_paypal_search']               = 'Search';
-$_['text_recurring_profile']           = 'Recurring Profiles';

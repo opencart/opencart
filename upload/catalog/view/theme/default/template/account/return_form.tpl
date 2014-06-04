@@ -153,7 +153,7 @@
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-captcha"><?php echo $entry_captcha; ?></label>
             <div class="col-sm-10">
-              <input type="text" name="captcha" value="<?php echo $captcha; ?>" placeholder="<?php echo $entry_captcha; ?>" id="input-captcha" class="form-control" />
+              <input type="text" name="captcha" value="" placeholder="<?php echo $entry_captcha; ?>" id="input-captcha" class="form-control" />
               <img src="index.php?route=tool/captcha" alt="" />
               <?php if ($error_captcha) { ?>
               <div class="text-danger"><?php echo $error_captcha; ?></div>

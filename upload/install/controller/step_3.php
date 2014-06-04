@@ -227,49 +227,49 @@ class ControllerStep3 extends Controller {
 
 	private function validate() {
 		if (!$this->request->post['db_hostname']) {
-			$this->error['db_hostname'] = 'Hostname required!';
+			$this->error['db_hostname'] = $this->language->get('error_db_hostname');
 		}
 
 		if (!$this->request->post['db_username']) {
-			$this->error['db_username'] = 'Username required!';
+			$this->error['db_username'] = $this->language->get('error_db_username');
 		}
 
 		if (!$this->request->post['db_database']) {
-			$this->error['db_database'] = 'Database Name required!';
+			$this->error['db_database'] = $this->language->get('error_db_database');
 		}
 
 		if ($this->request->post['db_prefix'] && preg_match('/[^a-z0-9_]/', $this->request->post['db_prefix'])) {
-			$this->error['db_prefix'] = 'DB Prefix can only contain lowercase characters in the a-z range, 0-9 and "_"!';
+			$this->error['db_prefix'] = $this->language->get('error_db_prefix');
 		}
 
 		if ($this->request->post['db_driver'] == 'mysqli') {
 			$mysql = @new mysqli($this->request->post['db_hostname'], $this->request->post['db_username'], $this->request->post['db_password'], $this->request->post['db_database']);
 
 			if ($mysql->connect_error) {
-				$this->error['warning'] = 'Error: Could not connect to the database please make sure the database server, username and password is correct!';
+				$this->error['warning'] = $this->language->get('error_db_connect');
 			} else {
 				$mysql->close();
 			}
 		}
 
 		if (!$this->request->post['username']) {
-			$this->error['username'] = 'Username required!';
+			$this->error['username'] = $this->language->get('error_username');
 		}
 
 		if (!$this->request->post['password']) {
-			$this->error['password'] = 'Password required!';
+			$this->error['password'] = $this->language->get('error_password');
 		}
 
 		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
-			$this->error['email'] = 'Invalid E-Mail!';
+			$this->error['email'] = $this->language->get('error_email');
 		}
 
 		if (!is_writable(DIR_OPENCART . 'config.php')) {
-			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'config.php!';
+			$this->error['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'config.php!';
 		}
 
 		if (!is_writable(DIR_OPENCART . 'admin/config.php')) {
-			$this->error['warning'] = 'Error: Could not write to config.php please check you have set the correct permissions on: ' . DIR_OPENCART . 'admin/config.php!';
+			$this->error['warning'] = $this->language->get('error_config') . DIR_OPENCART . 'admin/config.php!';
 		}	
 
 		return !$this->error;

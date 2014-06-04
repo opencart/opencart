@@ -766,12 +766,12 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    <td></td>
+                    
                     <td class="text-left"><?php echo $column_product; ?></td>
                     <td class="text-left"><?php echo $column_model; ?></td>
                     <td class="text-right"><?php echo $column_quantity; ?></td>
                     <td class="text-right"><?php echo $column_price; ?></td>
-                    <td class="text-right"><?php echo $column_total; ?></td>
+                    <td class="text-right"><?php echo $column_total; ?></td><td></td>
                   </tr>
                 </thead>
                 <?php $product_row = 0; ?>
@@ -780,7 +780,6 @@
                   <?php if ($order_products) { ?>
                   <?php foreach ($order_products as $order_product) { ?>
                   <tr id="product-row<?php echo $product_row; ?>">
-                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     <td class="text-left"><?php echo $order_product['name']; ?><br />
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
@@ -804,7 +803,8 @@
                     <td class="text-right"><?php echo $order_product['total']; ?>
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['total']; ?>" />
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['tax']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+
                   </tr>
                   <?php $product_row++; ?>
                   <?php } ?>
@@ -855,7 +855,6 @@
                   <?php if ($order_vouchers) { ?>
                   <?php foreach ($order_vouchers as $order_voucher) { ?>
                   <tr id="voucher-row<?php echo $voucher_row; ?>">
-                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                     <td class="text-left"><?php echo $order_voucher['description']; ?>
                       <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][order_voucher_id]" value="<?php echo $order_voucher['order_voucher_id']; ?>" />
                       <input type="hidden" name="order_voucher[<?php echo $voucher_row; ?>][voucher_id]" value="<?php echo $order_voucher['voucher_id']; ?>" />
@@ -872,6 +871,7 @@
                     <td class="text-right">1</td>
                     <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
                     <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
+                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   <?php $voucher_row++; ?>
                   <?php } ?>
@@ -1801,7 +1801,6 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					product = json['order_product'][i];
 					
 					html += '<tr id="product-row' + product_row + '">';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '  <td class="text-left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][order_product_id]" value="" /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" /><input type="hidden" name="order_product[' + product_row + '][name]" value="' + product['name'] + '" />';
 					
 					if (product['option']) {
@@ -1821,10 +1820,12 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					}
 					
 					html += '  </td>';
+					
 					html += '  <td class="text-left">' + product['model'] + '<input type="hidden" name="order_product[' + product_row + '][model]" value="' + product['model'] + '" /></td>';
 					html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="order_product[' + product_row + '][quantity]" value="' + product['quantity'] + '" /></td>';
 					html += '  <td class="text-right">' + product['price'] + '<input type="hidden" name="order_product[' + product_row + '][price]" value="' + product['price'] + '" /></td>';
 					html += '  <td class="text-right">' + product['total'] + '<input type="hidden" name="order_product[' + product_row + '][total]" value="' + product['total'] + '" /><input type="hidden" name="order_product[' + product_row + '][tax]" value="' + product['tax'] + '" /><input type="hidden" name="order_product[' + product_row + '][reward]" value="' + product['reward'] + '" /></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 					
 					product_row++;			
@@ -1849,7 +1850,6 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					voucher = json['order_voucher'][i];
 					 
 					html += '<tr id="voucher-row' + voucher_row + '">';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '  <td class="text-left">' + voucher['description'];
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][order_voucher_id]" value="" />';
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][voucher_id]" value="' + voucher['voucher_id'] + '" />';
@@ -1867,6 +1867,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';	
 				  
 					voucher_row++;

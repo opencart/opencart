@@ -1,4 +1,4 @@
-<?php 
+<?php
 class ControllerAccountRecurring extends Controller {
 	public function index() {
 		if (!$this->customer->isLogged()) {

@@ -8,6 +8,7 @@
 
 SET sql_mode = '';
 
+DROP TABLE IF EXISTS `oc_product_profile`;
 CREATE TABLE `oc_product_profile` (
   `product_id` int(11) NOT NULL,
   `profile_id` int(11) NOT NULL,
@@ -15,6 +16,7 @@ CREATE TABLE `oc_product_profile` (
   PRIMARY KEY (`product_id`,`profile_id`,`customer_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
+DROP TABLE IF EXISTS `oc_profile`;
 CREATE TABLE `oc_profile` (
   `profile_id` int(11) NOT NULL AUTO_INCREMENT,
   `price` decimal(10,4) NOT NULL,
@@ -32,6 +34,7 @@ CREATE TABLE `oc_profile` (
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 
+DROP TABLE IF EXISTS `oc_profile_description`;
 CREATE TABLE `oc_profile_description` (
   `profile_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
@@ -200,6 +203,25 @@ CREATE TABLE `oc_affiliate_transaction` (
 -- Dumping data for table `oc_affiliate_transaction`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_api`
+--
+
+CREATE TABLE IF NOT EXISTS `oc_api` (
+  `api_id` int(11) NOT NULL AUTO_INCREMENT,
+  `username` int(20) NOT NULL,
+  `key` text NOT NULL,
+  `status` tinyint(1) NOT NULL,
+  `date_added` datetime NOT NULL,
+  `date_modififed` datetime NOT NULL,
+  PRIMARY KEY (`api_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_api`
+--
 
 -- --------------------------------------------------------
 
@@ -2375,7 +2397,7 @@ CREATE TABLE `oc_product` (
   `upc` varchar(12) NOT NULL,
   `ean` varchar(14) NOT NULL,
   `jan` varchar(13) NOT NULL,
-  `isbn` varchar(13) NOT NULL,
+  `isbn` varchar(17) NOT NULL,
   `mpn` varchar(64) NOT NULL,
   `location` varchar(128) NOT NULL,
   `quantity` int(4) NOT NULL DEFAULT '0',

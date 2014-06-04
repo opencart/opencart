@@ -1,5 +1,5 @@
-<?php 
-class ControllerCatalogAttributeGroup extends Controller { 
+<?php
+class ControllerCatalogAttributeGroup extends Controller {
 	private $error = array();
 
 	public function index() {
@@ -156,7 +156,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		);
 
 		$data['insert'] = $this->url->link('catalog/attribute_group/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		$data['delete'] = $this->url->link('catalog/attribute_group/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');	
+		$data['delete'] = $this->url->link('catalog/attribute_group/delete', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		$data['attribute_groups'] = array();
 
@@ -178,7 +178,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 				'sort_order'         => $result['sort_order'],
 				'edit'               => $this->url->link('catalog/attribute_group/update', 'token=' . $this->session->data['token'] . '&attribute_group_id=' . $result['attribute_group_id'] . $url, 'SSL')
 			);
-		}	
+		}
 
 		$data['heading_title'] = $this->language->get('heading_title');
 
@@ -187,7 +187,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 
 		$data['column_name'] = $this->language->get('column_name');
 		$data['column_sort_order'] = $this->language->get('column_sort_order');
-		$data['column_action'] = $this->language->get('column_action');		
+		$data['column_action'] = $this->language->get('column_action');
 
 		$data['button_insert'] = $this->language->get('button_insert');
 		$data['button_edit'] = $this->language->get('button_edit');
@@ -341,7 +341,7 @@ class ControllerCatalogAttributeGroup extends Controller {
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
 
-		$this->response->setOutput($this->load->view('catalog/attribute_group_form.tpl', $data));	
+		$this->response->setOutput($this->load->view('catalog/attribute_group_form.tpl', $data));
 	}
 
 	protected function validateForm() {

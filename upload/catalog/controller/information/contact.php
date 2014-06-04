@@ -1,6 +1,6 @@
-<?php 
+<?php
 class ControllerInformationContact extends Controller {
-	private $error = array(); 
+	private $error = array();
 
 	public function index() {
 		$this->load->language('information/contact');
@@ -8,7 +8,9 @@ class ControllerInformationContact extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$mail = new Mail($this->config->get('config_mail'));		
+			unset($this->session->data['captcha']);
+
+			$mail = new Mail($this->config->get('config_mail'));
 			$mail->setTo($this->config->get('config_email'));
 			$mail->setFrom($this->request->post['email']);
 			$mail->setSender($this->request->post['name']);
@@ -59,19 +61,19 @@ class ControllerInformationContact extends Controller {
 			$data['error_email'] = $this->error['email'];
 		} else {
 			$data['error_email'] = '';
-		}		
+		}
 
 		if (isset($this->error['enquiry'])) {
 			$data['error_enquiry'] = $this->error['enquiry'];
 		} else {
 			$data['error_enquiry'] = '';
-		}		
+		}
 
 		if (isset($this->error['captcha'])) {
 			$data['error_captcha'] = $this->error['captcha'];
 		} else {
 			$data['error_captcha'] = '';
-		}	
+		}
 
 		$data['button_continue'] = $this->language->get('button_continue');
 
@@ -83,7 +85,7 @@ class ControllerInformationContact extends Controller {
 			$data['image'] = $this->model_tool_image->resize($this->config->get('config_image'), $this->config->get('config_image_location_width'), $this->config->get('config_image_location_height'));
 		} else {
 			$data['image'] = false;
-		}		
+		}
 
 		$data['store'] = $this->config->get('config_name');
 		$data['address'] = nl2br($this->config->get('config_address'));
@@ -114,9 +116,9 @@ class ControllerInformationContact extends Controller {
 					'geocode'     => $location_info['geocode'],
 					'telephone'   => $location_info['telephone'],
 					'fax'         => $location_info['fax'],
-					'image'       => $image,  
-					'open'        => $location_info['open'],   
-					'comment'     => $location_info['comment']   
+					'image'       => $image,
+					'open'        => $location_info['open'],
+					'comment'     => $location_info['comment']
 				);
 			}
 		}
@@ -143,7 +145,7 @@ class ControllerInformationContact extends Controller {
 			$data['captcha'] = $this->request->post['captcha'];
 		} else {
 			$data['captcha'] = '';
-		}		
+		}
 
 		$data['column_left'] = $this->load->controller('common/column_left');
 		$data['column_right'] = $this->load->controller('common/column_right');
@@ -156,13 +158,13 @@ class ControllerInformationContact extends Controller {
 			$this->response->setOutput($this->load->view($this->config->get('config_template') . '/template/information/contact.tpl', $data));
 		} else {
 			$this->response->setOutput($this->load->view('default/template/information/contact.tpl', $data));
-		}		
+		}
 	}
 
 	public function success() {
 		$this->load->language('information/contact');
 
-		$this->document->setTitle($this->language->get('heading_title')); 
+		$this->document->setTitle($this->language->get('heading_title'));
 
 		$data['breadcrumbs'] = array();
 
@@ -215,6 +217,6 @@ class ControllerInformationContact extends Controller {
 			$this->error['captcha'] = $this->language->get('error_captcha');
 		}
 
-		return !$this->error;  	  
+		return !$this->error;
 	}
 }

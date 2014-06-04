@@ -68,7 +68,7 @@
               <input type="password" name="db_password" value="<?php echo $db_password; ?>" id="input-db-password" class="form-control" />
             </div>
           </div>
-          <div class="form-group">
+          <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-db-database"><?php echo $entry_db_database; ?></label>
             <div class="col-sm-10">
               <input type="text" name="db_database" value="<?php echo $db_database; ?>" id="input-db-database" class="form-control" />

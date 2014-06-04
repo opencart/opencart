@@ -20,7 +20,7 @@ class ControllerPaymentPPStandard extends Controller {
 
 		if ($order_info) {
 			$data['business'] = $this->config->get('pp_standard_email');
-			$data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');				
+			$data['item_name'] = html_entity_decode($this->config->get('config_name'), ENT_QUOTES, 'UTF-8');
 
 			$data['products'] = array();
 
@@ -29,7 +29,7 @@ class ControllerPaymentPPStandard extends Controller {
 
 				foreach ($product['option'] as $option) {
 					if ($option['type'] != 'file') {
-						$value = $option['option_value'];	
+						$value = $option['option_value'];
 					} else {
 						$filename = $this->encryption->decrypt($option['option_value']);
 
@@ -50,7 +50,7 @@ class ControllerPaymentPPStandard extends Controller {
 					'option'   => $option_data,
 					'weight'   => $product['weight']
 				);
-			}	
+			}
 
 			$data['discount_amount_cart'] = 0;
 
@@ -64,18 +64,18 @@ class ControllerPaymentPPStandard extends Controller {
 					'quantity' => 1,
 					'option'   => array(),
 					'weight'   => 0
-				);	
+				);
 			} else {
 				$data['discount_amount_cart'] -= $total;
 			}
 
 			$data['currency_code'] = $order_info['currency_code'];
-			$data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');	
-			$data['last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');	
-			$data['address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');	
-			$data['address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');	
-			$data['city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');	
-			$data['zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');	
+			$data['first_name'] = html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8');
+			$data['last_name'] = html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
+			$data['address1'] = html_entity_decode($order_info['payment_address_1'], ENT_QUOTES, 'UTF-8');
+			$data['address2'] = html_entity_decode($order_info['payment_address_2'], ENT_QUOTES, 'UTF-8');
+			$data['city'] = html_entity_decode($order_info['payment_city'], ENT_QUOTES, 'UTF-8');
+			$data['zip'] = html_entity_decode($order_info['payment_postcode'], ENT_QUOTES, 'UTF-8');
 			$data['country'] = $order_info['payment_iso_code_2'];
 			$data['email'] = $order_info['email'];
 			$data['invoice'] = $this->session->data['order_id'] . ' - ' . html_entity_decode($order_info['payment_firstname'], ENT_QUOTES, 'UTF-8') . ' ' . html_entity_decode($order_info['payment_lastname'], ENT_QUOTES, 'UTF-8');
@@ -105,7 +105,7 @@ class ControllerPaymentPPStandard extends Controller {
 			$order_id = $this->request->post['custom'];
 		} else {
 			$order_id = 0;
-		}		
+		}
 
 		$this->load->model('checkout/order');
 
@@ -183,10 +183,10 @@ class ControllerPaymentPPStandard extends Controller {
 						break;
 					case 'Reversed':
 						$order_status_id = $this->config->get('pp_standard_reversed_status_id');
-						break;	 
+						break;
 					case 'Voided':
 						$order_status_id = $this->config->get('pp_standard_voided_status_id');
-						break;								
+						break;
 				}
 
 				if (!$order_info['order_status_id']) {
@@ -199,6 +199,6 @@ class ControllerPaymentPPStandard extends Controller {
 			}
 
 			curl_close($curl);
-		}	
+		}
 	}
 }

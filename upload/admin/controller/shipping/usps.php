@@ -76,7 +76,7 @@ class ControllerShippingUsps extends Controller {
 		$data['entry_dimension'] = $this->language->get('entry_dimension');
 		$data['entry_length'] = $this->language->get('entry_length');
 		$data['entry_width'] = $this->language->get('entry_width');
-		$data['entry_height'] = $this->language->get('entry_height');		
+		$data['entry_height'] = $this->language->get('entry_height');
 		$data['entry_display_time'] = $this->language->get('entry_display_time');
 		$data['entry_display_weight'] = $this->language->get('entry_display_weight');
 		$data['entry_weight_class'] = $this->language->get('entry_weight_class');
@@ -91,7 +91,7 @@ class ControllerShippingUsps extends Controller {
 		$data['help_display_weight'] = $this->language->get('help_display_weight');
 		$data['help_weight_class'] = $this->language->get('help_weight_class');
 		$data['help_debug'] = $this->language->get('help_debug');
-		
+
 		$data['button_save'] = $this->language->get('button_save');
 		$data['button_cancel'] = $this->language->get('button_cancel');
 
@@ -478,7 +478,7 @@ class ControllerShippingUsps extends Controller {
 		} else {
 			$data['usps_tax_class_id'] = $this->config->get('usps_tax_class_id');
 		}
-		
+
 		$this->load->model('localisation/tax_class');
 
 		$data['tax_classes'] = $this->model_localisation_tax_class->getTaxClasses();
@@ -488,7 +488,7 @@ class ControllerShippingUsps extends Controller {
 		} else {
 			$data['usps_geo_zone_id'] = $this->config->get('usps_geo_zone_id');
 		}
-		
+
 		$this->load->model('localisation/geo_zone');
 
 		$data['geo_zones'] = $this->model_localisation_geo_zone->getGeoZones();
@@ -510,11 +510,11 @@ class ControllerShippingUsps extends Controller {
 		} else {
 			$data['usps_sort_order'] = $this->config->get('usps_sort_order');
 		}
-		
+
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
 		$data['footer'] = $this->load->controller('common/footer');
-		
+
 		$this->response->setOutput($this->load->view('shipping/usps.tpl', $data));
 	}
 

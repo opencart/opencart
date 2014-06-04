@@ -188,7 +188,9 @@ function getOpenbayVersion() {
         $('#openbay_version').html('<?php echo $error_failed_to_load; ?><strong><span onclick="getOpenbayVersion();"><?php echo $button_retry; ?></span></strong>');
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (xhr.status != 0) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
       }
     });
   }, 500);
@@ -213,7 +215,9 @@ function getOpenbayNotifications() {
         $('#openbay_notification').html(html);
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (xhr.status != 0) {
+          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        }
       }
     });
   }, 500);

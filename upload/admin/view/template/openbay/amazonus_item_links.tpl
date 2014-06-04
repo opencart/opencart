@@ -102,7 +102,7 @@ function loadLinks() {
       $('#linked-items').html(rows);
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });
 }
@@ -162,7 +162,7 @@ $('#button-load').bind('click', function() {
       $('#unlinked-items').html(rows);
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });
 });
@@ -184,7 +184,7 @@ function addLink(button, product_id, amazon_sku, variation) {
       loadLinks();
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });
 }
@@ -203,7 +203,7 @@ function removeLink(button, amazon_sku) {
       loadLinks();
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });
 }
@@ -296,7 +296,7 @@ $('#new-product').autocomplete({
         }));
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   },
@@ -328,7 +328,7 @@ function openstockCheck(product_id) {
       $('#new-product').after(optionHtml);
     },
     error: function (xhr, ajaxOptions, thrownError) {
-      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });
 }

@@ -1052,7 +1052,7 @@
                 $('#suggested-categories-loading').hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
             }
         });
     }
@@ -1129,7 +1129,7 @@
                 $('#category-loading').hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
             }
         });
     }
@@ -1179,7 +1179,7 @@
                 }
             },
             error: function (xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
             }
         });
     }
@@ -1255,7 +1255,7 @@
               $('#button-catalog-search').empty().removeAttr('disabled').html('<i class="fa fa-search"></i> <?php echo $button_search; ?>');
             },
             error: function (xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
           }
         });
     });
@@ -1375,7 +1375,7 @@
                 $('#feature-loading').hide();
             },
             error: function (xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
             }
         });
     }
@@ -1451,7 +1451,7 @@
           }, 1000);
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
         }
       });
     }
@@ -1534,7 +1534,7 @@
     },
     error: function (xhr, ajaxOptions, thrownError) {
       $('#add-shipping-'+id).empty().html('<i class="fa fa-plus-circle"></i> <?php echo $text_btn_add; ?>').removeAttr('disabled');
-      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });
 
@@ -1673,7 +1673,7 @@
                   $('#button-verify').empty().html('<?php echo $text_verify; ?>').removeAttr('disabled');
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
-                alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
               }
             });
         } else {
@@ -1722,7 +1722,7 @@
           $('#button-save').empty().html('<?php echo $button_save_listing; ?>').removeAttr('disabled');
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
         }
       });
     });
@@ -1869,7 +1869,7 @@
                   }, 1000);
               },
               error: function (xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
             }
           });
       }
@@ -1922,7 +1922,7 @@
               }, 1000);
           },
           error: function (xhr, ajaxOptions, thrownError) {
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
         }
       });
   }
@@ -1950,7 +1950,7 @@
                   }, 1000);
               },
               error: function (xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
             }
           });
       }

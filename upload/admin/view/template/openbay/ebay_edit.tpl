@@ -270,7 +270,7 @@
               $('#button-save').empty().html('<i class="fa fa-save"></i> <?php echo $button_save; ?>').removeAttr('disabled');
             },
             error: function (xhr, ajaxOptions, thrownError) {
-              alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+              if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
             }
         });
     });
@@ -291,7 +291,7 @@
                         window.location = 'index.php?route=extension/openbay/itemList&token=<?php echo $token; ?>';
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
                     }
                 });
             }
@@ -318,7 +318,7 @@
                         }
                     },
                     error: function (xhr, ajaxOptions, thrownError) {
-                      alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+                      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
                     }
                 });
             }

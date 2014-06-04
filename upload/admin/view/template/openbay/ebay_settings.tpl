@@ -544,7 +544,7 @@
               }, 500);
           },
           error: function (xhr, ajaxOptions, thrownError) {
-            alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+            if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
           }
         });
       } else {
@@ -568,7 +568,7 @@
           }, 500);
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
           $('#button-clear-locks').empty().html('<?php echo $text_clear; ?>');
         }
       });
@@ -589,7 +589,7 @@
           }, 500);
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
           $('#button-repair-links').empty().html('<?php echo $text_update; ?>');
         }
       });

@@ -176,7 +176,7 @@
             $('#ftp-test-loading').hide();
         },
         error: function (xhr, ajaxOptions, thrownError) {
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
         }
     });
   });
@@ -197,7 +197,7 @@
       error: function (xhr, ajaxOptions, thrownError) {
         $('#button-patch').empty().html('<?php echo $text_patch_button; ?>');
         $("#sync-cats").removeAttr('disabled');
-        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   });
@@ -218,7 +218,7 @@
       error: function (xhr, ajaxOptions, thrownError) {
         $('#button-clear-faq').empty().html('<?php echo $text_clear; ?>');
         $("#sync-cats").removeAttr('disabled');
-        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   });
@@ -241,7 +241,7 @@
         $('#ftp-update-module-loading').hide();
       },
       error: function (xhr, ajaxOptions, thrownError) {
-        alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   });

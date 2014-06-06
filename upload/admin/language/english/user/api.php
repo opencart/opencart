@@ -9,7 +9,7 @@ $_['text_success']         = 'Success: You have modified API\'s!';
 $_['column_username']      = 'Username';
 $_['column_status']        = 'Status';
 $_['column_date_added']    = 'Date Added';
-$_['column_date_modified'] = 'Date Added';
+$_['column_date_modified'] = 'Date Modified';
 $_['column_action']        = 'Action';
 
 // Entry

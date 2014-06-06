@@ -372,7 +372,7 @@ class ControllerUserApi extends Controller {
 			$this->error['username'] = $this->language->get('error_username');
 		}
 		
-		if ((utf8_strlen($this->request->post['key']) < 3) || (utf8_strlen($this->request->post['key']) > 64)) {
+		if ((utf8_strlen($this->request->post['key']) < 3) || (utf8_strlen($this->request->post['key']) > 256)) {
 			$this->error['key'] = $this->language->get('error_key');
 		}
 		

@@ -78,7 +78,7 @@ class ControllerAccountReturn extends Controller {
 		$pagination->total = $return_total;
 		$pagination->page = $page;
 		$pagination->limit = $this->config->get('config_product_limit');
-		$pagination->url = $this->url->link('account/history', 'page={page}', 'SSL');
+		$pagination->url = $this->url->link('account/return', 'page={page}', 'SSL');
 
 		$data['pagination'] = $pagination->render();
 

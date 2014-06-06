@@ -161,7 +161,7 @@ class ControllerApiShipping extends Controller {
 	}
 	
 	public function method() {
-		$this->load->language('api/api');
+		$this->load->language('api/shipping');
 		
 		$json = array();		
 		

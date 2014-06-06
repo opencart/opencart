@@ -1,7 +1,7 @@
 <?php
 class ControllerApiReward extends Controller {
 	public function index() {
-		$this->load->language('module/reward');
+		$this->load->language('api/reward');
 
 		$json = array();
 

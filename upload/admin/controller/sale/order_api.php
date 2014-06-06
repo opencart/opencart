@@ -91,7 +91,7 @@ class ControllerSaleOrder extends Controller {
 		
 	}
 	
-	public function calculate() {
+	public function refresh() {
 		$this->load->language('sale/order');
 
 		$json = array();

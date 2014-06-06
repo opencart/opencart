@@ -1,7 +1,7 @@
 <?php
 class ControllerApiVoucher extends Controller {
 	public function index() {
-		$this->load->language('module/voucher');
+		$this->load->language('api/voucher');
 		
 		$json = array();
 				
@@ -27,7 +27,7 @@ class ControllerApiVoucher extends Controller {
 	}
 	
 	public function add() {
-		$this->load->language('module/voucher');
+		$this->load->language('api/voucher');
 		
 		$json = array();		
 		
@@ -74,7 +74,7 @@ class ControllerApiVoucher extends Controller {
 	}
 	
 	public function remove() {
-		$this->load->language('checkout/cart');
+		$this->load->language('api/voucher');
 
 		$json = array();
 		

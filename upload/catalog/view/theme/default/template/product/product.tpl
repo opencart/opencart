@@ -464,7 +464,7 @@ $('#button-cart').on('click', function() {
                 
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
 				
-				$('#cart > ul').load('index.php?route=module/cart/info ul li');
+				$('#cart > ul').load('index.php?route=common/cart/info ul li');
             }   
         }
     });
@@ -552,6 +552,8 @@ $('#button-review').on('click', function() {
         },
         complete: function() {
             $('#button-review').button('reset');
+            $('#captcha').attr('src', 'index.php?route=tool/captcha');
+            $('input[name=\'captcha\']').val('');
         },
         success: function(json) {
 			$('.alert-success, .alert-danger').remove();

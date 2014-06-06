@@ -30,7 +30,7 @@ class Customer {
 				$this->customer_group_id = $customer_query->row['customer_group_id'];
 				$this->address_id = $customer_query->row['address_id'];
 
-				$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(isset($this->session->data['cart']) ? serialize($this->session->data['cart']) : '') . "', wishlist = '" . $this->db->escape(isset($this->session->data['wishlist']) ? serialize($this->session->data['wishlist']) : '') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
+				$this->db->query("UPDATE " . DB_PREFIX . "customer SET cart = '" . $this->db->escape(isset($this->session->data['cart']) ? json_encode($this->session->data['cart']) : '') . "', wishlist = '" . $this->db->escape(isset($this->session->data['wishlist']) ? json_encode($this->session->data['wishlist']) : '') . "', ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "' WHERE customer_id = '" . (int)$this->customer_id . "'");
 
 				$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "customer_ip WHERE customer_id = '" . (int)$this->session->data['customer_id'] . "' AND ip = '" . $this->db->escape($this->request->server['REMOTE_ADDR']) . "'");
 
@@ -54,7 +54,7 @@ class Customer {
 			$this->session->data['customer_id'] = $customer_query->row['customer_id'];
 
 			if ($customer_query->row['cart'] && is_string($customer_query->row['cart'])) {
-				$cart = unserialize($customer_query->row['cart']);
+				$cart = json_decode($customer_query->row['cart']);
 
 				foreach ($cart as $key => $value) {
 					if (!array_key_exists($key, $this->session->data['cart'])) {
@@ -70,7 +70,7 @@ class Customer {
 					$this->session->data['wishlist'] = array();
 				}
 
-				$wishlist = unserialize($customer_query->row['wishlist']);
+				$wishlist = json_decode($customer_query->row['wishlist']);
 
 				foreach ($wishlist as $product_id) {
 					if (!in_array($product_id, $this->session->data['wishlist'])) {

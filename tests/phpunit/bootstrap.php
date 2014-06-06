@@ -24,3 +24,6 @@ define('PP_EXPRESS_API_PASSWORD', '');
 define('PP_EXPRESS_API_SIGNATURE', '');
 define('PP_EXPRESS_USERNAME', '');
 define('PP_EXPRESS_PASSWORD', '');
+
+// Settings for SagePay Direct's selenium tests
+define('SAGEPAY_DIRECT_VENDOR', '');

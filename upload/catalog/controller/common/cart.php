@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleCart extends Controller {
+class ControllerCommonCart extends Controller {
 	public function index() {
 		$this->load->language('module/cart');
 

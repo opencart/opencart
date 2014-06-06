@@ -134,56 +134,55 @@
 </div>
 <script type="text/javascript"><!--
 $('#button-filter').on('click', function() {
-  url = 'index.php?route=sale/recurring&token=<?php echo $token; ?>';
+	url = 'index.php?route=sale/recurring&token=<?php echo $token; ?>';
 
-  var filter_order_recurring_id = $('input[name=\'filter_order_recurring_id\']').val();
+	var filter_order_recurring_id = $('input[name=\'filter_order_recurring_id\']').val();
 
-  if (filter_order_recurring_id) {
-    url += '&filter_order_recurring_id=' + encodeURIComponent(filter_order_recurring_id);
-  }
+	if (filter_order_recurring_id) {
+		url += '&filter_order_recurring_id=' + encodeURIComponent(filter_order_recurring_id);
+	}
 
-  var filter_order_id = $('input[name=\'filter_order_id\']').val();
+	var filter_order_id = $('input[name=\'filter_order_id\']').val();
 
-  if (filter_order_id) {
-    url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
-  }
+	if (filter_order_id) {
+		url += '&filter_order_id=' + encodeURIComponent(filter_order_id);
+	}
 
-  var filter_payment_reference = $('input[name=\'filter_payment_reference\']').val();
+	var filter_payment_reference = $('input[name=\'filter_payment_reference\']').val();
+	
+	if (filter_payment_reference) {
+		url += '&filter_payment_reference=' + encodeURIComponent(filter_payment_reference);
+	}
 
-  if (filter_payment_reference) {
-    url += '&filter_payment_reference=' + encodeURIComponent(filter_payment_reference);
-  }
-
-  var filter_customer = $('input[name=\'filter_customer\']').val();
-
-  if (filter_customer) {
-    url += '&filter_customer=' + encodeURIComponent(filter_customer);
-  }
-
-  var filter_created = $('input[name=\'filter_created\']').val();
-
-  if (filter_created != '') {
-    url += '&filter_created=' + encodeURIComponent(filter_created);
-  }
-
-  var filter_status = $('select[name=\'filter_status\']').val();
-
-  if (filter_status != 0) {
-    url += '&filter_status=' + encodeURIComponent(filter_status);
-  }
-
-  location = url;
+	var filter_customer = $('input[name=\'filter_customer\']').val();
+	
+	if (filter_customer) {
+		url += '&filter_customer=' + encodeURIComponent(filter_customer);
+	}
+	
+	var filter_created = $('input[name=\'filter_created\']').val();
+	
+	if (filter_created != '') {
+		url += '&filter_created=' + encodeURIComponent(filter_created);
+	}
+	
+	var filter_status = $('select[name=\'filter_status\']').val();
+	
+	if (filter_status != 0) {
+		url += '&filter_status=' + encodeURIComponent(filter_status);
+	}
+	
+	location = url;
 });
-
+	
 $('#form input').keydown(function(e) {
-  if (e.keyCode == 13) {
-    filter();
-  }
+	if (e.keyCode == 13) {
+		filter();
+	}
 });
 
-$(document).ready(function() {
-  $('.date').datepicker({dateFormat: 'yy-mm-dd'});
+$('.date').datetimepicker({ 
+	pickTime: false 
 });
-
 //--></script> 
 <?php echo $footer; ?>

@@ -32,6 +32,7 @@
           <label class="col-sm-2 control-label" for="input-code"><?php echo $entry_code; ?></label>
           <div class="col-sm-10">
             <input type="text" name="code" value="<?php echo $code; ?>" placeholder="<?php echo $entry_code; ?>" id="input-code" class="form-control" />
+            <span class="help-block"><?php echo $help_code; ?></span>
             <?php if ($error_code) { ?>
             <div class="text-danger"><?php echo $error_code; ?></div>
             <?php } ?>
@@ -41,6 +42,7 @@
           <label class="col-sm-2 control-label required" for="input-locale"><?php echo $entry_locale; ?></label>
           <div class="col-sm-10">
             <input type="text" name="locale" value="<?php echo $locale; ?>" placeholder="<?php echo $entry_locale; ?>" id="input-locale" class="form-control" />
+            <span class="help-block"><?php echo $help_locale; ?></span>
             <?php if ($error_locale) { ?>
             <div class="text-danger"><?php echo $error_locale; ?></div>
             <?php } ?>
@@ -50,6 +52,7 @@
           <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
           <div class="col-sm-10">
             <input type="text" name="image" value="<?php echo $image; ?>" placeholder="<?php echo $entry_image; ?>" id="input-image" class="form-control" />
+            <span class="help-block"><?php echo $help_image; ?></span>
             <?php if ($error_image) { ?>
             <div class="text-danger"><?php echo $error_image; ?></div>
             <?php } ?>
@@ -59,6 +62,7 @@
           <label class="col-sm-2 control-label" for="input-directory"><?php echo $entry_directory; ?></label>
           <div class="col-sm-10">
             <input type="text" name="directory" value="<?php echo $directory; ?>" placeholder="<?php echo $entry_directory; ?>" id="input-directory" class="form-control" />
+            <span class="help-block"><?php echo $help_directory; ?></span>
             <?php if ($error_directory) { ?>
             <div class="text-danger"><?php echo $error_directory; ?></div>
             <?php } ?>
@@ -68,6 +72,7 @@
           <label class="col-sm-2 control-label" for="input-filename"><?php echo $entry_filename; ?></label>
           <div class="col-sm-10">
             <input type="text" name="filename" value="<?php echo $filename; ?>" placeholder="<?php echo $entry_filename; ?>" id="input-filename" class="form-control" />
+            <span class="help-block"><?php echo $help_filename; ?></span>
             <?php if ($error_filename) { ?>
             <div class="text-danger"><?php echo $error_filename; ?></div>
             <?php } ?>
@@ -85,6 +90,7 @@
               <option value="0" selected="selected"><?php echo $text_disabled; ?></option>
               <?php } ?>
             </select>
+            <span class="help-block"><?php echo $help_status; ?></span>
           </div>
         </div>
         <div class="form-group">

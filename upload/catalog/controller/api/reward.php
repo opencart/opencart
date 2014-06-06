@@ -50,7 +50,7 @@ class ControllerApiReward extends Controller {
 		$this->response->setOutput(json_encode($json));				
 	}
 	
-	public function avaliable() {
+	public function available() {
 		$json = array();
 
 		$json['points'] = $this->customer->getRewardPoints();

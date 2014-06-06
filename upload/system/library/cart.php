@@ -313,7 +313,7 @@ class Cart {
 	public function update($key, $qty) {
 		$this->data = array();
 
-		if ((int)$qty && ((int)$qty > 0)) {
+		if ((int)$qty && ((int)$qty > 0) && isset($this->session->data['cart'][$key])) {
 			$this->session->data['cart'][$key] = (int)$qty;
 		} else {
 			$this->remove($key);

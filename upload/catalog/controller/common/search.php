@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleSearch extends COntroller {
+class ControllerCommonSearch extends COntroller {
 	public function index() {
 		$this->load->language('module/search');
 

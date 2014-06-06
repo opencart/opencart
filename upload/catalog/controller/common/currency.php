@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleCurrency extends Controller {
+class ControllerCommonCurrency extends Controller {
 	public function index() {
 		$this->load->language('module/currency');
 

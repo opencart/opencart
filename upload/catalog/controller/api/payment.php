@@ -1,11 +1,13 @@
 <?php
 class ControllerApiPayment extends Controller {
 	public function index() {
+		$this->load->language('module/reward');
+		
 		$json = array();
 		
-		// Validate if payment address has been set.
+		// Payment Address
 		if (!isset($this->session->data['payment_address'])) {
-			$json['error']['payment_address'] = '';
+			$json['error']['payment_address'] = $this->language->get('error_payment_address');
 		}		
 		
 		if (!$json) {
@@ -34,10 +36,7 @@ class ControllerApiPayment extends Controller {
 				}
 			}
 			
-			// Payment Methods
-			$method_data = array();
-			
-			$this->load->model('setting/extension');
+			$json['payment_method'] = array();
 			
 			$results = $this->model_setting_extension->getExtensions('payment');
 
@@ -53,11 +52,11 @@ class ControllerApiPayment extends Controller {
 						if ($cart_has_recurring > 0) {
 							if (method_exists($this->{'model_payment_' . $result['code']}, 'recurringPayments')) {
 								if ($this->{'model_payment_' . $result['code']}->recurringPayments() == true) {
-									$method_data[$result['code']] = $method;
+									$json['payment_method'][$result['code']] = $method;
 								}
 							}
 						} else {
-							$method_data[$result['code']] = $method;
+							$json['payment_method'][$result['code']] = $method;
 						}
 					}
 				}
@@ -65,13 +64,17 @@ class ControllerApiPayment extends Controller {
 
 			$sort_order = array(); 
 		  
-			foreach ($method_data as $key => $value) {
+			foreach ($json['payment_method'] as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 	
-			array_multisort($sort_order, SORT_ASC, $method_data);			
+			array_multisort($sort_order, SORT_ASC, $json['payment_method']);			
 			
-			$this->session->data['payment_methods'] = $method_data;
+			if ($json['payment_method']) {
+				$this->session->data['payment_methods'] = $json['payment_method'];
+			} else {
+				$json['error']['payment_method'] = $this->language->get('error_no_payment');
+			}			
 		}
 		
 		$this->response->setOutput(json_encode($json));		

@@ -1,5 +1,5 @@
 <?php
-class ControllerModuleLanguage extends Controller {
+class ControllerCommonLanguage extends Controller {
 	public function index() {
 		$this->load->language('module/language');
 

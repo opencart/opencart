@@ -103,10 +103,10 @@ class ControllerCommonHeader extends Controller {
 			}
 		}
 
-		$data['language'] = $this->load->controller('module/language');
-		$data['currency'] = $this->load->controller('module/currency');
-		$data['search'] = $this->load->controller('module/search');
-		$data['cart'] = $this->load->controller('module/cart');
+		$data['language'] = $this->load->controller('common/language');
+		$data['currency'] = $this->load->controller('common/currency');
+		$data['search'] = $this->load->controller('common/search');
+		$data['cart'] = $this->load->controller('common/cart');
 
 		// For page specific css
 		if (isset($this->request->get['route'])) {

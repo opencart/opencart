@@ -1073,7 +1073,7 @@
               </div>
             </fieldset>
             <div class="text-right">
-              <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-plus-circle"></i> Save</button>
+              <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_save; ?></button>
               <button type="button" id="button-update" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_total; ?></button>
             </div>
           </div>

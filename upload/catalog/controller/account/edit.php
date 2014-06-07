@@ -12,7 +12,7 @@ class ControllerAccountEdit extends Controller {
 		$this->load->language('account/edit');
 
 		$this->document->setTitle($this->language->get('heading_title'));
-
+		
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/moment.min.js');
 		$this->document->addScript('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.js');
 		$this->document->addStyle('catalog/view/javascript/jquery/datetimepicker/bootstrap-datetimepicker.min.css');
@@ -41,19 +41,19 @@ class ControllerAccountEdit extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_home'),
-			'href'      => $this->url->link('common/home'),
+			'href'      => $this->url->link('common/home'),     	
 			'separator' => false
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_account'),
-			'href'      => $this->url->link('account/account', '', 'SSL'),
+			'href'      => $this->url->link('account/account', '', 'SSL'),        	
 			'separator' => $this->language->get('text_separator')
 		);
 
 		$data['breadcrumbs'][] = array(
 			'text'      => $this->language->get('text_edit'),
-			'href'      => $this->url->link('account/edit', '', 'SSL'),
+			'href'      => $this->url->link('account/edit', '', 'SSL'),       	
 			'separator' => $this->language->get('text_separator')
 		);
 
@@ -67,6 +67,7 @@ class ControllerAccountEdit extends Controller {
 		$data['entry_lastname'] = $this->language->get('entry_lastname');
 		$data['entry_email'] = $this->language->get('entry_email');
 		$data['entry_telephone'] = $this->language->get('entry_telephone');
+/* N */		$data['entry_mobile'] = $this->language->get('entry_mobile');
 		$data['entry_fax'] = $this->language->get('entry_fax');
 
 		$data['button_continue'] = $this->language->get('button_continue');
@@ -95,13 +96,19 @@ class ControllerAccountEdit extends Controller {
 			$data['error_email'] = $this->error['email'];
 		} else {
 			$data['error_email'] = '';
-		}
+		}	
 
 		if (isset($this->error['telephone'])) {
 			$data['error_telephone'] = $this->error['telephone'];
 		} else {
 			$data['error_telephone'] = '';
-		}
+		}	
+
+/* N */		if (isset($this->error['mobile'])) {
+/* N */			$data['error_mobile'] = $this->error['mobile'];
+/* N */		} else {
+/* N */			$data['error_mobile'] = '';
+/* N */		}	
 
 		if (isset($this->error['custom_field'])) {
 			$data['error_custom_field'] = $this->error['custom_field'];
@@ -147,6 +154,14 @@ class ControllerAccountEdit extends Controller {
 			$data['telephone'] = '';
 		}
 
+/* N */		if (isset($this->request->post['mobile'])) {
+/* N */			$data['mobile'] = $this->request->post['mobile'];
+/* N */		} elseif (!empty($customer_info)) {
+/* N */			$data['mobile'] = $customer_info['mobile'];
+/* N */		} else {
+/* N */			$data['mobile'] = '';
+/* N */		}
+
 		if (isset($this->request->post['fax'])) {
 			$data['fax'] = $this->request->post['fax'];
 		} elseif (!empty($customer_info)) {
@@ -159,7 +174,7 @@ class ControllerAccountEdit extends Controller {
 		$this->load->model('account/custom_field');
 
 		$data['custom_fields'] = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $this->config->get('config_customer_group_id')));
-
+		
 		if (isset($this->request->post['custom_field'])) {
 			$data['account_custom_field'] = $this->request->post['custom_field'];
 		} elseif (isset($customer_info)) {
@@ -204,6 +219,10 @@ class ControllerAccountEdit extends Controller {
 		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
 			$this->error['telephone'] = $this->language->get('error_telephone');
 		}
+
+/* N */		if ((utf8_strlen($this->request->post['mobile']) < 3) || (utf8_strlen($this->request->post['mobile']) > 32)) {
+/* N */			$this->error['mobile'] = $this->language->get('error_mobile');
+/* N */		}
 
 		// Custom field validation
 		$this->load->model('account/custom_field');

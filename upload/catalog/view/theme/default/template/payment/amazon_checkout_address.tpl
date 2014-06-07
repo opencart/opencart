@@ -1,22 +1,14 @@
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
-<div class="container"><?php echo $content_top; ?>
-  <div style="text-align:center;">
-    <h3><?php echo $heading_address; ?></h3>
-    <div style="margin: 0 auto; width: 400px;" id="amazon-address-widget"></div>
-    <div style="margin: 5px auto 0; width: 180px;">
-      <div class="shipping-methods amazon-payments-box"></div>
+<div id="content"><?php echo $content_top; ?>
+  <h2><?php echo $heading_address; ?></h2>
+    <div style="float: left" id="amazon-address-widget"></div>
+    <div style="float: left; width: 58%" class="shipping-methods"></div>
+    <div style="clear: both;"></div>
+    <div class="buttons" style="margin-top: 15px">
+      <a href="<?php echo $cart ?>" class="button left"><span><?php echo $text_cart ?></span></a>
+      <a class="button right" id="continue-button"><span><?php echo $text_continue ?></span></a>
     </div>
-  </div>
-  <div style="clear: both;"></div>
-  <div class="buttons">
-    <div class="pull-left">
-      <a href="<?php echo $cart; ?>" class="btn btn-primary"><?php echo $text_cart; ?></a>
-    </div>
-    <div class="pull-right">
-      <input class="btn btn-primary" id="continue-button" type="submit" value="<?php echo $text_continue; ?>" />
-    </div>
-  </div>
-  <input type="hidden" name="addressSelected" value="0" />
+    <input type="hidden" name="addressSelected" value="0" />
   <?php echo $content_bottom; ?>
 </div>
 <script type="text/javascript"><!--
@@ -58,28 +50,29 @@
 
           if (data.error) {
             $('#amazon-address-widget').before('<div class="warning">' + data.error + '</div>');
-          } else if (data.quotes) {
+          } elseif (data.quotes) {
             var html = '';
+            html += '<table class="radio">';
 
             $.each(data.quotes, function(code, shippingMethod){
-              html += '<p><strong>' + shippingMethod.title + '</strong></p>';
+              html += '<tr><td colspan="3"><b>' + shippingMethod.title + '</b></td></tr>';
 
               $.each(shippingMethod.quote, function(i, quote){
-                html += '<div class="radio">';
-                html += '<label>';
+                html += '<tr>';
 
                 if (data.selected == quote.code) {
-                  html += '<input type="radio" name="shipping_method" value="' + quote.code + '" id="' + quote.code + '" checked="checked" />';
+                  html += ' <td><input type="radio" name="shipping_method" value="' + quote.code + '" id="' + quote.code + '" checked="checked" /></td>';
                 } else {
-                  html += '<input type="radio" name="shipping_method" value="' + quote.code + '" id="' + quote.code + '" />';
+                  html += ' <td><input type="radio" name="shipping_method" value="' + quote.code + '" id="' + quote.code + '" /></td>';
                 }
 
-                html += quote.title + ' - ';
-                html += quote.text;
-                html += '</label>';
-                html += '</div>';
+                html += ' <td><label for="' + quote.code + '">' + quote.title + '</label></td>';
+                html += ' <td style="text-align: right;"><label for="' + quote.code + '">' + quote.text + '</label></td>';
+                html += '</tr>';
               });
             });
+
+            html += '</table>';
             $('.shipping-methods').html(html);
 
             if ($('input[name="shipping_method"]:checked').length == 0) {

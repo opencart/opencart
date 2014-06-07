@@ -18,16 +18,26 @@
     <?php } ?>
     <div id="content" class="<?php echo $class; ?>"><?php echo $content_top; ?>
       <h1><?php echo $heading_title; ?></h1>
-      <p><?php echo $text_email; ?></p>
+      <p><?php echo $text_contact_data; ?></p>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" class="form-horizontal">
         <fieldset>
-          <legend><?php echo $text_your_email; ?></legend>
+        
+          <legend><?php echo $text_your_contact_data; ?></legend>
+          
           <div class="form-group required">
             <label class="col-sm-2 control-label" for="input-email"><?php echo $entry_email; ?></label>
             <div class="col-sm-10">
               <input type="email" name="email" value="" placeholder="<?php echo $entry_email; ?>" id="input-email" class="form-control" />
             </div>
           </div>
+         
+<!-- N -->          <div class="form-group required">
+<!-- N -->            <label class="col-sm-2 control-label" for="input-mobile"><?php echo $entry_mobile; ?></label>
+<!-- N -->            <div class="col-sm-10">
+<!-- N -->              <input type="mobile" name="mobile" value="" placeholder="<?php echo $entry_mobile; ?>" id="input-mobile" class="form-control" />
+<!-- N -->            </div>
+<!-- N -->          </div>
+          
         </fieldset>
         <div class="buttons clearfix">
           <div class="pull-left"><a href="<?php echo $back; ?>" class="btn btn-default"><?php echo $button_back; ?></a></div>

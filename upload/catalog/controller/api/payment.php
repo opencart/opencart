@@ -106,6 +106,32 @@ class ControllerApiPayment extends Controller {
 		$this->response->setOutput(json_encode($json));		
 	}
 	
+	public function method() {
+		$this->load->language('api/payment');
+		
+		$json = array();
+				
+		// Payment Address
+		if (!isset($this->session->data['payment_address'])) {
+			$json['error']['warning'] = $this->language->get('error_payment_address');
+		}
+		
+		// Payment Method
+		if (empty($this->session->data['payment_methods'])) {
+			$json['error']['warning'] = $this->language->get('error_payment_methods');	
+		} elseif (!isset($this->request->post['payment_method'])) {
+			$json['error']['warning'] = $this->language->get('error_payment_method');
+		} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
+			$json['error']['warning'] = $this->language->get('error_payment_method');
+		}
+				
+		if (!$json) {
+			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];			
+		
+			$json['success'] = $this->language->get('text_success');
+		}
+	}		
+	
 	public function methods() {
 		$this->load->language('api/payment');
 		
@@ -146,7 +172,7 @@ class ControllerApiPayment extends Controller {
 			
 			$results = $this->model_setting_extension->getExtensions('payment');
 
-			$cart_has_recurring = $this->cart->hasRecurringProducts();
+			$recurring = $this->cart->hasRecurringProducts();
 	
 			foreach ($results as $result) {
 				if ($this->config->get($result['code'] . '_status')) {
@@ -155,7 +181,7 @@ class ControllerApiPayment extends Controller {
 					$method = $this->{'model_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total); 
 					
 					if ($method) {
-						if ($cart_has_recurring > 0) {
+						if ($recurring > 0) {
 							if (method_exists($this->{'model_payment_' . $result['code']}, 'recurringPayments')) {
 								if ($this->{'model_payment_' . $result['code']}->recurringPayments() == true) {
 									$json['payment_method'][$result['code']] = $method;
@@ -185,30 +211,4 @@ class ControllerApiPayment extends Controller {
 		
 		$this->response->setOutput(json_encode($json));		
 	}
-	
-	public function method() {
-		$this->load->language('api/payment');
-		
-		$json = array();
-				
-		// Payment Address
-		if (!isset($this->session->data['payment_address'])) {
-			$json['error']['warning'] = $this->language->get('error_payment_address');
-		}
-		
-		// Payment Method
-		if (empty($this->session->data['payment_methods'])) {
-			$json['error']['warning'] = $this->language->get('error_payment_methods');	
-		} elseif (!isset($this->request->post['payment_method'])) {
-			$json['error']['warning'] = $this->language->get('error_payment_method');
-		} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-			$json['error']['warning'] = $this->language->get('error_payment_method');
-		}
-				
-		if (!$json) {
-			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];			
-		
-			$json['success'] = $this->language->get('text_success');
-		}		
-	}	
 }

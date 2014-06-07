@@ -105,7 +105,43 @@ class ControllerApiShipping extends Controller {
 		
 		$this->response->setOutput(json_encode($json));	
 	}
+	
+	public function method() {
+		$this->load->language('api/shipping');
 		
+		$json = array();		
+		
+		if ($this->cart->hasShipping()) {
+			// Shipping Address
+			if (!isset($this->session->data['shipping_address'])) {
+				$json['error']['warning'] = $this->language->get('error_shipping_address');
+			}
+		
+			// Shipping Method
+			if (empty($this->session->data['shipping_methods'])) {
+				$json['error']['warning'] = $this->language->get('error_shipping_methods');	
+			} elseif (!isset($this->request->post['shipping_method'])) {
+				$json['error']['warning'] = $this->language->get('error_shipping_method');
+			} else {
+				$shipping = explode('.', $this->request->post['shipping_method']);
+	
+				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
+					$json['error']['warning'] = $this->language->get('error_shipping_method');
+				}
+			}
+		} else {
+			unset($this->session->data['shipping_address']);
+			unset($this->session->data['shipping_method']);
+			unset($this->session->data['shipping_methods']);
+		}
+		
+		if (!$json) {
+			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+			
+			$json['success'] = $this->language->get('text_success');
+		}					
+	}	
+	
 	public function methods() {
 		$this->load->language('api/shipping');
 		
@@ -159,40 +195,4 @@ class ControllerApiShipping extends Controller {
 		
 		$this->response->setOutput(json_encode($json));	
 	}
-	
-	public function method() {
-		$this->load->language('api/shipping');
-		
-		$json = array();		
-		
-		if ($this->cart->hasShipping()) {
-			// Shipping Address
-			if (!isset($this->session->data['shipping_address'])) {
-				$json['error']['warning'] = $this->language->get('error_shipping_address');
-			}
-		
-			// Shipping Method
-			if (empty($this->session->data['shipping_methods'])) {
-				$json['error']['warning'] = $this->language->get('error_shipping_methods');	
-			} elseif (!isset($this->request->post['shipping_method'])) {
-				$json['error']['warning'] = $this->language->get('error_shipping_method');
-			} else {
-				$shipping = explode('.', $this->request->post['shipping_method']);
-	
-				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-					$json['error']['warning'] = $this->language->get('error_shipping_method');
-				}
-			}
-		} else {
-			unset($this->session->data['shipping_address']);
-			unset($this->session->data['shipping_method']);
-			unset($this->session->data['shipping_methods']);
-		}
-		
-		if (!$json) {
-			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-			
-			$json['success'] = $this->language->get('text_success');
-		}					
-	}	
-}
+}	

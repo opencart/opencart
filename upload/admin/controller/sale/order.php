@@ -444,7 +444,7 @@ class ControllerSaleOrder extends Controller {
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
-		$data['button_total'] = $this->language->get('button_total');
+		$data['button_refresh'] = $this->language->get('button_refresh');
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
 

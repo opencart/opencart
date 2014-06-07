@@ -803,7 +803,7 @@
                     <td class="text-right"><?php echo $order_product['total']; ?>
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['total']; ?>" />
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['tax']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-update').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-refresh').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
 
                   </tr>
                   <?php $product_row++; ?>
@@ -871,7 +871,7 @@
                     <td class="text-right">1</td>
                     <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
                     <td class="text-right"><?php echo $order_voucher['amount']; ?></td>
-                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-update').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
+                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#voucher-row<?php echo $voucher_row; ?>').remove(); $('#button-refresh').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   <?php $voucher_row++; ?>
                   <?php } ?>
@@ -1074,7 +1074,7 @@
             </fieldset>
             <div class="text-right">
               <button type="button" id="button-save" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_save; ?></button>
-              <button type="button" id="button-update" class="btn btn-primary"><i class="fa fa-plus-circle"></i> <?php echo $button_total; ?></button>
+              <button type="button" id="button-refresh" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_refresh; ?></button>
             </div>
           </div>
         </div>
@@ -1625,7 +1625,7 @@ $('#button-reward-remove').on('click', function() {
 });
 //--></script> 
 <script type="text/javascript"><!--
-$('#button-product, #button-voucher, #button-update').on('click', function() {	
+$('#button-product, #button-voucher, #button-refresh').on('click', function() {	
 	data  = '#tab-customer input, #tab-customer select, #tab-customer textarea, ';
 	data += '#tab-payment input, #tab-payment select, #tab-payment textarea, ';
 	data += '#tab-shipping input, #tab-shipping select, #tab-shipping textarea, ';
@@ -1654,12 +1654,12 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 		data: $(data),
 		dataType: 'json',
 		beforeSend: function() {
-			$('#button-product i, #button-voucher i, #button-update i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
-			$('#button-product, #button-voucher, #button-update').prop('disabled', true);
+			$('#button-product i, #button-voucher i, #button-refresh i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
+			$('#button-product, #button-voucher, #button-refresh').prop('disabled', true);
 		},	
 		complete: function() {
-			$('#button-product i, #button-voucher i, #button-update i').replaceWith('<i class="fa fa-plus-circle"></i>');
-			$('#button-product, #button-voucher, #button-update').prop('disabled', false);
+			$('#button-product i, #button-voucher i, #button-refresh i').replaceWith('<i class="fa fa-plus-circle"></i>');
+			$('#button-product, #button-voucher, #button-refresh').prop('disabled', false);
 		},		
 		success: function(json) {
 			$('.alert, .text-danger').remove();
@@ -1825,7 +1825,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="order_product[' + product_row + '][quantity]" value="' + product['quantity'] + '" /></td>';
 					html += '  <td class="text-right">' + product['price'] + '<input type="hidden" name="order_product[' + product_row + '][price]" value="' + product['price'] + '" /></td>';
 					html += '  <td class="text-right">' + product['total'] + '<input type="hidden" name="order_product[' + product_row + '][total]" value="' + product['total'] + '" /><input type="hidden" name="order_product[' + product_row + '][tax]" value="' + product['tax'] + '" /><input type="hidden" name="order_product[' + product_row + '][reward]" value="' + product['reward'] + '" /></td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 					
 					product_row++;			
@@ -1867,7 +1867,7 @@ $('#button-product, #button-voucher, #button-update').on('click', function() {
 					html += '  <td class="text-right">1</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
 					html += '  <td class="text-right">' + voucher['amount'] + '</td>';
-					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-update\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
+					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#voucher-row' + voucher_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';	
 				  
 					voucher_row++;

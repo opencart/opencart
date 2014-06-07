@@ -45,7 +45,7 @@ class ControllerCheckoutPaymentMethod extends Controller {
 					$method = $this->{'model_payment_' . $result['code']}->getMethod($this->session->data['payment_address'], $total);
 
 					if ($method) {
-						if ($cart_has_recurring > 0) {
+						if ($recurring > 0) {
 							if (method_exists($this->{'model_payment_' . $result['code']}, 'recurringPayments')) {
 								if ($this->{'model_payment_' . $result['code']}->recurringPayments() == true) {
 									$method_data[$result['code']] = $method;

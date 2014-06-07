@@ -55,7 +55,7 @@ class ControllerCheckoutGuest extends Controller {
 		}
 
 		if (isset($this->session->data['guest']['lastname'])) {
-			$data['lastname'] = $this->session->data['payment_address']['lastname'];
+			$data['lastname'] = $this->session->data['guest']['lastname'];
 		} else {
 			$data['lastname'] = '';
 		}

@@ -92,7 +92,7 @@ class ControllerInformationContact extends Controller {
 		$data['geocode'] = $this->config->get('config_geocode');
 		$data['telephone'] = $this->config->get('config_telephone');
 		$data['fax'] = $this->config->get('config_fax');
-		$data['open'] = $this->config->get('config_open');
+		$data['open'] = nl2br($this->config->get('config_open'));
 		$data['comment'] = $this->config->get('config_comment');
 
 		$data['locations'] = array();
@@ -117,7 +117,7 @@ class ControllerInformationContact extends Controller {
 					'telephone'   => $location_info['telephone'],
 					'fax'         => $location_info['fax'],
 					'image'       => $image,
-					'open'        => $location_info['open'],
+					'open'        => nl2br($location_info['open']),
 					'comment'     => $location_info['comment']
 				);
 			}

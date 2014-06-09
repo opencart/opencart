@@ -5,7 +5,7 @@ class ControllerCommonCurrency extends Controller {
 
 		$data['text_currency'] = $this->language->get('text_currency');
 
-		$data['action'] = $this->url->link('module/currency/currency', '', $this->request->server['HTTPS']);
+		$data['action'] = $this->url->link('common/currency/currency', '', $this->request->server['HTTPS']);
 
 		$data['code'] = $this->currency->getCode();
 

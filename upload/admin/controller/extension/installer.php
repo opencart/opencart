@@ -321,7 +321,7 @@ class ControllerExtensionInstaller extends Controller {
 
 				ftp_close($connection);
 			} else {
-				$json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_host'), $this->config->get('config_ftp_port'));
+				$json['error'] = sprintf($this->language->get('error_ftp_connection'), $this->config->get('config_ftp_hostname'), $this->config->get('config_ftp_port'));
 			}
 		}
 

@@ -462,9 +462,7 @@ $('#button-cart').on('click', function() {
                     
                 $('#cart-total').html(json['total']);
                 
-                $('html, body').animate({ scrollTop: 0 }, 'slow');
-				
-				$('#cart > ul').load('index.php?route=common/cart/info ul li');
+                $('html, body').animate({ scrollTop: 0 }, 'slow'); 
             }   
         }
     });
@@ -552,8 +550,6 @@ $('#button-review').on('click', function() {
         },
         complete: function() {
             $('#button-review').button('reset');
-            $('#captcha').attr('src', 'index.php?route=tool/captcha');
-            $('input[name=\'captcha\']').val('');
         },
         success: function(json) {
 			$('.alert-success, .alert-danger').remove();

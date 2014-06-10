@@ -1,5 +1,5 @@
 <?php
-// Heading
+// Heading 
 $_['heading_title']     = 'My Account Information';
 
 // Text
@@ -13,6 +13,7 @@ $_['entry_firstname']  = 'First Name';
 $_['entry_lastname']   = 'Last Name';
 $_['entry_email']      = 'E-Mail';
 $_['entry_telephone']  = 'Telephone';
+/* N */$_['entry_mobile']     = 'Mobile';
 $_['entry_fax']        = 'Fax';
 
 // Error
@@ -21,3 +22,4 @@ $_['error_firstname']  = 'First Name must be between 1 and 32 characters!';
 $_['error_lastname']   = 'Last Name must be between 1 and 32 characters!';
 $_['error_email']      = 'E-Mail Address does not appear to be valid!';
 $_['error_telephone']  = 'Telephone must be between 3 and 32 characters!';
+/* N */$_['error_mobile']  = 'Mobile phone must be between 3 and 32 characters!';

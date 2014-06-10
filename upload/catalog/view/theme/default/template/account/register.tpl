@@ -78,6 +78,17 @@
               <?php } ?>
             </div>
           </div>
+          
+<!-- N -->          <div class="form-group required">
+<!-- N -->            <label class="col-sm-2 control-label" for="input-mobile"><?php echo $entry_mobile; ?></label>
+<!-- N -->            <div class="col-sm-10">
+<!-- N -->              <input type="tel" name="mobile" value="<?php echo $mobile; ?>" placeholder="<?php echo $entry_mobile; ?>" id="input-mobile" class="form-control" />
+<!-- N -->              <?php if ($error_mobile) { ?>
+<!-- N -->              <div class="text-danger"><?php echo $error_mobile; ?></div>
+<!-- N -->              <?php } ?>
+<!-- N -->            </div>
+<!-- N -->          </div>
+          
           <div class="form-group">
             <label class="col-sm-2 control-label" for="input-fax"><?php echo $entry_fax; ?></label>
             <div class="col-sm-10">

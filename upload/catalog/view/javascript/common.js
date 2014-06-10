@@ -36,6 +36,21 @@ $(document).ready(function() {
         }
     });
 
+	// Cart
+	$.ajax({
+		url: 'index.php?route=module/cart/info',
+		dataType: 'html',
+		beforeSend: function() {
+			$('#cart > button').button('loading');
+		},      
+		complete: function() {
+			$('#cart > button').button('reset');
+		},					
+		success: function(html) {
+			$('#cart > ul').html(html);
+		}
+	});	
+
 	// Menu
 	$('#menu .dropdown-menu').each(function() {
 		var menu = $('#menu').offset();
@@ -147,7 +162,7 @@ var cart = {
 					
 					$('html, body').animate({ scrollTop: 0 }, 'slow'); 
 					
-					$('#cart > ul').load('index.php?route=common/cart/info ul li');
+					$('#cart > ul').load('index.php?route=module/cart/info');
 				}
 			}
 		});
@@ -169,7 +184,7 @@ var cart = {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart > ul').load('index.php?route=common/cart/info ul li');
+					$('#cart > ul').load('index.php?route=module/cart/info');
 				}			
 			}
 		});			
@@ -191,7 +206,7 @@ var cart = {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart > ul').load('index.php?route=common/cart/info ul li');
+					$('#cart > ul').load('index.php?route=module/cart/info');
 				}
 			}
 		});			
@@ -220,7 +235,7 @@ var voucher = {
 				if (getURLVar('route') == 'checkout/cart' || getURLVar('route') == 'checkout/checkout') {
 					location = 'index.php?route=checkout/cart';
 				} else {
-					$('#cart > ul').load('index.php?route=common/cart/info ul li');
+					$('#cart > ul').load('index.php?route=module/cart');
 				}			
 			}
 		});	

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<dwsync>
+<file name="sagepay_direct.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="amazon_checkout_failure.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="amazon_checkout_confirm.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="worldpay.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="pp_express_confirm.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="amazon_checkout_payment.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="pp_standard.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="pp_payflow_iframe_return.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="realex_remote.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="bank_transfer.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="payza.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="authorizenet_aim.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="paymate.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="realex.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="authorizenet_sim.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="cod.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="worldpay_success.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="pp_payflow_iframe.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="sagepay.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="pp_pro_iframe.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="amazon_checkout_address.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="moneybookers.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="paypoint_success.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="web_payment_software.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="realex_response.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="pp_pro_iframe_body.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="worldpay_failure.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="pp_payflow.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="klarna_invoice.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="paypoint.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="cheque.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="perpetual_payments.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="twocheckout.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="nochex.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="free_checkout.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="paypoint_failure.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="liqpay.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="amazon_checkout_cart.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="sagepay_us.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="pp_pro.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="amazon_checkout_success.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="klarna_account.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+<file name="pp_express.tpl" server="107.170.141.154//var/www/" local="130439843660000000" remote="130439843660000000" Dst="2" />
+</dwsync>

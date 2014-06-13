@@ -89,6 +89,60 @@ class Amazonus {
 		}
 		$logger->write('productUpdateListen() exiting');
 	}
+	
+	
+	public function bulkUpdateOrders($orders) {
+		// Is the module enabled and called from admin?
+		if ($this->config->get('amazonus_status') != 1 || !defined('HTTPS_CATALOG')) {
+			return;
+		}
+		$this->load->model('openbay/amazonus');
+
+		$log = new Log('amazonus.log');
+		$log->write('Called bulkUpdateOrders method');
+
+		$request = array(
+			'orders' => array(),
+		);
+
+		foreach ($orders as $order) {
+			$amazon_order = $this->getOrder($order['order_id']);
+			$amazon_order_products = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order['order_id']);
+
+			$products = array();
+
+			foreach ($amazon_order_products as $amazon_order_product) {
+				$products[] = array(
+					'amazon_order_item_id' => $amazon_order_product['amazonus_order_item_id'],
+					'quantity' => $amazon_order_product['quantity'],
+				);
+			}
+
+			$order_info = array(
+				'amazon_order_id' => $amazon_order['amazonus_order_id'],
+				'status' => $order['status'],
+				'products' => $products,
+			);
+
+			if ($order['status'] == 'shipped' && !empty($order['carrier'])) {
+				if ($order['carrier_from_list']) {
+					$order_info['carrier_id'] = $order['carrier'];
+				} else {
+					$order_info['carrier_name'] = $order['carrier'];
+				}
+
+				$order_info['tracking'] = $order['tracking'];
+			}
+
+			$request['orders'][] = $order_info;
+		}
+
+		$log->write('order/bulkUpdate call: ' . print_r($request, 1));
+		
+		$response = $this->callWithResponse('order/bulkUpdate', $request);
+		
+		$log->write('order/bulkUpdate response: ' . $response);
+	}
 
 	public function updateOrder($orderId, $orderStatusString, $courier_id = '', $courierFromList = true, $tracking_no = '') {
 

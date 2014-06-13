@@ -924,6 +924,47 @@ class ControllerExtensionOpenbay extends Controller {
 				$this->openbay->amazon->bulkUpdateOrders($orders);
 			}
 		}
+		
+		//Amazon US
+		if ($this->config->get('amazonus_status') == 1) {
+			$orders = array();
+
+			foreach ($this->request->post['order_id'] as $order_id) {
+				if ($this->request->post['channel'][$order_id] == 'Amazon US') {
+
+					if ($this->config->get('openbay_amazonus_order_status_shipped') == $this->request->post['order_status_id']) {
+						$carrier = '';
+
+						if (isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
+							$carrier_from_list = false;
+							$carrier = $this->request->post['carrier_other'][$order_id];
+						} else {
+							$carrier_from_list = true;
+							$carrier = $this->request->post['carrier'][$order_id];
+						}
+
+						$orders[] = array(
+							'order_id' => $order_id,
+							'status' => 'shipped',
+							'carrier' => $carrier,
+							'carrier_from_list' => $carrier_from_list,
+							'tracking' => $this->request->post['tracking'][$order_id],
+						);
+					}
+
+					if ($this->config->get('openbay_amazonus_order_status_canceled') == $this->request->post['order_status_id']) {
+						$orders[] = array(
+							'order_id' => $order_id,
+							'status' => 'canceled',
+						);
+					}
+				}
+			}
+
+			if ($orders) {
+				$this->openbay->amazonus->bulkUpdateOrders($orders);
+			}
+		}
 
 		$i = 0;
 		foreach($this->request->post['order_id'] as $order_id) {
@@ -932,20 +973,6 @@ class ControllerExtensionOpenbay extends Controller {
 					$this->openbay->ebay->orderStatusListen($order_id, $this->request->post['order_status_id'], array('tracking_no' => $this->request->post['tracking'][$order_id], 'carrier_id' => $this->request->post['carrier'][$order_id]));
 				}else{
 					$this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id']);
-				}
-			}
-
-			if ($this->config->get('amazonus_status') == 1 && $this->request->post['channel'][$order_id] == 'Amazonus') {
-				if($this->config->get('openbay_amazonus_order_status_shipped') == $this->request->post['order_status_id']) {
-					if(isset($this->request->post['carrier_other'][$order_id]) && !empty($this->request->post['carrier_other'][$order_id])) {
-						$this->openbay->amazonus->updateOrder($order_id, 'shipped', $this->request->post['carrier_other'][$order_id], false, $this->request->post['tracking'][$order_id]);
-					} else {
-						$this->openbay->amazonus->updateOrder($order_id, 'shipped', $this->request->post['carrier'][$order_id], true, $this->request->post['tracking'][$order_id]);
-					}
-				}
-
-				if($this->config->get('openbay_amazonus_order_status_canceled') == $this->request->post['order_status_id']) {
-					$this->openbay->amazonus->updateOrder($order_id, 'canceled');
 				}
 			}
 

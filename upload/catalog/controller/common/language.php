@@ -5,7 +5,7 @@ class ControllerCommonLanguage extends Controller {
 
 		$data['text_language'] = $this->language->get('text_language');
 
-		$data['action'] = $this->url->link('module/language/language', '', $this->request->server['HTTPS']);
+		$data['action'] = $this->url->link('common/language/language', '', $this->request->server['HTTPS']);
 
 		$data['code'] = $this->session->data['language'];
 

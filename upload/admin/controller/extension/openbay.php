@@ -1,5 +1,7 @@
 <?php
 class ControllerExtensionOpenbay extends Controller {
+	private $error = array();
+
 	public function index() {
 		$this->load->model('openbay/openbay');
 		$this->load->model('setting/extension');
@@ -43,7 +45,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$extensions = $this->model_setting_extension->getInstalled('openbay');
 
 		foreach ($extensions as $key => $value) {
-			if (!file_exists(DIR_APPLICATION . 'controller/openbay/' . $value . ' . php')) {
+			if (!file_exists(DIR_APPLICATION . 'controller/openbay/' . $value . '.php')) {
 				$this->model_setting_extension->uninstall('openbay', $value);
 				unset($extensions[$key]);
 			}

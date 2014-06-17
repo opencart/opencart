@@ -7,7 +7,6 @@ class ControllerOpenbayEtsy extends Controller {
 		$this->load->model('setting/extension');
 
 		$this->model_openbay_etsy->install();
-		$this->model_setting_extension->install('openbay', $this->request->get['extension']);
 	}
 
 	public function uninstall() {
@@ -21,8 +20,43 @@ class ControllerOpenbayEtsy extends Controller {
 	}
 
 	public function index() {
-		//$this->response->redirect($this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], 'SSL'));
-		echo 'Index for etsy';
+		$data = $this->load->language('openbay/etsy_overview');
+
+		$this->document->setTitle($this->language->get('text_title'));
+		$this->document->addScript('view/javascript/openbay/faq.js');
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/ebay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_heading'),
+		);
+
+		if (isset($this->session->data['success'])) {
+			$data['success'] = $this->session->data['success'];
+			unset($this->session->data['success']);
+		} else {
+			$data['success'] = '';
+		}
+
+		$data['validation']               = $this->openbay->ebay->validate();
+		$data['links_settings']           = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], 'SSL');
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('openbay/etsy_overview.tpl', $data));
 	}
 
 	public function settings() {
@@ -110,10 +144,18 @@ class ControllerOpenbayEtsy extends Controller {
 	}
 
 	protected function validate() {
-		if($this->config->get('etsy_status') != 0 && $this->config->get('etsy_token') != '' && $this->config->get('etsy_enc1') != '' && $this->config->get('etsy_enc2') != '') {
+		if (!$this->user->hasPermission('modify', 'openbay/ebay')) {
+			$this->error['warning'] = $this->language->get('invalid_permission');
+		}
+
+		if (!$this->error) {
 			return true;
-		}else{
+		} else {
 			return false;
 		}
+	}
+
+	public function test() {
+		$this->openbay->etsy->call('product/default/categories', 'GET', array());
 	}
 }

@@ -8,6 +8,7 @@ final class Openbay {
 		$this->ebay = new Ebay($registry);
 		$this->amazon = new Amazon($registry);
 		$this->amazonus = new Amazonus($registry);
+		$this->etsy = new Etsy($registry);
 	}
 
 	public function __get($name) {

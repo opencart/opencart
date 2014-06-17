@@ -7,7 +7,6 @@ class ControllerOpenbayEbay extends Controller {
 		$this->load->model('setting/extension');
 
 		$this->model_openbay_ebay->install();
-		$this->model_setting_extension->install('openbay', $this->request->get['extension']);
 	}
 
 	public function uninstall() {

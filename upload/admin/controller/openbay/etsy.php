@@ -156,6 +156,9 @@ class ControllerOpenbayEtsy extends Controller {
 	}
 
 	public function test() {
-		$this->openbay->etsy->call('product/default/categories', 'GET', array());
+		$response = $this->openbay->etsy->call('product/default/categories', 'GET', array());
+
+		echo '<pre>';
+		print_r($response);
 	}
 }

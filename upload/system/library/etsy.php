@@ -41,13 +41,8 @@ final class Etsy {
 			$headers[] = 'X-Auth-Enc: '.$this->enc1;
 			$headers[] = 'Content-Type:application/json';
 
-			echo '<pre>';
-			print_r($headers);
-
-			echo $this->url.$uri;
-
 			$defaults = array(
-				CURLOPT_HEADER      	=> 1,
+				CURLOPT_HEADER      	=> 0,
 				CURLOPT_HTTPHEADER      => $headers,
 				CURLOPT_URL             => $this->url.$uri,
 				CURLOPT_USERAGENT       => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
@@ -68,32 +63,39 @@ final class Etsy {
 
 			$ch = curl_init();
 			curl_setopt_array($ch, $defaults);
+
+			$response = array();
+
 			if( ! $result = curl_exec($ch)) {
 				$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
+
+				return false;
+			} else {
+				$this->log('call() - Result of : "' . print_r($result, true) . '"');
+
+				$encoding = mb_detect_encoding($result);
+
+				if($encoding == 'UTF-8') {
+					$result = preg_replace('/[^(\x20-\x7F)]*/','', $result);
+				}
+
+				$result = json_decode($result, 1);
+
+				$response['header_code'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+
+				if(!empty($result)) {
+					$response['data'] = $result;
+				}else{
+					$response['data'] = '';
+				}
 			}
 			curl_close($ch);
 
-			$this->log('call() - Result of : "' . print_r($result, true) . '"');
-
-			$encoding = mb_detect_encoding($result);
-
-			if($encoding == 'UTF-8') {
-				$result = preg_replace('/[^(\x20-\x7F)]*/','', $result);
-			}
-
-			$result = json_decode($result, 1);
-
-			echo '<pre>';
-			print_r($result);
-			die();
-
-			if(!empty($result)) {
-				return $result;
-			}else{
-				return false;
-			}
+			return $response;
 		}else{
 			$this->log('call() - OpenBay Pro / Etsy not active');
+
+			return false;
 		}
 	}
 }

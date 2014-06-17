@@ -1,7 +1,7 @@
 <?php
 // Text
 $_['text_address']       = 'Success: Shipping address has been set!';
-$_['text_method']        = 'Success: Payment menthod has been set!';
+$_['text_method']        = 'Success: Payment method has been set!';
 
 // Error
 $_['error_warning']      = 'Warning: Please check the form carefully for errors!';

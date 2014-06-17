@@ -51,7 +51,7 @@ class ControllerExtensionOpenbay extends Controller {
 
 		$data['extensions'] = array();
 
-		$markets = array('ebay', 'amazon', 'amazonus');
+		$markets = array('ebay', 'amazon', 'amazonus', 'etsy');
 
 		foreach ($markets as $market) {
 			$extension = basename($market, ' . php');
@@ -88,11 +88,15 @@ class ControllerExtensionOpenbay extends Controller {
 	public function install() {
 		$this->load->language('extension/openbay');
 
+		$this->load->model('setting/extension');
+
 		if (!$this->user->hasPermission('modify', 'extension/openbay')) {
 			$this->session->data['error'] = $this->language->get('text_error_permission');
 
 			$this->response->redirect($this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'));
 		} else {
+			$this->model_setting_extension->install('openbay', $this->request->get['extension']);
+
 			$this->session->data['success'] = $this->language->get('text_install_success');
 
 			$this->load->model('user/user_group');

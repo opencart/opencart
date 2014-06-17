@@ -39,7 +39,7 @@ final class Etsy {
 			$headers = array ();
 			$headers[] = 'X-Auth-Token: '.$this->token;
 			$headers[] = 'X-Auth-Enc: '.$this->enc1;
-			$headers[] = 'Content-Type:application/json';
+			$headers[] = 'Content-Type: application/json';
 
 			$defaults = array(
 				CURLOPT_HEADER      	=> 0,
@@ -89,6 +89,7 @@ final class Etsy {
 					$response['data'] = '';
 				}
 			}
+
 			curl_close($ch);
 
 			return $response;

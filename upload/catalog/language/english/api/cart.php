@@ -1,6 +1,6 @@
 <?php
 // Text
-$_['text_success']   = 'Order totals has been successfully re-calculated!';
+$_['text_success']   = 'Success: You have modified your shopping cart!';
 
 // Error
 $_['error_stock']    = 'Products marked with *** are not available in the desired quantity or not in stock!';

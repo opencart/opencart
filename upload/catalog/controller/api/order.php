@@ -1,7 +1,7 @@
   <?php
 class ControllerApiOrder extends Controller {
 	public function setCustomer() {
-		$this->load->language('api/api');
+		$this->load->language('api/order');
 		
 		$json = array();
 		
@@ -53,7 +53,7 @@ class ControllerApiOrder extends Controller {
 		if (!$json) {
 			$this->session->data['customer'] = array(
 				'customer_id'       => $this->request->post['customer_id'],
-				'customer_group_id' => $this->request->post['customer_group_id'],
+				'customer_group_id' => $customer_group_id,
 				'firstname'         => $this->request->post['firstname'],
 				'lastname'          => $this->request->post['lastname'],
 				'email'             => $this->request->post['email'],
@@ -98,12 +98,6 @@ class ControllerApiOrder extends Controller {
 			// Shipping Method
 			if (!isset($this->request->post['shipping_method'])) {
 				$json['error']['warning'] = $this->language->get('error_shipping_method');
-			} else {
-				$shipping = explode('.', $this->request->post['shipping_method']);
-	
-				if (!isset($shipping[0]) || !isset($shipping[1]) || !isset($this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]])) {
-					$json['error']['warning'] = $this->language->get('error_shipping_method');
-				}
 			}
 		} else {
 			unset($this->session->data['shipping_address']);
@@ -113,7 +107,7 @@ class ControllerApiOrder extends Controller {
 						
 		// Cart
 		if ((!$this->cart->hasProducts() && empty($this->session->data['vouchers'])) || (!$this->cart->hasStock() && !$this->config->get('config_stock_checkout'))) {
-			$json['error']['warning'] = $this->language->get('error_cart');
+			$json['error']['warning'] = $this->language->get('error_stock');
 		}
 		
 		// Validate minimum quantity requirments.
@@ -129,7 +123,7 @@ class ControllerApiOrder extends Controller {
 			}
 
 			if ($product['minimum'] > $product_total) {
-				$json['error']['warning'] = $this->language->get('error_minimum');
+				$json['error']['warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
 
 				break;
 			}
@@ -385,12 +379,16 @@ class ControllerApiOrder extends Controller {
 
 		//$this->load->model('checkout/order');
 
-		//$this->session->data['order_id'] = $this->model_checkout_order->addOrder($order_data);
+		//$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
 	
 		$this->response->setOutput(json_encode($json));	
-	}		
+	}
 	
 	public function editOrder() {
+		$this->load->language('api/order');
+		
+		$json = array();
+		
 		// Add the coupon, vouchers and reward points back
 		if (isset($this->request->get['order_id'])) {
 			$this->load->model('account/order');
@@ -409,11 +407,16 @@ class ControllerApiOrder extends Controller {
 				}
 			}
 		}
-					
+		
+		$this->response->setOutput(json_encode($json));				
 	}
 	
 	public function deleteOrder() {
+		$this->load->language('api/order');
 		
+		$json = array();		
+		
+		$this->response->setOutput(json_encode($json));	
 	}
 	
 	public function getOrder() {

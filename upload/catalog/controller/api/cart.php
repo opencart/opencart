@@ -81,7 +81,7 @@ class ControllerApiCart extends Controller {
 		if (isset($this->request->post['key'])) {
 			$this->cart->remove($this->request->post['key']);
 
-			$this->session->data['success'] = $this->language->get('text_remove');
+			$json['success'] = $this->language->get('text_success');
 
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
@@ -145,7 +145,7 @@ class ControllerApiCart extends Controller {
 				'option'     => $option_data,
 				'download'   => $download_data,
 				'quantity'   => $product['quantity'],
-				'stock'      => $product['stock'],
+				'stock'      => $product['stock'] ? true : !(!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning')),
 				'price'      => $product['price'],	
 				'total'      => $product['total'],	
 				'tax'        => $this->tax->getTax($product['price'], $product['tax_class_id']),
@@ -217,7 +217,7 @@ class ControllerApiCart extends Controller {
 		foreach ($total_data as $total) {
 			$data['totals'][] = array(
 				'title' => $total['title'],
-				'text'  => $this->currency->format($total['value']),
+				'text'  => $this->currency->format($total['value'])
 			);
 		}
 		

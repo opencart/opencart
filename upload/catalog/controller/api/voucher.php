@@ -67,7 +67,7 @@ class ControllerApiVoucher extends Controller {
 				'amount'           => $this->currency->convert($this->request->post['amount'], $this->currency->getCode(), $this->config->get('config_currency'))
 			);
 			
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_cart');
 		}
 		
 		$this->response->setOutput(json_encode($json));
@@ -80,7 +80,7 @@ class ControllerApiVoucher extends Controller {
 		
 		unset($this->session->data['vouchers'][$this->request->post['key']]);
 		
-		$json['success'] = $this->language->get('text_success');
+		$json['success'] = $this->language->get('text_cart');
 		
 		$this->response->setOutput(json_encode($json));
 	}

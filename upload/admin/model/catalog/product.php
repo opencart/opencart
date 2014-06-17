@@ -259,7 +259,14 @@ class ModelCatalogProduct extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "url_alias SET query = 'product_id=" . (int)$product_id . "', keyword = '" . $this->db->escape($data['keyword']) . "'");
 		}
 
-		$this->db->query("DELETE FROM `" . DB_PREFIX . "product_profile` WHERE product_id = " . (int)$product_id);		if (isset($data['product_profiles'])) {			foreach ($data['product_profiles'] as $profile) {				$this->db->query("INSERT INTO `" . DB_PREFIX . "product_profile` SET `product_id` = " . (int)$product_id . ", customer_group_id = " . (int)$profile['customer_group_id'] . ", `profile_id` = " . (int)$profile['profile_id']);			}		}		$this->cache->delete('product');
+		$this->db->query ( "DELETE FROM `" . DB_PREFIX . "product_profile` WHERE product_id = " . ( int ) $product_id );
+		if (isset ( $data ['product_profiles'] )) {
+			foreach ( $data ['product_profiles'] as $profile ) {
+				$this->db->query ( "INSERT INTO `" . DB_PREFIX . "product_profile` SET `product_id` = " . ( int ) $product_id . ", customer_group_id = " . ( int ) $profile ['customer_group_id'] . ", `profile_id` = " . ( int ) $profile ['profile_id'] );
+			}
+		}
+		
+		$this->cache->delete ( 'product' );
 	}
 
 	public function copyProduct($product_id) {

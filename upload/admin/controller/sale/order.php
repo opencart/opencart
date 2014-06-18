@@ -2297,7 +2297,7 @@ class ControllerSaleOrder extends Controller {
 				// Allowed file extension types
 				$allowed = array();
 
-				$filetypes = explode("\n", $this->config->get('config_file_extension_allowed'));
+				$filetypes = explode("\n", str_replace(array("\r\n", "\r"), "\n", $this->config->get('config_file_extension_allowed')));
 
 				foreach ($filetypes as $filetype) {
 					$allowed[] = trim($filetype);
@@ -2310,8 +2310,7 @@ class ControllerSaleOrder extends Controller {
 				// Allowed file mime types
 				$allowed = array();
 
-				$filetypes = explode("\n", $this->config->get('config_file_mime_allowed'));
-
+				$filetypes = explode("\n", str_replace(array("\r\n", "\r"), "\n", $this->config->get('config_file_mime_allowed')));
 				foreach ($filetypes as $filetype) {
 					$allowed[] = trim($filetype);
 				}

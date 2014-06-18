@@ -139,6 +139,10 @@ class ControllerOpenbayEtsy extends Controller {
 		$this->response->setOutput($this->load->view('openbay/etsy_settings.tpl', $data));
 	}
 
+	public function settingsUpdate() {
+		$this->openbay->etsy->settingsUpdate();
+	}
+
 	public function verifyDetails() {
 		echo json_encode(array('error' => false));
 	}

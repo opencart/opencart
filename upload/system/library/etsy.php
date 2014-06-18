@@ -99,4 +99,30 @@ final class Etsy {
 			return false;
 		}
 	}
+
+	public function settingsUpdate() {
+		$this->log('Etsy loadDataTypes() start');
+
+		$response = $this->call('data/type/getSetup', 'GET');
+
+		foreach ($response['data'] as $key => $options) {
+			$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_setting_option` WHERE  `key` = '".$this->db->escape($key)."' LIMIT 1");
+
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_setting_option` SET `data` = '" . $this->db->escape(serialize($options)) . "', `key` = '".$this->db->escape($key)."', `last_updated`  = now()");
+
+			$this->log('Updated Etsy option: '.$key);
+		}
+
+		$this->log('Etsy loadDataTypes() complete');
+	}
+
+	public function getSetting($key) {
+		$qry = $this->db->query("SELECT `data` FROM `" . DB_PREFIX . "etsy_setting_option` WHERE `key` = '" . $this->db->escape($key) . "' LIMIT 1");
+
+		if($qry->num_rows > 0) {
+			return unserialize($qry->row['data']);
+		}else{
+			return false;
+		}
+	}
 }

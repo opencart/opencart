@@ -1408,10 +1408,16 @@ class ControllerExtensionOpenbay extends Controller {
 			return;
 		}
 
+		if($this->config->get('etsy_status') != '1' && $filter['filter_market_name'] == 'etsy') {
+			$this->response->redirect($this->url->link('extension/openbay/itemList', 'token=' . $this->session->data['token'], 'SSL'));
+			return;
+		}
+
 		$data['marketplace_statuses'] = array(
 			'ebay' => $this->config->get('ebay_status'),
 			'amazon' => $this->config->get('amazon_status'),
 			'amazonus' => $this->config->get('amazonus_status'),
+			'etsy' => $this->config->get('etsy_status'),
 		);
 
 		$product_total = $this->model_openbay_openbay->getTotalProducts($filter);
@@ -1519,6 +1525,26 @@ class ControllerExtensionOpenbay extends Controller {
 						'name'      => 'Amazon US',
 						'text'      => $this->language->get('text_openbay_new'),
 						'href'      => $this->url->link('openbay/amazonus_listing/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+					);
+				}
+			}
+
+			if ($this->config->get('etsy_status') == '1') {
+				$this->load->model('openbay/etsy_product');
+
+				$status = $this->model_openbay_etsy_product->getStatus($result['product_id']);
+
+				if($status == 0) {
+					$markets[] = array(
+						'name'      => 'Etsy',
+						'text'      => $this->language->get('text_openbay_new'),
+						'href'      => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
+					);
+				} else {
+					$markets[] = array(
+						'name'      => 'Etsy',
+						'text'      => $this->language->get('text_openbay_edit'),
+						'href'      => $this->url->link('openbay/etsy_product/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $result['product_id'] . $url, 'SSL'),
 					);
 				}
 			}

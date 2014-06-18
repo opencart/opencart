@@ -78,17 +78,6 @@ class ControllerSaleOrder extends Controller {
 
 			$this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
-
-		$this->getList();
-	}
-	
-	
-	public function paymentMethods() {
-
-	}
-	
-	public function shippingMethods() {
-		
 	}
 	
 	public function refresh() {
@@ -259,11 +248,8 @@ class ControllerSaleOrder extends Controller {
 	}
 	
 	private function api($url, $data) {
-		
-		
 		// Make curl request
 		$curl = curl_init($url);
-				
 		
 		curl_setopt($curl, CURLOPT_PORT, 443);
 		curl_setopt($curl, CURLOPT_HEADER, 0);

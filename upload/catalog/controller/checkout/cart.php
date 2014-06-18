@@ -224,7 +224,7 @@ class ControllerCheckoutCart extends Controller {
 			foreach ($total_data as $total) {
 				$data['totals'][] = array(
 					'title' => $total['title'],
-					'text'  => $this->currency->format($total['value']),
+					'text'  => $this->currency->format($total['value'])
 				);
 			}
 

@@ -486,7 +486,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				'option' => $option_data,
 				'quantity' => $product['quantity'],
 				'price' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax'))),
-				'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity']),
+				'total' => $this->currency->format($this->tax->calculate($product['price'], $product['tax_class_id'], $this->config->get('config_tax')) * $product['quantity'])
 			);
 		}
 		
@@ -497,7 +497,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		foreach ($total_data as $total) {
 			$data['totals'][] = array(
 				'title' => $total['title'],
-				'text'  => $this->currency->format($total['value']),
+				'text'  => $this->currency->format($total['value'])
 			);				
 		}
 
@@ -583,10 +583,10 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		foreach ($ordered_products as $product) {
 
 			$parameters_items['products'][] = array(
-				'title' => html_entity_decode($product['name'], ENT_QUOTES, 'UTF-8'),
-				'model' => $product['order_product_id'],
+				'title'    => html_entity_decode($product['name'], ENT_QUOTES, 'UTF-8'),
+				'model'    => $product['order_product_id'],
 				'quantity' => $product['quantity'],
-				'price' => $this->currency->format($product['price'] + $product['tax'], $currency_code, '', false),
+				'price'    => $this->currency->format($product['price'] + $product['tax'], $currency_code, '', false)
 			);
 
 			$total += ($product['price'] + $product['tax']) * $product['quantity'];
@@ -600,7 +600,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				'title' => $order_total['title'],
 				'model' => 'ot_' . $order_total['order_total_id'],
 				'quantity' => 1,
-				'price' => $this->currency->format($order_total['price'], $currency_code, '', false),
+				'price' => $this->currency->format($order_total['price'], $currency_code, '', false)
 			);
 
 			$total += $order_total['price'];
@@ -830,7 +830,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 				'country' => $country_name,
 				'iso_code_2' => $iso_code2,
 				'iso_code_3' => $iso_code3,
-				'address_format' => $address_format,
+				'address_format' => $address_format
 			);
 
 			$quotes = array();

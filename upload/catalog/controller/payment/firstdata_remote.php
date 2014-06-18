@@ -75,7 +75,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			'NNN' => $this->language->get('text_address_nnn'),
 			'YPX' => $this->language->get('text_address_ypx'),
 			'PYX' => $this->language->get('text_address_pyx'),
-			'XXU' => $this->language->get('text_address_xxu'),
+			'XXU' => $this->language->get('text_address_xxu')
 		);
 
 		$cvv_codes = array(
@@ -85,7 +85,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			'S' => $this->language->get('text_card_code_s'),
 			'U' => $this->language->get('text_card_code_u'),
 			'X' => $this->language->get('text_card_code_x'),
-			'NONE' => $this->language->get('text_card_code_blank'),
+			'NONE' => $this->language->get('text_card_code_blank')
 		);
 
 		if (!isset($this->request->post['cc_choice']) || (isset($this->request->post['cc_choice']) && $this->request->post['cc_choice'] == 'new')) {

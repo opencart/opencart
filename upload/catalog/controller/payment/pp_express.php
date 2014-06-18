@@ -79,7 +79,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'HDRBORDERCOLOR'     => $this->config->get('pp_express_border_colour'),
 			'HDRBACKCOLOR'       => $this->config->get('pp_express_header_colour'),
 			'PAYFLOWCOLOR'       => $this->config->get('pp_express_page_colour'),
-			'CHANNELTYPE'        => 'Merchant',
+			'CHANNELTYPE'        => 'Merchant'
 		);
 		
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());
@@ -123,7 +123,7 @@ class ControllerPaymentPPExpress extends Controller {
 		$this->load->model('payment/pp_express');
 		$data = array(
 			'METHOD' => 'GetExpressCheckoutDetails',
-			'TOKEN'  => $this->session->data['paypal']['token'],
+			'TOKEN'  => $this->session->data['paypal']['token']
 		);
 
 		$result = $this->model_payment_pp_express->call($data);
@@ -323,7 +323,7 @@ class ControllerPaymentPPExpress extends Controller {
 						'postcode'   => $result['PAYMENTREQUEST_0_SHIPTOZIP'],
 						'city'       => $result['PAYMENTREQUEST_0_SHIPTOCITY'],
 						'zone_id'    => (isset($zone_info['zone_id']) ? $zone_info['zone_id'] : 0),
-						'country_id' => (isset($country_info['country_id']) ? $country_info['country_id'] : 0),
+						'country_id' => (isset($country_info['country_id']) ? $country_info['country_id'] : 0)
 					);
 
 					$address_id = $this->model_account_address->addAddress($address_data);
@@ -527,7 +527,7 @@ class ControllerPaymentPPExpress extends Controller {
 				'remove'              => $this->url->link('checkout/cart', 'remove=' . $product['key']),
 				'recurring'           => $product['recurring'],
 				'profile_name'        => (isset($product['recurring']['profile_name']) ? $product['recurring']['profile_name'] : ''),
-				'profile_description' => $profile_description,
+				'profile_description' => $profile_description
 			);
 		}
 
@@ -1078,7 +1078,7 @@ class ControllerPaymentPPExpress extends Controller {
 				'PAYERID'                    => $this->session->data['paypal']['payerid'],
 				'METHOD'                     => 'DoExpressCheckoutPayment',
 				'PAYMENTREQUEST_0_NOTIFYURL' => $this->url->link('payment/pp_express/ipn', '', 'SSL'),
-				'RETURNFMFDETAILS'           => 1,
+				'RETURNFMFDETAILS'           => 1
 			);
 
 			$paypal_data = array_merge($paypal_data, $this->model_payment_pp_express->paymentRequestInfo());
@@ -1128,7 +1128,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'capture_status'   => ($this->config->get('pp_express_method') == 'Sale' ? 'Complete' : 'NotComplete'),
 					'currency_code'    => $result['PAYMENTINFO_0_CURRENCYCODE'],
 					'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
-					'total'            => $result['PAYMENTINFO_0_AMT'],
+					'total'            => $result['PAYMENTINFO_0_AMT']
 				);
 				$paypal_order_id = $this->model_payment_pp_express->addOrder($paypal_order_data);
 
@@ -1145,7 +1145,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'pending_reason'        => $result['PAYMENTINFO_0_PENDINGREASON'],
 					'transaction_entity'    => ($this->config->get('pp_express_method') == 'Sale' ? 'payment' : 'auth'),
 					'amount'                => $result['PAYMENTINFO_0_AMT'],
-					'debug_data'            => json_encode($result),
+					'debug_data'            => json_encode($result)
 				);
 				$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
@@ -1174,7 +1174,7 @@ class ControllerPaymentPPExpress extends Controller {
 							'BILLINGFREQUENCY'   => $item['recurring']['cycle'],
 							'TOTALBILLINGCYCLES' => $item['recurring']['duration'],
 							'AMT'                => $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
-							'CURRENCYCODE'       => $this->currency->getCode(),
+							'CURRENCYCODE'       => $this->currency->getCode()
 						);
 
 						//trial information
@@ -1183,7 +1183,7 @@ class ControllerPaymentPPExpress extends Controller {
 								'TRIALBILLINGPERIOD'      => $billing_period[$item['recurring']['trial_frequency']],
 								'TRIALBILLINGFREQUENCY'   => $item['recurring']['trial_cycle'],
 								'TRIALTOTALBILLINGCYCLES' => $item['recurring']['trial_duration'],
-								'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
+								'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity']
 							);
 
 							$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'].' '.$this->currency->getCode();
@@ -1282,7 +1282,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'HDRBACKCOLOR'       => $this->config->get('pp_express_header_colour'),
 			'PAYFLOWCOLOR'       => $this->config->get('pp_express_page_colour'),
 			'CHANNELTYPE'        => 'Merchant',
-			'ALLOWNOTE'          => $this->config->get('pp_express_allow_note'),
+			'ALLOWNOTE'          => $this->config->get('pp_express_allow_note')
 		);
 
 		$data = array_merge($data, $this->model_payment_pp_express->paymentRequestInfo());
@@ -1325,7 +1325,7 @@ class ControllerPaymentPPExpress extends Controller {
 
 		$data = array(
 			'METHOD' => 'GetExpressCheckoutDetails',
-			'TOKEN'  => $this->session->data['paypal']['token'],
+			'TOKEN'  => $this->session->data['paypal']['token']
 		);
 
 		$result = $this->model_payment_pp_express->call($data);
@@ -1340,7 +1340,7 @@ class ControllerPaymentPPExpress extends Controller {
 			'PAYERID'                    => $this->session->data['paypal']['payerid'],
 			'METHOD'                     => 'DoExpressCheckoutPayment',
 			'PAYMENTREQUEST_0_NOTIFYURL' => $this->url->link('payment/pp_express/ipn', '', 'SSL'),
-			'RETURNFMFDETAILS'           => 1,
+			'RETURNFMFDETAILS'           => 1
 		);
 
 		$paypal_data = array_merge($paypal_data, $this->model_payment_pp_express->paymentRequestInfo());
@@ -1390,7 +1390,7 @@ class ControllerPaymentPPExpress extends Controller {
 				'capture_status'   => ($this->config->get('pp_express_method') == 'Sale' ? 'Complete' : 'NotComplete'),
 				'currency_code'    => $result['PAYMENTINFO_0_CURRENCYCODE'],
 				'authorization_id' => $result['PAYMENTINFO_0_TRANSACTIONID'],
-				'total'            => $result['PAYMENTINFO_0_AMT'],
+				'total'            => $result['PAYMENTINFO_0_AMT']
 			);
 
 			$paypal_order_id = $this->model_payment_pp_express->addOrder($paypal_order_data);
@@ -1408,7 +1408,7 @@ class ControllerPaymentPPExpress extends Controller {
 				'pending_reason'        => $result['PAYMENTINFO_0_PENDINGREASON'],
 				'transaction_entity'    => ($this->config->get('pp_express_method') == 'Sale' ? 'payment' : 'auth'),
 				'amount'                => $result['PAYMENTINFO_0_AMT'],
-				'debug_data'            => json_encode($result),
+				'debug_data'            => json_encode($result)
 			);
 			$this->model_payment_pp_express->addTransaction($paypal_transaction_data);
 
@@ -1435,7 +1435,7 @@ class ControllerPaymentPPExpress extends Controller {
 						'BILLINGFREQUENCY'   => $item['recurring']['cycle'],
 						'TOTALBILLINGCYCLES' => $item['recurring']['duration'],
 						'AMT'                => $this->currency->format($this->tax->calculate($item['recurring']['price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
-						'CURRENCYCODE'       => $this->currency->getCode(),
+						'CURRENCYCODE'       => $this->currency->getCode()
 					);
 
 					//trial information
@@ -1444,7 +1444,7 @@ class ControllerPaymentPPExpress extends Controller {
 							'TRIALBILLINGPERIOD'      => $billing_period[$item['recurring']['trial_frequency']],
 							'TRIALBILLINGFREQUENCY'   => $item['recurring']['trial_cycle'],
 							'TRIALTOTALBILLINGCYCLES' => $item['recurring']['trial_duration'],
-							'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'],
+							'TRIALAMT'                => $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity']
 						);
 
 						$trial_amt = $this->currency->format($this->tax->calculate($item['recurring']['trial_price'], $item['tax_class_id'], $this->config->get('config_tax')), false, false, false) * $item['quantity'].' '.$this->currency->getCode();
@@ -1639,7 +1639,7 @@ class ControllerPaymentPPExpress extends Controller {
 						'pending_reason'        => (isset($this->request->post['pending_reason']) ? $this->request->post['pending_reason'] : ''),
 						'amount'                => $this->request->post['mc_gross'],
 						'debug_data'            => json_encode($this->request->post),
-						'transaction_entity'    => (isset($this->request->post['transaction_entity']) ? $this->request->post['transaction_entity'] : ''),
+						'transaction_entity'    => (isset($this->request->post['transaction_entity']) ? $this->request->post['transaction_entity'] : '')
 					);
 
 					$this->model_payment_pp_express->addTransaction($transaction);

@@ -444,7 +444,7 @@ class ControllerPaymentPPExpress extends Controller {
 				'pending_reason' => '',
 				'transaction_entity' => 'payment',
 				'amount' => '',
-				'debug_data' => json_encode($result),
+				'debug_data' => json_encode($result)
 			);
 
 			if ($result == false) {
@@ -550,7 +550,7 @@ class ControllerPaymentPPExpress extends Controller {
 					'pending_reason' => '',
 					'transaction_entity' => 'auth',
 					'amount' => '',
-					'debug_data' => json_encode($result),
+					'debug_data' => json_encode($result)
 				);
 
 				$this->model_payment_pp_express->addTransaction($transaction);
@@ -691,7 +691,7 @@ class ControllerPaymentPPExpress extends Controller {
 						'transaction_entity' => 'payment',
 						'pending_reason' => '',
 						'amount' => '-' . (isset($call_data['AMT']) ? $call_data['AMT'] : $current_transaction['amount']),
-						'debug_data' => json_encode($result),
+						'debug_data' => json_encode($result)
 					);
 
 					if ($result == false) {

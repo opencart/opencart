@@ -377,7 +377,7 @@ class ControllerPaymentPPProIframe extends Controller {
 						'transaction_entity' => 'payment',
 						'pending_reason' => '',
 						'amount' => '-' . (isset($call_data['AMT']) ? $call_data['AMT'] : $current_transaction['amount']),
-						'debug_data' => json_encode($result),
+						'debug_data' => json_encode($result)
 					);
 
 					if ($result == false) {
@@ -449,7 +449,7 @@ class ControllerPaymentPPProIframe extends Controller {
 					'transaction_entity' => 'auth',
 					'pending_reason' => $result['PENDINGREASON'],
 					'amount' => '-' . '',
-					'debug_data' => json_encode($result),
+					'debug_data' => json_encode($result)
 				);
 
 				$this->model_payment_pp_pro_iframe->addTransaction($transaction);
@@ -639,7 +639,7 @@ class ControllerPaymentPPProIframe extends Controller {
 				'pending_reason' => '',
 				'transaction_entity' => 'payment',
 				'amount' => '',
-				'debug_data' => json_encode($result),
+				'debug_data' => json_encode($result)
 			);
 
 			if ($result == false) {
@@ -744,7 +744,7 @@ class ControllerPaymentPPProIframe extends Controller {
 					'pending_reason' => '',
 					'transaction_entity' => 'auth',
 					'amount' => '',
-					'debug_data' => json_encode($result),
+					'debug_data' => json_encode($result)
 				);
 
 				$this->model_payment_pp_pro_iframe->addTransaction($transaction);

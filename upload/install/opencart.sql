@@ -7,18 +7,20 @@
 -- --------------------------------------------------------
 
 SET sql_mode = '';
-
-DROP TABLE IF EXISTS `oc_product_profile`;
+DROP TABLE IF EXISTS `oc_address`;
 CREATE TABLE `oc_product_profile` (
   `product_id` int(11) NOT NULL,
   `profile_id` int(11) NOT NULL,
   `customer_group_id` int(11) NOT NULL,
   PRIMARY KEY (`product_id`,`profile_id`,`customer_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM COLLATE=utf8_general_ci;
 
-DROP TABLE IF EXISTS `oc_profile`;
+
+DROP TABLE IF EXISTS `oc_address`;
 CREATE TABLE `oc_profile` (
   `profile_id` int(11) NOT NULL AUTO_INCREMENT,
+  `sort_order` int(11) NOT NULL,
+  `status` tinyint(4) NOT NULL,
   `price` decimal(10,4) NOT NULL,
   `frequency` enum('day','week','semi_month','month','year') NOT NULL,
   `duration` int(10) unsigned NOT NULL,
@@ -28,19 +30,16 @@ CREATE TABLE `oc_profile` (
   `trial_frequency` enum('day','week','semi_month','month','year') NOT NULL,
   `trial_duration` int(10) unsigned NOT NULL,
   `trial_cycle` int(10) unsigned NOT NULL,
-  `status` tinyint(4) NOT NULL,
-  `sort_order` int(11) NOT NULL,
   PRIMARY KEY (`profile_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM COLLATE=utf8_general_ci;
 
-
-DROP TABLE IF EXISTS `oc_profile_description`;
+DROP TABLE IF EXISTS `oc_address`;
 CREATE TABLE `oc_profile_description` (
   `profile_id` int(11) NOT NULL,
   `language_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   PRIMARY KEY (`profile_id`,`language_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+) ENGINE=MyISAM COLLATE=utf8_general_ci;
 
 --
 -- Table structure for table `oc_order_recurring`
@@ -84,7 +83,6 @@ CREATE TABLE `oc_order_recurring_transaction` (
   `created` datetime NOT NULL,
   `amount` decimal(10,4) NOT NULL,
   `type` varchar(255) NOT NULL,
-  `reference` varchar(255) NOT NULL,
   PRIMARY KEY (`order_recurring_transaction_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -100,14 +98,15 @@ CREATE TABLE `oc_address` (
   `customer_id` int(11) NOT NULL,
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
-  `company` varchar(40) NOT NULL,
+  `company` varchar(32) NOT NULL,
+  `company_id` varchar(32) NOT NULL,
+  `tax_id` varchar(32) NOT NULL,
   `address_1` varchar(128) NOT NULL,
   `address_2` varchar(128) NOT NULL,
   `city` varchar(128) NOT NULL,
   `postcode` varchar(10) NOT NULL,
   `country_id` int(11) NOT NULL DEFAULT '0',
   `zone_id` int(11) NOT NULL DEFAULT '0',
-  `custom_field` text NOT NULL,
   PRIMARY KEY (`address_id`),
   KEY `customer_id` (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -115,6 +114,7 @@ CREATE TABLE `oc_address` (
 --
 -- Dumping data for table `oc_address`
 --
+
 
 -- --------------------------------------------------------
 
@@ -132,7 +132,7 @@ CREATE TABLE `oc_affiliate` (
   `fax` varchar(32) NOT NULL,
   `password` varchar(40) NOT NULL,
   `salt` varchar(9) NOT NULL,
-  `company` varchar(40) NOT NULL,
+  `company` varchar(32) NOT NULL,
   `website` varchar(255) NOT NULL,
   `address_1` varchar(128) NOT NULL,
   `address_2` varchar(128) NOT NULL,
@@ -162,25 +162,6 @@ CREATE TABLE `oc_affiliate` (
 -- Dumping data for table `oc_affiliate`
 --
 
--- --------------------------------------------------------
---
--- Table structure for table `oc_affiliate_activity`
---
-
-DROP TABLE IF EXISTS `oc_affiliate_activity`;
-CREATE TABLE `oc_affiliate_activity` (
-  `activity_id` int(11) NOT NULL AUTO_INCREMENT,
-  `affiliate_id` int(11) NOT NULL,
-  `key` varchar(64) NOT NULL,
-  `data` text NOT NULL,
-  `ip` varchar(40) NOT NULL,
-  `date_added` datetime NOT NULL,
-  PRIMARY KEY (`activity_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_affiliate_activity`
---
 
 -- --------------------------------------------------------
 
@@ -203,25 +184,6 @@ CREATE TABLE `oc_affiliate_transaction` (
 -- Dumping data for table `oc_affiliate_transaction`
 --
 
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_api`
---
-
-CREATE TABLE IF NOT EXISTS `oc_api` (
-  `api_id` int(11) NOT NULL AUTO_INCREMENT,
-  `username` int(20) NOT NULL,
-  `key` text NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL,
-  `date_modififed` datetime NOT NULL,
-  PRIMARY KEY (`api_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_api`
---
 
 -- --------------------------------------------------------
 
@@ -367,7 +329,6 @@ CREATE TABLE `oc_banner_image` (
   `banner_id` int(11) NOT NULL,
   `link` varchar(255) NOT NULL,
   `image` varchar(255) NOT NULL,
-  `sort_order` int(3) NOT NULL DEFAULT '0',
   PRIMARY KEY (`banner_image_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -375,15 +336,15 @@ CREATE TABLE `oc_banner_image` (
 -- Dumping data for table `oc_banner_image`
 --
 
-INSERT INTO `oc_banner_image` (`banner_image_id`, `banner_id`, `link`, `image`, `sort_order`) VALUES
-(54, 7, 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'catalog/demo/samsung_banner.jpg', 0),
-(77, 6, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'catalog/demo/hp_banner.jpg', 0),
-(75, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=5', 'catalog/demo/htc_logo.jpg', 0),
-(73, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=8', 'catalog/demo/apple_logo.jpg', 1),
-(74, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=9', 'catalog/demo/canon_logo.jpg', 2),
-(71, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=10', 'catalog/demo/sony_logo.jpg', 3),
-(72, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=6', 'catalog/demo/palm_logo.jpg', 4),
-(76, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'catalog/demo/hp_logo.jpg', 5);
+INSERT INTO `oc_banner_image` (`banner_image_id`, `banner_id`, `link`, `image`) VALUES
+(54, 7, 'index.php?route=product/product&amp;path=57&amp;product_id=49', 'data/demo/samsung_banner.jpg'),
+(77, 6, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'data/demo/hp_banner.jpg'),
+(75, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=5', 'data/demo/htc_logo.jpg'),
+(73, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=8', 'data/demo/apple_logo.jpg'),
+(74, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=9', 'data/demo/canon_logo.jpg'),
+(71, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=10', 'data/demo/sony_logo.jpg'),
+(72, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=6', 'data/demo/palm_logo.jpg'),
+(76, 8, 'index.php?route=product/manufacturer/info&amp;manufacturer_id=7', 'data/demo/hp_logo.jpg');
 
 -- --------------------------------------------------------
 
@@ -429,10 +390,9 @@ CREATE TABLE `oc_category` (
   `column` int(3) NOT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL,
-  PRIMARY KEY (`category_id`),
-  KEY `parent_id` (`parent_id`)
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  PRIMARY KEY (`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -442,9 +402,9 @@ CREATE TABLE `oc_category` (
 INSERT INTO `oc_category` (`category_id`, `image`, `parent_id`, `top`, `column`, `sort_order`, `status`, `date_added`, `date_modified`) VALUES
 (25, '', 0, 1, 1, 3, 1, '2009-01-31 01:04:25', '2011-05-30 12:14:55'),
 (27, '', 20, 0, 0, 2, 1, '2009-01-31 01:55:34', '2010-08-22 06:32:15'),
-(20, 'catalog/demo/compaq_presario.jpg', 0, 1, 1, 1, 1, '2009-01-05 21:49:43', '2011-07-16 02:14:42'),
+(20, 'data/demo/compaq_presario.jpg', 0, 1, 1, 1, 1, '2009-01-05 21:49:43', '2011-07-16 02:14:42'),
 (24, '', 0, 1, 1, 5, 1, '2009-01-20 02:36:26', '2011-05-30 12:15:18'),
-(18, 'catalog/demo/hp_2.jpg', 0, 1, 0, 2, 1, '2009-01-05 21:49:15', '2011-05-30 12:13:55'),
+(18, 'data/demo/hp_2.jpg', 0, 1, 0, 2, 1, '2009-01-05 21:49:15', '2011-05-30 12:13:55'),
 (17, '', 0, 1, 1, 4, 1, '2009-01-03 21:08:57', '2011-05-30 12:15:11'),
 (28, '', 25, 0, 0, 1, 1, '2009-02-02 13:11:12', '2010-08-22 06:32:46'),
 (26, '', 20, 0, 0, 1, 1, '2009-01-31 01:55:14', '2010-08-22 06:31:45'),
@@ -453,7 +413,7 @@ INSERT INTO `oc_category` (`category_id`, `image`, `parent_id`, `top`, `column`,
 (31, '', 25, 0, 0, 1, 1, '2009-02-03 14:17:24', '2010-08-22 06:33:06'),
 (32, '', 25, 0, 0, 1, 1, '2009-02-03 14:17:34', '2010-08-22 06:33:12'),
 (33, '', 0, 1, 1, 6, 1, '2009-02-03 14:17:55', '2011-05-30 12:15:25'),
-(34, 'catalog/demo/ipod_touch_4.jpg', 0, 1, 4, 7, 1, '2009-02-03 14:18:11', '2011-05-30 12:15:31'),
+(34, 'data/demo/ipod_touch_4.jpg', 0, 1, 4, 7, 1, '2009-02-03 14:18:11', '2011-05-30 12:15:31'),
 (35, '', 28, 0, 0, 0, 1, '2010-09-17 10:06:48', '2010-09-18 14:02:42'),
 (36, '', 28, 0, 0, 0, 1, '2010-09-17 10:07:13', '2010-09-18 14:02:55'),
 (37, '', 34, 0, 0, 0, 1, '2010-09-18 14:03:39', '2011-04-22 01:55:08'),
@@ -491,7 +451,6 @@ CREATE TABLE `oc_category_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL,
   PRIMARY KEY (`category_id`,`language_id`),
@@ -980,6 +939,8 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (237, 'Democratic Republic of Congo', 'CD', 'COD', '', 0, 1),
 (238, 'Zambia', 'ZM', 'ZMB', '', 0, 1),
 (239, 'Zimbabwe', 'ZW', 'ZWE', '', 0, 1),
+(240, 'Jersey', 'JE', 'JEY', '', 1, 1),
+(241, 'Guernsey', 'GG', 'GGY', '', 1, 1),
 (242, 'Montenegro', 'ME', 'MNE', '', 0, 1),
 (243, 'Serbia', 'RS', 'SRB', '', 0, 1),
 (244, 'Aaland Islands', 'AX', 'ALA', '', 0, 1),
@@ -989,13 +950,7 @@ INSERT INTO `oc_country` (`country_id`, `name`, `iso_code_2`, `iso_code_3`, `add
 (248, 'South Sudan', 'SS', 'SSD', '', 0, 1),
 (249, 'St. Barthelemy', 'BL', 'BLM', '', 0, 1),
 (250, 'St. Martin (French part)', 'MF', 'MAF', '', 0, 1),
-(251, 'Canary Islands', 'IC', 'ICA', '', 0, 1),
-(252, 'Ascension Island (British)', 'AC', 'ASC', '', 0, 1),
-(253, 'Kosovo, Republic of', 'XK', 'UNK', '', 0, 1),
-(254, 'Isle of Man', 'IM', 'IMN', '', 0, 1),
-(255, 'Tristan da Cunha', 'TA', 'SHN', '', 0, 1),
-(256, 'Guernsey', 'GG', 'GGY', '', 0, 1),
-(257, 'Jersey', 'JE', 'JEY', '', 0, 1);
+(251, 'Canary Islands', 'IC', 'ICA', '', 0, 1);
 -- --------------------------------------------------------
 
 --
@@ -1017,7 +972,7 @@ CREATE TABLE `oc_coupon` (
   `uses_total` int(11) NOT NULL,
   `uses_customer` varchar(11) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`coupon_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1102,7 +1057,7 @@ CREATE TABLE `oc_currency` (
   `decimal_place` char(1) NOT NULL,
   `value` float(15,8) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_modified` datetime NOT NULL,
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`currency_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1124,7 +1079,6 @@ INSERT INTO `oc_currency` (`currency_id`, `title`, `code`, `symbol_left`, `symbo
 DROP TABLE IF EXISTS `oc_customer`;
 CREATE TABLE `oc_customer` (
   `customer_id` int(11) NOT NULL AUTO_INCREMENT,
-  `customer_group_id` int(11) NOT NULL,
   `store_id` int(11) NOT NULL DEFAULT '0',
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
@@ -1137,12 +1091,12 @@ CREATE TABLE `oc_customer` (
   `wishlist` text,
   `newsletter` tinyint(1) NOT NULL DEFAULT '0',
   `address_id` int(11) NOT NULL DEFAULT '0',
-  `custom_field` text NOT NULL,
-  `ip` varchar(40) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  `ip` varchar(40) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL,
   `approved` tinyint(1) NOT NULL,
   `token` varchar(255) NOT NULL,
-  `date_added` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`customer_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1153,22 +1107,22 @@ CREATE TABLE `oc_customer` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_customer_activity`
+-- Table structure for table `customer_field`
 --
 
-DROP TABLE IF EXISTS `oc_customer_activity`;
-CREATE TABLE `oc_customer_activity` (
-  `activity_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `oc_customer_field`;
+CREATE TABLE `oc_customer_field` (
   `customer_id` int(11) NOT NULL,
-  `key` varchar(64) NOT NULL,
-  `data` text NOT NULL,
-  `ip` varchar(40) NOT NULL,
-  `date_added` datetime NOT NULL,
-  PRIMARY KEY (`activity_id`)
+  `custom_field_id` int(11) NOT NULL,
+  `custom_field_value_id` int(11) NOT NULL,
+  `name` int(128) NOT NULL,
+  `value` text NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`customer_id`,`custom_field_id`,`custom_field_value_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `oc_customer_activity`
+-- Dumping data for table `oc_customer_field`
 --
 
 -- --------------------------------------------------------
@@ -1181,6 +1135,10 @@ DROP TABLE IF EXISTS `oc_customer_group`;
 CREATE TABLE `oc_customer_group` (
   `customer_group_id` int(11) NOT NULL AUTO_INCREMENT,
   `approval` int(1) NOT NULL,
+  `company_id_display` int(1) NOT NULL,
+  `company_id_required` int(1) NOT NULL,
+  `tax_id_display` int(1) NOT NULL,
+  `tax_id_required` int(1) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`customer_group_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -1189,8 +1147,8 @@ CREATE TABLE `oc_customer_group` (
 -- Dumping data for table `oc_customer_group`
 --
 
-INSERT INTO `oc_customer_group` (`customer_group_id`, `approval`, `sort_order`) VALUES
-(1, 0, 1);
+INSERT INTO `oc_customer_group` (`customer_group_id`, `approval`, `company_id_display`, `company_id_required`, `tax_id_display`, `tax_id_required`, `sort_order`) VALUES
+(1, 0, 1, 0, 0, 1, 1);
 
 -- --------------------------------------------------------
 
@@ -1256,7 +1214,7 @@ CREATE TABLE `oc_customer_ip` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_customer_ip_ban_ip`
+-- Table structure for table `oc_customer_ban_ip`
 --
 
 DROP TABLE IF EXISTS `oc_customer_ban_ip`;
@@ -1296,7 +1254,7 @@ CREATE TABLE `oc_customer_reward` (
   `order_id` int(11) NOT NULL DEFAULT '0',
   `description` text NOT NULL,
   `points` int(8) NOT NULL DEFAULT '0',
-  `date_added` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`customer_reward_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1336,32 +1294,15 @@ CREATE TABLE `oc_custom_field` (
   `custom_field_id` int(11) NOT NULL AUTO_INCREMENT,
   `type` varchar(32) NOT NULL,
   `value` text NOT NULL,
-  `location` varchar(7) NOT NULL,
-  `status` tinyint(1) NOT NULL,
+  `required` tinyint(1) NOT NULL,
+  `location` varchar(32) NOT NULL,
+  `position` int(3) NOT NULL,
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`custom_field_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_custom_field`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_custom_field_customer_group`
---
-
-DROP TABLE IF EXISTS `oc_custom_field_customer_group`;
-CREATE TABLE `oc_custom_field_customer_group` (
-  `custom_field_id` int(11) NOT NULL,
-  `customer_group_id` int(11) NOT NULL,
-  `required` tinyint(1) NOT NULL,
-  PRIMARY KEY (`custom_field_id`,`customer_group_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_custom_field_customer_group`
 --
 
 -- --------------------------------------------------------
@@ -1380,6 +1321,23 @@ CREATE TABLE `oc_custom_field_description` (
 
 --
 -- Dumping data for table `oc_custom_field_description`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oc_custom_field_to_customer_group`
+--
+
+DROP TABLE IF EXISTS `oc_custom_field_to_customer_group`;
+CREATE TABLE `oc_custom_field_to_customer_group` (
+  `custom_field_id` int(11) NOT NULL,
+  `customer_group_id` int(11) NOT NULL,
+  PRIMARY KEY (`custom_field_id`,`customer_group_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_custom_field_to_customer_group`
 --
 
 -- --------------------------------------------------------
@@ -1430,7 +1388,8 @@ CREATE TABLE `oc_download` (
   `download_id` int(11) NOT NULL AUTO_INCREMENT,
   `filename` varchar(128) NOT NULL,
   `mask` varchar(128) NOT NULL,
-  `date_added` datetime NOT NULL,
+  `remaining` int(11) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1579,8 +1538,8 @@ CREATE TABLE `oc_geo_zone` (
   `geo_zone_id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `date_modified` datetime NOT NULL,
-  `date_added` datetime NOT NULL,
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`geo_zone_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1629,9 +1588,6 @@ CREATE TABLE `oc_information_description` (
   `language_id` int(11) NOT NULL,
   `title` varchar(64) NOT NULL,
   `description` text NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
-  `meta_description` varchar(255) NOT NULL,
-  `meta_keyword` varchar(255) NOT NULL,
   PRIMARY KEY (`information_id`,`language_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -1765,8 +1721,8 @@ CREATE TABLE `oc_layout_route` (
 --
 
 INSERT INTO `oc_layout_route` (`layout_route_id`, `layout_id`, `store_id`, `route`) VALUES
-(30, 6, 0, 'account/%'),
-(17, 10, 0, 'affiliate/%'),
+(30, 6, 0, 'account'),
+(17, 10, 0, 'affiliate/'),
 (29, 3, 0, 'product/category'),
 (26, 1, 0, 'common/home'),
 (20, 2, 0, 'product/product'),
@@ -1825,31 +1781,6 @@ INSERT INTO `oc_length_class_description` (`length_class_id`, `language_id`, `ti
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_location`
---
-
-DROP TABLE IF EXISTS `oc_location`;
-CREATE TABLE `oc_location` (
-  `location_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
-  `address` text NOT NULL,
-  `telephone` varchar(32) NOT NULL,
-  `fax` varchar(32) NOT NULL,
-  `geocode` varchar(32) NOT NULL,
-  `image` varchar(255) DEFAULT NULL,
-  `open` text NOT NULL,
-  `comment` text NOT NULL,
-  PRIMARY KEY (`location_id`),
-  KEY `name` (`name`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_location`
---
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `oc_manufacturer`
 --
 
@@ -1867,12 +1798,12 @@ CREATE TABLE `oc_manufacturer` (
 --
 
 INSERT INTO `oc_manufacturer` (`manufacturer_id`, `name`, `image`, `sort_order`) VALUES
-(5, 'HTC', 'catalog/demo/htc_logo.jpg', 0),
-(6, 'Palm', 'catalog/demo/palm_logo.jpg', 0),
-(7, 'Hewlett-Packard', 'catalog/demo/hp_logo.jpg', 0),
-(8, 'Apple', 'catalog/demo/apple_logo.jpg', 0),
-(9, 'Canon', 'catalog/demo/canon_logo.jpg', 0),
-(10, 'Sony', 'catalog/demo/sony_logo.jpg', 0);
+(5, 'HTC', 'data/demo/htc_logo.jpg', 0),
+(6, 'Palm', 'data/demo/palm_logo.jpg', 0),
+(7, 'Hewlett-Packard', 'data/demo/hp_logo.jpg', 0),
+(8, 'Apple', 'data/demo/apple_logo.jpg', 0),
+(9, 'Canon', 'data/demo/canon_logo.jpg', 0),
+(10, 'Sony', 'data/demo/sony_logo.jpg', 0);
 
 -- --------------------------------------------------------
 
@@ -1898,50 +1829,6 @@ INSERT INTO `oc_manufacturer_to_store` (`manufacturer_id`, `store_id`) VALUES
 (8, 0),
 (9, 0),
 (10, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_marketing`
---
-
-DROP TABLE IF EXISTS `oc_marketing`;
-CREATE TABLE `oc_marketing` (
-  `marketing_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(32) NOT NULL,
-  `description` text NOT NULL,
-  `code` varchar(64) NOT NULL,
-  `clicks` int(5) NOT NULL DEFAULT '0',
-  `date_added` datetime NOT NULL,
-  PRIMARY KEY (`marketing_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_marketing`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_modification`
---
-
-DROP TABLE IF EXISTS `oc_modification`;
-CREATE TABLE `oc_modification` (
-  `modification_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(64) NOT NULL,
-  `author` varchar(64) NOT NULL,
-  `version` varchar(32) NOT NULL,
-  `link` varchar(255) NOT NULL,
-  `code` text NOT NULL,
-  `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL,
-  PRIMARY KEY (`modification_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_modification`
---
 
 -- --------------------------------------------------------
 
@@ -2098,7 +1985,9 @@ CREATE TABLE `oc_order` (
   `fax` varchar(32) NOT NULL,
   `payment_firstname` varchar(32) NOT NULL,
   `payment_lastname` varchar(32) NOT NULL,
-  `payment_company` varchar(40) NOT NULL,
+  `payment_company` varchar(32) NOT NULL,
+  `payment_company_id` varchar(32) NOT NULL,
+  `payment_tax_id` varchar(32) NOT NULL,
   `payment_address_1` varchar(128) NOT NULL,
   `payment_address_2` varchar(128) NOT NULL,
   `payment_city` varchar(128) NOT NULL,
@@ -2112,7 +2001,7 @@ CREATE TABLE `oc_order` (
   `payment_code` varchar(128) NOT NULL,
   `shipping_firstname` varchar(32) NOT NULL,
   `shipping_lastname` varchar(32) NOT NULL,
-  `shipping_company` varchar(40) NOT NULL,
+  `shipping_company` varchar(32) NOT NULL,
   `shipping_address_1` varchar(128) NOT NULL,
   `shipping_address_2` varchar(128) NOT NULL,
   `shipping_city` varchar(128) NOT NULL,
@@ -2129,8 +2018,6 @@ CREATE TABLE `oc_order` (
   `order_status_id` int(11) NOT NULL DEFAULT '0',
   `affiliate_id` int(11) NOT NULL,
   `commission` decimal(15,4) NOT NULL,
-  `marketing_id` int(11) NOT NULL,
-  `tracking` varchar(64) NOT NULL,
   `language_id` int(11) NOT NULL,
   `currency_id` int(11) NOT NULL,
   `currency_code` varchar(3) NOT NULL,
@@ -2148,33 +2035,27 @@ CREATE TABLE `oc_order` (
 -- Dumping data for table `oc_order`
 --
 
+
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_order_custom_field`
+-- Table structure for table `oc_order_download`
 --
 
-DROP TABLE IF EXISTS `oc_order_custom_field`;
-CREATE TABLE `oc_order_custom_field` (
-  `order_custom_field_id` int(11) NOT NULL AUTO_INCREMENT,
+DROP TABLE IF EXISTS `oc_order_download`;
+CREATE TABLE `oc_order_download` (
+  `order_download_id` int(11) NOT NULL AUTO_INCREMENT,
   `order_id` int(11) NOT NULL,
-  `custom_field_id` int(11) NOT NULL,
-  `custom_field_value_id` int(11) NOT NULL,
-  `name` varchar(255) NOT NULL,
-  `value` text NOT NULL,
-  `type` varchar(32) NOT NULL,
-  `location` varchar(16) NOT NULL,
-  PRIMARY KEY (`order_custom_field_id`)
+  `order_product_id` int(11) NOT NULL,
+  `name` varchar(64) NOT NULL,
+  `filename` varchar(128) NOT NULL,
+  `mask` varchar(128) NOT NULL,
+  `remaining` int(3) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`order_download_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
--- Dumping data for table `oc_order_custom_field`
---
-
--- --------------------------------------------------------
-
---
--- Table structure for table `oc_order_fraud`
+-- Dumping data for table `oc_order_download`
 --
 
 DROP TABLE IF EXISTS `oc_order_fraud`;
@@ -2231,9 +2112,30 @@ CREATE TABLE `oc_order_fraud` (
   `queries_remaining` int(11) NOT NULL,
   `maxmind_id` varchar(8) NOT NULL,
   `error` text NOT NULL,
-  `date_added` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `order_field`
+--
+
+DROP TABLE IF EXISTS `oc_order_field`;
+CREATE TABLE `oc_order_field` (
+  `order_id` int(11) NOT NULL,
+  `custom_field_id` int(11) NOT NULL,
+  `custom_field_value_id` int(11) NOT NULL,
+  `name` int(128) NOT NULL,
+  `value` text NOT NULL,
+  `sort_order` int(3) NOT NULL,
+  PRIMARY KEY (`order_id`,`custom_field_id`,`custom_field_value_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_order_field`
+--
 
 -- --------------------------------------------------------
 
@@ -2248,7 +2150,7 @@ CREATE TABLE `oc_order_history` (
   `order_status_id` int(5) NOT NULL,
   `notify` tinyint(1) NOT NULL DEFAULT '0',
   `comment` text NOT NULL,
-  `date_added` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`order_history_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -2256,7 +2158,9 @@ CREATE TABLE `oc_order_history` (
 -- Dumping data for table `oc_order_history`
 --
 
+
 -- --------------------------------------------------------
+
 
 --
 -- Table structure for table `oc_order_option`
@@ -2278,6 +2182,7 @@ CREATE TABLE `oc_order_option` (
 --
 -- Dumping data for table `oc_order_option`
 --
+
 
 -- --------------------------------------------------------
 
@@ -2350,10 +2255,11 @@ CREATE TABLE `oc_order_total` (
   `order_id` int(11) NOT NULL,
   `code` varchar(32) NOT NULL,
   `title` varchar(255) NOT NULL,
+  `text` varchar(255) NOT NULL,
   `value` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `sort_order` int(3) NOT NULL,
   PRIMARY KEY (`order_total_id`),
-  KEY `order_id` (`order_id`)
+  KEY `idx_orders_total_orders_id` (`order_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -2397,7 +2303,7 @@ CREATE TABLE `oc_product` (
   `upc` varchar(12) NOT NULL,
   `ean` varchar(14) NOT NULL,
   `jan` varchar(13) NOT NULL,
-  `isbn` varchar(17) NOT NULL,
+  `isbn` varchar(13) NOT NULL,
   `mpn` varchar(64) NOT NULL,
   `location` varchar(128) NOT NULL,
   `quantity` int(4) NOT NULL DEFAULT '0',
@@ -2408,7 +2314,7 @@ CREATE TABLE `oc_product` (
   `price` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `points` int(8) NOT NULL DEFAULT '0',
   `tax_class_id` int(11) NOT NULL,
-  `date_available` date NOT NULL DEFAULT '0000-00-00',
+  `date_available` date NOT NULL,
   `weight` decimal(15,8) NOT NULL DEFAULT '0.00000000',
   `weight_class_id` int(11) NOT NULL DEFAULT '0',
   `length` decimal(15,8) NOT NULL DEFAULT '0.00000000',
@@ -2419,36 +2325,39 @@ CREATE TABLE `oc_product` (
   `minimum` int(11) NOT NULL DEFAULT '1',
   `sort_order` int(11) NOT NULL DEFAULT '0',
   `status` tinyint(1) NOT NULL DEFAULT '0',
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   `viewed` int(5) NOT NULL DEFAULT '0',
-  `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+
+
 
 --
 -- Dumping data for table `oc_product`
 --
 
 INSERT INTO `oc_product` (`product_id`, `model`, `sku`, `upc`, `location`, `quantity`, `stock_status_id`, `image`, `manufacturer_id`, `shipping`, `price`, `points`, `tax_class_id`, `date_available`, `weight`, `weight_class_id`, `length`, `width`, `height`, `length_class_id`, `subtract`, `minimum`, `sort_order`, `status`, `date_added`, `date_modified`, `viewed`) VALUES
-(28, 'Product 1', '', '', '', 939, 7, 'catalog/demo/htc_touch_hd_1.jpg', 5, 1, '100.0000', 200, 9, '2009-02-03', '146.40', 2, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 16:06:50', '2011-09-30 01:05:39', 0),
-(29, 'Product 2', '', '', '', 999, 6, 'catalog/demo/palm_treo_pro_1.jpg', 6, 1, '279.9900', 0, 9, '2009-02-03', '133.00', 2, '0.00', '0.00', '0.00', 3, 1, 1, 0, 1, '2009-02-03 16:42:17', '2011-09-30 01:06:08', 0),
-(30, 'Product 3', '', '', '', 7, 6, 'catalog/demo/canon_eos_5d_1.jpg', 9, 1, '100.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 16:59:00', '2011-09-30 01:05:23', 0),
-(31, 'Product 4', '', '', '', 1000, 6, 'catalog/demo/nikon_d300_1.jpg', 0, 1, '80.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 3, 1, 1, 0, 1, '2009-02-03 17:00:10', '2011-09-30 01:06:00', 0),
-(32, 'Product 5', '', '', '', 999, 6, 'catalog/demo/ipod_touch_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 17:07:26', '2011-09-30 01:07:22', 0),
-(33, 'Product 6', '', '', '', 1000, 6, 'catalog/demo/samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 17:08:31', '2011-09-30 01:06:29', 0),
-(34, 'Product 7', '', '', '', 1000, 6, 'catalog/demo/ipod_shuffle_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 18:07:54', '2011-09-30 01:07:17', 0),
+(28, 'Product 1', '', '', '', 939, 7, 'data/demo/htc_touch_hd_1.jpg', 5, 1, '100.0000', 200, 9, '2009-02-03', '146.40', 2, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 16:06:50', '2011-09-30 01:05:39', 0),
+(29, 'Product 2', '', '', '', 999, 6, 'data/demo/palm_treo_pro_1.jpg', 6, 1, '279.9900', 0, 9, '2009-02-03', '133.00', 2, '0.00', '0.00', '0.00', 3, 1, 1, 0, 1, '2009-02-03 16:42:17', '2011-09-30 01:06:08', 0),
+(30, 'Product 3', '', '', '', 7, 6, 'data/demo/canon_eos_5d_1.jpg', 9, 1, '100.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 16:59:00', '2011-09-30 01:05:23', 0),
+(31, 'Product 4', '', '', '', 1000, 6, 'data/demo/nikon_d300_1.jpg', 0, 1, '80.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 3, 1, 1, 0, 1, '2009-02-03 17:00:10', '2011-09-30 01:06:00', 0),
+(32, 'Product 5', '', '', '', 999, 6, 'data/demo/ipod_touch_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 17:07:26', '2011-09-30 01:07:22', 0),
+(33, 'Product 6', '', '', '', 1000, 6, 'data/demo/samsung_syncmaster_941bw.jpg', 0, 1, '200.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 17:08:31', '2011-09-30 01:06:29', 0),
+(34, 'Product 7', '', '', '', 1000, 6, 'data/demo/ipod_shuffle_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 18:07:54', '2011-09-30 01:07:17', 0),
 (35, 'Product 8', '', '', '', 1000, 5, '', 0, 0, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 18:08:31', '2011-09-30 01:06:17', 0),
-(36, 'Product 9', '', '', '', 994, 6, 'catalog/demo/ipod_nano_1.jpg', 8, 0, '100.0000', 100, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 18:09:19', '2011-09-30 01:07:12', 0),
-(40, 'product 11', '', '', '', 970, 5, 'catalog/demo/iphone_1.jpg', 8, 1, '101.0000', 0, 9, '2009-02-03', '10.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 21:07:12', '2011-09-30 01:06:53', 0),
-(41, 'Product 14', '', '', '', 977, 5, 'catalog/demo/imac_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 21:07:26', '2011-09-30 01:06:44', 0),
-(42, 'Product 15', '', '', '', 990, 5, 'catalog/demo/apple_cinema_30.jpg', 8, 1, '100.0000', 400, 9, '2009-02-04', '12.50', 1, '1.00', '2.00', '3.00', 1, 1, 2, 0, 1, '2009-02-03 21:07:37', '2011-09-30 00:46:19', 0),
-(43, 'Product 16', '', '', '', 929, 5, 'catalog/demo/macbook_1.jpg', 8, 0, '500.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:07:49', '2011-09-30 01:05:46', 0),
-(44, 'Product 17', '', '', '', 1000, 5, 'catalog/demo/macbook_air_1.jpg', 8, 1, '1000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:00', '2011-09-30 01:05:53', 0),
-(45, 'Product 18', '', '', '', 998, 5, 'catalog/demo/macbook_pro_1.jpg', 8, 1, '2000.0000', 0, 100, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:17', '2011-09-15 22:22:01', 0),
-(46, 'Product 19', '', '', '', 1000, 5, 'catalog/demo/sony_vaio_1.jpg', 10, 1, '1000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:29', '2011-09-30 01:06:39', 0),
-(47, 'Product 21', '', '', '', 1000, 5, 'catalog/demo/hp_1.jpg', 7, 1, '100.0000', 400, 9, '2009-02-03', '1.00', 1, '0.00', '0.00', '0.00', 1, 0, 1, 0, 1, '2009-02-03 21:08:40', '2011-09-30 01:05:28', 0),
-(48, 'product 20', 'test 1', '', 'test 2', 995, 5, 'catalog/demo/ipod_classic_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-08', '1.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-08 17:21:51', '2011-09-30 01:07:06', 0),
-(49, 'SAM1', '', '', '', 0, 8, 'catalog/demo/samsung_tab_1.jpg', 0, 1, '199.9900', 0, 9, '2011-04-25', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 1, 1, '2011-04-26 08:57:34', '2011-09-30 01:06:23', 0);
+(36, 'Product 9', '', '', '', 994, 6, 'data/demo/ipod_nano_1.jpg', 8, 0, '100.0000', 100, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 18:09:19', '2011-09-30 01:07:12', 0),
+(40, 'product 11', '', '', '', 970, 5, 'data/demo/iphone_1.jpg', 8, 1, '101.0000', 0, 9, '2009-02-03', '10.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 21:07:12', '2011-09-30 01:06:53', 0),
+(41, 'Product 14', '', '', '', 977, 5, 'data/demo/imac_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-03', '5.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 0, 1, '2009-02-03 21:07:26', '2011-09-30 01:06:44', 0),
+(42, 'Product 15', '', '', '', 990, 5, 'data/demo/apple_cinema_30.jpg', 8, 1, '100.0000', 400, 9, '2009-02-04', '12.50', 1, '1.00', '2.00', '3.00', 1, 1, 2, 0, 1, '2009-02-03 21:07:37', '2011-09-30 00:46:19', 0),
+(43, 'Product 16', '', '', '', 929, 5, 'data/demo/macbook_1.jpg', 8, 0, '500.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:07:49', '2011-09-30 01:05:46', 0),
+(44, 'Product 17', '', '', '', 1000, 5, 'data/demo/macbook_air_1.jpg', 8, 1, '1000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:00', '2011-09-30 01:05:53', 0),
+(45, 'Product 18', '', '', '', 998, 5, 'data/demo/macbook_pro_1.jpg', 8, 1, '2000.0000', 0, 100, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:17', '2011-09-15 22:22:01', 0),
+(46, 'Product 19', '', '', '', 1000, 5, 'data/demo/sony_vaio_1.jpg', 10, 1, '1000.0000', 0, 9, '2009-02-03', '0.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-03 21:08:29', '2011-09-30 01:06:39', 0),
+(47, 'Product 21', '', '', '', 1000, 5, 'data/demo/hp_1.jpg', 7, 1, '100.0000', 400, 9, '2009-02-03', '1.00', 1, '0.00', '0.00', '0.00', 1, 0, 1, 0, 1, '2009-02-03 21:08:40', '2011-09-30 01:05:28', 0),
+(48, 'product 20', 'test 1', '', 'test 2', 995, 5, 'data/demo/ipod_classic_1.jpg', 8, 1, '100.0000', 0, 9, '2009-02-08', '1.00', 1, '0.00', '0.00', '0.00', 2, 1, 1, 0, 1, '2009-02-08 17:21:51', '2011-09-30 01:07:06', 0),
+(49, 'SAM1', '', '', '', 0, 8, 'data/demo/samsung_tab_1.jpg', 0, 1, '199.9900', 0, 9, '2011-04-25', '0.00', 1, '0.00', '0.00', '0.00', 1, 1, 1, 1, 1, '2011-04-26 08:57:34', '2011-09-30 01:06:23', 0);
 
 -- --------------------------------------------------------
 
@@ -2488,10 +2397,9 @@ CREATE TABLE `oc_product_description` (
   `language_id` int(11) NOT NULL,
   `name` varchar(255) NOT NULL,
   `description` text NOT NULL,
-  `tag` text NOT NULL,
-  `meta_title` varchar(255) NOT NULL,
   `meta_description` varchar(255) NOT NULL,
   `meta_keyword` varchar(255) NOT NULL,
+  `tag` text NOT NULL,
   PRIMARY KEY (`product_id`,`language_id`),
   KEY `name` (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -2579,8 +2487,7 @@ CREATE TABLE `oc_product_image` (
   `product_id` int(11) NOT NULL,
   `image` varchar(255) DEFAULT NULL,
   `sort_order` int(3) NOT NULL DEFAULT '0',
-  PRIMARY KEY (`product_image_id`),
-  KEY `product_id` (`product_id`)
+  PRIMARY KEY (`product_image_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -2588,67 +2495,67 @@ CREATE TABLE `oc_product_image` (
 --
 
 INSERT INTO `oc_product_image` (`product_image_id`, `product_id`, `image`) VALUES
-(2345, 30, 'catalog/demo/canon_eos_5d_2.jpg'),
-(2321, 47, 'catalog/demo/hp_3.jpg'),
-(2035, 28, 'catalog/demo/htc_touch_hd_2.jpg'),
-(2351, 41, 'catalog/demo/imac_3.jpg'),
-(1982, 40, 'catalog/demo/iphone_6.jpg'),
-(2001, 36, 'catalog/demo/ipod_nano_5.jpg'),
-(2000, 36, 'catalog/demo/ipod_nano_4.jpg'),
-(2005, 34, 'catalog/demo/ipod_shuffle_5.jpg'),
-(2004, 34, 'catalog/demo/ipod_shuffle_4.jpg'),
-(2011, 32, 'catalog/demo/ipod_touch_7.jpg'),
-(2010, 32, 'catalog/demo/ipod_touch_6.jpg'),
-(2009, 32, 'catalog/demo/ipod_touch_5.jpg'),
-(1971, 43, 'catalog/demo/macbook_5.jpg'),
-(1970, 43, 'catalog/demo/macbook_4.jpg'),
-(1974, 44, 'catalog/demo/macbook_air_4.jpg'),
-(1973, 44, 'catalog/demo/macbook_air_2.jpg'),
-(1977, 45, 'catalog/demo/macbook_pro_2.jpg'),
-(1976, 45, 'catalog/demo/macbook_pro_3.jpg'),
-(1986, 31, 'catalog/demo/nikon_d300_3.jpg'),
-(1985, 31, 'catalog/demo/nikon_d300_2.jpg'),
-(1988, 29, 'catalog/demo/palm_treo_pro_3.jpg'),
-(1995, 46, 'catalog/demo/sony_vaio_5.jpg'),
-(1994, 46, 'catalog/demo/sony_vaio_4.jpg'),
-(1991, 48, 'catalog/demo/ipod_classic_4.jpg'),
-(1990, 48, 'catalog/demo/ipod_classic_3.jpg'),
-(1981, 40, 'catalog/demo/iphone_2.jpg'),
-(1980, 40, 'catalog/demo/iphone_5.jpg'),
-(2344, 30, 'catalog/demo/canon_eos_5d_3.jpg'),
-(2320, 47, 'catalog/demo/hp_2.jpg'),
-(2034, 28, 'catalog/demo/htc_touch_hd_3.jpg'),
-(2350, 41, 'catalog/demo/imac_2.jpg'),
-(1979, 40, 'catalog/demo/iphone_3.jpg'),
-(1978, 40, 'catalog/demo/iphone_4.jpg'),
-(1989, 48, 'catalog/demo/ipod_classic_2.jpg'),
-(1999, 36, 'catalog/demo/ipod_nano_2.jpg'),
-(1998, 36, 'catalog/demo/ipod_nano_3.jpg'),
-(2003, 34, 'catalog/demo/ipod_shuffle_2.jpg'),
-(2002, 34, 'catalog/demo/ipod_shuffle_3.jpg'),
-(2008, 32, 'catalog/demo/ipod_touch_2.jpg'),
-(2007, 32, 'catalog/demo/ipod_touch_3.jpg'),
-(2006, 32, 'catalog/demo/ipod_touch_4.jpg'),
-(1969, 43, 'catalog/demo/macbook_2.jpg'),
-(1968, 43, 'catalog/demo/macbook_3.jpg'),
-(1972, 44, 'catalog/demo/macbook_air_3.jpg'),
-(1975, 45, 'catalog/demo/macbook_pro_4.jpg'),
-(1984, 31, 'catalog/demo/nikon_d300_4.jpg'),
-(1983, 31, 'catalog/demo/nikon_d300_5.jpg'),
-(1987, 29, 'catalog/demo/palm_treo_pro_2.jpg'),
-(1993, 46, 'catalog/demo/sony_vaio_2.jpg'),
-(1992, 46, 'catalog/demo/sony_vaio_3.jpg'),
-(2327, 49, 'catalog/demo/samsung_tab_7.jpg'),
-(2326, 49, 'catalog/demo/samsung_tab_6.jpg'),
-(2325, 49, 'catalog/demo/samsung_tab_5.jpg'),
-(2324, 49, 'catalog/demo/samsung_tab_4.jpg'),
-(2323, 49, 'catalog/demo/samsung_tab_3.jpg'),
-(2322, 49, 'catalog/demo/samsung_tab_2.jpg'),
-(2317, 42, 'catalog/demo/canon_logo.jpg'),
-(2316, 42, 'catalog/demo/hp_1.jpg'),
-(2315, 42, 'catalog/demo/compaq_presario.jpg'),
-(2314, 42, 'catalog/demo/canon_eos_5d_1.jpg'),
-(2313, 42, 'catalog/demo/canon_eos_5d_2.jpg');
+(2345, 30, 'data/demo/canon_eos_5d_2.jpg'),
+(2321, 47, 'data/demo/hp_3.jpg'),
+(2035, 28, 'data/demo/htc_touch_hd_2.jpg'),
+(2351, 41, 'data/demo/imac_3.jpg'),
+(1982, 40, 'data/demo/iphone_6.jpg'),
+(2001, 36, 'data/demo/ipod_nano_5.jpg'),
+(2000, 36, 'data/demo/ipod_nano_4.jpg'),
+(2005, 34, 'data/demo/ipod_shuffle_5.jpg'),
+(2004, 34, 'data/demo/ipod_shuffle_4.jpg'),
+(2011, 32, 'data/demo/ipod_touch_7.jpg'),
+(2010, 32, 'data/demo/ipod_touch_6.jpg'),
+(2009, 32, 'data/demo/ipod_touch_5.jpg'),
+(1971, 43, 'data/demo/macbook_5.jpg'),
+(1970, 43, 'data/demo/macbook_4.jpg'),
+(1974, 44, 'data/demo/macbook_air_4.jpg'),
+(1973, 44, 'data/demo/macbook_air_2.jpg'),
+(1977, 45, 'data/demo/macbook_pro_2.jpg'),
+(1976, 45, 'data/demo/macbook_pro_3.jpg'),
+(1986, 31, 'data/demo/nikon_d300_3.jpg'),
+(1985, 31, 'data/demo/nikon_d300_2.jpg'),
+(1988, 29, 'data/demo/palm_treo_pro_3.jpg'),
+(1995, 46, 'data/demo/sony_vaio_5.jpg'),
+(1994, 46, 'data/demo/sony_vaio_4.jpg'),
+(1991, 48, 'data/demo/ipod_classic_4.jpg'),
+(1990, 48, 'data/demo/ipod_classic_3.jpg'),
+(1981, 40, 'data/demo/iphone_2.jpg'),
+(1980, 40, 'data/demo/iphone_5.jpg'),
+(2344, 30, 'data/demo/canon_eos_5d_3.jpg'),
+(2320, 47, 'data/demo/hp_2.jpg'),
+(2034, 28, 'data/demo/htc_touch_hd_3.jpg'),
+(2350, 41, 'data/demo/imac_2.jpg'),
+(1979, 40, 'data/demo/iphone_3.jpg'),
+(1978, 40, 'data/demo/iphone_4.jpg'),
+(1989, 48, 'data/demo/ipod_classic_2.jpg'),
+(1999, 36, 'data/demo/ipod_nano_2.jpg'),
+(1998, 36, 'data/demo/ipod_nano_3.jpg'),
+(2003, 34, 'data/demo/ipod_shuffle_2.jpg'),
+(2002, 34, 'data/demo/ipod_shuffle_3.jpg'),
+(2008, 32, 'data/demo/ipod_touch_2.jpg'),
+(2007, 32, 'data/demo/ipod_touch_3.jpg'),
+(2006, 32, 'data/demo/ipod_touch_4.jpg'),
+(1969, 43, 'data/demo/macbook_2.jpg'),
+(1968, 43, 'data/demo/macbook_3.jpg'),
+(1972, 44, 'data/demo/macbook_air_3.jpg'),
+(1975, 45, 'data/demo/macbook_pro_4.jpg'),
+(1984, 31, 'data/demo/nikon_d300_4.jpg'),
+(1983, 31, 'data/demo/nikon_d300_5.jpg'),
+(1987, 29, 'data/demo/palm_treo_pro_2.jpg'),
+(1993, 46, 'data/demo/sony_vaio_2.jpg'),
+(1992, 46, 'data/demo/sony_vaio_3.jpg'),
+(2327, 49, 'data/demo/samsung_tab_7.jpg'),
+(2326, 49, 'data/demo/samsung_tab_6.jpg'),
+(2325, 49, 'data/demo/samsung_tab_5.jpg'),
+(2324, 49, 'data/demo/samsung_tab_4.jpg'),
+(2323, 49, 'data/demo/samsung_tab_3.jpg'),
+(2322, 49, 'data/demo/samsung_tab_2.jpg'),
+(2317, 42, 'data/demo/canon_logo.jpg'),
+(2316, 42, 'data/demo/hp_1.jpg'),
+(2315, 42, 'data/demo/compaq_presario.jpg'),
+(2314, 42, 'data/demo/canon_eos_5d_1.jpg'),
+(2313, 42, 'data/demo/canon_eos_5d_2.jpg');
 
 -- --------------------------------------------------------
 
@@ -2661,7 +2568,7 @@ CREATE TABLE `oc_product_option` (
   `product_option_id` int(11) NOT NULL AUTO_INCREMENT,
   `product_id` int(11) NOT NULL,
   `option_id` int(11) NOT NULL,
-  `value` text NOT NULL,
+  `option_value` text NOT NULL,
   `required` tinyint(1) NOT NULL,
   PRIMARY KEY (`product_option_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -2670,7 +2577,7 @@ CREATE TABLE `oc_product_option` (
 -- Dumping data for table `oc_product_option`
 --
 
-INSERT INTO `oc_product_option` (`product_option_id`, `product_id`, `option_id`, `value`, `required`) VALUES
+INSERT INTO `oc_product_option` (`product_option_id`, `product_id`, `option_id`, `option_value`, `required`) VALUES
 (224, 35, 11, '', 1),
 (225, 47, 12, '2011-04-22', 1),
 (223, 42, 2, '', 1),
@@ -2831,8 +2738,7 @@ DROP TABLE IF EXISTS `oc_product_to_category`;
 CREATE TABLE `oc_product_to_category` (
   `product_id` int(11) NOT NULL,
   `category_id` int(11) NOT NULL,
-  PRIMARY KEY (`product_id`,`category_id`),
-  KEY `category_id` (`category_id`)
+  PRIMARY KEY (`product_id`,`category_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
@@ -2888,6 +2794,7 @@ CREATE TABLE `oc_product_to_download` (
 -- Dumping data for table `oc_product_to_download`
 --
 
+
 -- --------------------------------------------------------
 
 --
@@ -2905,6 +2812,7 @@ CREATE TABLE `oc_product_to_layout` (
 --
 -- Dumping data for table `oc_product_to_layout`
 --
+
 
 -- --------------------------------------------------------
 
@@ -2947,6 +2855,23 @@ INSERT INTO `oc_product_to_store` (`product_id`, `store_id`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `oc_product_recurring`
+--
+
+DROP TABLE IF EXISTS `oc_product_recurring`;
+CREATE TABLE `oc_product_recurring` (
+  `product_id` int(11) NOT NULL,
+  `store_id` int(11) NOT NULL,
+  PRIMARY KEY (`product_id`,`store_id`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
+
+--
+-- Dumping data for table `oc_product_to_store`
+--
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `oc_return`
 --
 
@@ -2968,7 +2893,7 @@ CREATE TABLE `oc_return` (
   `return_action_id` int(11) NOT NULL,
   `return_status_id` int(11) NOT NULL,
   `comment` text,
-  `date_ordered` date NOT NULL DEFAULT '0000-00-00',
+  `date_ordered` date NOT NULL,
   `date_added` datetime NOT NULL,
   `date_modified` datetime NOT NULL,
   PRIMARY KEY (`return_id`)
@@ -3086,8 +3011,8 @@ CREATE TABLE `oc_review` (
   `text` text NOT NULL,
   `rating` int(1) NOT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '0',
-  `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`review_id`),
   KEY `product_id` (`product_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
@@ -3135,19 +3060,19 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (14, 0, 'shipping', 'shipping_status', '1', 0),
 (15, 0, 'shipping', 'shipping_estimator', '1', 0),
 (16, 0, 'config', 'config_google_analytics', '', 0),
-(17, 0, 'config', 'config_error_filename', 'error.log', 0),
+(17, 0, 'config', 'config_error_filename', 'error.txt', 0),
 (18, 0, 'config', 'config_error_log', '1', 0),
 (19, 0, 'config', 'config_error_display', '1', 0),
 (20, 0, 'config', 'config_compression', '0', 0),
-(21, 0, 'config', 'config_encryption', 'SUBSTRING(SHA1(RAND()) FROM 1 FOR 8)', 0),
+(21, 0, 'config', 'config_encryption', '12345', 0),
 (22, 0, 'config', 'config_maintenance', '0', 0),
 (23, 0, 'config', 'config_account_mail', '0', 0),
-(24, 0, 'config', 'config_mail_alert', '', 0),
+(24, 0, 'config', 'config_alert_emails', '', 0),
 (25, 0, 'config', 'config_secure', '0', 0),
 (26, 0, 'config', 'config_seo_url', '0', 0),
 (27, 0, 'coupon', 'coupon_sort_order', '4', 0),
 (28, 0, 'coupon', 'coupon_status', '1', 0),
-(29, 0, 'config', 'config_order_mail', '0', 0),
+(29, 0, 'config', 'config_alert_mail', '0', 0),
 (30, 0, 'config', 'config_smtp_username', '', 0),
 (31, 0, 'config', 'config_smtp_password', '', 0),
 (32, 0, 'config', 'config_smtp_port', '25', 0),
@@ -3195,7 +3120,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (74, 0, 'config', 'config_cart_weight', '1', 0),
 (75, 0, 'config', 'config_upload_allowed', 'jpg, JPG, jpeg, gif, png, txt', 0),
 (76, 0, 'config', 'config_file_extension_allowed', 'txt\r\npng\r\njpe\r\njpeg\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc\r\nrtf\r\nxls\r\nppt\r\nodt\r\nods', 0),
-(77, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/vnd.microsoft.icon\r\nimage/tiff\r\nimage/svg+xml\r\napplication/zip\r\napplication/x-rar-compressed\r\napplication/x-msdownload\r\napplication/vnd.ms-cab-compressed\r\naudio/mpeg\r\nvideo/quicktime\r\napplication/pdf\r\nimage/vnd.adobe.photoshop\r\napplication/postscript\r\napplication/msword\r\napplication/rtf\r\napplication/vnd.ms-excel\r\napplication/vnd.ms-powerpoint\r\napplication/vnd.oasis.opendocument.text\r\napplication/vnd.oasis.opendocument.spreadsheet', 0),
+(77, 0, 'config', 'config_file_mime_allowed', 'text/plain\r\nimage/png\r\nimage/jpeg\r\nimage/jpeg\r\nimage/jpeg\r\nimage/gif\r\nimage/bmp\r\nimage/vnd.microsoft.icon\r\nimage/tiff\r\nimage/tiff\r\nimage/svg+xml\r\nimage/svg+xml\r\napplication/zip\r\napplication/x-rar-compressed\r\napplication/x-msdownload\r\napplication/vnd.ms-cab-compressed\r\naudio/mpeg\r\nvideo/quicktime\r\nvideo/quicktime\r\napplication/pdf\r\nimage/vnd.adobe.photoshop\r\napplication/postscript\r\napplication/postscript\r\napplication/postscript\r\napplication/msword\r\napplication/rtf\r\napplication/vnd.ms-excel\r\napplication/vnd.ms-powerpoint\r\napplication/vnd.oasis.opendocument.text\r\napplication/vnd.oasis.opendocument.spreadsheet', 0),
 (78, 0, 'config', 'config_review_status', '1', 0),
 (79, 0, 'config', 'config_download', '1', 0),
 (80, 0, 'config', 'config_return_status_id', '2', 0),
@@ -3205,10 +3130,10 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (84, 0, 'config', 'config_stock_checkout', '0', 0),
 (85, 0, 'config', 'config_stock_warning', '0', 0),
 (86, 0, 'config', 'config_stock_display', '0', 0),
-(87, 0, 'config', 'config_affiliate_commission', '5', 0),
+(87, 0, 'config', 'config_commission', '5', 0),
 (88, 0, 'config', 'config_affiliate_id', '4', 0),
 (89, 0, 'config', 'config_checkout_id', '5', 0),
-(90, 0, 'config', 'config_checkout_guest', '1', 0),
+(90, 0, 'config', 'config_guest_checkout', '1', 0),
 (91, 0, 'config', 'config_account_id', '3', 0),
 (92, 0, 'config', 'config_customer_price', '0', 0),
 (93, 0, 'config', 'config_customer_group_id', '1', 0),
@@ -3219,8 +3144,8 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (98, 0, 'config', 'config_tax', '1', 0),
 (99, 0, 'config', 'config_tax_customer', 'shipping', 0),
 (100, 0, 'config', 'config_tax_default', 'shipping', 0),
-(101, 0, 'config', 'config_limit_admin', '20', 0),
-(102, 0, 'config', 'config_product_limit', '15', 0),
+(101, 0, 'config', 'config_admin_limit', '20', 0),
+(102, 0, 'config', 'config_catalog_limit', '15', 0),
 (103, 0, 'free_checkout', 'free_checkout_status', '1', 0),
 (104, 0, 'free_checkout', 'free_checkout_order_status_id', '1', 0),
 (105, 0, 'config', 'config_weight_class_id', '1', 0),
@@ -3234,7 +3159,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (113, 0, 'config', 'config_email', 'your@store.com', 0),
 (114, 0, 'config', 'config_telephone', '123456789', 0),
 (115, 0, 'config', 'config_fax', '', 0),
-(116, 0, 'config', 'config_meta_title', 'Your Store', 0),
+(116, 0, 'config', 'config_title', 'Your Store', 0),
 (117, 0, 'config', 'config_meta_description', 'My Store', 0),
 (118, 0, 'config', 'config_template', 'default', 0),
 (119, 0, 'config', 'config_layout_id', '4', 0),
@@ -3248,11 +3173,7 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (127, 0, 'config', 'config_customer_group_display', 'a:1:{i:0;s:1:\"1\";}', 1),
 (128, 0, 'config', 'config_robots', 'abot\r\ndbot\r\nebot\r\nhbot\r\nkbot\r\nlbot\r\nmbot\r\nnbot\r\nobot\r\npbot\r\nrbot\r\nsbot\r\ntbot\r\nvbot\r\nybot\r\nzbot\r\nbot.\r\nbot/\r\n_bot\r\n.bot\r\n/bot\r\n-bot\r\n:bot\r\n(bot\r\ncrawl\r\nslurp\r\nspider\r\nseek\r\naccoona\r\nacoon\r\nadressendeutschland\r\nah-ha.com\r\nahoy\r\naltavista\r\nananzi\r\nanthill\r\nappie\r\narachnophilia\r\narale\r\naraneo\r\naranha\r\narchitext\r\naretha\r\narks\r\nasterias\r\natlocal\r\natn\r\natomz\r\naugurfind\r\nbackrub\r\nbannana_bot\r\nbaypup\r\nbdfetch\r\nbig brother\r\nbiglotron\r\nbjaaland\r\nblackwidow\r\nblaiz\r\nblog\r\nblo.\r\nbloodhound\r\nboitho\r\nbooch\r\nbradley\r\nbutterfly\r\ncalif\r\ncassandra\r\nccubee\r\ncfetch\r\ncharlotte\r\nchurl\r\ncienciaficcion\r\ncmc\r\ncollective\r\ncomagent\r\ncombine\r\ncomputingsite\r\ncsci\r\ncurl\r\ncusco\r\ndaumoa\r\ndeepindex\r\ndelorie\r\ndepspid\r\ndeweb\r\ndie blinde kuh\r\ndigger\r\nditto\r\ndmoz\r\ndocomo\r\ndownload express\r\ndtaagent\r\ndwcp\r\nebiness\r\nebingbong\r\ne-collector\r\nejupiter\r\nemacs-w3 search engine\r\nesther\r\nevliya celebi\r\nezresult\r\nfalcon\r\nfelix ide\r\nferret\r\nfetchrover\r\nfido\r\nfindlinks\r\nfireball\r\nfish search\r\nfouineur\r\nfunnelweb\r\ngazz\r\ngcreep\r\ngenieknows\r\ngetterroboplus\r\ngeturl\r\nglx\r\ngoforit\r\ngolem\r\ngrabber\r\ngrapnel\r\ngralon\r\ngriffon\r\ngromit\r\ngrub\r\ngulliver\r\nhamahakki\r\nharvest\r\nhavindex\r\nhelix\r\nheritrix\r\nhku www octopus\r\nhomerweb\r\nhtdig\r\nhtml index\r\nhtml_analyzer\r\nhtmlgobble\r\nhubater\r\nhyper-decontextualizer\r\nia_archiver\r\nibm_planetwide\r\nichiro\r\niconsurf\r\niltrovatore\r\nimage.kapsi.net\r\nimagelock\r\nincywincy\r\nindexer\r\ninfobee\r\ninformant\r\ningrid\r\ninktomisearch.com\r\ninspector web\r\nintelliagent\r\ninternet shinchakubin\r\nip3000\r\niron33\r\nisraeli-search\r\nivia\r\njack\r\njakarta\r\njavabee\r\njetbot\r\njumpstation\r\nkatipo\r\nkdd-explorer\r\nkilroy\r\nknowledge\r\nkototoi\r\nkretrieve\r\nlabelgrabber\r\nlachesis\r\nlarbin\r\nlegs\r\nlibwww\r\nlinkalarm\r\nlink validator\r\nlinkscan\r\nlockon\r\nlwp\r\nlycos\r\nmagpie\r\nmantraagent\r\nmapoftheinternet\r\nmarvin/\r\nmattie\r\nmediafox\r\nmediapartners\r\nmercator\r\nmerzscope\r\nmicrosoft url control\r\nminirank\r\nmiva\r\nmj12\r\nmnogosearch\r\nmoget\r\nmonster\r\nmoose\r\nmotor\r\nmultitext\r\nmuncher\r\nmuscatferret\r\nmwd.search\r\nmyweb\r\nnajdi\r\nnameprotect\r\nnationaldirectory\r\nnazilla\r\nncsa beta\r\nnec-meshexplorer\r\nnederland.zoek\r\nnetcarta webmap engine\r\nnetmechanic\r\nnetresearchserver\r\nnetscoop\r\nnewscan-online\r\nnhse\r\nnokia6682/\r\nnomad\r\nnoyona\r\nnutch\r\nnzexplorer\r\nobjectssearch\r\noccam\r\nomni\r\nopen text\r\nopenfind\r\nopenintelligencedata\r\norb search\r\nosis-project\r\npack rat\r\npageboy\r\npagebull\r\npage_verifier\r\npanscient\r\nparasite\r\npartnersite\r\npatric\r\npear.\r\npegasus\r\nperegrinator\r\npgp key agent\r\nphantom\r\nphpdig\r\npicosearch\r\npiltdownman\r\npimptrain\r\npinpoint\r\npioneer\r\npiranha\r\nplumtreewebaccessor\r\npogodak\r\npoirot\r\npompos\r\npoppelsdorf\r\npoppi\r\npopular iconoclast\r\npsycheclone\r\npublisher\r\npython\r\nrambler\r\nraven search\r\nroach\r\nroad runner\r\nroadhouse\r\nrobbie\r\nrobofox\r\nrobozilla\r\nrules\r\nsalty\r\nsbider\r\nscooter\r\nscoutjet\r\nscrubby\r\nsearch.\r\nsearchprocess\r\nsemanticdiscovery\r\nsenrigan\r\nsg-scout\r\nshai''hulud\r\nshark\r\nshopwiki\r\nsidewinder\r\nsift\r\nsilk\r\nsimmany\r\nsite searcher\r\nsite valet\r\nsitetech-rover\r\nskymob.com\r\nsleek\r\nsmartwit\r\nsna-\r\nsnappy\r\nsnooper\r\nsohu\r\nspeedfind\r\nsphere\r\nsphider\r\nspinner\r\nspyder\r\nsteeler/\r\nsuke\r\nsuntek\r\nsupersnooper\r\nsurfnomore\r\nsven\r\nsygol\r\nszukacz\r\ntach black widow\r\ntarantula\r\ntempleton\r\n/teoma\r\nt-h-u-n-d-e-r-s-t-o-n-e\r\ntheophrastus\r\ntitan\r\ntitin\r\ntkwww\r\ntoutatis\r\nt-rex\r\ntutorgig\r\ntwiceler\r\ntwisted\r\nucsd\r\nudmsearch\r\nurl check\r\nupdated\r\nvagabondo\r\nvalkyrie\r\nverticrawl\r\nvictoria\r\nvision-search\r\nvolcano\r\nvoyager/\r\nvoyager-hc\r\nw3c_validator\r\nw3m2\r\nw3mir\r\nwalker\r\nwallpaper\r\nwanderer\r\nwauuu\r\nwavefire\r\nweb core\r\nweb hopper\r\nweb wombat\r\nwebbandit\r\nwebcatcher\r\nwebcopy\r\nwebfoot\r\nweblayers\r\nweblinker\r\nweblog monitor\r\nwebmirror\r\nwebmonkey\r\nwebquest\r\nwebreaper\r\nwebsitepulse\r\nwebsnarf\r\nwebstolperer\r\nwebvac\r\nwebwalk\r\nwebwatch\r\nwebwombat\r\nwebzinger\r\nwhizbang\r\nwhowhere\r\nwild ferret\r\nworldlight\r\nwwwc\r\nwwwster\r\nxenu\r\nxget\r\nxift\r\nxirq\r\nyandex\r\nyanga\r\nyeti\r\nyodao\r\nzao\r\nzippp\r\nzyborg', 0),
 (129, 0, 'config', 'config_password', '1', 0),
-(130, 0, 'config', 'config_product_count', '1', 0),
-(131, 0, 'config', 'config_product_description_length', '100', 0),
-(132, 0, 'config', 'config_image_file_size', '300000', 0),
-(133, 0, 'config', 'config_review_mail', '0', 0),
-(134, 0, 'config', 'config_review_guest', '1', 0);
+(130, 0, 'config', 'config_product_count', '1', 0);
 
 -- --------------------------------------------------------
 
@@ -3309,8 +3230,8 @@ CREATE TABLE `oc_tax_class` (
   `tax_class_id` int(11) NOT NULL AUTO_INCREMENT,
   `title` varchar(32) NOT NULL,
   `description` varchar(255) NOT NULL,
-  `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`tax_class_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3335,8 +3256,8 @@ CREATE TABLE `oc_tax_rate` (
   `name` varchar(32) NOT NULL,
   `rate` decimal(15,4) NOT NULL DEFAULT '0.0000',
   `type` char(1) NOT NULL,
-  `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`tax_rate_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3398,26 +3319,6 @@ INSERT INTO `oc_tax_rule` (`tax_rule_id`, `tax_class_id`, `tax_rate_id`, `based`
 -- --------------------------------------------------------
 
 --
--- Table structure for table `oc_upload`
---
-
-DROP TABLE IF EXISTS `oc_upload`;
-CREATE TABLE `oc_upload` (
-  `upload_id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(255) NOT NULL,
-  `filename` varchar(255) NOT NULL,
-  `code` varchar(255) NOT NULL,
-  `date_added` datetime NOT NULL,
-  PRIMARY KEY (`upload_id`)
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
-
---
--- Dumping data for table `oc_upload`
---
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `oc_url_alias`
 --
 
@@ -3434,73 +3335,15 @@ CREATE TABLE `oc_url_alias` (
 --
 
 INSERT INTO `oc_url_alias` (`url_alias_id`, `query`, `keyword`) VALUES
-(824, 'product_id=48', 'ipod-classic'),
-(836, 'category_id=20', 'desktops'),
-(834, 'category_id=26', 'pc'),
-(835, 'category_id=27', 'mac'),
+(704, 'product_id=48', 'ipod_classic'),
+(773, 'category_id=20', 'desktops'),
+(503, 'category_id=26', 'pc'),
+(505, 'category_id=27', 'mac'),
 (730, 'manufacturer_id=8', 'apple'),
 (772, 'information_id=4', 'about_us'),
 (768, 'product_id=42', 'test'),
-(789, 'category_id=34', 'mp3-players'),
-(781, 'category_id=36', 'test2'),
-(774, 'category_id=18', 'laptop-notebook'),
-(775, 'category_id=46', 'macs'),
-(776, 'category_id=45', 'windows'),
-(777, 'category_id=25', 'component'),
-(778, 'category_id=29', 'mouse'),
-(779, 'category_id=28', 'monitor'),
-(780, 'category_id=35', 'test1'),
-(782, 'category_id=30', 'printer'),
-(783, 'category_id=31', 'scanner'),
-(784, 'category_id=32', 'web-camera'),
-(785, 'category_id=57', 'tablet'),
-(786, 'category_id=17', 'software'),
-(787, 'category_id=24', 'smartphone'),
-(788, 'category_id=33', 'camera'),
-(790, 'category_id=43', 'test11'),
-(791, 'category_id=44', 'test12'),
-(792, 'category_id=47', 'test15'),
-(793, 'category_id=48', 'test16'),
-(794, 'category_id=49', 'test17'),
-(795, 'category_id=50', 'test18'),
-(796, 'category_id=51', 'test19'),
-(797, 'category_id=52', 'test20'),
-(798, 'category_id=58', 'test25'),
-(799, 'category_id=53', 'test21'),
-(800, 'category_id=54', 'test22'),
-(801, 'category_id=55', 'test23'),
-(802, 'category_id=56', 'test24'),
-(803, 'category_id=38', 'test4'),
-(804, 'category_id=37', 'test5'),
-(805, 'category_id=39', 'test6'),
-(806, 'category_id=40', 'test7'),
-(807, 'category_id=41', 'test8'),
-(808, 'category_id=42', 'test9'),
-(809, 'product_id=30', 'canon-eos-5d'),
-(840, 'product_id=47', 'hp-lp3065'),
-(811, 'product_id=28', 'htc-touch-hd'),
-(812, 'product_id=43', 'macbook'),
-(813, 'product_id=44', 'macbook-air'),
-(814, 'product_id=45', 'macbook-pro'),
-(816, 'product_id=31', 'nikon-d300'),
-(817, 'product_id=29', 'palm-treo-pro'),
-(818, 'product_id=35', 'product-8'),
-(819, 'product_id=49', 'samsung-galaxy-tab-10-1'),
-(820, 'product_id=33', 'samsung-syncmaster-941bw'),
-(821, 'product_id=46', 'sony-vaio'),
-(837, 'product_id=41', 'imac'),
-(823, 'product_id=40', 'iphone'),
-(825, 'product_id=36', 'ipod-nano'),
-(826, 'product_id=34', 'ipod-shuffle'),
-(827, 'product_id=32', 'ipod-touch'),
-(828, 'manufacturer_id=9', 'canon'),
-(829, 'manufacturer_id=5', 'htc'),
-(830, 'manufacturer_id=7', 'hewlett-packard'),
-(831, 'manufacturer_id=6', 'palm'),
-(832, 'manufacturer_id=10', 'sony'),
-(841, 'information_id=6', 'delivery'),
-(842, 'information_id=3', 'privacy'),
-(843, 'information_id=5', 'terms');
+(767, 'category_id=34', 'mp3-players'),
+(536, 'category_id=36', 'Normal');
 
 -- --------------------------------------------------------
 
@@ -3518,11 +3361,10 @@ CREATE TABLE `oc_user` (
   `firstname` varchar(32) NOT NULL,
   `lastname` varchar(32) NOT NULL,
   `email` varchar(96) NOT NULL,
-  `image` varchar(255) NOT NULL,
   `code` varchar(40) NOT NULL,
   `ip` varchar(40) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`user_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -3549,7 +3391,7 @@ CREATE TABLE `oc_user_group` (
 --
 
 INSERT INTO `oc_user_group` (`user_group_id`, `name`, `permission`) VALUES
-(1, 'Administrator', 'a:2:{s:6:"access";a:137:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:15:"catalog/profile";i:10;s:14:"catalog/review";i:11;s:18:"common/filemanager";i:12;s:13:"design/banner";i:13;s:13:"design/layout";i:14;s:14:"extension/feed";i:15;s:19:"extension/installer";i:16;s:22:"extension/modification";i:17;s:16:"extension/module";i:18;s:17:"extension/payment";i:19;s:18:"extension/shipping";i:20;s:15:"extension/total";i:21;s:16:"feed/google_base";i:22;s:19:"feed/google_sitemap";i:23;s:20:"localisation/country";i:24;s:21:"localisation/currency";i:25;s:21:"localisation/geo_zone";i:26;s:21:"localisation/language";i:27;s:25:"localisation/length_class";i:28;s:21:"localisation/location";i:29;s:25:"localisation/order_status";i:30;s:26:"localisation/return_action";i:31;s:26:"localisation/return_reason";i:32;s:26:"localisation/return_status";i:33;s:25:"localisation/stock_status";i:34;s:22:"localisation/tax_class";i:35;s:21:"localisation/tax_rate";i:36;s:25:"localisation/weight_class";i:37;s:17:"localisation/zone";i:38;s:19:"marketing/affiliate";i:39;s:17:"marketing/contact";i:40;s:16:"marketing/coupon";i:41;s:19:"marketing/marketing";i:42;s:14:"module/account";i:43;s:16:"module/affiliate";i:44;s:13:"module/banner";i:45;s:17:"module/bestseller";i:46;s:15:"module/carousel";i:47;s:15:"module/category";i:48;s:15:"module/featured";i:49;s:13:"module/filter";i:50;s:18:"module/google_talk";i:51;s:18:"module/information";i:52;s:13:"module/latest";i:53;s:16:"module/slideshow";i:54;s:14:"module/special";i:55;s:12:"module/store";i:56;s:14:"module/welcome";i:57;s:24:"payment/authorizenet_aim";i:58;s:21:"payment/bank_transfer";i:59;s:14:"payment/cheque";i:60;s:11:"payment/cod";i:61;s:21:"payment/free_checkout";i:62;s:22:"payment/klarna_account";i:63;s:22:"payment/klarna_invoice";i:64;s:14:"payment/liqpay";i:65;s:20:"payment/moneybookers";i:66;s:14:"payment/nochex";i:67;s:15:"payment/paymate";i:68;s:16:"payment/paypoint";i:69;s:13:"payment/payza";i:70;s:26:"payment/perpetual_payments";i:71;s:18:"payment/pp_express";i:72;s:25:"payment/pp_payflow_iframe";i:73;s:14:"payment/pp_pro";i:74;s:21:"payment/pp_pro_iframe";i:75;s:18:"payment/pp_payflow";i:76;s:17:"payment/pp_pro_uk";i:77;s:19:"payment/pp_standard";i:78;s:15:"payment/sagepay";i:79;s:22:"payment/sagepay_direct";i:80;s:18:"payment/sagepay_us";i:81;s:19:"payment/twocheckout";i:82;s:28:"payment/web_payment_software";i:83;s:16:"payment/worldpay";i:84;s:16:"report/affiliate";i:85;s:25:"report/affiliate_activity";i:86;s:24:"report/customer_activity";i:87;s:22:"report/customer_credit";i:88;s:22:"report/customer_online";i:89;s:21:"report/customer_order";i:90;s:22:"report/customer_reward";i:91;s:16:"report/marketing";i:92;s:24:"report/product_purchased";i:93;s:21:"report/product_viewed";i:94;s:18:"report/sale_coupon";i:95;s:17:"report/sale_order";i:96;s:18:"report/sale_return";i:97;s:20:"report/sale_shipping";i:98;s:15:"report/sale_tax";i:99;s:17:"sale/custom_field";i:100;s:13:"sale/customer";i:101;s:20:"sale/customer_ban_ip";i:102;s:19:"sale/customer_group";i:103;s:10:"sale/order";i:104;s:14:"sale/recurring";i:105;s:11:"sale/return";i:106;s:12:"sale/voucher";i:107;s:18:"sale/voucher_theme";i:108;s:15:"setting/setting";i:109;s:13:"setting/store";i:110;s:16:"shipping/auspost";i:111;s:17:"shipping/citylink";i:112;s:14:"shipping/fedex";i:113;s:13:"shipping/flat";i:114;s:13:"shipping/free";i:115;s:13:"shipping/item";i:116;s:23:"shipping/parcelforce_48";i:117;s:15:"shipping/pickup";i:118;s:19:"shipping/royal_mail";i:119;s:12:"shipping/ups";i:120;s:13:"shipping/usps";i:121;s:15:"shipping/weight";i:122;s:11:"tool/backup";i:123;s:14:"tool/error_log";i:124;s:12:"total/coupon";i:125;s:12:"total/credit";i:126;s:14:"total/handling";i:127;s:16:"total/klarna_fee";i:128;s:19:"total/low_order_fee";i:129;s:12:"total/reward";i:130;s:14:"total/shipping";i:131;s:15:"total/sub_total";i:132;s:9:"total/tax";i:133;s:11:"total/total";i:134;s:13:"total/voucher";i:135;s:9:"user/user";i:136;s:20:"user/user_permission";}s:6:"modify";a:137:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:15:"catalog/profile";i:10;s:14:"catalog/review";i:11;s:18:"common/filemanager";i:12;s:13:"design/banner";i:13;s:13:"design/layout";i:14;s:14:"extension/feed";i:15;s:19:"extension/installer";i:16;s:22:"extension/modification";i:17;s:16:"extension/module";i:18;s:17:"extension/payment";i:19;s:18:"extension/shipping";i:20;s:15:"extension/total";i:21;s:16:"feed/google_base";i:22;s:19:"feed/google_sitemap";i:23;s:20:"localisation/country";i:24;s:21:"localisation/currency";i:25;s:21:"localisation/geo_zone";i:26;s:21:"localisation/language";i:27;s:25:"localisation/length_class";i:28;s:21:"localisation/location";i:29;s:25:"localisation/order_status";i:30;s:26:"localisation/return_action";i:31;s:26:"localisation/return_reason";i:32;s:26:"localisation/return_status";i:33;s:25:"localisation/stock_status";i:34;s:22:"localisation/tax_class";i:35;s:21:"localisation/tax_rate";i:36;s:25:"localisation/weight_class";i:37;s:17:"localisation/zone";i:38;s:19:"marketing/affiliate";i:39;s:17:"marketing/contact";i:40;s:16:"marketing/coupon";i:41;s:19:"marketing/marketing";i:42;s:14:"module/account";i:43;s:16:"module/affiliate";i:44;s:13:"module/banner";i:45;s:17:"module/bestseller";i:46;s:15:"module/carousel";i:47;s:15:"module/category";i:48;s:15:"module/featured";i:49;s:13:"module/filter";i:50;s:18:"module/google_talk";i:51;s:18:"module/information";i:52;s:13:"module/latest";i:53;s:16:"module/slideshow";i:54;s:14:"module/special";i:55;s:12:"module/store";i:56;s:14:"module/welcome";i:57;s:24:"payment/authorizenet_aim";i:58;s:21:"payment/bank_transfer";i:59;s:14:"payment/cheque";i:60;s:11:"payment/cod";i:61;s:21:"payment/free_checkout";i:62;s:22:"payment/klarna_account";i:63;s:22:"payment/klarna_invoice";i:64;s:14:"payment/liqpay";i:65;s:20:"payment/moneybookers";i:66;s:14:"payment/nochex";i:67;s:15:"payment/paymate";i:68;s:16:"payment/paypoint";i:69;s:13:"payment/payza";i:70;s:26:"payment/perpetual_payments";i:71;s:18:"payment/pp_express";i:72;s:25:"payment/pp_payflow_iframe";i:73;s:14:"payment/pp_pro";i:74;s:21:"payment/pp_pro_iframe";i:75;s:18:"payment/pp_payflow";i:76;s:17:"payment/pp_pro_uk";i:77;s:19:"payment/pp_standard";i:78;s:15:"payment/sagepay";i:79;s:22:"payment/sagepay_direct";i:80;s:18:"payment/sagepay_us";i:81;s:19:"payment/twocheckout";i:82;s:28:"payment/web_payment_software";i:83;s:16:"payment/worldpay";i:84;s:16:"report/affiliate";i:85;s:25:"report/affiliate_activity";i:86;s:24:"report/customer_activity";i:87;s:22:"report/customer_credit";i:88;s:22:"report/customer_online";i:89;s:21:"report/customer_order";i:90;s:22:"report/customer_reward";i:91;s:16:"report/marketing";i:92;s:24:"report/product_purchased";i:93;s:21:"report/product_viewed";i:94;s:18:"report/sale_coupon";i:95;s:17:"report/sale_order";i:96;s:18:"report/sale_return";i:97;s:20:"report/sale_shipping";i:98;s:15:"report/sale_tax";i:99;s:17:"sale/custom_field";i:100;s:13:"sale/customer";i:101;s:20:"sale/customer_ban_ip";i:102;s:19:"sale/customer_group";i:103;s:10:"sale/order";i:104;s:14:"sale/recurring";i:105;s:11:"sale/return";i:106;s:12:"sale/voucher";i:107;s:18:"sale/voucher_theme";i:108;s:15:"setting/setting";i:109;s:13:"setting/store";i:110;s:16:"shipping/auspost";i:111;s:17:"shipping/citylink";i:112;s:14:"shipping/fedex";i:113;s:13:"shipping/flat";i:114;s:13:"shipping/free";i:115;s:13:"shipping/item";i:116;s:23:"shipping/parcelforce_48";i:117;s:15:"shipping/pickup";i:118;s:19:"shipping/royal_mail";i:119;s:12:"shipping/ups";i:120;s:13:"shipping/usps";i:121;s:15:"shipping/weight";i:122;s:11:"tool/backup";i:123;s:14:"tool/error_log";i:124;s:12:"total/coupon";i:125;s:12:"total/credit";i:126;s:14:"total/handling";i:127;s:16:"total/klarna_fee";i:128;s:19:"total/low_order_fee";i:129;s:12:"total/reward";i:130;s:14:"total/shipping";i:131;s:15:"total/sub_total";i:132;s:9:"total/tax";i:133;s:11:"total/total";i:134;s:13:"total/voucher";i:135;s:9:"user/user";i:136;s:20:"user/user_permission";}}'),
+(1, 'Top Administrator', 'a:2:{s:6:"access";a:146:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:15:"catalog/profile";i:10;s:14:"catalog/review";i:11;s:18:"common/filemanager";i:12;s:13:"design/banner";i:13;s:19:"design/custom_field";i:14;s:13:"design/layout";i:15;s:14:"extension/feed";i:16;s:17:"extension/manager";i:17;s:16:"extension/module";i:18;s:17:"extension/openbay";i:19;s:17:"extension/payment";i:20;s:18:"extension/shipping";i:21;s:15:"extension/total";i:22;s:16:"feed/google_base";i:23;s:19:"feed/google_sitemap";i:24;s:20:"localisation/country";i:25;s:21:"localisation/currency";i:26;s:21:"localisation/geo_zone";i:27;s:21:"localisation/language";i:28;s:25:"localisation/length_class";i:29;s:25:"localisation/order_status";i:30;s:26:"localisation/return_action";i:31;s:26:"localisation/return_reason";i:32;s:26:"localisation/return_status";i:33;s:25:"localisation/stock_status";i:34;s:22:"localisation/tax_class";i:35;s:21:"localisation/tax_rate";i:36;s:25:"localisation/weight_class";i:37;s:17:"localisation/zone";i:38;s:14:"module/account";i:39;s:16:"module/affiliate";i:40;s:29:"module/amazon_checkout_layout";i:41;s:13:"module/banner";i:42;s:17:"module/bestseller";i:43;s:15:"module/carousel";i:44;s:15:"module/category";i:45;s:18:"module/ebaydisplay";i:46;s:15:"module/featured";i:47;s:13:"module/filter";i:48;s:18:"module/google_talk";i:49;s:18:"module/information";i:50;s:13:"module/latest";i:51;s:17:"module/openbaypro";i:52;s:16:"module/pp_layout";i:53;s:16:"module/slideshow";i:54;s:14:"module/special";i:55;s:12:"module/store";i:56;s:14:"module/welcome";i:57;s:14:"openbay/amazon";i:58;s:22:"openbay/amazon_listing";i:59;s:22:"openbay/amazon_product";i:60;s:16:"openbay/amazonus";i:61;s:24:"openbay/amazonus_listing";i:62;s:24:"openbay/amazonus_product";i:63;s:20:"openbay/ebay_profile";i:64;s:21:"openbay/ebay_template";i:65;s:15:"openbay/openbay";i:66;s:23:"payment/amazon_checkout";i:67;s:24:"payment/authorizenet_aim";i:68;s:21:"payment/bank_transfer";i:69;s:14:"payment/cheque";i:70;s:11:"payment/cod";i:71;s:21:"payment/free_checkout";i:72;s:22:"payment/klarna_account";i:73;s:22:"payment/klarna_invoice";i:74;s:14:"payment/liqpay";i:75;s:20:"payment/moneybookers";i:76;s:14:"payment/nochex";i:77;s:15:"payment/paymate";i:78;s:16:"payment/paypoint";i:79;s:13:"payment/payza";i:80;s:26:"payment/perpetual_payments";i:81;s:18:"payment/pp_express";i:82;s:25:"payment/pp_payflow_iframe";i:83;s:14:"payment/pp_pro";i:84;s:21:"payment/pp_pro_iframe";i:85;s:17:"payment/pp_pro_pf";i:86;s:17:"payment/pp_pro_uk";i:87;s:19:"payment/pp_standard";i:88;s:15:"payment/sagepay";i:89;s:22:"payment/sagepay_direct";i:90;s:18:"payment/sagepay_us";i:91;s:19:"payment/twocheckout";i:92;s:28:"payment/web_payment_software";i:93;s:16:"payment/worldpay";i:94;s:27:"report/affiliate_commission";i:95;s:22:"report/customer_credit";i:96;s:22:"report/customer_online";i:97;s:21:"report/customer_order";i:98;s:22:"report/customer_reward";i:99;s:24:"report/product_purchased";i:100;s:21:"report/product_viewed";i:101;s:18:"report/sale_coupon";i:102;s:17:"report/sale_order";i:103;s:18:"report/sale_return";i:104;s:20:"report/sale_shipping";i:105;s:15:"report/sale_tax";i:106;s:14:"sale/affiliate";i:107;s:12:"sale/contact";i:108;s:11:"sale/coupon";i:109;s:13:"sale/customer";i:110;s:20:"sale/customer_ban_ip";i:111;s:19:"sale/customer_group";i:112;s:10:"sale/order";i:113;s:14:"sale/recurring";i:114;s:11:"sale/return";i:115;s:12:"sale/voucher";i:116;s:18:"sale/voucher_theme";i:117;s:15:"setting/setting";i:118;s:13:"setting/store";i:119;s:16:"shipping/auspost";i:120;s:17:"shipping/citylink";i:121;s:14:"shipping/fedex";i:122;s:13:"shipping/flat";i:123;s:13:"shipping/free";i:124;s:13:"shipping/item";i:125;s:23:"shipping/parcelforce_48";i:126;s:15:"shipping/pickup";i:127;s:19:"shipping/royal_mail";i:128;s:12:"shipping/ups";i:129;s:13:"shipping/usps";i:130;s:15:"shipping/weight";i:131;s:11:"tool/backup";i:132;s:14:"tool/error_log";i:133;s:12:"total/coupon";i:134;s:12:"total/credit";i:135;s:14:"total/handling";i:136;s:16:"total/klarna_fee";i:137;s:19:"total/low_order_fee";i:138;s:12:"total/reward";i:139;s:14:"total/shipping";i:140;s:15:"total/sub_total";i:141;s:9:"total/tax";i:142;s:11:"total/total";i:143;s:13:"total/voucher";i:144;s:9:"user/user";i:145;s:20:"user/user_permission";}s:6:"modify";a:146:{i:0;s:17:"catalog/attribute";i:1;s:23:"catalog/attribute_group";i:2;s:16:"catalog/category";i:3;s:16:"catalog/download";i:4;s:14:"catalog/filter";i:5;s:19:"catalog/information";i:6;s:20:"catalog/manufacturer";i:7;s:14:"catalog/option";i:8;s:15:"catalog/product";i:9;s:15:"catalog/profile";i:10;s:14:"catalog/review";i:11;s:18:"common/filemanager";i:12;s:13:"design/banner";i:13;s:19:"design/custom_field";i:14;s:13:"design/layout";i:15;s:14:"extension/feed";i:16;s:17:"extension/manager";i:17;s:16:"extension/module";i:18;s:17:"extension/openbay";i:19;s:17:"extension/payment";i:20;s:18:"extension/shipping";i:21;s:15:"extension/total";i:22;s:16:"feed/google_base";i:23;s:19:"feed/google_sitemap";i:24;s:20:"localisation/country";i:25;s:21:"localisation/currency";i:26;s:21:"localisation/geo_zone";i:27;s:21:"localisation/language";i:28;s:25:"localisation/length_class";i:29;s:25:"localisation/order_status";i:30;s:26:"localisation/return_action";i:31;s:26:"localisation/return_reason";i:32;s:26:"localisation/return_status";i:33;s:25:"localisation/stock_status";i:34;s:22:"localisation/tax_class";i:35;s:21:"localisation/tax_rate";i:36;s:25:"localisation/weight_class";i:37;s:17:"localisation/zone";i:38;s:14:"module/account";i:39;s:16:"module/affiliate";i:40;s:29:"module/amazon_checkout_layout";i:41;s:13:"module/banner";i:42;s:17:"module/bestseller";i:43;s:15:"module/carousel";i:44;s:15:"module/category";i:45;s:18:"module/ebaydisplay";i:46;s:15:"module/featured";i:47;s:13:"module/filter";i:48;s:18:"module/google_talk";i:49;s:18:"module/information";i:50;s:13:"module/latest";i:51;s:17:"module/openbaypro";i:52;s:16:"module/pp_layout";i:53;s:16:"module/slideshow";i:54;s:14:"module/special";i:55;s:12:"module/store";i:56;s:14:"module/welcome";i:57;s:14:"openbay/amazon";i:58;s:22:"openbay/amazon_listing";i:59;s:22:"openbay/amazon_product";i:60;s:16:"openbay/amazonus";i:61;s:24:"openbay/amazonus_listing";i:62;s:24:"openbay/amazonus_product";i:63;s:20:"openbay/ebay_profile";i:64;s:21:"openbay/ebay_template";i:65;s:15:"openbay/openbay";i:66;s:23:"payment/amazon_checkout";i:67;s:24:"payment/authorizenet_aim";i:68;s:21:"payment/bank_transfer";i:69;s:14:"payment/cheque";i:70;s:11:"payment/cod";i:71;s:21:"payment/free_checkout";i:72;s:22:"payment/klarna_account";i:73;s:22:"payment/klarna_invoice";i:74;s:14:"payment/liqpay";i:75;s:20:"payment/moneybookers";i:76;s:14:"payment/nochex";i:77;s:15:"payment/paymate";i:78;s:16:"payment/paypoint";i:79;s:13:"payment/payza";i:80;s:26:"payment/perpetual_payments";i:81;s:18:"payment/pp_express";i:82;s:25:"payment/pp_payflow_iframe";i:83;s:14:"payment/pp_pro";i:84;s:21:"payment/pp_pro_iframe";i:85;s:17:"payment/pp_pro_pf";i:86;s:17:"payment/pp_pro_uk";i:87;s:19:"payment/pp_standard";i:88;s:15:"payment/sagepay";i:89;s:22:"payment/sagepay_direct";i:90;s:18:"payment/sagepay_us";i:91;s:19:"payment/twocheckout";i:92;s:28:"payment/web_payment_software";i:93;s:16:"payment/worldpay";i:94;s:27:"report/affiliate_commission";i:95;s:22:"report/customer_credit";i:96;s:22:"report/customer_online";i:97;s:21:"report/customer_order";i:98;s:22:"report/customer_reward";i:99;s:24:"report/product_purchased";i:100;s:21:"report/product_viewed";i:101;s:18:"report/sale_coupon";i:102;s:17:"report/sale_order";i:103;s:18:"report/sale_return";i:104;s:20:"report/sale_shipping";i:105;s:15:"report/sale_tax";i:106;s:14:"sale/affiliate";i:107;s:12:"sale/contact";i:108;s:11:"sale/coupon";i:109;s:13:"sale/customer";i:110;s:20:"sale/customer_ban_ip";i:111;s:19:"sale/customer_group";i:112;s:10:"sale/order";i:113;s:14:"sale/recurring";i:114;s:11:"sale/return";i:115;s:12:"sale/voucher";i:116;s:18:"sale/voucher_theme";i:117;s:15:"setting/setting";i:118;s:13:"setting/store";i:119;s:16:"shipping/auspost";i:120;s:17:"shipping/citylink";i:121;s:14:"shipping/fedex";i:122;s:13:"shipping/flat";i:123;s:13:"shipping/free";i:124;s:13:"shipping/item";i:125;s:23:"shipping/parcelforce_48";i:126;s:15:"shipping/pickup";i:127;s:19:"shipping/royal_mail";i:128;s:12:"shipping/ups";i:129;s:13:"shipping/usps";i:130;s:15:"shipping/weight";i:131;s:11:"tool/backup";i:132;s:14:"tool/error_log";i:133;s:12:"total/coupon";i:134;s:12:"total/credit";i:135;s:14:"total/handling";i:136;s:16:"total/klarna_fee";i:137;s:19:"total/low_order_fee";i:138;s:12:"total/reward";i:139;s:14:"total/shipping";i:140;s:15:"total/sub_total";i:141;s:9:"total/tax";i:142;s:11:"total/total";i:143;s:13:"total/voucher";i:144;s:9:"user/user";i:145;s:20:"user/user_permission";}}'),
 (10, 'Demonstration', '');
 
 -- --------------------------------------------------------
@@ -3571,13 +3413,14 @@ CREATE TABLE `oc_voucher` (
   `message` text NOT NULL,
   `amount` decimal(15,4) NOT NULL,
   `status` tinyint(1) NOT NULL,
-  `date_added` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`voucher_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
 --
 -- Dumping data for table `oc_voucher`
 --
+
 
 -- --------------------------------------------------------
 
@@ -3618,9 +3461,9 @@ CREATE TABLE `oc_voucher_theme` (
 --
 
 INSERT INTO `oc_voucher_theme` (`voucher_theme_id`, `image`) VALUES
-(8, 'catalog/demo/canon_eos_5d_2.jpg'),
-(7, 'catalog/demo/gift-voucher-birthday.jpg'),
-(6, 'catalog/demo/apple_logo.jpg');
+(8, 'data/demo/canon_eos_5d_2.jpg'),
+(7, 'data/demo/gift-voucher-birthday.jpg'),
+(6, 'data/demo/apple_logo.jpg');
 
 -- --------------------------------------------------------
 
@@ -4560,27 +4403,27 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (844, 52, 'VAV', 'Vavoua', 1),
 (845, 52, 'YAM', 'Yamoussoukro', 1),
 (846, 52, 'ZUE', 'Zuenoula', 1),
-(847, 53, 'BB', 'Bjelovarsko-bilogorska', 1),
-(848, 53, 'GZ', 'Grad Zagreb', 1),
-(849, 53, 'DN', 'Dubrovačko-neretvanska', 1),
-(850, 53, 'IS', 'Istarska', 1),
-(851, 53, 'KA', 'Karlovačka', 1),
-(852, 53, 'KK', 'Koprivničko-križevačka', 1),
-(853, 53, 'KZ', 'Krapinsko-zagorska', 1),
-(854, 53, 'LS', 'Ličko-senjska', 1),
-(855, 53, 'ME', 'Međimurska', 1),
-(856, 53, 'OB', 'Osječko-baranjska', 1),
-(857, 53, 'PS', 'Požeško-slavonska', 1),
-(858, 53, 'PG', 'Primorsko-goranska', 1),
-(859, 53, 'SK', 'Šibensko-kninska', 1),
-(860, 53, 'SM', 'Sisačko-moslavačka', 1),
-(861, 53, 'BP', 'Brodsko-posavska', 1),
-(862, 53, 'SD', 'Splitsko-dalmatinska', 1),
-(863, 53, 'VA', 'Varaždinska', 1),
-(864, 53, 'VP', 'Virovitičko-podravska', 1),
-(865, 53, 'VS', 'Vukovarsko-srijemska', 1),
-(866, 53, 'ZA', 'Zadarska', 1),
-(867, 53, 'ZG', 'Zagrebačka', 1),
+(847, 53, 'BB', 'Bjelovar-Bilogora', 1),
+(848, 53, 'CZ', 'City of Zagreb', 1),
+(849, 53, 'DN', 'Dubrovnik-Neretva', 1),
+(850, 53, 'IS', 'Istra', 1),
+(851, 53, 'KA', 'Karlovac', 1),
+(852, 53, 'KK', 'Koprivnica-Krizevci', 1),
+(853, 53, 'KZ', 'Krapina-Zagorje', 1),
+(854, 53, 'LS', 'Lika-Senj', 1),
+(855, 53, 'ME', 'Medimurje', 1),
+(856, 53, 'OB', 'Osijek-Baranja', 1),
+(857, 53, 'PS', 'Pozega-Slavonia', 1),
+(858, 53, 'PG', 'Primorje-Gorski Kotar', 1),
+(859, 53, 'SI', 'Sibenik', 1),
+(860, 53, 'SM', 'Sisak-Moslavina', 1),
+(861, 53, 'SB', 'Slavonski Brod-Posavina', 1),
+(862, 53, 'SD', 'Split-Dalmatia', 1),
+(863, 53, 'VA', 'Varazdin', 1),
+(864, 53, 'VP', 'Virovitica-Podravina', 1),
+(865, 53, 'VS', 'Vukovar-Srijem', 1),
+(866, 53, 'ZK', 'Zadar-Knin', 1),
+(867, 53, 'ZA', 'Zagreb', 1),
 (868, 54, 'CA', 'Camaguey', 1),
 (869, 54, 'CD', 'Ciego de Avila', 1),
 (870, 54, 'CI', 'Cienfuegos', 1),
@@ -5510,6 +5353,39 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (1816, 116, 'XE', 'Xekong', 1),
 (1817, 116, 'XI', 'Xiangkhoang', 1),
 (1818, 116, 'XN', 'Xaisomboun', 1),
+(1819, 117, 'AIZ', 'Aizkraukles Rajons', 1),
+(1820, 117, 'ALU', 'Aluksnes Rajons', 1),
+(1821, 117, 'BAL', 'Balvu Rajons', 1),
+(1822, 117, 'BAU', 'Bauskas Rajons', 1),
+(1823, 117, 'CES', 'Cesu Rajons', 1),
+(1824, 117, 'DGR', 'Daugavpils Rajons', 1),
+(1825, 117, 'DOB', 'Dobeles Rajons', 1),
+(1826, 117, 'GUL', 'Gulbenes Rajons', 1),
+(1827, 117, 'JEK', 'Jekabpils Rajons', 1),
+(1828, 117, 'JGR', 'Jelgavas Rajons', 1),
+(1829, 117, 'KRA', 'Kraslavas Rajons', 1),
+(1830, 117, 'KUL', 'Kuldigas Rajons', 1),
+(1831, 117, 'LPR', 'Liepajas Rajons', 1),
+(1832, 117, 'LIM', 'Limbazu Rajons', 1),
+(1833, 117, 'LUD', 'Ludzas Rajons', 1),
+(1834, 117, 'MAD', 'Madonas Rajons', 1),
+(1835, 117, 'OGR', 'Ogres Rajons', 1),
+(1836, 117, 'PRE', 'Preilu Rajons', 1),
+(1837, 117, 'RZR', 'Rezeknes Rajons', 1),
+(1838, 117, 'RGR', 'Rigas Rajons', 1),
+(1839, 117, 'SAL', 'Saldus Rajons', 1),
+(1840, 117, 'TAL', 'Talsu Rajons', 1),
+(1841, 117, 'TUK', 'Tukuma Rajons', 1),
+(1842, 117, 'VLK', 'Valkas Rajons', 1),
+(1843, 117, 'VLM', 'Valmieras Rajons', 1),
+(1844, 117, 'VSR', 'Ventspils Rajons', 1),
+(1845, 117, 'DGV', 'Daugavpils', 1),
+(1846, 117, 'JGV', 'Jelgava', 1),
+(1847, 117, 'JUR', 'Jurmala', 1),
+(1848, 117, 'LPK', 'Liepaja', 1),
+(1849, 117, 'RZK', 'Rezekne', 1),
+(1850, 117, 'RGA', 'Riga', 1),
+(1851, 117, 'VSL', 'Ventspils', 1),
 (1852, 119, 'BE', 'Berea', 1),
 (1853, 119, 'BB', 'Butha-Buthe', 1),
 (1854, 119, 'LE', 'Leribe', 1),
@@ -5629,22 +5505,21 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (1968, 128, 'SLM', 'Salima', 1),
 (1969, 128, 'THY', 'Thyolo', 1),
 (1970, 128, 'ZBA', 'Zomba', 1),
-(1971, 129, 'MY-01', 'Johor', 1),
-(1972, 129, 'MY-02', 'Kedah', 1),
-(1973, 129, 'MY-03', 'Kelantan', 1),
-(1974, 129, 'MY-15', 'Labuan', 1),
-(1975, 129, 'MY-04', 'Melaka', 1),
-(1976, 129, 'MY-05', 'Negeri Sembilan', 1),
-(1977, 129, 'MY-06', 'Pahang', 1),
-(1978, 129, 'MY-08', 'Perak', 1),
-(1979, 129, 'MY-09', 'Perlis', 1),
-(1980, 129, 'MY-07', 'Pulau Pinang', 1),
-(1981, 129, 'MY-12', 'Sabah', 1),
-(1982, 129, 'MY-13', 'Sarawak', 1),
-(1983, 129, 'MY-10', 'Selangor', 1),
-(1984, 129, 'MY-11', 'Terengganu', 1),
-(1985, 129, 'MY-14', 'Kuala Lumpur', 1),
-(4035, 129, 'MY-16', 'Putrajaya', 1),
+(1971, 129, 'JO', 'Johor', 1),
+(1972, 129, 'KE', 'Kedah', 1),
+(1973, 129, 'KL', 'Kelantan', 1),
+(1974, 129, 'LA', 'Labuan', 1),
+(1975, 129, 'ME', 'Melaka', 1),
+(1976, 129, 'NS', 'Negeri Sembilan', 1),
+(1977, 129, 'PA', 'Pahang', 1),
+(1978, 129, 'PE', 'Perak', 1),
+(1979, 129, 'PR', 'Perlis', 1),
+(1980, 129, 'PP', 'Pulau Pinang', 1),
+(1981, 129, 'SA', 'Sabah', 1),
+(1982, 129, 'SR', 'Sarawak', 1),
+(1983, 129, 'SE', 'Selangor', 1),
+(1984, 129, 'TE', 'Terengganu', 1),
+(1985, 129, 'WP', 'Wilayah Persekutuan', 1),
 (1986, 130, 'THU', 'Thiladhunmathi Uthuru', 1),
 (1987, 130, 'THD', 'Thiladhunmathi Dhekunu', 1),
 (1988, 130, 'MLU', 'Miladhunmadulu Uthuru', 1),
@@ -6690,9 +6565,9 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3028, 196, 'SO', 'Southern', 1),
 (3029, 196, 'UV', 'Uva', 1),
 (3030, 196, 'WE', 'Western', 1),
-
+(3031, 197, 'A', 'Ascension', 1),
 (3032, 197, 'S', 'Saint Helena', 1),
-
+(3033, 197, 'T', 'Tristan da Cunha', 1),
 (3034, 199, 'ANL', 'A''ali an Nil', 1),
 (3035, 199, 'BAM', 'Al Bahr al Ahmar', 1),
 (3036, 199, 'BRT', 'Al Buhayrat', 1),
@@ -7609,7 +7484,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (3969, 101, 'ALB', 'Alborz', 1),
 (3970, 21, 'BRU', 'Brussels-Capital Region', 1),
 (3971, 138, 'AG', 'Aguascalientes', 1),
-
+(3972, 222, 'IOM', 'Isle of Man', 1),
 (3973, 242, '01', 'Andrijevica', 1),
 (3974, 242, '02', 'Bar', 1),
 (3975, 242, '03', 'Berane', 1),
@@ -7656,7 +7531,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (4016, 243, '22', 'Pirot', 1),
 (4017, 243, '23', 'Jablanica', 1),
 (4018, 243, '24', 'Pčinja', 1),
-
+(4019, 243, 'KM', 'Kosovo', 1),
 (4020, 245, 'BO', 'Bonaire', 1),
 (4021, 245, 'SA', 'Saba', 1),
 (4022, 245, 'SE', 'Sint Eustatius', 1),
@@ -7669,197 +7544,7 @@ INSERT INTO `oc_zone` (`zone_id`, `country_id`, `code`, `name`, `status`) VALUES
 (4029, 248, 'NU', 'Upper Nile', 1),
 (4030, 248, 'WR', 'Warrap', 1),
 (4031, 248, 'BW', 'Western Bahr el-Ghazal', 1),
-(4032, 248, 'EW', 'Western Equatoria', 1),
-
-
-
-(4036,117,  '0661405', 'Ainaži, Salacgrīvas novads', 1),
-(4037,117,  '0320201', 'Aizkraukle, Aizkraukles novads', 1),
-(4038,117,  '0320200', 'Aizkraukles novads', 1),
-(4039,117,  '0640605', 'Aizpute, Aizputes novads', 1),
-(4040,117,  '0640600', 'Aizputes novads', 1),
-(4041,117,  '0560805', 'Aknīste, Aknīstes novads', 1),
-(4042,117,  '0560800', 'Aknīstes novads', 1),
-(4043,117,  '0661007', 'Aloja, Alojas novads', 1),
-(4044,117,  '0661000', 'Alojas novads', 1),
-(4045,117,  '0624200', 'Alsungas novads', 1),
-(4046,117,  '0360201', 'Alūksne, Alūksnes novads', 1),
-(4047,117,  '0360200', 'Alūksnes novads', 1),
-(4048,117,  '0424701', 'Amatas novads', 1),
-(4049,117,  '0360805', 'Ape, Apes novads', 1),
-(4050,117,  '0360800', 'Apes novads', 1),
-(4051,117,  '0460805', 'Auce, Auces novads', 1),
-(4052,117,  '0460800', 'Auces novads', 1),
-(4053,117,  '0804400', 'Ādažu novads', 1),
-(4054,117,  '0804900', 'Babītes novads', 1),
-(4055,117,  '0800605', 'Baldone, Baldones novads', 1),
-(4056,117,  '0800600', 'Baldones novads', 1),
-(4057,117,  '0800807', 'Baloži, Ķekavas novads', 1),
-(4058,117,  '0384400', 'Baltinavas novads', 1),
-(4059,117,  '0380201', 'Balvi, Balvu novads', 1),
-(4060,117,  '0380200', 'Balvu novads', 1),
-(4061,117,  '0400201', 'Bauska, Bauskas novads', 1),
-(4062,117,  '0400200', 'Bauskas novads', 1),
-(4063,117,  '0964700', 'Beverīnas novads', 1),
-(4064,117,  '0840605', 'Brocēni, Brocēnu novads', 1),
-(4065,117,  '0840601', 'Brocēnu novads', 1),
-(4066,117,  '0967101', 'Burtnieku novads', 1),
-(4067,117,  '0805200', 'Carnikavas novads', 1),
-(4068,117,  '0700807', 'Cesvaine, Cesvaines novads', 1),
-(4069,117,  '0700800', 'Cesvaines novads', 1),
-(4070,117,  '0420201', 'Cēsis, Cēsu novads', 1),
-(4071,117,  '0420200', 'Cēsu novads', 1),
-(4072,117,  '0684901', 'Ciblas novads', 1),
-(4073,117,  '0601009', 'Dagda, Dagdas novads', 1),
-(4074,117,  '0601000', 'Dagdas novads', 1),
-(4075,117,  '0050000', 'Daugavpils', 1),
-(4076,117,  '0440200', 'Daugavpils novads', 1),
-(4077,117,  '0460201', 'Dobele, Dobeles novads', 1),
-(4078,117,  '0460200', 'Dobeles novads', 1),
-(4079,117,  '0885100', 'Dundagas novads', 1),
-(4080,117,  '0640807', 'Durbe, Durbes novads', 1),
-(4081,117,  '0640801', 'Durbes novads', 1),
-(4082,117,  '0905100', 'Engures novads', 1),
-(4083,117,  '0705500', 'Ērgļu novads', 1),
-(4084,117,  '0806000', 'Garkalnes novads', 1),
-(4085,117,  '0641009', 'Grobiņa, Grobiņas novads', 1),
-(4086,117,  '0641000', 'Grobiņas novads', 1),
-(4087,117,  '0500201', 'Gulbene, Gulbenes novads', 1),
-(4088,117,  '0500200', 'Gulbenes novads', 1),
-(4089,117,  '0406400', 'Iecavas novads', 1),
-(4090,117,  '0740605', 'Ikšķile, Ikšķiles novads', 1),
-(4091,117,  '0740600', 'Ikšķiles novads', 1),
-(4092,117,  '0440807', 'Ilūkste, Ilūkstes novads', 1),
-(4093,117,  '0440801', 'Ilūkstes novads', 1),
-(4094,117,  '0801800', 'Inčukalna novads', 1),
-(4095,117,  '0321007', 'Jaunjelgava, Jaunjelgavas novads', 1),
-(4096,117,  '0321000', 'Jaunjelgavas novads', 1),
-(4097,117,  '0425700', 'Jaunpiebalgas novads', 1),
-(4098,117,  '0905700', 'Jaunpils novads', 1),
-(4099,117,  '0090000', 'Jelgava', 1),
-(4100,117,  '0540200', 'Jelgavas novads', 1),
-(4101,117,  '0110000', 'Jēkabpils', 1),
-(4102,117,  '0560200', 'Jēkabpils novads', 1),
-(4103,117,  '0130000', 'Jūrmala', 1),
-(4104,117,  '0540211', 'Kalnciems, Jelgavas novads', 1),
-(4105,117,  '0901211', 'Kandava, Kandavas novads', 1),
-(4106,117,  '0901201', 'Kandavas novads', 1),
-(4107,117,  '0681009', 'Kārsava, Kārsavas novads', 1),
-(4108,117,  '0681000', 'Kārsavas novads', 1),
-(4109,117,  '0960200', 'Kocēnu novads ,bij. Valmieras)', 1),
-(4110,117,  '0326100', 'Kokneses novads', 1),
-(4111,117,  '0600201', 'Krāslava, Krāslavas novads', 1),
-(4112,117,  '0600202', 'Krāslavas novads', 1),
-(4113,117,  '0806900', 'Krimuldas novads', 1),
-(4114,117,  '0566900', 'Krustpils novads', 1),
-(4115,117,  '0620201', 'Kuldīga, Kuldīgas novads', 1),
-(4116,117,  '0620200', 'Kuldīgas novads', 1),
-(4117,117,  '0741001', 'Ķeguma novads', 1),
-(4118,117,  '0741009', 'Ķegums, Ķeguma novads', 1),
-(4119,117,  '0800800', 'Ķekavas novads', 1),
-(4120,117,  '0741413', 'Lielvārde, Lielvārdes novads', 1),
-(4121,117,  '0741401', 'Lielvārdes novads', 1),
-(4122,117,  '0170000', 'Liepāja', 1),
-(4123,117,  '0660201', 'Limbaži, Limbažu novads', 1),
-(4124,117,  '0660200', 'Limbažu novads', 1),
-(4125,117,  '0421211', 'Līgatne, Līgatnes novads', 1),
-(4126,117,  '0421200', 'Līgatnes novads', 1),
-(4127,117,  '0761211', 'Līvāni, Līvānu novads', 1),
-(4128,117,  '0761201', 'Līvānu novads', 1),
-(4129,117,  '0701413', 'Lubāna, Lubānas novads', 1),
-(4130,117,  '0701400', 'Lubānas novads', 1),
-(4131,117,  '0680201', 'Ludza, Ludzas novads', 1),
-(4132,117,  '0680200', 'Ludzas novads', 1),
-(4133,117,  '0700201', 'Madona, Madonas novads', 1),
-(4134,117,  '0700200', 'Madonas novads', 1),
-(4135,117,  '0961011', 'Mazsalaca, Mazsalacas novads', 1),
-(4136,117,  '0961000', 'Mazsalacas novads', 1),
-(4137,117,  '0807400', 'Mālpils novads', 1),
-(4138,117,  '0807600', 'Mārupes novads', 1),
-(4139,117,  '0887600', 'Mērsraga novads', 1),
-(4140,117,  '0967300', 'Naukšēnu novads', 1),
-(4141,117,  '0327100', 'Neretas novads', 1),
-(4142,117,  '0647900', 'Nīcas novads', 1),
-(4143,117,  '0740201', 'Ogre, Ogres novads', 1),
-(4144,117,  '0740202', 'Ogres novads', 1),
-(4145,117,  '0801009', 'Olaine, Olaines novads', 1),
-(4146,117,  '0801000', 'Olaines novads', 1),
-(4147,117,  '0546701', 'Ozolnieku novads', 1),
-(4148,117,  '0427500', 'Pārgaujas novads', 1),
-(4149,117,  '0641413', 'Pāvilosta, Pāvilostas novads', 1),
-(4150,117,  '0641401', 'Pāvilostas novads', 1),
-(4151,117,  '0980213', 'Piltene, Ventspils novads', 1),
-(4152,117,  '0321413', 'Pļaviņas, Pļaviņu novads', 1),
-(4153,117,  '0321400', 'Pļaviņu novads', 1),
-(4154,117,  '0760201', 'Preiļi, Preiļu novads', 1),
-(4155,117,  '0760202', 'Preiļu novads', 1),
-(4156,117,  '0641615', 'Priekule, Priekules novads', 1),
-(4157,117,  '0641600', 'Priekules novads', 1),
-(4158,117,  '0427300', 'Priekuļu novads', 1),
-(4159,117,  '0427700', 'Raunas novads', 1),
-(4160,117,  '0210000', 'Rēzekne', 1),
-(4161,117,  '0780200', 'Rēzeknes novads', 1),
-(4162,117,  '0766300', 'Riebiņu novads', 1),
-(4163,117,  '0010000', 'Rīga', 1),
-(4164,117,  '0888300', 'Rojas novads', 1),
-(4165,117,  '0808400', 'Ropažu novads', 1),
-(4166,117,  '0648500', 'Rucavas novads', 1),
-(4167,117,  '0387500', 'Rugāju novads', 1),
-(4168,117,  '0407700', 'Rundāles novads', 1),
-(4169,117,  '0961615', 'Rūjiena, Rūjienas novads', 1),
-(4170,117,  '0961600', 'Rūjienas novads', 1),
-(4171,117,  '0880213', 'Sabile, Talsu novads', 1),
-(4172,117,  '0661415', 'Salacgrīva, Salacgrīvas novads', 1),
-(4173,117,  '0661400', 'Salacgrīvas novads', 1),
-(4174,117,  '0568700', 'Salas novads', 1),
-(4175,117,  '0801200', 'Salaspils novads', 1),
-(4176,117,  '0801211', 'Salaspils, Salaspils novads', 1),
-(4177,117,  '0840200', 'Saldus novads', 1),
-(4178,117,  '0840201', 'Saldus, Saldus novads', 1),
-(4179,117,  '0801413', 'Saulkrasti, Saulkrastu novads', 1),
-(4180,117,  '0801400', 'Saulkrastu novads', 1),
-(4181,117,  '0941813', 'Seda, Strenču novads', 1),
-(4182,117,  '0809200', 'Sējas novads', 1),
-(4183,117,  '0801615', 'Sigulda, Siguldas novads', 1),
-(4184,117,  '0801601', 'Siguldas novads', 1),
-(4185,117,  '0328200', 'Skrīveru novads', 1),
-(4186,117,  '0621209', 'Skrunda, Skrundas novads', 1),
-(4187,117,  '0621200', 'Skrundas novads', 1),
-(4188,117,  '0941615', 'Smiltene, Smiltenes novads', 1),
-(4189,117,  '0941600', 'Smiltenes novads', 1),
-(4190,117,  '0661017', 'Staicele, Alojas novads', 1),
-(4191,117,  '0880215', 'Stende, Talsu novads', 1),
-(4192,117,  '0809600', 'Stopiņu novads', 1),
-(4193,117,  '0941817', 'Strenči, Strenču novads', 1),
-(4194,117,  '0941800', 'Strenču novads', 1),
-(4195,117,  '0440815', 'Subate, Ilūkstes novads', 1),
-(4196,117,  '0880201', 'Talsi, Talsu novads', 1),
-(4197,117,  '0880200', 'Talsu novads', 1),
-(4198,117,  '0468900', 'Tērvetes novads', 1),
-(4199,117,  '0900200', 'Tukuma novads', 1),
-(4200,117,  '0900201', 'Tukums, Tukuma novads', 1),
-(4201,117,  '0649300', 'Vaiņodes novads', 1),
-(4202,117,  '0880217', 'Valdemārpils, Talsu novads', 1),
-(4203,117,  '0940201', 'Valka, Valkas novads', 1),
-(4204,117,  '0940200', 'Valkas novads', 1),
-(4205,117,  '0250000', 'Valmiera', 1),
-(4206,117,  '0801817', 'Vangaži, Inčukalna novads', 1),
-(4207,117,  '0701817', 'Varakļāni, Varakļānu novads', 1),
-(4208,117,  '0701800', 'Varakļānu novads', 1),
-(4209,117,  '0769101', 'Vārkavas novads', 1),
-(4210,117,  '0429300', 'Vecpiebalgas novads', 1),
-(4211,117,  '0409500', 'Vecumnieku novads', 1),
-(4212,117,  '0270000', 'Ventspils', 1),
-(4213,117,  '0980200', 'Ventspils novads', 1),
-(4214,117,  '0561815', 'Viesīte, Viesītes novads', 1),
-(4215,117,  '0561800', 'Viesītes novads', 1),
-(4216,117,  '0381615', 'Viļaka, Viļakas novads', 1),
-(4217,117,  '0381600', 'Viļakas novads', 1),
-(4218,117,  '0781817', 'Viļāni, Viļānu novads', 1),
-(4219,117,  '0781800', 'Viļānu novads', 1),
-(4220,117,  '0681817', 'Zilupe, Zilupes novads', 1),
-(4221,117,  '0681801', 'Zilupes novads', 1);
-
+(4032, 248, 'EW', 'Western Equatoria', 1);
 -- --------------------------------------------------------
 
 --
@@ -7872,8 +7557,8 @@ CREATE TABLE `oc_zone_to_geo_zone` (
   `country_id` int(11) NOT NULL,
   `zone_id` int(11) NOT NULL DEFAULT '0',
   `geo_zone_id` int(11) NOT NULL,
-  `date_added` datetime NOT NULL,
-  `date_modified` datetime NOT NULL,
+  `date_added` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
+  `date_modified` datetime NOT NULL DEFAULT '0000-00-00 00:00:00',
   PRIMARY KEY (`zone_to_geo_zone_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 
@@ -7882,112 +7567,5 @@ CREATE TABLE `oc_zone_to_geo_zone` (
 --
 
 INSERT INTO `oc_zone_to_geo_zone` (`zone_to_geo_zone_id`, `country_id`, `zone_id`, `geo_zone_id`, `date_added`, `date_modified`) VALUES
-(1, 222, 0, 4, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(2, 222, 3513, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(3, 222, 3514, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(4, 222, 3515, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(5, 222, 3516, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(6, 222, 3517, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(7, 222, 3518, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(8, 222, 3519, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(9, 222, 3520, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(10, 222, 3521, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(11, 222, 3522, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(12, 222, 3523, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(13, 222, 3524, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(14, 222, 3525, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(15, 222, 3526, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(16, 222, 3527, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(17, 222, 3528, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(18, 222, 3529, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(19, 222, 3530, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(20, 222, 3531, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(21, 222, 3532, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(22, 222, 3533, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(23, 222, 3534, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(24, 222, 3535, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(25, 222, 3536, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(26, 222, 3537, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(27, 222, 3538, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(28, 222, 3539, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(29, 222, 3540, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(30, 222, 3541, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(31, 222, 3542, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(32, 222, 3543, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(33, 222, 3544, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(34, 222, 3545, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(35, 222, 3546, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(36, 222, 3547, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(37, 222, 3548, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(38, 222, 3549, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(39, 222, 3550, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(40, 222, 3551, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(41, 222, 3552, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(42, 222, 3553, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(43, 222, 3554, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(44, 222, 3555, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(45, 222, 3556, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(46, 222, 3557, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(47, 222, 3558, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(48, 222, 3559, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(49, 222, 3560, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(50, 222, 3561, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(51, 222, 3562, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(52, 222, 3563, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(53, 222, 3564, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(54, 222, 3565, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(55, 222, 3566, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(56, 222, 3567, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(57, 222, 3568, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(58, 222, 3569, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(59, 222, 3570, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(60, 222, 3571, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(61, 222, 3572, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(62, 222, 3573, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(63, 222, 3574, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(64, 222, 3575, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(65, 222, 3576, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(66, 222, 3577, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(67, 222, 3578, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(68, 222, 3579, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(69, 222, 3580, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(70, 222, 3581, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(71, 222, 3582, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(72, 222, 3583, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(73, 222, 3584, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(74, 222, 3585, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(75, 222, 3586, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(76, 222, 3587, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(77, 222, 3588, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(78, 222, 3589, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(79, 222, 3590, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(80, 222, 3591, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(81, 222, 3592, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(82, 222, 3593, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(83, 222, 3594, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(84, 222, 3595, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(85, 222, 3596, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(86, 222, 3597, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(87, 222, 3598, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(88, 222, 3599, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(89, 222, 3600, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(90, 222, 3601, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(91, 222, 3602, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(92, 222, 3603, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(93, 222, 3604, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(94, 222, 3605, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(95, 222, 3606, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(96, 222, 3607, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(97, 222, 3608, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(98, 222, 3609, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(99, 222, 3610, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(100, 222, 3611, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(101, 222, 3612, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(102, 222, 3949, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(103, 222, 3950, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(104, 222, 3951, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(105, 222, 3952, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(106, 222, 3953, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(107, 222, 3954, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(108, 222, 3955, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00'),
-(109, 222, 3972, 3, '0000-00-00 00:00:00', '0000-00-00 00:00:00');
+(57, 222, 0, 3, '2010-02-26 22:33:24', '0000-00-00 00:00:00'),
+(65, 222, 0, 4, '2010-12-15 15:18:13', '0000-00-00 00:00:00');

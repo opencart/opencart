@@ -1,7 +1,7 @@
 <?php echo $header; ?><?php echo $column_left; ?><?php echo $column_right; ?>
 <div id="content"><?php echo $content_top; ?>
   <h2><?php echo $heading_confirm; ?></h2>
-  <form class="payment-form" method="POST" action="<?php echo $process_order ?>">
+  <form class="payment-form" method="POST" action="<?php echo $process_order; ?>">
     <div style="float: left" id="amazon-address-widget"></div>
     <div style="float: left; margin-left: 15px" id="amazon-wallet-widget"></div>
     <div style="clear: both;"></div>
@@ -46,8 +46,8 @@
   </div>
 
   <div class="buttons">
-    <a href="<?php echo $back ?>" class="button left"><span><?php echo $text_back ?></span></a>
-    <a class="button right" id="confirm-button"><span><?php echo $text_confirm ?></span></a>
+    <a href="<?php echo $back; ?>" class="button left"><span><?php echo $text_back; ?></span></a>
+    <a class="button right" id="confirm-button"><span><?php echo $text_confirm; ?></span></a>
   </div>
 
   <?php echo $content_bottom; ?>
@@ -55,12 +55,12 @@
 <script type="text/javascript"><!--
   $(document).ready(function(){
     new CBA.Widgets.AddressWidget({
-      merchantId: '<?php echo $merchant_id ?>',
+      merchantId: '<?php echo $merchant_id; ?>',
       displayMode: 'read'
     }).render('amazon-address-widget');
 
     new CBA.Widgets.WalletWidget({
-      merchantId: '<?php echo $merchant_id ?>',
+      merchantId: '<?php echo $merchant_id; ?>',
       displayMode: 'read'
     }).render('amazon-wallet-widget');
 

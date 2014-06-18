@@ -6,6 +6,7 @@
 * Change settitle to setTitle in error/not_found.php
 * Fixed issue in Amazon Payments where tax lines where passed as products if cart had different tax rates.
 * Fixed the implementation of captchas.
+* Incorrect file type when uploading on Windows Machines REF: #1550
 
 #### Changes
 * Removed duplicate DELETE SQL query for product attributes REF: #1379

@@ -34,4 +34,4 @@ $_['column_status']         = 'Order Status';
 $_['column_comment']        = 'Comment';
 
 // Error
-$_['error_reorder']         = '%s is not currently avaliable to be reordered.';
+$_['error_reorder']         = '%s is not currently available to be reordered.';

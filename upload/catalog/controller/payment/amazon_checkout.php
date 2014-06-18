@@ -170,7 +170,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 		$data['column_total'] = $this->language->get('column_total');
 		$data['text_confirm'] = $this->language->get('text_confirm');
 
-		// Validate minimum quantity requirments.
+		// Validate minimum quantity requirements.
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {

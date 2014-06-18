@@ -42,7 +42,7 @@ class ControllerApiOrder extends Controller {
 			$json['error']['warning'] = $this->language->get('error_stock');
 		}
 		
-		// Validate minimum quantity requirments.
+		// Validate minimum quantity requirements.
 		$products = $this->cart->getProducts();
 
 		foreach ($products as $product) {

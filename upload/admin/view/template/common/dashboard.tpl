@@ -18,7 +18,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-shopping-cart fa-4x"></i></span></div>
+            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-shopping-cart fa-3x"></i></span></div>
             <div class="col-xs-9">
               <?php if ($order_percentage > 0) { ?>
               <span class="label label-success pull-right">+<?php echo $order_percentage; ?>%</span>
@@ -35,7 +35,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-user fa-4x"></i></span></div>
+            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-user fa-3x"></i></span></div>
             <div class="col-xs-9">
               <?php if ($customer_percentage > 0) { ?>
               <span class="label label-success pull-right">+<?php echo $customer_percentage; ?>%</span>
@@ -52,7 +52,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-credit-card fa-4x"></i></span></div>
+            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-credit-card fa-3x"></i></span></div>
             <div class="col-xs-9">
               <?php if ($sale_percentage > 0) { ?>
               <?php $class = 'label-success'; ?>
@@ -70,7 +70,7 @@
       <div class="panel panel-default">
         <div class="panel-body">
           <div class="row">
-            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-eye fa-4x"></i></span></div>
+            <div class="col-xs-3"><span class="text-muted"><i class="fa fa-eye fa-3x"></i></span></div>
             <div class="col-xs-9">
               <?php if ($online_total > 30) { ?>
               <h3 class="text-success"><?php echo $online_total; ?></h3>

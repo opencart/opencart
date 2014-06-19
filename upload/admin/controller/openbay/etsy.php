@@ -51,6 +51,7 @@ class ControllerOpenbayEtsy extends Controller {
 
 		$data['validation']               = $this->openbay->ebay->validate();
 		$data['links_settings']           = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], 'SSL');
+		$data['links_shipping']           = $this->url->link('openbay/etsy_shipping/getAll', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

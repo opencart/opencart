@@ -4,8 +4,12 @@ $_['text_title']      		= 'Etsy';
 $_['text_openbay']      	= 'OpenBay Pro';
 $_['text_option']      		= 'Select option';
 $_['text_category_selected']= 'Category selected';
+$_['text_material_add']  	= 'Add Material';
+$_['text_material_remove']  = 'Remove Material';
 
-$_['tab_general']      		= 'General';
+$_['tab_general']      		= 'Required information';
+$_['tab_additional']      	= 'Additional information';
+$_['tab_images']      		= 'Images';
 
 $_['btn_submit']      		= 'Submit';
 
@@ -27,5 +31,9 @@ $_['entry_style_2']      	= 'Style Tag 2';
 $_['entry_processing_min']  = 'Processing time min';
 $_['entry_processing_max']  = 'Processing time max';
 $_['entry_materials']  		= 'Materials';
-$_['text_material_add']  	= 'Add Material';
-$_['text_material_remove']  = 'Remove Material';
+$_['entry_shipping']  		= 'Shipping profile';
+$_['entry_shop']  			= 'Shop section';
+$_['entry_is_custom']  		= 'Can it be customised?';
+
+$_['error_no_shipping']  	= 'You have not setup any shipping profiles!';
+$_['error_no_shop_secton']  = 'You have not setup any shop sections!';

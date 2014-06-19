@@ -177,7 +177,7 @@ function getOpenbayVersion() {
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) {
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          alert(xhr.status + "\r\n" + thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
       }
     });
@@ -204,7 +204,7 @@ function getOpenbayNotifications() {
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) {
-          alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
+          alert(xhr.status + "\r\n" +thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
         }
       }
     });

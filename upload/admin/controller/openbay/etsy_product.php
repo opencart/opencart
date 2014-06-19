@@ -108,6 +108,9 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		if (!$this->error) {
 			// process the request
+			$response = $this->openbay->etsy->call('product/listing/create', 'POST', $data);
+			echo '<pre>';
+			print_r($response);
 		} else {
 			$this->response->setOutput(json_encode(array('error' => $this->error)));
 		}

@@ -28,9 +28,9 @@
           <table class="table table-bordered table-hover">
             <thead>
               <tr>
-                <td class="text-left">Template ID</td>
-                <td class="text-left">Name</td>
-                <td class="text-right"></td>
+                <td class="text-left"><?php echo $column_id; ?></td>
+                <td class="text-left"><?php echo $column_name; ?></td>
+                <td class="text-right"><?php echo $column_action; ?></td>
               </tr>
             </thead>
             <tbody>

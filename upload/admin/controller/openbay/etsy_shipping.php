@@ -2,12 +2,22 @@
 class ControllerOpenbayEtsyShipping extends Controller {
 	private $error;
 
-	public function getAll() {
+	public function index() {
 		$shipping_templates = $this->openbay->etsy->call('product/shipping/getAllTemplates', 'GET');
 
 		$data = $this->load->language('openbay/etsy_shipping');
 
-		$data['shipping_templates'] = $shipping_templates['data']['results'];
+		if (isset($shipping_templates['data']['results']) && !empty($shipping_templates['data']['results'])) {
+			foreach ($shipping_templates['data']['results'] as $template) {
+				$data['shipping_templates'][] = array(
+					'shipping_template_id' => $template['shipping_template_id'],
+					'title' => $template['title'],
+					'edit' => $this->url->link('openbay/etsy_shipping/edit', 'token=' . $this->session->data['token'], 'SSL'),
+				);
+			}
+		} else {
+			$data['shipping_templates'] = array();
+		}
 
 		$this->document->setTitle($this->language->get('heading_title'));
 
@@ -47,5 +57,19 @@ class ControllerOpenbayEtsyShipping extends Controller {
 
 	public function delete() {
 
+	}
+
+	public function edit() {
+
+	}
+
+	public function create() {
+
+	}
+
+	public function getAll() {
+		$shipping_templates = $this->openbay->etsy->call('product/shipping/getAllTemplates', 'GET');
+
+		return $this->response->setOutput(json_encode($shipping_templates));
 	}
 }

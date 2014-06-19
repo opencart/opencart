@@ -154,7 +154,7 @@
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-meta-keyword"><?php echo $entry_meta_keyword; ?></label>
               <div class="col-sm-10">
-                <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-description" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
+                <textarea name="config_meta_keyword" rows="5" placeholder="<?php echo $entry_meta_keyword; ?>" id="input-meta-keyword" class="form-control"><?php echo $config_meta_keyword; ?></textarea>
               </div>
             </div>
             <div class="form-group">

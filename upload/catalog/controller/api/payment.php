@@ -126,7 +126,7 @@ class ControllerApiPayment extends Controller {
 		}
 				
 		if (!$json) {
-			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];			
+			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
 		
 			$json['success'] = $this->language->get('text_success');
 		}

@@ -1,26 +1,183 @@
 <?php
 class ControllerSaleOrder extends Controller {
-	private $error = array();
+	private function api($url, $data) {
+		// Make curl request
+		$curl = curl_init($url);
+		
+		curl_setopt($curl, CURLOPT_PORT, 443);
+		curl_setopt($curl, CURLOPT_HEADER, 0);
+		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
+		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+		curl_setopt($curl, CURLOPT_FORBID_REUSE, 0);
+		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
+		curl_setopt($curl, CURLOPT_POST, 1);
+		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
 
-	public function index() {
-		$this->load->language('sale/order');
+		$response = curl_exec($curl);
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		curl_close($curl);
 
-		$this->load->model('sale/order');
-
-		$this->getList();
-	}
-
+		if (!$response) {
+			$this->log->write(curl_error($curl) . '(' . curl_errno($curl) . ')');
+		} else {
+			return $response;
+		}
+	}	
+	
 	public function insert() {
 		$this->load->language('sale/order');
 
-		$this->document->setTitle($this->language->get('heading_title'));
+		$json = array();
+		
+		$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
+		
+		if ($store_info) {
+			$url = $store_info['url'];
+		} else {
+			$url = HTTP_CATALOG;
+		}
+		
+		$this->load->library('curl');
+		
+		$curl = new Curl();
+				
+		// Add to cart
+		if (isset($this->request->post['order_product'])) {
+			foreach ($this->request->post['order_product'] as $order_product) {
+				$product_data = array(
+					'product_id' => $order_product['product_id'],
+					'option'     => $order_product['option'],
+					'quantity'   => $order_product['quantity'],
+					'override'   => true
+				);
+				
+				$response = $this->api($url . 'index.php?route=api/cart/add', $product_data);
+			
+				if ($response['error']) {
+					$json['error']['coupon'] = $response['error'];
+					
+					break;	
+				}
+			}
+		}
+		
+		// Voucher
+		if (isset($this->request->post['order_voucher'])) {
+			foreach ($this->request->post['order_voucher'] as $order_voucher) {
+				$response = $curl->post($url . 'index.php?route=api/voucher/add', $order_voucher);
+			
+				if ($response['error']) {
+					$json['error']['voucher'] = $response['error'];
+					break;	
+				}
+			}
+		}
+				
+		// Customer
+		$response = $curl->post($url . 'index.php?route=api/customer', $this->request->post);
+		
+		if ($response['error']) {
+			$json['error']['payment'] = $response['error'];
+		}		
+				
+		// Payment Address
+		$response = $curl->post($url . 'index.php?route=api/payment/address', $this->request->post['payment_address']);
+		
+		if ($response['error']) {
+			$json['error']['payment'] = $response['error'];
+		}
+		
+		// Shipping Address
+		$response = $curl->post($url . 'index.php?route=api/shipping/address', $this->request->post['shipping_address']);
+		
+		if ($response['error']) {
+			$json['error']['payment'] = $response['error'];
+		}
+		
+		// Shipping Methods		
+		$response = $curl->post($url . 'index.php?route=api/shipping/methods');
+		
+		if ($response['error']) {
+			$json['error']['shipping'] = $response['error'];
+		} else {
+			$json['shipping_methods'] = $response;
+		}
+		
+		// Shipping Method
+		$response = $curl->post($url . 'index.php?route=api/shipping/method');
+		
+		if ($response['error']) {
+			$json['error']['payment'] = $response['error'];
+		}
+		
+		// Payment Methods		
+		$response = $curl->post($url . 'index.php?route=api/payment/methods');
+		
+		if ($response['error']) {
+			$json['error']['payment'] = $response['error'];
+		}
+		
+		// Shipping Methods	
+		$response = $curl->post($url . 'index.php?route=api/payment/method');
+		
+		if ($response['error']) {
+			$json['error']['shipping'] = $response['error'];
+		}
+		
+		
 
-		$this->load->model('sale/order');
+		
+		// Coupon
+		if ($this->request->post['coupon']) {
+			$response = $curl->post($url . 'index.php?route=api/coupon',  $this->request->post);
+			
+			if ($response['error']) {
+				$json['error']['coupon'] = $response['error'];
+			}			
+		}
+		
+		// Voucher
+		if ($this->request->post['voucher']) {
+			$response = $curl->post($url . 'index.php?route=api/voucher',  $this->request->post);
+		
+			if ($response['error']) {
+				$json['error']['voucher'] = $response['error'];
+			}				
+		}
+		
+		// Reward Points
+		if ($this->request->post['reward']) {
+			$response = $curl->post($url . 'index.php?route=api/reward', $this->request->post);
+		
+			if ($response['error']) {
+				$json['error']['reward'] = $response['error'];
+			}		
+		}	
 
-    	$this->getForm();
+		// Order
+		if (!$json['error']) {
+			$response = $curl->post($url . 'index.php?route=api/order/add');
+		}	
+		
+		$curl->close();
+		
+		$this->response->setOutput(json_encode($json));
   	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 	public function update() {
 		$this->load->language('sale/order');
@@ -28,8 +185,6 @@ class ControllerSaleOrder extends Controller {
 		$this->document->setTitle($this->language->get('heading_title'));
 
 		$this->load->model('sale/order');
-
-    	$this->getForm();
   	}
 
   	public function delete() {
@@ -37,48 +192,11 @@ class ControllerSaleOrder extends Controller {
 			$this->model_sale_order->editOrder($this->request->get['order_id']);
 
 			$this->session->data['success'] = $this->language->get('text_success');
-
-			$url = '';
-
-			if (isset($this->request->get['filter_order_id'])) {
-				$url .= '&filter_order_id=' . $this->request->get['filter_order_id'];
-			}
-
-			if (isset($this->request->get['filter_customer'])) {
-				$url .= '&filter_customer=' . urlencode(html_entity_decode($this->request->get['filter_customer'], ENT_QUOTES, 'UTF-8'));
-			}
-
-			if (isset($this->request->get['filter_order_status_id'])) {
-				$url .= '&filter_order_status_id=' . $this->request->get['filter_order_status_id'];
-			}
-
-			if (isset($this->request->get['filter_total'])) {
-				$url .= '&filter_total=' . $this->request->get['filter_total'];
-			}
-
-			if (isset($this->request->get['filter_date_added'])) {
-				$url .= '&filter_date_added=' . $this->request->get['filter_date_added'];
-			}
-
-			if (isset($this->request->get['filter_date_modified'])) {
-				$url .= '&filter_date_modified=' . $this->request->get['filter_date_modified'];
-			}
-
-			if (isset($this->request->get['sort'])) {
-				$url .= '&sort=' . $this->request->get['sort'];
-			}
-
-			if (isset($this->request->get['order'])) {
-				$url .= '&order=' . $this->request->get['order'];
-			}
-
-			if (isset($this->request->get['page'])) {
-				$url .= '&page=' . $this->request->get['page'];
-			}
-
-			$this->response->redirect($this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL'));
 		}
 	}
+	
+	
+	
 	
 	public function refresh() {
 		$this->load->language('sale/order');
@@ -192,7 +310,7 @@ class ControllerSaleOrder extends Controller {
 		}
 		
 		// Get Shipping Methods		
-		$response = $curl->post($url . 'index.php?route=api/order/getshippingmethods');
+		$response = $curl->post($url . 'index.php?route=api/shipping/methods');
 		
 		if ($response['error']) {
 			$json['error']['shipping'] = $response['error'];
@@ -222,10 +340,10 @@ class ControllerSaleOrder extends Controller {
 		}
 		
 		// Get Products
-		$response = $curl->get($url . 'index.php?route=api/order/getProducts');
+		$response = $curl->get($url . 'index.php?route=api/cart/products');
 		
 		// Get Order Totals
-		$response = $curl->get($url . 'index.php?route=api/order/getTotals');
+		$response = $curl->get($url . 'index.php?route=api/cart/totals');
 
 		// Set Customer Details
 		$response = $curl->post($url . 'index.php?route=api/order/add', $this->request->post);
@@ -238,34 +356,4 @@ class ControllerSaleOrder extends Controller {
 		
 		$this->response->setOutput(json_encode($json));			
 	}
-	
-	public function addOrder() {
-		
-	}
-	
-	public function editOrder() {
-		
-	}
-	
-	private function api($url, $data) {
-		// Make curl request
-		$curl = curl_init($url);
-		
-		curl_setopt($curl, CURLOPT_PORT, 443);
-		curl_setopt($curl, CURLOPT_HEADER, 0);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 0);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $data);
-
-		$response = curl_exec($curl);
-
-		curl_close($curl);
-
-		if (!$response) {
-			$this->log->write(curl_error($curl) . '(' . curl_errno($curl) . ')');
-		}	
-	}	
 }

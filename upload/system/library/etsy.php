@@ -40,30 +40,35 @@ final class Etsy {
 			$headers[] = 'X-Auth-Token: '.$this->token;
 			$headers[] = 'X-Auth-Enc: '.$this->enc1;
 			$headers[] = 'Content-Type: application/json';
-			$headers[] = 'Content-Length: '.strlen(json_encode($data));
+			//$headers[] = 'Content-Length: '.strlen(json_encode($data));
 
-			$connection = curl_init();
-			curl_setopt($connection, CURLOPT_HEADER, 0);
-			curl_setopt($connection, CURLOPT_HTTPHEADER, $headers);
-			curl_setopt($connection, CURLOPT_URL, $this->url.$uri);
-			curl_setopt($connection, CURLOPT_USERAGENT, "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1");
-			curl_setopt($connection, CURLOPT_FRESH_CONNECT, 1);
-			curl_setopt($connection, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($connection, CURLOPT_FORBID_REUSE, 1);
-			curl_setopt($connection, CURLOPT_TIMEOUT, 30);
-			curl_setopt($connection, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($connection, CURLOPT_SSL_VERIFYHOST, 0);
-
+			$defaults = array(
+				CURLOPT_HEADER      	=> 0,
+				CURLOPT_HTTPHEADER      => $headers,
+				CURLOPT_URL             => $this->url.$uri,
+				CURLOPT_USERAGENT       => "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.8.1.1) Gecko/20061204 Firefox/2.0.0.1",
+				CURLOPT_FRESH_CONNECT   => 1,
+				CURLOPT_RETURNTRANSFER  => 1,
+				CURLOPT_FORBID_REUSE    => 1,
+				CURLOPT_TIMEOUT         => 10,
+				CURLOPT_SSL_VERIFYPEER  => 0,
+				CURLOPT_SSL_VERIFYHOST  => 0,
+				CURLOPT_VERBOSE 		=> true,
+				CURLOPT_STDERR 			=> fopen('C:\xampp2\htdocs\test_installs\openbay\system\logs\veb.log', "w+")
+			);
 
 			if ($method == 'POST') {
-				curl_setopt($connection, CURLOPT_POST, 1);
-				curl_setopt($connection, CURLOPT_POSTFIELDS, json_encode($data));
+				$defaults[CURLOPT_POST] = 1;
+				$defaults[CURLOPT_POSTFIELDS] = json_encode($data);
 			}
+
+			$ch = curl_init();
+			curl_setopt_array($ch, $defaults);
 
 			$response = array();
 
-			if( ! $result = curl_exec($connection)) {
-				$this->log('call() - Curl Failed ' . curl_error($connection) . ' ' . curl_errno($connection));
+			if( ! $result = curl_exec($ch)) {
+				$this->log('call() - Curl Failed ' . curl_error($ch) . ' ' . curl_errno($ch));
 
 				return false;
 			} else {
@@ -77,7 +82,7 @@ final class Etsy {
 
 				$result = json_decode($result, 1);
 
-				$response['header_code'] = curl_getinfo($connection, CURLINFO_HTTP_CODE);
+				$response['header_code'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 				if(!empty($result)) {
 					$response['data'] = $result;
@@ -86,7 +91,7 @@ final class Etsy {
 				}
 			}
 
-			curl_close($connection);
+			curl_close($ch);
 
 			return $response;
 		}else{

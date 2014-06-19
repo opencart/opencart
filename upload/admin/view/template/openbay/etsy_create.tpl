@@ -173,15 +173,6 @@
               </div>
             </div>
             <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-is-custom"><?php echo $entry_is_custom; ?></label>
-              <div class="col-sm-10">
-                <select name="is_customizable" id="input-is-custom" class="form-control">
-                  <option value="0" selected="selected">No</option>
-                  <option value="1">Yes</option>
-                </select>
-              </div>
-            </div>
-            <div class="form-group">
               <label class="col-sm-2 control-label" for="input-processing-min"><?php echo $entry_processing_min; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="processing_min" value="" placeholder="<?php echo $entry_processing_min; ?>" id="input-processing-min" class="form-control" />
@@ -430,7 +421,7 @@ function getShopSection() {
 
 $(document).ready(function() {
   getShippingProfiles();
-  getShopSection();
+  //getShopSection();
 });
 
 //--></script>

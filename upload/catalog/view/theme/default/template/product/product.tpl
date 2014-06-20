@@ -329,8 +329,8 @@
             <hr>
             <!-- AddThis Button BEGIN -->
             <div class="addthis_toolbox addthis_default_style"><a class="addthis_button_facebook_like" fb:like:layout="button_count"></a> <a class="addthis_button_tweet"></a> <a class="addthis_button_pinterest_pinit"></a> <a class="addthis_counter addthis_pill_style"></a></div>
-            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script> 
-            <!-- AddThis Button END --> 
+            <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-515eeaf54693130e"></script>
+            <!-- AddThis Button END -->
           </div>
           <?php } ?>
         </div>
@@ -421,14 +421,14 @@ $('select[name="profile_id"], input[name="quantity"]').change(function(){
 		},
 		success: function(json) {
 			$('.alert, .text-danger').remove();
-		
+
 			if (json['success']) {
 				$('#profile-description').html(json['success']);
 			}
 		}
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#button-cart').on('click', function() {
     $.ajax({
@@ -438,13 +438,13 @@ $('#button-cart').on('click', function() {
         dataType: 'json',
         beforeSend: function() {
         	$('#button-cart').button('loading');
-		},      
+		},
         complete: function() {
 			$('#button-cart').button('reset');
-        },		
+        },
         success: function(json) {
             $('.alert, .text-danger').remove();
-            
+
             if (json['error']) {
                 if (json['error']['option']) {
                     for (i in json['error']['option']) {
@@ -455,21 +455,21 @@ $('#button-cart').on('click', function() {
 				if (json['error']['profile']) {
 					$('select[name=\'profile_id\']').after('<div class="text-danger">' + json['error']['profile'] + '</div>');
 				}
-            } 
-            
+            }
+
             if (json['success']) {
                 $('.breadcrumb').after('<div class="alert alert-success">' + json['success'] + '<button type="button" class="close" data-dismiss="alert">&times;</button></div>');
-                    
+
                 $('#cart-total').html(json['total']);
-                
+
                 $('html, body').animate({ scrollTop: 0 }, 'slow');
-				
+
 				$('#cart > ul').load('index.php?route=common/cart/info ul li');
-            }   
+            }
         }
     });
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('.date').datetimepicker({
 	pickTime: false
@@ -483,12 +483,12 @@ $('.datetime').datetimepicker({
 $('.time').datetimepicker({
 	pickDate: false
 });
-		
+
 $('button[id^=\'button-upload\']').on('click', function() {
 	var node = this;
-	
+
 	$('#form-upload').remove();
-	
+
 	$('body').prepend('<form enctype="multipart/form-data" id="form-upload" style="display: none;"><input type="file" name="file" /></form>');
 
 	$('#form-upload input[name=\'file\']').trigger('click');
@@ -496,48 +496,48 @@ $('button[id^=\'button-upload\']').on('click', function() {
 	$('#form-upload input[name=\'file\']').on('change', function() {
 		$.ajax({
 			url: 'index.php?route=product/product/upload',
-			type: 'post',		
+			type: 'post',
 			dataType: 'json',
 			data: new FormData($(this).parent()[0]),
 			cache: false,
 			contentType: false,
-			processData: false,		
+			processData: false,
 			beforeSend: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 				$(node).prop('disabled', true);
 			},
 			complete: function() {
 				$(node).find('i').replaceWith('<i class="fa fa-upload"></i>');
-				$(node).prop('disabled', false);			
-			},		
+				$(node).prop('disabled', false);
+			},
 			success: function(json) {
 				if (json['error']) {
 					$(node).parent().find('input').after('<div class="text-danger">' + json['error'] + '</div>');
 				}
-							
+
 				if (json['success']) {
 					alert(json['success']);
-					
+
 					$(node).parent().find('input').attr('value', json['code']);
 				}
-			},			
+			},
 			error: function(xhr, ajaxOptions, thrownError) {
 				alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 			}
 		});
 	});
 });
-//--></script> 
+//--></script>
 <script type="text/javascript"><!--
 $('#review').delegate('.pagination a', 'click', function(e) {
 	e.preventDefault();
-	
+
     $('#review').fadeOut('slow');
-        
+
     $('#review').load(this.href);
-    
+
     $('#review').fadeIn('slow');
-});         
+});
 
 $('#review').load('index.php?route=product/product/review&product_id=<?php echo $product_id; ?>');
 
@@ -546,7 +546,7 @@ $('#button-review').on('click', function() {
         url: 'index.php?route=product/product/write&product_id=<?php echo $product_id; ?>',
         type: 'post',
         dataType: 'json',
-        data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&text=' + encodeURIComponent($('textarea[name=\'text\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
+        data: 'name=' + encodeURIComponent($('input[name=\'name\']').val()) + '&content=' + encodeURIComponent($('textarea[name=\'content\']').val()) + '&rating=' + encodeURIComponent($('input[name=\'rating\']:checked').val() ? $('input[name=\'rating\']:checked').val() : '') + '&captcha=' + encodeURIComponent($('input[name=\'captcha\']').val()),
         beforeSend: function() {
             $('#button-review').button('loading');
         },
@@ -557,16 +557,16 @@ $('#button-review').on('click', function() {
         },
         success: function(json) {
 			$('.alert-success, .alert-danger').remove();
-            
+
 			if (json['error']) {
                 $('#review').after('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error'] + '</div>');
             }
-            
+
             if (json['success']) {
                 $('#review').after('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '</div>');
-                                
+
                 $('input[name=\'name\']').val('');
-                $('textarea[name=\'text\']').val('');
+                $('textarea[name=\'content\']').val('');
                 $('input[name=\'rating\']:checked').prop('checked', false);
                 $('input[name=\'captcha\']').val('');
             }
@@ -578,10 +578,10 @@ $(document).ready(function() {
 	$('.thumbnails').magnificPopup({
 		type:'image',
 		delegate: 'a',
-		gallery: { 
-			enabled:true 
+		gallery: {
+			enabled:true
 		}
 	});
 });
-//--></script> 
+//--></script>
 <?php echo $footer; ?>

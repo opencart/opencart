@@ -9,7 +9,6 @@ $_['text_material_remove']  = 'Remove Material';
 
 $_['tab_general']      		= 'Required information';
 $_['tab_additional']      	= 'Additional information';
-$_['tab_images']      		= 'Images';
 
 $_['btn_submit']      		= 'Submit';
 
@@ -34,6 +33,7 @@ $_['entry_materials']  		= 'Materials';
 $_['entry_shipping']  		= 'Shipping profile';
 $_['entry_shop']  			= 'Shop section';
 $_['entry_is_custom']  		= 'Can it be customised?';
+$_['entry_image']  			= 'Image';
 
 $_['error_no_shipping']  	= 'You have not setup any shipping profiles!';
 $_['error_no_shop_secton']  = 'You have not setup any shop sections!';

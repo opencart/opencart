@@ -54,7 +54,7 @@ final class Etsy {
 				CURLOPT_SSL_VERIFYPEER  => 0,
 				CURLOPT_SSL_VERIFYHOST  => 0,
 				CURLOPT_VERBOSE 		=> true,
-				CURLOPT_STDERR 			=> fopen('C:\xampp2\htdocs\test_installs\openbay\system\logs\veb.log', "w+")
+				CURLOPT_STDERR 			=> fopen(DIR_LOGS.'curl_verbose.log', "w+")
 			);
 
 			if ($method == 'POST') {

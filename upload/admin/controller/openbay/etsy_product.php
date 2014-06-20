@@ -39,6 +39,16 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$product_info = $this->model_catalog_product->getProduct($this->request->get['product_id']);
 
+		$this->load->model('tool/image');
+
+		if (!empty($product_info) && is_file(DIR_IMAGE . $product_info['image'])) {
+			$product_info['image_url'] = $this->model_tool_image->resize($product_info['image'], 800, 800);
+			$product_info['thumb'] = $this->model_tool_image->resize($product_info['image'], 100, 100);
+		} else {
+			$product_info['image_url'] = '';
+			$product_info['thumb'] = '';
+		}
+
 		$data['product'] = $product_info;
 
 		$setting = array();
@@ -109,6 +119,10 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		if (!$this->error) {
 			// process the request
 			$response = $this->openbay->etsy->call('product/listing/create', 'POST', $data);
+
+			echo '<pre>';
+			print_r($response);
+			die();
 
 			if (isset($response['data']['error'])) {
 				$this->response->setOutput(json_encode($response['data']));

@@ -34,6 +34,20 @@
                 <option value="mysqli"><?php echo $text_mysqli; ?></option>
                 <?php } ?>
                 <?php } ?>
+                <?php if ($mysql) { ?>
+                <?php if ($db_driver == 'mysql') { ?>
+                <option value="mysql" selected="selected"><?php echo $text_mysql; ?></option>
+                <?php } else { ?>
+                <option value="mysqli"><?php echo $text_mysqli; ?></option>
+                <?php } ?>
+                <?php } ?>
+                <?php if ($mmsql) { ?>
+                <?php if ($db_driver == 'mmsql') { ?>
+                <option value="mmsql" selected="selected"><?php echo $text_mmsql; ?></option>
+                <?php } else { ?>
+                <option value="mmsql"><?php echo $text_mmsql; ?></option>
+                <?php } ?>
+                <?php } ?>
                 <?php if ($pdo) { ?>
                 <?php if ($db_driver == 'mpdo') { ?>
                 <option value="mpdo" selected="selected"><?php echo $text_mpdo; ?></option>

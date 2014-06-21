@@ -133,7 +133,7 @@ CREATE TABLE IF NOT EXISTS `oc_api` (
   `key` text NOT NULL,
   `status` tinyint(1) NOT NULL,
   `date_added` datetime NOT NULL,
-  `date_modififed` datetime NOT NULL,
+  `date_modified` datetime NOT NULL,
   PRIMARY KEY (`api_id`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_general_ci;
 

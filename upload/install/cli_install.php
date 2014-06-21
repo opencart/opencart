@@ -32,7 +32,7 @@ define('DIR_DATABASE', DIR_SYSTEM . 'database/');
 define('DIR_LANGUAGE', DIR_APPLICATION . 'language/');
 define('DIR_TEMPLATE', DIR_APPLICATION . 'view/template/');
 define('DIR_CONFIG', DIR_SYSTEM . 'config/');
-
+define('DIR_MODIFICATION', DIR_SYSTEM . 'modification/');
 // Startup
 require_once(DIR_SYSTEM . 'startup.php');
 
@@ -126,9 +126,10 @@ function valid($options) {
 function install($options) {
 	$check = check_requirements();
 	if ($check[0]) {
-		setup_mysql($options);
+		create_config_files();
+		set_dir_permissions();
 		write_config_files($options);
-		dir_permissions();
+		setup_db($options);
 	} else {
 		echo 'FAILED! Pre-installation check failed: ' . $check[1] . "\n\n";
 		exit(1);
@@ -150,8 +151,8 @@ function check_requirements() {
 		$error = 'Warning: OpenCart will not work with session.auto_start enabled!';
 	}
 
-	if (!extension_loaded('mysql')) {
-		$error = 'Warning: MySQL extension needs to be loaded for OpenCart to work!';
+	if (!extension_loaded('mysqli')) {
+		$error = 'Warning: MySQLi extension needs to be loaded for OpenCart to work!';
 	}
 
 	if (!extension_loaded('gd')) {
@@ -174,7 +175,7 @@ function check_requirements() {
 }
 
 
-function setup_mysql($dbdata) {
+function setup_db($dbdata) {
 	global $loader, $registry;
 	$loader->model('install');
 	$model = $registry->get('model_install');
@@ -182,7 +183,15 @@ function setup_mysql($dbdata) {
 }
 
 
-function write_config_files($options) {
+function create_config_files() {
+	exec('chmod o+w  ' . DIR_OPENCART);
+	@copy ( DIR_OPENCART.'config-dist.php' , DIR_OPENCART.'config.php' );
+	exec('chmod o-w  ' . DIR_OPENCART);
+	exec('chmod o+w  ' . DIR_OPENCART.'admin');
+	@copy ( DIR_OPENCART.'admin/config-dist.php' , DIR_OPENCART.'admin/config.php' );
+}
+
+	function write_config_files($options) {
 	$output  = '<?php' . "\n";
 	$output .= '// HTTP' . "\n";
 	$output .= 'define(\'HTTP_SERVER\', \'' . $options['http_server'] . '\');' . "\n";
@@ -260,10 +269,21 @@ function write_config_files($options) {
 	fwrite($file, $output);
 
 	fclose($file);
+	
+	@exec('chmod o-w  ' . DIR_OPENCART);
+	@exec('chmod o-w  ' . DIR_OPENCART.'config.php');
+	@exec('chmod o-w  ' . DIR_OPENCART.'admin');
+	@exec('chmod o-w  ' . DIR_OPENCART.'admin/config.php');
+	if(file_exists(DIR_OPENCART.'config.php') && file_exists(DIR_OPENCART.'admin/config.php'))
+	{
+		echo "Success: Config files Written";
+	}else{
+		echo "Error: Config files Not Written";
+	}
 }
 
 
-function dir_permissions() {
+function set_dir_permissions() {
 	$dirs = array(
 		DIR_OPENCART . 'image/',
 		DIR_OPENCART . 'system/download/',

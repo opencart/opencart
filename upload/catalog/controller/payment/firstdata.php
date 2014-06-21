@@ -120,7 +120,7 @@ class ControllerPaymentFirstdata extends Controller {
 							'NNN' => $this->language->get('text_address_nnn'),
 							'YPX' => $this->language->get('text_address_ypx'),
 							'PYX' => $this->language->get('text_address_pyx'),
-							'XXU' => $this->language->get('text_address_xxu'),
+							'XXU' => $this->language->get('text_address_xxu')
 						);
 
 						$cvv_codes = array(
@@ -130,7 +130,7 @@ class ControllerPaymentFirstdata extends Controller {
 							'S' => $this->language->get('text_card_code_s'),
 							'U' => $this->language->get('text_card_code_u'),
 							'X' => $this->language->get('text_card_code_x'),
-							'NONE' => $this->language->get('text_card_code_blank'),
+							'NONE' => $this->language->get('text_card_code_blank')
 						);
 
 						$card_types = array(
@@ -139,7 +139,7 @@ class ControllerPaymentFirstdata extends Controller {
 							'C' => $this->language->get('text_card_type_c'),
 							'A' => $this->language->get('text_card_type_a'),
 							'MA' => $this->language->get('text_card_type_ma'),
-							'MAESTROUK' => $this->language->get('text_card_type_mauk'),
+							'MAESTROUK' => $this->language->get('text_card_type_mauk')
 						);
 
 						if ($response_parts[0] == 'Y') {

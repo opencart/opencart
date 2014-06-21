@@ -171,7 +171,7 @@ class ControllerCheckoutGuest extends Controller {
 			$json['redirect'] = $this->url->link('checkout/cart');
 		}
 
-		// Check if guest checkout is avaliable.
+		// Check if guest checkout is available.
 		if (!$this->config->get('config_checkout_guest') || $this->config->get('config_customer_price') || $this->cart->hasDownload()) {
 			$json['redirect'] = $this->url->link('checkout/checkout', '', 'SSL');
 		}

@@ -33,6 +33,7 @@ $_['entry_comment']                    = 'Comment';
 $_['entry_location']                   = 'Store Location';
 $_['entry_meta_title']                 = 'Meta Title';
 $_['entry_meta_description']           = 'Meta Tag Description';
+$_['entry_meta_keyword']               = 'Meta Tag Keywords';
 $_['entry_layout']                     = 'Default Layout';
 $_['entry_template']                   = 'Template';
 $_['entry_country']                    = 'Country';

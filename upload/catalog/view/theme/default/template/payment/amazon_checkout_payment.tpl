@@ -29,7 +29,7 @@
     });
 
     new CBA.Widgets.WalletWidget({
-      merchantId: '<?php echo $merchant_id ?>',
+      merchantId: '<?php echo $merchant_id; ?>',
       displayMode: 'edit',
       onPaymentSelect: function(widget){
         $("input[name='payment_method']").val('1');

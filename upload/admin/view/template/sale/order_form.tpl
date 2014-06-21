@@ -5,11 +5,6 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <div class="pull-right">
@@ -18,7 +13,7 @@
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
-      <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-order" class="form-horizontal">
+      <form class="form-horizontal">
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-customer" data-toggle="tab"><?php echo $tab_customer; ?></a></li>
           <li><a href="#tab-payment" data-toggle="tab"><?php echo $tab_payment; ?></a></li>
@@ -70,36 +65,24 @@
               <label class="col-sm-2 control-label" for="input-customer-firstname"><?php echo $entry_firstname; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="firstname" value="<?php echo $firstname; ?>" id="input-customer-firstname" class="form-control" />
-                <?php if ($error_firstname) { ?>
-                <div class="text-danger"><?php echo $error_firstname; ?></div>
-                <?php } ?>
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-customer-lastname"><?php echo $entry_lastname; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="lastname" value="<?php echo $lastname; ?>" id="input-customer-lastname" class="form-control" />
-                <?php if ($error_lastname) { ?>
-                <div class="text-danger"><?php echo $error_lastname; ?></div>
-                <?php } ?>
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-customer-email"><?php echo $entry_email; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="email" value="<?php echo $email; ?>" id="input-customer-email" class="form-control" />
-                <?php if ($error_email) { ?>
-                <div class="text-danger"><?php echo $error_email; ?></div>
-                <?php } ?>
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-customer-telephone"><?php echo $entry_telephone; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="telephone" value="<?php echo $telephone; ?>" id="input-customer-telephone" class="form-control" />
-                <?php if ($error_telephone) { ?>
-                <div class="text-danger"><?php echo $error_telephone; ?></div>
-                <?php } ?>
               </div>
             </div>
             <div class="form-group">
@@ -124,9 +107,6 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -149,9 +129,6 @@
                   </div>
                   <?php } ?>
                 </div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -174,9 +151,6 @@
                   </div>
                   <?php } ?>
                 </div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -185,9 +159,6 @@
               <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -196,9 +167,6 @@
               <label class="col-sm-2 control-label" for="input-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo $custom_field['value']; ?></textarea>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -208,9 +176,6 @@
               <div class="col-sm-10">
                 <button type="button" id="button-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
                 <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($account_custom_field[$custom_field['custom_field_id']]) ? $account_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -223,9 +188,6 @@
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -238,9 +200,6 @@
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -253,9 +212,6 @@
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -277,64 +233,49 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-payment-firstname"><?php echo $entry_firstname; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="payment_firstname" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" class="form-control" />
-                <?php if ($error_payment_firstname) { ?>
-                <div class="text-danger"><?php echo $error_payment_firstname; ?></div>
-                <?php } ?>
+                <input type="text" name="payment_address[firstname]" value="<?php echo $payment_firstname; ?>" id="input-payment-firstname" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-payment-lastname"><?php echo $entry_lastname; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="payment_lastname" value="<?php echo $payment_lastname; ?>" id="input-payment-lastname" class="form-control" />
-                <?php if ($error_payment_lastname) { ?>
-                <div class="text-danger"><?php echo $error_payment_lastname; ?></div>
-                <?php } ?>
+                <input type="text" name="payment_address[lastname]" value="<?php echo $payment_lastname; ?>" id="input-payment-lastname" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-payment-company"><?php echo $entry_company; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="payment_company" value="<?php echo $payment_company; ?>" id="input-payment-company" class="form-control" />
+                <input type="text" name="payment_address[company]" value="<?php echo $payment_company; ?>" id="input-payment-company" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-payment-address-1"><?php echo $entry_address_1; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="payment_address_1" value="<?php echo $payment_address_1; ?>" id="input-payment-address-1" class="form-control" />
-                <?php if ($error_payment_address_1) { ?>
-                <div class="text-danger"><?php echo $error_payment_address_1; ?></div>
-                <?php } ?>
+                <input type="text" name="payment_address[address_1]" value="<?php echo $payment_address_1; ?>" id="input-payment-address-1" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-payment-address-2"><?php echo $entry_address_2; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="payment_address_2" value="<?php echo $payment_address_2; ?>" id="input-payment-address-2" class="form-control" />
+                <input type="text" name="payment_address[address_2]" value="<?php echo $payment_address_2; ?>" id="input-payment-address-2" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-payment-city"><?php echo $entry_city; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="payment_city" value="<?php echo $payment_city; ?>" id="input-payment-city" class="form-control" />
-                <?php if ($error_payment_city) { ?>
-                <div class="text-danger"><?php echo $error_payment_city; ?></div>
-                <?php } ?>
+                <input type="text" name="payment_address[city]" value="<?php echo $payment_city; ?>" id="input-payment-city" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-payment-postcode"><?php echo $entry_postcode; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="payment_postcode" value="<?php echo $payment_postcode; ?>" id="input-payment-postcode" class="form-control" />
-                <?php if ($error_payment_postcode) { ?>
-                <div class="text-danger"><?php echo $error_payment_postcode; ?></div>
-                <?php } ?>
+                <input type="text" name="payment_address[postcode]" value="<?php echo $payment_postcode; ?>" id="input-payment-postcode" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-payment-country"><?php echo $entry_country; ?></label>
               <div class="col-sm-10">
-                <select name="payment_country_id" id="input-payment-country" class="form-control">
+                <select name="payment_address[country_id]" id="input-payment-country" class="form-control">
                   <option value=""><?php echo $text_select; ?></option>
                   <?php foreach ($countries as $country) { ?>
                   <?php if ($country['country_id'] == $payment_country_id) { ?>
@@ -344,19 +285,13 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <?php if ($error_payment_country) { ?>
-                <div class="text-danger"><?php echo $error_payment_country; ?></div>
-                <?php } ?>
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-payment-zone"><?php echo $entry_zone; ?></label>
               <div class="col-sm-10">
-                <select name="payment_zone_id" id="input-payment-zone" class="form-control">
+                <select name="payment_address[zone_id]" id="input-payment-zone" class="form-control">
                 </select>
-                <?php if ($error_payment_zone) { ?>
-                <div class="text-danger"><?php echo $error_payment_zone; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php foreach ($custom_fields as $custom_field) { ?>
@@ -365,7 +300,7 @@
             <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
               <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
-                <select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
+                <select name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
                   <option value=""><?php echo $text_select; ?></option>
                   <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                   <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -375,9 +310,6 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -390,19 +322,16 @@
                   <div class="radio">
                     <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $payment_custom_field[$custom_field['custom_field_id']]) { ?>
                     <label>
-                      <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
+                      <input type="radio" name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                       <?php echo $custom_field_value['name']; ?></label>
                     <?php } else { ?>
                     <label>
-                      <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+                      <input type="radio" name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
                       <?php echo $custom_field_value['name']; ?></label>
                     <?php } ?>
                   </div>
                   <?php } ?>
                 </div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -415,19 +344,16 @@
                   <div class="checkbox">
                     <?php if (isset($payment_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $payment_custom_field[$custom_field['custom_field_id']])) { ?>
                     <label>
-                      <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
+                      <input type="checkbox" name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                       <?php echo $custom_field_value['name']; ?></label>
                     <?php } else { ?>
                     <label>
-                      <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+                      <input type="checkbox" name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
                       <?php echo $custom_field_value['name']; ?></label>
                     <?php } ?>
                   </div>
                   <?php } ?>
                 </div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -435,10 +361,7 @@
             <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
               <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
+                <input type="text" name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
               </div>
             </div>
             <?php } ?>
@@ -446,10 +369,7 @@
             <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
               <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
-                <textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
+                <textarea name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
               </div>
             </div>
             <?php } ?>
@@ -458,10 +378,7 @@
               <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <button type="button" id="button-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-                <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
+                <input type="hidden" name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
               </div>
             </div>
             <?php } ?>
@@ -470,13 +387,10 @@
               <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                  <input type="text" name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -485,13 +399,10 @@
               <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <div class="input-group time">
-                  <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                  <input type="text" name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -500,13 +411,10 @@
               <label class="col-sm-2 control-label" for="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <div class="input-group datetime">
-                  <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                  <input type="text" name="payment_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($payment_custom_field[$custom_field['custom_field_id']]) ? $payment_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-payment-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -528,61 +436,49 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-shipping-firstname"><?php echo $entry_firstname; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="shipping_firstname" value="<?php echo $shipping_firstname; ?>" id="input-shipping-firstname" class="form-control" />
-                <?php if ($error_shipping_firstname) { ?>
-                <div class="text-danger"><?php echo $error_shipping_firstname; ?></div>
-                <?php } ?>
+                <input type="text" name="shipping_address[firstname]" value="<?php echo $shipping_firstname; ?>" id="input-shipping-firstname" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-shipping-lastname"><?php echo $entry_lastname; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="shipping_lastname" value="<?php echo $shipping_lastname; ?>" id="input-shipping-lastname" class="form-control" />
-                <?php if ($error_shipping_lastname) { ?>
-                <div class="text-danger"><?php echo $error_shipping_lastname; ?></div>
-                <?php } ?>
+                <input type="text" name="shipping_address[lastname]" value="<?php echo $shipping_lastname; ?>" id="input-shipping-lastname" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-shipping-company"><?php echo $entry_company; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="shipping_company" value="<?php echo $shipping_company; ?>" id="input-shipping-company" class="form-control" />
+                <input type="text" name="shipping_address[company]" value="<?php echo $shipping_company; ?>" id="input-shipping-company" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-shipping-address-1"><?php echo $entry_address_1; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="shipping_address_1" value="<?php echo $shipping_address_1; ?>" id="input-shipping-address-1" class="form-control" />
-                <?php if ($error_shipping_address_1) { ?>
-                <div class="text-danger"><?php echo $error_shipping_address_1; ?></div>
-                <?php } ?>
+                <input type="text" name="shipping_address[address_1]" value="<?php echo $shipping_address_1; ?>" id="input-shipping-address-1" class="form-control" />
               </div>
             </div>
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-shipping-address-2"><?php echo $entry_address_2; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="shipping_address_2" value="<?php echo $shipping_address_2; ?>" id="input-shipping-address-2" class="form-control" />
+                <input type="text" name="shipping_address[address_2]" value="<?php echo $shipping_address_2; ?>" id="input-shipping-address-2" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-shipping-city"><?php echo $entry_city; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="shipping_city" value="<?php echo $shipping_city; ?>" id="input-shipping-city" class="form-control" />
+                <input type="text" name="shipping_address[city]" value="<?php echo $shipping_city; ?>" id="input-shipping-city" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-shipping-postcode"><?php echo $entry_postcode; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="shipping_postcode" value="<?php echo $shipping_postcode; ?>" id="input-shipping-postcode" class="form-control" />
-                <?php if ($error_shipping_postcode) { ?>
-                <div class="text-danger"><?php echo $error_shipping_postcode; ?></div>
-                <?php } ?>
+                <input type="text" name="shipping_address[postcode]" value="<?php echo $shipping_postcode; ?>" id="input-shipping-postcode" class="form-control" />
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-shipping-country"><?php echo $entry_country; ?></label>
               <div class="col-sm-10">
-                <select name="shipping_country_id" id="input-shipping-country" class="form-control">
+                <select name="shipping_address[country_id]" id="input-shipping-country" class="form-control">
                   <option value=""><?php echo $text_select; ?></option>
                   <?php foreach ($countries as $country) { ?>
                   <?php if ($country['country_id'] == $shipping_country_id) { ?>
@@ -592,19 +488,13 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <?php if ($error_shipping_country) { ?>
-                <div class="text-danger"><?php echo $error_shipping_country; ?></div>
-                <?php } ?>
               </div>
             </div>
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-shipping-zone"><?php echo $entry_zone; ?></label>
               <div class="col-sm-10">
-                <select name="shipping_zone_id" id="input-shipping-zone" class="form-control">
+                <select name="shipping_address[zone_id]" id="input-shipping-zone" class="form-control">
                 </select>
-                <?php if ($error_shipping_zone) { ?>
-                <div class="text-danger"><?php echo $error_shipping_zone; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php foreach ($custom_fields as $custom_field) { ?>
@@ -613,7 +503,7 @@
             <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
               <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
-                <select name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
+                <select name="shipping_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control">
                   <option value=""><?php echo $text_select; ?></option>
                   <?php foreach ($custom_field['custom_field_value'] as $custom_field_value) { ?>
                   <?php if (isset($ashipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field[$custom_field['custom_field_id']]) { ?>
@@ -623,9 +513,6 @@
                   <?php } ?>
                   <?php } ?>
                 </select>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -638,19 +525,16 @@
                   <div class="radio">
                     <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && $custom_field_value['custom_field_value_id'] == $shipping_custom_field[$custom_field['custom_field_id']]) { ?>
                     <label>
-                      <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
+                      <input type="radio" name="shipping_address][custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                       <?php echo $custom_field_value['name']; ?></label>
                     <?php } else { ?>
                     <label>
-                      <input type="radio" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+                      <input type="radio" name="shipping_address][custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
                       <?php echo $custom_field_value['name']; ?></label>
                     <?php } ?>
                   </div>
                   <?php } ?>
                 </div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -663,19 +547,16 @@
                   <div class="checkbox">
                     <?php if (isset($shipping_custom_field[$custom_field['custom_field_id']]) && in_array($custom_field_value['custom_field_value_id'], $shipping_custom_field[$custom_field['custom_field_id']])) { ?>
                     <label>
-                      <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
+                      <input type="checkbox" name="shipping_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" checked="checked" />
                       <?php echo $custom_field_value['name']; ?></label>
                     <?php } else { ?>
                     <label>
-                      <input type="checkbox" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
+                      <input type="checkbox" name="shipping_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>][]" value="<?php echo $custom_field_value['custom_field_value_id']; ?>" />
                       <?php echo $custom_field_value['name']; ?></label>
                     <?php } ?>
                   </div>
                   <?php } ?>
                 </div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -683,10 +564,7 @@
             <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
               <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
-                <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
+                <input type="text" name="shipping_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
               </div>
             </div>
             <?php } ?>
@@ -694,10 +572,7 @@
             <div class="form-group custom-field custom-field<?php echo $custom_field['custom_field_id']; ?>">
               <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
-                <textarea name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
+                <textarea name="shipping_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" rows="5" placeholder="<?php echo $custom_field['name']; ?>" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control"><?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?></textarea>
               </div>
             </div>
             <?php } ?>
@@ -706,10 +581,7 @@
               <label class="col-sm-2 control-label"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <button type="button" id="button-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="btn btn-default"><i class="fa fa-upload"></i> <?php echo $button_upload; ?></button>
-                <input type="hidden" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
+                <input type="hidden" name="shipping_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : ''); ?>" id="input-custom-field<?php echo $custom_field['custom_field_id']; ?>" />
               </div>
             </div>
             <?php } ?>
@@ -718,13 +590,10 @@
               <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <div class="input-group date">
-                  <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                  <input type="text" name="shipping_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -733,13 +602,10 @@
               <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <div class="input-group time">
-                  <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                  <input type="text" name="shipping_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -748,13 +614,10 @@
               <label class="col-sm-2 control-label" for="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>"><?php echo $custom_field['name']; ?></label>
               <div class="col-sm-10">
                 <div class="input-group datetime">
-                  <input type="text" name="custom_field[<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
+                  <input type="text" name="shipping_address[custom_field][<?php echo $custom_field['custom_field_id']; ?>]" value="<?php echo (isset($shipping_custom_field[$custom_field['custom_field_id']]) ? $shipping_custom_field[$custom_field['custom_field_id']] : $custom_field['value']); ?>" placeholder="<?php echo $custom_field['name']; ?>" data-format="YYYY-MM-DD HH:mm" id="input-shipping-custom-field<?php echo $custom_field['custom_field_id']; ?>" class="form-control" />
                   <span class="input-group-btn">
                   <button type="button" class="btn btn-default"><i class="fa fa-calendar"></i></button>
                   </span></div>
-                <?php if (isset($error_custom_field[$custom_field['custom_field_id']])) { ?>
-                <div class="text-danger"><?php echo $error_custom_field[$custom_field['custom_field_id']]; ?></div>
-                <?php } ?>
               </div>
             </div>
             <?php } ?>
@@ -766,12 +629,12 @@
               <table class="table table-bordered">
                 <thead>
                   <tr>
-                    
                     <td class="text-left"><?php echo $column_product; ?></td>
                     <td class="text-left"><?php echo $column_model; ?></td>
                     <td class="text-right"><?php echo $column_quantity; ?></td>
                     <td class="text-right"><?php echo $column_price; ?></td>
-                    <td class="text-right"><?php echo $column_total; ?></td><td></td>
+                    <td class="text-right"><?php echo $column_total; ?></td>
+                    <td></td>
                   </tr>
                 </thead>
                 <?php $product_row = 0; ?>
@@ -803,8 +666,8 @@
                     <td class="text-right"><?php echo $order_product['total']; ?>
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['total']; ?>" />
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['tax']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-refresh').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
-
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>
+                    <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-refresh').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   <?php $product_row++; ?>
                   <?php } ?>
@@ -1005,9 +868,6 @@
                   </select>
                   <input type="hidden" name="shipping_method" value="<?php echo $shipping_method; ?>" />
                   <input type="hidden" name="shipping_code" value="<?php echo $shipping_code; ?>" />
-                  <?php if ($error_shipping_method) { ?>
-                  <div class="text-danger"><?php echo $error_shipping_method; ?></div>
-                  <?php } ?>
                 </div>
               </div>
               <div class="form-group">
@@ -1021,9 +881,6 @@
                   </select>
                   <input type="hidden" name="payment_method" value="<?php echo $payment_method; ?>" />
                   <input type="hidden" name="payment_code" value="<?php echo $payment_code; ?>" />
-                  <?php if ($error_payment_method) { ?>
-                  <div class="text-danger"><?php echo $error_payment_method; ?></div>
-                  <?php } ?>
                 </div>
               </div>
               <div class="form-group">

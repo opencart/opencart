@@ -127,7 +127,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 				'FIN' => 'EUR',
 				'DNK' => 'DKK',
 				'DEU' => 'EUR',
-				'NLD' => 'EUR',
+				'NLD' => 'EUR'
 			);
 
 			if ($order_info['payment_iso_code_3'] == 'DEU' || $order_info['payment_iso_code_3'] == 'NLD') {
@@ -314,7 +314,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					'FIN' => 'EUR',
 					'DNK' => 'DKK',
 					'DEU' => 'EUR',
-					'NLD' => 'EUR',
+					'NLD' => 'EUR'
 				);
 
 				switch ($order_info['payment_iso_code_3']) {
@@ -393,7 +393,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 					'house_extension' => $house_ext,
 					'zip'             => $order_info['payment_postcode'],
 					'city'            => $order_info['payment_city'],
-					'country'         => $country,
+					'country'         => $country
 				);
 
 				$product_query = $this->db->query("SELECT `name`, `model`, `price`, `quantity`, `tax` / `price` * 100 AS 'tax_rate' FROM `" . DB_PREFIX . "order_product` WHERE `order_id` = " . (int)$order_info['order_id'] . " UNION ALL SELECT '', `code`, `amount`, '1', 0.00 FROM `" . DB_PREFIX . "order_voucher` WHERE `order_id` = " . (int)$order_info['order_id']);
@@ -407,7 +407,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 							'price'    => (int)str_replace('.', '', $this->currency->format($product['price'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
 							'vat'      => (float)$product['tax_rate'],
 							'discount' => 0.0,
-							'flags'    => 0,
+							'flags'    => 0
 						)
 					);
 				}
@@ -428,7 +428,7 @@ class ControllerPaymentKlarnaAccount extends Controller {
 								'price'    => (int)str_replace('.', '', $this->currency->format($total['value'], $country_to_currency[$order_info['payment_iso_code_3']], '', false)),
 								'vat'      => (float)$total['tax_rate'],
 								'discount' => 0.0,
-								'flags'    => 0,
+								'flags'    => 0
 							)
 						);
 					}

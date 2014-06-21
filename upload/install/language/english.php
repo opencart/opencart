@@ -42,6 +42,7 @@ $_['text_session']           = 'Session Auto Start';
 $_['text_mysqli']            = 'MySQLi';
 $_['text_mysql']             = 'MySQL';
 $_['text_mpdo']              = 'mPDO';
+$_['text_pgsql']              = 'Postgresql';
 $_['text_gd']                = 'GD';
 $_['text_curl']              = 'cURL';
 $_['text_mcrypt']            = 'mCrypt';

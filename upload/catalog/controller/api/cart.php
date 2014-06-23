@@ -6,6 +6,8 @@ class ControllerApiCart extends Controller {
 		$json = array();
 			
 		if (isset($this->request->post['product_id'])) {
+			$this->load->model('catalog/product');
+			
 			$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
 
 			if ($product_info) {
@@ -20,8 +22,8 @@ class ControllerApiCart extends Controller {
 				} else {
 					$option = array();	
 				}
-				
-				if (!isset($this->request->post['override']) && $this->request->post['override']) {
+ 				
+				if (!isset($this->request->post['override']) || !$this->request->post['override']) {
 					$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
 					
 					foreach ($product_options as $product_option) {

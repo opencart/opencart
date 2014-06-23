@@ -644,29 +644,25 @@
                   <?php foreach ($order_products as $order_product) { ?>
                   <tr id="product-row<?php echo $product_row; ?>">
                     <td class="text-left"><?php echo $order_product['name']; ?><br />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_product_id]" value="<?php echo $order_product['order_product_id']; ?>" />
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][product_id]" value="<?php echo $order_product['product_id']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][name]" value="<?php echo $order_product['name']; ?>" />
                       <?php foreach ($order_product['option'] as $option) { ?>
                       - <small><?php echo $option['name']; ?>: <?php echo $option['value']; ?></small><br />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][order_option_id]" value="<?php echo $option['order_option_id']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_id]" value="<?php echo $option['product_option_id']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][product_option_value_id]" value="<?php echo $option['product_option_value_id']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][name]" value="<?php echo $option['name']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][value]" value="<?php echo $option['value']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option_row; ?>][type]" value="<?php echo $option['type']; ?>" />
+                      <?php if ($option['type'] == 'select' || $option['type'] == 'radio' || $option['type'] == 'image') { ?>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['product_option_value_id']; ?>" />
+                      <?php } ?>
+                      <?php if ($option['type'] == 'checkbox') { ?>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option['product_option_id']; ?>][]" value="<?php echo $option['product_option_value_id']; ?>" />
+                      <?php } ?>
+                      <?php if ($option['type'] == 'text' || $option['type'] == 'textarea' || $option['type'] == 'file' || $option['type'] == 'date' || $option['type'] == 'datetime' || $option['type'] == 'time') { ?>
+                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][order_option][<?php echo $option['product_option_id']; ?>]" value="<?php echo $option['value']; ?>" />
+                      <?php } ?>
                       <?php $option_row++; ?>
                       <?php } ?></td>
-                    <td class="text-left"><?php echo $order_product['model']; ?>
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][model]" value="<?php echo $order_product['model']; ?>" /></td>
+                    <td class="text-left"><?php echo $order_product['model']; ?></td>
                     <td class="text-right"><?php echo $order_product['quantity']; ?>
                       <input type="hidden" name="order_product[<?php echo $product_row; ?>][quantity]" value="<?php echo $order_product['quantity']; ?>" /></td>
-                    <td class="text-right"><?php echo $order_product['price']; ?>
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][price]" value="<?php echo $order_product['price']; ?>" /></td>
-                    <td class="text-right"><?php echo $order_product['total']; ?>
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][total]" value="<?php echo $order_product['total']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][tax]" value="<?php echo $order_product['tax']; ?>" />
-                      <input type="hidden" name="order_product[<?php echo $product_row; ?>][reward]" value="<?php echo $order_product['reward']; ?>" /></td>
+                    <td class="text-right"><?php echo $order_product['price']; ?></td>
+                    <td class="text-right"><?php echo $order_product['total']; ?></td>
                     <td class="text-center" style="width: 3px;"><button type="button" onclick="$('#product-row<?php echo $product_row; ?>').remove(); $('#button-refresh').trigger('click');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>
                   </tr>
                   <?php $product_row++; ?>
@@ -1048,14 +1044,14 @@ $('select[name=\'payment_address\']').on('change', function() {
 		},		
 		success: function(json) {
 			if (json != '') {	
-				$('input[name=\'payment_firstname\']').attr('value', json['firstname']);
-				$('input[name=\'payment_lastname\']').attr('value', json['lastname']);
-				$('input[name=\'payment_company\']').attr('value', json['company']);
-				$('input[name=\'payment_address_1\']').attr('value', json['address_1']);
-				$('input[name=\'payment_address_2\']').attr('value', json['address_2']);
-				$('input[name=\'payment_city\']').attr('value', json['city']);
-				$('input[name=\'payment_postcode\']').attr('value', json['postcode']);
-				$('select[name=\'payment_country_id\']').prop('value', json['country_id']);
+				$('input[name=\'payment_address[firstname]\']').attr('value', json['firstname']);
+				$('input[name=\'payment_address[lastname]\']').attr('value', json['lastname']);
+				$('input[name=\'payment_address[company]\']').attr('value', json['company']);
+				$('input[name=\'payment_address[address_1]\']').attr('value', json['address_1']);
+				$('input[name=\'payment_address[address_2]\']').attr('value', json['address_2']);
+				$('input[name=\'payment_address[city]\']').attr('value', json['city']);
+				$('input[name=\'payment_address[postcode]\']').attr('value', json['postcode']);
+				$('select[name=\'payment_address[country_id]\']').prop('value', json['country_id']);
 				
 				payment_zone_id = json['zone_id'];
 				
@@ -1082,7 +1078,7 @@ $('select[name=\'payment_country_id\']').on('change', function() {
 		},			
 		success: function(json) {
 			if (json['postcode_required'] == '1') {
-				$('input[name=\'payment_postcode\']').parent().parent().addClass('required');
+				$('input[name=\'payment_address[postcode]\']').parent().parent().addClass('required');
 			} else {
 				$('input[name=\'payment_postcode\']').parent().parent().removeClass('required');
 			}
@@ -1503,13 +1499,13 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 
 	$.ajax({
 		<?php if ($order_id) { ?>
-		url: '<?php echo $store_url; ?>index.php?route=checkout/manual&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
+		url: 'index.php?route=sale/order_api/refresh&token=<?php echo $token; ?>&order_id=<?php echo $order_id; ?>',
 		<?php } else { ?>
-		url: '<?php echo $store_url; ?>index.php?route=checkout/manual&token=<?php echo $token; ?>',
+		url: 'index.php?route=sale/order_api/refresh&token=<?php echo $token; ?>',
 		<?php } ?>
 		type: 'post',
 		data: $(data),
-		dataType: 'json',
+		dataType: 'html',
 		beforeSend: function() {
 			$('#button-product i, #button-voucher i, #button-refresh i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-product, #button-voucher, #button-refresh').prop('disabled', true);
@@ -1519,6 +1515,9 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			$('#button-product, #button-voucher, #button-refresh').prop('disabled', false);
 		},		
 		success: function(json) {
+			$('#content').html(json);
+			
+			
 			$('.alert, .text-danger').remove();
 			
 			// Check for errors
@@ -1860,6 +1859,8 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			}	
 		},
 		error: function(xhr, ajaxOptions, thrownError) {
+			$('#content').html(xhr.responseText);
+			
 			alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText);
 		}
 	});	

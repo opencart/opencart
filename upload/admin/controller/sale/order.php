@@ -566,9 +566,7 @@ class ControllerSaleOrder extends Controller {
 
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($order_info)) {
+		if (!empty($order_info)) {
 			$data['firstname'] = $order_info['firstname'];
 		} else {
 			$data['firstname'] = '';
@@ -580,9 +578,7 @@ class ControllerSaleOrder extends Controller {
 			$data['lastname'] = '';
 		}
 
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} elseif (!empty($order_info)) {
+		if (!empty($order_info)) {
 			$data['email'] = $order_info['email'];
 		} else {
 			$data['email'] = '';
@@ -2378,73 +2374,5 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$this->response->setOutput($this->load->view('sale/order_shipping.tpl', $data));
-	}
-	
-	public function api() {
-		$this->load->model('setting/store');
-		
-		if ($this->request->post['store_id']) {
-			
-		} else {
-				
-		}
-		
-		$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
-		
-		if ($store_info) {
-			$url = $store_info['url'];
-		} else {
-			$url = HTTP_CATALOG;	
-		}
-		
-		// Make curl request
-		$curl = curl_init($url . 'index.php?route=' . $this->request->get['call']);
-				
-		switch($this->request->get['call']) {
-			case 'payment':
-			
-				break;
-			case 'shipping':
-			
-				break;
-			case 'calculate':
-			
-				break;
-			case 'add':
-			
-				break;		
-			case 'edit':
-			
-				break;
-			case 'delete':
-			
-				break;									
-			case 'comment':
-			
-				break;	
-		}
-		
-
-			
-
-				
-				
-				
-		curl_setopt($curl, CURLOPT_PORT, 443);
-		curl_setopt($curl, CURLOPT_HEADER, 0);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 0);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $this->request->post);
-
-		$response = curl_exec($curl);
-
-		curl_close($curl);
-
-		if (!$response) {
-			$this->log->write(curl_error($curl) . '(' . curl_errno($curl) . ')');
-		}	
 	}
 }

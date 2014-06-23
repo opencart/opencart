@@ -49,6 +49,29 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$product_info['thumb'] = '';
 		}
 
+		// Images
+		if (isset($this->request->get['product_id'])) {
+			$product_images = $this->model_catalog_product->getProductImages($this->request->get['product_id']);
+		} else {
+			$product_images = array();
+		}
+
+		$data['product_images'] = array();
+
+		foreach ($product_images as $product_image) {
+			if (is_file(DIR_IMAGE . $product_image['image'])) {
+				$image = $product_image['image'];
+			} else {
+				$image = '';
+			}
+
+			$product_info['product_images'][] = array(
+				'image_url'  => $this->model_tool_image->resize($image, 800, 800),
+				'thumb'      => $this->model_tool_image->resize($image, 100, 100),
+				'sort_order' => $product_image['sort_order']
+			);
+		}
+
 		$data['product'] = $product_info;
 
 		$setting = array();
@@ -131,6 +154,28 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			}
 		} else {
 			$this->response->setOutput(json_encode(array('error' => $this->error)));
+		}
+	}
+
+	public function addImage() {
+		$data = $this->request->post;
+
+		if (!isset($data['image']) || empty($data['image'])) {
+			$this->error['image'] = 'No image selected for upload';
+		}
+
+		if (!isset($data['listing_id']) || empty($data['listing_id'])) {
+			$this->error['listing_id'] = 'No listing ID supplied';
+		}
+
+		if (!$this->error) {
+			$response = $this->openbay->etsy->call('product/listing/'.(int)$data['listing_id'].'/image', 'POST', $data);
+
+			if (isset($response['data']['error'])) {
+				$this->response->setOutput(json_encode($response['data']));
+			} else {
+				$this->response->setOutput(json_encode($response['results'][0]));
+			}
 		}
 	}
 

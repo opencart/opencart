@@ -23,6 +23,7 @@
         <ul class="nav nav-tabs">
           <li class="active"><a href="#tab-listing-general" data-toggle="tab"><?php echo $tab_general; ?></a></li>
           <li><a href="#tab-listing-additional" data-toggle="tab"><?php echo $tab_additional; ?></a></li>
+          <li><a href="#tab-images" data-toggle="tab"><?php echo $tab_images; ?></a></li>
         </ul>
         <div class="tab-content">
           <div id="tab-listing-general" class="tab-pane active">
@@ -122,6 +123,48 @@
               </div>
             </div>
           </div>
+          <div id="tab-images" class="tab-pane">
+
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
+              <div class="col-sm-10">
+                <?php if ($product['thumb']) { ?>
+                <a id="thumb-image" class="img-thumbnail"><img src="<?php echo $product['thumb']; ?>" alt="" title="" /></a>
+                <?php } else { ?>
+                <a id="thumb-image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
+                <?php } ?>
+                <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
+              </div>
+            </div>
+            <div class="table-responsive">
+              <table id="images" class="table table-striped table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <td class="text-right" style="width: 1px;"></td>
+                    <td class="text-left"><?php echo $entry_image_other; ?></td>
+                  </tr>
+                </thead>
+                <tbody>
+                <?php $image_row = 0; ?>
+                <?php foreach ($product['product_images'] as $product_image) { ?>
+                <tr>
+                  <td class="text-left">
+                    <input type="checkbox" name="product_image[<?php echo $image_row; ?>][image_url]" value="<?php echo $product_image['image_url']; ?>" class="product-image" checked="checked" />
+                  </td>
+                  <td class="text-left">
+                    <?php if ($product_image['thumb']) { ?>
+                      <a href="" class="img-thumbnail"><img src="<?php echo $product_image['thumb']; ?>" alt="" title="" /></a>
+                    <?php } else { ?>
+                      <a href="" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
+                    <?php } ?>
+                   </td>
+                </tr>
+                <?php $image_row++; ?>
+                <?php } ?>
+                </tbody>
+              </table>
+            </div>
+          </div>
           <div id="tab-listing-additional" class="tab-pane">
             <div class="form-group">
               <label class="col-sm-2 control-label" for="input-shop-section"><?php echo $entry_shop; ?> <span id="shop-section-loading" style="display: none;"><i class="fa fa-cog fa-lg fa-spin"></i></span></label>
@@ -202,17 +245,6 @@
                     <ul class="list-group" id="material-container"></ul>
                   </div>
                 </div>
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label" for="input-image"><?php echo $entry_image; ?></label>
-              <div class="col-sm-10">
-                <?php if ($product['thumb']) { ?>
-                <a id="thumb-image" class="img-thumbnail"><img src="<?php echo $product['thumb']; ?>" alt="" title="" /></a>
-                <?php } else { ?>
-                <a id="thumb-image" class="img-thumbnail"><i class="fa fa-camera fa-5x"></i></a>
-                <?php } ?>
-                <input type="hidden" name="image" value="<?php echo $product['image_url']; ?>" id="input-image" />
               </div>
             </div>
           </div>
@@ -424,6 +456,10 @@ function getShopSection() {
       if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
     }
   });
+}
+
+function uploadImages() {
+
 }
 
 $(document).ready(function() {

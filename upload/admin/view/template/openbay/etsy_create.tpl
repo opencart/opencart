@@ -188,8 +188,8 @@
               <label class="col-sm-2 control-label" for="input-non-taxable"><?php echo $entry_non_taxable; ?></label>
               <div class="col-sm-10">
                 <select name="non_taxable" id="input-non-taxable" class="form-control">
-                  <option value="0" selected="selected">No</option>
-                  <option value="1">Yes</option>
+                  <option value="false" selected="selected">No</option>
+                  <option value="true">Yes</option>
                 </select>
               </div>
             </div>
@@ -266,6 +266,10 @@
       url: 'index.php?route=openbay/etsy_product/createSubmit&token=<?php echo $token; ?>',
       beforeSend: function(){
         $('#button-submit').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+
+        // reset progress bar info
+
+        // calculate the progress bar info and display
       },
       type: 'post',
       data: $("#form").serialize(),
@@ -278,7 +282,11 @@
             alert(v);
           });
         } else {
+          //update progress bar
 
+          // start images upload
+
+          // start digital upload
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
@@ -459,6 +467,10 @@ function getShopSection() {
 }
 
 function uploadImages() {
+
+}
+
+function uploadDigitals() {
 
 }
 

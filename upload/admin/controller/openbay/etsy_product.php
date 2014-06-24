@@ -109,33 +109,41 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		// validation
 		if (!isset($data['title']) || empty($data['title']) || strlen($data['title']) > 255) {
 			if (strlen($data['title']) > 255) {
-				$this->error['title'] = 'Title is too long';
+				$this->error['title'] = $this->language->get('error_title_length');
 			} else {
-				$this->error['title'] = 'Title is missing';
+				$this->error['title'] = $this->language->get('error_title_missing');
 			}
 		}
 
 		if (!isset($data['description']) || empty($data['description'])) {
-			$this->error['title'] = 'Description is missing';
+			$this->error['title'] = $this->language->get('error_desc_missing');
 		}
 
 		if (!isset($data['price']) || empty($data['price'])) {
-			$this->error['price'] = 'Price is missing';
+			$this->error['price'] = $this->language->get('error_price_missing');
 		}
 
 		if (!isset($data['category_id']) || empty($data['category_id']) || $data['category_id'] == 0) {
-			$this->error['category_id'] = 'Category is not selected';
+			$this->error['category_id'] = $this->language->get('error_category');
+		}
+
+		if (isset($data['tags']) && count($data['tags']) > 13) {
+			$this->error['tags'] = $this->language->get('error_tags');
+		}
+
+		if (isset($data['materials']) && count($data['materials']) > 13) {
+			$this->error['materials'] = $this->language->get('error_materials');
 		}
 
 		if (isset($data['style_1']) && !empty($data['style_1'])) {
 			if (preg_match('/[^\p{L}\p{Nd}\p{Zs}]/u', $data['style_1']) == 1) {
-				$this->error['style_1'] = 'Style 1 tag is not valid';
+				$this->error['style_1'] = $this->language->get('error_style_1_tag');
 			}
 		}
 
 		if (isset($data['style_2']) && !empty($data['style_2'])) {
 			if (preg_match('/[^\p{L}\p{Nd}\p{Zs}]/u', $data['style_2']) == 1) {
-				$this->error['style_2'] = 'Style 2 tag is not valid';
+				$this->error['style_2'] = $this->language->get('error_style_2_tag');
 			}
 		}
 
@@ -143,14 +151,10 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			// process the request
 			$response = $this->openbay->etsy->call('product/listing/create', 'POST', $data);
 
-			echo '<pre>';
-			print_r($response);
-			die();
-
 			if (isset($response['data']['error'])) {
 				$this->response->setOutput(json_encode($response['data']));
 			} else {
-				$this->response->setOutput(json_encode($response['results'][0]));
+				$this->response->setOutput(json_encode($response['data']['results'][0]));
 			}
 		} else {
 			$this->response->setOutput(json_encode(array('error' => $this->error)));
@@ -158,14 +162,16 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function addImage() {
+		$this->load->language('openbay/etsy_create');
+
 		$data = $this->request->post;
 
 		if (!isset($data['image']) || empty($data['image'])) {
-			$this->error['image'] = 'No image selected for upload';
+			$this->error['image'] = $this->language->get('error_no_img_url');
 		}
 
 		if (!isset($data['listing_id']) || empty($data['listing_id'])) {
-			$this->error['listing_id'] = 'No listing ID supplied';
+			$this->error['listing_id'] = $this->language->get('error_no_listing_id');
 		}
 
 		if (!$this->error) {
@@ -174,7 +180,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			if (isset($response['data']['error'])) {
 				$this->response->setOutput(json_encode($response['data']));
 			} else {
-				$this->response->setOutput(json_encode($response['results'][0]));
+				$this->response->setOutput(json_encode($response['data']['results'][0]));
 			}
 		}
 	}
@@ -201,9 +207,5 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$categories = $this->openbay->etsy->call('product/category/findAllSubCategoryChildren?sub_tag='.$data['sub_tag'], 'GET');
 
 		$this->response->setOutput(json_encode($categories));
-	}
-
-	public function edit() {
-
 	}
 }

@@ -68,7 +68,7 @@
             <div class="form-group required">
               <label class="col-sm-2 control-label" for="input-description"><?php echo $entry_description; ?></label>
               <div class="col-sm-10">
-                <textarea name="description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"></textarea>
+                <textarea name="description" placeholder="<?php echo $entry_description; ?>" id="input-description" class="form-control"><?php echo $product['description']; ?></textarea>
               </div>
             </div>
             <div class="form-group required">
@@ -81,8 +81,8 @@
               <label class="col-sm-2 control-label" for="input-is-supply"><?php echo $entry_is_supply; ?></label>
               <div class="col-sm-10">
                 <select name="is_supply" id="input-is-supply" class="form-control">
-                  <option value="false" selected="selected">No</option>
-                  <option value="true">Yes</option>
+                  <option value="false" selected="selected"><?php echo $text_no; ?></option>
+                  <option value="true"><?php echo $text_yes; ?></option>
                 </select>
               </div>
             </div>
@@ -188,8 +188,8 @@
               <label class="col-sm-2 control-label" for="input-non-taxable"><?php echo $entry_non_taxable; ?></label>
               <div class="col-sm-10">
                 <select name="non_taxable" id="input-non-taxable" class="form-control">
-                  <option value="0" selected="selected">No</option>
-                  <option value="1">Yes</option>
+                  <option value="0" selected="selected"><?php echo $text_no; ?></option>
+                  <option value="1"><?php echo $text_yes; ?></option>
                 </select>
               </div>
             </div>
@@ -247,20 +247,53 @@
                 </div>
               </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="input-tag"><?php echo $entry_tags; ?></label>
+              <div class="col-sm-10">
+                <div class="row">
+                  <div class="col-sm-4">
+                    <div class="row">
+                      <div class="col-xs-8">
+                        <input type="text" name="tag_input" value="" placeholder="<?php echo $entry_tags; ?>" id="input-tag" class="form-control" />
+                      </div>
+                      <div class="col-xs-2">
+                        <button class="btn btn-primary" title="" onclick="addTag();" data-toggle="tooltip" type="button" data-original-title="<?php echo $text_tag_add; ?>"><i class="fa fa-plus-circle"></i></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-sm-8">
+                    <ul class="list-group" id="tag-container"></ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div class="well">
             <div class="row">
-              <div class="col-sm-12 text-right">
-                <a class="btn btn-primary" id="button-submit" onclick="submitForm();"><span><?php echo $btn_submit; ?></span></a>
+              <div class="col-sm-12">
+                <a class="btn btn-primary pull-right" id="button-submit" onclick="submitForm();"><span><?php echo $btn_submit; ?></span></a>
               </div>
             </div>
           </div>
         </div>
       </form>
     </div>
+    <div class="panel-body" id="page-listing-success" style="display:none;">
+      <div class="well">
+        <div class="row">
+          <div class="col-sm-12">
+            <h3><?php echo $text_created; ?></h3>
+            <p><?php echo $text_listing_id; ?>: <span id="listing-id"></span></p>
+            <ul class="list-group" id="listing-image-status"></ul>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <script type="text/javascript"><!--
+  var image_count = 1;
+
   function submitForm() {
     $.ajax({
       url: 'index.php?route=openbay/etsy_product/createSubmit&token=<?php echo $token; ?>',
@@ -271,19 +304,60 @@
       data: $("#form").serialize(),
       dataType: 'json',
       success: function(json) {
-        $('#button-submit').empty().html('<span><?php echo $btn_submit; ?></span>').removeAttr('disabled');
-
         if (json.error) {
-          $.each(json.error, function( k, v ) {
-            alert(v);
-          });
+          if (json.code) {
+            alert(json.error);
+          } else {
+            $.each(json.error, function( k, v ) {
+              alert(v);
+            });
+          }
         } else {
+          if (json.listing_id) {
+            // upload the primary image
+            var image_primary = $('#input-image').val();
 
+            if (image_primary != '') {
+              uploadImage(json.listing_id, $('#input-image').val(), image_count);
+              image_count = image_count + 1;
+            }
+
+            // get the extra images and upload
+            $('.product-image:checkbox:checked').each(function() {
+              uploadImage(json.listing_id, $(this).val(), image_count);
+              image_count = image_count + 1;
+            });
+
+            $('#listing-id').text(json.listing_id);
+            $('#page-listing').hide();
+            $('#page-listing-success').fadeIn();
+            $('#button-submit').empty().html('<span><?php echo $btn_submit; ?></span>').removeAttr('disabled');
+          } else {
+            alert('Error creating listing?');
+          }
         }
       },
       error: function (xhr, ajaxOptions, thrownError) {
         if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
         $('#button-submit').empty().html('<span><?php echo $btn_submit; ?></span>').removeAttr('disabled');
+      }
+    });
+  }
+
+  function uploadImage(listing_id, url, id) {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy_product/addImage&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#listing-image-status').append('<li class="list-group-item list-group-item-info" id="image-upload-status-'+id+'"><i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_img_upload; ?> '+id+'</li>');
+      },
+      type: 'post',
+      data: {'listing_id':listing_id,'image':url},
+      dataType: 'json',
+      success: function(json) {
+        $('#image-upload-status-'+id).removeClass('list-group-item-info').addClass('list-group-item-success').empty().html('<i class="fa fa-check fa-lg" style="color:green;"></i> <?php echo $text_img_upload_done; ?> '+id+'');
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
     });
   }
@@ -294,7 +368,7 @@
     var material = $('#input-material').val();
 
     if (material != '') {
-      $('#material-container').append('<input type="hidden" name="material[]" value="'+material+'" /><li class="list-group-item" id="material-id-'+material_count+'"><div class="row"><div class="col-xs-1"><button class="btn btn-danger btn-xs" title="" type="button" data-toggle="tooltip" data-original-title="<?php echo $text_material_remove; ?>" onclick="$(\'#material-id-'+material_count+'\').remove();"><i class="fa fa-times"></i></button></div><div class="col-xs-11">'+material+'</div></div></li>');
+      $('#material-container').append('<li class="list-group-item" id="material-id-'+material_count+'"><div class="row"><div class="col-xs-1"><button class="btn btn-danger btn-xs" title="" type="button" data-toggle="tooltip" data-original-title="<?php echo $text_material_remove; ?>" onclick="$(\'#material-id-'+material_count+'\').remove();"><i class="fa fa-times"></i></button></div><div class="col-xs-11">'+material+'</div></div><input type="hidden" name="materials[]" value="'+material+'" /></li>');
 
       material_count = material_count + 1;
 
@@ -302,170 +376,180 @@
     }
   }
 
-$('#input-category').on('change', function() {
-  $.ajax({
-    url: 'index.php?route=openbay/etsy_product/getSubCategory&token=<?php echo $token; ?>',
-    beforeSend: function(){
-      $('#input-category').attr('disabled','disabled');
-      $('#input-sub-category').empty();
-      $('#input-sub-sub-category').empty();
-      $('#container-sub-category').hide();
-      $('#container-sub-sub-category').hide();
-      $('#category-id').val('');
-      $('#category-loading').show();
-      $('#category-selected').hide();
-      $('#category-sub-default').remove();
-    },
-    type: 'post',
-    data: {'tag' : $(this).val()},
-    dataType: 'json',
-    success: function(json) {
-      $('#input-sub-category').append('<option id="category-sub-default" selected="selected"><?php echo $text_option; ?></option>');
-      $.each(json.data, function( k, v ) {
-        $('#input-sub-category').append('<option value="'+v.category_name+'">'+ v.long_name+'</option>');
-      });
+  var tag_count = 0;
 
-      $('#input-category').removeAttr('disabled');
-      $('#container-sub-category').show();
-      $('#category-loading').hide();
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-      $('#input-category').removeAttr('disabled');
+  function addTag() {
+    var tag = $('#input-tag').val();
+
+    if (tag != '') {
+      $('#tag-container').append('<li class="list-group-item" id="tag-id-'+tag_count+'"><div class="row"><div class="col-xs-1"><button class="btn btn-danger btn-xs" title="" type="button" data-toggle="tooltip" data-original-title="<?php echo $text_tag_remove; ?>" onclick="$(\'#tag-id-'+tag_count+'\').remove();"><i class="fa fa-times"></i></button></div><div class="col-xs-11">'+tag+'</div></div><input type="hidden" name="tags[]" value="'+tag+'" /></li>');
+
+      tag_count = tag_count + 1;
+
+      $('#input-tag').val('');
     }
-  });
-});
+  }
 
-$('#input-sub-category').on('change', function() {
-  var sub_tag = $(this).val();
-
-  $.ajax({
-    url: 'index.php?route=openbay/etsy_product/getSubSubCategory&token=<?php echo $token; ?>',
-    beforeSend: function(){
-      $('#input-category').attr('disabled','disabled');
-      $('#input-sub-category').attr('disabled','disabled');
-      $('#input-sub-sub-category').empty();
-      $('#container-sub-sub-category').hide();
-      $('#category-id').val('');
-      $('#sub-category-loading').show();
-      $('#category-selected').hide();
-      $('#category-sub-default').remove();
-    },
-    type: 'post',
-    data: {'sub_tag' : sub_tag},
-    dataType: 'json',
-    success: function(json) {
-      if ($.isEmptyObject(json.data)) {
-        var category;
-
-        category = getCategory(sub_tag);
-      } else {
-        $('#input-sub-sub-category').append('<option id="category-sub-sub-default" selected="selected"><?php echo $text_option; ?></option>');
+  $('#input-category').on('change', function() {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy_product/getSubCategory&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#input-category').attr('disabled','disabled');
+        $('#input-sub-category').empty();
+        $('#input-sub-sub-category').empty();
+        $('#container-sub-category').hide();
+        $('#container-sub-sub-category').hide();
+        $('#category-id').val('');
+        $('#category-loading').show();
+        $('#category-selected').hide();
+        $('#category-sub-default').remove();
+      },
+      type: 'post',
+      data: {'tag' : $(this).val()},
+      dataType: 'json',
+      success: function(json) {
+        $('#input-sub-category').append('<option id="category-sub-default" selected="selected"><?php echo $text_option; ?></option>');
         $.each(json.data, function( k, v ) {
-          $('#input-sub-sub-category').append('<option value="'+v.category_name+'">'+ v.long_name+'</option>');
+          $('#input-sub-category').append('<option value="'+v.category_name+'">'+ v.long_name+'</option>');
         });
 
-        $('#container-sub-sub-category').show();
+        $('#input-category').removeAttr('disabled');
+        $('#container-sub-category').show();
+        $('#category-loading').hide();
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+        $('#input-category').removeAttr('disabled');
       }
-
-      $('#input-category').removeAttr('disabled');
-      $('#input-sub-category').removeAttr('disabled');
-      $('#sub-category-loading').hide();
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-      $('#input-category').removeAttr('disabled');
-      $('#input-sub-category').removeAttr('disabled');
-    }
+    });
   });
-});
 
-$('#input-sub-sub-category').on('change', function() {
-  $('#category-sub-sub-default').remove();
-  getCategory($(this).val());
-});
+  $('#input-sub-category').on('change', function() {
+    var sub_tag = $(this).val();
 
-function getCategory(tag) {
-  $.ajax({
-    url: 'index.php?route=openbay/etsy_product/getCategory&token=<?php echo $token; ?>',
-    beforeSend: function(){ },
-    type: 'post',
-    data: {'tag' : tag},
-    dataType: 'json',
-    success: function(json) {
-      setCategory(json.data.category_id);
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-    }
-  });
-}
+    $.ajax({
+      url: 'index.php?route=openbay/etsy_product/getSubSubCategory&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#input-category').attr('disabled','disabled');
+        $('#input-sub-category').attr('disabled','disabled');
+        $('#input-sub-sub-category').empty();
+        $('#container-sub-sub-category').hide();
+        $('#category-id').val('');
+        $('#sub-category-loading').show();
+        $('#category-selected').hide();
+        $('#category-sub-default').remove();
+      },
+      type: 'post',
+      data: {'sub_tag' : sub_tag},
+      dataType: 'json',
+      success: function(json) {
+        if ($.isEmptyObject(json.data)) {
+          var category;
 
-function setCategory(id) {
-  $('#category-id').val(id);
-  $('#category-selected').show();
-}
+          category = getCategory(sub_tag);
+        } else {
+          $('#input-sub-sub-category').append('<option id="category-sub-sub-default" selected="selected"><?php echo $text_option; ?></option>');
+          $.each(json.data, function( k, v ) {
+            $('#input-sub-sub-category').append('<option value="'+v.category_name+'">'+ v.long_name+'</option>');
+          });
 
-function getShippingProfiles() {
-  $.ajax({
-    url: 'index.php?route=openbay/etsy_shipping/getAll&token=<?php echo $token; ?>',
-    beforeSend: function(){
-      $('#shipping-loading').show();
-    },
-    type: 'get',
-    dataType: 'json',
-    success: function(json) {
-      if ($.isEmptyObject(json.data.results)) {
-        alert('<?php echo $error_no_shipping; ?>');
-      } else {
-        $.each(json.data.results, function( k, v ) {
-          $('#input-shipping').append('<option value="'+v.shipping_template_id+'">'+ v.title+'</option>');
-        });
+          $('#container-sub-sub-category').show();
+        }
+
+        $('#input-category').removeAttr('disabled');
+        $('#input-sub-category').removeAttr('disabled');
+        $('#sub-category-loading').hide();
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+        $('#input-category').removeAttr('disabled');
+        $('#input-sub-category').removeAttr('disabled');
       }
-
-      $('#input-shipping').removeAttr('disabled');
-      $('#shipping-loading').hide();
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-    }
+    });
   });
-}
 
-function getShopSection() {
-  $.ajax({
-    url: 'index.php?route=openbay/etsy_shop/getSections&token=<?php echo $token; ?>',
-    beforeSend: function(){
-      $('#shop-section-loading').show();
-    },
-    type: 'get',
-    dataType: 'json',
-    success: function(json) {
-      if ($.isEmptyObject(json.data.results)) {
-        alert('<?php echo $error_no_shop_secton; ?>');
-      } else {
-        $.each(json.data.results, function( k, v ) {
-          $('#input-shop-section').append('<option value="'+v.shop_section_id+'">'+ v.title+'</option>');
-        });
+  $('#input-sub-sub-category').on('change', function() {
+    $('#category-sub-sub-default').remove();
+    getCategory($(this).val());
+  });
+
+  function getCategory(tag) {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy_product/getCategory&token=<?php echo $token; ?>',
+      beforeSend: function(){ },
+      type: 'post',
+      data: {'tag' : tag},
+      dataType: 'json',
+      success: function(json) {
+        setCategory(json.data.category_id);
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
       }
+    });
+  }
 
-      $('#input-shop-section').removeAttr('disabled');
-      $('#shop-section-loading').hide();
-    },
-    error: function (xhr, ajaxOptions, thrownError) {
-      if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
-    }
+  function setCategory(id) {
+    $('#category-id').val(id);
+    $('#category-selected').show();
+  }
+
+  function getShippingProfiles() {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy_shipping/getAll&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#shipping-loading').show();
+      },
+      type: 'get',
+      dataType: 'json',
+      success: function(json) {
+        if ($.isEmptyObject(json.data.results)) {
+          alert('<?php echo $error_no_shipping; ?>');
+        } else {
+          $.each(json.data.results, function( k, v ) {
+            $('#input-shipping').append('<option value="'+v.shipping_template_id+'">'+ v.title+'</option>');
+          });
+        }
+
+        $('#input-shipping').removeAttr('disabled');
+        $('#shipping-loading').hide();
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      }
+    });
+  }
+
+  function getShopSection() {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy_shop/getSections&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#shop-section-loading').show();
+      },
+      type: 'get',
+      dataType: 'json',
+      success: function(json) {
+        if ($.isEmptyObject(json.data.results)) {
+          alert('<?php echo $error_no_shop_secton; ?>');
+        } else {
+          $.each(json.data.results, function( k, v ) {
+            $('#input-shop-section').append('<option value="'+v.shop_section_id+'">'+v.title+'</option>');
+          });
+        }
+
+        $('#input-shop-section').removeAttr('disabled');
+        $('#shop-section-loading').hide();
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      }
+    });
+  }
+
+  $(document).ready(function() {
+    getShippingProfiles();
+    getShopSection();
   });
-}
-
-function uploadImages() {
-
-}
-
-$(document).ready(function() {
-  getShippingProfiles();
-  getShopSection();
-});
 
 //--></script>
 <?php echo $footer; ?>

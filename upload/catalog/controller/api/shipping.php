@@ -69,7 +69,7 @@ class ControllerApiShipping extends Controller {
 
 			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
 	
-			if ($zone_query->num_rows) {
+			if ($zone_info) {
 				$zone = $zone_info['name'];
 				$zone_code = $zone_info['code'];
 			} else {
@@ -78,7 +78,6 @@ class ControllerApiShipping extends Controller {
 			}
 			
 			$this->session->data['shipping_address'] = array(
-				'address_id'     => $this->request->post['address_id'],
 				'firstname'      => $this->request->post['firstname'],
 				'lastname'       => $this->request->post['lastname'],
 				'company'        => $this->request->post['company'],
@@ -94,7 +93,7 @@ class ControllerApiShipping extends Controller {
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => unserialize($this->request->post['custom_field'])
+				'custom_field'   => $this->request->post['custom_field']
 			);
 			
 			$json['success'] = $this->language->get('text_success');
@@ -154,7 +153,7 @@ class ControllerApiShipping extends Controller {
 			}			
 			
 			if (!$json) {
-				$json['shipping_method'] = array();
+				$json['shipping_methods'] = array();
 				
 				$this->load->model('setting/extension');
 				
@@ -167,7 +166,7 @@ class ControllerApiShipping extends Controller {
 						$quote = $this->{'model_shipping_' . $result['code']}->getQuote($this->session->data['shipping_address']); 
 			
 						if ($quote) {
-							$json['shipping_method'][$result['code']] = array( 
+							$json['shipping_methods'][$result['code']] = array( 
 								'title'      => $quote['title'],
 								'quote'      => $quote['quote'], 
 								'sort_order' => $quote['sort_order'],
@@ -179,14 +178,14 @@ class ControllerApiShipping extends Controller {
 		
 				$sort_order = array();
 			  
-				foreach ($json['shipping_method'] as $key => $value) {
+				foreach ($json['shipping_methods'] as $key => $value) {
 					$sort_order[$key] = $value['sort_order'];
 				}
 		
-				array_multisort($sort_order, SORT_ASC, $json['shipping_method']);
+				array_multisort($sort_order, SORT_ASC, $json['shipping_methods']);
 	
 				if ($json['shipping_method']) {
-					$this->session->data['shipping_methods'] = $json['shipping_method'];
+					$this->session->data['shipping_methods'] = $json['shipping_methods'];
 				} else {
 					$json['error']['shipping_method'] = $this->language->get('error_no_shipping');
 				}

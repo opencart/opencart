@@ -45,7 +45,7 @@ class ControllerApiCustomer extends Controller {
 		$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
 
 		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
+			if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
 				$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
 			}
 		}
@@ -59,7 +59,7 @@ class ControllerApiCustomer extends Controller {
 				'email'             => $this->request->post['email'],
 				'telephone'         => $this->request->post['lastname'],
 				'fax'               => $this->request->post['fax'],
-				'custom_field'      => unserialize($this->request->post['custom_field'])
+				'custom_field'      => $this->request->post['custom_field']
 			);
 			
 			$json['success'] = $this->language->get('text_success');			

@@ -69,7 +69,7 @@ class ControllerApiPayment extends Controller {
 
 			$zone_info = $this->model_localisation_zone->getZone($this->request->post['zone_id']);
 	
-			if ($zone_query->num_rows) {
+			if ($zone_info) {
 				$zone = $zone_info['name'];
 				$zone_code = $zone_info['code'];
 			} else {
@@ -78,7 +78,6 @@ class ControllerApiPayment extends Controller {
 			}
 			
 			$this->session->data['payment_address'] = array(
-				'address_id'     => $this->request->post['address_id'],
 				'firstname'      => $this->request->post['firstname'],
 				'lastname'       => $this->request->post['lastname'],
 				'company'        => $this->request->post['company'],
@@ -94,7 +93,7 @@ class ControllerApiPayment extends Controller {
 				'iso_code_2'     => $iso_code_2,
 				'iso_code_3'     => $iso_code_3,
 				'address_format' => $address_format,
-				'custom_field'   => unserialize($this->request->post['custom_field'])
+				'custom_field'   => $this->request->post['custom_field']
 			);
 			
 			$json['success'] = $this->language->get('text_success');
@@ -168,7 +167,7 @@ class ControllerApiPayment extends Controller {
 				}
 			}
 			
-			$json['payment_method'] = array();
+			$json['payment_methods'] = array();
 			
 			$results = $this->model_setting_extension->getExtensions('payment');
 
@@ -184,11 +183,11 @@ class ControllerApiPayment extends Controller {
 						if ($recurring > 0) {
 							if (method_exists($this->{'model_payment_' . $result['code']}, 'recurringPayments')) {
 								if ($this->{'model_payment_' . $result['code']}->recurringPayments() == true) {
-									$json['payment_method'][$result['code']] = $method;
+									$json['payment_methods'][$result['code']] = $method;
 								}
 							}
 						} else {
-							$json['payment_method'][$result['code']] = $method;
+							$json['payment_methods'][$result['code']] = $method;
 						}
 					}
 				}
@@ -196,14 +195,14 @@ class ControllerApiPayment extends Controller {
 
 			$sort_order = array(); 
 		  
-			foreach ($json['payment_method'] as $key => $value) {
+			foreach ($json['payment_methods'] as $key => $value) {
 				$sort_order[$key] = $value['sort_order'];
 			}
 	
-			array_multisort($sort_order, SORT_ASC, $json['payment_method']);			
+			array_multisort($sort_order, SORT_ASC, $json['payment_methods']);			
 			
-			if ($json['payment_method']) {
-				$this->session->data['payment_methods'] = $json['payment_method'];
+			if ($json['payment_methods']) {
+				$this->session->data['payment_methods'] = $json['payment_methods'];
 			} else {
 				$json['error']['payment_method'] = $this->language->get('error_no_payment');
 			}			

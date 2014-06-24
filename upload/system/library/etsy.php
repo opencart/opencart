@@ -82,6 +82,10 @@ final class Etsy {
 
 				$result = json_decode($result, 1);
 
+				echo '<pre>';
+				print_r($result);
+				die();
+
 				$response['header_code'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 				if(!empty($result)) {

@@ -19,13 +19,14 @@ class ModelOpenbayEtsy extends Model{
 				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
 		$this->db->query("
-					CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "etsy_listing` (
-					  `etsy_listing_id` int(11) NOT NULL AUTO_INCREMENT,
-					  `etsy_item_id` char(100) NOT NULL,
-					  `product_id` int(11) NOT NULL,
-					  `status` SMALLINT(3) NOT NULL DEFAULT '1',
-					  PRIMARY KEY (`etsy_listing_id`)
-					) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "etsy_listing` (
+				  `etsy_listing_id` int(11) NOT NULL AUTO_INCREMENT,
+				  `etsy_item_id` char(100) NOT NULL,
+				  `product_id` int(11) NOT NULL,
+				  `status` SMALLINT(3) NOT NULL DEFAULT '1',
+				  `created` DATETIME NOT NULL,
+				  PRIMARY KEY (`etsy_listing_id`)
+				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
 	}
 

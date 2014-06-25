@@ -104,6 +104,8 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function createSubmit() {
+		$this->load->model('openbay/etsy_product');
+
 		$data = $this->request->post;
 
 		// validation
@@ -155,6 +157,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 				$this->response->setOutput(json_encode($response['data']));
 			} else {
 				$this->response->setOutput(json_encode($response['data']['results'][0]));
+				$this->model_openbay_etsy_product->addLink($data['product_id'], $response['data']['results'][0]['listing_id']);
 			}
 		} else {
 			$this->response->setOutput(json_encode(array('error' => $this->error)));
@@ -207,5 +210,72 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$categories = $this->openbay->etsy->call('product/category/findAllSubCategoryChildren?sub_tag='.$data['sub_tag'], 'GET');
 
 		$this->response->setOutput(json_encode($categories));
+	}
+
+	public function itemLinks() {
+		$this->load->model('openbay/etsy_product');
+
+		$data = $this->load->language('openbay/etsy_links');
+
+		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('view/javascript/openbay/faq.js');
+
+		$data['breadcrumbs'] = array();
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('common/home', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_home'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_etsy'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_heading'),
+		);
+
+		$data['return']       = $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], 'SSL');
+		//$data['edit_url']     = $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=', 'SSL');
+		//$data['validation']   = $this->openbay->ebay->validate();
+		$data['token']        = $this->session->data['token'];
+
+		$total_linked = $this->model_openbay_etsy_product->totalLinked();
+
+		if(isset($this->request->get['page'])){
+			$page = (int)$this->request->get['page'];
+		}else{
+			$page = 1;
+		}
+
+		if(isset($this->request->get['limit'])){
+			$limit = (int)$this->request->get['limit'];
+		}else{
+			$limit = 100;
+		}
+
+		$pagination = new Pagination();
+		$pagination->total = $total_linked;
+		$pagination->page = $page;
+		$pagination->limit = 100;
+		$pagination->text = $this->language->get('text_pagination');
+		$pagination->url = $this->url->link('openbay/etsy/itemLinks', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
+
+		$data['pagination'] = $pagination->render();
+
+		$data['items'] = $this->model_openbay_etsy_product->loadLinked($limit, $page);
+
+		$data['header'] = $this->load->controller('common/header');
+		$data['menu'] = $this->load->controller('common/menu');
+		$data['footer'] = $this->load->controller('common/footer');
+
+		$this->response->setOutput($this->load->view('openbay/etsy_links.tpl', $data));
 	}
 }

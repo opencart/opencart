@@ -28,13 +28,12 @@ class ModelOpenbayEtsyProduct extends Model{
 
 		$sql = "
 		SELECT
-			`el`.`ebay_item_id`,
+			`el`.`etsy_item_id`,
 			`p`.`product_id`,
 			`p`.`sku`,
 			`p`.`model`,
 			`p`.`quantity`,
-			`pd`.`name`,
-			`esr`.`reserve`
+			`pd`.`name`
 		FROM `" . DB_PREFIX . "etsy_listing` `el`
 		LEFT JOIN `" . DB_PREFIX . "product` `p` ON (`el`.`product_id` = `p`.`product_id`)
 		LEFT JOIN `" . DB_PREFIX . "product_description` `pd` ON (`p`.`product_id` = `pd`.`product_id`)

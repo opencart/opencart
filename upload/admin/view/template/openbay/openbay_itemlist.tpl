@@ -151,9 +151,7 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="form-group text-right">
-          <a onclick="filter();" class="btn btn-primary"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
+          <a onclick="filter();" class="btn btn-primary pull-right"><i class="fa fa-filter"></i> <?php echo $button_filter; ?></a>
         </div>
       </div>
     </div>

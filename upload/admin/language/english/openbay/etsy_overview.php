@@ -6,3 +6,4 @@ $_['text_heading_settings']         = 'Settings';
 $_['text_heading_sync']             = 'Syncronise';
 $_['text_heading_register']         = 'Register here';
 $_['text_heading_shipping']         = 'Shipping profiles';
+$_['text_heading_products']        	= 'Product links';

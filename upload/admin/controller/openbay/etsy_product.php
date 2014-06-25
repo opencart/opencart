@@ -212,6 +212,14 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$this->response->setOutput(json_encode($categories));
 	}
 
+	public function addLink() {
+		$this->load->model('openbay/etsy_product');
+
+		$data = $this->request->post;
+
+		$this->model_openbay_etsy_product->addLink($data['product_id'], $data['etsy_id'], 1);
+	}
+
 	public function itemLinks() {
 		$this->load->model('openbay/etsy_product');
 
@@ -239,7 +247,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['breadcrumbs'][] = array(
 			'href' => $this->url->link('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
-			'text' => $this->language->get('text_heading'),
+			'text' => $this->language->get('heading_title'),
 		);
 
 		$data['return']       = $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], 'SSL');

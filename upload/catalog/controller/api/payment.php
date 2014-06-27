@@ -96,7 +96,7 @@ class ControllerApiPayment extends Controller {
 				'custom_field'   => $this->request->post['custom_field']
 			);
 			
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_address');
 			
 			unset($this->session->data['payment_method']);
 			unset($this->session->data['payment_methods']);
@@ -112,23 +112,25 @@ class ControllerApiPayment extends Controller {
 				
 		// Payment Address
 		if (!isset($this->session->data['payment_address'])) {
-			$json['error']['warning'] = $this->language->get('error_payment_address');
+			$json['error']['warning'] = $this->language->get('error_address');
 		}
 		
 		// Payment Method
 		if (empty($this->session->data['payment_methods'])) {
-			$json['error']['warning'] = $this->language->get('error_payment_methods');	
+			$json['error']['warning'] = $this->language->get('error_no_payment');	
 		} elseif (!isset($this->request->post['payment_method'])) {
-			$json['error']['warning'] = $this->language->get('error_payment_method');
+			$json['error']['warning'] = $this->language->get('error_method');
 		} elseif (!isset($this->session->data['payment_methods'][$this->request->post['payment_method']])) {
-			$json['error']['warning'] = $this->language->get('error_payment_method');
+			$json['error']['warning'] = $this->language->get('error_method');
 		}
 				
 		if (!$json) {
 			$this->session->data['payment_method'] = $this->session->data['payment_methods'][$this->request->post['payment_method']];
 		
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_method');
 		}
+		
+		$this->response->setOutput(json_encode($json));	
 	}		
 	
 	public function methods() {
@@ -138,7 +140,7 @@ class ControllerApiPayment extends Controller {
 		
 		// Payment Address
 		if (!isset($this->session->data['payment_address'])) {
-			$json['error']['payment_address'] = $this->language->get('error_payment_address');
+			$json['error']['payment_address'] = $this->language->get('error_address');
 		}		
 		
 		if (!$json) {

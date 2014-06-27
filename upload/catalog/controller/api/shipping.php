@@ -96,7 +96,7 @@ class ControllerApiShipping extends Controller {
 				'custom_field'   => $this->request->post['custom_field']
 			);
 			
-			$json['success'] = $this->language->get('text_success');
+			$json['success'] = $this->language->get('text_address');
 			
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
@@ -113,14 +113,14 @@ class ControllerApiShipping extends Controller {
 		if ($this->cart->hasShipping()) {
 			// Shipping Address
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error']['warning'] = $this->language->get('error_shipping_address');
+				$json['error']['warning'] = $this->language->get('error_address');
 			}
 		
 			// Shipping Method
 			if (empty($this->session->data['shipping_methods'])) {
-				$json['error']['warning'] = $this->language->get('error_shipping_methods');	
+				$json['error']['warning'] = $this->language->get('error_no_shipping');	
 			} elseif (!isset($this->request->post['shipping_method'])) {
-				$json['error']['warning'] = $this->language->get('error_shipping_method');
+				$json['error']['warning'] = $this->language->get('error_method');
 			} else {
 				$shipping = explode('.', $this->request->post['shipping_method']);
 	
@@ -128,28 +128,30 @@ class ControllerApiShipping extends Controller {
 					$json['error']['warning'] = $this->language->get('error_shipping_method');
 				}
 			}
+			
+			if (!$json) {
+				$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
+				
+				$json['success'] = $this->language->get('text_method');
+			}			
 		} else {
 			unset($this->session->data['shipping_address']);
 			unset($this->session->data['shipping_method']);
 			unset($this->session->data['shipping_methods']);
 		}
 		
-		if (!$json) {
-			$this->session->data['shipping_method'] = $this->session->data['shipping_methods'][$shipping[0]]['quote'][$shipping[1]];
-			
-			$json['success'] = $this->language->get('text_success');
-		}					
+		$this->response->setOutput(json_encode($json));	
 	}	
 	
 	public function methods() {
 		$this->load->language('api/shipping');
 		
 		$json = array();
-				
+
 		if ($this->cart->hasShipping()) {
 			// Shipping Address
 			if (!isset($this->session->data['shipping_address'])) {
-				$json['error']['shipping_address'] = $this->language->get('error_shipping_address');
+				$json['error']['shipping_address'] = $this->language->get('error_address');
 			}			
 			
 			if (!$json) {
@@ -184,7 +186,7 @@ class ControllerApiShipping extends Controller {
 		
 				array_multisort($sort_order, SORT_ASC, $json['shipping_methods']);
 	
-				if ($json['shipping_method']) {
+				if ($json['shipping_methods']) {
 					$this->session->data['shipping_methods'] = $json['shipping_methods'];
 				} else {
 					$json['error']['shipping_method'] = $this->language->get('error_no_shipping');

@@ -52,7 +52,7 @@ class ControllerUserApi extends Controller {
 		$this->load->model('user/api');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateForm()) {
-			$this->model_user_api->editApi($this->request->get['user_id'], $this->request->post);
+			$this->model_user_api->editApi($this->request->get['api_id'], $this->request->post);
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -84,8 +84,8 @@ class ControllerUserApi extends Controller {
 		$this->load->model('user/api');
 
 		if (isset($this->request->post['selected']) && $this->validateDelete()) {
-			foreach ($this->request->post['selected'] as $user_id) {
-				$this->model_user_api->deleteApi($user_id);
+			foreach ($this->request->post['selected'] as $api_id) {
+				$this->model_user_api->deleteApi($api_id);
 			}
 
 			$this->session->data['success'] = $this->language->get('text_success');
@@ -114,7 +114,7 @@ class ControllerUserApi extends Controller {
 		if (isset($this->request->get['sort'])) {
 			$sort = $this->request->get['sort'];
 		} else {
-			$sort = 'name';
+			$sort = 'username';
 		}
 
 		if (isset($this->request->get['order'])) {
@@ -177,7 +177,7 @@ class ControllerUserApi extends Controller {
 				'username'   => $result['username'],
 				'status'     => ($result['status'] ? $this->language->get('text_enabled') : $this->language->get('text_disabled')),
 				'date_added' => date($this->language->get('date_format_short'), strtotime($result['date_added'])),
-				'edit'       => $this->url->link('user/api/update', 'token=' . $this->session->data['token'] . '&user_id=' . $result['user_id'] . $url, 'SSL')
+				'edit'       => $this->url->link('user/api/update', 'token=' . $this->session->data['token'] . '&api_id=' . $result['api_id'] . $url, 'SSL')
 			);
 		}
 

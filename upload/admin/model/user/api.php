@@ -1,11 +1,11 @@
 <?php
 class ModelUserApi extends Model {
 	public function addApi($data) {
-		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['username']) . "', `key` = '" . $this->db->escape($data['key']) . "', status = '" . (int)$data['status'] . "', date_added = NOW(), date_modified = NOW()");
 	}
 
 	public function editApi($api_id, $data) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['name']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE api_id = '" . (int)$api_id . "'");
+		$this->db->query("UPDATE `" . DB_PREFIX . "api` SET username = '" . $this->db->escape($data['username']) . "', `key` = '" . $this->db->escape($data['key']) . "', status = '" . (int)$data['status'] . "', date_modified = NOW() WHERE api_id = '" . (int)$api_id . "'");
 	}
 
 	public function deleteApi($api_id) {

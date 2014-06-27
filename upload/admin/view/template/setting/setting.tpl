@@ -643,6 +643,21 @@
             </fieldset>
             <fieldset>
               <legend><?php echo $text_checkout; ?></legend>
+               <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_api; ?></label>
+                <div class="col-sm-10">
+                  <select name="config_api_id" id="input-api" class="form-control">
+                    <option value="0"><?php echo $text_none; ?></option>
+                    <?php foreach ($apis as $api) { ?>
+                    <?php if ($api['api_id'] == $config_api_id) { ?>
+                    <option value="<?php echo $api['api_id']; ?>" selected="selected"><?php echo $api['username']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $api['api_id']; ?>"><?php echo $api['username']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_api; ?></span> </div>
+              </div>             
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_cart_weight; ?></label>
                 <div class="col-sm-10">

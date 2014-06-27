@@ -29,7 +29,7 @@ $_['entry_address_2']           = 'Adresszeile 2:';
 $_['entry_postcode']            = 'Postleitzahl:';
 $_['entry_city']                = 'Stadt:';
 $_['entry_country']             = 'Land:';
-$_['entry_zone']                = 'Bundesland:';
+$_['entry_zone']                = 'Kanton:';
 $_['entry_tax']                 = 'Steuernummer:';
 $_['entry_payment']             = 'Zahlungsverfahren:';
 $_['entry_cheque']              = 'Name Scheckempfänger:';
@@ -53,7 +53,7 @@ $_['error_confirm']             = 'Passwort und Bestätigung stimmt nicht übere
 $_['error_address_1']           = 'Adresszeile 1 muss zwischen 3 und 128 Zeichen lang sein!';
 $_['error_city']                = 'Stadt muss zwischen 2 und 128 Zeichen lang sein!';
 $_['error_country']             = 'Bitte ein Land wählen!';
-$_['error_zone']                = 'Bitte ein Bundesland wählen!';
+$_['error_zone']                = 'Bitte ein Kanton wählen!';
 $_['error_postcode']            = 'Postleitzahl muss zwischen 2 und 10 Zeichen lang sein.';
 $_['error_agree']               = 'Warnung: Sie müssen den %s Bedingungen zustimmen!';
 ?>

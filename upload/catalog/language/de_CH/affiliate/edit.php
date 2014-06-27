@@ -22,7 +22,7 @@ $_['entry_address_2']   = 'Adresszeile 2:';
 $_['entry_postcode']    = 'Postleitzahl:';
 $_['entry_city']        = 'Stadt:';
 $_['entry_country']     = 'Land:';
-$_['entry_zone']        = 'Bundesland:';
+$_['entry_zone']        = 'Kanton:';
 
 // Error
 $_['error_exists']      = 'Warnung: Diese E-Mailadresse ist bereits registriert!';
@@ -33,6 +33,6 @@ $_['error_telephone']   = 'Telefon muss zwischen 3 und 32 Zeichen lang sein!';
 $_['error_address_1']   = 'Adresszeile 1 muss zwischen 3 und 128 Zeichen lang sein!';
 $_['error_city']        = 'Stadt muss zwischen 2 und 128 Zeichen lang sein!';
 $_['error_country']     = 'Bitte ein Land wählen!';
-$_['error_zone']        = 'Bitte ein Bundesland wählen!';
+$_['error_zone']        = 'Bitte ein Kanton wählen!';
 $_['error_postcode']    = 'Postleitzahl muss zwischen 2 und 10 Zeichen lang sein.';
 ?>

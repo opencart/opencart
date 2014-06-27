@@ -34,7 +34,7 @@ $_['entry_reward']          = 'Anzahl Bonuspunkte (Max. %s):';
 $_['entry_country']         = 'Land:';
 $_['entry_coupon']          = 'Bitte Code für Aktionsgutschein eingeben:';
 $_['entry_postcode']        = 'Postleitzahl:';
-$_['entry_zone']            = 'Bundesland:';
+$_['entry_zone']            = 'Kanton:';
 
 // Error
 $_['error_stock']           = 'Produkte mit *** sind nicht oder nicht in der gewünschten Menge verfügbar!';
@@ -49,6 +49,6 @@ $_['error_no_shipping']     = 'Warnung: Es sind keine Versandarten verfügbar. B
 $_['error_postcode']        = 'Postleitzahl muss zwischen 2 und 10 Zeichen lang sein.';
 $_['error_product']         = 'Warnung: Es sind keine Artikel zum Versenden vorhanden.';
 $_['error_shipping']        = 'Warnung: Die Versandart ist ein Pflichtfeld!';
-$_['error_zone']            = 'Bitte ein Bundesland wählen!';
+$_['error_zone']            = 'Bitte ein Kanton wählen!';
 $_['error_reward']          = 'Warnung: Bitte geben Sie die Anzahl Bonuspunkte an, die Sie einlösen möchten!';
 ?>

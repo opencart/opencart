@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Text
 $_['text_new_subject']          = '%s - Auftrag %s';
 $_['text_new_greeting']         = 'Vielen Dank für Ihr Interesse an Produkten aus dem Bereich %s. Wir haben Ihren Auftrag empfangen und werden ihn ausführen, sobald die Zahlung eingegangen ist.';

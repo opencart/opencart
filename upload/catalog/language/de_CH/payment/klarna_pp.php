@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 $_['text_title']       = 'Klarna Zahlungsmodul';
 $_['entry_dob']        = 'Geburtsdatum:';
 $_['entry_gender']     = 'Geschlecht:';

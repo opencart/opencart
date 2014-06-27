@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Heading
 $_['heading_title']     = 'Adressbuch';
 
@@ -21,7 +22,7 @@ $_['entry_city']        = 'Stadt:';
 $_['entry_country']     = 'Land:';
 $_['entry_zone']        = 'Kanton:';
 $_['entry_default']     = 'Standardadresse:';
-$_['entry_tax_id']      = 'UStID-Nr.:';
+$_['entry_tax_id']      = 'MwSt.:';
 $_['entry_company_id']  = 'Steuernummer:';
 
 // Error
@@ -34,5 +35,5 @@ $_['error_postcode']    = 'Postleitzahl muss zwischen 2 und 10 Zeichen lang sein
 $_['error_city']        = 'Stadt muss zwischen 2 und 128 Zeichen lang sein!';
 $_['error_country']     = 'Bitte ein Land wählen!';
 $_['error_zone']        = 'Bitte ein Kanton wählen!';
-$_['error_vat']         = 'Warnung: UStID-Nr. ist ungültig!';
+$_['error_vat']         = 'Warnung: MwSt. ist ungültig!';
 ?>

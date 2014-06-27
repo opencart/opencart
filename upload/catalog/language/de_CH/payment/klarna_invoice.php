@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 $_['entry_gender']     = 'Geschlecht:';
 $_['entry_house_ext']  = 'Zusatz Hausnummer:';
 $_['entry_house_no']   = 'Hausnummer:';

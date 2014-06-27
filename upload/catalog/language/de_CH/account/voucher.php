@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 $_['entry_amount']     = 'Betrag:<br /><span class="help">(Wert muss zwischen %s und %s liegen)</span>';
 $_['entry_from_email'] = 'Ihre E-Mail:';
 $_['entry_from_name']  = 'Ihr Name:';

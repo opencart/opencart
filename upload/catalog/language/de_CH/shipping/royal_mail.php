@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Text
 $_['text_special_delivery_1000'] = 'Special Delivery Next Day (&pound;1000)';
 $_['text_special_delivery_2500'] = 'Special Delivery Next Day (&pound;2500)';

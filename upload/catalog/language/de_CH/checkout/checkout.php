@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Heading 
 $_['heading_title']                  = 'Kasse';
 
@@ -57,7 +58,7 @@ $_['entry_newsletter']               = 'Ich möchte mich für den %s Newsletter 
 $_['entry_shipping']                 = 'Meine Liefer- und Rechnungsadresse stimmen überein.';
 $_['entry_company_id']               = 'Steuernummer:';
 $_['entry_customer_group']           = 'Kundengruppe:';
-$_['entry_tax_id']                   = 'UStID-Nr.:';
+$_['entry_tax_id']                   = 'MwSt.:';
 
 // Error
 $_['error_warning']                  = 'Es ist ein Problem bei der Verarbeitung Ihres Auftrags aufgetreten! Wenn das Problem weiter besteht wählen Sie bitte ein anderes Zahlungsverfahren aus oder kontaktieren Sie den Shopinhaber <a href="%s">hier</a>.';
@@ -80,8 +81,8 @@ $_['error_shipping']                 = 'Warnung: Die Versandart ist ein Pflichtf
 $_['error_no_shipping']              = 'Warnung: Es sind keine Versandarten verfügbar. Bitte <a href="%s">kontaktieren</a> Sie uns für Hilfe!';
 $_['error_payment']                  = 'Warnung: Das Zahlungsverfahren ist ein Pflichtfeld!';
 $_['error_no_payment']               = 'Warnung: Es sind keine Zahlungsverfahren verfügbar. Bitte <a href="%s">kontaktieren</a> Sie uns für Hilfe!';
-$_['error_tax_id']                   = 'Warnung: UStID-Nr. erforderlich!';
+$_['error_tax_id']                   = 'Warnung: MwSt. erforderlich!';
 $_['error_approved']                 = 'Warnung: Ihr Konto muss noch freigeschaltet werden bevor Sie sich anmelden können.';
 $_['error_company_id']               = 'Warnung: Steuernummer erforderlich!';
-$_['error_vat']                      = 'Warnung: UStID-Nr. ist ungültig!';
+$_['error_vat']                      = 'Warnung: MwSt. ist ungültig!';
 ?>

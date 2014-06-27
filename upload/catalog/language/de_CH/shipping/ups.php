@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Text
 $_['text_title']           = 'United Parcel Service (UPS)';
 $_['text_weight']          = 'Gewicht:';

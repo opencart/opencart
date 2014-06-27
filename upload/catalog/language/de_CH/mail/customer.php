@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Text
 $_['text_subject']  = '%s - Danke für Ihre Registrierung';
 $_['text_welcome']  = 'Herzlich Willkommen und danke für die Registrierung bei %s!';

@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Entry
 $_['entry_cc_cvv2']        = 'Prüfziffer (CVV2):';
 $_['entry_cc_expire_date'] = 'Karte gültig bis:';

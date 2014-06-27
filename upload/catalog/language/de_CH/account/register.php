@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Heading 
 $_['heading_title']        = 'Neues Konto anlegen';
 
@@ -30,7 +31,7 @@ $_['entry_password']       = 'Passwort:';
 $_['entry_confirm']        = 'Passwort bestätigen:';
 $_['entry_company_id']     = 'Steuernummer:';
 $_['entry_customer_group'] = 'Kundengruppe:';
-$_['entry_tax_id']         = 'UStID-Nr.:';
+$_['entry_tax_id']         = 'MwSt.:';
 
 // Error
 $_['error_exists']         = 'Warnung: Diese E-Mailadresse ist bereits registriert!';
@@ -46,7 +47,7 @@ $_['error_postcode']       = 'Postleitzahl muss zwischen 2 und 10 Zeichen lang s
 $_['error_country']        = 'Bitte ein Land wählen!';
 $_['error_zone']           = 'Bitte ein Kanton wählen!';
 $_['error_agree']          = 'Warnung: Sie müssen den %s Bedingungen zustimmen!';
-$_['error_tax_id']         = 'Warnung: UStID-Nr. erforderlich!';
+$_['error_tax_id']         = 'Warnung: MwSt. erforderlich!';
 $_['error_company_id']     = 'Warnung: Steuernummer erforderlich!';
-$_['error_vat']            = 'Warnung: UStID-Nr. ist ungültig!';
+$_['error_vat']            = 'Warnung: MwSt. ist ungültig!';
 ?>

@@ -1,4 +1,5 @@
 <?php
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Text
 $_['text_subject']  = 'Sie haben einen Geschenkgutschein von %s erhalten.';
 $_['text_greeting'] = 'Herzlichen Glückwunsch, Ihnen wurde ein Geschenkgutschein in Höhe von %s überreicht!';

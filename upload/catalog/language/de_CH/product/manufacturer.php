@@ -1,7 +1,7 @@
 <?php
 /** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 // Heading
-$_['heading_title']     = 'Finde Deine Lieblingsmarke';
+$_['heading_title']     = 'Finden Sie Ihre Lieblingsmarke';
 
 // Text
 $_['text_brand']        = 'Marke';

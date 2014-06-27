@@ -3,13 +3,13 @@
 
 $_['text_colorbox_image']	= 'Bild {current} von {total}';
 
-// globals vars
+// Globals vars
 $_['date_format_short_date_time']	= 'Y.m.d H:i:s';
 $_['text_list_price']				= 'UVP';
 $_['text_packaging_unit']			= 'VE';
 $_['column_list_price']				= 'UVP';
 $_['column_packaging_unit']			= 'VE';
-// end custom
+// End custom
 
 // Locale
 $_['code']                  = 'de';

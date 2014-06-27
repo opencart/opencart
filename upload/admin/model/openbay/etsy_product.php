@@ -29,6 +29,7 @@ class ModelOpenbayEtsyProduct extends Model{
 		$sql = "
 		SELECT
 			`el`.`etsy_item_id`,
+			`el`.`status`,
 			`p`.`product_id`,
 			`p`.`sku`,
 			`p`.`model`,
@@ -47,14 +48,16 @@ class ModelOpenbayEtsyProduct extends Model{
 		$data = array();
 		if($qry->num_rows){
 			foreach($qry->rows as $row){
-				$data[$row['ebay_item_id']] = array(
+				$data[] = array(
 					'product_id'    => $row['product_id'],
 					'sku'           => $row['sku'],
 					'model'         => $row['model'],
-					'qty'           => $row['quantity'],
+					'quantity'      => $row['quantity'],
 					'name'          => $row['name'],
+					'status'        => $row['status'],
+					'etsy_item_id'  => $row['etsy_item_id'],
 					'link_edit'     => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], 'SSL'),
-					'link_etsy'     => $this->config->get('ebay_itm_link').$row['ebay_item_id'],
+					'link_etsy'     => 'http://www.etsy.com/listing/'.$row['etsy_item_id'],
 				);
 			}
 		}

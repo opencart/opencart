@@ -213,11 +213,24 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function addLink() {
+		$this->load->language('openbay/etsy_links');
 		$this->load->model('openbay/etsy_product');
 
 		$data = $this->request->post;
 
+		if (!isset($data['product_id'])) {
+			echo json_encode(array('error' => $this->language->get('error_product_id')));
+			die();
+		}
+
+		if (!isset($data['etsy_id'])) {
+			echo json_encode(array('error' => $this->language->get('error_etsy_id')));
+			die();
+		}
+
 		$this->model_openbay_etsy_product->addLink($data['product_id'], $data['etsy_id'], 1);
+
+		$this->response->setOutput(json_encode(array('error' => false)));
 	}
 
 	public function itemLinks() {

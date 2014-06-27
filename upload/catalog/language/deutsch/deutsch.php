@@ -1,9 +1,9 @@
 <?php
-/** German translation by _fD_ http://www.frefeldigital.com   */
+/** Swiss German translation by _fD_ http://www.frefeldigital.com   */
 
 $_['text_colorbox_image']	= 'Bild {current} von {total}';
 
-    // globals vars
+// globals vars
 $_['date_format_short_date_time']	= 'Y.m.d H:i:s';
 $_['text_list_price']				= 'UVP';
 $_['text_packaging_unit']			= 'VE';
@@ -61,14 +61,14 @@ $_['button_view']           = 'Ansicht';
 $_['button_voucher']        = 'Geschenkgutschein einlösen';
 $_['button_upload']         = 'Datei hochladen';
 $_['button_reward']         = 'Punkte anwenden';
-$_['button_quote']          = 'Fracht berechnen';
+$_['button_quote']          = 'Versand berechnen';
 
 // Error
-$_['error_upload_1']        = '(1) Datei überschreitet die zulässige Dateigröße!';
-$_['error_upload_2']        = '(2) Datei überschreitet die zulässige Dateigröße!';
+$_['error_upload_1']        = '(1) Datei überschreitet die zulässige Dateigrösse!';
+$_['error_upload_2']        = '(2) Datei überschreitet die zulässige Dateigrösse!';
 $_['error_upload_3']        = 'Die Datei wurde nur teilweise hochgeladen!';
 $_['error_upload_4']        = 'Es wurde keine Datei hochgeladen!';
-$_['error_upload_6']        = 'Fehler mit temporärem Verzeichnis!';
+$_['error_upload_6']        = 'Fehler mit dem temporären Verzeichnis!';
 $_['error_upload_7']        = 'Fehler beim Schreiben der Datei!';
 $_['error_upload_8']        = 'Der Ladevorgang wurde wegen Zeitüberschreitung gestoppt!';
 $_['error_upload_999']      = 'Unbekannter Fehler!';

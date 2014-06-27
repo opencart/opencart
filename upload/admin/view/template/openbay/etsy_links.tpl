@@ -12,6 +12,7 @@
     </div>
     <div class="panel-body">
       <h4><?php echo $text_new_link; ?></h4>
+      <div class="alert alert-success" id="category-selected" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_category_selected; ?></div>
       <div class="well">
         <div class="row">
           <div class="col-sm-6">
@@ -26,7 +27,7 @@
               <label class="control-label" for="input-etsy-id"><?php echo $entry_etsy_id; ?></label>
               <input type="text" name="add_link_etsy_id" value="" placeholder="<?php echo $entry_etsy_id; ?>" id="input-etsy-id" class="form-control" />
             </div>
-            <a onclick="addLink();" class="btn btn-primary pull-right"><i class="fa fa-check"></i> <?php echo $button_save; ?></a>
+            <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a>
           </div>
         </div>
       </div>
@@ -64,7 +65,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-function addLink() {
+  function addLink() {
   var product_id = $('#input-product-id').val();
   var etsy_id = $('#input-etsy-id').val();
 
@@ -83,13 +84,19 @@ function addLink() {
     dataType: 'json',
     data: {'product_id':product_id, 'etsy_id':etsy_id},
     beforeSend: function() {
+      $('#button-submit-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
     },
     success: function(json) {
       $('#input-product-id').empty();
       $('#input-etsy-id').empty();
+      $('#button-submit').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+    },
+    failure: function() {
+      $('#button-submit').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
     }
   });
 }
+
   $('input[name=\'add_link_product\']').autocomplete({
   'source': function(request, response) {
     $.ajax({

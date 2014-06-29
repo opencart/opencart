@@ -40,5 +40,9 @@ class Language {
 		//	exit();
 		}
 	}
+
+    public function all() {
+        return $this->data;
+    }
 }
 ?>

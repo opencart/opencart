@@ -31,17 +31,6 @@
         </div>
         <div class="col-md-3 text-center">
           <div class="well">
-            <a href="<?php echo $links_shipping; ?>">
-                <span class="fa-stack fa-3x">
-                  <i class="fa fa-square-o fa-stack-2x"></i>
-                  <i class="fa fa-truck fa-stack-1x"></i>
-                </span>
-              <h4><?php echo $text_heading_shipping; ?></h4>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-3 text-center">
-          <div class="well">
             <a href="<?php echo $links_products; ?>">
                 <span class="fa-stack fa-3x">
                   <i class="fa fa-square-o fa-stack-2x"></i>

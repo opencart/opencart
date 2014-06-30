@@ -32,6 +32,7 @@
           </div>
         </div>
       </div>
+      <h4><?php echo $text_current_links; ?></h4>
       <table class="table">
         <thead>
           <tr>
@@ -44,14 +45,16 @@
         </thead>
         <tbody id="show-linked-items">
           <?php foreach ($items as $id => $item) { ?>
-            <tr id="row-<?php echo $id; ?>">
+            <tr id="row-<?php echo $item['etsy_listing_id']; ?>">
               <td class="text-left"><a href="<?php echo $item['link_edit']; ?>" target="_BLANK"><?php echo $item['name']; ?></a></td>
               <td class="text-center"><a href="<?php echo $item['link_etsy']; ?>" target="_BLANK"><?php echo $item['etsy_item_id']; ?></a></td>
               <td class="text-center"><?php echo $item['quantity']; ?></td>
               <td class="text-center">
                 <?php if ($item['status'] == 1) { ?><i class="fa fa-check" style="color: green;"></i><?php } else { ?><i class="fa fa-times" style="color: red;"></i><?php } ?>
               </td>
-              <td class="text-center"></td>
+              <td class="text-center">
+                <button class="btn btn-danger" id="row-delete-btn-<?php echo $item['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $item['etsy_listing_id']; ?>')"><i class="fa fa-times"></i></button>
+              </td>
             </tr>
           <?php } ?>
         </tbody>
@@ -98,6 +101,29 @@
       },
       failure: function() {
         $('#button-submit').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+      }
+    });
+  }
+
+  function deleteLink(etsy_link_id) {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy_product/deleteLink&token=<?php echo $token; ?>',
+      dataType: 'json',
+      method: 'POST',
+      data: { 'etsy_link_id' : etsy_link_id },
+      beforeSend: function() {
+        $('#row-delete-btn-'+etsy_link_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
+      success: function(json) {
+        if (json.error == false) {
+          $('#row-'+etsy_link_id).remove();
+        } else {
+          $('#row-delete-btn-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
+          $('#alert-link-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+        }
+      },
+      failure: function() {
+        $('#row-delete-btn-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
       }
     });
   }

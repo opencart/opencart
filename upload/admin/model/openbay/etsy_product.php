@@ -21,6 +21,10 @@ class ModelOpenbayEtsyProduct extends Model{
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_listing` SET `product_id` = '" . (int)$product_id . "', `etsy_item_id` = '".$this->db->escape($etsy_item_id)."', `status` = '" . (int)$status_id . "', `created`  = now()");
 	}
 
+	public function deleteLink($link_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_listing_id` = '" . (int)$link_id . "'");
+	}
+
 	public function loadLinked($limit = 100, $page = 1){
 		$this->load->model('tool/image');
 
@@ -28,6 +32,7 @@ class ModelOpenbayEtsyProduct extends Model{
 
 		$sql = "
 		SELECT
+			`el`.`etsy_listing_id`,
 			`el`.`etsy_item_id`,
 			`el`.`status`,
 			`p`.`product_id`,
@@ -49,15 +54,16 @@ class ModelOpenbayEtsyProduct extends Model{
 		if($qry->num_rows){
 			foreach($qry->rows as $row){
 				$data[] = array(
-					'product_id'    => $row['product_id'],
-					'sku'           => $row['sku'],
-					'model'         => $row['model'],
-					'quantity'      => $row['quantity'],
-					'name'          => $row['name'],
-					'status'        => $row['status'],
-					'etsy_item_id'  => $row['etsy_item_id'],
-					'link_edit'     => $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], 'SSL'),
-					'link_etsy'     => 'http://www.etsy.com/listing/'.$row['etsy_item_id'],
+					'etsy_listing_id'	=> $row['etsy_listing_id'],
+					'product_id'    	=> $row['product_id'],
+					'sku'           	=> $row['sku'],
+					'model'         	=> $row['model'],
+					'quantity'      	=> $row['quantity'],
+					'name'          	=> $row['name'],
+					'status'        	=> $row['status'],
+					'etsy_item_id'  	=> $row['etsy_item_id'],
+					'link_edit'     	=> $this->url->link('catalog/product/update', 'token=' . $this->session->data['token'] . '&product_id=' . $row['product_id'], 'SSL'),
+					'link_etsy'     	=> 'http://www.etsy.com/listing/'.$row['etsy_item_id'],
 				);
 			}
 		}

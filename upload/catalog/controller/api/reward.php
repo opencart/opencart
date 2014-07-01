@@ -57,4 +57,8 @@ class ControllerApiReward extends Controller {
 
 		$this->response->setOutput(json_encode($json));				
 	}
+	
+	public function remove() {
+		
+	}
 }

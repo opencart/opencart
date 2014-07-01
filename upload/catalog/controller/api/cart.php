@@ -95,7 +95,7 @@ class ControllerApiCart extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 		
-	public function product() {
+	public function products() {
 		$this->load->language('api/cart');
 		
 		$json = array();
@@ -178,7 +178,7 @@ class ControllerApiCart extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 	
-	function total() {
+	function totals() {
 		$json = array();		
 		
 		// Totals
@@ -214,10 +214,10 @@ class ControllerApiCart extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $total_data);
 
-		$data['totals'] = array();
+		$json['totals'] = array();
 
 		foreach ($total_data as $total) {
-			$data['totals'][] = array(
+			$json['totals'][] = array(
 				'title' => $total['title'],
 				'text'  => $this->currency->format($total['value'])
 			);

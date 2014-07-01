@@ -5,11 +5,19 @@ class ControllerApiLogin extends Controller {
 		
 		$json = array();
 		
-		if (!$json) {
-		//	$json['success'] = $this->language->get('text_success');			
-		}
+		$this->model->load('api');
 		
-		$json['cookie'] = session_id();
+		$user_info = $this->model_user_api->login($this->request->post['username'], $this->request->post['password']);
+		
+		if ($user_info) {
+			$this->session->data['api_id'] = $api_info['api_id'];
+			
+			$json['cookie'] = session_id();
+			
+			$json['success'] = $this->language->get('text_success');			
+		} else {
+			$json['error'] = $this->language->get('error_login');
+		}
 		
 		$this->response->setOutput(json_encode($json));					
 	}

@@ -361,22 +361,28 @@ class ControllerApiOrder extends Controller {
 			$json['error']['warning'] = $this->language->get('error_stock');
 		}
 
+		// Validate minimum quantity requirements.
+		$products = $this->cart->getProducts();
 
+		foreach ($products as $product) {
+			$product_total = 0;
 
-		// Remove coupon, vouchers reward points history
-		if (isset($this->request->get['order_id'])) {
-			$this->load->model('account/order');
-
-			$order_totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
-
-			foreach ($order_totals as $order_total) {
-				$this->load->model('total/' . $order_total['code']);
-
-				if (method_exists($this->{'model_total_' . $order_total['code']}, 'clear')) {
-					$this->{'model_total_' . $order_total['code']}->clear($this->request->get['order_id']);
+			foreach ($products as $product_2) {
+				if ($product_2['product_id'] == $product['product_id']) {
+					$product_total += $product_2['quantity'];
 				}
-			}			
-		}
+			}
+
+			if ($product['minimum'] > $product_total) {
+				$json['error']['warning'] = sprintf($this->language->get('error_minimum'), $product['name'], $product['minimum']);
+
+				break;
+			}
+		}	
+
+
+
+
 			
 			
 			
@@ -432,11 +438,34 @@ class ControllerApiOrder extends Controller {
 		
 		$json = array();		
 		
+		
+		
+		
 		$this->response->setOutput(json_encode($json));	
 	}
 	
 	public function getOrder() {
 		
+	}
+	
+	public function reset() {
+		// Remove coupon, vouchers reward points history
+		if (isset($this->request->get['order_id'])) {
+			$this->load->model('account/order');
+
+			$order_totals = $this->model_account_order->getOrderTotals($this->request->get['order_id']);
+
+			foreach ($order_totals as $order_total) {
+				$this->load->model('total/' . $order_total['code']);
+
+				if (method_exists($this->{'model_total_' . $order_total['code']}, 'clear')) {
+					$this->{'model_total_' . $order_total['code']}->clear($this->request->get['order_id']);
+				}
+			}			
+		}
+		
+		
+			
 	}
 	
 	public function confirm() {

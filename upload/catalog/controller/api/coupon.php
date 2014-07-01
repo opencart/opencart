@@ -13,7 +13,7 @@ class ControllerApiCoupon extends Controller {
 			$coupon = '';
 		}
 				
-		$coupon_info = $this->model_checkout_voucher->getVoucher($coupon);			
+		$coupon_info = $this->model_checkout_coupon->getCoupon($coupon);			
 		
 		if ($coupon_info) {	
 			$this->session->data['coupon'] = $this->request->post['coupon'];

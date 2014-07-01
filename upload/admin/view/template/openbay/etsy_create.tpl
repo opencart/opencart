@@ -312,6 +312,7 @@
               alert(v);
             });
           }
+          $('#button-submit').empty().html('<span><?php echo $btn_submit; ?></span>').removeAttr('disabled');
         } else {
           if (json.listing_id) {
             // upload the primary image

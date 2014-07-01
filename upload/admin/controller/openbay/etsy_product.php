@@ -157,7 +157,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 				$this->response->setOutput(json_encode($response['data']));
 			} else {
 				$this->response->setOutput(json_encode($response['data']['results'][0]));
-				$this->model_openbay_etsy_product->addLink($data['product_id'], $response['data']['results'][0]['listing_id']);
+				$this->model_openbay_etsy_product->addLink($data['product_id'], $response['data']['results'][0]['listing_id'], 1);
 			}
 		} else {
 			$this->response->setOutput(json_encode(array('error' => $this->error)));
@@ -215,6 +215,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	public function addLink() {
 		$this->load->language('openbay/etsy_links');
 		$this->load->model('openbay/etsy_product');
+		$this->load->model('catalog/product');
 
 		$data = $this->request->post;
 
@@ -226,6 +227,41 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		if (!isset($data['etsy_id'])) {
 			echo json_encode(array('error' => $this->language->get('error_etsy_id')));
 			die();
+		}
+
+		$links = $this->openbay->etsy->getLinks($data['product_id'], 1);
+
+		if ($links != false) {
+			echo json_encode(array('error' => $this->language->get('error_link_exists')));
+			die();
+		}
+
+		$product = $this->model_catalog_product->getProduct($data['product_id']);
+
+		if (!$product) {
+			echo json_encode(array('error' => $this->language->get('error_product')));
+			die();
+		}
+
+		if ($product['quantity'] <= 0) {
+			echo json_encode(array('error' => $this->language->get('error_stock')));
+			die();
+		}
+
+		// check the etsy item exists
+		$response = $this->model_openbay_etsy_product->getEtsyItem($data['etsy_id']);
+		if (isset($response['data']['error'])) {
+			echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
+			die();
+		} else {
+			if ($response['quantity'] != $product['quantity']) {
+				// if the stock is different than the item being linked update the etsy stock level
+				$response = $this->openbay->etsy->updateListingStock($data['etsy_id'], $product['quantity']);
+				if (isset($response['data']['error'])) {
+					echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
+					die();
+				}
+			}
 		}
 
 		$this->model_openbay_etsy_product->addLink($data['product_id'], $data['etsy_id'], 1);

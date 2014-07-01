@@ -82,10 +82,6 @@ final class Etsy {
 
 				$result = json_decode($result, 1);
 
-				echo '<pre>';
-				print_r($result);
-				die();
-
 				$response['header_code'] = curl_getinfo($ch, CURLINFO_HTTP_CODE);
 
 				if(!empty($result)) {
@@ -128,6 +124,51 @@ final class Etsy {
 			return unserialize($qry->row['data']);
 		}else{
 			return false;
+		}
+	}
+
+	public function getLinks($product_id, $status = 0) {
+		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = '".(int)$status."'");
+
+		if($qry->num_rows) {
+			$links = array();
+			foreach ($qry->rows as $row) {
+				$links[] = $row;
+			}
+
+			return $links;
+		}else{
+			return false;
+		}
+	}
+
+	public function updateAllStock($product_id, $new_stock) {
+		/**
+		 * This will update all linked listings with the set stock amount
+		 */
+
+		/** @var loop over linked items $response
+		$response = $this->openbay->etsy->call('product/listing/'.(int)$data['listing_id'].'/image', 'POST', $data);
+
+		if (isset($response['data']['error'])) {
+			$this->response->setOutput(json_encode($response['data']));
+		} else {
+			$this->response->setOutput(json_encode($response['data']['results'][0]));
+		}
+		 * */
+	}
+
+	public function updateListingStock($listing_id, $new_stock) {
+		/**
+		 * This will update a single listing stock level
+		 */
+
+		$response = $this->openbay->etsy->call('product/listing/'.(int)$listing_id.'/updateStock', 'POST', array('quantity' => $new_stock));
+
+		if (isset($response['data']['error'])) {
+			$this->response->setOutput(json_encode($response['data']));
+		} else {
+			return true;
 		}
 	}
 }

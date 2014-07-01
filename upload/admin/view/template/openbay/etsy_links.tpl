@@ -13,7 +13,7 @@
     <div class="panel-body">
       <h4><?php echo $text_new_link; ?></h4>
       <div class="alert alert-success" id="alert-link-save" style="display:none;"><i class="fa fa-check fa-lg" style="color:green"></i> <?php echo $text_link_saved; ?></div>
-      <div class="alert alert-error" id="alert-link-error" style="display:none;"></div>
+      <div class="alert alert-danger" id="alert-link-error" style="display:none;"></div>
       <div class="well">
         <div class="row">
           <div class="col-sm-6">
@@ -90,8 +90,9 @@
       },
       success: function(json) {
         if (json.error == false) {
-          $('#input-product-id').empty();
-          $('#input-etsy-id').empty();
+          $('#input-product-id').val('');
+          $('#input-name').val('');
+          $('#input-etsy-id').val('');
           $('#alert-link-save').show();
         } else {
           $('#alert-link-error').html('<i class="fa fa-times fa-lg" style="color:red;"></i> '+json.error).show();

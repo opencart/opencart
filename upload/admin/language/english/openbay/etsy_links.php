@@ -17,6 +17,10 @@ $_['column_action']				= 'Action';
 $_['entry_name']				= 'Product name';
 $_['entry_etsy_id']				= 'Etsy item ID';
 
+$_['error_product']				= 'Product does not exist in your store';
+$_['error_stock']				= 'You cannot link an item that has no stock';
 $_['error_product_id']			= 'Product ID required';
 $_['error_etsy_id']				= 'Etsy item ID required';
 $_['error_link_id']				= 'Link ID required';
+$_['error_link_exists']			= 'An active link already exists for this item';
+$_['error_etsy']				= 'Unable to link item, Etsy API response: ';

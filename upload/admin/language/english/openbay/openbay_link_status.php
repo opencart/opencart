@@ -10,3 +10,4 @@ $_['text_openbay_status_linked'] = 'Linked';
 $_['text_ebay'] = 'eBay';
 $_['text_amazoneu'] = 'Amazon EU';
 $_['text_amazonus'] = 'Amazon US';
+$_['text_etsy'] = 'Etsy';

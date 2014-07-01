@@ -1031,6 +1031,30 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 		}
 
+		if ($this->config->get('etsy_status') == '1') {
+			$this->load->model('openbay/etsy');
+
+			if($this->openbay->etsy->getLinks($product_id, 1) == false) {
+				$markets[] = array(
+					'name'  => $this->language->get('text_etsy'),
+					'status' => 0,
+					'status_text' => $this->language->get('text_openbay_status_new'),
+					'button_text' => $this->language->get('text_openbay_button_new'),
+					'button_link' => $this->url->link('openbay/etsy_product/create', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
+				);
+			} else {
+				/*
+				$markets[] = array(
+					'name'      => $this->language->get('text_etsy'),
+					'status'    => 1,
+					'status_text' => $this->language->get('text_openbay_status_linked'),
+					'button_text' => $this->language->get('text_openbay_button_edit'),
+					'button_link'      => $this->url->link('openbay/ebay/edit', 'token=' . $this->session->data['token'] . '&product_id=' . $product_id, 'SSL'),
+				);
+				*/
+			}
+		}
+
 		if ($this->config->get('amazon_status') == '1') {
 			$this->load->model('openbay/amazon');
 			$amazon_status = $this->model_openbay_amazon->getProductStatus($product_id);

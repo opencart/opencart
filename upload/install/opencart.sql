@@ -3273,7 +3273,9 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (131, 0, 'config', 'config_product_description_length', '100', 0),
 (132, 0, 'config', 'config_image_file_size', '300000', 0),
 (133, 0, 'config', 'config_review_mail', '0', 0),
-(134, 0, 'config', 'config_review_guest', '1', 0);
+(134, 0, 'config', 'config_review_guest', '1', 0)
+(135, 0, 'config', 'config_image_location_width', '268' 0),
+(136, 0, 'config', 'config_image_location_height', '50', 0);
 
 -- --------------------------------------------------------
 

@@ -610,6 +610,8 @@ class ControllerOpenbayEbay extends Controller {
 				  $this->db->query("TRUNCATE `" . DB_PREFIX . "customer_transaction`");
 				  $this->db->query("TRUNCATE `" . DB_PREFIX . "address`");
 				  $this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_transaction`");
+				  $this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order`");
+				  $this->db->query("TRUNCATE `" . DB_PREFIX . "ebay_order_lock`");
 				 */
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer`");
 				$this->db->query("TRUNCATE `" . DB_PREFIX . "manufacturer_to_store`");

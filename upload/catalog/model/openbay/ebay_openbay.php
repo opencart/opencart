@@ -292,8 +292,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$priceNet = $price;
 				$this->openbay->ebay->log('create() - Net price: '.$priceNet);
 
-				$totalNet = $price * $qty;
-				$this->openbay->ebay->log('create() - Total net price: '.$totalNet);
+				$total_net = $price * $qty;
+				$this->openbay->ebay->log('create() - Total net price: '.$total_net);
 
 				$tax = number_format((double)$txn->item->tax->item, 4,'.','');
 				$this->openbay->ebay->log('create() - Tax: '.$tax);
@@ -304,8 +304,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 				$priceNet = $price / $this->tax;
 				$this->openbay->ebay->log('create() - Net price: '.$priceNet);
 
-				$totalNet = $priceNet * $qty;
-				$this->openbay->ebay->log('create() - Total net price: '.$totalNet);
+				$total_net = $priceNet * $qty;
+				$this->openbay->ebay->log('create() - Total net price: '.$total_net);
 
 				$tax = number_format(($price - $priceNet), 4,'.','');
 				$this->openbay->ebay->log('create() - Tax: '.$tax);
@@ -323,7 +323,7 @@ class ModelOpenbayEbayOpenbay extends Model{
 					`model`               = '" . $this->db->escape($model_number) . "',
 					`quantity`            = '" . (int)$qty . "',
 					`price`               = '" . (double)$priceNet . "',
-					`total`               = '" . (double)$totalNet . "',
+					`total`               = '" . (double)$total_net . "',
 					`tax`                 = '" . (double)$tax . "'
 				");
 
@@ -455,8 +455,8 @@ class ModelOpenbayEbayOpenbay extends Model{
 		   WHERE `order_id` = '" . $order_id . "'
 		   ");
 
-		$totalTax = 0;
-		$totalNet = 0;
+		$total_tax = 0;
+		$total_net = 0;
 
 		/* force array type */
 		if(!is_array($order->txn)) {
@@ -471,63 +471,65 @@ class ModelOpenbayEbayOpenbay extends Model{
 				//calculate taxes that come in from eBay
 				$this->openbay->ebay->log('updateOrderWithConfirmedData() - Using tax rates from eBay');
 
-				$totalTax   += (double)$txn->item->tax->total;
-				$totalNet   += $price * $qty;
+				$total_tax   += (double)$txn->item->tax->total;
+				$total_net   += $price * $qty;
 			}else{
 				//use the store pre-set tax-rate for everything
 				$this->openbay->ebay->log('updateOrderWithConfirmedData() - Using tax rates from store');
 
-				$itemNet     = $price / $this->tax;
-				$itemTax     = $price - $itemNet;
-				$lineNet     = $itemNet * $qty;
-				$lineTax     = $itemTax * $qty;
+				$item_net     = $price / $this->tax;
+				$item_tax     = $price - $item_net;
+				$line_net     = $item_net * $qty;
+				$line_tax     = $item_tax * $qty;
 
-				$totalTax   += number_format($lineTax, 4,'.','');
-				$totalNet   += $lineNet;
+				$total_tax   += number_format($line_tax, 4,'.','');
+				$total_net   += $line_net;
 			}
 		}
 
 		if($this->tax_type == 1){
-			$discountNet    = (double)$order->order->discount;
-			$shippingNet    = (double)$order->shipping->cost;
+			$discount_net    = (double)$order->order->discount;
+			$shipping_net    = (double)$order->shipping->cost;
 
-			$tax = number_format($totalTax, 4,'.','');
+			$tax = number_format($total_tax, 4,'.','');
 		}else{
-			$discountNet    = (double)$order->order->discount / $this->tax;
-			$discountTax    = (double)$order->order->discount - $discountNet;
-			$shippingNet    = (double)$order->shipping->cost / $this->tax;
-			$shippingTax    = (double)$order->shipping->cost - $shippingNet;
+			$discount_net    = (double)$order->order->discount / $this->tax;
+			$discount_tax    = (double)$order->order->discount - $discount_net;
+			$shipping_net    = (double)$order->shipping->cost / $this->tax;
+			$shipping_tax    = (double)$order->shipping->cost - $shipping_net;
 
-			$tax = number_format($shippingTax + $totalTax + $discountTax, 4,'.','');
+			$tax = number_format($shipping_tax + $total_tax + $discount_tax, 4,'.','');
 		}
 
-		$totals = number_format((double)$totalNet + (double)$shippingNet + (double)$tax + (double)$discountNet, 4,'.','');
+		$totals = number_format((double)$total_net + (double)$shipping_net + (double)$tax + (double)$discount_net, 4,'.','');
 
 		$data = array();
 
 		$data['totals'][0] = array(
 			'code'          => 'sub_total',
 			'title'         => $totals_language['lang_subtotal'],
-			'text'          => $this->db->escape($currency['symbol_left']).number_format($totalNet, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
-			'value'         => number_format((double)$totalNet, 4,'.',''),
+			'text'          => $this->db->escape($currency['symbol_left']).number_format($total_net, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
+			'value'         => number_format((double)$total_net, 4,'.',''),
 			'sort_order'    => '1'
 		);
 
 		$data['totals'][1] = array(
 			'code'          => 'shipping',
 			'title'         => $totals_language['lang_shipping'],
-			'text'          => $this->db->escape($currency['symbol_left']).number_format($shippingNet, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
-			'value'         => number_format((double)$shippingNet, 4,'.',''),
+			'text'          => $this->db->escape($currency['symbol_left']).number_format($shipping_net, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
+			'value'         => number_format((double)$shipping_net, 4,'.',''),
 			'sort_order'    => '3'
 		);
 
-		$data['totals'][2] = array(
-			'code'          => 'credit',
-			'title'         => $totals_language['lang_discount'],
-			'text'          => $this->db->escape($currency['symbol_left']).number_format($discountNet, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
-			'value'         => number_format((double)$discountNet, 4,'.',''),
-			'sort_order'    => '4'
-		);
+		if ($discount_net != 0.00) {
+			$data['totals'][2] = array(
+				'code'          => 'coupon',
+				'title'         => $totals_language['lang_discount'],
+				'text'          => $this->db->escape($currency['symbol_left']).number_format($discount_net, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
+				'value'         => number_format((double)$discount_net, 4,'.',''),
+				'sort_order'    => '4'
+			);
+		}
 
 		$data['totals'][3] = array(
 			'code'          => 'tax',

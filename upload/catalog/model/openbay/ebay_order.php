@@ -3,9 +3,9 @@ class ModelOpenbayEbayOrder extends Model{
 	public function addOrderLine($data, $order_id, $created) {
 		$orderLine      = $this->getOrderLine($data['txn_id'], $data['item_id']);
 
-		$createdHours   = (int)$this->config->get('openbaypro_created_hours');
-		if($createdHours == 0 || $createdHours == '') { $createdHours = 24; } //This is a fallback value.
-		$from           = date("Y-m-d H:i:00", mktime(date("H")-$createdHours, date("i"), date("s"), date("m"), date("d"), date("y")));
+		$created_hours   = (int)$this->config->get('openbaypro_created_hours');
+		if($created_hours == 0 || $created_hours == '') { $created_hours = 24; } //This is a fallback value.
+		$from           = date("Y-m-d H:i:00", mktime(date("H")-$created_hours, date("i"), date("s"), date("m"), date("d"), date("y")));
 
 		if($orderLine === false) {
 			if($created >= $from) {

@@ -4,55 +4,61 @@ class ControllerApiCart extends Controller {
 		$this->load->language('api/cart');
 		
 		$json = array();
+		
+		if (!isset($this->session->data['api_id'])) {
+			$json['error_permission'] = $this->session->data['api_id'];
+		}
 			
-		if (isset($this->request->post['product_id'])) {
-			$this->load->model('catalog/product');
-			
-			$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
-
-			if ($product_info) {
-				if (isset($this->request->post['quantity'])) {
-					$quantity = $this->request->post['quantity'];
-				} else {
-					$quantity = 1;
-				}
-															
-				if (isset($this->request->post['option'])) {
-					$option = array_filter($this->request->post['option']);
-				} else {
-					$option = array();	
-				}
- 				
-				if (!isset($this->request->post['override']) || !$this->request->post['override']) {
-					$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
+		if (!$json) {	
+			if (isset($this->request->post['product_id'])) {
+				$this->load->model('catalog/product');
+				
+				$product_info = $this->model_catalog_product->getProduct($this->request->post['product_id']);
+	
+				if ($product_info) {
+					if (isset($this->request->post['quantity'])) {
+						$quantity = $this->request->post['quantity'];
+					} else {
+						$quantity = 1;
+					}
+																
+					if (isset($this->request->post['option'])) {
+						$option = array_filter($this->request->post['option']);
+					} else {
+						$option = array();	
+					}
 					
-					foreach ($product_options as $product_option) {
-						if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
-							$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+					if (!isset($this->request->post['override']) || !$this->request->post['override']) {
+						$product_options = $this->model_catalog_product->getProductOptions($this->request->post['product_id']);
+						
+						foreach ($product_options as $product_option) {
+							if ($product_option['required'] && empty($option[$product_option['product_option_id']])) {
+								$json['error']['option'][$product_option['product_option_id']] = sprintf($this->language->get('error_required'), $product_option['name']);
+							}
 						}
 					}
-				}
-				
-				if (!isset($json['error']['option'])) {
-					$this->cart->add($this->request->post['product_id'], $quantity, $option);
 					
-					$json['success'] = $this->language->get('text_success');
-					
-					unset($this->session->data['shipping_method']);
-					unset($this->session->data['shipping_methods']);
-					unset($this->session->data['payment_method']);
-					unset($this->session->data['payment_methods']);					
+					if (!isset($json['error']['option'])) {
+						$this->cart->add($this->request->post['product_id'], $quantity, $option);
+						
+						$json['success'] = $this->language->get('text_success');
+						
+						unset($this->session->data['shipping_method']);
+						unset($this->session->data['shipping_methods']);
+						unset($this->session->data['payment_method']);
+						unset($this->session->data['payment_methods']);					
+					}
+				} else {
+					$json['error']['store'] = $this->language->get('error_store');
 				}
-			} else {
-				$json['error']['store'] = $this->language->get('error_store');
+			}
+			
+			// Stock
+			if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
+				$json['error']['stock'] = $this->language->get('error_stock');
 			}
 		}
 		
-		// Stock
-		if (!$this->cart->hasStock() && (!$this->config->get('config_stock_checkout') || $this->config->get('config_stock_warning'))) {
-			$json['error']['stock'] = $this->language->get('error_stock');
-		}
-	
 		$this->response->setOutput(json_encode($json));	
 	}	
 		

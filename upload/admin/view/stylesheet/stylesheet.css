@@ -9,6 +9,8 @@
     font-style: normal;
 }
 
+@import url(http://fonts.googleapis.com/css?family=Montserrat);
+
 html, body {
 	height: 100%;
 	margin: 0;
@@ -336,13 +338,16 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 }
 .panel-title {
 	padding: 5px 0;
-	font-size: 20px;
 	text-shadow: 1px 1px 0 #FFF;
 }
 .panel-title i {
 	color: #34C9DF;
 }
 
+.page-header h1 {
+	font-family: 'Montserrat', sans-serif;
+	font-weight: 100;
+}
 
 
 .breadcrumb {
@@ -391,7 +396,6 @@ label.control-label {
 }
 .form-control {
 	padding: 5px 12px;
-	font-size: 12px;
 }
 input.form-control, select.form-control {
 	height: 31px;

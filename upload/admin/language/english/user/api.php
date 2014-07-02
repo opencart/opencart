@@ -14,10 +14,10 @@ $_['column_action']        = 'Action';
 
 // Entry
 $_['entry_username']       = 'Username';
-$_['entry_key']            = 'Key';
+$_['entry_password']       = 'Password';
 $_['entry_status']         = 'Status';
 
 // Error
 $_['error_permission']     = 'Warning: You do not have permission to modify API\'s!';
 $_['error_username']       = 'Username must be between 3 and 20 characters!';
-$_['error_key']            = 'API key must be between 3 and 256 characters!';
+$_['error_password']       = 'API password must be between 3 and 256 characters!';

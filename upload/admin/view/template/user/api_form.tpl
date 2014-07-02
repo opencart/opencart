@@ -29,13 +29,13 @@
           </div>
         </div>
         <div class="form-group required">
-          <label class="col-sm-2 control-label" for="input-key"><?php echo $entry_key; ?></label>
+          <label class="col-sm-2 control-label" for="input-password"><?php echo $entry_password; ?></label>
           <div class="col-sm-10">
-            <textarea name="key" placeholder="<?php echo $entry_key; ?>" rows="5" id="input-key" class="form-control"><?php echo $key; ?></textarea>
+            <textarea name="password" placeholder="<?php echo $entry_password; ?>" rows="5" id="input-password" class="form-control"><?php echo $password; ?></textarea>
             <br />
             <button type="button" id="button-generate" class="btn btn-primary"><i class="fa fa-refresh"></i> <?php echo $button_generate; ?></button>
-            <?php if ($error_key) { ?>
-            <div class="text-danger"><?php echo $error_key; ?></div>
+            <?php if ($error_password) { ?>
+            <div class="text-danger"><?php echo $error_password; ?></div>
             <?php } ?>
           </div>
         </div>
@@ -67,7 +67,7 @@ $('#button-generate').on('click', function() {
 		rand += string[Math.floor(Math.random() * (string.length - 1))];
 	}
 	
-	$('#input-key').val(rand);
+	$('#input-password').val(rand);
 });
 //--></script> 
 <?php echo $footer; ?> 

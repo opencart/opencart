@@ -7,9 +7,9 @@ class ControllerApiLogin extends Controller {
 		
 		$this->model->load('api');
 		
-		$user_info = $this->model_user_api->login($this->request->post['username'], $this->request->post['password']);
+		$api_info = $this->model_user_api->login($this->request->post['username'], $this->request->post['password']);
 		
-		if ($user_info) {
+		if ($api_info) {
 			$this->session->data['api_id'] = $api_info['api_id'];
 			
 			$json['cookie'] = session_id();

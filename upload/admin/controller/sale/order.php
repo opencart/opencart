@@ -33,8 +33,16 @@ class ControllerSaleOrder extends Controller {
   	}
 
   	public function delete() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateDelete()) {
-			$this->model_sale_order->editOrder($this->request->get['order_id']);
+			$this->load->language('sale/order');
+
+			$this->document->setTitle($this->language->get('heading_title'));
+
+			$this->load->model('sale/order');
+
+			if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateDelete()) {
+				foreach ($this->request->post['selected'] as $order_id) {
+					$this->model_sale_order->deleteOrder($order_id);
+				}
 
 			$this->session->data['success'] = $this->language->get('text_success');
 

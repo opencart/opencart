@@ -142,8 +142,8 @@ final class Etsy {
 		}
 	}
 
-	public function getProductLink($etsy_item_id) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_listing` WHERE `etsy_item_id` = '" . (int)$etsy_item_id . "'");
+	public function getLinkedProduct($etsy_item_id) {
+		$qry = $this->db->query("SELECT `p`.`quantity`, `el`.`status` AS `link_status` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `p`.`product_id` = `el`.`product_id` WHERE `el`.`etsy_item_id` = '" . (int)$etsy_item_id . "'");
 
 		if($qry->num_rows) {
 			return $qry->row;

@@ -6,7 +6,6 @@ class ControllerAmazonusOrder extends Controller {
 		}
 
 		$this->load->library('log');
-		$this->load->library('amazonus');
 		$this->load->model('checkout/order');
 		$this->load->model('openbay/amazonus_order');
 		$this->language->load('openbay/amazonus_order');

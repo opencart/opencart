@@ -6,7 +6,6 @@ class ControllerAmazonOrder extends Controller {
 		}
 
 		$this->load->library('log');
-		$this->load->library('amazon');
 		$this->load->model('checkout/order');
 		$this->load->model('openbay/amazon_order');
 		$this->language->load('openbay/amazon_order');
@@ -16,10 +15,10 @@ class ControllerAmazonOrder extends Controller {
 
 		$token = $this->config->get('openbay_amazon_token');
 
-		$incomingToken = isset($this->request->post['token']) ? $this->request->post['token'] : '';
+		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
 
-		if ($incomingToken !== $token) {
-			$logger->write('amazon/order - Incorrect token: ' . $incomingToken);
+		if ($incoming_token !== $token) {
+			$logger->write('amazon/order - Incorrect token: ' . $incoming_token);
 			return;
 		}
 

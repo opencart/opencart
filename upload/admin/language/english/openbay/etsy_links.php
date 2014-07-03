@@ -24,3 +24,4 @@ $_['error_etsy_id']				= 'Etsy item ID required';
 $_['error_link_id']				= 'Link ID required';
 $_['error_link_exists']			= 'An active link already exists for this item';
 $_['error_etsy']				= 'Unable to link item, Etsy API response: ';
+$_['error_status']				= 'Status filter required';

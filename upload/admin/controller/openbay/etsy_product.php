@@ -351,4 +351,58 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$this->response->setOutput($this->load->view('openbay/etsy_links.tpl', $data));
 	}
+
+	public function getListings() {
+		$this->load->language('openbay/etsy_links');
+		$this->load->model('openbay/etsy_product');
+
+		$data = $this->request->get;
+
+		if (!isset($data['status'])) {
+			$params = 'status=active';
+		} else {
+			$params = 'status='.$data['status'];
+		}
+
+		if (isset($data['page'])) {
+			$params .= 'page='.(int)$data['page'];
+		}
+
+		if (isset($data['limit'])) {
+			$params .= 'limit='.(int)$data['limit'];
+		}
+
+		$listing_response = $this->openbay->etsy->call('product/getListings?'.$params, 'GET');
+
+		if (isset($listing_response['data']['error'])) {
+			echo json_encode(array('error' => $this->language->get('error_etsy').$listing_response['data']['error']));
+			die();
+		}else {
+			$listings = array();
+
+			foreach($listing_response['data']['results'] as $listing) {
+				$product_link = $this->openbay->etsy->getProductLink($listing['listing_id']);
+
+				if ($product_link != false) {
+					$listings[] = array('link' => $product_link, 'listing' => $listing);
+				}
+			}
+
+			$data['listings'] = $listings;
+
+			$pagination = new Pagination();
+			$pagination->total = 10;
+			$pagination->page = 1;
+			$pagination->limit = 2;
+			$pagination->url = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&page={page}', 'SSL');
+
+			$data['pagination'] = $pagination->render();
+
+			$data['header'] = $this->load->controller('common/header');
+			$data['menu'] = $this->load->controller('common/menu');
+			$data['footer'] = $this->load->controller('common/footer');
+
+			$this->response->setOutput($this->load->view('openbay/etsy_links_ajax.tpl', $data));
+		}
+	}
 }

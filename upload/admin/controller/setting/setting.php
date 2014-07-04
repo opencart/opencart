@@ -89,7 +89,6 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
 		$data['entry_checkout_guest'] = $this->language->get('entry_checkout_guest');
 		$data['entry_checkout'] = $this->language->get('entry_checkout');
-		$data['entry_order_edit'] = $this->language->get('entry_order_edit');
 		$data['entry_invoice_prefix'] = $this->language->get('entry_invoice_prefix');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
@@ -180,7 +179,6 @@ class ControllerSettingSetting extends Controller {
 		$data['help_cart_weight'] = $this->language->get('help_cart_weight');
 		$data['help_checkout_guest'] = $this->language->get('help_checkout_guest');
 		$data['help_checkout'] = $this->language->get('help_checkout');
-		$data['help_order_edit'] = $this->language->get('help_order_edit');
 		$data['help_invoice_prefix'] = $this->language->get('help_invoice_prefix');
 		$data['help_order_status'] = $this->language->get('help_order_status');
 		$data['help_complete_status'] = $this->language->get('help_complete_status');
@@ -780,14 +778,6 @@ class ControllerSettingSetting extends Controller {
 			$data['config_checkout_id'] = $this->request->post['config_checkout_id'];
 		} else {
 			$data['config_checkout_id'] = $this->config->get('config_checkout_id');
-		}
-
-		if (isset($this->request->post['config_order_edit'])) {
-			$data['config_order_edit'] = $this->request->post['config_order_edit'];
-		} elseif ($this->config->get('config_order_edit')) {
-			$data['config_order_edit'] = $this->config->get('config_order_edit');
-		} else {
-			$data['config_order_edit'] = 7;
 		}
 
 		if (isset($this->request->post['config_invoice_prefix'])) {

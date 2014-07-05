@@ -1479,7 +1479,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 	data += '#tab-shipping input, #tab-shipping select, #tab-shipping textarea, ';
 	
 	if ($(this).attr('id') == 'button-product') {
-		data += '#tab-product input, #tab-product select, #tab-product textarea, ';
+		data += '#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select:selected, #tab-product textarea, ';
 	} else {
 		data += '#product input, #product select, #product textarea, ';
 	}
@@ -1500,7 +1500,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 		<?php } ?>
 		type: 'post',
 		data: $(data),
-		dataType: 'json',
+		dataType: 'html',
 		beforeSend: function() {
 			$('#button-product i, #button-voucher i, #button-refresh i').replaceWith('<i class="fa fa-spinner fa-spin"></i>');
 			$('#button-product, #button-voucher, #button-refresh').prop('disabled', true);
@@ -1510,7 +1510,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			$('#button-product, #button-voucher, #button-refresh').prop('disabled', false);
 		},		
 		success: function(json) {
-			//$('#content').prepend(json);
+			$('#content').prepend(json);
 			
 			$('.alert, .text-danger').remove();
 			
@@ -1782,7 +1782,7 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					
 					html += '<tr id="total-row' + total_row + '">';
 					html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
-					html += '  <td class="text-right">' + total['value'] + '</td>';
+					html += '  <td class="text-right">' + total['text'] + '</td>';
 					html += '</tr>';
 					
 					total_row++;

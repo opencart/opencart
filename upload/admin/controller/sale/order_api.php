@@ -109,7 +109,7 @@ class ControllerSaleOrderApi extends Controller {
 						'override'   => true
 					);
 	
-					$response = $this->api($url . 'index.php?route=api/cart/add', $cookie, $product_data);	
+					$response = $this->api($url . 'index.php?route=api/cart/add', $cookie, $product_data);
 					
 					if (isset($response['error'])) {
 						$json['error']['product'] = $response['error'];
@@ -142,8 +142,8 @@ class ControllerSaleOrderApi extends Controller {
 				$response = $this->api($url . 'index.php?route=api/cart/add', $cookie, $product_data);
 						
 				if (isset($response['error'])) {
-					$json['error']['product'] = array_merge($json['error'], $response['error']);
-				}			
+					$json['error']['product'] = $response['error'];
+				}
 			}		
 			
 			// Vouchers
@@ -238,6 +238,9 @@ class ControllerSaleOrderApi extends Controller {
 			}	
 		}
 		
+		
+		
+		
 		// Order
 		//if (!$json['error']) {
 			//$response = $curl->post($url . 'index.php?route=api/order/add');
@@ -264,23 +267,26 @@ class ControllerSaleOrderApi extends Controller {
 		}		
 		*/
 	
-		// Get Products
+		// Products
 		$response = $this->api($url . 'index.php?route=api/cart/products', $cookie);
 		
 		if (isset($response['product'])) {
 			$json['product'] = $response['product'];
 		}
 		
+		// Vouchers
 		if (isset($response['voucher'])) {
 			$json['voucher'] = $response['voucher'];
 		}
 				
-		// Get Order Totals
+		// Totals
 		$response = $this->api($url . 'index.php?route=api/cart/totals', $cookie);
 		
 		if (isset($response['total'])) {
 			$json['total'] = $response['total'];
 		}		
+		
+		print_r($json);
 		
 		$this->response->setOutput(json_encode($json));		
 	}

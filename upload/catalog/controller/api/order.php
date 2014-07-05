@@ -601,4 +601,16 @@ class ControllerApiOrder extends Controller {
 			
 		}		
 	}
+	
+	public function unconfirm() {
+		$this->load->language('api/order');
+		
+		$json = array();		
+		
+		if (!isset($this->session->data['api_id'])) {
+			$json['error']['warning'] = $this->language->get('error_permission');
+		} else {
+			
+		}		
+	}
 }

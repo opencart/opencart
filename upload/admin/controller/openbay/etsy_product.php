@@ -355,6 +355,9 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	public function listings() {
 		$data = $this->load->language('openbay/etsy_listings');
 
+		$this->document->setTitle($this->language->get('heading_title'));
+		$this->document->addScript('view/javascript/openbay/faq.js');
+
 		$this->load->model('openbay/etsy_product');
 
 		$data['token'] = $this->session->data['token'];
@@ -367,8 +370,18 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		);
 
 		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('extension/openbay', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_openbay'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/etsy', 'token=' . $this->session->data['token'], 'SSL'),
+			'text' => $this->language->get('text_etsy'),
+		);
+
+		$data['breadcrumbs'][] = array(
+			'href' => $this->url->link('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], 'SSL'),
 			'text' => $this->language->get('heading_title'),
-			'href' => $this->url->link('catalog/product', 'token=' . $this->session->data['token'], 'SSL')
 		);
 
 		$filter = array();
@@ -400,11 +413,6 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$listing_response = $this->openbay->etsy->call('product/getListings?'.http_build_query($filter), 'GET');
 		unset($filter['page']);
 
-		/*
-		echo '<pre>';
-		print_r($listing_response);
-		die();
-*/
 		if (isset($listing_response['data']['error'])) {
 			$data['listings'] = array();
 			$data['pagination'] = '';
@@ -426,7 +434,9 @@ class ControllerOpenbayEtsyProduct extends Controller {
 					$actions[] = 'add_link';
 				}
 
-
+				if (!empty($product_link)) {
+					$actions[] = 'delete_link';
+				}
 
 				if ($product_link != false) {
 					$listings[] = array('link' => $product_link, 'listing' => $listing, 'actions' => $actions);
@@ -446,6 +456,16 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			$data['pagination'] = $pagination->render();
 			$data['results'] = sprintf($this->language->get('text_pagination'), ($listing_response['data']['count']) ? (($listing_response['data']['pagination']['effective_page'] - 1) * $listing_response['data']['pagination']['effective_limit']) + 1 : 0, ((($listing_response['data']['pagination']['effective_page'] - 1) * $listing_response['data']['pagination']['effective_limit']) > ($listing_response['data']['count'] - $listing_response['data']['pagination']['effective_limit'])) ? $listing_response['data']['count'] : ((($listing_response['data']['pagination']['effective_page'] - 1) * $listing_response['data']['pagination']['effective_limit']) + $listing_response['data']['pagination']['effective_limit']), $listing_response['data']['count'], ceil($listing_response['data']['count'] / $listing_response['data']['pagination']['effective_limit']));
 
+		}
+
+		$data['success'] = '';
+
+		if (isset($this->request->get['link_added'])) {
+			$data['success'] = $this->language->get('text_link_added');
+		}
+
+		if (isset($this->request->get['link_deleted'])) {
+			$data['success'] = $this->language->get('text_link_deleted');
 		}
 
 		if (isset($this->error['warning'])) {

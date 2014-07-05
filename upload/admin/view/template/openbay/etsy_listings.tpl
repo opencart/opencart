@@ -5,6 +5,11 @@
     <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
     <?php } ?>
   </ul>
+  <?php if ($success) { ?>
+  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  </div>
+  <?php } ?>
   <div class="panel panel-default">
     <div class="panel-heading">
       <h1 class="panel-title"><i class="fa fa-bars fa-lg"></i> <?php echo $heading_title; ?></h1>
@@ -16,6 +21,7 @@
             <div class="form-group">
               <label class="control-label" for="input-keywords"><?php echo $entry_keywords; ?></label>
               <input type="text" name="keywords" value="<?php echo isset($filter['keywords']) ? $filter['keywords'] : ''; ?>" placeholder="<?php echo $entry_keywords; ?>" id="input-keywords" class="form-control" />
+              <span class="help-block"><?php echo $help_keywords; ?></span>
             </div>
             <div class="form-group">
               <label class="control-label" for="input-limit"><?php echo $entry_limit; ?></label>
@@ -40,8 +46,26 @@
           </div>
         </div>
       </div>
-      <form action="<?php echo $delete; ?>" method="post" enctype="multipart/form-data" id="form-product">
-        <div class="table-responsive">
+      <div class="alert alert-danger" id="alert-link-error" style="display:none;"></div>
+      <div class="well" style="display:none;" id="link-well">
+        <div class="row">
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="control-label" for="input-name"><?php echo $entry_name; ?></label>
+              <input type="hidden" name="add_link_product_id" value="" id="input-product-id"/>
+              <input type="text" name="add_link_product" value="" placeholder="<?php echo $entry_name; ?>" id="input-name" class="form-control" />
+            </div>
+          </div>
+          <div class="col-sm-6">
+            <div class="form-group">
+              <label class="control-label" for="input-etsy-id"><?php echo $entry_etsy_id; ?></label>
+              <input type="text" name="add_link_etsy_id" value="" placeholder="<?php echo $entry_etsy_id; ?>" id="input-etsy-id" class="form-control" />
+            </div>
+            <a onclick="addLink();" class="btn btn-primary pull-right" id="button-submit-link"><i class="fa fa-check"></i> <?php echo $button_save; ?></a>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
           <table class="table table-bordered table-hover">
             <thead>
             <tr>
@@ -61,36 +85,35 @@
                 <td class="text-left"><?php echo $listing['listing']['listing_id']; ?></td>
                 <td class="text-left"><?php echo $listing['listing']['title']; ?></td>
                 <td class="text-center"><?php echo $listing['listing']['quantity']; ?></td>
-                <td class="text-center">
-                  <?php
-                    if(isset($listing['link']['quantity'])) {
-                      echo $listing['link']['quantity'];
-                    } else {
-                      echo '<i class="fa fa-minus"></i>';
-                    }
-                  ?>
+                <?php if(!empty($listing['link'])) { ?>
+                  <td class="text-center"><?php echo $listing['link']['quantity']; ?></td>
+                  <td class="text-center"><i class="fa fa-check" style="color: green;"></i></td>
+                  <td class="text-center">
+                    <?php
+                      if ($listing['link']['quantity'] != $listing['listing']['quantity']) {
+                        echo $text_status_stock;
+                      } else {
+                        echo $text_status_ok;
+                      }
+                     ?>
+                  </td>
+                <?php } else { ?>
+                  <td class="text-center"><i class="fa fa-minus"></i></td>
+                  <td class="text-center"><i class="fa fa-times" style="color: red;"></i></td>
+                  <td class="text-center"><?php echo $text_status_nolink; ?></td>
+                <?php } ?>
                 </td>
-                <td class="text-center">
-                  <?php
-                    if(isset($listing['link']['link_status']) && $listing['link']['link_status'] == 1) {
-                      echo '<i class="fa fa-check" style="color: green;"></i>';
-                    } else {
-                      echo '<i class="fa fa-times" style="color: red;"></i>';
-                    }
-                  ?>
+                <td class="text-right">
+                  <?php if (in_array('add_link', $listing['actions'])) { ?>
+                    <button data-toggle="tooltip" title="Add link" class="btn btn-primary" onclick="showLinkOption('<?php echo $listing['listing']['listing_id']; ?>')"><i class="fa fa-link"></i></button>
+                  <?php } ?>
+                  <?php if (in_array('delete_link', $listing['actions'])) { ?>
+                  <button data-toggle="tooltip" title="Delete link" class="btn btn-danger" id="btn-delete-<?php echo $listing['link']['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $listing['link']['etsy_listing_id']; ?>')"><i class="fa fa-unlink"></i></button>
+                  <?php } ?>
+                  <?php if (in_array('end_item', $listing['actions'])) { ?>
+                  <button data-toggle="tooltip" title="End listing" class="btn btn-danger"><i class="fa fa-times"></i></button>
+                  <?php } ?>
                 </td>
-                <td class="text-center">
-                  <?php
-                    if (empty($listing['link'])) {
-                      echo $text_status_nolink;
-                    } elseif(isset($listing['link']['quantity']) && $listing['link']['quantity'] != $listing['listing']['quantity']) {
-                      echo $text_status_stock;
-                    } else {
-                      echo $text_status_ok;
-                    }
-                  ?>
-                </td>
-                <td class="text-right"></td>
               </tr>
               <?php } ?>
             <?php } else { ?>
@@ -101,7 +124,6 @@
             </tbody>
           </table>
         </div>
-      </form>
       <div class="row">
         <div class="col-sm-6 text-left"><?php echo $pagination; ?></div>
         <div class="col-sm-6 text-right"><?php echo $results; ?></div>
@@ -110,6 +132,26 @@
   </div>
 </div>
 <script type="text/javascript"><!--
+var url = 'index.php?route=openbay/etsy_product/listings&token=<?php echo $token; ?>';
+
+var filter_keywords = $('input[name=\'keywords\']').val();
+
+if (filter_keywords) {
+  url += '&keywords=' + encodeURIComponent(filter_keywords);
+}
+
+var filter_status = $('input[name=\'status\']').val();
+
+if (filter_status) {
+  url += '&status=' + encodeURIComponent(filter_status);
+}
+
+var filter_limit = $('input[name=\'limit\']').val();
+
+if (filter_limit) {
+  url += '&limit=' + encodeURIComponent(filter_limit);
+}
+
 $('#button-filter').on('click', function() {
   var url = 'index.php?route=openbay/etsy_product/listings&token=<?php echo $token; ?>';
 
@@ -128,6 +170,95 @@ $('#button-filter').on('click', function() {
   }
 
   location = url;
+});
+
+function showLinkOption(id) {
+  $('#input-etsy-id').val(id);
+  $('#link-well').slideDown();
+}
+
+function addLink() {
+  var product_id = $('#input-product-id').val();
+  var etsy_id = $('#input-etsy-id').val();
+
+  if (product_id == '') {
+    alert('<?php echo $error_product_id; ?>');
+    return false;
+  }
+
+  if (etsy_id == '') {
+    alert('<?php echo $error_etsy_id; ?>');
+    return false;
+  }
+
+  $.ajax({
+    url: 'index.php?route=openbay/etsy_product/addLink&token=<?php echo $token; ?>',
+    dataType: 'json',
+    method: 'POST',
+    data: { 'product_id' : product_id, 'etsy_id' : etsy_id },
+    beforeSend: function() {
+      $('#alert-link-error').hide().empty();
+      $('#button-submit-link').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+    },
+    success: function(json) {
+      if (json.error == false) {
+        url += '&link_added=1';
+        location = url;
+      } else {
+        $('#alert-link-error').html('<i class="fa fa-times fa-lg" style="color:red;"></i> '+json.error).show();
+      }
+
+      $('#button-submit-link').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+    },
+    failure: function() {
+      $('#button-submit').empty().html('<i class="fa fa-check"></i> <?php echo $button_save; ?>').removeAttr('disabled');
+    }
+  });
+}
+
+function deleteLink(etsy_link_id) {
+  $.ajax({
+    url: 'index.php?route=openbay/etsy_product/deleteLink&token=<?php echo $token; ?>',
+    dataType: 'json',
+    method: 'POST',
+    data: { 'etsy_link_id' : etsy_link_id },
+    beforeSend: function() {
+      $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+    },
+    success: function(json) {
+      if (json.error == false) {
+        url += '&link_deleted=1';
+        location = url;
+      } else {
+        $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
+        $('#alert-link-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+      }
+    },
+    failure: function() {
+      $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+    }
+  });
+}
+
+$('input[name=\'add_link_product\']').autocomplete({
+  'source': function(request, response) {
+    $.ajax({
+      url: 'index.php?route=catalog/product/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
+      dataType: 'json',
+      success: function(json) {
+        response($.map(json, function(item) {
+          return {
+            label: item['name'],
+            value: item['product_id']
+          }
+        }));
+      }
+    });
+  },
+  'select': function(item) {
+    $('input[name=\'add_link_product\']').val(item['label']);
+    $('#input-product-id').val(item['value']);
+  }
 });
 //--></script>
 <?php echo $footer; ?>

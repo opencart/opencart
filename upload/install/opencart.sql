@@ -127,7 +127,8 @@ CREATE TABLE `oc_affiliate_transaction` (
 -- Table structure for table `oc_api`
 --
 
-CREATE TABLE IF NOT EXISTS `oc_api` (
+DROP TABLE IF EXISTS `oc_api`;
+CREATE TABLE `oc_api` (
   `api_id` int(11) NOT NULL AUTO_INCREMENT,
   `username` varchar(64) NOT NULL,
   `password` text NOT NULL,

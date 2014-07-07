@@ -15,7 +15,7 @@ class ControllerApiVoucher extends Controller {
 			} else {
 				$voucher = '';
 			}
-					
+			
 			$voucher_info = $this->model_checkout_voucher->getVoucher($voucher);			
 			
 			if ($voucher_info) {	
@@ -37,7 +37,24 @@ class ControllerApiVoucher extends Controller {
 		
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
-		} else {			
+		} else {
+			// Add keys for missing post vars
+			$keys = array(
+				'from_name',
+				'from_email',
+				'to_name',
+				'to_email',
+				'voucher_theme_id',
+				'message',
+				'amount'
+			);
+			
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}			
+						
 			// Add a new voucher if set
 			if ((utf8_strlen($this->request->post['from_name']) < 1) || (utf8_strlen($this->request->post['from_name']) > 64)) {
 				$json['error']['from_name'] = $this->language->get('error_from_name');

@@ -236,10 +236,26 @@ class ControllerSaleOrderApi extends Controller {
 			if (isset($response['error'])) {
 				$json['error']['payment_method'] = $response['error'];
 			}	
+			
+			// Products
+			$response = $this->api($url . 'index.php?route=api/cart/products', $cookie);
+			
+			if (isset($response['product'])) {
+				$json['product'] = $response['product'];
+			}
+			
+			// Vouchers
+			if (isset($response['voucher'])) {
+				$json['voucher'] = $response['voucher'];
+			}
+					
+			// Totals
+			$response = $this->api($url . 'index.php?route=api/cart/totals', $cookie);
+			
+			if (isset($response['total'])) {
+				$json['total'] = $response['total'];
+			}				
 		}
-		
-		
-		
 		
 		// Order
 		//if (!$json['error']) {
@@ -257,36 +273,6 @@ class ControllerSaleOrderApi extends Controller {
 			//	$json['error']['payment_method'] = $response['error'];
 			//}			
 		//}
-				
-		//$response = curl_exec($curl);
-		/*
-		if (!$response) {
-			$this->log->write(curl_error($curl) . '(' . curl_errno($curl) . ')');
-		} else {
-			return json_decode($response);
-		}		
-		*/
-	
-		// Products
-		$response = $this->api($url . 'index.php?route=api/cart/products', $cookie);
-		
-		if (isset($response['product'])) {
-			$json['product'] = $response['product'];
-		}
-		
-		// Vouchers
-		if (isset($response['voucher'])) {
-			$json['voucher'] = $response['voucher'];
-		}
-				
-		// Totals
-		$response = $this->api($url . 'index.php?route=api/cart/totals', $cookie);
-		
-		if (isset($response['total'])) {
-			$json['total'] = $response['total'];
-		}		
-		
-		print_r($json);
 		
 		$this->response->setOutput(json_encode($json));		
 	}
@@ -300,6 +286,7 @@ class ControllerSaleOrderApi extends Controller {
 		}
 		
 		curl_setopt($curl, CURLOPT_HEADER, false);
+		curl_setopt($curl, CURLINFO_HEADER_OUT, true);
 		curl_setopt($curl, CURLOPT_USERAGENT, $this->request->server['HTTP_USER_AGENT']);
 		curl_setopt($curl, CURLOPT_FOLLOWLOCATION, true);
 		curl_setopt($curl, CURLOPT_SSL_VERIFYHOST, false); 
@@ -317,7 +304,9 @@ class ControllerSaleOrderApi extends Controller {
 		}
 		
 		$response = curl_exec($curl);
-		//echo $response;
+
+		print_r(curl_getinfo($curl));
+
 		if (!$response) {
 			return array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')');
 		}

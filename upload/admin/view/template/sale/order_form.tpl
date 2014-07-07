@@ -1012,6 +1012,11 @@ $('input[name=\'affiliate\']').autocomplete({
 			url: 'index.php?route=marketing/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
+				json.unshift({
+					'affiliate_id': 0,
+					'name': '<?php echo $text_none; ?>'
+				});
+								
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
@@ -1474,12 +1479,14 @@ $('#button-reward-remove').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('#button-product, #button-voucher, #button-refresh').on('click', function() {	
-	data  = '#tab-customer input, #tab-customer select, #tab-customer textarea, ';
+	data  = '#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, ';
+	
+	
 	data += '#tab-payment input, #tab-payment select, #tab-payment textarea, ';
 	data += '#tab-shipping input, #tab-shipping select, #tab-shipping textarea, ';
 	
 	if ($(this).attr('id') == 'button-product') {
-		data += '#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select:selected, #tab-product textarea, ';
+		data += '#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea, ';
 	} else {
 		data += '#product input, #product select, #product textarea, ';
 	}
@@ -1529,8 +1536,17 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			
 				// Payment Address
 				if (json['error']['payment']) {
+					alert(json['error']['payment'].join('-'));
+					
 					for (i in json['error']['payment']) {
+						
+						
 						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['payment'][i] + '</div>');
+						
+						
+					//	if () {
+							
+					//	} 
 					}
 				}
 			
@@ -1548,7 +1564,11 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 							$('#input-option' + i).after('<div class="text-danger">' + json['error']['product']['option'][i] + '</div>');
 						}
 					}
-					
+
+					if (json['error']['product']['warning']) {
+						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + '</div>');
+					}	
+										
 					if (json['error']['product']['stock']) {
 						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['stock'] + '</div>');
 					}	

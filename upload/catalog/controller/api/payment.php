@@ -7,7 +7,26 @@ class ControllerApiPayment extends Controller {
 		
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
-		} else {		
+		} else {
+			// Add keys for missing post vars
+			$keys = array(
+				'firstname',
+				'lastname',
+				'company',
+				'address_1',
+				'address_2',
+				'postcode',
+				'city',
+				'zone_id',
+				'country_id'
+			);
+			
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}			
+			
 			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
 				$json['error']['firstname'] = $this->language->get('error_firstname');
 			}
@@ -96,7 +115,7 @@ class ControllerApiPayment extends Controller {
 					'iso_code_2'     => $iso_code_2,
 					'iso_code_3'     => $iso_code_3,
 					'address_format' => $address_format,
-					'custom_field'   => $this->request->post['custom_field']
+					'custom_field'   => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array()
 				);
 				
 				$json['success'] = $this->language->get('text_address');

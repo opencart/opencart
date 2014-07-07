@@ -7,7 +7,24 @@ class ControllerApiCustomer extends Controller {
 		
 		if (!isset($this->session->data['api_id'])) {
 			$json['error']['warning'] = $this->language->get('error_permission');
-		} else {		
+		} else {	
+			// Add keys for missing post vars
+			$keys = array(
+				'customer_id',
+				'customer_group_id',
+				'firstname',
+				'lastname',
+				'email',
+				'telephone',
+				'fax'
+			);
+			
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}		
+			
 			// Customer
 			if ($this->request->post['customer_id']) {
 				$this->load->model('account/customer');
@@ -62,7 +79,7 @@ class ControllerApiCustomer extends Controller {
 					'email'             => $this->request->post['email'],
 					'telephone'         => $this->request->post['lastname'],
 					'fax'               => $this->request->post['fax'],
-					'custom_field'      => $this->request->post['custom_field']
+					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array()
 				);
 				
 				$json['success'] = $this->language->get('text_success');			

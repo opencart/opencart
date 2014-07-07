@@ -10,6 +10,7 @@
 }
 
 @import url(http://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic);
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:200,300,400,600,700,900,200italic,300italic,400italic,600italic,700italic,900italic);
 
 html, body {
 	height: 100%;
@@ -24,6 +25,10 @@ body {
 	line-height: 18px;
 	background: #FFFFFF;
 	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: subpixel-antialiased !important; 
+	-webkit-backface-visibility: hidden; 
+	-moz-backface-visibility: hidden; 
+	-ms-backface-visibility: hidden;	
 }
 h1, h2, h3, h4, h5, h6, p {
 	margin-top: 0;
@@ -34,6 +39,7 @@ h1, h2, h3, h4, h5, h6, p {
 a, a:visited {
 	color: #34C9DF;
 }
+
 /* fix for bootstrap hidden and visible */
 span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	display: inline;
@@ -344,9 +350,9 @@ span.hidden-xs, span.hidden-sm, span.hidden-md, span.hidden-lg {
 	color: #34C9DF;
 }
 
-.page-header h1 {
-	font-family: 'Roboto', sans-serif;
-	font-weight: 300;
+h1 {
+	font-family: 'Source Sans Pro', sans-serif;
+	font-weight: 100;
 }
 
 

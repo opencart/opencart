@@ -132,7 +132,7 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-var url = 'index.php?route=openbay/etsy_product/listings&token=<?php echo $token; ?>';
+var url = 'index.php?route=openbay/etsy_product/listings&token=<?php echo $token; ?>&page=<?php echo $filter["page"]; ?>';
 
 var filter_keywords = $('input[name=\'keywords\']').val();
 

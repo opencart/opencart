@@ -33,8 +33,15 @@ class ControllerSaleOrder extends Controller {
   	}
 
   	public function delete() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateDelete()) {
-			$this->model_sale_order->editOrder($this->request->get['order_id']);
+		$this->load->language('sale/order');
+		
+		if ($this->validateDelete()) {
+			
+			
+			
+			
+
+			
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -221,7 +228,7 @@ class ControllerSaleOrder extends Controller {
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
 				'edit'          => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
-				'expired'       => strtotime($result['date_added']) < strtotime('-' . (int)$this->config->get('config_order_edit') . ' day')
+				'delete'        => $this->url->link('sale/order/delete', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
 			);
 		}
 
@@ -514,18 +521,17 @@ class ControllerSaleOrder extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		if (isset($this->request->get['order_id'])) {
+		if (!empty($order_info)) {
 			$data['order_id'] = $this->request->get['order_id'];
+			$data['store_id'] = $order_info['store_id'];
+		
 		} else {
 			$data['order_id'] = 0;
-		}
-
-		if (isset($this->request->post['store_id'])) {
-			$data['store_id'] = $this->request->post['store_id'];
-		} elseif (!empty($order_info)) {
-			$data['store_id'] = $order_info['store_id'];
-		} else {
 			$data['store_id'] = '';
+		
+		
+		
+		
 		}
 
 		$this->load->model('setting/store');
@@ -538,17 +544,13 @@ class ControllerSaleOrder extends Controller {
 			$data['store_url'] = HTTP_CATALOG;
 		}
 
-		if (isset($this->request->post['customer'])) {
-			$data['customer'] = $this->request->post['customer'];
-		} elseif (!empty($order_info)) {
+		if (!empty($order_info)) {
 			$data['customer'] = $order_info['customer'];
 		} else {
 			$data['customer'] = '';
 		}
 
-		if (isset($this->request->post['customer_id'])) {
-			$data['customer_id'] = $this->request->post['customer_id'];
-		} elseif (!empty($order_info)) {
+		if (!empty($order_info)) {
 			$data['customer_id'] = $order_info['customer_id'];
 		} else {
 			$data['customer_id'] = '';

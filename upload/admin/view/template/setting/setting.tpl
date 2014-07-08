@@ -643,6 +643,21 @@
             </fieldset>
             <fieldset>
               <legend><?php echo $text_checkout; ?></legend>
+               <div class="form-group">
+                <label class="col-sm-2 control-label"><?php echo $entry_api; ?></label>
+                <div class="col-sm-10">
+                  <select name="config_api_id" id="input-api" class="form-control">
+                    <option value="0"><?php echo $text_none; ?></option>
+                    <?php foreach ($apis as $api) { ?>
+                    <?php if ($api['api_id'] == $config_api_id) { ?>
+                    <option value="<?php echo $api['api_id']; ?>" selected="selected"><?php echo $api['username']; ?></option>
+                    <?php } else { ?>
+                    <option value="<?php echo $api['api_id']; ?>"><?php echo $api['username']; ?></option>
+                    <?php } ?>
+                    <?php } ?>
+                  </select>
+                  <span class="help-block"><?php echo $help_api; ?></span> </div>
+              </div>             
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_cart_weight; ?></label>
                 <div class="col-sm-10">
@@ -664,7 +679,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <span class="help-block"><?php echo $help_cart_weight; ?></span> </div>
+                  <span class="help-block"><?php echo $help_cart_weight; ?></span></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label"><?php echo $entry_checkout_guest; ?></label>
@@ -687,7 +702,7 @@
                     <?php echo $text_no; ?>
                     <?php } ?>
                   </label>
-                  <span class="help-block"><?php echo $help_checkout_guest; ?></span> </div>
+                  <span class="help-block"><?php echo $help_checkout_guest; ?></span></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-checkout"><?php echo $entry_checkout; ?></label>
@@ -702,13 +717,7 @@
                     <?php } ?>
                     <?php } ?>
                   </select>
-                  <span class="help-block"><?php echo $help_checkout; ?></span> </div>
-              </div>
-              <div class="form-group">
-                <label class="col-sm-2 control-label" for="input-order-edit"><?php echo $entry_order_edit; ?></label>
-                <div class="col-sm-10">
-                  <input type="text" name="config_order_edit" value="<?php echo $config_order_edit; ?>" placeholder="<?php echo $entry_order_edit; ?>" id="input-order-edit" class="form-control" />
-                  <span class="help-block"><?php echo $help_order_edit; ?></span> </div>
+                  <span class="help-block"><?php echo $help_checkout; ?></span></div>
               </div>
               <div class="form-group">
                 <label class="col-sm-2 control-label" for="input-invoice-prefix"><?php echo $entry_invoice_prefix; ?></label>

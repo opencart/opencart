@@ -833,12 +833,7 @@
                   <?php } ?>
                   <?php foreach ($order_totals as $order_total) { ?>
                   <tr id="total-row<?php echo $total_row; ?>">
-                    <td class="text-right" colspan="4"><?php echo $order_total['title']; ?>:
-                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][order_total_id]" value="<?php echo $order_total['order_total_id']; ?>" />
-                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][code]" value="<?php echo $order_total['code']; ?>" />
-                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][title]" value="<?php echo $order_total['title']; ?>" />
-                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][value]" value="<?php echo $order_total['value']; ?>" />
-                      <input type="hidden" name="order_total[<?php echo $total_row; ?>][sort_order]" value="<?php echo $order_total['sort_order']; ?>" /></td>
+                    <td class="text-right" colspan="4"><?php echo $order_total['title']; ?>:</td>
                     <td class="text-right"><?php echo $order_total['value']; ?></td>
                   </tr>
                   <?php $total_row++; ?>
@@ -1017,6 +1012,11 @@ $('input[name=\'affiliate\']').autocomplete({
 			url: 'index.php?route=marketing/affiliate/autocomplete&token=<?php echo $token; ?>&filter_name=' +  encodeURIComponent(request),
 			dataType: 'json',			
 			success: function(json) {
+				json.unshift({
+					'affiliate_id': 0,
+					'name': '<?php echo $text_none; ?>'
+				});
+								
 				response($.map(json, function(item) {
 					return {
 						label: item['name'],
@@ -1479,12 +1479,14 @@ $('#button-reward-remove').on('click', function() {
 //--></script> 
 <script type="text/javascript"><!--
 $('#button-product, #button-voucher, #button-refresh').on('click', function() {	
-	data  = '#tab-customer input, #tab-customer select, #tab-customer textarea, ';
+	data  = '#tab-customer input[type=\'text\'], #tab-customer input[type=\'hidden\'], #tab-customer input[type=\'radio\']:checked, #tab-customer input[type=\'checkbox\']:checked, #tab-customer select, #tab-customer textarea, ';
+	
+	
 	data += '#tab-payment input, #tab-payment select, #tab-payment textarea, ';
 	data += '#tab-shipping input, #tab-shipping select, #tab-shipping textarea, ';
 	
 	if ($(this).attr('id') == 'button-product') {
-		data += '#tab-product input, #tab-product select, #tab-product textarea, ';
+		data += '#tab-product input[type=\'text\'], #tab-product input[type=\'hidden\'], #tab-product input[type=\'radio\']:checked, #tab-product input[type=\'checkbox\']:checked, #tab-product select, #tab-product textarea, ';
 	} else {
 		data += '#product input, #product select, #product textarea, ';
 	}
@@ -1517,7 +1519,6 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 		success: function(json) {
 			$('#content').prepend(json);
 			
-			
 			$('.alert, .text-danger').remove();
 			
 			// Check for errors
@@ -1535,8 +1536,17 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			
 				// Payment Address
 				if (json['error']['payment']) {
+					alert(json['error']['payment'].join('-'));
+					
 					for (i in json['error']['payment']) {
+						
+						
 						$('#input-payment-' + i.replace('_', '-')).after('<div class="text-danger">' + json['error']['payment'][i] + '</div>');
+						
+						
+					//	if () {
+							
+					//	} 
 					}
 				}
 			
@@ -1554,7 +1564,11 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 							$('#input-option' + i).after('<div class="text-danger">' + json['error']['product']['option'][i] + '</div>');
 						}
 					}
-					
+
+					if (json['error']['product']['warning']) {
+						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['warning'] + '</div>');
+					}	
+										
 					if (json['error']['product']['stock']) {
 						$('.panel').before('<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> ' + json['error']['product']['stock'] + '</div>');
 					}	
@@ -1647,40 +1661,43 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 				$('.panel').before('<div class="alert alert-success"><i class="fa fa-check-circle"></i> ' + json['success'] + '  <button type="button" class="close" data-dismiss="alert">&times;</button></div>');
 			}
 			
-			if (json['order_product'] != '') {
+			if (json['product']) {
 				var product_row = 0;
-				var option_row = 0;
 	
 				html = '';
 				
-				for (i = 0; i < json['order_product'].length; i++) {
-					product = json['order_product'][i];
+				for (i = 0; i < json['product'].length; i++) {
+					product = json['product'][i];
 					
 					html += '<tr id="product-row' + product_row + '">';
-					html += '  <td class="text-left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][order_product_id]" value="" /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" /><input type="hidden" name="order_product[' + product_row + '][name]" value="' + product['name'] + '" />';
+					html += '  <td class="text-left">' + product['name'] + '<br /><input type="hidden" name="order_product[' + product_row + '][product_id]" value="' + product['product_id'] + '" />';
 					
 					if (product['option']) {
 						for (j = 0; j < product['option'].length; j++) {
 							option = product['option'][j];
 							
 							html += '  - <small>' + option['name'] + ': ' + option['value'] + '</small><br />';
-							html += '  <input type="hidden" name="order_product[' + product_row + '][order_option][' + option_row + '][order_option_id]" value="' + option['order_option_id'] + '" />';
-							html += '  <input type="hidden" name="order_product[' + product_row + '][order_option][' + option_row + '][product_option_id]" value="' + option['product_option_id'] + '" />';
-							html += '  <input type="hidden" name="order_product[' + product_row + '][order_option][' + option_row + '][product_option_value_id]" value="' + option['product_option_value_id'] + '" />';
-							html += '  <input type="hidden" name="order_product[' + product_row + '][order_option][' + option_row + '][name]" value="' + option['name'] + '" />';
-							html += '  <input type="hidden" name="order_product[' + product_row + '][order_option][' + option_row + '][value]" value="' + option['value'] + '" />';
-							html += '  <input type="hidden" name="order_product[' + product_row + '][order_option][' + option_row + '][type]" value="' + option['type'] + '" />';
 							
-							option_row++;
+							if (option['type'] == 'select' || option['type'] == 'radio' || option['type'] == 'image') {
+								html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['product_option_value_id'] + '" />';
+							}
+							
+							if (option['type'] == 'checkbox') {
+								html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + '][]" value="' + option['product_option_value_id'] + '" />';
+							}
+							
+							if (option['type'] == 'text' || option['type'] == 'textarea' || option['type'] == 'file' || option['type'] == 'date' || option['type'] == 'datetime' || option['type'] == 'time') {
+								html += '<input type="hidden" name="order_product[' + product_row + '][order_option][' + option['product_option_id'] + ']" value="' + option['value'] + '" />';
+							}
 						}
 					}
 					
 					html += '  </td>';
 					
-					html += '  <td class="text-left">' + product['model'] + '<input type="hidden" name="order_product[' + product_row + '][model]" value="' + product['model'] + '" /></td>';
+					html += '  <td class="text-left">' + product['model'] + '</td>';
 					html += '  <td class="text-right">' + product['quantity'] + '<input type="hidden" name="order_product[' + product_row + '][quantity]" value="' + product['quantity'] + '" /></td>';
-					html += '  <td class="text-right">' + product['price'] + '<input type="hidden" name="order_product[' + product_row + '][price]" value="' + product['price'] + '" /></td>';
-					html += '  <td class="text-right">' + product['total'] + '<input type="hidden" name="order_product[' + product_row + '][total]" value="' + product['total'] + '" /><input type="hidden" name="order_product[' + product_row + '][tax]" value="' + product['tax'] + '" /><input type="hidden" name="order_product[' + product_row + '][reward]" value="' + product['reward'] + '" /></td>';
+					html += '  <td class="text-right">' + product['price'] + '</td>';
+					html += '  <td class="text-right">' + product['total'] + '</td>';
 					html += '  <td class="text-center" style="width: 3px;"><button type="button" onclick="$(\'#product-row' + product_row + '\').remove(); $(\'#button-refresh\').trigger(\'click\');" data-toggle="tooltip" title="<?php echo $button_remove; ?>" class="btn btn-danger"><i class="fa fa-minus-circle"></i></button></td>';
 					html += '</tr>';
 					
@@ -1697,18 +1714,16 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			}
 						
 			// Vouchers
-			if (json['order_voucher'] != '') {
+			if (json['voucher']) {
 				var voucher_row = 0;
 				
 				 html = '';
 				 
-				 for (i in json['order_voucher']) {
-					voucher = json['order_voucher'][i];
+				 for (i in json['voucher']) {
+					voucher = json['voucher'][i];
 					 
 					html += '<tr id="voucher-row' + voucher_row + '">';
 					html += '  <td class="text-left">' + voucher['description'];
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][order_voucher_id]" value="" />';
-					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][voucher_id]" value="' + voucher['voucher_id'] + '" />';
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][description]" value="' + voucher['description'] + '" />';
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][code]" value="' + voucher['code'] + '" />';
 					html += '  <input type="hidden" name="order_voucher[' + voucher_row + '][from_name]" value="' + voucher['from_name'] + '" />';
@@ -1739,12 +1754,12 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 			}
 						
 			// Totals
-			if (json['order_product'] != '' || json['order_voucher'] != '' || json['order_total'] != '') {
+			if (json['product'] || json['voucher'] || json['total']) {
 				html = '';
 				
-				if (json['order_product'] != '') {
-					for (i = 0; i < json['order_product'].length; i++) {
-						product = json['order_product'][i];
+				if (json['product']) {
+					for (i = 0; i < json['product'].length; i++) {
+						product = json['product'][i];
 						
 						html += '<tr>';
 						html += '  <td class="text-left">' + product['name'] + '<br />';
@@ -1766,9 +1781,9 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 					}				
 				}
 				
-				if (json['order_voucher'] != '') {
-					for (i in json['order_voucher']) {
-						voucher = json['order_voucher'][i];
+				if (json['voucher']) {
+					for (i in json['voucher']) {
+						voucher = json['voucher'][i];
 						 
 						html += '<tr>';
 						html += '  <td class="text-left">' + voucher['description'] + '</td>';
@@ -1782,12 +1797,12 @@ $('#button-product, #button-voucher, #button-refresh').on('click', function() {
 				
 				var total_row = 0;
 				
-				for (i in json['order_total']) {
-					total = json['order_total'][i];
+				for (i in json['total']) {
+					total = json['total'][i];
 					
 					html += '<tr id="total-row' + total_row + '">';
-					html += '  <td class="text-right" colspan="4">' + total['title'] + ':<input type="hidden" name="order_total[' + total_row + '][order_total_id]" value="" /><input type="hidden" name="order_total[' + total_row + '][code]" value="' + total['code'] + '" /><input type="hidden" name="order_total[' + total_row + '][title]" value="' + total['title'] + '" /><input type="hidden" name="order_total[' + total_row + '][value]" value="' + total['value'] + '" /><input type="hidden" name="order_total[' + total_row + '][sort_order]" value="' + total['sort_order'] + '" /></td>';
-					html += '  <td class="text-right">' + total['value'] + '</td>';
+					html += '  <td class="text-right" colspan="4">' + total['title'] + ':</td>';
+					html += '  <td class="text-right">' + total['text'] + '</td>';
 					html += '</tr>';
 					
 					total_row++;

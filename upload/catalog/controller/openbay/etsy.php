@@ -19,7 +19,7 @@ class ControllerOpenbayEtsy extends Controller {
 		$incoming_token = isset($body['auth']['token']) ? $body['auth']['token'] : '';
 		$incoming_secret = isset($body['auth']['secret']) ? $body['auth']['secret'] : '';
 
-		if ($incoming_token !== $token || $incoming_secret != $secret) {
+		if ($incoming_token !== $token || $incoming_secret !== $secret) {
 			$this->openbay->etsy->log('etsy/inbound - Auth failed: ' . $incoming_token . '/' . $incoming_secret);
 			return;
 		}
@@ -37,11 +37,17 @@ class ControllerOpenbayEtsy extends Controller {
 			$data = json_decode($decrypted);
 		}
 
-		switch ($data['action']) {
+		switch ($body['action']) {
 			case 'orders':
+				$this->load->model('openbay/etsy_order');
+
+				$this->model_openbay_etsy_order->inbound($data);
 
 				break;
 			case 'products';
+				$this->load->model('openbay/etsy_product');
+
+				$this->model_openbay_etsy_product->inbound($data);
 
 				break;
 		}

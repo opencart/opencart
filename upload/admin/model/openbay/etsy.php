@@ -28,6 +28,20 @@ class ModelOpenbayEtsy extends Model{
 				  PRIMARY KEY (`etsy_listing_id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 
+		$this->db->query("
+				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "etsy_order` (
+				  `etsy_order_id` int(11) NOT NULL AUTO_INCREMENT,
+				  `order_id` int(11) NOT NULL,
+				  `receipt_id` int(11) NOT NULL,
+				  PRIMARY KEY (`etsy_order_id`)
+				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
+
+		$this->db->query("
+				CREATE TABLE IF NOT EXISTS `" . DB_PREFIX . "etsy_order_lock` (
+				  `order_id` int(11) NOT NULL,
+				  PRIMARY KEY (`order_id`)
+				) ENGINE=MyISAM  DEFAULT CHARSET=utf8;");
+
 	}
 
 	public function uninstall(){

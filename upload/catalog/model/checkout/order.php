@@ -26,6 +26,7 @@ class ModelCheckoutOrder extends Model {
 			$this->db->query("INSERT INTO " . DB_PREFIX . "order_total SET order_id = '" . (int)$order_id . "', code = '" . $this->db->escape($total['code']) . "', title = '" . $this->db->escape($total['title']) . "', `value` = '" . (float)$total['value'] . "', sort_order = '" . (int)$total['sort_order'] . "'");
 		}
 
+		/*
 		// Custom Fields
 		$data['custom_fields'] = array();
 
@@ -39,7 +40,7 @@ class ModelCheckoutOrder extends Model {
 			}
 
 		}
-
+*/
 
 		foreach ($data['custom_field'] as $custom_field) {
 			$custom_field_query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "custom_field` WHERE custom_field = '" . (int)$custom_field['custom_field_id'] . "'");

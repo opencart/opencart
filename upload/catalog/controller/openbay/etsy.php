@@ -1,28 +1,49 @@
 <?php
 class ControllerOpenbayEtsy extends Controller {
-	public function orders() {
+	public function inbound() {
 		if ($this->config->get('etsy_status') != '1') {
+			$this->openbay->etsy->log('etsy/inbound - module inactive');
 			return;
 		}
 
-		$token = $this->config->get('openbay_etsy_token');
+		$body = $this->request->post;
 
-		$incoming_token = isset($this->request->post['token']) ? $this->request->post['token'] : '';
-
-		if ($incoming_token !== $token) {
-			$this->openbay->etsy->log('etsy/order - Incorrect token: ' . $incoming_token);
+		if (!isset($body['action']) || !isset($body['auth'])) {
+			$this->openbay->etsy->log('etsy/inbound - action or auth data not set');
 			return;
 		}
 
-		$decrypted = $this->openbay->etsy->decryptArgs($this->request->post['data']);
+		$token = $this->config->get('etsy_token');
+		$secret = $this->config->get('etsy_enc1');
 
-		if (!$decrypted) {
-			$this->openbay->etsy->log('amazon/order Failed to decrypt data');
+		$incoming_token = isset($body['auth']['token']) ? $body['auth']['token'] : '';
+		$incoming_secret = isset($body['auth']['secret']) ? $body['auth']['secret'] : '';
+
+		if ($incoming_token !== $token || $incoming_secret != $secret) {
+			$this->openbay->etsy->log('etsy/inbound - Auth failed: ' . $incoming_token . '/' . $incoming_secret);
 			return;
 		}
 
-		$data = json_decode($decrypted);
+		$data = array();
 
-		$this->openbay->etsy->log($decrypted);
+		if (isset($body['data']) && !empty($body['data'])) {
+			$decrypted = $this->openbay->etsy->decryptArgs($body['data']);
+
+			if (!$decrypted) {
+				$this->openbay->etsy->log('etsy/inbound Failed to decrypt data');
+				return;
+			}
+
+			$data = json_decode($decrypted);
+		}
+
+		switch ($data['action']) {
+			case 'orders':
+
+				break;
+			case 'products';
+
+				break;
+		}
 	}
 }

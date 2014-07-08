@@ -19,14 +19,14 @@ final class Etsy {
 	}
 
 	public function log($data, $write = true) {
-			if(function_exists('getmypid')) {
-				$pId = getmypid();
-				$data = $pId . ' - ' . $data;
-			}
+		if(function_exists('getmypid')) {
+			$pId = getmypid();
+			$data = $pId . ' - ' . $data;
+		}
 
-			if($write == true) {
-				$this->logger->write($data);
-			}
+		if($write == true) {
+			$this->logger->write($data);
+		}
 	}
 
 	public function getApiServer() {

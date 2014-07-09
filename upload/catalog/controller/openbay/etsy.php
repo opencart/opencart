@@ -37,9 +37,13 @@ class ControllerOpenbayEtsy extends Controller {
 			$data = json_decode($decrypted);
 		}
 
+		$this->openbay->etsy->log(print_r($data, true));
+
 		switch ($body['action']) {
 			case 'orders':
 				$this->load->model('openbay/etsy_order');
+
+				$this->openbay->etsy->log('Orders action found');
 
 				$this->model_openbay_etsy_order->inbound($data);
 

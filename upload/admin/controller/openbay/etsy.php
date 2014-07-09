@@ -131,7 +131,31 @@ class ControllerOpenbayEtsy extends Controller {
 			$data['etsy_enc2'] = $this->config->get('etsy_enc2');
 		}
 
-		$data['api_server']       = $this->openbay->etsy->getApiServer();
+		if (isset($this->request->post['etsy_address_format'])) {
+			$data['etsy_address_format'] = $this->request->post['etsy_address_format'];
+		} else {
+			$data['etsy_address_format'] = $this->config->get('etsy_address_format');
+		}
+
+		if (isset($this->request->post['etsy_order_status_new'])) {
+			$data['etsy_order_status_new'] = $this->request->post['etsy_order_status_new'];
+		} else {
+			$data['etsy_order_status_new'] = $this->config->get('etsy_order_status_new');
+		}
+
+		if (isset($this->request->post['etsy_order_status_paid'])) {
+			$data['etsy_order_status_paid'] = $this->request->post['etsy_order_status_paid'];
+		} else {
+			$data['etsy_order_status_paid'] = $this->config->get('etsy_order_status_paid');
+		}
+
+		if (isset($this->request->post['etsy_order_status_shipped'])) {
+			$data['etsy_order_status_shipped'] = $this->request->post['etsy_order_status_shipped'];
+		} else {
+			$data['etsy_order_status_shipped'] = $this->config->get('etsy_order_status_shipped');
+		}
+
+		$data['api_server'] = $this->openbay->etsy->getApiServer();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

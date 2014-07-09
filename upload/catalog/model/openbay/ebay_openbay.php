@@ -508,7 +508,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$data['totals'][0] = array(
 			'code'          => 'sub_total',
 			'title'         => $totals_language['lang_subtotal'],
-			'text'          => $this->db->escape($currency['symbol_left']).number_format($total_net, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
 			'value'         => number_format((double)$total_net, 4,'.',''),
 			'sort_order'    => '1'
 		);
@@ -516,7 +515,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$data['totals'][1] = array(
 			'code'          => 'shipping',
 			'title'         => $totals_language['lang_shipping'],
-			'text'          => $this->db->escape($currency['symbol_left']).number_format($shipping_net, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
 			'value'         => number_format((double)$shipping_net, 4,'.',''),
 			'sort_order'    => '3'
 		);
@@ -525,7 +523,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 			$data['totals'][2] = array(
 				'code'          => 'coupon',
 				'title'         => $totals_language['lang_discount'],
-				'text'          => $this->db->escape($currency['symbol_left']).number_format($discount_net, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
 				'value'         => number_format((double)$discount_net, 4,'.',''),
 				'sort_order'    => '4'
 			);
@@ -534,7 +531,6 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$data['totals'][3] = array(
 			'code'          => 'tax',
 			'title'         => $totals_language['lang_tax'],
-			'text'          => $this->db->escape($currency['symbol_left']).number_format($tax, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
 			'value'         => number_format((double)$tax, 3,'.',''),
 			'sort_order'    => '5'
 		);
@@ -542,13 +538,12 @@ class ModelOpenbayEbayOpenbay extends Model{
 		$data['totals'][4] = array(
 			'code'          => 'total',
 			'title'         => $totals_language['lang_total'],
-			'text'          => $this->db->escape($currency['symbol_left']).number_format($totals, $currency['decimal_place'],'.','').$this->db->escape($currency['symbol_right']),
 			'value'         => $totals,
 			'sort_order'    => '6'
 		);
 
 		foreach ($data['totals'] as $total) {
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `text` = '" . $this->db->escape($total['text']) . "', `value` = '" . (double)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `value` = '" . (double)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
 		}
 	}
 

@@ -34,14 +34,14 @@ class ControllerAmazonusOrder extends Controller {
 		$amazonusOrderStatus = trim(strtolower((string)$orderXml->Status));
 
 		$amazonusOrderId = (string)$orderXml->AmazonOrderId;
-		$orderStatus = $this->model_openbay_amazonus_order->getMappedStatus((string)$orderXml->Status);
+		$order_status = $this->model_openbay_amazonus_order->getMappedStatus((string)$orderXml->Status);
 
 		$logger->write('Received order ' . $amazonusOrderId);
 
-		$orderId = $this->model_openbay_amazonus_order->getOrderId($amazonusOrderId);
+		$order_id = $this->model_openbay_amazonus_order->getOrderId($amazonusOrderId);
 
 		// If the order already exists on opencart, ignore it.
-		if ($orderId) {
+		if ($order_id) {
 			$logger->write("Duplicate order $amazonusOrderId. Terminating.");
 			$this->response->setOutput('Ok');
 			return;
@@ -241,66 +241,53 @@ class ControllerAmazonusOrder extends Controller {
 				array(
 					'code' => 'sub_total',
 					'title' => $this->language->get('sub_total_text'),
-					'text' => $this->currency->format($productsTotal, $orderCurrency),
 					'value' => sprintf('%.4f', $productsTotal),
 					'sort_order' => '1',
 				),
 				array(
 					'code' => 'shipping',
 					'title' => $this->language->get('shipping_text'),
-					'text' => $this->currency->format($productsShipping, $orderCurrency),
 					'value' => sprintf('%.4f', $productsShipping),
 					'sort_order' => '3',
 				),
 				array(
 					'code' => 'tax',
 					'title' => $this->language->get('tax_text'),
-					'text' => $this->currency->format($productsTax, $orderCurrency),
 					'value' => sprintf('%.4f', $productsTax),
 					'sort_order' => '4',
 				),
 				array(
 					'code' => 'shipping_tax',
 					'title' => $this->language->get('shipping_tax_text'),
-					'text' => $this->currency->format($productsShippingTax, $orderCurrency),
 					'value' => sprintf('%.4f', $productsShippingTax),
 					'sort_order' => '6',
 				),
 				array(
 					'code' => 'gift_wrap',
 					'title' => $this->language->get('gift_wrap_text'),
-					'text' => $this->currency->format($giftWrap, $orderCurrency),
 					'value' => sprintf('%.4f', $giftWrap),
 					'sort_order' => '2',
 				),
 				array(
 					'code' => 'gift_wrap_tax',
 					'title' => $this->language->get('gift_wrap_tax_text'),
-					'text' => $this->currency->format($giftWrapTax, $orderCurrency),
 					'value' => sprintf('%.4f', $giftWrapTax),
 					'sort_order' => '5',
 				),
 				array(
 					'code' => 'total',
 					'title' => $this->language->get('total_text'),
-					'text' => $this->currency->format($total, $orderCurrency),
 					'value' => sprintf('%.4f', $total),
 					'sort_order' => '7',
 				),
 			),
 		);
 
-		$addOrderMethod = 'addOrder';
+		$order_id = $this->model_checkout_order->addOrder($order);
 
-		if (version_compare(VERSION, '1.5.1.3', '<=')) {
-			$addOrderMethod = 'create';
-		}
-
-		$orderId = $this->model_checkout_order->$addOrderMethod($order);
-
-		$this->model_openbay_amazonus_order->updateOrderStatus($orderId, $orderStatus);
-		$this->model_openbay_amazonus_order->addAmazonusOrder($orderId, $amazonusOrderId);
-		$this->model_openbay_amazonus_order->addAmazonusOrderProducts($orderId, $productMapping);
+		$this->model_openbay_amazonus_order->updateOrderStatus($order_id, $order_status);
+		$this->model_openbay_amazonus_order->addAmazonusOrder($order_id, $amazonusOrderId);
+		$this->model_openbay_amazonus_order->addAmazonusOrderProducts($order_id, $productMapping);
 
 		foreach($products as $product) {
 			if($product['product_id'] != 0) {
@@ -308,18 +295,18 @@ class ControllerAmazonusOrder extends Controller {
 			}
 		}
 
-		$logger->write('Order ' . $amazonusOrderId . ' was added to the database (ID: ' . $orderId . ')');
+		$logger->write('Order ' . $amazonusOrderId . ' was added to the database (ID: ' . $order_id . ')');
 		$logger->write("Finished processing the order");
 
-		$logger->write("Notifying Openbay::orderNew($orderId)");
-		$this->openbay->orderNew($orderId);
+		$logger->write("Notifying Openbay::orderNew($order_id)");
+		$this->openbay->orderNew($order_id);
 		$logger->write("Openbay notified");
 
-		$this->model_openbay_amazonus_order->acknowledgeOrder($orderId);
+		$this->model_openbay_amazonus_order->acknowledgeOrder($order_id);
 
 		//send an email to the administrator about the sale
 		if($this->config->get('openbay_amazonus_notify_admin') == 1){
-			$this->openbay->newOrderAdminNotify($orderId, $orderStatus);
+			$this->openbay->newOrderAdminNotify($order_id, $order_status);
 		}
 
 		$logger->write("Ok");

@@ -5,16 +5,16 @@ $_['heading_title']    = 'Purchase a Gift Certificate';
 // Text
 $_['text_account']     = 'Account';
 $_['text_voucher']     = 'Gift Voucher';
-$_['text_description'] = 'This gift certificate will be emailed to the recipient after your order has been paid for.';
+$_['text_description'] = 'This gift certificate will be e-mailed to the recipient after your order has been paid for.';
 $_['text_agree']       = 'I understand that gift certificates are non-refundable.';
-$_['text_message']     = '<p>Thank you for purchasing a gift certificate! Once you have completed your order your gift voucher recipient will be sent an email with details how to redeem their gift voucher.</p>';
+$_['text_message']     = '<p>Thank you for purchasing a gift certificate! Once you have completed your order your gift voucher recipient will be sent an e-mail with details how to redeem their gift voucher.</p>';
 $_['text_for']         = '%s Gift Certificate for %s';
 
 // Entry
 $_['entry_to_name']    = 'Recipient\'s Name';
-$_['entry_to_email']   = 'Recipient\'s Email';
+$_['entry_to_email']   = 'Recipient\'s E-mail';
 $_['entry_from_name']  = 'Your Name';
-$_['entry_from_email'] = 'Your Email';
+$_['entry_from_email'] = 'Your E-mail';
 $_['entry_theme']      = 'Gift Certificate Theme';
 $_['entry_message']    = 'Message';
 $_['entry_amount']     = 'Amount';

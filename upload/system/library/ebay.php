@@ -641,7 +641,7 @@ final class Ebay {
 		}
 	}
 
-	public function putStockUpdateBulk($product_id_array, $endInactive = false) {
+	public function putStockUpdateBulk($product_id_array, $end_inactive = false) {
 		// We know is that these product ID's have been modified. They should only be passed if the stock has changed so we can assume this.
 		$this->log('putStockUpdateBulk()');
 
@@ -723,7 +723,7 @@ final class Ebay {
 				$this->removeItemByItemId($item['itemId']);
 			}else{
 				//check if the local item is now inactive - end if it is
-				if($endInactive == true && $local_stock['status'] == 0) {
+				if($end_inactive == true && $local_stock['status'] == 0) {
 					$this->endItem($item['itemId']);
 				}else{
 					//get any options that are set for this product

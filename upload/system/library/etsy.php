@@ -270,7 +270,23 @@ final class Etsy {
 		return substr($dk, 0, $kl);
 	}
 
-	public function deleteProduct($product_id){
+	public function deleteProduct($product_id) {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
+	}
+
+	public function productUpdateListen($product_id, $data) {
+
+	}
+
+	public function orderNew($order_id) {
+
+	}
+
+	public function putStockUpdateBulk($product_id_array, $end_inactive) {
+
+	}
+
+	public function deleteOrder($order_id) {
+
 	}
 }

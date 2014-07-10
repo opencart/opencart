@@ -406,21 +406,21 @@ class Amazon {
 		return $this->server;
 	}
 
-	public function putStockUpdateBulk($product_idArray, $endInactive = false){
+	public function putStockUpdateBulk($product_id_array, $end_inactive = false){
 		$this->load->library('log');
 		$logger = new Log('amazon_stocks.log');
 		$logger->write('Updating stock using putStockUpdateBulk()');
 		$quantity_data = array();
-		foreach($product_idArray as $product_id) {
-			$amazonRows = $this->getLinkedSkus($product_id);
-			foreach($amazonRows as $amazonRow) {
-				$productRow = $this->db->query("SELECT `quantity`, `status` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
+		foreach($product_id_array as $product_id) {
+			$amazon_rows = $this->getLinkedSkus($product_id);
+			foreach($amazon_rows as $amazon_row) {
+				$product_row = $this->db->query("SELECT `quantity`, `status` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
 
-				if(!empty($productRow)) {
-					if($endInactive && $productRow['status'] == '0') {
-						$quantity_data[$amazonRow['amazon_sku']] = 0;
+				if(!empty($product_row)) {
+					if($end_inactive && $product_row['status'] == '0') {
+						$quantity_data[$amazon_row['amazon_sku']] = 0;
 					} else {
-						$quantity_data[$amazonRow['amazon_sku']] = $productRow['quantity'];
+						$quantity_data[$amazon_row['amazon_sku']] = $product_row['quantity'];
 					}
 				}
 			}

@@ -24,7 +24,7 @@
     </div>
     <div class="panel-body">
       <div class="row">
-        <div class="col-md-7">
+        <div class="col-md-6">
           <div class="row">
             <div class="col-md-12">
               <table class="table table-bordered table-hover">
@@ -36,7 +36,7 @@
                 </tr>
                 </thead>
                 <tbody>
-                <?php if ($extensions) { ?><?php foreach ($extensions as $extension) { ?>
+                <?php foreach ($extensions as $extension) { ?>
                 <tr>
                   <td class="text-left"><?php echo $extension['name']; ?></td>
                   <td class="text-center"><?php echo $extension['status'] ?></td>
@@ -52,10 +52,6 @@
                     <?php } ?>
                   </td>
                 </tr>
-                <?php } ?><?php } else { ?>
-                <tr>
-                  <td class="text-center" colspan="8"><?php echo $text_text_no_results; ?></td>
-                </tr>
                 <?php } ?>
                 </tbody>
               </table>
@@ -64,10 +60,10 @@
           <div class="row">
             <div class="col-md-12 text-center">
               <div class="row">
-                <div class="col-md-2 text-center">
+                <div class="col-md-4 text-center">
                   <div class="well">
                     <a href="<?php echo $product_link; ?>">
-                      <span class="fa-stack fa-3x">
+                      <span class="fa-stack fa-2x">
                         <i class="fa fa-square-o fa-stack-2x"></i>
                         <i class="fa fa-tags fa-stack-1x"></i>
                       </span>
@@ -75,10 +71,10 @@
                     </a>
                   </div>
                 </div>
-                <div class="col-md-2 text-center">
+                <div class="col-md-4 text-center">
                   <div class="well">
                     <a href="<?php echo $order_link; ?>">
-                      <span class="fa-stack fa-3x">
+                      <span class="fa-stack fa-2x">
                         <i class="fa fa-square-o fa-stack-2x"></i>
                         <i class="fa fa-shopping-cart fa-stack-1x"></i>
                       </span>
@@ -86,10 +82,10 @@
                     </a>
                   </div>
                 </div>
-                <div class="col-md-2 text-center">
+                <div class="col-md-4 text-center">
                   <div class="well">
                     <a href="<?php echo $manage_link; ?>">
-                      <span class="fa-stack fa-3x">
+                      <span class="fa-stack fa-2x">
                         <i class="fa fa-square-o fa-stack-2x"></i>
                         <i class="fa fa-wrench fa-stack-1x"></i>
                       </span>
@@ -97,10 +93,10 @@
                     </a>
                   </div>
                 </div>
-                <div class="col-md-2 text-center">
+                <div class="col-md-4 text-center">
                   <div class="well">
                     <a href="http://www.openbaypro.com/help" target="_BLANK">
-                      <span class="fa-stack fa-3x">
+                      <span class="fa-stack fa-2x">
                         <i class="fa fa-square-o fa-stack-2x"></i>
                         <i class="fa fa-comments-o fa-stack-1x"></i>
                       </span>
@@ -108,10 +104,10 @@
                     </a>
                   </div>
                 </div>
-                <div class="col-md-2 text-center">
+                <div class="col-md-4 text-center">
                   <div class="well">
                     <a href="http://www.openbaypro.com/tutorials" target="_BLANK">
-                      <span class="fa-stack fa-3x">
+                      <span class="fa-stack fa-2x">
                         <i class="fa fa-square-o fa-stack-2x"></i>
                         <i class="fa fa-youtube-play fa-stack-1x"></i>
                       </span>
@@ -119,10 +115,10 @@
                     </a>
                   </div>
                 </div>
-                <div class="col-md-2 text-center">
+                <div class="col-md-4 text-center">
                   <div class="well">
                     <a href="http://www.openbaypro.com/suggestions" target="_BLANK">
-                      <span class="fa-stack fa-3x">
+                      <span class="fa-stack fa-2x">
                         <i class="fa fa-square-o fa-stack-2x"></i>
                         <i class="fa fa-bullhorn fa-stack-1x"></i>
                       </span>
@@ -134,7 +130,7 @@
             </div>
           </div>
         </div>
-        <div class="col-md-5" style="padding-left:10px;">
+        <div class="col-md-6" style="padding-left:10px;">
           <div id="openbay_version" class="alert alert-info text-left">
             <div id="openbay_version_loading">
               <i class="fa fa-cog fa-lg fa-spin"></i> <?php echo $text_checking_version; ?>

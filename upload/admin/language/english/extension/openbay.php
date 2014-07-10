@@ -1,17 +1,20 @@
 <?php
 // Heading
-$_['text_heading_title']        = 'OpenBay Pro';
-$_['text_manager']         = 'OpenBay Pro manager';
+$_['text_heading_title']        		= 'OpenBay Pro';
+$_['text_manager']         				= 'OpenBay Pro manager';
 
 // Text
-$_['text_install']              = 'Install';
-$_['text_uninstall']            = 'Uninstall';
-$_['text_success_settings']         = 'Success: Settings have been saved';
-$_['text_text_no_results']      = 'No results found';
-$_['text_manage']          = 'Manage';
-$_['text_products']          = 'Products';
-$_['text_orders']          = 'Orders';
-$_['text_checking_version']     = 'Checking software version';
+$_['text_install']              		= 'Install';
+$_['text_uninstall']            		= 'Uninstall';
+$_['text_success_settings']         	= 'Success: Settings have been saved';
+$_['text_text_no_results']      		= 'No results found';
+$_['text_products']          			= 'Items';
+$_['text_orders']          				= 'Orders';
+$_['text_manage']          				= 'Manage';
+$_['text_help']                     	= 'Help';
+$_['text_tutorials']                    = 'Tutorials';
+$_['text_suggestions']                  = 'Ideas';
+$_['text_checking_version']     		= 'Checking software version';
 $_['button_retry']            = 'Retry';
 $_['text_btn_update']           = 'Update';
 $_['text_btn_settings']         = 'Settings';
@@ -65,13 +68,13 @@ $_['update_okcon']                      = 'Connected to server OK. OpenCart fold
 $_['update_failed_user']                = 'Could not login with that user';
 $_['update_failed_connect']             = 'Could not connect to server';
 $_['update_success']                    = 'Module has been updated (v.%s)';
-$_['text_update_description']            = "The update tool will make changes to your shop's file system. Make sure you have a backup before using this tool.";
+$_['text_update_description']           = "The update tool will make changes to your shop's file system. Make sure you have a backup before using this tool.";
 
-$_['error_mcrypt_not_enabled']            = 'PHP function "mcrypt_encrypt" is not enabled. Contact your hosting provider.';
-$_['error_mb_not_enabled']                = 'PHP library "mb strings" is not enabled. Contact your hosting provider.';
-$_['error_ftp_not_enabled']               = 'PHP FTP functions are not enabled. Contact your hosting provider.';
-$_['error_oc_version']             = 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
-$_['error_failed_to_load']             		= 'Failed to load, retry?';
+$_['error_mcrypt_not_enabled']          = 'PHP function "mcrypt_encrypt" is not enabled. Contact your hosting provider.';
+$_['error_mb_not_enabled']              = 'PHP library "mb strings" is not enabled. Contact your hosting provider.';
+$_['error_ftp_not_enabled']             = 'PHP FTP functions are not enabled. Contact your hosting provider.';
+$_['error_oc_version']             		= 'Your version of OpenCart is not tested to work with this module. You may experience problems.';
+$_['error_failed_to_load']              = 'Failed to load, retry?';
 
 $_['text_clear_faq']                    = 'Clear hidden FAQ popups';
 $_['text_clear']                    	= 'Clear';
@@ -96,11 +99,8 @@ $_['text_ajax_tracking_msg3']           = 'You must select courier if you want t
 $_['text_ajax_tracking_msg4']           = 'Please leave courier field empty if you want to use custom courier.';
 
 $_['text_title_help']                   = 'Need help with OpenBay Pro?';
-$_['text_help']                     	= 'Help';
 $_['text_title_manage']                 = 'Manage OpenBay Pro; updates, settings and more';
 $_['text_title_shop']                   = 'OpenBay Pro store; addons, templates and more';
-$_['text_tutorials']                    = 'Tutorials';
-$_['text_suggestions']                  = 'Suggestions';
 $_['text_install_success']              = 'Marketplace has been installed';
 $_['text_uninstall_success']            = 'Marketplace has been removed';
 $_['text_error_permission']             = 'You do not have permission to modify the OpenBay Pro extension';

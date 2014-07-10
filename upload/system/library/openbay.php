@@ -38,6 +38,11 @@ final class Openbay {
 			$this->amazonus->orderNew($order_id);
 		}
 
+		// Etsy Module
+		if ($this->config->get('etsy_status') == 1) {
+			$this->etsy->orderNew($order_id);
+		}
+
 		/**
 		 * If a 3rd party module needs to be notified about a new order
 		 * so it can update the stock then they should add a method to their
@@ -67,30 +72,40 @@ final class Openbay {
 		if ($this->config->get('amazonus_status') == 1) {
 			$this->amazonus->productUpdateListen($product_id, $data);
 		}
+
+		// Etsy Module
+		if ($this->config->get('etsy_status') == 1) {
+			$this->etsy->productUpdateListen($product_id, $data);
+		}
 	}
 
-	public function putStockUpdateBulk($product_idArray, $endInactive = false) {
+	public function putStockUpdateBulk($product_id_array, $end_inactive = false) {
 		/**
 		 * putStockUpdateBulk
 		 *
 		 * Takes an array of product id's where stock has been modified
 		 *
-		 * @param $product_idArray
+		 * @param $product_id_array
 		 */
 
 		// eBay Module
 		if ($this->config->get('ebay_status') == 1) {
-			$this->ebay->putStockUpdateBulk($product_idArray, $endInactive);
+			$this->ebay->putStockUpdateBulk($product_id_array, $end_inactive);
 		}
 
 		// Amazon EU Module
 		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->putStockUpdateBulk($product_idArray, $endInactive);
+			$this->amazon->putStockUpdateBulk($product_id_array, $end_inactive);
 		}
 
 		// Amazon US Module
 		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->putStockUpdateBulk($product_idArray, $endInactive);
+			$this->amazonus->putStockUpdateBulk($product_id_array, $end_inactive);
+		}
+
+		// Etsy Module
+		if ($this->config->get('etsy_status') == 1) {
+			$this->etsy->putStockUpdateBulk($product_id_array, $end_inactive);
 		}
 	}
 
@@ -188,7 +203,6 @@ final class Openbay {
 	}
 
 	public function newOrderAdminNotify($order_id, $order_status_id) {
-
 		$this->load->model('checkout/order');
 		$order_info = $this->model_checkout_order->getOrder($order_id);
 
@@ -315,6 +329,11 @@ final class Openbay {
 		if ($this->config->get('amazonus_status') == 1) {
 			$this->amazonus->deleteOrder($order_id);
 		}
+
+		// Etsy Module
+		if ($this->config->get('etsy_status') == 1) {
+			$this->etsy->deleteOrder($order_id);
+		}
 	}
 
 	public function getProductModelNumber($product_id, $sku = null) {
@@ -326,7 +345,6 @@ final class Openbay {
 			}else{
 				return false;
 			}
-
 		}else{
 			$qry = $this->db->query("SELECT `model` FROM `" . DB_PREFIX . "product` WHERE `product_id` = '".(int)$product_id."' LIMIT 1");
 

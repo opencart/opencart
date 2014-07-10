@@ -23,6 +23,9 @@ function getURLVar(key) {
 } 
 
 $(document).ready(function() {
+	
+	
+	
 	// Set last page opened on the menu
 	$('#menu a[href]').on('click', function() {
 		sessionStorage.setItem('menu', $(this).attr('href'));

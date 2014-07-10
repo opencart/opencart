@@ -302,6 +302,8 @@ class ControllerApiOrder extends Controller {
 			//$this->load->model('checkout/order');
 	
 			//$json['order_id'] = $this->model_checkout_order->addOrder($order_data);
+			
+			$json['success'] = $this->language->get('text_success');
 		}
 		
 		$this->response->setOutput(json_encode($json));	
@@ -552,8 +554,6 @@ class ControllerApiOrder extends Controller {
 				
 				$order_data['comment'] = $this->session->data['comment'];
 				$order_data['total'] = $total;
-				
-				
 			}
 		}
 		
@@ -571,7 +571,9 @@ class ControllerApiOrder extends Controller {
 			// Add keys for missing post vars
 			$keys = array(
 				'order_id'
-			);			
+			);
+			
+					
 			
 			$this->load->model('checkout/order');
 			

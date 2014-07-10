@@ -152,7 +152,7 @@ class ControllerSaleOrderApi extends Controller {
 					$response = $this->api($url . 'index.php?route=api/voucher/add', $cookie, $order_voucher);
 						
 					if (isset($response['error'])) {
-						$json['error']['voucher'] = $response['error'];
+						$json['error']['vouchers'] = $response['error'];
 						
 						break;	
 					}
@@ -174,7 +174,7 @@ class ControllerSaleOrderApi extends Controller {
 				$response = $this->api($url . 'index.php?route=api/voucher/add', $cookie, $voucher_data);
 				
 				if (isset($response['error'])) {
-					$json['error']['voucher'] = $response['error'];
+					$json['error']['vouchers'] = $response['error'];
 				}			
 			}
 			
@@ -211,7 +211,7 @@ class ControllerSaleOrderApi extends Controller {
 			if (isset($response['error'])) {
 				$json['error']['shipping_method'] = $response['error'];
 			} else {
-				$json['shipping_methods'] = $response;
+				$json['shipping_methods'] = $response['shipping_methods'];
 			}
 			
 			// Shipping Method
@@ -227,7 +227,7 @@ class ControllerSaleOrderApi extends Controller {
 			if (isset($response['error'])) {
 				$json['error']['payment_method'] = $response['error'];
 			} else {
-				$json['payment_methods'] = $response;
+				$json['payment_methods'] = $response['payment_methods'];
 			}
 			
 			// Payment Method
@@ -254,25 +254,36 @@ class ControllerSaleOrderApi extends Controller {
 			
 			if (isset($response['total'])) {
 				$json['total'] = $response['total'];
-			}				
+			}
+			
+		
+			// Order
+			/*
+			if (!$json['error']) {
+				$response = $curl->post($url . 'index.php?route=api/order/add');
+							
+				if (isset($response['error'])) {
+					$json['error']['payment_method'] = $response['error'];
+				}
+				
+				$response = $curl->post($url . 'index.php?route=api/order/confirm');
+							
+				if (isset($response['error'])) {
+					$json['error']['payment_method'] = $response['error'];
+				}						
+			}
+			
+			if (!$json['error']) {
+				$response = $curl->post($url . 'index.php?route=api/order/update');
+							
+				if (isset($response['error'])) {
+					$json['error']['payment_method'] = $response['error'];
+				}			
+			}			
+			*/
+							
 		}
-		
-		// Order
-		//if (!$json['error']) {
-			//$response = $curl->post($url . 'index.php?route=api/order/add');
-						
-			//if ($response['error']) {
-			//	$json['error']['payment_method'] = $response['error'];
-			//}			
-		//}
-		
-		//if (!$json['error']) {
-			//$response = $curl->post($url . 'index.php?route=api/order/update');
-						
-			//if ($response['error']) {
-			//	$json['error']['payment_method'] = $response['error'];
-			//}			
-		//}
+
 		
 		$this->response->setOutput(json_encode($json));		
 	}
@@ -304,8 +315,6 @@ class ControllerSaleOrderApi extends Controller {
 		}
 		
 		$response = curl_exec($curl);
-
-		print_r(curl_getinfo($curl));
 
 		if (!$response) {
 			return array('error' => curl_error($curl) . '(' . curl_errno($curl) . ')');

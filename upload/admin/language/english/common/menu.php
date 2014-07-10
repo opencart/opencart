@@ -63,7 +63,6 @@ $_['text_return_action']               = 'Return Actions';
 $_['text_return_reason']               = 'Return Reasons';
 $_['text_return_status']               = 'Return Statuses';
 $_['text_sale']                        = 'Sales';
-$_['text_search']                      = 'Search';
 $_['text_shipping']                    = 'Shipping';
 $_['text_setting']                     = 'Settings';
 $_['text_stock_status']                = 'Stock Statuses';

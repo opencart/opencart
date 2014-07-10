@@ -1,18 +1,13 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
   <div class="container">
-  <ul class="breadcrumb">
-    <?php foreach ($breadcrumbs as $breadcrumb) { ?>
-    <li><a href="<?php echo $breadcrumb['href']; ?>"><?php echo $breadcrumb['text']; ?></a></li>
-    <?php } ?>
-  </ul>
   <?php if ($error_warning) { ?>
   <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
     <button type="button" class="close" data-dismiss="alert">&times;</button>
   </div>
   <?php } ?>
   <div class="panel panel-default">
-    <div class="panel-heading">
+    <div class="page-header">
       <div class="pull-right">
         <button type="submit" form="form-firstdata" class="btn" data-toggle="tooltip" data-original-title="<?php echo $button_save; ?>">
           <i class="fa fa-check-circle"></i></button>
@@ -20,7 +15,7 @@
       </div>
       <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
-    <div class="panel-body">
+    <div class="container-fluid">
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-firstdata" class="form-horizontal">
       <ul class="nav nav-tabs" id="tabs">
         <li class="active"><a href="#tab-account" data-toggle="tab"><?php echo $tab_account; ?></a></li>

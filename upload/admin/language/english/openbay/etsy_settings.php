@@ -11,6 +11,12 @@ $_['text_remove']               = 'Remove';
 $_['text_load']                 = 'Load';
 $_['text_success_settings']     = 'Your settings have been saved';
 $_['text_status']         		= 'Status';
+$_['text_address_format']       = 'Default address format';
+$_['text_address_format_help']  = 'Only used if the linked country does not have an address format set-up already.';
+
+$_['text_import_def_id']        = 'Import default status (unpaid):';
+$_['text_import_paid_id']       = 'Paid status:';
+$_['text_import_shipped_id']    = 'Shipped status:';
 
 $_['tab_api_info']            	= 'API details';
 $_['text_token']            	= 'API token';

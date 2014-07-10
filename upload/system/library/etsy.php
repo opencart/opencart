@@ -176,7 +176,7 @@ final class Etsy {
 		$response = $this->openbay->etsy->call('product/listing/'.(int)$listing_id.'/updateStock', 'POST', array('quantity' => $new_stock));
 
 		if (isset($response['data']['error'])) {
-			$this->response->setOutput(json_encode($response['data']));
+			return $response;
 		} else {
 			return true;
 		}
@@ -268,5 +268,9 @@ final class Etsy {
 		}
 
 		return substr($dk, 0, $kl);
+	}
+
+	public function deleteProduct($product_id){
+		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
 	}
 }

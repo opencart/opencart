@@ -1060,22 +1060,22 @@ final class Ebay {
 		}
 	}
 
-	public function getEbayListing($itemId) {
+	public function getEbayListing($item_id) {
 		$this->log('getEbayListing()');
-		return $this->call('item/getItem/', array('itemId' => $itemId));
+		return $this->call('item/getItem/', array('itemId' => $item_id));
 	}
 
-	public function relistItem($itemId, $productId, $qty) {
-		$this->log('relistItem() - Starting relist item, ID: ' . $itemId . ', product: ' . $productId . ', qty: ' . $qty);
+	public function relistItem($item_id, $product_id, $qty) {
+		$this->log('relistItem() - Starting relist item, ID: ' . $item_id . ', product: ' . $product_id . ', qty: ' . $qty);
 
-		$response = $this->call('listing/relistItem/', array('itemId' => $itemId, 'qty' => $qty));
+		$response = $this->call('listing/relistItem/', array('itemId' => $item_id, 'qty' => $qty));
 
 		if(!empty($response['ItemID'])) {
 			$this->log('relistItem() - Created: ' . $response['ItemID']);
-			$this->createLink($productId, $response['ItemID'], '');
+			$this->createLink($product_id, $response['ItemID'], '');
 			return $response['ItemID'];
 		}else{
-			$this->log('relistItem() - Relisting failed ID: ' . $itemId);
+			$this->log('relistItem() - Relisting failed ID: ' . $item_id);
 			return false;
 		}
 	}

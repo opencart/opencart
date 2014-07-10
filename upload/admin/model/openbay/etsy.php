@@ -33,6 +33,8 @@ class ModelOpenbayEtsy extends Model{
 				  `etsy_order_id` int(11) NOT NULL AUTO_INCREMENT,
 				  `order_id` int(11) NOT NULL,
 				  `receipt_id` int(11) NOT NULL,
+				  `paid` int(1) NOT NULL,
+				  `shipped` int(1) NOT NULL,
 				  PRIMARY KEY (`etsy_order_id`)
 				) ENGINE=MyISAM  DEFAULT CHARSET=latin1;");
 

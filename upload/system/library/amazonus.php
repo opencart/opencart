@@ -19,7 +19,7 @@ class Amazonus {
 		return $this->registry->get($name);
 	}
 
-	public function orderNew($orderId) {
+	public function orderNew($order_id) {
 		if ($this->config->get('amazonus_status') != 1) {
 			return;
 		}
@@ -27,65 +27,65 @@ class Amazonus {
 		/* Is called from front-end? */
 		if (!defined('HTTPS_CATALOG')) {
 			$this->load->model('openbay/amazonus_order');
-			$amazonusOrderId = $this->model_openbay_amazonus_order->getAmazonusOrderId($orderId);
+			$amazonusOrderId = $this->model_openbay_amazonus_order->getAmazonusOrderId($order_id);
 
 			$this->load->library('log');
 			$logger = new Log('amazonus_stocks.log');
-			$logger->write('orderNew() called with order id: ' . $orderId);
+			$logger->write('orderNew() called with order id: ' . $order_id);
 
 			//Stock levels update
 			if ($this->openbay->addonLoad('openstock') == true) {
 				$logger->write('openStock found installed.');
 
-				$osProducts = $this->osProducts($orderId);
-				$logger->write(print_r($osProducts, true));
-				$quantityData = array();
-				foreach ($osProducts as $osProduct) {
-					$amazonusSkuRows = $this->getLinkedSkus($osProduct['pid'], $osProduct['var']);
+				$os_products = $this->osProducts($order_id);
+				$logger->write(print_r($os_products, true));
+				$quantity_data = array();
+				foreach ($os_products as $os_product) {
+					$amazonusSkuRows = $this->getLinkedSkus($os_product['pid'], $os_product['var']);
 					foreach($amazonusSkuRows as $amazonusSkuRow) {
-						$quantityData[$amazonusSkuRow['amazonus_sku']] = $osProduct['qty_left'];
+						$quantity_data[$amazonusSkuRow['amazonus_sku']] = $os_product['qty_left'];
 					}
 				}
-				if(!empty($quantityData)) {
-					$logger->write('Updating quantities with data: ' . print_r($quantityData, true));
-					$this->updateQuantities($quantityData);
+				if(!empty($quantity_data)) {
+					$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
+					$this->updateQuantities($quantity_data);
 				} else {
 					$logger->write('No quantity data need to be posted.');
 				}
 			} else {
-				$orderedProducts = $this->getOrderdProducts($orderId);
-				$orderedProductIds = array();
-				foreach($orderedProducts as $orderedProduct) {
-					$orderedProductIds[] = $orderedProduct['product_id'];
+				$ordered_products = $this->getOrderdProducts($order_id);
+				$ordered_product_ids = array();
+				foreach($ordered_products as $ordered_product) {
+					$ordered_product_ids[] = $ordered_product['product_id'];
 				}
-				$this->putStockUpdateBulk($orderedProductIds);
+				$this->putStockUpdateBulk($ordered_product_ids);
 			}
 			$logger->write('orderNew() exiting');
 		}
 	}
 
-	public function productUpdateListen($productId, $data) {
+	public function productUpdateListen($product_id, $data) {
 		$logger = new Log('amazonus_stocks.log');
-		$logger->write('productUpdateListen called for product id: ' . $productId);
+		$logger->write('productUpdateListen called for product id: ' . $product_id);
 
 		if ($this->openbay->addonLoad('openstock') && (isset($data['has_option']) && $data['has_option'] == 1)) {
 			$logger->write('openStock found installed and product has options.');
-			$quantityData = array();
+			$quantity_data = array();
 			foreach($data['product_option_stock'] as $optStock) {
-				$amazonusSkuRows = $this->getLinkedSkus($productId, $optStock['var']);
+				$amazonusSkuRows = $this->getLinkedSkus($product_id, $optStock['var']);
 				foreach($amazonusSkuRows as $amazonusSkuRow) {
-					$quantityData[$amazonusSkuRow['amazonus_sku']] = $optStock['stock'];
+					$quantity_data[$amazonusSkuRow['amazonus_sku']] = $optStock['stock'];
 				}
 			}
-			if(!empty($quantityData)) {
-				$logger->write('Updating quantities with data: ' . print_r($quantityData, true));
-				$this->updateQuantities($quantityData);
+			if(!empty($quantity_data)) {
+				$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
+				$this->updateQuantities($quantity_data);
 			} else {
 				$logger->write('No quantity data need to be posted.');
 			}
 
 		} else {
-			$this->putStockUpdateBulk(array($productId));
+			$this->putStockUpdateBulk(array($product_id));
 		}
 		$logger->write('productUpdateListen() exiting');
 	}
@@ -144,7 +144,7 @@ class Amazonus {
 		$log->write('order/bulkUpdate response: ' . $response);
 	}
 
-	public function updateOrder($orderId, $orderStatusString, $courier_id = '', $courierFromList = true, $tracking_no = '') {
+	public function updateOrder($order_id, $orderStatusString, $courier_id = '', $courierFromList = true, $tracking_no = '') {
 
 		if ($this->config->get('amazonus_status') != 1) {
 			return;
@@ -155,7 +155,7 @@ class Amazonus {
 			return;
 		}
 
-		$amazonusOrder = $this->getOrder($orderId);
+		$amazonusOrder = $this->getOrder($order_id);
 
 		if(!$amazonusOrder) {
 			return;
@@ -169,7 +169,7 @@ class Amazonus {
 
 
 		$this->load->model('openbay/amazonus');
-		$amazonusOrderProducts = $this->model_openbay_amazonus->getAmazonusOrderedProducts($orderId);
+		$amazonusOrderProducts = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order_id);
 
 
 		$requestNode = new SimpleXMLElement('<Request/>');
@@ -199,7 +199,7 @@ class Amazonus {
 		$doc->loadXML($requestNode->asXML());
 		$doc->formatOutput = true;
 
-		$this->model_openbay_amazonus->updateAmazonusOrderTracking($orderId, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
+		$this->model_openbay_amazonus->updateAmazonusOrderTracking($order_id, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
 		$response = $this->callWithResponse('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");
@@ -408,36 +408,36 @@ class Amazonus {
 		return $this->server;
 	}
 
-	public function putStockUpdateBulk($productIdArray, $endInactive = false){
+	public function putStockUpdateBulk($product_idArray, $endInactive = false){
 		$this->load->library('log');
 		$logger = new Log('amazonus_stocks.log');
 		$logger->write('Updating stock using putStockUpdateBulk()');
-		$quantityData = array();
-		foreach($productIdArray as $product_id) {
+		$quantity_data = array();
+		foreach($product_idArray as $product_id) {
 			$amazonusRows = $this->getLinkedSkus($product_id);
 			foreach($amazonusRows as $amazonusRow) {
 				$productRow = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
 
 				if(!empty($productRow)) {
 					if($endInactive && $productRow['status'] == '0') {
-						$quantityData[$amazonusRow['amazonus_sku']] = 0;
+						$quantity_data[$amazonusRow['amazonus_sku']] = 0;
 					} else {
-						$quantityData[$amazonusRow['amazonus_sku']] = $productRow['quantity'];
+						$quantity_data[$amazonusRow['amazonus_sku']] = $productRow['quantity'];
 					}
 				}
 			}
 		}
-		if(!empty($quantityData)) {
-			$logger->write('Quantity data to be sent:' . print_r($quantityData, true));
-			$response = $this->updateQuantities($quantityData);
+		if(!empty($quantity_data)) {
+			$logger->write('Quantity data to be sent:' . print_r($quantity_data, true));
+			$response = $this->updateQuantities($quantity_data);
 			$logger->write('Submit to API. Response: ' . print_r($response, true));
 		} else {
 			$logger->write('No quantity data need to be posted.');
 		}
 	}
 
-	public function getLinkedSkus($productId, $var='') {
-		return $this->db->query("SELECT `amazonus_sku` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$productId . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
+	public function getLinkedSkus($product_id, $var='') {
+		return $this->db->query("SELECT `amazonus_sku` FROM `" . DB_PREFIX . "amazonus_product_link` WHERE `product_id` = '" . (int)$product_id . "' AND `var` = '" . $this->db->escape($var) . "'")->rows;
 	}
 
 	public function getOrderdProducts($order_id) {

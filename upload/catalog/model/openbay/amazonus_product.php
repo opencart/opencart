@@ -59,10 +59,10 @@ class ModelOpenbayAmazonusProduct extends Model {
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('openstock/openstock');
-			$optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 
 			$option = null;
-			foreach ($optionStocks as $optionIterator) {
+			foreach ($option_stocks as $optionIterator) {
 				if($optionIterator['var'] === $var) {
 					$option = $optionIterator;
 					break;

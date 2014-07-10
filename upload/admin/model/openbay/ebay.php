@@ -326,9 +326,9 @@ class ModelOpenbayEbay extends Model{
 				break;
 			}
 
-			foreach($response['items'] as $itemId => $item){
-				if($this->openbay->ebay->getProductId($itemId, 1) == false){
-					$unlinked[$itemId] = $item;
+			foreach($response['items'] as $item_id => $item){
+				if($this->openbay->ebay->getProductId($item_id, 1) == false){
+					$unlinked[$item_id] = $item;
 				}
 			}
 

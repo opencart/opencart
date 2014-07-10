@@ -47,11 +47,11 @@ class ControllerAmazonusProduct extends Controller  {
 				$this->model_openbay_amazonus_product->linkProduct($insertionProduct['sku'], $insertionProduct['product_id'], $insertionProduct['var']);
 				$this->model_openbay_amazonus_product->deleteErrors($decodedData['insertion_id']);
 
-				$quantityData = array(
+				$quantity_data = array(
 					$insertionProduct['sku'] => $this->model_openbay_amazonus_product->getProductQuantity($insertionProduct['product_id'], $insertionProduct['var'])
 				);
-				$logger->write('Updating quantity with data: ' . print_r($quantityData, true));
-				$logger->write('Response: ' . print_r($this->openbay->amazonus->updateQuantities($quantityData), true));
+				$logger->write('Updating quantity with data: ' . print_r($quantity_data, true));
+				$logger->write('Response: ' . print_r($this->openbay->amazonus->updateQuantities($quantity_data), true));
 			} else {
 				$msg = 'Product was not accepted by amazonus. Please try again or contact OpenBay.';
 				$this->model_openbay_amazonus_product->setSubmitError($decodedData['insertion_id'], $msg);

@@ -108,12 +108,12 @@ class ControllerAmazonOrder extends Controller {
 				continue;
 			}
 
-			$productId = $this->model_openbay_amazon_order->getProductId((string)$item->Sku);
-			$productVar = $this->model_openbay_amazon_order->getProductVar((string)$item->Sku);
+			$product_id = $this->model_openbay_amazon_order->getProductId((string)$item->Sku);
+			$product_var = $this->model_openbay_amazon_order->getProductVar((string)$item->Sku);
 
 			$products[] = array(
-				'product_id' => $productId,
-				'var' => $productVar,
+				'product_id' => $product_id,
+				'var' => $product_var,
 				'sku' => (string)$item->Sku,
 				'asin' => (string)$item->Asin,
 				'order_item_id' => (string)$item->OrderItemId,
@@ -124,7 +124,7 @@ class ControllerAmazonOrder extends Controller {
 				'total' => sprintf('%.4f', $totalPrice - $taxTotal),
 				'tax' => $taxTotal / (int)$item->Ordered,
 				'reward' => '0',
-				'option' => $this->model_openbay_amazon_order->getProductOptionsByVar($productVar),
+				'option' => $this->model_openbay_amazon_order->getProductOptionsByVar($product_var),
 				'download' => array(),
 			);
 

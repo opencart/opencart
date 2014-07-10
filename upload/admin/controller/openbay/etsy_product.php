@@ -249,16 +249,18 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		}
 
 		// check the etsy item exists
-		$response = $this->model_openbay_etsy_product->getEtsyItem($data['etsy_id']);
-		if (isset($response['data']['error'])) {
-			echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
+		$get_response = $this->model_openbay_etsy_product->getEtsyItem($data['etsy_id']);
+
+		if (isset($get_response['data']['error'])) {
+			echo json_encode(array('error' => $this->language->get('error_etsy').$get_response['data']['error']));
 			die();
 		} else {
-			if ($response['quantity'] != $product['quantity']) {
+			if ((int)$get_response['quantity'] != (int)$product['quantity']) {
 				// if the stock is different than the item being linked update the etsy stock level
-				$response = $this->openbay->etsy->updateListingStock($data['etsy_id'], $product['quantity']);
-				if (isset($response['data']['error'])) {
-					echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
+				$update_response = $this->openbay->etsy->updateListingStock($data['etsy_id'], $product['quantity']);
+
+				if (isset($update_response['data']['error'])) {
+					echo json_encode(array('error' => $this->language->get('error_etsy').$update_response['data']['error']));
 					die();
 				}
 			}

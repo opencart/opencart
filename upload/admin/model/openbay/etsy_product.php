@@ -75,9 +75,9 @@ class ModelOpenbayEtsyProduct extends Model{
 		$response = $this->openbay->etsy->call('product/listing/'.$listing_id, 'GET');
 
 		if (isset($response['data']['error'])) {
-			$this->response->setOutput(json_encode($response['data']));
+			return $response;
 		} else {
-			$this->response->setOutput(json_encode($response['data']['results'][0]));
+			return $response['data']['results'][0];
 		}
 	}
 }

@@ -534,17 +534,17 @@ class ControllerOpenbayAmazonus extends Controller {
 			$logger->write('Using openStock');
 			$this->load->model('tool/image');
 			$this->load->model('openstock/openstock');
-			$optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
-			$quantityData = array();
-			foreach($optionStocks as $optionStock) {
-				if(isset($optionStock['var']) && $optionStock['var'] == $var) {
-					$quantityData[$amazonus_sku] = $optionStock['stock'];
+			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$quantity_data = array();
+			foreach($option_stocks as $option_stock) {
+				if(isset($option_stock['var']) && $option_stock['var'] == $var) {
+					$quantity_data[$amazonus_sku] = $option_stock['stock'];
 					break;
 				}
 			}
-			if(!empty($quantityData)) {
-				$logger->write('Updating quantities with data: ' . print_r($quantityData, true));
-				$this->openbay->amazonus->updateQuantities($quantityData);
+			if(!empty($quantity_data)) {
+				$logger->write('Updating quantities with data: ' . print_r($quantity_data, true));
+				$this->openbay->amazonus->updateQuantities($quantity_data);
 			} else {
 				$logger->write('No quantity data will be posted . ');
 			}

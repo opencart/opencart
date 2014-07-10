@@ -65,6 +65,7 @@ class ControllerOpenbayEtsy extends Controller {
 
 		$this->load->model('setting/setting');
 		$this->load->model('openbay/etsy');
+		$this->load->model('localisation/order_status');
 
 		if (($this->request->server['REQUEST_METHOD'] == 'POST') && ($this->validate())) {
 			$this->model_setting_setting->editSetting('etsy', $this->request->post);
@@ -156,6 +157,7 @@ class ControllerOpenbayEtsy extends Controller {
 		}
 
 		$data['api_server'] = $this->openbay->etsy->getApiServer();
+		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');

@@ -15,7 +15,7 @@ final class Openbay {
 		return $this->registry->get($name);
 	}
 
-	public function orderNew($orderId) {
+	public function orderNew($order_id) {
 		/**
 		 * Once and order has been imported from external marketplace and
 		 * and order_id has been created, this method should be called.
@@ -25,28 +25,28 @@ final class Openbay {
 
 		// eBay Module
 		if ($this->config->get('ebay_status') == 1) {
-			$this->ebay->orderNew($orderId);
+			$this->ebay->orderNew($order_id);
 		}
 
 		// Amazon EU Module
 		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->orderNew($orderId);
+			$this->amazon->orderNew($order_id);
 		}
 
 		// Amazon US Module
 		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->orderNew($orderId);
+			$this->amazonus->orderNew($order_id);
 		}
 
 		/**
 		 * If a 3rd party module needs to be notified about a new order
 		 * so it can update the stock then they should add a method to their
 		 * application here with the order id so they can get the info about it.
-		 * i.e. $this->mylibraryfile->newOrderMethod($orderId);
+		 * i.e. $this->mylibraryfile->newOrderMethod($order_id);
 		 */
 	}
 
-	public function productUpdateListen($productId, $data) {
+	public function productUpdateListen($product_id, $data) {
 		/**
 		 * This call is performed after the product has been updated.
 		 * The $data variable holds all of the information that has
@@ -55,42 +55,42 @@ final class Openbay {
 
 		// eBay Module
 		if ($this->config->get('ebay_status') == 1) {
-			$this->ebay->productUpdateListen($productId, $data);
+			$this->ebay->productUpdateListen($product_id, $data);
 		}
 
 		// Amazon Module
 		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->productUpdateListen($productId, $data);
+			$this->amazon->productUpdateListen($product_id, $data);
 		}
 
 		// Amazon US Module
 		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->productUpdateListen($productId, $data);
+			$this->amazonus->productUpdateListen($product_id, $data);
 		}
 	}
 
-	public function putStockUpdateBulk($productIdArray, $endInactive = false) {
+	public function putStockUpdateBulk($product_idArray, $endInactive = false) {
 		/**
 		 * putStockUpdateBulk
 		 *
 		 * Takes an array of product id's where stock has been modified
 		 *
-		 * @param $productIdArray
+		 * @param $product_idArray
 		 */
 
 		// eBay Module
 		if ($this->config->get('ebay_status') == 1) {
-			$this->ebay->putStockUpdateBulk($productIdArray, $endInactive);
+			$this->ebay->putStockUpdateBulk($product_idArray, $endInactive);
 		}
 
 		// Amazon EU Module
 		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->putStockUpdateBulk($productIdArray, $endInactive);
+			$this->amazon->putStockUpdateBulk($product_idArray, $endInactive);
 		}
 
 		// Amazon US Module
 		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->putStockUpdateBulk($productIdArray, $endInactive);
+			$this->amazonus->putStockUpdateBulk($product_idArray, $endInactive);
 		}
 	}
 
@@ -289,6 +289,11 @@ final class Openbay {
 		// Amazon US Module
 		if ($this->config->get('amazonus_status') == 1) {
 			$this->amazonus->deleteProduct($product_id);
+		}
+
+		// Etsy Module
+		if ($this->config->get('etsy_status') == 1) {
+			$this->etsy->deleteProduct($product_id);
 		}
 	}
 

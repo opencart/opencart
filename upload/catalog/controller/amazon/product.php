@@ -51,11 +51,11 @@ class ControllerAmazonProduct extends Controller {
 				$this->model_openbay_amazon_product->linkProduct($insertionProduct['sku'], $insertionProduct['product_id'], $insertionProduct['var']);
 				$this->model_openbay_amazon_product->deleteErrors($decodedData['insertion_id']);
 
-				$quantityData = array(
+				$quantity_data = array(
 					$insertionProduct['sku'] => $this->model_openbay_amazon_product->getProductQuantity($insertionProduct['product_id'], $insertionProduct['var'])
 				);
-				$logger->write('Updating quantity with data: ' . print_r($quantityData, true));
-				$logger->write('Response: ' . print_r($this->openbay->amazon->updateQuantities($quantityData), true));
+				$logger->write('Updating quantity with data: ' . print_r($quantity_data, true));
+				$logger->write('Response: ' . print_r($this->openbay->amazon->updateQuantities($quantity_data), true));
 			} else {
 				$msg = 'Product was not accepted by amazon. Please try again or contact OpenBay.';
 				$this->model_openbay_amazon_product->setSubmitError($decodedData['insertion_id'], $msg);

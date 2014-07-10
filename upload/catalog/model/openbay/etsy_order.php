@@ -6,34 +6,33 @@ class ModelOpenbayEtsyOrder extends Model {
 
 		$this->language->load('openbay/etsy_order');
 
-
 		/**
-		 * debuig code to remove
-		 */
+		 * debug code to remove
+
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "etsy_order`");
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order`");
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_history`");
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_option`");
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_product`");
 		$this->db->query("TRUNCATE `" . DB_PREFIX . "order_total`");
-
+*/
 		if(!empty($orders)) {
 			foreach($orders as $order) {
-				$this->openbay->etsy->log($order->receipt_id);
+				$etsy_order = $this->findOrder($order->receipt_id);
 
-				$order_id = $this->findOrder($order->receipt_id);
+				if ($etsy_order != false) {
+					$order_id = (int)$etsy_order['order_id'];
 
-				if ($order_id != false) {
 					if (!$this->lockExists($order_id)) {
-						$order_info = $this->model_checkout_order->getOrder($order_id);
-
-						$this->openbay->etsy->log('Loaded existing order');
-
 						// paid status changed?
+						if ($order->paid != $etsy_order['paid']) {
+							$this->updatePaid($order_id, $order->paid);
+						}
 
 						// shipped status changed?
-
-
+						if ($order->shipped != $etsy_order['shipped']) {
+							$this->updateShipped($order_id, $order->shipped);
+						}
 
 						$this->lockDelete($order_id);
 					}
@@ -42,20 +41,13 @@ class ModelOpenbayEtsyOrder extends Model {
 
 					// is paid?
 					if ($order->paid == 1) {
-
-					} else {
-
+						$this->updatePaid($order_id, $order->paid);
 					}
 
 					// is shipped?
 					if ($order->shipped == 1) {
-
-					} else {
-
+						$this->updateShipped($order_id, $order->shipped);
 					}
-
-					// confirm order
-
 
 					$this->openbay->etsy->log('Created new order: ' . $order_id);
 				}
@@ -63,14 +55,42 @@ class ModelOpenbayEtsyOrder extends Model {
 		}
 	}
 
+	public function updateOrderStatus($order_id, $status_id) {
+		$this->db->query("INSERT INTO `" . DB_PREFIX . "order_history` (`order_id`, `order_status_id`, `notify`, `comment`, `date_added`) VALUES (" . (int)$order_id . ", " . (int)$status_id . ", 0, '', NOW())");
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "order` SET `order_status_id` = " . (int)$status_id . " WHERE `order_id` = " . (int)$order_id);
+	}
+
+	public function updatePaid($order_id, $status) {
+		if ($status == 1) {
+			$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_paid'));
+		}
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "etsy_order` SET `paid` = " . (int)$status . " WHERE `order_id` = " . (int)$order_id);
+	}
+
+	public function updateShipped($order_id, $status) {
+		if ($status == 1) {
+			$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_shipped'));
+		}
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "etsy_order` SET `shipped` = " . (int)$status . " WHERE `order_id` = " . (int)$order_id);
+	}
+
+	public function modifyStock($product_id, $qty, $symbol = '-') {
+		$this->openbay->etsy->log('modifyStock() - Updating stock. Product id: '.$product_id.' qty: '.$qty.', symbol: '.$symbol);
+
+		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
+	}
+
 	private function findOrder($receipt_id) {
 		$this->openbay->etsy->log('Find '.$receipt_id);
 
-		$query = $this->db->query("SELECT `order_id` FROM `" . DB_PREFIX . "etsy_order` WHERE `receipt_id` = '" . (int)$receipt_id . "' LIMIT 1");
+		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order` WHERE `receipt_id` = '" . (int)$receipt_id . "' LIMIT 1");
 
 		if($query->num_rows > 0) {
 			$this->openbay->etsy->log($query->row['order_id']);
-			return (int)$query->row['order_id'];
+			return $query->row;
 		}else{
 			$this->openbay->etsy->log('no');
 			return false;
@@ -142,7 +162,7 @@ class ModelOpenbayEtsyOrder extends Model {
 		   `payment_zone`			  = '" . $this->db->escape((string)$order->address_state) . "',
 		   `payment_zone_id`		  = '" . (int)$zone_id . "',
 		   `payment_address_format`	  = '" . $this->db->escape((string)$country_address_format) . "',
-		   `payment_method`	  		  = '',
+		   `payment_method`	  		  = '" . $this->db->escape((string)$order->payment_method_name) . "',
 		   `payment_code`	  		  = '',
 		   `shipping_firstname`		  = '" . $this->db->escape((string)$customer_name['firstname']) . "',
 		   `shipping_lastname`		  = '" . $this->db->escape((string)$customer_name['surname']) . "',
@@ -155,9 +175,9 @@ class ModelOpenbayEtsyOrder extends Model {
 		   `shipping_zone`			  = '" . $this->db->escape((string)$order->address_state) . "',
 		   `shipping_zone_id`		  = '" . (int)$zone_id . "',
 		   `shipping_address_format`  = '" . $this->db->escape((string)$country_address_format) . "',
-		   `shipping_method`  		  = '" . $this->db->escape((string)$order->shipping_carrier) . "',
+		   `shipping_method`  		  = '',
 		   `shipping_code`  		  = '',
-		   `comment`                  = '" . $this->db->escape((string)$order->shipping_note) . "',
+		   `comment`                  = '" . $this->db->escape((string)$order->buyer_note) . "',
 		   `total`                    = '" . (double)$order->amount_total . "',
 		   `order_status_id`          = '',
 		   `affiliate_id`          	  = '',
@@ -200,6 +220,10 @@ class ModelOpenbayEtsyOrder extends Model {
 			   `tax`			= '',
 			   `reward`			= ''
 		   ");
+
+			if ($product_id != 0) {
+				$this->modifyStock($product_id, (int)$transaction->quantity);
+			}
 		}
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_order` SET `order_id` = '" . (int)$order_id . "', `receipt_id` = '" . (int)$order->receipt_id . "'");
@@ -209,7 +233,7 @@ class ModelOpenbayEtsyOrder extends Model {
 		$totals[0] = array(
 			'code'          => 'sub_total',
 			'title'         => $this->language->get('lang_subtotal'),
-			'value'         => number_format((double)$order->amount_subtotal, 4,'.',''),
+			'value'         => number_format((double)$order->price_total, 4,'.',''),
 			'sort_order'    => '1'
 		);
 
@@ -247,7 +271,7 @@ class ModelOpenbayEtsyOrder extends Model {
 			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_total` SET `order_id` = '" . (int)$order_id . "', `code` = '" . $this->db->escape($total['code']) . "', `title` = '" . $this->db->escape($total['title']) . "', `value` = '" . (double)$total['value'] . "', `sort_order` = '" . (int)$total['sort_order'] . "'");
 		}
 
-		$this->openbay->etsy->log($order_id);
+		$this->updateOrderStatus($order_id, $this->config->get('etsy_order_status_new'));
 
 		return $order_id;
 	}

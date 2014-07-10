@@ -37,7 +37,7 @@ class ControllerOpenbayEtsy extends Controller {
 			$data = json_decode($decrypted);
 		}
 
-		$this->openbay->etsy->log(print_r($data, true));
+		//$this->openbay->etsy->log(print_r($data, true));
 
 		switch ($body['action']) {
 			case 'orders':

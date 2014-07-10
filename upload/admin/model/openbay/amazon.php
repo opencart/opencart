@@ -369,11 +369,11 @@ class ModelOpenbayAmazon extends Model {
 		}
 	}
 
-	public function getOrderStatusString($orderId) {
+	public function getOrderStatusString($order_id) {
 		$row = $this->db->query("
 			SELECT `s`.`key`
 			FROM `" . DB_PREFIX . "order` `o`
-			JOIN `" . DB_PREFIX . "setting` `s` ON `o`.`order_id` = " . (int)$orderId . " AND `s`.`value` = `o`.`order_status_id`
+			JOIN `" . DB_PREFIX . "setting` `s` ON `o`.`order_id` = " . (int)$order_id . " AND `s`.`value` = `o`.`order_status_id`
 			WHERE `s`.`key` = 'openbay_amazon_order_status_shipped' OR `s`.`key` = 'openbay_amazon_order_status_canceled'
 			LIMIT 1")->row;
 
@@ -399,20 +399,20 @@ class ModelOpenbayAmazon extends Model {
 		return $orderStatus;
 	}
 
-	public function updateAmazonOrderTracking($orderId, $courierId, $courierFromList, $trackingNo) {
+	public function updateAmazonOrderTracking($order_id, $courierId, $courierFromList, $trackingNo) {
 		$this->db->query("
 			UPDATE `" . DB_PREFIX . "amazon_order`
 			SET `courier_id` = '" . $courierId . "',
 				`courier_other` = " . (int)!$courierFromList . ",
 				`tracking_no` = '" . $trackingNo . "'
-			WHERE `order_id` = " . (int)$orderId . "");
+			WHERE `order_id` = " . (int)$order_id . "");
 	}
 
-	public function getAmazonOrderId($orderId) {
+	public function getAmazonOrderId($order_id) {
 		$row = $this->db->query("
 			SELECT `amazon_order_id`
 			FROM `" . DB_PREFIX . "amazon_order`
-			WHERE `order_id` = " . (int)$orderId . "
+			WHERE `order_id` = " . (int)$order_id . "
 			LIMIT 1")->row;
 
 		if (isset($row['amazon_order_id']) && !empty($row['amazon_order_id'])) {
@@ -422,12 +422,12 @@ class ModelOpenbayAmazon extends Model {
 		return null;
 	}
 
-	public function getAmazonOrderedProducts($orderId) {
+	public function getAmazonOrderedProducts($order_id) {
 		return $this->db->query("
 			SELECT `aop`.`amazon_order_item_id`, `op`.`quantity`
 			FROM `" . DB_PREFIX . "amazon_order_product` `aop`
 			JOIN `" . DB_PREFIX . "order_product` `op` ON `op`.`order_product_id` = `aop`.`order_product_id`
-				AND `op`.`order_id` = " . (int)$orderId)->rows;
+				AND `op`.`order_id` = " . (int)$order_id)->rows;
 	}
 
 	public function getProductQuantity($product_id, $var = '') {
@@ -438,10 +438,10 @@ class ModelOpenbayAmazon extends Model {
 		if ($var !== '' && $this->openbay->addonLoad('openstock')) {
 			$this->load->model('tool/image');
 			$this->load->model('openstock/openstock');
-			$optionStocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
+			$option_stocks = $this->model_openstock_openstock->getProductOptionStocks($product_id);
 
 			$option = null;
-			foreach ($optionStocks as $optionIterator) {
+			foreach ($option_stocks as $optionIterator) {
 				if($optionIterator['var'] === $var) {
 					$option = $optionIterator;
 					break;

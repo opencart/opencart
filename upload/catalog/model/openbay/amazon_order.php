@@ -164,10 +164,10 @@ class ModelOpenbayAmazonOrder extends Model {
 		return NULL;
 	}
 
-	public function getProductOptionsByVar($productVar) {
+	public function getProductOptionsByVar($product_var) {
 		$options = array();
 
-		$option_value_ids = explode(':', $productVar);
+		$option_value_ids = explode(':', $product_var);
 		foreach($option_value_ids as $optionValueId) {
 			$option_details_row = $this->db->query("SELECT
 				pov.product_option_id,

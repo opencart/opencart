@@ -71,6 +71,49 @@
                 <p><a href="https://account.openbaypro.com/etsy/apiRegister/" target="_BLANK"><i class="fa fa-link"></i> <?php echo $text_token_register; ?></a></p>
               </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="etsy_address_format"><?php echo $text_address_format; ?></label>
+              <div class="col-sm-10">
+                <textarea name="etsy_address_format" class="form-control" rows="3" id="etsy_address_format"><?php echo $etsy_address_format; ?></textarea>
+                <span class="help-block"><?php echo $text_address_format_help; ?></span>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="etsy_order_status_new"><?php echo $text_import_def_id; ?></label>
+              <div class="col-sm-10">
+                <select name="etsy_order_status_new" id="etsy_order_status_new" class="form-control">
+                  <?php if (empty($etsy_order_status_new)) { $etsy_order_status_new = 1; } ?>
+
+                  <?php foreach ($order_statuses as $status) { ?>
+                  <?php echo'<option value="'.$status['order_status_id'].'"'.($etsy_order_status_new == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="etsy_order_status_paid"><?php echo $text_import_paid_id; ?></label>
+              <div class="col-sm-10">
+                <select name="etsy_order_status_paid" id="etsy_order_status_paid" class="form-control">
+                  <?php if (empty($etsy_order_status_paid)) { $etsy_order_status_paid = 2; } ?>
+
+                  <?php foreach ($order_statuses as $status) { ?>
+                  <?php echo'<option value="'.$status['order_status_id'].'"'.($etsy_order_status_paid == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="etsy_order_status_shipped"><?php echo $text_import_shipped_id; ?></label>
+              <div class="col-sm-10">
+                <select name="etsy_order_status_shipped" id="etsy_order_status_shipped" class="form-control">
+                  <?php if (empty($etsy_order_status_shipped)) { $etsy_order_status_shipped = 3; } ?>
+
+                  <?php foreach ($order_statuses as $status) { ?>
+                  <?php echo'<option value="'.$status['order_status_id'].'"'.($etsy_order_status_shipped == $status['order_status_id'] ? ' selected=selected' :'').'>'.$status['name'].'</option>'; ?>
+                  <?php } ?>
+                </select>
+              </div>
+            </div>
           </div>
         </div>
       </form>

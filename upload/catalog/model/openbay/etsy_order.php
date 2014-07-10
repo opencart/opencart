@@ -178,7 +178,29 @@ class ModelOpenbayEtsyOrder extends Model {
 
 		$order_id = $this->db->getLastId();
 
-		$this->addTransactions($order->transactions, $order_id);
+		foreach($order->transactions as $transaction) {
+			$product = $this->openbay->etsy->getLinkedProduct($transaction->etsy_listing_id);
+
+			if ($product != false) {
+				$product_id = $product['product_id'];
+				$product_model = $product['model'];
+			} else {
+				$product_id = 0;
+				$product_model = '';
+			}
+
+			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_product` SET
+			   `order_id`		= '" . (int)$order_id . "',
+			   `product_id`		= '" . (int)$product_id . "',
+			   `name`			= '" . $this->db->escape((string)$transaction->title) . "',
+			   `model`			= '" . $this->db->escape($product_model) . "',
+			   `quantity`		= '" . (int)$transaction->quantity . "',
+			   `price`			= '" . (int)$transaction->price . "',
+			   `total`			= '" . (int)$transaction->price * (int)$transaction->quantity . "',
+			   `tax`			= '',
+			   `reward`			= ''
+		   ");
+		}
 
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_order` SET `order_id` = '" . (int)$order_id . "', `receipt_id` = '" . (int)$order->receipt_id . "'");
 
@@ -228,31 +250,5 @@ class ModelOpenbayEtsyOrder extends Model {
 		$this->openbay->etsy->log($order_id);
 
 		return $order_id;
-	}
-
-	private function addTransactions($transactions, $order_id) {
-		foreach($transactions as $transaction) {
-			$product = $this->openbay->etsy->getLinkedProduct($transaction->etsy_listing_id);
-
-			if ($product != false) {
-				$product_id = $product['product_id'];
-				$product_model = $product['model'];
-			} else {
-				$product_id = 0;
-				$product_model = '';
-			}
-
-			$this->db->query("INSERT INTO `" . DB_PREFIX . "order_product` SET
-			   `order_id`		= '" . (int)$order_id . "',
-			   `product_id`		= '" . (int)$product_id . "',
-			   `name`			= '" . $this->db->escape((string)$transaction->title) . "',
-			   `model`			= '" . $this->db->escape($product_model) . "',
-			   `quantity`		= '" . (int)$transaction->quantity . "',
-			   `price`			= '" . (int)$transaction->price . "',
-			   `total`			= '" . (int)$transaction->price * (int)$transaction->quantity . "',
-			   `tax`			= '',
-			   `reward`			= ''
-		   ");
-		}
 	}
 }

@@ -16,7 +16,7 @@
   <tr>
     <td><?php echo $text_capture_status; ?></td>
     <td id="capture_status">
-      <?php if ($realex_order['capture_status'] == 1 ) { ?>
+      <?php if ($realex_order['capture_status'] == 1) { ?>
         <span class="capture_text"><?php echo $text_yes; ?></span>
       <?php } else { ?>
         <span class="capture_text"><?php echo $text_no; ?></span>&nbsp;&nbsp;

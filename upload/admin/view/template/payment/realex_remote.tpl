@@ -1,10 +1,5 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
   <div class="alert alert-warning"><i class="fa fa-exclamation-circle"></i> <?php echo $text_ip_message; ?></div>
   <div class="page-header">
     <div class="container-fluid">
@@ -15,6 +10,11 @@
     </div>
   </div>
   <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-realex" class="form-horizontal">
       <ul class="nav nav-tabs" id="tabs">
         <li class="active"><a href="#tab-account" data-toggle="tab"><?php echo $tab_account; ?></a></li>

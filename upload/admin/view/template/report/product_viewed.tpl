@@ -1,10 +1,5 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="<?php echo $reset; ?>" data-toggle="tooltip" title="<?php echo $button_reset; ?>" class="btn"><i class="fa fa-refresh"></i></a></div>
@@ -12,6 +7,11 @@
     </div>
   </div>
   <div class="container-fluid">
+    <?php if ($success) { ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
     <div class="table-responsive">
       <table class="table table-bordered">
         <thead>

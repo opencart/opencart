@@ -1,10 +1,5 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
@@ -14,6 +9,11 @@
     </div>
   </div>
   <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-custom-field" class="form-horizontal">
       <div class="form-group required">
         <label class="col-sm-2 control-label"><?php echo $entry_name; ?></label>

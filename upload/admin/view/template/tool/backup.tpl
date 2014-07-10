@@ -1,15 +1,5 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <?php if ($error_warning) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <?php if ($success) { ?>
-  <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
-    <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right">
@@ -20,6 +10,16 @@
     </div>
   </div>
   <div class="container-fluid">
+    <?php if ($error_warning) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_warning; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <?php if ($success) { ?>
+    <div class="alert alert-success"><i class="fa fa-check-circle"></i> <?php echo $success; ?>
+      <button type="button" form="form-backup" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
     <form action="<?php echo $restore; ?>" method="post" enctype="multipart/form-data" id="form-restore" class="form-horizontal">
       <div class="form-group">
         <label class="col-sm-2 control-label" for="input-import"><?php echo $entry_restore; ?></label>

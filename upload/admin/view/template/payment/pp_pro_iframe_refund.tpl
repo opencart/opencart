@@ -1,15 +1,5 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <?php if ($error != '') { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <?php if ($attention != '') { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
   <div class="page-header">
     <div class="container-fluid">
       <div class="pull-right"><a href="<?php echo $cancel; ?>" class="btn btn-primary"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
@@ -17,6 +7,16 @@
     </div>
   </div>
   <div class="container-fluid">
+    <?php if ($error != '') { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <?php if ($attention != '') { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $attention; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
     <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form" class="form-horizontal">
       <input type="hidden" name="amount_original" value="<?php echo $amount_original; ?>"/>
       <input type="hidden" name="currency_code" value="<?php echo $currency_code; ?>"/>
@@ -50,14 +50,14 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-    function refundAmount() {
-        var valChecked = $('#refund_full').prop('checked');
+function refundAmount() {
+	var valChecked = $('#refund_full').prop('checked');
 
-        if (valChecked == true) {
-            $('#partial_amount_row').hide();
-        } else {
-            $('#partial_amount_row').show();
-        }
-    }
+	if (valChecked == true) {
+		$('#partial_amount_row').hide();
+	} else {
+		$('#partial_amount_row').show();
+	}
+}
 //--></script> 
 <?php echo $footer; ?>

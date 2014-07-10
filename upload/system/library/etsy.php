@@ -275,6 +275,21 @@ final class Etsy {
 	}
 
 	public function productUpdateListen($product_id, $data) {
+		// is the item linked?
+
+		// get the listing from etsy
+
+		// is it active?
+			// yes
+				// does the stock match? If not push an update.
+
+			// no
+				// does it have an old link?
+					// yes
+						// do we have relist items setting to true?
+							// yes - relist the item
+							// no
+					// no
 
 	}
 

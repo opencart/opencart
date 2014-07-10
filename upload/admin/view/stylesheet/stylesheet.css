@@ -374,3 +374,6 @@ input.form-control, select.form-control {
 	vertical-align: middle;
 	display: inline-block;
 }
+.btn-primary:visited {
+    color: #fff;
+}

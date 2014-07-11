@@ -309,7 +309,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$shippedStatusId = isset($settings['openbay_amazon_order_status_shipped']) ? $settings['openbay_amazon_order_status_shipped'] : '';
 		$canceledStatusId = isset($settings['openbay_amazon_order_status_canceled']) ? $settings['openbay_amazon_order_status_canceled'] : '';
 
-		$amazonOrderStatuses = array(
+		$amazon_order_statuses = array(
 			'unshipped' => array('name' => $this->language->get('text_unshipped'), 'order_status_id' => $unshippedStatusId),
 			'partially_shipped' => array('name' => $this->language->get('text_partially_shipped'), 'order_status_id' => $partiallyShippedStatusId),
 			'shipped' => array('name' => $this->language->get('text_shipped'), 'order_status_id' => $shippedStatusId),
@@ -319,7 +319,7 @@ class ControllerOpenbayAmazon extends Controller {
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 		$data['openbay_amazon_order_customer_group'] = isset($settings['openbay_amazon_order_customer_group']) ? $settings['openbay_amazon_order_customer_group'] : '';
 
-		$data['amazon_order_statuses'] = $amazonOrderStatuses;
+		$data['amazon_order_statuses'] = $amazon_order_statuses;
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
 
 		$data['subscription_url'] = $this->url->link('openbay/amazon/subscription', 'token=' . $this->session->data['token'], 'SSL');

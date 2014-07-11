@@ -27,7 +27,7 @@ class Amazonus {
 		/* Is called from front-end? */
 		if (!defined('HTTPS_CATALOG')) {
 			$this->load->model('openbay/amazonus_order');
-			$amazonusOrderId = $this->model_openbay_amazonus_order->getAmazonusOrderId($order_id);
+			$amazonus_order_id = $this->model_openbay_amazonus_order->getAmazonusOrderId($order_id);
 
 			$this->load->library('log');
 			$logger = new Log('amazonus_stocks.log');
@@ -89,8 +89,7 @@ class Amazonus {
 		}
 		$logger->write('productUpdateListen() exiting');
 	}
-	
-	
+
 	public function bulkUpdateOrders($orders) {
 		// Is the module enabled and called from admin?
 		if ($this->config->get('amazonus_status') != 1 || !defined('HTTPS_CATALOG')) {
@@ -138,13 +137,13 @@ class Amazonus {
 		}
 
 		$log->write('order/bulkUpdate call: ' . print_r($request, 1));
-		
+
 		$response = $this->callWithResponse('order/bulkUpdate', $request);
-		
+
 		$log->write('order/bulkUpdate response: ' . $response);
 	}
 
-	public function updateOrder($order_id, $orderStatusString, $courier_id = '', $courierFromList = true, $tracking_no = '') {
+	public function updateOrder($order_id, $order_status_string, $courier_id = '', $courier_from_list = true, $tracking_no = '') {
 
 		if ($this->config->get('amazonus_status') != 1) {
 			return;
@@ -155,51 +154,51 @@ class Amazonus {
 			return;
 		}
 
-		$amazonusOrder = $this->getOrder($order_id);
+		$amazonus_order = $this->getOrder($order_id);
 
-		if(!$amazonusOrder) {
+		if(!$amazonus_order) {
 			return;
 		}
 
-		$amazonusOrderId = $amazonusOrder['amazonus_order_id'];
+		$amazonus_order_id = $amazonus_order['amazonus_order_id'];
 
 
 		$log = new Log('amazonus.log');
-		$log->write("Order's $amazonusOrderId status changed to $orderStatusString");
+		$log->write("Order's $amazonus_order_id status changed to $order_status_string");
 
 
 		$this->load->model('openbay/amazonus');
-		$amazonusOrderProducts = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order_id);
+		$amazonus_order_products = $this->model_openbay_amazonus->getAmazonusOrderedProducts($order_id);
 
 
-		$requestNode = new SimpleXMLElement('<Request/>');
+		$request_node = new SimpleXMLElement('<Request/>');
 
-		$requestNode->addChild('AmazonusOrderId', $amazonusOrderId);
-		$requestNode->addChild('Status', $orderStatusString);
+		$request_node->addChild('AmazonusOrderId', $amazonus_order_id);
+		$request_node->addChild('Status', $order_status_string);
 
 		if(!empty($courier_id)) {
-			if($courierFromList) {
-				$requestNode->addChild('CourierId', $courier_id);
+			if($courier_from_list) {
+				$request_node->addChild('CourierId', $courier_id);
 			} else {
-				$requestNode->addChild('CourierOther', $courier_id);
+				$request_node->addChild('CourierOther', $courier_id);
 			}
-			$requestNode->addChild('TrackingNo', $tracking_no);
+			$request_node->addChild('TrackingNo', $tracking_no);
 		}
 
-		$orderItemsNode = $requestNode->addChild('OrderItems');
+		$order_items_node = $request_node->addChild('OrderItems');
 
-		foreach ($amazonusOrderProducts as $product) {
-			$newOrderItem = $orderItemsNode->addChild('OrderItem');
+		foreach ($amazonus_order_products as $product) {
+			$newOrderItem = $order_items_node->addChild('OrderItem');
 			$newOrderItem->addChild('ItemId', htmlspecialchars($product['amazonus_order_item_id']));
 			$newOrderItem->addChild('Quantity', (int)$product['quantity']);
 		}
 
 		$doc = new DOMDocument('1.0');
 		$doc->preserveWhiteSpace = false;
-		$doc->loadXML($requestNode->asXML());
+		$doc->loadXML($request_node->asXML());
 		$doc->formatOutput = true;
 
-		$this->model_openbay_amazonus->updateAmazonusOrderTracking($order_id, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
+		$this->model_openbay_amazonus->updateAmazonusOrderTracking($order_id, $courier_id, $courier_from_list, !empty($courier_id) ? $tracking_no : '');
 		$log->write('Request: ' . $doc->saveXML());
 		$response = $this->callWithResponse('order/update2', $doc->saveXML(), false);
 		$log->write("Response for Order's status update: $response");
@@ -331,13 +330,15 @@ class Amazonus {
 	}
 
 	private function encrypt($msg, $k, $base64 = false) {
-		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', ''))
+		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '')) {
 			return false;
+		}
 
 		$iv = mcrypt_create_iv(32, MCRYPT_RAND);
 
-		if (mcrypt_generic_init($td, $k, $iv) !== 0)
+		if (mcrypt_generic_init($td, $k, $iv) !== 0) {
 			return false;
+		}
 
 		$msg = mcrypt_generic($td, $msg);
 		$msg = $iv . $msg;
@@ -392,11 +393,11 @@ class Amazonus {
 		$dk = '';
 
 		for ($block = 1; $block <= $kb; $block++) {
-
 			$ib = $b = hash_hmac($a, $s . pack('N', $block), $p, true);
 
-			for ($i = 1; $i < $c; $i++)
+			for ($i = 1; $i < $c; $i++) {
 				$ib ^= ($b = hash_hmac($a, $b, $p, true));
+			}
 
 			$dk .= $ib;
 		}
@@ -414,8 +415,8 @@ class Amazonus {
 		$logger->write('Updating stock using putStockUpdateBulk()');
 		$quantity_data = array();
 		foreach($product_id_array as $product_id) {
-			$amazonusRows = $this->getLinkedSkus($product_id);
-			foreach($amazonusRows as $amazonusRow) {
+			$amazonus_rows = $this->getLinkedSkus($product_id);
+			foreach($amazonus_rows as $amazonusRow) {
 				$product_row = $this->db->query("SELECT quantity, status FROM `" . DB_PREFIX . "product` WHERE `product_id` = '" . (int)$product_id . "'")->row;
 
 				if(!empty($product_row)) {

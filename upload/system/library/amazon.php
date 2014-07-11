@@ -136,13 +136,13 @@ class Amazon {
 		}
 
 		$log->write('order/bulkUpdate call: ' . print_r($request, 1));
-		
+
 		$response = $this->callWithResponse('order/bulkUpdate', $request);
 
 		$log->write('order/bulkUpdate response: ' . $response);
 	}
 
-	public function updateOrder($order_id, $orderStatusString, $courier_id = '', $courierFromList = true, $tracking_no = '') {
+	public function updateOrder($order_id, $order_status_string, $courier_id = '', $courierFromList = true, $tracking_no = '') {
 
 		if ($this->config->get('amazon_status') != 1) {
 			return;
@@ -153,40 +153,40 @@ class Amazon {
 			return;
 		}
 
-		$amazonOrder = $this->getOrder($order_id);
+		$amazon_order = $this->getOrder($order_id);
 
-		if(!$amazonOrder) {
+		if(!$amazon_order) {
 			return;
 		}
 
-		$amazon_order_id = $amazonOrder['amazon_order_id'];
+		$amazon_order_id = $amazon_order['amazon_order_id'];
 
 
 		$log = new Log('amazon.log');
-		$log->write("Order's $amazon_order_id status changed to $orderStatusString");
+		$log->write("Order's $amazon_order_id status changed to $order_status_string");
 
 
 		$this->load->model('openbay/amazon');
-		$amazonOrderProducts = $this->model_openbay_amazon->getAmazonOrderedProducts($order_id);
+		$amazon_orderProducts = $this->model_openbay_amazon->getAmazonOrderedProducts($order_id);
 
 
-		$requestNode = new SimpleXMLElement('<Request/>');
+		$request_node = new SimpleXMLElement('<Request/>');
 
-		$requestNode->addChild('AmazonOrderId', $amazon_order_id);
-		$requestNode->addChild('Status', $orderStatusString);
+		$request_node->addChild('AmazonOrderId', $amazon_order_id);
+		$request_node->addChild('Status', $order_status_string);
 
 		if(!empty($courier_id)) {
 			if($courierFromList) {
-				$requestNode->addChild('CourierId', $courier_id);
+				$request_node->addChild('CourierId', $courier_id);
 			} else {
-				$requestNode->addChild('CourierOther', $courier_id);
+				$request_node->addChild('CourierOther', $courier_id);
 			}
-			$requestNode->addChild('TrackingNo', $tracking_no);
+			$request_node->addChild('TrackingNo', $tracking_no);
 		}
 
-		$orderItemsNode = $requestNode->addChild('OrderItems');
+		$orderItemsNode = $request_node->addChild('OrderItems');
 
-		foreach ($amazonOrderProducts as $product) {
+		foreach ($amazon_orderProducts as $product) {
 			$newOrderItem = $orderItemsNode->addChild('OrderItem');
 			$newOrderItem->addChild('ItemId', htmlspecialchars($product['amazon_order_item_id']));
 			$newOrderItem->addChild('Quantity', (int)$product['quantity']);
@@ -194,7 +194,7 @@ class Amazon {
 
 		$doc = new DOMDocument('1.0');
 		$doc->preserveWhiteSpace = false;
-		$doc->loadXML($requestNode->asXML());
+		$doc->loadXML($request_node->asXML());
 		$doc->formatOutput = true;
 
 		$this->model_openbay_amazon->updateAmazonOrderTracking($order_id, $courier_id, $courierFromList, !empty($courier_id) ? $tracking_no : '');
@@ -329,13 +329,15 @@ class Amazon {
 	}
 
 	private function encrypt($msg, $k, $base64 = false) {
-		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', ''))
+		if (!$td = mcrypt_module_open('rijndael-256', '', 'ctr', '')) {
 			return false;
+		}
 
 		$iv = mcrypt_create_iv(32, MCRYPT_RAND);
 
-		if (mcrypt_generic_init($td, $k, $iv) !== 0)
+		if (mcrypt_generic_init($td, $k, $iv) !== 0) {
 			return false;
+		}
 
 		$msg = mcrypt_generic($td, $msg);
 		$msg = $iv . $msg;
@@ -390,11 +392,11 @@ class Amazon {
 		$dk = '';
 
 		for ($block = 1; $block <= $kb; $block++) {
-
 			$ib = $b = hash_hmac($a, $s . pack('N', $block), $p, true);
 
-			for ($i = 1; $i < $c; $i++)
+			for ($i = 1; $i < $c; $i++) {
 				$ib ^= ($b = hash_hmac($a, $b, $p, true));
+			}
 
 			$dk .= $ib;
 		}

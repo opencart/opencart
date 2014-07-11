@@ -31,7 +31,7 @@ class ControllerAmazonOrder extends Controller {
 
 		$orderXml = simplexml_load_string($decrypted);
 
-		$amazonOrderStatus = trim(strtolower((string)$orderXml->Status));
+		$amazon_orderStatus = trim(strtolower((string)$orderXml->Status));
 
 		$amazon_order_id = (string)$orderXml->AmazonOrderId;
 		$order_status = $this->model_openbay_amazon_order->getMappedStatus((string)$orderXml->Status);

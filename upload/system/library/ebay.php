@@ -352,7 +352,7 @@ final class Ebay {
 		$msg = serialize($msg);
 		$iv  = mcrypt_create_iv(32, MCRYPT_RAND);
 
-		if(mcrypt_generic_init($td, $k, $iv) !== 0 ) { return false; }
+		if (mcrypt_generic_init($td, $k, $iv) !== 0 ) { return false; }
 
 		$msg  = mcrypt_generic($td, $msg);
 		$msg  = $iv . $msg;

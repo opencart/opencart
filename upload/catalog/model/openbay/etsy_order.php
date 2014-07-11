@@ -18,7 +18,7 @@ class ModelOpenbayEtsyOrder extends Model {
 */
 		if(!empty($orders)) {
 			foreach($orders as $order) {
-				$etsy_order = $this->findOrder($order->receipt_id);
+				$etsy_order = $this->openbay->etsy->orderFind(null, $order->receipt_id);
 
 				if ($etsy_order != false) {
 					$order_id = (int)$etsy_order['order_id'];
@@ -81,20 +81,6 @@ class ModelOpenbayEtsyOrder extends Model {
 		$this->openbay->etsy->log('modifyStock() - Updating stock. Product id: '.$product_id.' qty: '.$qty.', symbol: '.$symbol);
 
 		$this->db->query("UPDATE `" . DB_PREFIX . "product` SET `quantity` = (`quantity` " . $this->db->escape((string)$symbol) . " " . (int)$qty . ") WHERE `product_id` = '" . (int)$product_id . "' AND `subtract` = '1'");
-	}
-
-	private function findOrder($receipt_id) {
-		$this->openbay->etsy->log('Find '.$receipt_id);
-
-		$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order` WHERE `receipt_id` = '" . (int)$receipt_id . "' LIMIT 1");
-
-		if($query->num_rows > 0) {
-			$this->openbay->etsy->log($query->row['order_id']);
-			return $query->row;
-		}else{
-			$this->openbay->etsy->log('no');
-			return false;
-		}
 	}
 
 	private function lockAdd($order_id) {

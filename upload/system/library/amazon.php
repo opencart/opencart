@@ -501,7 +501,7 @@ class Amazon {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "amazon_product_link` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
 	}
 
-	public function deleteOrder($order_id){
+	public function orderDelete($order_id){
 		/**
 		 * @todo
 		 */

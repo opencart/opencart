@@ -21,10 +21,6 @@ class ModelOpenbayEtsyProduct extends Model{
 		$this->db->query("INSERT INTO `" . DB_PREFIX . "etsy_listing` SET `product_id` = '" . (int)$product_id . "', `etsy_item_id` = '".$this->db->escape($etsy_item_id)."', `status` = '" . (int)$status_id . "', `created`  = now()");
 	}
 
-	public function deleteLink($link_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_listing_id` = '" . (int)$link_id . "'");
-	}
-
 	public function loadLinked($limit = 100, $page = 1) {
 		$this->load->model('tool/image');
 
@@ -69,15 +65,5 @@ class ModelOpenbayEtsyProduct extends Model{
 		}
 
 		return $data;
-	}
-
-	public function getEtsyItem($listing_id) {
-		$response = $this->openbay->etsy->call('product/listing/'.$listing_id, 'GET');
-
-		if (isset($response['data']['error'])) {
-			return $response;
-		} else {
-			return $response['data']['results'][0];
-		}
 	}
 }

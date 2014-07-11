@@ -367,7 +367,7 @@ class ControllerExtensionOpenbay extends Controller {
 		$this->response->setOutput(json_encode($json));
 	}
 
-	public function ajaxOrderInfo() {
+	public function getOrderInfo() {
 		$data = array();
 
 		$data = array_merge($data, $this->load->language('extension/openbay'));
@@ -405,9 +405,19 @@ class ControllerExtensionOpenbay extends Controller {
 				}
 			}
 		}
+
+		if($this->config->get('etsy_status') == 1) {
+			$data['order_info'] = $this->openbay->etsy->orderFind($this->request->get['order_id']);
+
+			if($data['order_info']) {
+				if($this->request->get['status_id'] == $this->config->get('etsy_order_status_shipped')) {
+
+				}
+			}
+		}
 	}
 
-	public function ajaxAddOrderInfo() {
+	public function addOrderInfo() {
 		if($this->config->get('ebay_status') == 1 && $this->openbay->ebay->isEbayOrder($this->request->get['order_id']) !== false) {
 			if($this->config->get('ebay_status_shipped_id') == $this->request->get['status_id']) {
 				$this->openbay->ebay->orderStatusListen($this->request->get['order_id'], $this->request->get['status_id'], array('tracking_no' => $this->request->post['tracking_no'], 'carrier_id' => $this->request->post['carrier_id']));
@@ -440,6 +450,20 @@ class ControllerExtensionOpenbay extends Controller {
 			}
 			if($this->config->get('openbay_amazonus_order_status_canceled') == $this->request->get['status_id']) {
 				$this->openbay->amazonus->updateOrder($this->request->get['order_id'], 'canceled');
+			}
+		}
+
+		if ($this->config->get('etsy_status') == 1) {
+			$linked_order = $this->openbay->etsy->orderFind($this->request->get['order_id']);
+
+			if ($linked_order != false) {
+				if($this->config->get('etsy_order_status_paid') == $this->request->get['status_id']) {
+					$response = $this->openbay->etsy->orderUpdatePaid($linked_order['receipt_id'], "true");
+				}
+
+				if($this->config->get('etsy_order_status_shipped') == $this->request->get['status_id']) {
+					$response = $this->openbay->etsy->orderUpdateShipped($linked_order['receipt_id'], "true");
+				}
 			}
 		}
 	}

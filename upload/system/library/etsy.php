@@ -127,8 +127,17 @@ final class Etsy {
 		}
 	}
 
-	public function getLinks($product_id, $status = 0) {
-		$qry = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . (int)$product_id . "' AND `status` = '".(int)$status."'");
+	public function getLinks($product_id, $status = 0, $limit = null) {
+		$this->log('getLinks() - Product_id: '.$product_id.' status: '.$status.' limit:'.$limit);
+
+		if ($limit != null) {
+			$sql_limit = ' LIMIT 1';
+		} else {
+			$sql_limit = '';
+		}
+
+
+		$qry = $this->db->query("SELECT `el`.*, `p`.`quantity` FROM `" . DB_PREFIX . "etsy_listing` `el` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `el`.`product_id` = `p`.`product_id` WHERE `el`.`product_id` = '" . (int)$product_id . "' AND `el`.`status` = '".(int)$status."' ORDER BY `el`.`created` DESC".$sql_limit);
 
 		if($qry->num_rows) {
 			$links = array();
@@ -274,34 +283,99 @@ final class Etsy {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
 	}
 
+	public function deleteLink($link_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_listing_id` = '" . (int)$link_id . "'");
+	}
+
 	public function productUpdateListen($product_id, $data) {
-		// is the item linked?
+		$links = $this->getLinks($product_id, 1);
 
-		// get the listing from etsy
+		if (!empty($links)) {
+			foreach ($links as $link) {
+				$etsy_listing = $this->getEtsyItem($link['etsy_item_id']);
 
-		// is it active?
-			// yes
-				// does the stock match? If not push an update.
+				if ($etsy_listing != false && isset($etsy_listing['state']) && $etsy_listing['state'] == 'active') {
+					if ($etsy_listing['quantity'] != $link['quantity']) {
+						$this->updateListingStock($link['etsy_item_id'], $link['quantity']);
+					}
+				} else {
+					$this->deleteLink($link['etsy_listing_id']);
+				}
+			}
+		}
+	}
 
-			// no
-				// does it have an old link?
-					// yes
-						// do we have relist items setting to true?
-							// yes - relist the item
-							// no
-					// no
+	public function orderFind($order_id = null, $receipt_id = null) {
+		if ($order_id != null) {
+			$this->log('Find order id: '.$order_id);
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order` WHERE `order_id` = '" . (int)$order_id . "' LIMIT 1");
 
+			if($query->num_rows > 0) {
+				$this->log('Found');
+				return $query->row;
+			}else{
+				$this->log('Not found');
+				return false;
+			}
+		} elseif($receipt_id != null) {
+			$this->log('Find receipt id: '.$receipt_id);
+			$query = $this->db->query("SELECT * FROM `" . DB_PREFIX . "etsy_order` WHERE `receipt_id` = '" . (int)$receipt_id . "' LIMIT 1");
+
+			if($query->num_rows > 0) {
+				$this->log('Found');
+				return $query->row;
+			}else{
+				$this->log('Not found');
+				return false;
+			}
+		}
 	}
 
 	public function orderNew($order_id) {
 
 	}
 
+	public function orderDelete($order_id) {
+
+	}
+
+	public function orderUpdatePaid($receipt_id, $status) {
+		$this->log('Update paid receipt id: '.$receipt_id);
+		$response = $this->openbay->etsy->call('order/update/payment', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
+
+		$this->log(print_r($response, true));
+
+		if (isset($response['data']['error'])) {
+			return $response;
+		} else {
+			return true;
+		}
+	}
+
+	public function orderUpdateShipped($receipt_id, $status) {
+		$this->log('Update shipped receipt id: '.$receipt_id);
+		$response = $this->openbay->etsy->call('order/update/shipping', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
+
+		$this->log(print_r($response, true));
+
+		if (isset($response['data']['error'])) {
+			return $response;
+		} else {
+			return true;
+		}
+	}
+
 	public function putStockUpdateBulk($product_id_array, $end_inactive) {
 
 	}
 
-	public function deleteOrder($order_id) {
+	public function getEtsyItem($listing_id) {
+		$response = $this->openbay->etsy->call('product/listing/'.$listing_id, 'GET');
 
+		if (isset($response['data']['error'])) {
+			return $response;
+		} else {
+			return $response['data']['results'][0];
+		}
 	}
 }

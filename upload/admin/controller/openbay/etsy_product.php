@@ -249,7 +249,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		}
 
 		// check the etsy item exists
-		$get_response = $this->model_openbay_etsy_product->getEtsyItem($data['etsy_id']);
+		$get_response = $this->openbay->etsy->getEtsyItem($data['etsy_id']);
 
 		if (isset($get_response['data']['error'])) {
 			echo json_encode(array('error' => $this->language->get('error_etsy').$get_response['data']['error']));
@@ -273,7 +273,6 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 	public function deleteLink() {
 		$this->load->language('openbay/etsy_links');
-		$this->load->model('openbay/etsy_product');
 
 		$data = $this->request->post;
 
@@ -282,7 +281,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 			die();
 		}
 
-		$this->model_openbay_etsy_product->deleteLink($data['etsy_link_id']);
+		$this->openbay->etsy->deleteLink($data['etsy_link_id']);
 
 		$this->response->setOutput(json_encode(array('error' => false)));
 	}

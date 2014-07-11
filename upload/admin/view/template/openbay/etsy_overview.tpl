@@ -47,7 +47,7 @@
                   <i class="fa fa-square-o fa-stack-2x"></i>
                   <i class="fa fa-tag fa-stack-1x"></i>
                 </span>
-              <h4><?php echo $text_heading_products; ?></h4>
+              <h4><?php echo $text_heading_listings; ?></h4>
             </a>
           </div>
         </div>

@@ -216,7 +216,7 @@ final class Ebay {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "ebay_stock_reserve` WHERE `product_id` = '" . (int)$product_id . "'");
 	}
 
-	public function deleteOrder($order_id) {
+	public function orderDelete($order_id) {
 		/**
 		 * @todo
 		 */

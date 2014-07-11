@@ -2,80 +2,41 @@
 final class Openbay {
 	private $registry;
 	private $installed_modules = array();
+	private $installed_markets = array();
 
 	public function __construct($registry) {
 		$this->registry = $registry;
-		$this->ebay = new Ebay($registry);
-		$this->amazon = new Amazon($registry);
-		$this->amazonus = new Amazonus($registry);
-		$this->etsy = new Etsy($registry);
+
+		$this->getInstalled();
+
+		foreach ($this->installed_markets as $market) {
+			$class = ucfirst($market);
+			$this->{$market} = new $class($registry);
+		}
+	}
+
+	private function getInstalled() {
+		$query = $this->db->query("SELECT * FROM " . DB_PREFIX . "extension WHERE `type` = 'openbay'");
+
+		foreach ($query->rows as $result) {
+			$this->installed_markets[] = $result['code'];
+		}
 	}
 
 	public function __get($name) {
 		return $this->registry->get($name);
 	}
 
-	public function orderNew($order_id) {
-		/**
-		 * Once and order has been imported from external marketplace and
-		 * and order_id has been created, this method should be called.
-		 *
-		 * $src is the variable controlling where the order has been created.
-		 */
-
-		// eBay Module
-		if ($this->config->get('ebay_status') == 1) {
-			$this->ebay->orderNew($order_id);
-		}
-
-		// Amazon EU Module
-		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->orderNew($order_id);
-		}
-
-		// Amazon US Module
-		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->orderNew($order_id);
-		}
-
-		// Etsy Module
-		if ($this->config->get('etsy_status') == 1) {
-			$this->etsy->orderNew($order_id);
-		}
-
-		/**
-		 * If a 3rd party module needs to be notified about a new order
-		 * so it can update the stock then they should add a method to their
-		 * application here with the order id so they can get the info about it.
-		 * i.e. $this->mylibraryfile->newOrderMethod($order_id);
-		 */
-	}
-
 	public function productUpdateListen($product_id, $data) {
 		/**
 		 * This call is performed after the product has been updated.
-		 * The $data variable holds all of the information that has
-		 * been sent through the $_POST.
+		 * The $data variable holds all of the $_POST data
 		 */
 
-		// eBay Module
-		if ($this->config->get('ebay_status') == 1) {
-			$this->ebay->productUpdateListen($product_id, $data);
-		}
-
-		// Amazon Module
-		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->productUpdateListen($product_id, $data);
-		}
-
-		// Amazon US Module
-		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->productUpdateListen($product_id, $data);
-		}
-
-		// Etsy Module
-		if ($this->config->get('etsy_status') == 1) {
-			$this->etsy->productUpdateListen($product_id, $data);
+		foreach ($this->installed_markets as $market) {
+			if ($this->config->get($market.'_status') == 1) {
+				$this->{$market}->productUpdateListen($product_id, $data);
+			}
 		}
 	}
 
@@ -88,24 +49,10 @@ final class Openbay {
 		 * @param $product_id_array
 		 */
 
-		// eBay Module
-		if ($this->config->get('ebay_status') == 1) {
-			$this->ebay->putStockUpdateBulk($product_id_array, $end_inactive);
-		}
-
-		// Amazon EU Module
-		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->putStockUpdateBulk($product_id_array, $end_inactive);
-		}
-
-		// Amazon US Module
-		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->putStockUpdateBulk($product_id_array, $end_inactive);
-		}
-
-		// Etsy Module
-		if ($this->config->get('etsy_status') == 1) {
-			$this->etsy->putStockUpdateBulk($product_id_array, $end_inactive);
+		foreach ($this->installed_markets as $market) {
+			if ($this->config->get($market.'_status') == 1) {
+				$this->{$market}->putStockUpdateBulk($product_id_array, $end_inactive);
+			}
 		}
 	}
 
@@ -290,49 +237,46 @@ final class Openbay {
 	}
 
 	public function deleteProduct($product_id) {
-		// eBay Module
-		if ($this->config->get('ebay_status') == 1) {
-			$this->ebay->deleteProduct($product_id);
-		}
-
-		// Amazon Module
-		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->deleteProduct($product_id);
-		}
-
-		// Amazon US Module
-		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->deleteProduct($product_id);
-		}
-
-		// Etsy Module
-		if ($this->config->get('etsy_status') == 1) {
-			$this->etsy->deleteProduct($product_id);
+		/**
+		 * Called when a product is deleted in the admin
+		 * Used to delete any data the marketplace module holds
+		 */
+		foreach ($this->installed_markets as $market) {
+			if ($this->config->get($market.'_status') == 1) {
+				$this->{$market}->deleteProduct($product_id);
+			}
 		}
 	}
 
-	public function deleteOrder($order_id) {
+	public function orderNew($order_id) {
 		/**
-		 * Called when an order is deleted - usually by the admin. Helpful to loop over the products to add the stock back to the markets.
+		 * Once and order has been imported from external marketplace and
+		 * and order_id has been created, this method should be called.
 		 */
-		// eBay Module
-		if ($this->config->get('ebay_status') == 1) {
-			$this->ebay->deleteOrder($order_id);
+
+		foreach ($this->installed_markets as $market) {
+			if ($this->config->get($market.'_status') == 1) {
+				$this->{$market}->orderNew($order_id);
+			}
 		}
 
-		// Amazon Module
-		if ($this->config->get('amazon_status') == 1) {
-			$this->amazon->deleteOrder($order_id);
-		}
+		/**
+		 * If a 3rd party module needs to be notified about a new order
+		 * so it can update the stock then they should add a method to their
+		 * application here with the order id so they can get the info about it.
+		 * i.e. $this->mylibraryfile->newOrderMethod($order_id);
+		 */
+	}
 
-		// Amazon US Module
-		if ($this->config->get('amazonus_status') == 1) {
-			$this->amazonus->deleteOrder($order_id);
-		}
-
-		// Etsy Module
-		if ($this->config->get('etsy_status') == 1) {
-			$this->etsy->deleteOrder($order_id);
+	public function orderDelete($order_id) {
+		/**
+		 * Called when an order is deleted in the admin
+		 * Use it to add stock back to the marketplaces
+		 */
+		foreach ($this->installed_markets as $market) {
+			if ($this->config->get($market.'_status') == 1) {
+				$this->{$market}->orderDelete($order_id);
+			}
 		}
 	}
 

@@ -46,7 +46,7 @@
           </div>
         </div>
       </div>
-      <div class="alert alert-danger" id="alert-link-error" style="display:none;"></div>
+      <div class="alert alert-danger" id="alert-error" style="display:none;"></div>
       <div class="well" style="display:none;" id="link-well">
         <div class="row">
           <div class="col-sm-6">
@@ -111,7 +111,7 @@
                   <button data-toggle="tooltip" title="Delete link" class="btn btn-danger" id="btn-delete-<?php echo $listing['link']['etsy_listing_id']; ?>" onclick="deleteLink('<?php echo $listing['link']['etsy_listing_id']; ?>')"><i class="fa fa-unlink"></i></button>
                   <?php } ?>
                   <?php if (in_array('end_item', $listing['actions'])) { ?>
-                  <button data-toggle="tooltip" title="End listing" class="btn btn-danger"><i class="fa fa-times"></i></button>
+                  <button data-toggle="tooltip" title="End listing" class="btn btn-danger" onclick="endListing('<?php echo $listing['listing']['listing_id']; ?>')" id="btn-end-<?php echo $listing['link']['etsy_listing_id']; ?>"><i class="fa fa-times"></i></button>
                   <?php } ?>
                 </td>
               </tr>
@@ -231,13 +231,41 @@ function deleteLink(etsy_link_id) {
         location = url;
       } else {
         $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
-        $('#alert-link-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+        $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
       }
     },
     failure: function() {
       $('#btn-delete-'+etsy_link_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
     }
   });
+}
+
+function endListing(etsy_item_id) {
+  var pass = confirm("<?php echo $text_confirm_end; ?>");
+
+  if (pass == true) {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy_product/endlisting&token=<?php echo $token; ?>',
+      dataType: 'json',
+      method: 'POST',
+      data: { 'etsy_item_id' : etsy_item_id },
+      beforeSend: function() {
+        $('#btn-end-'+etsy_item_id).empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
+      success: function(json) {
+        if (json.error == false) {
+          url += '&item_ended=1';
+          location = url;
+        } else {
+          $('#btn-end-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
+          $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();
+        }
+      },
+      failure: function() {
+        $('#btn-end-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg"></i>').removeAttr('disabled');
+      }
+    });
+  }
 }
 
 $('input[name=\'add_link_product\']').autocomplete({

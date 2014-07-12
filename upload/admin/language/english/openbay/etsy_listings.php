@@ -10,6 +10,8 @@ $_['text_status_ok']         	= 'OK';
 $_['text_status_nolink']        = 'Not linked';
 $_['text_link_added']        	= 'A product has been linked to the listing';
 $_['text_link_deleted']        	= 'The product has been unlinked from the listing';
+$_['text_item_ended']        	= 'The item has been removed from Etsy';
+$_['text_confirm_end']          = 'Are you sure you want to remove the listing?';
 
 $_['column_listing_id']			= 'Etsy ID';
 $_['column_title']				= 'Title';

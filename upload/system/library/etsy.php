@@ -283,8 +283,8 @@ final class Etsy {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
 	}
 
-	public function deleteLink($link_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_listing_id` = '" . (int)$link_id . "'");
+	public function deleteLink($etsy_listing_id) {
+		$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_listing_id` = '" . (int)$etsy_listing_id . "'");
 	}
 
 	public function productUpdateListen($product_id, $data) {

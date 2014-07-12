@@ -182,7 +182,7 @@ class ControllerOpenbayEtsy extends Controller {
 	}
 
 	protected function validate() {
-		if (!$this->user->hasPermission('modify', 'openbay/ebay')) {
+		if (!$this->user->hasPermission('modify', 'openbay/etsy')) {
 			$this->error['warning'] = $this->language->get('invalid_permission');
 		}
 

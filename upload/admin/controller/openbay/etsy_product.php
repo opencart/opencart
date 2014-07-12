@@ -461,6 +461,10 @@ class ControllerOpenbayEtsyProduct extends Controller {
 
 		$data['success'] = '';
 
+		if (isset($this->request->get['item_ended'])) {
+			$data['success'] = $this->language->get('text_item_ended');
+		}
+
 		if (isset($this->request->get['link_added'])) {
 			$data['success'] = $this->language->get('text_link_added');
 		}
@@ -480,5 +484,32 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$data['footer'] = $this->load->controller('common/footer');
 
 		$this->response->setOutput($this->load->view('openbay/etsy_listings.tpl', $data));
+	}
+
+	public function endListing() {
+		$this->load->language('openbay/etsy_links');
+
+		$data = $this->request->post;
+
+		if (!isset($data['etsy_item_id'])) {
+			echo json_encode(array('error' => $this->language->get('error_etsy_id')));
+			die();
+		}
+
+		// check the etsy item exists
+		$response = $this->openbay->etsy->call('product/listing/'.(int)$data['etsy_item_id'].'/delete', 'POST', array());
+
+		if (isset($response['data']['error'])) {
+			echo json_encode(array('error' => $this->language->get('error_etsy').$response['data']['error']));
+			die();
+		} else {
+			$linked_item = $this->openbay->etsy->getLinkedProduct($data['etsy_item_id']);
+
+			if ($linked_item != false) {
+				$this->openbay->etsy->deleteLink($linked_item['etsy_listing_id']);
+			}
+
+			$this->response->setOutput(json_encode(array('error' => false)));
+		}
 	}
 }

@@ -378,4 +378,8 @@ final class Etsy {
 			return $response['data']['results'][0];
 		}
 	}
+
+	public function validate() {
+
+	}
 }

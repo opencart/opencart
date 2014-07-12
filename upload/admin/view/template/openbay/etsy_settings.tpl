@@ -114,6 +114,12 @@
                 </select>
               </div>
             </div>
+            <div class="form-group">
+              <label class="col-sm-2 control-label" for="button-import"><?php echo $text_pull_orders; ?></label>
+              <div class="col-sm-10">
+                <a class="btn btn-primary" id="button-import"><i class="fa fa-refresh"></i> <?php echo $btn_pull; ?></a>
+              </div>
+            </div>
           </div>
         </div>
       </form>
@@ -121,41 +127,65 @@
   </div>
 </div>
 <script type="text/javascript"><!--
-    function validateForm() {
-        $('#form-etsy-settings').submit();
-    }
+  function validateForm() {
+      $('#form-etsy-settings').submit();
+  }
 
-    function checkCredentials() {
-        $.ajax({
-            url: 'index.php?route=openbay/etsy/verifyDetails&token=<?php echo $token; ?>',
-            type: 'POST',
-            dataType: 'json',
-            data: {token: $('#etsy_token').val(), secret: $('#etsy_secret').val(), enc1: $('#etsy_enc1').val(), enc2: $('#etsy_enc2').val()},
-            beforeSend: function() {
-              $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> Checking details').show();
-            },
-            success: function(data) {
-                if (data.error == false) {
-                    $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> <?php echo $text_api_ok; ?>');
-                } else {
-                    $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i>');
-                }
-            },
-            failure: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $text_api_connect_fail; ?>');
-            },
-            error: function() {
-              $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $text_api_connect_error; ?>');
-            }
-        });
-    }
+  function checkCredentials() {
+      $.ajax({
+          url: 'index.php?route=openbay/etsy/verifyDetails&token=<?php echo $token; ?>',
+          type: 'POST',
+          dataType: 'json',
+          data: {token: $('#etsy_token').val(), secret: $('#etsy_secret').val(), enc1: $('#etsy_enc1').val(), enc2: $('#etsy_enc2').val()},
+          beforeSend: function() {
+            $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> Checking details').show();
+          },
+          success: function(data) {
+              if (data.error == false) {
+                  $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> <?php echo $text_api_ok; ?>');
+              } else {
+                  $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i>');
+              }
+          },
+          failure: function() {
+            $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $text_api_connect_fail; ?>');
+          },
+          error: function() {
+            $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $text_api_connect_error; ?>');
+          }
+      });
+  }
 
-    $('.credentials').change(function() {
-      checkCredentials();
+  $('.credentials').change(function() {
+    checkCredentials();
+  });
+
+  $(document).ready(function() {
+    checkCredentials();
+  });
+
+  $('#button-import').bind('click', function() {
+    $.ajax({
+      url: 'index.php?route=openbay/etsy/getorders&token=<?php echo $token; ?>',
+      beforeSend: function(){
+        $('#button-import').removeClass('btn-success').removeClass('btn-danger').addClass('btn-primary').empty().html('<i class="fa fa-cog fa-lg fa-spin"></i>').attr('disabled','disabled');
+      },
+      type: 'post',
+      dataType: 'json',
+      success: function(json) {
+        if (json.header_code == 200) {
+          $('#button-import').empty().removeClass('btn-primary').addClass('btn-success').html('<?php echo $text_complete; ?>');
+          alert('<?php echo $text_orders_imported; ?>');
+        } else {
+          $('#button-import').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+          alert(json.data.error + '(' + json.data.code + ')');
+        }
+      },
+      error: function (xhr, ajaxOptions, thrownError) {
+        $('#button-import').empty().removeClass('btn-primary').addClass('btn-danger').html('<?php echo $text_failed; ?>').removeAttr('disabled');
+        if (xhr.status != 0) { alert(thrownError + "\r\n" + xhr.statusText + "\r\n" + xhr.responseText); }
+      }
     });
-
-    $(document).ready(function() {
-      checkCredentials();
-    });
+  });
 //--></script>
 <?php echo $footer; ?>

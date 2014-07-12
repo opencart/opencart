@@ -49,10 +49,10 @@ class ControllerOpenbayEtsy extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['validation']               = $this->openbay->ebay->validate();
-		$data['links_settings']           = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], 'SSL');
-		$data['links_products']           = $this->url->link('openbay/etsy_product/itemLinks', 'token=' . $this->session->data['token'], 'SSL');
-		$data['links_listings']           = $this->url->link('openbay/etsy_product/listings', 'token=' . $this->session->data['token'], 'SSL');
+		$data['validation'] = $this->openbay->etsy->validate();
+		$data['links_settings'] = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], 'SSL');
+		$data['links_products'] = $this->url->link('openbay/etsy_product/links', 'token=' . $this->session->data['token'], 'SSL');
+		$data['links_listings'] = $this->url->link('openbay/etsy_product/listings', 'token=' . $this->session->data['token'], 'SSL');
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -173,6 +173,12 @@ class ControllerOpenbayEtsy extends Controller {
 
 	public function verifyDetails() {
 		echo json_encode(array('error' => false));
+	}
+
+	public function getOrders() {
+		$response = $this->openbay->etsy->call('order/get/all', 'GET');
+
+		$this->response->setOutput(json_encode($response));
 	}
 
 	protected function validate() {

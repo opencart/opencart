@@ -286,7 +286,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 		$this->response->setOutput(json_encode(array('error' => false)));
 	}
 
-	public function itemLinks() {
+	public function links() {
 		$this->load->model('openbay/etsy_product');
 
 		$data = $this->load->language('openbay/etsy_links');

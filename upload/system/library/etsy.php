@@ -380,6 +380,10 @@ final class Etsy {
 	}
 
 	public function validate() {
-
+		if ($this->config->get('etsy_token') && $this->config->get('etsy_enc1') && $this->config->get('etsy_enc2')) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

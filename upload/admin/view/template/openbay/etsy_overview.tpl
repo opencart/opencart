@@ -29,30 +29,29 @@
             </a>
           </div>
         </div>
-        <div class="col-md-3 text-center">
-          <div class="well">
-            <a href="<?php echo $links_products; ?>">
-                <span class="fa-stack fa-3x">
-                  <i class="fa fa-square-o fa-stack-2x"></i>
-                  <i class="fa fa-link fa-stack-1x"></i>
-                </span>
-              <h4><?php echo $text_heading_products; ?></h4>
-            </a>
-          </div>
-        </div>
-        <div class="col-md-3 text-center">
-          <div class="well">
-            <a href="<?php echo $links_listings; ?>">
-                <span class="fa-stack fa-3x">
-                  <i class="fa fa-square-o fa-stack-2x"></i>
-                  <i class="fa fa-tag fa-stack-1x"></i>
-                </span>
-              <h4><?php echo $text_heading_listings; ?></h4>
-            </a>
-          </div>
-        </div>
         <?php if($validation == true){ ?>
-
+          <div class="col-md-3 text-center">
+            <div class="well">
+              <a href="<?php echo $links_products; ?>">
+                  <span class="fa-stack fa-3x">
+                    <i class="fa fa-square-o fa-stack-2x"></i>
+                    <i class="fa fa-link fa-stack-1x"></i>
+                  </span>
+                <h4><?php echo $text_heading_products; ?></h4>
+              </a>
+            </div>
+          </div>
+          <div class="col-md-3 text-center">
+            <div class="well">
+              <a href="<?php echo $links_listings; ?>">
+                  <span class="fa-stack fa-3x">
+                    <i class="fa fa-square-o fa-stack-2x"></i>
+                    <i class="fa fa-tag fa-stack-1x"></i>
+                  </span>
+                <h4><?php echo $text_heading_listings; ?></h4>
+              </a>
+            </div>
+          </div>
         <?php }else{ ?>
           <div class="col-md-3 text-center">
             <div class="well">

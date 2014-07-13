@@ -19,6 +19,13 @@
       <h1 class="panel-title"><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
     </div>
     <div class="panel-body">
+      <?php if ($account_info != false) { ?>
+        <?php if ($account_info['header_code'] == 200) { ?>
+      <div class="alert alert-success"><i class="fa fa-check"></i> <?php echo $text_account_ok; ?></div>
+        <?php } else { ?>
+          <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_account_info; ?> (<?php echo $account_info['header_code']; ?>)</div>
+        <?php } ?>
+      <?php } ?>
       <form action="<?php echo $action; ?>" method="post" enctype="multipart/form-data" id="form-etsy-settings" class="form-horizontal">
 
         <ul class="nav nav-tabs">
@@ -57,12 +64,6 @@
               <label class="col-sm-2 control-label" for="etsy_enc2"><?php echo $text_enc2; ?></label>
               <div class="col-sm-10">
                 <input type="text" name="etsy_enc2" value="<?php echo $etsy_enc2; ?>" placeholder="<?php echo $text_enc2; ?>" id="etsy_enc2" class="form-control credentials" />
-              </div>
-            </div>
-            <div class="form-group">
-              <label class="col-sm-2 control-label"><?php echo $text_api_status; ?></label>
-              <div class="col-sm-10">
-                <h4><span id="api-status" class="label" style="display:none;"></span></h4>
               </div>
             </div>
             <div class="form-group">
@@ -129,31 +130,6 @@
 <script type="text/javascript"><!--
   function validateForm() {
       $('#form-etsy-settings').submit();
-  }
-
-  function checkCredentials() {
-      $.ajax({
-          url: 'index.php?route=openbay/etsy/verifyDetails&token=<?php echo $token; ?>',
-          type: 'POST',
-          dataType: 'json',
-          data: {token: $('#etsy_token').val(), secret: $('#etsy_secret').val(), enc1: $('#etsy_enc1').val(), enc2: $('#etsy_enc2').val()},
-          beforeSend: function() {
-            $('#api-status').removeClass('label-success').removeClass('label-danger').addClass('label-primary').html('<i class="fa fa-cog fa-lg fa-spin"></i> Checking details').show();
-          },
-          success: function(data) {
-              if (data.error == false) {
-                  $('#api-status').removeClass('label-primary').addClass('label-success').html('<i class="fa fa-check-square-o"></i> <?php echo $text_api_ok; ?>');
-              } else {
-                  $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i>');
-              }
-          },
-          failure: function() {
-            $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $text_api_connect_fail; ?>');
-          },
-          error: function() {
-            $('#api-status').removeClass('label-primary').addClass('label-danger').html('<i class="fa fa-minus-square"></i> <?php echo $text_api_connect_error; ?>');
-          }
-      });
   }
 
   $('.credentials').change(function() {

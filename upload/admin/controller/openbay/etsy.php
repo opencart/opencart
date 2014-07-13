@@ -49,7 +49,7 @@ class ControllerOpenbayEtsy extends Controller {
 			$data['success'] = '';
 		}
 
-		$data['validation'] = $this->openbay->etsy->validate();
+		$data['validation'] 	= $this->openbay->etsy->validate();
 		$data['links_settings'] = $this->url->link('openbay/etsy/settings', 'token=' . $this->session->data['token'], 'SSL');
 		$data['links_products'] = $this->url->link('openbay/etsy_product/links', 'token=' . $this->session->data['token'], 'SSL');
 		$data['links_listings'] = $this->url->link('openbay/etsy_product/listings', 'token=' . $this->session->data['token'], 'SSL');
@@ -159,6 +159,7 @@ class ControllerOpenbayEtsy extends Controller {
 
 		$data['api_server'] = $this->openbay->etsy->getApiServer();
 		$data['order_statuses'] = $this->model_localisation_order_status->getOrderStatuses();
+		$data['account_info'] = $this->model_openbay_etsy->verifyAccount();
 
 		$data['header'] = $this->load->controller('common/header');
 		$data['menu'] = $this->load->controller('common/menu');
@@ -169,10 +170,6 @@ class ControllerOpenbayEtsy extends Controller {
 
 	public function settingsUpdate() {
 		$this->openbay->etsy->settingsUpdate();
-	}
-
-	public function verifyDetails() {
-		echo json_encode(array('error' => false));
 	}
 
 	public function getOrders() {

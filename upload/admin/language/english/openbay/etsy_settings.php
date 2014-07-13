@@ -13,6 +13,7 @@ $_['text_success_settings']     = 'Your settings have been saved';
 $_['text_status']         		= 'Status';
 $_['text_address_format']       = 'Default address format';
 $_['text_address_format_help']  = 'Only used if the linked country does not have an address format set-up already.';
+$_['text_account_ok']  			= 'Connection to Etsy OK';
 
 $_['text_import_def_id']        = 'Import default status (unpaid):';
 $_['text_import_paid_id']       = 'Paid status:';
@@ -34,3 +35,5 @@ $_['text_complete']    			= 'Complete';
 $_['text_failed']    			= 'Failed';
 $_['text_orders_imported']    	= 'Order poll has been requested';
 $_['btn_pull']    				= 'Poll now';
+
+$_['error_account_info']    	= 'Unable to verify API connection to Etsy ';

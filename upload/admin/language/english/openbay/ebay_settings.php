@@ -9,7 +9,7 @@ $_['text_clear']                = 'Clear';
 $_['text_add']                  = 'Add';
 $_['text_remove']               = 'Remove';
 $_['text_load']                 = 'Load';
-$_['text_success_settings']         = 'Your settings have been saved';
+$_['text_success_settings']     = 'Your settings have been saved';
 $_['text_status']         		= 'Status';
 
 $_['tab_api_info']            = 'API details';

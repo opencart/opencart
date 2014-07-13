@@ -49,4 +49,12 @@ class ModelOpenbayEtsy extends Model{
 	public function uninstall(){
 
 	}
+
+	public function verifyAccount() {
+		if ($this->openbay->etsy->validate() == true) {
+			return $this->openbay->etsy->call('account/info', 'GET');
+		} else {
+			return false;
+		}
+	}
 }

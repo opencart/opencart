@@ -104,6 +104,7 @@ class ControllerOpenbayEtsyProduct extends Controller {
 	}
 
 	public function createSubmit() {
+		$this->load->language('openbay/etsy_create');
 		$this->load->model('openbay/etsy_product');
 
 		$data = $this->request->post;

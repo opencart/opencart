@@ -177,17 +177,25 @@ final class Etsy {
 		 * */
 	}
 
-	public function updateListingStock($listing_id, $new_stock) {
-		/**
-		 * This will update a single listing stock level
-		 */
+	public function updateListingStock($etsy_item_id, $new_stock) {
+		if ($new_stock > 0) {
+			$response = $this->call('product/listing/'.(int)$etsy_item_id.'/updateStock', 'POST', array('quantity' => $new_stock));
 
-		$response = $this->openbay->etsy->call('product/listing/'.(int)$listing_id.'/updateStock', 'POST', array('quantity' => $new_stock));
-
-		if (isset($response['data']['error'])) {
-			return $response;
+			if (isset($response['data']['error'])) {
+				return $response;
+			} else {
+				return true;
+			}
 		} else {
-			return true;
+			$this->deleteLink(null, $etsy_item_id);
+
+			$response = $this->call('product/listing/'.(int)$etsy_item_id.'/inactive', 'POST');
+
+			if (isset($response['data']['error'])) {
+				return $response;
+			} else {
+				return true;
+			}
 		}
 	}
 
@@ -283,8 +291,12 @@ final class Etsy {
 		$this->db->query("DELETE FROM `" . DB_PREFIX . "etsy_listing` WHERE `product_id` = '" . $this->db->escape($product_id) . "'");
 	}
 
-	public function deleteLink($etsy_listing_id) {
-		$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_listing_id` = '" . (int)$etsy_listing_id . "'");
+	public function deleteLink($etsy_listing_id = null, $etsy_item_id = null) {
+		if ($etsy_listing_id != null) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_listing_id` = '" . (int)$etsy_listing_id . "' LIMIT 1");
+		} elseif ($etsy_item_id != null) {
+			$this->db->query("UPDATE `" . DB_PREFIX . "etsy_listing` SET `status` = 0 WHERE `etsy_item_id` = '" . (int)$etsy_item_id . "' LIMIT 1");
+		}
 	}
 
 	public function productUpdateListen($product_id, $data) {
@@ -294,7 +306,11 @@ final class Etsy {
 			foreach ($links as $link) {
 				$etsy_listing = $this->getEtsyItem($link['etsy_item_id']);
 
-				if ($etsy_listing != false && isset($etsy_listing['state']) && $etsy_listing['state'] == 'active') {
+				$this->log(print_r($etsy_listing, true));
+
+				$this->log('Listings update');
+
+				if ($etsy_listing != false && isset($etsy_listing['state']) && ($etsy_listing['state'] == 'active' || $etsy_listing['state'] == 'private')) {
 					if ($etsy_listing['quantity'] != $link['quantity']) {
 						$this->updateListingStock($link['etsy_item_id'], $link['quantity']);
 					}
@@ -332,7 +348,15 @@ final class Etsy {
 	}
 
 	public function orderNew($order_id) {
+		if(!$this->orderFind($order_id)) {
+			$query = $this->db->query("SELECT `p`.`quantity`, `p`.`product_id`, `el`.`etsy_item_id` FROM `" . DB_PREFIX . "order_product` `op` LEFT JOIN `" . DB_PREFIX . "product` `p` ON `op`.`product_id` = `p`.`product_id` LEFT JOIN `" . DB_PREFIX . "etsy_listing` `el` ON `op`.`product_id` = `p`.`product_id` WHERE `op`.`order_id` = '" . (int)$order_id . "' AND `el`.`status` = 1");
 
+			if($query->num_rows > 0) {
+				foreach ($query->rows as $product) {
+					$this->updateListingStock((int)$product['etsy_item_id'], (int)$product['quantity']);
+				}
+			}
+		}
 	}
 
 	public function orderDelete($order_id) {
@@ -340,10 +364,7 @@ final class Etsy {
 	}
 
 	public function orderUpdatePaid($receipt_id, $status) {
-		$this->log('Update paid receipt id: '.$receipt_id);
 		$response = $this->openbay->etsy->call('order/update/payment', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
-
-		$this->log(print_r($response, true));
 
 		if (isset($response['data']['error'])) {
 			return $response;
@@ -353,10 +374,7 @@ final class Etsy {
 	}
 
 	public function orderUpdateShipped($receipt_id, $status) {
-		$this->log('Update shipped receipt id: '.$receipt_id);
 		$response = $this->openbay->etsy->call('order/update/shipping', 'POST', array('receipt_id' => $receipt_id, 'status' => $status));
-
-		$this->log(print_r($response, true));
 
 		if (isset($response['data']['error'])) {
 			return $response;

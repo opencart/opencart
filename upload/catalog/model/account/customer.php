@@ -71,6 +71,8 @@ class ModelAccountCustomer extends Model {
 				}
 			}
 		}
+		
+		$this->event->trigger('customer_register', array('customer_id' => $customer_id));
 
 		return $customer_id;
 	}

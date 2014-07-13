@@ -60,17 +60,17 @@ if (!$store_query->num_rows) {
 	$config->set('config_ssl', HTTPS_SERVER);
 }
 
-//Event
+// Event
 $event = new Event($loader);
 $registry->set('event', $event);
 
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '0' OR store_id = '" . (int)$config->get('config_store_id') . "' ORDER BY store_id ASC");
 
 foreach ($query->rows as $e) {
-    $handlers = unserialize($e['handlers']);
-    foreach ($handlers as $handler) {
-	    $event->register($e['event'], $handler);
-    }
+	$handlers = unserialize($e['handlers']);
+	foreach ($handlers as $handler) {
+		$event->register($e['event'], $handler);
+	}
 }
 
 // Url

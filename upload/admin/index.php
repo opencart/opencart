@@ -42,17 +42,17 @@ foreach ($query->rows as $setting) {
 $loader = new Loader($registry);
 $registry->set('load', $loader);
 
-//Event
+// Event
 $event = new Event($loader);
 $registry->set('event', $event);
 
 $query = $db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '0'");
 
 foreach ($query->rows as $e) {
-    $handlers = unserialize($e['handlers']);
-    foreach ($handlers as $handler) {
-	    $event->register($e['event'], $handler);
-    }
+	$handlers = unserialize($e['handlers']);
+	foreach ($handlers as $handler) {
+		$event->register($e['event'], $handler);
+	}
 }
 
 // Url

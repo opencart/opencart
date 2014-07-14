@@ -22,8 +22,9 @@ final class Action {
 				continue;
 			}
 
-			if (is_file(DIR_APPLICATION . 'controller/' . str_replace(array('../', '..\\', '..'), '', $path) . '.php')) {
-				$this->file = DIR_APPLICATION . 'controller/' . str_replace(array('../', '..\\', '..'), '', $path) . '.php';
+            $controller_path = DIR_APPLICATION . 'controller/' . str_replace(array('../', '..\\', '..'), '', $path) . '.php';
+			if (is_file($controller_path)) {
+				$this->file = $controller_path;
 
 				$this->class = 'Controller' . preg_replace('/[^a-zA-Z0-9]/', '', $path);
 

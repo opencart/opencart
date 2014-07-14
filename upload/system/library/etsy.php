@@ -392,7 +392,23 @@ final class Etsy {
 	}
 
 	public function putStockUpdateBulk($product_id_array, $end_inactive) {
+		foreach($product_id_array as $product_id) {
+			$links = $this->getLinks($product_id, 1);
 
+			if (!empty($links)) {
+				foreach ($links as $link) {
+					$etsy_listing = $this->getEtsyItem($link['etsy_item_id']);
+
+					if ($etsy_listing != false && isset($etsy_listing['state']) && ($etsy_listing['state'] == 'active' || $etsy_listing['state'] == 'private')) {
+						if ($etsy_listing['quantity'] != $link['quantity']) {
+							$this->updateListingStock($link['etsy_item_id'], $link['quantity']);
+						}
+					} else {
+						$this->deleteLink($link['etsy_listing_id']);
+					}
+				}
+			}
+		}
 	}
 
 	public function getEtsyItem($listing_id) {

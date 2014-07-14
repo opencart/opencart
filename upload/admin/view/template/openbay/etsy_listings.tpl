@@ -287,8 +287,7 @@ function deactivateListing(etsy_item_id) {
       success: function(json) {
         if (json.error == false) {
           url += '&item_deactivated=1';
-          alert(url);
-          //location = url;
+          location = url;
         } else {
           $('#btn-deactivate-'+etsy_item_id).empty().html('<i class="fa fa-times fa-lg" style="color:red;"></i>').removeAttr('disabled');
           $('#alert-error').html('<i class="fa fa-times fa-lg"></i> '+json.error).show();

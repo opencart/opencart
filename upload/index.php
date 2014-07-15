@@ -218,6 +218,18 @@ $registry->set('cart', new Cart($registry));
 
 // Encryption
 $registry->set('encryption', new Encryption($config->get('config_encryption')));
+
+// Event
+$registry->set('event', new Event($registry));
+
+$query = $db->query("SELECT * FROM " . DB_PREFIX . "event WHERE store_id = '0'");
+
+foreach ($query->rows as $e) {
+	$handlers = unserialize($e['handlers']);
+	foreach ($handlers as $handler) {
+		$event->register($e['event'], $handler);
+	}
+}
 		
 // Front Controller
 $controller = new Front($registry);

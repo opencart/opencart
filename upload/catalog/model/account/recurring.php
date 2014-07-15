@@ -1,6 +1,5 @@
 <?php
 class ModelAccountRecurring extends Model {
-
 	private $recurring_status = array(
 		0 => 'Inactive',
 		1 => 'Active',

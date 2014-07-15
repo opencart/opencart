@@ -72,19 +72,27 @@ class ModelAccountCustomer extends Model {
 			}
 		}
 
+		$this->event->trigger('customer_add', array('customer_id' => $customer_id));
+
 		return $customer_id;
 	}
 
 	public function editCustomer($data) {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET firstname = '" . $this->db->escape($data['firstname']) . "', lastname = '" . $this->db->escape($data['lastname']) . "', email = '" . $this->db->escape($data['email']) . "', telephone = '" . $this->db->escape($data['telephone']) . "', fax = '" . $this->db->escape($data['fax']) . "', custom_field = '" . $this->db->escape(isset($data['custom_field']) ? serialize($data['custom_field']) : '') . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+
+		$this->event->trigger('customer_edit');
 	}
 
 	public function editPassword($email, $password) {
       	$this->db->query("UPDATE " . DB_PREFIX . "customer SET salt = '" . $this->db->escape($salt = substr(md5(uniqid(rand(), true)), 0, 9)) . "', password = '" . $this->db->escape(sha1($salt . sha1($salt . sha1($password)))) . "' WHERE LOWER(email) = '" . $this->db->escape(utf8_strtolower($email)) . "'");
+
+		$this->event->trigger('customer_edit_password');
 	}
 
 	public function editNewsletter($newsletter) {
 		$this->db->query("UPDATE " . DB_PREFIX . "customer SET newsletter = '" . (int)$newsletter . "' WHERE customer_id = '" . (int)$this->customer->getId() . "'");
+
+		$this->event->trigger('customer_edit_newsletter');
 	}
 
 	public function getCustomer($customer_id) {

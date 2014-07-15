@@ -1,14 +1,19 @@
 <?php echo $header; ?><?php echo $menu; ?>
 <div id="content">
-  <?php if ($error_install) { ?>
-  <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_install; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
-  </div>
-  <?php } ?>
-  <div class="alert alert-info"><i class="fa fa-thumbs-o-up"></i> <?php echo $text_welcome; ?>
-    <button type="button" class="close" data-dismiss="alert">&times;</button>
+  <div class="page-header">
+    <div class="container-fluid">
+      <h1><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+    </div>
   </div>
   <div class="container-fluid">
+    <?php if ($error_install) { ?>
+    <div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> <?php echo $error_install; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
+    <?php } ?>
+    <div class="alert alert-info"><i class="fa fa-thumbs-o-up"></i> <?php echo $text_welcome; ?>
+      <button type="button" class="close" data-dismiss="alert">&times;</button>
+    </div>
     <div class="row">
       <div class="col-sm-3">
         <div class="panel panel-default">

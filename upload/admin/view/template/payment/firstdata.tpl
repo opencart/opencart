@@ -5,7 +5,7 @@
       <div class="pull-right">
         <button type="submit" form="form-firstdata" class="btn" data-toggle="tooltip" data-original-title="<?php echo $button_save; ?>"> <i class="fa fa-check-circle"></i></button>
         <a href="<?php echo $cancel; ?>" class="btn" data-toggle="tooltip" data-original-title="<?php echo $button_cancel; ?>"><i class="fa fa-reply"></i></a> </div>
-      <h1 class="panel-title"><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-edit"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">

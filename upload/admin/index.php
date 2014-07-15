@@ -137,6 +137,9 @@ $registry->set('user', new User($registry));
 //OpenBay Pro
 $registry->set('openbay', new Openbay($registry));
 
+// Event
+$registry->set('event', new Event($registry));
+
 // Front Controller
 $controller = new Front($registry);
 

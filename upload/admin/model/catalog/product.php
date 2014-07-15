@@ -332,7 +332,7 @@ class ModelCatalogProduct extends Model {
 
 		$this->cache->delete('product');
 
-		$this->event->trigger('admin_delete_product');
+		$this->event->trigger('admin_delete_product', array('product_id' => $product_id));
 	}
 
 	public function getProduct($product_id) {

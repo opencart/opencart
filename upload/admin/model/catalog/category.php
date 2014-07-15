@@ -53,7 +53,7 @@ class ModelCatalogCategory extends Model {
 
 		$this->cache->delete('category');
 
-		$this->event->trigger('admin_add_category', array('product_id' => $category_id));
+		$this->event->trigger('admin_add_category', array('category_id' => $category_id));
 	}
 
 	public function editCategory($category_id, $data) {

@@ -20,10 +20,10 @@ $_['text_trial']       = '%s every %s %s for %s payments then ';
 $_['text_recurring']   = '%s every %s %s';
 $_['text_length']      = ' for %s payments';
 $_['text_until_cancelled']   	= 'until cancelled';
-$_['text_recurring_item']    	= 'Recurring item';
-$_['text_payment_profile']   	= 'Payment Profile';
-$_['text_trial_description'] 	= '%s every %d %s(s) for %d payment(s) then';
-$_['text_payment_description'] 	= '%s every %d %s(s) for %d payment(s)';
+$_['text_recurring_item']    	              = 'Recurring item';
+$_['text_payment_profile']                    = 'Payment Profile';
+$_['text_trial_description'] 	              = '%s every %d %s(s) for %d payment(s) then';
+$_['text_payment_description'] 	              = '%s every %d %s(s) for %d payment(s)';
 $_['text_payment_until_canceled_description'] = '%s every %d %s(s) until canceled';
 
 // Column

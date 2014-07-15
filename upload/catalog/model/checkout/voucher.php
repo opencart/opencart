@@ -76,30 +76,30 @@ class ModelCheckoutVoucher extends Model {
 
 			foreach ($voucher_query->rows as $voucher) {
 				// HTML Mail
-				$template = new Template();
+				$data = array();
 
-				$template->data['title'] = sprintf($language->get('text_subject'), $voucher['from_name']);
+				$data['title'] = sprintf($language->get('text_subject'), $voucher['from_name']);
 
-				$template->data['text_greeting'] = sprintf($language->get('text_greeting'), $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']));
-				$template->data['text_from'] = sprintf($language->get('text_from'), $voucher['from_name']);
-				$template->data['text_message'] = $language->get('text_message');
-				$template->data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher['code']);
-				$template->data['text_footer'] = $language->get('text_footer');
+				$data['text_greeting'] = sprintf($language->get('text_greeting'), $this->currency->format($voucher['amount'], $order_info['currency_code'], $order_info['currency_value']));
+				$data['text_from'] = sprintf($language->get('text_from'), $voucher['from_name']);
+				$data['text_message'] = $language->get('text_message');
+				$data['text_redeem'] = sprintf($language->get('text_redeem'), $voucher['code']);
+				$data['text_footer'] = $language->get('text_footer');
 
 				if (is_file(DIR_IMAGE . $voucher['image'])) {
-					$template->data['image'] = $this->config->get('config_url') . 'image/' . $voucher['image'];
+					$data['image'] = $this->config->get('config_url') . 'image/' . $voucher['image'];
 				} else {
-					$template->data['image'] = '';
+					$data['image'] = '';
 				}
 
-				$template->data['store_name'] = $order_info['store_name'];
-				$template->data['store_url'] = $order_info['store_url'];
-				$template->data['message'] = nl2br($voucher['message']);
+				$data['store_name'] = $order_info['store_name'];
+				$data['store_url'] = $order_info['store_url'];
+				$data['message'] = nl2br($voucher['message']);
 
 				if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/mail/voucher.tpl')) {
-					$html = $template->fetch($this->config->get('config_template') . '/template/mail/voucher.tpl');
+					$html = $this->load->view($this->config->get('config_template') . '/template/mail/voucher.tpl', $data);
 				} else {
-					$html = $template->fetch('default/template/mail/voucher.tpl');
+					$html = $this->load->view('default/template/mail/voucher.tpl', $data);
 				}
 
 				$mail = new Mail($this->config->get('config_mail'));

@@ -71,7 +71,6 @@ $_['button_route_add']              = 'Add Route';
 $_['button_rule_add']               = 'Add Rule';
 $_['button_module_add']             = 'Add Module';
 $_['button_link_add']               = 'Add Link';
-$_['button_total']                  = 'Update Totals';
 $_['button_approve']                = 'Approve';
 $_['button_reset']                  = 'Reset';
 $_['button_generate']               = 'Generate';
@@ -129,7 +128,6 @@ $_['tab_sale']                      = 'Sales';
 $_['tab_marketing']                 = 'Marketing';
 $_['tab_online']                    = 'People Online';
 $_['tab_activity']                  = 'Recent Activity';
-$_['tab_profile']                  	= 'Profile';
 $_['tab_trial']                  	= 'Trial Period';
 $_['tab_openbay']                  	= 'Marketplaces';
 

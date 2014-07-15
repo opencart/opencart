@@ -33,8 +33,15 @@ class ControllerSaleOrder extends Controller {
   	}
 
   	public function delete() {
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validateDelete()) {
-			$this->model_sale_order->editOrder($this->request->get['order_id']);
+		$this->load->language('sale/order');
+		
+		if ($this->validateDelete()) {
+			
+			
+			
+			
+
+			
 
 			$this->session->data['success'] = $this->language->get('text_success');
 
@@ -221,7 +228,7 @@ class ControllerSaleOrder extends Controller {
 				'date_modified' => date($this->language->get('date_format_short'), strtotime($result['date_modified'])),
 				'view'          => $this->url->link('sale/order/info', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
 				'edit'          => $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL'),
-				'expired'       => strtotime($result['date_added']) < strtotime('-' . (int)$this->config->get('config_order_edit') . ' day')
+				'delete'        => $this->url->link('sale/order/delete', 'token=' . $this->session->data['token'] . '&order_id=' . $result['order_id'] . $url, 'SSL')
 			);
 		}
 
@@ -444,7 +451,7 @@ class ControllerSaleOrder extends Controller {
 		$data['button_cancel'] = $this->language->get('button_cancel');
 		$data['button_product_add'] = $this->language->get('button_product_add');
 		$data['button_voucher_add'] = $this->language->get('button_voucher_add');
-		$data['button_total'] = $this->language->get('button_total');
+		$data['button_refresh'] = $this->language->get('button_refresh');
 		$data['button_upload'] = $this->language->get('button_upload');
 		$data['button_remove'] = $this->language->get('button_remove');
 
@@ -455,132 +462,6 @@ class ControllerSaleOrder extends Controller {
 		$data['tab_product'] = $this->language->get('tab_product');
 		$data['tab_voucher'] = $this->language->get('tab_voucher');
 		$data['tab_total'] = $this->language->get('tab_total');
-
-		if (isset($this->error['warning'])) {
-			$data['error_warning'] = $this->error['warning'];
-		} else {
-			$data['error_warning'] = '';
-		}
-
-		if (isset($this->error['firstname'])) {
-			$data['error_firstname'] = $this->error['firstname'];
-		} else {
-			$data['error_firstname'] = '';
-		}
-
-		if (isset($this->error['lastname'])) {
-			$data['error_lastname'] = $this->error['lastname'];
-		} else {
-			$data['error_lastname'] = '';
-		}
-
-		if (isset($this->error['email'])) {
-			$data['error_email'] = $this->error['email'];
-		} else {
-			$data['error_email'] = '';
-		}
-
-		if (isset($this->error['telephone'])) {
-			$data['error_telephone'] = $this->error['telephone'];
-		} else {
-			$data['error_telephone'] = '';
-		}
-
-		if (isset($this->error['payment_firstname'])) {
-			$data['error_payment_firstname'] = $this->error['payment_firstname'];
-		} else {
-			$data['error_payment_firstname'] = '';
-		}
-
-		if (isset($this->error['payment_lastname'])) {
-			$data['error_payment_lastname'] = $this->error['payment_lastname'];
-		} else {
-			$data['error_payment_lastname'] = '';
-		}
-
-		if (isset($this->error['payment_address_1'])) {
-			$data['error_payment_address_1'] = $this->error['payment_address_1'];
-		} else {
-			$data['error_payment_address_1'] = '';
-		}
-
-		if (isset($this->error['payment_city'])) {
-			$data['error_payment_city'] = $this->error['payment_city'];
-		} else {
-			$data['error_payment_city'] = '';
-		}
-
-		if (isset($this->error['payment_postcode'])) {
-			$data['error_payment_postcode'] = $this->error['payment_postcode'];
-		} else {
-			$data['error_payment_postcode'] = '';
-		}
-
-		if (isset($this->error['payment_country'])) {
-			$data['error_payment_country'] = $this->error['payment_country'];
-		} else {
-			$data['error_payment_country'] = '';
-		}
-
-		if (isset($this->error['payment_zone'])) {
-			$data['error_payment_zone'] = $this->error['payment_zone'];
-		} else {
-			$data['error_payment_zone'] = '';
-		}
-
-		if (isset($this->error['payment_method'])) {
-			$data['error_payment_method'] = $this->error['payment_method'];
-		} else {
-			$data['error_payment_method'] = '';
-		}
-
-		if (isset($this->error['shipping_firstname'])) {
-			$data['error_shipping_firstname'] = $this->error['shipping_firstname'];
-		} else {
-			$data['error_shipping_firstname'] = '';
-		}
-
-		if (isset($this->error['shipping_lastname'])) {
-			$data['error_shipping_lastname'] = $this->error['shipping_lastname'];
-		} else {
-			$data['error_shipping_lastname'] = '';
-		}
-
-		if (isset($this->error['shipping_address_1'])) {
-			$data['error_shipping_address_1'] = $this->error['shipping_address_1'];
-		} else {
-			$data['error_shipping_address_1'] = '';
-		}
-
-		if (isset($this->error['shipping_city'])) {
-			$data['error_shipping_city'] = $this->error['shipping_city'];
-		} else {
-			$data['error_shipping_city'] = '';
-		}
-
-		if (isset($this->error['shipping_postcode'])) {
-			$data['error_shipping_postcode'] = $this->error['shipping_postcode'];
-		} else {
-			$data['error_shipping_postcode'] = '';
-		}
-
-		if (isset($this->error['shipping_country'])) {
-			$data['error_shipping_country'] = $this->error['shipping_country'];
-		} else {
-			$data['error_shipping_country'] = '';
-		}
-
-		if (isset($this->error['shipping_zone'])) {
-			$data['error_shipping_zone'] = $this->error['shipping_zone'];
-		} else {
-			$data['error_shipping_zone'] = '';
-		}
-
-		if (isset($this->error['shipping_method'])) {
-			$data['error_shipping_method'] = $this->error['shipping_method'];
-		} else {
-			$data['error_shipping_method'] = '';
-		}
 
 		$url = '';
 
@@ -632,12 +513,6 @@ class ControllerSaleOrder extends Controller {
 			'href' => $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL')
 		);
 
-		if (!isset($this->request->get['order_id'])) {
-			$data['action'] = $this->url->link('sale/order/insert', 'token=' . $this->session->data['token'] . $url, 'SSL');
-		} else {
-			$data['action'] = $this->url->link('sale/order/update', 'token=' . $this->session->data['token'] . '&order_id=' . $this->request->get['order_id'] . $url, 'SSL');
-		}
-
 		$data['cancel'] = $this->url->link('sale/order', 'token=' . $this->session->data['token'] . $url, 'SSL');
 
 		if (isset($this->request->get['order_id']) && ($this->request->server['REQUEST_METHOD'] != 'POST')) {
@@ -646,18 +521,17 @@ class ControllerSaleOrder extends Controller {
 
 		$data['token'] = $this->session->data['token'];
 
-		if (isset($this->request->get['order_id'])) {
+		if (!empty($order_info)) {
 			$data['order_id'] = $this->request->get['order_id'];
+			$data['store_id'] = $order_info['store_id'];
+		
 		} else {
 			$data['order_id'] = 0;
-		}
-
-		if (isset($this->request->post['store_id'])) {
-			$data['store_id'] = $this->request->post['store_id'];
-		} elseif (!empty($order_info)) {
-			$data['store_id'] = $order_info['store_id'];
-		} else {
 			$data['store_id'] = '';
+		
+		
+		
+		
 		}
 
 		$this->load->model('setting/store');
@@ -670,17 +544,13 @@ class ControllerSaleOrder extends Controller {
 			$data['store_url'] = HTTP_CATALOG;
 		}
 
-		if (isset($this->request->post['customer'])) {
-			$data['customer'] = $this->request->post['customer'];
-		} elseif (!empty($order_info)) {
+		if (!empty($order_info)) {
 			$data['customer'] = $order_info['customer'];
 		} else {
 			$data['customer'] = '';
 		}
 
-		if (isset($this->request->post['customer_id'])) {
-			$data['customer_id'] = $this->request->post['customer_id'];
-		} elseif (!empty($order_info)) {
+		if (!empty($order_info)) {
 			$data['customer_id'] = $order_info['customer_id'];
 		} else {
 			$data['customer_id'] = '';
@@ -698,25 +568,19 @@ class ControllerSaleOrder extends Controller {
 
 		$data['customer_groups'] = $this->model_sale_customer_group->getCustomerGroups();
 
-		if (isset($this->request->post['firstname'])) {
-			$data['firstname'] = $this->request->post['firstname'];
-		} elseif (!empty($order_info)) {
+		if (!empty($order_info)) {
 			$data['firstname'] = $order_info['firstname'];
 		} else {
 			$data['firstname'] = '';
 		}
 
-		if (isset($this->request->post['lastname'])) {
-			$data['lastname'] = $this->request->post['lastname'];
-		} elseif (!empty($order_info)) {
+		if (!empty($order_info)) {
 			$data['lastname'] = $order_info['lastname'];
 		} else {
 			$data['lastname'] = '';
 		}
 
-		if (isset($this->request->post['email'])) {
-			$data['email'] = $this->request->post['email'];
-		} elseif (!empty($order_info)) {
+		if (!empty($order_info)) {
 			$data['email'] = $order_info['email'];
 		} else {
 			$data['email'] = '';
@@ -1091,125 +955,6 @@ class ControllerSaleOrder extends Controller {
 
 		$this->response->setOutput($this->load->view('sale/order_form.tpl', $data));
   	}
-
-	protected function validateForm() {
-		if (!$this->user->hasPermission('modify', 'sale/order')) {
-			$this->error['warning'] = $this->language->get('error_permission');
-		}
-
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$this->error['firstname'] = $this->language->get('error_firstname');
-		}
-
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$this->error['lastname'] = $this->language->get('error_lastname');
-		}
-
-		if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
-			$this->error['email'] = $this->language->get('error_email');
-		}
-
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
-		}
-
-		if ((utf8_strlen($this->request->post['payment_firstname']) < 1) || (utf8_strlen($this->request->post['payment_firstname']) > 32)) {
-			$this->error['payment_firstname'] = $this->language->get('error_firstname');
-		}
-
-		if ((utf8_strlen($this->request->post['payment_lastname']) < 1) || (utf8_strlen($this->request->post['payment_lastname']) > 32)) {
-			$this->error['payment_lastname'] = $this->language->get('error_lastname');
-		}
-
-		if ((utf8_strlen($this->request->post['payment_address_1']) < 3) || (utf8_strlen($this->request->post['payment_address_1']) > 128)) {
-			$this->error['payment_address_1'] = $this->language->get('error_address_1');
-		}
-
-		if ((utf8_strlen($this->request->post['payment_city']) < 3) || (utf8_strlen($this->request->post['payment_city']) > 128)) {
-			$this->error['payment_city'] = $this->language->get('error_city');
-		}
-
-		$this->load->model('localisation/country');
-
-		$country_info = $this->model_localisation_country->getCountry($this->request->post['payment_country_id']);
-
-		if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['payment_postcode']) < 2 || utf8_strlen($this->request->post['payment_postcode']) > 10)) {
-			$this->error['payment_postcode'] = $this->language->get('error_postcode');
-		}
-
-		if ($this->request->post['payment_country_id'] == '') {
-			$this->error['payment_country'] = $this->language->get('error_country');
-		}
-
-		if (!isset($this->request->post['payment_zone_id']) || $this->request->post['payment_zone_id'] == '') {
-			$this->error['payment_zone'] = $this->language->get('error_zone');
-		}
-
-		if (!isset($this->request->post['payment_method']) || $this->request->post['payment_method'] == '') {
-			$this->error['payment_method'] = $this->language->get('error_payment');
-		}
-
-		// Check if any products require shipping
-		$shipping = false;
-
-		if (isset($this->request->post['order_product'])) {
-			$this->load->model('catalog/product');
-
-			foreach ($this->request->post['order_product'] as $order_product) {
-				$product_info = $this->model_catalog_product->getProduct($order_product['product_id']);
-
-				if ($product_info && $product_info['shipping']) {
-					$shipping = true;
-
-					break;
-				}
-			}
-		}
-
-		if ($shipping) {
-			if ((utf8_strlen($this->request->post['shipping_firstname']) < 1) || (utf8_strlen($this->request->post['shipping_firstname']) > 32)) {
-				$this->error['shipping_firstname'] = $this->language->get('error_firstname');
-			}
-
-			if ((utf8_strlen($this->request->post['shipping_lastname']) < 1) || (utf8_strlen($this->request->post['shipping_lastname']) > 32)) {
-				$this->error['shipping_lastname'] = $this->language->get('error_lastname');
-			}
-
-			if ((utf8_strlen($this->request->post['shipping_address_1']) < 3) || (utf8_strlen($this->request->post['shipping_address_1']) > 128)) {
-				$this->error['shipping_address_1'] = $this->language->get('error_address_1');
-			}
-
-			if ((utf8_strlen($this->request->post['shipping_city']) < 3) || (utf8_strlen($this->request->post['shipping_city']) > 128)) {
-				$this->error['shipping_city'] = $this->language->get('error_city');
-			}
-
-			$this->load->model('localisation/country');
-
-			$country_info = $this->model_localisation_country->getCountry($this->request->post['shipping_country_id']);
-
-			if ($country_info && $country_info['postcode_required'] && (utf8_strlen($this->request->post['shipping_postcode']) < 2 || utf8_strlen($this->request->post['shipping_postcode']) > 10)) {
-				$this->error['shipping_postcode'] = $this->language->get('error_postcode');
-			}
-
-			if ($this->request->post['shipping_country_id'] == '') {
-				$this->error['shipping_country'] = $this->language->get('error_country');
-			}
-
-			if (!isset($this->request->post['shipping_zone_id']) || $this->request->post['shipping_zone_id'] == '') {
-				$this->error['shipping_zone'] = $this->language->get('error_zone');
-			}
-
-			if (!$this->request->post['shipping_method']) {
-				$this->error['shipping_method'] = $this->language->get('error_shipping');
-			}
-		}
-
-		if ($this->error && !isset($this->error['warning'])) {
-			$this->error['warning'] = $this->language->get('error_warning');
-		}
-
-		return !$this->error;
-	}
 
 	protected function validateDelete() {
 		if (!$this->user->hasPermission('modify', 'sale/order')) {
@@ -2631,73 +2376,5 @@ class ControllerSaleOrder extends Controller {
 		}
 
 		$this->response->setOutput($this->load->view('sale/order_shipping.tpl', $data));
-	}
-	
-	public function api() {
-		$this->load->model('setting/store');
-		
-		if ($this->request->post['store_id']) {
-			
-		} else {
-				
-		}
-		
-		$store_info = $this->model_setting_store->getStore($this->request->post['store_id']);
-		
-		if ($store_info) {
-			$url = $store_info['url'];
-		} else {
-			$url = HTTP_CATALOG;	
-		}
-		
-		// Make curl request
-		$curl = curl_init($url . 'index.php?route=' . $this->request->get['call']);
-				
-		switch($this->request->get['call']) {
-			case 'payment':
-			
-				break;
-			case 'shipping':
-			
-				break;
-			case 'calculate':
-			
-				break;
-			case 'add':
-			
-				break;		
-			case 'edit':
-			
-				break;
-			case 'delete':
-			
-				break;									
-			case 'comment':
-			
-				break;	
-		}
-		
-
-			
-
-				
-				
-				
-		curl_setopt($curl, CURLOPT_PORT, 443);
-		curl_setopt($curl, CURLOPT_HEADER, 0);
-		curl_setopt($curl, CURLOPT_SSL_VERIFYPEER, 0);
-		curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
-		curl_setopt($curl, CURLOPT_FORBID_REUSE, 0);
-		curl_setopt($curl, CURLOPT_FRESH_CONNECT, 1);
-		curl_setopt($curl, CURLOPT_POST, 1);
-		curl_setopt($curl, CURLOPT_POSTFIELDS, $this->request->post);
-
-		$response = curl_exec($curl);
-
-		curl_close($curl);
-
-		if (!$response) {
-			$this->log->write(curl_error($curl) . '(' . curl_errno($curl) . ')');
-		}	
 	}
 }

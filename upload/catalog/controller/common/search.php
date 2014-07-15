@@ -1,7 +1,7 @@
 <?php
-class ControllerModuleSearch extends COntroller {
+class ControllerCommonSearch extends Controller {
 	public function index() {
-		$this->load->language('module/search');
+		$this->load->language('common/search');
 
 		$data['text_search'] = $this->language->get('text_search');
 
@@ -11,10 +11,10 @@ class ControllerModuleSearch extends COntroller {
 			$data['search'] = '';
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/search.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/search.tpl', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/search.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/common/search.tpl', $data);
 		} else {
-			return $this->load->view('default/template/module/search.tpl', $data);
+			return $this->load->view('default/template/common/search.tpl', $data);
 		}
 	}
 }

@@ -2,7 +2,7 @@
 // Text
 $_['text_affiliate']                   = 'Affiliates';
 $_['text_affiliate_activity']          = 'Affiliate Activity';
-$_['text_api']                         = 'Api';
+$_['text_api']                         = 'API';
 $_['text_attribute']                   = 'Attributes';
 $_['text_attribute_group']             = 'Attribute Groups';
 $_['text_backup']                      = 'Backup / Restore';
@@ -63,7 +63,6 @@ $_['text_return_action']               = 'Return Actions';
 $_['text_return_reason']               = 'Return Reasons';
 $_['text_return_status']               = 'Return Statuses';
 $_['text_sale']                        = 'Sales';
-$_['text_search']                      = 'Search';
 $_['text_shipping']                    = 'Shipping';
 $_['text_setting']                     = 'Settings';
 $_['text_stock_status']                = 'Stock Statuses';

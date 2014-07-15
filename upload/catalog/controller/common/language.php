@@ -1,11 +1,11 @@
 <?php
-class ControllerModuleLanguage extends Controller {
+class ControllerCommonLanguage extends Controller {
 	public function index() {
-		$this->load->language('module/language');
+		$this->load->language('common/language');
 
 		$data['text_language'] = $this->language->get('text_language');
 
-		$data['action'] = $this->url->link('module/language/language', '', $this->request->server['HTTPS']);
+		$data['action'] = $this->url->link('common/language/language', '', $this->request->server['HTTPS']);
 
 		$data['code'] = $this->session->data['language'];
 
@@ -45,10 +45,10 @@ class ControllerModuleLanguage extends Controller {
 			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/language.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/language.tpl', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/language.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/common/language.tpl', $data);
 		} else {
-			return $this->load->view('default/template/module/language.tpl', $data);
+			return $this->load->view('default/template/common/language.tpl', $data);
 		}
 	}
 

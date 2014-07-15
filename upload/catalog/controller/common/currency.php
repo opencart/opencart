@@ -1,11 +1,11 @@
 <?php
-class ControllerModuleCurrency extends Controller {
+class ControllerCommonCurrency extends Controller {
 	public function index() {
-		$this->load->language('module/currency');
+		$this->load->language('common/currency');
 
 		$data['text_currency'] = $this->language->get('text_currency');
 
-		$data['action'] = $this->url->link('module/currency/currency', '', $this->request->server['HTTPS']);
+		$data['action'] = $this->url->link('common/currency/currency', '', $this->request->server['HTTPS']);
 
 		$data['code'] = $this->currency->getCode();
 
@@ -46,10 +46,10 @@ class ControllerModuleCurrency extends Controller {
 			$data['redirect'] = $this->url->link($route, $url, $this->request->server['HTTPS']);
 		}
 
-		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/module/currency.tpl')) {
-			return $this->load->view($this->config->get('config_template') . '/template/module/currency.tpl', $data);
+		if (file_exists(DIR_TEMPLATE . $this->config->get('config_template') . '/template/common/currency.tpl')) {
+			return $this->load->view($this->config->get('config_template') . '/template/common/currency.tpl', $data);
 		} else {
-			return $this->load->view('default/template/module/currency.tpl', $data);
+			return $this->load->view('default/template/common/currency.tpl', $data);
 		}
 	}
 

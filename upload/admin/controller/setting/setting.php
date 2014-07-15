@@ -56,6 +56,7 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_location'] = $this->language->get('entry_location');
 		$data['entry_meta_title'] = $this->language->get('entry_meta_title');
 		$data['entry_meta_description'] = $this->language->get('entry_meta_description');
+		$data['entry_meta_keyword'] = $this->language->get('entry_meta_keyword');
 		$data['entry_layout'] = $this->language->get('entry_layout');
 		$data['entry_template'] = $this->language->get('entry_template');
 		$data['entry_country'] = $this->language->get('entry_country');
@@ -84,10 +85,10 @@ class ControllerSettingSetting extends Controller {
 		$data['entry_customer_price'] = $this->language->get('entry_customer_price');
 		$data['entry_account'] = $this->language->get('entry_account');
 		$data['entry_account_mail'] = $this->language->get('entry_account_mail');
+		$data['entry_api'] = $this->language->get('entry_api');
 		$data['entry_cart_weight'] = $this->language->get('entry_cart_weight');
 		$data['entry_checkout_guest'] = $this->language->get('entry_checkout_guest');
 		$data['entry_checkout'] = $this->language->get('entry_checkout');
-		$data['entry_order_edit'] = $this->language->get('entry_order_edit');
 		$data['entry_invoice_prefix'] = $this->language->get('entry_invoice_prefix');
 		$data['entry_order_status'] = $this->language->get('entry_order_status');
 		$data['entry_complete_status'] = $this->language->get('entry_complete_status');
@@ -174,10 +175,10 @@ class ControllerSettingSetting extends Controller {
 		$data['help_customer_price'] = $this->language->get('help_customer_price');
 		$data['help_account'] = $this->language->get('help_account');
 		$data['help_account_mail'] = $this->language->get('help_account_mail');
+		$data['help_api'] = $this->language->get('help_api');
 		$data['help_cart_weight'] = $this->language->get('help_cart_weight');
 		$data['help_checkout_guest'] = $this->language->get('help_checkout_guest');
 		$data['help_checkout'] = $this->language->get('help_checkout');
-		$data['help_order_edit'] = $this->language->get('help_order_edit');
 		$data['help_invoice_prefix'] = $this->language->get('help_invoice_prefix');
 		$data['help_order_status'] = $this->language->get('help_order_status');
 		$data['help_complete_status'] = $this->language->get('help_complete_status');
@@ -535,6 +536,12 @@ class ControllerSettingSetting extends Controller {
 			$data['config_meta_description'] = $this->config->get('config_meta_description');
 		}
 
+		if (isset($this->request->post['config_meta_keyword'])) {
+			$data['config_meta_keyword'] = $this->request->post['config_meta_keyword'];
+		} else {
+			$data['config_meta_keyword'] = $this->config->get('config_meta_keyword');
+		}
+
 		if (isset($this->request->post['config_layout_id'])) {
 			$data['config_layout_id'] = $this->request->post['config_layout_id'];
 		} else {
@@ -744,7 +751,17 @@ class ControllerSettingSetting extends Controller {
 		} else {
 			$data['config_account_mail'] = $this->config->get('config_account_mail');
 		}
+		
+		if (isset($this->request->post['config_api'])) {
+			$data['config_api'] = $this->request->post['config_api'];
+		} else {
+			$data['config_api'] = $this->config->get('config_api');
+		}
 
+		$this->load->model('user/api');
+
+		$data['apis'] = $this->model_user_api->getApis();
+				
 		if (isset($this->request->post['config_cart_weight'])) {
 			$data['config_cart_weight'] = $this->request->post['config_cart_weight'];
 		} else {
@@ -761,14 +778,6 @@ class ControllerSettingSetting extends Controller {
 			$data['config_checkout_id'] = $this->request->post['config_checkout_id'];
 		} else {
 			$data['config_checkout_id'] = $this->config->get('config_checkout_id');
-		}
-
-		if (isset($this->request->post['config_order_edit'])) {
-			$data['config_order_edit'] = $this->request->post['config_order_edit'];
-		} elseif ($this->config->get('config_order_edit')) {
-			$data['config_order_edit'] = $this->config->get('config_order_edit');
-		} else {
-			$data['config_order_edit'] = 7;
 		}
 
 		if (isset($this->request->post['config_invoice_prefix'])) {

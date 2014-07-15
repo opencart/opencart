@@ -73,7 +73,6 @@ class ControllerCommonMenu extends Controller {
 		$data['text_return_action'] = $this->language->get('text_return_action');
 		$data['text_return_reason'] = $this->language->get('text_return_reason');
 		$data['text_return_status'] = $this->language->get('text_return_status');
-		$data['text_search'] = $this->language->get('text_search');
 		$data['text_shipping'] = $this->language->get('text_shipping');
 		$data['text_setting'] = $this->language->get('text_setting');
 		$data['text_stock_status'] = $this->language->get('text_stock_status');

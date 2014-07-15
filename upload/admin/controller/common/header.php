@@ -94,7 +94,7 @@ class ControllerCommonHeader extends Controller {
 
 			$data['product_total'] = $product_total;
 
-			$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . 'filter_order_status_id='.  $this->config->get('config_complete_status_id'), 'SSL');
+			$data['product'] = $this->url->link('catalog/product', 'token=' . $this->session->data['token'] . '&filter_order_status_id='.  $this->config->get('config_complete_status_id'), 'SSL');
 
 			// Reviews
 			$this->load->model('catalog/review');
@@ -103,7 +103,7 @@ class ControllerCommonHeader extends Controller {
 
 			$data['review_total'] = $review_total;
 
-			$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . 'filter_status=0', 'SSL');
+			$data['review'] = $this->url->link('catalog/review', 'token=' . $this->session->data['token'] . '&filter_status=0', 'SSL');
 
 			// Affliate
 			$this->load->model('marketing/affiliate');

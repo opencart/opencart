@@ -16,7 +16,7 @@ $_['text_return'] = 'Return';
 $_['text_cancel'] = 'Cancel';
 $_['text_filter'] = 'Filter';
 $_['text_view'] = 'View';
-$_['text_cancel_confirm'] = "Profile's cancelation cannot be undone! Are you sure want to do this?";
+$_['text_cancel_confirm'] = 'Profile\'s cancellation cannot be undone! Are you sure want to do this?';
 $_['text_transaction_created'] = 'Created';
 $_['text_transaction_payment'] = 'Payment';
 $_['text_transaction_outstanding_payment'] = 'Outstanding payment';
@@ -39,12 +39,12 @@ $_['entry_status'] = 'Status';
 $_['entry_type'] = 'Type';
 $_['entry_action'] = 'Action';
 $_['entry_email'] = 'Email';
-$_['entry_profile_description'] = "Profile's description";
-$_['entry_product'] = "Product";
-$_['entry_quantity'] = "Quantity";
-$_['entry_amount'] = "Amount";
-$_['entry_profile'] = "Profile";
-$_['entry_payment_type'] = "Payment method";
+$_['entry_profile_description'] = 'Profile\'s description';
+$_['entry_product'] = 'Product';
+$_['entry_quantity'] = 'Quantity';
+$_['entry_amount'] = 'Amount';
+$_['entry_profile'] = 'Profile';
+$_['entry_payment_type'] = 'Payment method';
 
 // Error / Success
 $_['error_not_cancelled'] = 'Error: %s';

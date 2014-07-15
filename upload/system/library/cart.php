@@ -171,7 +171,7 @@ class Cart {
 					$discount_quantity = 0;
 
 					foreach ($this->session->data['cart'] as $key_2 => $quantity_2) {
-						$product_2 = unserialize(base64_decode($key_2));
+						$product_2 = (array)unserialize(base64_decode($key_2));
 
 						if ($product_2['product_id'] == $product_id) {
 							$discount_quantity += $quantity_2;
@@ -313,7 +313,7 @@ class Cart {
 	public function update($key, $qty) {
 		$this->data = array();
 
-		if ((int)$qty && ((int)$qty > 0)) {
+		if ((int)$qty && ((int)$qty > 0) && isset($this->session->data['cart'][$key])) {
 			$this->session->data['cart'][$key] = (int)$qty;
 		} else {
 			$this->remove($key);

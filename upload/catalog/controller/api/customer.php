@@ -1,95 +1,91 @@
 <?php
 class ControllerApiCustomer extends Controller {
-	public function add() {
+	public function index() {
+		$this->load->language('api/customer');
+		
 		$json = array();
 		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$json['customer_id'] = $this->model_account_customer->addCustomer($this->request->post);
-		} else {
-			$json['error'] = $this->error;
-		}
-		
-		$this->response->setOutput(json_encode($json));
-	}
+		if (!isset($this->session->data['api_id'])) {
+			$json['error']['warning'] = $this->language->get('error_permission');
+		} else {	
+			// Add keys for missing post vars
+			$keys = array(
+				'customer_id',
+				'customer_group_id',
+				'firstname',
+				'lastname',
+				'email',
+				'telephone',
+				'fax'
+			);
+			
+			foreach ($keys as $key) {
+				if (!isset($this->request->post[$key])) {
+					$this->request->post[$key] = '';
+				}
+			}		
+			
+			// Customer
+			if ($this->request->post['customer_id']) {
+				$this->load->model('account/customer');
 	
-	public function edit() {
-		$json = array();
-		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$json['customer_id'] = $this->model_account_customer->addCustomer($this->request->post);
-		} else {
-			$json['error'] = $this->error;
-		}		
-		
-		$this->response->setOutput(json_encode($json));
-	}
+				$customer_info = $this->model_account_customer->getCustomer($this->request->post['customer_id']);
 	
-	public function delete() {
-		$json = array();
-		
-		if (($this->request->server['REQUEST_METHOD'] == 'POST') && $this->validate()) {
-			$json['customer_id'] = $this->model_account_customer->addCustomer($this->request->post);
-		} else {
-			$json['error'] = $this->error;
-		}		
-		
-		$this->response->setOutput(json_encode($json));
-	}
+				if (!$customer_info) {
+					$json['error']['warning'] = $this->language->get('error_customer');
+				}
+			}
+			
+			if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
+				$json['error']['firstname'] = $this->language->get('error_firstname');
+			}
 	
-	public function getCustomer() {
-		$json = array();
-		
-		$this->response->setOutput(json_encode($json));
-	}
+			if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
+				$json['error']['lastname'] = $this->language->get('error_lastname');
+			}
 	
-	public function validate() {
-		if ((utf8_strlen(trim($this->request->post['firstname'])) < 1) || (utf8_strlen(trim($this->request->post['firstname'])) > 32)) {
-			$this->error['firstname'] = $this->language->get('error_firstname');
-		}
-
-		if ((utf8_strlen(trim($this->request->post['lastname'])) < 1) || (utf8_strlen(trim($this->request->post['lastname'])) > 32)) {
-			$this->error['lastname'] = $this->language->get('error_lastname');
-		}
-
-		if ((utf8_strlen($this->request->post['email']) > 96) || !preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email'])) {
-			$this->error['email'] = $this->language->get('error_email');
-		}
-
-		if ($this->model_account_customer->getTotalCustomersByEmail($this->request->post['email'])) {
-			$this->error['warning'] = $this->language->get('error_exists');
-		}
-
-		if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
-			$this->error['telephone'] = $this->language->get('error_telephone');
-		}
-
-		// Customer Group
-		if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
-			$customer_group_id = $this->request->post['customer_group_id'];
-		} else {
-			$customer_group_id = $this->config->get('config_customer_group_id');
-		}
-
-		// Custom field validation
-		$this->load->model('account/custom_field');
-
-		$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
-
-		foreach ($custom_fields as $custom_field) {
-			if ($custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['location']][$custom_field['custom_field_id']])) {
-				$this->error['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+			if ((utf8_strlen($this->request->post['email']) > 96) || (!preg_match('/^[^\@]+@.*\.[a-z]{2,6}$/i', $this->request->post['email']))) {
+				$json['error']['email'] = $this->language->get('error_email');
+			}
+	
+			if ((utf8_strlen($this->request->post['telephone']) < 3) || (utf8_strlen($this->request->post['telephone']) > 32)) {
+				$json['error']['telephone'] = $this->language->get('error_telephone');
+			}
+			
+			// Customer Group
+			if (isset($this->request->post['customer_group_id']) && is_array($this->config->get('config_customer_group_display')) && in_array($this->request->post['customer_group_id'], $this->config->get('config_customer_group_display'))) {
+				$customer_group_id = $this->request->post['customer_group_id'];
+			} else {
+				$customer_group_id = $this->config->get('config_customer_group_id');
+			}
+	
+			// Custom field validation
+			$this->load->model('account/custom_field');
+	
+			$custom_fields = $this->model_account_custom_field->getCustomFields(array('filter_customer_group_id' => $customer_group_id));
+	
+			foreach ($custom_fields as $custom_field) {
+				if (($custom_field['location'] == 'account') && $custom_field['required'] && empty($this->request->post['custom_field'][$custom_field['custom_field_id']])) {
+					$json['error']['custom_field'][$custom_field['custom_field_id']] = sprintf($this->language->get('error_custom_field'), $custom_field['name']);
+				}
+			}
+	
+			if (!$json) {
+				$this->session->data['customer'] = array(
+					'customer_id'       => $this->request->post['customer_id'],
+					'customer_group_id' => $customer_group_id,
+					'firstname'         => $this->request->post['firstname'],
+					'lastname'          => $this->request->post['lastname'],
+					'email'             => $this->request->post['email'],
+					'telephone'         => $this->request->post['lastname'],
+					'fax'               => $this->request->post['fax'],
+					'custom_field'      => isset($this->request->post['custom_field']) ? $this->request->post['custom_field'] : array()
+				);
+				
+				$json['success'] = $this->language->get('text_success');			
 			}
 		}
-
-		if ((utf8_strlen($this->request->post['password']) < 4) || (utf8_strlen($this->request->post['password']) > 20)) {
-			$this->error['password'] = $this->language->get('error_password');
-		}
-
-		if ($this->request->post['confirm'] != $this->request->post['password']) {
-			$this->error['confirm'] = $this->language->get('error_confirm');
-		}
-
-		return !$this->error;
 		
+		$this->response->setOutput(json_encode($json));					
 	}
 }

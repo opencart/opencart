@@ -42,7 +42,7 @@ $_['text_card_code_p'] = 'Not processed';
 $_['text_card_code_s'] = 'Merchant has indicated that the card security code is not present on the card';
 $_['text_card_code_u'] = 'Issuer is not certified and/or has not provided encryption keys';
 $_['text_card_code_x'] = 'No response from the credit card association was received';
-$_['text_card_code_blank'] = 'A blank response should indicate that no code was sent and that there was no indication that the code was not present on the card . ';
+$_['text_card_code_blank'] = 'A blank response should indicate that no code was sent and that there was no indication that the code was not present on the card.';
 
 // card types
 $_['text_card_accepted'] = 'Accepted cards: ';

@@ -5,7 +5,7 @@
       <div class="pull-right">
         <button type="submit" form="form-attribute" class="btn"><i class="fa fa-check-circle"></i> <?php echo $button_save; ?></button>
         <a href="<?php echo $cancel; ?>" class="btn"><i class="fa fa-reply"></i> <?php echo $button_cancel; ?></a></div>
-      <h1><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">

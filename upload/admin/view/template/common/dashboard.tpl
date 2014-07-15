@@ -2,7 +2,7 @@
 <div id="content">
   <div class="page-header">
     <div class="container-fluid">
-      <h1><i class="fa fa-pencil-square fa-lg"></i> <?php echo $heading_title; ?></h1>
+      <h1><i class="fa fa-pencil-square"></i> <?php echo $heading_title; ?></h1>
     </div>
   </div>
   <div class="container-fluid">

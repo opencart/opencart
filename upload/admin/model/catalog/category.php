@@ -52,6 +52,8 @@ class ModelCatalogCategory extends Model {
 		}
 
 		$this->cache->delete('category');
+
+		$this->event->trigger('admin_add_category', array('product_id' => $category_id));
 	}
 
 	public function editCategory($category_id, $data) {
@@ -151,6 +153,8 @@ class ModelCatalogCategory extends Model {
 		}
 
 		$this->cache->delete('category');
+
+		$this->event->trigger('admin_edit_category');
 	}
 
 	public function deleteCategory($category_id) {
@@ -171,6 +175,8 @@ class ModelCatalogCategory extends Model {
 		$this->db->query("DELETE FROM " . DB_PREFIX . "url_alias WHERE query = 'category_id=" . (int)$category_id . "'");
 
 		$this->cache->delete('category');
+
+		$this->event->trigger('admin_delete_category');
 	}
 
 	public function repairCategories($parent_id = 0) {

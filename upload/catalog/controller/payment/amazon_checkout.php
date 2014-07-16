@@ -887,6 +887,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$json['error'] = $this->language->get('error_shipping_methods');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -907,6 +908,7 @@ class ControllerPaymentAmazonCheckout extends Controller {
 			$json['redirect'] = $this->url->link('payment/amazon_checkout/paymentMethod', '', 'SSL');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

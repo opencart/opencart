@@ -498,6 +498,7 @@ class ControllerCatalogDownload extends Controller {
 			$json['success'] = $this->language->get('text_upload');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -531,6 +532,7 @@ class ControllerCatalogDownload extends Controller {
 
 		array_multisort($sort_order, SORT_ASC, $json);
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

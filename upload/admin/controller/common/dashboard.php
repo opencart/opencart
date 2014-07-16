@@ -261,6 +261,7 @@ class ControllerCommonDashboard extends Controller {
 				break;
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -284,6 +285,7 @@ class ControllerCommonDashboard extends Controller {
 			$json['xaxis'][] = array($time, date('H:i', $time));
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

@@ -84,7 +84,8 @@ class ControllerPaymentBluePayHostedForm extends Controller {
 	}
 
 	public function adminCallback() {
-		echo json_encode($this->request->get);
+		$this->response->setContentType('Content-Type: application/json');
+		$this->response->setOutput(json_encode($this->request->get));
 	}
 
 }

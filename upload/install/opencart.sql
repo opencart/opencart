@@ -3230,8 +3230,8 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (69, 0, 'config', 'config_image_popup_width', '500', 0),
 (70, 0, 'config', 'config_image_thumb_height', '228', 0),
 (71, 0, 'config', 'config_image_thumb_width', '228', 0),
-(72, 0, 'config', 'config_icon', 'data/cart.png', 0),
-(73, 0, 'config', 'config_logo', 'data/logo.png', 0),
+(72, 0, 'config', 'config_icon', 'catalog/cart.png', 0),
+(73, 0, 'config', 'config_logo', 'catalog/logo.png', 0),
 (74, 0, 'config', 'config_cart_weight', '1', 0),
 (75, 0, 'config', 'config_upload_allowed', 'jpg, JPG, jpeg, gif, png, txt', 0),
 (76, 0, 'config', 'config_file_extension_allowed', 'txt\r\npng\r\njpe\r\njpeg\r\njpg\r\ngif\r\nbmp\r\nico\r\ntiff\r\ntif\r\nsvg\r\nsvgz\r\nzip\r\nrar\r\nmsi\r\ncab\r\nmp3\r\nqt\r\nmov\r\npdf\r\npsd\r\nai\r\neps\r\nps\r\ndoc\r\nrtf\r\nxls\r\nppt\r\nodt\r\nods', 0),
@@ -3292,7 +3292,9 @@ INSERT INTO `oc_setting` (`setting_id`, `store_id`, `group`, `key`, `value`, `se
 (131, 0, 'config', 'config_product_description_length', '100', 0),
 (132, 0, 'config', 'config_image_file_size', '300000', 0),
 (133, 0, 'config', 'config_review_mail', '0', 0),
-(134, 0, 'config', 'config_review_guest', '1', 0);
+(134, 0, 'config', 'config_review_guest', '1', 0),
+(135, 0, 'config', 'config_image_location_width', '268', 0),
+(136, 0, 'config', 'config_image_location_height', '50', 0);
 
 -- --------------------------------------------------------
 

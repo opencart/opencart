@@ -372,6 +372,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -422,6 +423,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -478,6 +480,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

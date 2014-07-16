@@ -986,6 +986,7 @@ class ControllerSaleOrder extends Controller {
 			);
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1658,6 +1659,7 @@ class ControllerSaleOrder extends Controller {
 			}
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1692,6 +1694,7 @@ class ControllerSaleOrder extends Controller {
 			$json['success'] = $this->language->get('text_reward_added');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1722,6 +1725,7 @@ class ControllerSaleOrder extends Controller {
 			$json['success'] = $this->language->get('text_reward_removed');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1756,6 +1760,7 @@ class ControllerSaleOrder extends Controller {
 			$json['success'] = $this->language->get('text_commission_added');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1786,6 +1791,7 @@ class ControllerSaleOrder extends Controller {
 			$json['success'] = $this->language->get('text_commission_removed');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1814,6 +1820,7 @@ class ControllerSaleOrder extends Controller {
 			}
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -1956,6 +1963,7 @@ class ControllerSaleOrder extends Controller {
 			$json['success'] = $this->language->get('text_upload');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

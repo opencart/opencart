@@ -84,6 +84,7 @@ class ControllerPaymentRealexRemote extends Controller {
 		}
 
 		if (isset($json['error'])) {
+			$this->response->setContentType('Content-Type: application/json');
 			$this->response->setOutput(json_encode($json));
 			die();
 		}
@@ -137,6 +138,7 @@ class ControllerPaymentRealexRemote extends Controller {
 					$json['PaReq'] = (string)$verify_3ds->pareq;
 					$json['TermUrl'] = $this->url->link('payment/realex_remote/acsReturn', '', 'SSL');
 
+					$this->response->setContentType('Content-Type: application/json');
 					$this->response->setOutput(json_encode($json));
 					die();
 				}
@@ -160,6 +162,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 						$json['error'] = $this->language->get('error_3d_unable');
 
+						$this->response->setContentType('Content-Type: application/json');
 						$this->response->setOutput(json_encode($json));
 						die();
 					} else {
@@ -181,6 +184,7 @@ class ControllerPaymentRealexRemote extends Controller {
 
 						$json['error'] = (string)$verify_3ds->message;
 
+						$this->response->setContentType('Content-Type: application/json');
 						$this->response->setOutput(json_encode($json));
 						die();
 					} else {
@@ -221,6 +225,7 @@ class ControllerPaymentRealexRemote extends Controller {
 			$json['success'] = $this->url->link('checkout/success');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

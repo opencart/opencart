@@ -299,6 +299,7 @@ class ControllerCommonFileManager extends Controller {
 			$json['success'] = $this->language->get('text_uploaded');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -345,6 +346,7 @@ class ControllerCommonFileManager extends Controller {
 			$json['success'] = $this->language->get('text_directory');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -426,6 +428,7 @@ class ControllerCommonFileManager extends Controller {
 			$json['success'] = $this->language->get('text_delete');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

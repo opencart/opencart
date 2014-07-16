@@ -90,7 +90,7 @@ class ControllerFeedGoogleBase extends Controller {
 			$output .= '</channel>';
 			$output .= '</rss>';
 
-			$this->response->addHeader('Content-Type: application/rss+xml');
+			$this->response->setContentType('Content-Type: application/rss+xml');
 			$this->response->setOutput($output);
 		}
 	}

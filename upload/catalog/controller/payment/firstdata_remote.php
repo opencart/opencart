@@ -155,6 +155,7 @@ class ControllerPaymentFirstdataRemote extends Controller {
 			}
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }

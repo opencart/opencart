@@ -383,6 +383,7 @@ class ControllerPaymentRealex extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -439,6 +440,7 @@ class ControllerPaymentRealex extends Controller {
 			$json['msg'] = $this->language->get('error_data_missing');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 
@@ -495,6 +497,7 @@ class ControllerPaymentRealex extends Controller {
 			$json['msg'] = 'Missing data';
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 

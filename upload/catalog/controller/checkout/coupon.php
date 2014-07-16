@@ -57,6 +57,7 @@ class ControllerModuleCoupon extends Controller {
 			$json['error'] = $this->language->get('error_coupon');
 		}
 
+		$this->response->setContentType('Content-Type: application/json');
 		$this->response->setOutput(json_encode($json));
 	}
 }
